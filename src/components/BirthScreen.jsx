@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useGameStore } from '../store/gameStore'
 import { COUNTRIES } from '../data/countries'
+import StatBar from './StatBar'
 
 const WEALTH_LABELS = ['Destitute', 'Poor', 'Working Class', 'Middle Class', 'Wealthy']
 const STABILITY_LABELS = {
@@ -9,23 +10,14 @@ const STABILITY_LABELS = {
   stable: 'Stable',
   secure: 'Secure',
 }
-const TRAIT_NAMES = { intel: 'Intelligence', con: 'Constitution', res: 'Resilience', cha: 'Charisma' }
 
-function TraitBar({ label, value }) {
-  const pct = ((value - 3) / 7) * 100
-  const color = value >= 8 ? '#4ade80' : value >= 6 ? '#a3e635' : value >= 4 ? '#facc15' : '#f87171'
-  return (
-    <div className="space-y-1">
-      <div className="flex justify-between text-xs text-natalis-dim">
-        <span>{label}</span>
-        <span>{value}/10</span>
-      </div>
-      <div className="h-1 bg-natalis-muted rounded-full overflow-hidden">
-        <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, backgroundColor: color }} />
-      </div>
-    </div>
-  )
-}
+const STAT_LABELS = [
+  ['happiness', 'Happiness'],
+  ['health',    'Health'],
+  ['smarts',    'Smarts'],
+  ['looks',     'Looks'],
+  ['charisma',  'Charisma'],
+]
 
 export default function BirthScreen() {
   const character = useGameStore(s => s.character)
@@ -39,7 +31,7 @@ export default function BirthScreen() {
   const [manualYear, setManualYear] = useState(character?.birthYear ?? 1980)
 
   if (!character) return null
-  const { firstName, surname, country, gender, birthYear, wealthTier, familyStability, familySize, traits } = character
+  const { firstName, surname, country, gender, birthYear, wealthTier, familyStability, familySize, initialStats } = character
 
   const yearMin = country.yearRange[0]
   const yearMax = country.yearRange[1]
@@ -140,11 +132,11 @@ export default function BirthScreen() {
             </div>
           </div>
 
-          {/* Traits */}
+          {/* Starting Stats */}
           <div className="space-y-2 pt-2 border-t border-natalis-border">
-            <p className="text-natalis-muted text-xs uppercase tracking-wider">Traits</p>
-            {Object.entries(traits).map(([key, val]) => (
-              <TraitBar key={key} label={TRAIT_NAMES[key]} value={val} />
+            <p className="text-natalis-muted text-xs uppercase tracking-wider">Starting Stats</p>
+            {STAT_LABELS.map(([key, label]) => (
+              <StatBar key={key} stat={key} label={label} value={initialStats[key]} />
             ))}
           </div>
         </div>

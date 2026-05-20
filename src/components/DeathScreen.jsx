@@ -63,11 +63,12 @@ export default function DeathScreen() {
         {/* Stats */}
         <div className="border border-natalis-border p-4 space-y-3">
           <p className="text-natalis-dim text-xs uppercase tracking-wider">Final Stats</p>
-          <StatBar stat="health" label="Health" value={stats.health} />
-          <StatBar stat="mental" label="Mental" value={stats.mental} />
-          <StatBar stat="wealth" label="Wealth" value={stats.wealth} />
-          <StatBar stat="education" label="Education" value={stats.education} />
-          <StatBar stat="social" label="Social" value={stats.social} />
+          <StatBar stat="happiness" label="Happiness" value={stats.happiness} />
+          <StatBar stat="health"    label="Health"    value={stats.health} />
+          <StatBar stat="smarts"    label="Smarts"    value={stats.smarts} />
+          <StatBar stat="looks"     label="Looks"     value={stats.looks} />
+          <StatBar stat="charisma"  label="Charisma"  value={stats.charisma} />
+          <StatBar stat="wealth"    label="Wealth"    value={stats.wealth} />
           {regret > 0 && (
             <div className="flex justify-between text-xs text-natalis-muted pt-1 border-t border-natalis-border">
               <span>Regret carried</span>

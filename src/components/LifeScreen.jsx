@@ -43,6 +43,8 @@ export default function LifeScreen() {
   const actionsThisYear = useGameStore(s => s.actionsThisYear)
   const maxActionsPerYear = useGameStore(s => s.maxActionsPerYear)
   const lastOutcome = useGameStore(s => s.lastOutcome)
+  const money = useGameStore(s => s.money)
+  const parents = useGameStore(s => s.parents)
   const ageUp = useGameStore(s => s.ageUp)
   const dead = useGameStore(s => s.dead)
 
@@ -70,11 +72,12 @@ export default function LifeScreen() {
 
         {/* Stats */}
         <div className="p-4 border-b border-natalis-border space-y-3">
-          <StatBar stat="health" label="Health" value={stats.health} />
-          <StatBar stat="mental" label="Mental" value={stats.mental} />
-          <StatBar stat="wealth" label="Wealth" value={stats.wealth} />
-          <StatBar stat="education" label="Education" value={stats.education} />
-          <StatBar stat="social" label="Social" value={stats.social} />
+          <StatBar stat="happiness" label="Happiness" value={stats.happiness} />
+          <StatBar stat="health"    label="Health"    value={stats.health} />
+          <StatBar stat="smarts"    label="Smarts"    value={stats.smarts} />
+          <StatBar stat="looks"     label="Looks"     value={stats.looks} />
+          <StatBar stat="charisma"  label="Charisma"  value={stats.charisma} />
+          <StatBar stat="wealth"    label="Wealth"    value={stats.wealth} />
           {regret > 0 && (
             <div className="text-natalis-muted text-xs flex justify-between pt-1">
               <span>Regret</span>
@@ -85,11 +88,37 @@ export default function LifeScreen() {
 
         {/* Life status */}
         <div className="p-4 border-b border-natalis-border space-y-2 text-xs text-natalis-dim">
+          {money > 0 && (
+            <div>
+              <p className="text-natalis-muted uppercase tracking-wider text-xs mb-0.5">Net Worth</p>
+              <p className="text-natalis-text">{money >= 1000000
+                ? `$${(money / 1000000).toFixed(2)}M`
+                : money >= 1000
+                ? `$${Math.round(money / 1000)}k`
+                : `$${money.toLocaleString()}`
+              }</p>
+            </div>
+          )}
           {career && (
             <div>
               <p className="text-natalis-muted uppercase tracking-wider text-xs mb-0.5">Career</p>
               <p>{career.title}</p>
-              <p className="text-natalis-muted">${career.salary.toLocaleString()}/yr · Level {career.level + 1}</p>
+              <p className="text-natalis-muted">${career.salary.toLocaleString()}/yr</p>
+              <div className="mt-1">
+                <div className="flex justify-between text-natalis-muted text-xs mb-0.5">
+                  <span>Performance</span>
+                  <span>{Math.round(career.performance ?? 70)}%</span>
+                </div>
+                <div className="h-1 bg-natalis-bg rounded-full overflow-hidden">
+                  <div
+                    className="h-full transition-all"
+                    style={{
+                      width: `${career.performance ?? 70}%`,
+                      backgroundColor: (career.performance ?? 70) > 60 ? '#4ade80' : (career.performance ?? 70) > 30 ? '#fb923c' : '#f87171',
+                    }}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {education.level !== 'none' && (
@@ -101,13 +130,60 @@ export default function LifeScreen() {
           {partner && (
             <div>
               <p className="text-natalis-muted uppercase tracking-wider text-xs mb-0.5">Partner</p>
-              <p>{partner.name}{partner.married ? ' (married)' : ''}</p>
+              <p>{partner.name}{partner.married ? ' ♥' : partner.engaged ? ' (engaged)' : ''}</p>
+              <div className="mt-1">
+                <div className="h-1 bg-natalis-bg rounded-full overflow-hidden">
+                  <div
+                    className="h-full transition-all"
+                    style={{
+                      width: `${partner.relationshipQuality}%`,
+                      backgroundColor: partner.relationshipQuality > 65 ? '#4ade80' : partner.relationshipQuality > 35 ? '#fb923c' : '#f87171',
+                    }}
+                  />
+                </div>
+              </div>
             </div>
           )}
           {children.length > 0 && (
             <div>
               <p className="text-natalis-muted uppercase tracking-wider text-xs mb-0.5">Children</p>
-              <p>{children.length}</p>
+              {children.map((child, i) => (
+                <div key={i} className="flex justify-between items-center text-xs py-0.5">
+                  <span className="text-natalis-dim truncate max-w-[100px]">{child.name.split(' ')[0]}</span>
+                  <div className="w-10 h-1 bg-natalis-bg rounded-full overflow-hidden ml-1">
+                    <div
+                      className="h-full"
+                      style={{
+                        width: `${child.relationshipQuality}%`,
+                        backgroundColor: child.relationshipQuality > 65 ? '#4ade80' : child.relationshipQuality > 35 ? '#fb923c' : '#f87171',
+                      }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          {parents && (
+            <div>
+              <p className="text-natalis-muted uppercase tracking-wider text-xs mb-0.5">Parents</p>
+              {['mother', 'father'].map(key => {
+                const p = parents[key]
+                if (!p || !p.alive) return null
+                return (
+                  <div key={key} className="flex justify-between items-center text-xs py-0.5">
+                    <span className="text-natalis-dim capitalize">{key}</span>
+                    <div className="w-10 h-1 bg-natalis-bg rounded-full overflow-hidden ml-1">
+                      <div
+                        className="h-full"
+                        style={{
+                          width: `${p.relationshipQuality}%`,
+                          backgroundColor: p.relationshipQuality > 65 ? '#4ade80' : p.relationshipQuality > 35 ? '#fb923c' : '#f87171',
+                        }}
+                      />
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           )}
           {inPrison && (

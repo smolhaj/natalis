@@ -1,4 +1,30 @@
 export const RIBBONS = [
+  // ── LEGENDARY (priority 101+) ────────────────────────────────────────────────
+  {
+    id: 'the_loaded',
+    name: 'The Loaded',
+    description: 'You accumulated what most people cannot imagine. Money ceased to be a concern.',
+    condition: (G) => (G.money ?? 0) >= 10000000,
+    priority: 105,
+    color: 'gold',
+  },
+  {
+    id: 'the_rich',
+    name: 'The Rich',
+    description: 'You made it. Not just enough — genuinely wealthy.',
+    condition: (G) => (G.money ?? 0) >= 1000000,
+    priority: 102,
+    color: 'gold',
+  },
+  {
+    id: 'the_geriatric',
+    name: 'The Centenarian',
+    description: 'You outlived everyone\'s expectations, including your own.',
+    condition: (G) => G.age >= 100,
+    priority: 101,
+    color: 'purple',
+  },
+
   // ── EXCEPTIONAL (priority 90-100) ───────────────────────────────────────────
   {
     id: 'the_self_made',
@@ -46,7 +72,7 @@ export const RIBBONS = [
     id: 'the_scholar',
     name: 'The Scholar',
     description: 'You made education your instrument and never put it down.',
-    condition: (G) => G.flags.includes('university_graduate') && G.stats.education > 70 && G.education?.level === 'graduate',
+    condition: (G) => G.flags.includes('university_graduate') && G.stats.smarts > 70 && G.education?.level === 'graduate',
     priority: 82,
     color: 'blue',
   },
@@ -152,7 +178,7 @@ export const RIBBONS = [
     id: 'the_intellectual',
     name: 'The Intellectual',
     description: 'Ideas were your primary occupation, whether or not anyone paid you for them.',
-    condition: (G) => G.flags.includes('early_reader') && G.flags.includes('university_graduate') && G.stats.education > 75,
+    condition: (G) => G.flags.includes('early_reader') && G.flags.includes('university_graduate') && G.stats.smarts > 75,
     priority: 52,
     color: 'blue',
   },
@@ -253,6 +279,22 @@ export const RIBBONS = [
     condition: (G) => G.regret > 65,
     priority: 22,
     color: 'gray',
+  },
+  {
+    id: 'the_fertile',
+    name: 'The Prolific',
+    description: 'You filled the house with children and their noise.',
+    condition: (G) => G.children.length >= 6,
+    priority: 18,
+    color: 'green',
+  },
+  {
+    id: 'the_lustful',
+    name: 'The Libertine',
+    description: 'You lived as though pleasure was its own philosophy.',
+    condition: (G) => (G.hooksUpCount ?? 0) >= 20,
+    priority: 15,
+    color: 'purple',
   },
   {
     id: 'the_quiet_life',

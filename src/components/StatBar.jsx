@@ -1,9 +1,10 @@
 const COLORS = {
-  health: { low: '#f87171', mid: '#fb923c', high: '#4ade80' },
-  mental: { low: '#f87171', mid: '#c084fc', high: '#818cf8' },
-  wealth: { low: '#94a3b8', mid: '#facc15', high: '#4ade80' },
-  education: { low: '#94a3b8', mid: '#38bdf8', high: '#818cf8' },
-  social: { low: '#94a3b8', mid: '#fb923c', high: '#4ade80' },
+  happiness: { low: '#f87171', mid: '#c084fc', high: '#818cf8' },
+  health:    { low: '#f87171', mid: '#fb923c', high: '#4ade80' },
+  smarts:    { low: '#94a3b8', mid: '#38bdf8', high: '#818cf8' },
+  looks:     { low: '#94a3b8', mid: '#f9a8d4', high: '#ec4899' },
+  charisma:  { low: '#94a3b8', mid: '#fb923c', high: '#4ade80' },
+  wealth:    { low: '#94a3b8', mid: '#facc15', high: '#4ade80' },
 }
 
 function getColor(stat, value) {
