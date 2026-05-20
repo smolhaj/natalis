@@ -2,12 +2,27 @@ import { create } from 'zustand'
 import {
   createCharacter,
   deriveInitialStats,
+  deriveInitialMoney,
+  deriveInitialParents,
   tick,
   resolveChoice,
   applyActivity,
   attemptCrime,
   enterCareer,
   generateEpitaph,
+  askForRaise,
+  quitJob,
+  meetPotentialPartner,
+  hookUp,
+  goOnDate,
+  complimentPartner,
+  proposeMarriage,
+  getMarried,
+  fileForDivorce,
+  tryForChild,
+  spendTimeWithChild,
+  callParent,
+  getPlasticSurgery,
 } from '../engine/gameEngine'
 import { COUNTRIES } from '../data/countries'
 
@@ -40,6 +55,10 @@ const INITIAL_STATE = {
   causeOfDeath: null,
   ribbon: null,
   epitaph: '',
+  money: 0,
+  debt: 0,
+  hooksUpCount: 0,
+  parents: null,
 }
 
 export const useGameStore = create((set, get) => ({
@@ -78,6 +97,8 @@ export const useGameStore = create((set, get) => ({
     const { character } = get()
     if (!character) return
     const stats = deriveInitialStats(character)
+    const money = deriveInitialMoney(character)
+    const parents = deriveInitialParents(character)
     set({
       screen: 'life',
       stats,
@@ -109,6 +130,10 @@ export const useGameStore = create((set, get) => ({
       causeOfDeath: null,
       ribbon: null,
       epitaph: '',
+      money,
+      debt: 0,
+      hooksUpCount: 0,
+      parents,
     })
   },
 
@@ -153,6 +178,92 @@ export const useGameStore = create((set, get) => ({
     if (state.dead) return
     const next = enterCareer(state, careerId)
     set(next)
+  },
+
+  // ── Career actions ──────────────────────────────────────────────────────────
+
+  askForRaise: () => {
+    const state = get()
+    if (state.dead) return
+    set(askForRaise(state))
+  },
+
+  quitJob: () => {
+    const state = get()
+    if (state.dead) return
+    set(quitJob(state))
+  },
+
+  // ── Relationship actions ────────────────────────────────────────────────────
+
+  meetSomeone: () => {
+    const state = get()
+    if (state.dead) return
+    set(meetPotentialPartner(state))
+  },
+
+  hookUp: () => {
+    const state = get()
+    if (state.dead) return
+    set(hookUp(state))
+  },
+
+  goOnDate: () => {
+    const state = get()
+    if (state.dead) return
+    set(goOnDate(state))
+  },
+
+  complimentPartner: () => {
+    const state = get()
+    if (state.dead) return
+    set(complimentPartner(state))
+  },
+
+  proposeMarriage: () => {
+    const state = get()
+    if (state.dead) return
+    set(proposeMarriage(state))
+  },
+
+  getMarried: () => {
+    const state = get()
+    if (state.dead) return
+    set(getMarried(state))
+  },
+
+  fileForDivorce: () => {
+    const state = get()
+    if (state.dead) return
+    set(fileForDivorce(state))
+  },
+
+  // ── Family actions ──────────────────────────────────────────────────────────
+
+  tryForChild: () => {
+    const state = get()
+    if (state.dead) return
+    set(tryForChild(state))
+  },
+
+  spendTimeWithChild: (childIndex) => {
+    const state = get()
+    if (state.dead) return
+    set(spendTimeWithChild(state, childIndex))
+  },
+
+  callParent: (key) => {
+    const state = get()
+    if (state.dead) return
+    set(callParent(state, key))
+  },
+
+  // ── Health actions ──────────────────────────────────────────────────────────
+
+  getPlasticSurgery: (type) => {
+    const state = get()
+    if (state.dead) return
+    set(getPlasticSurgery(state, type))
   },
 
   // ── Death / restart ─────────────────────────────────────────────────────────
