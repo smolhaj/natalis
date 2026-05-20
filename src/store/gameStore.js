@@ -49,6 +49,7 @@ import {
   practiceMartalArts,
   obtainLicense,
   interactWithFriend,
+  dropOutOfSchool,
 } from '../engine/gameEngine'
 import { COUNTRIES } from '../data/countries'
 
@@ -68,7 +69,7 @@ const INITIAL_STATE = {
   mem: {},
   log: [],
   career: null,
-  education: { level: 'none', field: null },
+  education: { level: 'none', field: null, enrolled: null },
   partner: null,
   children: [],
   criminalRecord: [],
@@ -138,6 +139,7 @@ export const useGameStore = create((set, get) => ({
     const money = deriveInitialMoney(character)
     const parents = deriveInitialParents(character)
     const siblings = deriveInitialSiblings(character)
+    const initialGpa = parseFloat(Math.min(4.0, 1.5 + stats.smarts * 0.02).toFixed(2))
     set({
       screen: 'life',
       stats,
@@ -157,7 +159,7 @@ export const useGameStore = create((set, get) => ({
         },
       ],
       career: null,
-      education: { level: 'none', field: null },
+      education: { level: 'none', field: null, enrolled: null },
       partner: null,
       children: [],
       criminalRecord: [],
@@ -184,7 +186,7 @@ export const useGameStore = create((set, get) => ({
       socialMedia: { followers: 0, verified: false, genre: null },
       martialArts: { discipline: null, belt: 0 },
       birthControl: false,
-      gpa: null,
+      gpa: initialGpa,
     })
   },
 
@@ -471,6 +473,13 @@ export const useGameStore = create((set, get) => ({
     const state = get()
     if (state.dead) return
     set(interactWithFriend(state, friendIdx, action))
+  },
+
+  dropOutOfSchool: () => {
+    const state = get()
+    if (state.dead) return
+    const next = dropOutOfSchool(state)
+    set(next)
   },
 
   // ── Death / restart ─────────────────────────────────────────────────────────

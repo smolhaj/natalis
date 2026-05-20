@@ -3,7 +3,7 @@ import { useGameStore } from '../store/gameStore'
 import { ACTIVITIES } from '../data/activities'
 import { CRIMES } from '../data/crimes'
 import { PROPERTY_TYPES, VEHICLE_TYPES } from '../data/assets'
-import { getAvailableCareers } from '../engine/gameEngine'
+import { getAvailableCareers, dropOutOfSchool } from '../engine/gameEngine'
 
 const TOP_CATEGORIES = [
   { key: 'mind_body',     label: 'Mind & Body',     emoji: '🧘', desc: 'Work on yourself' },
@@ -95,6 +95,7 @@ export default function ActivitiesPanel({ onClose }) {
   const practiceMartalArts = useGameStore(s => s.practiceMartalArts)
   const obtainLicense      = useGameStore(s => s.obtainLicense)
   const interactWithFriend = useGameStore(s => s.interactWithFriend)
+  const dropOutOfSchool    = useGameStore(s => s.dropOutOfSchool)
 
   const actionsLeft = state.maxActionsPerYear - state.actionsThisYear
   const noActions = actionsLeft <= 0
@@ -148,10 +149,23 @@ export default function ActivitiesPanel({ onClose }) {
       }
 
       case 'education': {
-        const isInSchool = state.education.level !== 'none' || state.age <= 22
+        const enrolled = state.education?.enrolled
         const gpa = state.gpa
+        const isGraduate = state.education.level === 'university'
         return (
           <>
+            {/* Enrollment status */}
+            {enrolled && (
+              <div className="bg-white rounded-xl border border-natalis-border px-4 py-3 space-y-1">
+                <p className="text-xs font-semibold uppercase tracking-wider text-natalis-muted">Currently Enrolled</p>
+                <p className="font-bold text-natalis-text text-sm">
+                  {enrolled.type === 'university' ? '🎓' : '🔧'} {enrolled.field} — Year {(enrolled.year ?? 0) + 1} of {enrolled.type === 'university' ? 4 : 2}
+                </p>
+                <div className="w-full h-2 bg-natalis-bg rounded-full overflow-hidden mt-1">
+                  <div className="h-full rounded-full" style={{ width: `${((enrolled.year ?? 0) / (enrolled.type === 'university' ? 4 : 2)) * 100}%`, background: 'linear-gradient(90deg, #007aff, #5ac8fa)' }} />
+                </div>
+              </div>
+            )}
             {gpa !== null && (
               <div className="flex items-center justify-between bg-white rounded-xl border border-natalis-border px-4 py-3">
                 <span className="text-natalis-muted text-xs font-semibold uppercase tracking-wider">🎓 GPA</span>
@@ -159,9 +173,14 @@ export default function ActivitiesPanel({ onClose }) {
               </div>
             )}
             {state.age >= 10 && state.age <= 25 && (
-              <Btn disabled={noActions} onClick={() => go(studyHarder)} title="Study Harder" subtitle="Put in extra hours. Boosts GPA and smarts." />
+              <Btn disabled={noActions} onClick={() => go(studyHarder)} title="Study Harder" subtitle="Extra effort boosts GPA and smarts." />
             )}
-            {/* Mind activities that relate to learning */}
+            {enrolled && (
+              <Btn disabled={false} onClick={() => go(dropOutOfSchool)} title="Drop Out" subtitle="Leave your program early." danger />
+            )}
+            {!enrolled && state.flags.includes('university_graduate') && !isGraduate && (
+              <Btn disabled={noActions} onClick={() => go(studyHarder)} title="Pursue Graduate Studies" subtitle="Apply for postgraduate research." />
+            )}
             {(ACTIVITIES.mind ?? [])
               .filter(a => ['study', 'online_course', 'learn_language', 'philosophy'].includes(a.id))
               .filter(a => (!a.minAge || state.age >= a.minAge) && (!a.maxAge || state.age <= a.maxAge))
@@ -627,6 +646,12 @@ export default function ActivitiesPanel({ onClose }) {
               if (cat.key === 'plastic_surg' && state.age < 18) return null
               if (cat.key === 'licenses' && state.age < 16) return null
               if (cat.key === 'race_tracks' && state.age < 18) return null
+              if (cat.key === 'shopping' && state.age < 8) return null
+              if (cat.key === 'social_media' && state.age < 13) return null
+              if (cat.key === 'career' && state.age < 14) return null
+              if (cat.key === 'love' && state.age < 13) return null
+              if (cat.key === 'assets' && state.age < 18) return null
+              if (cat.key === 'money' && state.age < 14) return null
               if (cat.key === 'rehab' && !hasAddiction && !(ACTIVITIES.body ?? []).some(a => (a.id === 'quit_smoking' || a.id === 'rehabilitation') && (!a.condition || a.condition(G)))) return null
 
               const badge = cat.key === 'rehab' && hasAddiction ? { text: '!', color: '#ff3b30' } :
