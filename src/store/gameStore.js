@@ -4,6 +4,7 @@ import {
   deriveInitialStats,
   deriveInitialMoney,
   deriveInitialParents,
+  deriveInitialSiblings,
   tick,
   resolveChoice,
   applyActivity,
@@ -12,6 +13,10 @@ import {
   generateEpitaph,
   askForRaise,
   quitJob,
+  workHarder,
+  schmoozeBoss,
+  retire,
+  emigrate,
   meetPotentialPartner,
   hookUp,
   goOnDate,
@@ -22,7 +27,15 @@ import {
   tryForChild,
   spendTimeWithChild,
   callParent,
+  callSibling,
+  adoptChild,
   getPlasticSurgery,
+  buyProperty,
+  sellProperty,
+  buyVehicle,
+  sellVehicle,
+  adoptPet,
+  visitVet,
 } from '../engine/gameEngine'
 import { COUNTRIES } from '../data/countries'
 
@@ -59,6 +72,13 @@ const INITIAL_STATE = {
   debt: 0,
   hooksUpCount: 0,
   parents: null,
+  karma: 50,
+  fame: 0,
+  siblings: [],
+  pets: [],
+  assets: { properties: [], vehicles: [] },
+  licenceObtained: false,
+  retired: false,
 }
 
 export const useGameStore = create((set, get) => ({
@@ -99,6 +119,7 @@ export const useGameStore = create((set, get) => ({
     const stats = deriveInitialStats(character)
     const money = deriveInitialMoney(character)
     const parents = deriveInitialParents(character)
+    const siblings = deriveInitialSiblings(character)
     set({
       screen: 'life',
       stats,
@@ -134,6 +155,13 @@ export const useGameStore = create((set, get) => ({
       debt: 0,
       hooksUpCount: 0,
       parents,
+      siblings,
+      karma: 50,
+      fame: 0,
+      pets: [],
+      assets: { properties: [], vehicles: [] },
+      licenceObtained: false,
+      retired: false,
     })
   },
 
@@ -192,6 +220,30 @@ export const useGameStore = create((set, get) => ({
     const state = get()
     if (state.dead) return
     set(quitJob(state))
+  },
+
+  workHarder: () => {
+    const state = get()
+    if (state.dead) return
+    set(workHarder(state))
+  },
+
+  schmoozeBoss: () => {
+    const state = get()
+    if (state.dead) return
+    set(schmoozeBoss(state))
+  },
+
+  retire: () => {
+    const state = get()
+    if (state.dead) return
+    set(retire(state))
+  },
+
+  emigrate: (countryName) => {
+    const state = get()
+    if (state.dead) return
+    set(emigrate(state, countryName))
   },
 
   // ── Relationship actions ────────────────────────────────────────────────────
@@ -258,12 +310,64 @@ export const useGameStore = create((set, get) => ({
     set(callParent(state, key))
   },
 
+  callSibling: (idx) => {
+    const state = get()
+    if (state.dead) return
+    set(callSibling(state, idx))
+  },
+
+  adoptChild: () => {
+    const state = get()
+    if (state.dead) return
+    set(adoptChild(state))
+  },
+
   // ── Health actions ──────────────────────────────────────────────────────────
 
   getPlasticSurgery: (type) => {
     const state = get()
     if (state.dead) return
     set(getPlasticSurgery(state, type))
+  },
+
+  // ── Asset actions ───────────────────────────────────────────────────────────
+
+  buyProperty: (typeId) => {
+    const state = get()
+    if (state.dead) return
+    set(buyProperty(state, typeId))
+  },
+
+  sellProperty: (idx) => {
+    const state = get()
+    if (state.dead) return
+    set(sellProperty(state, idx))
+  },
+
+  buyVehicle: (typeId) => {
+    const state = get()
+    if (state.dead) return
+    set(buyVehicle(state, typeId))
+  },
+
+  sellVehicle: (idx) => {
+    const state = get()
+    if (state.dead) return
+    set(sellVehicle(state, idx))
+  },
+
+  // ── Pet actions ─────────────────────────────────────────────────────────────
+
+  adoptPet: (species) => {
+    const state = get()
+    if (state.dead) return
+    set(adoptPet(state, species))
+  },
+
+  visitVet: (idx) => {
+    const state = get()
+    if (state.dead) return
+    set(visitVet(state, idx))
   },
 
   // ── Death / restart ─────────────────────────────────────────────────────────

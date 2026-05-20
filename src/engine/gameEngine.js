@@ -5,6 +5,8 @@ import { RIBBONS } from '../data/ribbons'
 import { ACTIVITIES } from '../data/activities'
 import { CRIMES } from '../data/crimes'
 import { CAREERS } from '../data/careers'
+import { PROPERTY_TYPES, VEHICLE_TYPES } from '../data/assets'
+import { ILLNESSES } from '../data/illnesses'
 import { randomBetween, pickFrom, rollWeighted, clamp, chance } from '../utils/random'
 
 // ─── Phase mapping ────────────────────────────────────────────────────────────
@@ -70,6 +72,23 @@ export function deriveInitialStats(char) {
   return { ...char.initialStats }
 }
 
+export function deriveInitialSiblings(char) {
+  const count = Math.min(Math.max(0, char.familySize - 1), 5)
+  const c = char.country
+  const baseQ = { secure: 78, stable: 65, struggling: 50, unstable: 32 }[char.familyStability] ?? 55
+  return Array.from({ length: count }, () => {
+    const gender = chance(0.5) ? 'male' : 'female'
+    const firstName = pickFrom(gender === 'male' ? c.namePool.male : c.namePool.female)
+    return {
+      name: `${firstName} ${char.surname}`,
+      gender,
+      ageDiff: randomBetween(-8, 8),
+      alive: true,
+      relationshipQuality: clamp(baseQ + randomBetween(-15, 15), 10, 100),
+    }
+  })
+}
+
 export function deriveInitialMoney(char) {
   const base = { 0: 0, 1: 300, 2: 2000, 3: 12000, 4: 60000 }
   return (base[char.wealthTier] ?? 0) + randomBetween(-200, 200) * char.wealthTier
@@ -102,7 +121,7 @@ export function deriveInitialParents(char) {
 
 function createProxy(state) {
   return {
-    h: 0, m: 0, w: 0, e: 0, s: 0, lo: 0, r: 0, mo: 0,
+    h: 0, m: 0, w: 0, e: 0, s: 0, lo: 0, r: 0, mo: 0, karma: 0, fame: 0,
     flags: [...state.flags],
     mem: { ...state.mem },
   }
@@ -119,8 +138,10 @@ function applyProxy(state, proxy) {
   }
   const regret = clamp(state.regret + proxy.r, 0, 100)
   const money  = Math.max(0, (state.money ?? 0) + (proxy.mo ?? 0))
+  const karma  = clamp((state.karma ?? 50) + (proxy.karma ?? 0), 0, 100)
+  const fame   = clamp((state.fame ?? 0) + (proxy.fame ?? 0), 0, 100)
   const flags  = [...new Set(proxy.flags)]
-  return { ...state, stats, regret, money, flags, mem: proxy.mem }
+  return { ...state, stats, regret, money, karma, fame, flags, mem: proxy.mem }
 }
 
 function applyNaturalAging(state) {
@@ -167,6 +188,7 @@ function resolveProxyExtras(state, proxy) {
   if (proxy._newPartner !== undefined) next = { ...next, partner: proxy._newPartner }
   if (proxy._clearPartner)   next = { ...next, partner: null }
   if (proxy._newChild)       next = { ...next, children: [...next.children, proxy._newChild] }
+  if (proxy.flags.includes('has_licence')) next = { ...next, licenceObtained: true }
   return next
 }
 
@@ -224,6 +246,13 @@ function buildG(state) {
     money: state.money ?? 0,
     parents: state.parents,
     hooksUpCount: state.hooksUpCount ?? 0,
+    karma: state.karma ?? 50,
+    fame: state.fame ?? 0,
+    siblings: state.siblings ?? [],
+    pets: state.pets ?? [],
+    assets: state.assets ?? { properties: [], vehicles: [] },
+    licenceObtained: state.licenceObtained ?? false,
+    retired: state.retired ?? false,
   }
 }
 
@@ -291,6 +320,9 @@ function checkDeath(state) {
   const hcMod = { excellent: 0.65, good: 0.8, fair: 1.0, poor: 1.25, very_poor: 1.5 }
   prob *= hcMod[character.country.healthcare] ?? 1.0
   if (stats.health < 10) prob += 0.15
+  // Karma very slightly modifies survival odds
+  const karma = state.karma ?? 50
+  prob *= clamp(1 - (karma - 50) * 0.002, 0.8, 1.2)
   if (!chance(prob)) return { dead: false }
   return { dead: true, cause: determineCause(state) }
 }
@@ -714,6 +746,161 @@ function tickParents(state) {
   return { ...state, parents: { mother, father }, log, money }
 }
 
+// ─── Asset ticking ───────────────────────────────────────────────────────────
+
+function tickAssets(state) {
+  if (!state.assets) return state
+  const { properties, vehicles } = state.assets
+  let money = state.money ?? 0
+
+  const updatedProperties = properties.map(p => {
+    const type = PROPERTY_TYPES.find(t => t.id === p.typeId)
+    if (!type) return p
+    const newValue = Math.round(p.currentValue * (1 + type.appreciationRate + randomBetween(-2, 2) / 100))
+    money -= type.annualMaintenance
+    if (p.mortgage > 0) {
+      const interest = Math.round(p.mortgage * 0.04)
+      const payment = Math.min(Math.round(p.mortgage / 25) + interest, p.mortgage + interest)
+      money -= payment
+      return { ...p, currentValue: newValue, mortgage: Math.max(0, p.mortgage - (payment - interest)) }
+    }
+    return { ...p, currentValue: newValue }
+  })
+
+  const updatedVehicles = vehicles.map(v => {
+    const type = VEHICLE_TYPES.find(t => t.id === v.typeId)
+    if (!type) return v
+    money -= type.annualMaintenance
+    return { ...v, currentValue: Math.max(100, Math.round(v.currentValue * (1 - type.depreciationRate))) }
+  })
+
+  return { ...state, assets: { properties: updatedProperties, vehicles: updatedVehicles }, money: Math.max(0, money) }
+}
+
+// ─── Pet ticking ──────────────────────────────────────────────────────────────
+
+function tickPets(state) {
+  if (!state.pets || state.pets.length === 0) return state
+  let log = [...state.log]
+  let happinessDelta = 0
+  const maxAge = { dog: 14, cat: 17, rabbit: 10, hamster: 3, parrot: 25, fish: 5, bird: 12 }
+
+  const pets = state.pets.map(pet => {
+    if (!pet.alive) return pet
+    const newAge = pet.age + 1
+    const lifespan = maxAge[pet.species] ?? 12
+    const deathProb = newAge > lifespan * 0.75 ? (newAge / lifespan) * 0.2 : 0.005
+    if (chance(deathProb)) {
+      log.push({ age: state.age, text: `Your ${pet.species} ${pet.name} passes away after ${newAge} years.`, isKey: true })
+      happinessDelta -= 12
+      return { ...pet, age: newAge, alive: false }
+    }
+    return { ...pet, age: newAge }
+  })
+
+  const stats = happinessDelta
+    ? { ...state.stats, happiness: clamp(state.stats.happiness + happinessDelta, 0, 100) }
+    : state.stats
+  return { ...state, pets, stats, log }
+}
+
+// ─── Sibling ticking ──────────────────────────────────────────────────────────
+
+function tickSiblings(state) {
+  if (!state.siblings || state.siblings.length === 0) return state
+  let log = [...state.log]
+
+  const siblings = state.siblings.map(sib => {
+    if (!sib.alive) return sib
+    const sibAge = state.age - sib.ageDiff
+    let deathProb = 0
+    if (sibAge > 80) deathProb = 0.06 + (sibAge - 80) * 0.01
+    else if (sibAge > 65) deathProb = 0.015
+    if (chance(deathProb)) {
+      log.push({ age: state.age, text: `Your sibling ${sib.name} passes away.`, isKey: true })
+      return { ...sib, alive: false }
+    }
+    const drift = (60 - sib.relationshipQuality) * 0.01
+    return { ...sib, relationshipQuality: clamp(sib.relationshipQuality + drift + randomBetween(-1, 1), 0, 100) }
+  })
+
+  return { ...state, siblings, log }
+}
+
+// ─── Fame ticking ─────────────────────────────────────────────────────────────
+
+function tickFame(state) {
+  const fame = state.fame ?? 0
+  if (fame <= 0) return state
+  const isEntCareeer = state.career?.field === 'entertainment' || state.career?.field === 'sports'
+  if (!isEntCareeer) {
+    return { ...state, fame: clamp(fame - fame * 0.07, 0, 100) }
+  }
+  return state
+}
+
+// ─── Illness risk ─────────────────────────────────────────────────────────────
+
+function checkIllnessRisk(state) {
+  let updated = state
+  for (const illness of ILLNESSES) {
+    const { minAge, maxAge: maxA, flagRequired, riskFactors } = illness.triggerConditions
+    if (state.flags.includes(illness.flag)) continue
+    if (state.flags.includes(`${illness.id}_diagnosed`)) continue
+    if (minAge && state.age < minAge) continue
+    if (maxA && state.age > maxA) continue
+    if (flagRequired && !state.flags.includes(flagRequired)) continue
+
+    let prob = 0.002
+    if (illness.id === 'cancer' && state.age > 50) prob += (state.age - 50) * 0.001
+    if (illness.id === 'heart_disease' && state.age > 55) prob += (state.age - 55) * 0.0015
+    if (illness.id === 'clinical_depression' && state.stats.happiness < 30) prob += 0.04
+    if (illness.id === 'anxiety_disorder' && state.stats.happiness < 40) prob += 0.03
+    if (illness.id === 'addiction' && state.flags.includes('heavy_drinker')) prob += 0.025
+    const riskCount = riskFactors.filter(f => state.flags.includes(f)).length
+    prob += riskCount * 0.005
+    if (state.stats.health < 40) prob *= 1.5
+
+    if (!chance(prob)) continue
+
+    const event = {
+      id: `illness_${illness.id}_${state.age}`,
+      phase: getPhase(state.age),
+      weight: 10,
+      text: `You are diagnosed with ${illness.name}.`,
+      choices: illness.treatments.map(t => {
+        const willSucceed = Math.random() < t.successChance
+        return {
+          text: `${t.name}${t.cost > 0 ? ` ($${t.cost.toLocaleString()})` : ' (free)'}`,
+          tag: null,
+          outcome: willSucceed ? t.outcomeSuccess : t.outcomeFailure,
+          effect: (p) => {
+            p.mo -= t.cost
+            p.m += t.happinessEffect ?? 0
+            if (willSucceed) {
+              p.h += Math.abs(t.healthEffect ?? 0)
+            } else {
+              p.h -= Math.abs(t.healthEffect ?? 0)
+              p.addFlag(illness.flag)
+            }
+          },
+          inject: null,
+        }
+      }),
+      effect: null,
+      when: () => true,
+    }
+
+    updated = {
+      ...updated,
+      flags: [...new Set([...updated.flags, `${illness.id}_diagnosed`])],
+      queue: [...updated.queue, event],
+    }
+    break
+  }
+  return updated
+}
+
 // ─── Main tick ────────────────────────────────────────────────────────────────
 
 export function tick(state) {
@@ -748,8 +935,23 @@ export function tick(state) {
   // Parent aging and possible inheritance
   s = tickParents(s)
 
+  // Sibling aging
+  s = tickSiblings(s)
+
+  // Pet aging
+  s = tickPets(s)
+
+  // Asset appreciation/depreciation/maintenance
+  s = tickAssets(s)
+
+  // Fame decay if not in entertainment/sports
+  s = tickFame(s)
+
   // World events
   s = applyWorldEvents(s)
+
+  // Illness risk check
+  s = checkIllnessRisk(s)
 
   // Death check
   const death = checkDeath(s)
@@ -780,6 +982,11 @@ export function tick(state) {
     // Sync wealth stat loosely from money (logarithmic quality-of-life indicator)
     const wealthLevel = clamp(Math.round((Math.log10(Math.max(1, s.money)) - 2.5) * 22), 5, 98)
     s.stats = { ...s.stats, wealth: wealthLevel }
+    // Fame accumulation for entertainment/sports careers
+    if (s.career.field === 'entertainment' || s.career.field === 'sports') {
+      const fameGain = clamp((s.career.level + 1) * 5 + randomBetween(-3, 6), 1, 25)
+      s.fame = clamp((s.fame ?? 0) + fameGain, 0, 100)
+    }
   }
 
   // Partner relationship drift
@@ -845,6 +1052,220 @@ export function resolveChoice(state, choiceIndex) {
   return s
 }
 
+// ─── Asset system ────────────────────────────────────────────────────────────
+
+export function buyProperty(state, typeId) {
+  if (state.age < 18) return state
+  const type = PROPERTY_TYPES.find(t => t.id === typeId)
+  if (!type) return state
+  const price = Math.round(randomBetween(type.priceRange[0], type.priceRange[1]))
+  const downPayment = Math.round(price * type.downPaymentRate)
+  if ((state.money ?? 0) < downPayment) {
+    return { ...state, log: [...state.log, { age: state.age, text: `You can't afford the down payment for a ${type.name}.`, isKey: false }] }
+  }
+  const mortgage = price - downPayment
+  const property = { typeId: type.id, name: type.name, purchasePrice: price, currentValue: price, mortgage }
+  return {
+    ...state,
+    money: (state.money ?? 0) - downPayment,
+    assets: { ...state.assets, properties: [...(state.assets?.properties ?? []), property] },
+    flags: [...new Set([...state.flags, 'homeowner'])],
+    stats: { ...state.stats, happiness: clamp(state.stats.happiness + 8, 0, 100) },
+    log: [...state.log, { age: state.age, text: `You buy a ${type.name} for $${price.toLocaleString()}. Down payment: $${downPayment.toLocaleString()}.`, isKey: true }],
+  }
+}
+
+export function sellProperty(state, propertyIdx) {
+  const properties = state.assets?.properties ?? []
+  const prop = properties[propertyIdx]
+  if (!prop) return state
+  const equity = prop.currentValue - (prop.mortgage ?? 0)
+  const agentFee = Math.round(prop.currentValue * 0.025)
+  const proceeds = Math.max(0, equity - agentFee)
+  const newProperties = properties.filter((_, i) => i !== propertyIdx)
+  return {
+    ...state,
+    money: (state.money ?? 0) + proceeds,
+    assets: { ...state.assets, properties: newProperties },
+    log: [...state.log, { age: state.age, text: `You sell your ${prop.name} for $${prop.currentValue.toLocaleString()}, netting $${proceeds.toLocaleString()} after fees and mortgage.`, isKey: true }],
+  }
+}
+
+export function buyVehicle(state, typeId) {
+  if (!state.licenceObtained && typeId !== 'bicycle') {
+    return { ...state, log: [...state.log, { age: state.age, text: "You need a driving licence first.", isKey: false }] }
+  }
+  const type = VEHICLE_TYPES.find(t => t.id === typeId)
+  if (!type) return state
+  const price = Math.round(randomBetween(type.priceRange[0], type.priceRange[1]))
+  if ((state.money ?? 0) < price) {
+    return { ...state, log: [...state.log, { age: state.age, text: `You can't afford a ${type.name}.`, isKey: false }] }
+  }
+  const vehicle = { typeId: type.id, name: type.name, purchasePrice: price, currentValue: price }
+  return {
+    ...state,
+    money: (state.money ?? 0) - price,
+    assets: { ...state.assets, vehicles: [...(state.assets?.vehicles ?? []), vehicle] },
+    stats: { ...state.stats, happiness: clamp(state.stats.happiness + 4, 0, 100) },
+    log: [...state.log, { age: state.age, text: `You buy a ${type.name} for $${price.toLocaleString()}.`, isKey: false }],
+  }
+}
+
+export function sellVehicle(state, vehicleIdx) {
+  const vehicles = state.assets?.vehicles ?? []
+  const vehicle = vehicles[vehicleIdx]
+  if (!vehicle) return state
+  const newVehicles = vehicles.filter((_, i) => i !== vehicleIdx)
+  return {
+    ...state,
+    money: (state.money ?? 0) + vehicle.currentValue,
+    assets: { ...state.assets, vehicles: newVehicles },
+    log: [...state.log, { age: state.age, text: `You sell your ${vehicle.name} for $${vehicle.currentValue.toLocaleString()}.`, isKey: false }],
+  }
+}
+
+// ─── Pets ─────────────────────────────────────────────────────────────────────
+
+const PET_NAMES = ['Buddy', 'Luna', 'Max', 'Bella', 'Charlie', 'Milo', 'Daisy', 'Rocky', 'Cleo', 'Oscar']
+
+export function adoptPet(state, species) {
+  if (state.age < 8) return state
+  const name = pickFrom(PET_NAMES)
+  const adoptionCost = { dog: 400, cat: 200, rabbit: 80, hamster: 30, parrot: 300, fish: 20, bird: 150 }[species] ?? 200
+  if ((state.money ?? 0) < adoptionCost) {
+    return { ...state, log: [...state.log, { age: state.age, text: `You can't afford the adoption fee.`, isKey: false }] }
+  }
+  const pet = { name, species, age: 0, alive: true }
+  return {
+    ...state,
+    money: (state.money ?? 0) - adoptionCost,
+    pets: [...(state.pets ?? []), pet],
+    flags: [...new Set([...state.flags, 'pet_owner'])],
+    stats: { ...state.stats, happiness: clamp(state.stats.happiness + 8, 0, 100) },
+    log: [...state.log, { age: state.age, text: `You adopt a ${species} named ${name}.`, isKey: true }],
+  }
+}
+
+export function visitVet(state, petIdx) {
+  const pets = state.pets ?? []
+  const pet = pets[petIdx]
+  if (!pet?.alive) return state
+  const cost = randomBetween(150, 600)
+  if ((state.money ?? 0) < cost) {
+    return { ...state, log: [...state.log, { age: state.age, text: `You can't afford the vet bill right now.`, isKey: false }] }
+  }
+  return {
+    ...state,
+    money: (state.money ?? 0) - cost,
+    stats: { ...state.stats, happiness: clamp(state.stats.happiness + 3, 0, 100) },
+    log: [...state.log, { age: state.age, text: `You take ${pet.name} to the vet. Cost: $${cost.toLocaleString()}.`, isKey: false }],
+  }
+}
+
+// ─── Career actions (continued) ──────────────────────────────────────────────
+
+export function workHarder(state) {
+  if (!state.career) return state
+  const gain = randomBetween(5, 14)
+  return {
+    ...state,
+    career: { ...state.career, performance: clamp((state.career.performance ?? 70) + gain, 0, 100) },
+    stats: { ...state.stats, health: clamp(state.stats.health - 3, 0, 100), happiness: clamp(state.stats.happiness - 2, 0, 100) },
+    log: [...state.log, { age: state.age, text: `You put in extra hours. Performance improves. The body notices.`, isKey: false }],
+  }
+}
+
+export function schmoozeBoss(state) {
+  if (!state.career) return state
+  const successChance = clamp(0.3 + (state.stats.charisma - 50) * 0.006, 0.1, 0.8)
+  if (chance(successChance)) {
+    const gain = randomBetween(8, 18)
+    return {
+      ...state,
+      career: { ...state.career, performance: clamp((state.career.performance ?? 70) + gain, 0, 100) },
+      stats: { ...state.stats, happiness: clamp(state.stats.happiness - 1, 0, 100) },
+      log: [...state.log, { age: state.age, text: `Your charm lands. Your manager thinks well of you.`, isKey: false }],
+    }
+  }
+  return {
+    ...state,
+    log: [...state.log, { age: state.age, text: `The schmoozing reads as transparent. No ground gained.`, isKey: false }],
+  }
+}
+
+// ─── Life transitions ─────────────────────────────────────────────────────────
+
+export function retire(state) {
+  if (!state.career && state.retired) return state
+  const pension = state.career ? Math.round(state.career.salary * 0.35) : 0
+  return {
+    ...state,
+    career: null,
+    retired: true,
+    stats: { ...state.stats, happiness: clamp(state.stats.happiness + 10, 0, 100) },
+    log: [...state.log, { age: state.age, text: `You retire.${pension > 0 ? ` You'll receive approximately $${pension.toLocaleString()}/yr in pension.` : ''}`, isKey: true }],
+  }
+}
+
+export function emigrate(state, destCountryName) {
+  if (state.flags.includes('emigrated')) return state
+  const dest = COUNTRIES.find(c => c.name === destCountryName)
+  if (!dest) return state
+  const moveCost = randomBetween(3000, 15000)
+  return {
+    ...state,
+    money: Math.max(0, (state.money ?? 0) - moveCost),
+    flags: [...new Set([...state.flags, 'emigrated'])],
+    stats: {
+      ...state.stats,
+      happiness: clamp(state.stats.happiness - 10, 0, 100),
+      charisma: clamp(state.stats.charisma - 5, 0, 100),
+      smarts: clamp(state.stats.smarts + 5, 0, 100),
+    },
+    log: [...state.log, { age: state.age, text: `You emigrate to ${dest.name}. Moving costs: $${moveCost.toLocaleString()}.`, isKey: true }],
+  }
+}
+
+// ─── Sibling interaction ──────────────────────────────────────────────────────
+
+export function callSibling(state, siblingIdx) {
+  const siblings = state.siblings ?? []
+  const sib = siblings[siblingIdx]
+  if (!sib?.alive) return state
+  const gain = randomBetween(3, 10)
+  const updated = [...siblings]
+  updated[siblingIdx] = { ...sib, relationshipQuality: clamp(sib.relationshipQuality + gain, 0, 100) }
+  return {
+    ...state,
+    siblings: updated,
+    stats: { ...state.stats, happiness: clamp(state.stats.happiness + 3, 0, 100) },
+    log: [...state.log, { age: state.age, text: `You call ${sib.name}. It is a good conversation.`, isKey: false }],
+  }
+}
+
+// ─── Child adoption ───────────────────────────────────────────────────────────
+
+export function adoptChild(state) {
+  if (state.age < 25 || state.age > 55) return state
+  const adoptionCost = randomBetween(8000, 35000)
+  if ((state.money ?? 0) < adoptionCost) {
+    return { ...state, log: [...state.log, { age: state.age, text: `The adoption process requires funds you don't currently have.`, isKey: false }] }
+  }
+  const cGender = chance(0.5) ? 'male' : 'female'
+  const c = state.character.country
+  const childName = `${pickFrom(cGender === 'male' ? c.namePool.male : c.namePool.female)} ${state.character.surname}`
+  const childAge = randomBetween(0, 8)
+  const child = { name: childName, gender: cGender, ageAtBirth: state.age - childAge, relationshipQuality: 75, adopted: true }
+  return {
+    ...state,
+    money: (state.money ?? 0) - adoptionCost,
+    children: [...state.children, child],
+    flags: [...new Set([...state.flags, 'parent', 'adoptive_parent'])],
+    stats: { ...state.stats, happiness: clamp(state.stats.happiness + 12, 0, 100) },
+    log: [...state.log, { age: state.age, text: `You adopt ${childName}. Adoption costs: $${adoptionCost.toLocaleString()}.`, isKey: true }],
+  }
+}
+
 // ─── Epitaph generator ───────────────────────────────────────────────────────
 
 export function generateEpitaph(state) {
@@ -890,7 +1311,24 @@ export function generateEpitaph(state) {
   }
 
   if (money > 1000000) {
-    lines.push(`${pronoun} left behind $${(money / 1000).toFixed(0)}k — a testament to ${possessive} ambitions.`)
+    lines.push(`${pronoun} left behind $${(money / 1000000).toFixed(2)}M — a testament to ${possessive} ambitions.`)
+  }
+
+  const { fame, assets, siblings } = state
+  if (fame > 70) {
+    lines.push(`${pronoun} was famous. The kind of famous that changes what it means to walk into a room.`)
+  } else if (fame > 40) {
+    lines.push(`In certain circles, ${name} was well-known.`)
+  }
+
+  const propertyCount = assets?.properties?.length ?? 0
+  if (propertyCount >= 3) {
+    lines.push(`${pronoun} owned ${propertyCount} properties — a material fact that told its own story.`)
+  }
+
+  const livingSiblings = (siblings ?? []).filter(s => s.alive).length
+  if (livingSiblings > 0) {
+    lines.push(`${pronoun} left behind ${livingSiblings} sibling${livingSiblings > 1 ? 's' : ''}.`)
   }
 
   if (flags.includes('found_meaning') || flags.includes('acceptance')) {
