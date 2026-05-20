@@ -8,37 +8,47 @@ export default function EventBox({ event }) {
   const isAutomatic = !event.choices || event.choices.length === 0
 
   return (
-    <div className="border border-natalis-border bg-natalis-surface p-5 space-y-4">
-      {event.context && (
-        <div className="text-natalis-muted text-xs italic border-l border-natalis-muted pl-3">
-          {event.context}
-        </div>
-      )}
+    <div className="bg-white rounded-2xl shadow-card-lg overflow-hidden border border-natalis-border">
+      {/* Event header band */}
+      <div className="bg-bit-blue px-5 py-3">
+        <p className="text-white text-xs font-semibold uppercase tracking-widest opacity-80">
+          {event.isWorld ? '🌍 World Event' : '📖 Life Event'}
+        </p>
+      </div>
 
-      <p className="text-natalis-text text-sm leading-relaxed">{event.text}</p>
+      <div className="p-5 space-y-4">
+        {event.context && (
+          <p className="text-natalis-muted text-xs italic border-l-2 border-bit-blue pl-3">
+            {event.context}
+          </p>
+        )}
 
-      {!isAutomatic && (
-        <div className="space-y-2 pt-1">
-          {event.choices.map((choice, i) => (
-            <button
-              key={i}
-              onClick={() => resolveChoice(i)}
-              className="
-                w-full text-left p-3 border border-natalis-border
-                hover:border-natalis-muted hover:bg-natalis-bg
-                transition-all duration-150 space-y-1 group
-              "
-            >
-              <p className="text-natalis-text text-sm group-hover:text-white transition-colors">
+        <p className="text-natalis-text text-base font-medium leading-relaxed">
+          {event.text}
+        </p>
+
+        {!isAutomatic && (
+          <div className="space-y-2 pt-1">
+            <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider">What will you do?</p>
+            {event.choices.map((choice, i) => (
+              <button
+                key={i}
+                onClick={() => resolveChoice(i)}
+                className="w-full text-center px-4 py-3 rounded-xl font-semibold text-sm text-white transition-all duration-150 active:scale-95"
+                style={{
+                  background: i === 0
+                    ? 'linear-gradient(135deg, #007aff, #0055cc)'
+                    : i === 1
+                    ? 'linear-gradient(135deg, #34c759, #28a046)'
+                    : 'linear-gradient(135deg, #ff9500, #e07800)',
+                }}
+              >
                 {choice.text}
-              </p>
-              {choice.outcome && (
-                <p className="text-natalis-muted text-xs italic">{choice.outcome}</p>
-              )}
-            </button>
-          ))}
-        </div>
-      )}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   )
 }

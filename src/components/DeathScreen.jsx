@@ -2,133 +2,119 @@ import { useGameStore } from '../store/gameStore'
 import FlagChip from './FlagChip'
 import StatBar from './StatBar'
 
-const RIBBON_COLORS = {
-  gold: 'text-yellow-400 border-yellow-800 bg-yellow-950/30',
-  green: 'text-green-400 border-green-800 bg-green-950/30',
-  red: 'text-red-400 border-red-800 bg-red-950/30',
-  blue: 'text-blue-400 border-blue-800 bg-blue-950/30',
-  purple: 'text-purple-400 border-purple-800 bg-purple-950/30',
-  gray: 'text-natalis-dim border-natalis-border bg-natalis-surface',
+const RIBBON_STYLES = {
+  gold:   { bg: '#fffbeb', border: '#f59e0b', text: '#92400e', badge: '🏆' },
+  green:  { bg: '#f0fdf4', border: '#22c55e', text: '#14532d', badge: '🌿' },
+  red:    { bg: '#fef2f2', border: '#ef4444', text: '#7f1d1d', badge: '🔥' },
+  blue:   { bg: '#eff6ff', border: '#3b82f6', text: '#1e3a8a', badge: '💎' },
+  purple: { bg: '#faf5ff', border: '#a855f7', text: '#581c87', badge: '👑' },
+  gray:   { bg: '#f9fafb', border: '#e5e7eb', text: '#374151', badge: '🌫️' },
 }
 
 export default function DeathScreen() {
-  const character = useGameStore(s => s.character)
-  const stats = useGameStore(s => s.stats)
-  const flags = useGameStore(s => s.flags)
-  const regret = useGameStore(s => s.regret)
-  const age = useGameStore(s => s.age)
-  const causeOfDeath = useGameStore(s => s.causeOfDeath)
-  const ribbon = useGameStore(s => s.ribbon)
-  const epitaph = useGameStore(s => s.epitaph)
+  const character     = useGameStore(s => s.character)
+  const stats         = useGameStore(s => s.stats)
+  const flags         = useGameStore(s => s.flags)
+  const regret        = useGameStore(s => s.regret)
+  const age           = useGameStore(s => s.age)
+  const causeOfDeath  = useGameStore(s => s.causeOfDeath)
+  const ribbon        = useGameStore(s => s.ribbon)
+  const epitaph       = useGameStore(s => s.epitaph)
   const criminalRecord = useGameStore(s => s.criminalRecord)
-  const career = useGameStore(s => s.career)
-  const children = useGameStore(s => s.children)
-  const startNewLife = useGameStore(s => s.startNewLife)
+  const career        = useGameStore(s => s.career)
+  const children      = useGameStore(s => s.children)
+  const money         = useGameStore(s => s.money)
+  const startNewLife  = useGameStore(s => s.startNewLife)
 
   if (!character) return null
 
   const birthYear = character.birthYear
   const deathYear = birthYear + age
-  const ribbonStyle = RIBBON_COLORS[ribbon?.color ?? 'gray']
+  const rs = RIBBON_STYLES[ribbon?.color ?? 'gray']
+
+  const formatMoney = (n) => {
+    if (!n) return '$0'
+    if (n >= 1000000) return `$${(n/1000000).toFixed(2)}M`
+    if (n >= 1000) return `$${Math.round(n/1000)}k`
+    return `$${n.toLocaleString()}`
+  }
 
   return (
-    <div className="min-h-screen bg-natalis-bg flex items-start justify-center py-16 px-4">
-      <div className="w-full max-w-2xl space-y-8">
+    <div className="min-h-screen bg-natalis-bg flex items-start justify-center py-8 px-4">
+      <div className="w-full max-w-sm space-y-4">
 
-        {/* Header */}
-        <div className="text-center space-y-2 border-b border-natalis-border pb-8">
-          <p className="text-natalis-muted text-xs uppercase tracking-widest">In Memoriam</p>
-          <h1 className="text-3xl text-natalis-text font-light">{character.firstName} {character.surname}</h1>
-          <p className="text-natalis-dim text-sm">
-            {birthYear} – {deathYear} · {character.country.name} · Died age {age}
-          </p>
-          <p className="text-natalis-muted text-xs italic">Cause: {causeOfDeath}</p>
-        </div>
-
-        {/* Ribbon */}
-        {ribbon && (
-          <div className={`border p-4 text-center space-y-1 ${ribbonStyle}`}>
-            <p className="text-xs uppercase tracking-widest opacity-70">Life Archetype</p>
-            <p className="text-lg">{ribbon.name}</p>
-            <p className="text-xs opacity-70 italic">{ribbon.description}</p>
+        {/* Gravestone header */}
+        <div className="bg-white rounded-2xl shadow-card overflow-hidden border border-natalis-border text-center">
+          <div className="py-6 px-5" style={{ background: 'linear-gradient(135deg, #1c1c1e, #3a3a3c)' }}>
+            <p className="text-4xl mb-3">⚰️</p>
+            <h1 className="text-2xl font-black text-white">{character.firstName} {character.surname}</h1>
+            <p className="text-gray-400 text-sm mt-1">{birthYear} – {deathYear}</p>
+            <p className="text-gray-400 text-xs mt-0.5">{character.country.name} · Died age {age}</p>
+            <p className="text-gray-500 text-xs italic mt-2">Cause: {causeOfDeath}</p>
           </div>
-        )}
+
+          {/* Ribbon */}
+          {ribbon && (
+            <div className="px-5 py-4 border-t border-natalis-border" style={{ background: rs.bg }}>
+              <p className="text-xs font-semibold uppercase tracking-wider mb-1" style={{ color: rs.text, opacity: 0.7 }}>Life Archetype</p>
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-2xl">{rs.badge}</span>
+                <p className="text-xl font-black" style={{ color: rs.text }}>{ribbon.name}</p>
+              </div>
+              <p className="text-xs italic mt-1" style={{ color: rs.text, opacity: 0.8 }}>{ribbon.description}</p>
+            </div>
+          )}
+        </div>
 
         {/* Epitaph */}
-        <div className="border-l-2 border-natalis-muted pl-5 space-y-3">
-          <p className="text-natalis-dim text-xs uppercase tracking-wider">Epitaph</p>
-          <p className="text-natalis-text text-sm leading-relaxed">{epitaph}</p>
+        <div className="bg-white rounded-2xl p-5 border border-natalis-border shadow-card">
+          <p className="text-xs font-bold uppercase tracking-wider text-natalis-muted mb-2">📜 Epitaph</p>
+          <p className="text-natalis-text text-sm leading-relaxed italic">{epitaph}</p>
         </div>
 
-        {/* Stats */}
-        <div className="border border-natalis-border p-4 space-y-3">
-          <p className="text-natalis-dim text-xs uppercase tracking-wider">Final Stats</p>
+        {/* Stats summary */}
+        <div className="bg-white rounded-2xl p-5 border border-natalis-border shadow-card space-y-3">
+          <p className="font-bold text-natalis-text text-sm">Final Stats</p>
           <StatBar stat="happiness" label="Happiness" value={stats.happiness} />
           <StatBar stat="health"    label="Health"    value={stats.health} />
           <StatBar stat="smarts"    label="Smarts"    value={stats.smarts} />
           <StatBar stat="looks"     label="Looks"     value={stats.looks} />
-          <StatBar stat="charisma"  label="Charisma"  value={stats.charisma} />
-          <StatBar stat="wealth"    label="Wealth"    value={stats.wealth} />
-          {regret > 0 && (
-            <div className="flex justify-between text-xs text-natalis-muted pt-1 border-t border-natalis-border">
-              <span>Regret carried</span>
-              <span>{Math.round(regret)}</span>
-            </div>
-          )}
-          {career && (
-            <div className="flex justify-between text-xs text-natalis-muted pt-1 border-t border-natalis-border">
-              <span>Final career</span>
-              <span>{career.title}</span>
-            </div>
-          )}
-          {children.length > 0 && (
-            <div className="flex justify-between text-xs text-natalis-muted">
-              <span>Children</span>
-              <span>{children.length}</span>
-            </div>
-          )}
-          {criminalRecord.length > 0 && (
-            <div className="flex justify-between text-xs text-red-400/70">
-              <span>Criminal record</span>
-              <span>{criminalRecord.length} offence{criminalRecord.length !== 1 ? 's' : ''}</span>
-            </div>
-          )}
+
+          <div className="pt-2 border-t border-natalis-border space-y-1.5">
+            {[
+              { label: '💰 Final Net Worth', value: formatMoney(money), color: '#34c759' },
+              career && { label: '💼 Final Career', value: career.title, color: '#007aff' },
+              children.length > 0 && { label: '👨‍👩‍👧 Children', value: children.length.toString(), color: '#ff9500' },
+              regret > 0 && { label: '😔 Regret', value: Math.round(regret).toString(), color: '#8e8e93' },
+              criminalRecord.length > 0 && { label: '⚠️ Criminal Record', value: `${criminalRecord.length} offence${criminalRecord.length !== 1 ? 's' : ''}`, color: '#ff3b30' },
+            ].filter(Boolean).map(({ label, value, color }) => (
+              <div key={label} className="flex justify-between items-center text-sm">
+                <span className="text-natalis-muted text-xs">{label}</span>
+                <span className="font-bold text-xs" style={{ color }}>{value}</span>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Flags */}
         {flags.length > 0 && (
-          <div className="space-y-3">
-            <p className="text-natalis-dim text-xs uppercase tracking-wider">Life Flags</p>
+          <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
+            <p className="font-bold text-natalis-text text-sm mb-3">Life Flags</p>
             <div className="flex flex-wrap gap-1.5">
               {flags.map(f => <FlagChip key={f} flag={f} />)}
             </div>
           </div>
         )}
 
-        {/* Criminal record detail */}
-        {criminalRecord.length > 0 && (
-          <div className="space-y-2">
-            <p className="text-natalis-dim text-xs uppercase tracking-wider">Criminal Record</p>
-            <div className="space-y-1">
-              {criminalRecord.map((entry, i) => (
-                <p key={i} className="text-red-400/70 text-xs border-l border-red-900 pl-2">{entry}</p>
-              ))}
-            </div>
-          </div>
-        )}
-
         {/* Restart */}
-        <div className="pt-4 border-t border-natalis-border">
-          <button
-            onClick={startNewLife}
-            className="
-              w-full py-3 border border-natalis-muted text-natalis-text text-xs tracking-widest uppercase
-              hover:bg-natalis-surface transition-all
-            "
-          >
-            Another Life
-          </button>
-        </div>
+        <button
+          onClick={startNewLife}
+          className="w-full py-4 rounded-2xl font-bold text-white text-base shadow-card-lg transition-all active:scale-95"
+          style={{ background: 'linear-gradient(135deg, #007aff, #0055cc)' }}
+        >
+          🌱 Start Another Life
+        </button>
+
       </div>
     </div>
   )

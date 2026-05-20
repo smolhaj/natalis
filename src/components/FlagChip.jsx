@@ -3,7 +3,8 @@ const NEGATIVE_FLAGS = new Set([
   'early_marriage', 'missed_schooling', 'child_labor', 'left_school_early', 'dropped_out',
   'compromised', 'corruption_exposed', 'refugee', 'displaced', 'reluctant_parent',
   'divorced', 'learned_silence', 'guarded_heart', 'smoker', 'heavy_drinker', 'child_soldier',
-  'gang_member', 'criminal_record', 'abusive_relationship',
+  'gang_member', 'criminal_record', 'abusive_relationship', 'alcohol_addiction',
+  'gambling_addiction', 'drug_addiction', 'addiction',
 ])
 
 const POSITIVE_FLAGS = new Set([
@@ -12,12 +13,14 @@ const POSITIVE_FLAGS = new Set([
   'found_meaning', 'acceptance', 'grandparent', 'bridge_builder', 'reconciled_with_child',
   'adult_learner', 'committed_activist', 'emotionally_honest', 'cared_for_parents',
   'health_conscious', 'emigrated', 'entrepreneur', 'mentor', 'community_leader',
+  'rehab_graduate', 'martial_arts', 'bookworm', 'school_athlete', 'has_close_friend',
+  'has_licence', 'pilot_licence', 'boating_licence',
 ])
 
-function flagColor(flag) {
-  if (NEGATIVE_FLAGS.has(flag)) return 'bg-red-950 text-red-300 border-red-900'
-  if (POSITIVE_FLAGS.has(flag)) return 'bg-green-950 text-green-300 border-green-900'
-  return 'bg-natalis-surface text-natalis-dim border-natalis-border'
+function flagStyle(flag) {
+  if (NEGATIVE_FLAGS.has(flag)) return { bg: '#fff0ef', text: '#c0392b', border: '#ffcdd2' }
+  if (POSITIVE_FLAGS.has(flag)) return { bg: '#f0fdf4', text: '#166534', border: '#bbf7d0' }
+  return { bg: '#f0f4ff', text: '#1e40af', border: '#bfdbfe' }
 }
 
 function flagLabel(flag) {
@@ -25,8 +28,12 @@ function flagLabel(flag) {
 }
 
 export default function FlagChip({ flag }) {
+  const s = flagStyle(flag)
   return (
-    <span className={`inline-block text-xs px-2 py-0.5 border rounded-sm ${flagColor(flag)}`}>
+    <span
+      className="inline-block text-xs px-2.5 py-1 rounded-full font-semibold border"
+      style={{ backgroundColor: s.bg, color: s.text, borderColor: s.border }}
+    >
       {flagLabel(flag)}
     </span>
   )
