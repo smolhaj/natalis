@@ -23,6 +23,7 @@ const INITIAL_STATE = {
   usedEventIds: new Set(),
   queue: [],
   pendingEvent: null,
+  lastOutcome: null,
   mem: {},
   log: [],
   career: null,
@@ -116,7 +117,7 @@ export const useGameStore = create((set, get) => ({
   ageUp: () => {
     const state = get()
     if (state.pendingEvent || state.dead) return
-    const next = tick(state)
+    const next = tick({ ...state, lastOutcome: null })
     if (next.screen === 'death') {
       const epitaph = generateEpitaph(next)
       set({ ...next, epitaph })
@@ -128,8 +129,9 @@ export const useGameStore = create((set, get) => ({
   resolveChoice: (choiceIndex) => {
     const state = get()
     if (!state.pendingEvent) return
+    const choice = state.pendingEvent.choices?.[choiceIndex]
     const next = resolveChoice(state, choiceIndex)
-    set(next)
+    set({ ...next, lastOutcome: choice?.outcome ?? null })
   },
 
   takeActivity: (activityId) => {

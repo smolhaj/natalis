@@ -42,6 +42,7 @@ export default function LifeScreen() {
   const prisonSentence = useGameStore(s => s.prisonSentence)
   const actionsThisYear = useGameStore(s => s.actionsThisYear)
   const maxActionsPerYear = useGameStore(s => s.maxActionsPerYear)
+  const lastOutcome = useGameStore(s => s.lastOutcome)
   const ageUp = useGameStore(s => s.ageUp)
   const dead = useGameStore(s => s.dead)
 
@@ -143,6 +144,13 @@ export default function LifeScreen() {
 
         {/* Event / Activity area */}
         <div className="flex-shrink-0 p-4 space-y-3 border-b border-natalis-border">
+
+          {/* Last choice outcome flash */}
+          {lastOutcome && !pendingEvent && (
+            <div className="text-natalis-dim text-xs italic border-l-2 border-natalis-muted pl-3 py-0.5">
+              {lastOutcome}
+            </div>
+          )}
 
           {/* Prison state */}
           {inPrison && !pendingEvent && (

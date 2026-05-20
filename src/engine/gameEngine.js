@@ -116,7 +116,26 @@ function buildEffectProxy(state) {
   proxy.addFlag = (flag) => {
     if (!proxy.flags.includes(flag)) proxy.flags.push(flag)
   }
+  // setEducation allows events to advance education level
+  proxy.setEducation = (level, field = null) => {
+    proxy._newEducation = { level, field: field ?? state.education.field }
+  }
+  // setCareer allows events to grant or change a career
+  proxy.setCareer = (careerId) => {
+    proxy._newCareerId = careerId
+  }
   return proxy
+}
+
+function resolveProxyExtras(state, proxy) {
+  let next = state
+  if (proxy._newEducation) {
+    next = { ...next, education: proxy._newEducation }
+  }
+  if (proxy._newCareerId) {
+    next = enterCareer(next, proxy._newCareerId)
+  }
+  return next
 }
 
 // ─── Event system ─────────────────────────────────────────────────────────────
@@ -133,12 +152,24 @@ export function getNextEvent(state) {
   )
   if (queueMatch) return queueMatch
 
-  // Filter pool
-  const pool = EVENTS.filter(e =>
+  // Build pool: base events + active career's profession-specific events
+  let pool = EVENTS.filter(e =>
     e.phase === phase &&
     !state.usedEventIds.has(e.id) &&
     (!e.when || e.when(G))
   )
+
+  if (state.career) {
+    const careerDef = CAREERS.find(c => c.id === state.career.id)
+    if (careerDef?.events?.length) {
+      const careerEvents = careerDef.events.filter(e =>
+        e.phase === phase &&
+        !state.usedEventIds.has(e.id) &&
+        (!e.when || e.when(G))
+      )
+      pool = [...pool, ...careerEvents]
+    }
+  }
 
   if (pool.length === 0) return null
 
@@ -362,7 +393,8 @@ export function applyActivity(state, activityId) {
   const proxy = buildEffectProxy(state)
   if (activity.cost) proxy.w -= activity.cost / 10
   activity.effect(proxy)
-  const updated = applyProxy(state, proxy)
+  let updated = applyProxy(state, proxy)
+  updated = resolveProxyExtras(updated, proxy)
   updated.actionsThisYear = state.actionsThisYear + 1
   updated.log = [...updated.log, { age: state.age, text: activity.outcome, isKey: false }]
   return updated
@@ -422,8 +454,14 @@ export function tick(state) {
     actionsThisYear: 0,
   }
 
-  // Prison year
+  // Prison year — health can still deteriorate behind bars
   if (s.inPrison) {
+    s.stats = { ...s.stats, health: clamp(s.stats.health - 1, 0, 100), mental: clamp(s.stats.mental - 2, 0, 100) }
+    const deathInPrison = checkDeath(s)
+    if (deathInPrison.dead) {
+      const ribbon = assignRibbon(s)
+      return { ...s, dead: true, causeOfDeath: `${deathInPrison.cause} (in prison)`, ribbon, screen: 'death' }
+    }
     const remaining = s.prisonSentence - 1
     if (remaining <= 0) {
       s.inPrison = false
@@ -482,6 +520,7 @@ export function tick(state) {
     const proxy = buildEffectProxy(s)
     if (event.effect) event.effect(proxy)
     s = applyProxy(s, proxy)
+    s = resolveProxyExtras(s, proxy)
     s.log = [...s.log, { age: s.age, text: event.text, isKey: false }]
     return s
   }
@@ -501,6 +540,7 @@ export function resolveChoice(state, choiceIndex) {
   const proxy = buildEffectProxy(state)
   if (choice.effect) choice.effect(proxy)
   let s = applyProxy(state, proxy)
+  s = resolveProxyExtras(s, proxy)
 
   if (choice.tag) s.flags = [...new Set([...s.flags, choice.tag])]
 
