@@ -110,6 +110,28 @@ export const ACTIVITIES = {
       condition: null,
       outcome: 'Win or lose, the discipline is its own reward.',
     },
+    {
+      id: 'library',
+      name: 'Visit the library',
+      description: 'Spend time reading and researching.',
+      minAge: 8,
+      maxAge: null,
+      cost: 0,
+      effect: (p) => { p.e += 4; p.m += 2; },
+      condition: null,
+      outcome: 'Knowledge accumulates in ways you cannot always measure.',
+    },
+    {
+      id: 'gardening',
+      name: 'Take up gardening',
+      description: 'Grow things. Connect with the slow rhythm of the earth.',
+      minAge: 10,
+      maxAge: null,
+      cost: 0,
+      effect: (p) => { p.h += 2; p.m += 5; },
+      condition: null,
+      outcome: 'Something small and green survives under your care.',
+    },
   ],
 
   body: [

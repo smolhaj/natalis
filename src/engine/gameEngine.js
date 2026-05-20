@@ -178,7 +178,25 @@ function buildEffectProxy(state) {
   proxy.setPartner = (partner) => { proxy._newPartner = partner }
   proxy.clearPartner = () => { proxy._clearPartner = true }
   proxy.addChild = (child) => { proxy._newChild = child }
+  proxy.addFriend = (friend) => {
+    if (!proxy._newFriends) proxy._newFriends = []
+    proxy._newFriends.push(friend)
+  }
+  proxy.makeFriend = (quality = 65) => {
+    const c = state.character.country
+    const gender = chance(0.5) ? 'male' : 'female'
+    const name = `${pickFrom(gender === 'male' ? c.namePool.male : c.namePool.female)} ${pickFrom(c.surnames)}`
+    if (!proxy._newFriends) proxy._newFriends = []
+    proxy._newFriends.push({ name, alive: true, relationshipQuality: clamp(quality + randomBetween(-10, 10), 20, 95) })
+  }
+  proxy.setGpa = (gpa) => { proxy._newGpa = gpa }
   return proxy
+}
+
+function genFriendName(state) {
+  const c = state.character.country
+  const gender = chance(0.5) ? 'male' : 'female'
+  return `${pickFrom(gender === 'male' ? c.namePool.male : c.namePool.female)} ${pickFrom(c.surnames)}`
 }
 
 function resolveProxyExtras(state, proxy) {
@@ -188,6 +206,8 @@ function resolveProxyExtras(state, proxy) {
   if (proxy._newPartner !== undefined) next = { ...next, partner: proxy._newPartner }
   if (proxy._clearPartner)   next = { ...next, partner: null }
   if (proxy._newChild)       next = { ...next, children: [...next.children, proxy._newChild] }
+  if (proxy._newFriends)     next = { ...next, friends: [...(next.friends ?? []), ...proxy._newFriends] }
+  if (proxy._newGpa !== undefined) next = { ...next, gpa: proxy._newGpa }
   if (proxy.flags.includes('has_licence')) next = { ...next, licenceObtained: true }
   return next
 }
@@ -253,6 +273,11 @@ function buildG(state) {
     assets: state.assets ?? { properties: [], vehicles: [] },
     licenceObtained: state.licenceObtained ?? false,
     retired: state.retired ?? false,
+    friends: state.friends ?? [],
+    socialMedia: state.socialMedia ?? { followers: 0, verified: false, genre: null },
+    martialArts: state.martialArts ?? { discipline: null, belt: 0 },
+    birthControl: state.birthControl ?? false,
+    gpa: state.gpa ?? null,
   }
 }
 
@@ -573,6 +598,9 @@ export function fileForDivorce(state) {
 
 export function tryForChild(state) {
   if (!state.partner) return state
+  if (state.birthControl) {
+    return { ...state, log: [...state.log, { age: state.age, text: "You're currently using birth control.", isKey: false }] }
+  }
   if (state.age > 50 || (state.partner.age ?? 30) > 48) {
     return { ...state, log: [...state.log, { age: state.age, text: "Having a biological child is no longer possible.", isKey: false }] }
   }
@@ -1011,6 +1039,15 @@ export function tick(state) {
     }))
   }
 
+  // Friend drift
+  if (s.friends && s.friends.length > 0) {
+    s.friends = s.friends.map(friend => {
+      if (!friend.alive) return friend
+      const drift = (50 - friend.relationshipQuality) * 0.01
+      return { ...friend, relationshipQuality: clamp(friend.relationshipQuality + drift + randomBetween(-1, 1), 0, 100) }
+    })
+  }
+
   // Get next event
   const event = getNextEvent(s)
   if (!event) {
@@ -1263,6 +1300,301 @@ export function adoptChild(state) {
     flags: [...new Set([...state.flags, 'parent', 'adoptive_parent'])],
     stats: { ...state.stats, happiness: clamp(state.stats.happiness + 12, 0, 100) },
     log: [...state.log, { age: state.age, text: `You adopt ${childName}. Adoption costs: $${adoptionCost.toLocaleString()}.`, isKey: true }],
+  }
+}
+
+// ─── Study harder ─────────────────────────────────────────────────────────────
+
+export function studyHarder(state) {
+  const gpaGain = parseFloat((Math.random() * 0.2 + 0.05).toFixed(2))
+  const newGpa = Math.min(4.0, parseFloat(((state.gpa ?? 2.0) + gpaGain).toFixed(2)))
+  return {
+    ...state,
+    gpa: newGpa,
+    stats: { ...state.stats, smarts: clamp(state.stats.smarts + 3, 0, 100), happiness: clamp(state.stats.happiness - 3, 0, 100) },
+    actionsThisYear: state.actionsThisYear + 1,
+    log: [...state.log, { age: state.age, text: `You put in extra study hours. GPA: ${newGpa.toFixed(2)}.`, isKey: false }],
+  }
+}
+
+// ─── Movie theater ────────────────────────────────────────────────────────────
+
+export function goToMovies(state) {
+  const cost = randomBetween(15, 25)
+  const genres = ['action blockbuster', 'indie drama', 'horror film', 'romantic comedy', 'documentary']
+  const genre = pickFrom(genres)
+  return {
+    ...state,
+    money: Math.max(0, (state.money ?? 0) - cost),
+    stats: { ...state.stats, happiness: clamp(state.stats.happiness + 5, 0, 100) },
+    actionsThisYear: state.actionsThisYear + 1,
+    log: [...state.log, { age: state.age, text: `You catch a ${genre} at the cinema. $${cost} well spent.`, isKey: false }],
+  }
+}
+
+// ─── Nightlife ────────────────────────────────────────────────────────────────
+
+export function goClubbing(state) {
+  if (state.age < 18) return { ...state, log: [...state.log, { age: state.age, text: "You're not old enough to go clubbing.", isKey: false }] }
+  const cost = randomBetween(50, 120)
+  const newFlags = [...state.flags]
+  if (!newFlags.includes('heavy_drinker') && chance(0.15)) newFlags.push('heavy_drinker')
+  if (newFlags.includes('heavy_drinker') && !newFlags.includes('alcohol_addiction') && chance(0.08)) newFlags.push('alcohol_addiction')
+  const met = !state.partner && chance(0.2)
+  let next = {
+    ...state,
+    money: Math.max(0, (state.money ?? 0) - cost),
+    flags: [...new Set(newFlags)],
+    stats: { ...state.stats, happiness: clamp(state.stats.happiness + 8, 0, 100), health: clamp(state.stats.health - 2, 0, 100) },
+    actionsThisYear: state.actionsThisYear + 1,
+    log: [...state.log, { age: state.age, text: `You spend the night out clubbing. Cost: $${cost}.${met ? ' You meet someone interesting.' : ''}`, isKey: false }],
+  }
+  if (met) next = meetPotentialPartner({ ...next, actionsThisYear: next.actionsThisYear - 1 })
+  return next
+}
+
+// ─── Shopping ────────────────────────────────────────────────────────────────
+
+export function goShopping(state, category) {
+  const opts = {
+    clothes:     { cost: 200,  happiness: 5, looks: 2, text: 'You pick up some new clothes.' },
+    electronics: { cost: 800,  happiness: 7, looks: 0, text: 'You treat yourself to new electronics.' },
+    luxury:      { cost: 3000, happiness: 10, looks: 3, text: 'A luxury purchase. Worth every penny.' },
+  }
+  const opt = opts[category] ?? opts.clothes
+  if ((state.money ?? 0) < opt.cost) {
+    return { ...state, log: [...state.log, { age: state.age, text: "You can't afford that right now.", isKey: false }] }
+  }
+  return {
+    ...state,
+    money: (state.money ?? 0) - opt.cost,
+    stats: { ...state.stats, happiness: clamp(state.stats.happiness + opt.happiness, 0, 100), looks: clamp(state.stats.looks + opt.looks, 0, 100) },
+    actionsThisYear: state.actionsThisYear + 1,
+    log: [...state.log, { age: state.age, text: `${opt.text} $${opt.cost.toLocaleString()} spent.`, isKey: false }],
+  }
+}
+
+// ─── Salon & Spa ──────────────────────────────────────────────────────────────
+
+export function visitSalonSpa(state, service) {
+  const services = {
+    haircut:   { cost: 60,  happiness: 5, looks: 1, health: 0, text: 'A fresh haircut lifts your spirits.' },
+    hairdye:   { cost: 120, happiness: 6, looks: 2, health: 0, text: 'You color your hair. A new look.' },
+    massage:   { cost: 150, happiness: 9, looks: 0, health: 3, text: 'A full-body massage melts the tension away.' },
+    facial:    { cost: 100, happiness: 5, looks: 3, health: 0, text: 'A rejuvenating facial treatment.' },
+    manicure:  { cost: 50,  happiness: 4, looks: 1, health: 0, text: 'Small luxury, noticeable effect.' },
+  }
+  const svc = services[service]
+  if (!svc) return state
+  if ((state.money ?? 0) < svc.cost) {
+    return { ...state, log: [...state.log, { age: state.age, text: "You can't afford that service right now.", isKey: false }] }
+  }
+  return {
+    ...state,
+    money: (state.money ?? 0) - svc.cost,
+    stats: { ...state.stats, happiness: clamp(state.stats.happiness + svc.happiness, 0, 100), looks: clamp(state.stats.looks + svc.looks, 0, 100), health: clamp(state.stats.health + svc.health, 0, 100) },
+    actionsThisYear: state.actionsThisYear + 1,
+    log: [...state.log, { age: state.age, text: svc.text, isKey: false }],
+  }
+}
+
+// ─── Social media ─────────────────────────────────────────────────────────────
+
+export function postSocialMedia(state) {
+  const sm = state.socialMedia ?? { followers: 0, verified: false, genre: null }
+  const famous = (state.fame ?? 0) > 20
+  const followerDelta = famous ? randomBetween(200, 5000) : randomBetween(-100, 300)
+  const newFollowers = Math.max(0, sm.followers + followerDelta)
+  const nowVerified = sm.verified || (newFollowers >= 100000 && (state.fame ?? 0) >= 25)
+  return {
+    ...state,
+    socialMedia: { ...sm, followers: newFollowers, verified: nowVerified },
+    actionsThisYear: state.actionsThisYear + 1,
+    log: [...state.log, {
+      age: state.age,
+      text: followerDelta > 0
+        ? `Your post gets traction. Followers: ${newFollowers.toLocaleString()}.${nowVerified && !sm.verified ? ' You\'re now verified!' : ''}`
+        : `Your post flops. Followers slip to ${newFollowers.toLocaleString()}.`,
+      isKey: nowVerified && !sm.verified,
+    }],
+  }
+}
+
+export function promoteSocialMedia(state) {
+  const sm = state.socialMedia ?? { followers: 0, verified: false, genre: null }
+  if (sm.followers < 5000) {
+    return { ...state, log: [...state.log, { age: state.age, text: "You need more followers before brands will work with you.", isKey: false }] }
+  }
+  const income = Math.round(sm.followers * randomBetween(1, 5) / 100)
+  const followerRisk = chance(0.3) ? -randomBetween(100, 2000) : randomBetween(0, 500)
+  const newFollowers = Math.max(0, sm.followers + followerRisk)
+  return {
+    ...state,
+    money: (state.money ?? 0) + income,
+    socialMedia: { ...sm, followers: newFollowers },
+    actionsThisYear: state.actionsThisYear + 1,
+    log: [...state.log, {
+      age: state.age,
+      text: followerRisk < 0
+        ? `The sponsored post alienates some followers. You earn $${income.toLocaleString()} but lose ${Math.abs(followerRisk).toLocaleString()} followers.`
+        : `The sponsored post lands well. You earn $${income.toLocaleString()}.`,
+      isKey: income > 10000,
+    }],
+  }
+}
+
+// ─── Race tracks ─────────────────────────────────────────────────────────────
+
+const HORSE_NAMES = [
+  'Thunderhooves', 'Lucky Lightning', 'Desert Rose', 'Iron Maiden', 'Golden Gallop',
+  'Dark Tempest', 'Silver Bullet', 'Morning Star', 'Storm Chaser', 'Wild Card',
+  'Blazing Saddle', 'Night Fury', 'Crimson Dawn', 'Dusty Trail', 'Velvet Thunder',
+]
+
+export function betOnHorses(state, horseIdx, betAmount) {
+  const bet = Math.max(1, Math.round(betAmount))
+  if ((state.money ?? 0) < bet) {
+    return { ...state, log: [...state.log, { age: state.age, text: "You don't have enough to place that bet.", isKey: false }] }
+  }
+  const raceHorses = Array.from({ length: 5 }, () => pickFrom(HORSE_NAMES))
+  const winner = randomBetween(0, 4)
+  const won = winner === horseIdx
+  const payout = won ? bet * 5 : 0
+  const net = payout - bet
+  const newFlags = [...state.flags]
+  if (!newFlags.includes('gambler')) newFlags.push('gambler')
+  if (newFlags.includes('gambler') && !newFlags.includes('gambling_addiction') && chance(0.06)) newFlags.push('gambling_addiction')
+  return {
+    ...state,
+    money: (state.money ?? 0) + net,
+    flags: [...new Set(newFlags)],
+    stats: { ...state.stats, happiness: clamp(state.stats.happiness + (won ? 15 : -4), 0, 100) },
+    actionsThisYear: state.actionsThisYear + 1,
+    mem: { ...state.mem, lastRaceHorses: raceHorses, lastRaceWinner: winner },
+    log: [...state.log, {
+      age: state.age,
+      text: won
+        ? `${raceHorses[horseIdx]} wins! You pocket $${payout.toLocaleString()} on a $${bet.toLocaleString()} bet.`
+        : `${raceHorses[horseIdx]} doesn't place. ${raceHorses[winner]} takes it. You lose $${bet.toLocaleString()}.`,
+      isKey: won && bet > 1000,
+    }],
+  }
+}
+
+// ─── Rehab ────────────────────────────────────────────────────────────────────
+
+export function goToRehab(state) {
+  const addictions = ['alcohol_addiction', 'gambling_addiction', 'drug_addiction'].filter(f => state.flags.includes(f))
+  if (addictions.length === 0) {
+    return { ...state, log: [...state.log, { age: state.age, text: "You don't have any active addictions to treat.", isKey: false }] }
+  }
+  const cost = randomBetween(5000, 25000)
+  if ((state.money ?? 0) < cost) {
+    return { ...state, log: [...state.log, { age: state.age, text: `Rehab would cost about $${cost.toLocaleString()}. You can't afford it right now.`, isKey: false }] }
+  }
+  const newFlags = state.flags.filter(f => !addictions.includes(f))
+  return {
+    ...state,
+    money: (state.money ?? 0) - cost,
+    flags: [...new Set([...newFlags, 'rehab_graduate'])],
+    stats: { ...state.stats, happiness: clamp(state.stats.happiness + 12, 0, 100), health: clamp(state.stats.health + 8, 0, 100) },
+    actionsThisYear: state.actionsThisYear + 1,
+    log: [...state.log, { age: state.age, text: `You complete a stint in rehab. Cost: $${cost.toLocaleString()}. You feel genuinely renewed.`, isKey: true }],
+  }
+}
+
+// ─── Birth control ────────────────────────────────────────────────────────────
+
+export function toggleBirthControl(state) {
+  const current = state.birthControl ?? false
+  return {
+    ...state,
+    birthControl: !current,
+    log: [...state.log, { age: state.age, text: !current ? 'You start using birth control.' : 'You stop using birth control.', isKey: false }],
+  }
+}
+
+// ─── Martial arts ─────────────────────────────────────────────────────────────
+
+const BELT_NAMES = ['white', 'yellow', 'orange', 'green', 'blue', 'purple', 'red', 'brown', 'black']
+
+export function practiceMartalArts(state, discipline) {
+  const ma = state.martialArts ?? { discipline: null, belt: 0 }
+  const active = discipline ?? ma.discipline
+  if (!active) return state
+  const belt = ma.belt ?? 0
+  const progressChance = clamp(0.25 + state.stats.health * 0.003, 0.1, 0.65)
+  if (belt < BELT_NAMES.length - 1 && chance(progressChance)) {
+    const newBelt = belt + 1
+    return {
+      ...state,
+      martialArts: { discipline: active, belt: newBelt },
+      stats: { ...state.stats, health: clamp(state.stats.health + 4, 0, 100), happiness: clamp(state.stats.happiness + 3, 0, 100) },
+      flags: [...new Set([...state.flags, 'martial_arts'])],
+      actionsThisYear: state.actionsThisYear + 1,
+      log: [...state.log, { age: state.age, text: `You earn your ${BELT_NAMES[newBelt]} belt in ${active}!`, isKey: newBelt === 8 }],
+    }
+  }
+  return {
+    ...state,
+    martialArts: { discipline: active, belt },
+    stats: { ...state.stats, health: clamp(state.stats.health + 2, 0, 100) },
+    actionsThisYear: state.actionsThisYear + 1,
+    log: [...state.log, { age: state.age, text: `You train ${active}. Slow and steady progress.`, isKey: false }],
+  }
+}
+
+// ─── Licenses ─────────────────────────────────────────────────────────────────
+
+export function obtainLicense(state, licType) {
+  const defs = {
+    driver:  { cost: 500,  flag: 'has_licence',     minAge: 16, text: "You pass your driving test. Driver's licence obtained." },
+    pilot:   { cost: 8000, flag: 'pilot_licence',   minAge: 18, text: "After extensive training, you earn your pilot's licence." },
+    boating: { cost: 600,  flag: 'boating_licence', minAge: 16, text: "You pass your boating safety course. Boating licence obtained." },
+  }
+  const lic = defs[licType]
+  if (!lic) return state
+  if (state.age < lic.minAge) return { ...state, log: [...state.log, { age: state.age, text: "You're not old enough for that licence yet.", isKey: false }] }
+  if (state.flags.includes(lic.flag)) return { ...state, log: [...state.log, { age: state.age, text: "You already have that licence.", isKey: false }] }
+  if ((state.money ?? 0) < lic.cost) return { ...state, log: [...state.log, { age: state.age, text: "You can't afford the licence fees right now.", isKey: false }] }
+  return {
+    ...state,
+    money: (state.money ?? 0) - lic.cost,
+    flags: [...new Set([...state.flags, lic.flag])],
+    licenceObtained: licType === 'driver' ? true : (state.licenceObtained ?? false),
+    actionsThisYear: state.actionsThisYear + 1,
+    log: [...state.log, { age: state.age, text: lic.text, isKey: true }],
+  }
+}
+
+// ─── Friend interactions ──────────────────────────────────────────────────────
+
+export function interactWithFriend(state, friendIdx, action) {
+  const friends = state.friends ?? []
+  const friend = friends[friendIdx]
+  if (!friend?.alive) return state
+  const acts = {
+    hangout:   { rqDelta: 8,  happiness: 6, cost: 30,  text: `You hang out with ${friend.name}. A good time.` },
+    compliment:{ rqDelta: 6,  happiness: 3, cost: 0,   text: `You say something kind to ${friend.name}.` },
+    gift:      { rqDelta: 12, happiness: 4, cost: 100, text: `You give ${friend.name} a thoughtful gift.` },
+    prank: {
+      rqDelta: chance(0.5) ? 5 : -10,
+      happiness: 4,
+      cost: 0,
+      text: chance(0.5) ? `You prank ${friend.name}. They laugh it off.` : `You prank ${friend.name}. They don't find it funny.`,
+    },
+  }
+  const act = acts[action]
+  if (!act) return state
+  if ((state.money ?? 0) < act.cost) return { ...state, log: [...state.log, { age: state.age, text: "You can't afford to do that right now.", isKey: false }] }
+  const updatedFriends = friends.map((f, i) => i === friendIdx ? { ...f, relationshipQuality: clamp(f.relationshipQuality + act.rqDelta, 0, 100) } : f)
+  return {
+    ...state,
+    friends: updatedFriends,
+    money: Math.max(0, (state.money ?? 0) - act.cost),
+    stats: { ...state.stats, happiness: clamp(state.stats.happiness + act.happiness, 0, 100) },
+    actionsThisYear: state.actionsThisYear + 1,
+    log: [...state.log, { age: state.age, text: act.text, isKey: false }],
   }
 }
 

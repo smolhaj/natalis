@@ -36,6 +36,19 @@ import {
   sellVehicle,
   adoptPet,
   visitVet,
+  studyHarder,
+  goToMovies,
+  goClubbing,
+  goShopping,
+  visitSalonSpa,
+  postSocialMedia,
+  promoteSocialMedia,
+  betOnHorses,
+  goToRehab,
+  toggleBirthControl,
+  practiceMartalArts,
+  obtainLicense,
+  interactWithFriend,
 } from '../engine/gameEngine'
 import { COUNTRIES } from '../data/countries'
 
@@ -79,6 +92,11 @@ const INITIAL_STATE = {
   assets: { properties: [], vehicles: [] },
   licenceObtained: false,
   retired: false,
+  friends: [],
+  socialMedia: { followers: 0, verified: false, genre: null },
+  martialArts: { discipline: null, belt: 0 },
+  birthControl: false,
+  gpa: null,
 }
 
 export const useGameStore = create((set, get) => ({
@@ -162,6 +180,11 @@ export const useGameStore = create((set, get) => ({
       assets: { properties: [], vehicles: [] },
       licenceObtained: false,
       retired: false,
+      friends: [],
+      socialMedia: { followers: 0, verified: false, genre: null },
+      martialArts: { discipline: null, belt: 0 },
+      birthControl: false,
+      gpa: null,
     })
   },
 
@@ -368,6 +391,86 @@ export const useGameStore = create((set, get) => ({
     const state = get()
     if (state.dead) return
     set(visitVet(state, idx))
+  },
+
+  // ── New activities ──────────────────────────────────────────────────────────
+
+  studyHarder: () => {
+    const state = get()
+    if (state.dead) return
+    set(studyHarder(state))
+  },
+
+  goToMovies: () => {
+    const state = get()
+    if (state.dead) return
+    set(goToMovies(state))
+  },
+
+  goClubbing: () => {
+    const state = get()
+    if (state.dead) return
+    set(goClubbing(state))
+  },
+
+  goShopping: (category) => {
+    const state = get()
+    if (state.dead) return
+    set(goShopping(state, category))
+  },
+
+  visitSalonSpa: (service) => {
+    const state = get()
+    if (state.dead) return
+    set(visitSalonSpa(state, service))
+  },
+
+  postSocialMedia: () => {
+    const state = get()
+    if (state.dead) return
+    set(postSocialMedia(state))
+  },
+
+  promoteSocialMedia: () => {
+    const state = get()
+    if (state.dead) return
+    set(promoteSocialMedia(state))
+  },
+
+  betOnHorses: (horseIdx, betAmount) => {
+    const state = get()
+    if (state.dead) return
+    set(betOnHorses(state, horseIdx, betAmount))
+  },
+
+  goToRehab: () => {
+    const state = get()
+    if (state.dead) return
+    set(goToRehab(state))
+  },
+
+  toggleBirthControl: () => {
+    const state = get()
+    if (state.dead) return
+    set(toggleBirthControl(state))
+  },
+
+  practiceMartalArts: (discipline) => {
+    const state = get()
+    if (state.dead) return
+    set(practiceMartalArts(state, discipline))
+  },
+
+  obtainLicense: (licType) => {
+    const state = get()
+    if (state.dead) return
+    set(obtainLicense(state, licType))
+  },
+
+  interactWithFriend: (friendIdx, action) => {
+    const state = get()
+    if (state.dead) return
+    set(interactWithFriend(state, friendIdx, action))
   },
 
   // ── Death / restart ─────────────────────────────────────────────────────────
