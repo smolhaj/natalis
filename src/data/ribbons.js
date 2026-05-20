@@ -1,6 +1,14 @@
 export const RIBBONS = [
   // ── LEGENDARY (priority 101+) ────────────────────────────────────────────────
   {
+    id: 'the_famous',
+    name: 'The Famous',
+    description: 'You were known. The kind of known that follows you into rooms and outlives you.',
+    condition: (G) => (G.fame ?? 0) >= 80,
+    priority: 110,
+    color: 'gold',
+  },
+  {
     id: 'the_loaded',
     name: 'The Loaded',
     description: 'You accumulated what most people cannot imagine. Money ceased to be a concern.',
@@ -279,6 +287,38 @@ export const RIBBONS = [
     condition: (G) => G.regret > 65,
     priority: 22,
     color: 'gray',
+  },
+  {
+    id: 'the_animal_lover',
+    name: 'The Animal Lover',
+    description: 'You shared your home and your years with creatures who asked for very little and gave a great deal.',
+    condition: (G) => (G.pets ?? []).length >= 3,
+    priority: 20,
+    color: 'green',
+  },
+  {
+    id: 'the_property_mogul',
+    name: 'The Property Mogul',
+    description: 'Bricks and mortar. You understood early that land is a different kind of money.',
+    condition: (G) => (G.assets?.properties?.length ?? 0) >= 4,
+    priority: 26,
+    color: 'gold',
+  },
+  {
+    id: 'the_karma',
+    name: 'The Good Person',
+    description: 'You made choices that were right even when they were costly. People felt it.',
+    condition: (G) => (G.karma ?? 50) >= 85,
+    priority: 24,
+    color: 'blue',
+  },
+  {
+    id: 'the_sibling',
+    name: 'The Loyal Sibling',
+    description: 'The people you grew up with — you never let the years make them strangers.',
+    condition: (G) => (G.siblings ?? []).some(s => s.relationshipQuality >= 80),
+    priority: 16,
+    color: 'green',
   },
   {
     id: 'the_fertile',

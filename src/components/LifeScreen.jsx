@@ -45,6 +45,12 @@ export default function LifeScreen() {
   const lastOutcome = useGameStore(s => s.lastOutcome)
   const money = useGameStore(s => s.money)
   const parents = useGameStore(s => s.parents)
+  const siblings = useGameStore(s => s.siblings)
+  const pets = useGameStore(s => s.pets)
+  const assets = useGameStore(s => s.assets)
+  const karma = useGameStore(s => s.karma)
+  const fame = useGameStore(s => s.fame)
+  const retired = useGameStore(s => s.retired)
   const ageUp = useGameStore(s => s.ageUp)
   const dead = useGameStore(s => s.dead)
 
@@ -184,6 +190,63 @@ export default function LifeScreen() {
                   </div>
                 )
               })}
+            </div>
+          )}
+          {retired && !career && (
+            <div>
+              <p className="text-natalis-muted uppercase tracking-wider text-xs mb-0.5">Status</p>
+              <p className="text-natalis-dim">Retired</p>
+            </div>
+          )}
+          {fame > 0 && (
+            <div>
+              <p className="text-natalis-muted uppercase tracking-wider text-xs mb-0.5">Fame</p>
+              <div className="h-1 bg-natalis-bg rounded-full overflow-hidden">
+                <div className="h-full transition-all" style={{ width: `${fame}%`, backgroundColor: '#facc15' }} />
+              </div>
+            </div>
+          )}
+          {karma !== 50 && (
+            <div>
+              <p className="text-natalis-muted uppercase tracking-wider text-xs mb-0.5">Karma</p>
+              <div className="h-1 bg-natalis-bg rounded-full overflow-hidden">
+                <div className="h-full transition-all" style={{ width: `${karma}%`, backgroundColor: karma > 60 ? '#4ade80' : karma < 40 ? '#f87171' : '#fb923c' }} />
+              </div>
+            </div>
+          )}
+          {siblings && siblings.some(s => s.alive) && (
+            <div>
+              <p className="text-natalis-muted uppercase tracking-wider text-xs mb-0.5">Siblings</p>
+              {siblings.filter(s => s.alive).map((sib, i) => (
+                <div key={i} className="flex justify-between items-center text-xs py-0.5">
+                  <span className="text-natalis-dim truncate max-w-[100px]">{sib.name.split(' ')[0]}</span>
+                  <div className="w-10 h-1 bg-natalis-bg rounded-full overflow-hidden ml-1">
+                    <div className="h-full" style={{ width: `${sib.relationshipQuality}%`, backgroundColor: sib.relationshipQuality > 65 ? '#4ade80' : sib.relationshipQuality > 35 ? '#fb923c' : '#f87171' }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          {pets && pets.some(p => p.alive) && (
+            <div>
+              <p className="text-natalis-muted uppercase tracking-wider text-xs mb-0.5">Pets</p>
+              {pets.filter(p => p.alive).map((pet, i) => (
+                <div key={i} className="text-xs text-natalis-dim py-0.5">{pet.name} the {pet.species}</div>
+              ))}
+            </div>
+          )}
+          {assets && (assets.properties.length > 0 || assets.vehicles.length > 0) && (
+            <div>
+              <p className="text-natalis-muted uppercase tracking-wider text-xs mb-0.5">Assets</p>
+              {assets.properties.map((p, i) => (
+                <div key={i} className="text-xs text-natalis-dim py-0.5 flex justify-between">
+                  <span className="truncate max-w-[110px]">{p.name}</span>
+                  <span>${Math.round(p.currentValue / 1000)}k</span>
+                </div>
+              ))}
+              {assets.vehicles.map((v, i) => (
+                <div key={i} className="text-xs text-natalis-dim py-0.5">{v.name}</div>
+              ))}
             </div>
           )}
           {inPrison && (

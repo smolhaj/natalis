@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useGameStore } from '../store/gameStore'
 import { ACTIVITIES } from '../data/activities'
 import { CRIMES } from '../data/crimes'
+import { PROPERTY_TYPES, VEHICLE_TYPES } from '../data/assets'
 import { getAvailableCareers } from '../engine/gameEngine'
 
 const CATEGORIES = [
@@ -10,6 +11,8 @@ const CATEGORIES = [
   { key: 'social', label: 'Social' },
   { key: 'money', label: 'Money' },
   { key: 'love', label: 'Love' },
+  { key: 'assets', label: 'Assets' },
+  { key: 'appearance', label: 'Style' },
   { key: 'crime', label: 'Crime' },
   { key: 'career', label: 'Career' },
 ]
@@ -33,6 +36,17 @@ export default function ActivitiesPanel({ onClose }) {
   const getPlasticSurgery = useGameStore(s => s.getPlasticSurgery)
   const askForRaise = useGameStore(s => s.askForRaise)
   const quitJob = useGameStore(s => s.quitJob)
+  const workHarder = useGameStore(s => s.workHarder)
+  const schmoozeBoss = useGameStore(s => s.schmoozeBoss)
+  const retire = useGameStore(s => s.retire)
+  const adoptChild = useGameStore(s => s.adoptChild)
+  const callSibling = useGameStore(s => s.callSibling)
+  const buyProperty = useGameStore(s => s.buyProperty)
+  const sellProperty = useGameStore(s => s.sellProperty)
+  const buyVehicle = useGameStore(s => s.buyVehicle)
+  const sellVehicle = useGameStore(s => s.sellVehicle)
+  const adoptPet = useGameStore(s => s.adoptPet)
+  const visitVet = useGameStore(s => s.visitVet)
 
   const actionsLeft = state.maxActionsPerYear - state.actionsThisYear
 
@@ -164,10 +178,152 @@ export default function ActivitiesPanel({ onClose }) {
         })
       }
 
+      if (state.siblings) {
+        state.siblings.filter(s => s.alive).forEach((sib, i) => {
+          const realIdx = state.siblings.indexOf(sib)
+          items.push(
+            <button key={`sib-${i}`} onClick={() => doAction(() => callSibling(realIdx))}
+              disabled={actionsLeft <= 0}
+              className="w-full text-left p-3 border border-natalis-border hover:border-natalis-muted hover:bg-natalis-bg disabled:opacity-40 disabled:cursor-not-allowed transition-all space-y-0.5">
+              <p className="text-natalis-text text-sm">Call {sib.name.split(' ')[0]}</p>
+              <p className="text-natalis-muted text-xs italic">Your sibling. Stay in touch.</p>
+            </button>
+          )
+        })
+      }
+
+      if (state.age >= 25) {
+        items.push(
+          <button key="adopt" onClick={() => doAction(adoptChild)}
+            disabled={actionsLeft <= 0}
+            className="w-full text-left p-3 border border-natalis-border hover:border-natalis-muted hover:bg-natalis-bg disabled:opacity-40 disabled:cursor-not-allowed transition-all space-y-0.5">
+            <p className="text-natalis-text text-sm">Adopt a child</p>
+            <p className="text-natalis-muted text-xs italic">Open your home and your life.</p>
+          </button>
+        )
+      }
+
       if (items.length === 0) {
         return <div className="text-natalis-muted text-sm italic p-3">Nothing available right now.</div>
       }
       return items
+    }
+
+    if (activeTab === 'assets') {
+      const items = []
+      const properties = state.assets?.properties ?? []
+      const vehicles = state.assets?.vehicles ?? []
+
+      items.push(<p key="prop-header" className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-1">Buy Property</p>)
+      PROPERTY_TYPES.forEach(type => {
+        const downPayment = Math.round(type.basePrice * type.downPaymentRate)
+        const canAfford = (state.money ?? 0) >= downPayment
+        items.push(
+          <button key={`buy-${type.id}`}
+            disabled={actionsLeft <= 0 || !canAfford || state.age < 18}
+            onClick={() => { buyProperty(type.id); onClose() }}
+            className="w-full text-left p-3 border border-natalis-border hover:border-natalis-muted hover:bg-natalis-bg disabled:opacity-40 disabled:cursor-not-allowed transition-all space-y-0.5">
+            <p className="text-natalis-text text-sm">{type.name}</p>
+            <p className="text-natalis-muted text-xs italic">{type.description}</p>
+            <p className="text-natalis-dim text-xs">~${type.basePrice.toLocaleString()} · Deposit: ${downPayment.toLocaleString()}</p>
+          </button>
+        )
+      })
+
+      if (properties.length > 0) {
+        items.push(<p key="owned-header" className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">Your Properties</p>)
+        properties.forEach((p, i) => {
+          items.push(
+            <button key={`sell-prop-${i}`}
+              onClick={() => { sellProperty(i); onClose() }}
+              className="w-full text-left p-3 border border-red-900/40 hover:border-red-900 hover:bg-red-950/20 transition-all space-y-0.5">
+              <p className="text-natalis-text text-sm">Sell {p.name}</p>
+              <p className="text-natalis-muted text-xs">Value: ${p.currentValue.toLocaleString()}{p.mortgage > 0 ? ` · Mortgage: $${p.mortgage.toLocaleString()}` : ''}</p>
+            </button>
+          )
+        })
+      }
+
+      items.push(<p key="veh-header" className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">Buy Vehicle</p>)
+      VEHICLE_TYPES.filter(t => t.id === 'bicycle' || state.licenceObtained).forEach(type => {
+        const canAfford = (state.money ?? 0) >= type.basePrice
+        items.push(
+          <button key={`buyveh-${type.id}`}
+            disabled={actionsLeft <= 0 || !canAfford}
+            onClick={() => { buyVehicle(type.id); onClose() }}
+            className="w-full text-left p-3 border border-natalis-border hover:border-natalis-muted hover:bg-natalis-bg disabled:opacity-40 disabled:cursor-not-allowed transition-all space-y-0.5">
+            <p className="text-natalis-text text-sm">{type.name}</p>
+            <p className="text-natalis-muted text-xs italic">{type.description}</p>
+            <p className="text-natalis-dim text-xs">~${type.basePrice.toLocaleString()}/yr maint: ${type.annualMaintenance.toLocaleString()}</p>
+          </button>
+        )
+      })
+
+      if (vehicles.length > 0) {
+        items.push(<p key="owned-veh" className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">Your Vehicles</p>)
+        vehicles.forEach((v, i) => {
+          items.push(
+            <button key={`sell-veh-${i}`}
+              onClick={() => { sellVehicle(i); onClose() }}
+              className="w-full text-left p-3 border border-red-900/40 hover:border-red-900 hover:bg-red-950/20 transition-all space-y-0.5">
+              <p className="text-natalis-text text-sm">Sell {v.name}</p>
+              <p className="text-natalis-muted text-xs">Value: ${v.currentValue.toLocaleString()}</p>
+            </button>
+          )
+        })
+      }
+
+      items.push(<p key="pets-header" className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">Adopt a Pet</p>)
+      const adoptionFees = { dog: 400, cat: 200, rabbit: 80, hamster: 30, parrot: 300, fish: 20, bird: 150 }
+      Object.entries(adoptionFees).forEach(([species, cost]) => {
+        items.push(
+          <button key={`adopt-${species}`}
+            disabled={actionsLeft <= 0 || (state.money ?? 0) < cost}
+            onClick={() => { adoptPet(species); onClose() }}
+            className="w-full text-left p-3 border border-natalis-border hover:border-natalis-muted hover:bg-natalis-bg disabled:opacity-40 disabled:cursor-not-allowed transition-all space-y-0.5">
+            <p className="text-natalis-text text-sm capitalize">Adopt a {species}</p>
+            <p className="text-natalis-dim text-xs">Adoption fee: ${cost}</p>
+          </button>
+        )
+      })
+
+      const livePets = (state.pets ?? []).filter(p => p.alive)
+      if (livePets.length > 0) {
+        items.push(<p key="vet-header" className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">Vet Visits</p>)
+        livePets.forEach(pet => {
+          const allIdx = (state.pets ?? []).indexOf(pet)
+          items.push(
+            <button key={`vet-${allIdx}`}
+              disabled={actionsLeft <= 0}
+              onClick={() => { visitVet(allIdx); onClose() }}
+              className="w-full text-left p-3 border border-natalis-border hover:border-natalis-muted hover:bg-natalis-bg disabled:opacity-40 disabled:cursor-not-allowed transition-all space-y-0.5">
+              <p className="text-natalis-text text-sm">Take {pet.name} to the vet</p>
+              <p className="text-natalis-muted text-xs italic">Age {pet.age} · $150–$600</p>
+            </button>
+          )
+        })
+      }
+
+      return items
+    }
+
+    if (activeTab === 'appearance') {
+      const items = ACTIVITIES.appearance ?? []
+      return items
+        .filter(a => (!a.minAge || state.age >= a.minAge) && (!a.maxAge || state.age <= a.maxAge))
+        .filter(a => !a.condition || a.condition(G))
+        .map(activity => (
+          <button
+            key={activity.id}
+            disabled={actionsLeft <= 0}
+            onClick={() => { takeActivity(activity.id); onClose() }}
+            className="w-full text-left p-3 border border-natalis-border hover:border-natalis-muted hover:bg-natalis-bg disabled:opacity-40 disabled:cursor-not-allowed transition-all space-y-0.5"
+          >
+            <p className="text-natalis-text text-sm">{activity.name}</p>
+            <p className="text-natalis-muted text-xs italic">{activity.description}</p>
+            {activity.cost > 0 && <p className="text-natalis-dim text-xs">Cost: ${activity.cost.toLocaleString()}</p>}
+          </button>
+        ))
     }
 
     if (activeTab === 'crime') {
@@ -200,21 +356,34 @@ export default function ActivitiesPanel({ onClose }) {
 
       if (state.career) {
         careerActions.push(
-          <button
-            key="raise"
-            onClick={() => doAction(askForRaise)}
-            className="w-full text-left p-3 border border-natalis-border hover:border-natalis-muted hover:bg-natalis-bg transition-all space-y-0.5"
-          >
+          <button key="harder" onClick={() => doAction(workHarder)}
+            className="w-full text-left p-3 border border-natalis-border hover:border-natalis-muted hover:bg-natalis-bg transition-all space-y-0.5">
+            <p className="text-natalis-text text-sm">Work harder</p>
+            <p className="text-natalis-muted text-xs italic">Put in extra effort. Costs health and happiness.</p>
+          </button>,
+          <button key="schmooze" onClick={() => doAction(schmoozeBoss)}
+            className="w-full text-left p-3 border border-natalis-border hover:border-natalis-muted hover:bg-natalis-bg transition-all space-y-0.5">
+            <p className="text-natalis-text text-sm">Schmooze the boss</p>
+            <p className="text-natalis-muted text-xs italic">Charisma-based. Results may vary.</p>
+          </button>,
+          <button key="raise" onClick={() => doAction(askForRaise)}
+            className="w-full text-left p-3 border border-natalis-border hover:border-natalis-muted hover:bg-natalis-bg transition-all space-y-0.5">
             <p className="text-natalis-text text-sm">Ask for a raise</p>
             <p className="text-natalis-muted text-xs italic">Performance and charisma determine success.</p>
           </button>,
-          <button
-            key="quit"
-            onClick={() => doAction(quitJob)}
-            className="w-full text-left p-3 border border-red-900/40 hover:border-red-900 hover:bg-red-950/20 transition-all space-y-0.5"
-          >
+          <button key="quit" onClick={() => doAction(quitJob)}
+            className="w-full text-left p-3 border border-red-900/40 hover:border-red-900 hover:bg-red-950/20 transition-all space-y-0.5">
             <p className="text-red-400 text-sm">Quit your job</p>
             <p className="text-natalis-muted text-xs italic">Leave your position as {state.career.title}.</p>
+          </button>
+        )
+      }
+      if (state.age >= 55 && !state.retired) {
+        careerActions.push(
+          <button key="retire" onClick={() => doAction(retire)}
+            className="w-full text-left p-3 border border-natalis-border hover:border-natalis-muted hover:bg-natalis-bg transition-all space-y-0.5">
+            <p className="text-natalis-text text-sm">Retire</p>
+            <p className="text-natalis-muted text-xs italic">End your working life on your own terms.</p>
           </button>
         )
       }
