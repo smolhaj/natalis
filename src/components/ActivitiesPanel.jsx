@@ -18,6 +18,7 @@ const TOP_CATEGORIES = [
   { key: 'plastic_surg',  label: 'Plastic Surgery',  emoji: '✂️',  desc: 'Enhance your appearance' },
   { key: 'race_tracks',   label: 'Race Tracks',      emoji: '🏇', desc: 'Bet on the races' },
   { key: 'rehab',         label: 'Rehab',            emoji: '☀️',  desc: 'Battle addictions' },
+  { key: 'substances',   label: 'Substances',       emoji: '💊', desc: 'Alcohol and drugs' },
   { key: 'pets',          label: 'Pets',             emoji: '🐾', desc: 'Your animal companions' },
   { key: 'licenses',      label: 'Licenses',         emoji: '🪪', desc: 'Get licenced' },
   { key: 'assets',        label: 'Assets',           emoji: '🏠', desc: 'Property & vehicles' },
@@ -96,6 +97,8 @@ export default function ActivitiesPanel({ onClose }) {
   const obtainLicense      = useGameStore(s => s.obtainLicense)
   const interactWithFriend = useGameStore(s => s.interactWithFriend)
   const dropOutOfSchool    = useGameStore(s => s.dropOutOfSchool)
+  const abandonChild       = useGameStore(s => s.abandonChild)
+  const useSubstance       = useGameStore(s => s.useSubstance)
 
   const actionsLeft = state.maxActionsPerYear - state.actionsThisYear
   const noActions = actionsLeft <= 0
@@ -223,6 +226,13 @@ export default function ActivitiesPanel({ onClose }) {
                 <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">Children</p>
                 {state.children.map((child, i) => (
                   <Btn key={i} disabled={noActions} onClick={() => go(() => spendTimeWithChild(i))} title={`Spend time with ${child.name.split(' ')[0]}`} subtitle="Be present in their life." />
+                ))}
+                {state.children.map((child, i) => (
+                  <Btn key={`abandon-${i}`} disabled={false}
+                    onClick={() => { if (window.confirm(`Abandon ${child.name.split(' ')[0]}? This cannot be undone.`)) { abandonChild(i); onClose() } }}
+                    title={`Abandon ${child.name.split(' ')[0]}`}
+                    subtitle="Walk away. You will carry this."
+                    danger />
                 ))}
               </>
             )}
@@ -606,6 +616,35 @@ export default function ActivitiesPanel({ onClose }) {
         })
       }
 
+      case 'substances': {
+        const isAddict = state.flags.includes('alcohol_addiction') || state.flags.includes('drug_addiction')
+        return (
+          <>
+            {isAddict && (
+              <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-xl px-4 py-3 mb-1">
+                <span className="text-lg">⚠️</span>
+                <p className="text-xs font-semibold text-bit-red">Active addiction. Consider rehab.</p>
+              </div>
+            )}
+            <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider px-1 py-1">Alcohol</p>
+            <Btn disabled={noActions} onClick={() => go(() => useSubstance('alcohol'))} title="Have a Drink" subtitle="Relax with alcohol." cost="~$30" />
+            {state.age >= 16 && (
+              <>
+                <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider px-1 pt-2">Drugs</p>
+                <Btn disabled={noActions} onClick={() => go(() => useSubstance('cannabis'))} title="Smoke Cannabis" subtitle="Mild. Still a choice with consequences." cost="~$40" />
+                {state.age >= 18 && (
+                  <>
+                    <Btn disabled={noActions} onClick={() => go(() => useSubstance('pills'))} title="Take Pills" subtitle="Prescription or otherwise." cost="~$60" danger />
+                    <Btn disabled={noActions} onClick={() => go(() => useSubstance('cocaine'))} title="Use Cocaine" subtitle="High risk of addiction. Serious health cost." cost="~$200" danger />
+                    <Btn disabled={noActions} onClick={() => go(() => useSubstance('heroin'))} title="Use Heroin" subtitle="Extreme addiction and overdose risk." cost="~$150" danger />
+                  </>
+                )}
+              </>
+            )}
+          </>
+        )
+      }
+
       default:
         return <p className="text-natalis-muted text-sm italic p-3">Select a category.</p>
     }
@@ -653,6 +692,7 @@ export default function ActivitiesPanel({ onClose }) {
               if (cat.key === 'assets' && state.age < 18) return null
               if (cat.key === 'money' && state.age < 14) return null
               if (cat.key === 'rehab' && !hasAddiction && !(ACTIVITIES.body ?? []).some(a => (a.id === 'quit_smoking' || a.id === 'rehabilitation') && (!a.condition || a.condition(G)))) return null
+              if (cat.key === 'substances' && state.age < 14) return null
 
               const badge = cat.key === 'rehab' && hasAddiction ? { text: '!', color: '#ff3b30' } :
                             cat.key === 'social_media' && sm.followers > 0 ? { text: sm.followers >= 1000 ? `${(sm.followers/1000).toFixed(0)}k` : sm.followers.toString(), color: '#007aff' } :
