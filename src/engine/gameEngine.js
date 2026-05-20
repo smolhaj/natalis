@@ -190,6 +190,8 @@ function buildEffectProxy(state) {
     proxy._newFriends.push({ name, alive: true, relationshipQuality: clamp(quality + randomBetween(-10, 10), 20, 95) })
   }
   proxy.setGpa = (gpa) => { proxy._newGpa = gpa }
+  proxy.setEnrolled = (enrollment) => { proxy._newEnrolled = enrollment }
+  proxy.setMem = (key, value) => { proxy.mem[key] = value }
   return proxy
 }
 
@@ -208,6 +210,9 @@ function resolveProxyExtras(state, proxy) {
   if (proxy._newChild)       next = { ...next, children: [...next.children, proxy._newChild] }
   if (proxy._newFriends)     next = { ...next, friends: [...(next.friends ?? []), ...proxy._newFriends] }
   if (proxy._newGpa !== undefined) next = { ...next, gpa: proxy._newGpa }
+  if (proxy._newEnrolled !== undefined) {
+    next = { ...next, education: { ...next.education, enrolled: proxy._newEnrolled } }
+  }
   if (proxy.flags.includes('has_licence')) next = { ...next, licenceObtained: true }
   return next
 }
@@ -395,6 +400,7 @@ export function getAvailableCareers(state) {
       if (gdpOrder.indexOf(state.character.country.gdp) < gdpOrder.indexOf(career.gdpRequired)) return false
     }
     if (Array.isArray(career.archetypeAvailable) && !career.archetypeAvailable.includes(state.character.country.archetype)) return false
+    if (career.requirements.flags && !career.requirements.flags.some(f => state.flags.includes(f))) return false
     if (state.career?.id === career.id) return false
     return true
   })
@@ -929,6 +935,56 @@ function checkIllnessRisk(state) {
   return updated
 }
 
+// ─── Education enrollment tick ────────────────────────────────────────────────
+
+function tickEnrollment(state) {
+  const enrolled = state.education?.enrolled
+  if (!enrolled) return state
+  const { type, field, year } = enrolled
+  const newYear = year + 1
+  const totalYears = type === 'university' ? 4 : 2
+  let s = { ...state }
+
+  if (type === 'university') {
+    if (!s.flags.includes('scholarship_won')) {
+      const tuition = { healthcare: 12000, business: 9000, science: 10000, arts: 7000, general: 8000 }[field] ?? 8000
+      s.money = Math.max(0, (s.money ?? 0) - tuition)
+    }
+    s.gpa = Math.min(4.0, parseFloat(((s.gpa ?? 2.5) + randomBetween(-5, 10) / 100).toFixed(2)))
+  } else if (type === 'vocational' && newYear === 1) {
+    const cost = { electrician: 2500, plumber: 2500, construction: 2000, IT: 3000 }[field] ?? 2500
+    s.money = Math.max(0, (s.money ?? 0) - cost)
+  }
+
+  s.stats = { ...s.stats, smarts: clamp(s.stats.smarts + 2, 0, 100) }
+
+  if (newYear >= totalYears) {
+    if (type === 'university') {
+      const isFirstGen = (s.character?.wealthTier ?? 3) <= 2
+      s.education = { level: 'university', field, enrolled: null }
+      s.flags = [...new Set([...s.flags, 'university_graduate', ...(isFirstGen ? ['first_gen_graduate'] : [])])]
+      s.mem = { ...s.mem, graduated: 'university', uniField: field, uniGpa: s.gpa ?? 2.5 }
+      s.stats = { ...s.stats, smarts: clamp(s.stats.smarts + 5, 0, 100), happiness: clamp(s.stats.happiness + 12, 0, 100) }
+      const gpaStr = s.gpa ? ` Final GPA: ${s.gpa.toFixed(2)}.` : ''
+      s.log = [...s.log, { age: s.age, text: `🎓 You graduate from university with a degree in ${field}.${isFirstGen ? ' The first in your family to do so.' : ''}${gpaStr}`, isKey: true }]
+    } else {
+      s.education = { ...s.education, level: 'secondary', field, enrolled: null }
+      s.flags = [...new Set([...s.flags, 'vocational_trained', `trade_${field}`])]
+      s.mem = { ...s.mem, graduated: 'vocational', vocField: field }
+      s.stats = { ...s.stats, smarts: clamp(s.stats.smarts + 3, 0, 100), happiness: clamp(s.stats.happiness + 8, 0, 100) }
+      s.log = [...s.log, { age: s.age, text: `🔧 You complete your ${field} certification.`, isKey: true }]
+    }
+  } else {
+    s.education = { ...s.education, enrolled: { type, field, year: newYear } }
+    if (type === 'university') {
+      s.log = [...s.log, { age: s.age, text: `University — year ${newYear} of 4 (${field}).`, isKey: false }]
+    } else {
+      s.log = [...s.log, { age: s.age, text: `Trade school — year ${newYear} of 2 (${field}).`, isKey: false }]
+    }
+  }
+  return s
+}
+
 // ─── Main tick ────────────────────────────────────────────────────────────────
 
 export function tick(state) {
@@ -977,6 +1033,82 @@ export function tick(state) {
 
   // World events
   s = applyWorldEvents(s)
+
+  // Education progression
+  s = tickEnrollment(s)
+
+  // High school graduation at 18
+  if (s.age === 18 && !s.flags.includes('graduated_hs') && !s.flags.includes('dropped_out') && !s.flags.includes('child_labor') && !s.flags.includes('left_school_early') && !s.education?.enrolled && !s.usedEventIds.has('hs_graduation')) {
+    const rawGpa = Math.min(4.0, parseFloat(((s.gpa ?? 2.0) + 0.1).toFixed(2)))
+    s.education = { ...s.education, level: 'secondary' }
+    s.flags = [...new Set([...s.flags, 'graduated_hs'])]
+    s.gpa = rawGpa
+    s.mem = { ...s.mem, hsGpa: rawGpa }
+    const smarts = s.stats.smarts
+    const canAfford = (s.money ?? 0) >= 8000 || smarts >= 72
+    const scholarship = smarts >= 75 || rawGpa >= 3.7
+    const uniChoices = (smarts >= 50 && canAfford) ? [{
+      text: '🎓 Go to University',
+      tag: null,
+      outcome: scholarship ? 'You earn a partial scholarship and enroll in university.' : 'You enroll in university. The next four years will shape your career.',
+      effect: (p) => {
+        p.addFlag('university_enrolled')
+        p.m += 5
+        if (scholarship) p.addFlag('scholarship_won')
+        p.setMem('educationPath', 'university')
+      },
+      inject: {
+        id: 'uni_field_choice',
+        phase: 'young_adult',
+        text: 'What will you study at university?',
+        choices: [
+          { text: '🏥 Medicine / Healthcare', tag: null, outcome: 'Demanding, long hours, significant reward.', effect: (p) => { p.setEnrolled({ type: 'university', field: 'healthcare', year: 0 }); p.setMem('uniField', 'healthcare') }, inject: null },
+          { text: '⚖️ Law / Business', tag: null, outcome: 'Competitive and potentially lucrative.', effect: (p) => { p.setEnrolled({ type: 'university', field: 'business', year: 0 }); p.setMem('uniField', 'business') }, inject: null },
+          { text: '🔬 Science / Engineering', tag: null, outcome: 'Rigorous with strong career prospects.', effect: (p) => { p.setEnrolled({ type: 'university', field: 'science', year: 0 }); p.setMem('uniField', 'science') }, inject: null },
+          { text: '📚 Arts / Humanities', tag: null, outcome: 'You follow your passion. The path is less prescribed.', effect: (p) => { p.setEnrolled({ type: 'university', field: 'arts', year: 0 }); p.setMem('uniField', 'arts') }, inject: null },
+        ],
+        effect: null,
+        when: () => true,
+      },
+    }] : []
+    const graduationEvent = {
+      id: 'hs_graduation',
+      phase: 'young_adult',
+      text: `You graduate from high school. GPA: ${rawGpa.toFixed(2)}. The world is waiting — what comes next?`,
+      choices: [
+        ...uniChoices,
+        {
+          text: '🔧 Trade / Vocational School',
+          tag: null,
+          outcome: 'A practical path. Two years to a certified trade.',
+          effect: (p) => { p.m += 3; p.addFlag('vocational_enrolled'); p.setMem('educationPath', 'vocational') },
+          inject: {
+            id: 'vocational_field_choice',
+            phase: 'young_adult',
+            text: 'Which trade will you train in?',
+            choices: [
+              { text: '🔌 Electrician', tag: null, outcome: 'In-demand work. Good pay.', effect: (p) => { p.setEnrolled({ type: 'vocational', field: 'electrician', year: 0 }); p.setMem('vocField', 'electrician') }, inject: null },
+              { text: '🔧 Plumbing', tag: null, outcome: 'Essential trade. Steady income.', effect: (p) => { p.setEnrolled({ type: 'vocational', field: 'plumber', year: 0 }); p.setMem('vocField', 'plumber') }, inject: null },
+              { text: '🏗️ Construction', tag: null, outcome: 'Physical work. You build real things.', effect: (p) => { p.setEnrolled({ type: 'vocational', field: 'construction', year: 0 }); p.setMem('vocField', 'construction') }, inject: null },
+              { text: '💻 IT / Technical', tag: null, outcome: 'Fast-growing field, strong demand.', effect: (p) => { p.setEnrolled({ type: 'vocational', field: 'IT', year: 0 }); p.setMem('vocField', 'IT') }, inject: null },
+            ],
+            effect: null,
+            when: () => true,
+          },
+        },
+        {
+          text: '💼 Enter the Workforce',
+          tag: 'workforce_direct',
+          outcome: 'No more school. You start earning right away.',
+          effect: (p) => { p.m += 2; p.addFlag('workforce_direct'); p.setMem('educationPath', 'workforce') },
+          inject: null,
+        },
+      ],
+      effect: null,
+      when: () => true,
+    }
+    s.queue = [graduationEvent, ...s.queue]
+  }
 
   // Illness risk check
   s = checkIllnessRisk(s)
@@ -1595,6 +1727,20 @@ export function interactWithFriend(state, friendIdx, action) {
     stats: { ...state.stats, happiness: clamp(state.stats.happiness + act.happiness, 0, 100) },
     actionsThisYear: state.actionsThisYear + 1,
     log: [...state.log, { age: state.age, text: act.text, isKey: false }],
+  }
+}
+
+// ─── Drop out of school ───────────────────────────────────────────────────────
+
+export function dropOutOfSchool(state) {
+  if (!state.education?.enrolled) return state
+  const { type, field, year } = state.education.enrolled
+  return {
+    ...state,
+    education: { ...state.education, enrolled: null },
+    flags: [...new Set([...state.flags, 'dropped_out'])],
+    stats: { ...state.stats, happiness: clamp(state.stats.happiness - 8, 0, 100) },
+    log: [...state.log, { age: state.age, text: `You drop out of ${type === 'university' ? 'university' : 'trade school'} after year ${year + 1}.`, isKey: true }],
   }
 }
 
