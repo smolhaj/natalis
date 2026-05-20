@@ -133,7 +133,7 @@ export const EVENTS = [
     id: 'ch_books',
     phase: 'childhood',
     weight: 3,
-    when: (G) => G.character.traits.intel >= 6,
+    when: (G) => G.stats.smarts >= 50,
     text: 'You discover the school library. The librarian lets you take out more books than the limit.',
     context: null,
     choices: null,
@@ -168,7 +168,7 @@ export const EVENTS = [
     id: 'ch_sport',
     phase: 'childhood',
     weight: 3,
-    when: (G) => G.character.traits.con >= 6,
+    when: (G) => G.stats.health >= 50,
     text: 'You discover a natural talent for sport. A coach takes notice.',
     context: null,
     choices: [
@@ -318,7 +318,7 @@ export const EVENTS = [
     id: 'ch_gifted_program',
     phase: 'childhood',
     weight: 2,
-    when: (G) => G.character.traits.intel >= 8 && G.character.country.archetype !== 'conflict_zone',
+    when: (G) => G.stats.smarts >= 70 && G.character.country.archetype !== 'conflict_zone',
     text: 'Your school recommends you for a gifted program. Your parents must agree to extra hours.',
     context: null,
     choices: [
@@ -370,7 +370,7 @@ export const EVENTS = [
     id: 'adol_university_exam',
     phase: 'adolescence',
     weight: 4,
-    when: (G) => G.character.traits.intel >= 5,
+    when: (G) => G.stats.smarts >= 30,
     text: 'The university entrance exam is approaching. Everything seems to depend on it.',
     context: null,
     choices: [
@@ -427,7 +427,7 @@ export const EVENTS = [
     id: 'adol_mentor',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => G.character.traits.intel >= 7 || G.character.traits.cha >= 7,
+    when: (G) => G.stats.smarts >= 60 || G.stats.charisma >= 60,
     text: 'An adult in your community takes a genuine interest in your future.',
     context: null,
     choices: [
@@ -484,7 +484,7 @@ export const EVENTS = [
     id: 'adol_scholarship',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => G.character.traits.intel >= 7 && G.character.wealthTier <= 2,
+    when: (G) => G.stats.smarts >= 60 && G.character.wealthTier <= 2,
     text: 'A scholarship application lands in front of you. It would pay for university.',
     context: null,
     choices: [
@@ -509,7 +509,7 @@ export const EVENTS = [
     id: 'adol_art',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => G.character.traits.cha >= 7,
+    when: (G) => G.stats.charisma >= 60,
     text: 'You discover a creative outlet — music, painting, writing. Something that is entirely yours.',
     context: null,
     choices: null,
@@ -701,7 +701,7 @@ export const EVENTS = [
     id: 'ya_political_awakening',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.character.traits.intel >= 6,
+    when: (G) => G.stats.smarts >= 50,
     text: 'Something is happening politically in your country. You feel the pull to act.',
     context: null,
     choices: [
@@ -774,7 +774,7 @@ export const EVENTS = [
     id: 'ya_entrepreneurship',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.character.traits.cha >= 7 && G.stats.wealth > 30,
+    when: (G) => G.stats.charisma >= 60 && G.stats.wealth > 30,
     text: 'You have an idea. It might be a business. It might be a mistake.',
     context: null,
     choices: [
@@ -829,7 +829,7 @@ export const EVENTS = [
     id: 'ya_mental_health_crisis',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.stats.mental < 45,
+    when: (G) => G.stats.happiness < 45,
     text: "Something caves in. You recognize something is wrong but don't have a name for it.",
     context: null,
     choices: [
@@ -854,7 +854,7 @@ export const EVENTS = [
     id: 'ya_graduate_study',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.flags.includes('university_graduate') && G.character.traits.intel >= 7,
+    when: (G) => G.flags.includes('university_graduate') && G.stats.smarts >= 60,
     text: 'A graduate program accepts you. Another two years. Another debt.',
     context: null,
     choices: [
@@ -946,7 +946,7 @@ export const EVENTS = [
     id: 'ya_military_service',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.character.traits.con >= 6 && !G.flags.includes('refugee'),
+    when: (G) => G.stats.health >= 50 && !G.flags.includes('refugee'),
     text: 'Military service — required or voluntary — is in front of you.',
     context: null,
     choices: [
@@ -1177,7 +1177,7 @@ export const EVENTS = [
     id: 'mid_community_leader',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.stats.social > 50,
+    when: (G) => G.stats.charisma > 50,
     text: 'People in your community start looking to you for leadership. It was not something you sought.',
     context: null,
     choices: [

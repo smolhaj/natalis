@@ -70,11 +70,12 @@ export default function LifeScreen() {
 
         {/* Stats */}
         <div className="p-4 border-b border-natalis-border space-y-3">
-          <StatBar stat="health" label="Health" value={stats.health} />
-          <StatBar stat="mental" label="Mental" value={stats.mental} />
-          <StatBar stat="wealth" label="Wealth" value={stats.wealth} />
-          <StatBar stat="education" label="Education" value={stats.education} />
-          <StatBar stat="social" label="Social" value={stats.social} />
+          <StatBar stat="happiness" label="Happiness" value={stats.happiness} />
+          <StatBar stat="health"    label="Health"    value={stats.health} />
+          <StatBar stat="smarts"    label="Smarts"    value={stats.smarts} />
+          <StatBar stat="looks"     label="Looks"     value={stats.looks} />
+          <StatBar stat="charisma"  label="Charisma"  value={stats.charisma} />
+          <StatBar stat="wealth"    label="Wealth"    value={stats.wealth} />
           {regret > 0 && (
             <div className="text-natalis-muted text-xs flex justify-between pt-1">
               <span>Regret</span>

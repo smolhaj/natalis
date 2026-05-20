@@ -47,12 +47,23 @@ export function createCharacter(overrides = {}) {
     ['subsaharan', 'conflict_zone', 'developing_unstable'].includes(country.archetype) ? 2 : 0
   ), 1, 12)
 
-  const traits = {
-    intel: overrides.traits?.intel ?? randomBetween(3, 10),
-    con:   overrides.traits?.con   ?? randomBetween(3, 10),
-    res:   overrides.traits?.res   ?? randomBetween(3, 10),
-    cha:   overrides.traits?.cha   ?? randomBetween(3, 10),
-  }
+  const hcBonus = { excellent: 15, good: 8, fair: 0, poor: -10, very_poor: -20 }[country.healthcare] ?? 0
+  const health = clamp(55 + hcBonus + (wealthTier - 3) * 4, 15, 100)
+
+  const stabBonus = { secure: 15, stable: 5, struggling: -5, unstable: -20 }[familyStability] ?? 0
+  const happiness = clamp(60 + stabBonus + randomBetween(-5, 5), 10, 100)
+
+  const gdpBonus = { very_high: 15, high: 10, medium_high: 5, medium: 0, low_medium: -5, low: -10, very_low: -15 }[country.gdp] ?? 0
+  const smarts = clamp(50 + gdpBonus + randomBetween(-10, 10), 15, 90)
+
+  const looks = clamp(50 + (wealthTier - 3) * 3 + randomBetween(-15, 15), 15, 90)
+
+  const charismaBonus = { secure: 10, stable: 5, struggling: -3, unstable: -10 }[familyStability] ?? 0
+  const charisma = clamp(50 + charismaBonus + randomBetween(-10, 10), 15, 85)
+
+  const wealth = clamp(wealthTier * 18 + randomBetween(-4, 4), 0, 100)
+
+  const initialStats = { happiness, health, smarts, looks, charisma, wealth }
 
   return {
     firstName,
@@ -64,26 +75,12 @@ export function createCharacter(overrides = {}) {
     wealthTier,
     familyStability,
     familySize,
-    traits,
+    initialStats,
   }
 }
 
 export function deriveInitialStats(char) {
-  const { wealthTier, familyStability, traits, country } = char
-
-  const hcBonus = { excellent: 15, good: 8, fair: 0, poor: -10, very_poor: -20 }[country.healthcare] ?? 0
-  const health = clamp(55 + (traits.con - 5) * 4 + hcBonus, 15, 100)
-
-  const stabBonus = { secure: 12, stable: 4, struggling: -5, unstable: -15 }[familyStability] ?? 0
-  const mental = clamp(55 + (traits.res - 5) * 4 + stabBonus, 10, 100)
-
-  const wealth = clamp(wealthTier * 18 + randomBetween(-4, 4), 0, 100)
-
-  const education = 0
-
-  const social = clamp(50 + (traits.cha - 5) * 4, 20, 80)
-
-  return { health, mental, wealth, education, social }
+  return { ...char.initialStats }
 }
 
 // ─── Stat proxy ───────────────────────────────────────────────────────────────
@@ -91,7 +88,7 @@ export function deriveInitialStats(char) {
 function createProxy(state) {
   // Use copies so effect functions can mutate proxy.flags safely without touching state
   return {
-    h: 0, m: 0, w: 0, e: 0, s: 0, r: 0,
+    h: 0, m: 0, w: 0, e: 0, s: 0, lo: 0, r: 0,
     flags: [...state.flags],
     mem: { ...state.mem },
   }
@@ -99,15 +96,49 @@ function createProxy(state) {
 
 function applyProxy(state, proxy) {
   const stats = {
-    health:    clamp(state.stats.health    + proxy.h, 0, 100),
-    mental:    clamp(state.stats.mental    + proxy.m, 0, 100),
-    wealth:    clamp(state.stats.wealth    + proxy.w, 0, 100),
-    education: clamp(state.stats.education + proxy.e, 0, 100),
-    social:    clamp(state.stats.social    + proxy.s, 0, 100),
+    health:    clamp(state.stats.health    + proxy.h,  0, 100),
+    happiness: clamp(state.stats.happiness + proxy.m,  0, 100),
+    wealth:    clamp(state.stats.wealth    + proxy.w,  0, 100),
+    smarts:    clamp(state.stats.smarts    + proxy.e,  0, 100),
+    charisma:  clamp(state.stats.charisma  + proxy.s,  0, 100),
+    looks:     clamp(state.stats.looks     + proxy.lo, 0, 100),
   }
   const regret = clamp(state.regret + proxy.r, 0, 100)
   const flags = [...new Set(proxy.flags)]
   return { ...state, stats, regret, flags, mem: proxy.mem }
+}
+
+function applyNaturalAging(state) {
+  const { age, stats } = state
+  let { happiness, health, smarts, looks, charisma } = stats
+
+  // Happiness regresses ~4% per year toward the neutral point (50)
+  happiness += (50 - happiness) * 0.04
+
+  // Health declines with age
+  if (age > 75) health -= 1.0
+  else if (age > 60) health -= 0.7
+  else if (age > 40) health -= 0.5
+
+  // Looks decline with age after 30
+  if (age > 70) looks -= 0.5
+  else if (age > 50) looks -= 0.6
+  else if (age > 30) looks -= 0.4
+
+  // Smarts decline slightly in very old age
+  if (age > 75) smarts -= 0.3
+
+  return {
+    ...state,
+    stats: {
+      ...stats,
+      happiness: clamp(happiness, 0, 100),
+      health:    clamp(health,    0, 100),
+      smarts:    clamp(smarts,    0, 100),
+      looks:     clamp(looks,     0, 100),
+      charisma:  clamp(charisma,  0, 100),
+    },
+  }
 }
 
 function buildEffectProxy(state) {
@@ -261,7 +292,7 @@ function checkDeath(state) {
   } else if (age < 35) {
     prob = 0.002 + character.country.conflictRisk * 0.04
     if (flags.includes('criminal_life')) prob += 0.015
-    if (stats.mental < 15) prob += 0.02
+    if (stats.happiness < 15) prob += 0.02
   } else if (age < 50) {
     prob = 0.004 + (age - 35) * 0.0003
     if (stats.health < 25) prob += 0.025
@@ -297,7 +328,7 @@ function determineCause({ age, stats, flags, character }) {
   if (flags.includes('child_soldier') && age < 18) return 'caught in armed conflict'
   if (character.country.conflictRisk > 0.15 && age < 30 && chance(0.3)) return 'killed in conflict'
   if (flags.includes('criminal_life') && age < 40 && chance(0.3)) return 'violence related to criminal activity'
-  if (stats.mental < 15 && age < 45 && chance(0.4)) return 'suicide'
+  if (stats.happiness < 15 && age < 45 && chance(0.4)) return 'suicide'
   if (flags.includes('smoker') && age > 50 && chance(0.3)) return 'lung cancer'
   if (stats.health < 25 && age > 40) return 'organ failure'
   if (age > 80) return 'old age'
@@ -327,7 +358,7 @@ export function getAvailableCareers(state) {
       if (playerEdu < reqEdu) return false
       if (career.requirements.field && state.education.field !== career.requirements.field) return false
     }
-    if (career.requirements.minIntelligence && state.character.traits.intel < career.requirements.minIntelligence) return false
+    if (career.requirements.minSmarts && state.stats.smarts < career.requirements.minSmarts) return false
     if (career.gdpRequired && career.gdpRequired !== 'any') {
       const gdpOrder = ['very_low', 'low', 'low_medium', 'medium', 'medium_high', 'high', 'very_high']
       const countryGdp = gdpOrder.indexOf(state.character.country.gdp)
@@ -360,9 +391,9 @@ export function checkPromotion(state) {
   if (nextLevelIndex >= careerDef.levels.length) return state // already at top
 
   const baseChance = careerDef.promotionChance ?? 0.15
-  const intelBonus = (state.character.traits.intel - 5) * 0.02
+  const smartsBonus = (state.stats.smarts - 50) * 0.001
   const yearsBonus = Math.min(state.career.yearsInRole * 0.03, 0.15)
-  if (!chance(baseChance + intelBonus + yearsBonus)) return state
+  if (!chance(baseChance + smartsBonus + yearsBonus)) return state
 
   const newLevel = careerDef.levels[nextLevelIndex]
   const salary = randomBetween(newLevel.salaryRange[0], newLevel.salaryRange[1])
@@ -456,7 +487,7 @@ export function tick(state) {
 
   // Prison year — health can still deteriorate behind bars
   if (s.inPrison) {
-    s.stats = { ...s.stats, health: clamp(s.stats.health - 1, 0, 100), mental: clamp(s.stats.mental - 2, 0, 100) }
+    s.stats = { ...s.stats, health: clamp(s.stats.health - 1, 0, 100), happiness: clamp(s.stats.happiness - 2, 0, 100) }
     const deathInPrison = checkDeath(s)
     if (deathInPrison.dead) {
       const ribbon = assignRibbon(s)
@@ -477,6 +508,9 @@ export function tick(state) {
     }
     return s
   }
+
+  // Natural aging effects
+  s = applyNaturalAging(s)
 
   // World events
   s = applyWorldEvents(s)

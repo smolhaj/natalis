@@ -15,7 +15,7 @@ const INITIAL_STATE = {
   screen: 'title',
   birthYearMode: 'random',
   character: null,
-  stats: { health: 100, mental: 100, wealth: 50, education: 0, social: 50 },
+  stats: { happiness: 80, health: 80, smarts: 50, looks: 50, charisma: 50, wealth: 50 },
   flags: [],
   regret: 0,
   age: 0,
