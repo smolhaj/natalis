@@ -1110,6 +1110,20 @@ export function tick(state) {
     s.queue = [graduationEvent, ...s.queue]
   }
 
+  // Addiction health drain
+  if (s.flags.includes('alcohol_addiction')) {
+    s.stats = { ...s.stats, health: clamp(s.stats.health - 2, 0, 100), happiness: clamp(s.stats.happiness - 3, 0, 100) }
+  }
+  if (s.flags.includes('drug_addiction')) {
+    s.stats = { ...s.stats, health: clamp(s.stats.health - 3, 0, 100), happiness: clamp(s.stats.happiness - 2, 0, 100) }
+    // Overdose risk (random annual check)
+    if (chance(0.04)) {
+      s.stats = { ...s.stats, health: clamp(s.stats.health - 20, 0, 100) }
+      s.flags = [...new Set([...s.flags, 'overdosed'])]
+      s.log = [...s.log, { age: s.age, text: 'You suffer an overdose. You survive, but barely.', isKey: true }]
+    }
+  }
+
   // Illness risk check
   s = checkIllnessRisk(s)
 
@@ -1290,6 +1304,21 @@ export function sellVehicle(state, vehicleIdx) {
     money: (state.money ?? 0) + vehicle.currentValue,
     assets: { ...state.assets, vehicles: newVehicles },
     log: [...state.log, { age: state.age, text: `You sell your ${vehicle.name} for $${vehicle.currentValue.toLocaleString()}.`, isKey: false }],
+  }
+}
+
+export function abandonChild(state, childIndex) {
+  const child = state.children[childIndex]
+  if (!child) return state
+  const updated = state.children.filter((_, i) => i !== childIndex)
+  return {
+    ...state,
+    children: updated,
+    flags: [...new Set([...state.flags, 'deadbeat_parent'])],
+    regret: clamp(state.regret + 25, 0, 100),
+    karma: clamp((state.karma ?? 50) - 20, 0, 100),
+    stats: { ...state.stats, happiness: clamp(state.stats.happiness - 15, 0, 100) },
+    log: [...state.log, { age: state.age, text: `You abandon ${child.name.split(' ')[0]}. The weight of this will not leave you.`, isKey: true }],
   }
 }
 
@@ -1643,6 +1672,46 @@ export function toggleBirthControl(state) {
     ...state,
     birthControl: !current,
     log: [...state.log, { age: state.age, text: !current ? 'You start using birth control.' : 'You stop using birth control.', isKey: false }],
+  }
+}
+
+export function useSubstance(state, substance) {
+  const opts = {
+    alcohol:  { cost: 30,  hDelta: -3, mDelta: 8,  addFlag: 'heavy_drinker',    addictionFlag: 'alcohol_addiction', addictChance: 0.08 },
+    cannabis: { cost: 40,  hDelta: -2, mDelta: 7,  addFlag: 'drug_user',        addictionFlag: 'drug_addiction',    addictChance: 0.06 },
+    cocaine:  { cost: 200, hDelta: -5, mDelta: 12, addFlag: 'substance_abuser', addictionFlag: 'drug_addiction',    addictChance: 0.18 },
+    heroin:   { cost: 150, hDelta: -8, mDelta: 10, addFlag: 'substance_abuser', addictionFlag: 'drug_addiction',    addictChance: 0.30 },
+    pills:    { cost: 60,  hDelta: -4, mDelta: 9,  addFlag: 'drug_user',        addictionFlag: 'drug_addiction',    addictChance: 0.12 },
+  }
+  const opt = opts[substance]
+  if (!opt) return state
+  if ((state.money ?? 0) < opt.cost) {
+    return { ...state, log: [...state.log, { age: state.age, text: "You can't afford that right now.", isKey: false }] }
+  }
+  const newFlags = [...state.flags]
+  if (!newFlags.includes(opt.addFlag)) newFlags.push(opt.addFlag)
+  if (!newFlags.includes(opt.addictionFlag) && chance(opt.addictChance + (newFlags.includes(opt.addFlag) ? 0.05 : 0))) {
+    newFlags.push(opt.addictionFlag)
+  }
+  // Overdose risk for hard drugs
+  const overdoseRisk = { heroin: 0.06, cocaine: 0.03, pills: 0.02 }[substance] ?? 0
+  if (chance(overdoseRisk)) {
+    return {
+      ...state,
+      money: Math.max(0, (state.money ?? 0) - opt.cost),
+      flags: [...new Set([...newFlags, 'overdosed'])],
+      stats: { ...state.stats, health: clamp(state.stats.health - 25, 0, 100), happiness: clamp(state.stats.happiness - 10, 0, 100) },
+      actionsThisYear: state.actionsThisYear + 1,
+      log: [...state.log, { age: state.age, text: `You overdose on ${substance}. Someone finds you in time. Barely.`, isKey: true }],
+    }
+  }
+  return {
+    ...state,
+    money: Math.max(0, (state.money ?? 0) - opt.cost),
+    flags: [...new Set(newFlags)],
+    stats: { ...state.stats, health: clamp(state.stats.health + opt.hDelta, 0, 100), happiness: clamp(state.stats.happiness + opt.mDelta, 0, 100) },
+    actionsThisYear: state.actionsThisYear + 1,
+    log: [...state.log, { age: state.age, text: `You use ${substance}. The effect is immediate.`, isKey: false }],
   }
 }
 

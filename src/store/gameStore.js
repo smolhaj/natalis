@@ -50,6 +50,8 @@ import {
   obtainLicense,
   interactWithFriend,
   dropOutOfSchool,
+  abandonChild,
+  useSubstance,
 } from '../engine/gameEngine'
 import { COUNTRIES } from '../data/countries'
 
@@ -479,6 +481,20 @@ export const useGameStore = create((set, get) => ({
     const state = get()
     if (state.dead) return
     const next = dropOutOfSchool(state)
+    set(next)
+  },
+
+  abandonChild: (childIndex) => {
+    const state = get()
+    if (state.dead) return
+    const next = abandonChild(state, childIndex)
+    set(next)
+  },
+
+  useSubstance: (substance) => {
+    const state = get()
+    if (state.actionsThisYear >= state.maxActionsPerYear || state.pendingEvent || state.dead) return
+    const next = useSubstance(state, substance)
     set(next)
   },
 
