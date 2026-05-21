@@ -7234,4 +7234,148 @@ export const EVENTS = [
       { text: 'Move on to another city in this country', tag: null, outcome: 'You cut ties and relocate within the country. The threat recedes.', effect: (p) => { p.m -= 8; p.h -= 3 } },
     ],
   },
+
+  // ── RELATIONSHIP ANNIVERSARIES ───────────────────────────────────────────────
+
+  {
+    id: 'relationship_1yr',
+    phase: null,
+    weight: 5,
+    when: (G) => G.partner && G.partner.years === 1 && !G.mem.anniv_1yr,
+    text: G => `One year with ${G.partner?.name}. You think about everything that's happened and where you'd both be without that first meeting.`,
+    choices: [
+      { text: 'Celebrate properly — dinner, gifts, the works', tag: null, outcome: 'A night to remember. You feel closer than ever.', effect: (p) => { p.mo -= 200; p.m += 10; p.partnerRel(8); p.setMem('anniv_1yr', true) } },
+      { text: 'Mark the day quietly together', tag: null, outcome: 'Simple and genuine. They appreciate the thought.', effect: (p) => { p.m += 6; p.partnerRel(5); p.setMem('anniv_1yr', true) } },
+      { text: 'Let it pass without mention', tag: null, outcome: 'They notice. It leaves a small, cold absence.', effect: (p) => { p.partnerRel(-6); p.setMem('anniv_1yr', true) } },
+    ],
+  },
+
+  {
+    id: 'relationship_5yr',
+    phase: null,
+    weight: 4,
+    isKey: true,
+    when: (G) => G.partner && G.partner.years === 5 && !G.mem.anniv_5yr,
+    text: G => `Five years with ${G.partner?.name}. The electricity of newness has given way to something steadier — a presence that has become architecture.`,
+    choices: [
+      { text: 'Reflect on how far you\'ve come together', tag: null, outcome: 'Gratitude, quietly held. It strengthens something.', effect: (p) => { p.m += 8; p.partnerRel(10); p.r -= 3; p.setMem('anniv_5yr', true) } },
+      { text: 'Worry that you\'ve grown too comfortable', tag: null, outcome: 'The doubt flickers, then fades. Comfort isn\'t complacency.', effect: (p) => { p.m -= 4; p.r += 3; p.setMem('anniv_5yr', true) } },
+    ],
+  },
+
+  {
+    id: 'relationship_10yr',
+    phase: null,
+    weight: 3,
+    isKey: true,
+    when: (G) => G.partner && G.partner.years === 10 && !G.mem.anniv_10yr,
+    text: G => `A decade with ${G.partner?.name}. Ten years of choosing each other. Not every day has been easy. But the choosing kept happening.`,
+    choices: [
+      { text: 'Renew your vows or make a new promise', tag: null, outcome: 'A public recommitment. The room is smaller than the first ceremony, but the feeling is larger.', effect: (p) => { p.m += 15; p.partnerRel(15); p.setMem('anniv_10yr', true) } },
+      { text: 'Mark it simply — just the two of you', tag: null, outcome: 'What you have is private. It doesn\'t need an audience.', effect: (p) => { p.m += 10; p.partnerRel(10); p.setMem('anniv_10yr', true) } },
+    ],
+  },
+
+  // ── MENOPAUSE ────────────────────────────────────────────────────────────────
+
+  {
+    id: 'menopause_onset',
+    phase: null,
+    weight: 3,
+    isKey: true,
+    when: (G) => G.character.gender === 'female' && G.age >= 48 && G.age <= 55 && !G.flags.includes('menopause') && !G.mem.menopause_check,
+    text: 'Your period becomes irregular and then, gradually, absent. Perimenopause. The body making a slow announcement. Heat flushes, disrupted sleep, a fogginess you\'ve named but not yet made peace with.',
+    choices: [
+      { text: 'See a doctor about HRT', tag: null, outcome: 'Hormone replacement therapy evens the transition considerably. The fog lifts.', effect: (p) => { p.mo -= 800; p.h += 8; p.m += 5; p.addFlag('menopause'); p.setMem('menopause_check', true) } },
+      { text: 'Manage it naturally', tag: null, outcome: 'Diet, exercise, and patience. Not easy, but navigable.', effect: (p) => { p.h -= 5; p.m -= 4; p.addFlag('menopause'); p.setMem('menopause_check', true) } },
+      { text: 'Push through — it will pass', tag: null, outcome: 'It does pass, eventually. The years between are harder than they needed to be.', effect: (p) => { p.h -= 10; p.m -= 8; p.addFlag('menopause'); p.setMem('menopause_check', true) } },
+    ],
+  },
+
+  {
+    id: 'menopause_mood',
+    phase: null,
+    weight: 4,
+    when: (G) => G.flags.includes('menopause') && G.age <= 60 && !G.mem.menopause_mood,
+    text: 'The hormonal shift brings unexpected emotional terrain. Some days you feel inexplicably tearful; others, a clarity and steadiness you haven\'t felt in years.',
+    choices: [
+      { text: 'Talk to someone — therapist, friend, partner', tag: null, outcome: 'Naming it reduces its power, if only slightly.', effect: (p) => { p.m += 8; p.h += 3; p.setMem('menopause_mood', true) } },
+      { text: 'Work through it alone', tag: null, outcome: 'You always have. The same strategy, longer runway.', effect: (p) => { p.m -= 5; p.setMem('menopause_mood', true) } },
+    ],
+  },
+
+  // ── DEMENTIA / COGNITIVE DECLINE ─────────────────────────────────────────────
+
+  {
+    id: 'cognitive_decline_early',
+    phase: null,
+    weight: 2,
+    when: (G) => G.age >= 72 && G.age <= 80 && !G.mem.dementia_onset && Math.random() < 0.3,
+    text: 'You misplace your keys three times in a week. You lose a word mid-sentence — not just momentarily, but really lose it. Your doctor calls it "mild cognitive impairment" and asks you to come back in six months.',
+    isKey: true,
+    choices: [
+      { text: 'Start cognitive exercises and lifestyle changes', tag: null, outcome: 'Brain training, social engagement, physical activity. You hold the line for longer.', effect: (p) => { p.e += 3; p.h += 3; p.m -= 5; p.addFlag('mild_cognitive_impairment'); p.setMem('dementia_onset', true) } },
+      { text: 'Get a second opinion', tag: null, outcome: 'The second doctor agrees. Different words, same landscape.', effect: (p) => { p.m -= 8; p.addFlag('mild_cognitive_impairment'); p.setMem('dementia_onset', true) } },
+      { text: 'Dismiss it — everyone forgets things', tag: null, outcome: 'Some dismissals are self-protection. This one costs time.', effect: (p) => { p.m -= 3; p.h -= 3; p.addFlag('mild_cognitive_impairment'); p.setMem('dementia_onset', true) } },
+    ],
+  },
+
+  {
+    id: 'dementia_progressed',
+    phase: null,
+    weight: 3,
+    when: (G) => G.flags.includes('mild_cognitive_impairment') && G.age >= 78 && !G.mem.dementia_progressed,
+    text: 'The diagnosis is now Alzheimer\'s. Not a surprise, exactly — but hearing the name changes something. You think about what you want to do while you can still plan it.',
+    isKey: true,
+    choices: [
+      { text: 'Write letters to the people who matter most', tag: null, outcome: 'Hours at the desk, finding the words. The most important thing you\'ve done in years.', effect: (p) => { p.m += 10; p.r -= 15; p.karma += 10; p.addFlag('dementia'); p.setMem('dementia_progressed', true) } },
+      { text: 'Spend every remaining clear day with family', tag: null, outcome: 'The clarity comes in waves. You use each one.', effect: (p) => { p.m += 8; p.r -= 10; p.addFlag('dementia'); p.setMem('dementia_progressed', true) } },
+      { text: 'Plan a bucket list trip', tag: null, outcome: 'You go. The place is everything and the memory of it will outlast you in others.', effect: (p) => { p.m += 15; p.mo -= 5000; p.addFlag('dementia'); p.setMem('dementia_progressed', true) } },
+    ],
+  },
+
+  // ── STI EVENTS ───────────────────────────────────────────────────────────────
+
+  {
+    id: 'sti_discovered',
+    phase: null,
+    weight: 3,
+    when: (G) => G.flags.includes('has_std') && !G.mem.sti_told && G.age >= 16,
+    text: 'A routine check-up, or maybe symptoms you\'d been quietly ignoring. The test comes back positive. Your doctor runs through options — treatment, notification of partners, follow-up.',
+    isKey: true,
+    choices: [
+      { text: 'Start treatment immediately', tag: null, outcome: 'You begin the course. It\'s manageable. You make the calls you need to make.', effect: (p) => { p.mo -= 300; p.h += 5; p.m -= 5; p.setMem('sti_told', true) } },
+      { text: 'Treat it quietly and tell no one', tag: null, outcome: 'The treatment works. The silence stays. A weight you chose.', effect: (p) => { p.mo -= 300; p.h += 3; p.karma -= 10; p.setMem('sti_told', true) } },
+      { text: 'Delay — you\'ll deal with it later', tag: null, outcome: 'Later costs more — in health, in damage, in the relationship you haven\'t yet told.', effect: (p) => { p.h -= 8; p.m -= 5; p.setMem('sti_told', true) } },
+    ],
+  },
+
+  // ── PAPARAZZI / FAME PRESSURE ────────────────────────────────────────────────
+
+  {
+    id: 'stalker_fan',
+    phase: null,
+    weight: 3,
+    when: (G) => (G.fame ?? 0) >= 50 && !G.mem.stalkerEvent,
+    text: 'Someone has been outside your home three days running. The messages escalate from admiration to obsession. Your team is aware, but you are the one who has to live inside this.',
+    isKey: true,
+    choices: [
+      { text: 'Get a restraining order', tag: null, outcome: 'It\'s effective, mostly. You feel safer. Fame costs differently than you expected.', effect: (p) => { p.mo -= 2000; p.m += 5; p.setMem('stalkerEvent', true) } },
+      { text: 'Hire additional security', tag: null, outcome: 'The privacy shrinks as the protection grows. A transaction you didn\'t choose to make.', effect: (p) => { p.mo -= 5000; p.m -= 3; p.h += 3; p.setMem('stalkerEvent', true) } },
+      { text: 'Ignore it and hope it passes', tag: null, outcome: 'Mostly it does. The not-knowing is its own kind of cost.', effect: (p) => { p.m -= 10; p.h -= 5; p.setMem('stalkerEvent', true) } },
+    ],
+  },
+
+  {
+    id: 'endorsement_deal',
+    phase: null,
+    weight: 4,
+    when: (G) => (G.fame ?? 0) >= 55 && !G.mem.endorsementDeal,
+    text: 'A brand reaches out through your agent. The numbers are real. So are the strings — they want six posts over three months, a specific tone, photos that feel organic but aren\'t.',
+    choices: [
+      { text: 'Take it — the money is significant', tag: null, outcome: 'You sign. The posts go up. Your audience notices, mostly without comment.', effect: (p) => { p.mo += 15000; p.m -= 3; p.setMem('endorsementDeal', true) } },
+      { text: 'Only if you actually like the product', tag: null, outcome: 'It\'s one you\'d buy anyway. That makes the posts easier. The money helps.', effect: (p) => { p.mo += 8000; p.m += 3; p.karma += 3; p.setMem('endorsementDeal', true) } },
+      { text: 'Decline — your credibility matters more', tag: null, outcome: 'The agent is frustrated. You feel fine about the decision.', effect: (p) => { p.m += 5; p.karma += 5; p.setMem('endorsementDeal', true) } },
+    ],
+  },
 ]

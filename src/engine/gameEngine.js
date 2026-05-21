@@ -212,6 +212,7 @@ function applyNaturalAging(state) {
 function buildEffectProxy(state) {
   const proxy = createProxy(state)
   proxy.addFlag = (flag) => { if (!proxy.flags.includes(flag)) proxy.flags.push(flag) }
+  proxy.clearFlag = (flag) => { proxy.flags = proxy.flags.filter(f => f !== flag) }
   proxy.setEducation = (level, field = null) => {
     proxy._newEducation = { level, field: field ?? state.education.field }
   }
@@ -882,6 +883,8 @@ export function applyActivity(state, activityId) {
     ...(ACTIVITIES.body ?? []),
     ...(ACTIVITIES.social ?? []),
     ...(ACTIVITIES.money ?? []),
+    ...(ACTIVITIES.extracurricular ?? []),
+    ...(ACTIVITIES.appearance ?? []),
   ]
   const activity = allActivities.find(a => a.id === activityId)
   if (!activity) return state
@@ -1950,9 +1953,18 @@ export function visitSalonSpa(state, service) {
 export function postSocialMedia(state) {
   const sm = state.socialMedia ?? { followers: 0, verified: false, genre: null }
   const famous = (state.fame ?? 0) > 20
-  const followerDelta = famous ? randomBetween(200, 5000) : randomBetween(-100, 300)
+  // Genre-based multipliers — niche audiences grow faster, mass-appeal grows big
+  const genreBonus = {
+    comedy: 1.3, gaming: 1.2, fitness: 1.1, lifestyle: 1.15,
+    beauty: 1.1, music: 1.2, food: 1.1, politics: 0.85,
+  }
+  const mult = sm.genre ? (genreBonus[sm.genre] ?? 1.0) : 0.7
+  const baseMin = famous ? 200 : sm.genre ? -50 : -100
+  const baseMax = famous ? 5000 : sm.genre ? 400 : 300
+  const followerDelta = Math.round(randomBetween(baseMin, baseMax) * mult)
   const newFollowers = Math.max(0, sm.followers + followerDelta)
   const nowVerified = sm.verified || (newFollowers >= 100000 && (state.fame ?? 0) >= 25)
+  const genreLabel = sm.genre ? ` (${sm.genre})` : ''
   return {
     ...state,
     socialMedia: { ...sm, followers: newFollowers, verified: nowVerified },
@@ -1960,8 +1972,10 @@ export function postSocialMedia(state) {
     log: [...state.log, {
       age: state.age,
       text: followerDelta > 0
-        ? `Your post gets traction. Followers: ${newFollowers.toLocaleString()}.${nowVerified && !sm.verified ? ' You\'re now verified!' : ''}`
-        : `Your post flops. Followers slip to ${newFollowers.toLocaleString()}.`,
+        ? `Your${genreLabel} post gets traction. Followers: ${newFollowers.toLocaleString()}.${nowVerified && !sm.verified ? ' You\'re now verified!' : ''}`
+        : sm.genre
+          ? `Your${genreLabel} post underperforms. Followers: ${newFollowers.toLocaleString()}.`
+          : `Your post flops — try picking a niche. Followers: ${newFollowers.toLocaleString()}.`,
       isKey: nowVerified && !sm.verified,
     }],
   }

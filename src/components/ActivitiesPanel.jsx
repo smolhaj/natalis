@@ -158,6 +158,10 @@ export default function ActivitiesPanel({ onClose }) {
             {state.age >= 10 && <Btn disabled={noActions} onClick={() => go(() => takeActivity('gardening'))} title="Gardening" subtitle="Get your hands in the earth." />}
             {/* Therapy */}
             {state.age >= 16 && <Btn disabled={noActions} onClick={() => go(() => takeActivity('book_therapy'))} title="🛋️ Book Therapy" subtitle="Address your mental health with a professional." cost="$120" />}
+            {/* STI Treatment */}
+            {state.flags.includes('has_std') && (
+              <Btn disabled={noActions} onClick={() => go(() => takeActivity('treat_sti'))} title="🏥 Treat STI" subtitle="See a doctor and start treatment." cost="$300" danger />
+            )}
             {/* Martial Arts */}
             {state.age >= 12 && (
               <>
@@ -216,6 +220,25 @@ export default function ActivitiesPanel({ onClose }) {
                 <Btn key={a.id} disabled={noActions} onClick={() => go(() => takeActivity(a.id))} title={a.name} subtitle={a.description} cost={a.cost > 0 ? `Cost: $${a.cost}` : null} />
               ))
             }
+            {state.age >= 10 && state.age <= 18 && (
+              <>
+                <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">Extracurriculars</p>
+                {(ACTIVITIES.extracurricular ?? [])
+                  .filter(a => state.age >= (a.minAge ?? 0) && state.age <= (a.maxAge ?? 99))
+                  .filter(a => !a.minYear || (state.currentYear ?? 0) >= a.minYear)
+                  .map(a => {
+                    const joined = state.flags.includes(a.id.replace('_school', '').replace('volunteer_school', 'volunteer'))
+                    return (
+                      <Btn key={a.id} disabled={noActions}
+                        onClick={() => go(() => takeActivity(a.id))}
+                        title={`${joined ? '✓ ' : ''}${a.name}`}
+                        subtitle={a.desc ?? a.description}
+                      />
+                    )
+                  })
+                }
+              </>
+            )}
           </>
         )
       }
@@ -554,6 +577,17 @@ export default function ActivitiesPanel({ onClose }) {
       }
 
       case 'social_media': {
+        const SM_GENRES = [
+          { id: 'comedy',    label: 'Comedy',    emoji: '😂', desc: 'Relatable and funny content.' },
+          { id: 'lifestyle', label: 'Lifestyle', emoji: '✨', desc: 'Fashion, travel, aspirational living.' },
+          { id: 'gaming',    label: 'Gaming',    emoji: '🎮', desc: 'Gameplay, reviews, streaming.' },
+          { id: 'fitness',   label: 'Fitness',   emoji: '💪', desc: 'Workouts, health, wellness.' },
+          { id: 'beauty',    label: 'Beauty',    emoji: '💄', desc: 'Makeup, skincare, style.' },
+          { id: 'politics',  label: 'Politics',  emoji: '📢', desc: 'Opinions and commentary.' },
+          { id: 'music',     label: 'Music',     emoji: '🎵', desc: 'Covers, originals, music talk.' },
+          { id: 'food',      label: 'Food',      emoji: '🍜', desc: 'Recipes, restaurants, cooking.' },
+        ]
+        const setGenre = (genreId) => useGameStore.getState().set?.({ socialMedia: { ...sm, genre: genreId } }) ?? useGameStore.setState({ socialMedia: { ...sm, genre: genreId } })
         return (
           <>
             <div className="flex items-center justify-between bg-white rounded-xl border border-natalis-border px-4 py-3 mb-1">
@@ -561,11 +595,33 @@ export default function ActivitiesPanel({ onClose }) {
               <div className="flex items-center gap-2">
                 <span className="font-bold text-natalis-text text-sm">{sm.followers.toLocaleString()}</span>
                 {sm.verified && <span className="text-xs font-bold text-white bg-bit-blue px-2 py-0.5 rounded-full">✓ Verified</span>}
+                {sm.genre && <span className="text-xs font-bold text-white bg-pink-500 px-2 py-0.5 rounded-full capitalize">{sm.genre}</span>}
               </div>
             </div>
-            <Btn disabled={noActions} onClick={() => go(postSocialMedia)} title="Post Content" subtitle="Share a post and grow your audience." />
-            {sm.followers >= 5000 && (
-              <Btn disabled={noActions} onClick={() => go(promoteSocialMedia)} title="Promote a Product" subtitle="Earn money through sponsorships." cost="Requires 5k+ followers" />
+            {!sm.genre && (
+              <>
+                <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1">Pick your content niche</p>
+                <div className="grid grid-cols-2 gap-1.5 mb-2">
+                  {SM_GENRES.map(g => (
+                    <button key={g.id}
+                      onClick={() => useGameStore.setState({ socialMedia: { ...sm, genre: g.id } })}
+                      className="flex items-center gap-2 px-3 py-2.5 rounded-xl border border-natalis-border bg-white text-left text-xs font-semibold text-natalis-text hover:border-bit-blue hover:bg-blue-50 active:scale-95 transition-all">
+                      <span className="text-lg">{g.emoji}</span>
+                      <div><p>{g.label}</p><p className="font-normal text-natalis-muted">{g.desc}</p></div>
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+            {sm.genre && (
+              <>
+                <Btn disabled={noActions} onClick={() => go(postSocialMedia)} title="Post Content" subtitle={`Share ${sm.genre} content and grow your audience.`} />
+                {sm.followers >= 5000 && (
+                  <Btn disabled={noActions} onClick={() => go(promoteSocialMedia)} title="Promote a Product" subtitle="Earn money through sponsorships." cost="Requires 5k+ followers" />
+                )}
+                <Btn disabled={false} onClick={() => useGameStore.setState({ socialMedia: { ...sm, genre: null } })}
+                  title="Change Niche" subtitle={`Currently: ${SM_GENRES.find(g => g.id === sm.genre)?.label ?? sm.genre}`} />
+              </>
             )}
           </>
         )
