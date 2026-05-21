@@ -4831,7 +4831,7 @@ export const EVENTS = [
     id: 'gambling_addiction_spiral',
     phase: 'young_adult',
     weight: 3,
-    when: (G) => G.flags.includes('addicted_gambling') && !G.mem.gambling_spiral_shown && G.age >= 18,
+    when: (G) => (G.flags.includes('addicted_gambling') || G.flags.includes('gambling_addiction')) && !G.mem.gambling_spiral_shown && G.age >= 18,
     text: G => {
       const arch = G.character.country.archetype;
       if (['wealthy_west', 'wealthy_gulf'].includes(arch)) return 'The casino knows your name now. The carpet, the lights, the sound of chips — they\'ve replaced everything else. You\'ve been calling in sick to bet on sports from your couch.';
@@ -4861,7 +4861,7 @@ export const EVENTS = [
     id: 'gambling_big_loss',
     phase: 'young_adult',
     weight: 3,
-    when: (G) => G.flags.includes('addicted_gambling') && G.money > 500 && !G.mem.gambling_big_loss,
+    when: (G) => (G.flags.includes('addicted_gambling') || G.flags.includes('gambling_addiction')) && G.money > 500 && !G.mem.gambling_big_loss,
     text: 'You bet everything on a sure thing. The horse stumbles. The card is wrong. The wheel lands one slot over. In minutes, a significant portion of your savings is gone.',
     isKey: true,
     choices: [
@@ -4869,14 +4869,14 @@ export const EVENTS = [
         text: 'Walk away',
         tag: null,
         outcome: 'You leave the floor. You don\'t look back. The loss is real — so is the decision.',
-        effect: (p) => { p.mo -= Math.min(G.money * 0.4, 5000); p.h -= 25; p.setMem('gambling_big_loss', true); },
+        effect: (p) => { p.mo -= 3000; p.h -= 25; p.setMem('gambling_big_loss', true); },
         inject: null,
       },
       {
         text: 'Double down to recover',
         tag: null,
         outcome: 'Chasing losses is a mathematical trap. You step into it fully.',
-        effect: (p) => { p.mo -= Math.min(G.money * 0.7, 10000); p.m -= 15; p.h -= 30; p.setMem('gambling_big_loss', true); },
+        effect: (p) => { p.mo -= 7000; p.m -= 15; p.h -= 30; p.setMem('gambling_big_loss', true); },
         inject: null,
       },
     ],
@@ -5164,6 +5164,242 @@ export const EVENTS = [
         effect: (p) => { p.h -= 2; p.setMem('talent_show', true); },
         inject: null,
       },
+    ],
+    effect: null,
+  },
+
+  // ── PROPERTY EVENTS ───────────────────────────────────────────────────────────
+  {
+    id: 'neighbor_dispute',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.assets?.properties?.length > 0 && !G.mem.neighbor_dispute && G.age >= 22,
+    text: (G) => {
+      if (G.character.country.archetype === 'wealthy_west')
+        return 'Your HOA has forwarded a noise complaint from next door — apparently your weekend habits are "inconsistent with community standards". The letter is very long.'
+      if (G.character.country.archetype === 'post_soviet')
+        return 'Your upstairs neighbour in the Soviet-era apartment block has been hammering at all hours. The building management committee is useless. The feud is escalating.'
+      if (['developing_urban', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'A developer has begun encroaching on the boundary between their site and your property. A wall has appeared overnight. It is not on your land — not quite.'
+      return 'A dispute with your neighbour has been building for weeks. Today it came to a head over the fence line and neither of you is backing down.'
+    },
+    choices: [
+      { text: 'Talk it out calmly', tag: null, outcome: 'The conversation is uncomfortable but honest. A compromise is reached. The tension thaws.', effect: (p) => { p.m += 5; p.karma += 5; p.setMem('neighbor_dispute', true); }, inject: null },
+      { text: 'Lawyer up', tag: null, outcome: "The solicitor's letter lands and the neighbour backs down — grudgingly. The legal bill lands too.", effect: (p) => { p.mo -= 500; p.m -= 5; p.setMem('neighbor_dispute', true); }, inject: null },
+      { text: 'Ignore it', tag: null, outcome: 'The dispute festers. You spend the next month dreading your own front door.', effect: (p) => { p.m -= 8; p.setMem('neighbor_dispute', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'home_renovation',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.assets?.properties?.length > 0 && G.money >= 2000 && !G.mem.home_reno && G.age >= 25,
+    text: 'Your home is showing its age. The kitchen is original from when the previous owner bought it, the bathroom tiles have seen better decades, and the roof has started making sounds. Something has to give.',
+    choices: [
+      { text: 'Full renovation ($5,000)', tag: null, outcome: 'Six weeks of dust, builders, and chaos — then it is transformed. The property value climbs. You feel different walking through the door.', effect: (p) => { p.mo -= 5000; p.m += 20; p.w += 8; p.setMem('home_reno', true); }, inject: null },
+      { text: 'Basic repairs ($1,500)', tag: null, outcome: 'The essentials are fixed. Not glamorous, but solid.', effect: (p) => { p.mo -= 1500; p.m += 8; p.setMem('home_reno', true); }, inject: null },
+      { text: 'DIY it', tag: null, outcome: 'It took every weekend for three months and several trips to A&E with minor injuries, but you got there. The tiles are slightly crooked. You love them.', effect: (p) => { p.mo -= 300; p.m += 12; p.h -= 5; p.setMem('home_reno', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'flood_damage',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.assets?.properties?.length > 0 && !G.mem.flood_damage && G.age >= 22,
+    text: (G) => {
+      if (['developing_unstable', 'subsaharan', 'conflict_zone'].includes(G.character.country.archetype))
+        return 'The monsoon season has been brutal this year. Water has entered the ground floor of your property. The damage is extensive and insurance is a distant concept here.'
+      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
+        return 'An unexpected flash flood — the drainage system overwhelmed in minutes. Your ground floor is under thirty centimetres of filthy water. The insurance company has already put you on hold.'
+      return 'Heavy rains have overwhelmed the local drainage and your property has flooded. The damage will take months to address.'
+    },
+    choices: [
+      { text: 'File an insurance claim', tag: null, outcome: 'The assessor takes three weeks. The payout covers most of it, after the excess. The process is exhausting.', effect: (p) => { p.mo -= 1000; p.m -= 10; p.setMem('flood_damage', true); }, inject: null },
+      { text: 'Repair it yourself', tag: null, outcome: 'You rip out the damaged flooring and rebuild it by hand. Your back pays the price. The house recovers; you take longer.', effect: (p) => { p.mo -= 3000; p.m -= 15; p.h -= 5; p.setMem('flood_damage', true); }, inject: null },
+      { text: 'Sell the damaged property fast', tag: null, outcome: 'You take a heavy loss to offload the problem. The relief is immediate. The regret sets in later.', effect: (p) => { p.mo -= 8000; p.m -= 20; p.setMem('flood_damage', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'rental_income_opportunity',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.assets?.properties?.length > 0 && !G.mem.rented_room && G.age >= 25,
+    text: 'You have a spare room sitting empty. A colleague mentions they know someone looking for a place. The extra income would be useful — but so would your privacy.',
+    choices: [
+      { text: 'Rent it out', tag: null, outcome: 'The money arrives each month. So does tenant drama: the shared fridge, the late nights, the passive-aggressive notes. Worth it, mostly.', effect: (p) => { p.mo += 800; p.m -= 5; p.setMem('rented_room', true); }, inject: null },
+      { text: 'Keep your privacy', tag: null, outcome: 'Your home remains your own. The quiet is worth more than the rent.', effect: (p) => { p.m += 5; p.setMem('rented_room', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'property_price_boom',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.assets?.properties?.length > 0 && G.currentYear >= 2000 && !G.mem.prop_boom,
+    text: (G) => {
+      if (G.character.country.archetype === 'wealthy_west' && G.currentYear >= 2020)
+        return 'The post-pandemic housing market has gone into overdrive. Your property has appreciated by more in the last eighteen months than in the previous decade. Estate agents are sending unsolicited letters.'
+      if (G.character.country.archetype === 'wealthy_west' && G.currentYear >= 2000)
+        return 'The property market is booming and your home has surged in value. Everyone seems to be either buying or selling.'
+      if (G.character.country.archetype === 'wealthy_east')
+        return 'The Asian property surge has lifted values across the region. Your property is suddenly worth considerably more than you paid for it.'
+      if (['developing_urban', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'Gentrification is reshaping the neighbourhood. The cafe that replaced the hardware shop charges five times as much. Your property value has followed the coffee prices upward.'
+      return 'Local property values have surged unexpectedly. Your asset is worth significantly more than you paid for it.'
+    },
+    choices: [
+      { text: 'Sell now at peak', tag: null, outcome: 'You time the market perfectly. The windfall is significant. Finding somewhere new to live is a problem for tomorrow.', effect: (p) => { p.mo += 15000; p.m += 20; p.setMem('prop_boom', true); }, inject: null },
+      { text: 'Hold for the long term', tag: null, outcome: 'You resist the temptation. The asset sits there, appreciating. Patience has always been part of the plan.', effect: (p) => { p.m += 10; p.w += 5; p.setMem('prop_boom', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // ── CAREER DEPTH EVENTS ───────────────────────────────────────────────────────
+  {
+    id: 'workplace_romance',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.career !== null && G.partner === null && G.age >= 22 && !G.mem.workplace_romance,
+    text: 'A colleague has been finding increasingly transparent reasons to stop by your desk. The coffee invitations are becoming something else. The feeling appears to be mutual.',
+    choices: [
+      { text: 'Pursue the connection', tag: null, outcome: 'The first date is a work drinks that neither of you wants to end. Risky, exhilarating, and possibly worth every complication.', effect: (p) => { p.m += 15; p.setMem('workplace_romance', true); }, inject: null },
+      { text: 'Keep it professional', tag: null, outcome: 'You redirect the energy back into the work. The right call, probably. The occasional glance across the office costs nothing.', effect: (p) => { p.m += 3; p.karma += 5; p.setMem('workplace_romance', true); }, inject: null },
+      { text: 'Report to HR', tag: null, outcome: 'The process is uncomfortable and thorough. By the book and slightly joyless — but the right protocol.', effect: (p) => { p.m -= 5; p.karma += 8; p.setMem('workplace_romance', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'demotion',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.career !== null && G.career.level > 1 && !G.mem.demoted && G.age >= 25,
+    text: (G) => {
+      if (G.character.country.archetype === 'wealthy_west')
+        return 'A company restructuring has been announced. When the dust settles, your title has quietly changed. The salary review that comes with it goes the wrong direction.'
+      if (G.character.country.archetype === 'post_soviet')
+        return "The manager's nephew has been brought in above you. The demotion arrives in a terse memo. Political connections matter here more than performance."
+      if (['developing_urban', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'Favouritism in the office has reached its conclusion. Someone with the right connections has your position now. The HR department shows no interest in your complaint.'
+      return 'Your performance has been flagged by management. A demotion is presented as a development opportunity. The framing fools no one.'
+    },
+    choices: [
+      { text: 'Accept and work harder', tag: null, outcome: 'You swallow it. The humiliation sits heavy but the resolve is real. You begin rebuilding from the new floor.', effect: (p) => { p.m -= 20; p.w -= 10; p.setMem('demoted', true); }, inject: null },
+      { text: 'Quit in protest', tag: null, outcome: 'You walk out with your head up. The job market awaits. The career gap will need explaining later.', effect: (p) => { p.m -= 10; p.setMem('demoted', true); }, inject: null },
+      { text: 'Contest the decision formally', tag: null, outcome: 'You file the appeal. Legal fees and six weeks of limbo. The outcome could go either way.', effect: (p) => { p.mo -= 1000; p.m -= 15; p.setMem('demoted', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'company_bankruptcy',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.career !== null && !G.mem.company_bankrupt && G.age >= 22,
+    text: 'The email arrives at 7am on a Monday. The company is entering administration. HR will be in touch. The office plants are still alive. The coffee machine is still on. Everything else is over.',
+    choices: [
+      { text: 'Start job searching immediately', tag: null, outcome: 'You update the CV that night. The search is brutal but you stay ahead of the market. Something comes through eventually.', effect: (p) => { p.m -= 15; p.setMem('company_bankrupt', true); }, inject: null },
+      { text: 'File for unemployment benefits', tag: null, outcome: 'The paperwork takes three weeks. The payments arrive. They are not enough but they are something.', effect: (p) => { p.mo += 500; p.m -= 20; p.setMem('company_bankrupt', true); }, inject: null },
+      { text: 'Take legal action against the company', tag: null, outcome: 'The employment tribunal drags on for months. You receive a fraction of what you were owed. The solicitor receives the rest.', effect: (p) => { p.mo -= 800; p.m -= 10; p.setMem('company_bankrupt', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'industry_layoffs',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.career !== null && !G.mem.industry_layoffs && G.currentYear >= 1980 && G.age >= 25,
+    text: (G) => {
+      if (G.character.country.archetype === 'wealthy_west' && G.currentYear >= 2008 && G.currentYear <= 2012)
+        return 'The financial crisis has reached your industry. Whole departments are being eliminated. The redundancy notices are going out in batches and your name is on the next one.'
+      if (G.character.country.archetype === 'wealthy_west' && G.currentYear >= 2000 && G.currentYear <= 2002)
+        return 'The dot-com bubble has burst spectacularly. Your sector — so recently untouchable — is haemorrhaging jobs. The whole floor has been called to a "brief update" meeting.'
+      if (G.character.country.archetype === 'post_soviet' && G.currentYear >= 1991 && G.currentYear <= 1999)
+        return 'The post-Soviet economic collapse is hitting your sector hard. State enterprises are dissolving. Entire industries have evaporated in a year. Payroll has not arrived in three months.'
+      return 'A sector-wide downturn has triggered a wave of layoffs. The industry press is calling it a correction. Your mortgage does not care what the press calls it.'
+    },
+    choices: [
+      { text: 'Volunteer for the redundancy package', tag: null, outcome: 'The payout is reasonable. You take it and use the space to think. The uncertainty is the price.', effect: (p) => { p.mo += 2000; p.m -= 10; p.setMem('industry_layoffs', true); }, inject: null },
+      { text: 'Fight to keep your job', tag: null, outcome: 'You make yourself indispensable through sheer output. It costs you sleep and several months of anxiety. You survive the cut.', effect: (p) => { p.m -= 20; p.setMem('industry_layoffs', true); }, inject: null },
+      { text: 'Start your own business', tag: null, outcome: 'The layoffs become the catalyst. You spend the redundancy on the first invoice. The entrepreneurial leap is terrifying and clarifying.', effect: (p) => { p.mo -= 3000; p.m -= 5; p.setMem('industry_layoffs', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mentor_at_work',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.career !== null && G.career.level <= 3 && !G.mem.has_mentor && G.age >= 21,
+    text: 'A senior colleague has taken an interest in your development. They have begun inviting you to meetings above your grade, making introductions, and sharing things the official training programme never would.',
+    choices: [
+      { text: 'Welcome the mentorship fully', tag: null, outcome: 'Over the next two years they open doors you did not know existed. The relationship shifts your trajectory measurably.', effect: (p) => { p.e += 8; p.m += 10; p.w += 5; p.setMem('has_mentor', true); }, inject: null },
+      { text: 'Prefer to figure it out alone', tag: null, outcome: 'You decline politely. The independence matters to you. The road is longer for it, but it is yours.', effect: (p) => { p.m += 3; p.setMem('has_mentor', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // ── EDUCATION MID-PROGRAM EVENTS ──────────────────────────────────────────────
+  {
+    id: 'failed_exam',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) => G.education?.enrolled !== null && !G.mem.failed_exam && G.age >= 16,
+    text: 'The exam results arrive and yours is not what you needed. The grade sits on the page like a verdict. The path forward suddenly requires more from you than you expected.',
+    choices: [
+      { text: 'Study hard and retake it', tag: null, outcome: 'Three weeks of intensive revision. The retake is harder than the original. You pass. The resilience stays with you.', effect: (p) => { p.e += 5; p.m -= 10; p.setMem('failed_exam', true); }, inject: null },
+      { text: 'Accept the grade and move on', tag: null, outcome: 'You absorb the result and keep walking. The disappointment travels with you for a while.', effect: (p) => { p.m -= 15; p.setMem('failed_exam', true); }, inject: null },
+      { text: 'Drop the subject entirely', tag: null, outcome: 'The course load lightens. So does your confidence in the area. You redirect elsewhere.', effect: (p) => { p.m -= 5; p.e -= 3; p.setMem('failed_exam', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'summer_job',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) => G.education?.enrolled !== null && G.age >= 16 && G.age <= 25 && !G.mem.summer_job,
+    text: 'The summer break stretches ahead. A friend mentions there are positions at a local business — not glamorous, but the pay is real and the experience would look good on paper.',
+    choices: [
+      { text: 'Take the job', tag: null, outcome: 'Six weeks of early starts and tired evenings. The money is real and so is the understanding that work is work. Study time takes the hit.', effect: (p) => { p.mo += 1500; p.w += 3; p.m -= 5; p.setMem('summer_job', true); }, inject: null },
+      { text: 'Focus on studying instead', tag: null, outcome: 'You spend the summer ahead of the syllabus. The next term feels different when you have already covered the material.', effect: (p) => { p.e += 5; p.m += 5; p.setMem('summer_job', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'thesis_defense',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.education?.level === 'graduate' && !G.mem.thesis_defended && G.age >= 22,
+    text: 'The day has arrived. Four years of research condensed into sixty minutes in a room with three academics who have read every word more carefully than you wrote them. The committee is assembled. Your notes are as ready as they will ever be.',
+    choices: [
+      { text: 'Crush it — you know this material cold', tag: null, outcome: 'The defence runs long because the questions are genuinely engaging. The committee recommends no corrections. You walk out a different person.', effect: (p) => { p.e += 10; p.m += 20; p.setMem('thesis_defended', true); }, inject: null },
+      { text: 'Scrape through on adrenaline', tag: null, outcome: 'You fumble two questions and recover. The pass is real if not elegant. You will take it.', effect: (p) => { p.m -= 5; p.e += 5; p.setMem('thesis_defended', true); }, inject: null },
+      { text: 'Revisions required', tag: null, outcome: 'Three chapters need substantial work. The disappointment is sharp. The six weeks of corrections are clarifying. The second submission is stronger.', effect: (p) => { p.m -= 15; p.e += 3; p.setMem('thesis_defended', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'study_abroad_opportunity',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.education?.enrolled !== null && !G.mem.studied_abroad && G.age >= 18 && G.age <= 28 && G.money >= 2000,
+    text: 'Your institution has announced an exchange programme. A semester abroad — a different city, a different language, a different way of approaching the same material. The application window is open for two weeks.',
+    choices: [
+      { text: 'Go abroad', tag: null, outcome: 'The semester abroad is disorienting and transformative in equal measure. A new language, new friends, a new understanding of where you come from. You return changed.', effect: (p) => { p.mo -= 3000; p.e += 10; p.m += 15; p.s += 5; p.setMem('studied_abroad', true); }, inject: null },
+      { text: 'Stay home', tag: null, outcome: 'The decision feels sensible at the time. Your studies continue without interruption. The programme runs without you.', effect: (p) => { p.m += 3; p.setMem('studied_abroad', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'professor_conflict',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) => G.education?.enrolled !== null && !G.mem.professor_conflict && G.age >= 17,
+    text: 'A professor has taken against you — or at least that is how it feels. Your work is held to a different standard. The feedback is harsh in ways that do not feel purely academic. The other students have noticed.',
+    choices: [
+      { text: 'Fight your corner academically', tag: null, outcome: 'You produce work so rigorous it cannot be dismissed. The professor does not warm to you. Your grades do.', effect: (p) => { p.e += 5; p.m -= 5; p.setMem('professor_conflict', true); }, inject: null },
+      { text: 'Bite your tongue and outlast it', tag: null, outcome: "The semester ends. The professor's opinion of you was never going to matter beyond these walls. The degree remains on track.", effect: (p) => { p.m -= 8; p.setMem('professor_conflict', true); }, inject: null },
+      { text: 'File a formal complaint', tag: null, outcome: 'The department reviews the marking. An acknowledgement is made — nothing dramatic, nothing fast. The process restores something.', effect: (p) => { p.karma += 3; p.m -= 10; p.setMem('professor_conflict', true); }, inject: null },
     ],
     effect: null,
   },

@@ -1415,16 +1415,20 @@ export function tick(state) {
   if (s.queue.some(e => e.id === event.id)) s.queue = s.queue.filter(e => e.id !== event.id)
   s.usedEventIds = new Set([...s.usedEventIds, event.id])
 
-  if (!event.choices || event.choices.length === 0) {
+  // Resolve function text so EventBox and logs always receive strings
+  const resolvedText = typeof event.text === 'function' ? event.text(buildG(s)) : (event.text ?? '')
+  const resolvedEvent = resolvedText !== event.text ? { ...event, text: resolvedText } : event
+
+  if (!resolvedEvent.choices || resolvedEvent.choices.length === 0) {
     const proxy = buildEffectProxy(s)
-    if (event.effect) event.effect(proxy)
+    if (resolvedEvent.effect) resolvedEvent.effect(proxy)
     s = applyProxy(s, proxy)
     s = resolveProxyExtras(s, proxy)
-    s.log = [...s.log, { age: s.age, text: event.text, isKey: false }]
+    s.log = [...s.log, { age: s.age, text: resolvedText, isKey: resolvedEvent.isKey ?? false }]
     return s
   }
 
-  s.pendingEvent = event
+  s.pendingEvent = resolvedEvent
   return s
 }
 
@@ -1440,7 +1444,8 @@ export function resolveChoice(state, choiceIndex) {
   s = resolveProxyExtras(s, proxy)
   if (choice.tag) s.flags = [...new Set([...s.flags, choice.tag])]
   if (choice.inject) s.queue = [...s.queue, choice.inject]
-  s.log = [...s.log, { age: state.age, text: `${pendingEvent.text.slice(0, 80)}… — ${choice.outcome}`, isKey: true }]
+  const evtText = typeof pendingEvent.text === 'function' ? pendingEvent.text(buildG(state)) : (pendingEvent.text ?? '')
+  s.log = [...s.log, { age: state.age, text: `${evtText.slice(0, 80)}… — ${choice.outcome}`, isKey: true }]
   s.pendingEvent = null
   return s
 }
@@ -1867,7 +1872,7 @@ export function goToRehab(state) {
   return {
     ...state,
     money: (state.money ?? 0) - cost,
-    flags: [...new Set([...newFlags, 'rehab_graduate'])],
+    flags: [...new Set([...newFlags, 'rehab_graduate', 'in_recovery'])],
     stats: { ...state.stats, happiness: clamp(state.stats.happiness + 12, 0, 100), health: clamp(state.stats.health + 8, 0, 100) },
     actionsThisYear: state.actionsThisYear + 1,
     log: [...state.log, { age: state.age, text: `You complete a stint in rehab. Cost: $${cost.toLocaleString()}. You feel genuinely renewed.`, isKey: true }],
