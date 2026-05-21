@@ -714,6 +714,87 @@ export function getPlasticSurgery(state, surgeryType) {
 // ─── Activity system ──────────────────────────────────────────────────────────
 
 export function applyActivity(state, activityId) {
+  // ── Hobby practice activities ────────────────────────────────────────────────
+  const hobbyActivity = (ACTIVITIES.hobbies ?? []).find(a => a.id === activityId)
+  if (hobbyActivity) {
+    let updated = { ...state }
+    const cost = hobbyActivity.cost ?? 0
+    if (cost > 0 && (updated.money ?? 0) < cost) {
+      return { ...updated, log: [...updated.log, { age: updated.age, text: `You can't afford the ${hobbyActivity.label} ($${cost}).`, isKey: false }] }
+    }
+    updated.money = (updated.money ?? 0) - cost
+    // Progress the hobby
+    const current = updated.hobbies?.[hobbyActivity.hobbyId] ?? 0
+    updated.hobbies = { ...(updated.hobbies ?? {}), [hobbyActivity.hobbyId]: Math.min(100, current + hobbyActivity.delta) }
+    // Store primary hobby in mem if not set
+    if (!updated.mem?.primaryHobby) updated.mem = { ...(updated.mem ?? {}), primaryHobby: hobbyActivity.hobbyId }
+    // Apply stat bonuses
+    const b = hobbyActivity.statBonus ?? {}
+    const s = updated.stats
+    updated.stats = {
+      ...s,
+      happiness: Math.min(100, (s.happiness ?? 80) + (b.m ?? 0)),
+      health:    Math.min(100, (s.health    ?? 80) + (b.h ?? 0)),
+      smarts:    Math.min(100, (s.smarts    ?? 50) + (b.e ?? 0)),
+      looks:     Math.min(100, (s.looks     ?? 50) + (b.s ?? 0)),
+    }
+    const newLevel = updated.hobbies[hobbyActivity.hobbyId]
+    const tier = newLevel >= 80 ? 'master' : newLevel >= 60 ? 'expert' : newLevel >= 40 ? 'skilled' : newLevel >= 20 ? 'learning' : 'beginner'
+    updated.log = [...updated.log, { age: updated.age, text: `You practice ${hobbyActivity.hobbyId}. Skill: ${newLevel}/100 (${tier}).`, isKey: false }]
+    updated.actionsThisYear = (updated.actionsThisYear ?? 0) + 1
+    return updated
+  }
+
+  // ── Therapy booking ──────────────────────────────────────────────────────────
+  if (activityId === 'book_therapy') {
+    const cost = 120
+    if ((state.money ?? 0) < cost) {
+      return { ...state, log: [...state.log, { age: state.age, text: "You can't afford therapy right now.", isKey: false }] }
+    }
+    let updated = { ...state }
+    updated.money = (updated.money ?? 0) - cost
+    updated.mentalHealth = {
+      ...(updated.mentalHealth ?? {}),
+      therapy: true,
+      condition: updated.mentalHealth?.condition ?? null,
+    }
+    const happyBoost = updated.mentalHealth?.condition ? 6 : 4
+    updated.stats = { ...updated.stats, happiness: Math.min(100, updated.stats.happiness + happyBoost) }
+    updated.log = [...updated.log, { age: updated.age, text: 'You attend a therapy session. Progress is slow and meaningful.', isKey: false }]
+    updated.actionsThisYear = (updated.actionsThisYear ?? 0) + 1
+    return updated
+  }
+
+  // ── Debt management ──────────────────────────────────────────────────────────
+  if (activityId === 'pay_debt') {
+    if (!state.debt || state.debt <= 0) {
+      return { ...state, log: [...state.log, { age: state.age, text: 'You have no debt to pay off.', isKey: false }] }
+    }
+    const payment = Math.min(state.debt, Math.max(500, Math.round((state.money ?? 0) * 0.1)))
+    if (payment <= 0 || (state.money ?? 0) < payment) {
+      return { ...state, log: [...state.log, { age: state.age, text: "You don't have enough to make an extra payment.", isKey: false }] }
+    }
+    let updated = { ...state }
+    updated.money = (updated.money ?? 0) - payment
+    updated.debt = Math.max(0, updated.debt - payment)
+    updated.log = [...updated.log, { age: updated.age, text: `You pay $${payment.toLocaleString()} off your debt. Remaining: $${updated.debt.toLocaleString()}.`, isKey: false }]
+    updated.actionsThisYear = (updated.actionsThisYear ?? 0) + 1
+    return updated
+  }
+
+  if (activityId === 'take_loan') {
+    let updated = { ...state }
+    const maxLoan = Math.max(1000, Math.round((updated.money ?? 0) * 3 + 5000))
+    const amount = Math.min(maxLoan, 10000)
+    updated.money = (updated.money ?? 0) + amount
+    updated.debt = (updated.debt ?? 0) + amount
+    updated.mem = { ...(updated.mem ?? {}), debtType: 'personal' }
+    updated.log = [...updated.log, { age: updated.age, text: `You borrow $${amount.toLocaleString()} at 18% annual interest.`, isKey: false }]
+    updated.actionsThisYear = (updated.actionsThisYear ?? 0) + 1
+    return updated
+  }
+
+  // ── Standard activities ──────────────────────────────────────────────────────
   const allActivities = [
     ...(ACTIVITIES.mind ?? []),
     ...(ACTIVITIES.body ?? []),

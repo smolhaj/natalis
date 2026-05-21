@@ -7,6 +7,7 @@ import { getAvailableCareers, dropOutOfSchool } from '../engine/gameEngine'
 
 const TOP_CATEGORIES = [
   { key: 'mind_body',     label: 'Mind & Body',     emoji: '🧘', desc: 'Work on yourself' },
+  { key: 'hobbies',       label: 'Hobbies',          emoji: '🎸', desc: 'Practice skills and creative pursuits' },
   { key: 'education',     label: 'Education',        emoji: '📚', desc: 'Study and learn' },
   { key: 'love',          label: 'Love',             emoji: '❤️',  desc: 'Relationships' },
   { key: 'fertility',     label: 'Fertility',        emoji: '👶', desc: 'Family planning' },
@@ -134,6 +135,8 @@ export default function ActivitiesPanel({ onClose }) {
             {state.age >= 14 && <Btn disabled={noActions} onClick={() => go(() => takeActivity('diet'))} title="Go on a Diet" subtitle="Improve your health and appearance." />}
             {/* Gardening */}
             {state.age >= 10 && <Btn disabled={noActions} onClick={() => go(() => takeActivity('gardening'))} title="Gardening" subtitle="Get your hands in the earth." />}
+            {/* Therapy */}
+            {state.age >= 16 && <Btn disabled={noActions} onClick={() => go(() => takeActivity('book_therapy'))} title="🛋️ Book Therapy" subtitle="Address your mental health with a professional." cost="$120" />}
             {/* Martial Arts */}
             {state.age >= 12 && (
               <>
@@ -680,6 +683,24 @@ export default function ActivitiesPanel({ onClose }) {
             )}
           </>
         )
+      }
+
+      case 'hobbies': {
+        const hobbyActivities = ACTIVITIES.hobbies ?? []
+        return hobbyActivities
+          .filter(a => {
+            if (a.minAge && state.age < a.minAge) return false
+            if (a.minYear && (state.currentYear ?? 0) < a.minYear) return false
+            return true
+          })
+          .map(a => (
+            <Btn key={a.id} disabled={noActions}
+              onClick={() => go(() => takeActivity(a.id))}
+              title={`${a.emoji} ${a.label}`}
+              subtitle={a.desc}
+              cost={a.cost > 0 ? `$${a.cost}` : 'Free'}
+            />
+          ))
       }
 
       default:
