@@ -2438,4 +2438,251 @@ export const EVENTS = [
     ],
     effect: null,
   },
+
+  // ── GRIEF ARC ─────────────────────────────────────────────────────────────
+  {
+    id: 'parent_death_young',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) => G.age >= 13 && G.age <= 17 && !G.flags.includes('orphan') && Math.random() < 0.08,
+    text: 'Your parent dies. The circumstances vary — illness, accident, violence — but the fact is the same. The person who was supposed to be there is not.',
+    choices: null,
+    effect: (p) => { p.m -= 20; p.h -= 8; p.r += 10; p.addFlag('orphan'); p.addFlag('early_grief'); p.setMem('parentDied', true) },
+  },
+  {
+    id: 'parent_death_adult',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) => G.age >= 22 && G.age <= 35 && !G.flags.includes('orphan') && !G.mem.parentDied && Math.random() < 0.07,
+    text: 'You get the call. Your parent is gone. You knew it would happen someday. It still feels like the floor has dropped away.',
+    choices: [
+      { text: 'Take time to grieve properly', tag: null, outcome: 'You take leave. You allow yourself to feel it.', effect: (p) => { p.m -= 15; p.r += 6; p.addFlag('processed_grief') }, inject: null },
+      { text: 'Keep working, keep moving', tag: null, outcome: 'Grief waits. It finds you later, in stranger moments.', effect: (p) => { p.m -= 8; p.r += 12; p.h -= 4 }, inject: null },
+    ],
+    effect: (p) => { p.setMem('parentDied', true) },
+  },
+  {
+    id: 'grief_anniversary',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.mem.parentDied && G.age >= 30 && !G.flags.includes('found_meaning'),
+    text: 'The anniversary of their death arrives quietly. You find yourself doing something they used to do — a gesture, a recipe, a phrase — and for a moment they are not gone.',
+    choices: null,
+    effect: (p) => { p.m += 5; p.addFlag('found_meaning') },
+  },
+  {
+    id: 'spouse_death',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) => G.partner && G.age >= 58 && Math.random() < 0.12,
+    text: 'Your partner of many years dies. The house is very quiet. Everything reminds you of them.',
+    choices: [
+      { text: 'Lean on family and friends', tag: null, outcome: 'You are not alone. That is not nothing.', effect: (p) => { p.m -= 20; p.r += 8; p.clearPartner() }, inject: null },
+      { text: 'Grieve in solitude', tag: null, outcome: 'The grief is entirely yours. It does not share itself.', effect: (p) => { p.m -= 28; p.h -= 6; p.r += 15; p.clearPartner() }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'child_predeceases',
+    phase: 'late_life',
+    weight: 1,
+    when: (G) => G.children.length > 0 && G.age >= 55 && Math.random() < 0.04,
+    text: 'No parent expects to outlive their child. The grief is a different category. It does not follow normal rules.',
+    choices: null,
+    effect: (p) => { p.m -= 30; p.h -= 10; p.r += 20; p.addFlag('child_loss') },
+  },
+
+  // ── THERAPY SYSTEM ────────────────────────────────────────────────────────
+  {
+    id: 'ya_therapy_start',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) => G.stats.happiness < 45 && G.money >= 500 && !G.flags.includes('in_therapy') && G.age >= 20,
+    text: 'A friend suggests therapy. You\'ve been deflecting the idea for a long time. Something about this moment makes you finally consider it.',
+    choices: [
+      { text: 'Make an appointment', tag: null, outcome: 'The first session is awkward. The second is less so.', effect: (p) => { p.addFlag('in_therapy'); p.mo -= 600; p.m += 4 }, inject: null },
+      { text: 'You don\'t need it — you\'re fine', tag: null, outcome: 'You are not fine. But the appointment waits.', effect: (p) => { p.m -= 2 }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'ya_therapy_progress',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.flags.includes('in_therapy') && G.age >= 22,
+    text: 'The therapist asks about your childhood. You give a version of the answer. Then she asks you to say what actually happened.',
+    choices: [
+      { text: 'Tell the truth — all of it', tag: null, outcome: 'Something releases. It does not disappear, but it loosens.', effect: (p) => { p.r -= 10; p.m += 8; p.addFlag('emotionally_honest'); p.mo -= 800 }, inject: null },
+      { text: 'Keep the edited version', tag: null, outcome: 'The sessions continue. The real work is postponed.', effect: (p) => { p.m += 2; p.mo -= 800 }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mid_therapy_breakthrough',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.flags.includes('in_therapy') && (G.flags.includes('abused_child') || G.flags.includes('early_grief')) && G.age >= 32,
+    text: 'Your therapist says something that reframes the last thirty years. You sit with it for a long time after the session ends.',
+    choices: null,
+    effect: (p) => { p.r -= 15; p.m += 12; p.addFlag('processed_grief'); p.addFlag('acceptance') },
+  },
+  {
+    id: 'mid_therapy_long_term',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.flags.includes('in_therapy') && G.age >= 40 && G.regret > 20,
+    text: 'Years of therapy. You are not fixed — that was never the point. But you are less afraid of yourself than you used to be.',
+    choices: [
+      { text: 'Continue — it\'s still working', tag: null, outcome: 'The work is long. You keep doing it.', effect: (p) => { p.r -= 8; p.m += 5; p.mo -= 1200 }, inject: null },
+      { text: 'Take a break — you feel stable', tag: null, outcome: 'You know how to return if you need to.', effect: (p) => { p.r -= 4; p.m += 3 }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // ── CHRONIC ILLNESS ───────────────────────────────────────────────────────
+  {
+    id: 'ya_chronic_illness_diagnosis',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.age >= 20 && G.stats.health < 60 && !G.flags.includes('chronic_illness') && Math.random() < 0.06,
+    text: 'The doctor gives your symptoms a name. A chronic condition — manageable, but lifelong. You leave the clinic holding a leaflet that rewrites your future.',
+    choices: [
+      { text: 'Accept it and adapt', tag: null, outcome: 'You restructure your life around the new reality.', effect: (p) => { p.h -= 8; p.addFlag('chronic_illness'); p.addFlag('health_conscious') }, inject: null },
+      { text: 'Ignore it — you\'ll manage somehow', tag: null, outcome: 'The condition doesn\'t care whether you\'re ready.', effect: (p) => { p.h -= 15; p.addFlag('chronic_illness') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mid_chronic_illness_flare',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) => G.flags.includes('chronic_illness') && G.age >= 30,
+    text: 'A flare-up. The condition that usually stays in the background pushes itself forward. You cancel everything for a week.',
+    choices: [
+      { text: 'Rest fully and recover properly', tag: null, outcome: 'It passes. You lose time, but you recover.', effect: (p) => { p.h -= 5; p.m -= 6; p.mo -= 400 }, inject: null },
+      { text: 'Push through — you can\'t afford to stop', tag: null, outcome: 'The flare worsens. The recovery takes three weeks.', effect: (p) => { p.h -= 12; p.m -= 10; p.mo -= 200 }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_chronic_illness_management',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.flags.includes('chronic_illness') && G.age >= 55,
+    text: 'After decades with the condition, you have learned more about your body than most people ever know about their own. It has cost you. It has also taught you.',
+    choices: null,
+    effect: (p) => { p.m += 6; p.addFlag('health_conscious'); p.addFlag('acceptance') },
+  },
+
+  // ── ESTRANGEMENT ──────────────────────────────────────────────────────────
+  {
+    id: 'ya_family_estrangement',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => (G.flags.includes('abused_child') || G.flags.includes('domestic_violence_home')) && G.age >= 19 && !G.flags.includes('estranged_family'),
+    text: 'You realize you don\'t have to see them. This is a thought you have never fully allowed yourself before. They are family. They are also the source of harm.',
+    choices: [
+      { text: 'Cut contact — protect yourself', tag: null, outcome: 'The silence is strange, then peaceful, then grief-like — for the family you did not have.', effect: (p) => { p.m += 10; p.r += 8; p.addFlag('estranged_family') }, inject: null },
+      { text: 'Maintain contact but set limits', tag: null, outcome: 'The limits are tested constantly. Some hold.', effect: (p) => { p.m -= 5; p.addFlag('guarded_heart') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mid_estrangement_decision',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.flags.includes('estranged_family') && G.age >= 35 && !G.flags.includes('reconciled_family'),
+    text: 'A sibling reaches out. There is talk of reconciliation. The old person is apparently changed. You don\'t know if you believe it.',
+    choices: [
+      { text: 'Attempt cautious reconnection', tag: null, outcome: 'Some things are repaired. Others are not. The attempt matters.', effect: (p) => { p.m += 5; p.r -= 5; p.addFlag('reconciled_family') }, inject: null },
+      { text: 'Maintain the distance you earned', tag: null, outcome: 'You protect what you built. There is no obligation to forgive what was not asked for.', effect: (p) => { p.m += 4 }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // ── LEGACY / CHILDREN IN OLD AGE ─────────────────────────────────────────
+  {
+    id: 'late_children_support',
+    phase: 'late_life',
+    weight: 5,
+    when: (G) => G.children.length > 0 && G.age >= 65 && G.flags.includes('cared_for_children') && !G.flags.includes('legacy_support'),
+    text: 'Your children are adults with children of their own now. They call to check in. Sometimes they visit. The relationship you built shows up in ways you didn\'t expect.',
+    choices: null,
+    effect: (p) => { p.m += 15; p.r -= 8; p.addFlag('legacy_support'); p.addFlag('grandparent') },
+  },
+  {
+    id: 'late_children_absent',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) => G.children.length > 0 && G.age >= 65 && !G.flags.includes('cared_for_children') && !G.flags.includes('legacy_support'),
+    text: 'Your children are busy. The calls are infrequent. You understand — you were the same at their age. Still, the evenings are long.',
+    choices: [
+      { text: 'Reach out to rebuild connection', tag: null, outcome: 'It is not too late. It just takes longer now.', effect: (p) => { p.m += 6; p.r -= 4; p.addFlag('legacy_support') }, inject: null },
+      { text: 'Accept the distance as the consequence', tag: null, outcome: 'Some debts compound quietly.', effect: (p) => { p.m -= 8; p.r += 10 }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_deadbeat_reckoning',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.flags.includes('deadbeat_parent') && G.age >= 60,
+    text: 'Your child — now an adult — finds you. They do not come to reconnect. They come with questions that do not have good answers.',
+    choices: [
+      { text: 'Face them honestly — all of it', tag: null, outcome: 'They may not forgive you. You give them the truth instead.', effect: (p) => { p.r -= 10; p.m -= 10; p.addFlag('emotionally_honest') }, inject: null },
+      { text: 'Deflect, minimize, disappear again', tag: null, outcome: 'They stop looking. The regret compounds.', effect: (p) => { p.r += 20; p.m -= 15 }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // ── FOOD INSECURITY ───────────────────────────────────────────────────────
+  {
+    id: 'ch_food_insecurity',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) => G.stats.wealth < 25 && G.character.country.archetype === 'subsaharan' && G.age >= 6 && !G.flags.includes('hunger_childhood'),
+    text: 'There is not always enough food. You learn to eat quickly when there is food, and to say nothing when there is not. Hunger becomes familiar.',
+    choices: null,
+    effect: (p) => { p.h -= 8; p.m -= 6; p.addFlag('hunger_childhood') },
+  },
+  {
+    id: 'ya_food_insecurity_adult',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.money < 200 && G.stats.wealth < 20 && G.age >= 18 && (G.character.country.archetype === 'developing_unstable' || G.character.country.archetype === 'subsaharan'),
+    text: 'At the end of the month, there is nothing left for food. You eat what you can. You pretend to others that you are fine.',
+    choices: [
+      { text: 'Seek food assistance', tag: null, outcome: 'The humiliation is real. So is the food.', effect: (p) => { p.h += 3; p.m -= 5 }, inject: null },
+      { text: 'Manage alone — pride first', tag: null, outcome: 'You are thinner than you should be. Your thinking slows.', effect: (p) => { p.h -= 6; p.e -= 3; p.m -= 6 }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // ── LGBTQ+ UNDER CRIMINALIZATION ─────────────────────────────────────────
+  {
+    id: 'ad_lgbtq_criminalized',
+    phase: 'adolescence',
+    weight: 2,
+    when: (G) => G.age >= 14 && ['Nigeria','Saudi Arabia','Iran','Afghanistan','Somalia','Yemen'].includes(G.character.country.name) && Math.random() < 0.05,
+    text: 'You understand something about yourself that this place has no room for. The law makes it a crime. The culture makes it a death. You keep this entirely to yourself.',
+    choices: [
+      { text: 'Suppress it completely to survive', tag: null, outcome: 'You become skilled at performing a version of yourself that is safe.', effect: (p) => { p.m -= 15; p.addFlag('learned_silence'); p.addFlag('guarded_heart') }, inject: null },
+      { text: 'Confide in one trusted person', tag: null, outcome: 'The risk is enormous. For now, you are not entirely alone.', effect: (p) => { p.m -= 5; p.addFlag('has_close_friend') }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // ── ARRANGED MARRIAGE ─────────────────────────────────────────────────────
+  {
+    id: 'ya_arranged_marriage',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.age >= 18 && G.age <= 24 && !G.partner && ['India','Pakistan','Bangladesh','Afghanistan','Saudi Arabia','UAE'].includes(G.character.country.name) && G.character.familyStability !== 'unstable',
+    text: 'Your family has found someone. They are from a good family. You have met once, briefly. The arrangements are nearly complete.',
+    choices: [
+      { text: 'Accept the match', tag: null, outcome: 'You enter the marriage. Whether it becomes something good depends on what you both make of it.', effect: (p) => { p.addFlag('early_marriage'); p.m -= 3 }, inject: null },
+      { text: 'Refuse — choose your own path', tag: null, outcome: 'The family conflict is significant. You bear the consequences.', effect: (p) => { p.m -= 10; p.r += 5; p.addFlag('estranged_family') }, inject: null },
+    ],
+    effect: null,
+  },
 ]

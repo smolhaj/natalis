@@ -10,6 +10,9 @@ const NEGATIVE_FLAGS = new Set([
   'disaster_survivor', 'medical_debt', 'lived_through_occupation', 'lived_through_coup',
   'hyperinflation_survivor', 'economic_collapse_survivor', 'war_generation',
   'revolution_generation', 'deadbeat_parent', 'chernobyl_generation',
+  // personal depth flags
+  'orphan', 'early_grief', 'child_loss', 'chronic_illness', 'estranged_family',
+  'in_therapy', 'cycle_broken', 'abuser', 'early_drinker', 'medical_debt',
 ])
 
 const POSITIVE_FLAGS = new Set([
@@ -23,6 +26,9 @@ const POSITIVE_FLAGS = new Set([
   // world event flags
   'veteran', 'survived_soviet_collapse', 'cold_war_generation', 'internet_generation',
   'lived_through_revolution', 'lived_through_pandemic',
+  // personal depth flags
+  'processed_grief', 'reconciled_family', 'legacy_support', 'cared_for_children',
+  'in_recovery', 'cycle_broken',
 ])
 
 function flagStyle(flag) {
