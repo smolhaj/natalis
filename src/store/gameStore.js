@@ -195,6 +195,11 @@ export const useGameStore = create((set, get) => ({
       martialArts: { discipline: null, belt: 0 },
       birthControl: false,
       gpa: initialGpa,
+      mentalHealth: { condition: null, medicating: false, therapy: false },
+      hobbies: {},
+      fitness: 50,
+      creditScore: 700,
+      pendingMinigame: null,
     })
   },
 
@@ -202,7 +207,7 @@ export const useGameStore = create((set, get) => ({
 
   ageUp: () => {
     const state = get()
-    if (state.pendingEvent || state.dead) return
+    if (state.pendingEvent || state.dead || state.pendingMinigame) return
     const next = tick({ ...state, lastOutcome: null })
     if (next.screen === 'death') {
       const epitaph = generateEpitaph(next)
@@ -216,6 +221,44 @@ export const useGameStore = create((set, get) => ({
     const state = get()
     if (!state.pendingEvent) return
     const choice = state.pendingEvent.choices?.[choiceIndex]
+
+    // If this choice has a minigame, apply any immediate effect then launch the game
+    if (choice?.minigame) {
+      // Apply the choice's pre-minigame effect (e.g. setting mem flags)
+      const preState = choice.effect ? (() => {
+        const next = resolveChoice(state, choiceIndex)
+        return { ...next, pendingEvent: state.pendingEvent } // keep event alive for logging
+      })() : state
+
+      const mg = choice.minigame
+      set({
+        ...preState,
+        pendingEvent: null,
+        pendingMinigame: {
+          ...mg,
+          onSuccess: {
+            outcome: mg.successOutcome ?? 'Success.',
+            effect: (s) => {
+              const next = { ...s }
+              if (mg.karmaHit) next.karma = Math.max(0, Math.min(100, (next.karma ?? 50) + mg.karmaHit))
+              next.log = [...(next.log ?? []), { age: s.age, text: mg.successOutcome ?? 'Success.', isKey: true }]
+              return next
+            },
+          },
+          onFailure: {
+            outcome: mg.failOutcome ?? 'Failed.',
+            effect: (s) => {
+              const next = { ...s }
+              next.stats = { ...next.stats, health: Math.max(0, (next.stats?.health ?? 80) - 10), happiness: Math.max(0, (next.stats?.happiness ?? 80) - 8) }
+              next.log = [...(next.log ?? []), { age: s.age, text: mg.failOutcome ?? 'Failed.', isKey: true }]
+              return next
+            },
+          },
+        },
+      })
+      return
+    }
+
     const next = resolveChoice(state, choiceIndex)
     set({ ...next, lastOutcome: choice?.outcome ?? null })
   },
@@ -230,23 +273,13 @@ export const useGameStore = create((set, get) => ({
   commitCrime: (crimeId) => {
     const state = get()
     if (state.pendingEvent || state.dead || state.pendingMinigame) return
-    // Check if this crime has a minigame
-    const crime = CRIMES.find(c => c.id === crimeId)
-    if (crime?.minigame) {
-      set({
-        pendingMinigame: {
-          ...crime.minigame,
-          _pendingCrimeId: crimeId,
-          _resolve: 'crime',
-        }
-      })
-      return
-    }
     const next = attemptCrime(state, crimeId)
     set(next)
   },
 
   triggerMinigame: (config) => {
+    // config: { type, difficulty, title, description, onSuccess, onFailure, skipable? }
+    // onSuccess/onFailure: { effect: (state) => nextState, outcome: string }
     set({ pendingMinigame: config })
   },
 
@@ -254,32 +287,12 @@ export const useGameStore = create((set, get) => ({
     const state = get()
     const mg = state.pendingMinigame
     if (!mg) return
-
-    let next = { ...state, pendingMinigame: null }
-
-    if (mg._resolve === 'crime') {
-      // Import crimes synchronously — we need to handle this differently
-      // Apply effect based on success
-      const effect = success ? mg.onSuccess : mg.onFailure
-      if (effect) {
-        const { applyMinigameEffect } = require('../engine/gameEngine.js')
-        next = applyMinigameEffect(next, effect)
-      } else {
-        // Fallback: attempt the crime normally but override outcome
-        const { attemptCrime } = require('../engine/gameEngine.js')
-        next = { ...attemptCrime(next, mg._pendingCrimeId), pendingMinigame: null }
-      }
-    } else if (mg._resolve === 'event_choice') {
-      // Apply the success or failure effect from the stored choice
-      const result = success ? mg.onSuccess : mg.onFailure
-      if (result?.effect) {
-        const proxy = buildEffectProxy ? buildEffectProxy(next) : null
-        // Simple inline effect application
-        next.lastOutcome = typeof result.outcome === 'function' ? result.outcome(next) : result.outcome
-        next.log = [...next.log, { age: next.age, text: next.lastOutcome?.slice(0, 100) ?? '', isKey: true }]
-      }
-    }
-
+    const result = success ? mg.onSuccess : mg.onFailure
+    const outcome = typeof result?.outcome === 'string' ? result.outcome : (success ? 'You succeeded.' : 'You failed.')
+    const base = { ...state, pendingMinigame: null }
+    let next = result?.effect ? result.effect(base) : base
+    next = { ...next, pendingMinigame: null, lastOutcome: outcome }
+    if (outcome) next.log = [...(next.log ?? []), { age: next.age, text: outcome.slice(0, 120), isKey: true }]
     set(next)
   },
 

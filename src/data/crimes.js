@@ -35,6 +35,7 @@ export const CRIMES = [
     archetypeModifier: { post_soviet: -0.05, developing_urban: -0.05 },
     wealthRequirement: null,
     incomeEstimate: 2000,
+    minigame: { type: 'quicktime', difficulty: 'normal', title: 'Pickpocket', description: 'Tap at the right moment to lift the wallet.', actionLabel: 'Grab!', rounds: 3, successOutcome: 'Smooth. The wallet is yours before they know it.', failOutcome: 'You fumble. Someone shouts. You run.' },
   },
   {
     id: 'vandalism',
@@ -91,6 +92,7 @@ export const CRIMES = [
     archetypeModifier: {},
     wealthRequirement: null,
     incomeEstimate: 8000,
+    minigame: { type: 'lockpick', difficulty: 'normal', title: 'Break In', description: 'Pick the lock before someone spots you.', successOutcome: 'You\'re in. You grab what you can and vanish.', failOutcome: 'The lock holds. A neighbour calls it in. You run empty-handed.', karmaHit: -12 },
   },
   {
     id: 'car_theft',
@@ -109,6 +111,7 @@ export const CRIMES = [
     archetypeModifier: {},
     wealthRequirement: null,
     incomeEstimate: 5000,
+    minigame: { type: 'quicktime', difficulty: 'hard', title: 'Hot-wire It', description: 'Time the ignition sequence perfectly.', actionLabel: 'Wire!', rounds: 3, successOutcome: 'The engine turns. You drive.', failOutcome: 'The alarm screams. You bolt.', karmaHit: -8 },
   },
   {
     id: 'arson',
@@ -369,6 +372,7 @@ export const CRIMES = [
     archetypeModifier: {},
     wealthRequirement: null,
     incomeEstimate: 0,
+    minigame: { type: 'fight', difficulty: 'normal', title: 'Street Fight', description: 'Read their moves. Counter correctly.', successOutcome: 'You come out on top. Bruised but standing.', failOutcome: 'They get the better of you. You take a beating and run.', karmaHit: -15 },
   },
   {
     id: 'armed_robbery',
@@ -643,6 +647,7 @@ export const CRIMES = [
     failEffect: (p) => { p.m -= 5; p.h -= 3; },
     flagsAdded: ['criminal_record'],
     minSmarts: 60,
+    minigame: { type: 'hack', difficulty: 'normal', title: 'System Breach', description: 'Memorise and replay the access sequence.', successOutcome: 'Access granted. Funds transferred. Trace cleaned.', failOutcome: 'Intrusion detected. You disconnect fast but they got your IP.', karmaHit: -12 },
   },
   {
     id: 'ransomware',

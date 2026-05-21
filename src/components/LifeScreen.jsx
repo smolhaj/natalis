@@ -80,6 +80,11 @@ export default function LifeScreen() {
   const martialArts  = useGameStore(s => s.martialArts)
   const birthControl = useGameStore(s => s.birthControl)
   const criminalRecord = useGameStore(s => s.criminalRecord)
+  const mentalHealth = useGameStore(s => s.mentalHealth)
+  const hobbies      = useGameStore(s => s.hobbies)
+  const fitness      = useGameStore(s => s.fitness)
+  const debt         = useGameStore(s => s.debt)
+  const pendingMinigame = useGameStore(s => s.pendingMinigame)
   const ageUp        = useGameStore(s => s.ageUp)
 
   if (!character) return null
@@ -267,6 +272,9 @@ export default function LifeScreen() {
                     birthControl && { label: '💊 Birth Control', value: 'Active' },
                     inPrison && { label: '🔒 Prison', value: `${prisonSentence} yr remaining` },
                     criminalRecord.length > 0 && { label: '⚠️ Record', value: `${criminalRecord.length} offence${criminalRecord.length !== 1 ? 's' : ''}` },
+                    fitness !== undefined && { label: '💪 Fitness', value: `${Math.round(fitness ?? 50)}/100` },
+                    mentalHealth?.condition && { label: '🧠 Mental Health', value: `${mentalHealth.condition}${mentalHealth.therapy ? ' · therapy' : ''}${mentalHealth.medicating ? ' · medicated' : ''}` },
+                    (debt ?? 0) > 0 && { label: '💳 Debt', value: formatMoney(debt) },
                   ].filter(Boolean).map(({ label, value }) => (
                     <div key={label} className="flex justify-between items-center py-1 border-b border-natalis-border last:border-0">
                       <span className="text-natalis-muted text-xs">{label}</span>
@@ -275,6 +283,33 @@ export default function LifeScreen() {
                   ))}
                 </div>
               </div>
+
+              {/* Hobbies */}
+              {hobbies && Object.keys(hobbies).length > 0 && (
+                <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
+                  <p className="font-bold text-natalis-text text-sm mb-3">Hobbies</p>
+                  <div className="space-y-2">
+                    {Object.entries(hobbies).map(([hobby, level]) => {
+                      const hobbyEmoji = { music: '🎸', art: '🎨', sport: '⚽', writing: '✍️', cooking: '🍳', coding: '💻', general: '🎯' }[hobby] ?? '🎯'
+                      const tier = level >= 80 ? 'Master' : level >= 60 ? 'Expert' : level >= 40 ? 'Skilled' : level >= 20 ? 'Learning' : 'Beginner'
+                      return (
+                        <div key={hobby} className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <span>{hobbyEmoji}</span>
+                            <span className="text-sm text-natalis-dim font-medium capitalize">{hobby}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="w-20 h-2 bg-gray-100 rounded-full overflow-hidden">
+                              <div className="h-full rounded-full bg-purple-400" style={{ width: `${level}%` }} />
+                            </div>
+                            <span className="text-xs text-natalis-muted w-16 text-right">{tier}</span>
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
 
               {/* Flags */}
               {flags.length > 0 && (

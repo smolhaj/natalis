@@ -4569,4 +4569,121 @@ export const EVENTS = [
     ],
     effect: null,
   },
+
+  // ── MINIGAME-TRIGGERED EVENTS ─────────────────────────────────────────────
+
+  {
+    id: 'prison_escape_opportunity',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.inPrison && G.prisonSentence >= 3 && !G.mem.escapeAttempted,
+    text: (G) => {
+      if (['conflict_zone', 'developing_unstable', 'subsaharan'].includes(G.character.country.archetype))
+        return 'A gap appears — a guard falls asleep, a door is left unlatched. The fence is twenty metres. You could run.'
+      return 'During an outdoor work session, you spot it: a loose section of perimeter fencing and a blind spot in the camera coverage. A narrow window.'
+    },
+    choices: [
+      {
+        text: 'Attempt the escape',
+        tag: null,
+        outcome: 'You make your move.',
+        minigame: { type: 'maze', difficulty: 'hard', title: 'Prison Break', description: 'Navigate to the perimeter before the guard returns.', successOutcome: 'You clear the fence and disappear into the night. Free, for now — though hunted.', failOutcome: 'You are caught in the yard. A year added to your sentence. The story spreads.', karmaHit: 0 },
+        effect: (p) => { p.setMem('escapeAttempted', true); },
+        inject: null,
+      },
+      {
+        text: 'Stay — the risk is too great',
+        tag: null,
+        outcome: 'Wisdom or fear — you cannot be certain which. You serve your time.',
+        effect: (p) => { p.m -= 5; p.setMem('escapeAttempted', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ya_bar_fight',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.age >= 18 && !G.mem.barFight,
+    text: 'A confrontation at a bar escalates faster than expected. Someone throws a punch. You have half a second.',
+    choices: [
+      {
+        text: 'Fight back',
+        tag: null,
+        outcome: 'You swing.',
+        minigame: { type: 'fight', difficulty: 'normal', title: 'Bar Fight', description: 'Block, dodge, or punch. Read their move first.', enemyLabel: 'the aggressor', successOutcome: 'You give better than you get. They back off.', failOutcome: 'Bruised ribs, split lip. An expensive lesson.', karmaHit: -5 },
+        effect: (p) => { p.setMem('barFight', true); },
+        inject: null,
+      },
+      {
+        text: 'De-escalate — hands up, step back',
+        tag: null,
+        outcome: 'You defuse it. Most of the room respects the move.',
+        effect: (p) => { p.m += 3; p.karma += 5; p.setMem('barFight', true); },
+        inject: null,
+      },
+      {
+        text: 'Walk away',
+        tag: null,
+        outcome: 'Not your night. You leave before it becomes yours.',
+        effect: (p) => { p.m += 2; p.setMem('barFight', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_corporate_hack_opportunity',
+    phase: 'midlife',
+    weight: 1,
+    when: (G) => G.stats.smarts >= 65 && G.currentYear >= 2005 && !G.mem.corpHack && !G.inPrison,
+    text: 'A former colleague sends an encrypted message. They have found a vulnerability in a corporate payroll system — clean, untraceable, and very profitable. They need your skills.',
+    choices: [
+      {
+        text: 'Go in',
+        tag: null,
+        outcome: 'You boot up.',
+        minigame: { type: 'hack', difficulty: 'hard', title: 'Corporate Breach', description: 'Six-layer sequence. One mistake and the trace begins.', successOutcome: '$200,000 moves across three anonymous accounts. Clean exit.', failOutcome: 'The system flags you at layer four. You close the terminal. The logs exist.', karmaHit: -15 },
+        effect: (p) => { p.setMem('corpHack', true); p.karma -= 15; },
+        inject: null,
+      },
+      {
+        text: 'Delete the message',
+        tag: 'integrity',
+        outcome: 'Some opportunities you choose not to take. That choice is also a statement.',
+        effect: (p) => { p.karma += 8; p.setMem('corpHack', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ch_lockpick_challenge',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) => G.age >= 9 && G.age <= 13 && !G.mem.lockpickEvent,
+    text: 'You find a padlocked box that everyone says is empty. Curiosity turns into a challenge. Can you pick it open?',
+    choices: [
+      {
+        text: 'Try to pick the lock',
+        tag: null,
+        outcome: 'You reach for a hairpin.',
+        minigame: { type: 'lockpick', difficulty: 'easy', title: 'The Locked Box', description: 'Set each pin. Take your time.', successOutcome: 'The lid opens. Inside: old photographs, a letter, a key to something you haven\'t found yet.', failOutcome: 'The lock holds. The mystery remains.', karmaHit: 0 },
+        effect: (p) => { p.e += 3; p.setMem('lockpickEvent', true); },
+        inject: null,
+      },
+      {
+        text: 'Leave it alone',
+        tag: null,
+        outcome: 'Some things are meant to stay closed.',
+        effect: (p) => { p.setMem('lockpickEvent', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
 ]
