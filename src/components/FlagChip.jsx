@@ -5,6 +5,11 @@ const NEGATIVE_FLAGS = new Set([
   'divorced', 'learned_silence', 'guarded_heart', 'smoker', 'heavy_drinker', 'child_soldier',
   'gang_member', 'criminal_record', 'abusive_relationship', 'alcohol_addiction',
   'gambling_addiction', 'drug_addiction', 'addiction',
+  // world event flags
+  'genocide_survivor', 'famine_survivor', 'aids_generation', 'apartheid_generation',
+  'disaster_survivor', 'medical_debt', 'lived_through_occupation', 'lived_through_coup',
+  'hyperinflation_survivor', 'economic_collapse_survivor', 'war_generation',
+  'revolution_generation', 'deadbeat_parent', 'chernobyl_generation',
 ])
 
 const POSITIVE_FLAGS = new Set([
@@ -15,6 +20,9 @@ const POSITIVE_FLAGS = new Set([
   'health_conscious', 'emigrated', 'entrepreneur', 'mentor', 'community_leader',
   'rehab_graduate', 'martial_arts', 'bookworm', 'school_athlete', 'has_close_friend',
   'has_licence', 'pilot_licence', 'boating_licence',
+  // world event flags
+  'veteran', 'survived_soviet_collapse', 'cold_war_generation', 'internet_generation',
+  'lived_through_revolution', 'lived_through_pandemic',
 ])
 
 function flagStyle(flag) {
