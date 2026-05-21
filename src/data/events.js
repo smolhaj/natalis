@@ -3144,4 +3144,170 @@ export const EVENTS = [
     ],
     effect: null,
   },
+
+  // ── PRISON DEPTH EVENTS ──────────────────────────────────────────────────
+  // These events only fire when inPrison === true (via G.inPrison check in engine)
+
+  {
+    id: 'prison_first_week',
+    phase: 'young_adult',
+    weight: 8,
+    when: (G) => G.inPrison && !G.flags.includes('prison_oriented'),
+    text: (G) => {
+      if (['conflict_zone', 'developing_unstable', 'subsaharan'].includes(G.character.country.archetype))
+        return 'The prison is overcrowded. Three people share a cell designed for one. Violence is a daily reality. You must decide quickly who to trust — and who to avoid entirely.'
+      return 'The first week inside is disorienting. The hierarchy is invisible but rigid. Older inmates test you early on.'
+    },
+    choices: [
+      { text: 'Keep your head down and observe', tag: null, outcome: 'You learn the landscape without making enemies. A quiet dignity develops.', effect: (p) => { p.m -= 5; p.e += 4; p.addFlag('prison_oriented'); }, inject: null },
+      { text: 'Assert yourself early', tag: null, outcome: 'A confrontation establishes a rough respect. You also earn a grudge.', effect: (p) => { p.h -= 8; p.m -= 5; p.addFlag('prison_oriented'); }, inject: null },
+      { text: 'Find a patron — someone established', tag: null, outcome: 'The protection comes with obligations. Nothing inside is free.', effect: (p) => { p.m -= 3; p.karma -= 5; p.addFlag('prison_oriented'); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'prison_cellmate',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) => G.inPrison,
+    text: (G) => {
+      const archetype = G.character.country.archetype
+      if (['conflict_zone', 'developing_unstable'].includes(archetype))
+        return 'Your cellmate is a political prisoner — a journalist arrested for covering the regime. His knowledge of the outside world is remarkable.'
+      return 'Your cellmate has been inside for twelve years. He is either the wisest or most broken person you have ever met — possibly both.'
+    },
+    choices: [
+      { text: 'Talk to him. Listen to his story.', tag: null, outcome: 'The conversations reshape how you see your own crime and your own life.', effect: (p) => { p.e += 6; p.m += 3; }, inject: null },
+      { text: 'Stay silent. Do not form attachments.', tag: null, outcome: 'The years inside get quieter. And lonelier.', effect: (p) => { p.m -= 6; }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'prison_job',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) => G.inPrison && !G.flags.includes('prison_worker'),
+    text: (G) => {
+      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
+        return 'The prison offers a work assignment. Library assistant, kitchen, or workshop — they all pay almost nothing, but they fill the hours.'
+      return 'Work assignments in the prison are scarce and fought over. A spot opens up in the kitchen.'
+    },
+    choices: [
+      { text: 'Take the library job', tag: null, outcome: 'You read more in a year than in your entire life before. Something shifts.', effect: (p) => { p.e += 8; p.m += 4; p.addFlag('prison_worker'); p.addFlag('bookworm'); }, inject: null },
+      { text: 'Take the kitchen job', tag: null, outcome: 'The work is physical and hot. You eat better than most. You learn to cook.', effect: (p) => { p.h += 4; p.m += 3; p.addFlag('prison_worker'); }, inject: null },
+      { text: 'Take the workshop job', tag: null, outcome: 'You learn a trade. The skill follows you out.', effect: (p) => { p.e += 5; p.m += 4; p.addFlag('prison_worker'); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'prison_education',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.inPrison && !G.flags.includes('prison_education') && ['wealthy_west', 'wealthy_east', 'developing_urban'].includes(G.character.country.archetype),
+    text: 'The prison runs an education programme — basic literacy up to secondary equivalency. A quiet teacher comes twice a week. Some inmates mock it. Others fill every session.',
+    choices: [
+      { text: 'Enrol and attend every class', tag: 'adult_learner', outcome: 'You earn a qualification behind bars. The irony is not lost on you.', effect: (p) => { p.e += 10; p.m += 6; p.addFlag('adult_learner'); p.addFlag('prison_education'); }, inject: null },
+      { text: 'Attend occasionally', tag: null, outcome: 'You pick up more than you expected to.', effect: (p) => { p.e += 4; p.addFlag('prison_education'); }, inject: null },
+      { text: 'Skip it — not for you', tag: null, outcome: 'The hours go differently.', effect: (p) => { p.m -= 2; }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'prison_gang_pressure',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.inPrison && !G.flags.includes('gang_member'),
+    text: (G) => {
+      if (['conflict_zone', 'developing_unstable', 'subsaharan'].includes(G.character.country.archetype))
+        return 'The prison is run by gangs aligned with different factions outside. Staying unaffiliated is dangerous. They want your answer now.'
+      return 'A prison gang offers you protection — and a cut of their smuggling operation. Refusing has costs. Joining has costs too.'
+    },
+    choices: [
+      { text: 'Join — survival comes first', tag: null, outcome: 'The protection is real. The debt that comes with it is realer.', effect: (p) => { p.h += 5; p.m -= 8; p.karma -= 10; p.addFlag('gang_member'); }, inject: null },
+      { text: 'Refuse and find another way', tag: null, outcome: 'It is harder alone. You manage. The refusal costs you some health but keeps you intact.', effect: (p) => { p.h -= 5; p.m -= 5; p.karma += 5; }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'prison_incident',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.inPrison,
+    text: (G) => {
+      const archetype = G.character.country.archetype
+      if (['conflict_zone', 'developing_unstable', 'subsaharan'].includes(archetype))
+        return 'A riot breaks out over food rations. Guards fire into the crowd. You must get somewhere safe immediately.'
+      return 'A fight erupts in the yard. You are near the edge of it when it starts.'
+    },
+    choices: [
+      { text: 'Get to the wall and stay low', tag: null, outcome: 'You avoid the worst of it. You are shaken but unharmed.', effect: (p) => { p.m -= 8; }, inject: null },
+      { text: 'Pull someone out of the fight', tag: 'compassionate', outcome: 'You take a blow meant for someone else. They remember.', effect: (p) => { p.h -= 10; p.m += 5; p.karma += 8; }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'prison_letter',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) => G.inPrison && (G.partner || (G.children && G.children.length > 0)),
+    text: (G) => G.partner
+      ? 'A letter arrives from your partner. The handwriting is careful. The words are not.'
+      : 'A letter arrives from your child. The handwriting is their school handwriting — still forming.',
+    choices: [
+      { text: 'Write back — tell the truth', tag: null, outcome: 'It is the hardest letter you have ever written. It may be the most important.', effect: (p) => { p.m += 6; p.r -= 3; }, inject: null },
+      { text: 'Write back — keep it light', tag: null, outcome: 'You protect them from the reality. For now.', effect: (p) => { p.m += 2; p.r += 4; }, inject: null },
+      { text: 'Do not respond', tag: null, outcome: 'The silence says what you could not.', effect: (p) => { p.m -= 10; p.r += 8; }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'prison_rehabilitation',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.inPrison && ['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype) && (G.mem?.originalSentence ?? 0) >= 3,
+    text: 'The prison offers a rehabilitation programme — cognitive behavioural therapy, anger management, restorative justice. Participation is voluntary but noted by the parole board.',
+    choices: [
+      { text: 'Engage fully and honestly', tag: 'in_recovery', outcome: 'It is confronting work. Something in you loosens.', effect: (p) => { p.m += 10; p.e += 5; p.addFlag('in_recovery'); p.karma += 8; }, inject: null },
+      { text: 'Attend but keep the walls up', tag: null, outcome: 'The parole board sees attendance. You leave with less than you could have.', effect: (p) => { p.m += 3; }, inject: null },
+      { text: 'Skip it — it is not sincere', tag: null, outcome: 'The parole board notices the absence. The release date moves.', effect: (p) => { p.m -= 5; p.r += 5; }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'prison_parole_hearing',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) => G.inPrison && G.prisonSentence >= 2 && (G.mem?.originalSentence ?? 0) >= 4,
+    text: 'A parole hearing is scheduled. Three board members sit behind a table. The question is simple: are you a different person now?',
+    choices: [
+      { text: 'Make your case — genuine change, concrete plans', tag: null, outcome: 'They grant parole. The conditions are strict. The freedom is real.', effect: (p) => { p.releaseFromPrison(); p.m += 15; p.addFlag('in_recovery'); }, inject: null },
+      { text: 'Give them what they want to hear', tag: null, outcome: 'Parole denied — the board can read a rehearsed answer. Your sentence continues.', effect: (p) => { p.m -= 10; p.r += 5; }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'prison_visitor',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.inPrison,
+    text: (G) => {
+      if (G.partner) return 'Your partner visits. An hour across a table. The glass between you says everything that words cannot.'
+      if (G.parents) return 'One of your parents visits. The shame in their eyes is worse than the sentence itself.'
+      return 'An old friend — the only one who comes — sits across from you. They look tired.'
+    },
+    choices: [
+      { text: 'Make the most of the hour', tag: null, outcome: 'The connection, however strained, holds. They leave saying they will come again.', effect: (p) => { p.m += 8; }, inject: null },
+      { text: 'Tell them not to come back — for their sake', tag: null, outcome: 'They argue. Eventually, they stop visiting. You told yourself it was a kindness.', effect: (p) => { p.m -= 10; p.r += 6; }, inject: null },
+    ],
+    effect: null,
+  },
 ]

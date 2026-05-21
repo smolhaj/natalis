@@ -192,6 +192,7 @@ function buildEffectProxy(state) {
   proxy.setGpa = (gpa) => { proxy._newGpa = gpa }
   proxy.setEnrolled = (enrollment) => { proxy._newEnrolled = enrollment }
   proxy.setMem = (key, value) => { proxy.mem[key] = value }
+  proxy.releaseFromPrison = () => { proxy._releaseFromPrison = true }
   return proxy
 }
 
@@ -214,6 +215,7 @@ function resolveProxyExtras(state, proxy) {
     next = { ...next, education: { ...next.education, enrolled: proxy._newEnrolled } }
   }
   if (proxy.flags.includes('has_licence')) next = { ...next, licenceObtained: true }
+  if (proxy._releaseFromPrison) next = { ...next, inPrison: false, prisonSentence: 0 }
   return next
 }
 
@@ -268,6 +270,7 @@ function buildG(state) {
     mem: state.mem,
     criminalRecord: state.criminalRecord,
     inPrison: state.inPrison,
+    prisonSentence: state.prisonSentence ?? 0,
     money: state.money ?? 0,
     parents: state.parents,
     hooksUpCount: state.hooksUpCount ?? 0,
@@ -736,6 +739,7 @@ export function attemptCrime(state, crimeId) {
     if (sentence > 0) {
       updated.inPrison = true
       updated.prisonSentence = sentence
+      updated.mem = { ...updated.mem, originalSentence: sentence, prisonYearStart: state.age }
       updated.log = [...updated.log, { age: state.age, text: `You are sentenced to ${sentence} year${sentence > 1 ? 's' : ''} in prison.`, isKey: true }]
     }
   } else {
@@ -1006,9 +1010,40 @@ export function tick(state) {
     if (remaining <= 0) {
       s.inPrison = false; s.prisonSentence = 0
       s.log = [...s.log, { age: s.age, text: 'You are released from prison.', isKey: true }]
+      // Parole event — queue if sentence was long
+      if ((s.mem?.originalSentence ?? 0) >= 3) {
+        s.queue = [...s.queue, {
+          id: `prison_parole_release_${s.age}`,
+          phase: getPhase(s.age),
+          text: 'You walk out of the gates. The sunlight feels wrong — too bright, too open. Reintegration begins now.',
+          choices: [
+            { text: 'Find work and start over', tag: 'determined', outcome: 'The record follows you everywhere. But you keep applying.', effect: (p) => { p.m += 8; p.e += 5; p.addFlag('determined_student'); }, inject: null },
+            { text: 'Reconnect with old contacts', tag: null, outcome: 'Some are glad to see you. Some pull you back toward the life you tried to leave.', effect: (p) => { p.m += 4; p.karma -= 5; }, inject: null },
+          ],
+          effect: null,
+          when: () => true,
+        }]
+      }
     } else {
       s.prisonSentence = remaining
-      s.log = [...s.log, { age: s.age, text: `Another year behind bars. ${remaining} year${remaining === 1 ? '' : 's'} remain.`, isKey: false }]
+      // Queue a prison event roughly every other year
+      const prisonEvent = getNextEvent(s)
+      if (prisonEvent) {
+        if (s.queue.some(e => e.id === prisonEvent.id)) s.queue = s.queue.filter(e => e.id !== prisonEvent.id)
+        s.usedEventIds = new Set([...s.usedEventIds, prisonEvent.id])
+        if (!prisonEvent.choices || prisonEvent.choices.length === 0) {
+          const proxy = buildEffectProxy(s)
+          if (prisonEvent.effect) prisonEvent.effect(proxy)
+          s = applyProxy(s, proxy)
+          s = resolveProxyExtras(s, proxy)
+          s.log = [...s.log, { age: s.age, text: typeof prisonEvent.text === 'function' ? prisonEvent.text(buildG(s)) : prisonEvent.text, isKey: false }]
+        } else {
+          s.pendingEvent = prisonEvent
+          return s
+        }
+      } else {
+        s.log = [...s.log, { age: s.age, text: `Another year behind bars. ${remaining} year${remaining === 1 ? '' : 's'} remain.`, isKey: false }]
+      }
     }
     return s
   }
