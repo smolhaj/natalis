@@ -62,6 +62,8 @@ export default function ActivitiesPanel({ onClose }) {
   const [betAmount, setBetAmount] = useState(100)
   const [murderStep, setMurderStep] = useState(null) // null | 'victim' | 'method'
   const [murderVictim, setMurderVictim] = useState(null)
+  const [datingAppStep, setDatingAppStep] = useState(null) // null | 'filters' | 'match'
+  const [datingFilters, setDatingFilters] = useState({ ageRange: 'any', netWorth: 'any' })
 
   const state = useGameStore(s => s)
   const takeActivity       = useGameStore(s => s.takeActivity)
@@ -116,6 +118,10 @@ export default function ActivitiesPanel({ onClose }) {
   const confirmBreakOut    = useGameStore(s => s.confirmBreakOut)
   const assumeIdentity     = useGameStore(s => s.assumeIdentity)
   const goIllegal          = useGameStore(s => s.goIllegal)
+  const pendingPartner     = useGameStore(s => s.pendingPartner)
+  const acceptPartner      = useGameStore(s => s.acceptPartner)
+  const declinePartner     = useGameStore(s => s.declinePartner)
+  const useDatingApp       = useGameStore(s => s.useDatingApp)
 
   const actionsLeft = state.maxActionsPerYear - state.actionsThisYear
   const noActions = actionsLeft <= 0
@@ -215,10 +221,205 @@ export default function ActivitiesPanel({ onClose }) {
       }
 
       case 'love': {
+        // ── Partner profile card (organic meet or dating app match) ──────────
+        const PartnerProfileCard = ({ profile, onAccept, onDecline, acceptLabel = 'Go on a Date', declineLabel = 'Not Interested' }) => {
+          const genderEmojis = { male: '👨', female: '👩', 'non-binary': '🧑' }
+          const faceEmoji = genderEmojis[profile.gender] ?? '🧑'
+          const StatBarRow = ({ label, value, color }) => (
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-natalis-muted w-16 shrink-0">{label}</span>
+              <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+                <div className="h-full rounded-full transition-all" style={{ width: `${value}%`, backgroundColor: color }} />
+              </div>
+              <span className="text-xs font-bold w-8 text-right" style={{ color }}>{value}</span>
+            </div>
+          )
+          return (
+            <div className="bg-white rounded-2xl border border-natalis-border shadow-sm overflow-hidden mb-2">
+              {/* Header */}
+              <div className="bg-gradient-to-br from-pink-500 to-rose-400 px-5 py-4 flex items-center gap-4">
+                <span className="text-5xl">{faceEmoji}</span>
+                <div>
+                  <p className="text-white font-bold text-lg leading-tight">{profile.name}</p>
+                  <p className="text-pink-100 text-xs mt-0.5">{profile.occupation}</p>
+                </div>
+              </div>
+              {/* Info fields */}
+              <div className="px-4 pt-3 pb-1 grid grid-cols-2 gap-x-4 gap-y-1.5">
+                <div>
+                  <p className="text-natalis-muted text-xs">Gender</p>
+                  <p className="text-natalis-text text-sm font-semibold capitalize">{profile.gender}</p>
+                </div>
+                <div>
+                  <p className="text-natalis-muted text-xs">Birth Gender</p>
+                  <p className="text-natalis-text text-sm font-semibold capitalize">{profile.birthGender}</p>
+                </div>
+                <div>
+                  <p className="text-natalis-muted text-xs">Age</p>
+                  <p className="text-natalis-text text-sm font-semibold">{profile.age}</p>
+                </div>
+                <div>
+                  <p className="text-natalis-muted text-xs">Occupation</p>
+                  <p className="text-natalis-text text-sm font-semibold truncate">{profile.occupation}</p>
+                </div>
+              </div>
+              {/* Stat bars */}
+              <div className="px-4 pt-2 pb-3 space-y-2">
+                <StatBarRow label="Looks" value={profile.looks} color="#ff6b81" />
+                <StatBarRow label="Smarts" value={profile.smarts} color="#007aff" />
+                <StatBarRow label="Money" value={profile.wealthStat} color="#34c759" />
+                <StatBarRow label="Craziness" value={profile.craziness} color="#ff9500" />
+              </div>
+              {/* Action buttons */}
+              <div className="px-4 pb-4 grid grid-cols-2 gap-2">
+                <button
+                  onClick={onAccept}
+                  className="py-3 rounded-xl font-bold text-white text-sm active:scale-95 transition-all"
+                  style={{ background: 'linear-gradient(135deg,#ff6b81,#c44569)' }}
+                >
+                  {acceptLabel}
+                </button>
+                <button
+                  onClick={onDecline}
+                  className="py-3 rounded-xl font-bold text-sm border border-natalis-border bg-natalis-bg text-natalis-muted active:scale-95 transition-all"
+                >
+                  {declineLabel}
+                </button>
+              </div>
+            </div>
+          )
+        }
+
+        // ── Pending partner (organic meet) ───────────────────────────────────
+        if (pendingPartner && !state.partner) {
+          return (
+            <>
+              <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1 mb-1">You meet someone...</p>
+              <PartnerProfileCard
+                profile={pendingPartner}
+                acceptLabel="Start Dating"
+                declineLabel="Not Interested"
+                onAccept={() => { acceptPartner(); onClose() }}
+                onDecline={() => declinePartner()}
+              />
+            </>
+          )
+        }
+
+        // ── Dating app flow ──────────────────────────────────────────────────
+        const AGE_RANGES = [
+          { label: 'Any age', value: 'any' },
+          { label: '18–25', value: '18-25', minAge: 18, maxAge: 25 },
+          { label: '26–35', value: '26-35', minAge: 26, maxAge: 35 },
+          { label: '36–45', value: '36-45', minAge: 36, maxAge: 45 },
+          { label: '46–55', value: '46-55', minAge: 46, maxAge: 55 },
+          { label: '56+',   value: '56+',  minAge: 56, maxAge: 80 },
+        ]
+        const NET_WORTH_OPTIONS = [
+          { label: "It doesn't matter", value: 'any' },
+          { label: 'Some savings ($10k+)', value: 'some', minWealthStat: 30 },
+          { label: 'Comfortable ($100k+)', value: 'comfortable', minWealthStat: 55 },
+          { label: 'Wealthy ($1M+)', value: 'wealthy', minWealthStat: 80 },
+        ]
+
+        if (datingAppStep === 'filters') {
+          const selectedAge = AGE_RANGES.find(r => r.value === datingFilters.ageRange) ?? AGE_RANGES[0]
+          const selectedNW = NET_WORTH_OPTIONS.find(r => r.value === datingFilters.netWorth) ?? NET_WORTH_OPTIONS[0]
+          return (
+            <>
+              <button onClick={() => setDatingAppStep(null)} className="text-bit-blue text-sm font-semibold mb-3">← Back</button>
+              {/* Dating app header card */}
+              <div className="bg-gradient-to-br from-pink-500 to-rose-400 rounded-2xl px-5 py-4 mb-4 text-white">
+                <p className="font-bold text-lg">💘 Dating App</p>
+                <p className="text-pink-100 text-xs mt-0.5">$100 per search · Find your match</p>
+              </div>
+
+              <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1">Pick your desired age</p>
+              <div className="grid grid-cols-3 gap-1.5 mb-3">
+                {AGE_RANGES.map(r => (
+                  <button key={r.value} onClick={() => setDatingFilters(f => ({ ...f, ageRange: r.value }))}
+                    className="py-2 px-2 rounded-xl border text-xs font-semibold transition-all active:scale-95"
+                    style={{
+                      background: datingFilters.ageRange === r.value ? '#ff6b81' : 'white',
+                      color: datingFilters.ageRange === r.value ? 'white' : '#8e8e93',
+                      borderColor: datingFilters.ageRange === r.value ? '#ff6b81' : '#e5e5ea',
+                    }}>
+                    {r.label}
+                  </button>
+                ))}
+              </div>
+
+              <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1">Pick your desired net worth</p>
+              <div className="space-y-1.5 mb-4">
+                {NET_WORTH_OPTIONS.map(r => (
+                  <button key={r.value} onClick={() => setDatingFilters(f => ({ ...f, netWorth: r.value }))}
+                    className="w-full text-left px-4 py-2.5 rounded-xl border text-sm font-semibold transition-all active:scale-95"
+                    style={{
+                      background: datingFilters.netWorth === r.value ? '#fff0f3' : 'white',
+                      color: datingFilters.netWorth === r.value ? '#c44569' : '#3a3a3c',
+                      borderColor: datingFilters.netWorth === r.value ? '#ff6b81' : '#e5e5ea',
+                    }}>
+                    {r.label}
+                    {datingFilters.netWorth === r.value && <span className="float-right text-pink-400">✓</span>}
+                  </button>
+                ))}
+              </div>
+
+              <button
+                disabled={noActions || (state.money ?? 0) < 100}
+                onClick={() => {
+                  const ageOpts = AGE_RANGES.find(r => r.value === datingFilters.ageRange) ?? {}
+                  const nwOpts = NET_WORTH_OPTIONS.find(r => r.value === datingFilters.netWorth) ?? {}
+                  useDatingApp({ minAge: ageOpts.minAge, maxAge: ageOpts.maxAge, minWealthStat: nwOpts.minWealthStat })
+                  setDatingAppStep('match')
+                }}
+                className="w-full py-3 rounded-xl font-bold text-white text-sm active:scale-95 disabled:opacity-40 transition-all"
+                style={{ background: 'linear-gradient(135deg,#ff6b81,#c44569)' }}
+              >
+                💘 Let's try it · ${(state.money ?? 0) >= 100 ? '100' : 'Need $100'}
+              </button>
+            </>
+          )
+        }
+
+        if (datingAppStep === 'match' && pendingPartner) {
+          return (
+            <>
+              <button onClick={() => { setDatingAppStep('filters'); declinePartner() }} className="text-bit-blue text-sm font-semibold mb-2">← New Match</button>
+              <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1 mb-1">Your match</p>
+              <PartnerProfileCard
+                profile={pendingPartner}
+                acceptLabel="Go on a Date"
+                declineLabel="No, try again"
+                onAccept={() => { acceptPartner(); setDatingAppStep(null); onClose() }}
+                onDecline={() => {
+                  declinePartner()
+                  setDatingAppStep('filters')
+                }}
+              />
+            </>
+          )
+        }
+
+        if (datingAppStep === 'match' && !pendingPartner) {
+          setDatingAppStep(null)
+        }
+
         return (
           <>
             {state.age >= 16 && !state.partner && (
-              <Btn disabled={noActions} onClick={() => go(meetSomeone)} title="Meet Someone New" subtitle="Put yourself out there." />
+              <>
+                <Btn disabled={noActions} onClick={() => meetSomeone()} title="Meet Someone New" subtitle="Put yourself out there." />
+                {state.age >= 18 && (
+                  <Btn
+                    disabled={noActions || (state.money ?? 0) < 100}
+                    onClick={() => setDatingAppStep('filters')}
+                    title="💘 Dating App"
+                    subtitle="Browse matches with filters."
+                    cost="$100 per search"
+                  />
+                )}
+              </>
             )}
             {state.age >= 14 && (
               <Btn disabled={noActions} onClick={() => go(hookUp)} title="Hook Up" subtitle="Casual. No strings. Probably." />
@@ -1109,6 +1310,7 @@ export default function ActivitiesPanel({ onClose }) {
               const isUnderground = state.inPrison || state.wanted || state.flags.includes('escaped_prisoner')
               const badge = cat.key === 'underground' && isUnderground ? { text: '!', color: '#ff3b30' } :
                             cat.key === 'rehab' && hasAddiction ? { text: '!', color: '#ff3b30' } :
+                            cat.key === 'love' && pendingPartner && !state.partner ? { text: '💘', color: '#ff6b81' } :
                             cat.key === 'social_media' && sm.followers > 0 ? { text: sm.followers >= 1000 ? `${(sm.followers/1000).toFixed(0)}k` : sm.followers.toString(), color: '#007aff' } :
                             cat.key === 'friends' && (state.friends ?? []).filter(f => f.alive).length > 0 ? { text: (state.friends ?? []).filter(f => f.alive).length.toString(), color: '#34c759' } :
                             null

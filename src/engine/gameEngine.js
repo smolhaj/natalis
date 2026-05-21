@@ -565,29 +565,62 @@ function fireFromJob(state) {
 
 // ─── Relationship system ──────────────────────────────────────────────────────
 
+const PARTNER_OCCUPATIONS = [
+  'Software Engineer', 'Teacher', 'Nurse', 'Doctor', 'Lawyer', 'Accountant',
+  'Graphic Designer', 'Chef', 'Bartender', 'Sales Manager', 'Marketing Director',
+  'Real Estate Agent', 'Police Officer', 'Firefighter', 'Architect', 'Journalist',
+  'Pharmacist', 'Social Worker', 'Personal Trainer', 'Electrician', 'Plumber',
+  'Mechanic', 'Store Manager', 'Bank Teller', 'Dental Hygienist', 'Librarian',
+  'Barista', 'Photographer', 'Event Planner', 'Insurance Agent', 'Veterinarian',
+  'Student', 'Freelancer', 'Artist', 'Musician', 'Actor', 'Model',
+  'Entrepreneur', 'Consultant', 'Waiter', 'Driver', 'Cleaner', 'Security Guard',
+]
+
 function genPartnerName(state, gender) {
   const c = state.character.country
   return `${pickFrom(gender === 'male' ? c.namePool.male : c.namePool.female)} ${pickFrom(c.surnames)}`
 }
 
-export function meetPotentialPartner(state) {
-  if (state.partner) return { ...state, log: [...state.log, { age: state.age, text: "You already have a partner.", isKey: false }] }
-  if (state.age < 16) return state
-  const gender = state.character.gender === 'male' ? 'female' : 'male'
-  const name = genPartnerName(state, gender)
-  const attractScore = (state.stats.looks + state.stats.charisma) / 2
-  if (!chance(clamp(attractScore / 100 + 0.1, 0.15, 0.9))) {
-    return { ...state, log: [...state.log, { age: state.age, text: `You meet ${name} but nothing sparks.`, isKey: false }] }
-  }
-  const partner = {
-    name, gender,
-    age: clamp(state.age + randomBetween(-5, 8), 16, state.age + 10),
+export function generatePartnerProfile(state, overrides = {}) {
+  const myGender = state.character.gender
+  const preferredGender = myGender === 'male' ? 'female' : myGender === 'female' ? 'male' : pickFrom(['male', 'female'])
+  const gender = overrides.gender ?? preferredGender
+  const nameGender = gender === 'non-binary' ? pickFrom(['male', 'female']) : gender
+  const name = genPartnerName(state, nameGender)
+  const birthGender = Math.random() < 0.04 ? (gender === 'male' ? 'female' : 'male') : gender === 'non-binary' ? pickFrom(['male', 'female']) : gender
+
+  const minAge = overrides.minAge ?? Math.max(18, state.age - 8)
+  const maxAge = overrides.maxAge ?? (state.age + 12)
+  const age = clamp(randomBetween(minAge, maxAge), 16, 99)
+
+  const looks = randomBetween(15, 95)
+  const smarts = randomBetween(15, 95)
+  const wealthStat = overrides.minWealthStat != null
+    ? randomBetween(overrides.minWealthStat, 100)
+    : randomBetween(5, 90)
+  const craziness = randomBetween(10, 90)
+
+  return {
+    name, gender, birthGender, age,
+    occupation: pickFrom(PARTNER_OCCUPATIONS),
+    looks, smarts, wealthStat, craziness,
     relationshipQuality: randomBetween(45, 72),
     married: false, engaged: false, years: 0,
   }
+}
+
+export function meetPotentialPartner(state) {
+  if (state.partner) return { ...state, log: [...state.log, { age: state.age, text: "You already have a partner.", isKey: false }] }
+  if (state.age < 16) return state
+  const attractScore = (state.stats.looks + state.stats.charisma) / 2
+  if (!chance(clamp(attractScore / 100 + 0.1, 0.15, 0.9))) {
+    return { ...state, log: [...state.log, { age: state.age, text: "You try to meet someone, but nothing clicks.", isKey: false }] }
+  }
+  const profile = generatePartnerProfile(state)
   return {
-    ...state, partner,
-    log: [...state.log, { age: state.age, text: `You meet ${name} and begin dating.`, isKey: true }],
+    ...state,
+    pendingPartner: profile,
+    log: [...state.log, { age: state.age, text: `You meet ${profile.name}.`, isKey: false }],
   }
 }
 

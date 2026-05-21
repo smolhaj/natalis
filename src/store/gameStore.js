@@ -19,6 +19,7 @@ import {
   retire,
   emigrate,
   meetPotentialPartner,
+  generatePartnerProfile,
   hookUp,
   goOnDate,
   complimentPartner,
@@ -119,6 +120,7 @@ const INITIAL_STATE = {
   wantedFor: null,
   assumedIdentity: null,
   exPartners: [],
+  pendingPartner: null,
 }
 
 export const useGameStore = create((set, get) => ({
@@ -219,6 +221,7 @@ export const useGameStore = create((set, get) => ({
       wantedFor: null,
       assumedIdentity: null,
       exPartners: [],
+      pendingPartner: null,
     })
   },
 
@@ -366,6 +369,47 @@ export const useGameStore = create((set, get) => ({
     const state = get()
     if (state.dead) return
     set(meetPotentialPartner(state))
+  },
+
+  acceptPartner: () => {
+    const state = get()
+    if (!state.pendingPartner || state.dead) return
+    set({
+      ...state,
+      partner: state.pendingPartner,
+      pendingPartner: null,
+      log: [...state.log, { age: state.age, text: `You start dating ${state.pendingPartner.name}.`, isKey: true }],
+    })
+  },
+
+  declinePartner: () => {
+    const state = get()
+    if (!state.pendingPartner || state.dead) return
+    set({
+      ...state,
+      pendingPartner: null,
+      log: [...state.log, { age: state.age, text: `You decide not to pursue ${state.pendingPartner.name}.`, isKey: false }],
+    })
+  },
+
+  useDatingApp: (filters = {}) => {
+    const state = get()
+    if (state.dead || state.partner) return
+    if ((state.money ?? 0) < 100) {
+      set({ log: [...state.log, { age: state.age, text: "You need $100 for the dating app.", isKey: false }] })
+      return
+    }
+    const overrides = {}
+    if (filters.minAge) overrides.minAge = filters.minAge
+    if (filters.maxAge) overrides.maxAge = filters.maxAge
+    if (filters.minWealthStat) overrides.minWealthStat = filters.minWealthStat
+    const profile = generatePartnerProfile(state, overrides)
+    set({
+      ...state,
+      money: (state.money ?? 0) - 100,
+      pendingPartner: profile,
+      log: [...state.log, { age: state.age, text: `Dating app match: ${profile.name}, ${profile.age}.`, isKey: false }],
+    })
   },
 
   hookUp: () => {
