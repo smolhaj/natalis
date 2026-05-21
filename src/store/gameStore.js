@@ -100,6 +100,8 @@ const INITIAL_STATE = {
   martialArts: { discipline: null, belt: 0 },
   birthControl: false,
   gpa: null,
+  mentalHealth: { condition: null, medicating: false, therapy: false },
+  hobbies: {},
 }
 
 export const useGameStore = create((set, get) => ({

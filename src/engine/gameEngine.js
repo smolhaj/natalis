@@ -193,6 +193,11 @@ function buildEffectProxy(state) {
   proxy.setEnrolled = (enrollment) => { proxy._newEnrolled = enrollment }
   proxy.setMem = (key, value) => { proxy.mem[key] = value }
   proxy.releaseFromPrison = () => { proxy._releaseFromPrison = true }
+  proxy.setMentalHealth = (updates) => { proxy._mentalHealthUpdates = { ...(proxy._mentalHealthUpdates ?? {}), ...updates } }
+  proxy.practiceHobby = (hobbyId, delta = 1) => {
+    if (!proxy._hobbyDeltas) proxy._hobbyDeltas = {}
+    proxy._hobbyDeltas[hobbyId] = (proxy._hobbyDeltas[hobbyId] ?? 0) + delta
+  }
   return proxy
 }
 
@@ -216,6 +221,12 @@ function resolveProxyExtras(state, proxy) {
   }
   if (proxy.flags.includes('has_licence')) next = { ...next, licenceObtained: true }
   if (proxy._releaseFromPrison) next = { ...next, inPrison: false, prisonSentence: 0 }
+  if (proxy._mentalHealthUpdates) next = { ...next, mentalHealth: { ...(next.mentalHealth ?? {}), ...proxy._mentalHealthUpdates } }
+  if (proxy._hobbyDeltas) {
+    const hobbies = { ...(next.hobbies ?? {}) }
+    for (const [k, v] of Object.entries(proxy._hobbyDeltas)) hobbies[k] = Math.min(100, (hobbies[k] ?? 0) + v)
+    next = { ...next, hobbies }
+  }
   return next
 }
 
@@ -286,6 +297,8 @@ function buildG(state) {
     martialArts: state.martialArts ?? { discipline: null, belt: 0 },
     birthControl: state.birthControl ?? false,
     gpa: state.gpa ?? null,
+    mentalHealth: state.mentalHealth ?? { condition: null, medicating: false, therapy: false },
+    hobbies: state.hobbies ?? {},
   }
 }
 

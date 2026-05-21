@@ -3721,4 +3721,262 @@ export const EVENTS = [
     ],
     effect: null,
   },
+
+  // ── MENTAL HEALTH SYSTEM ─────────────────────────────────────────────────
+
+  {
+    id: 'ya_anxiety_diagnosis',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.stats.happiness < 45 && !G.mentalHealth.condition && !G.mem.mhEvent1,
+    text: (G) => {
+      if (['subsaharan', 'conflict_zone', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'The feeling has been there for years — a constant low hum of dread. No one in your community names it. But it is taking a toll on your body.'
+      return 'The panic attacks started six months ago. A GP refers you to a mental health assessment. The diagnosis: generalised anxiety disorder.'
+    },
+    choices: [
+      {
+        text: 'Start therapy',
+        tag: null,
+        outcome: (G) => ['wealthy_west', 'wealthy_east', 'developing_urban'].includes(G.character.country.archetype)
+          ? 'CBT helps. The progress is slow and measurable. You begin to understand the pattern.'
+          : 'A community health worker offers limited support. It helps more than nothing.',
+        effect: (p) => { p.m += 8; p.setMentalHealth({ condition: 'anxiety', therapy: true }); p.setMem('mhEvent1', true); },
+        inject: null,
+      },
+      {
+        text: 'Start medication',
+        tag: null,
+        outcome: 'The SSRI takes six weeks to work. When it does, the edge comes off.',
+        effect: (p) => { p.m += 6; p.h -= 2; p.setMentalHealth({ condition: 'anxiety', medicating: true }); p.setMem('mhEvent1', true); },
+        inject: null,
+      },
+      {
+        text: 'Manage it without help',
+        tag: null,
+        outcome: 'Some days are manageable. Others are not. The condition shapes your choices without being named.',
+        effect: (p) => { p.m -= 5; p.setMentalHealth({ condition: 'anxiety' }); p.setMem('mhEvent1', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ya_depression_episode',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.stats.happiness < 35 && !G.mentalHealth.condition && !G.mem.mhEvent1,
+    text: (G) => {
+      if (['subsaharan', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype))
+        return 'You have not gotten out of bed properly in weeks. In your community, this is called laziness, or possession, or weakness. None of those names fit what it feels like.'
+      return 'The depression arrives without warning and stays. Nothing gives pleasure. Everything takes effort. You call in sick more than you can afford to.'
+    },
+    choices: [
+      {
+        text: 'Seek professional help',
+        tag: null,
+        outcome: (G) => ['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype)
+          ? 'A combination of therapy and medication slowly rebuilds function. It takes nearly a year.'
+          : 'Access is limited. A traditional healer and family support carry most of the weight.',
+        effect: (p) => { p.m += 12; p.mo -= 2000; p.setMentalHealth({ condition: 'depression', therapy: true }); p.setMem('mhEvent1', true); },
+        inject: null,
+      },
+      {
+        text: 'Tell a trusted person',
+        tag: null,
+        outcome: 'Speaking it aloud makes it real in a different way. Their response is imperfect. It helps anyway.',
+        effect: (p) => { p.m += 5; p.setMentalHealth({ condition: 'depression' }); p.setMem('mhEvent1', true); },
+        inject: null,
+      },
+      {
+        text: 'Say nothing and push through',
+        tag: null,
+        outcome: 'Function returns, partially. The episode leaves its residue.',
+        effect: (p) => { p.m -= 8; p.h -= 5; p.setMentalHealth({ condition: 'depression' }); p.setMem('mhEvent1', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_mental_health_relapse',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.mentalHealth.condition && !G.mem.mhRelapse,
+    text: (G) => `Your ${G.mentalHealth.condition === 'anxiety' ? 'anxiety' : 'depression'} has returned after years of stability. A combination of work pressure and a difficult year has triggered it.`,
+    choices: [
+      {
+        text: 'Return to treatment immediately',
+        tag: null,
+        outcome: 'Catching it early makes the difference. Recovery is faster than before.',
+        effect: (p) => { p.m += 10; p.mo -= 2000; p.setMem('mhRelapse', true); },
+        inject: null,
+      },
+      {
+        text: 'Try to manage it yourself this time',
+        tag: null,
+        outcome: 'Harder than you remembered. The episode deepens before it lifts.',
+        effect: (p) => { p.m -= 10; p.h -= 5; p.setMem('mhRelapse', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_mental_health_stability',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.mentalHealth.condition && (G.mentalHealth.therapy || G.mentalHealth.medicating) && !G.mem.mhStability,
+    text: 'You have maintained your mental health actively for several years. The tools are familiar now. The language to describe what you experience has become part of you.',
+    choices: [
+      {
+        text: 'Consider reducing medication with your doctor',
+        tag: null,
+        outcome: 'The taper is slow and supervised. You maintain stability. The credit is shared.',
+        effect: (p) => { p.m += 8; p.setMentalHealth({ medicating: false }); p.setMem('mhStability', true); },
+        inject: null,
+      },
+      {
+        text: 'Maintain the current treatment — it works',
+        tag: null,
+        outcome: 'Stability is not nothing. You know what it cost to get here.',
+        effect: (p) => { p.m += 5; p.setMem('mhStability', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── HOBBY SKILL PROGRESSION ──────────────────────────────────────────────
+
+  {
+    id: 'ch_hobby_discovery',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) => Object.keys(G.hobbies).length === 0,
+    text: 'A hobby catches you. Something you pick up almost by accident becomes something you look forward to.',
+    choices: [
+      { text: 'Music — learn an instrument', tag: null, outcome: 'You begin on a second-hand guitar. The calluses form slowly.', effect: (p) => { p.practiceHobby('music', 10); p.setMem('primaryHobby', 'music'); p.m += 5; }, inject: null },
+      { text: 'Drawing and painting', tag: null, outcome: 'You fill notebooks with drawings. A teacher notices.', effect: (p) => { p.practiceHobby('art', 10); p.setMem('primaryHobby', 'art'); p.m += 5; p.e += 3; }, inject: null },
+      { text: 'Sport — choose your game', tag: null, outcome: 'The physical discipline shapes your body and your character.', effect: (p) => { p.practiceHobby('sport', 10); p.setMem('primaryHobby', 'sport'); p.h += 5; p.m += 3; }, inject: null },
+      { text: 'Reading and writing', tag: null, outcome: 'Libraries become your favourite places. Words are where you live.', effect: (p) => { p.practiceHobby('writing', 10); p.setMem('primaryHobby', 'writing'); p.e += 5; p.m += 3; p.addFlag('bookworm'); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ya_hobby_deepening',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => Object.values(G.hobbies).some(v => v >= 10) && Object.values(G.hobbies).every(v => v < 40),
+    text: (G) => {
+      const hobby = G.mem.primaryHobby ?? Object.entries(G.hobbies).sort((a, b) => b[1] - a[1])[0]?.[0] ?? 'your craft'
+      const hobbyName = { music: 'music', art: 'painting', sport: 'sport', writing: 'writing', cooking: 'cooking', coding: 'programming' }[hobby] ?? hobby
+      return `You have stuck with ${hobbyName} long enough to get past beginner frustration. The improvement is visible — to you and others.`
+    },
+    choices: [
+      {
+        text: 'Commit — practice daily',
+        tag: null,
+        outcome: 'The hours accumulate. The skill compounds.',
+        effect: (p) => {
+          const hobby = p.mem.primaryHobby ?? 'general'
+          p.practiceHobby(hobby, 20); p.m += 6; p.e += 3;
+        },
+        inject: null,
+      },
+      {
+        text: 'Keep it casual — enjoy it without pressure',
+        tag: null,
+        outcome: 'Progress slows, but you love it more for having no stakes.',
+        effect: (p) => {
+          const hobby = p.mem.primaryHobby ?? 'general'
+          p.practiceHobby(hobby, 8); p.m += 8;
+        },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ya_hobby_music_performance',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => (G.hobbies.music ?? 0) >= 30 && !G.mem.musicPerformed,
+    text: (G) => {
+      if (['subsaharan', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'You are asked to play at a community event — a wedding, a local ceremony. Your music is known in the neighbourhood.'
+      return 'An open mic night. Your name is on the list. You have been building to this for years.'
+    },
+    choices: [
+      { text: 'Play — face the fear', tag: null, outcome: 'The performance is imperfect and real. The applause is small and enormous.', effect: (p) => { p.m += 12; p.s += 3; p.practiceHobby('music', 10); p.setMem('musicPerformed', true); }, inject: null },
+      { text: 'Pull out at the last minute', tag: null, outcome: 'The regret is immediate. You reschedule in your head a dozen times.', effect: (p) => { p.m -= 5; p.r += 6; p.setMem('musicPerformed', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_hobby_mastery',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => Object.values(G.hobbies).some(v => v >= 60) && !G.mem.hobbyMaster,
+    text: (G) => {
+      const hobby = G.mem.primaryHobby ?? Object.entries(G.hobbies).sort((a, b) => b[1] - a[1])[0]?.[0] ?? 'your craft'
+      const hobbyName = { music: 'music', art: 'visual art', sport: 'your sport', writing: 'writing', cooking: 'cooking', coding: 'programming' }[hobby] ?? hobby
+      return `Decades of practice have made you genuinely accomplished at ${hobbyName}. People who know their craft recognise yours.`
+    },
+    choices: [
+      { text: 'Teach it — pass it on', tag: 'mentor', outcome: 'Students come. Some surpass you. That turns out to be the best part.', effect: (p) => { p.m += 12; p.karma += 10; p.addFlag('mentor'); p.setMem('hobbyMaster', true); }, inject: null },
+      { text: 'Keep it for yourself — some things should stay private', tag: null, outcome: 'The solitude of the practice remains its own reward.', effect: (p) => { p.m += 8; p.setMem('hobbyMaster', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ya_coding_hobby',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.currentYear >= 1995 && !G.hobbies.coding && G.stats.smarts >= 55,
+    text: (G) => G.currentYear >= 2010
+      ? 'A free coding bootcamp opens nearby. You attend out of curiosity.'
+      : `You start teaching yourself to program from library books${G.currentYear >= 2000 ? ' and online forums' : ''}.`,
+    choices: [
+      { text: 'Invest serious time in it', tag: null, outcome: 'The logic clicks. You build small things that actually work. The satisfaction is unlike anything else.', effect: (p) => { p.practiceHobby('coding', 20); p.e += 8; p.m += 5; }, inject: null },
+      { text: 'Try it and move on', tag: null, outcome: 'Not for you — at least not right now.', effect: (p) => { p.practiceHobby('coding', 5); p.e += 2; }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ya_cooking_hobby',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => !G.hobbies.cooking && !G.flags.includes('career_chef'),
+    text: (G) => {
+      if (['subsaharan', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype))
+        return 'You grew up watching your grandmother cook. Now you have your own kitchen — however small — and you begin recreating her recipes from memory.'
+      return 'A cooking class, a gifted cookbook, or simply the need to feed yourself better. You start cooking seriously.'
+    },
+    choices: [
+      {
+        text: 'Follow traditional recipes from your culture',
+        tag: null,
+        outcome: 'The flavours are memory itself. Others gather around your table.',
+        effect: (p) => { p.practiceHobby('cooking', 15); p.m += 8; p.h += 3; },
+        inject: null,
+      },
+      {
+        text: 'Experiment and try new techniques',
+        tag: null,
+        outcome: 'Some disasters. Some revelations. Your palate develops.',
+        effect: (p) => { p.practiceHobby('cooking', 12); p.m += 6; p.e += 3; },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
 ]
