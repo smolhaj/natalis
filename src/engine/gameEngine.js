@@ -89,6 +89,32 @@ export function deriveInitialSiblings(char) {
   })
 }
 
+export function deriveBirthText(char) {
+  const { country, birthYear, familyStability, familySize, wealthTier, firstName, surname } = char
+  const arch = country.archetype
+  const name = `${firstName} ${surname}`
+
+  const stabilityCtx = {
+    secure: 'into a household of stability and warmth',
+    stable: 'to a family of modest means but solid foundations',
+    struggling: 'into a family navigating real hardship',
+    unstable: 'into difficult circumstances from the first day',
+  }[familyStability] ?? 'into the world'
+
+  const archCtx = {
+    wealthy_west: `In ${country.name} in ${birthYear}, the maternity ward is clean, the forms are in triplicate, and your parents drive home on a road with lane markings.`,
+    wealthy_east: `${country.name}, ${birthYear}. A modern hospital, careful documentation, grandparents waiting in the corridor with specific opinions about your name.`,
+    post_soviet: `${country.name}, ${birthYear}. The maternity ward smells of disinfectant. Your mother was not allowed to have your father in the room.`,
+    developing_urban: `${country.name}, ${birthYear}. The city is enormous and still growing. The neighbourhood you are born into will shape everything that follows.`,
+    developing_unstable: `${country.name}, ${birthYear}. The country is in motion — politically, economically, always. You arrive ${stabilityCtx}.`,
+    subsaharan: `${country.name}, ${birthYear}. You are born ${stabilityCtx}${familySize > 4 ? ', the newest in a large family' : ''}. ${country.name}'s sun is already through the window.`,
+    conflict_zone: `${country.name}, ${birthYear}. You are born during a time of conflict. Your mother's first priority was keeping you safe.`,
+    wealthy_gulf: `${country.name}, ${birthYear}. The hospital is modern, the air conditioning precise. You are born into a country of vast resources and layered rules.`,
+  }[arch] ?? `${name} enters the world in ${country.name}, ${birthYear}.`
+
+  return archCtx
+}
+
 export function deriveInitialMoney(char) {
   const base = { 0: 0, 1: 300, 2: 2000, 3: 12000, 4: 60000 }
   const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }

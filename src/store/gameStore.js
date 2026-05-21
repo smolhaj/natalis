@@ -5,6 +5,7 @@ import {
   deriveInitialMoney,
   deriveInitialParents,
   deriveInitialSiblings,
+  deriveBirthText,
   tick,
   resolveChoice,
   applyActivity,
@@ -162,8 +163,8 @@ export const useGameStore = create((set, get) => ({
       log: [
         {
           age: 0,
-          text: `${character.firstName} ${character.surname} enters the world in ${character.country.name}, ${character.birthYear}.`,
-          isKey: false,
+          text: deriveBirthText(character),
+          isKey: true,
         },
       ],
       career: null,
