@@ -1059,7 +1059,21 @@ function checkIllnessRisk(state) {
       if (state.stats.health < 40) prob *= 1.5
     }
 
+    // Country healthcare quality multiplies base illness risk
+    const hcIllnessMod = { excellent: 0.7, good: 0.85, fair: 1.0, poor: 1.3, very_poor: 1.6 }
+    prob *= hcIllnessMod[state.character.country.healthcare] ?? 1.0
+
+    // Pollution exposure increases illness risk significantly
+    if (state.flags.includes('pollution_exposure')) prob *= 1.4
+
     if (!chance(prob)) continue
+
+    // Scale treatment costs to country GDP (developing-world costs are lower but so are wages)
+    const gdpCostMult = { very_high: 1.4, high: 1.1, medium_high: 0.9, medium: 0.7, low_medium: 0.5, low: 0.35, very_low: 0.2 }
+    const costMult = gdpCostMult[state.character.country.gdp] ?? 1.0
+    // Also scale treatment success by healthcare quality (poor healthcare = worse outcomes)
+    const hcSuccessMod = { excellent: 1.15, good: 1.05, fair: 1.0, poor: 0.85, very_poor: 0.7 }
+    const successMod = hcSuccessMod[state.character.country.healthcare] ?? 1.0
 
     const event = {
       id: `illness_${illness.id}_${state.age}`,
@@ -1067,13 +1081,14 @@ function checkIllnessRisk(state) {
       weight: 10,
       text: `You are diagnosed with ${illness.name}.`,
       choices: illness.treatments.map(t => {
-        const willSucceed = Math.random() < t.successChance
+        const adjustedCost = Math.round(t.cost * costMult)
+        const willSucceed = Math.random() < clamp(t.successChance * successMod, 0.05, 0.98)
         return {
-          text: `${t.name}${t.cost > 0 ? ` ($${t.cost.toLocaleString()})` : ' (free)'}`,
+          text: `${t.name}${adjustedCost > 0 ? ` ($${adjustedCost.toLocaleString()})` : ' (free)'}`,
           tag: null,
           outcome: willSucceed ? t.outcomeSuccess : t.outcomeFailure,
           effect: (p) => {
-            p.mo -= t.cost
+            p.mo -= adjustedCost
             p.m += t.happinessEffect ?? 0
             if (willSucceed) {
               p.h += Math.abs(t.healthEffect ?? 0)
