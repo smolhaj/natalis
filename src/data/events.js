@@ -5403,4 +5403,423 @@ export const EVENTS = [
     ],
     effect: null,
   },
+
+  // ── PET EVENTS ───────────────────────────────────────────────────────────────
+
+  {
+    id: 'pet_illness',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.pets && G.pets.length > 0 && G.age >= 10,
+    text: (G) => {
+      if (G.character.country.archetype === 'conflict_zone')
+        return 'Your pet is sick — lethargic, refusing food. In a place like this, finding a vet means scrounging for supplies and favours. The cost is not just money.'
+      if (G.character.country.archetype === 'wealthy_west' || G.character.country.archetype === 'wealthy_east')
+        return 'Your pet stops eating and the vet clinic — gleaming, expensive, thorough — gives you the diagnosis and the bill in the same breath.'
+      if (G.character.country.archetype === 'subsaharan')
+        return 'Your pet is unwell. The nearest animal doctor is far and the journey alone is a commitment most cannot afford.'
+      return 'Your pet is sick. The vet visit is unavoidable. The bill, when it comes, stings.'
+    },
+    choices: [
+      {
+        text: 'Pay for treatment',
+        tag: null,
+        outcome: 'The treatment works. Your pet recovers slowly, and you feel the relief in your chest more than you expected.',
+        effect: (p) => { p.mo -= 300; p.m += 5; },
+        inject: null,
+      },
+      {
+        text: 'Surrender the pet — you cannot afford this',
+        tag: null,
+        outcome: 'You hand them over. They look back at you from the carrier. The guilt settles in and does not leave quickly.',
+        effect: (p) => { p.m -= 20; p.addFlag('surrendered_pet'); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'pet_runs_away',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.pets && G.pets.length > 0 && G.age >= 10 && !G.flags.includes('pet_lost'),
+    text: (G) => {
+      if (G.character.country.archetype === 'conflict_zone')
+        return 'In the chaos of another difficult week, the gate is left unlatched. Your pet is gone. In a neighbourhood like this, the odds of finding them are not good.'
+      if (['subsaharan', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'Your pet slips out through a gap in the fence and disappears into the neighbourhood. You call their name until dark.'
+      return 'You come home and the front door has been left ajar. Your pet is nowhere to be found.'
+    },
+    choices: [
+      {
+        text: 'Search the neighbourhood — post flyers, ask everyone',
+        tag: null,
+        outcome: (G) => {
+          if (Math.random() < 0.6) return 'Two days later, a neighbour calls. Your pet is found — thin, a little spooked, but home.'
+          return 'You search for days. The flyers fade in the rain. They do not come back.'
+        },
+        effect: (p) => {
+          if (Math.random() < 0.6) { p.m += 10; }
+          else { p.m -= 15; p.addFlag('pet_lost'); }
+        },
+        inject: null,
+      },
+      {
+        text: 'Accept that they are gone',
+        tag: null,
+        outcome: 'You take the bowl inside. Some losses you carry quietly.',
+        effect: (p) => { p.m -= 15; p.addFlag('pet_lost'); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'pet_death',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.pets && G.pets.length > 0 && G.age >= 18,
+    text: (G) => {
+      if (G.character.country.archetype === 'wealthy_west' || G.character.country.archetype === 'wealthy_east')
+        return 'The vet said it would be a matter of weeks. They were right. Your pet — companion, routine, small daily anchor — dies at home, quietly, on their favourite blanket.'
+      if (G.character.country.archetype === 'conflict_zone')
+        return 'Your pet has been with you through things most people cannot imagine. Old age catches up with them now. In a life with few certainties, they were one. That is gone now.'
+      return 'Your pet dies of old age. Fourteen years of mornings together, and now the house is very quiet.'
+    },
+    choices: [
+      {
+        text: 'Grieve properly — let yourself feel it',
+        tag: null,
+        outcome: 'The loss is real. Grief for an animal is its own kind, and you do not apologise for it.',
+        effect: (p) => { p.m -= 20; p.h -= 5; },
+        inject: null,
+      },
+      {
+        text: 'Celebrate the life they had',
+        tag: null,
+        outcome: 'You look at old photos. It was a good life for them. That is enough.',
+        effect: (p) => { p.m -= 8; },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'pet_learns_trick',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.pets && G.pets.length > 0 && G.age >= 8,
+    text: (G) => {
+      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
+        return 'After weeks of patient repetition — treats, hand signals, the same word until it lost meaning — your pet finally gets it. The trick clicks. They look at you with what you are almost certain is pride.'
+      if (G.character.country.archetype === 'subsaharan')
+        return 'The neighbourhood kids gather to watch. Your pet performs the trick perfectly. The laughter is real and warm.'
+      return 'You have been working on this for weeks. Today, finally, something clicks. Your pet nails the trick and the two of you share a moment of uncomplicated joy.'
+    },
+    choices: [
+      {
+        text: 'Spend the afternoon training together',
+        tag: null,
+        outcome: 'Some hours are just good. This is one of them.',
+        effect: (p) => { p.m += 12; p.karma += 2; },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'stray_dog_adopts_you',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => (!G.pets || G.pets.length === 0) && G.age >= 12,
+    text: (G) => {
+      if (G.character.country.archetype === 'conflict_zone')
+        return 'Strays are everywhere here. Most people look through them. But this one has been following you for three days now — waiting outside, patient, not begging. Just present.'
+      if (['subsaharan', 'developing_urban', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'A scraggly dog has decided you are its person. It shows up each morning and waits. The neighbourhood has started calling it by a name you did not choose.'
+      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
+        return 'A stray follows you home from the park. No collar, well-behaved, eyes that seem to already know the layout of your flat. The shelter is full. You have a decision to make.'
+      return 'A stray dog has adopted you. It appeared three days ago and it has not left. It sits outside your door like a question you have not answered yet.'
+    },
+    choices: [
+      {
+        text: 'Keep it — buy food, get them checked out',
+        tag: null,
+        outcome: 'That first night they sleep at the foot of your bed. The routine you build around them feels, strangely, like something you needed.',
+        effect: (p) => { p.m += 15; p.mo -= 50; },
+        inject: null,
+      },
+      {
+        text: 'Leave food out but do not let them in',
+        tag: null,
+        outcome: 'You tell yourself you are not attached. They disappear after a few days. You notice the absence more than you expected.',
+        effect: (p) => { p.m -= 5; },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── AFFAIR SYSTEM ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'affair_opportunity',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.partner !== null && G.partner.married && G.age >= 25 && !G.flags.includes('having_affair'),
+    text: (G) => {
+      if (G.character.country.archetype === 'wealthy_gulf')
+        return 'A colleague — charming, careful, aware of the stakes — makes their interest clear. In this society, what you are contemplating carries consequences that extend far beyond the two of you.'
+      if (G.character.country.archetype === 'post_soviet')
+        return 'A neighbour who has always been a little too attentive makes a move. Life here is complicated enough. This would complicate it further.'
+      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
+        return 'An attractive colleague lingers after everyone else has left. The conversation shifts. You know exactly what is being offered.'
+      return 'Someone new has appeared in your life — a colleague, a neighbour — and recently the attention has become unmistakably something more. You are not imagining it.'
+    },
+    choices: [
+      {
+        text: 'Resist — walk away',
+        tag: 'principled',
+        outcome: 'You let the moment pass. The right call is not always the easy one.',
+        effect: (p) => { p.karma += 5; p.m += 2; },
+        inject: null,
+      },
+      {
+        text: 'Begin a secret affair',
+        tag: 'unfaithful',
+        outcome: 'The excitement and the guilt arrive at almost exactly the same time.',
+        effect: (p) => { p.addFlag('having_affair'); p.setMem('affair_start', p._age ?? 0); p.m += 15; p.karma -= 15; },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'affair_discovered',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.flags.includes('having_affair') && G.partner !== null && G.age > (G.mem.affair_start ?? 0) + 1,
+    text: (G) => {
+      if (G.character.country.archetype === 'wealthy_gulf')
+        return 'Your spouse has found out. In this community, discovery is not a private matter — families, reputations, and livelihoods are now in play. The confrontation is cold and formal and devastating.'
+      if (G.character.country.archetype === 'conflict_zone')
+        return 'Your partner finds out. Trust was already thin here; life is already hard. This breaks something that may not be fixable.'
+      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
+        return 'Your partner found the messages. They are waiting for you when you get home. The look on their face is one you will not forget.'
+      return 'Your spouse discovers the affair. They have known for longer than you realised. The confrontation you have been dreading is here.'
+    },
+    choices: [
+      {
+        text: 'Come clean — beg for forgiveness',
+        tag: 'repentant',
+        outcome: (G) => {
+          if (Math.random() < 0.5) return 'They listen. The pain is real, the repair uncertain — but they do not leave. Not today.'
+          return 'The honesty is not enough. They leave. The silence in the house is enormous.'
+        },
+        effect: (p) => { p.m -= 25; p.r += 30; p.karma += 5; },
+        inject: null,
+      },
+      {
+        text: 'Deny everything',
+        tag: null,
+        outcome: 'The denial makes it worse. They know. You know they know. The lie sits between you now.',
+        effect: (p) => { p.m -= 15; p.r += 20; p.karma -= 10; },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'end_affair',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.flags.includes('having_affair') && G.age > (G.mem.affair_start ?? 0) + 1,
+    text: (G) => {
+      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
+        return 'The affair has been running long enough that the weight of it has become constant. The excitement faded; what remains is deception. You know what you need to do.'
+      return 'You have been carrying two lives for a while now. It is exhausting, and somewhere in the exhaustion, clarity has arrived.'
+    },
+    choices: [
+      {
+        text: 'End it — cleanly, finally',
+        tag: null,
+        outcome: 'The ending is harder than you expected. The relief that follows is harder still to admit.',
+        effect: (p) => { p.m -= 5; p.karma += 10; p.addFlag('affair_ended'); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── RELATIONSHIP COUNSELLING ──────────────────────────────────────────────────
+
+  {
+    id: 'relationship_troubles',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.partner !== null && G.age >= 20 && !G.mem.relationshipTroubles,
+    text: (G) => {
+      if (G.character.country.archetype === 'wealthy_gulf')
+        return 'The strain between you and your spouse has become harder to ignore. In a culture where appearances matter, what happens inside the home stays inside — but something needs to change.'
+      if (G.character.country.archetype === 'post_soviet')
+        return 'You and your partner have been circling the same arguments for months. The silences are longer now and not the comfortable kind.'
+      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
+        return 'The relationship has been strained for a while. The small arguments have a familiar pattern now. Something underneath needs to be addressed.'
+      return 'Things between you and your partner have been tense for months. The goodwill is still there but it is being tested.'
+    },
+    choices: [
+      {
+        text: 'Suggest couples counselling',
+        tag: null,
+        outcome: 'The first session is awkward and necessary. Something starts to shift.',
+        effect: (p) => { p.r += 15; p.mo -= 200; p.m += 8; p.setMem('relationshipTroubles', true); },
+        inject: null,
+      },
+      {
+        text: 'Give it time — things will settle',
+        tag: null,
+        outcome: 'Some things do settle. Others do not get better without attention.',
+        effect: (p) => { p.r += 5; p.setMem('relationshipTroubles', true); },
+        inject: null,
+      },
+      {
+        text: 'Have an honest conversation about what is wrong',
+        tag: null,
+        outcome: 'It is uncomfortable. It is also overdue. The air is a little clearer after.',
+        effect: (p) => { p.r += 10; p.m += 5; p.setMem('relationshipTroubles', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'partner_wants_children',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.partner !== null && G.age >= 22 && G.age <= 40 && G.children.length === 0 && !G.mem.discussed_kids,
+    text: (G) => {
+      if (G.character.country.archetype === 'wealthy_gulf')
+        return "Your spouse raises the subject with weight and formality: when will you start a family? The expectation is not just theirs — it is the community's."
+      if (['subsaharan', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'Your partner brings it up one evening. Children are expected here, and sooner rather than later. The conversation has been coming for a while.'
+      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
+        return 'Your partner brings it up over dinner, carefully but directly. They want to know where you stand on having children. The question has been in the air for months.'
+      return 'Your partner raises the question of children. They are ready to start a family, and they want to know how you feel.'
+    },
+    choices: [
+      {
+        text: 'I want that too',
+        tag: null,
+        outcome: 'The conversation turns warm. You are building something together.',
+        effect: (p) => { p.setMem('discussed_kids', true); p.r -= 15; p.m += 10; },
+        inject: null,
+      },
+      {
+        text: 'Not ready yet',
+        tag: null,
+        outcome: 'They understand, but you can see the patience in their face. This is not over.',
+        effect: (p) => { p.setMem('discussed_kids', true); p.r += 5; p.m += 3; },
+        inject: null,
+      },
+      {
+        text: 'I do not want children',
+        tag: null,
+        outcome: 'The honesty is right, but the impact is real. This changes things between you.',
+        effect: (p) => { p.setMem('discussed_kids', true); p.r += 20; p.m -= 5; },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── AGE MILESTONE REGRET ──────────────────────────────────────────────────────
+
+  {
+    id: 'midlife_reflection',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) => G.age >= 40 && G.age <= 42 && !G.mem.midlife_reflected,
+    text: (G) => {
+      if (G.character.country.archetype === 'post_soviet')
+        return 'Forty. In another era your parents had already built their whole lives by now — apartment, career, children, all arranged by the state. You have had to arrange your own. It is a strange thing to take stock of.'
+      if (G.character.country.archetype === 'conflict_zone')
+        return 'Forty feels different when you did not always expect to get here. You stop one afternoon and take stock of the life you have managed to build.'
+      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
+        return 'Forty. You read about midlife crises the way you read about weather. Now you are in one — or near one — and it is quieter and stranger than you expected. Just a long, sober look at the scoreboard.'
+      return 'You are forty. The number sits differently than others. You find yourself taking stock without quite deciding to.'
+    },
+    choices: [
+      {
+        text: 'I have lived well',
+        tag: null,
+        outcome: 'The accounting is honest and it comes out positive. That is not nothing.',
+        effect: (p) => { p.m += 10; p.setMem('midlife_reflected', true); },
+        inject: null,
+      },
+      {
+        text: 'I wish I had done things differently',
+        tag: null,
+        outcome: 'The regret is real. So is the self-awareness it comes with. That counts for something.',
+        effect: (p) => { p.m -= 10; p.karma += 5; p.setMem('midlife_reflected', true); },
+        inject: null,
+      },
+      {
+        text: 'Time to make changes',
+        tag: null,
+        outcome: 'The second half starts differently. That is your intention, at least.',
+        effect: (p) => { p.m += 5; p.setMem('midlife_reflected', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'sixtieth_birthday',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) => G.age >= 60 && G.age <= 62 && !G.mem.sixty_reflected,
+    text: (G) => {
+      if (G.character.country.archetype === 'subsaharan')
+        return 'Sixty. Your community marks the age with ceremony — an elder now, with everything that entails. The weight of it is real, and so is the respect that comes with it.'
+      if (G.character.country.archetype === 'wealthy_gulf')
+        return 'Sixty. The family gathers. There are speeches. A life in full view of everyone — measured by family, by standing, by the names of your grandchildren.'
+      if (G.character.country.archetype === 'post_soviet')
+        return 'Sixty. You remember your own parents at this age — they seemed ancient. Looking in the mirror, you do not feel ancient. You feel like yourself, but louder somehow.'
+      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
+        return 'Sixty. Someone books a restaurant. There is a cake. People say you do not look it. You think about the years — what they contained, what you did with them.'
+      return 'Your sixtieth birthday arrives. People gather. There are stories and toasts and the particular warmth of a milestone publicly marked.'
+    },
+    choices: [
+      {
+        text: 'Grateful for a full life',
+        tag: null,
+        outcome: 'The gratitude is honest. There is still time left, and you intend to use it.',
+        effect: (p) => { p.m += 15; p.setMem('sixty_reflected', true); },
+        inject: null,
+      },
+      {
+        text: 'The best is behind me',
+        tag: null,
+        outcome: 'The feeling is familiar to many who reach sixty. It is not wrong, exactly. But it is not the whole truth either.',
+        effect: (p) => { p.m -= 15; p.setMem('sixty_reflected', true); },
+        inject: null,
+      },
+      {
+        text: 'Still plenty left to do',
+        tag: null,
+        outcome: 'The chapter has not closed. You pick up where you left off, and you mean it.',
+        effect: (p) => { p.m += 8; p.setMem('sixty_reflected', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
 ]
