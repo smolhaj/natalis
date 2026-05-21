@@ -7378,4 +7378,348 @@ export const EVENTS = [
       { text: 'Decline — your credibility matters more', tag: null, outcome: 'The agent is frustrated. You feel fine about the decision.', effect: (p) => { p.m += 5; p.karma += 5; p.setMem('endorsementDeal', true) } },
     ],
   },
+
+  // ── CHILDHOOD EVENTS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'childhood_bully',
+    phase: 'childhood',
+    weight: 6,
+    when: (G) => G.age >= 7 && G.age <= 12 && !G.mem.bully_event,
+    text: 'There\'s a kid at school who has decided you\'re the problem. It starts with words, then lunch stolen, then the group that laughs when you walk past.',
+    choices: [
+      { text: 'Tell a teacher', tag: null, outcome: 'The teacher speaks to them. It gets worse for two weeks, then quietly stops.', effect: (p) => { p.m -= 3; p.e += 2; p.setMem('bully_event', true) } },
+      { text: 'Stand your ground', tag: null, outcome: 'You say something back. It doesn\'t land perfectly but it lands. A small pivot.', effect: (p) => { p.s += 3; p.m += 2; p.setMem('bully_event', true) } },
+      { text: 'Avoid them and wait it out', tag: null, outcome: 'You become very good at reading a room, knowing where not to stand.', effect: (p) => { p.m -= 5; p.e += 3; p.setMem('bully_event', true) } },
+      { text: 'Tell your parents', tag: null, outcome: 'They call the school. There is a meeting. Nothing resolves cleanly but the pressure eases.', effect: (p) => { p.m += 3; p.setMem('bully_event', true) } },
+    ],
+  },
+
+  {
+    id: 'childhood_first_best_friend',
+    phase: 'childhood',
+    weight: 8,
+    when: (G) => G.age >= 6 && G.age <= 10 && !G.mem.first_best_friend,
+    text: 'You spend every recess with the same person. You have a shared language now — references no one else gets, a particular laugh, a way of being that feels like a second self.',
+    choices: [
+      { text: 'Invite them over after school', tag: null, outcome: 'They come. Your bedroom becomes a world you\'ve built together.', effect: (p) => { p.m += 8; p.s += 4; p.setMem('first_best_friend', true) } },
+      { text: 'Keep it to school only', tag: null, outcome: 'There\'s a boundary, and it holds. It\'s still good, just contained.', effect: (p) => { p.m += 4; p.setMem('first_best_friend', true) } },
+    ],
+  },
+
+  {
+    id: 'childhood_parents_fight',
+    phase: 'childhood',
+    weight: 5,
+    when: (G) => G.age >= 6 && G.age <= 13 && G.parents && G.parents.length >= 2 && !G.mem.parents_fight,
+    text: 'You wake up to voices from downstairs — not angry-loud, but a kind of controlled intensity that is worse. You lie still and listen without meaning to.',
+    choices: [
+      { text: 'Go downstairs and ask if everything is okay', tag: null, outcome: 'They stop. Your mother says "everything\'s fine." You know it isn\'t but the night gets quieter.', effect: (p) => { p.m -= 5; p.s += 2; p.e += 2; p.setMem('parents_fight', true) } },
+      { text: 'Put headphones on and pretend to sleep', tag: null, outcome: 'The music fills the space where the silence should be. It works enough.', effect: (p) => { p.m -= 6; p.setMem('parents_fight', true) } },
+      { text: 'Confide in a friend at school next day', tag: null, outcome: 'Saying it out loud helps more than you expected. Someone else has heard those sounds too.', effect: (p) => { p.m += 3; p.s += 2; p.setMem('parents_fight', true) } },
+    ],
+  },
+
+  {
+    id: 'childhood_school_play',
+    phase: 'childhood',
+    weight: 5,
+    when: (G) => G.age >= 7 && G.age <= 12 && !G.mem.school_play,
+    text: 'Auditions for the school play. The drama teacher hands out sheets. You didn\'t know you wanted a part until you saw the list.',
+    choices: [
+      { text: 'Try out for the lead', tag: null, outcome: 'You don\'t get it, but you get something — a small part, stage fright, and a curtain call.', effect: (p) => { p.s += 4; p.m += 5; p.setMem('school_play', true) } },
+      { text: 'Go for a background role', tag: null, outcome: 'Backstage suits you, it turns out. You\'re the one who always knows what comes next.', effect: (p) => { p.e += 2; p.m += 3; p.setMem('school_play', true) } },
+      { text: 'Skip the audition', tag: null, outcome: 'You watch from the audience. It\'s fine. But there\'s a small "what if" that doesn\'t quite leave.', effect: (p) => { p.m -= 2; p.r += 3; p.setMem('school_play', true) } },
+    ],
+  },
+
+  {
+    id: 'childhood_pet_dies',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) => G.age >= 7 && G.age <= 14 && G.flags.includes('has_pet') && !G.mem.pet_died,
+    isKey: true,
+    text: 'You find your pet still in the morning. The stillness is different from sleeping. You already know before your parents do.',
+    choices: [
+      { text: 'Cry and let yourself grieve', tag: null, outcome: 'It takes a few weeks. You learn something about the weight of absence.', effect: (p) => { p.m -= 10; p.e += 3; p.setMem('pet_died', true) } },
+      { text: 'Hold it together — it\'s just an animal', tag: null, outcome: 'You\'re fine, you tell everyone. The dream you have about them three nights later tells a different story.', effect: (p) => { p.m -= 8; p.r += 5; p.setMem('pet_died', true) } },
+      { text: 'Ask for a new pet to fill the gap', tag: null, outcome: 'Your parents get you one. It helps and it doesn\'t.', effect: (p) => { p.m -= 3; p.setMem('pet_died', true) } },
+    ],
+  },
+
+  {
+    id: 'childhood_move_schools',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) => G.age >= 7 && G.age <= 13 && !G.mem.moved_schools,
+    text: 'Your family is moving. New house, new neighborhood, new school in September. You look at the map and try to calculate the distance from everyone you know.',
+    choices: [
+      { text: 'Promise to stay in touch with old friends', tag: null, outcome: 'For a while, you do. Then the calls get shorter. Then they stop. Then one resurfaces on social media fifteen years later.', effect: (p) => { p.m -= 5; p.s += 2; p.setMem('moved_schools', true) } },
+      { text: 'Focus on making it work at the new place', tag: null, outcome: 'You arrive with open hands. The first week is hard. The second is easier.', effect: (p) => { p.s += 5; p.m += 2; p.setMem('moved_schools', true) } },
+      { text: 'Resist it — ask to stay with a friend', tag: null, outcome: 'Your parents say no. The anger is real but brief; the adaptation happens anyway.', effect: (p) => { p.m -= 7; p.setMem('moved_schools', true) } },
+    ],
+  },
+
+  {
+    id: 'childhood_hobby_discovered',
+    phase: 'childhood',
+    weight: 7,
+    when: (G) => G.age >= 8 && G.age <= 13 && !G.mem.hobby_found,
+    text: 'One afternoon changes shape. A borrowed instrument, a library book, a cousin\'s sketchbook — and something in you that didn\'t have a name finds one.',
+    choices: [
+      { text: 'Ask to take lessons', tag: null, outcome: 'Your parents find the money somehow. The teacher is brusque but good. You improve.', effect: (p) => { p.e += 5; p.m += 6; p.mo -= 1200; p.setMem('hobby_found', true) } },
+      { text: 'Teach yourself', tag: null, outcome: 'You accumulate hours without anyone watching. That suits you, it turns out.', effect: (p) => { p.e += 6; p.m += 4; p.setMem('hobby_found', true) } },
+      { text: 'Try it briefly, then move on', tag: null, outcome: 'Not everything sticks. But it pointed somewhere.', effect: (p) => { p.m += 2; p.setMem('hobby_found', true) } },
+    ],
+  },
+
+  // ── LATE LIFE EVENTS ──────────────────────────────────────────────────────────
+
+  {
+    id: 'late_life_retirement_adjustment',
+    phase: 'late_life',
+    weight: 6,
+    when: (G) => G.age >= 65 && G.age <= 70 && G.flags.includes('retired') && !G.mem.retirement_adj,
+    text: 'Three months into retirement and the calendar is a strange blank. You\'ve spent forty years being needed at specific times. This open water requires different swimming.',
+    isKey: true,
+    choices: [
+      { text: 'Fill it with purpose — volunteer or consult', tag: null, outcome: 'Structure re-enters on your terms. The work is smaller and more deliberate.', effect: (p) => { p.m += 8; p.s += 3; p.karma += 5; p.setMem('retirement_adj', true) } },
+      { text: 'Embrace the unscheduled life', tag: null, outcome: 'Morning coffee without a clock. You adjust in about six months.', effect: (p) => { p.m += 5; p.h += 3; p.setMem('retirement_adj', true) } },
+      { text: 'Struggle with the loss of routine', tag: null, outcome: 'The restlessness becomes its own kind of work. You find your way out eventually.', effect: (p) => { p.m -= 8; p.r += 5; p.setMem('retirement_adj', true) } },
+    ],
+  },
+
+  {
+    id: 'late_life_old_friend_contact',
+    phase: 'late_life',
+    weight: 5,
+    when: (G) => G.age >= 65 && !G.mem.old_friend_contact,
+    text: 'A name you haven\'t spoken in twenty years sends a message. They found you through a mutual contact. The last time you saw them was before two marriages and three careers.',
+    choices: [
+      { text: 'Reconnect fully — meet for lunch', tag: null, outcome: 'The gap closes faster than you expected. Some friendships are dormant, not dead.', effect: (p) => { p.m += 10; p.s += 3; p.setMem('old_friend_contact', true) } },
+      { text: 'Reply warmly but keep it brief', tag: null, outcome: 'A pleasant exchange. You don\'t push further, and neither do they.', effect: (p) => { p.m += 4; p.setMem('old_friend_contact', true) } },
+      { text: 'Leave the message on read', tag: null, outcome: 'You\'re not sure why. Some chapters are closed for reasons you can\'t fully name.', effect: (p) => { p.r += 5; p.setMem('old_friend_contact', true) } },
+    ],
+  },
+
+  {
+    id: 'late_life_driving_concern',
+    phase: 'late_life',
+    weight: 5,
+    when: (G) => G.age >= 78 && !G.mem.driving_concern,
+    text: 'Your children have been having a conversation without you, you suspect. Small incidents — a dent on the bumper you don\'t remember, a near-miss on the highway. They want to talk about the driving.',
+    isKey: true,
+    choices: [
+      { text: 'Agree to a formal assessment', tag: null, outcome: 'You pass, barely. The restrictions feel fair, mostly.', effect: (p) => { p.m -= 5; p.h += 2; p.setMem('driving_concern', true) } },
+      { text: 'Voluntarily stop driving', tag: null, outcome: 'Before anyone asks you to. It costs independence but gains dignity.', effect: (p) => { p.m -= 8; p.karma += 5; p.setMem('driving_concern', true) } },
+      { text: 'Push back — you\'re fine', tag: null, outcome: 'The argument is circular. They back down. You notice yourself checking twice now, at every turn.', effect: (p) => { p.m -= 3; p.h -= 2; p.setMem('driving_concern', true) } },
+    ],
+  },
+
+  {
+    id: 'late_life_legacy_question',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) => G.age >= 70 && !G.mem.legacy_question,
+    text: 'Someone asks you, at a dinner, what you want to be remembered for. The question catches you off guard. You\'ve been so busy being alive you haven\'t finished deciding.',
+    choices: [
+      { text: 'The relationships — the people you stayed with', tag: null, outcome: 'You say it out loud and find you mean it completely.', effect: (p) => { p.m += 8; p.karma += 5; p.r -= 8; p.setMem('legacy_question', true) } },
+      { text: 'The work — what you built or made', tag: null, outcome: 'Your answer is clean. Whether it\'s the whole truth takes longer to resolve.', effect: (p) => { p.m += 5; p.e += 3; p.setMem('legacy_question', true) } },
+      { text: 'You don\'t know yet', tag: null, outcome: 'The table laughs warmly. It\'s the most honest answer at the table.', effect: (p) => { p.m += 6; p.r -= 3; p.karma += 3; p.setMem('legacy_question', true) } },
+    ],
+  },
+
+  {
+    id: 'late_life_grandchildren_time',
+    phase: 'late_life',
+    weight: 7,
+    when: (G) => G.age >= 62 && G.children && G.children.length > 0 && !G.mem.grandkids_time,
+    text: 'Your grandchildren are at the age where you are still interesting to them. They want to know about before — before they existed, before their parents were adults, before everything was already decided.',
+    choices: [
+      { text: 'Tell them everything — the whole uncurated story', tag: null, outcome: 'Some of it surprises them. You see yourself reflected in their reaction. It\'s not entirely comfortable. It\'s good.', effect: (p) => { p.m += 10; p.r -= 10; p.karma += 5; p.setMem('grandkids_time', true) } },
+      { text: 'Tell them the cleaned-up version', tag: null, outcome: 'They get a story. Not the full one. Perhaps that\'s right.', effect: (p) => { p.m += 6; p.setMem('grandkids_time', true) } },
+      { text: 'Ask them about themselves instead', tag: null, outcome: 'They talk for an hour. You realize you know them less well than you thought.', effect: (p) => { p.m += 8; p.s += 2; p.karma += 3; p.setMem('grandkids_time', true) } },
+    ],
+  },
+
+  // ── LAWSUIT EVENTS ────────────────────────────────────────────────────────────
+
+  {
+    id: 'lawsuit_slip_fall',
+    phase: null,
+    weight: 3,
+    when: (G) => G.age >= 25 && !G.mem.lawsuit_slip && (G.career || G.flags.includes('business_owner')),
+    text: 'A letter arrives from a law firm. Someone fell on premises you\'re responsible for — a sidewalk, a staircase, a wet floor. They are seeking damages of significant size.',
+    isKey: true,
+    choices: [
+      { text: 'Settle out of court', tag: null, outcome: 'Your lawyer recommends it. You pay, sign, and don\'t discuss it. It\'s over in six weeks.', effect: (p) => { p.mo -= 12000; p.m -= 5; p.setMem('lawsuit_slip', true) } },
+      { text: 'Fight it in court', tag: null, outcome: 'The process takes fourteen months. You win, narrowly, but the legal fees approach the settlement amount anyway.', effect: (p) => { p.mo -= 18000; p.m -= 10; p.karma += 3; p.setMem('lawsuit_slip', true) } },
+      { text: 'Let insurance handle it', tag: null, outcome: 'Your premium doubles the following year. Your hands stay clean of the details.', effect: (p) => { p.mo -= 2000; p.m -= 3; p.setMem('lawsuit_slip', true) } },
+    ],
+  },
+
+  {
+    id: 'lawsuit_wrongful_termination',
+    phase: null,
+    weight: 3,
+    when: (G) => G.age >= 30 && G.career && !G.mem.lawsuit_wrongful_term && G.flags.includes('manager'),
+    text: 'A former employee has filed a wrongful termination suit. The claims are partially accurate and partially not. HR is involved. You hire a lawyer on a Wednesday afternoon.',
+    isKey: true,
+    choices: [
+      { text: 'Cooperate fully with HR and legal', tag: null, outcome: 'You\'re cleared of personal liability. The company settles. The documentation you kept saves you.', effect: (p) => { p.m -= 8; p.e += 3; p.setMem('lawsuit_wrongful_term', true) } },
+      { text: 'Settle quickly and quietly', tag: null, outcome: 'The story doesn\'t spread. The number is uncomfortable but manageable.', effect: (p) => { p.mo -= 25000; p.m -= 10; p.setMem('lawsuit_wrongful_term', true) } },
+      { text: 'Contest it vigorously', tag: null, outcome: 'The case drags. The plaintiff\'s lawyer is better than yours. You settle anyway, eighteen months later, for more.', effect: (p) => { p.mo -= 40000; p.m -= 15; p.setMem('lawsuit_wrongful_term', true) } },
+    ],
+  },
+
+  {
+    id: 'lawsuit_neighbor_dispute',
+    phase: null,
+    weight: 4,
+    when: (G) => G.age >= 28 && G.flags.includes('homeowner') && !G.mem.lawsuit_neighbor,
+    text: 'The fence dispute with next door has escalated beyond neighborly conversation. They\'ve filed a civil suit over a boundary line. The surveyor\'s report is contradictory.',
+    choices: [
+      { text: 'Mediate — you don\'t want to be at war with your neighbor', tag: null, outcome: 'Three sessions. An agreement. It costs both of you less and you can still wave across the fence.', effect: (p) => { p.mo -= 2000; p.m += 3; p.karma += 3; p.setMem('lawsuit_neighbor', true) } },
+      { text: 'Go to small claims court', tag: null, outcome: 'You win on the survey evidence. They don\'t speak to you after. Neither do you to them.', effect: (p) => { p.mo -= 800; p.m -= 5; p.setMem('lawsuit_neighbor', true) } },
+      { text: 'Cave — it\'s not worth it', tag: null, outcome: 'You sign over the disputed strip. Two feet of lawn is not worth a decade of tension.', effect: (p) => { p.m -= 3; p.r += 3; p.setMem('lawsuit_neighbor', true) } },
+    ],
+  },
+
+  {
+    id: 'lawsuit_sued_by_business_partner',
+    phase: null,
+    weight: 3,
+    when: (G) => G.age >= 30 && G.flags.includes('business_owner') && !G.mem.partner_lawsuit,
+    text: 'Your business partner is suing you. The partnership is dissolving in the most expensive way possible. The operating agreement you both signed has seven pages of ambiguity.',
+    isKey: true,
+    choices: [
+      { text: 'Negotiate a buyout', tag: null, outcome: 'You pay above market value for the peace. The business survives. The friendship doesn\'t.', effect: (p) => { p.mo -= 50000; p.m -= 10; p.setMem('partner_lawsuit', true) } },
+      { text: 'Counter-sue and fight for your stake', tag: null, outcome: 'It costs two years and eighty thousand dollars each. You get what you wanted. You\'re not sure it was worth it.', effect: (p) => { p.mo -= 80000; p.m -= 20; p.setMem('partner_lawsuit', true) } },
+      { text: 'Find a mediator and split the business', tag: null, outcome: 'Cleanly, awkwardly, expensively. But cleanly.', effect: (p) => { p.mo -= 15000; p.m -= 8; p.setMem('partner_lawsuit', true) } },
+    ],
+  },
+
+  // ── STEP-CHILDREN EVENTS ──────────────────────────────────────────────────────
+
+  {
+    id: 'stepchild_meets_you',
+    phase: null,
+    weight: 6,
+    when: (G) => G.partner && G.flags.includes('partner_has_kids') && !G.flags.includes('met_stepkids') && G.age >= 25,
+    isKey: true,
+    text: 'Your partner\'s children are coming for the weekend. The oldest is nine. You\'ve cleaned the house twice and rehearsed small talk you know sounds nothing like you.',
+    choices: [
+      { text: 'Be yourself — warm but not trying too hard', tag: null, outcome: 'The nine-year-old ignores you most of the day, then asks if you want to play a game. You say yes.', effect: (p) => { p.m += 8; p.s += 3; p.addFlag('met_stepkids'); p.partnerRel(5) } },
+      { text: 'Go all out — plan activities and snacks', tag: null, outcome: 'The youngest has fun. The oldest is suspicious of the effort. These things take time.', effect: (p) => { p.m += 4; p.mo -= 80; p.addFlag('met_stepkids') } },
+      { text: 'Stay in the background and let your partner lead', tag: null, outcome: 'Your partner appreciates it. The kids barely register you. That\'s fine for now.', effect: (p) => { p.m += 3; p.partnerRel(3); p.addFlag('met_stepkids') } },
+    ],
+  },
+
+  {
+    id: 'stepchild_resistance',
+    phase: null,
+    weight: 5,
+    when: (G) => G.flags.includes('met_stepkids') && !G.mem.stepchild_resist && G.age >= 26,
+    text: 'The older one has decided you\'re the reason things are the way they are. They don\'t say it but they don\'t have to. Every exchange is a small deliberate friction.',
+    choices: [
+      { text: 'Give them time and keep showing up', tag: null, outcome: 'It takes a year. One afternoon something shifts and the friction is quieter.', effect: (p) => { p.m -= 5; p.karma += 8; p.setMem('stepchild_resist', true) } },
+      { text: 'Talk to them directly — clear the air', tag: null, outcome: 'They don\'t want to talk. But something about being asked directly changes the temperature slightly.', effect: (p) => { p.m -= 3; p.s += 3; p.setMem('stepchild_resist', true) } },
+      { text: 'Ask your partner to mediate', tag: null, outcome: 'Your partner tries. It helps and complicates simultaneously.', effect: (p) => { p.m -= 5; p.partnerRel(-3); p.setMem('stepchild_resist', true) } },
+    ],
+  },
+
+  {
+    id: 'stepchild_calls_you_parent',
+    phase: null,
+    weight: 3,
+    when: (G) => G.flags.includes('met_stepkids') && G.mem.stepchild_resist && !G.mem.stepchild_bonded,
+    isKey: true,
+    text: 'It happens by accident. They call you Dad, or Mom — whatever you are — without thinking about it, and then go quiet. Neither of you says anything.',
+    choices: [
+      { text: 'Let it pass without comment', tag: null, outcome: 'It becomes a thing that happened between you. No announcement necessary.', effect: (p) => { p.m += 15; p.karma += 5; p.r -= 10; p.setMem('stepchild_bonded', true) } },
+      { text: 'Smile and say you don\'t mind', tag: null, outcome: 'They nod. The next time they do it, it\'s deliberate.', effect: (p) => { p.m += 12; p.s += 3; p.setMem('stepchild_bonded', true) } },
+    ],
+  },
+
+  {
+    id: 'stepchild_bio_parent_conflict',
+    phase: null,
+    weight: 4,
+    when: (G) => G.flags.includes('met_stepkids') && !G.mem.bio_parent_conflict,
+    text: 'The children\'s other parent is making things difficult. They say things to the kids about you that the kids then repeat. Your partner is caught in the middle of something old and ongoing.',
+    choices: [
+      { text: 'Stay out of it — it\'s not your conflict', tag: null, outcome: 'You hold the line. It\'s hard. The kids respect it eventually, even if they don\'t say so.', effect: (p) => { p.m -= 5; p.karma += 5; p.partnerRel(3); p.setMem('bio_parent_conflict', true) } },
+      { text: 'Talk to your partner about setting boundaries', tag: null, outcome: 'Your partner agrees but finds it difficult to enforce. Progress is slow.', effect: (p) => { p.m -= 3; p.partnerRel(-2); p.setMem('bio_parent_conflict', true) } },
+      { text: 'Respond in kind — correct the record', tag: null, outcome: 'The children hear both versions. This helps no one, least of all them.', effect: (p) => { p.m -= 10; p.karma -= 8; p.setMem('bio_parent_conflict', true) } },
+    ],
+  },
+
+  // ── IN-LAW EVENTS ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'inlaw_first_meeting',
+    phase: null,
+    weight: 7,
+    when: (G) => G.partner && !G.mem.inlaw_met && G.age >= 20,
+    isKey: true,
+    text: 'Dinner at your partner\'s parents\' house. You\'ve prepared. You know their professions, their politics (roughly), their dog\'s name. You bring wine and hope it\'s the right kind.',
+    choices: [
+      { text: 'Be charming and attentive', tag: null, outcome: 'They like you, cautiously. The father makes a joke you don\'t fully understand and you laugh anyway. Acceptable.', effect: (p) => { p.s += 3; p.m += 5; p.partnerRel(4); p.setMem('inlaw_met', true) } },
+      { text: 'Be quiet and let your partner lead', tag: null, outcome: 'You say the right things when you say them. The mother calls you "well-mannered." It\'s a start.', effect: (p) => { p.m += 3; p.partnerRel(2); p.setMem('inlaw_met', true) } },
+      { text: 'Be yourself — no performance', tag: null, outcome: 'You say something slightly too honest at dinner and your partner tenses. Later they say they loved it.', effect: (p) => { p.m += 4; p.s += 2; p.partnerRel(3); p.setMem('inlaw_met', true) } },
+    ],
+  },
+
+  {
+    id: 'inlaw_overbearing',
+    phase: null,
+    weight: 5,
+    when: (G) => G.partner && G.mem.inlaw_met && !G.mem.inlaw_overbearing,
+    text: 'Your partner\'s mother calls three times a week. She has opinions about your apartment, your career choices, your plan (or lack of one) for children. She means well. That doesn\'t make it easier.',
+    choices: [
+      { text: 'Talk to your partner about setting limits', tag: null, outcome: 'Your partner defends their mother first, then reluctantly agrees. The calls reduce to once a week.', effect: (p) => { p.m += 3; p.partnerRel(-3); p.setMem('inlaw_overbearing', true) } },
+      { text: 'Build your own relationship with her — engage directly', tag: null, outcome: 'You call her first once a month. She\'s pleased. Somehow this reduces the pressure.', effect: (p) => { p.s += 3; p.m += 4; p.partnerRel(3); p.setMem('inlaw_overbearing', true) } },
+      { text: 'Absorb it — it\'s not worth the conflict', tag: null, outcome: 'The quiet resentment calcifies slowly. You don\'t notice until you do.', effect: (p) => { p.m -= 6; p.r += 4; p.setMem('inlaw_overbearing', true) } },
+    ],
+  },
+
+  {
+    id: 'inlaw_financial_ask',
+    phase: null,
+    weight: 3,
+    when: (G) => G.partner && G.mem.inlaw_met && G.money >= 30000 && !G.mem.inlaw_money,
+    text: 'Your in-laws are in a difficult position. The request comes through your partner: a loan — sizeable, indefinite return timeline, family, so how could you. You have the money.',
+    choices: [
+      { text: 'Lend it — they\'re family now', tag: null, outcome: 'The money leaves. The timeline extends. You don\'t press for it back. Neither does your partner.', effect: (p) => { p.mo -= 15000; p.partnerRel(5); p.karma += 3; p.setMem('inlaw_money', true) } },
+      { text: 'Give it as a gift, no strings', tag: null, outcome: 'You reframe it to yourself. No debt means no awkward holiday dinners.', effect: (p) => { p.mo -= 15000; p.m += 5; p.karma += 8; p.partnerRel(5); p.setMem('inlaw_money', true) } },
+      { text: 'Decline, with reasons', tag: null, outcome: 'Your partner is disappointed. The in-laws never quite forgive. It\'s a reasonable position with lasting costs.', effect: (p) => { p.m -= 8; p.partnerRel(-8); p.setMem('inlaw_money', true) } },
+    ],
+  },
+
+  {
+    id: 'inlaw_death',
+    phase: null,
+    weight: 4,
+    when: (G) => G.partner && G.mem.inlaw_met && G.age >= 45 && !G.mem.inlaw_death,
+    isKey: true,
+    text: 'Your partner\'s father has died. The funeral is held in the town where they grew up. You\'ve been there once. You stand slightly back during the burial and understand you are witnessing something closed and old.',
+    choices: [
+      { text: 'Be fully present — stay close to your partner', tag: null, outcome: 'You don\'t say the wrong thing because you barely speak. You hold their hand through the whole service.', effect: (p) => { p.m -= 5; p.partnerRel(8); p.karma += 5; p.setMem('inlaw_death', true) } },
+      { text: 'Handle the logistics — food, calls, arrangements', tag: null, outcome: 'You become quietly useful. Your partner notices later, weeks later, and thanks you for it.', effect: (p) => { p.m -= 3; p.partnerRel(6); p.karma += 4; p.setMem('inlaw_death', true) } },
+      { text: 'Give your partner space to grieve with family', tag: null, outcome: 'You stay in the background. It\'s the right call. They come back to you in pieces over the following months.', effect: (p) => { p.m -= 4; p.partnerRel(4); p.setMem('inlaw_death', true) } },
+    ],
+  },
+
+  {
+    id: 'inlaw_conflict_partner',
+    phase: null,
+    weight: 4,
+    when: (G) => G.partner && G.mem.inlaw_met && !G.mem.inlaw_conflict,
+    text: 'Your in-laws disapprove of a decision you and your partner made together — a move, a career change, something about the children. They make their position clear at a family gathering, in front of others.',
+    choices: [
+      { text: 'Present a united front with your partner', tag: null, outcome: 'You and your partner respond as one. The in-laws back down. Your relationship is stronger for it.', effect: (p) => { p.m += 5; p.partnerRel(8); p.setMem('inlaw_conflict', true) } },
+      { text: 'Stay silent and let your partner handle it', tag: null, outcome: 'Your partner handles it alone. They wish you\'d said something. The conversation on the drive home is difficult.', effect: (p) => { p.m -= 5; p.partnerRel(-5); p.setMem('inlaw_conflict', true) } },
+      { text: 'Defend yourself directly', tag: null, outcome: 'The in-laws are offended. Your partner is grateful and also slightly horrified. Mixed results.', effect: (p) => { p.m += 2; p.s += 2; p.partnerRel(-2); p.setMem('inlaw_conflict', true) } },
+    ],
+  },
 ]
