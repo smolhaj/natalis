@@ -1529,6 +1529,44 @@ export default function ActivitiesPanel({ onClose }) {
                 />
               </>
             )}
+
+            <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-3 py-1">Escape</p>
+            <div className="bg-red-50 rounded-xl border border-red-200 p-3 mb-2 text-xs text-red-700">
+              Sentence remaining: <strong>{state.prisonSentence} year{state.prisonSentence !== 1 ? 's' : ''}</strong>. Escaping makes you a wanted fugitive.
+            </div>
+            <Btn danger disabled={noActions}
+              onClick={() => {
+                onClose()
+                triggerMinigame({
+                  type: 'maze', difficulty: state.prisonSentence > 10 ? 'hard' : 'normal',
+                  title: 'Prison Break',
+                  description: 'Navigate through the facility before the alarm sounds.',
+                  skipable: true,
+                  onSuccess: {
+                    outcome: 'You slip through the gaps and escape. Now you\'re on the run.',
+                    effect: (s) => ({
+                      ...s,
+                      inPrison: false,
+                      wanted: true,
+                      wantedFor: s.wantedFor ?? 'escaped_conviction',
+                      flags: [...new Set([...s.flags, 'escaped_prisoner'])],
+                      log: [...s.log, { age: s.age, text: 'You escape from prison. You are now a fugitive.', isKey: true }],
+                    }),
+                  },
+                  onFailure: {
+                    outcome: 'Caught during the escape attempt. Three years added.',
+                    effect: (s) => ({
+                      ...s,
+                      prisonSentence: (s.prisonSentence ?? 0) + 3,
+                      stats: { ...s.stats, happiness: Math.max(0, s.stats.happiness - 15) },
+                      log: [...s.log, { age: s.age, text: 'Your escape attempt fails. Three years added to your sentence.', isKey: true }],
+                    }),
+                  },
+                })
+              }}
+              title="🏃 Attempt Prison Break"
+              subtitle="Maze minigame. Failure adds 3 years. Success: you're a fugitive."
+            />
           </>
         )
       }
