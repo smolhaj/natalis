@@ -10,6 +10,29 @@ import { PROPERTY_TYPES, VEHICLE_TYPES } from '../data/assets'
 import { ILLNESSES } from '../data/illnesses'
 import { randomBetween, pickFrom, rollWeighted, clamp, chance } from '../utils/random'
 
+// ─── Weighted random helpers ──────────────────────────────────────────────────
+
+function weightedRandom(weights) {
+  const total = Object.values(weights).reduce((a, b) => a + b, 0)
+  if (total <= 0) return Object.keys(weights)[0]
+  let r = Math.random() * total
+  for (const [key, weight] of Object.entries(weights)) {
+    r -= weight
+    if (r <= 0) return key
+  }
+  return Object.keys(weights)[Object.keys(weights).length - 1]
+}
+
+function weightedRandomFromArray(arr, shareKey = 'share') {
+  const total = arr.reduce((sum, item) => sum + (item[shareKey] ?? 1), 0)
+  let r = Math.random() * total
+  for (const item of arr) {
+    r -= item[shareKey] ?? 1
+    if (r <= 0) return item
+  }
+  return arr[arr.length - 1]
+}
+
 // ─── Phase mapping ────────────────────────────────────────────────────────────
 
 export function getPhase(age) {
@@ -19,6 +42,27 @@ export function getPhase(age) {
   if (age <= 29) return 'young_adult'
   if (age <= 49) return 'midlife'
   return 'late_life'
+}
+
+// ─── Country regime / LGBTQ helpers ──────────────────────────────────────────
+
+export function getCountryRegime(country, year) {
+  if (!country) return 'democracy'
+  let regime = country.regime ?? 'democracy'
+  if (country.regimeHistory && Array.isArray(country.regimeHistory)) {
+    const sorted = [...country.regimeHistory].sort((a, b) => a.year - b.year)
+    for (const shift of sorted) {
+      if (year >= shift.year) regime = shift.to
+    }
+  }
+  return regime
+}
+
+export function isLgbtqCriminalized(country, year) {
+  if (!country) return false
+  if (!country.lgbtqCriminalized) return false
+  if (country.lgbtqLegalYear && year >= country.lgbtqLegalYear) return false
+  return true
 }
 
 // ─── Character creation ───────────────────────────────────────────────────────
@@ -62,10 +106,44 @@ export function createCharacter(overrides = {}) {
   const wealth = clamp(wealthTier * 18 + randomBetween(-4, 4), 0, 100)
   const initialStats = { happiness, health, smarts, looks, charisma, wealth }
 
+  // Assign religion
+  const religion = (() => {
+    const weights = country.religionWeights
+    if (!weights) return 'secular'
+    return weightedRandom(weights)
+  })()
+
+  // Assign ethnicity
+  const ethnicity = (() => {
+    const groups = country.ethnicGroups
+    if (!groups || groups.length === 0) return 'local'
+    const group = weightedRandomFromArray(groups, 'share')
+    return group.id
+  })()
+
+  // Assign rural/urban based on urbanRate + era
+  const baseUrbanRate = country.urbanRate ?? 0.65
+  // Earlier birth years = more rural (pre-1960 much more rural in developing world)
+  const eraAdjust = birthYear < 1960 ? -0.15 : birthYear < 1980 ? -0.07 : 0
+  const adjustedUrbanRate = Math.max(0.05, Math.min(0.98, baseUrbanRate + eraAdjust))
+  const ruralUrban = Math.random() < adjustedUrbanRate
+    ? (Math.random() < 0.3 ? 'suburban' : 'urban')
+    : 'rural'
+
+  // Assign literacy (affects event availability)
+  const litRate = gender === 'female'
+    ? (country.literacyFemale ?? 0.95)
+    : (country.literacyMale ?? 0.97)
+  // Earlier birth years = lower literacy in developing nations
+  const eraLitAdj = birthYear < 1960 && (country.gdp === 'low' || country.gdp === 'very_low' || country.gdp === 'low_medium')
+    ? -0.15 : birthYear < 1980 && (country.gdp === 'low' || country.gdp === 'very_low') ? -0.10 : 0
+  const literate = Math.random() < Math.max(0.05, litRate + eraLitAdj)
+
   return {
     firstName, surname, name: `${firstName} ${surname}`,
     country, gender, birthYear, wealthTier, familyStability, familySize,
     initialStats,
+    religion, ethnicity, ruralUrban, literate,
   }
 }
 
@@ -349,6 +427,14 @@ function buildG(state) {
     gpa: state.gpa ?? null,
     mentalHealth: state.mentalHealth ?? { condition: null, medicating: false, therapy: false },
     hobbies: state.hobbies ?? {},
+    religion: state.character?.religion ?? 'secular',
+    ethnicity: state.character?.ethnicity ?? 'local',
+    ruralUrban: state.character?.ruralUrban ?? 'urban',
+    literate: state.character?.literate ?? true,
+    regime: getCountryRegime(state.character?.country, state.currentYear ?? new Date().getFullYear()),
+    lgbtqCriminalized: isLgbtqCriminalized(state.character?.country, state.currentYear ?? new Date().getFullYear()),
+    casteSystem: state.character?.country?.casteSystem ?? false,
+    childMarriageRisk: state.character?.country?.childMarriageRisk ?? 0,
   }
 }
 
