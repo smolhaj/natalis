@@ -3,6 +3,7 @@ import { useGameStore } from '../store/gameStore'
 import { ACTIVITIES } from '../data/activities'
 import { DESTINATIONS } from '../data/destinations'
 import { CRIMES } from '../data/crimes'
+import { COUNTRIES } from '../data/countries'
 import { PROPERTY_TYPES, VEHICLE_TYPES } from '../data/assets'
 import { getAvailableCareers, dropOutOfSchool, BUSINESS_TYPES, getAvailableBusinessTypes } from '../engine/gameEngine'
 
@@ -30,6 +31,7 @@ const TOP_CATEGORIES = [
   { key: 'business',      label: 'Business',         emoji: '🏢', desc: 'Run your own company' },
   { key: 'friends',       label: 'Friends',          emoji: '👥', desc: 'Your social circle' },
   { key: 'travel',        label: 'Travel',           emoji: '✈️',  desc: 'See the world' },
+  { key: 'underground',   label: 'Go Underground',   emoji: '🕵️', desc: 'Evade the law' },
 ]
 
 const MARTIAL_DISCIPLINES = ['Jiu-Jitsu', 'Taekwondo', 'Judo', 'Karate', 'Kung Fu']
@@ -111,6 +113,9 @@ export default function ActivitiesPanel({ onClose }) {
   const manageBusiness     = useGameStore(s => s.manageBusiness)
   const hireEmployee       = useGameStore(s => s.hireEmployee)
   const closeBusiness      = useGameStore(s => s.closeBusiness)
+  const confirmBreakOut    = useGameStore(s => s.confirmBreakOut)
+  const assumeIdentity     = useGameStore(s => s.assumeIdentity)
+  const goIllegal          = useGameStore(s => s.goIllegal)
 
   const actionsLeft = state.maxActionsPerYear - state.actionsThisYear
   const noActions = actionsLeft <= 0
@@ -538,10 +543,40 @@ export default function ActivitiesPanel({ onClose }) {
       }
 
       case 'crime': {
+        // Murder method detection rates (chance of being caught AFTER a successful kill)
         const MURDER_METHODS = [
-          'Push Down Stairs', 'Push Off Cliff', 'Strangle Them',
-          'Elephant Laxative', 'Scare to Death', 'Fastball to Head',
+          { name: 'Push Down Stairs',  detection: 0.12 },
+          { name: 'Push Off Cliff',    detection: 0.12 },
+          { name: 'Scare to Death',    detection: 0.05 },
+          { name: 'Drown',             detection: 0.22 },
+          { name: 'Elephant Laxative', detection: 0.22 },
+          { name: 'Poison',            detection: 0.28 },
+          { name: 'Hire a Hitman',     detection: 0.30 },
+          { name: 'Electrocute',       detection: 0.32 },
+          { name: 'Set on Fire',       detection: 0.38 },
+          { name: 'Strangle Them',     detection: 0.42 },
+          { name: 'Fastball to Head',  detection: 0.52 },
+          { name: 'Drive-by Shooting', detection: 0.55 },
         ]
+
+        const calcSentence = (c) => {
+          if (!c?.sentence) return 1
+          if (typeof c.sentence === 'object' && !Array.isArray(c.sentence)) {
+            return c.sentence.min + Math.floor(Math.random() * (c.sentence.max - c.sentence.min + 1))
+          }
+          if (Array.isArray(c.sentence)) return c.sentence[0] + Math.floor(Math.random() * (c.sentence[1] - c.sentence[0]))
+          return typeof c.sentence === 'number' ? c.sentence : 1
+        }
+
+        const killVictim = (next, victim) => {
+          if (victim.key === 'partner') { next.partner = null }
+          else if (victim.key === 'mother' && next.parents?.mother) { next.parents = { ...next.parents, mother: { ...next.parents.mother, alive: false } } }
+          else if (victim.key === 'father' && next.parents?.father) { next.parents = { ...next.parents, father: { ...next.parents.father, alive: false } } }
+          else if (victim.key?.startsWith('sibling_')) { const sibs = [...(next.siblings ?? [])]; if (sibs[victim.idx]) sibs[victim.idx] = { ...sibs[victim.idx], alive: false }; next.siblings = sibs }
+          else if (victim.key?.startsWith('friend_')) { const frds = [...(next.friends ?? [])]; if (frds[victim.idx]) frds[victim.idx] = { ...frds[victim.idx], alive: false }; next.friends = frds }
+          else if (victim.key?.startsWith('child_')) { const clds = [...(next.children ?? [])]; if (clds[victim.idx]) clds[victim.idx] = { ...clds[victim.idx], alive: false }; next.children = clds }
+          else if (victim.key?.startsWith('ex_')) { const exs = [...(next.exPartners ?? [])]; if (exs[victim.idx]) exs[victim.idx] = { ...exs[victim.idx], alive: false }; next.exPartners = exs }
+        }
 
         // Murder victim selection flow
         if (murderStep === 'victim') {
@@ -550,7 +585,9 @@ export default function ActivitiesPanel({ onClose }) {
             ...(state.parents?.mother?.alive ? [{ label: `${state.parents.mother.name} (Mother)`, key: 'mother' }] : []),
             ...(state.parents?.father?.alive ? [{ label: `${state.parents.father.name} (Father)`, key: 'father' }] : []),
             ...((state.siblings ?? []).filter(s => s.alive).map((s, i) => ({ label: `${s.name} (Sibling)`, key: `sibling_${i}`, idx: i }))),
+            ...((state.children ?? []).filter(c => c.alive !== false).map((c, i) => ({ label: `${c.name.split(' ')[0]} (Child)`, key: `child_${i}`, idx: i }))),
             ...((state.friends ?? []).filter(f => f.alive).map((f, i) => ({ label: `${f.name} (Friend)`, key: `friend_${i}`, idx: i }))),
+            ...((state.exPartners ?? []).filter(e => e.alive !== false).map((e, i) => ({ label: `${e.name} (Ex)`, key: `ex_${i}`, idx: i }))),
           ]
           return (
             <>
@@ -558,11 +595,7 @@ export default function ActivitiesPanel({ onClose }) {
               <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1 mb-1">Pick your victim</p>
               {victims.length === 0 && <p className="text-natalis-muted text-sm italic p-3">No viable victims in your life.</p>}
               {victims.map(v => (
-                <Btn key={v.key} danger
-                  onClick={() => { setMurderVictim(v); setMurderStep('method') }}
-                  title={v.label}
-                  subtitle="Select as target"
-                />
+                <Btn key={v.key} danger onClick={() => { setMurderVictim(v); setMurderStep('method') }} title={v.label} subtitle="Select as target" />
               ))}
             </>
           )
@@ -570,10 +603,7 @@ export default function ActivitiesPanel({ onClose }) {
 
         if (murderStep === 'method' && murderVictim) {
           const murderCrime = CRIMES.find(c => c.id === 'murder')
-          const getSentence = () => {
-            const s = murderCrime?.sentence ?? { min: 15, max: 40 }
-            return s.min + Math.floor(Math.random() * (s.max - s.min + 1))
-          }
+          const victimFirstName = murderVictim.label.split(' (')[0]
           return (
             <>
               <button onClick={() => setMurderStep('victim')} className="text-bit-blue text-sm font-semibold mb-2">← Back</button>
@@ -582,65 +612,53 @@ export default function ActivitiesPanel({ onClose }) {
                 <p className="text-red-500 text-xs mt-0.5">You're really feeling like you shouldn't be doing this.</p>
               </div>
               <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1 mb-1">Pick your method</p>
-              {MURDER_METHODS.map(method => (
+              {MURDER_METHODS.map(({ name: method, detection }) => (
                 <Btn key={method} danger
                   onClick={() => {
-                    const sentence = getSentence()
+                    const failSentence = calcSentence(murderCrime)
+                    const capturedV = murderVictim
                     onClose()
                     setMurderStep(null)
                     setMurderVictim(null)
                     triggerMinigame({
                       type: 'fight', difficulty: 'hard',
                       title: `Murder · ${method}`,
-                      description: `You attempt to kill ${murderVictim.label.split(' (')[0]} using ${method}.`,
-                      successOutcome: `You kill ${murderVictim.label.split(' (')[0]}. The deed is done.`,
-                      failOutcome: `Your attempt fails. You flee before police arrive.`,
+                      description: `You attempt to kill ${victimFirstName} using ${method.toLowerCase()}.`,
                       onSuccess: {
-                        outcome: `You kill ${murderVictim.label.split(' (')[0]} using ${method.toLowerCase()}.`,
+                        outcome: `You kill ${victimFirstName}. The deed is done.`,
                         effect: (s) => {
                           let next = { ...s }
                           next.karma = Math.max(0, (next.karma ?? 50) - 30)
-                          next.criminalRecord = [...(next.criminalRecord ?? []), { crime: 'Murder', age: s.age }]
                           next.flags = [...new Set([...next.flags, 'killer'])]
-                          // Kill the victim
-                          if (murderVictim.key === 'partner') {
-                            next.partner = null
-                          } else if (murderVictim.key === 'mother' && next.parents?.mother) {
-                            next.parents = { ...next.parents, mother: { ...next.parents.mother, alive: false } }
-                          } else if (murderVictim.key === 'father' && next.parents?.father) {
-                            next.parents = { ...next.parents, father: { ...next.parents.father, alive: false } }
-                          } else if (murderVictim.key?.startsWith('sibling_')) {
-                            const idx = murderVictim.idx
-                            const sibs = [...(next.siblings ?? [])]
-                            if (sibs[idx]) sibs[idx] = { ...sibs[idx], alive: false }
-                            next.siblings = sibs
-                          } else if (murderVictim.key?.startsWith('friend_')) {
-                            const idx = murderVictim.idx
-                            const frds = [...(next.friends ?? [])]
-                            if (frds[idx]) frds[idx] = { ...frds[idx], alive: false }
-                            next.friends = frds
+                          killVictim(next, capturedV)
+                          next.actionsThisYear = (next.actionsThisYear ?? 0) + 1
+                          next.log = [...(next.log ?? []), { age: s.age, text: `You killed ${capturedV.label.split(' (')[0]} using ${method.toLowerCase()}.`, isKey: true }]
+                          // Post-murder investigation window — decays each year
+                          next.mem = { ...next.mem, murder_pending_detection: { risk: detection } }
+                          if (detection <= 0.12) {
+                            next.log = [...next.log, { age: s.age, text: 'The death is ruled an accident. For now, you are not a suspect.', isKey: false }]
+                          } else {
+                            next.log = [...next.log, { age: s.age, text: 'Police are treating the death as suspicious. An investigation has opened.', isKey: false }]
                           }
-                          next.log = [...(next.log ?? []), { age: s.age, text: `You murdered ${murderVictim.label.split(' (')[0]} using ${method.toLowerCase()}.`, isKey: true }]
                           return next
                         },
                       },
                       onFailure: {
-                        outcome: `You fail. Arrested for attempted murder.`,
-                        effect: (s) => {
-                          return {
-                            ...s,
-                            inPrison: sentence > 0,
-                            prisonSentence: sentence,
-                            karma: Math.max(0, (s.karma ?? 50) - 20),
-                            criminalRecord: [...(s.criminalRecord ?? []), { crime: 'Attempted murder', age: s.age }],
-                            log: [...(s.log ?? []), { age: s.age, text: `Arrested for attempted murder. Sentenced to ${sentence} years.`, isKey: true }],
-                          }
-                        },
+                        outcome: `Your attempt fails. Arrested for attempted murder.`,
+                        effect: (s) => ({
+                          ...s,
+                          inPrison: failSentence > 0,
+                          prisonSentence: failSentence,
+                          actionsThisYear: (s.actionsThisYear ?? 0) + 1,
+                          karma: Math.max(0, (s.karma ?? 50) - 20),
+                          criminalRecord: [...(s.criminalRecord ?? []), { crime: 'Attempted murder', age: s.age }],
+                          log: [...(s.log ?? []), { age: s.age, text: `Arrested for attempted murder. Sentenced to ${failSentence} years.`, isKey: true }],
+                        }),
                       },
                     })
                   }}
                   title={method}
-                  subtitle={`Method of choice`}
+                  subtitle={`Detection risk if successful: ${Math.round(detection * 100)}%`}
                 />
               ))}
             </>
@@ -655,24 +673,15 @@ export default function ActivitiesPanel({ onClose }) {
             if (!crime) return null
             if (crime.requiresFlag && !state.flags.includes(crime.requiresFlag)) return null
             const canAfford = !crime.wealthRequirement || state.character?.wealthTier >= crime.wealthRequirement
-            // Murder has special victim/method flow
             if (crime.id === 'murder') {
               return (
                 <Btn key="murder" disabled={noActions} danger
                   onClick={() => setMurderStep('victim')}
                   title="🔪 Murder"
-                  subtitle="Intentionally kill someone. Choose your target and method."
-                  cost={`Arrest risk: ${Math.round(crime.arrestRisk * 100)}%`}
+                  subtitle="Choose your target and method. Getting away with it is not guaranteed."
+                  cost="Varies by method"
                 />
               )
-            }
-            const getSentence = (c) => {
-              if (!c.sentence) return 1
-              if (typeof c.sentence === 'object' && !Array.isArray(c.sentence)) {
-                return c.sentence.min + Math.floor(Math.random() * (c.sentence.max - c.sentence.min + 1))
-              }
-              if (Array.isArray(c.sentence)) return c.sentence[0] + Math.floor(Math.random() * (c.sentence[1] - c.sentence[0]))
-              return c.sentence
             }
             const handleCrime = () => {
               if (crime.minigame) {
@@ -694,7 +703,7 @@ export default function ActivitiesPanel({ onClose }) {
                   onFailure: {
                     outcome: crime.minigame.failOutcome ?? 'You are caught.',
                     effect: (s) => {
-                      const sentence = getSentence(crime)
+                      const sentence = calcSentence(crime)
                       return {
                         ...s,
                         inPrison: sentence > 0,
@@ -944,6 +953,109 @@ export default function ActivitiesPanel({ onClose }) {
         )
       }
 
+      case 'underground': {
+        const isWanted = state.wanted || state.flags.includes('escaped_prisoner')
+        const inJail = state.inPrison
+        if (!isWanted && !inJail) {
+          return <p className="text-natalis-muted text-sm italic p-3">Nothing to do here unless you're in trouble with the law.</p>
+        }
+
+        // Prison escape option
+        if (inJail) {
+          return (
+            <>
+              <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1">Escape from Prison</p>
+              <div className="bg-gray-50 rounded-xl border border-gray-200 p-3 mb-2 text-xs text-natalis-muted">
+                Sentence remaining: {state.prisonSentence} year{state.prisonSentence !== 1 ? 's' : ''}. Escaping makes you a wanted fugitive.
+              </div>
+              <Btn danger disabled={noActions}
+                onClick={() => {
+                  onClose()
+                  triggerMinigame({
+                    type: 'maze', difficulty: state.prisonSentence > 10 ? 'hard' : 'normal',
+                    title: 'Prison Break',
+                    description: 'Navigate through the facility before the alarm sounds.',
+                    skipable: true,
+                    onSuccess: {
+                      outcome: 'You slip through the gaps and escape. Now you\'re on the run.',
+                      effect: (s) => ({
+                        ...s,
+                        inPrison: false,
+                        wanted: true,
+                        wantedFor: s.wantedFor ?? 'escaped_conviction',
+                        flags: [...new Set([...s.flags, 'escaped_prisoner'])],
+                        log: [...s.log, { age: s.age, text: 'You escape from prison. You are now a fugitive.', isKey: true }],
+                      }),
+                    },
+                    onFailure: {
+                      outcome: 'Caught during the escape attempt. Extra years added.',
+                      effect: (s) => ({
+                        ...s,
+                        prisonSentence: (s.prisonSentence ?? 0) + 3,
+                        stats: { ...s.stats, happiness: Math.max(0, s.stats.happiness - 15) },
+                        log: [...s.log, { age: s.age, text: 'Your escape attempt fails. Three years added to your sentence.', isKey: true }],
+                      }),
+                    },
+                  })
+                }}
+                title="🏃 Attempt Prison Break"
+                subtitle="High risk. Failure adds 3 years. Success leaves you a fugitive."
+              />
+            </>
+          )
+        }
+
+        // On the run options
+        const gdpIllegalMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
+        const illMult = gdpIllegalMult[state.character?.country?.gdp] ?? 1.0
+        const identityCost = Math.round(8000 * illMult)
+        const smugglerMin = Math.round(8000 * illMult)
+        const smugglerMax = Math.round(20000 * illMult)
+
+        return (
+          <>
+            <div className="bg-red-50 rounded-xl border border-red-200 p-3 mb-2">
+              <p className="text-red-700 text-xs font-semibold">🚨 You are a wanted fugitive</p>
+              <p className="text-red-500 text-xs mt-0.5">Police search intensifies each year. Reduce your capture risk.</p>
+            </div>
+
+            {!state.flags.includes('assumed_identity') && (
+              <Btn disabled={noActions || (state.money ?? 0) < identityCost}
+                onClick={() => { assumeIdentity(); onClose() }}
+                title="🪪 Assume a False Identity"
+                subtitle={`Buy forged documents. Reduces annual capture risk by 8%.`}
+                cost={`$${identityCost.toLocaleString()}`}
+              />
+            )}
+
+            {state.flags.includes('assumed_identity') && (
+              <div className="bg-green-50 rounded-xl border border-green-200 px-3 py-2 text-xs text-green-700 font-semibold">
+                ✓ Living as: {state.assumedIdentity?.name ?? 'Unknown'}
+              </div>
+            )}
+
+            {!state.flags.includes('appearance_changed') && (
+              <Btn disabled={noActions}
+                onClick={() => { setActiveTop('plastic_surg') }}
+                title="✂️ Change Your Appearance"
+                subtitle="Cosmetic surgery, hair, style change. Reduces capture risk by 5%."
+              />
+            )}
+
+            <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2 pb-1">Flee the Country Illegally</p>
+            <p className="text-natalis-muted text-xs px-1 mb-2">Smuggler fee: ${smugglerMin.toLocaleString()}–${smugglerMax.toLocaleString()}. 30% chance of interception.</p>
+            {COUNTRIES.slice(0, 12).filter(c => c.name !== state.character?.country?.name).map(c => (
+              <Btn key={c.name} danger
+                disabled={noActions || (state.money ?? 0) < smugglerMin}
+                onClick={() => { goIllegal(c.name); onClose() }}
+                title={`→ ${c.name}`}
+                subtitle={`${c.archetype?.replace(/_/g, ' ')} · Flee illegally`}
+              />
+            ))}
+          </>
+        )
+      }
+
       default:
         return <p className="text-natalis-muted text-sm italic p-3">Select a category.</p>
     }
@@ -992,8 +1104,11 @@ export default function ActivitiesPanel({ onClose }) {
               if (cat.key === 'money' && state.age < 14) return null
               if (cat.key === 'rehab' && !hasAddiction && !(ACTIVITIES.body ?? []).some(a => (a.id === 'quit_smoking' || a.id === 'rehabilitation') && (!a.condition || a.condition(G)))) return null
               if (cat.key === 'substances' && state.age < 14) return null
+              if (cat.key === 'underground' && !state.inPrison && !state.wanted && !state.flags.includes('escaped_prisoner')) return null
 
-              const badge = cat.key === 'rehab' && hasAddiction ? { text: '!', color: '#ff3b30' } :
+              const isUnderground = state.inPrison || state.wanted || state.flags.includes('escaped_prisoner')
+              const badge = cat.key === 'underground' && isUnderground ? { text: '!', color: '#ff3b30' } :
+                            cat.key === 'rehab' && hasAddiction ? { text: '!', color: '#ff3b30' } :
                             cat.key === 'social_media' && sm.followers > 0 ? { text: sm.followers >= 1000 ? `${(sm.followers/1000).toFixed(0)}k` : sm.followers.toString(), color: '#007aff' } :
                             cat.key === 'friends' && (state.friends ?? []).filter(f => f.alive).length > 0 ? { text: (state.friends ?? []).filter(f => f.alive).length.toString(), color: '#34c759' } :
                             null

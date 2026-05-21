@@ -115,6 +115,10 @@ const INITIAL_STATE = {
   hobbies: {},
   pendingMinigame: null,
   business: null,
+  wanted: false,
+  wantedFor: null,
+  assumedIdentity: null,
+  exPartners: [],
 }
 
 export const useGameStore = create((set, get) => ({
@@ -211,6 +215,10 @@ export const useGameStore = create((set, get) => ({
       creditScore: 700,
       pendingMinigame: null,
       business: null,
+      wanted: false,
+      wantedFor: null,
+      assumedIdentity: null,
+      exPartners: [],
     })
   },
 
@@ -393,7 +401,11 @@ export const useGameStore = create((set, get) => ({
   fileForDivorce: () => {
     const state = get()
     if (state.dead) return
-    set(fileForDivorce(state))
+    const exP = state.partner
+    const next = fileForDivorce(state)
+    // Track ex-partner for murder victim list
+    if (exP) next.exPartners = [...(state.exPartners ?? []), { ...exP, separatedAt: state.age }]
+    set(next)
   },
 
   // ── Family actions ──────────────────────────────────────────────────────────
@@ -604,6 +616,87 @@ export const useGameStore = create((set, get) => ({
     const state = get()
     if (state.dead) return
     set(closeBusiness(state))
+  },
+
+  // ── Fugitive actions ────────────────────────────────────────────────────────
+
+  // Called after successful prison escape minigame
+  confirmBreakOut: () => {
+    const state = get()
+    if (state.dead || !state.inPrison) return
+    set({
+      ...state,
+      inPrison: false,
+      wanted: true,
+      wantedFor: state.wantedFor ?? 'escaped_conviction',
+      flags: [...new Set([...state.flags, 'escaped_prisoner'])],
+      log: [...state.log, { age: state.age, text: 'You slip through the gaps and escape from prison. You are now a fugitive.', isKey: true }],
+    })
+  },
+
+  assumeIdentity: () => {
+    const state = get()
+    if (state.dead) return
+    if (state.flags.includes('assumed_identity')) return
+    const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
+    const mult = gdpMult[state.character?.country?.gdp] ?? 1.0
+    const cost = Math.round(8000 * mult)
+    if ((state.money ?? 0) < cost) {
+      set({ log: [...state.log, { age: state.age, text: `You need $${cost.toLocaleString()} for forged documents.`, isKey: false }] })
+      return
+    }
+    const c = state.character?.country
+    const g = state.character?.gender
+    const pool = g === 'male' ? (c?.namePool?.male ?? []) : (c?.namePool?.female ?? [])
+    const surnames = c?.surnames ?? ['Smith', 'Jones', 'Brown']
+    const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
+    const fakeName = `${pick(pool.length ? pool : ['Alex'])} ${pick(surnames)}`
+    set({
+      ...state,
+      money: (state.money ?? 0) - cost,
+      assumedIdentity: { name: fakeName, adoptedAt: state.age },
+      flags: [...new Set([...state.flags, 'assumed_identity'])],
+      log: [...state.log, { age: state.age, text: `For $${cost.toLocaleString()} you obtain forged documents and become ${fakeName}. Your old identity is buried.`, isKey: true }],
+    })
+  },
+
+  goIllegal: (countryName) => {
+    const state = get()
+    if (state.dead) return
+    const dest = COUNTRIES.find(c => c.name === countryName)
+    if (!dest) return
+    const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
+    const mult = gdpMult[state.character?.country?.gdp] ?? 1.0
+    const fee = Math.round((8000 + Math.floor(Math.random() * 12000)) * mult)
+    if ((state.money ?? 0) < fee) {
+      set({ log: [...state.log, { age: state.age, text: `The smuggler wants $${fee.toLocaleString()}. You can't afford it.`, isKey: false }] })
+      return
+    }
+    if (Math.random() < 0.30) {
+      set({
+        ...state,
+        money: (state.money ?? 0) - fee,
+        inPrison: true,
+        prisonSentence: (state.prisonSentence ?? 0) + 2,
+        wanted: false,
+        log: [...state.log, { age: state.age, text: `You pay $${fee.toLocaleString()} but border guards intercept you. Deported and sentenced to 2 additional years.`, isKey: true }],
+      })
+      return
+    }
+    set({
+      ...state,
+      money: (state.money ?? 0) - fee,
+      character: { ...state.character, country: dest },
+      flags: [...new Set([...state.flags, 'emigrated', 'illegal_immigrant'])],
+      stats: { ...state.stats, happiness: Math.min(100, state.stats.happiness + 5) },
+      log: [...state.log, { age: state.age, text: `You pay a smuggler $${fee.toLocaleString()} and cross the border into ${countryName}. A dangerous new chapter begins.`, isKey: true }],
+    })
+  },
+
+  trackExPartner: (partner) => {
+    const state = get()
+    if (!partner) return
+    set({ exPartners: [...(state.exPartners ?? []), { ...partner, separatedAt: state.age }] })
   },
 
   // ── Death / restart ─────────────────────────────────────────────────────────

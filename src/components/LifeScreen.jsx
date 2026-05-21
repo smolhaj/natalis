@@ -63,6 +63,8 @@ export default function LifeScreen() {
   const children     = useGameStore(s => s.children)
   const inPrison     = useGameStore(s => s.inPrison)
   const prisonSentence = useGameStore(s => s.prisonSentence)
+  const wanted       = useGameStore(s => s.wanted)
+  const assumedIdentity = useGameStore(s => s.assumedIdentity)
   const actionsThisYear = useGameStore(s => s.actionsThisYear)
   const maxActionsPerYear = useGameStore(s => s.maxActionsPerYear)
   const lastOutcome  = useGameStore(s => s.lastOutcome)
@@ -182,6 +184,17 @@ export default function LifeScreen() {
               <div>
                 <p className="font-bold text-red-600 text-sm">In Prison</p>
                 <p className="text-red-500 text-xs">{prisonSentence} year{prisonSentence !== 1 ? 's' : ''} remaining</p>
+              </div>
+            </div>
+          )}
+
+          {/* Wanted / fugitive banner */}
+          {wanted && !inPrison && (
+            <div className="bg-red-600 rounded-2xl px-4 py-3 flex items-center gap-3">
+              <span className="text-2xl">🚨</span>
+              <div>
+                <p className="font-bold text-white text-sm">WANTED FUGITIVE</p>
+                <p className="text-red-200 text-xs">{assumedIdentity ? `Living as ${assumedIdentity.name}` : 'Police are actively searching for you'}</p>
               </div>
             </div>
           )}
