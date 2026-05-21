@@ -91,7 +91,9 @@ export function deriveInitialSiblings(char) {
 
 export function deriveInitialMoney(char) {
   const base = { 0: 0, 1: 300, 2: 2000, 3: 12000, 4: 60000 }
-  return (base[char.wealthTier] ?? 0) + randomBetween(-200, 200) * char.wealthTier
+  const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
+  const mult = gdpMult[char.country.gdp] ?? 1.0
+  return Math.round(((base[char.wealthTier] ?? 0) + randomBetween(-200, 200) * char.wealthTier) * mult)
 }
 
 export function deriveInitialParents(char) {
@@ -445,7 +447,11 @@ export function enterCareer(state, careerId) {
   const career = CAREERS.find(c => c.id === careerId)
   if (!career) return state
   const level = career.levels[0]
-  const salary = randomBetween(level.salaryRange[0], level.salaryRange[1])
+  const baseSalary = randomBetween(level.salaryRange[0], level.salaryRange[1])
+  // Scale salary to country purchasing power
+  const gdpSalaryMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.22, low_medium: 0.1, low: 0.055, very_low: 0.03 }
+  const salaryMult = gdpSalaryMult[state.character.country.gdp] ?? 1.0
+  const salary = Math.round(baseSalary * salaryMult)
   const newCareer = {
     id: career.id, title: level.title, level: 0, salary,
     field: career.field, yearsInRole: 0, performance: 70,
@@ -469,7 +475,9 @@ export function checkPromotion(state) {
   if (!chance(baseChance + smartsBonus + perfBonus + yearsBonus)) return state
 
   const newLevel = careerDef.levels[nextIdx]
-  const salary = randomBetween(newLevel.salaryRange[0], newLevel.salaryRange[1])
+  const gdpSalaryMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.22, low_medium: 0.1, low: 0.055, very_low: 0.03 }
+  const salaryMult = gdpSalaryMult[state.character.country.gdp] ?? 1.0
+  const salary = Math.round(randomBetween(newLevel.salaryRange[0], newLevel.salaryRange[1]) * salaryMult)
   const career = { ...state.career, level: nextIdx, title: newLevel.title, salary, yearsInRole: 0 }
   const log = [...state.log, { age: state.age, text: `You are promoted to ${newLevel.title}. New salary: $${salary.toLocaleString()}/yr.`, isKey: true }]
   return { ...state, career, log }
