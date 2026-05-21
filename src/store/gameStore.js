@@ -53,6 +53,7 @@ import {
   dropOutOfSchool,
   abandonChild,
   useSubstance,
+  bookTrip,
 } from '../engine/gameEngine'
 import { COUNTRIES } from '../data/countries'
 import { CRIMES } from '../data/crimes'
@@ -96,6 +97,7 @@ const INITIAL_STATE = {
   fame: 0,
   siblings: [],
   pets: [],
+  travels: [],
   assets: { properties: [], vehicles: [] },
   licenceObtained: false,
   retired: false,
@@ -188,6 +190,7 @@ export const useGameStore = create((set, get) => ({
       karma: 50,
       fame: 0,
       pets: [],
+      travels: [],
       assets: { properties: [], vehicles: [] },
       licenceObtained: false,
       retired: false,
@@ -565,6 +568,12 @@ export const useGameStore = create((set, get) => ({
     if (state.actionsThisYear >= state.maxActionsPerYear || state.pendingEvent || state.dead) return
     const next = useSubstance(state, substance)
     set(next)
+  },
+
+  bookTrip: (destinationId) => {
+    const state = get()
+    if (state.dead) return
+    set(bookTrip(state, destinationId))
   },
 
   // ── Death / restart ─────────────────────────────────────────────────────────

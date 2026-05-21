@@ -1,4 +1,5 @@
 import { COUNTRIES } from '../data/countries'
+import { DESTINATIONS } from '../data/destinations'
 import { EVENTS } from '../data/events'
 import { WORLD_EVENTS } from '../data/worldEvents'
 import { RIBBONS } from '../data/ribbons'
@@ -1426,6 +1427,31 @@ export function tick(state) {
     }
   }
 
+  // Business annual income
+  if (s.business?.active) {
+    const bt = BUSINESS_TYPES.find(b => b.id === s.business.id)
+    if (bt) {
+      const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
+      const mult = gdpMult[s.character?.country?.gdp] ?? 1.0
+      const perf = s.business.performance ?? 50
+      const [minRev, maxRev] = bt.baseRevenue
+      const scaledMin = Math.round(minRev * mult)
+      const scaledMax = Math.round(maxRev * mult)
+      const rawRevenue = Math.round(randomBetween(scaledMin, scaledMax) * (perf / 60))
+      const expenses = Math.round(rawRevenue * randomBetween(0.35, 0.55))
+      const profit = rawRevenue - expenses
+      const newValue = Math.round(s.business.value * 1.05 + profit * 0.3)
+      // Performance drifts toward 50 without management
+      const perfDrift = clamp(perf + randomBetween(-8, 5), 10, 95)
+      s.business = { ...s.business, yearsOpen: (s.business.yearsOpen ?? 0) + 1, revenue: rawRevenue, expenses, performance: perfDrift, value: newValue }
+      s.money = (s.money ?? 0) + profit
+      s.stats = { ...s.stats, wealth: clamp(s.stats.wealth + (profit > 0 ? 2 : -2), 0, 100) }
+      if (s.business.yearsOpen === 1) s.log = [...s.log, { age: s.age, text: `First year of ${s.business.name}: revenue $${rawRevenue.toLocaleString()}, profit $${profit.toLocaleString()}.`, isKey: true }]
+      else if (profit < 0) s.log = [...s.log, { age: s.age, text: `${s.business.name} had a tough year. Lost $${Math.abs(profit).toLocaleString()}.`, isKey: false }]
+      else s.log = [...s.log, { age: s.age, text: `${s.business.name} earned $${profit.toLocaleString()} profit this year.`, isKey: false }]
+    }
+  }
+
   // Partner relationship drift
   if (s.partner) {
     const drift = (55 - s.partner.relationshipQuality) * 0.03 + randomBetween(-2, 2)
@@ -2078,6 +2104,155 @@ export function dropOutOfSchool(state) {
     flags: [...new Set([...state.flags, 'dropped_out'])],
     stats: { ...state.stats, happiness: clamp(state.stats.happiness - 8, 0, 100) },
     log: [...state.log, { age: state.age, text: `You drop out of ${type === 'university' ? 'university' : 'trade school'} after year ${year + 1}.`, isKey: true }],
+  }
+}
+
+// ─── Travel / Vacation ────────────────────────────────────────────────────────
+
+export function bookTrip(state, destinationId) {
+  const dest = DESTINATIONS.find(d => d.id === destinationId)
+  if (!dest) return state
+  if (state.age < dest.minAge) return { ...state, log: [...state.log, { age: state.age, text: `You're too young for ${dest.name}.`, isKey: false }] }
+  if (dest.minYear && state.currentYear < dest.minYear) return { ...state, log: [...state.log, { age: state.age, text: `${dest.name} isn't available yet.`, isKey: false }] }
+  if (dest.requiresLicence && !state.licenceObtained) return { ...state, log: [...state.log, { age: state.age, text: "You need a driver's licence for a road trip.", isKey: false }] }
+
+  // Scale cost by GDP
+  const gdpCostMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
+  const costMult = gdpCostMult[state.character?.country?.gdp] ?? 1.0
+  const cost = Math.round(dest.cost * costMult)
+
+  if ((state.money ?? 0) < cost) {
+    return { ...state, log: [...state.log, { age: state.age, text: `You can't afford ${dest.name} right now ($${cost.toLocaleString()}).`, isKey: false }] }
+  }
+
+  const travels = [...(state.travels ?? []), { id: dest.id, name: dest.name, age: state.age, year: state.currentYear, type: dest.type }]
+  const newFlags = [...state.flags]
+  if (travels.length >= 5 && !newFlags.includes('well_traveled')) newFlags.push('well_traveled')
+  if (travels.length >= 10 && !newFlags.includes('world_explorer')) newFlags.push('world_explorer')
+
+  // Queue a random travel event
+  const travelEventPool = [
+    { id: `travel_food_poison_${state.age}`, phase: getPhase(state.age), weight: 5, text: `You get food poisoning in ${dest.name}. Two days in bed. Still worth it.`, effect: (p) => { p.m -= 10; p.h -= 5 }, choices: null },
+    { id: `travel_pickpocket_${state.age}`, phase: getPhase(state.age), weight: 4, text: `Someone picks your pocket in a crowded market. You lose some cash but not your passport.`, effect: (p) => { p.mo -= Math.round(cost * 0.1); p.h -= 5 }, choices: null },
+    { id: `travel_beautiful_${state.age}`, phase: getPhase(state.age), weight: 8, text: `${dest.name} is more beautiful than the photos. You watch the sunset from a hillside and feel genuinely alive.`, effect: (p) => { p.h += 15; p.e += 3 }, choices: null },
+    { id: `travel_culture_${state.age}`, phase: getPhase(state.age), weight: 7, text: `You spend a morning in a local market in ${dest.name}, eating things you can't name and watching how people live. Something shifts in how you see the world.`, effect: (p) => { p.h += 10; p.e += 8 }, choices: null },
+    { id: `travel_romance_${state.age}`, phase: getPhase(state.age), weight: 3, text: `You meet someone interesting on the trip. It doesn't last past the airport, but while it lasted it was perfect.`, effect: (p) => { p.h += 20; p.s += 3 }, choices: null, when: (G) => !G.partner },
+    { id: `travel_delay_${state.age}`, phase: getPhase(state.age), weight: 4, text: `Your flight home is delayed by 18 hours. The airport floor. The single power outlet. The long conversations with strangers.`, effect: (p) => { p.h -= 3; p.e += 5 }, choices: null },
+    { id: `travel_adventure_${state.age}`, phase: getPhase(state.age), weight: 6, text: `You do something you've never done before — a hike, a dive, a climb. Your body reminds you what it's for.`, effect: (p) => { p.h += 12; p.m += 5 }, choices: null, when: (G) => dest.type === 'adventure' },
+    { id: `travel_homesick_${state.age}`, phase: getPhase(state.age), weight: 3, text: `Two weeks in, you miss home. Not the place, exactly — the feeling. You book an earlier flight.`, effect: (p) => { p.h -= 5; p.e += 3 }, choices: null },
+  ]
+
+  // Pick a random event from pool (filter by when if applicable)
+  const G = buildG(state)
+  const eligible = travelEventPool.filter(e => !e.when || e.when(G))
+  const travelEvent = eligible[Math.floor(Math.random() * eligible.length)]
+
+  return {
+    ...state,
+    money: (state.money ?? 0) - cost,
+    travels,
+    flags: newFlags,
+    actionsThisYear: state.actionsThisYear + 1,
+    queue: [...state.queue, travelEvent],
+    log: [...state.log, { age: state.age, text: `You take a trip to ${dest.name}. Cost: $${cost.toLocaleString()}.`, isKey: true }],
+  }
+}
+
+// ─── Business ownership ───────────────────────────────────────────────────────
+
+const BUSINESS_TYPES = [
+  { id: 'corner_shop',    name: 'Corner Shop',       emoji: '🏪', startupCost: 5000,   baseRevenue: [8000, 18000],   minAge: 21, description: 'A small retail shop. Low risk, steady income.' },
+  { id: 'restaurant',     name: 'Restaurant',        emoji: '🍽️', startupCost: 30000,  baseRevenue: [25000, 80000],  minAge: 21, description: 'Food service. High overhead, high reward.' },
+  { id: 'consulting',     name: 'Consulting Firm',   emoji: '💼', startupCost: 2000,   baseRevenue: [15000, 60000],  minAge: 25, description: 'Sell your expertise. Needs smarts 60+.' , minSmarts: 60 },
+  { id: 'bar',            name: 'Bar / Nightclub',   emoji: '🍸', startupCost: 20000,  baseRevenue: [20000, 70000],  minAge: 21, description: 'Entertainment venue. Volatile income.' },
+  { id: 'tech_startup',   name: 'Tech Startup',      emoji: '💻', startupCost: 50000,  baseRevenue: [0, 200000],     minAge: 21, description: 'High risk, high reward. Needs smarts 70+.', minSmarts: 70, minYear: 1995 },
+  { id: 'online_shop',    name: 'Online Shop',       emoji: '📦', startupCost: 1000,   baseRevenue: [5000, 40000],   minAge: 18, description: 'E-commerce. Low overhead.', minYear: 2005 },
+  { id: 'gym',            name: 'Gym / Fitness',     emoji: '🏋️', startupCost: 40000,  baseRevenue: [30000, 90000],  minAge: 21, description: 'Health & fitness. Growing market.' },
+]
+export { BUSINESS_TYPES }
+
+export function getAvailableBusinessTypes(state) {
+  return BUSINESS_TYPES.filter(bt => {
+    if (state.age < bt.minAge) return false
+    if (bt.minSmarts && state.stats.smarts < bt.minSmarts) return false
+    if (bt.minYear && state.currentYear < bt.minYear) return false
+    return true
+  })
+}
+
+export function startBusiness(state, typeId) {
+  if (state.business?.active) {
+    return { ...state, log: [...state.log, { age: state.age, text: 'You already run a business.', isKey: false }] }
+  }
+  const bt = BUSINESS_TYPES.find(b => b.id === typeId)
+  if (!bt) return state
+
+  // Scale startup cost to country GDP
+  const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
+  const mult = gdpMult[state.character?.country?.gdp] ?? 1.0
+  const cost = Math.round(bt.startupCost * mult)
+
+  if ((state.money ?? 0) < cost) {
+    return { ...state, log: [...state.log, { age: state.age, text: `You need $${cost.toLocaleString()} to start a ${bt.name}.`, isKey: false }] }
+  }
+
+  const business = {
+    id: bt.id, name: bt.name, emoji: bt.emoji,
+    active: true, yearsOpen: 0,
+    performance: 50, // 0-100
+    employees: 0, value: cost,
+    revenue: 0, expenses: 0,
+  }
+
+  return {
+    ...state,
+    money: (state.money ?? 0) - cost,
+    business,
+    actionsThisYear: state.actionsThisYear + 1,
+    flags: [...new Set([...state.flags, 'entrepreneur'])],
+    log: [...state.log, { age: state.age, text: `You open a ${bt.name}. Startup cost: $${cost.toLocaleString()}.`, isKey: true }],
+  }
+}
+
+export function manageBusiness(state) {
+  if (!state.business?.active) return state
+  const perf = clamp((state.business.performance ?? 50) + randomBetween(5, 15), 0, 100)
+  const business = { ...state.business, performance: perf }
+  return {
+    ...state,
+    business,
+    actionsThisYear: state.actionsThisYear + 1,
+    stats: { ...state.stats, happiness: clamp(state.stats.happiness - 3, 0, 100) },
+    log: [...state.log, { age: state.age, text: `You put in extra hours managing the ${business.name}. Performance improves.`, isKey: false }],
+  }
+}
+
+export function hireEmployee(state) {
+  if (!state.business?.active) return state
+  const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
+  const mult = gdpMult[state.character?.country?.gdp] ?? 1.0
+  const hiringCost = Math.round(2000 * mult)
+  if ((state.money ?? 0) < hiringCost) {
+    return { ...state, log: [...state.log, { age: state.age, text: "You can't afford to hire right now.", isKey: false }] }
+  }
+  const business = { ...state.business, employees: (state.business.employees ?? 0) + 1, performance: clamp((state.business.performance ?? 50) + 8, 0, 100) }
+  return {
+    ...state,
+    money: (state.money ?? 0) - hiringCost,
+    business,
+    actionsThisYear: state.actionsThisYear + 1,
+    log: [...state.log, { age: state.age, text: `You hire a new employee for the ${business.name}. Staff: ${business.employees}.`, isKey: false }],
+  }
+}
+
+export function closeBusiness(state) {
+  if (!state.business?.active) return state
+  const salvage = Math.round(state.business.value * (state.business.performance >= 60 ? 0.5 : 0.2))
+  return {
+    ...state,
+    money: (state.money ?? 0) + salvage,
+    business: { ...state.business, active: false },
+    log: [...state.log, { age: state.age, text: `You close the ${state.business.name}. Salvage value: $${salvage.toLocaleString()}.`, isKey: true }],
   }
 }
 

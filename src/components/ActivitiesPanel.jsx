@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useGameStore } from '../store/gameStore'
 import { ACTIVITIES } from '../data/activities'
+import { DESTINATIONS } from '../data/destinations'
 import { CRIMES } from '../data/crimes'
 import { PROPERTY_TYPES, VEHICLE_TYPES } from '../data/assets'
 import { getAvailableCareers, dropOutOfSchool } from '../engine/gameEngine'
@@ -27,6 +28,7 @@ const TOP_CATEGORIES = [
   { key: 'crime',         label: 'Crime',            emoji: '⚠️',  desc: 'Illegal activities' },
   { key: 'career',        label: 'Career',           emoji: '💼', desc: 'Your working life' },
   { key: 'friends',       label: 'Friends',          emoji: '👥', desc: 'Your social circle' },
+  { key: 'travel',        label: 'Travel',           emoji: '✈️',  desc: 'See the world' },
 ]
 
 const MARTIAL_DISCIPLINES = ['Jiu-Jitsu', 'Taekwondo', 'Judo', 'Karate', 'Kung Fu']
@@ -101,6 +103,7 @@ export default function ActivitiesPanel({ onClose }) {
   const abandonChild       = useGameStore(s => s.abandonChild)
   const useSubstance       = useGameStore(s => s.useSubstance)
   const triggerMinigame    = useGameStore(s => s.triggerMinigame)
+  const bookTrip           = useGameStore(s => s.bookTrip)
 
   const actionsLeft = state.maxActionsPerYear - state.actionsThisYear
   const noActions = actionsLeft <= 0
@@ -701,6 +704,56 @@ export default function ActivitiesPanel({ onClose }) {
               cost={a.cost > 0 ? `$${a.cost}` : 'Free'}
             />
           ))
+      }
+
+      case 'travel': {
+        if (state.age < 16) return <p className="text-natalis-muted text-sm italic p-3">You're too young to travel alone.</p>
+
+        // Scale costs for display
+        const gdpCostMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
+        const costMult = gdpCostMult[state.character?.country?.gdp] ?? 1.0
+        const visited = (state.travels ?? []).map(t => t.id)
+
+        const regions = [
+          { key: 'domestic',      label: '🗺️ Domestic' },
+          { key: 'regional',      label: '🌍 Regional' },
+          { key: 'international', label: '✈️ International' },
+          { key: 'luxury',        label: '💎 Luxury' },
+        ]
+
+        return (
+          <>
+            {(state.travels ?? []).length > 0 && (
+              <div className="bg-blue-50 rounded-xl border border-blue-200 px-4 py-2 mb-2">
+                <p className="text-blue-700 text-xs font-semibold">{(state.travels ?? []).length} trip{(state.travels ?? []).length !== 1 ? 's' : ''} taken · {[...new Set((state.travels ?? []).map(t => t.name))].slice(-3).join(', ')}</p>
+              </div>
+            )}
+            {regions.map(region => {
+              const dests = DESTINATIONS.filter(d => d.region === region.key && d.minAge <= state.age && (!d.minYear || state.currentYear >= d.minYear))
+              if (dests.length === 0) return null
+              return (
+                <div key={region.key}>
+                  <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider px-1 py-1">{region.label}</p>
+                  {dests.map(dest => {
+                    const scaledCost = Math.round(dest.cost * costMult)
+                    const canAfford = (state.money ?? 0) >= scaledCost
+                    const timesVisited = visited.filter(id => id === dest.id).length
+                    return (
+                      <Btn
+                        key={dest.id}
+                        disabled={noActions || !canAfford}
+                        onClick={() => { bookTrip(dest.id); onClose() }}
+                        title={`${dest.name}${timesVisited > 0 ? ` (×${timesVisited})` : ''}`}
+                        subtitle={dest.type.charAt(0).toUpperCase() + dest.type.slice(1)}
+                        cost={canAfford ? `$${scaledCost.toLocaleString()}` : `Need $${scaledCost.toLocaleString()}`}
+                      />
+                    )
+                  })}
+                </div>
+              )
+            })}
+          </>
+        )
       }
 
       default:
