@@ -4686,4 +4686,485 @@ export const EVENTS = [
     ],
     effect: null,
   },
+
+  // ── ADDICTION ESCALATION — DRINKING ─────────────────────────────────────────
+  {
+    id: 'drinking_escalates',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.flags.includes('light_drinker') && !G.flags.includes('heavy_drinker') && !G.mem.drinking_escalate_shown && G.age >= 22,
+    text: G => {
+      const arch = G.character.country.archetype;
+      if (arch === 'post_soviet') return 'Vodka has become a daily ritual. The bottle waits for you every evening after work, a reliable companion in a city where reliable companions are rare.';
+      if (arch === 'conflict_zone') return 'Alcohol numbs the horrors you\'ve witnessed. Each drink pushes the memories a little further back — though they always return by dawn.';
+      return 'You\'ve been leaning on wine more than usual after work. The glass at dinner became two, then the whole bottle, then reaching for a second before the week is out.';
+    },
+    isKey: true,
+    choices: [
+      {
+        text: 'Cut back',
+        tag: null,
+        outcome: 'You pour the open bottle down the sink. It\'s harder than you expected.',
+        effect: (p) => { p.h += 5; p.m += 5; p.setMem('drinking_escalate_shown', true); },
+        inject: null,
+      },
+      {
+        text: 'It\'s fine, everyone drinks',
+        tag: null,
+        outcome: 'You pour another glass and tell yourself it\'s social. The definition of social keeps expanding.',
+        effect: (p) => { p.addFlag('heavy_drinker'); p.m -= 10; p.setMem('drinking_escalate_shown', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'heavy_drinking_consequences',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.flags.includes('heavy_drinker') && !G.flags.includes('addiction') && G.age >= 25 && !G.mem.heavy_drinking_shown,
+    text: 'The consequences are stacking up. Missed mornings. A warning at work. A friend who stopped calling. Your body is sending signals you\'ve been ignoring.',
+    isKey: true,
+    choices: [
+      {
+        text: 'Get help now',
+        tag: null,
+        outcome: 'You make the call you\'ve been putting off. The counsellor\'s voice is calm and unhurried.',
+        effect: (p) => { p.h += 10; p.addFlag('seeking_help'); p.setMem('heavy_drinking_shown', true); },
+        inject: null,
+      },
+      {
+        text: 'I can handle it',
+        tag: null,
+        outcome: 'You tell yourself you\'ve handled worse. You haven\'t.',
+        effect: (p) => { p.addFlag('addiction'); p.m -= 20; p.h -= 15; p.setMem('heavy_drinking_shown', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'hitting_rock_bottom',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.flags.includes('addiction') && !G.mem.rock_bottom_shown && G.age >= 21,
+    text: G => {
+      const arch = G.character.country.archetype;
+      if (['developing_urban', 'subsaharan', 'developing_unstable'].includes(arch)) return 'You spent your rent money on another binge. The landlord\'s notice is on the door. Your phone shows unanswered calls from family you\'ve been avoiding for months.';
+      return 'You wake up in a stranger\'s apartment having missed an important presentation. Your phone has seventeen missed calls. The ceiling is unfamiliar. You don\'t know what day it is.';
+    },
+    isKey: true,
+    choices: [
+      {
+        text: 'Check into rehab',
+        tag: null,
+        outcome: 'It costs money and dignity. It costs less than continuing.',
+        effect: (p) => { p.mo -= 10000; p.h -= 5; p.setMem('rock_bottom_shown', true); p.addFlag('in_recovery'); },
+        inject: null,
+      },
+      {
+        text: 'This is as low as I go. I\'ll quit myself',
+        tag: null,
+        outcome: 'White-knuckling it. Every hour is a small war.',
+        effect: (p) => { p.mo -= 0; p.m -= 15; p.h -= 10; p.setMem('rock_bottom_shown', true); },
+        inject: null,
+      },
+      {
+        text: 'Order another drink',
+        tag: null,
+        outcome: 'The bottom, it turns out, has a basement.',
+        effect: (p) => { p.m -= 25; p.h -= 25; p.karma -= 5; p.setMem('rock_bottom_shown', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'recovery_anniversary',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.flags.includes('in_recovery') && !G.mem.recovery_anniversary_shown && G.age >= 22,
+    text: 'One year sober. Your sponsor hands you a chip the size of a coin. You turn it over in your fingers and think about the year it represents.',
+    isKey: true,
+    choices: [
+      {
+        text: 'Celebrate with your sponsor',
+        tag: null,
+        outcome: 'Coffee and cheap cake at the community hall. The most meaningful party you\'ve ever attended.',
+        effect: (p) => { p.h += 20; p.karma += 10; p.setMem('recovery_anniversary_shown', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'aa_meeting',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.flags.includes('heavy_drinker') && !G.flags.includes('in_recovery') && !G.mem.aa_invited,
+    text: 'Someone who\'s seen you at your worst pulls you aside. They hand you a folded piece of paper with an address and a time. "Just come once," they say. "You don\'t have to say anything."',
+    choices: [
+      {
+        text: 'Go to the meeting',
+        tag: null,
+        outcome: 'You sit in the back. You listen. You hear yourself in other people\'s words.',
+        effect: (p) => { p.h += 8; p.m += 5; p.setMem('aa_invited', true); p.addFlag('seeking_help'); },
+        inject: null,
+      },
+      {
+        text: 'Decline',
+        tag: null,
+        outcome: 'You pocket the paper and never take it out again.',
+        effect: (p) => { p.h -= 3; p.setMem('aa_invited', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── GAMBLING ADDICTION ───────────────────────────────────────────────────────
+  {
+    id: 'gambling_addiction_spiral',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.flags.includes('addicted_gambling') && !G.mem.gambling_spiral_shown && G.age >= 18,
+    text: G => {
+      const arch = G.character.country.archetype;
+      if (['wealthy_west', 'wealthy_gulf'].includes(arch)) return 'The casino knows your name now. The carpet, the lights, the sound of chips — they\'ve replaced everything else. You\'ve been calling in sick to bet on sports from your couch.';
+      return 'The back-room betting shop is a second home. Illegal, yes, but always open, always welcoming when you have money. The debt has a face now — a man who knows where you live.';
+    },
+    isKey: true,
+    choices: [
+      {
+        text: 'Seek help for gambling addiction',
+        tag: null,
+        outcome: 'The first step is admitting the cards are rigged. Always were.',
+        effect: (p) => { p.h += 5; p.addFlag('gambling_recovery'); p.setMem('gambling_spiral_shown', true); },
+        inject: null,
+      },
+      {
+        text: 'One big win will fix everything',
+        tag: null,
+        outcome: 'There is no big win. There is only the next bet.',
+        effect: (p) => { p.mo -= 2000; p.m -= 10; p.h -= 20; p.setMem('gambling_spiral_shown', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'gambling_big_loss',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.flags.includes('addicted_gambling') && G.money > 500 && !G.mem.gambling_big_loss,
+    text: 'You bet everything on a sure thing. The horse stumbles. The card is wrong. The wheel lands one slot over. In minutes, a significant portion of your savings is gone.',
+    isKey: true,
+    choices: [
+      {
+        text: 'Walk away',
+        tag: null,
+        outcome: 'You leave the floor. You don\'t look back. The loss is real — so is the decision.',
+        effect: (p) => { p.mo -= Math.min(G.money * 0.4, 5000); p.h -= 25; p.setMem('gambling_big_loss', true); },
+        inject: null,
+      },
+      {
+        text: 'Double down to recover',
+        tag: null,
+        outcome: 'Chasing losses is a mathematical trap. You step into it fully.',
+        effect: (p) => { p.mo -= Math.min(G.money * 0.7, 10000); p.m -= 15; p.h -= 30; p.setMem('gambling_big_loss', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── EARLY CHILDHOOD EVENTS ───────────────────────────────────────────────────
+  {
+    id: 'first_steps',
+    phase: 'early_childhood',
+    weight: 4,
+    when: (G) => G.age <= 2 && !G.mem.first_steps,
+    text: 'You take your first wobbly steps across the living room floor. Your parents beam with pride.',
+    isKey: true,
+    choices: [
+      {
+        text: 'Toddle forward',
+        tag: null,
+        outcome: 'You make it three steps before sitting down hard. Everyone cheers.',
+        effect: (p) => { p.h += 5; p.setMem('first_steps', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'first_word',
+    phase: 'early_childhood',
+    weight: 3,
+    when: (G) => G.age <= 2 && !G.mem.first_word && G.mem.first_steps,
+    text: 'You open your mouth and say your first real word. It comes out a little garbled, but everyone in the room understands. "Mama." "Dada." The sound changes everything.',
+    isKey: true,
+    choices: [
+      {
+        text: 'Say it again',
+        tag: null,
+        outcome: 'They photograph you. They call relatives. You don\'t know why everyone is so excited, but their joy becomes yours.',
+        effect: (p) => { p.e += 2; p.h += 5; p.setMem('first_word', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'imaginary_friend',
+    phase: 'early_childhood',
+    weight: 3,
+    when: (G) => G.age >= 3 && G.age <= 6 && !G.mem.imaginary_friend,
+    text: 'Someone appears in your room who nobody else can see. They have a name, preferences, opinions on things. They are very real to you.',
+    choices: [
+      {
+        text: 'Name your imaginary friend',
+        tag: null,
+        outcome: 'You set a plate for them at dinner. Your parents smile and say nothing.',
+        effect: (p) => { p.h += 10; p.e += 3; p.setMem('imaginary_friend', true); },
+        inject: null,
+      },
+      {
+        text: 'Ignore it',
+        tag: null,
+        outcome: 'The figure fades after a few weeks, unacknowledged.',
+        effect: (p) => { p.h += 2; p.setMem('imaginary_friend', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'childhood_nightmare',
+    phase: 'early_childhood',
+    weight: 3,
+    when: (G) => G.age >= 3 && G.age <= 8 && !G.mem.nightmare,
+    text: 'The same dream keeps coming back. Something is in the dark at the end of the hallway. You wake up in a cold sweat with a pounding heart.',
+    choices: [
+      {
+        text: 'Tell your parents',
+        tag: null,
+        outcome: 'They sit with you until the room feels safe again. It helps more than you can articulate.',
+        effect: (p) => { p.h += 8; p.m += 3; p.setMem('nightmare', true); },
+        inject: null,
+      },
+      {
+        text: 'Face the dark alone',
+        tag: null,
+        outcome: 'You stare at the ceiling until morning. The fear doesn\'t go, but something else grows in its place.',
+        effect: (p) => { p.h -= 3; p.e += 3; p.setMem('nightmare', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'school_first_day',
+    phase: 'early_childhood',
+    weight: 4,
+    when: (G) => G.age >= 5 && G.age <= 7 && !G.mem.school_first_day,
+    text: G => {
+      const arch = G.character.country.archetype;
+      if (['conflict_zone', 'developing_unstable'].includes(arch)) return 'The makeshift classroom smells of chalk and old wood. You sit on a bench with six other children and wait for a teacher who arrives forty minutes late.';
+      if (['developing_urban', 'subsaharan'].includes(arch)) return 'The schoolyard is dusty and loud. Children shout in a mix of languages. Your new uniform is already too hot in the morning sun.';
+      return 'The gleaming school bus pulls up and the door opens. Thirty children in identical backpacks climb aboard. This is the first day of the rest of your education.';
+    },
+    isKey: true,
+    choices: [
+      {
+        text: 'Make a friend',
+        tag: null,
+        outcome: 'You sit next to someone with bright eyes and introduce yourself. By lunch you have an ally.',
+        effect: (p) => { p.h += 12; p.e += 3; p.setMem('school_first_day', true); p.addFlag('first_school_friend'); },
+        inject: null,
+      },
+      {
+        text: 'Cry and hide',
+        tag: null,
+        outcome: 'The teacher finds you behind the coats. She sits with you until the panic passes.',
+        effect: (p) => { p.h -= 5; p.e += 2; p.setMem('school_first_day', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'childhood_pet_wish',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.age >= 5 && G.age <= 10 && G.pets.length === 0 && !G.mem.pet_wish,
+    text: 'You want a pet more than you\'ve wanted anything in your short life. You dream about it. You draw pictures of it. You have already named it.',
+    choices: [
+      {
+        text: 'Beg relentlessly',
+        tag: null,
+        outcome: 'Your parents say no firmly and repeatedly until you drop it.',
+        effect: (p) => { p.h -= 3; p.setMem('pet_wish', true); },
+        inject: null,
+      },
+      {
+        text: 'Ask politely once',
+        tag: null,
+        outcome: '"Maybe," your parent says. You take that and treasure it.',
+        effect: (p) => { p.h += 5; p.setMem('pet_wish', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'playground_bully',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.age >= 6 && G.age <= 12 && !G.mem.bullied,
+    text: 'There\'s a kid at school who has decided you are a target. Every recess. Every lunch. You can\'t avoid them and ignoring them isn\'t working.',
+    isKey: true,
+    choices: [
+      {
+        text: 'Stand up to the bully',
+        tag: null,
+        outcome: 'Your voice shakes but you hold your ground. They back off. Some of the other kids start talking to you after that.',
+        effect: (p) => { p.h += 10; p.karma += 5; p.e += 2; p.setMem('bullied', true); },
+        inject: null,
+      },
+      {
+        text: 'Tell a teacher',
+        tag: null,
+        outcome: 'There is a meeting. The bully is warned. Things are quieter for a while.',
+        effect: (p) => { p.h += 5; p.m += 3; p.setMem('bullied', true); },
+        inject: null,
+      },
+      {
+        text: 'Avoid them',
+        tag: null,
+        outcome: 'You rearrange your whole day around someone else\'s cruelty.',
+        effect: (p) => { p.h -= 5; p.setMem('bullied', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'childhood_sport_tryout',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.age >= 7 && G.age <= 14 && !G.mem.sport_tryout,
+    text: 'The coach puts you through the drills. Other kids line up beside you. The tryout is your chance to make the team.',
+    choices: [
+      {
+        text: 'Give it your all',
+        tag: null,
+        outcome: 'You make the team. Your name goes on the list. You read it three times.',
+        effect: (p) => { p.h += 8; p.setMem('sport_tryout', true); },
+        inject: null,
+      },
+      {
+        text: 'Don\'t bother trying out',
+        tag: null,
+        outcome: 'You watch from the sideline as the team forms without you.',
+        effect: (p) => { p.h -= 2; p.setMem('sport_tryout', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'childhood_reading',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.age >= 6 && G.age <= 10 && !G.mem.childhood_reading,
+    text: 'You find a book that grabs you and doesn\'t let go. You read it under the covers with a torch. You finish it and immediately turn back to page one.',
+    choices: [
+      {
+        text: 'Devour every book you can find',
+        tag: null,
+        outcome: 'The library becomes your territory. You run out of books to borrow and start over.',
+        effect: (p) => { p.e += 8; p.h += 5; p.setMem('childhood_reading', true); },
+        inject: null,
+      },
+      {
+        text: 'Prefer cartoons instead',
+        tag: null,
+        outcome: 'The book sits on the shelf. The TV is more immediate.',
+        effect: (p) => { p.h += 5; p.setMem('childhood_reading', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'daycare_drama',
+    phase: 'early_childhood',
+    weight: 3,
+    when: (G) => G.age >= 2 && G.age <= 5 && !G.mem.daycare_drama,
+    text: 'Another child at daycare has taken your favourite toy and refuses to give it back. The injustice is enormous. This is the worst thing that has ever happened.',
+    choices: [
+      {
+        text: 'Share your toys',
+        tag: null,
+        outcome: 'You offer your other toy. Grudgingly. The teacher gives you a sticker.',
+        effect: (p) => { p.h += 5; p.karma += 5; p.setMem('daycare_drama', true); },
+        inject: null,
+      },
+      {
+        text: 'Refuse to share',
+        tag: null,
+        outcome: 'You take your toy back. The other child cries. You feel briefly victorious, then vaguely bad.',
+        effect: (p) => { p.h += 3; p.karma -= 3; p.setMem('daycare_drama', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'childhood_talent_show',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.age >= 8 && G.age <= 14 && !G.mem.talent_show,
+    text: 'The school is holding a talent show. Your name is on the list whether you signed up or not — a friend volunteered you. The auditorium will be full.',
+    choices: [
+      {
+        text: 'Perform confidently',
+        tag: null,
+        outcome: 'The nerves become something else under the lights. You finish. People clap. Someone in the second row stands up.',
+        effect: (p) => { p.h += 15; p.s += 2; p.setMem('talent_show', true); },
+        inject: null,
+      },
+      {
+        text: 'Freeze on stage',
+        tag: null,
+        outcome: 'You stand at the microphone for a very long eight seconds. Then you walk off. In retrospect, you learn something.',
+        effect: (p) => { p.h -= 5; p.e += 2; p.setMem('talent_show', true); },
+        inject: null,
+      },
+      {
+        text: 'Refuse to participate',
+        tag: null,
+        outcome: 'You sit in the audience and watch. Part of you wonders.',
+        effect: (p) => { p.h -= 2; p.setMem('talent_show', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
 ]

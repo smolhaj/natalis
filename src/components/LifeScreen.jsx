@@ -84,6 +84,7 @@ export default function LifeScreen() {
   const hobbies      = useGameStore(s => s.hobbies)
   const fitness      = useGameStore(s => s.fitness)
   const debt         = useGameStore(s => s.debt)
+  const creditScore  = useGameStore(s => s.creditScore)
   const pendingMinigame = useGameStore(s => s.pendingMinigame)
   const ageUp        = useGameStore(s => s.ageUp)
 
@@ -92,13 +93,30 @@ export default function LifeScreen() {
   const phase = getPhase(age)
   const recentLog = [...log].reverse().slice(0, 40)
   const actionsLeft = maxActionsPerYear - actionsThisYear
-  const hasAddiction = flags.includes('alcohol_addiction') || flags.includes('gambling_addiction') || flags.includes('drug_addiction')
+  const hasAddiction = flags.includes('alcohol_addiction') || flags.includes('gambling_addiction') || flags.includes('drug_addiction') || flags.includes('addiction') || flags.includes('addicted_gambling')
 
   const formatMoney = (n) => {
-    if (!n) return '$0'
-    if (n >= 1000000) return `$${(n/1000000).toFixed(2)}M`
-    if (n >= 1000) return `$${Math.round(n/1000)}k`
-    return `$${n.toLocaleString()}`
+    if (n === null || n === undefined) return '$0'
+    const abs = Math.abs(n)
+    const sign = n < 0 ? '-' : ''
+    if (abs >= 1000000) return `${sign}$${(abs/1000000).toFixed(2)}M`
+    if (abs >= 1000) return `${sign}$${Math.round(abs/1000)}k`
+    return `${sign}$${Math.round(abs).toLocaleString()}`
+  }
+
+  const karmaLabel = karma >= 85 ? 'Saint' : karma >= 70 ? 'Virtuous' : karma >= 50 ? 'Neutral' : karma >= 30 ? 'Questionable' : 'Sinister'
+
+  const propertyEquity = (assets?.properties ?? []).reduce((sum, p) => sum + (p.currentValue ?? 0) - (p.mortgage ?? 0), 0)
+  const vehicleValue = (assets?.vehicles ?? []).reduce((sum, v) => sum + (v.currentValue ?? 0), 0)
+  const netWorth = (money ?? 0) + propertyEquity + vehicleValue - (debt ?? 0)
+
+  const creditLabel = (cs) => {
+    if (!cs) return 'Unknown'
+    if (cs >= 750) return 'Excellent'
+    if (cs >= 700) return 'Good'
+    if (cs >= 650) return 'Fair'
+    if (cs >= 600) return 'Poor'
+    return 'Very Poor'
   }
 
   return (
@@ -230,7 +248,10 @@ export default function LifeScreen() {
                 <StatBar stat="smarts"    label="Smarts"    value={stats.smarts} />
                 <StatBar stat="looks"     label="Looks"     value={stats.looks} />
                 <StatBar stat="charisma"  label="Charisma"  value={stats.charisma} />
-                <StatBar stat="wealth"    label="Wealth"    value={stats.wealth} />
+                <div>
+                  <StatBar stat="wealth" label="Wealth (lifestyle score)" value={stats.wealth} />
+                  <p className="text-xs text-natalis-muted mt-1">Cash: <span className="font-semibold text-natalis-text">{formatMoney(money)}</span> · Net Worth: <span className="font-semibold text-natalis-text">{formatMoney(netWorth)}</span></p>
+                </div>
               </div>
 
               {/* Extra stats */}
@@ -238,7 +259,7 @@ export default function LifeScreen() {
                 <p className="font-bold text-natalis-text text-sm mb-3">Profile</p>
                 <div className="space-y-2">
                   {[
-                    { label: 'Karma', value: karma, emoji: karma > 60 ? '😇' : karma < 40 ? '😈' : '😐', color: karma > 60 ? '#34c759' : karma < 40 ? '#ff3b30' : '#ff9500' },
+                    { label: `Karma · ${karmaLabel}`, value: karma, emoji: karma > 60 ? '😇' : karma < 40 ? '😈' : '😐', color: karma > 60 ? '#34c759' : karma < 40 ? '#ff3b30' : '#ff9500' },
                     { label: 'Fame', value: fame, emoji: '⭐', color: '#ffcc00' },
                     { label: 'Regret', value: regret, emoji: '😔', color: '#8e8e93' },
                   ].map(({ label, value, emoji, color }) => (
@@ -271,7 +292,7 @@ export default function LifeScreen() {
                     socialMedia?.followers > 0 && { label: '📱 Followers', value: `${socialMedia.followers >= 1000 ? `${(socialMedia.followers/1000).toFixed(1)}k` : socialMedia.followers}${socialMedia.verified ? ' ✓' : ''}` },
                     birthControl && { label: '💊 Birth Control', value: 'Active' },
                     inPrison && { label: '🔒 Prison', value: `${prisonSentence} yr remaining` },
-                    criminalRecord.length > 0 && { label: '⚠️ Record', value: `${criminalRecord.length} offence${criminalRecord.length !== 1 ? 's' : ''}` },
+                    criminalRecord.length > 0 && { label: '⚠️ Criminal Record', value: `${criminalRecord.length} offence${criminalRecord.length !== 1 ? 's' : ''}` },
                     fitness !== undefined && { label: '💪 Fitness', value: `${Math.round(fitness ?? 50)}/100` },
                     mentalHealth?.condition && { label: '🧠 Mental Health', value: `${mentalHealth.condition}${mentalHealth.therapy ? ' · therapy' : ''}${mentalHealth.medicating ? ' · medicated' : ''}` },
                     (debt ?? 0) > 0 && { label: '💳 Debt', value: formatMoney(debt) },
@@ -283,6 +304,21 @@ export default function LifeScreen() {
                   ))}
                 </div>
               </div>
+
+              {/* Criminal Record */}
+              {criminalRecord.length > 0 && (
+                <div className="bg-white rounded-2xl p-4 border border-red-200 shadow-card">
+                  <p className="font-bold text-red-600 text-sm mb-3">⚠️ Criminal Record</p>
+                  <div className="space-y-1">
+                    {criminalRecord.map((entry, i) => (
+                      <div key={i} className="flex justify-between items-center py-1 border-b border-natalis-border last:border-0">
+                        <span className="text-natalis-dim text-xs capitalize">{typeof entry === 'string' ? entry.replace(/_/g, ' ') : (entry.crime ?? 'Unknown offence').replace(/_/g, ' ')}</span>
+                        {entry.age !== undefined && <span className="text-natalis-muted text-xs">Age {entry.age}</span>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Hobbies */}
               {hobbies && Object.keys(hobbies).length > 0 && (
@@ -466,18 +502,37 @@ export default function LifeScreen() {
           {/* ── ASSETS TAB ── */}
           {activeTab === 'assets' && (
             <div className="space-y-3">
-              {/* Finances */}
+              {/* Net Worth Summary */}
               <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-                <p className="font-bold text-natalis-text text-sm mb-3">💰 Finances</p>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-green-50 rounded-xl p-3">
-                    <p className="text-xs text-green-700 font-semibold mb-1">Net Worth</p>
-                    <p className="font-bold text-green-700 text-lg">{formatMoney(money)}</p>
-                  </div>
+                <p className="font-bold text-natalis-text text-sm mb-3">💰 Net Worth</p>
+                <div className="text-center mb-4">
+                  <p className={`font-black text-2xl ${netWorth >= 0 ? 'text-green-600' : 'text-red-500'}`}>{formatMoney(netWorth)}</p>
+                  <p className="text-xs text-natalis-muted mt-1">total net worth</p>
+                </div>
+                <div className="space-y-2">
+                  {[
+                    { label: 'Cash', value: money ?? 0, color: 'text-green-600' },
+                    propertyEquity !== 0 && { label: 'Property equity', value: propertyEquity, color: propertyEquity >= 0 ? 'text-green-600' : 'text-red-500' },
+                    vehicleValue > 0 && { label: 'Vehicles', value: vehicleValue, color: 'text-blue-600' },
+                    (debt ?? 0) > 0 && { label: 'Outstanding debt', value: -(debt ?? 0), color: 'text-red-500' },
+                  ].filter(Boolean).map(({ label, value, color }) => (
+                    <div key={label} className="flex justify-between items-center text-sm">
+                      <span className="text-natalis-muted">{label}</span>
+                      <span className={`font-semibold ${color}`}>{value >= 0 ? '+' : ''}{formatMoney(value)}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-3 pt-3 border-t border-natalis-border grid grid-cols-2 gap-2">
                   {career && (
-                    <div className="bg-blue-50 rounded-xl p-3">
-                      <p className="text-xs text-blue-700 font-semibold mb-1">Annual Salary</p>
-                      <p className="font-bold text-blue-700 text-lg">{formatMoney(career.salary)}</p>
+                    <div className="bg-blue-50 rounded-xl p-2.5">
+                      <p className="text-xs text-blue-600 font-semibold">Annual Salary</p>
+                      <p className="font-bold text-blue-700">{formatMoney(career.salary)}</p>
+                    </div>
+                  )}
+                  {creditScore && (
+                    <div className={`rounded-xl p-2.5 ${creditScore >= 700 ? 'bg-green-50' : creditScore >= 600 ? 'bg-yellow-50' : 'bg-red-50'}`}>
+                      <p className={`text-xs font-semibold ${creditScore >= 700 ? 'text-green-600' : creditScore >= 600 ? 'text-yellow-600' : 'text-red-600'}`}>Credit Score</p>
+                      <p className={`font-bold ${creditScore >= 700 ? 'text-green-700' : creditScore >= 600 ? 'text-yellow-700' : 'text-red-700'}`}>{creditScore} <span className="text-xs font-normal">({creditLabel(creditScore)})</span></p>
                     </div>
                   )}
                 </div>
@@ -516,7 +571,24 @@ export default function LifeScreen() {
                 </div>
               )}
 
-              {assets?.properties?.length === 0 && assets?.vehicles?.length === 0 && (
+              {/* Debt detail */}
+              {(debt ?? 0) > 0 && (
+                <div className="bg-red-50 rounded-2xl p-4 border border-red-200 shadow-card">
+                  <p className="font-bold text-red-600 text-sm mb-3">💳 Debt</p>
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p className="text-red-700 font-black text-xl">{formatMoney(debt)}</p>
+                      <p className="text-red-400 text-xs">~18% APR · interest accrues each year</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-xs text-red-500 font-semibold">Use Activities → Money</p>
+                      <p className="text-xs text-red-400">to make payments</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {assets?.properties?.length === 0 && assets?.vehicles?.length === 0 && (debt ?? 0) === 0 && (
                 <div className="bg-white rounded-2xl px-5 py-8 text-center border border-natalis-border">
                   <p className="text-4xl mb-2">🏦</p>
                   <p className="text-natalis-muted text-sm">No assets yet. Start saving!</p>
