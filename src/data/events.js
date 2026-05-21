@@ -7128,4 +7128,110 @@ export const EVENTS = [
     ],
     effect: null,
   },
+
+  // ── FUGITIVE / WANTED SYSTEM EVENTS ─────────────────────────────────────────
+
+  {
+    id: 'detective_visits',
+    phase: null,
+    weight: 5,
+    when: (G) => G.flags.includes('killer') && !G.flags.includes('murder_charge') && !G.mem?.murder_pending_detection && G.age > 16,
+    text: 'A plain-clothes detective knocks on your door. They have questions about the death of someone you knew.',
+    choices: [
+      { text: 'Cooperate fully', tag: null, outcome: 'You answer calmly. They seem to believe you — for now.', effect: (p) => { p.m -= 8; p.s += 2 } },
+      { text: 'Lawyer up immediately', tag: null, outcome: 'You say nothing without a lawyer present. They leave, but you know they\'ll be back.', effect: (p) => { p.mo -= 3000; p.m -= 5 } },
+      { text: 'Flee before they can question you', tag: null, outcome: 'You bolt. Now you\'re officially a suspect.', effect: (p) => { p.m -= 15; p.addFlag('suspected_murderer') } },
+    ],
+  },
+
+  {
+    id: 'witness_comes_forward',
+    phase: null,
+    weight: 4,
+    when: (G) => G.flags.includes('suspected_murderer') && G.age > 16,
+    text: 'A witness who saw something contacts the police. Investigators now have a credible lead pointing to you.',
+    isKey: true,
+    choices: [
+      { text: 'Pay the witness to recant ($15,000)', tag: null, outcome: 'They take the money and change their story. The case weakens — but you\'ve created another loose end.', effect: (p) => { p.mo -= 15000; p.karma -= 10; p.m -= 10 } },
+      { text: 'Disappear before the arrest warrant arrives', tag: null, outcome: 'You go underground. You are now a wanted fugitive.', effect: (p) => { p.addFlag('escaped_prisoner'); p.m -= 20 } },
+      { text: 'Face the music', tag: null, outcome: 'You turn yourself in. A lawyer negotiates. The evidence is circumstantial.', effect: (p) => { p.m -= 15; p.karma += 5; p.s += 3 } },
+    ],
+  },
+
+  {
+    id: 'police_closing_in',
+    phase: null,
+    weight: 5,
+    when: (G) => G.flags.includes('escaped_prisoner') && !G.flags.includes('assumed_identity') && G.age > 16,
+    text: 'You spot a police cruiser parked outside your building. Your face has been circulated in the media.',
+    choices: [
+      { text: 'Slip out the back immediately', tag: null, outcome: 'You disappear into the crowds. You stay one step ahead — for now.', effect: (p) => { p.m -= 12; p.h -= 5 } },
+      { text: 'Change your appearance urgently', tag: null, outcome: 'You cut your hair, change your clothes. It buys you time.', effect: (p) => { p.m -= 8; p.addFlag('appearance_changed') } },
+      { text: 'Surrender', tag: null, outcome: 'You walk out with your hands up. The weight lifts, even as the cuffs click.', effect: (p) => { p.m -= 5; p.r += 10; p.karma += 8 } },
+    ],
+  },
+
+  {
+    id: 'old_friend_recognises_you',
+    phase: null,
+    weight: 4,
+    when: (G) => G.flags.includes('escaped_prisoner') && G.age > 18,
+    text: G => `An old acquaintance spots you at a market. They look surprised — your face was on the news. They haven't reached for their phone yet.`,
+    choices: [
+      { text: 'Beg them not to turn you in', tag: null, outcome: 'They hesitate, then nod. You owe them one — and they know it.', effect: (p) => { p.m -= 5; p.karma -= 3 } },
+      { text: 'Threaten them into silence', tag: null, outcome: 'They back off, terrified. But now there\'s another person with a reason to hate you.', effect: (p) => { p.karma -= 15; p.m -= 8; p.addFlag('violent') } },
+      { text: 'Disappear before they can act', tag: null, outcome: 'You blend into the crowd and vanish. Another close call.', effect: (p) => { p.m -= 10; p.h -= 3 } },
+    ],
+  },
+
+  {
+    id: 'identity_blown',
+    phase: null,
+    weight: 3,
+    when: (G) => G.flags.includes('assumed_identity') && G.age > 18,
+    text: 'Someone who knew you before spots through your new identity. They call you by your real name in a crowded place.',
+    isKey: true,
+    choices: [
+      { text: 'Deny everything and walk away calmly', tag: null, outcome: 'You brazen it out. They look confused. You move cities the next week.', effect: (p) => { p.m -= 12; p.s -= 3 } },
+      { text: 'Confide in them and ask for help', tag: null, outcome: 'It\'s a gamble. They cover for you — this time.', effect: (p) => { p.m -= 8; p.karma += 3 } },
+      { text: 'Abandon the identity and start again', tag: null, outcome: 'Another $8,000. Another name. Another life.', effect: (p) => { p.mo -= 8000; p.m -= 20 } },
+    ],
+  },
+
+  {
+    id: 'crime_pays_off',
+    phase: null,
+    weight: 3,
+    when: (G) => G.flags.includes('escaped_prisoner') && G.flags.includes('assumed_identity') && G.mem?.years_underground >= 5,
+    text: 'Five years underground. No visits from police, no near-misses. Perhaps you have truly become someone else.',
+    choices: [
+      { text: 'Accept your new life fully', tag: null, outcome: 'You let the old self go. The ghosts grow quieter.', effect: (p) => { p.m += 15; p.r -= 10; p.addFlag('new_life') } },
+      { text: 'Try to reconnect with old family', tag: null, outcome: 'You reach out carefully. It is equal parts comfort and risk.', effect: (p) => { p.m += 8; p.karma += 5; p.r -= 5 } },
+    ],
+  },
+
+  {
+    id: 'fugitive_stress',
+    phase: null,
+    weight: 7,
+    when: (G) => G.flags.includes('escaped_prisoner') && G.age > 16,
+    text: 'Living in the shadows takes a relentless toll. You sleep lightly, jump at footsteps, trust no one completely.',
+    choices: [
+      { text: 'Push through — freedom is worth it', tag: null, outcome: 'You endure. The paranoia becomes background noise.', effect: (p) => { p.m -= 10; p.h -= 3; p.e += 2 } },
+      { text: 'Self-medicate to cope', tag: null, outcome: 'It dulls the edge — at a price.', effect: (p) => { p.m -= 3; p.h -= 8; p.addFlag('alcohol_habit') } },
+    ],
+  },
+
+  {
+    id: 'border_informant',
+    phase: null,
+    weight: 4,
+    when: (G) => G.flags.includes('illegal_immigrant') && G.flags.includes('escaped_prisoner'),
+    text: 'A local finds out you crossed the border illegally. They hint they could report you to immigration authorities — or forget they ever saw you.',
+    choices: [
+      { text: 'Pay them to stay quiet ($3,000)', tag: null, outcome: 'Money changes hands. They disappear. For now.', effect: (p) => { p.mo -= 3000; p.m -= 5 } },
+      { text: 'Refuse and call their bluff', tag: null, outcome: 'Either they were bluffing, or they weren\'t. You wait with your bags packed.', effect: (p) => { p.m -= 12 } },
+      { text: 'Move on to another city in this country', tag: null, outcome: 'You cut ties and relocate within the country. The threat recedes.', effect: (p) => { p.m -= 8; p.h -= 3 } },
+    ],
+  },
 ]
