@@ -3951,6 +3951,329 @@ export const EVENTS = [
     effect: null,
   },
 
+  // ── CHILDHOOD DEPTH ──────────────────────────────────────────────────────
+
+  {
+    id: 'ch_first_best_friend',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) => G.age >= 7 && G.age <= 10 && !G.mem.firstFriend,
+    text: (G) => {
+      if (['subsaharan', 'conflict_zone'].includes(G.character.country.archetype))
+        return 'A child in your neighbourhood becomes your constant companion. You spend every daylight hour together.'
+      return 'You meet someone at school who gets you immediately. You spend every weekend together. A genuine friendship begins.'
+    },
+    choices: [
+      { text: 'Become inseparable', tag: 'has_close_friend', outcome: 'The friendship shapes who you become. Some friendships are formative.', effect: (p) => { p.m += 10; p.addFlag('has_close_friend'); p.makeFriend(70); p.setMem('firstFriend', true); }, inject: null },
+      { text: 'Keep it casual — you have many friends', tag: null, outcome: 'A broad social circle forms. Roots are shallower.', effect: (p) => { p.m += 5; p.setMem('firstFriend', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ch_bullied_at_school',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.age >= 8 && G.age <= 13 && !G.mem.bullyingEvent,
+    text: (G) => {
+      if (['conflict_zone', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'An older child in school has decided you are a target. Your possessions are taken. You dread the walk home.'
+      return 'A group at school has made you their target. Every day is an exercise in dread management.'
+    },
+    choices: [
+      { text: 'Tell a trusted adult', tag: null, outcome: 'The intervention is imperfect. It helps. The bullying slows.', effect: (p) => { p.m -= 5; p.setMem('bullyingEvent', true); }, inject: null },
+      { text: 'Stand up to them directly', tag: null, outcome: 'The confrontation goes both ways. Eventually they find a different target.', effect: (p) => { p.h -= 5; p.m += 4; p.setMem('bullyingEvent', true); }, inject: null },
+      { text: 'Endure it alone', tag: null, outcome: 'You develop a quiet toughness. The social wound takes years to close.', effect: (p) => { p.m -= 10; p.e += 3; p.setMem('bullyingEvent', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ch_sibling_rivalry',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.siblings && G.siblings.length > 0 && G.age >= 8 && !G.mem.siblingRivalryEvent,
+    text: (G) => {
+      if (['subsaharan', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'Resources are scarce. The sibling closest to you in age gets the school shoes. You get them next year. The dynamic settles early.'
+      return 'Your sibling consistently outperforms you at school. Your parents\' praise for them lands differently each time.'
+    },
+    choices: [
+      { text: 'Work harder to compete', tag: null, outcome: 'The competition drives you. The relationship is complicated but alive.', effect: (p) => { p.e += 5; p.m -= 3; p.setMem('siblingRivalryEvent', true); }, inject: null },
+      { text: 'Find your own thing', tag: null, outcome: 'You stop competing on their terms. Your own identity emerges.', effect: (p) => { p.m += 5; p.setMem('siblingRivalryEvent', true); }, inject: null },
+      { text: 'Grow resentful', tag: null, outcome: 'The resentment becomes part of the family furniture. It outlives the original cause.', effect: (p) => { p.m -= 5; p.r += 5; p.setMem('siblingRivalryEvent', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ch_pocket_money_lesson',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.age >= 9 && G.age <= 12 && !G.mem.moneyLesson,
+    text: (G) => {
+      if (['subsaharan', 'conflict_zone', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'You earn a small sum helping at the market or running errands. It is the first money you have ever held that was yours.'
+      return 'You get pocket money for the first time. The question is immediate: spend it now, or save it for something bigger?'
+    },
+    choices: [
+      { text: 'Save it for something you really want', tag: null, outcome: 'The discipline of waiting teaches something permanent.', effect: (p) => { p.w += 3; p.e += 2; p.setMem('moneyLesson', true); }, inject: null },
+      { text: 'Spend it immediately — joy now', tag: null, outcome: 'The pleasure is real and brief. You learn what immediate gratification feels like.', effect: (p) => { p.m += 5; p.setMem('moneyLesson', true); }, inject: null },
+      { text: 'Share it with a friend or sibling', tag: null, outcome: 'Generosity, at its most instinctive.', effect: (p) => { p.karma += 5; p.m += 3; p.setMem('moneyLesson', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ch_conflict_zone_displacement',
+    phase: 'childhood',
+    weight: 5,
+    when: (G) => ['conflict_zone'].includes(G.character.country.archetype) && G.age >= 6 && G.age <= 12 && !G.mem.displaced,
+    text: (G) => `Fighting reaches ${G.character.country.name}. Your family packs what they can carry and moves. You leave school, your neighbourhood, the grave of your grandparent.`,
+    choices: [
+      {
+        text: 'Accept the disruption with resilience',
+        tag: null,
+        outcome: 'You adapt faster than the adults. That adaptation costs something invisible.',
+        effect: (p) => { p.m -= 10; p.e += 3; p.addFlag('refugee'); p.setMem('displaced', true); },
+        inject: null,
+      },
+      {
+        text: 'Grieve what was lost',
+        tag: null,
+        outcome: 'The grief is real and processed, slowly. You carry the memory of the old life intact.',
+        effect: (p) => { p.m -= 15; p.r += 5; p.addFlag('refugee'); p.setMem('displaced', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── ADOLESCENCE DEPTH ────────────────────────────────────────────────────
+
+  {
+    id: 'ad_first_relationship',
+    phase: 'adolescence',
+    weight: 4,
+    when: (G) => G.age >= 14 && G.age <= 17 && !G.mem.firstRelationship,
+    text: (G) => {
+      if (['wealthy_gulf', 'conflict_zone', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'You develop feelings for someone. The social and family rules around relationships at your age are strict — this stays entirely private.'
+      return 'Your first real relationship. Everything feels enormous.'
+    },
+    choices: [
+      {
+        text: 'Pursue it — tell them how you feel',
+        tag: null,
+        outcome: (G) => ['wealthy_gulf', 'conflict_zone', 'developing_unstable'].includes(G.character.country.archetype)
+          ? 'The relationship is conducted in secret. The concealment adds its own weight.'
+          : 'They feel the same way. The first relationship is sweet and brief and educational.',
+        effect: (p) => { p.m += 8; p.s += 3; p.setMem('firstRelationship', true); },
+        inject: null,
+      },
+      {
+        text: 'Say nothing — the timing is wrong',
+        tag: null,
+        outcome: 'The moment passes. You wonder sometimes what might have been.',
+        effect: (p) => { p.r += 5; p.m -= 2; p.setMem('firstRelationship', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ad_academic_pressure',
+    phase: 'adolescence',
+    weight: 4,
+    when: (G) => G.age >= 15 && G.age <= 17 && !G.mem.academicPressureEvent,
+    text: (G) => {
+      if (['wealthy_east'].includes(G.character.country.archetype))
+        return `In ${G.character.country.name}, the exam season is existential. Your family's expectations and the national exam system converge on this single period.`
+      if (['subsaharan', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype))
+        return 'You are the first in your family to reach secondary school. Failing these exams would mean not just your failure but a kind of communal disappointment.'
+      return 'Final exams are approaching. The stakes feel absolute, though they are not quite.'
+    },
+    choices: [
+      { text: 'Study intensively — sacrifice everything else', tag: null, outcome: 'The grades are good. The burnout is real. You cross the line.', effect: (p) => { p.e += 8; p.h -= 5; p.m -= 5; p.setMem('academicPressureEvent', true); }, inject: null },
+      { text: 'Study hard but keep balance', tag: null, outcome: 'Decent results. A healthier crossing of the finish line.', effect: (p) => { p.e += 5; p.m += 3; p.setMem('academicPressureEvent', true); }, inject: null },
+      { text: 'Struggle — the pressure is too much', tag: null, outcome: 'The grades are below what was expected. The fallout varies by household.', effect: (p) => { p.e -= 3; p.m -= 10; p.setMem('academicPressureEvent', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ad_first_job',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) => G.age >= 15 && G.age <= 17 && !G.mem.firstJob,
+    text: (G) => {
+      if (['subsaharan', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype))
+        return 'School ends at three. The rest of the day you work — a market stall, carrying goods, domestic work. The money goes to the household.'
+      return 'Your first part-time job. The pay is negligible. The independence is not.'
+    },
+    choices: [
+      { text: 'Work hard and save', tag: null, outcome: 'The discipline forms early. The money is real.', effect: (p) => { p.mo += 500; p.w += 3; p.m += 5; p.setMem('firstJob', true); }, inject: null },
+      { text: 'Work the minimum and spend freely', tag: null, outcome: 'The experience is more social than financial. Still worth it.', effect: (p) => { p.m += 7; p.setMem('firstJob', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ad_identity_question',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) => G.age >= 15 && G.age <= 18 && !G.mem.identityEvent,
+    text: (G) => {
+      if (['conflict_zone', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'Amid the instability, the question of who you are feels both trivial and urgent. Your identity is partly defined by what you have survived. What else does it contain?'
+      return 'Adolescence requires you to decide who you are — or at least to perform that decision. The pressure to fit a category is real.'
+    },
+    choices: [
+      { text: 'Conform to what is expected — it is easier', tag: null, outcome: 'The path is smooth. Something stays undiscovered for now.', effect: (p) => { p.m -= 3; p.setMem('identityEvent', true); }, inject: null },
+      { text: 'Explore — question everything', tag: null, outcome: 'The self that emerges is more genuinely yours. The path is rockier.', effect: (p) => { p.e += 5; p.m -= 3; p.setMem('identityEvent', true); }, inject: null },
+      { text: 'Keep a private self and a public one', tag: null, outcome: 'The split becomes a skill. Not always a healthy one.', effect: (p) => { p.m -= 5; p.e += 3; p.setMem('identityEvent', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ad_substance_first',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) => G.age >= 15 && G.age <= 18 && !G.mem.substanceFirstEvent,
+    text: (G) => {
+      if (['conflict_zone', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'In a place where adults drink to forget, alcohol or khat reaches you young. There is little protective infrastructure around it.'
+      return 'At a party, substances are present. The social pressure is subtle and constant.'
+    },
+    choices: [
+      {
+        text: 'Try it — everyone is',
+        tag: null,
+        outcome: (G) => G.currentYear >= 2000 ? 'The experience is mild. You add it to your reference points.' : 'The experience is more disorienting than expected. You learn something about your body.',
+        effect: (p) => { p.m += 3; p.h -= 3; p.setMem('substanceFirstEvent', true); },
+        inject: null,
+      },
+      {
+        text: 'Decline — not for you',
+        tag: null,
+        outcome: 'The social cost is minor. The self-knowledge is worth it.',
+        effect: (p) => { p.m += 2; p.karma += 3; p.setMem('substanceFirstEvent', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── RELATIONSHIP DEPTH ───────────────────────────────────────────────────
+
+  {
+    id: 'ya_relationship_long_distance',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.partner && !G.partner.married && G.age >= 22 && G.age <= 32 && !G.mem.ldRelationship,
+    text: 'Work or study separates you and your partner for an extended period. Long distance. Two lives that are not quite aligned.',
+    choices: [
+      { text: 'Make it work — regular calls, planned visits', tag: null, outcome: 'The relationship survives the distance. The test was real.', effect: (p) => { p.m += 5; p.setMem('ldRelationship', true); }, inject: null },
+      { text: 'Let it drift — the distance reveals the limits', tag: null, outcome: 'The relationship fades without a clean ending. That turns out to be its own kind of ending.', effect: (p) => { p.m -= 8; p.clearPartner(); p.setMem('ldRelationship', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_marriage_milestone',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.partner?.married && G.age >= 40 && !G.mem.marriageMilestone,
+    text: (G) => {
+      const years = G.age - (G.partner.metAt ?? G.age - 10)
+      if (['wealthy_east', 'wealthy_gulf', 'developing_unstable'].includes(G.character.country.archetype))
+        return `You mark ${years} years of marriage. The family gathers. The years are counted as an achievement and an obligation both.`
+      return `${years} years together. A milestone, or just another Tuesday. You find yourselves asking what comes next.`
+    },
+    choices: [
+      { text: 'Renew your commitment — deliberately', tag: 'strong_marriage', outcome: 'The gesture is small. Its meaning is not.', effect: (p) => { p.m += 10; p.addFlag('strong_marriage'); p.setMem('marriageMilestone', true); }, inject: null },
+      { text: 'Keep going as you are — stability is enough', tag: null, outcome: 'Comfortable and real. Not all marriages need a ceremony to survive.', effect: (p) => { p.m += 5; p.setMem('marriageMilestone', true); }, inject: null },
+      { text: 'Acknowledge the drift and address it', tag: null, outcome: 'The conversation is overdue. It helps.', effect: (p) => { p.m += 7; p.setMem('marriageMilestone', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_infidelity_discovered',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.partner?.married && !G.mem.infidelityEvent && G.age >= 35,
+    text: (G) => {
+      if (['wealthy_gulf', 'conflict_zone', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'You discover your spouse has been unfaithful. In your community, the shame attached to this — and the options available to you — are shaped by forces larger than the two of you.'
+      return 'You find out your partner has been unfaithful. The information arrives without warning and rearranges everything.'
+    },
+    choices: [
+      {
+        text: 'Confront them and try to repair it',
+        tag: null,
+        outcome: 'The repair is possible but long. Trust is rebuilt brick by brick.',
+        effect: (p) => { p.m -= 12; p.r += 5; p.setMem('infidelityEvent', true); },
+        inject: null,
+      },
+      {
+        text: 'End the marriage',
+        tag: null,
+        outcome: 'The decision is clear, if not easy. The aftermath is complex.',
+        effect: (p) => { p.m -= 15; p.clearPartner(); p.addFlag('divorced'); p.setMem('infidelityEvent', true); },
+        inject: null,
+      },
+      {
+        text: 'Say nothing — preserve the household',
+        tag: null,
+        outcome: (G) => ['wealthy_gulf', 'developing_unstable'].includes(G.character.country.archetype)
+          ? 'The choice is shaped by pragmatism. The silence becomes the new normal.'
+          : 'You absorb it. The relationship continues. The knowledge changes you.',
+        effect: (p) => { p.m -= 15; p.r += 12; p.setMem('infidelityEvent', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_empty_nest',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.children.length > 0 && G.age >= 48 && !G.mem.emptyNest && G.children.every(c => (G.age - c.ageAtBirth) >= 18),
+    text: (G) => {
+      if (['subsaharan', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'Your children have gone to seek work in the city. The house is quieter than it has ever been. You built a life around them.'
+      return 'The last child leaves for university. The house is suddenly, absolutely quiet.'
+    },
+    choices: [
+      { text: 'Rediscover who you are outside of parenthood', tag: null, outcome: 'The transition is strange and then liberating.', effect: (p) => { p.m += 5; p.e += 3; p.setMem('emptyNest', true); }, inject: null },
+      { text: 'Fill the space with work or purpose', tag: null, outcome: 'The activity manages the transition.', effect: (p) => { p.m += 3; p.setMem('emptyNest', true); }, inject: null },
+      { text: 'Grieve the loss of that phase', tag: null, outcome: 'The grief is real and legitimate. It passes.', effect: (p) => { p.m -= 5; p.r += 3; p.setMem('emptyNest', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_career_plateau',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.career && G.age >= 42 && !G.mem.careerPlateau,
+    text: (G) => {
+      if (['subsaharan', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype))
+        return `After years in your role, opportunities for advancement in ${G.character.country.name} are limited by who you know as much as what you do. The ceiling is structural.`
+      return 'You have been at the same level for five years. The promotions that seemed inevitable have not arrived. The question is whether to push harder or reassess.'
+    },
+    choices: [
+      { text: 'Look for opportunities elsewhere', tag: null, outcome: 'The move costs relationships. It gains you momentum.', effect: (p) => { p.mo += 8000; p.m += 5; p.setMem('careerPlateau', true); }, inject: null },
+      { text: 'Invest in new skills — refresh your value', tag: null, outcome: 'The upskilling takes time. It pays off in two years.', effect: (p) => { p.e += 8; p.m += 3; p.setMem('careerPlateau', true); }, inject: null },
+      { text: 'Accept it — stability over advancement', tag: null, outcome: 'The ambition quiets. The life outside work expands.', effect: (p) => { p.m += 5; p.r += 3; p.setMem('careerPlateau', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
   {
     id: 'ya_cooking_hobby',
     phase: 'young_adult',
