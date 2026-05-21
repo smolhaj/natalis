@@ -5822,4 +5822,548 @@ export const EVENTS = [
     ],
     effect: null,
   },
+
+  // ── POST-SOVIET LIFECYCLE EVENTS ─────────────────────────────────────────────
+
+  // EARLY CHILDHOOD
+  {
+    id: 'ps_birth_context',
+    phase: 'early_childhood',
+    weight: 5,
+    isKey: true,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age <= 1 && !G.mem.ps_birth,
+    text: (G) => {
+      if (G.currentYear < 1992) return 'Born in a Soviet maternity ward, where your mother was given no pain relief and told not to make noise. Your father waited outside for three days. You were wrapped in hospital standard-issue cloth and handed over at the gate.';
+      if (G.currentYear <= 2000) return 'The maternity ward smells of disinfectant and old ambition. The Soviet Union is gone and so is the budget. Your mother had to bring her own towels, sheets, and food. Your father bribed a nurse to get a proper room.';
+      return 'The clinic is modern — polished floors, foreign equipment — if your parents could afford the private wing. The public ward was adequate but crowded.';
+    },
+    choices: null,
+    effect: (p) => { p.h += 3; p.setMem('ps_birth', true); },
+  },
+
+  {
+    id: 'ps_kommunalka',
+    phase: 'early_childhood',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 2 && G.age <= 5 && G.currentYear >= 1975 && G.currentYear <= 2005 && !G.mem.ps_kommunalka,
+    text: 'Your family shares a kitchen and bathroom with two other families. The schedule for the stove is taped to the wall. Neighbours argue. Adults whisper about things in the hallway. You know every smell, sound, and conflict in this building.',
+    choices: null,
+    effect: (p) => { p.h -= 3; p.e += 4; p.setMem('ps_kommunalka', true); p.addFlag('communal_childhood'); },
+  },
+
+  {
+    id: 'ps_dacha_childhood',
+    phase: 'early_childhood',
+    weight: 5,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 3 && G.age <= 8 && !G.mem.ps_dacha,
+    text: 'Every summer your family loads into a train and goes to the dacha — a small plot two hours outside the city. You eat tomatoes straight from the vine, help carry water from the well, and fall asleep under a sky thick with stars. Your grandparents live here half the year.',
+    choices: [
+      {
+        text: 'Help in the vegetable garden',
+        tag: 'dacha_child',
+        outcome: 'You learn the names of every plant, carry the watering can with both hands, and feel useful in a way school never quite manages.',
+        effect: (p) => { p.h += 10; p.karma += 3; p.setMem('ps_dacha', true); p.addFlag('dacha_child'); },
+        inject: null,
+      },
+      {
+        text: 'Wander the forests alone',
+        tag: null,
+        outcome: 'You build a mental map of every path, every clearing. The forest becomes yours.',
+        effect: (p) => { p.h += 8; p.e += 3; p.setMem('ps_dacha', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // CHILDHOOD
+  {
+    id: 'ps_soviet_school_uniform',
+    phase: 'childhood',
+    weight: 5,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 6 && G.age <= 8 && !G.mem.ps_school_start,
+    text: (G) => {
+      if (G.currentYear <= 1991) return 'Your school uniform is brown and your bow is white. Every September first there is a ceremony. You carry carnations. The teacher reads aloud from the school charter. Everything feels very serious and exactly the right size.';
+      return 'The old Soviet uniform is gone but the September ritual remains. You carry flowers for your teacher on the first day. The school still smells of chalk and floor wax. The portraits on the wall have changed.';
+    },
+    choices: [
+      {
+        text: 'Stand perfectly straight during assembly',
+        tag: null,
+        outcome: 'The teacher notices. You feel the weight of being noticed.',
+        effect: (p) => { p.m += 3; p.e += 3; p.setMem('ps_school_start', true); },
+        inject: null,
+      },
+      {
+        text: 'Whisper jokes to the kid next to you',
+        tag: null,
+        outcome: 'You make a friend for life before the first lesson begins.',
+        effect: (p) => { p.h += 8; p.setMem('ps_school_start', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_wild_nineties_childhood',
+    phase: 'childhood',
+    weight: 5,
+    isKey: true,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 7 && G.age <= 14 && G.currentYear >= 1991 && G.currentYear <= 2001 && !G.mem.ps_nineties,
+    text: 'The Nineties arrive and your parents\' certainties evaporate. Your father\'s factory closes. A man in a leather jacket starts driving the neighbours\' old Volga. Your mother queues for bread at five in the morning. At the market, people sell their Soviet medals, china, and winter coats. Kiosks sell everything and nothing at the same time.',
+    choices: [
+      {
+        text: 'You feel the fear at home but don\'t understand it yet',
+        tag: 'wild_nineties_childhood',
+        outcome: 'The anxiety settles into your body before your mind has the language for it.',
+        effect: (p) => { p.m -= 5; p.e += 5; p.setMem('ps_nineties', true); p.addFlag('wild_nineties_childhood'); },
+        inject: null,
+      },
+      {
+        text: 'You find ways to help — selling newspapers, carrying groceries',
+        tag: 'wild_nineties_childhood',
+        outcome: 'You learn early that money is not abstract. It is bread. It is heating.',
+        effect: (p) => { p.h += 3; p.w += 5; p.setMem('ps_nineties', true); p.addFlag('wild_nineties_childhood'); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_grandparent_war_stories',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 8 && G.age <= 14 && !G.mem.ps_war_stories,
+    text: 'Your grandparents sit in the kitchen and talk. The Great Patriotic War. The Siege. The evacuation. The years after when everything had to be rebuilt by hand. You are the generation these stories were saved for.',
+    choices: [
+      {
+        text: 'Listen carefully to every detail',
+        tag: 'historically_aware',
+        outcome: 'You carry the stories like inheritance. Some of them are heavy.',
+        effect: (p) => { p.e += 5; p.h += 5; p.karma += 3; p.setMem('ps_war_stories', true); p.addFlag('historically_aware'); },
+        inject: null,
+      },
+      {
+        text: 'Nod politely and return to your friends',
+        tag: null,
+        outcome: 'The stories wait. They will find you again later.',
+        effect: (p) => { p.h += 2; p.setMem('ps_war_stories', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ADOLESCENCE
+  {
+    id: 'ps_conscription_dread',
+    phase: 'adolescence',
+    weight: 5,
+    isKey: true,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 15 && G.age <= 18 && G.character.gender === 'male' && !G.mem.ps_conscription_dread && ['Russia', 'Ukraine', 'Kazakhstan', 'Georgia', 'Belarus'].includes(G.character.country.name),
+    text: 'Military service hangs over every conversation. Your older cousin came back quieter. There are ways to avoid it — a medical certificate, a university deferral, money in the right hand — but they all have costs.',
+    choices: [
+      {
+        text: 'Study hard to qualify for university deferral',
+        tag: null,
+        outcome: 'You buy yourself years. Whether they are the right years remains to be seen.',
+        effect: (p) => { p.e += 10; p.m -= 5; p.setMem('ps_conscription_dread', true); },
+        inject: null,
+      },
+      {
+        text: 'Accept it — everyone goes eventually',
+        tag: 'accepts_duty',
+        outcome: 'You stop fighting the current. There is a rough dignity in that.',
+        effect: (p) => { p.m -= 3; p.addFlag('accepts_duty'); p.setMem('ps_conscription_dread', true); },
+        inject: null,
+      },
+      {
+        text: 'Your family pays for a medical exemption certificate',
+        tag: null,
+        outcome: 'The certificate is obtained. Nobody asks too many questions. The guilt is your own business.',
+        effect: (p) => { p.mo -= 1500; p.karma -= 5; p.h += 5; p.setMem('ps_conscription_dread', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_brain_drain_peer',
+    phase: 'adolescence',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 16 && G.age <= 22 && G.currentYear >= 1995 && !G.mem.ps_brain_drain,
+    text: 'Your smartest friend has a visa. Germany. Canada. America. They have been preparing for two years without telling most people. At the farewell party there are jokes and then not jokes. You wonder if you are the one making the wrong choice.',
+    choices: [
+      {
+        text: 'Consider leaving yourself',
+        tag: 'considers_emigration',
+        outcome: 'The thought takes root. You begin researching quietly.',
+        effect: (p) => { p.e += 3; p.r += 5; p.setMem('ps_brain_drain', true); p.addFlag('considers_emigration'); },
+        inject: null,
+      },
+      {
+        text: 'You belong here. Let them go.',
+        tag: null,
+        outcome: 'You feel the decision settle in your chest like a stone — not regret exactly, but weight.',
+        effect: (p) => { p.karma += 5; p.h -= 5; p.setMem('ps_brain_drain', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_nationalism_school',
+    phase: 'adolescence',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 13 && G.age <= 17 && G.currentYear >= 2000 && !G.mem.ps_nationalism,
+    text: 'History class has changed. The textbooks are new. The lesson is that your nation has always been great, beset by enemies, and is now reclaiming its rightful place. The teacher speaks with conviction. Some students stand and nod. Others look at the desk.',
+    choices: [
+      {
+        text: 'Absorb the lesson — it feels true',
+        tag: 'nationalist',
+        outcome: 'The narrative gives you a shape for things you already felt.',
+        effect: (p) => { p.setMem('ps_nationalism', true); p.addFlag('nationalist'); },
+        inject: null,
+      },
+      {
+        text: 'Something feels wrong about this version of history',
+        tag: 'politically_aware',
+        outcome: 'You start looking for the other version in old books, in your grandparents\' silences.',
+        effect: (p) => { p.e += 5; p.r += 3; p.setMem('ps_nationalism', true); p.addFlag('politically_aware'); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // YOUNG ADULT
+  {
+    id: 'ps_oligarch_economy',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 20 && G.age <= 30 && !G.mem.ps_oligarch && G.currentYear >= 1995,
+    text: 'The economy runs on connections. The apartment you want, the promotion you deserve, the contract your small business needs — they all pass through someone who knows someone. You begin to understand why some of your classmates went into the siloviki. Or why others left.',
+    choices: [
+      {
+        text: 'Work the system — build connections strategically',
+        tag: null,
+        outcome: 'You learn the language of favours. It opens doors and closes others.',
+        effect: (p) => { p.w += 5; p.karma -= 5; p.setMem('ps_oligarch', true); },
+        inject: null,
+      },
+      {
+        text: 'Build something legitimate, however slowly',
+        tag: null,
+        outcome: 'Progress is slow and often humiliating. But it is yours.',
+        effect: (p) => { p.e += 3; p.karma += 8; p.r += 3; p.setMem('ps_oligarch', true); },
+        inject: null,
+      },
+      {
+        text: 'Get out — apply for positions abroad',
+        tag: 'considers_emigration',
+        outcome: 'The applications go out. The waiting begins.',
+        effect: (p) => { p.setMem('ps_oligarch', true); p.addFlag('considers_emigration'); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_factory_collapse',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 18 && G.age <= 35 && G.currentYear >= 1991 && G.currentYear <= 2010 && !G.mem.ps_factory && !G.career,
+    text: 'The factory your father worked at for thirty years is being stripped. The machines are sold for scrap. The workers — most over fifty — have nowhere to go. Your city\'s economy was built around this building. It is being peeled away brick by brick.',
+    choices: [
+      {
+        text: 'Try to find work in the new service economy',
+        tag: null,
+        outcome: 'The work is different and often demeaning, but there is work.',
+        effect: (p) => { p.m -= 8; p.e += 3; p.setMem('ps_factory', true); },
+        inject: null,
+      },
+      {
+        text: 'Join a retraining programme',
+        tag: null,
+        outcome: 'You learn things that belong to a different century. Some of them are useful.',
+        effect: (p) => { p.e += 8; p.m -= 5; p.setMem('ps_factory', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_drinking_culture',
+    phase: 'young_adult',
+    weight: 5,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 18 && G.age <= 35 && !G.mem.ps_drinking,
+    text: 'At every celebration — wedding, promotion, wake, Tuesday — the vodka comes out. You don\'t drink at the first toast, you lose face. You don\'t drink at the third, something is wrong with you. The bottle is both hospitality and test.',
+    choices: [
+      {
+        text: 'Drink and belong',
+        tag: 'light_drinker',
+        outcome: 'You belong, and the belonging is warm, and the mornings are not always easy.',
+        effect: (p) => { p.h += 5; p.addFlag('light_drinker'); p.setMem('ps_drinking', true); },
+        inject: null,
+      },
+      {
+        text: 'Drink selectively, hold your ground',
+        tag: null,
+        outcome: 'You learn which toasts require the full glass and which allow a sip. It is a skill.',
+        effect: (p) => { p.h += 2; p.karma += 3; p.setMem('ps_drinking', true); },
+        inject: null,
+      },
+      {
+        text: 'Refuse entirely — face the social cost',
+        tag: null,
+        outcome: 'You are the strange one. It costs something. It is also, quietly, something to respect about yourself.',
+        effect: (p) => { p.h -= 5; p.karma += 8; p.m += 3; p.setMem('ps_drinking', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_protest_moment',
+    phase: 'young_adult',
+    weight: 3,
+    isKey: true,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 18 && G.age <= 40 && G.currentYear >= 2000 && !G.mem.ps_protest,
+    text: (G) => {
+      if (G.character.country.name === 'Russia' || G.character.country.name === 'Belarus') return 'People are gathering in the square. Not many at first, then thousands. You watch from an office window, from across the street, from behind a phone camera. The OMON arrive in black uniforms. By evening the square is empty.';
+      if (G.character.country.name === 'Ukraine') return 'Independence Square is full. Your neighbour has been sleeping there for three nights. The weather is bitter. History is being made on live television, either way it goes.';
+      return 'A protest in the city centre draws people you know. Some of your friends are there. The police presence is heavy. The outcome uncertain.';
+    },
+    choices: [
+      {
+        text: 'Join the protest',
+        tag: 'political_participant',
+        outcome: 'You are there when it happens. Whatever happens next, you were there.',
+        effect: (p) => { p.h += 15; p.karma += 10; p.r += 5; p.setMem('ps_protest', true); p.addFlag('political_participant'); },
+        inject: null,
+      },
+      {
+        text: 'Watch from a distance, afraid',
+        tag: null,
+        outcome: 'The fear is real. The regret may be too.',
+        effect: (p) => { p.r += 8; p.setMem('ps_protest', true); },
+        inject: null,
+      },
+      {
+        text: 'Stay home — you have too much to lose',
+        tag: null,
+        outcome: 'You keep what you have. The cost is invisible until later.',
+        effect: (p) => { p.r += 10; p.karma -= 5; p.setMem('ps_protest', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // MIDLIFE
+  {
+    id: 'ps_dacha_inheritance',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 35 && G.age <= 50 && G.parents && !G.mem.ps_dacha_inherit,
+    text: 'Your parents are passing the dacha to you. The deed is a single typed page from 1967. The roof needs work. The well pump is twenty years old. But in summer it smells exactly as it always has — old wood, hot grass, your grandmother\'s jam.',
+    choices: [
+      {
+        text: 'Keep it and maintain it',
+        tag: 'dacha_owner',
+        outcome: 'You spend three weekends replacing the roof felt. It becomes yours the way things become yours — through work.',
+        effect: (p) => { p.h += 15; p.mo -= 2000; p.karma += 5; p.setMem('ps_dacha_inherit', true); p.addFlag('dacha_owner'); },
+        inject: null,
+      },
+      {
+        text: 'Sell it — the maintenance is too much',
+        tag: null,
+        outcome: 'The money is real. The loss is also real, and arrives later than expected.',
+        effect: (p) => { p.mo += 8000; p.r += 10; p.setMem('ps_dacha_inherit', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_soviet_nostalgia',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 30 && !G.mem.ps_nostalgia,
+    text: 'Your father says things were better before. The jobs were stable. The streets were safe. People looked after each other. He watches Soviet-era films and talks about Brezhnev as if he were discussing a golden age. You can see both what he means and everything he is forgetting.',
+    choices: [
+      {
+        text: 'Argue — the past was not as clean as he remembers',
+        tag: null,
+        outcome: 'He goes quiet. You are both right about different things.',
+        effect: (p) => { p.e += 5; p.h -= 5; p.setMem('ps_nostalgia', true); },
+        inject: null,
+      },
+      {
+        text: 'Listen and find what is true in it',
+        tag: null,
+        outcome: 'You find the real thing inside the myth: he misses the certainty, not the system.',
+        effect: (p) => { p.h += 5; p.karma += 5; p.setMem('ps_nostalgia', true); },
+        inject: null,
+      },
+      {
+        text: 'Change the subject — some conversations go nowhere',
+        tag: null,
+        outcome: 'You let it pass. Not every hill is worth it.',
+        effect: (p) => { p.setMem('ps_nostalgia', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_health_system',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 30 && !G.mem.ps_health && G.stats.health < 70,
+    text: 'The clinic has Soviet-era equipment, underpaid doctors, and a supply of envelopes for unofficial payments. The doctor is competent — trained under a system that valued medical education — but overwhelmed. You pay for private care if you can. If you can\'t, you wait.',
+    choices: [
+      {
+        text: 'Pay for private care',
+        tag: null,
+        outcome: 'Fast, efficient, expensive. The result is good.',
+        effect: (p) => { p.m += 12; p.mo -= 800; p.setMem('ps_health', true); },
+        inject: null,
+      },
+      {
+        text: 'Navigate the public system',
+        tag: null,
+        outcome: 'Three appointments over six weeks. The diagnosis is the same. The experience is not.',
+        effect: (p) => { p.m += 5; p.r += 5; p.setMem('ps_health', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // LATE LIFE
+  {
+    id: 'ps_pension_collapse',
+    phase: 'late_life',
+    weight: 4,
+    isKey: true,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 55 && G.retired && !G.mem.ps_pension,
+    text: 'The pension calculation was based on wages from thirty years ago, before the hyperinflation ate the denomination. What arrives monthly covers utilities and bread. Your garden and the dacha carry the rest of the weight.',
+    choices: [
+      {
+        text: 'Grow your own food, cut every corner',
+        tag: null,
+        outcome: 'You eat well and live carefully. The resourcefulness is its own kind of pride.',
+        effect: (p) => { p.m += 5; p.h -= 10; p.setMem('ps_pension', true); },
+        inject: null,
+      },
+      {
+        text: 'Ask children for financial help',
+        tag: null,
+        outcome: 'They help without complaint. The asking is the hardest part.',
+        effect: (p) => { p.r += 8; p.h -= 5; p.setMem('ps_pension', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_regime_retrospective',
+    phase: 'late_life',
+    weight: 4,
+    isKey: true,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 60 && !G.mem.ps_retrospective,
+    text: 'You have lived under the Soviet Union, the chaos of transition, and whatever this is now. Three different passports and three different answers to the question of who you are. The young people have only known one of these worlds.',
+    choices: [
+      {
+        text: 'The old system had dignity in it, whatever its faults',
+        tag: null,
+        outcome: 'You hold both truths: that it was real, and that the reckoning was also real.',
+        effect: (p) => { p.h += 5; p.setMem('ps_retrospective', true); },
+        inject: null,
+      },
+      {
+        text: 'Freedom — however messy — is worth all of it',
+        tag: null,
+        outcome: 'The conclusion is hard-won and genuinely yours.',
+        effect: (p) => { p.h += 8; p.karma += 5; p.setMem('ps_retrospective', true); },
+        inject: null,
+      },
+      {
+        text: 'There is no clean answer, and that is the honest conclusion',
+        tag: null,
+        outcome: 'You sit with the complexity. Few people reach this without having lived through it.',
+        effect: (p) => { p.e += 5; p.h += 3; p.setMem('ps_retrospective', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_late_emigration_choice',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 40 && G.age <= 65 && G.currentYear >= 2010 && !G.mem.ps_late_emigration && G.children.length > 0,
+    text: 'Your children are talking about leaving. They have skills. They have options. The question they do not ask directly is whether you are coming with them. The other question is whether leaving means abandoning everything you stayed for.',
+    choices: [
+      {
+        text: 'Encourage them to go — build a life somewhere better',
+        tag: null,
+        outcome: 'They go. The apartment is very quiet. The video calls are something.',
+        effect: (p) => { p.h -= 10; p.karma += 10; p.r += 5; p.setMem('ps_late_emigration', true); },
+        inject: null,
+      },
+      {
+        text: 'Ask them to stay — this is your home, make it work here',
+        tag: null,
+        outcome: 'Some stay. Some go anyway. You cannot hold what wants to move.',
+        effect: (p) => { p.h += 5; p.r += 8; p.setMem('ps_late_emigration', true); },
+        inject: null,
+      },
+      {
+        text: 'Go with them — start again',
+        tag: null,
+        outcome: 'You leave with two suitcases and a sense of vertigo that takes years to pass.',
+        effect: (p) => { p.h += 8; p.r += 10; p.setMem('ps_late_emigration', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_victory_day',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 8 && !G.mem.ps_victory_day,
+    text: 'May 9th. Your city fills with people carrying portraits of the war dead — grandparents, great-grandparents, strangers from the regiment records. The Immortal Regiment march passes your window. Some people weep. Some wear medals they didn\'t earn. The day carries more weight than a single meaning.',
+    choices: [
+      {
+        text: 'Carry your great-grandfather\'s portrait',
+        tag: null,
+        outcome: 'You feel the name on the frame like something physical. The grief is old and still sharp.',
+        effect: (p) => { p.h += 8; p.karma += 5; p.setMem('ps_victory_day', true); },
+        inject: null,
+      },
+      {
+        text: 'Watch from the sidelines, uncertain how to feel',
+        tag: null,
+        outcome: 'You are not alone in the uncertainty. You just don\'t know that yet.',
+        effect: (p) => { p.e += 3; p.setMem('ps_victory_day', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
 ]
