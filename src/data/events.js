@@ -2765,4 +2765,383 @@ export const EVENTS = [
     ],
     effect: null,
   },
+
+  // ── LATE LIFE EXPANSION ───────────────────────────────────────────────────
+  {
+    id: 'late_retirement_decision',
+    phase: 'late_life',
+    weight: 5,
+    when: (G) => G.age >= 60 && G.age <= 65 && G.career && !G.flags.includes('retired'),
+    text: (G) => {
+      if (['wealthy_west','wealthy_east'].includes(G.character.country.archetype)) return 'The pension papers arrive. You\'ve been paying in for decades. The math works — you can leave.'
+      if (G.character.country.archetype === 'post_soviet') return 'The state pension is barely enough. But your body is done with the work.'
+      return 'There is no pension. You stop working when you cannot work anymore.'
+    },
+    choices: [
+      { text: 'Retire — you\'ve earned it', tag: null, outcome: 'The first week feels strange. By the third, you begin to understand rest.', effect: (p) => { p.m += 10; p.addFlag('retired') }, inject: null },
+      { text: 'Keep working — idleness frightens you', tag: null, outcome: 'You stay on. The body has opinions about this decision.', effect: (p) => { p.m += 3; p.h -= 4 }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_pension_reality',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) => G.age >= 62 && G.flags.includes('retired') && !G.flags.includes('pension_settled'),
+    text: (G) => {
+      if (['wealthy_west','wealthy_east'].includes(G.character.country.archetype)) return 'The pension is smaller than you imagined. Everything is more expensive than it used to be.'
+      if (G.character.country.archetype === 'subsaharan' || G.character.country.archetype === 'conflict_zone') return 'There is no formal pension. Your children are your retirement plan. Whether that works depends on them.'
+      return 'The government pension arrives monthly. It covers rent, barely. Extras are a memory.'
+    },
+    choices: [
+      { text: 'Downsize and adapt', tag: null, outcome: 'A smaller life. Also a simpler one.', effect: (p) => { p.m += 5; p.w -= 5; p.addFlag('pension_settled') }, inject: null },
+      { text: 'Keep the lifestyle — drain savings', tag: null, outcome: 'The math will catch up eventually.', effect: (p) => { p.m += 2; p.mo -= 5000; p.addFlag('pension_settled') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_grandchild_born',
+    phase: 'late_life',
+    weight: 6,
+    when: (G) => G.children.length > 0 && G.age >= 52 && !G.flags.includes('grandparent') && G.flags.includes('cared_for_children'),
+    text: (G) => {
+      if (G.character.country.archetype === 'wealthy_east') return 'Your child calls. The baby has arrived. In this culture, your role is expected to be central — caregiver, daily presence, family anchor.'
+      if (['subsaharan','developing_unstable'].includes(G.character.country.archetype)) return 'The grandchild arrives. In this family, this means you: childcare while the parents work, school pickups, stories at night.'
+      return 'You are a grandparent. The weight of the word settles on you slowly, then all at once.'
+    },
+    choices: [
+      { text: 'Be fully present — the involved grandparent', tag: null, outcome: 'The child knows your face and your stories. You know theirs.', effect: (p) => { p.m += 18; p.addFlag('grandparent'); p.addFlag('found_meaning') }, inject: null },
+      { text: 'Maintain some distance — let them parent', tag: null, outcome: 'You are there when needed. Less, when not.', effect: (p) => { p.m += 8; p.addFlag('grandparent') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_grandchild_relationship',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) => G.flags.includes('grandparent') && G.age >= 60,
+    text: 'Your grandchild asks you what it was like when you were young. You realize you are now the keeper of a world that no longer exists.',
+    choices: [
+      { text: 'Tell them everything — the real version', tag: null, outcome: 'They listen with a seriousness that surprises you. Something transfers.', effect: (p) => { p.m += 12; p.r -= 6; p.addFlag('bridge_builder') }, inject: null },
+      { text: 'Give them the edited version', tag: null, outcome: 'They sense the gaps. They will fill them in their own time.', effect: (p) => { p.m += 6 }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_cognitive_early',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 68 && G.stats.health < 50 && !G.flags.includes('cognitive_decline') && Math.random() < 0.12,
+    text: (G) => {
+      if (['wealthy_west','wealthy_east'].includes(G.character.country.archetype)) return 'You forget the word for something ordinary. Then a name. The doctor orders tests and returns with a careful face.'
+      if (G.character.country.archetype === 'post_soviet') return 'You forget things more often. The family says it\'s age. You suspect it\'s something else, but diagnosis costs money.'
+      return 'The forgetting comes gradually. In this place, there is no clinic for it, no name given. The family manages as best they can.'
+    },
+    choices: [
+      { text: 'Pursue diagnosis and treatment', tag: null, outcome: (G) => ['wealthy_west','wealthy_east'].includes(G.character.country.archetype) ? 'Early intervention slows the progression.' : 'The medication is expensive and hard to source.', effect: (p) => { p.h -= 5; p.m -= 10; p.mo -= 3000; p.addFlag('cognitive_decline') }, inject: null },
+      { text: 'Accept it quietly and adapt', tag: null, outcome: 'You restructure your life around what you still have.', effect: (p) => { p.h -= 8; p.m -= 8; p.addFlag('cognitive_decline') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_cognitive_progression',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) => G.flags.includes('cognitive_decline') && G.age >= 72,
+    text: 'The gaps in memory are larger now. Sometimes the date slips away. Sometimes a face. The people around you rearrange their lives.',
+    choices: null,
+    effect: (p) => { p.h -= 8; p.m -= 12; p.e -= 6; p.r += 8 },
+  },
+  {
+    id: 'late_health_scare_heart',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) => G.age >= 58 && !G.flags.includes('heart_event') && (G.flags.includes('smoker') || G.stats.health < 45) && Math.random() < 0.15,
+    text: (G) => {
+      const base = 'A pain in the chest, then in the arm. The hospital. Tests. The doctor says you are lucky it was a warning.'
+      if (G.character.country.archetype === 'wealthy_west') return base + ' The cardiac team is excellent.'
+      if (['subsaharan','conflict_zone'].includes(G.character.country.archetype)) return 'A pain in the chest. The nearest clinic is hours away. By the time you arrive, the moment has passed.'
+      return base
+    },
+    choices: [
+      { text: 'Change everything — diet, exercise, stress', tag: null, outcome: 'You become something you were not. It is not too late.', effect: (p) => { p.h += 5; p.m -= 5; p.addFlag('health_conscious'); p.addFlag('heart_event') }, inject: null },
+      { text: 'Take the medication, change little else', tag: null, outcome: 'The pills help. The habits stay the same.', effect: (p) => { p.h -= 3; p.mo -= 1500; p.addFlag('heart_event') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_health_cancer',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.age >= 62 && !G.flags.includes('cancer_survivor') && Math.random() < 0.08,
+    text: (G) => {
+      if (['wealthy_west','wealthy_east'].includes(G.character.country.archetype)) return 'The scan shows something that wasn\'t there before. The oncologist speaks in percentages and treatment windows.'
+      if (['subsaharan','conflict_zone','developing_unstable'].includes(G.character.country.archetype)) return 'The diagnosis comes late — there was no screening, no early detection. The treatment options are few and expensive.'
+      return 'Cancer. The word lands differently than you expected.'
+    },
+    choices: [
+      { text: 'Pursue full treatment — fight it', tag: null, outcome: 'Chemotherapy. Hair loss. Exhaustion. And, eventually, a clean scan.', effect: (p) => { p.h -= 15; p.m -= 10; p.mo -= 25000; p.addFlag('cancer_survivor') }, inject: null },
+      { text: 'Pursue palliative care — quality over quantity', tag: null, outcome: 'You choose how to spend the remaining good time.', effect: (p) => { p.h -= 20; p.m += 5; p.r -= 5; p.addFlag('acceptance') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_nursing_home',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 76 && G.stats.health < 35 && !G.flags.includes('nursing_home'),
+    text: (G) => {
+      if (['wealthy_west'].includes(G.character.country.archetype)) return 'Your children gently raise the subject of assisted living. The facility is clean and well-staffed. It also feels like a waiting room.'
+      if (['wealthy_east','developing_urban'].includes(G.character.country.archetype)) return 'In this culture, placing a parent in a facility carries deep shame. Your child proposes moving you into their home instead.'
+      return 'Your family takes you in. There is no other option, and also no question about it.'
+    },
+    choices: [
+      { text: 'Accept the move gracefully', tag: null, outcome: 'You adapt. Some of the staff become something like friends.', effect: (p) => { p.m -= 8; p.addFlag('nursing_home') }, inject: null },
+      { text: 'Insist on staying at home as long as possible', tag: null, outcome: 'With help, you manage. Independence costs effort.', effect: (p) => { p.m += 5; p.h -= 5 }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_life_review',
+    phase: 'late_life',
+    weight: 5,
+    when: (G) => G.age >= 70 && !G.flags.includes('life_reviewed'),
+    text: 'At some point in the long evenings, you begin reviewing your life with an honesty you couldn\'t have managed earlier. You see the forks you took and the ones you didn\'t.',
+    choices: [
+      { text: 'Accept it — all of it', tag: null, outcome: 'The regret doesn\'t vanish, but it stops ambushing you.', effect: (p) => { p.r -= 15; p.m += 10; p.addFlag('acceptance'); p.addFlag('life_reviewed') }, inject: null },
+      { text: 'Focus on what you\'re proud of', tag: null, outcome: 'There is enough. There was always enough to be proud of.', effect: (p) => { p.r -= 8; p.m += 8; p.addFlag('life_reviewed') }, inject: null },
+      { text: 'Dwell on what went wrong', tag: null, outcome: 'The audit never quite finishes. It follows you to bed.', effect: (p) => { p.r += 10; p.m -= 8; p.addFlag('life_reviewed') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_old_friend_death',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) => G.friends && G.friends.length > 0 && G.age >= 65,
+    text: 'The call comes. A friend from another chapter of your life is gone. You find yourself at a funeral thinking about all the ones still ahead.',
+    choices: null,
+    effect: (p) => { p.m -= 10; p.r += 5 },
+  },
+  {
+    id: 'late_will_and_testament',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 62 && !G.flags.includes('will_written') && (G.money > 5000 || G.children.length > 0),
+    text: (G) => {
+      if (['wealthy_west','wealthy_east'].includes(G.character.country.archetype)) return 'The solicitor suggests it is time to formalize your wishes. A will. The word has a finality that is uncomfortable and necessary.'
+      return 'Your children ask what you want done with what you leave behind. You realize you have never said.'
+    },
+    choices: [
+      { text: 'Write the will — clear and fair', tag: null, outcome: 'One less thing for them to fight about.', effect: (p) => { p.m += 5; p.r -= 6; p.mo -= 800; p.addFlag('will_written') }, inject: null },
+      { text: 'Leave it to them to sort out', tag: null, outcome: 'This decision will cost your children something.', effect: (p) => { p.r += 8; p.addFlag('will_written') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_volunteering',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.flags.includes('retired') && G.age >= 62 && G.stats.health > 40 && !G.flags.includes('committed_activist'),
+    text: (G) => {
+      if (['subsaharan','developing_unstable'].includes(G.character.country.archetype)) return 'There is always work that needs doing in your community. No one is paid for it. No one expects to be.'
+      return 'With the work gone, you find something is missing. A community organization asks if you have time.'
+    },
+    choices: [
+      { text: 'Volunteer — give your time and knowledge', tag: null, outcome: 'The structure returns. So does the sense of being useful.', effect: (p) => { p.m += 12; p.addFlag('committed_activist'); p.addFlag('community_leader') }, inject: null },
+      { text: 'Enjoy the freedom — you\'ve given enough', tag: null, outcome: 'The leisure is real. It is also sometimes hollow.', effect: (p) => { p.m += 3 }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_downsizing',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 64 && G.flags.includes('retired') && G.money > 0 && !G.flags.includes('downsized'),
+    text: (G) => {
+      if (['wealthy_west'].includes(G.character.country.archetype)) return 'The house is too large now. The children left years ago. You walk through rooms you never use.'
+      return 'The home you built your life in starts to feel like a burden. Maintenance, costs, stairs.'
+    },
+    choices: [
+      { text: 'Sell and move somewhere smaller', tag: null, outcome: 'You pocket the difference. The new place fits.', effect: (p) => { p.m += 6; p.mo += 30000; p.addFlag('downsized') }, inject: null },
+      { text: 'Stay — the memories live here too', tag: null, outcome: 'You maintain it as long as you can.', effect: (p) => { p.m += 4; p.mo -= 3000; p.addFlag('downsized') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_late_romance',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => !G.partner && G.age >= 62 && G.age <= 75 && G.stats.happiness < 55,
+    text: (G) => {
+      if (G.currentYear >= 2010 && ['wealthy_west','wealthy_east','developing_urban'].includes(G.character.country.archetype)) return 'A friend shows you a dating app for people your age. You dismiss it, then don\'t.'
+      return 'At a community event, someone sits next to you and asks about your life. You notice you are telling the truth.'
+    },
+    choices: [
+      { text: 'Open yourself to it', tag: null, outcome: 'Something unexpected grows in the late afternoon of your life.', effect: (p) => { p.m += 15; p.addFlag('strong_marriage') }, inject: null },
+      { text: 'You are done with all that', tag: null, outcome: 'You are at peace with solitude. That is not nothing.', effect: (p) => { p.m += 4; p.addFlag('acceptance') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_political_reflection',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.age >= 68 && (G.flags.includes('cold_war_generation') || G.flags.includes('apartheid_generation') || G.flags.includes('revolution_generation')),
+    text: 'You have lived through things that history books now describe in two paragraphs. Someone younger asks what it was really like. You realize the gap between what happened and what they imagine is vast.',
+    choices: [
+      { text: 'Speak — bear witness', tag: null, outcome: 'You tell them what the books leave out. They are quiet for a long time.', effect: (p) => { p.m += 10; p.r -= 8; p.addFlag('bridge_builder') }, inject: null },
+      { text: 'Some things don\'t translate', tag: null, outcome: 'You give them the outline. The texture stays yours.', effect: (p) => { p.m += 4 }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_spiritual_reckoning',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 70 && !G.flags.includes('spiritual_settled'),
+    text: (G) => {
+      if (G.flags.includes('devout')) return 'Your faith has accompanied you this whole way. At this stage, it feels less like belief and more like an old friend.'
+      if (G.flags.includes('skeptic')) return 'You have been skeptical all your life. Now, in the quiet hours, you find you are not as certain of your certainty as you used to be.'
+      return 'The question of what comes after presents itself differently at seventy than it did at thirty.'
+    },
+    choices: [
+      { text: 'Find peace in faith or philosophy', tag: null, outcome: 'A framework for what\'s coming. That\'s enough.', effect: (p) => { p.m += 10; p.r -= 5; p.addFlag('spiritual_settled'); p.addFlag('found_meaning') }, inject: null },
+      { text: 'Sit with the uncertainty', tag: null, outcome: 'You do not need an answer. The question itself is the companion.', effect: (p) => { p.m += 6; p.addFlag('spiritual_settled') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_grandchild_milestone',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.flags.includes('grandparent') && G.age >= 68,
+    text: 'Your grandchild graduates, or gets married, or has a child of their own. Four generations, briefly in the same room. You understand something about time that you couldn\'t have explained before.',
+    choices: null,
+    effect: (p) => { p.m += 14; p.r -= 8; p.addFlag('found_meaning') },
+  },
+  {
+    id: 'late_memoir_writing',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.age >= 65 && G.stats.smarts > 45 && !G.flags.includes('memoir_written'),
+    text: 'You start writing down what happened. Not for publication — for yourself, maybe for the grandchildren. Getting it down feels urgent in a way you can\'t fully explain.',
+    choices: [
+      { text: 'Write it all — the honest version', tag: null, outcome: 'You surprise yourself with what you remember. And what you feel about it.', effect: (p) => { p.r -= 12; p.m += 8; p.e += 3; p.addFlag('memoir_written'); p.addFlag('emotionally_honest') }, inject: null },
+      { text: 'Write the version you can live with', tag: null, outcome: 'It is still yours. Just curated.', effect: (p) => { p.r -= 5; p.m += 5; p.addFlag('memoir_written') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_inheritance_leaving',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 72 && G.children.length > 0 && G.money > 10000 && !G.flags.includes('inheritance_planned'),
+    text: (G) => {
+      if (G.children.length > 1) return 'How you divide what you have will say something. The children may not agree with what it says.'
+      return 'Everything will go to your child. You have mixed feelings about handing so much weight to one person.'
+    },
+    choices: [
+      { text: 'Divide equally, whatever the relationships', tag: null, outcome: 'Fair on paper. In practice, contested.', effect: (p) => { p.r -= 4; p.addFlag('inheritance_planned') }, inject: null },
+      { text: 'Reward the child who showed up', tag: null, outcome: 'The others find out eventually. Relationships shift.', effect: (p) => { p.r -= 6; p.m += 4; p.addFlag('inheritance_planned') }, inject: null },
+      { text: 'Give it away — charities, causes', tag: null, outcome: 'Your children are surprised. Some are hurt. You are at peace.', effect: (p) => { p.karma += 15; p.r -= 10; p.m += 8; p.addFlag('inheritance_planned') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_physical_limits',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) => G.age >= 72 && G.stats.health < 50 && !G.flags.includes('physical_limits_accepted'),
+    text: 'The body\'s negotiations with you have changed. Stairs are a decision. Distances are considered. You are not who you were at forty, and the body keeps reminding you.',
+    choices: [
+      { text: 'Adapt without complaint', tag: null, outcome: 'You do what you can with what remains. That has always been the deal.', effect: (p) => { p.m += 5; p.addFlag('acceptance'); p.addFlag('physical_limits_accepted') }, inject: null },
+      { text: 'Rage against it — refuse the limits', tag: null, outcome: 'Some of the spirit transfers into stubbornness. The body is not persuaded.', effect: (p) => { p.m -= 4; p.h -= 4; p.addFlag('physical_limits_accepted') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_friend_network_thin',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 72 && (!G.friends || G.friends.length < 2) && !G.flags.includes('late_loneliness'),
+    text: (G) => {
+      if (['wealthy_east','subsaharan'].includes(G.character.country.archetype)) return 'In this culture, old age without family nearby is almost unthinkable. But family has scattered. The loneliness is real, but unnamed.'
+      return 'Your peers have died or moved. The social world shrinks. You notice that days can pass without meaningful conversation.'
+    },
+    choices: [
+      { text: 'Join a community group — find new connection', tag: null, outcome: 'The new friendships are smaller but warm.', effect: (p) => { p.m += 8; p.addFlag('has_close_friend') }, inject: null },
+      { text: 'Accept the solitude', tag: null, outcome: 'You learn what you need and what you can live without.', effect: (p) => { p.m -= 5; p.addFlag('late_loneliness'); p.addFlag('acceptance') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_reconcile_past',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.regret > 30 && G.age >= 68 && !G.flags.includes('reconciled_past'),
+    text: 'There are people you wronged and never addressed. Some are still alive. You find yourself drafting a letter in your head that you haven\'t yet sent.',
+    choices: [
+      { text: 'Reach out — it\'s not too late', tag: null, outcome: 'Some receive it well. One doesn\'t respond. You did what you could.', effect: (p) => { p.r -= 12; p.m += 6; p.addFlag('reconciled_past'); p.addFlag('emotionally_honest') }, inject: null },
+      { text: 'Let it stay in the past', tag: null, outcome: 'You carry it a little longer.', effect: (p) => { p.r += 5; p.m -= 3; p.addFlag('reconciled_past') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_end_of_life_peace',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.age >= 78 && G.stats.health < 30,
+    text: 'You know what this is. You have known for a while. The question now is what to do with the time that remains.',
+    choices: [
+      { text: 'Call the people who matter and say what needs saying', tag: null, outcome: 'Some conversations you\'ve been postponing for decades happen in the space of a week. It is enough.', effect: (p) => { p.r -= 15; p.m += 12; p.addFlag('found_meaning') }, inject: null },
+      { text: 'Keep your private counsel — die as you lived', tag: null, outcome: 'You have always been this way. There is dignity in consistency.', effect: (p) => { p.r -= 5; p.addFlag('acceptance') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_community_elder',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.age >= 65 && (G.flags.includes('community_leader') || G.flags.includes('mentor')) && G.stats.happiness > 50,
+    text: (G) => {
+      if (['subsaharan','developing_urban'].includes(G.character.country.archetype)) return 'In your neighborhood, you are consulted on disputes. Your age is capital here — experience has currency.'
+      return 'Younger people come to you. Not for advice, exactly, but for the witness of someone who has seen more.'
+    },
+    choices: null,
+    effect: (p) => { p.m += 10; p.r -= 5; p.addFlag('found_meaning') },
+  },
+  {
+    id: 'late_sibling_reckoning',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.siblings && G.siblings.length > 0 && G.age >= 65 && !G.flags.includes('sibling_reckoned'),
+    text: 'One of your siblings is ill. You see them in a way you haven\'t in years — not as the person from childhood, but as someone also running out of time.',
+    choices: [
+      { text: 'Close whatever distance remains', tag: null, outcome: 'You talk properly for the first time since you were young. Something repairs.', effect: (p) => { p.m += 10; p.r -= 8; p.addFlag('sibling_reckoned') }, inject: null },
+      { text: 'Keep the comfortable distance', tag: null, outcome: 'Some relationships are maintained rather than healed. That is still something.', effect: (p) => { p.m += 2; p.addFlag('sibling_reckoned') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_poverty_old_age',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.money < 1000 && G.stats.wealth < 20 && G.age >= 62 && ['subsaharan','developing_unstable','conflict_zone'].includes(G.character.country.archetype),
+    text: 'Old age without savings in a country without a safety net. You work as long as the body allows. After that, you depend entirely on family. Whether they can carry this weight is not in your hands.',
+    choices: null,
+    effect: (p) => { p.h -= 6; p.m -= 10; p.r += 8 },
+  },
+  {
+    id: 'late_tech_bewilderment',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 70 && G.currentYear >= 2010 && !G.flags.includes('tech_adapted'),
+    text: 'The world runs on phones now. Your grandchildren communicate in ways you can\'t quite follow. Some of it you learn. Some of it stays foreign.',
+    choices: [
+      { text: 'Try to learn it — video calls, apps, the lot', tag: null, outcome: 'You manage more than expected. The connection is worth the effort.', effect: (p) => { p.e += 3; p.m += 6; p.addFlag('tech_adapted') }, inject: null },
+      { text: 'Let them come to you in the old ways', tag: null, outcome: 'Some do. Some don\'t. You learn which is which.', effect: (p) => { p.m -= 2; p.addFlag('tech_adapted') }, inject: null },
+    ],
+    effect: null,
+  },
 ]
