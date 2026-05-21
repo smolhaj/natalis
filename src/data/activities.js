@@ -617,6 +617,10 @@ export const ACTIVITIES = {
     { crimeId: 'black_market', label: 'Black market trading', minAge: 18 },
     { crimeId: 'political_dissent', label: 'Engage in political dissent', minAge: 18 },
     { crimeId: 'corporate_fraud', label: 'Corporate fraud', minAge: 30 },
+    { crimeId: 'aggravated_assault', label: 'Aggravated assault', minAge: 16 },
+    { crimeId: 'manslaughter', label: 'Manslaughter', minAge: 16 },
+    { crimeId: 'domestic_violence', label: 'Domestic violence', minAge: 16 },
+    { crimeId: 'murder', label: 'Murder someone', minAge: 16 },
   ],
 
   hobbies: [

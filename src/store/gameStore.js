@@ -54,6 +54,11 @@ import {
   abandonChild,
   useSubstance,
   bookTrip,
+  startBusiness,
+  manageBusiness,
+  hireEmployee,
+  closeBusiness,
+  BUSINESS_TYPES,
 } from '../engine/gameEngine'
 import { COUNTRIES } from '../data/countries'
 import { CRIMES } from '../data/crimes'
@@ -109,6 +114,7 @@ const INITIAL_STATE = {
   mentalHealth: { condition: null, medicating: false, therapy: false },
   hobbies: {},
   pendingMinigame: null,
+  business: null,
 }
 
 export const useGameStore = create((set, get) => ({
@@ -204,6 +210,7 @@ export const useGameStore = create((set, get) => ({
       fitness: 50,
       creditScore: 700,
       pendingMinigame: null,
+      business: null,
     })
   },
 
@@ -574,6 +581,29 @@ export const useGameStore = create((set, get) => ({
     const state = get()
     if (state.dead) return
     set(bookTrip(state, destinationId))
+  },
+
+  // ── Business actions ────────────────────────────────────────────────────────
+
+  startBusiness: (typeId) => {
+    const state = get()
+    if (state.dead) return
+    set(startBusiness(state, typeId))
+  },
+  manageBusiness: () => {
+    const state = get()
+    if (state.dead) return
+    set(manageBusiness(state))
+  },
+  hireEmployee: () => {
+    const state = get()
+    if (state.dead) return
+    set(hireEmployee(state))
+  },
+  closeBusiness: () => {
+    const state = get()
+    if (state.dead) return
+    set(closeBusiness(state))
   },
 
   // ── Death / restart ─────────────────────────────────────────────────────────
