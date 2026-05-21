@@ -89,9 +89,37 @@ export function deriveInitialSiblings(char) {
   })
 }
 
+export function deriveBirthText(char) {
+  const { country, birthYear, familyStability, familySize, wealthTier, firstName, surname } = char
+  const arch = country.archetype
+  const name = `${firstName} ${surname}`
+
+  const stabilityCtx = {
+    secure: 'into a household of stability and warmth',
+    stable: 'to a family of modest means but solid foundations',
+    struggling: 'into a family navigating real hardship',
+    unstable: 'into difficult circumstances from the first day',
+  }[familyStability] ?? 'into the world'
+
+  const archCtx = {
+    wealthy_west: `In ${country.name} in ${birthYear}, the maternity ward is clean, the forms are in triplicate, and your parents drive home on a road with lane markings.`,
+    wealthy_east: `${country.name}, ${birthYear}. A modern hospital, careful documentation, grandparents waiting in the corridor with specific opinions about your name.`,
+    post_soviet: `${country.name}, ${birthYear}. The maternity ward smells of disinfectant. Your mother was not allowed to have your father in the room.`,
+    developing_urban: `${country.name}, ${birthYear}. The city is enormous and still growing. The neighbourhood you are born into will shape everything that follows.`,
+    developing_unstable: `${country.name}, ${birthYear}. The country is in motion — politically, economically, always. You arrive ${stabilityCtx}.`,
+    subsaharan: `${country.name}, ${birthYear}. You are born ${stabilityCtx}${familySize > 4 ? ', the newest in a large family' : ''}. ${country.name}'s sun is already through the window.`,
+    conflict_zone: `${country.name}, ${birthYear}. You are born during a time of conflict. Your mother's first priority was keeping you safe.`,
+    wealthy_gulf: `${country.name}, ${birthYear}. The hospital is modern, the air conditioning precise. You are born into a country of vast resources and layered rules.`,
+  }[arch] ?? `${name} enters the world in ${country.name}, ${birthYear}.`
+
+  return archCtx
+}
+
 export function deriveInitialMoney(char) {
   const base = { 0: 0, 1: 300, 2: 2000, 3: 12000, 4: 60000 }
-  return (base[char.wealthTier] ?? 0) + randomBetween(-200, 200) * char.wealthTier
+  const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
+  const mult = gdpMult[char.country.gdp] ?? 1.0
+  return Math.round(((base[char.wealthTier] ?? 0) + randomBetween(-200, 200) * char.wealthTier) * mult)
 }
 
 export function deriveInitialParents(char) {
@@ -155,8 +183,20 @@ function applyNaturalAging(state) {
   else if (age > 50) looks -= 0.6
   else if (age > 30) looks -= 0.4
   if (age > 75) smarts -= 0.3
+
+  // Fitness decay
+  let fitness = state.fitness ?? 50
+  if (age >= 50) fitness -= 1
+  else if (age >= 30) fitness -= 0.5
+  fitness = clamp(fitness, 0, 100)
+
+  // Fitness feedback
+  if (fitness >= 70) looks = clamp(looks + 0.2, 0, 100)
+  if (fitness < 30) health = clamp(health - 0.3, 0, 100)
+
   return {
     ...state,
+    fitness,
     stats: {
       ...stats,
       happiness: clamp(happiness, 0, 100),
@@ -192,6 +232,13 @@ function buildEffectProxy(state) {
   proxy.setGpa = (gpa) => { proxy._newGpa = gpa }
   proxy.setEnrolled = (enrollment) => { proxy._newEnrolled = enrollment }
   proxy.setMem = (key, value) => { proxy.mem[key] = value }
+  proxy.releaseFromPrison = () => { proxy._releaseFromPrison = true }
+  proxy.setMentalHealth = (updates) => { proxy._mentalHealthUpdates = { ...(proxy._mentalHealthUpdates ?? {}), ...updates } }
+  proxy.practiceHobby = (hobbyId, delta = 1) => {
+    if (!proxy._hobbyDeltas) proxy._hobbyDeltas = {}
+    proxy._hobbyDeltas[hobbyId] = (proxy._hobbyDeltas[hobbyId] ?? 0) + delta
+  }
+  proxy.partnerRel = (delta) => { proxy._partnerRelDelta = (proxy._partnerRelDelta ?? 0) + delta }
   return proxy
 }
 
@@ -214,6 +261,16 @@ function resolveProxyExtras(state, proxy) {
     next = { ...next, education: { ...next.education, enrolled: proxy._newEnrolled } }
   }
   if (proxy.flags.includes('has_licence')) next = { ...next, licenceObtained: true }
+  if (proxy._releaseFromPrison) next = { ...next, inPrison: false, prisonSentence: 0 }
+  if (proxy._partnerRelDelta && next.partner) {
+    next = { ...next, partner: { ...next.partner, relationshipQuality: clamp((next.partner.relationshipQuality ?? 60) + proxy._partnerRelDelta, 0, 100) } }
+  }
+  if (proxy._mentalHealthUpdates) next = { ...next, mentalHealth: { ...(next.mentalHealth ?? {}), ...proxy._mentalHealthUpdates } }
+  if (proxy._hobbyDeltas) {
+    const hobbies = { ...(next.hobbies ?? {}) }
+    for (const [k, v] of Object.entries(proxy._hobbyDeltas)) hobbies[k] = Math.min(100, (hobbies[k] ?? 0) + v)
+    next = { ...next, hobbies }
+  }
   return next
 }
 
@@ -268,7 +325,11 @@ function buildG(state) {
     mem: state.mem,
     criminalRecord: state.criminalRecord,
     inPrison: state.inPrison,
+    prisonSentence: state.prisonSentence ?? 0,
     money: state.money ?? 0,
+    debt: state.debt ?? 0,
+    creditScore: state.creditScore ?? 700,
+    fitness: state.fitness ?? 50,
     parents: state.parents,
     hooksUpCount: state.hooksUpCount ?? 0,
     karma: state.karma ?? 50,
@@ -283,6 +344,8 @@ function buildG(state) {
     martialArts: state.martialArts ?? { discipline: null, belt: 0 },
     birthControl: state.birthControl ?? false,
     gpa: state.gpa ?? null,
+    mentalHealth: state.mentalHealth ?? { condition: null, medicating: false, therapy: false },
+    hobbies: state.hobbies ?? {},
   }
 }
 
@@ -410,7 +473,11 @@ export function enterCareer(state, careerId) {
   const career = CAREERS.find(c => c.id === careerId)
   if (!career) return state
   const level = career.levels[0]
-  const salary = randomBetween(level.salaryRange[0], level.salaryRange[1])
+  const baseSalary = randomBetween(level.salaryRange[0], level.salaryRange[1])
+  // Scale salary to country purchasing power
+  const gdpSalaryMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.22, low_medium: 0.1, low: 0.055, very_low: 0.03 }
+  const salaryMult = gdpSalaryMult[state.character.country.gdp] ?? 1.0
+  const salary = Math.round(baseSalary * salaryMult)
   const newCareer = {
     id: career.id, title: level.title, level: 0, salary,
     field: career.field, yearsInRole: 0, performance: 70,
@@ -434,7 +501,9 @@ export function checkPromotion(state) {
   if (!chance(baseChance + smartsBonus + perfBonus + yearsBonus)) return state
 
   const newLevel = careerDef.levels[nextIdx]
-  const salary = randomBetween(newLevel.salaryRange[0], newLevel.salaryRange[1])
+  const gdpSalaryMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.22, low_medium: 0.1, low: 0.055, very_low: 0.03 }
+  const salaryMult = gdpSalaryMult[state.character.country.gdp] ?? 1.0
+  const salary = Math.round(randomBetween(newLevel.salaryRange[0], newLevel.salaryRange[1]) * salaryMult)
   const career = { ...state.career, level: nextIdx, title: newLevel.title, salary, yearsInRole: 0 }
   const log = [...state.log, { age: state.age, text: `You are promoted to ${newLevel.title}. New salary: $${salary.toLocaleString()}/yr.`, isKey: true }]
   return { ...state, career, log }
@@ -683,6 +752,87 @@ export function getPlasticSurgery(state, surgeryType) {
 // ─── Activity system ──────────────────────────────────────────────────────────
 
 export function applyActivity(state, activityId) {
+  // ── Hobby practice activities ────────────────────────────────────────────────
+  const hobbyActivity = (ACTIVITIES.hobbies ?? []).find(a => a.id === activityId)
+  if (hobbyActivity) {
+    let updated = { ...state }
+    const cost = hobbyActivity.cost ?? 0
+    if (cost > 0 && (updated.money ?? 0) < cost) {
+      return { ...updated, log: [...updated.log, { age: updated.age, text: `You can't afford the ${hobbyActivity.label} ($${cost}).`, isKey: false }] }
+    }
+    updated.money = (updated.money ?? 0) - cost
+    // Progress the hobby
+    const current = updated.hobbies?.[hobbyActivity.hobbyId] ?? 0
+    updated.hobbies = { ...(updated.hobbies ?? {}), [hobbyActivity.hobbyId]: Math.min(100, current + hobbyActivity.delta) }
+    // Store primary hobby in mem if not set
+    if (!updated.mem?.primaryHobby) updated.mem = { ...(updated.mem ?? {}), primaryHobby: hobbyActivity.hobbyId }
+    // Apply stat bonuses
+    const b = hobbyActivity.statBonus ?? {}
+    const s = updated.stats
+    updated.stats = {
+      ...s,
+      happiness: Math.min(100, (s.happiness ?? 80) + (b.m ?? 0)),
+      health:    Math.min(100, (s.health    ?? 80) + (b.h ?? 0)),
+      smarts:    Math.min(100, (s.smarts    ?? 50) + (b.e ?? 0)),
+      looks:     Math.min(100, (s.looks     ?? 50) + (b.s ?? 0)),
+    }
+    const newLevel = updated.hobbies[hobbyActivity.hobbyId]
+    const tier = newLevel >= 80 ? 'master' : newLevel >= 60 ? 'expert' : newLevel >= 40 ? 'skilled' : newLevel >= 20 ? 'learning' : 'beginner'
+    updated.log = [...updated.log, { age: updated.age, text: `You practice ${hobbyActivity.hobbyId}. Skill: ${newLevel}/100 (${tier}).`, isKey: false }]
+    updated.actionsThisYear = (updated.actionsThisYear ?? 0) + 1
+    return updated
+  }
+
+  // ── Therapy booking ──────────────────────────────────────────────────────────
+  if (activityId === 'book_therapy') {
+    const cost = 120
+    if ((state.money ?? 0) < cost) {
+      return { ...state, log: [...state.log, { age: state.age, text: "You can't afford therapy right now.", isKey: false }] }
+    }
+    let updated = { ...state }
+    updated.money = (updated.money ?? 0) - cost
+    updated.mentalHealth = {
+      ...(updated.mentalHealth ?? {}),
+      therapy: true,
+      condition: updated.mentalHealth?.condition ?? null,
+    }
+    const happyBoost = updated.mentalHealth?.condition ? 6 : 4
+    updated.stats = { ...updated.stats, happiness: Math.min(100, updated.stats.happiness + happyBoost) }
+    updated.log = [...updated.log, { age: updated.age, text: 'You attend a therapy session. Progress is slow and meaningful.', isKey: false }]
+    updated.actionsThisYear = (updated.actionsThisYear ?? 0) + 1
+    return updated
+  }
+
+  // ── Debt management ──────────────────────────────────────────────────────────
+  if (activityId === 'pay_debt') {
+    if (!state.debt || state.debt <= 0) {
+      return { ...state, log: [...state.log, { age: state.age, text: 'You have no debt to pay off.', isKey: false }] }
+    }
+    const payment = Math.min(state.debt, Math.max(500, Math.round((state.money ?? 0) * 0.1)))
+    if (payment <= 0 || (state.money ?? 0) < payment) {
+      return { ...state, log: [...state.log, { age: state.age, text: "You don't have enough to make an extra payment.", isKey: false }] }
+    }
+    let updated = { ...state }
+    updated.money = (updated.money ?? 0) - payment
+    updated.debt = Math.max(0, updated.debt - payment)
+    updated.log = [...updated.log, { age: updated.age, text: `You pay $${payment.toLocaleString()} off your debt. Remaining: $${updated.debt.toLocaleString()}.`, isKey: false }]
+    updated.actionsThisYear = (updated.actionsThisYear ?? 0) + 1
+    return updated
+  }
+
+  if (activityId === 'take_loan') {
+    let updated = { ...state }
+    const maxLoan = Math.max(1000, Math.round((updated.money ?? 0) * 3 + 5000))
+    const amount = Math.min(maxLoan, 10000)
+    updated.money = (updated.money ?? 0) + amount
+    updated.debt = (updated.debt ?? 0) + amount
+    updated.mem = { ...(updated.mem ?? {}), debtType: 'personal' }
+    updated.log = [...updated.log, { age: updated.age, text: `You borrow $${amount.toLocaleString()} at 18% annual interest.`, isKey: false }]
+    updated.actionsThisYear = (updated.actionsThisYear ?? 0) + 1
+    return updated
+  }
+
+  // ── Standard activities ──────────────────────────────────────────────────────
   const allActivities = [
     ...(ACTIVITIES.mind ?? []),
     ...(ACTIVITIES.body ?? []),
@@ -703,6 +853,13 @@ export function applyActivity(state, activityId) {
   activity.effect(proxy)
   let updated = applyProxy(state, proxy)
   updated = resolveProxyExtras(updated, proxy)
+
+  // Fitness bonuses for physical activities
+  const fitnessGain = activityId === 'gym' ? 5 : activityId === 'walk' ? 2 : activityId === 'join_sports_team' ? 8 : 0
+  if (fitnessGain > 0) {
+    updated = { ...updated, fitness: clamp((updated.fitness ?? 50) + fitnessGain, 0, 100) }
+  }
+
   updated.actionsThisYear = state.actionsThisYear + 1
   updated.log = [...updated.log, { age: state.age, text: activity.outcome, isKey: false }]
   return updated
@@ -715,19 +872,38 @@ export function attemptCrime(state, crimeId) {
   if (!crime) return state
   if (crime.minAge && state.age < crime.minAge) return state
   if (crime.requiresFlag && !state.flags.includes(crime.requiresFlag)) return state
+  if (crime.requiresYear && state.currentYear < crime.requiresYear) {
+    return { ...state, log: [...state.log, { age: state.age, text: "This type of crime doesn't exist yet.", isKey: false }] }
+  }
+  if (crime.minSmarts && state.stats.smarts < crime.minSmarts) {
+    return { ...state, log: [...state.log, { age: state.age, text: "You don't have the technical knowledge for this.", isKey: false }] }
+  }
 
   const archetypeMod = crime.archetypeModifier?.[state.character.country.archetype] ?? 0
-  const arrestProb = clamp(crime.arrestRisk + archetypeMod, 0.01, 0.99)
+  // Support both old format (arrestRisk/successEffect/caughtEffect) and new format (baseSuccessRate/effect/failEffect)
+  const useNewFormat = typeof crime.effect === 'function'
+  const failProb = useNewFormat
+    ? clamp(crime.arrestRisk + archetypeMod, 0.01, 0.99)
+    : clamp(crime.arrestRisk + archetypeMod, 0.01, 0.99)
+  const successProb = useNewFormat ? (crime.baseSuccessRate ?? (1 - failProb)) : null
   let updated = { ...state, actionsThisYear: state.actionsThisYear + 1 }
 
-  if (chance(arrestProb)) {
+  // Determine outcome: for new format use baseSuccessRate; for old format use arrestRisk
+  const succeeded = useNewFormat ? chance(successProb) : !chance(failProb)
+
+  if (!succeeded) {
     const proxy = buildEffectProxy(updated)
-    crime.caughtEffect(proxy)
+    if (useNewFormat) crime.failEffect(proxy)
+    else crime.caughtEffect(proxy)
     updated = applyProxy(updated, proxy)
-    const sentence = randomBetween(crime.sentence.min, crime.sentence.max)
-    updated.criminalRecord = [...updated.criminalRecord, crime.criminalRecordEntry]
-    if (crime.addFlag) updated.flags = [...new Set([...updated.flags, crime.addFlag])]
-    if (updated.career && ['petty', 'property', 'violent', 'drug', 'organized'].includes(crime.category)) {
+    // Sentence format: old = {min, max}, new = [min, max]
+    const sentMin = Array.isArray(crime.sentence) ? crime.sentence[0] : crime.sentence.min
+    const sentMax = Array.isArray(crime.sentence) ? crime.sentence[1] : crime.sentence.max
+    const sentence = randomBetween(sentMin, sentMax)
+    if (crime.criminalRecordEntry) updated.criminalRecord = [...updated.criminalRecord, crime.criminalRecordEntry]
+    const flagToAdd = useNewFormat ? (crime.flagsAdded?.[0] ?? null) : crime.addFlag
+    if (flagToAdd) updated.flags = [...new Set([...updated.flags, flagToAdd])]
+    if (updated.career && ['petty', 'property', 'violent', 'drug', 'organized', 'financial', 'organised'].includes(crime.category)) {
       updated.log = [...updated.log, { age: state.age, text: `You are arrested for ${crime.name.toLowerCase()}. You lose your job.`, isKey: true }]
       updated.career = null
     } else {
@@ -736,13 +912,16 @@ export function attemptCrime(state, crimeId) {
     if (sentence > 0) {
       updated.inPrison = true
       updated.prisonSentence = sentence
+      updated.mem = { ...updated.mem, originalSentence: sentence, prisonYearStart: state.age }
       updated.log = [...updated.log, { age: state.age, text: `You are sentenced to ${sentence} year${sentence > 1 ? 's' : ''} in prison.`, isKey: true }]
     }
   } else {
     const proxy = buildEffectProxy(updated)
-    crime.successEffect(proxy)
+    if (useNewFormat) crime.effect(proxy)
+    else crime.successEffect(proxy)
     updated = applyProxy(updated, proxy)
-    if (crime.addFlag) updated.flags = [...new Set([...updated.flags, crime.addFlag])]
+    const flagToAdd = useNewFormat ? (crime.flagsAdded?.[0] ?? null) : crime.addFlag
+    if (flagToAdd) updated.flags = [...new Set([...updated.flags, flagToAdd])]
     updated.log = [...updated.log, { age: state.age, text: `You ${crime.name.toLowerCase()} and get away with it.`, isKey: false }]
   }
   return updated
@@ -895,7 +1074,40 @@ function checkIllnessRisk(state) {
     prob += riskCount * 0.005
     if (state.stats.health < 40) prob *= 1.5
 
+    // Comorbidity modifiers
+    if (illness.id === 'heart_disease') {
+      if (state.flags.includes('smoker')) prob *= 2.5
+      if (state.flags.includes('heavy_drinker')) prob *= 1.8
+      if (state.flags.includes('diagnosed_diabetes')) prob *= 2.0
+      if ((state.fitness ?? 50) < 30) prob *= 1.5
+    }
+    if (illness.id === 'cancer') {
+      if (state.flags.includes('smoker')) prob *= 3.0
+    }
+    if (illness.id === 'clinical_depression' || illness.id === 'anxiety_disorder') {
+      if (state.flags.includes('alcohol_addiction') || state.flags.includes('drug_addiction')) prob *= 2.0
+      if (state.regret > 70) prob *= 1.5
+    }
+    if (illness.id === 'diabetes') {
+      if ((state.fitness ?? 50) < 25) prob *= 2.0
+      if (state.stats.health < 40) prob *= 1.5
+    }
+
+    // Country healthcare quality multiplies base illness risk
+    const hcIllnessMod = { excellent: 0.7, good: 0.85, fair: 1.0, poor: 1.3, very_poor: 1.6 }
+    prob *= hcIllnessMod[state.character.country.healthcare] ?? 1.0
+
+    // Pollution exposure increases illness risk significantly
+    if (state.flags.includes('pollution_exposure')) prob *= 1.4
+
     if (!chance(prob)) continue
+
+    // Scale treatment costs to country GDP (developing-world costs are lower but so are wages)
+    const gdpCostMult = { very_high: 1.4, high: 1.1, medium_high: 0.9, medium: 0.7, low_medium: 0.5, low: 0.35, very_low: 0.2 }
+    const costMult = gdpCostMult[state.character.country.gdp] ?? 1.0
+    // Also scale treatment success by healthcare quality (poor healthcare = worse outcomes)
+    const hcSuccessMod = { excellent: 1.15, good: 1.05, fair: 1.0, poor: 0.85, very_poor: 0.7 }
+    const successMod = hcSuccessMod[state.character.country.healthcare] ?? 1.0
 
     const event = {
       id: `illness_${illness.id}_${state.age}`,
@@ -903,13 +1115,14 @@ function checkIllnessRisk(state) {
       weight: 10,
       text: `You are diagnosed with ${illness.name}.`,
       choices: illness.treatments.map(t => {
-        const willSucceed = Math.random() < t.successChance
+        const adjustedCost = Math.round(t.cost * costMult)
+        const willSucceed = Math.random() < clamp(t.successChance * successMod, 0.05, 0.98)
         return {
-          text: `${t.name}${t.cost > 0 ? ` ($${t.cost.toLocaleString()})` : ' (free)'}`,
+          text: `${t.name}${adjustedCost > 0 ? ` ($${adjustedCost.toLocaleString()})` : ' (free)'}`,
           tag: null,
           outcome: willSucceed ? t.outcomeSuccess : t.outcomeFailure,
           effect: (p) => {
-            p.mo -= t.cost
+            p.mo -= adjustedCost
             p.m += t.happinessEffect ?? 0
             if (willSucceed) {
               p.h += Math.abs(t.healthEffect ?? 0)
@@ -1006,15 +1219,65 @@ export function tick(state) {
     if (remaining <= 0) {
       s.inPrison = false; s.prisonSentence = 0
       s.log = [...s.log, { age: s.age, text: 'You are released from prison.', isKey: true }]
+      // Parole event — queue if sentence was long
+      if ((s.mem?.originalSentence ?? 0) >= 3) {
+        s.queue = [...s.queue, {
+          id: `prison_parole_release_${s.age}`,
+          phase: getPhase(s.age),
+          text: 'You walk out of the gates. The sunlight feels wrong — too bright, too open. Reintegration begins now.',
+          choices: [
+            { text: 'Find work and start over', tag: 'determined', outcome: 'The record follows you everywhere. But you keep applying.', effect: (p) => { p.m += 8; p.e += 5; p.addFlag('determined_student'); }, inject: null },
+            { text: 'Reconnect with old contacts', tag: null, outcome: 'Some are glad to see you. Some pull you back toward the life you tried to leave.', effect: (p) => { p.m += 4; p.karma -= 5; }, inject: null },
+          ],
+          effect: null,
+          when: () => true,
+        }]
+      }
     } else {
       s.prisonSentence = remaining
-      s.log = [...s.log, { age: s.age, text: `Another year behind bars. ${remaining} year${remaining === 1 ? '' : 's'} remain.`, isKey: false }]
+      // Queue a prison event roughly every other year
+      const prisonEvent = getNextEvent(s)
+      if (prisonEvent) {
+        if (s.queue.some(e => e.id === prisonEvent.id)) s.queue = s.queue.filter(e => e.id !== prisonEvent.id)
+        s.usedEventIds = new Set([...s.usedEventIds, prisonEvent.id])
+        if (!prisonEvent.choices || prisonEvent.choices.length === 0) {
+          const proxy = buildEffectProxy(s)
+          if (prisonEvent.effect) prisonEvent.effect(proxy)
+          s = applyProxy(s, proxy)
+          s = resolveProxyExtras(s, proxy)
+          s.log = [...s.log, { age: s.age, text: typeof prisonEvent.text === 'function' ? prisonEvent.text(buildG(s)) : prisonEvent.text, isKey: false }]
+        } else {
+          s.pendingEvent = prisonEvent
+          return s
+        }
+      } else {
+        s.log = [...s.log, { age: s.age, text: `Another year behind bars. ${remaining} year${remaining === 1 ? '' : 's'} remain.`, isKey: false }]
+      }
     }
     return s
   }
 
   // Natural aging
   s = applyNaturalAging(s)
+
+  // Debt interest accrual
+  if (s.debt > 0) {
+    const interestRate = (s.mem?.debtType === 'mortgage') ? 0.06 : 0.18
+    const interest = Math.round(s.debt * interestRate)
+    s.debt = s.debt + interest
+    s.money = (s.money ?? 0) - Math.round(s.debt * 0.05) // minimum payment
+    if (s.money < -50000) {
+      s.flags = [...new Set([...s.flags, 'bankrupt'])]
+      s.debt = 0
+      s.money = -5000
+      s.creditScore = Math.max(300, (s.creditScore ?? 700) - 200)
+      s.log = [...s.log, { age: s.age, text: 'You are declared bankrupt. A relief and a shame at once.', isKey: true }]
+    }
+  }
+  // Credit score slow recovery
+  if (!s.debt && (s.creditScore ?? 700) < 800) {
+    s.creditScore = Math.min(800, (s.creditScore ?? 700) + 2)
+  }
 
   // Parent aging and possible inheritance
   s = tickParents(s)
@@ -1205,16 +1468,20 @@ export function tick(state) {
   if (s.queue.some(e => e.id === event.id)) s.queue = s.queue.filter(e => e.id !== event.id)
   s.usedEventIds = new Set([...s.usedEventIds, event.id])
 
-  if (!event.choices || event.choices.length === 0) {
+  // Resolve function text so EventBox and logs always receive strings
+  const resolvedText = typeof event.text === 'function' ? event.text(buildG(s)) : (event.text ?? '')
+  const resolvedEvent = resolvedText !== event.text ? { ...event, text: resolvedText } : event
+
+  if (!resolvedEvent.choices || resolvedEvent.choices.length === 0) {
     const proxy = buildEffectProxy(s)
-    if (event.effect) event.effect(proxy)
+    if (resolvedEvent.effect) resolvedEvent.effect(proxy)
     s = applyProxy(s, proxy)
     s = resolveProxyExtras(s, proxy)
-    s.log = [...s.log, { age: s.age, text: event.text, isKey: false }]
+    s.log = [...s.log, { age: s.age, text: resolvedText, isKey: resolvedEvent.isKey ?? false }]
     return s
   }
 
-  s.pendingEvent = event
+  s.pendingEvent = resolvedEvent
   return s
 }
 
@@ -1230,7 +1497,8 @@ export function resolveChoice(state, choiceIndex) {
   s = resolveProxyExtras(s, proxy)
   if (choice.tag) s.flags = [...new Set([...s.flags, choice.tag])]
   if (choice.inject) s.queue = [...s.queue, choice.inject]
-  s.log = [...s.log, { age: state.age, text: `${pendingEvent.text.slice(0, 80)}… — ${choice.outcome}`, isKey: true }]
+  const evtText = typeof pendingEvent.text === 'function' ? pendingEvent.text(buildG(state)) : (pendingEvent.text ?? '')
+  s.log = [...s.log, { age: state.age, text: `${evtText.slice(0, 80)}… — ${choice.outcome}`, isKey: true }]
   s.pendingEvent = null
   return s
 }
@@ -1657,7 +1925,7 @@ export function goToRehab(state) {
   return {
     ...state,
     money: (state.money ?? 0) - cost,
-    flags: [...new Set([...newFlags, 'rehab_graduate'])],
+    flags: [...new Set([...newFlags, 'rehab_graduate', 'in_recovery'])],
     stats: { ...state.stats, happiness: clamp(state.stats.happiness + 12, 0, 100), health: clamp(state.stats.health + 8, 0, 100) },
     actionsThisYear: state.actionsThisYear + 1,
     log: [...state.log, { age: state.age, text: `You complete a stint in rehab. Cost: $${cost.toLocaleString()}. You feel genuinely renewed.`, isKey: true }],

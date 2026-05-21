@@ -7,6 +7,7 @@ import { getAvailableCareers, dropOutOfSchool } from '../engine/gameEngine'
 
 const TOP_CATEGORIES = [
   { key: 'mind_body',     label: 'Mind & Body',     emoji: '🧘', desc: 'Work on yourself' },
+  { key: 'hobbies',       label: 'Hobbies',          emoji: '🎸', desc: 'Practice skills and creative pursuits' },
   { key: 'education',     label: 'Education',        emoji: '📚', desc: 'Study and learn' },
   { key: 'love',          label: 'Love',             emoji: '❤️',  desc: 'Relationships' },
   { key: 'fertility',     label: 'Fertility',        emoji: '👶', desc: 'Family planning' },
@@ -99,6 +100,7 @@ export default function ActivitiesPanel({ onClose }) {
   const dropOutOfSchool    = useGameStore(s => s.dropOutOfSchool)
   const abandonChild       = useGameStore(s => s.abandonChild)
   const useSubstance       = useGameStore(s => s.useSubstance)
+  const triggerMinigame    = useGameStore(s => s.triggerMinigame)
 
   const actionsLeft = state.maxActionsPerYear - state.actionsThisYear
   const noActions = actionsLeft <= 0
@@ -133,6 +135,8 @@ export default function ActivitiesPanel({ onClose }) {
             {state.age >= 14 && <Btn disabled={noActions} onClick={() => go(() => takeActivity('diet'))} title="Go on a Diet" subtitle="Improve your health and appearance." />}
             {/* Gardening */}
             {state.age >= 10 && <Btn disabled={noActions} onClick={() => go(() => takeActivity('gardening'))} title="Gardening" subtitle="Get your hands in the earth." />}
+            {/* Therapy */}
+            {state.age >= 16 && <Btn disabled={noActions} onClick={() => go(() => takeActivity('book_therapy'))} title="🛋️ Book Therapy" subtitle="Address your mental health with a professional." cost="$120" />}
             {/* Martial Arts */}
             {state.age >= 12 && (
               <>
@@ -532,10 +536,46 @@ export default function ActivitiesPanel({ onClose }) {
             if (!crime) return null
             if (crime.requiresFlag && !state.flags.includes(crime.requiresFlag)) return null
             const canAfford = !crime.wealthRequirement || state.character?.wealthTier >= crime.wealthRequirement
+            const handleCrime = () => {
+              if (crime.minigame) {
+                onClose()
+                triggerMinigame({
+                  ...crime.minigame,
+                  onSuccess: {
+                    outcome: crime.minigame.successOutcome ?? 'You pull it off.',
+                    effect: (s) => {
+                      const next = { ...s }
+                      next.money = (next.money ?? 0) + (crime.incomeEstimate ?? 0)
+                      next.karma = Math.max(0, (next.karma ?? 50) + (crime.karmaHit ?? -10))
+                      next.log = [...(next.log ?? []), { age: s.age, text: `You committed ${crime.name}.`, isKey: true }]
+                      return next
+                    },
+                  },
+                  onFailure: {
+                    outcome: crime.minigame.failOutcome ?? 'You are caught.',
+                    effect: (s) => {
+                      const sentence = Array.isArray(crime.sentence)
+                        ? crime.sentence[0] + Math.floor(Math.random() * (crime.sentence[1] - crime.sentence[0]))
+                        : (crime.sentence ?? 1)
+                      return {
+                        ...s,
+                        inPrison: true,
+                        prisonSentence: sentence,
+                        criminalRecord: [...(s.criminalRecord ?? []), crime.name],
+                        log: [...(s.log ?? []), { age: s.age, text: `Arrested for ${crime.name}. Sentenced to ${sentence} year${sentence !== 1 ? 's' : ''}.`, isKey: true }],
+                      }
+                    },
+                  },
+                })
+              } else {
+                go(() => commitCrime(crime.id))
+              }
+            }
             return (
               <Btn key={crime.id} disabled={noActions || !canAfford}
-                onClick={() => go(() => commitCrime(crime.id))}
-                title={crime.name} subtitle={crime.description}
+                onClick={handleCrime}
+                title={`${crime.minigame ? '🎮 ' : ''}${crime.name}`}
+                subtitle={crime.description}
                 cost={`Arrest risk: ${Math.round(crime.arrestRisk * 100)}%`}
                 danger />
             )
@@ -643,6 +683,24 @@ export default function ActivitiesPanel({ onClose }) {
             )}
           </>
         )
+      }
+
+      case 'hobbies': {
+        const hobbyActivities = ACTIVITIES.hobbies ?? []
+        return hobbyActivities
+          .filter(a => {
+            if (a.minAge && state.age < a.minAge) return false
+            if (a.minYear && (state.currentYear ?? 0) < a.minYear) return false
+            return true
+          })
+          .map(a => (
+            <Btn key={a.id} disabled={noActions}
+              onClick={() => go(() => takeActivity(a.id))}
+              title={`${a.emoji} ${a.label}`}
+              subtitle={a.desc}
+              cost={a.cost > 0 ? `$${a.cost}` : 'Free'}
+            />
+          ))
       }
 
       default:

@@ -5,6 +5,7 @@ import {
   deriveInitialMoney,
   deriveInitialParents,
   deriveInitialSiblings,
+  deriveBirthText,
   tick,
   resolveChoice,
   applyActivity,
@@ -54,6 +55,7 @@ import {
   useSubstance,
 } from '../engine/gameEngine'
 import { COUNTRIES } from '../data/countries'
+import { CRIMES } from '../data/crimes'
 
 const INITIAL_STATE = {
   screen: 'title',
@@ -86,6 +88,8 @@ const INITIAL_STATE = {
   epitaph: '',
   money: 0,
   debt: 0,
+  creditScore: 700,
+  fitness: 50,
   hooksUpCount: 0,
   parents: null,
   karma: 50,
@@ -100,6 +104,9 @@ const INITIAL_STATE = {
   martialArts: { discipline: null, belt: 0 },
   birthControl: false,
   gpa: null,
+  mentalHealth: { condition: null, medicating: false, therapy: false },
+  hobbies: {},
+  pendingMinigame: null,
 }
 
 export const useGameStore = create((set, get) => ({
@@ -156,8 +163,8 @@ export const useGameStore = create((set, get) => ({
       log: [
         {
           age: 0,
-          text: `${character.firstName} ${character.surname} enters the world in ${character.country.name}, ${character.birthYear}.`,
-          isKey: false,
+          text: deriveBirthText(character),
+          isKey: true,
         },
       ],
       career: null,
@@ -189,6 +196,11 @@ export const useGameStore = create((set, get) => ({
       martialArts: { discipline: null, belt: 0 },
       birthControl: false,
       gpa: initialGpa,
+      mentalHealth: { condition: null, medicating: false, therapy: false },
+      hobbies: {},
+      fitness: 50,
+      creditScore: 700,
+      pendingMinigame: null,
     })
   },
 
@@ -196,7 +208,7 @@ export const useGameStore = create((set, get) => ({
 
   ageUp: () => {
     const state = get()
-    if (state.pendingEvent || state.dead) return
+    if (state.pendingEvent || state.dead || state.pendingMinigame) return
     const next = tick({ ...state, lastOutcome: null })
     if (next.screen === 'death') {
       const epitaph = generateEpitaph(next)
@@ -210,6 +222,44 @@ export const useGameStore = create((set, get) => ({
     const state = get()
     if (!state.pendingEvent) return
     const choice = state.pendingEvent.choices?.[choiceIndex]
+
+    // If this choice has a minigame, apply any immediate effect then launch the game
+    if (choice?.minigame) {
+      // Apply the choice's pre-minigame effect (e.g. setting mem flags)
+      const preState = choice.effect ? (() => {
+        const next = resolveChoice(state, choiceIndex)
+        return { ...next, pendingEvent: state.pendingEvent } // keep event alive for logging
+      })() : state
+
+      const mg = choice.minigame
+      set({
+        ...preState,
+        pendingEvent: null,
+        pendingMinigame: {
+          ...mg,
+          onSuccess: {
+            outcome: mg.successOutcome ?? 'Success.',
+            effect: (s) => {
+              const next = { ...s }
+              if (mg.karmaHit) next.karma = Math.max(0, Math.min(100, (next.karma ?? 50) + mg.karmaHit))
+              next.log = [...(next.log ?? []), { age: s.age, text: mg.successOutcome ?? 'Success.', isKey: true }]
+              return next
+            },
+          },
+          onFailure: {
+            outcome: mg.failOutcome ?? 'Failed.',
+            effect: (s) => {
+              const next = { ...s }
+              next.stats = { ...next.stats, health: Math.max(0, (next.stats?.health ?? 80) - 10), happiness: Math.max(0, (next.stats?.happiness ?? 80) - 8) }
+              next.log = [...(next.log ?? []), { age: s.age, text: mg.failOutcome ?? 'Failed.', isKey: true }]
+              return next
+            },
+          },
+        },
+      })
+      return
+    }
+
     const next = resolveChoice(state, choiceIndex)
     set({ ...next, lastOutcome: choice?.outcome ?? null })
   },
@@ -223,8 +273,27 @@ export const useGameStore = create((set, get) => ({
 
   commitCrime: (crimeId) => {
     const state = get()
-    if (state.pendingEvent || state.dead) return
+    if (state.pendingEvent || state.dead || state.pendingMinigame) return
     const next = attemptCrime(state, crimeId)
+    set(next)
+  },
+
+  triggerMinigame: (config) => {
+    // config: { type, difficulty, title, description, onSuccess, onFailure, skipable? }
+    // onSuccess/onFailure: { effect: (state) => nextState, outcome: string }
+    set({ pendingMinigame: config })
+  },
+
+  resolveMinigame: (success) => {
+    const state = get()
+    const mg = state.pendingMinigame
+    if (!mg) return
+    const result = success ? mg.onSuccess : mg.onFailure
+    const outcome = typeof result?.outcome === 'string' ? result.outcome : (success ? 'You succeeded.' : 'You failed.')
+    const base = { ...state, pendingMinigame: null }
+    let next = result?.effect ? result.effect(base) : base
+    next = { ...next, pendingMinigame: null, lastOutcome: outcome }
+    if (outcome) next.log = [...(next.log ?? []), { age: next.age, text: outcome.slice(0, 120), isKey: true }]
     set(next)
   },
 

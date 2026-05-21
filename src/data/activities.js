@@ -326,6 +326,17 @@ export const ACTIVITIES = {
       outcome: 'You leave understanding something you could not name before.',
     },
     {
+      id: 'book_therapy',
+      name: 'Book Therapy',
+      description: 'Address your mental health with a professional.',
+      minAge: 16,
+      maxAge: null,
+      cost: 120,
+      effect: (p) => { p.m += 6; p.addFlag('therapy_veteran'); },
+      condition: null,
+      outcome: 'Progress is slow and meaningful.',
+    },
+    {
       id: 'date_night',
       name: 'Invest in your relationship',
       description: 'Make deliberate effort with your partner.',
@@ -555,6 +566,28 @@ export const ACTIVITIES = {
       condition: null,
       outcome: 'The wheel has no memory.',
     },
+    {
+      id: 'pay_debt',
+      name: 'Pay Off Debt',
+      description: 'Make an extra debt payment beyond the minimum.',
+      minAge: 18,
+      maxAge: null,
+      cost: 0,
+      effect: (p) => {},
+      condition: null,
+      outcome: 'You chip away at what you owe.',
+    },
+    {
+      id: 'take_loan',
+      name: 'Take Out Loan',
+      description: 'Borrow money — 18% annual interest.',
+      minAge: 18,
+      maxAge: null,
+      cost: 0,
+      effect: (p) => {},
+      condition: null,
+      outcome: 'The money arrives. The interest begins immediately.',
+    },
   ],
 
   crime: [
@@ -584,6 +617,18 @@ export const ACTIVITIES = {
     { crimeId: 'black_market', label: 'Black market trading', minAge: 18 },
     { crimeId: 'political_dissent', label: 'Engage in political dissent', minAge: 18 },
     { crimeId: 'corporate_fraud', label: 'Corporate fraud', minAge: 30 },
+  ],
+
+  hobbies: [
+    { id: 'practice_music',   label: 'Practice Music',   emoji: '🎸', desc: 'Develop your musical skills.', minAge: 5,  cost: 0,    hobbyId: 'music',   delta: 8,  statBonus: { m: 4 } },
+    { id: 'practice_art',     label: 'Draw / Paint',     emoji: '🎨', desc: 'Develop your artistic skills.', minAge: 5,  cost: 0,    hobbyId: 'art',     delta: 8,  statBonus: { m: 4, e: 2 } },
+    { id: 'practice_writing', label: 'Write',            emoji: '✍️', desc: 'Work on your writing.', minAge: 8,  cost: 0,    hobbyId: 'writing', delta: 8,  statBonus: { e: 4 } },
+    { id: 'practice_cooking', label: 'Cook Something',   emoji: '🍳', desc: 'Experiment in the kitchen.', minAge: 12, cost: 20,   hobbyId: 'cooking', delta: 8,  statBonus: { m: 5, h: 2 } },
+    { id: 'practice_coding',  label: 'Code a Project',   emoji: '💻', desc: 'Build something with code.', minAge: 14, cost: 0,    hobbyId: 'coding',  delta: 10, statBonus: { e: 5 }, minYear: 1990 },
+    { id: 'practice_sport',   label: 'Train Sport',      emoji: '⚽', desc: 'Physical training and practice.', minAge: 6,  cost: 0,    hobbyId: 'sport',   delta: 8,  statBonus: { h: 5, s: 2 } },
+    { id: 'music_lesson',     label: 'Music Lesson',     emoji: '🎹', desc: 'Professional tuition — costs money but doubles progress.', minAge: 5,  cost: 80,   hobbyId: 'music',   delta: 18, statBonus: { m: 5, e: 3 } },
+    { id: 'art_class',        label: 'Art Class',        emoji: '🖼️', desc: 'Structured tuition — faster skill growth.', minAge: 8,  cost: 60,   hobbyId: 'art',     delta: 16, statBonus: { m: 5 } },
+    { id: 'writing_workshop', label: 'Writing Workshop',  emoji: '📝', desc: 'Workshop with peer feedback.', minAge: 16, cost: 100,  hobbyId: 'writing', delta: 16, statBonus: { e: 6 } },
   ],
 
   appearance: [

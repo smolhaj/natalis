@@ -2438,4 +2438,4694 @@ export const EVENTS = [
     ],
     effect: null,
   },
+
+  // ── GRIEF ARC ─────────────────────────────────────────────────────────────
+  {
+    id: 'parent_death_young',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) => G.age >= 13 && G.age <= 17 && !G.flags.includes('orphan') && Math.random() < 0.08,
+    text: 'Your parent dies. The circumstances vary — illness, accident, violence — but the fact is the same. The person who was supposed to be there is not.',
+    choices: null,
+    effect: (p) => { p.m -= 20; p.h -= 8; p.r += 10; p.addFlag('orphan'); p.addFlag('early_grief'); p.setMem('parentDied', true) },
+  },
+  {
+    id: 'parent_death_adult',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) => G.age >= 22 && G.age <= 35 && !G.flags.includes('orphan') && !G.mem.parentDied && Math.random() < 0.07,
+    text: 'You get the call. Your parent is gone. You knew it would happen someday. It still feels like the floor has dropped away.',
+    choices: [
+      { text: 'Take time to grieve properly', tag: null, outcome: 'You take leave. You allow yourself to feel it.', effect: (p) => { p.m -= 15; p.r += 6; p.addFlag('processed_grief') }, inject: null },
+      { text: 'Keep working, keep moving', tag: null, outcome: 'Grief waits. It finds you later, in stranger moments.', effect: (p) => { p.m -= 8; p.r += 12; p.h -= 4 }, inject: null },
+    ],
+    effect: (p) => { p.setMem('parentDied', true) },
+  },
+  {
+    id: 'grief_anniversary',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.mem.parentDied && G.age >= 30 && !G.flags.includes('found_meaning'),
+    text: 'The anniversary of their death arrives quietly. You find yourself doing something they used to do — a gesture, a recipe, a phrase — and for a moment they are not gone.',
+    choices: null,
+    effect: (p) => { p.m += 5; p.addFlag('found_meaning') },
+  },
+  {
+    id: 'spouse_death',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) => G.partner && G.age >= 58 && Math.random() < 0.12,
+    text: 'Your partner of many years dies. The house is very quiet. Everything reminds you of them.',
+    choices: [
+      { text: 'Lean on family and friends', tag: null, outcome: 'You are not alone. That is not nothing.', effect: (p) => { p.m -= 20; p.r += 8; p.clearPartner() }, inject: null },
+      { text: 'Grieve in solitude', tag: null, outcome: 'The grief is entirely yours. It does not share itself.', effect: (p) => { p.m -= 28; p.h -= 6; p.r += 15; p.clearPartner() }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'child_predeceases',
+    phase: 'late_life',
+    weight: 1,
+    when: (G) => G.children.length > 0 && G.age >= 55 && Math.random() < 0.04,
+    text: 'No parent expects to outlive their child. The grief is a different category. It does not follow normal rules.',
+    choices: null,
+    effect: (p) => { p.m -= 30; p.h -= 10; p.r += 20; p.addFlag('child_loss') },
+  },
+
+  // ── THERAPY SYSTEM ────────────────────────────────────────────────────────
+  {
+    id: 'ya_therapy_start',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) => G.stats.happiness < 45 && G.money >= 500 && !G.flags.includes('in_therapy') && G.age >= 20,
+    text: 'A friend suggests therapy. You\'ve been deflecting the idea for a long time. Something about this moment makes you finally consider it.',
+    choices: [
+      { text: 'Make an appointment', tag: null, outcome: 'The first session is awkward. The second is less so.', effect: (p) => { p.addFlag('in_therapy'); p.mo -= 600; p.m += 4 }, inject: null },
+      { text: 'You don\'t need it — you\'re fine', tag: null, outcome: 'You are not fine. But the appointment waits.', effect: (p) => { p.m -= 2 }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'ya_therapy_progress',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.flags.includes('in_therapy') && G.age >= 22,
+    text: 'The therapist asks about your childhood. You give a version of the answer. Then she asks you to say what actually happened.',
+    choices: [
+      { text: 'Tell the truth — all of it', tag: null, outcome: 'Something releases. It does not disappear, but it loosens.', effect: (p) => { p.r -= 10; p.m += 8; p.addFlag('emotionally_honest'); p.mo -= 800 }, inject: null },
+      { text: 'Keep the edited version', tag: null, outcome: 'The sessions continue. The real work is postponed.', effect: (p) => { p.m += 2; p.mo -= 800 }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mid_therapy_breakthrough',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.flags.includes('in_therapy') && (G.flags.includes('abused_child') || G.flags.includes('early_grief')) && G.age >= 32,
+    text: 'Your therapist says something that reframes the last thirty years. You sit with it for a long time after the session ends.',
+    choices: null,
+    effect: (p) => { p.r -= 15; p.m += 12; p.addFlag('processed_grief'); p.addFlag('acceptance') },
+  },
+  {
+    id: 'mid_therapy_long_term',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.flags.includes('in_therapy') && G.age >= 40 && G.regret > 20,
+    text: 'Years of therapy. You are not fixed — that was never the point. But you are less afraid of yourself than you used to be.',
+    choices: [
+      { text: 'Continue — it\'s still working', tag: null, outcome: 'The work is long. You keep doing it.', effect: (p) => { p.r -= 8; p.m += 5; p.mo -= 1200 }, inject: null },
+      { text: 'Take a break — you feel stable', tag: null, outcome: 'You know how to return if you need to.', effect: (p) => { p.r -= 4; p.m += 3 }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // ── CHRONIC ILLNESS ───────────────────────────────────────────────────────
+  {
+    id: 'ya_chronic_illness_diagnosis',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.age >= 20 && G.stats.health < 60 && !G.flags.includes('chronic_illness') && Math.random() < 0.06,
+    text: 'The doctor gives your symptoms a name. A chronic condition — manageable, but lifelong. You leave the clinic holding a leaflet that rewrites your future.',
+    choices: [
+      { text: 'Accept it and adapt', tag: null, outcome: 'You restructure your life around the new reality.', effect: (p) => { p.h -= 8; p.addFlag('chronic_illness'); p.addFlag('health_conscious') }, inject: null },
+      { text: 'Ignore it — you\'ll manage somehow', tag: null, outcome: 'The condition doesn\'t care whether you\'re ready.', effect: (p) => { p.h -= 15; p.addFlag('chronic_illness') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mid_chronic_illness_flare',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) => G.flags.includes('chronic_illness') && G.age >= 30,
+    text: 'A flare-up. The condition that usually stays in the background pushes itself forward. You cancel everything for a week.',
+    choices: [
+      { text: 'Rest fully and recover properly', tag: null, outcome: 'It passes. You lose time, but you recover.', effect: (p) => { p.h -= 5; p.m -= 6; p.mo -= 400 }, inject: null },
+      { text: 'Push through — you can\'t afford to stop', tag: null, outcome: 'The flare worsens. The recovery takes three weeks.', effect: (p) => { p.h -= 12; p.m -= 10; p.mo -= 200 }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_chronic_illness_management',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.flags.includes('chronic_illness') && G.age >= 55,
+    text: 'After decades with the condition, you have learned more about your body than most people ever know about their own. It has cost you. It has also taught you.',
+    choices: null,
+    effect: (p) => { p.m += 6; p.addFlag('health_conscious'); p.addFlag('acceptance') },
+  },
+
+  // ── ESTRANGEMENT ──────────────────────────────────────────────────────────
+  {
+    id: 'ya_family_estrangement',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => (G.flags.includes('abused_child') || G.flags.includes('domestic_violence_home')) && G.age >= 19 && !G.flags.includes('estranged_family'),
+    text: 'You realize you don\'t have to see them. This is a thought you have never fully allowed yourself before. They are family. They are also the source of harm.',
+    choices: [
+      { text: 'Cut contact — protect yourself', tag: null, outcome: 'The silence is strange, then peaceful, then grief-like — for the family you did not have.', effect: (p) => { p.m += 10; p.r += 8; p.addFlag('estranged_family') }, inject: null },
+      { text: 'Maintain contact but set limits', tag: null, outcome: 'The limits are tested constantly. Some hold.', effect: (p) => { p.m -= 5; p.addFlag('guarded_heart') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mid_estrangement_decision',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.flags.includes('estranged_family') && G.age >= 35 && !G.flags.includes('reconciled_family'),
+    text: 'A sibling reaches out. There is talk of reconciliation. The old person is apparently changed. You don\'t know if you believe it.',
+    choices: [
+      { text: 'Attempt cautious reconnection', tag: null, outcome: 'Some things are repaired. Others are not. The attempt matters.', effect: (p) => { p.m += 5; p.r -= 5; p.addFlag('reconciled_family') }, inject: null },
+      { text: 'Maintain the distance you earned', tag: null, outcome: 'You protect what you built. There is no obligation to forgive what was not asked for.', effect: (p) => { p.m += 4 }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // ── LEGACY / CHILDREN IN OLD AGE ─────────────────────────────────────────
+  {
+    id: 'late_children_support',
+    phase: 'late_life',
+    weight: 5,
+    when: (G) => G.children.length > 0 && G.age >= 65 && G.flags.includes('cared_for_children') && !G.flags.includes('legacy_support'),
+    text: 'Your children are adults with children of their own now. They call to check in. Sometimes they visit. The relationship you built shows up in ways you didn\'t expect.',
+    choices: null,
+    effect: (p) => { p.m += 15; p.r -= 8; p.addFlag('legacy_support'); p.addFlag('grandparent') },
+  },
+  {
+    id: 'late_children_absent',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) => G.children.length > 0 && G.age >= 65 && !G.flags.includes('cared_for_children') && !G.flags.includes('legacy_support'),
+    text: 'Your children are busy. The calls are infrequent. You understand — you were the same at their age. Still, the evenings are long.',
+    choices: [
+      { text: 'Reach out to rebuild connection', tag: null, outcome: 'It is not too late. It just takes longer now.', effect: (p) => { p.m += 6; p.r -= 4; p.addFlag('legacy_support') }, inject: null },
+      { text: 'Accept the distance as the consequence', tag: null, outcome: 'Some debts compound quietly.', effect: (p) => { p.m -= 8; p.r += 10 }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_deadbeat_reckoning',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.flags.includes('deadbeat_parent') && G.age >= 60,
+    text: 'Your child — now an adult — finds you. They do not come to reconnect. They come with questions that do not have good answers.',
+    choices: [
+      { text: 'Face them honestly — all of it', tag: null, outcome: 'They may not forgive you. You give them the truth instead.', effect: (p) => { p.r -= 10; p.m -= 10; p.addFlag('emotionally_honest') }, inject: null },
+      { text: 'Deflect, minimize, disappear again', tag: null, outcome: 'They stop looking. The regret compounds.', effect: (p) => { p.r += 20; p.m -= 15 }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // ── FOOD INSECURITY ───────────────────────────────────────────────────────
+  {
+    id: 'ch_food_insecurity',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) => G.stats.wealth < 25 && G.character.country.archetype === 'subsaharan' && G.age >= 6 && !G.flags.includes('hunger_childhood'),
+    text: 'There is not always enough food. You learn to eat quickly when there is food, and to say nothing when there is not. Hunger becomes familiar.',
+    choices: null,
+    effect: (p) => { p.h -= 8; p.m -= 6; p.addFlag('hunger_childhood') },
+  },
+  {
+    id: 'ya_food_insecurity_adult',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.money < 200 && G.stats.wealth < 20 && G.age >= 18 && (G.character.country.archetype === 'developing_unstable' || G.character.country.archetype === 'subsaharan'),
+    text: 'At the end of the month, there is nothing left for food. You eat what you can. You pretend to others that you are fine.',
+    choices: [
+      { text: 'Seek food assistance', tag: null, outcome: 'The humiliation is real. So is the food.', effect: (p) => { p.h += 3; p.m -= 5 }, inject: null },
+      { text: 'Manage alone — pride first', tag: null, outcome: 'You are thinner than you should be. Your thinking slows.', effect: (p) => { p.h -= 6; p.e -= 3; p.m -= 6 }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // ── LGBTQ+ UNDER CRIMINALIZATION ─────────────────────────────────────────
+  {
+    id: 'ad_lgbtq_criminalized',
+    phase: 'adolescence',
+    weight: 2,
+    when: (G) => G.age >= 14 && ['Nigeria','Saudi Arabia','Iran','Afghanistan','Somalia','Yemen'].includes(G.character.country.name) && Math.random() < 0.05,
+    text: 'You understand something about yourself that this place has no room for. The law makes it a crime. The culture makes it a death. You keep this entirely to yourself.',
+    choices: [
+      { text: 'Suppress it completely to survive', tag: null, outcome: 'You become skilled at performing a version of yourself that is safe.', effect: (p) => { p.m -= 15; p.addFlag('learned_silence'); p.addFlag('guarded_heart') }, inject: null },
+      { text: 'Confide in one trusted person', tag: null, outcome: 'The risk is enormous. For now, you are not entirely alone.', effect: (p) => { p.m -= 5; p.addFlag('has_close_friend') }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // ── TIME-PERIOD FLAVOR ────────────────────────────────────────────────────
+  {
+    id: 'ch_polio_era',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) => G.currentYear >= 1950 && G.currentYear <= 1963 && G.age >= 4 && G.age <= 12 && ['wealthy_west'].includes(G.character.country.archetype),
+    text: 'Summer means polio warnings. Parents keep children from public pools. A neighborhood child gets it. Everyone holds their breath.',
+    choices: null,
+    effect: (p) => { p.h -= 4; p.m -= 5; p.addFlag('polio_era') },
+  },
+  {
+    id: 'ch_cold_war_drills',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.currentYear >= 1952 && G.currentYear <= 1985 && G.age >= 6 && G.age <= 14 && ['wealthy_west', 'post_soviet'].includes(G.character.country.archetype),
+    text: 'The teacher tells you to get under your desk and cover your head. You know — everyone knows — this would not actually help. You do it anyway.',
+    choices: null,
+    effect: (p) => { p.m -= 6; p.addFlag('cold_war_generation') },
+  },
+  {
+    id: 'ya_no_internet_era',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.currentYear >= 1975 && G.currentYear <= 1993 && G.age >= 18 && G.age <= 28,
+    text: 'Everything moves slowly. Letters take days. Research means a library. Job listings are in the newspaper. The world is smaller and more local because of it.',
+    choices: [
+      { text: 'Use the library — become well-read', tag: null, outcome: 'Without distraction, you read everything you can get your hands on.', effect: (p) => { p.e += 5; p.addFlag('bookworm') }, inject: null },
+      { text: 'Make do with what\'s available', tag: null, outcome: 'Information is scarce. You rely on people more than data.', effect: (p) => { p.e += 2 }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'ya_mobile_phone_arrives',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.currentYear >= 1996 && G.currentYear <= 2001 && G.age >= 16 && G.age <= 30 && ['wealthy_west', 'wealthy_east', 'developing_urban'].includes(G.character.country.archetype),
+    text: 'You get your first mobile phone. A brick-like thing. You can call people from anywhere. This feels like science fiction made ordinary.',
+    choices: null,
+    effect: (p) => { p.m += 5; p.addFlag('internet_generation') },
+  },
+  {
+    id: 'ch_green_revolution',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) => G.currentYear >= 1965 && G.currentYear <= 1975 && G.age >= 6 && G.age <= 14 && ['India', 'Pakistan', 'Bangladesh', 'Vietnam', 'Philippines', 'Indonesia'].includes(G.character.country.name),
+    text: 'New seed varieties and irrigation transform farming in the region. Food becomes more available than it was for your parents. The difference is visible in the faces of children.',
+    choices: null,
+    effect: (p) => { p.h += 5; p.w += 4 },
+  },
+  {
+    id: 'ad_aids_awareness_1980s',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) => G.currentYear >= 1985 && G.currentYear <= 1995 && G.age >= 14 && G.age <= 17 && ['wealthy_west'].includes(G.character.country.archetype),
+    text: 'A disease called AIDS is in the news, then everywhere. Sex education changes overnight. Some people you know start dying, or know people who are.',
+    choices: null,
+    effect: (p) => { p.m -= 5; p.addFlag('aids_generation') },
+  },
+  {
+    id: 'ya_internet_dot_com',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.currentYear >= 1998 && G.currentYear <= 2002 && G.age >= 18 && G.age <= 32 && ['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype),
+    text: 'Everyone is starting a dotcom. Money is flowing. Your friends are getting rich or pretending to. The bubble feels permanent.',
+    choices: [
+      { text: 'Invest — get in while it\'s rising', tag: null, outcome: 'You make money, then lose most of it when it crashes.', effect: (p) => { p.w += 5; p.mo += 3000 }, inject: null },
+      { text: 'Stay cautious — something feels wrong', tag: null, outcome: 'The bubble bursts. You watch others scramble while you stay stable.', effect: (p) => { p.m += 3; p.e += 2 }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mid_9_11_aftermath',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.currentYear >= 2001 && G.currentYear <= 2004 && G.age >= 25 && ['wealthy_west'].includes(G.character.country.archetype),
+    text: 'Everything at airports is different now. Security theater becomes a permanent feature of travel. The country you live in is afraid, and that fear has decided things.',
+    choices: null,
+    effect: (p) => { p.m -= 5 },
+  },
+
+  // ── ARRANGED MARRIAGE ─────────────────────────────────────────────────────
+  {
+    id: 'ya_arranged_marriage',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.age >= 18 && G.age <= 24 && !G.partner && ['India','Pakistan','Bangladesh','Afghanistan','Saudi Arabia','UAE'].includes(G.character.country.name) && G.character.familyStability !== 'unstable',
+    text: 'Your family has found someone. They are from a good family. You have met once, briefly. The arrangements are nearly complete.',
+    choices: [
+      { text: 'Accept the match', tag: null, outcome: 'You enter the marriage. Whether it becomes something good depends on what you both make of it.', effect: (p) => { p.addFlag('early_marriage'); p.m -= 3 }, inject: null },
+      { text: 'Refuse — choose your own path', tag: null, outcome: 'The family conflict is significant. You bear the consequences.', effect: (p) => { p.m -= 10; p.r += 5; p.addFlag('estranged_family') }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // ── LATE LIFE EXPANSION ───────────────────────────────────────────────────
+  {
+    id: 'late_retirement_decision',
+    phase: 'late_life',
+    weight: 5,
+    when: (G) => G.age >= 60 && G.age <= 65 && G.career && !G.flags.includes('retired'),
+    text: (G) => {
+      if (['wealthy_west','wealthy_east'].includes(G.character.country.archetype)) return 'The pension papers arrive. You\'ve been paying in for decades. The math works — you can leave.'
+      if (G.character.country.archetype === 'post_soviet') return 'The state pension is barely enough. But your body is done with the work.'
+      return 'There is no pension. You stop working when you cannot work anymore.'
+    },
+    choices: [
+      { text: 'Retire — you\'ve earned it', tag: null, outcome: 'The first week feels strange. By the third, you begin to understand rest.', effect: (p) => { p.m += 10; p.addFlag('retired') }, inject: null },
+      { text: 'Keep working — idleness frightens you', tag: null, outcome: 'You stay on. The body has opinions about this decision.', effect: (p) => { p.m += 3; p.h -= 4 }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_pension_reality',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) => G.age >= 62 && G.flags.includes('retired') && !G.flags.includes('pension_settled'),
+    text: (G) => {
+      if (['wealthy_west','wealthy_east'].includes(G.character.country.archetype)) return 'The pension is smaller than you imagined. Everything is more expensive than it used to be.'
+      if (G.character.country.archetype === 'subsaharan' || G.character.country.archetype === 'conflict_zone') return 'There is no formal pension. Your children are your retirement plan. Whether that works depends on them.'
+      return 'The government pension arrives monthly. It covers rent, barely. Extras are a memory.'
+    },
+    choices: [
+      { text: 'Downsize and adapt', tag: null, outcome: 'A smaller life. Also a simpler one.', effect: (p) => { p.m += 5; p.w -= 5; p.addFlag('pension_settled') }, inject: null },
+      { text: 'Keep the lifestyle — drain savings', tag: null, outcome: 'The math will catch up eventually.', effect: (p) => { p.m += 2; p.mo -= 5000; p.addFlag('pension_settled') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_grandchild_born',
+    phase: 'late_life',
+    weight: 6,
+    when: (G) => G.children.length > 0 && G.age >= 52 && !G.flags.includes('grandparent') && G.flags.includes('cared_for_children'),
+    text: (G) => {
+      if (G.character.country.archetype === 'wealthy_east') return 'Your child calls. The baby has arrived. In this culture, your role is expected to be central — caregiver, daily presence, family anchor.'
+      if (['subsaharan','developing_unstable'].includes(G.character.country.archetype)) return 'The grandchild arrives. In this family, this means you: childcare while the parents work, school pickups, stories at night.'
+      return 'You are a grandparent. The weight of the word settles on you slowly, then all at once.'
+    },
+    choices: [
+      { text: 'Be fully present — the involved grandparent', tag: null, outcome: 'The child knows your face and your stories. You know theirs.', effect: (p) => { p.m += 18; p.addFlag('grandparent'); p.addFlag('found_meaning') }, inject: null },
+      { text: 'Maintain some distance — let them parent', tag: null, outcome: 'You are there when needed. Less, when not.', effect: (p) => { p.m += 8; p.addFlag('grandparent') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_grandchild_relationship',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) => G.flags.includes('grandparent') && G.age >= 60,
+    text: 'Your grandchild asks you what it was like when you were young. You realize you are now the keeper of a world that no longer exists.',
+    choices: [
+      { text: 'Tell them everything — the real version', tag: null, outcome: 'They listen with a seriousness that surprises you. Something transfers.', effect: (p) => { p.m += 12; p.r -= 6; p.addFlag('bridge_builder') }, inject: null },
+      { text: 'Give them the edited version', tag: null, outcome: 'They sense the gaps. They will fill them in their own time.', effect: (p) => { p.m += 6 }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_cognitive_early',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 68 && G.stats.health < 50 && !G.flags.includes('cognitive_decline') && Math.random() < 0.12,
+    text: (G) => {
+      if (['wealthy_west','wealthy_east'].includes(G.character.country.archetype)) return 'You forget the word for something ordinary. Then a name. The doctor orders tests and returns with a careful face.'
+      if (G.character.country.archetype === 'post_soviet') return 'You forget things more often. The family says it\'s age. You suspect it\'s something else, but diagnosis costs money.'
+      return 'The forgetting comes gradually. In this place, there is no clinic for it, no name given. The family manages as best they can.'
+    },
+    choices: [
+      { text: 'Pursue diagnosis and treatment', tag: null, outcome: (G) => ['wealthy_west','wealthy_east'].includes(G.character.country.archetype) ? 'Early intervention slows the progression.' : 'The medication is expensive and hard to source.', effect: (p) => { p.h -= 5; p.m -= 10; p.mo -= 3000; p.addFlag('cognitive_decline') }, inject: null },
+      { text: 'Accept it quietly and adapt', tag: null, outcome: 'You restructure your life around what you still have.', effect: (p) => { p.h -= 8; p.m -= 8; p.addFlag('cognitive_decline') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_cognitive_progression',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) => G.flags.includes('cognitive_decline') && G.age >= 72,
+    text: 'The gaps in memory are larger now. Sometimes the date slips away. Sometimes a face. The people around you rearrange their lives.',
+    choices: null,
+    effect: (p) => { p.h -= 8; p.m -= 12; p.e -= 6; p.r += 8 },
+  },
+  {
+    id: 'late_health_scare_heart',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) => G.age >= 58 && !G.flags.includes('heart_event') && (G.flags.includes('smoker') || G.stats.health < 45) && Math.random() < 0.15,
+    text: (G) => {
+      const base = 'A pain in the chest, then in the arm. The hospital. Tests. The doctor says you are lucky it was a warning.'
+      if (G.character.country.archetype === 'wealthy_west') return base + ' The cardiac team is excellent.'
+      if (['subsaharan','conflict_zone'].includes(G.character.country.archetype)) return 'A pain in the chest. The nearest clinic is hours away. By the time you arrive, the moment has passed.'
+      return base
+    },
+    choices: [
+      { text: 'Change everything — diet, exercise, stress', tag: null, outcome: 'You become something you were not. It is not too late.', effect: (p) => { p.h += 5; p.m -= 5; p.addFlag('health_conscious'); p.addFlag('heart_event') }, inject: null },
+      { text: 'Take the medication, change little else', tag: null, outcome: 'The pills help. The habits stay the same.', effect: (p) => { p.h -= 3; p.mo -= 1500; p.addFlag('heart_event') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_health_cancer',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.age >= 62 && !G.flags.includes('cancer_survivor') && Math.random() < 0.08,
+    text: (G) => {
+      if (['wealthy_west','wealthy_east'].includes(G.character.country.archetype)) return 'The scan shows something that wasn\'t there before. The oncologist speaks in percentages and treatment windows.'
+      if (['subsaharan','conflict_zone','developing_unstable'].includes(G.character.country.archetype)) return 'The diagnosis comes late — there was no screening, no early detection. The treatment options are few and expensive.'
+      return 'Cancer. The word lands differently than you expected.'
+    },
+    choices: [
+      { text: 'Pursue full treatment — fight it', tag: null, outcome: 'Chemotherapy. Hair loss. Exhaustion. And, eventually, a clean scan.', effect: (p) => { p.h -= 15; p.m -= 10; p.mo -= 25000; p.addFlag('cancer_survivor') }, inject: null },
+      { text: 'Pursue palliative care — quality over quantity', tag: null, outcome: 'You choose how to spend the remaining good time.', effect: (p) => { p.h -= 20; p.m += 5; p.r -= 5; p.addFlag('acceptance') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_nursing_home',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 76 && G.stats.health < 35 && !G.flags.includes('nursing_home'),
+    text: (G) => {
+      if (['wealthy_west'].includes(G.character.country.archetype)) return 'Your children gently raise the subject of assisted living. The facility is clean and well-staffed. It also feels like a waiting room.'
+      if (['wealthy_east','developing_urban'].includes(G.character.country.archetype)) return 'In this culture, placing a parent in a facility carries deep shame. Your child proposes moving you into their home instead.'
+      return 'Your family takes you in. There is no other option, and also no question about it.'
+    },
+    choices: [
+      { text: 'Accept the move gracefully', tag: null, outcome: 'You adapt. Some of the staff become something like friends.', effect: (p) => { p.m -= 8; p.addFlag('nursing_home') }, inject: null },
+      { text: 'Insist on staying at home as long as possible', tag: null, outcome: 'With help, you manage. Independence costs effort.', effect: (p) => { p.m += 5; p.h -= 5 }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_life_review',
+    phase: 'late_life',
+    weight: 5,
+    when: (G) => G.age >= 70 && !G.flags.includes('life_reviewed'),
+    text: 'At some point in the long evenings, you begin reviewing your life with an honesty you couldn\'t have managed earlier. You see the forks you took and the ones you didn\'t.',
+    choices: [
+      { text: 'Accept it — all of it', tag: null, outcome: 'The regret doesn\'t vanish, but it stops ambushing you.', effect: (p) => { p.r -= 15; p.m += 10; p.addFlag('acceptance'); p.addFlag('life_reviewed') }, inject: null },
+      { text: 'Focus on what you\'re proud of', tag: null, outcome: 'There is enough. There was always enough to be proud of.', effect: (p) => { p.r -= 8; p.m += 8; p.addFlag('life_reviewed') }, inject: null },
+      { text: 'Dwell on what went wrong', tag: null, outcome: 'The audit never quite finishes. It follows you to bed.', effect: (p) => { p.r += 10; p.m -= 8; p.addFlag('life_reviewed') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_old_friend_death',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) => G.friends && G.friends.length > 0 && G.age >= 65,
+    text: 'The call comes. A friend from another chapter of your life is gone. You find yourself at a funeral thinking about all the ones still ahead.',
+    choices: null,
+    effect: (p) => { p.m -= 10; p.r += 5 },
+  },
+  {
+    id: 'late_will_and_testament',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 62 && !G.flags.includes('will_written') && (G.money > 5000 || G.children.length > 0),
+    text: (G) => {
+      if (['wealthy_west','wealthy_east'].includes(G.character.country.archetype)) return 'The solicitor suggests it is time to formalize your wishes. A will. The word has a finality that is uncomfortable and necessary.'
+      return 'Your children ask what you want done with what you leave behind. You realize you have never said.'
+    },
+    choices: [
+      { text: 'Write the will — clear and fair', tag: null, outcome: 'One less thing for them to fight about.', effect: (p) => { p.m += 5; p.r -= 6; p.mo -= 800; p.addFlag('will_written') }, inject: null },
+      { text: 'Leave it to them to sort out', tag: null, outcome: 'This decision will cost your children something.', effect: (p) => { p.r += 8; p.addFlag('will_written') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_volunteering',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.flags.includes('retired') && G.age >= 62 && G.stats.health > 40 && !G.flags.includes('committed_activist'),
+    text: (G) => {
+      if (['subsaharan','developing_unstable'].includes(G.character.country.archetype)) return 'There is always work that needs doing in your community. No one is paid for it. No one expects to be.'
+      return 'With the work gone, you find something is missing. A community organization asks if you have time.'
+    },
+    choices: [
+      { text: 'Volunteer — give your time and knowledge', tag: null, outcome: 'The structure returns. So does the sense of being useful.', effect: (p) => { p.m += 12; p.addFlag('committed_activist'); p.addFlag('community_leader') }, inject: null },
+      { text: 'Enjoy the freedom — you\'ve given enough', tag: null, outcome: 'The leisure is real. It is also sometimes hollow.', effect: (p) => { p.m += 3 }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_downsizing',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 64 && G.flags.includes('retired') && G.money > 0 && !G.flags.includes('downsized'),
+    text: (G) => {
+      if (['wealthy_west'].includes(G.character.country.archetype)) return 'The house is too large now. The children left years ago. You walk through rooms you never use.'
+      return 'The home you built your life in starts to feel like a burden. Maintenance, costs, stairs.'
+    },
+    choices: [
+      { text: 'Sell and move somewhere smaller', tag: null, outcome: 'You pocket the difference. The new place fits.', effect: (p) => { p.m += 6; p.mo += 30000; p.addFlag('downsized') }, inject: null },
+      { text: 'Stay — the memories live here too', tag: null, outcome: 'You maintain it as long as you can.', effect: (p) => { p.m += 4; p.mo -= 3000; p.addFlag('downsized') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_late_romance',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => !G.partner && G.age >= 62 && G.age <= 75 && G.stats.happiness < 55,
+    text: (G) => {
+      if (G.currentYear >= 2010 && ['wealthy_west','wealthy_east','developing_urban'].includes(G.character.country.archetype)) return 'A friend shows you a dating app for people your age. You dismiss it, then don\'t.'
+      return 'At a community event, someone sits next to you and asks about your life. You notice you are telling the truth.'
+    },
+    choices: [
+      { text: 'Open yourself to it', tag: null, outcome: 'Something unexpected grows in the late afternoon of your life.', effect: (p) => { p.m += 15; p.addFlag('strong_marriage') }, inject: null },
+      { text: 'You are done with all that', tag: null, outcome: 'You are at peace with solitude. That is not nothing.', effect: (p) => { p.m += 4; p.addFlag('acceptance') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_political_reflection',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.age >= 68 && (G.flags.includes('cold_war_generation') || G.flags.includes('apartheid_generation') || G.flags.includes('revolution_generation')),
+    text: 'You have lived through things that history books now describe in two paragraphs. Someone younger asks what it was really like. You realize the gap between what happened and what they imagine is vast.',
+    choices: [
+      { text: 'Speak — bear witness', tag: null, outcome: 'You tell them what the books leave out. They are quiet for a long time.', effect: (p) => { p.m += 10; p.r -= 8; p.addFlag('bridge_builder') }, inject: null },
+      { text: 'Some things don\'t translate', tag: null, outcome: 'You give them the outline. The texture stays yours.', effect: (p) => { p.m += 4 }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_spiritual_reckoning',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 70 && !G.flags.includes('spiritual_settled'),
+    text: (G) => {
+      if (G.flags.includes('devout')) return 'Your faith has accompanied you this whole way. At this stage, it feels less like belief and more like an old friend.'
+      if (G.flags.includes('skeptic')) return 'You have been skeptical all your life. Now, in the quiet hours, you find you are not as certain of your certainty as you used to be.'
+      return 'The question of what comes after presents itself differently at seventy than it did at thirty.'
+    },
+    choices: [
+      { text: 'Find peace in faith or philosophy', tag: null, outcome: 'A framework for what\'s coming. That\'s enough.', effect: (p) => { p.m += 10; p.r -= 5; p.addFlag('spiritual_settled'); p.addFlag('found_meaning') }, inject: null },
+      { text: 'Sit with the uncertainty', tag: null, outcome: 'You do not need an answer. The question itself is the companion.', effect: (p) => { p.m += 6; p.addFlag('spiritual_settled') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_grandchild_milestone',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.flags.includes('grandparent') && G.age >= 68,
+    text: 'Your grandchild graduates, or gets married, or has a child of their own. Four generations, briefly in the same room. You understand something about time that you couldn\'t have explained before.',
+    choices: null,
+    effect: (p) => { p.m += 14; p.r -= 8; p.addFlag('found_meaning') },
+  },
+  {
+    id: 'late_memoir_writing',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.age >= 65 && G.stats.smarts > 45 && !G.flags.includes('memoir_written'),
+    text: 'You start writing down what happened. Not for publication — for yourself, maybe for the grandchildren. Getting it down feels urgent in a way you can\'t fully explain.',
+    choices: [
+      { text: 'Write it all — the honest version', tag: null, outcome: 'You surprise yourself with what you remember. And what you feel about it.', effect: (p) => { p.r -= 12; p.m += 8; p.e += 3; p.addFlag('memoir_written'); p.addFlag('emotionally_honest') }, inject: null },
+      { text: 'Write the version you can live with', tag: null, outcome: 'It is still yours. Just curated.', effect: (p) => { p.r -= 5; p.m += 5; p.addFlag('memoir_written') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_inheritance_leaving',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 72 && G.children.length > 0 && G.money > 10000 && !G.flags.includes('inheritance_planned'),
+    text: (G) => {
+      if (G.children.length > 1) return 'How you divide what you have will say something. The children may not agree with what it says.'
+      return 'Everything will go to your child. You have mixed feelings about handing so much weight to one person.'
+    },
+    choices: [
+      { text: 'Divide equally, whatever the relationships', tag: null, outcome: 'Fair on paper. In practice, contested.', effect: (p) => { p.r -= 4; p.addFlag('inheritance_planned') }, inject: null },
+      { text: 'Reward the child who showed up', tag: null, outcome: 'The others find out eventually. Relationships shift.', effect: (p) => { p.r -= 6; p.m += 4; p.addFlag('inheritance_planned') }, inject: null },
+      { text: 'Give it away — charities, causes', tag: null, outcome: 'Your children are surprised. Some are hurt. You are at peace.', effect: (p) => { p.karma += 15; p.r -= 10; p.m += 8; p.addFlag('inheritance_planned') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_physical_limits',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) => G.age >= 72 && G.stats.health < 50 && !G.flags.includes('physical_limits_accepted'),
+    text: 'The body\'s negotiations with you have changed. Stairs are a decision. Distances are considered. You are not who you were at forty, and the body keeps reminding you.',
+    choices: [
+      { text: 'Adapt without complaint', tag: null, outcome: 'You do what you can with what remains. That has always been the deal.', effect: (p) => { p.m += 5; p.addFlag('acceptance'); p.addFlag('physical_limits_accepted') }, inject: null },
+      { text: 'Rage against it — refuse the limits', tag: null, outcome: 'Some of the spirit transfers into stubbornness. The body is not persuaded.', effect: (p) => { p.m -= 4; p.h -= 4; p.addFlag('physical_limits_accepted') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_friend_network_thin',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 72 && (!G.friends || G.friends.length < 2) && !G.flags.includes('late_loneliness'),
+    text: (G) => {
+      if (['wealthy_east','subsaharan'].includes(G.character.country.archetype)) return 'In this culture, old age without family nearby is almost unthinkable. But family has scattered. The loneliness is real, but unnamed.'
+      return 'Your peers have died or moved. The social world shrinks. You notice that days can pass without meaningful conversation.'
+    },
+    choices: [
+      { text: 'Join a community group — find new connection', tag: null, outcome: 'The new friendships are smaller but warm.', effect: (p) => { p.m += 8; p.addFlag('has_close_friend') }, inject: null },
+      { text: 'Accept the solitude', tag: null, outcome: 'You learn what you need and what you can live without.', effect: (p) => { p.m -= 5; p.addFlag('late_loneliness'); p.addFlag('acceptance') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_reconcile_past',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.regret > 30 && G.age >= 68 && !G.flags.includes('reconciled_past'),
+    text: 'There are people you wronged and never addressed. Some are still alive. You find yourself drafting a letter in your head that you haven\'t yet sent.',
+    choices: [
+      { text: 'Reach out — it\'s not too late', tag: null, outcome: 'Some receive it well. One doesn\'t respond. You did what you could.', effect: (p) => { p.r -= 12; p.m += 6; p.addFlag('reconciled_past'); p.addFlag('emotionally_honest') }, inject: null },
+      { text: 'Let it stay in the past', tag: null, outcome: 'You carry it a little longer.', effect: (p) => { p.r += 5; p.m -= 3; p.addFlag('reconciled_past') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_end_of_life_peace',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.age >= 78 && G.stats.health < 30,
+    text: 'You know what this is. You have known for a while. The question now is what to do with the time that remains.',
+    choices: [
+      { text: 'Call the people who matter and say what needs saying', tag: null, outcome: 'Some conversations you\'ve been postponing for decades happen in the space of a week. It is enough.', effect: (p) => { p.r -= 15; p.m += 12; p.addFlag('found_meaning') }, inject: null },
+      { text: 'Keep your private counsel — die as you lived', tag: null, outcome: 'You have always been this way. There is dignity in consistency.', effect: (p) => { p.r -= 5; p.addFlag('acceptance') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_community_elder',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.age >= 65 && (G.flags.includes('community_leader') || G.flags.includes('mentor')) && G.stats.happiness > 50,
+    text: (G) => {
+      if (['subsaharan','developing_urban'].includes(G.character.country.archetype)) return 'In your neighborhood, you are consulted on disputes. Your age is capital here — experience has currency.'
+      return 'Younger people come to you. Not for advice, exactly, but for the witness of someone who has seen more.'
+    },
+    choices: null,
+    effect: (p) => { p.m += 10; p.r -= 5; p.addFlag('found_meaning') },
+  },
+  {
+    id: 'late_sibling_reckoning',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.siblings && G.siblings.length > 0 && G.age >= 65 && !G.flags.includes('sibling_reckoned'),
+    text: 'One of your siblings is ill. You see them in a way you haven\'t in years — not as the person from childhood, but as someone also running out of time.',
+    choices: [
+      { text: 'Close whatever distance remains', tag: null, outcome: 'You talk properly for the first time since you were young. Something repairs.', effect: (p) => { p.m += 10; p.r -= 8; p.addFlag('sibling_reckoned') }, inject: null },
+      { text: 'Keep the comfortable distance', tag: null, outcome: 'Some relationships are maintained rather than healed. That is still something.', effect: (p) => { p.m += 2; p.addFlag('sibling_reckoned') }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_poverty_old_age',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.money < 1000 && G.stats.wealth < 20 && G.age >= 62 && ['subsaharan','developing_unstable','conflict_zone'].includes(G.character.country.archetype),
+    text: 'Old age without savings in a country without a safety net. You work as long as the body allows. After that, you depend entirely on family. Whether they can carry this weight is not in your hands.',
+    choices: null,
+    effect: (p) => { p.h -= 6; p.m -= 10; p.r += 8 },
+  },
+  {
+    id: 'late_tech_bewilderment',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 70 && G.currentYear >= 2010 && !G.flags.includes('tech_adapted'),
+    text: 'The world runs on phones now. Your grandchildren communicate in ways you can\'t quite follow. Some of it you learn. Some of it stays foreign.',
+    choices: [
+      { text: 'Try to learn it — video calls, apps, the lot', tag: null, outcome: 'You manage more than expected. The connection is worth the effort.', effect: (p) => { p.e += 3; p.m += 6; p.addFlag('tech_adapted') }, inject: null },
+      { text: 'Let them come to you in the old ways', tag: null, outcome: 'Some do. Some don\'t. You learn which is which.', effect: (p) => { p.m -= 2; p.addFlag('tech_adapted') }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // ── PRISON DEPTH EVENTS ──────────────────────────────────────────────────
+  // These events only fire when inPrison === true (via G.inPrison check in engine)
+
+  {
+    id: 'prison_first_week',
+    phase: 'young_adult',
+    weight: 8,
+    when: (G) => G.inPrison && !G.flags.includes('prison_oriented'),
+    text: (G) => {
+      if (['conflict_zone', 'developing_unstable', 'subsaharan'].includes(G.character.country.archetype))
+        return 'The prison is overcrowded. Three people share a cell designed for one. Violence is a daily reality. You must decide quickly who to trust — and who to avoid entirely.'
+      return 'The first week inside is disorienting. The hierarchy is invisible but rigid. Older inmates test you early on.'
+    },
+    choices: [
+      { text: 'Keep your head down and observe', tag: null, outcome: 'You learn the landscape without making enemies. A quiet dignity develops.', effect: (p) => { p.m -= 5; p.e += 4; p.addFlag('prison_oriented'); }, inject: null },
+      { text: 'Assert yourself early', tag: null, outcome: 'A confrontation establishes a rough respect. You also earn a grudge.', effect: (p) => { p.h -= 8; p.m -= 5; p.addFlag('prison_oriented'); }, inject: null },
+      { text: 'Find a patron — someone established', tag: null, outcome: 'The protection comes with obligations. Nothing inside is free.', effect: (p) => { p.m -= 3; p.karma -= 5; p.addFlag('prison_oriented'); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'prison_cellmate',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) => G.inPrison,
+    text: (G) => {
+      const archetype = G.character.country.archetype
+      if (['conflict_zone', 'developing_unstable'].includes(archetype))
+        return 'Your cellmate is a political prisoner — a journalist arrested for covering the regime. His knowledge of the outside world is remarkable.'
+      return 'Your cellmate has been inside for twelve years. He is either the wisest or most broken person you have ever met — possibly both.'
+    },
+    choices: [
+      { text: 'Talk to him. Listen to his story.', tag: null, outcome: 'The conversations reshape how you see your own crime and your own life.', effect: (p) => { p.e += 6; p.m += 3; }, inject: null },
+      { text: 'Stay silent. Do not form attachments.', tag: null, outcome: 'The years inside get quieter. And lonelier.', effect: (p) => { p.m -= 6; }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'prison_job',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) => G.inPrison && !G.flags.includes('prison_worker'),
+    text: (G) => {
+      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
+        return 'The prison offers a work assignment. Library assistant, kitchen, or workshop — they all pay almost nothing, but they fill the hours.'
+      return 'Work assignments in the prison are scarce and fought over. A spot opens up in the kitchen.'
+    },
+    choices: [
+      { text: 'Take the library job', tag: null, outcome: 'You read more in a year than in your entire life before. Something shifts.', effect: (p) => { p.e += 8; p.m += 4; p.addFlag('prison_worker'); p.addFlag('bookworm'); }, inject: null },
+      { text: 'Take the kitchen job', tag: null, outcome: 'The work is physical and hot. You eat better than most. You learn to cook.', effect: (p) => { p.h += 4; p.m += 3; p.addFlag('prison_worker'); }, inject: null },
+      { text: 'Take the workshop job', tag: null, outcome: 'You learn a trade. The skill follows you out.', effect: (p) => { p.e += 5; p.m += 4; p.addFlag('prison_worker'); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'prison_education',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.inPrison && !G.flags.includes('prison_education') && ['wealthy_west', 'wealthy_east', 'developing_urban'].includes(G.character.country.archetype),
+    text: 'The prison runs an education programme — basic literacy up to secondary equivalency. A quiet teacher comes twice a week. Some inmates mock it. Others fill every session.',
+    choices: [
+      { text: 'Enrol and attend every class', tag: 'adult_learner', outcome: 'You earn a qualification behind bars. The irony is not lost on you.', effect: (p) => { p.e += 10; p.m += 6; p.addFlag('adult_learner'); p.addFlag('prison_education'); }, inject: null },
+      { text: 'Attend occasionally', tag: null, outcome: 'You pick up more than you expected to.', effect: (p) => { p.e += 4; p.addFlag('prison_education'); }, inject: null },
+      { text: 'Skip it — not for you', tag: null, outcome: 'The hours go differently.', effect: (p) => { p.m -= 2; }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'prison_gang_pressure',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.inPrison && !G.flags.includes('gang_member'),
+    text: (G) => {
+      if (['conflict_zone', 'developing_unstable', 'subsaharan'].includes(G.character.country.archetype))
+        return 'The prison is run by gangs aligned with different factions outside. Staying unaffiliated is dangerous. They want your answer now.'
+      return 'A prison gang offers you protection — and a cut of their smuggling operation. Refusing has costs. Joining has costs too.'
+    },
+    choices: [
+      { text: 'Join — survival comes first', tag: null, outcome: 'The protection is real. The debt that comes with it is realer.', effect: (p) => { p.h += 5; p.m -= 8; p.karma -= 10; p.addFlag('gang_member'); }, inject: null },
+      { text: 'Refuse and find another way', tag: null, outcome: 'It is harder alone. You manage. The refusal costs you some health but keeps you intact.', effect: (p) => { p.h -= 5; p.m -= 5; p.karma += 5; }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'prison_incident',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.inPrison,
+    text: (G) => {
+      const archetype = G.character.country.archetype
+      if (['conflict_zone', 'developing_unstable', 'subsaharan'].includes(archetype))
+        return 'A riot breaks out over food rations. Guards fire into the crowd. You must get somewhere safe immediately.'
+      return 'A fight erupts in the yard. You are near the edge of it when it starts.'
+    },
+    choices: [
+      { text: 'Get to the wall and stay low', tag: null, outcome: 'You avoid the worst of it. You are shaken but unharmed.', effect: (p) => { p.m -= 8; }, inject: null },
+      { text: 'Pull someone out of the fight', tag: 'compassionate', outcome: 'You take a blow meant for someone else. They remember.', effect: (p) => { p.h -= 10; p.m += 5; p.karma += 8; }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'prison_letter',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) => G.inPrison && (G.partner || (G.children && G.children.length > 0)),
+    text: (G) => G.partner
+      ? 'A letter arrives from your partner. The handwriting is careful. The words are not.'
+      : 'A letter arrives from your child. The handwriting is their school handwriting — still forming.',
+    choices: [
+      { text: 'Write back — tell the truth', tag: null, outcome: 'It is the hardest letter you have ever written. It may be the most important.', effect: (p) => { p.m += 6; p.r -= 3; }, inject: null },
+      { text: 'Write back — keep it light', tag: null, outcome: 'You protect them from the reality. For now.', effect: (p) => { p.m += 2; p.r += 4; }, inject: null },
+      { text: 'Do not respond', tag: null, outcome: 'The silence says what you could not.', effect: (p) => { p.m -= 10; p.r += 8; }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'prison_rehabilitation',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.inPrison && ['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype) && (G.mem?.originalSentence ?? 0) >= 3,
+    text: 'The prison offers a rehabilitation programme — cognitive behavioural therapy, anger management, restorative justice. Participation is voluntary but noted by the parole board.',
+    choices: [
+      { text: 'Engage fully and honestly', tag: 'in_recovery', outcome: 'It is confronting work. Something in you loosens.', effect: (p) => { p.m += 10; p.e += 5; p.addFlag('in_recovery'); p.karma += 8; }, inject: null },
+      { text: 'Attend but keep the walls up', tag: null, outcome: 'The parole board sees attendance. You leave with less than you could have.', effect: (p) => { p.m += 3; }, inject: null },
+      { text: 'Skip it — it is not sincere', tag: null, outcome: 'The parole board notices the absence. The release date moves.', effect: (p) => { p.m -= 5; p.r += 5; }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'prison_parole_hearing',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) => G.inPrison && G.prisonSentence >= 2 && (G.mem?.originalSentence ?? 0) >= 4,
+    text: 'A parole hearing is scheduled. Three board members sit behind a table. The question is simple: are you a different person now?',
+    choices: [
+      { text: 'Make your case — genuine change, concrete plans', tag: null, outcome: 'They grant parole. The conditions are strict. The freedom is real.', effect: (p) => { p.releaseFromPrison(); p.m += 15; p.addFlag('in_recovery'); }, inject: null },
+      { text: 'Give them what they want to hear', tag: null, outcome: 'Parole denied — the board can read a rehearsed answer. Your sentence continues.', effect: (p) => { p.m -= 10; p.r += 5; }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'prison_visitor',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.inPrison,
+    text: (G) => {
+      if (G.partner) return 'Your partner visits. An hour across a table. The glass between you says everything that words cannot.'
+      if (G.parents) return 'One of your parents visits. The shame in their eyes is worse than the sentence itself.'
+      return 'An old friend — the only one who comes — sits across from you. They look tired.'
+    },
+    choices: [
+      { text: 'Make the most of the hour', tag: null, outcome: 'The connection, however strained, holds. They leave saying they will come again.', effect: (p) => { p.m += 8; }, inject: null },
+      { text: 'Tell them not to come back — for their sake', tag: null, outcome: 'They argue. Eventually, they stop visiting. You told yourself it was a kindness.', effect: (p) => { p.m -= 10; p.r += 6; }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // ── PREGNANCY & FERTILITY EVENTS ─────────────────────────────────────────
+
+  {
+    id: 'ya_unplanned_pregnancy',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => !G.birthControl && G.partner && G.age >= 16 && G.age <= 24 && G.children.length === 0 && !G.mem.hadPregnancyEvent,
+    text: (G) => {
+      const country = G.character.country.archetype
+      if (['developing_unstable', 'subsaharan', 'conflict_zone'].includes(country))
+        return `You are pregnant. There is no test kit — you simply know. In ${G.character.country.name}, this will change everything. There is no safety net for young mothers.`
+      if (G.character.country.name === 'United States')
+        return 'The test is positive. You are not ready. Healthcare costs, insurance, the conversation you need to have — it all arrives at once.'
+      return 'The test is positive. You are not ready. Whatever comes next, the decision belongs to you.'
+    },
+    choices: [
+      {
+        text: 'Continue the pregnancy',
+        tag: null,
+        outcome: (G) => ['developing_unstable', 'subsaharan', 'conflict_zone'].includes(G.character.country.archetype)
+          ? 'The birth is hard and attended by family. The child arrives into a life already full of difficulty and love in equal measure.'
+          : 'The pregnancy is difficult but you manage. A child arrives before you felt prepared. Prepared doesn\'t wait.',
+        effect: (p) => {
+          p.m += 5; p.h -= 10; p.w -= 10; p.setMem('hadPregnancyEvent', true);
+          p.addFlag('parent');
+          p.addChild({ gender: Math.random() < 0.5 ? 'male' : 'female', ageAtBirth: 0, relationshipQuality: 75 });
+        },
+        inject: null,
+      },
+      {
+        text: 'Terminate the pregnancy',
+        tag: null,
+        outcome: (G) => ['conflict_zone', 'developing_unstable'].includes(G.character.country.archetype) && G.currentYear < 2000
+          ? 'Safe options are nearly inaccessible here. The procedure happens anyway, at significant risk.'
+          : 'The procedure is straightforward medically. The emotional weight takes longer to process.',
+        effect: (p) => { p.m -= 8; p.h -= 5; p.r += 5; p.setMem('hadPregnancyEvent', true); },
+        inject: null,
+      },
+      {
+        text: 'Consider adoption',
+        tag: null,
+        outcome: 'The pregnancy continues. At birth, you place the child with adoptive parents. The grief and peace are not opposites.',
+        effect: (p) => { p.m -= 12; p.r += 8; p.karma += 5; p.setMem('hadPregnancyEvent', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_fertility_struggle',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.partner && G.children.length === 0 && G.age >= 30 && G.age <= 40 && !G.mem.fertilityEvent,
+    text: (G) => {
+      if (['subsaharan', 'conflict_zone', 'developing_unstable'].includes(G.character.country.archetype))
+        return `You and your partner have been trying for two years. In ${G.character.country.name}, a childless marriage carries social weight that is hard to describe to outsiders.`
+      return 'Two years of trying. Two years of tests, timing, and hope deferred. The doctors call it unexplained infertility.'
+    },
+    choices: [
+      {
+        text: 'Pursue IVF',
+        tag: null,
+        outcome: (G) => ['wealthy_west', 'wealthy_east', 'wealthy_gulf'].includes(G.character.country.archetype) && G.currentYear >= 1985
+          ? 'Three rounds. The second one works. The cost is significant. The exhaustion is total. A child is born.'
+          : 'IVF is not accessible here. The option exists in another country but the cost and travel are prohibitive.',
+        effect: (p) => {
+          if (['wealthy_west', 'wealthy_east', 'wealthy_gulf'].includes(p._state?.character?.country?.archetype)) {
+            p.m += 15; p.h -= 8; p.mo -= 25000; p.addFlag('parent');
+            p.addChild({ gender: Math.random() < 0.5 ? 'male' : 'female', ageAtBirth: 0, relationshipQuality: 80 });
+          } else {
+            p.m -= 10; p.r += 8;
+          }
+          p.setMem('fertilityEvent', true);
+        },
+        inject: null,
+      },
+      {
+        text: 'Adopt a child',
+        tag: null,
+        outcome: (G) => `The process in ${G.character.country.name} takes ${['wealthy_west'].includes(G.character.country.archetype) ? 'eighteen months of paperwork and home studies' : 'years of bureaucracy and uncertainty'}. A child eventually joins your family.`,
+        effect: (p) => { p.m += 10; p.mo -= 8000; p.addFlag('parent'); p.addChild({ gender: Math.random() < 0.5 ? 'male' : 'female', ageAtBirth: 0, relationshipQuality: 70 }); p.setMem('fertilityEvent', true); },
+        inject: null,
+      },
+      {
+        text: 'Accept a life without children',
+        tag: null,
+        outcome: 'The grief is real. So is the space that opens up. You find other ways to shape the next generation.',
+        effect: (p) => { p.m -= 5; p.r += 5; p.setMem('fertilityEvent', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ya_miscarriage',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.partner && G.age >= 22 && G.age <= 38 && G.children.length === 0 && !G.mem.miscarriageEvent,
+    text: (G) => {
+      if (['subsaharan', 'conflict_zone', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'The pregnancy ends at twelve weeks. There is no hospital nearby. Your family gathers. The grief is silent and communal.'
+      return 'You miscarry at ten weeks. The medical care is good and swift. The emotional aftermath is not in any brochure.'
+    },
+    choices: [
+      {
+        text: 'Grieve together with your partner',
+        tag: null,
+        outcome: 'The loss brings you closer. The grief takes its time.',
+        effect: (p) => { p.m -= 15; p.h -= 5; p.r += 5; p.setMem('miscarriageEvent', true); },
+        inject: null,
+      },
+      {
+        text: 'Try to move forward quickly',
+        tag: null,
+        outcome: 'The effort to appear okay delays the grief, not resolves it. It surfaces later.',
+        effect: (p) => { p.m -= 8; p.r += 8; p.setMem('miscarriageEvent', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ya_postpartum_depression',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.children.length > 0 && !G.mem.postpartumEvent && G.age <= 35 && G.children.some(c => c.ageAtBirth >= G.age - 2),
+    text: (G) => {
+      if (['subsaharan', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype))
+        return 'The baby is here and safe, but something in you went dark after the birth. No one has a name for what this is. You feel ashamed of feeling this way.'
+      return 'The baby is healthy. You know you should feel joy. Instead you feel a hollowness you cannot explain to anyone who hasn\'t felt it. Postpartum depression is what the doctor calls it.'
+    },
+    choices: [
+      {
+        text: 'Seek help — therapy and/or medication',
+        tag: null,
+        outcome: (G) => ['wealthy_west', 'wealthy_east', 'developing_urban'].includes(G.character.country.archetype)
+          ? 'Treatment helps. The fog lifts over months. You find the joy you feared was gone.'
+          : 'Support is limited but your partner and family help carry you through.',
+        effect: (p) => { p.m += 10; p.h += 5; p.mo -= 2000; p.setMem('postpartumEvent', true); },
+        inject: null,
+      },
+      {
+        text: 'Tell no one and push through',
+        tag: null,
+        outcome: 'You manage, barely. The first year is the hardest year of your life.',
+        effect: (p) => { p.m -= 10; p.h -= 5; p.r += 5; p.setMem('postpartumEvent', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_pregnancy_late',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.partner && G.age >= 38 && G.age <= 44 && G.children.length === 0 && !G.mem.latePregnancyEvent,
+    text: (G) => {
+      if (['wealthy_west', 'wealthy_east', 'wealthy_gulf'].includes(G.character.country.archetype) && G.currentYear >= 1990)
+        return 'Against the odds and your doctor\'s caution, you are pregnant at 40. The monitoring is intensive. The statistics are discussed at every appointment.'
+      return 'A late surprise. You had accepted you would not become a parent. Now everything changes.'
+    },
+    choices: [
+      {
+        text: 'Embrace the pregnancy fully',
+        tag: null,
+        outcome: 'The birth is managed carefully. A child arrives, changing everything you thought your future looked like.',
+        effect: (p) => { p.m += 12; p.h -= 12; p.addFlag('parent'); p.addChild({ gender: Math.random() < 0.5 ? 'male' : 'female', ageAtBirth: 0, relationshipQuality: 80 }); p.setMem('latePregnancyEvent', true); },
+        inject: null,
+      },
+      {
+        text: 'The risks are too high — end the pregnancy',
+        tag: null,
+        outcome: 'The decision weighs on you. The grief is mixed with relief, and vice versa.',
+        effect: (p) => { p.m -= 10; p.r += 10; p.setMem('latePregnancyEvent', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── INHERITANCE & WILLS ──────────────────────────────────────────────────
+
+  {
+    id: 'mid_will_writing',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.age >= 45 && G.money > 5000 && !G.mem.willWritten,
+    text: (G) => {
+      if (['subsaharan', 'conflict_zone', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'There is no solicitor to see — you gather the family and make your intentions clear in the presence of elders and witnesses. What you have, and who gets it.'
+      return 'A solicitor lays documents on the desk. A will is a strange thing to write — arranging the world for a day you won\'t see.'
+    },
+    choices: [
+      {
+        text: 'Leave everything to your children equally',
+        tag: null,
+        outcome: 'Simple. Equitable. Still contested by someone at the reading.',
+        effect: (p) => { p.m += 5; p.setMem('willWritten', true); p.setMem('willType', 'equal_children'); },
+        inject: null,
+      },
+      {
+        text: 'Leave a portion to charity',
+        tag: 'legacy_support',
+        outcome: 'You designate a cause that outlives you. Your estate becomes part of something larger.',
+        effect: (p) => { p.m += 8; p.karma += 10; p.addFlag('legacy_support'); p.setMem('willWritten', true); p.setMem('willType', 'charity'); },
+        inject: null,
+      },
+      {
+        text: 'Leave it to your partner and let them decide',
+        tag: null,
+        outcome: 'The simplest trust. It assumes the relationship will survive you.',
+        effect: (p) => { p.m += 4; p.setMem('willWritten', true); p.setMem('willType', 'partner'); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_contested_inheritance',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.parents === null && G.money > 10000 && !G.mem.inheritanceContested,
+    text: (G) => {
+      if (['subsaharan', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'Your parent has died. The land they farmed is now the subject of a family dispute. Relatives you barely know are laying claim to it.'
+      if (['post_soviet'].includes(G.character.country.archetype))
+        return 'The estate left by your parent is modest — a flat and some savings. A sibling contests the split.'
+      return 'The will is read. A sibling disputes their share, claiming undue influence. The lawyers circle.'
+    },
+    choices: [
+      {
+        text: 'Fight it — the will is clear',
+        tag: null,
+        outcome: 'The legal battle takes two years and a third of the estate in fees. You prevail.',
+        effect: (p) => { p.m -= 10; p.mo += 15000; p.setMem('inheritanceContested', true); },
+        inject: null,
+      },
+      {
+        text: 'Settle — give them a larger share to end it',
+        tag: null,
+        outcome: 'Peace costs money. The relationship survives, barely.',
+        effect: (p) => { p.m -= 5; p.mo += 5000; p.setMem('inheritanceContested', true); },
+        inject: null,
+      },
+      {
+        text: 'Let them have it — the money is not worth the fight',
+        tag: null,
+        outcome: 'The magnanimity is genuine. The sting fades. The relationship improves marginally.',
+        effect: (p) => { p.karma += 8; p.m -= 3; p.setMem('inheritanceContested', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'late_inheritance_received',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.parents === null && !G.mem.inheritanceReceived && G.money > 0,
+    text: (G) => {
+      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
+        return 'The estate is settled. After debts and taxes, an inheritance arrives — enough to reshape your final years.'
+      if (['subsaharan', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype))
+        return 'Your parent\'s plot of land passes to you. In cash terms it is very little. In meaning, it is everything.'
+      return 'The family home and what remained in the bank. An inheritance, modest but real.'
+    },
+    choices: [
+      {
+        text: 'Invest it for the family\'s future',
+        tag: null,
+        outcome: 'Careful stewardship. The wealth compounds slowly.',
+        effect: (p) => { p.mo += 30000; p.m += 5; p.setMem('inheritanceReceived', true); },
+        inject: null,
+      },
+      {
+        text: 'Pay off debts and live more freely',
+        tag: null,
+        outcome: 'The weight of the debt lifts. The late years feel lighter.',
+        effect: (p) => { p.mo += 15000; p.m += 10; p.w += 8; p.setMem('inheritanceReceived', true); },
+        inject: null,
+      },
+      {
+        text: 'Pass it on to your own children now',
+        tag: 'legacy_support',
+        outcome: 'You watch them use it while you are still here to see it. That turns out to matter.',
+        effect: (p) => { p.m += 12; p.karma += 8; p.addFlag('legacy_support'); p.setMem('inheritanceReceived', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── CIVIL LAW & LITIGATION EVENTS ────────────────────────────────────────
+
+  {
+    id: 'mid_sued',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.money > 20000 && !G.mem.civilSuit && G.age >= 30,
+    text: (G) => {
+      const archetype = G.character.country.archetype
+      if (['wealthy_west'].includes(archetype) && G.character.country.name === 'United States')
+        return 'A letter arrives from a law firm. You are being sued — a neighbour claims your renovation damaged their property. The claim is $85,000.'
+      if (['post_soviet', 'developing_urban'].includes(archetype))
+        return 'A former business partner is taking you to court over a disputed deal from years ago. The claim is vague but the legal costs are real.'
+      return 'A civil claim lands on your doorstep. A former contractor says you did not pay the agreed amount. Your records say otherwise.'
+    },
+    choices: [
+      {
+        text: 'Fight it in court',
+        tag: null,
+        outcome: 'The case drags on. Legal fees mount. You win but at a cost.',
+        effect: (p) => { p.mo -= 20000; p.m -= 10; p.setMem('civilSuit', true); },
+        inject: null,
+      },
+      {
+        text: 'Settle out of court',
+        tag: null,
+        outcome: 'The settlement costs less than the fight. The resentment costs more than either.',
+        effect: (p) => { p.mo -= 10000; p.m -= 5; p.setMem('civilSuit', true); },
+        inject: null,
+      },
+      {
+        text: 'Counter-sue for harassment',
+        tag: null,
+        outcome: 'The counter-claim is risky. It unsettles the claimant. Both parties eventually agree to drop it.',
+        effect: (p) => { p.mo -= 8000; p.m -= 8; p.setMem('civilSuit', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_sue_someone',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => !G.mem.hasFiledSuit && G.money > 5000 && G.age >= 28,
+    text: (G) => {
+      const archetype = G.character.country.archetype
+      if (archetype === 'wealthy_west' && G.character.country.name === 'United States')
+        return 'Your employer has illegally withheld wages for two years. The Employment Rights Center says you have a clear case.'
+      if (['conflict_zone', 'developing_unstable', 'subsaharan'].includes(archetype))
+        return 'A local official seized your property without compensation. The court system is unreliable, but an NGO offers legal support.'
+      return 'A contractor did substandard work that cost you significantly. Your solicitor says the case is strong.'
+    },
+    choices: [
+      {
+        text: 'File the suit',
+        tag: null,
+        outcome: (G) => ['conflict_zone', 'developing_unstable', 'subsaharan'].includes(G.character.country.archetype)
+          ? 'The case stalls in a corrupt system. After two years and significant cost, you reach a partial settlement.'
+          : 'The case takes eighteen months. You receive a settlement that partially covers your losses.',
+        effect: (p) => { p.mo += 8000; p.m -= 5; p.setMem('hasFiledSuit', true); },
+        inject: null,
+      },
+      {
+        text: 'Negotiate directly first',
+        tag: null,
+        outcome: 'The other party agrees to a modest payment to avoid litigation. Faster and cheaper for everyone.',
+        effect: (p) => { p.mo += 4000; p.m += 3; p.setMem('hasFiledSuit', true); },
+        inject: null,
+      },
+      {
+        text: 'Let it go — litigation is not worth it',
+        tag: null,
+        outcome: 'The decision saves time. The loss still stings.',
+        effect: (p) => { p.r += 5; p.setMem('hasFiledSuit', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_divorce_settlement',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.flags.includes('divorced') && !G.mem.divorceSettled && G.money > 5000,
+    text: (G) => {
+      if (['subsaharan', 'conflict_zone', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'The separation is mediated by community elders. Division of the household is decided collectively — and not always in your favour.'
+      if (['post_soviet', 'developing_urban'].includes(G.character.country.archetype))
+        return 'The divorce proceeds through court. Assets accumulated during marriage are to be split. The flat, the car, the savings account.'
+      return 'The divorce settlement involves lawyers for both sides. Property, pension, custody — everything on the table.'
+    },
+    choices: [
+      {
+        text: 'Negotiate fairly and equitably',
+        tag: null,
+        outcome: 'The settlement is balanced. The relationship with your ex settles into something manageable.',
+        effect: (p) => { p.mo -= 12000; p.m += 5; p.karma += 5; p.setMem('divorceSettled', true); },
+        inject: null,
+      },
+      {
+        text: 'Fight for the maximum',
+        tag: null,
+        outcome: 'The legal battle costs more than any gain. The animosity becomes permanent.',
+        effect: (p) => { p.mo -= 20000; p.m -= 8; p.karma -= 5; p.setMem('divorceSettled', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── MENTAL HEALTH SYSTEM ─────────────────────────────────────────────────
+
+  {
+    id: 'ya_anxiety_diagnosis',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.stats.happiness < 45 && !G.mentalHealth.condition && !G.mem.mhEvent1,
+    text: (G) => {
+      if (['subsaharan', 'conflict_zone', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'The feeling has been there for years — a constant low hum of dread. No one in your community names it. But it is taking a toll on your body.'
+      return 'The panic attacks started six months ago. A GP refers you to a mental health assessment. The diagnosis: generalised anxiety disorder.'
+    },
+    choices: [
+      {
+        text: 'Start therapy',
+        tag: null,
+        outcome: (G) => ['wealthy_west', 'wealthy_east', 'developing_urban'].includes(G.character.country.archetype)
+          ? 'CBT helps. The progress is slow and measurable. You begin to understand the pattern.'
+          : 'A community health worker offers limited support. It helps more than nothing.',
+        effect: (p) => { p.m += 8; p.setMentalHealth({ condition: 'anxiety', therapy: true }); p.setMem('mhEvent1', true); },
+        inject: null,
+      },
+      {
+        text: 'Start medication',
+        tag: null,
+        outcome: 'The SSRI takes six weeks to work. When it does, the edge comes off.',
+        effect: (p) => { p.m += 6; p.h -= 2; p.setMentalHealth({ condition: 'anxiety', medicating: true }); p.setMem('mhEvent1', true); },
+        inject: null,
+      },
+      {
+        text: 'Manage it without help',
+        tag: null,
+        outcome: 'Some days are manageable. Others are not. The condition shapes your choices without being named.',
+        effect: (p) => { p.m -= 5; p.setMentalHealth({ condition: 'anxiety' }); p.setMem('mhEvent1', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ya_depression_episode',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.stats.happiness < 35 && !G.mentalHealth.condition && !G.mem.mhEvent1,
+    text: (G) => {
+      if (['subsaharan', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype))
+        return 'You have not gotten out of bed properly in weeks. In your community, this is called laziness, or possession, or weakness. None of those names fit what it feels like.'
+      return 'The depression arrives without warning and stays. Nothing gives pleasure. Everything takes effort. You call in sick more than you can afford to.'
+    },
+    choices: [
+      {
+        text: 'Seek professional help',
+        tag: null,
+        outcome: (G) => ['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype)
+          ? 'A combination of therapy and medication slowly rebuilds function. It takes nearly a year.'
+          : 'Access is limited. A traditional healer and family support carry most of the weight.',
+        effect: (p) => { p.m += 12; p.mo -= 2000; p.setMentalHealth({ condition: 'depression', therapy: true }); p.setMem('mhEvent1', true); },
+        inject: null,
+      },
+      {
+        text: 'Tell a trusted person',
+        tag: null,
+        outcome: 'Speaking it aloud makes it real in a different way. Their response is imperfect. It helps anyway.',
+        effect: (p) => { p.m += 5; p.setMentalHealth({ condition: 'depression' }); p.setMem('mhEvent1', true); },
+        inject: null,
+      },
+      {
+        text: 'Say nothing and push through',
+        tag: null,
+        outcome: 'Function returns, partially. The episode leaves its residue.',
+        effect: (p) => { p.m -= 8; p.h -= 5; p.setMentalHealth({ condition: 'depression' }); p.setMem('mhEvent1', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_mental_health_relapse',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.mentalHealth.condition && !G.mem.mhRelapse,
+    text: (G) => `Your ${G.mentalHealth.condition === 'anxiety' ? 'anxiety' : 'depression'} has returned after years of stability. A combination of work pressure and a difficult year has triggered it.`,
+    choices: [
+      {
+        text: 'Return to treatment immediately',
+        tag: null,
+        outcome: 'Catching it early makes the difference. Recovery is faster than before.',
+        effect: (p) => { p.m += 10; p.mo -= 2000; p.setMem('mhRelapse', true); },
+        inject: null,
+      },
+      {
+        text: 'Try to manage it yourself this time',
+        tag: null,
+        outcome: 'Harder than you remembered. The episode deepens before it lifts.',
+        effect: (p) => { p.m -= 10; p.h -= 5; p.setMem('mhRelapse', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_mental_health_stability',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.mentalHealth.condition && (G.mentalHealth.therapy || G.mentalHealth.medicating) && !G.mem.mhStability,
+    text: 'You have maintained your mental health actively for several years. The tools are familiar now. The language to describe what you experience has become part of you.',
+    choices: [
+      {
+        text: 'Consider reducing medication with your doctor',
+        tag: null,
+        outcome: 'The taper is slow and supervised. You maintain stability. The credit is shared.',
+        effect: (p) => { p.m += 8; p.setMentalHealth({ medicating: false }); p.setMem('mhStability', true); },
+        inject: null,
+      },
+      {
+        text: 'Maintain the current treatment — it works',
+        tag: null,
+        outcome: 'Stability is not nothing. You know what it cost to get here.',
+        effect: (p) => { p.m += 5; p.setMem('mhStability', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── HOBBY SKILL PROGRESSION ──────────────────────────────────────────────
+
+  {
+    id: 'ch_hobby_discovery',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) => Object.keys(G.hobbies).length === 0,
+    text: 'A hobby catches you. Something you pick up almost by accident becomes something you look forward to.',
+    choices: [
+      { text: 'Music — learn an instrument', tag: null, outcome: 'You begin on a second-hand guitar. The calluses form slowly.', effect: (p) => { p.practiceHobby('music', 10); p.setMem('primaryHobby', 'music'); p.m += 5; }, inject: null },
+      { text: 'Drawing and painting', tag: null, outcome: 'You fill notebooks with drawings. A teacher notices.', effect: (p) => { p.practiceHobby('art', 10); p.setMem('primaryHobby', 'art'); p.m += 5; p.e += 3; }, inject: null },
+      { text: 'Sport — choose your game', tag: null, outcome: 'The physical discipline shapes your body and your character.', effect: (p) => { p.practiceHobby('sport', 10); p.setMem('primaryHobby', 'sport'); p.h += 5; p.m += 3; }, inject: null },
+      { text: 'Reading and writing', tag: null, outcome: 'Libraries become your favourite places. Words are where you live.', effect: (p) => { p.practiceHobby('writing', 10); p.setMem('primaryHobby', 'writing'); p.e += 5; p.m += 3; p.addFlag('bookworm'); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ya_hobby_deepening',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => Object.values(G.hobbies).some(v => v >= 10) && Object.values(G.hobbies).every(v => v < 40),
+    text: (G) => {
+      const hobby = G.mem.primaryHobby ?? Object.entries(G.hobbies).sort((a, b) => b[1] - a[1])[0]?.[0] ?? 'your craft'
+      const hobbyName = { music: 'music', art: 'painting', sport: 'sport', writing: 'writing', cooking: 'cooking', coding: 'programming' }[hobby] ?? hobby
+      return `You have stuck with ${hobbyName} long enough to get past beginner frustration. The improvement is visible — to you and others.`
+    },
+    choices: [
+      {
+        text: 'Commit — practice daily',
+        tag: null,
+        outcome: 'The hours accumulate. The skill compounds.',
+        effect: (p) => {
+          const hobby = p.mem.primaryHobby ?? 'general'
+          p.practiceHobby(hobby, 20); p.m += 6; p.e += 3;
+        },
+        inject: null,
+      },
+      {
+        text: 'Keep it casual — enjoy it without pressure',
+        tag: null,
+        outcome: 'Progress slows, but you love it more for having no stakes.',
+        effect: (p) => {
+          const hobby = p.mem.primaryHobby ?? 'general'
+          p.practiceHobby(hobby, 8); p.m += 8;
+        },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ya_hobby_music_performance',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => (G.hobbies.music ?? 0) >= 30 && !G.mem.musicPerformed,
+    text: (G) => {
+      if (['subsaharan', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'You are asked to play at a community event — a wedding, a local ceremony. Your music is known in the neighbourhood.'
+      return 'An open mic night. Your name is on the list. You have been building to this for years.'
+    },
+    choices: [
+      { text: 'Play — face the fear', tag: null, outcome: 'The performance is imperfect and real. The applause is small and enormous.', effect: (p) => { p.m += 12; p.s += 3; p.practiceHobby('music', 10); p.setMem('musicPerformed', true); }, inject: null },
+      { text: 'Pull out at the last minute', tag: null, outcome: 'The regret is immediate. You reschedule in your head a dozen times.', effect: (p) => { p.m -= 5; p.r += 6; p.setMem('musicPerformed', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_hobby_mastery',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => Object.values(G.hobbies).some(v => v >= 60) && !G.mem.hobbyMaster,
+    text: (G) => {
+      const hobby = G.mem.primaryHobby ?? Object.entries(G.hobbies).sort((a, b) => b[1] - a[1])[0]?.[0] ?? 'your craft'
+      const hobbyName = { music: 'music', art: 'visual art', sport: 'your sport', writing: 'writing', cooking: 'cooking', coding: 'programming' }[hobby] ?? hobby
+      return `Decades of practice have made you genuinely accomplished at ${hobbyName}. People who know their craft recognise yours.`
+    },
+    choices: [
+      { text: 'Teach it — pass it on', tag: 'mentor', outcome: 'Students come. Some surpass you. That turns out to be the best part.', effect: (p) => { p.m += 12; p.karma += 10; p.addFlag('mentor'); p.setMem('hobbyMaster', true); }, inject: null },
+      { text: 'Keep it for yourself — some things should stay private', tag: null, outcome: 'The solitude of the practice remains its own reward.', effect: (p) => { p.m += 8; p.setMem('hobbyMaster', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ya_coding_hobby',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.currentYear >= 1995 && !G.hobbies.coding && G.stats.smarts >= 55,
+    text: (G) => G.currentYear >= 2010
+      ? 'A free coding bootcamp opens nearby. You attend out of curiosity.'
+      : `You start teaching yourself to program from library books${G.currentYear >= 2000 ? ' and online forums' : ''}.`,
+    choices: [
+      { text: 'Invest serious time in it', tag: null, outcome: 'The logic clicks. You build small things that actually work. The satisfaction is unlike anything else.', effect: (p) => { p.practiceHobby('coding', 20); p.e += 8; p.m += 5; }, inject: null },
+      { text: 'Try it and move on', tag: null, outcome: 'Not for you — at least not right now.', effect: (p) => { p.practiceHobby('coding', 5); p.e += 2; }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // ── CHILDHOOD DEPTH ──────────────────────────────────────────────────────
+
+  {
+    id: 'ch_first_best_friend',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) => G.age >= 7 && G.age <= 10 && !G.mem.firstFriend,
+    text: (G) => {
+      if (['subsaharan', 'conflict_zone'].includes(G.character.country.archetype))
+        return 'A child in your neighbourhood becomes your constant companion. You spend every daylight hour together.'
+      return 'You meet someone at school who gets you immediately. You spend every weekend together. A genuine friendship begins.'
+    },
+    choices: [
+      { text: 'Become inseparable', tag: 'has_close_friend', outcome: 'The friendship shapes who you become. Some friendships are formative.', effect: (p) => { p.m += 10; p.addFlag('has_close_friend'); p.makeFriend(70); p.setMem('firstFriend', true); }, inject: null },
+      { text: 'Keep it casual — you have many friends', tag: null, outcome: 'A broad social circle forms. Roots are shallower.', effect: (p) => { p.m += 5; p.setMem('firstFriend', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ch_bullied_at_school',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.age >= 8 && G.age <= 13 && !G.mem.bullyingEvent,
+    text: (G) => {
+      if (['conflict_zone', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'An older child in school has decided you are a target. Your possessions are taken. You dread the walk home.'
+      return 'A group at school has made you their target. Every day is an exercise in dread management.'
+    },
+    choices: [
+      { text: 'Tell a trusted adult', tag: null, outcome: 'The intervention is imperfect. It helps. The bullying slows.', effect: (p) => { p.m -= 5; p.setMem('bullyingEvent', true); }, inject: null },
+      { text: 'Stand up to them directly', tag: null, outcome: 'The confrontation goes both ways. Eventually they find a different target.', effect: (p) => { p.h -= 5; p.m += 4; p.setMem('bullyingEvent', true); }, inject: null },
+      { text: 'Endure it alone', tag: null, outcome: 'You develop a quiet toughness. The social wound takes years to close.', effect: (p) => { p.m -= 10; p.e += 3; p.setMem('bullyingEvent', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ch_sibling_rivalry',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.siblings && G.siblings.length > 0 && G.age >= 8 && !G.mem.siblingRivalryEvent,
+    text: (G) => {
+      if (['subsaharan', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'Resources are scarce. The sibling closest to you in age gets the school shoes. You get them next year. The dynamic settles early.'
+      return 'Your sibling consistently outperforms you at school. Your parents\' praise for them lands differently each time.'
+    },
+    choices: [
+      { text: 'Work harder to compete', tag: null, outcome: 'The competition drives you. The relationship is complicated but alive.', effect: (p) => { p.e += 5; p.m -= 3; p.setMem('siblingRivalryEvent', true); }, inject: null },
+      { text: 'Find your own thing', tag: null, outcome: 'You stop competing on their terms. Your own identity emerges.', effect: (p) => { p.m += 5; p.setMem('siblingRivalryEvent', true); }, inject: null },
+      { text: 'Grow resentful', tag: null, outcome: 'The resentment becomes part of the family furniture. It outlives the original cause.', effect: (p) => { p.m -= 5; p.r += 5; p.setMem('siblingRivalryEvent', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ch_pocket_money_lesson',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.age >= 9 && G.age <= 12 && !G.mem.moneyLesson,
+    text: (G) => {
+      if (['subsaharan', 'conflict_zone', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'You earn a small sum helping at the market or running errands. It is the first money you have ever held that was yours.'
+      return 'You get pocket money for the first time. The question is immediate: spend it now, or save it for something bigger?'
+    },
+    choices: [
+      { text: 'Save it for something you really want', tag: null, outcome: 'The discipline of waiting teaches something permanent.', effect: (p) => { p.w += 3; p.e += 2; p.setMem('moneyLesson', true); }, inject: null },
+      { text: 'Spend it immediately — joy now', tag: null, outcome: 'The pleasure is real and brief. You learn what immediate gratification feels like.', effect: (p) => { p.m += 5; p.setMem('moneyLesson', true); }, inject: null },
+      { text: 'Share it with a friend or sibling', tag: null, outcome: 'Generosity, at its most instinctive.', effect: (p) => { p.karma += 5; p.m += 3; p.setMem('moneyLesson', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ch_conflict_zone_displacement',
+    phase: 'childhood',
+    weight: 5,
+    when: (G) => ['conflict_zone'].includes(G.character.country.archetype) && G.age >= 6 && G.age <= 12 && !G.mem.displaced,
+    text: (G) => `Fighting reaches ${G.character.country.name}. Your family packs what they can carry and moves. You leave school, your neighbourhood, the grave of your grandparent.`,
+    choices: [
+      {
+        text: 'Accept the disruption with resilience',
+        tag: null,
+        outcome: 'You adapt faster than the adults. That adaptation costs something invisible.',
+        effect: (p) => { p.m -= 10; p.e += 3; p.addFlag('refugee'); p.setMem('displaced', true); },
+        inject: null,
+      },
+      {
+        text: 'Grieve what was lost',
+        tag: null,
+        outcome: 'The grief is real and processed, slowly. You carry the memory of the old life intact.',
+        effect: (p) => { p.m -= 15; p.r += 5; p.addFlag('refugee'); p.setMem('displaced', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── ADOLESCENCE DEPTH ────────────────────────────────────────────────────
+
+  {
+    id: 'ad_first_relationship',
+    phase: 'adolescence',
+    weight: 4,
+    when: (G) => G.age >= 14 && G.age <= 17 && !G.mem.firstRelationship,
+    text: (G) => {
+      if (['wealthy_gulf', 'conflict_zone', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'You develop feelings for someone. The social and family rules around relationships at your age are strict — this stays entirely private.'
+      return 'Your first real relationship. Everything feels enormous.'
+    },
+    choices: [
+      {
+        text: 'Pursue it — tell them how you feel',
+        tag: null,
+        outcome: (G) => ['wealthy_gulf', 'conflict_zone', 'developing_unstable'].includes(G.character.country.archetype)
+          ? 'The relationship is conducted in secret. The concealment adds its own weight.'
+          : 'They feel the same way. The first relationship is sweet and brief and educational.',
+        effect: (p) => { p.m += 8; p.s += 3; p.setMem('firstRelationship', true); },
+        inject: null,
+      },
+      {
+        text: 'Say nothing — the timing is wrong',
+        tag: null,
+        outcome: 'The moment passes. You wonder sometimes what might have been.',
+        effect: (p) => { p.r += 5; p.m -= 2; p.setMem('firstRelationship', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ad_academic_pressure',
+    phase: 'adolescence',
+    weight: 4,
+    when: (G) => G.age >= 15 && G.age <= 17 && !G.mem.academicPressureEvent,
+    text: (G) => {
+      if (['wealthy_east'].includes(G.character.country.archetype))
+        return `In ${G.character.country.name}, the exam season is existential. Your family's expectations and the national exam system converge on this single period.`
+      if (['subsaharan', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype))
+        return 'You are the first in your family to reach secondary school. Failing these exams would mean not just your failure but a kind of communal disappointment.'
+      return 'Final exams are approaching. The stakes feel absolute, though they are not quite.'
+    },
+    choices: [
+      { text: 'Study intensively — sacrifice everything else', tag: null, outcome: 'The grades are good. The burnout is real. You cross the line.', effect: (p) => { p.e += 8; p.h -= 5; p.m -= 5; p.setMem('academicPressureEvent', true); }, inject: null },
+      { text: 'Study hard but keep balance', tag: null, outcome: 'Decent results. A healthier crossing of the finish line.', effect: (p) => { p.e += 5; p.m += 3; p.setMem('academicPressureEvent', true); }, inject: null },
+      { text: 'Struggle — the pressure is too much', tag: null, outcome: 'The grades are below what was expected. The fallout varies by household.', effect: (p) => { p.e -= 3; p.m -= 10; p.setMem('academicPressureEvent', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ad_first_job',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) => G.age >= 15 && G.age <= 17 && !G.mem.firstJob,
+    text: (G) => {
+      if (['subsaharan', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype))
+        return 'School ends at three. The rest of the day you work — a market stall, carrying goods, domestic work. The money goes to the household.'
+      return 'Your first part-time job. The pay is negligible. The independence is not.'
+    },
+    choices: [
+      { text: 'Work hard and save', tag: null, outcome: 'The discipline forms early. The money is real.', effect: (p) => { p.mo += 500; p.w += 3; p.m += 5; p.setMem('firstJob', true); }, inject: null },
+      { text: 'Work the minimum and spend freely', tag: null, outcome: 'The experience is more social than financial. Still worth it.', effect: (p) => { p.m += 7; p.setMem('firstJob', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ad_identity_question',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) => G.age >= 15 && G.age <= 18 && !G.mem.identityEvent,
+    text: (G) => {
+      if (['conflict_zone', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'Amid the instability, the question of who you are feels both trivial and urgent. Your identity is partly defined by what you have survived. What else does it contain?'
+      return 'Adolescence requires you to decide who you are — or at least to perform that decision. The pressure to fit a category is real.'
+    },
+    choices: [
+      { text: 'Conform to what is expected — it is easier', tag: null, outcome: 'The path is smooth. Something stays undiscovered for now.', effect: (p) => { p.m -= 3; p.setMem('identityEvent', true); }, inject: null },
+      { text: 'Explore — question everything', tag: null, outcome: 'The self that emerges is more genuinely yours. The path is rockier.', effect: (p) => { p.e += 5; p.m -= 3; p.setMem('identityEvent', true); }, inject: null },
+      { text: 'Keep a private self and a public one', tag: null, outcome: 'The split becomes a skill. Not always a healthy one.', effect: (p) => { p.m -= 5; p.e += 3; p.setMem('identityEvent', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ad_substance_first',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) => G.age >= 15 && G.age <= 18 && !G.mem.substanceFirstEvent,
+    text: (G) => {
+      if (['conflict_zone', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'In a place where adults drink to forget, alcohol or khat reaches you young. There is little protective infrastructure around it.'
+      return 'At a party, substances are present. The social pressure is subtle and constant.'
+    },
+    choices: [
+      {
+        text: 'Try it — everyone is',
+        tag: null,
+        outcome: (G) => G.currentYear >= 2000 ? 'The experience is mild. You add it to your reference points.' : 'The experience is more disorienting than expected. You learn something about your body.',
+        effect: (p) => { p.m += 3; p.h -= 3; p.setMem('substanceFirstEvent', true); },
+        inject: null,
+      },
+      {
+        text: 'Decline — not for you',
+        tag: null,
+        outcome: 'The social cost is minor. The self-knowledge is worth it.',
+        effect: (p) => { p.m += 2; p.karma += 3; p.setMem('substanceFirstEvent', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── RELATIONSHIP DEPTH ───────────────────────────────────────────────────
+
+  {
+    id: 'ya_relationship_long_distance',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.partner && !G.partner.married && G.age >= 22 && G.age <= 32 && !G.mem.ldRelationship,
+    text: 'Work or study separates you and your partner for an extended period. Long distance. Two lives that are not quite aligned.',
+    choices: [
+      { text: 'Make it work — regular calls, planned visits', tag: null, outcome: 'The relationship survives the distance. The test was real.', effect: (p) => { p.m += 5; p.setMem('ldRelationship', true); }, inject: null },
+      { text: 'Let it drift — the distance reveals the limits', tag: null, outcome: 'The relationship fades without a clean ending. That turns out to be its own kind of ending.', effect: (p) => { p.m -= 8; p.clearPartner(); p.setMem('ldRelationship', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_marriage_milestone',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.partner?.married && G.age >= 40 && !G.mem.marriageMilestone,
+    text: (G) => {
+      const years = G.age - (G.partner.metAt ?? G.age - 10)
+      if (['wealthy_east', 'wealthy_gulf', 'developing_unstable'].includes(G.character.country.archetype))
+        return `You mark ${years} years of marriage. The family gathers. The years are counted as an achievement and an obligation both.`
+      return `${years} years together. A milestone, or just another Tuesday. You find yourselves asking what comes next.`
+    },
+    choices: [
+      { text: 'Renew your commitment — deliberately', tag: 'strong_marriage', outcome: 'The gesture is small. Its meaning is not.', effect: (p) => { p.m += 10; p.addFlag('strong_marriage'); p.setMem('marriageMilestone', true); }, inject: null },
+      { text: 'Keep going as you are — stability is enough', tag: null, outcome: 'Comfortable and real. Not all marriages need a ceremony to survive.', effect: (p) => { p.m += 5; p.setMem('marriageMilestone', true); }, inject: null },
+      { text: 'Acknowledge the drift and address it', tag: null, outcome: 'The conversation is overdue. It helps.', effect: (p) => { p.m += 7; p.setMem('marriageMilestone', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_infidelity_discovered',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.partner?.married && !G.mem.infidelityEvent && G.age >= 35,
+    text: (G) => {
+      if (['wealthy_gulf', 'conflict_zone', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'You discover your spouse has been unfaithful. In your community, the shame attached to this — and the options available to you — are shaped by forces larger than the two of you.'
+      return 'You find out your partner has been unfaithful. The information arrives without warning and rearranges everything.'
+    },
+    choices: [
+      {
+        text: 'Confront them and try to repair it',
+        tag: null,
+        outcome: 'The repair is possible but long. Trust is rebuilt brick by brick.',
+        effect: (p) => { p.m -= 12; p.r += 5; p.setMem('infidelityEvent', true); },
+        inject: null,
+      },
+      {
+        text: 'End the marriage',
+        tag: null,
+        outcome: 'The decision is clear, if not easy. The aftermath is complex.',
+        effect: (p) => { p.m -= 15; p.clearPartner(); p.addFlag('divorced'); p.setMem('infidelityEvent', true); },
+        inject: null,
+      },
+      {
+        text: 'Say nothing — preserve the household',
+        tag: null,
+        outcome: (G) => ['wealthy_gulf', 'developing_unstable'].includes(G.character.country.archetype)
+          ? 'The choice is shaped by pragmatism. The silence becomes the new normal.'
+          : 'You absorb it. The relationship continues. The knowledge changes you.',
+        effect: (p) => { p.m -= 15; p.r += 12; p.setMem('infidelityEvent', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_empty_nest',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.children.length > 0 && G.age >= 48 && !G.mem.emptyNest && G.children.every(c => (G.age - c.ageAtBirth) >= 18),
+    text: (G) => {
+      if (['subsaharan', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'Your children have gone to seek work in the city. The house is quieter than it has ever been. You built a life around them.'
+      return 'The last child leaves for university. The house is suddenly, absolutely quiet.'
+    },
+    choices: [
+      { text: 'Rediscover who you are outside of parenthood', tag: null, outcome: 'The transition is strange and then liberating.', effect: (p) => { p.m += 5; p.e += 3; p.setMem('emptyNest', true); }, inject: null },
+      { text: 'Fill the space with work or purpose', tag: null, outcome: 'The activity manages the transition.', effect: (p) => { p.m += 3; p.setMem('emptyNest', true); }, inject: null },
+      { text: 'Grieve the loss of that phase', tag: null, outcome: 'The grief is real and legitimate. It passes.', effect: (p) => { p.m -= 5; p.r += 3; p.setMem('emptyNest', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_career_plateau',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.career && G.age >= 42 && !G.mem.careerPlateau,
+    text: (G) => {
+      if (['subsaharan', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype))
+        return `After years in your role, opportunities for advancement in ${G.character.country.name} are limited by who you know as much as what you do. The ceiling is structural.`
+      return 'You have been at the same level for five years. The promotions that seemed inevitable have not arrived. The question is whether to push harder or reassess.'
+    },
+    choices: [
+      { text: 'Look for opportunities elsewhere', tag: null, outcome: 'The move costs relationships. It gains you momentum.', effect: (p) => { p.mo += 8000; p.m += 5; p.setMem('careerPlateau', true); }, inject: null },
+      { text: 'Invest in new skills — refresh your value', tag: null, outcome: 'The upskilling takes time. It pays off in two years.', effect: (p) => { p.e += 8; p.m += 3; p.setMem('careerPlateau', true); }, inject: null },
+      { text: 'Accept it — stability over advancement', tag: null, outcome: 'The ambition quiets. The life outside work expands.', effect: (p) => { p.m += 5; p.r += 3; p.setMem('careerPlateau', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ya_cooking_hobby',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => !G.hobbies.cooking && !G.flags.includes('career_chef'),
+    text: (G) => {
+      if (['subsaharan', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype))
+        return 'You grew up watching your grandmother cook. Now you have your own kitchen — however small — and you begin recreating her recipes from memory.'
+      return 'A cooking class, a gifted cookbook, or simply the need to feed yourself better. You start cooking seriously.'
+    },
+    choices: [
+      {
+        text: 'Follow traditional recipes from your culture',
+        tag: null,
+        outcome: 'The flavours are memory itself. Others gather around your table.',
+        effect: (p) => { p.practiceHobby('cooking', 15); p.m += 8; p.h += 3; },
+        inject: null,
+      },
+      {
+        text: 'Experiment and try new techniques',
+        tag: null,
+        outcome: 'Some disasters. Some revelations. Your palate develops.',
+        effect: (p) => { p.practiceHobby('cooking', 12); p.m += 6; p.e += 3; },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // DEBT SYSTEM EVENTS
+  {
+    id: 'ya_personal_loan',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.money < 2000 && !G.debt && G.age >= 18 && !G.mem.hadLoan,
+    text: (G) => {
+      if (['developing_unstable','conflict_zone','subsaharan'].includes(G.character.country.archetype))
+        return 'A money lender in the neighbourhood offers cash — no bank, no paperwork, high interest. You need it.'
+      return 'The bank approves a personal loan. The interest rate is 18%. The need is real.'
+    },
+    choices: [
+      { text: 'Take the loan', tag: null, outcome: 'Cash in hand. The repayments begin immediately.', effect: (p) => { p.mo += 5000; p.setMem('hadLoan', true); p.setMem('debtType', 'personal'); }, inject: null },
+      { text: 'Decline — manage without it', tag: null, outcome: 'Tight but yours.', effect: (p) => { p.setMem('hadLoan', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mid_debt_spiral',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.debt > 15000 && !G.mem.debtSpiral,
+    text: (G) => {
+      if (['developing_unstable','subsaharan','conflict_zone'].includes(G.character.country.archetype))
+        return 'The informal lender sends collectors. The debt has grown with interest you did not fully understand when you signed.'
+      return 'Credit card debt, a personal loan, and an overdue car payment are converging. The minimum payments are not touching the principal.'
+    },
+    choices: [
+      { text: 'Seek debt counselling', tag: null, outcome: 'A payment plan is negotiated. It takes five years. You finish it.', effect: (p) => { p.mo -= 2000; p.m += 5; p.setMem('debtSpiral', true); }, inject: null },
+      { text: 'Ignore it and keep spending', tag: null, outcome: 'The interest compounds. The calls increase.', effect: (p) => { p.m -= 8; p.setMem('debtSpiral', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mid_bankruptcy',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.debt > 30000 && G.money < 0 && !G.flags.includes('bankrupt'),
+    text: (G) => {
+      if (['wealthy_west'].includes(G.character.country.archetype))
+        return 'A bankruptcy attorney explains Chapter 7. The debt is dischargeable. The credit record is not.'
+      return 'The court declares you insolvent. Assets are liquidated. Debts are restructured. You start again from near zero.'
+    },
+    choices: [
+      { text: 'File for bankruptcy', tag: 'bankrupt', outcome: 'The relief is immediate. The stigma is long.', effect: (p) => { p.addFlag('bankrupt'); p.mo += 5000; p.setMem('debtType', null); }, inject: null },
+      { text: 'Try to negotiate with creditors', tag: null, outcome: 'Some agree. Some don\'t. The hole is smaller.', effect: (p) => { p.mo += 2000; p.m -= 10; }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'ya_loan_shark',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => ['developing_unstable','conflict_zone','subsaharan'].includes(G.character.country.archetype) && G.money < 500 && !G.mem.loanShark,
+    text: 'A loan shark offers fast money at terms that sound manageable. They are not.',
+    choices: [
+      { text: 'Take it — you have no choice', tag: null, outcome: 'The money solves the immediate crisis. The collector arrives six weeks later.', effect: (p) => { p.mo += 2000; p.m -= 5; p.setMem('loanShark', true); p.setMem('debtType', 'personal'); }, inject: null },
+      { text: 'Refuse', tag: null, outcome: 'You find another way. Barely.', effect: (p) => { p.m -= 5; p.setMem('loanShark', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // FRIEND SYSTEM EVENTS
+  {
+    id: 'ya_friend_crisis',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.friends && G.friends.length > 0 && !G.mem.friendCrisis,
+    text: (G) => `${G.friends[0]?.name ?? 'A close friend'} calls at midnight. Something has gone badly wrong — a relationship collapse, a mental health crisis, an arrest.`,
+    choices: [
+      { text: 'Drop everything and go to them', tag: 'compassionate', outcome: 'You are there. It is enough. The friendship deepens permanently.', effect: (p) => { p.m -= 3; p.karma += 10; p.addFlag('has_close_friend'); p.setMem('friendCrisis', true); }, inject: null },
+      { text: 'Offer support by phone', tag: null, outcome: 'You do what you can. The distance registers.', effect: (p) => { p.m -= 2; p.setMem('friendCrisis', true); }, inject: null },
+      { text: 'You cannot deal with it right now', tag: null, outcome: 'The missed call becomes a missed moment. The friendship cools.', effect: (p) => { p.r += 8; p.setMem('friendCrisis', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mid_friend_betrayal',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.friends && G.friends.length > 0 && !G.mem.friendBetrayal,
+    text: (G) => `${G.friends[0]?.name ?? 'A longtime friend'} has spoken behind your back to your employer — details you shared in confidence. You hear it secondhand.`,
+    choices: [
+      { text: 'Confront them directly', tag: null, outcome: 'The conversation is brutal. The friendship ends or transforms.', effect: (p) => { p.m -= 10; p.setMem('friendBetrayal', true); }, inject: null },
+      { text: 'Say nothing and create distance', tag: null, outcome: 'The friendship fades quietly. You never say why.', effect: (p) => { p.m -= 6; p.r += 5; p.setMem('friendBetrayal', true); }, inject: null },
+      { text: 'Forgive them — people are complicated', tag: null, outcome: 'The forgiveness is real. The trust adjusts accordingly.', effect: (p) => { p.karma += 8; p.m -= 3; p.setMem('friendBetrayal', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'ya_friend_wedding',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.friends && G.friends.length > 0 && !G.mem.friendWedding && G.age >= 24,
+    text: (G) => {
+      const name = G.friends[0]?.name ?? 'Your best friend'
+      if (['subsaharan','developing_unstable'].includes(G.character.country.archetype))
+        return `${name} is getting married. The celebration will last three days. You are asked to play a central role.`
+      return `${name} is getting married and asks you to be their best person. The speech. The stag/hen. All of it.`
+    },
+    choices: [
+      { text: 'Embrace it fully', tag: null, outcome: 'The wedding is chaotic and wonderful. The friendship enters its next chapter.', effect: (p) => { p.m += 10; p.setMem('friendWedding', true); }, inject: null },
+      { text: 'Attend but stay at the edges', tag: null, outcome: 'You are there. The friendship is maintained if not deepened.', effect: (p) => { p.m += 4; p.setMem('friendWedding', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mid_friend_death',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.friends && G.friends.length > 0 && G.age >= 45 && !G.mem.friendDied,
+    text: (G) => `${G.friends[0]?.name ?? 'A close friend'} has died — unexpectedly, suddenly. The call comes on an ordinary Tuesday.`,
+    choices: [
+      { text: 'Attend the funeral and be present for the family', tag: null, outcome: 'The grief is real. The presence matters. Something in your own sense of time shifts.', effect: (p) => { p.m -= 15; p.r += 5; p.setMem('friendDied', true); }, inject: null },
+      { text: 'Grieve privately', tag: null, outcome: 'You mourn alone. The loss sits with you for months.', effect: (p) => { p.m -= 10; p.setMem('friendDied', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mid_old_friend_reconnect',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => !G.mem.friendReconnect && G.age >= 35,
+    text: 'A message arrives from someone you knew decades ago — a childhood friend, a college roommate, someone who disappeared from your life. They found you online.',
+    choices: [
+      { text: 'Respond and meet up', tag: null, outcome: 'The catch-up is strange and warm. You remember a version of yourself through them.', effect: (p) => { p.m += 8; p.makeFriend(60); p.setMem('friendReconnect', true); }, inject: null },
+      { text: 'Reply warmly but keep it to messages', tag: null, outcome: 'The connection is real, if contained.', effect: (p) => { p.m += 4; p.setMem('friendReconnect', true); }, inject: null },
+      { text: 'Leave the message unread', tag: null, outcome: 'Some doors stay closed for a reason.', effect: (p) => { p.setMem('friendReconnect', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // FITNESS EVENTS
+  {
+    id: 'mid_fitness_wake_up',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => (G.fitness ?? 50) < 35 && G.age >= 38 && !G.mem.fitnessWakeUp,
+    text: (G) => {
+      if (['subsaharan','developing_unstable','conflict_zone'].includes(G.character.country.archetype))
+        return 'Climbing the stairs leaves you breathless at 40. Your body is telling you something you have been ignoring.'
+      return 'A routine health check returns numbers your doctor calls "concerning". Blood pressure, resting heart rate, weight — all trending wrong.'
+    },
+    choices: [
+      { text: 'Make real changes — diet and exercise', tag: 'health_conscious', outcome: 'The changes are slow and permanent. Your body responds over two years.', effect: (p) => { p.h += 8; p.setMem('fitnessWakeUp', true); p.addFlag('health_conscious'); }, inject: null },
+      { text: 'Make temporary changes', tag: null, outcome: 'The gym membership lasts six weeks.', effect: (p) => { p.h += 2; p.setMem('fitnessWakeUp', true); }, inject: null },
+      { text: 'Ignore it', tag: null, outcome: 'The body continues its trend.', effect: (p) => { p.h -= 5; p.setMem('fitnessWakeUp', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'ya_fitness_peak',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => (G.fitness ?? 50) >= 75 && G.age >= 22 && G.age <= 30 && !G.mem.fitnessPeak,
+    text: 'You are in the best shape of your life. The discipline has become identity.',
+    choices: [
+      { text: 'Enter a competition or challenge', tag: null, outcome: 'You place. The result matters less than the attempt.', effect: (p) => { p.m += 10; p.s += 4; p.setMem('fitnessPeak', true); }, inject: null },
+      { text: 'Keep it personal — this is for you', tag: null, outcome: 'The practice remains yours. The health dividend is real.', effect: (p) => { p.m += 6; p.h += 5; p.setMem('fitnessPeak', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // FAME EVENTS
+  {
+    id: 'ya_tabloid_scandal',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => (G.fame ?? 0) >= 40 && !G.mem.tabloidEvent,
+    text: (G) => {
+      if (['wealthy_east'].includes(G.character.country.archetype))
+        return 'A gossip magazine publishes fabricated stories about your private life. In this industry, image is revenue.'
+      return 'A tabloid has published a story about you — half true, half fabrication, entirely damaging.'
+    },
+    choices: [
+      { text: 'Ignore it — engagement only amplifies it', tag: null, outcome: 'It dies in a week. The internet moves on.', effect: (p) => { p.m -= 5; p.setMem('tabloidEvent', true); }, inject: null },
+      { text: 'Sue for defamation', tag: null, outcome: 'The legal threat produces a retraction. The legal costs are real.', effect: (p) => { p.mo -= 15000; p.m += 5; p.setMem('tabloidEvent', true); }, inject: null },
+      { text: 'Use it — any publicity is publicity', tag: null, outcome: 'The notoriety converts to followers. Something in you shifts.', effect: (p) => { p.m -= 5; p.setMem('tabloidEvent', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mid_fan_encounter',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => (G.fame ?? 0) >= 50 && !G.mem.fanEncounter,
+    text: (G) => {
+      if (['wealthy_east'].includes(G.character.country.archetype))
+        return 'A fan outside the venue has been waiting for hours. Their dedication is unnerving and moving at once.'
+      return 'A fan approaches you in a coffee shop. They are shaking. You are the reason they got through a difficult year.'
+    },
+    choices: [
+      { text: 'Give them a full ten minutes', tag: 'compassionate', outcome: 'The moment costs you nothing significant. It means everything to them.', effect: (p) => { p.m += 8; p.karma += 10; p.setMem('fanEncounter', true); }, inject: null },
+      { text: 'A brief, warm acknowledgement and move on', tag: null, outcome: 'The interaction is complete and kind.', effect: (p) => { p.m += 3; p.setMem('fanEncounter', true); }, inject: null },
+      { text: 'Security removes them', tag: null, outcome: 'You see their face. It is not something you forget.', effect: (p) => { p.m -= 5; p.r += 5; p.setMem('fanEncounter', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mid_sponsorship_deal',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => (G.fame ?? 0) >= 60 && G.career?.field === 'sports' || (G.fame ?? 0) >= 65,
+    text: 'A major brand approaches your management with a sponsorship offer. The money is significant. The brand is… complicated.',
+    choices: [
+      { text: 'Accept — the money enables the work', tag: null, outcome: 'The deal pays for the next chapter of your career. The association lingers.', effect: (p) => { p.mo += 60000; p.m -= 3; p.setMem('sponsorship', true); }, inject: null },
+      { text: 'Negotiate for a better brand fit', tag: null, outcome: 'A smaller deal, better aligned. You sleep better.', effect: (p) => { p.mo += 25000; p.m += 5; p.setMem('sponsorship', true); }, inject: null },
+      { text: 'Decline — your image is not for sale', tag: 'integrity', outcome: 'The integrity dividend is real. So is the financial gap.', effect: (p) => { p.karma += 10; p.setMem('sponsorship', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mid_paparazzi',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => (G.fame ?? 0) >= 55 && !G.mem.paparazziEvent,
+    text: 'Photographers follow you from the venue to your car to your child\'s school. The intrusion is total.',
+    choices: [
+      { text: 'Establish firm boundaries — involve legal if needed', tag: null, outcome: 'The legal letters slow the intrusion. The fame remains.', effect: (p) => { p.mo -= 8000; p.m += 5; p.setMem('paparazziEvent', true); }, inject: null },
+      { text: 'Engage — control the narrative yourself', tag: null, outcome: 'You manage your own image. The candid shots stop mattering.', effect: (p) => { p.m += 3; p.setMem('paparazziEvent', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // DIVORCE REALISM
+  {
+    id: 'mid_custody_battle',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.flags.includes('divorced') && G.children.length > 0 && !G.mem.custodyResolved,
+    text: (G) => {
+      if (['wealthy_gulf','developing_unstable'].includes(G.character.country.archetype))
+        return 'The family court system is not neutral. Custody of the children will be shaped by custom and power as much as the law.'
+      return 'The divorce settlement has come to a custody dispute. Both sides are dug in. The children are watching.'
+    },
+    choices: [
+      { text: 'Mediation — put the children first', tag: null, outcome: 'The process is painful and productive. Shared custody is workable.', effect: (p) => { p.mo -= 5000; p.m -= 5; p.karma += 10; p.setMem('custodyResolved', true); }, inject: null },
+      { text: 'Fight for full custody', tag: null, outcome: (G) => G.flags.includes('integrity') ? 'The court awards primary custody. The fight was worth it.' : 'The case drags on. The children endure the most.', effect: (p) => { p.mo -= 20000; p.m -= 12; p.setMem('custodyResolved', true); }, inject: null },
+      { text: 'Cede custody — it is better for them', tag: null, outcome: 'The decision is selfless and corrosive at once. You see them on weekends.', effect: (p) => { p.m -= 15; p.r += 8; p.karma += 5; p.setMem('custodyResolved', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mid_child_support',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.flags.includes('divorced') && G.children.length > 0 && !G.mem.childSupportEvent && G.money < 5000,
+    text: 'The child support payments are falling behind. The court will notice.',
+    choices: [
+      { text: 'Pay it — prioritise the children over everything', tag: null, outcome: 'The sacrifice is real. The relationship with your children is worth it.', effect: (p) => { p.mo -= 3000; p.m -= 5; p.karma += 8; p.setMem('childSupportEvent', true); }, inject: null },
+      { text: 'Apply for a reduction based on changed circumstances', tag: null, outcome: 'The court adjusts the amount. The process takes months.', effect: (p) => { p.mo -= 1000; p.m -= 3; p.setMem('childSupportEvent', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_child_forgives_divorce',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.flags.includes('divorced') && G.children.length > 0 && !G.mem.childForgivenDivorce,
+    text: 'An adult child sits with you and says they understand now — the divorce, why it happened, what it cost everyone. They have carried it long enough.',
+    choices: [
+      { text: 'Receive it with full honesty', tag: null, outcome: 'The conversation takes three hours. Something long held loosens.', effect: (p) => { p.m += 15; p.r -= 10; p.setMem('childForgivenDivorce', true); }, inject: null },
+      { text: 'Deflect — some things are better unexamined', tag: null, outcome: 'The moment passes. The weight remains distributed as before.', effect: (p) => { p.m += 4; p.setMem('childForgivenDivorce', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // ── MINIGAME-TRIGGERED EVENTS ─────────────────────────────────────────────
+
+  {
+    id: 'prison_escape_opportunity',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.inPrison && G.prisonSentence >= 3 && !G.mem.escapeAttempted,
+    text: (G) => {
+      if (['conflict_zone', 'developing_unstable', 'subsaharan'].includes(G.character.country.archetype))
+        return 'A gap appears — a guard falls asleep, a door is left unlatched. The fence is twenty metres. You could run.'
+      return 'During an outdoor work session, you spot it: a loose section of perimeter fencing and a blind spot in the camera coverage. A narrow window.'
+    },
+    choices: [
+      {
+        text: 'Attempt the escape',
+        tag: null,
+        outcome: 'You make your move.',
+        minigame: { type: 'maze', difficulty: 'hard', title: 'Prison Break', description: 'Navigate to the perimeter before the guard returns.', successOutcome: 'You clear the fence and disappear into the night. Free, for now — though hunted.', failOutcome: 'You are caught in the yard. A year added to your sentence. The story spreads.', karmaHit: 0 },
+        effect: (p) => { p.setMem('escapeAttempted', true); },
+        inject: null,
+      },
+      {
+        text: 'Stay — the risk is too great',
+        tag: null,
+        outcome: 'Wisdom or fear — you cannot be certain which. You serve your time.',
+        effect: (p) => { p.m -= 5; p.setMem('escapeAttempted', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ya_bar_fight',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.age >= 18 && !G.mem.barFight,
+    text: 'A confrontation at a bar escalates faster than expected. Someone throws a punch. You have half a second.',
+    choices: [
+      {
+        text: 'Fight back',
+        tag: null,
+        outcome: 'You swing.',
+        minigame: { type: 'fight', difficulty: 'normal', title: 'Bar Fight', description: 'Block, dodge, or punch. Read their move first.', enemyLabel: 'the aggressor', successOutcome: 'You give better than you get. They back off.', failOutcome: 'Bruised ribs, split lip. An expensive lesson.', karmaHit: -5 },
+        effect: (p) => { p.setMem('barFight', true); },
+        inject: null,
+      },
+      {
+        text: 'De-escalate — hands up, step back',
+        tag: null,
+        outcome: 'You defuse it. Most of the room respects the move.',
+        effect: (p) => { p.m += 3; p.karma += 5; p.setMem('barFight', true); },
+        inject: null,
+      },
+      {
+        text: 'Walk away',
+        tag: null,
+        outcome: 'Not your night. You leave before it becomes yours.',
+        effect: (p) => { p.m += 2; p.setMem('barFight', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_corporate_hack_opportunity',
+    phase: 'midlife',
+    weight: 1,
+    when: (G) => G.stats.smarts >= 65 && G.currentYear >= 2005 && !G.mem.corpHack && !G.inPrison,
+    text: 'A former colleague sends an encrypted message. They have found a vulnerability in a corporate payroll system — clean, untraceable, and very profitable. They need your skills.',
+    choices: [
+      {
+        text: 'Go in',
+        tag: null,
+        outcome: 'You boot up.',
+        minigame: { type: 'hack', difficulty: 'hard', title: 'Corporate Breach', description: 'Six-layer sequence. One mistake and the trace begins.', successOutcome: '$200,000 moves across three anonymous accounts. Clean exit.', failOutcome: 'The system flags you at layer four. You close the terminal. The logs exist.', karmaHit: -15 },
+        effect: (p) => { p.setMem('corpHack', true); p.karma -= 15; },
+        inject: null,
+      },
+      {
+        text: 'Delete the message',
+        tag: 'integrity',
+        outcome: 'Some opportunities you choose not to take. That choice is also a statement.',
+        effect: (p) => { p.karma += 8; p.setMem('corpHack', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ch_lockpick_challenge',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) => G.age >= 9 && G.age <= 13 && !G.mem.lockpickEvent,
+    text: 'You find a padlocked box that everyone says is empty. Curiosity turns into a challenge. Can you pick it open?',
+    choices: [
+      {
+        text: 'Try to pick the lock',
+        tag: null,
+        outcome: 'You reach for a hairpin.',
+        minigame: { type: 'lockpick', difficulty: 'easy', title: 'The Locked Box', description: 'Set each pin. Take your time.', successOutcome: 'The lid opens. Inside: old photographs, a letter, a key to something you haven\'t found yet.', failOutcome: 'The lock holds. The mystery remains.', karmaHit: 0 },
+        effect: (p) => { p.e += 3; p.setMem('lockpickEvent', true); },
+        inject: null,
+      },
+      {
+        text: 'Leave it alone',
+        tag: null,
+        outcome: 'Some things are meant to stay closed.',
+        effect: (p) => { p.setMem('lockpickEvent', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── ADDICTION ESCALATION — DRINKING ─────────────────────────────────────────
+  {
+    id: 'drinking_escalates',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.flags.includes('light_drinker') && !G.flags.includes('heavy_drinker') && !G.mem.drinking_escalate_shown && G.age >= 22,
+    text: G => {
+      const arch = G.character.country.archetype;
+      if (arch === 'post_soviet') return 'Vodka has become a daily ritual. The bottle waits for you every evening after work, a reliable companion in a city where reliable companions are rare.';
+      if (arch === 'conflict_zone') return 'Alcohol numbs the horrors you\'ve witnessed. Each drink pushes the memories a little further back — though they always return by dawn.';
+      return 'You\'ve been leaning on wine more than usual after work. The glass at dinner became two, then the whole bottle, then reaching for a second before the week is out.';
+    },
+    isKey: true,
+    choices: [
+      {
+        text: 'Cut back',
+        tag: null,
+        outcome: 'You pour the open bottle down the sink. It\'s harder than you expected.',
+        effect: (p) => { p.h += 5; p.m += 5; p.setMem('drinking_escalate_shown', true); },
+        inject: null,
+      },
+      {
+        text: 'It\'s fine, everyone drinks',
+        tag: null,
+        outcome: 'You pour another glass and tell yourself it\'s social. The definition of social keeps expanding.',
+        effect: (p) => { p.addFlag('heavy_drinker'); p.m -= 10; p.setMem('drinking_escalate_shown', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'heavy_drinking_consequences',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.flags.includes('heavy_drinker') && !G.flags.includes('addiction') && G.age >= 25 && !G.mem.heavy_drinking_shown,
+    text: 'The consequences are stacking up. Missed mornings. A warning at work. A friend who stopped calling. Your body is sending signals you\'ve been ignoring.',
+    isKey: true,
+    choices: [
+      {
+        text: 'Get help now',
+        tag: null,
+        outcome: 'You make the call you\'ve been putting off. The counsellor\'s voice is calm and unhurried.',
+        effect: (p) => { p.h += 10; p.addFlag('seeking_help'); p.setMem('heavy_drinking_shown', true); },
+        inject: null,
+      },
+      {
+        text: 'I can handle it',
+        tag: null,
+        outcome: 'You tell yourself you\'ve handled worse. You haven\'t.',
+        effect: (p) => { p.addFlag('addiction'); p.m -= 20; p.h -= 15; p.setMem('heavy_drinking_shown', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'hitting_rock_bottom',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.flags.includes('addiction') && !G.mem.rock_bottom_shown && G.age >= 21,
+    text: G => {
+      const arch = G.character.country.archetype;
+      if (['developing_urban', 'subsaharan', 'developing_unstable'].includes(arch)) return 'You spent your rent money on another binge. The landlord\'s notice is on the door. Your phone shows unanswered calls from family you\'ve been avoiding for months.';
+      return 'You wake up in a stranger\'s apartment having missed an important presentation. Your phone has seventeen missed calls. The ceiling is unfamiliar. You don\'t know what day it is.';
+    },
+    isKey: true,
+    choices: [
+      {
+        text: 'Check into rehab',
+        tag: null,
+        outcome: 'It costs money and dignity. It costs less than continuing.',
+        effect: (p) => { p.mo -= 10000; p.h -= 5; p.setMem('rock_bottom_shown', true); p.addFlag('in_recovery'); },
+        inject: null,
+      },
+      {
+        text: 'This is as low as I go. I\'ll quit myself',
+        tag: null,
+        outcome: 'White-knuckling it. Every hour is a small war.',
+        effect: (p) => { p.mo -= 0; p.m -= 15; p.h -= 10; p.setMem('rock_bottom_shown', true); },
+        inject: null,
+      },
+      {
+        text: 'Order another drink',
+        tag: null,
+        outcome: 'The bottom, it turns out, has a basement.',
+        effect: (p) => { p.m -= 25; p.h -= 25; p.karma -= 5; p.setMem('rock_bottom_shown', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'recovery_anniversary',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.flags.includes('in_recovery') && !G.mem.recovery_anniversary_shown && G.age >= 22,
+    text: 'One year sober. Your sponsor hands you a chip the size of a coin. You turn it over in your fingers and think about the year it represents.',
+    isKey: true,
+    choices: [
+      {
+        text: 'Celebrate with your sponsor',
+        tag: null,
+        outcome: 'Coffee and cheap cake at the community hall. The most meaningful party you\'ve ever attended.',
+        effect: (p) => { p.h += 20; p.karma += 10; p.setMem('recovery_anniversary_shown', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'aa_meeting',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.flags.includes('heavy_drinker') && !G.flags.includes('in_recovery') && !G.mem.aa_invited,
+    text: 'Someone who\'s seen you at your worst pulls you aside. They hand you a folded piece of paper with an address and a time. "Just come once," they say. "You don\'t have to say anything."',
+    choices: [
+      {
+        text: 'Go to the meeting',
+        tag: null,
+        outcome: 'You sit in the back. You listen. You hear yourself in other people\'s words.',
+        effect: (p) => { p.h += 8; p.m += 5; p.setMem('aa_invited', true); p.addFlag('seeking_help'); },
+        inject: null,
+      },
+      {
+        text: 'Decline',
+        tag: null,
+        outcome: 'You pocket the paper and never take it out again.',
+        effect: (p) => { p.h -= 3; p.setMem('aa_invited', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── GAMBLING ADDICTION ───────────────────────────────────────────────────────
+  {
+    id: 'gambling_addiction_spiral',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => (G.flags.includes('addicted_gambling') || G.flags.includes('gambling_addiction')) && !G.mem.gambling_spiral_shown && G.age >= 18,
+    text: G => {
+      const arch = G.character.country.archetype;
+      if (['wealthy_west', 'wealthy_gulf'].includes(arch)) return 'The casino knows your name now. The carpet, the lights, the sound of chips — they\'ve replaced everything else. You\'ve been calling in sick to bet on sports from your couch.';
+      return 'The back-room betting shop is a second home. Illegal, yes, but always open, always welcoming when you have money. The debt has a face now — a man who knows where you live.';
+    },
+    isKey: true,
+    choices: [
+      {
+        text: 'Seek help for gambling addiction',
+        tag: null,
+        outcome: 'The first step is admitting the cards are rigged. Always were.',
+        effect: (p) => { p.h += 5; p.addFlag('gambling_recovery'); p.setMem('gambling_spiral_shown', true); },
+        inject: null,
+      },
+      {
+        text: 'One big win will fix everything',
+        tag: null,
+        outcome: 'There is no big win. There is only the next bet.',
+        effect: (p) => { p.mo -= 2000; p.m -= 10; p.h -= 20; p.setMem('gambling_spiral_shown', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'gambling_big_loss',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => (G.flags.includes('addicted_gambling') || G.flags.includes('gambling_addiction')) && G.money > 500 && !G.mem.gambling_big_loss,
+    text: 'You bet everything on a sure thing. The horse stumbles. The card is wrong. The wheel lands one slot over. In minutes, a significant portion of your savings is gone.',
+    isKey: true,
+    choices: [
+      {
+        text: 'Walk away',
+        tag: null,
+        outcome: 'You leave the floor. You don\'t look back. The loss is real — so is the decision.',
+        effect: (p) => { p.mo -= 3000; p.h -= 25; p.setMem('gambling_big_loss', true); },
+        inject: null,
+      },
+      {
+        text: 'Double down to recover',
+        tag: null,
+        outcome: 'Chasing losses is a mathematical trap. You step into it fully.',
+        effect: (p) => { p.mo -= 7000; p.m -= 15; p.h -= 30; p.setMem('gambling_big_loss', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── EARLY CHILDHOOD EVENTS ───────────────────────────────────────────────────
+  {
+    id: 'first_steps',
+    phase: 'early_childhood',
+    weight: 4,
+    when: (G) => G.age <= 2 && !G.mem.first_steps,
+    text: 'You take your first wobbly steps across the living room floor. Your parents beam with pride.',
+    isKey: true,
+    choices: [
+      {
+        text: 'Toddle forward',
+        tag: null,
+        outcome: 'You make it three steps before sitting down hard. Everyone cheers.',
+        effect: (p) => { p.h += 5; p.setMem('first_steps', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'first_word',
+    phase: 'early_childhood',
+    weight: 3,
+    when: (G) => G.age <= 2 && !G.mem.first_word && G.mem.first_steps,
+    text: 'You open your mouth and say your first real word. It comes out a little garbled, but everyone in the room understands. "Mama." "Dada." The sound changes everything.',
+    isKey: true,
+    choices: [
+      {
+        text: 'Say it again',
+        tag: null,
+        outcome: 'They photograph you. They call relatives. You don\'t know why everyone is so excited, but their joy becomes yours.',
+        effect: (p) => { p.e += 2; p.h += 5; p.setMem('first_word', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'imaginary_friend',
+    phase: 'early_childhood',
+    weight: 3,
+    when: (G) => G.age >= 3 && G.age <= 6 && !G.mem.imaginary_friend,
+    text: 'Someone appears in your room who nobody else can see. They have a name, preferences, opinions on things. They are very real to you.',
+    choices: [
+      {
+        text: 'Name your imaginary friend',
+        tag: null,
+        outcome: 'You set a plate for them at dinner. Your parents smile and say nothing.',
+        effect: (p) => { p.h += 10; p.e += 3; p.setMem('imaginary_friend', true); },
+        inject: null,
+      },
+      {
+        text: 'Ignore it',
+        tag: null,
+        outcome: 'The figure fades after a few weeks, unacknowledged.',
+        effect: (p) => { p.h += 2; p.setMem('imaginary_friend', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'childhood_nightmare',
+    phase: 'early_childhood',
+    weight: 3,
+    when: (G) => G.age >= 3 && G.age <= 8 && !G.mem.nightmare,
+    text: 'The same dream keeps coming back. Something is in the dark at the end of the hallway. You wake up in a cold sweat with a pounding heart.',
+    choices: [
+      {
+        text: 'Tell your parents',
+        tag: null,
+        outcome: 'They sit with you until the room feels safe again. It helps more than you can articulate.',
+        effect: (p) => { p.h += 8; p.m += 3; p.setMem('nightmare', true); },
+        inject: null,
+      },
+      {
+        text: 'Face the dark alone',
+        tag: null,
+        outcome: 'You stare at the ceiling until morning. The fear doesn\'t go, but something else grows in its place.',
+        effect: (p) => { p.h -= 3; p.e += 3; p.setMem('nightmare', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'school_first_day',
+    phase: 'early_childhood',
+    weight: 4,
+    when: (G) => G.age >= 5 && G.age <= 7 && !G.mem.school_first_day,
+    text: G => {
+      const arch = G.character.country.archetype;
+      if (['conflict_zone', 'developing_unstable'].includes(arch)) return 'The makeshift classroom smells of chalk and old wood. You sit on a bench with six other children and wait for a teacher who arrives forty minutes late.';
+      if (['developing_urban', 'subsaharan'].includes(arch)) return 'The schoolyard is dusty and loud. Children shout in a mix of languages. Your new uniform is already too hot in the morning sun.';
+      return 'The gleaming school bus pulls up and the door opens. Thirty children in identical backpacks climb aboard. This is the first day of the rest of your education.';
+    },
+    isKey: true,
+    choices: [
+      {
+        text: 'Make a friend',
+        tag: null,
+        outcome: 'You sit next to someone with bright eyes and introduce yourself. By lunch you have an ally.',
+        effect: (p) => { p.h += 12; p.e += 3; p.setMem('school_first_day', true); p.addFlag('first_school_friend'); },
+        inject: null,
+      },
+      {
+        text: 'Cry and hide',
+        tag: null,
+        outcome: 'The teacher finds you behind the coats. She sits with you until the panic passes.',
+        effect: (p) => { p.h -= 5; p.e += 2; p.setMem('school_first_day', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'childhood_pet_wish',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.age >= 5 && G.age <= 10 && G.pets.length === 0 && !G.mem.pet_wish,
+    text: 'You want a pet more than you\'ve wanted anything in your short life. You dream about it. You draw pictures of it. You have already named it.',
+    choices: [
+      {
+        text: 'Beg relentlessly',
+        tag: null,
+        outcome: 'Your parents say no firmly and repeatedly until you drop it.',
+        effect: (p) => { p.h -= 3; p.setMem('pet_wish', true); },
+        inject: null,
+      },
+      {
+        text: 'Ask politely once',
+        tag: null,
+        outcome: '"Maybe," your parent says. You take that and treasure it.',
+        effect: (p) => { p.h += 5; p.setMem('pet_wish', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'playground_bully',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.age >= 6 && G.age <= 12 && !G.mem.bullied,
+    text: 'There\'s a kid at school who has decided you are a target. Every recess. Every lunch. You can\'t avoid them and ignoring them isn\'t working.',
+    isKey: true,
+    choices: [
+      {
+        text: 'Stand up to the bully',
+        tag: null,
+        outcome: 'Your voice shakes but you hold your ground. They back off. Some of the other kids start talking to you after that.',
+        effect: (p) => { p.h += 10; p.karma += 5; p.e += 2; p.setMem('bullied', true); },
+        inject: null,
+      },
+      {
+        text: 'Tell a teacher',
+        tag: null,
+        outcome: 'There is a meeting. The bully is warned. Things are quieter for a while.',
+        effect: (p) => { p.h += 5; p.m += 3; p.setMem('bullied', true); },
+        inject: null,
+      },
+      {
+        text: 'Avoid them',
+        tag: null,
+        outcome: 'You rearrange your whole day around someone else\'s cruelty.',
+        effect: (p) => { p.h -= 5; p.setMem('bullied', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'childhood_sport_tryout',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.age >= 7 && G.age <= 14 && !G.mem.sport_tryout,
+    text: 'The coach puts you through the drills. Other kids line up beside you. The tryout is your chance to make the team.',
+    choices: [
+      {
+        text: 'Give it your all',
+        tag: null,
+        outcome: 'You make the team. Your name goes on the list. You read it three times.',
+        effect: (p) => { p.h += 8; p.setMem('sport_tryout', true); },
+        inject: null,
+      },
+      {
+        text: 'Don\'t bother trying out',
+        tag: null,
+        outcome: 'You watch from the sideline as the team forms without you.',
+        effect: (p) => { p.h -= 2; p.setMem('sport_tryout', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'childhood_reading',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.age >= 6 && G.age <= 10 && !G.mem.childhood_reading,
+    text: 'You find a book that grabs you and doesn\'t let go. You read it under the covers with a torch. You finish it and immediately turn back to page one.',
+    choices: [
+      {
+        text: 'Devour every book you can find',
+        tag: null,
+        outcome: 'The library becomes your territory. You run out of books to borrow and start over.',
+        effect: (p) => { p.e += 8; p.h += 5; p.setMem('childhood_reading', true); },
+        inject: null,
+      },
+      {
+        text: 'Prefer cartoons instead',
+        tag: null,
+        outcome: 'The book sits on the shelf. The TV is more immediate.',
+        effect: (p) => { p.h += 5; p.setMem('childhood_reading', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'daycare_drama',
+    phase: 'early_childhood',
+    weight: 3,
+    when: (G) => G.age >= 2 && G.age <= 5 && !G.mem.daycare_drama,
+    text: 'Another child at daycare has taken your favourite toy and refuses to give it back. The injustice is enormous. This is the worst thing that has ever happened.',
+    choices: [
+      {
+        text: 'Share your toys',
+        tag: null,
+        outcome: 'You offer your other toy. Grudgingly. The teacher gives you a sticker.',
+        effect: (p) => { p.h += 5; p.karma += 5; p.setMem('daycare_drama', true); },
+        inject: null,
+      },
+      {
+        text: 'Refuse to share',
+        tag: null,
+        outcome: 'You take your toy back. The other child cries. You feel briefly victorious, then vaguely bad.',
+        effect: (p) => { p.h += 3; p.karma -= 3; p.setMem('daycare_drama', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'childhood_talent_show',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.age >= 8 && G.age <= 14 && !G.mem.talent_show,
+    text: 'The school is holding a talent show. Your name is on the list whether you signed up or not — a friend volunteered you. The auditorium will be full.',
+    choices: [
+      {
+        text: 'Perform confidently',
+        tag: null,
+        outcome: 'The nerves become something else under the lights. You finish. People clap. Someone in the second row stands up.',
+        effect: (p) => { p.h += 15; p.s += 2; p.setMem('talent_show', true); },
+        inject: null,
+      },
+      {
+        text: 'Freeze on stage',
+        tag: null,
+        outcome: 'You stand at the microphone for a very long eight seconds. Then you walk off. In retrospect, you learn something.',
+        effect: (p) => { p.h -= 5; p.e += 2; p.setMem('talent_show', true); },
+        inject: null,
+      },
+      {
+        text: 'Refuse to participate',
+        tag: null,
+        outcome: 'You sit in the audience and watch. Part of you wonders.',
+        effect: (p) => { p.h -= 2; p.setMem('talent_show', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── PROPERTY EVENTS ───────────────────────────────────────────────────────────
+  {
+    id: 'neighbor_dispute',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.assets?.properties?.length > 0 && !G.mem.neighbor_dispute && G.age >= 22,
+    text: (G) => {
+      if (G.character.country.archetype === 'wealthy_west')
+        return 'Your HOA has forwarded a noise complaint from next door — apparently your weekend habits are "inconsistent with community standards". The letter is very long.'
+      if (G.character.country.archetype === 'post_soviet')
+        return 'Your upstairs neighbour in the Soviet-era apartment block has been hammering at all hours. The building management committee is useless. The feud is escalating.'
+      if (['developing_urban', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'A developer has begun encroaching on the boundary between their site and your property. A wall has appeared overnight. It is not on your land — not quite.'
+      return 'A dispute with your neighbour has been building for weeks. Today it came to a head over the fence line and neither of you is backing down.'
+    },
+    choices: [
+      { text: 'Talk it out calmly', tag: null, outcome: 'The conversation is uncomfortable but honest. A compromise is reached. The tension thaws.', effect: (p) => { p.m += 5; p.karma += 5; p.setMem('neighbor_dispute', true); }, inject: null },
+      { text: 'Lawyer up', tag: null, outcome: "The solicitor's letter lands and the neighbour backs down — grudgingly. The legal bill lands too.", effect: (p) => { p.mo -= 500; p.m -= 5; p.setMem('neighbor_dispute', true); }, inject: null },
+      { text: 'Ignore it', tag: null, outcome: 'The dispute festers. You spend the next month dreading your own front door.', effect: (p) => { p.m -= 8; p.setMem('neighbor_dispute', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'home_renovation',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.assets?.properties?.length > 0 && G.money >= 2000 && !G.mem.home_reno && G.age >= 25,
+    text: 'Your home is showing its age. The kitchen is original from when the previous owner bought it, the bathroom tiles have seen better decades, and the roof has started making sounds. Something has to give.',
+    choices: [
+      { text: 'Full renovation ($5,000)', tag: null, outcome: 'Six weeks of dust, builders, and chaos — then it is transformed. The property value climbs. You feel different walking through the door.', effect: (p) => { p.mo -= 5000; p.m += 20; p.w += 8; p.setMem('home_reno', true); }, inject: null },
+      { text: 'Basic repairs ($1,500)', tag: null, outcome: 'The essentials are fixed. Not glamorous, but solid.', effect: (p) => { p.mo -= 1500; p.m += 8; p.setMem('home_reno', true); }, inject: null },
+      { text: 'DIY it', tag: null, outcome: 'It took every weekend for three months and several trips to A&E with minor injuries, but you got there. The tiles are slightly crooked. You love them.', effect: (p) => { p.mo -= 300; p.m += 12; p.h -= 5; p.setMem('home_reno', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'flood_damage',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.assets?.properties?.length > 0 && !G.mem.flood_damage && G.age >= 22,
+    text: (G) => {
+      if (['developing_unstable', 'subsaharan', 'conflict_zone'].includes(G.character.country.archetype))
+        return 'The monsoon season has been brutal this year. Water has entered the ground floor of your property. The damage is extensive and insurance is a distant concept here.'
+      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
+        return 'An unexpected flash flood — the drainage system overwhelmed in minutes. Your ground floor is under thirty centimetres of filthy water. The insurance company has already put you on hold.'
+      return 'Heavy rains have overwhelmed the local drainage and your property has flooded. The damage will take months to address.'
+    },
+    choices: [
+      { text: 'File an insurance claim', tag: null, outcome: 'The assessor takes three weeks. The payout covers most of it, after the excess. The process is exhausting.', effect: (p) => { p.mo -= 1000; p.m -= 10; p.setMem('flood_damage', true); }, inject: null },
+      { text: 'Repair it yourself', tag: null, outcome: 'You rip out the damaged flooring and rebuild it by hand. Your back pays the price. The house recovers; you take longer.', effect: (p) => { p.mo -= 3000; p.m -= 15; p.h -= 5; p.setMem('flood_damage', true); }, inject: null },
+      { text: 'Sell the damaged property fast', tag: null, outcome: 'You take a heavy loss to offload the problem. The relief is immediate. The regret sets in later.', effect: (p) => { p.mo -= 8000; p.m -= 20; p.setMem('flood_damage', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'rental_income_opportunity',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.assets?.properties?.length > 0 && !G.mem.rented_room && G.age >= 25,
+    text: 'You have a spare room sitting empty. A colleague mentions they know someone looking for a place. The extra income would be useful — but so would your privacy.',
+    choices: [
+      { text: 'Rent it out', tag: null, outcome: 'The money arrives each month. So does tenant drama: the shared fridge, the late nights, the passive-aggressive notes. Worth it, mostly.', effect: (p) => { p.mo += 800; p.m -= 5; p.setMem('rented_room', true); }, inject: null },
+      { text: 'Keep your privacy', tag: null, outcome: 'Your home remains your own. The quiet is worth more than the rent.', effect: (p) => { p.m += 5; p.setMem('rented_room', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'property_price_boom',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.assets?.properties?.length > 0 && G.currentYear >= 2000 && !G.mem.prop_boom,
+    text: (G) => {
+      if (G.character.country.archetype === 'wealthy_west' && G.currentYear >= 2020)
+        return 'The post-pandemic housing market has gone into overdrive. Your property has appreciated by more in the last eighteen months than in the previous decade. Estate agents are sending unsolicited letters.'
+      if (G.character.country.archetype === 'wealthy_west' && G.currentYear >= 2000)
+        return 'The property market is booming and your home has surged in value. Everyone seems to be either buying or selling.'
+      if (G.character.country.archetype === 'wealthy_east')
+        return 'The Asian property surge has lifted values across the region. Your property is suddenly worth considerably more than you paid for it.'
+      if (['developing_urban', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'Gentrification is reshaping the neighbourhood. The cafe that replaced the hardware shop charges five times as much. Your property value has followed the coffee prices upward.'
+      return 'Local property values have surged unexpectedly. Your asset is worth significantly more than you paid for it.'
+    },
+    choices: [
+      { text: 'Sell now at peak', tag: null, outcome: 'You time the market perfectly. The windfall is significant. Finding somewhere new to live is a problem for tomorrow.', effect: (p) => { p.mo += 15000; p.m += 20; p.setMem('prop_boom', true); }, inject: null },
+      { text: 'Hold for the long term', tag: null, outcome: 'You resist the temptation. The asset sits there, appreciating. Patience has always been part of the plan.', effect: (p) => { p.m += 10; p.w += 5; p.setMem('prop_boom', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // ── CAREER DEPTH EVENTS ───────────────────────────────────────────────────────
+  {
+    id: 'workplace_romance',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.career !== null && G.partner === null && G.age >= 22 && !G.mem.workplace_romance,
+    text: 'A colleague has been finding increasingly transparent reasons to stop by your desk. The coffee invitations are becoming something else. The feeling appears to be mutual.',
+    choices: [
+      { text: 'Pursue the connection', tag: null, outcome: 'The first date is a work drinks that neither of you wants to end. Risky, exhilarating, and possibly worth every complication.', effect: (p) => { p.m += 15; p.setMem('workplace_romance', true); }, inject: null },
+      { text: 'Keep it professional', tag: null, outcome: 'You redirect the energy back into the work. The right call, probably. The occasional glance across the office costs nothing.', effect: (p) => { p.m += 3; p.karma += 5; p.setMem('workplace_romance', true); }, inject: null },
+      { text: 'Report to HR', tag: null, outcome: 'The process is uncomfortable and thorough. By the book and slightly joyless — but the right protocol.', effect: (p) => { p.m -= 5; p.karma += 8; p.setMem('workplace_romance', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'demotion',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.career !== null && G.career.level > 1 && !G.mem.demoted && G.age >= 25,
+    text: (G) => {
+      if (G.character.country.archetype === 'wealthy_west')
+        return 'A company restructuring has been announced. When the dust settles, your title has quietly changed. The salary review that comes with it goes the wrong direction.'
+      if (G.character.country.archetype === 'post_soviet')
+        return "The manager's nephew has been brought in above you. The demotion arrives in a terse memo. Political connections matter here more than performance."
+      if (['developing_urban', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'Favouritism in the office has reached its conclusion. Someone with the right connections has your position now. The HR department shows no interest in your complaint.'
+      return 'Your performance has been flagged by management. A demotion is presented as a development opportunity. The framing fools no one.'
+    },
+    choices: [
+      { text: 'Accept and work harder', tag: null, outcome: 'You swallow it. The humiliation sits heavy but the resolve is real. You begin rebuilding from the new floor.', effect: (p) => { p.m -= 20; p.w -= 10; p.setMem('demoted', true); }, inject: null },
+      { text: 'Quit in protest', tag: null, outcome: 'You walk out with your head up. The job market awaits. The career gap will need explaining later.', effect: (p) => { p.m -= 10; p.setMem('demoted', true); }, inject: null },
+      { text: 'Contest the decision formally', tag: null, outcome: 'You file the appeal. Legal fees and six weeks of limbo. The outcome could go either way.', effect: (p) => { p.mo -= 1000; p.m -= 15; p.setMem('demoted', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'company_bankruptcy',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.career !== null && !G.mem.company_bankrupt && G.age >= 22,
+    text: 'The email arrives at 7am on a Monday. The company is entering administration. HR will be in touch. The office plants are still alive. The coffee machine is still on. Everything else is over.',
+    choices: [
+      { text: 'Start job searching immediately', tag: null, outcome: 'You update the CV that night. The search is brutal but you stay ahead of the market. Something comes through eventually.', effect: (p) => { p.m -= 15; p.setMem('company_bankrupt', true); }, inject: null },
+      { text: 'File for unemployment benefits', tag: null, outcome: 'The paperwork takes three weeks. The payments arrive. They are not enough but they are something.', effect: (p) => { p.mo += 500; p.m -= 20; p.setMem('company_bankrupt', true); }, inject: null },
+      { text: 'Take legal action against the company', tag: null, outcome: 'The employment tribunal drags on for months. You receive a fraction of what you were owed. The solicitor receives the rest.', effect: (p) => { p.mo -= 800; p.m -= 10; p.setMem('company_bankrupt', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'industry_layoffs',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.career !== null && !G.mem.industry_layoffs && G.currentYear >= 1980 && G.age >= 25,
+    text: (G) => {
+      if (G.character.country.archetype === 'wealthy_west' && G.currentYear >= 2008 && G.currentYear <= 2012)
+        return 'The financial crisis has reached your industry. Whole departments are being eliminated. The redundancy notices are going out in batches and your name is on the next one.'
+      if (G.character.country.archetype === 'wealthy_west' && G.currentYear >= 2000 && G.currentYear <= 2002)
+        return 'The dot-com bubble has burst spectacularly. Your sector — so recently untouchable — is haemorrhaging jobs. The whole floor has been called to a "brief update" meeting.'
+      if (G.character.country.archetype === 'post_soviet' && G.currentYear >= 1991 && G.currentYear <= 1999)
+        return 'The post-Soviet economic collapse is hitting your sector hard. State enterprises are dissolving. Entire industries have evaporated in a year. Payroll has not arrived in three months.'
+      return 'A sector-wide downturn has triggered a wave of layoffs. The industry press is calling it a correction. Your mortgage does not care what the press calls it.'
+    },
+    choices: [
+      { text: 'Volunteer for the redundancy package', tag: null, outcome: 'The payout is reasonable. You take it and use the space to think. The uncertainty is the price.', effect: (p) => { p.mo += 2000; p.m -= 10; p.setMem('industry_layoffs', true); }, inject: null },
+      { text: 'Fight to keep your job', tag: null, outcome: 'You make yourself indispensable through sheer output. It costs you sleep and several months of anxiety. You survive the cut.', effect: (p) => { p.m -= 20; p.setMem('industry_layoffs', true); }, inject: null },
+      { text: 'Start your own business', tag: null, outcome: 'The layoffs become the catalyst. You spend the redundancy on the first invoice. The entrepreneurial leap is terrifying and clarifying.', effect: (p) => { p.mo -= 3000; p.m -= 5; p.setMem('industry_layoffs', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mentor_at_work',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.career !== null && G.career.level <= 3 && !G.mem.has_mentor && G.age >= 21,
+    text: 'A senior colleague has taken an interest in your development. They have begun inviting you to meetings above your grade, making introductions, and sharing things the official training programme never would.',
+    choices: [
+      { text: 'Welcome the mentorship fully', tag: null, outcome: 'Over the next two years they open doors you did not know existed. The relationship shifts your trajectory measurably.', effect: (p) => { p.e += 8; p.m += 10; p.w += 5; p.setMem('has_mentor', true); }, inject: null },
+      { text: 'Prefer to figure it out alone', tag: null, outcome: 'You decline politely. The independence matters to you. The road is longer for it, but it is yours.', effect: (p) => { p.m += 3; p.setMem('has_mentor', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // ── EDUCATION MID-PROGRAM EVENTS ──────────────────────────────────────────────
+  {
+    id: 'failed_exam',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) => G.education?.enrolled !== null && !G.mem.failed_exam && G.age >= 16,
+    text: 'The exam results arrive and yours is not what you needed. The grade sits on the page like a verdict. The path forward suddenly requires more from you than you expected.',
+    choices: [
+      { text: 'Study hard and retake it', tag: null, outcome: 'Three weeks of intensive revision. The retake is harder than the original. You pass. The resilience stays with you.', effect: (p) => { p.e += 5; p.m -= 10; p.setMem('failed_exam', true); }, inject: null },
+      { text: 'Accept the grade and move on', tag: null, outcome: 'You absorb the result and keep walking. The disappointment travels with you for a while.', effect: (p) => { p.m -= 15; p.setMem('failed_exam', true); }, inject: null },
+      { text: 'Drop the subject entirely', tag: null, outcome: 'The course load lightens. So does your confidence in the area. You redirect elsewhere.', effect: (p) => { p.m -= 5; p.e -= 3; p.setMem('failed_exam', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'summer_job',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) => G.education?.enrolled !== null && G.age >= 16 && G.age <= 25 && !G.mem.summer_job,
+    text: 'The summer break stretches ahead. A friend mentions there are positions at a local business — not glamorous, but the pay is real and the experience would look good on paper.',
+    choices: [
+      { text: 'Take the job', tag: null, outcome: 'Six weeks of early starts and tired evenings. The money is real and so is the understanding that work is work. Study time takes the hit.', effect: (p) => { p.mo += 1500; p.w += 3; p.m -= 5; p.setMem('summer_job', true); }, inject: null },
+      { text: 'Focus on studying instead', tag: null, outcome: 'You spend the summer ahead of the syllabus. The next term feels different when you have already covered the material.', effect: (p) => { p.e += 5; p.m += 5; p.setMem('summer_job', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'thesis_defense',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.education?.level === 'graduate' && !G.mem.thesis_defended && G.age >= 22,
+    text: 'The day has arrived. Four years of research condensed into sixty minutes in a room with three academics who have read every word more carefully than you wrote them. The committee is assembled. Your notes are as ready as they will ever be.',
+    choices: [
+      { text: 'Crush it — you know this material cold', tag: null, outcome: 'The defence runs long because the questions are genuinely engaging. The committee recommends no corrections. You walk out a different person.', effect: (p) => { p.e += 10; p.m += 20; p.setMem('thesis_defended', true); }, inject: null },
+      { text: 'Scrape through on adrenaline', tag: null, outcome: 'You fumble two questions and recover. The pass is real if not elegant. You will take it.', effect: (p) => { p.m -= 5; p.e += 5; p.setMem('thesis_defended', true); }, inject: null },
+      { text: 'Revisions required', tag: null, outcome: 'Three chapters need substantial work. The disappointment is sharp. The six weeks of corrections are clarifying. The second submission is stronger.', effect: (p) => { p.m -= 15; p.e += 3; p.setMem('thesis_defended', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'study_abroad_opportunity',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.education?.enrolled !== null && !G.mem.studied_abroad && G.age >= 18 && G.age <= 28 && G.money >= 2000,
+    text: 'Your institution has announced an exchange programme. A semester abroad — a different city, a different language, a different way of approaching the same material. The application window is open for two weeks.',
+    choices: [
+      { text: 'Go abroad', tag: null, outcome: 'The semester abroad is disorienting and transformative in equal measure. A new language, new friends, a new understanding of where you come from. You return changed.', effect: (p) => { p.mo -= 3000; p.e += 10; p.m += 15; p.s += 5; p.setMem('studied_abroad', true); }, inject: null },
+      { text: 'Stay home', tag: null, outcome: 'The decision feels sensible at the time. Your studies continue without interruption. The programme runs without you.', effect: (p) => { p.m += 3; p.setMem('studied_abroad', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'professor_conflict',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) => G.education?.enrolled !== null && !G.mem.professor_conflict && G.age >= 17,
+    text: 'A professor has taken against you — or at least that is how it feels. Your work is held to a different standard. The feedback is harsh in ways that do not feel purely academic. The other students have noticed.',
+    choices: [
+      { text: 'Fight your corner academically', tag: null, outcome: 'You produce work so rigorous it cannot be dismissed. The professor does not warm to you. Your grades do.', effect: (p) => { p.e += 5; p.m -= 5; p.setMem('professor_conflict', true); }, inject: null },
+      { text: 'Bite your tongue and outlast it', tag: null, outcome: "The semester ends. The professor's opinion of you was never going to matter beyond these walls. The degree remains on track.", effect: (p) => { p.m -= 8; p.setMem('professor_conflict', true); }, inject: null },
+      { text: 'File a formal complaint', tag: null, outcome: 'The department reviews the marking. An acknowledgement is made — nothing dramatic, nothing fast. The process restores something.', effect: (p) => { p.karma += 3; p.m -= 10; p.setMem('professor_conflict', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // ── PET EVENTS ───────────────────────────────────────────────────────────────
+
+  {
+    id: 'pet_illness',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.pets && G.pets.length > 0 && G.age >= 10,
+    text: (G) => {
+      if (G.character.country.archetype === 'conflict_zone')
+        return 'Your pet is sick — lethargic, refusing food. In a place like this, finding a vet means scrounging for supplies and favours. The cost is not just money.'
+      if (G.character.country.archetype === 'wealthy_west' || G.character.country.archetype === 'wealthy_east')
+        return 'Your pet stops eating and the vet clinic — gleaming, expensive, thorough — gives you the diagnosis and the bill in the same breath.'
+      if (G.character.country.archetype === 'subsaharan')
+        return 'Your pet is unwell. The nearest animal doctor is far and the journey alone is a commitment most cannot afford.'
+      return 'Your pet is sick. The vet visit is unavoidable. The bill, when it comes, stings.'
+    },
+    choices: [
+      {
+        text: 'Pay for treatment',
+        tag: null,
+        outcome: 'The treatment works. Your pet recovers slowly, and you feel the relief in your chest more than you expected.',
+        effect: (p) => { p.mo -= 300; p.m += 5; },
+        inject: null,
+      },
+      {
+        text: 'Surrender the pet — you cannot afford this',
+        tag: null,
+        outcome: 'You hand them over. They look back at you from the carrier. The guilt settles in and does not leave quickly.',
+        effect: (p) => { p.m -= 20; p.addFlag('surrendered_pet'); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'pet_runs_away',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.pets && G.pets.length > 0 && G.age >= 10 && !G.flags.includes('pet_lost'),
+    text: (G) => {
+      if (G.character.country.archetype === 'conflict_zone')
+        return 'In the chaos of another difficult week, the gate is left unlatched. Your pet is gone. In a neighbourhood like this, the odds of finding them are not good.'
+      if (['subsaharan', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'Your pet slips out through a gap in the fence and disappears into the neighbourhood. You call their name until dark.'
+      return 'You come home and the front door has been left ajar. Your pet is nowhere to be found.'
+    },
+    choices: [
+      {
+        text: 'Search the neighbourhood — post flyers, ask everyone',
+        tag: null,
+        outcome: (G) => {
+          if (Math.random() < 0.6) return 'Two days later, a neighbour calls. Your pet is found — thin, a little spooked, but home.'
+          return 'You search for days. The flyers fade in the rain. They do not come back.'
+        },
+        effect: (p) => {
+          if (Math.random() < 0.6) { p.m += 10; }
+          else { p.m -= 15; p.addFlag('pet_lost'); }
+        },
+        inject: null,
+      },
+      {
+        text: 'Accept that they are gone',
+        tag: null,
+        outcome: 'You take the bowl inside. Some losses you carry quietly.',
+        effect: (p) => { p.m -= 15; p.addFlag('pet_lost'); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'pet_death',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.pets && G.pets.length > 0 && G.age >= 18,
+    text: (G) => {
+      if (G.character.country.archetype === 'wealthy_west' || G.character.country.archetype === 'wealthy_east')
+        return 'The vet said it would be a matter of weeks. They were right. Your pet — companion, routine, small daily anchor — dies at home, quietly, on their favourite blanket.'
+      if (G.character.country.archetype === 'conflict_zone')
+        return 'Your pet has been with you through things most people cannot imagine. Old age catches up with them now. In a life with few certainties, they were one. That is gone now.'
+      return 'Your pet dies of old age. Fourteen years of mornings together, and now the house is very quiet.'
+    },
+    choices: [
+      {
+        text: 'Grieve properly — let yourself feel it',
+        tag: null,
+        outcome: 'The loss is real. Grief for an animal is its own kind, and you do not apologise for it.',
+        effect: (p) => { p.m -= 20; p.h -= 5; },
+        inject: null,
+      },
+      {
+        text: 'Celebrate the life they had',
+        tag: null,
+        outcome: 'You look at old photos. It was a good life for them. That is enough.',
+        effect: (p) => { p.m -= 8; },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'pet_learns_trick',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.pets && G.pets.length > 0 && G.age >= 8,
+    text: (G) => {
+      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
+        return 'After weeks of patient repetition — treats, hand signals, the same word until it lost meaning — your pet finally gets it. The trick clicks. They look at you with what you are almost certain is pride.'
+      if (G.character.country.archetype === 'subsaharan')
+        return 'The neighbourhood kids gather to watch. Your pet performs the trick perfectly. The laughter is real and warm.'
+      return 'You have been working on this for weeks. Today, finally, something clicks. Your pet nails the trick and the two of you share a moment of uncomplicated joy.'
+    },
+    choices: [
+      {
+        text: 'Spend the afternoon training together',
+        tag: null,
+        outcome: 'Some hours are just good. This is one of them.',
+        effect: (p) => { p.m += 12; p.karma += 2; },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'stray_dog_adopts_you',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => (!G.pets || G.pets.length === 0) && G.age >= 12,
+    text: (G) => {
+      if (G.character.country.archetype === 'conflict_zone')
+        return 'Strays are everywhere here. Most people look through them. But this one has been following you for three days now — waiting outside, patient, not begging. Just present.'
+      if (['subsaharan', 'developing_urban', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'A scraggly dog has decided you are its person. It shows up each morning and waits. The neighbourhood has started calling it by a name you did not choose.'
+      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
+        return 'A stray follows you home from the park. No collar, well-behaved, eyes that seem to already know the layout of your flat. The shelter is full. You have a decision to make.'
+      return 'A stray dog has adopted you. It appeared three days ago and it has not left. It sits outside your door like a question you have not answered yet.'
+    },
+    choices: [
+      {
+        text: 'Keep it — buy food, get them checked out',
+        tag: null,
+        outcome: 'That first night they sleep at the foot of your bed. The routine you build around them feels, strangely, like something you needed.',
+        effect: (p) => { p.m += 15; p.mo -= 50; },
+        inject: null,
+      },
+      {
+        text: 'Leave food out but do not let them in',
+        tag: null,
+        outcome: 'You tell yourself you are not attached. They disappear after a few days. You notice the absence more than you expected.',
+        effect: (p) => { p.m -= 5; },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── AFFAIR SYSTEM ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'affair_opportunity',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.partner !== null && G.partner.married && G.age >= 25 && !G.flags.includes('having_affair'),
+    text: (G) => {
+      if (G.character.country.archetype === 'wealthy_gulf')
+        return 'A colleague — charming, careful, aware of the stakes — makes their interest clear. In this society, what you are contemplating carries consequences that extend far beyond the two of you.'
+      if (G.character.country.archetype === 'post_soviet')
+        return 'A neighbour who has always been a little too attentive makes a move. Life here is complicated enough. This would complicate it further.'
+      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
+        return 'An attractive colleague lingers after everyone else has left. The conversation shifts. You know exactly what is being offered.'
+      return 'Someone new has appeared in your life — a colleague, a neighbour — and recently the attention has become unmistakably something more. You are not imagining it.'
+    },
+    choices: [
+      {
+        text: 'Resist — walk away',
+        tag: 'principled',
+        outcome: 'You let the moment pass. The right call is not always the easy one.',
+        effect: (p) => { p.karma += 5; p.m += 2; },
+        inject: null,
+      },
+      {
+        text: 'Begin a secret affair',
+        tag: 'unfaithful',
+        outcome: 'The excitement and the guilt arrive at almost exactly the same time.',
+        effect: (p) => { p.addFlag('having_affair'); p.setMem('affair_start', p._age ?? 0); p.m += 15; p.karma -= 15; },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'affair_discovered',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.flags.includes('having_affair') && G.partner !== null && G.age > (G.mem.affair_start ?? 0) + 1,
+    text: (G) => {
+      if (G.character.country.archetype === 'wealthy_gulf')
+        return 'Your spouse has found out. In this community, discovery is not a private matter — families, reputations, and livelihoods are now in play. The confrontation is cold and formal and devastating.'
+      if (G.character.country.archetype === 'conflict_zone')
+        return 'Your partner finds out. Trust was already thin here; life is already hard. This breaks something that may not be fixable.'
+      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
+        return 'Your partner found the messages. They are waiting for you when you get home. The look on their face is one you will not forget.'
+      return 'Your spouse discovers the affair. They have known for longer than you realised. The confrontation you have been dreading is here.'
+    },
+    choices: [
+      {
+        text: 'Come clean — beg for forgiveness',
+        tag: 'repentant',
+        outcome: (G) => {
+          if (Math.random() < 0.5) return 'They listen. The pain is real, the repair uncertain — but they do not leave. Not today.'
+          return 'The honesty is not enough. They leave. The silence in the house is enormous.'
+        },
+        effect: (p) => { p.m -= 25; p.r += 30; p.karma += 5; },
+        inject: null,
+      },
+      {
+        text: 'Deny everything',
+        tag: null,
+        outcome: 'The denial makes it worse. They know. You know they know. The lie sits between you now.',
+        effect: (p) => { p.m -= 15; p.r += 20; p.karma -= 10; },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'end_affair',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.flags.includes('having_affair') && G.age > (G.mem.affair_start ?? 0) + 1,
+    text: (G) => {
+      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
+        return 'The affair has been running long enough that the weight of it has become constant. The excitement faded; what remains is deception. You know what you need to do.'
+      return 'You have been carrying two lives for a while now. It is exhausting, and somewhere in the exhaustion, clarity has arrived.'
+    },
+    choices: [
+      {
+        text: 'End it — cleanly, finally',
+        tag: null,
+        outcome: 'The ending is harder than you expected. The relief that follows is harder still to admit.',
+        effect: (p) => { p.m -= 5; p.karma += 10; p.addFlag('affair_ended'); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── RELATIONSHIP COUNSELLING ──────────────────────────────────────────────────
+
+  {
+    id: 'relationship_troubles',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.partner !== null && G.age >= 20 && !G.mem.relationshipTroubles,
+    text: (G) => {
+      if (G.character.country.archetype === 'wealthy_gulf')
+        return 'The strain between you and your spouse has become harder to ignore. In a culture where appearances matter, what happens inside the home stays inside — but something needs to change.'
+      if (G.character.country.archetype === 'post_soviet')
+        return 'You and your partner have been circling the same arguments for months. The silences are longer now and not the comfortable kind.'
+      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
+        return 'The relationship has been strained for a while. The small arguments have a familiar pattern now. Something underneath needs to be addressed.'
+      return 'Things between you and your partner have been tense for months. The goodwill is still there but it is being tested.'
+    },
+    choices: [
+      {
+        text: 'Suggest couples counselling',
+        tag: null,
+        outcome: 'The first session is awkward and necessary. Something starts to shift.',
+        effect: (p) => { p.r += 15; p.mo -= 200; p.m += 8; p.setMem('relationshipTroubles', true); },
+        inject: null,
+      },
+      {
+        text: 'Give it time — things will settle',
+        tag: null,
+        outcome: 'Some things do settle. Others do not get better without attention.',
+        effect: (p) => { p.r += 5; p.setMem('relationshipTroubles', true); },
+        inject: null,
+      },
+      {
+        text: 'Have an honest conversation about what is wrong',
+        tag: null,
+        outcome: 'It is uncomfortable. It is also overdue. The air is a little clearer after.',
+        effect: (p) => { p.r += 10; p.m += 5; p.setMem('relationshipTroubles', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'partner_wants_children',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.partner !== null && G.age >= 22 && G.age <= 40 && G.children.length === 0 && !G.mem.discussed_kids,
+    text: (G) => {
+      if (G.character.country.archetype === 'wealthy_gulf')
+        return "Your spouse raises the subject with weight and formality: when will you start a family? The expectation is not just theirs — it is the community's."
+      if (['subsaharan', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'Your partner brings it up one evening. Children are expected here, and sooner rather than later. The conversation has been coming for a while.'
+      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
+        return 'Your partner brings it up over dinner, carefully but directly. They want to know where you stand on having children. The question has been in the air for months.'
+      return 'Your partner raises the question of children. They are ready to start a family, and they want to know how you feel.'
+    },
+    choices: [
+      {
+        text: 'I want that too',
+        tag: null,
+        outcome: 'The conversation turns warm. You are building something together.',
+        effect: (p) => { p.setMem('discussed_kids', true); p.r -= 15; p.m += 10; },
+        inject: null,
+      },
+      {
+        text: 'Not ready yet',
+        tag: null,
+        outcome: 'They understand, but you can see the patience in their face. This is not over.',
+        effect: (p) => { p.setMem('discussed_kids', true); p.r += 5; p.m += 3; },
+        inject: null,
+      },
+      {
+        text: 'I do not want children',
+        tag: null,
+        outcome: 'The honesty is right, but the impact is real. This changes things between you.',
+        effect: (p) => { p.setMem('discussed_kids', true); p.r += 20; p.m -= 5; },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── AGE MILESTONE REGRET ──────────────────────────────────────────────────────
+
+  {
+    id: 'midlife_reflection',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) => G.age >= 40 && G.age <= 42 && !G.mem.midlife_reflected,
+    text: (G) => {
+      if (G.character.country.archetype === 'post_soviet')
+        return 'Forty. In another era your parents had already built their whole lives by now — apartment, career, children, all arranged by the state. You have had to arrange your own. It is a strange thing to take stock of.'
+      if (G.character.country.archetype === 'conflict_zone')
+        return 'Forty feels different when you did not always expect to get here. You stop one afternoon and take stock of the life you have managed to build.'
+      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
+        return 'Forty. You read about midlife crises the way you read about weather. Now you are in one — or near one — and it is quieter and stranger than you expected. Just a long, sober look at the scoreboard.'
+      return 'You are forty. The number sits differently than others. You find yourself taking stock without quite deciding to.'
+    },
+    choices: [
+      {
+        text: 'I have lived well',
+        tag: null,
+        outcome: 'The accounting is honest and it comes out positive. That is not nothing.',
+        effect: (p) => { p.m += 10; p.setMem('midlife_reflected', true); },
+        inject: null,
+      },
+      {
+        text: 'I wish I had done things differently',
+        tag: null,
+        outcome: 'The regret is real. So is the self-awareness it comes with. That counts for something.',
+        effect: (p) => { p.m -= 10; p.karma += 5; p.setMem('midlife_reflected', true); },
+        inject: null,
+      },
+      {
+        text: 'Time to make changes',
+        tag: null,
+        outcome: 'The second half starts differently. That is your intention, at least.',
+        effect: (p) => { p.m += 5; p.setMem('midlife_reflected', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'sixtieth_birthday',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) => G.age >= 60 && G.age <= 62 && !G.mem.sixty_reflected,
+    text: (G) => {
+      if (G.character.country.archetype === 'subsaharan')
+        return 'Sixty. Your community marks the age with ceremony — an elder now, with everything that entails. The weight of it is real, and so is the respect that comes with it.'
+      if (G.character.country.archetype === 'wealthy_gulf')
+        return 'Sixty. The family gathers. There are speeches. A life in full view of everyone — measured by family, by standing, by the names of your grandchildren.'
+      if (G.character.country.archetype === 'post_soviet')
+        return 'Sixty. You remember your own parents at this age — they seemed ancient. Looking in the mirror, you do not feel ancient. You feel like yourself, but louder somehow.'
+      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
+        return 'Sixty. Someone books a restaurant. There is a cake. People say you do not look it. You think about the years — what they contained, what you did with them.'
+      return 'Your sixtieth birthday arrives. People gather. There are stories and toasts and the particular warmth of a milestone publicly marked.'
+    },
+    choices: [
+      {
+        text: 'Grateful for a full life',
+        tag: null,
+        outcome: 'The gratitude is honest. There is still time left, and you intend to use it.',
+        effect: (p) => { p.m += 15; p.setMem('sixty_reflected', true); },
+        inject: null,
+      },
+      {
+        text: 'The best is behind me',
+        tag: null,
+        outcome: 'The feeling is familiar to many who reach sixty. It is not wrong, exactly. But it is not the whole truth either.',
+        effect: (p) => { p.m -= 15; p.setMem('sixty_reflected', true); },
+        inject: null,
+      },
+      {
+        text: 'Still plenty left to do',
+        tag: null,
+        outcome: 'The chapter has not closed. You pick up where you left off, and you mean it.',
+        effect: (p) => { p.m += 8; p.setMem('sixty_reflected', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── POST-SOVIET LIFECYCLE EVENTS ─────────────────────────────────────────────
+
+  // EARLY CHILDHOOD
+  {
+    id: 'ps_birth_context',
+    phase: 'early_childhood',
+    weight: 5,
+    isKey: true,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age <= 1 && !G.mem.ps_birth,
+    text: (G) => {
+      if (G.currentYear < 1992) return 'Born in a Soviet maternity ward, where your mother was given no pain relief and told not to make noise. Your father waited outside for three days. You were wrapped in hospital standard-issue cloth and handed over at the gate.';
+      if (G.currentYear <= 2000) return 'The maternity ward smells of disinfectant and old ambition. The Soviet Union is gone and so is the budget. Your mother had to bring her own towels, sheets, and food. Your father bribed a nurse to get a proper room.';
+      return 'The clinic is modern — polished floors, foreign equipment — if your parents could afford the private wing. The public ward was adequate but crowded.';
+    },
+    choices: null,
+    effect: (p) => { p.h += 3; p.setMem('ps_birth', true); },
+  },
+
+  {
+    id: 'ps_kommunalka',
+    phase: 'early_childhood',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 2 && G.age <= 5 && G.currentYear >= 1975 && G.currentYear <= 2005 && !G.mem.ps_kommunalka,
+    text: 'Your family shares a kitchen and bathroom with two other families. The schedule for the stove is taped to the wall. Neighbours argue. Adults whisper about things in the hallway. You know every smell, sound, and conflict in this building.',
+    choices: null,
+    effect: (p) => { p.h -= 3; p.e += 4; p.setMem('ps_kommunalka', true); p.addFlag('communal_childhood'); },
+  },
+
+  {
+    id: 'ps_dacha_childhood',
+    phase: 'early_childhood',
+    weight: 5,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 3 && G.age <= 8 && !G.mem.ps_dacha,
+    text: 'Every summer your family loads into a train and goes to the dacha — a small plot two hours outside the city. You eat tomatoes straight from the vine, help carry water from the well, and fall asleep under a sky thick with stars. Your grandparents live here half the year.',
+    choices: [
+      {
+        text: 'Help in the vegetable garden',
+        tag: 'dacha_child',
+        outcome: 'You learn the names of every plant, carry the watering can with both hands, and feel useful in a way school never quite manages.',
+        effect: (p) => { p.h += 10; p.karma += 3; p.setMem('ps_dacha', true); p.addFlag('dacha_child'); },
+        inject: null,
+      },
+      {
+        text: 'Wander the forests alone',
+        tag: null,
+        outcome: 'You build a mental map of every path, every clearing. The forest becomes yours.',
+        effect: (p) => { p.h += 8; p.e += 3; p.setMem('ps_dacha', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // CHILDHOOD
+  {
+    id: 'ps_soviet_school_uniform',
+    phase: 'childhood',
+    weight: 5,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 6 && G.age <= 8 && !G.mem.ps_school_start,
+    text: (G) => {
+      if (G.currentYear <= 1991) return 'Your school uniform is brown and your bow is white. Every September first there is a ceremony. You carry carnations. The teacher reads aloud from the school charter. Everything feels very serious and exactly the right size.';
+      return 'The old Soviet uniform is gone but the September ritual remains. You carry flowers for your teacher on the first day. The school still smells of chalk and floor wax. The portraits on the wall have changed.';
+    },
+    choices: [
+      {
+        text: 'Stand perfectly straight during assembly',
+        tag: null,
+        outcome: 'The teacher notices. You feel the weight of being noticed.',
+        effect: (p) => { p.m += 3; p.e += 3; p.setMem('ps_school_start', true); },
+        inject: null,
+      },
+      {
+        text: 'Whisper jokes to the kid next to you',
+        tag: null,
+        outcome: 'You make a friend for life before the first lesson begins.',
+        effect: (p) => { p.h += 8; p.setMem('ps_school_start', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_wild_nineties_childhood',
+    phase: 'childhood',
+    weight: 5,
+    isKey: true,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 7 && G.age <= 14 && G.currentYear >= 1991 && G.currentYear <= 2001 && !G.mem.ps_nineties,
+    text: 'The Nineties arrive and your parents\' certainties evaporate. Your father\'s factory closes. A man in a leather jacket starts driving the neighbours\' old Volga. Your mother queues for bread at five in the morning. At the market, people sell their Soviet medals, china, and winter coats. Kiosks sell everything and nothing at the same time.',
+    choices: [
+      {
+        text: 'You feel the fear at home but don\'t understand it yet',
+        tag: 'wild_nineties_childhood',
+        outcome: 'The anxiety settles into your body before your mind has the language for it.',
+        effect: (p) => { p.m -= 5; p.e += 5; p.setMem('ps_nineties', true); p.addFlag('wild_nineties_childhood'); },
+        inject: null,
+      },
+      {
+        text: 'You find ways to help — selling newspapers, carrying groceries',
+        tag: 'wild_nineties_childhood',
+        outcome: 'You learn early that money is not abstract. It is bread. It is heating.',
+        effect: (p) => { p.h += 3; p.w += 5; p.setMem('ps_nineties', true); p.addFlag('wild_nineties_childhood'); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_grandparent_war_stories',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 8 && G.age <= 14 && !G.mem.ps_war_stories,
+    text: 'Your grandparents sit in the kitchen and talk. The Great Patriotic War. The Siege. The evacuation. The years after when everything had to be rebuilt by hand. You are the generation these stories were saved for.',
+    choices: [
+      {
+        text: 'Listen carefully to every detail',
+        tag: 'historically_aware',
+        outcome: 'You carry the stories like inheritance. Some of them are heavy.',
+        effect: (p) => { p.e += 5; p.h += 5; p.karma += 3; p.setMem('ps_war_stories', true); p.addFlag('historically_aware'); },
+        inject: null,
+      },
+      {
+        text: 'Nod politely and return to your friends',
+        tag: null,
+        outcome: 'The stories wait. They will find you again later.',
+        effect: (p) => { p.h += 2; p.setMem('ps_war_stories', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ADOLESCENCE
+  {
+    id: 'ps_conscription_dread',
+    phase: 'adolescence',
+    weight: 5,
+    isKey: true,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 15 && G.age <= 18 && G.character.gender === 'male' && !G.mem.ps_conscription_dread && ['Russia', 'Ukraine', 'Kazakhstan', 'Georgia', 'Belarus'].includes(G.character.country.name),
+    text: 'Military service hangs over every conversation. Your older cousin came back quieter. There are ways to avoid it — a medical certificate, a university deferral, money in the right hand — but they all have costs.',
+    choices: [
+      {
+        text: 'Study hard to qualify for university deferral',
+        tag: null,
+        outcome: 'You buy yourself years. Whether they are the right years remains to be seen.',
+        effect: (p) => { p.e += 10; p.m -= 5; p.setMem('ps_conscription_dread', true); },
+        inject: null,
+      },
+      {
+        text: 'Accept it — everyone goes eventually',
+        tag: 'accepts_duty',
+        outcome: 'You stop fighting the current. There is a rough dignity in that.',
+        effect: (p) => { p.m -= 3; p.addFlag('accepts_duty'); p.setMem('ps_conscription_dread', true); },
+        inject: null,
+      },
+      {
+        text: 'Your family pays for a medical exemption certificate',
+        tag: null,
+        outcome: 'The certificate is obtained. Nobody asks too many questions. The guilt is your own business.',
+        effect: (p) => { p.mo -= 1500; p.karma -= 5; p.h += 5; p.setMem('ps_conscription_dread', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_brain_drain_peer',
+    phase: 'adolescence',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 16 && G.age <= 22 && G.currentYear >= 1995 && !G.mem.ps_brain_drain,
+    text: 'Your smartest friend has a visa. Germany. Canada. America. They have been preparing for two years without telling most people. At the farewell party there are jokes and then not jokes. You wonder if you are the one making the wrong choice.',
+    choices: [
+      {
+        text: 'Consider leaving yourself',
+        tag: 'considers_emigration',
+        outcome: 'The thought takes root. You begin researching quietly.',
+        effect: (p) => { p.e += 3; p.r += 5; p.setMem('ps_brain_drain', true); p.addFlag('considers_emigration'); },
+        inject: null,
+      },
+      {
+        text: 'You belong here. Let them go.',
+        tag: null,
+        outcome: 'You feel the decision settle in your chest like a stone — not regret exactly, but weight.',
+        effect: (p) => { p.karma += 5; p.h -= 5; p.setMem('ps_brain_drain', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_nationalism_school',
+    phase: 'adolescence',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 13 && G.age <= 17 && G.currentYear >= 2000 && !G.mem.ps_nationalism,
+    text: 'History class has changed. The textbooks are new. The lesson is that your nation has always been great, beset by enemies, and is now reclaiming its rightful place. The teacher speaks with conviction. Some students stand and nod. Others look at the desk.',
+    choices: [
+      {
+        text: 'Absorb the lesson — it feels true',
+        tag: 'nationalist',
+        outcome: 'The narrative gives you a shape for things you already felt.',
+        effect: (p) => { p.setMem('ps_nationalism', true); p.addFlag('nationalist'); },
+        inject: null,
+      },
+      {
+        text: 'Something feels wrong about this version of history',
+        tag: 'politically_aware',
+        outcome: 'You start looking for the other version in old books, in your grandparents\' silences.',
+        effect: (p) => { p.e += 5; p.r += 3; p.setMem('ps_nationalism', true); p.addFlag('politically_aware'); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // YOUNG ADULT
+  {
+    id: 'ps_oligarch_economy',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 20 && G.age <= 30 && !G.mem.ps_oligarch && G.currentYear >= 1995,
+    text: 'The economy runs on connections. The apartment you want, the promotion you deserve, the contract your small business needs — they all pass through someone who knows someone. You begin to understand why some of your classmates went into the siloviki. Or why others left.',
+    choices: [
+      {
+        text: 'Work the system — build connections strategically',
+        tag: null,
+        outcome: 'You learn the language of favours. It opens doors and closes others.',
+        effect: (p) => { p.w += 5; p.karma -= 5; p.setMem('ps_oligarch', true); },
+        inject: null,
+      },
+      {
+        text: 'Build something legitimate, however slowly',
+        tag: null,
+        outcome: 'Progress is slow and often humiliating. But it is yours.',
+        effect: (p) => { p.e += 3; p.karma += 8; p.r += 3; p.setMem('ps_oligarch', true); },
+        inject: null,
+      },
+      {
+        text: 'Get out — apply for positions abroad',
+        tag: 'considers_emigration',
+        outcome: 'The applications go out. The waiting begins.',
+        effect: (p) => { p.setMem('ps_oligarch', true); p.addFlag('considers_emigration'); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_factory_collapse',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 18 && G.age <= 35 && G.currentYear >= 1991 && G.currentYear <= 2010 && !G.mem.ps_factory && !G.career,
+    text: 'The factory your father worked at for thirty years is being stripped. The machines are sold for scrap. The workers — most over fifty — have nowhere to go. Your city\'s economy was built around this building. It is being peeled away brick by brick.',
+    choices: [
+      {
+        text: 'Try to find work in the new service economy',
+        tag: null,
+        outcome: 'The work is different and often demeaning, but there is work.',
+        effect: (p) => { p.m -= 8; p.e += 3; p.setMem('ps_factory', true); },
+        inject: null,
+      },
+      {
+        text: 'Join a retraining programme',
+        tag: null,
+        outcome: 'You learn things that belong to a different century. Some of them are useful.',
+        effect: (p) => { p.e += 8; p.m -= 5; p.setMem('ps_factory', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_drinking_culture',
+    phase: 'young_adult',
+    weight: 5,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 18 && G.age <= 35 && !G.mem.ps_drinking,
+    text: 'At every celebration — wedding, promotion, wake, Tuesday — the vodka comes out. You don\'t drink at the first toast, you lose face. You don\'t drink at the third, something is wrong with you. The bottle is both hospitality and test.',
+    choices: [
+      {
+        text: 'Drink and belong',
+        tag: 'light_drinker',
+        outcome: 'You belong, and the belonging is warm, and the mornings are not always easy.',
+        effect: (p) => { p.h += 5; p.addFlag('light_drinker'); p.setMem('ps_drinking', true); },
+        inject: null,
+      },
+      {
+        text: 'Drink selectively, hold your ground',
+        tag: null,
+        outcome: 'You learn which toasts require the full glass and which allow a sip. It is a skill.',
+        effect: (p) => { p.h += 2; p.karma += 3; p.setMem('ps_drinking', true); },
+        inject: null,
+      },
+      {
+        text: 'Refuse entirely — face the social cost',
+        tag: null,
+        outcome: 'You are the strange one. It costs something. It is also, quietly, something to respect about yourself.',
+        effect: (p) => { p.h -= 5; p.karma += 8; p.m += 3; p.setMem('ps_drinking', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_protest_moment',
+    phase: 'young_adult',
+    weight: 3,
+    isKey: true,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 18 && G.age <= 40 && G.currentYear >= 2000 && !G.mem.ps_protest,
+    text: (G) => {
+      if (G.character.country.name === 'Russia' || G.character.country.name === 'Belarus') return 'People are gathering in the square. Not many at first, then thousands. You watch from an office window, from across the street, from behind a phone camera. The OMON arrive in black uniforms. By evening the square is empty.';
+      if (G.character.country.name === 'Ukraine') return 'Independence Square is full. Your neighbour has been sleeping there for three nights. The weather is bitter. History is being made on live television, either way it goes.';
+      return 'A protest in the city centre draws people you know. Some of your friends are there. The police presence is heavy. The outcome uncertain.';
+    },
+    choices: [
+      {
+        text: 'Join the protest',
+        tag: 'political_participant',
+        outcome: 'You are there when it happens. Whatever happens next, you were there.',
+        effect: (p) => { p.h += 15; p.karma += 10; p.r += 5; p.setMem('ps_protest', true); p.addFlag('political_participant'); },
+        inject: null,
+      },
+      {
+        text: 'Watch from a distance, afraid',
+        tag: null,
+        outcome: 'The fear is real. The regret may be too.',
+        effect: (p) => { p.r += 8; p.setMem('ps_protest', true); },
+        inject: null,
+      },
+      {
+        text: 'Stay home — you have too much to lose',
+        tag: null,
+        outcome: 'You keep what you have. The cost is invisible until later.',
+        effect: (p) => { p.r += 10; p.karma -= 5; p.setMem('ps_protest', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // MIDLIFE
+  {
+    id: 'ps_dacha_inheritance',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 35 && G.age <= 50 && G.parents && !G.mem.ps_dacha_inherit,
+    text: 'Your parents are passing the dacha to you. The deed is a single typed page from 1967. The roof needs work. The well pump is twenty years old. But in summer it smells exactly as it always has — old wood, hot grass, your grandmother\'s jam.',
+    choices: [
+      {
+        text: 'Keep it and maintain it',
+        tag: 'dacha_owner',
+        outcome: 'You spend three weekends replacing the roof felt. It becomes yours the way things become yours — through work.',
+        effect: (p) => { p.h += 15; p.mo -= 2000; p.karma += 5; p.setMem('ps_dacha_inherit', true); p.addFlag('dacha_owner'); },
+        inject: null,
+      },
+      {
+        text: 'Sell it — the maintenance is too much',
+        tag: null,
+        outcome: 'The money is real. The loss is also real, and arrives later than expected.',
+        effect: (p) => { p.mo += 8000; p.r += 10; p.setMem('ps_dacha_inherit', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_soviet_nostalgia',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 30 && !G.mem.ps_nostalgia,
+    text: 'Your father says things were better before. The jobs were stable. The streets were safe. People looked after each other. He watches Soviet-era films and talks about Brezhnev as if he were discussing a golden age. You can see both what he means and everything he is forgetting.',
+    choices: [
+      {
+        text: 'Argue — the past was not as clean as he remembers',
+        tag: null,
+        outcome: 'He goes quiet. You are both right about different things.',
+        effect: (p) => { p.e += 5; p.h -= 5; p.setMem('ps_nostalgia', true); },
+        inject: null,
+      },
+      {
+        text: 'Listen and find what is true in it',
+        tag: null,
+        outcome: 'You find the real thing inside the myth: he misses the certainty, not the system.',
+        effect: (p) => { p.h += 5; p.karma += 5; p.setMem('ps_nostalgia', true); },
+        inject: null,
+      },
+      {
+        text: 'Change the subject — some conversations go nowhere',
+        tag: null,
+        outcome: 'You let it pass. Not every hill is worth it.',
+        effect: (p) => { p.setMem('ps_nostalgia', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_health_system',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 30 && !G.mem.ps_health && G.stats.health < 70,
+    text: 'The clinic has Soviet-era equipment, underpaid doctors, and a supply of envelopes for unofficial payments. The doctor is competent — trained under a system that valued medical education — but overwhelmed. You pay for private care if you can. If you can\'t, you wait.',
+    choices: [
+      {
+        text: 'Pay for private care',
+        tag: null,
+        outcome: 'Fast, efficient, expensive. The result is good.',
+        effect: (p) => { p.m += 12; p.mo -= 800; p.setMem('ps_health', true); },
+        inject: null,
+      },
+      {
+        text: 'Navigate the public system',
+        tag: null,
+        outcome: 'Three appointments over six weeks. The diagnosis is the same. The experience is not.',
+        effect: (p) => { p.m += 5; p.r += 5; p.setMem('ps_health', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // LATE LIFE
+  {
+    id: 'ps_pension_collapse',
+    phase: 'late_life',
+    weight: 4,
+    isKey: true,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 55 && G.retired && !G.mem.ps_pension,
+    text: 'The pension calculation was based on wages from thirty years ago, before the hyperinflation ate the denomination. What arrives monthly covers utilities and bread. Your garden and the dacha carry the rest of the weight.',
+    choices: [
+      {
+        text: 'Grow your own food, cut every corner',
+        tag: null,
+        outcome: 'You eat well and live carefully. The resourcefulness is its own kind of pride.',
+        effect: (p) => { p.m += 5; p.h -= 10; p.setMem('ps_pension', true); },
+        inject: null,
+      },
+      {
+        text: 'Ask children for financial help',
+        tag: null,
+        outcome: 'They help without complaint. The asking is the hardest part.',
+        effect: (p) => { p.r += 8; p.h -= 5; p.setMem('ps_pension', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_regime_retrospective',
+    phase: 'late_life',
+    weight: 4,
+    isKey: true,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 60 && !G.mem.ps_retrospective,
+    text: 'You have lived under the Soviet Union, the chaos of transition, and whatever this is now. Three different passports and three different answers to the question of who you are. The young people have only known one of these worlds.',
+    choices: [
+      {
+        text: 'The old system had dignity in it, whatever its faults',
+        tag: null,
+        outcome: 'You hold both truths: that it was real, and that the reckoning was also real.',
+        effect: (p) => { p.h += 5; p.setMem('ps_retrospective', true); },
+        inject: null,
+      },
+      {
+        text: 'Freedom — however messy — is worth all of it',
+        tag: null,
+        outcome: 'The conclusion is hard-won and genuinely yours.',
+        effect: (p) => { p.h += 8; p.karma += 5; p.setMem('ps_retrospective', true); },
+        inject: null,
+      },
+      {
+        text: 'There is no clean answer, and that is the honest conclusion',
+        tag: null,
+        outcome: 'You sit with the complexity. Few people reach this without having lived through it.',
+        effect: (p) => { p.e += 5; p.h += 3; p.setMem('ps_retrospective', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_late_emigration_choice',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 40 && G.age <= 65 && G.currentYear >= 2010 && !G.mem.ps_late_emigration && G.children.length > 0,
+    text: 'Your children are talking about leaving. They have skills. They have options. The question they do not ask directly is whether you are coming with them. The other question is whether leaving means abandoning everything you stayed for.',
+    choices: [
+      {
+        text: 'Encourage them to go — build a life somewhere better',
+        tag: null,
+        outcome: 'They go. The apartment is very quiet. The video calls are something.',
+        effect: (p) => { p.h -= 10; p.karma += 10; p.r += 5; p.setMem('ps_late_emigration', true); },
+        inject: null,
+      },
+      {
+        text: 'Ask them to stay — this is your home, make it work here',
+        tag: null,
+        outcome: 'Some stay. Some go anyway. You cannot hold what wants to move.',
+        effect: (p) => { p.h += 5; p.r += 8; p.setMem('ps_late_emigration', true); },
+        inject: null,
+      },
+      {
+        text: 'Go with them — start again',
+        tag: null,
+        outcome: 'You leave with two suitcases and a sense of vertigo that takes years to pass.',
+        effect: (p) => { p.h += 8; p.r += 10; p.setMem('ps_late_emigration', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_victory_day',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 8 && !G.mem.ps_victory_day,
+    text: 'May 9th. Your city fills with people carrying portraits of the war dead — grandparents, great-grandparents, strangers from the regiment records. The Immortal Regiment march passes your window. Some people weep. Some wear medals they didn\'t earn. The day carries more weight than a single meaning.',
+    choices: [
+      {
+        text: 'Carry your great-grandfather\'s portrait',
+        tag: null,
+        outcome: 'You feel the name on the frame like something physical. The grief is old and still sharp.',
+        effect: (p) => { p.h += 8; p.karma += 5; p.setMem('ps_victory_day', true); },
+        inject: null,
+      },
+      {
+        text: 'Watch from the sidelines, uncertain how to feel',
+        tag: null,
+        outcome: 'You are not alone in the uncertainty. You just don\'t know that yet.',
+        effect: (p) => { p.e += 3; p.setMem('ps_victory_day', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── SUB-SAHARAN HEALTH & SOCIETY EVENTS ────────────────────────────────────
+  {
+    id: 'ss_malaria_childhood',
+    phase: 'childhood',
+    weight: 3,
+    isKey: true,
+    when: (G) => ['subsaharan', 'developing_unstable'].includes(G.character.country.archetype) && G.age >= 2 && G.age <= 12 && !G.mem.ss_malaria,
+    text: 'The fever comes in the night. Your body shakes even under blankets in the heat. Your mother puts wet cloth on your forehead and sits with you through the dark hours. At the clinic, they tell her what she already knows — malaria again. The yellow pills. Three days of bed. You recover. Not everyone in your neighbourhood does.',
+    context: null,
+    choices: null,
+    effect: (p) => { p.m -= 15; p.h -= 5; p.setMem('ss_malaria', true); p.addFlag('survived_malaria'); },
+  },
+  {
+    id: 'ss_hiv_family',
+    phase: 'childhood',
+    weight: 2,
+    isKey: true,
+    when: (G) => G.character.country.archetype === 'subsaharan' && G.currentYear >= 1990 && G.currentYear <= 2015 && G.age >= 8 && G.age <= 25 && !G.mem.ss_hiv,
+    text: 'Someone in your family is sick. The word is not spoken directly at first. Then it is, in stages. AIDS. The stigma is thick as the silence at the dinner table. At school, you hear things about people whose families have this sickness. Your understanding of the disease is incomplete. Your experience of it is very concrete.',
+    context: null,
+    choices: [
+      {
+        text: 'You help care for them — fetch medicine, sit with them',
+        tag: null,
+        outcome: 'The work is heavy. The closeness matters.',
+        effect: (p) => { p.m -= 5; p.h -= 8; p.karma += 10; p.setMem('ss_hiv', true); p.addFlag('caregiver_early'); },
+        inject: null,
+      },
+      {
+        text: 'You keep your distance — the stigma is crushing',
+        tag: null,
+        outcome: 'The guilt stays with you long after.',
+        effect: (p) => { p.r += 10; p.karma -= 8; p.setMem('ss_hiv', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+  {
+    id: 'ss_water_collection',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.character.country.archetype === 'subsaharan' && G.age >= 7 && G.age <= 16 && !G.mem.ss_water,
+    text: 'Before school — before anything — there is the water. The borehole is forty minutes away on foot. The jerrycan holds twenty litres. It weighs twenty kilograms full. Your arms have grown strong in ways your classmates\' haven\'t. Some mornings there is a queue.',
+    context: null,
+    choices: [
+      {
+        text: 'Carry the full load without complaint',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.m += 3; p.h -= 3; p.karma += 5; p.setMem('ss_water', true); },
+        inject: null,
+      },
+      {
+        text: 'Arrive at school late because of the queue',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.m -= 3; p.e -= 2; p.setMem('ss_water', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+  {
+    id: 'ss_school_fees_crisis',
+    phase: 'childhood',
+    weight: 3,
+    isKey: true,
+    when: (G) => G.character.country.archetype === 'subsaharan' && G.age >= 10 && G.age <= 18 && !G.mem.ss_fees && G.money < 500,
+    text: 'The head teacher sends you home. The fees for the term haven\'t been paid. You sit in the yard for three days while your mother goes to relatives, to neighbours, to the savings group at the church. The humiliation is specific: the other students watch you leave.',
+    context: null,
+    choices: [
+      {
+        text: 'Find part-time work to help cover fees',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.e -= 5; p.w += 5; p.h -= 8; p.setMem('ss_fees', true); p.addFlag('child_worker'); },
+        inject: null,
+      },
+      {
+        text: 'Your family scrapes it together',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.h -= 5; p.m -= 3; p.setMem('ss_fees', true); },
+        inject: null,
+      },
+      {
+        text: 'You drop out this term',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.e -= 10; p.h -= 15; p.setMem('ss_fees', true); p.addFlag('education_interrupted'); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+  {
+    id: 'ss_maternal_health',
+    phase: 'adolescence',
+    weight: 2,
+    when: (G) => G.character.country.archetype === 'subsaharan' && G.age >= 10 && G.age <= 20 && !G.mem.ss_maternal,
+    text: 'A woman in your neighbourhood dies in childbirth. The nearest hospital is four hours away and the ambulance did not come. The baby survives. Your own mother delivered you at home with a traditional birth attendant. The gap between this world and what you see on the television has a name now.',
+    context: null,
+    choices: null,
+    effect: (p) => { p.e += 5; p.h -= 8; p.karma += 3; p.setMem('ss_maternal', true); p.addFlag('health_aware'); },
+  },
+  {
+    id: 'ss_mobile_money',
+    phase: 'adolescence',
+    weight: 2,
+    when: (G) => G.character.country.archetype === 'subsaharan' && G.currentYear >= 2008 && G.age >= 16 && !G.mem.ss_mobile_money,
+    text: 'Your older sister sets up a mobile money account on her Nokia. She can send money to your mother in the village without a bus journey. The money gets there in seconds. Your uncle who drives a boda boda starts taking M-Pesa. The phone became the bank before the bank arrived.',
+    context: null,
+    choices: [
+      {
+        text: 'Set up your own account and start building savings',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.w += 5; p.e += 5; p.setMem('ss_mobile_money', true); },
+        inject: null,
+      },
+      {
+        text: 'Help your parents set up accounts',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.karma += 8; p.h += 5; p.setMem('ss_mobile_money', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+  {
+    id: 'ss_church_community',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.character.country.archetype === 'subsaharan' && G.age >= 8 && !G.mem.ss_church,
+    text: 'Sunday is for church. Not just the service — the after-service, the choir practice, the women\'s fellowship, the youth group, the burial society, the informal lending circle. The church is the neighbourhood\'s skeleton. Your family\'s social life is almost entirely inside its radius.',
+    context: null,
+    choices: [
+      {
+        text: 'Throw yourself into the community',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.h += 10; p.karma += 8; p.setMem('ss_church', true); },
+        inject: null,
+      },
+      {
+        text: 'Participate but keep your own counsel',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.h += 3; p.setMem('ss_church', true); },
+        inject: null,
+      },
+      {
+        text: 'As you get older, question the faith',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.e += 5; p.h -= 5; p.r += 3; p.setMem('ss_church', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+  {
+    id: 'ss_extended_family_obligation',
+    phase: 'young_adult',
+    weight: 3,
+    isKey: true,
+    when: (G) => G.character.country.archetype === 'subsaharan' && G.age >= 22 && G.career && !G.mem.ss_family_obligation,
+    text: 'You got the job. Now the requests begin. Your cousin needs school fees. Your uncle\'s shop needs capital. A relative from the village needs bus fare to the city. It is not a scam — these are real people with real needs and you are now the one with a salary. The expectation is structural, not exceptional.',
+    context: null,
+    choices: [
+      {
+        text: 'Help generously — this is what it means to succeed here',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.mo -= 2000; p.h += 5; p.karma += 10; p.setMem('ss_family_obligation', true); },
+        inject: null,
+      },
+      {
+        text: 'Help selectively, set limits',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.mo -= 800; p.karma += 5; p.setMem('ss_family_obligation', true); },
+        inject: null,
+      },
+      {
+        text: 'Protect your savings — explain your limits',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.r += 8; p.karma -= 5; p.setMem('ss_family_obligation', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── CONFLICT ZONE SPECIFIC EVENTS ───────────────────────────────────────────
+  {
+    id: 'cz_checkpoint',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.character.country.archetype === 'conflict_zone' && G.age >= 10 && !G.mem.cz_checkpoint,
+    text: 'There are men with guns at the intersection. They have been there so long you no longer think about them consciously — you route around them, you look at the ground when you pass, you learn which ones take bribes and which ones take other things. Your body knows the protocol before your mind does.',
+    context: null,
+    choices: [
+      {
+        text: 'Cross quickly, keep eyes down',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.m -= 5; p.setMem('cz_checkpoint', true); },
+        inject: null,
+      },
+      {
+        text: "Know someone's name — navigate the relationship",
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.w += 3; p.karma -= 3; p.setMem('cz_checkpoint', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+  {
+    id: 'cz_school_bombing',
+    phase: 'childhood',
+    weight: 2,
+    isKey: true,
+    when: (G) => G.character.country.archetype === 'conflict_zone' && G.age >= 6 && G.age <= 18 && !G.mem.cz_school_attack,
+    text: 'The sound is ahead of the understanding. Glass. Then dust. Then the alarm you have practised but never heard for real. The school building two streets away has taken a hit. Nobody from your class is hurt. The chemistry teacher\'s car is a frame. School is cancelled for two weeks and then held in the mosque basement.',
+    context: null,
+    choices: null,
+    effect: (p) => { p.m -= 12; p.h -= 15; p.addFlag('conflict_survivor'); p.setMem('cz_school_attack', true); },
+  },
+  {
+    id: 'cz_aid_dependency',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) => G.character.country.archetype === 'conflict_zone' && G.age >= 12 && !G.mem.cz_aid,
+    text: 'The white trucks come on Tuesdays. WFP, UNHCR, MSF — you know the logos before you know what the letters mean. The queue is orderly because everyone understands the cost of disrupting it. You have grown up knowing what a ration card looks like.',
+    context: null,
+    choices: [
+      {
+        text: 'Accept what comes — there is dignity in surviving',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.setMem('cz_aid', true); },
+        inject: null,
+      },
+      {
+        text: "Find ways to contribute to the community's self-sufficiency",
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.karma += 8; p.e += 3; p.setMem('cz_aid', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+  {
+    id: 'cz_family_separation',
+    phase: 'childhood',
+    weight: 2,
+    isKey: true,
+    when: (G) => G.character.country.archetype === 'conflict_zone' && G.age >= 5 && G.age <= 20 && !G.mem.cz_separation && G.parents,
+    text: 'Your father is on the other side of a line that did not exist six months ago. You speak on the phone when the network is working. The calls are short and careful. You understand that he is protecting you from information but you also hear it in his voice.',
+    context: null,
+    choices: [
+      {
+        text: 'Hold the family together — take on more responsibility',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.m -= 5; p.h += 3; p.karma += 8; p.setMem('cz_separation', true); },
+        inject: null,
+      },
+      {
+        text: 'Carry the absence as anger',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.h -= 10; p.r += 5; p.setMem('cz_separation', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── GENDER-SPECIFIC EVENTS (developing world focus) ─────────────────────────
+  {
+    id: 'gender_education_pressure',
+    phase: 'adolescence',
+    weight: 3,
+    isKey: true,
+    when: (G) => G.character.gender === 'female' && ['subsaharan', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype) && G.age >= 12 && G.age <= 16 && !G.mem.gender_school_pressure,
+    text: 'Your eldest brother says your bride price will be better if you are home learning to cook. The neighbour married her daughter at fourteen. Your mother says nothing when your uncle says girls\' education is a waste. Your teacher — the one who stays after class — says something different.',
+    context: null,
+    choices: [
+      {
+        text: 'Stay in school — your teacher helps you navigate the pressure',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.e += 8; p.h -= 5; p.karma += 5; p.setMem('gender_school_pressure', true); p.addFlag('educated_against_odds'); },
+        inject: null,
+      },
+      {
+        text: 'Leave school — the family pressure is too great',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.e -= 10; p.h -= 10; p.setMem('gender_school_pressure', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+  {
+    id: 'gender_safety_walk',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) => G.character.gender === 'female' && ['subsaharan', 'developing_urban', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype) && G.age >= 13 && G.age <= 30 && !G.mem.gender_safety,
+    text: 'Walking home. The calculations you run every time: which street, which time, how to dress, who to walk with. It is not paranoia — it is the accumulated knowledge of what happens when these calculations go wrong. Your mother taught you, her mother taught her. You know which shortcuts to avoid.',
+    context: null,
+    choices: [
+      {
+        text: 'Build the knowledge — learn to navigate',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.e += 3; p.karma += 3; p.setMem('gender_safety', true); },
+        inject: null,
+      },
+      {
+        text: 'The constant calculation exhausts and angers you',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.m -= 5; p.h -= 5; p.r += 5; p.setMem('gender_safety', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+  {
+    id: 'gender_early_marriage_pressure',
+    phase: 'adolescence',
+    weight: 3,
+    isKey: true,
+    when: (G) => G.character.gender === 'female' && ['subsaharan', 'developing_unstable', 'wealthy_gulf', 'conflict_zone'].includes(G.character.country.archetype) && G.age >= 16 && G.age <= 22 && !G.mem.marriage_pressure && !G.partner,
+    text: 'A proposal has been made to your father. The man is older — this is considered good. The bride price discussed is significant — this too is considered good. Your opinion is solicited and considered, but it is not the determining factor. Your mother was married at eighteen. Her mother at fifteen.',
+    context: null,
+    choices: [
+      {
+        text: 'Accept — the match is reasonable, the family needs this',
+        tag: null,
+        outcome: 'The wedding is set.',
+        effect: (p) => { p.h -= 10; p.karma += 3; p.r += 8; p.setMem('marriage_pressure', true); },
+        inject: null,
+      },
+      {
+        text: 'Ask for time to finish your education first',
+        tag: null,
+        outcome: 'Your father agrees to wait one year. One year.',
+        effect: (p) => { p.e += 5; p.h -= 5; p.r += 5; p.setMem('marriage_pressure', true); },
+        inject: null,
+      },
+      {
+        text: 'Refuse — and take the consequence',
+        tag: null,
+        outcome: 'The atmosphere in the house changes. Your value, as it is understood here, drops.',
+        effect: (p) => { p.h -= 15; p.r += 10; p.karma += 8; p.setMem('marriage_pressure', true); p.addFlag('refused_arranged_marriage'); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+  {
+    id: 'ss_remittance_dependency',
+    phase: 'adolescence',
+    weight: 2,
+    when: (G) => G.character.country.archetype === 'subsaharan' && G.age >= 14 && G.age <= 30 && !G.mem.ss_remittance,
+    text: 'The money arrives from abroad — from London, from Doha, from Minneapolis — in irregular pulses. An uncle who emigrated ten years ago sends what he can. When it arrives, school fees are paid, the roof gets fixed. When it doesn\'t, everyone goes quiet. The family\'s survival runs on this wire.',
+    context: null,
+    choices: [
+      {
+        text: 'Plan to emigrate yourself and send money back',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.e += 5; p.setMem('ss_remittance', true); p.addFlag('considers_emigration'); },
+        inject: null,
+      },
+      {
+        text: 'Build something here instead of leaving',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.h += 5; p.karma += 5; p.setMem('ss_remittance', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── DEVELOPING URBAN EVENTS ──────────────────────────────────────────────────
+
+  {
+    id: 'du_shantytown_childhood',
+    phase: 'childhood',
+    weight: 5,
+    when: (G) => G.character.country.archetype === 'developing_urban' && G.age >= 5 && G.age <= 12 && !G.mem.du_shantytown,
+    text: (G) => {
+      const name = G.character.country.name;
+      if (['Brazil', 'Colombia', 'Peru'].includes(name)) return 'The favela has its own geography. The alleys so narrow two people can\'t pass. Electricity tapped from the main line overhead. The view from the hilltop over the city below is genuinely beautiful and you know it even then.';
+      if (['Egypt', 'Morocco', 'Jordan'].includes(name)) return 'The city grew faster than the pipes. Your neighbourhood has electricity but shared water. The building was put up quickly by a relative thirty years ago and has been expanded room by room ever since.';
+      if (['Philippines', 'Indonesia', 'Vietnam'].includes(name)) return 'Your barangay floods every monsoon season. Everything important is stored high — documents in plastic, shoes on the shelf, the television on a table. Your family has lived in this house for twenty years, which makes you established.';
+      return 'The city has a formal face and an informal one. You grew up in the informal one — improvised, resourceful, dense with life and noise and the specific intimacy of people living closely.';
+    },
+    choices: [
+      {
+        text: 'You know every shortcut, every face — this place is home',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.h += 10; p.e += 3; p.setMem('du_shantytown', true); p.addFlag('urban_survivor'); },
+        inject: null,
+      },
+      {
+        text: 'You want out. You study harder than anyone.',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.e += 8; p.h -= 3; p.setMem('du_shantytown', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'du_informal_market',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'developing_urban' && G.age >= 7 && G.age <= 15 && !G.mem.du_market,
+    text: 'Your mother sells from a stall. Your father drives a motorbike taxi. The income is daily and inconsistent — good week, bad week, festival week, strike week. You help on weekends and understand before the age of ten that there is no sick leave, no holiday, no margin.',
+    choices: [
+      {
+        text: 'Help at the stall — learn the rhythms of trade',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.w += 5; p.e += 3; p.h += 3; p.setMem('du_market', true); },
+        inject: null,
+      },
+      {
+        text: 'Study on your own while they work',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.e += 8; p.setMem('du_market', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'du_urban_violence',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'developing_urban' && G.age >= 10 && G.age <= 20 && !G.mem.du_violence && ['Brazil', 'Colombia', 'South Africa', 'Mexico'].includes(G.character.country.name),
+    isKey: true,
+    text: (G) => {
+      const name = G.character.country.name;
+      if (name === 'Brazil') return 'A drug faction controls the end of your road. The rules are unwritten and clearly communicated: the bakery is open, the phone repair shop is neutral ground, Thursdays before midnight are generally fine. You grow up knowing the map.';
+      if (name === 'Colombia') return 'Your city was beautiful before the paramilitaries divided it. Now certain buses go certain ways. You know which murals mark which territory.';
+      if (name === 'South Africa') return 'The township has been this way for a long time. What outsiders call disorder has its own logic — the committee, the elders, the hierarchy of grievances. Violence happens at the edges, usually at night.';
+      if (name === 'Mexico') return 'The plaza belongs to the cartel by evening. The police agree. The shops close early on certain days for reasons everyone understands and nobody states.';
+      return 'Urban violence is part of the landscape — not constant, but structurally present. You navigate it.';
+    },
+    choices: [
+      {
+        text: 'Navigate carefully — know the rules and survive',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.m -= 5; p.e += 5; p.setMem('du_violence', true); p.addFlag('street_smart'); },
+        inject: null,
+      },
+      {
+        text: 'Lose a friend to it',
+        tag: null,
+        outcome: 'One night a friend doesn\'t come home. The grief is real. The anger has nowhere to go.',
+        effect: (p) => { p.h -= 15; p.m -= 8; p.r += 8; p.setMem('du_violence', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'du_china_gaokao',
+    phase: 'adolescence',
+    weight: 5,
+    when: (G) => G.character.country.name === 'China' && G.age >= 16 && G.age <= 19 && !G.mem.du_gaokao,
+    isKey: true,
+    text: 'The gaokao is in three days. You have been preparing for three years in earnest, twelve years in total. The exam will determine your university. Your university will determine your career. Your career will determine your marriage prospects. The three days feel like three years compressed into a single point.',
+    choices: [
+      {
+        text: 'You\'re as ready as you\'ll ever be — trust the preparation',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.e += 12; p.h -= 5; p.setMem('du_gaokao', true); p.addFlag('gaokao_survivor'); },
+        inject: null,
+      },
+      {
+        text: 'The pressure breaks you — you perform below your ability',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.e += 3; p.h -= 15; p.m -= 8; p.setMem('du_gaokao', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'du_remittance_sender',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'developing_urban' && G.age >= 20 && G.age <= 40 && G.career && !G.mem.du_remittance && G.money > 200,
+    text: 'The first paycheque is split before it arrives. A portion goes home to the village by bus or transfer. Your parents helped pay your school fees. Your younger siblings need uniforms. The expectation is not a burden, exactly — it is the structure of things. But it does affect the apartment you can afford.',
+    choices: [
+      {
+        text: 'Send reliably — it\'s the right thing to do',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.mo -= 1500; p.karma += 10; p.h += 5; p.setMem('du_remittance', true); },
+        inject: null,
+      },
+      {
+        text: 'Send less than expected — you need to build something here',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.mo -= 500; p.r += 8; p.setMem('du_remittance', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'du_megacity_commute',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'developing_urban' && G.career && G.age >= 22 && G.age <= 55 && !G.mem.du_commute,
+    text: (G) => {
+      const name = G.character.country.name;
+      if (name === 'China') return 'Three hours a day on the metro. Standing in the crush. The packed carriages at 8am are a full body of people pressing in the same direction. You read, you sleep standing, you arrive at work already used up.';
+      if (name === 'India') return 'The local train at rush hour is a different experience from a train. You do not take a train to work — you navigate a river of people that happens to be on rails. In twenty years, your shoulder muscles will remember this.';
+      if (['Mexico', 'Brazil', 'Indonesia', 'Philippines'].includes(name)) return 'The traffic in this city was not designed. It grew. What should be forty minutes is two hours some mornings. You become expert at the radio, at podcasts, at the particular patience that comes from having no other option.';
+      return 'The commute in this city is its own life — two, three hours daily in buses, trains, on foot. You become fluent in surviving it.';
+    },
+    choices: [
+      {
+        text: 'Find ways to use the time — read, learn, think',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.e += 5; p.setMem('du_commute', true); },
+        inject: null,
+      },
+      {
+        text: 'The commute grinds you down over years',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.m -= 8; p.h -= 5; p.r += 3; p.setMem('du_commute', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'du_middle_class_aspiration',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'developing_urban' && G.age >= 28 && G.age <= 45 && G.career && G.money > 5000 && !G.mem.du_middle_class,
+    isKey: true,
+    text: 'Your parents had nothing. You have a salary, an apartment, a motorbike that is actually yours. The refrigerator works. The children will go to private school. You are the first person in your family to own property. The generation above you has no vocabulary for what you have done — it didn\'t exist as a category.',
+    choices: [
+      {
+        text: 'Celebrate quietly — this is significant',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.h += 15; p.karma += 5; p.setMem('du_middle_class', true); p.addFlag('first_gen_middle_class'); },
+        inject: null,
+      },
+      {
+        text: 'The ladder goes further — you want more',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.w += 5; p.setMem('du_middle_class', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── CROSS-ARCHETYPE TRAUMA / PTSD EVENTS ─────────────────────────────────────
+
+  {
+    id: 'trauma_flashback',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.flags.includes('conflict_survivor') && G.age >= 18 && !G.mem.trauma_shown && !G.mentalHealth?.condition,
+    isKey: true,
+    text: 'It comes back at odd moments. A car backfiring. The particular angle of afternoon light. A smell in the market. Your body responds before your mind catches up — heart hammering, vision narrowing, somewhere else entirely for a few seconds. People around you see nothing unusual. You have learnt to wait it out without moving.',
+    choices: [
+      {
+        text: 'Seek professional help — this is a real injury',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.m += 8; p.h -= 5; p.setMentalHealth({ condition: 'ptsd', therapy: true }); p.setMem('trauma_shown', true); },
+        inject: null,
+      },
+      {
+        text: 'Manage alone — you always have',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.m -= 8; p.h -= 10; p.setMentalHealth({ condition: 'ptsd' }); p.setMem('trauma_shown', true); },
+        inject: null,
+      },
+      {
+        text: 'Talk to someone who went through the same thing',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.h += 5; p.m += 3; p.setMentalHealth({ condition: 'ptsd', therapy: true }); p.setMem('trauma_shown', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'trauma_anniversary',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.mentalHealth?.condition === 'ptsd' && G.age >= 20 && !G.mem.trauma_anniversary,
+    text: 'The anniversary is harder than the other days. Not the worst day — somehow the anticipation of it is worse than the day itself, most years. You have learnt to recognise the approach: the shortening of sleep, the irritability, the way certain songs are suddenly unlistenable.',
+    choices: [
+      {
+        text: 'Mark the day consciously — acknowledge it',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.m += 5; p.h -= 5; p.karma += 5; p.setMem('trauma_anniversary', true); },
+        inject: null,
+      },
+      {
+        text: 'Work through it — keep moving',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.h -= 8; p.setMem('trauma_anniversary', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'cz_late_life_exile',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'conflict_zone' && G.age >= 55 && G.flags.includes('refugee') && !G.mem.cz_exile_old,
+    isKey: true,
+    text: 'You have been away for longer than you were home. The country you left exists now as photographs, phone calls, and the specific way you cook certain things. Your children were born here, in this country that took you in. They speak the new language without an accent. The old place lives in you alone.',
+    choices: [
+      {
+        text: 'The exile is permanent — make peace with it',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.h += 5; p.r += 8; p.karma += 8; p.setMem('cz_exile_old', true); },
+        inject: null,
+      },
+      {
+        text: 'Return — whatever state it is in now',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.h += 15; p.r -= 5; p.setMem('cz_exile_old', true); },
+        inject: null,
+      },
+      {
+        text: 'Teach the children the old language before it is gone',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.h += 8; p.karma += 10; p.setMem('cz_exile_old', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'du_pollution_health',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) => ['developing_urban', 'developing_unstable'].includes(G.character.country.archetype) && G.age >= 10 && !G.mem.du_pollution,
+    text: 'The air in this city has a particular quality on still days — yellow-grey, heavy, scratching the back of the throat. Your schoolmates have chronic coughs that are treated as ordinary. The river your parents swam in is not swimmable. The fish are gone from that stretch.',
+    choices: null,
+    effect: (p) => { p.m -= 8; p.setMem('du_pollution', true); p.addFlag('pollution_exposure'); },
+  },
+
+  {
+    id: 'du_india_caste_encounter',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) => G.character.country.name === 'India' && G.age >= 10 && !G.mem.india_caste,
+    isKey: true,
+    text: 'Caste is in the air before you have a word for it. The seating at school has a pattern you don\'t fully understand. Your mother is careful about which water is offered at whose house. A friend\'s family does not eat with yours. Later, you find the official vocabulary. The experience had a name all along.',
+    choices: [
+      {
+        text: 'The system angers you — you push back where you can',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.karma += 8; p.h -= 5; p.e += 3; p.setMem('india_caste', true); p.addFlag('politically_aware'); },
+        inject: null,
+      },
+      {
+        text: 'Navigate it — the cost of confrontation is too high',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.r += 8; p.h -= 8; p.setMem('india_caste', true); },
+        inject: null,
+      },
+      {
+        text: 'Your family is from a higher caste — you benefit from it',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.w += 3; p.karma -= 5; p.setMem('india_caste', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'du_unstable_currency',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) => ['developing_unstable', 'developing_urban'].includes(G.character.country.archetype) && G.age >= 16 && !G.mem.du_currency && G.currentYear >= 1990,
+    text: (G) => {
+      const name = G.character.country.name;
+      if (name === 'Venezuela') return 'The bolivar lost half its value in a single week. Your savings are in a currency that is evaporating. The supermarket shelves are empty on the protein aisle and people are lining up for flour.';
+      if (name === 'Zimbabwe') return 'The zeros multiplied. The trillion-dollar note. The thing that was not supposed to be possible.';
+      return 'The exchange rate crisis arrives without announcement. Your salary buys less each month. People are converting to dollars wherever possible. The formal economy and the parallel economy are barely speaking to each other.';
+    },
+    choices: [
+      {
+        text: 'Convert savings to hard currency immediately',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.w += 8; p.e += 3; p.setMem('du_currency', true); },
+        inject: null,
+      },
+      {
+        text: 'You wait too long — the savings are gone',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.mo -= 3000; p.h -= 10; p.setMem('du_currency', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
 ]
