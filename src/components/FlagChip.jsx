@@ -13,6 +13,10 @@ const NEGATIVE_FLAGS = new Set([
   // personal depth flags
   'orphan', 'early_grief', 'child_loss', 'chronic_illness', 'estranged_family',
   'in_therapy', 'cycle_broken', 'abuser', 'early_drinker', 'medical_debt',
+  // prison
+  'gang_member', 'prison_oriented', 'prison_worker',
+  // civil/legal
+  'compromised',
 ])
 
 const POSITIVE_FLAGS = new Set([
@@ -29,6 +33,11 @@ const POSITIVE_FLAGS = new Set([
   // personal depth flags
   'processed_grief', 'reconciled_family', 'legacy_support', 'cared_for_children',
   'in_recovery', 'cycle_broken',
+  // prison
+  'prison_education',
+  // career/life
+  'adult_learner', 'determined', 'tech_adapted', 'compassionate',
+  'rehab_graduate', 'community_leader', 'mentor', 'integrity', 'parent',
 ])
 
 function flagStyle(flag) {

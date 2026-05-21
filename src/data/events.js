@@ -3310,4 +3310,415 @@ export const EVENTS = [
     ],
     effect: null,
   },
+
+  // ── PREGNANCY & FERTILITY EVENTS ─────────────────────────────────────────
+
+  {
+    id: 'ya_unplanned_pregnancy',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => !G.birthControl && G.partner && G.age >= 16 && G.age <= 24 && G.children.length === 0 && !G.mem.hadPregnancyEvent,
+    text: (G) => {
+      const country = G.character.country.archetype
+      if (['developing_unstable', 'subsaharan', 'conflict_zone'].includes(country))
+        return `You are pregnant. There is no test kit — you simply know. In ${G.character.country.name}, this will change everything. There is no safety net for young mothers.`
+      if (G.character.country.name === 'United States')
+        return 'The test is positive. You are not ready. Healthcare costs, insurance, the conversation you need to have — it all arrives at once.'
+      return 'The test is positive. You are not ready. Whatever comes next, the decision belongs to you.'
+    },
+    choices: [
+      {
+        text: 'Continue the pregnancy',
+        tag: null,
+        outcome: (G) => ['developing_unstable', 'subsaharan', 'conflict_zone'].includes(G.character.country.archetype)
+          ? 'The birth is hard and attended by family. The child arrives into a life already full of difficulty and love in equal measure.'
+          : 'The pregnancy is difficult but you manage. A child arrives before you felt prepared. Prepared doesn\'t wait.',
+        effect: (p) => {
+          p.m += 5; p.h -= 10; p.w -= 10; p.setMem('hadPregnancyEvent', true);
+          p.addFlag('parent');
+          p.addChild({ gender: Math.random() < 0.5 ? 'male' : 'female', ageAtBirth: 0, relationshipQuality: 75 });
+        },
+        inject: null,
+      },
+      {
+        text: 'Terminate the pregnancy',
+        tag: null,
+        outcome: (G) => ['conflict_zone', 'developing_unstable'].includes(G.character.country.archetype) && G.currentYear < 2000
+          ? 'Safe options are nearly inaccessible here. The procedure happens anyway, at significant risk.'
+          : 'The procedure is straightforward medically. The emotional weight takes longer to process.',
+        effect: (p) => { p.m -= 8; p.h -= 5; p.r += 5; p.setMem('hadPregnancyEvent', true); },
+        inject: null,
+      },
+      {
+        text: 'Consider adoption',
+        tag: null,
+        outcome: 'The pregnancy continues. At birth, you place the child with adoptive parents. The grief and peace are not opposites.',
+        effect: (p) => { p.m -= 12; p.r += 8; p.karma += 5; p.setMem('hadPregnancyEvent', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_fertility_struggle',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.partner && G.children.length === 0 && G.age >= 30 && G.age <= 40 && !G.mem.fertilityEvent,
+    text: (G) => {
+      if (['subsaharan', 'conflict_zone', 'developing_unstable'].includes(G.character.country.archetype))
+        return `You and your partner have been trying for two years. In ${G.character.country.name}, a childless marriage carries social weight that is hard to describe to outsiders.`
+      return 'Two years of trying. Two years of tests, timing, and hope deferred. The doctors call it unexplained infertility.'
+    },
+    choices: [
+      {
+        text: 'Pursue IVF',
+        tag: null,
+        outcome: (G) => ['wealthy_west', 'wealthy_east', 'wealthy_gulf'].includes(G.character.country.archetype) && G.currentYear >= 1985
+          ? 'Three rounds. The second one works. The cost is significant. The exhaustion is total. A child is born.'
+          : 'IVF is not accessible here. The option exists in another country but the cost and travel are prohibitive.',
+        effect: (p) => {
+          if (['wealthy_west', 'wealthy_east', 'wealthy_gulf'].includes(p._state?.character?.country?.archetype)) {
+            p.m += 15; p.h -= 8; p.mo -= 25000; p.addFlag('parent');
+            p.addChild({ gender: Math.random() < 0.5 ? 'male' : 'female', ageAtBirth: 0, relationshipQuality: 80 });
+          } else {
+            p.m -= 10; p.r += 8;
+          }
+          p.setMem('fertilityEvent', true);
+        },
+        inject: null,
+      },
+      {
+        text: 'Adopt a child',
+        tag: null,
+        outcome: (G) => `The process in ${G.character.country.name} takes ${['wealthy_west'].includes(G.character.country.archetype) ? 'eighteen months of paperwork and home studies' : 'years of bureaucracy and uncertainty'}. A child eventually joins your family.`,
+        effect: (p) => { p.m += 10; p.mo -= 8000; p.addFlag('parent'); p.addChild({ gender: Math.random() < 0.5 ? 'male' : 'female', ageAtBirth: 0, relationshipQuality: 70 }); p.setMem('fertilityEvent', true); },
+        inject: null,
+      },
+      {
+        text: 'Accept a life without children',
+        tag: null,
+        outcome: 'The grief is real. So is the space that opens up. You find other ways to shape the next generation.',
+        effect: (p) => { p.m -= 5; p.r += 5; p.setMem('fertilityEvent', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ya_miscarriage',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.partner && G.age >= 22 && G.age <= 38 && G.children.length === 0 && !G.mem.miscarriageEvent,
+    text: (G) => {
+      if (['subsaharan', 'conflict_zone', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'The pregnancy ends at twelve weeks. There is no hospital nearby. Your family gathers. The grief is silent and communal.'
+      return 'You miscarry at ten weeks. The medical care is good and swift. The emotional aftermath is not in any brochure.'
+    },
+    choices: [
+      {
+        text: 'Grieve together with your partner',
+        tag: null,
+        outcome: 'The loss brings you closer. The grief takes its time.',
+        effect: (p) => { p.m -= 15; p.h -= 5; p.r += 5; p.setMem('miscarriageEvent', true); },
+        inject: null,
+      },
+      {
+        text: 'Try to move forward quickly',
+        tag: null,
+        outcome: 'The effort to appear okay delays the grief, not resolves it. It surfaces later.',
+        effect: (p) => { p.m -= 8; p.r += 8; p.setMem('miscarriageEvent', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ya_postpartum_depression',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.children.length > 0 && !G.mem.postpartumEvent && G.age <= 35 && G.children.some(c => c.ageAtBirth >= G.age - 2),
+    text: (G) => {
+      if (['subsaharan', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype))
+        return 'The baby is here and safe, but something in you went dark after the birth. No one has a name for what this is. You feel ashamed of feeling this way.'
+      return 'The baby is healthy. You know you should feel joy. Instead you feel a hollowness you cannot explain to anyone who hasn\'t felt it. Postpartum depression is what the doctor calls it.'
+    },
+    choices: [
+      {
+        text: 'Seek help — therapy and/or medication',
+        tag: null,
+        outcome: (G) => ['wealthy_west', 'wealthy_east', 'developing_urban'].includes(G.character.country.archetype)
+          ? 'Treatment helps. The fog lifts over months. You find the joy you feared was gone.'
+          : 'Support is limited but your partner and family help carry you through.',
+        effect: (p) => { p.m += 10; p.h += 5; p.mo -= 2000; p.setMem('postpartumEvent', true); },
+        inject: null,
+      },
+      {
+        text: 'Tell no one and push through',
+        tag: null,
+        outcome: 'You manage, barely. The first year is the hardest year of your life.',
+        effect: (p) => { p.m -= 10; p.h -= 5; p.r += 5; p.setMem('postpartumEvent', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_pregnancy_late',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.partner && G.age >= 38 && G.age <= 44 && G.children.length === 0 && !G.mem.latePregnancyEvent,
+    text: (G) => {
+      if (['wealthy_west', 'wealthy_east', 'wealthy_gulf'].includes(G.character.country.archetype) && G.currentYear >= 1990)
+        return 'Against the odds and your doctor\'s caution, you are pregnant at 40. The monitoring is intensive. The statistics are discussed at every appointment.'
+      return 'A late surprise. You had accepted you would not become a parent. Now everything changes.'
+    },
+    choices: [
+      {
+        text: 'Embrace the pregnancy fully',
+        tag: null,
+        outcome: 'The birth is managed carefully. A child arrives, changing everything you thought your future looked like.',
+        effect: (p) => { p.m += 12; p.h -= 12; p.addFlag('parent'); p.addChild({ gender: Math.random() < 0.5 ? 'male' : 'female', ageAtBirth: 0, relationshipQuality: 80 }); p.setMem('latePregnancyEvent', true); },
+        inject: null,
+      },
+      {
+        text: 'The risks are too high — end the pregnancy',
+        tag: null,
+        outcome: 'The decision weighs on you. The grief is mixed with relief, and vice versa.',
+        effect: (p) => { p.m -= 10; p.r += 10; p.setMem('latePregnancyEvent', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── INHERITANCE & WILLS ──────────────────────────────────────────────────
+
+  {
+    id: 'mid_will_writing',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.age >= 45 && G.money > 5000 && !G.mem.willWritten,
+    text: (G) => {
+      if (['subsaharan', 'conflict_zone', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'There is no solicitor to see — you gather the family and make your intentions clear in the presence of elders and witnesses. What you have, and who gets it.'
+      return 'A solicitor lays documents on the desk. A will is a strange thing to write — arranging the world for a day you won\'t see.'
+    },
+    choices: [
+      {
+        text: 'Leave everything to your children equally',
+        tag: null,
+        outcome: 'Simple. Equitable. Still contested by someone at the reading.',
+        effect: (p) => { p.m += 5; p.setMem('willWritten', true); p.setMem('willType', 'equal_children'); },
+        inject: null,
+      },
+      {
+        text: 'Leave a portion to charity',
+        tag: 'legacy_support',
+        outcome: 'You designate a cause that outlives you. Your estate becomes part of something larger.',
+        effect: (p) => { p.m += 8; p.karma += 10; p.addFlag('legacy_support'); p.setMem('willWritten', true); p.setMem('willType', 'charity'); },
+        inject: null,
+      },
+      {
+        text: 'Leave it to your partner and let them decide',
+        tag: null,
+        outcome: 'The simplest trust. It assumes the relationship will survive you.',
+        effect: (p) => { p.m += 4; p.setMem('willWritten', true); p.setMem('willType', 'partner'); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_contested_inheritance',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.parents === null && G.money > 10000 && !G.mem.inheritanceContested,
+    text: (G) => {
+      if (['subsaharan', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'Your parent has died. The land they farmed is now the subject of a family dispute. Relatives you barely know are laying claim to it.'
+      if (['post_soviet'].includes(G.character.country.archetype))
+        return 'The estate left by your parent is modest — a flat and some savings. A sibling contests the split.'
+      return 'The will is read. A sibling disputes their share, claiming undue influence. The lawyers circle.'
+    },
+    choices: [
+      {
+        text: 'Fight it — the will is clear',
+        tag: null,
+        outcome: 'The legal battle takes two years and a third of the estate in fees. You prevail.',
+        effect: (p) => { p.m -= 10; p.mo += 15000; p.setMem('inheritanceContested', true); },
+        inject: null,
+      },
+      {
+        text: 'Settle — give them a larger share to end it',
+        tag: null,
+        outcome: 'Peace costs money. The relationship survives, barely.',
+        effect: (p) => { p.m -= 5; p.mo += 5000; p.setMem('inheritanceContested', true); },
+        inject: null,
+      },
+      {
+        text: 'Let them have it — the money is not worth the fight',
+        tag: null,
+        outcome: 'The magnanimity is genuine. The sting fades. The relationship improves marginally.',
+        effect: (p) => { p.karma += 8; p.m -= 3; p.setMem('inheritanceContested', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'late_inheritance_received',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.parents === null && !G.mem.inheritanceReceived && G.money > 0,
+    text: (G) => {
+      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
+        return 'The estate is settled. After debts and taxes, an inheritance arrives — enough to reshape your final years.'
+      if (['subsaharan', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype))
+        return 'Your parent\'s plot of land passes to you. In cash terms it is very little. In meaning, it is everything.'
+      return 'The family home and what remained in the bank. An inheritance, modest but real.'
+    },
+    choices: [
+      {
+        text: 'Invest it for the family\'s future',
+        tag: null,
+        outcome: 'Careful stewardship. The wealth compounds slowly.',
+        effect: (p) => { p.mo += 30000; p.m += 5; p.setMem('inheritanceReceived', true); },
+        inject: null,
+      },
+      {
+        text: 'Pay off debts and live more freely',
+        tag: null,
+        outcome: 'The weight of the debt lifts. The late years feel lighter.',
+        effect: (p) => { p.mo += 15000; p.m += 10; p.w += 8; p.setMem('inheritanceReceived', true); },
+        inject: null,
+      },
+      {
+        text: 'Pass it on to your own children now',
+        tag: 'legacy_support',
+        outcome: 'You watch them use it while you are still here to see it. That turns out to matter.',
+        effect: (p) => { p.m += 12; p.karma += 8; p.addFlag('legacy_support'); p.setMem('inheritanceReceived', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── CIVIL LAW & LITIGATION EVENTS ────────────────────────────────────────
+
+  {
+    id: 'mid_sued',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.money > 20000 && !G.mem.civilSuit && G.age >= 30,
+    text: (G) => {
+      const archetype = G.character.country.archetype
+      if (['wealthy_west'].includes(archetype) && G.character.country.name === 'United States')
+        return 'A letter arrives from a law firm. You are being sued — a neighbour claims your renovation damaged their property. The claim is $85,000.'
+      if (['post_soviet', 'developing_urban'].includes(archetype))
+        return 'A former business partner is taking you to court over a disputed deal from years ago. The claim is vague but the legal costs are real.'
+      return 'A civil claim lands on your doorstep. A former contractor says you did not pay the agreed amount. Your records say otherwise.'
+    },
+    choices: [
+      {
+        text: 'Fight it in court',
+        tag: null,
+        outcome: 'The case drags on. Legal fees mount. You win but at a cost.',
+        effect: (p) => { p.mo -= 20000; p.m -= 10; p.setMem('civilSuit', true); },
+        inject: null,
+      },
+      {
+        text: 'Settle out of court',
+        tag: null,
+        outcome: 'The settlement costs less than the fight. The resentment costs more than either.',
+        effect: (p) => { p.mo -= 10000; p.m -= 5; p.setMem('civilSuit', true); },
+        inject: null,
+      },
+      {
+        text: 'Counter-sue for harassment',
+        tag: null,
+        outcome: 'The counter-claim is risky. It unsettles the claimant. Both parties eventually agree to drop it.',
+        effect: (p) => { p.mo -= 8000; p.m -= 8; p.setMem('civilSuit', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_sue_someone',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => !G.mem.hasFiledSuit && G.money > 5000 && G.age >= 28,
+    text: (G) => {
+      const archetype = G.character.country.archetype
+      if (archetype === 'wealthy_west' && G.character.country.name === 'United States')
+        return 'Your employer has illegally withheld wages for two years. The Employment Rights Center says you have a clear case.'
+      if (['conflict_zone', 'developing_unstable', 'subsaharan'].includes(archetype))
+        return 'A local official seized your property without compensation. The court system is unreliable, but an NGO offers legal support.'
+      return 'A contractor did substandard work that cost you significantly. Your solicitor says the case is strong.'
+    },
+    choices: [
+      {
+        text: 'File the suit',
+        tag: null,
+        outcome: (G) => ['conflict_zone', 'developing_unstable', 'subsaharan'].includes(G.character.country.archetype)
+          ? 'The case stalls in a corrupt system. After two years and significant cost, you reach a partial settlement.'
+          : 'The case takes eighteen months. You receive a settlement that partially covers your losses.',
+        effect: (p) => { p.mo += 8000; p.m -= 5; p.setMem('hasFiledSuit', true); },
+        inject: null,
+      },
+      {
+        text: 'Negotiate directly first',
+        tag: null,
+        outcome: 'The other party agrees to a modest payment to avoid litigation. Faster and cheaper for everyone.',
+        effect: (p) => { p.mo += 4000; p.m += 3; p.setMem('hasFiledSuit', true); },
+        inject: null,
+      },
+      {
+        text: 'Let it go — litigation is not worth it',
+        tag: null,
+        outcome: 'The decision saves time. The loss still stings.',
+        effect: (p) => { p.r += 5; p.setMem('hasFiledSuit', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'mid_divorce_settlement',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.flags.includes('divorced') && !G.mem.divorceSettled && G.money > 5000,
+    text: (G) => {
+      if (['subsaharan', 'conflict_zone', 'developing_unstable'].includes(G.character.country.archetype))
+        return 'The separation is mediated by community elders. Division of the household is decided collectively — and not always in your favour.'
+      if (['post_soviet', 'developing_urban'].includes(G.character.country.archetype))
+        return 'The divorce proceeds through court. Assets accumulated during marriage are to be split. The flat, the car, the savings account.'
+      return 'The divorce settlement involves lawyers for both sides. Property, pension, custody — everything on the table.'
+    },
+    choices: [
+      {
+        text: 'Negotiate fairly and equitably',
+        tag: null,
+        outcome: 'The settlement is balanced. The relationship with your ex settles into something manageable.',
+        effect: (p) => { p.mo -= 12000; p.m += 5; p.karma += 5; p.setMem('divorceSettled', true); },
+        inject: null,
+      },
+      {
+        text: 'Fight for the maximum',
+        tag: null,
+        outcome: 'The legal battle costs more than any gain. The animosity becomes permanent.',
+        effect: (p) => { p.mo -= 20000; p.m -= 8; p.karma -= 5; p.setMem('divorceSettled', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
 ]
