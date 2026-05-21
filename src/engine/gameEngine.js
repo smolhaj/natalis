@@ -210,6 +210,7 @@ function buildEffectProxy(state) {
     if (!proxy._hobbyDeltas) proxy._hobbyDeltas = {}
     proxy._hobbyDeltas[hobbyId] = (proxy._hobbyDeltas[hobbyId] ?? 0) + delta
   }
+  proxy.partnerRel = (delta) => { proxy._partnerRelDelta = (proxy._partnerRelDelta ?? 0) + delta }
   return proxy
 }
 
@@ -233,6 +234,9 @@ function resolveProxyExtras(state, proxy) {
   }
   if (proxy.flags.includes('has_licence')) next = { ...next, licenceObtained: true }
   if (proxy._releaseFromPrison) next = { ...next, inPrison: false, prisonSentence: 0 }
+  if (proxy._partnerRelDelta && next.partner) {
+    next = { ...next, partner: { ...next.partner, relationshipQuality: clamp((next.partner.relationshipQuality ?? 60) + proxy._partnerRelDelta, 0, 100) } }
+  }
   if (proxy._mentalHealthUpdates) next = { ...next, mentalHealth: { ...(next.mentalHealth ?? {}), ...proxy._mentalHealthUpdates } }
   if (proxy._hobbyDeltas) {
     const hobbies = { ...(next.hobbies ?? {}) }
