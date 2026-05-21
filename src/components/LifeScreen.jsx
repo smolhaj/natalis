@@ -63,6 +63,8 @@ export default function LifeScreen() {
   const children     = useGameStore(s => s.children)
   const inPrison     = useGameStore(s => s.inPrison)
   const prisonSentence = useGameStore(s => s.prisonSentence)
+  const wanted       = useGameStore(s => s.wanted)
+  const assumedIdentity = useGameStore(s => s.assumedIdentity)
   const actionsThisYear = useGameStore(s => s.actionsThisYear)
   const maxActionsPerYear = useGameStore(s => s.maxActionsPerYear)
   const lastOutcome  = useGameStore(s => s.lastOutcome)
@@ -182,6 +184,17 @@ export default function LifeScreen() {
               <div>
                 <p className="font-bold text-red-600 text-sm">In Prison</p>
                 <p className="text-red-500 text-xs">{prisonSentence} year{prisonSentence !== 1 ? 's' : ''} remaining</p>
+              </div>
+            </div>
+          )}
+
+          {/* Wanted / fugitive banner */}
+          {wanted && !inPrison && (
+            <div className="bg-red-600 rounded-2xl px-4 py-3 flex items-center gap-3">
+              <span className="text-2xl">🚨</span>
+              <div>
+                <p className="font-bold text-white text-sm">WANTED FUGITIVE</p>
+                <p className="text-red-200 text-xs">{assumedIdentity ? `Living as ${assumedIdentity.name}` : 'Police are actively searching for you'}</p>
               </div>
             </div>
           )}
@@ -395,7 +408,7 @@ export default function LifeScreen() {
                   <div className="flex justify-between items-center">
                     <div>
                       <p className="font-semibold text-natalis-text">{partner.name}</p>
-                      <p className="text-natalis-muted text-xs">{partner.married ? '💍 Married' : partner.engaged ? '💌 Engaged' : '💑 Dating'}</p>
+                      <p className="text-natalis-muted text-xs">{partner.married ? '💍 Married' : partner.engaged ? '💌 Engaged' : '💑 Dating'}{partner.age ? ` · Age ${partner.age}` : ''}</p>
                     </div>
                     <RelBar value={partner.relationshipQuality} color={relColor(partner.relationshipQuality)} />
                   </div>
@@ -407,12 +420,18 @@ export default function LifeScreen() {
                 <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
                   <p className="font-bold text-natalis-text text-sm mb-3">👨‍👩‍👧 Children</p>
                   <div className="space-y-2">
-                    {children.map((child, i) => (
-                      <div key={i} className="flex justify-between items-center">
-                        <p className="text-natalis-dim text-sm">{child.name.split(' ')[0]}</p>
-                        <RelBar value={child.relationshipQuality} color={relColor(child.relationshipQuality)} />
-                      </div>
-                    ))}
+                    {children.map((child, i) => {
+                      const childAge = child.ageAtBirth !== undefined ? age - child.ageAtBirth : null
+                      return (
+                        <div key={i} className="flex justify-between items-center">
+                          <div>
+                            <p className="text-natalis-dim text-sm">{child.name.split(' ')[0]}</p>
+                            {childAge !== null && <p className="text-natalis-muted text-xs">Age {childAge}</p>}
+                          </div>
+                          <RelBar value={child.relationshipQuality} color={relColor(child.relationshipQuality)} />
+                        </div>
+                      )
+                    })}
                   </div>
                 </div>
               )}
@@ -429,7 +448,8 @@ export default function LifeScreen() {
                         <div key={key} className="flex justify-between items-center">
                           <div>
                             <p className="text-natalis-dim text-sm">{p.name.split(' ')[0]}</p>
-                            {!p.alive && <p className="text-natalis-muted text-xs">Deceased</p>}
+                            {p.currentAge && <p className="text-natalis-muted text-xs">{p.alive ? `Age ${p.currentAge}` : `Deceased · Age ${p.currentAge}`}</p>}
+                            {!p.currentAge && !p.alive && <p className="text-natalis-muted text-xs">Deceased</p>}
                           </div>
                           {p.alive
                             ? <RelBar value={p.relationshipQuality} color={relColor(p.relationshipQuality)} />
@@ -447,18 +467,22 @@ export default function LifeScreen() {
                 <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
                   <p className="font-bold text-natalis-text text-sm mb-3">👫 Siblings</p>
                   <div className="space-y-2">
-                    {siblings.map((sib, i) => (
-                      <div key={i} className="flex justify-between items-center">
-                        <div>
-                          <p className="text-natalis-dim text-sm">{sib.name.split(' ')[0]}</p>
-                          {!sib.alive && <p className="text-natalis-muted text-xs">Deceased</p>}
+                    {siblings.map((sib, i) => {
+                      const sibAge = sib.ageDiff !== undefined ? age + sib.ageDiff : null
+                      return (
+                        <div key={i} className="flex justify-between items-center">
+                          <div>
+                            <p className="text-natalis-dim text-sm">{sib.name.split(' ')[0]}</p>
+                            {sibAge !== null && <p className="text-natalis-muted text-xs">{sib.alive ? `Age ${Math.max(0, sibAge)}` : `Deceased · Age ${Math.max(0, sibAge)}`}</p>}
+                            {sibAge === null && !sib.alive && <p className="text-natalis-muted text-xs">Deceased</p>}
+                          </div>
+                          {sib.alive
+                            ? <RelBar value={sib.relationshipQuality} color={relColor(sib.relationshipQuality)} />
+                            : <span className="text-xs text-natalis-muted">✞</span>
+                          }
                         </div>
-                        {sib.alive
-                          ? <RelBar value={sib.relationshipQuality} color={relColor(sib.relationshipQuality)} />
-                          : <span className="text-xs text-natalis-muted">✞</span>
-                        }
-                      </div>
-                    ))}
+                      )
+                    })}
                   </div>
                 </div>
               )}

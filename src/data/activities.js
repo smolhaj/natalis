@@ -337,6 +337,17 @@ export const ACTIVITIES = {
       outcome: 'Progress is slow and meaningful.',
     },
     {
+      id: 'treat_sti',
+      name: 'Treat STI',
+      description: 'See a doctor and start treatment.',
+      minAge: 16,
+      maxAge: null,
+      cost: 300,
+      effect: (p) => { p.h += 8; p.m += 3; p.clearFlag('has_std'); p.clearFlag('chlamydia'); p.clearFlag('gonorrhea'); p.clearFlag('herpes'); },
+      condition: (G) => G.flags.includes('has_std'),
+      outcome: 'Treatment goes smoothly. Health restored. A relief.',
+    },
+    {
       id: 'date_night',
       name: 'Invest in your relationship',
       description: 'Make deliberate effort with your partner.',
@@ -617,6 +628,10 @@ export const ACTIVITIES = {
     { crimeId: 'black_market', label: 'Black market trading', minAge: 18 },
     { crimeId: 'political_dissent', label: 'Engage in political dissent', minAge: 18 },
     { crimeId: 'corporate_fraud', label: 'Corporate fraud', minAge: 30 },
+    { crimeId: 'aggravated_assault', label: 'Aggravated assault', minAge: 16 },
+    { crimeId: 'manslaughter', label: 'Manslaughter', minAge: 16 },
+    { crimeId: 'domestic_violence', label: 'Domestic violence', minAge: 16 },
+    { crimeId: 'murder', label: 'Murder someone', minAge: 16 },
   ],
 
   hobbies: [
@@ -629,6 +644,17 @@ export const ACTIVITIES = {
     { id: 'music_lesson',     label: 'Music Lesson',     emoji: '🎹', desc: 'Professional tuition — costs money but doubles progress.', minAge: 5,  cost: 80,   hobbyId: 'music',   delta: 18, statBonus: { m: 5, e: 3 } },
     { id: 'art_class',        label: 'Art Class',        emoji: '🖼️', desc: 'Structured tuition — faster skill growth.', minAge: 8,  cost: 60,   hobbyId: 'art',     delta: 16, statBonus: { m: 5 } },
     { id: 'writing_workshop', label: 'Writing Workshop',  emoji: '📝', desc: 'Workshop with peer feedback.', minAge: 16, cost: 100,  hobbyId: 'writing', delta: 16, statBonus: { e: 6 } },
+  ],
+
+  extracurricular: [
+    { id: 'drama_club',    name: 'Drama Club',      desc: 'Perform in plays and musicals.',     minAge: 10, maxAge: 18, cost: 0,  effect: (p) => { p.s += 5; p.m += 4; p.addFlag('drama_club');    }, outcome: 'You find your voice onstage.' },
+    { id: 'science_club',  name: 'Science Club',    desc: 'Experiments and curiosity.',         minAge: 10, maxAge: 18, cost: 0,  effect: (p) => { p.e += 6; p.m += 2; p.addFlag('science_club');  }, outcome: 'The world is a puzzle worth solving.' },
+    { id: 'sports_team',   name: 'Sports Team',     desc: 'Join a school sports team.',         minAge: 10, maxAge: 18, cost: 0,  effect: (p) => { p.h += 6; p.s += 3; p.addFlag('sports_team');   }, outcome: 'Sweat, teamwork, and a little glory.' },
+    { id: 'debate_club',   name: 'Debate Club',     desc: 'Argue for sport and precision.',     minAge: 12, maxAge: 18, cost: 0,  effect: (p) => { p.e += 4; p.s += 5; p.addFlag('debate_club');   }, outcome: 'Your arguments sharpen.' },
+    { id: 'art_club',      name: 'Art Club',        desc: 'Explore creative expression.',       minAge: 10, maxAge: 18, cost: 0,  effect: (p) => { p.m += 5; p.s += 2; p.addFlag('art_club');      }, outcome: 'Creation is its own reward.' },
+    { id: 'school_band',   name: 'School Band',     desc: 'Make music with classmates.',        minAge: 10, maxAge: 18, cost: 0,  effect: (p) => { p.m += 6; p.s += 3; p.addFlag('school_band');   }, outcome: 'You learn that music is also listening.' },
+    { id: 'coding_club',   name: 'Coding Club',     desc: 'Build projects and learn to code.',  minAge: 12, maxAge: 18, cost: 0,  effect: (p) => { p.e += 5; p.m += 3; p.addFlag('coding_club');   }, outcome: 'A different kind of problem-solving.', minYear: 1995 },
+    { id: 'volunteer_school', name: 'Volunteer',   desc: 'Give back to your community.',        minAge: 12, maxAge: 18, cost: 0,  effect: (p) => { p.karma += 8; p.m += 3; p.s += 2; },            outcome: 'Something shifts in how you see the world.' },
   ],
 
   appearance: [
