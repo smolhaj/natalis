@@ -4302,4 +4302,167 @@ export const EVENTS = [
     ],
     effect: null,
   },
+
+  // DEBT SYSTEM EVENTS
+  {
+    id: 'ya_personal_loan',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.money < 2000 && !G.debt && G.age >= 18 && !G.mem.hadLoan,
+    text: (G) => {
+      if (['developing_unstable','conflict_zone','subsaharan'].includes(G.character.country.archetype))
+        return 'A money lender in the neighbourhood offers cash — no bank, no paperwork, high interest. You need it.'
+      return 'The bank approves a personal loan. The interest rate is 18%. The need is real.'
+    },
+    choices: [
+      { text: 'Take the loan', tag: null, outcome: 'Cash in hand. The repayments begin immediately.', effect: (p) => { p.mo += 5000; p.setMem('hadLoan', true); p.setMem('debtType', 'personal'); }, inject: null },
+      { text: 'Decline — manage without it', tag: null, outcome: 'Tight but yours.', effect: (p) => { p.setMem('hadLoan', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mid_debt_spiral',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.debt > 15000 && !G.mem.debtSpiral,
+    text: (G) => {
+      if (['developing_unstable','subsaharan','conflict_zone'].includes(G.character.country.archetype))
+        return 'The informal lender sends collectors. The debt has grown with interest you did not fully understand when you signed.'
+      return 'Credit card debt, a personal loan, and an overdue car payment are converging. The minimum payments are not touching the principal.'
+    },
+    choices: [
+      { text: 'Seek debt counselling', tag: null, outcome: 'A payment plan is negotiated. It takes five years. You finish it.', effect: (p) => { p.mo -= 2000; p.m += 5; p.setMem('debtSpiral', true); }, inject: null },
+      { text: 'Ignore it and keep spending', tag: null, outcome: 'The interest compounds. The calls increase.', effect: (p) => { p.m -= 8; p.setMem('debtSpiral', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mid_bankruptcy',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.debt > 30000 && G.money < 0 && !G.flags.includes('bankrupt'),
+    text: (G) => {
+      if (['wealthy_west'].includes(G.character.country.archetype))
+        return 'A bankruptcy attorney explains Chapter 7. The debt is dischargeable. The credit record is not.'
+      return 'The court declares you insolvent. Assets are liquidated. Debts are restructured. You start again from near zero.'
+    },
+    choices: [
+      { text: 'File for bankruptcy', tag: 'bankrupt', outcome: 'The relief is immediate. The stigma is long.', effect: (p) => { p.addFlag('bankrupt'); p.mo += 5000; p.setMem('debtType', null); }, inject: null },
+      { text: 'Try to negotiate with creditors', tag: null, outcome: 'Some agree. Some don\'t. The hole is smaller.', effect: (p) => { p.mo += 2000; p.m -= 10; }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'ya_loan_shark',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => ['developing_unstable','conflict_zone','subsaharan'].includes(G.character.country.archetype) && G.money < 500 && !G.mem.loanShark,
+    text: 'A loan shark offers fast money at terms that sound manageable. They are not.',
+    choices: [
+      { text: 'Take it — you have no choice', tag: null, outcome: 'The money solves the immediate crisis. The collector arrives six weeks later.', effect: (p) => { p.mo += 2000; p.m -= 5; p.setMem('loanShark', true); p.setMem('debtType', 'personal'); }, inject: null },
+      { text: 'Refuse', tag: null, outcome: 'You find another way. Barely.', effect: (p) => { p.m -= 5; p.setMem('loanShark', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // FRIEND SYSTEM EVENTS
+  {
+    id: 'ya_friend_crisis',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.friends && G.friends.length > 0 && !G.mem.friendCrisis,
+    text: (G) => `${G.friends[0]?.name ?? 'A close friend'} calls at midnight. Something has gone badly wrong — a relationship collapse, a mental health crisis, an arrest.`,
+    choices: [
+      { text: 'Drop everything and go to them', tag: 'compassionate', outcome: 'You are there. It is enough. The friendship deepens permanently.', effect: (p) => { p.m -= 3; p.karma += 10; p.addFlag('has_close_friend'); p.setMem('friendCrisis', true); }, inject: null },
+      { text: 'Offer support by phone', tag: null, outcome: 'You do what you can. The distance registers.', effect: (p) => { p.m -= 2; p.setMem('friendCrisis', true); }, inject: null },
+      { text: 'You cannot deal with it right now', tag: null, outcome: 'The missed call becomes a missed moment. The friendship cools.', effect: (p) => { p.r += 8; p.setMem('friendCrisis', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mid_friend_betrayal',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.friends && G.friends.length > 0 && !G.mem.friendBetrayal,
+    text: (G) => `${G.friends[0]?.name ?? 'A longtime friend'} has spoken behind your back to your employer — details you shared in confidence. You hear it secondhand.`,
+    choices: [
+      { text: 'Confront them directly', tag: null, outcome: 'The conversation is brutal. The friendship ends or transforms.', effect: (p) => { p.m -= 10; p.setMem('friendBetrayal', true); }, inject: null },
+      { text: 'Say nothing and create distance', tag: null, outcome: 'The friendship fades quietly. You never say why.', effect: (p) => { p.m -= 6; p.r += 5; p.setMem('friendBetrayal', true); }, inject: null },
+      { text: 'Forgive them — people are complicated', tag: null, outcome: 'The forgiveness is real. The trust adjusts accordingly.', effect: (p) => { p.karma += 8; p.m -= 3; p.setMem('friendBetrayal', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'ya_friend_wedding',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.friends && G.friends.length > 0 && !G.mem.friendWedding && G.age >= 24,
+    text: (G) => {
+      const name = G.friends[0]?.name ?? 'Your best friend'
+      if (['subsaharan','developing_unstable'].includes(G.character.country.archetype))
+        return `${name} is getting married. The celebration will last three days. You are asked to play a central role.`
+      return `${name} is getting married and asks you to be their best person. The speech. The stag/hen. All of it.`
+    },
+    choices: [
+      { text: 'Embrace it fully', tag: null, outcome: 'The wedding is chaotic and wonderful. The friendship enters its next chapter.', effect: (p) => { p.m += 10; p.setMem('friendWedding', true); }, inject: null },
+      { text: 'Attend but stay at the edges', tag: null, outcome: 'You are there. The friendship is maintained if not deepened.', effect: (p) => { p.m += 4; p.setMem('friendWedding', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mid_friend_death',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.friends && G.friends.length > 0 && G.age >= 45 && !G.mem.friendDied,
+    text: (G) => `${G.friends[0]?.name ?? 'A close friend'} has died — unexpectedly, suddenly. The call comes on an ordinary Tuesday.`,
+    choices: [
+      { text: 'Attend the funeral and be present for the family', tag: null, outcome: 'The grief is real. The presence matters. Something in your own sense of time shifts.', effect: (p) => { p.m -= 15; p.r += 5; p.setMem('friendDied', true); }, inject: null },
+      { text: 'Grieve privately', tag: null, outcome: 'You mourn alone. The loss sits with you for months.', effect: (p) => { p.m -= 10; p.setMem('friendDied', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mid_old_friend_reconnect',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => !G.mem.friendReconnect && G.age >= 35,
+    text: 'A message arrives from someone you knew decades ago — a childhood friend, a college roommate, someone who disappeared from your life. They found you online.',
+    choices: [
+      { text: 'Respond and meet up', tag: null, outcome: 'The catch-up is strange and warm. You remember a version of yourself through them.', effect: (p) => { p.m += 8; p.makeFriend(60); p.setMem('friendReconnect', true); }, inject: null },
+      { text: 'Reply warmly but keep it to messages', tag: null, outcome: 'The connection is real, if contained.', effect: (p) => { p.m += 4; p.setMem('friendReconnect', true); }, inject: null },
+      { text: 'Leave the message unread', tag: null, outcome: 'Some doors stay closed for a reason.', effect: (p) => { p.setMem('friendReconnect', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // FITNESS EVENTS
+  {
+    id: 'mid_fitness_wake_up',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => (G.fitness ?? 50) < 35 && G.age >= 38 && !G.mem.fitnessWakeUp,
+    text: (G) => {
+      if (['subsaharan','developing_unstable','conflict_zone'].includes(G.character.country.archetype))
+        return 'Climbing the stairs leaves you breathless at 40. Your body is telling you something you have been ignoring.'
+      return 'A routine health check returns numbers your doctor calls "concerning". Blood pressure, resting heart rate, weight — all trending wrong.'
+    },
+    choices: [
+      { text: 'Make real changes — diet and exercise', tag: 'health_conscious', outcome: 'The changes are slow and permanent. Your body responds over two years.', effect: (p) => { p.h += 8; p.setMem('fitnessWakeUp', true); p.addFlag('health_conscious'); }, inject: null },
+      { text: 'Make temporary changes', tag: null, outcome: 'The gym membership lasts six weeks.', effect: (p) => { p.h += 2; p.setMem('fitnessWakeUp', true); }, inject: null },
+      { text: 'Ignore it', tag: null, outcome: 'The body continues its trend.', effect: (p) => { p.h -= 5; p.setMem('fitnessWakeUp', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'ya_fitness_peak',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => (G.fitness ?? 50) >= 75 && G.age >= 22 && G.age <= 30 && !G.mem.fitnessPeak,
+    text: 'You are in the best shape of your life. The discipline has become identity.',
+    choices: [
+      { text: 'Enter a competition or challenge', tag: null, outcome: 'You place. The result matters less than the attempt.', effect: (p) => { p.m += 10; p.s += 4; p.setMem('fitnessPeak', true); }, inject: null },
+      { text: 'Keep it personal — this is for you', tag: null, outcome: 'The practice remains yours. The health dividend is real.', effect: (p) => { p.m += 6; p.h += 5; p.setMem('fitnessPeak', true); }, inject: null },
+    ],
+    effect: null,
+  },
 ]

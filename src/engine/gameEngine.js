@@ -155,8 +155,20 @@ function applyNaturalAging(state) {
   else if (age > 50) looks -= 0.6
   else if (age > 30) looks -= 0.4
   if (age > 75) smarts -= 0.3
+
+  // Fitness decay
+  let fitness = state.fitness ?? 50
+  if (age >= 50) fitness -= 1
+  else if (age >= 30) fitness -= 0.5
+  fitness = clamp(fitness, 0, 100)
+
+  // Fitness feedback
+  if (fitness >= 70) looks = clamp(looks + 0.2, 0, 100)
+  if (fitness < 30) health = clamp(health - 0.3, 0, 100)
+
   return {
     ...state,
+    fitness,
     stats: {
       ...stats,
       happiness: clamp(happiness, 0, 100),
@@ -283,6 +295,9 @@ function buildG(state) {
     inPrison: state.inPrison,
     prisonSentence: state.prisonSentence ?? 0,
     money: state.money ?? 0,
+    debt: state.debt ?? 0,
+    creditScore: state.creditScore ?? 700,
+    fitness: state.fitness ?? 50,
     parents: state.parents,
     hooksUpCount: state.hooksUpCount ?? 0,
     karma: state.karma ?? 50,
@@ -719,6 +734,13 @@ export function applyActivity(state, activityId) {
   activity.effect(proxy)
   let updated = applyProxy(state, proxy)
   updated = resolveProxyExtras(updated, proxy)
+
+  // Fitness bonuses for physical activities
+  const fitnessGain = activityId === 'gym' ? 5 : activityId === 'walk' ? 2 : activityId === 'join_sports_team' ? 8 : 0
+  if (fitnessGain > 0) {
+    updated = { ...updated, fitness: clamp((updated.fitness ?? 50) + fitnessGain, 0, 100) }
+  }
+
   updated.actionsThisYear = state.actionsThisYear + 1
   updated.log = [...updated.log, { age: state.age, text: activity.outcome, isKey: false }]
   return updated
@@ -731,19 +753,38 @@ export function attemptCrime(state, crimeId) {
   if (!crime) return state
   if (crime.minAge && state.age < crime.minAge) return state
   if (crime.requiresFlag && !state.flags.includes(crime.requiresFlag)) return state
+  if (crime.requiresYear && state.currentYear < crime.requiresYear) {
+    return { ...state, log: [...state.log, { age: state.age, text: "This type of crime doesn't exist yet.", isKey: false }] }
+  }
+  if (crime.minSmarts && state.stats.smarts < crime.minSmarts) {
+    return { ...state, log: [...state.log, { age: state.age, text: "You don't have the technical knowledge for this.", isKey: false }] }
+  }
 
   const archetypeMod = crime.archetypeModifier?.[state.character.country.archetype] ?? 0
-  const arrestProb = clamp(crime.arrestRisk + archetypeMod, 0.01, 0.99)
+  // Support both old format (arrestRisk/successEffect/caughtEffect) and new format (baseSuccessRate/effect/failEffect)
+  const useNewFormat = typeof crime.effect === 'function'
+  const failProb = useNewFormat
+    ? clamp(crime.arrestRisk + archetypeMod, 0.01, 0.99)
+    : clamp(crime.arrestRisk + archetypeMod, 0.01, 0.99)
+  const successProb = useNewFormat ? (crime.baseSuccessRate ?? (1 - failProb)) : null
   let updated = { ...state, actionsThisYear: state.actionsThisYear + 1 }
 
-  if (chance(arrestProb)) {
+  // Determine outcome: for new format use baseSuccessRate; for old format use arrestRisk
+  const succeeded = useNewFormat ? chance(successProb) : !chance(failProb)
+
+  if (!succeeded) {
     const proxy = buildEffectProxy(updated)
-    crime.caughtEffect(proxy)
+    if (useNewFormat) crime.failEffect(proxy)
+    else crime.caughtEffect(proxy)
     updated = applyProxy(updated, proxy)
-    const sentence = randomBetween(crime.sentence.min, crime.sentence.max)
-    updated.criminalRecord = [...updated.criminalRecord, crime.criminalRecordEntry]
-    if (crime.addFlag) updated.flags = [...new Set([...updated.flags, crime.addFlag])]
-    if (updated.career && ['petty', 'property', 'violent', 'drug', 'organized'].includes(crime.category)) {
+    // Sentence format: old = {min, max}, new = [min, max]
+    const sentMin = Array.isArray(crime.sentence) ? crime.sentence[0] : crime.sentence.min
+    const sentMax = Array.isArray(crime.sentence) ? crime.sentence[1] : crime.sentence.max
+    const sentence = randomBetween(sentMin, sentMax)
+    if (crime.criminalRecordEntry) updated.criminalRecord = [...updated.criminalRecord, crime.criminalRecordEntry]
+    const flagToAdd = useNewFormat ? (crime.flagsAdded?.[0] ?? null) : crime.addFlag
+    if (flagToAdd) updated.flags = [...new Set([...updated.flags, flagToAdd])]
+    if (updated.career && ['petty', 'property', 'violent', 'drug', 'organized', 'financial', 'organised'].includes(crime.category)) {
       updated.log = [...updated.log, { age: state.age, text: `You are arrested for ${crime.name.toLowerCase()}. You lose your job.`, isKey: true }]
       updated.career = null
     } else {
@@ -757,9 +798,11 @@ export function attemptCrime(state, crimeId) {
     }
   } else {
     const proxy = buildEffectProxy(updated)
-    crime.successEffect(proxy)
+    if (useNewFormat) crime.effect(proxy)
+    else crime.successEffect(proxy)
     updated = applyProxy(updated, proxy)
-    if (crime.addFlag) updated.flags = [...new Set([...updated.flags, crime.addFlag])]
+    const flagToAdd = useNewFormat ? (crime.flagsAdded?.[0] ?? null) : crime.addFlag
+    if (flagToAdd) updated.flags = [...new Set([...updated.flags, flagToAdd])]
     updated.log = [...updated.log, { age: state.age, text: `You ${crime.name.toLowerCase()} and get away with it.`, isKey: false }]
   }
   return updated
@@ -1063,6 +1106,25 @@ export function tick(state) {
 
   // Natural aging
   s = applyNaturalAging(s)
+
+  // Debt interest accrual
+  if (s.debt > 0) {
+    const interestRate = (s.mem?.debtType === 'mortgage') ? 0.06 : 0.18
+    const interest = Math.round(s.debt * interestRate)
+    s.debt = s.debt + interest
+    s.money = (s.money ?? 0) - Math.round(s.debt * 0.05) // minimum payment
+    if (s.money < -50000) {
+      s.flags = [...new Set([...s.flags, 'bankrupt'])]
+      s.debt = 0
+      s.money = -5000
+      s.creditScore = Math.max(300, (s.creditScore ?? 700) - 200)
+      s.log = [...s.log, { age: s.age, text: 'You are declared bankrupt. A relief and a shame at once.', isKey: true }]
+    }
+  }
+  // Credit score slow recovery
+  if (!s.debt && (s.creditScore ?? 700) < 800) {
+    s.creditScore = Math.min(800, (s.creditScore ?? 700) + 2)
+  }
 
   // Parent aging and possible inheritance
   s = tickParents(s)

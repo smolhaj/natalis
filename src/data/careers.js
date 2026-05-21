@@ -1868,6 +1868,143 @@ export const CAREERS = [
   },
 
   {
+    id: 'electrician',
+    title: 'Electrician',
+    field: 'electrician',
+    levels: [
+      { title: 'Apprentice Electrician', salaryRange: [22000, 35000] },
+      { title: 'Journeyman Electrician', salaryRange: [45000, 70000] },
+      { title: 'Master Electrician', salaryRange: [68000, 100000] },
+      { title: 'Electrical Contractor', salaryRange: [95000, 200000] },
+    ],
+    requirements: { education: 'vocational', field: 'electrician', minSmarts: 40, minAge: 20 },
+    archetypeAvailable: 'all',
+    gdpRequired: 'low',
+    promotionChance: 0.12,
+    description: 'Wire the world.',
+    events: [
+      {
+        id: 'career_electrician_shock',
+        phase: 'young_adult',
+        weight: 3,
+        text: 'A colleague bypasses a safety protocol to save time. You catch it before anyone is hurt.',
+        choices: [
+          { text: 'Report it and enforce the standard', tag: 'integrity', outcome: 'The report goes on record. Safety improves. The colleague resents you briefly, then understands.', effect: (p) => { p.karma += 8; p.addFlag('integrity'); }, inject: null },
+          { text: 'Let it go this once', tag: null, outcome: 'Nothing happens this time. The habit continues.', effect: (p) => { p.m -= 3; }, inject: null },
+        ],
+        effect: null,
+        when: () => true,
+      },
+      {
+        id: 'career_electrician_own_business',
+        phase: 'midlife',
+        weight: 2,
+        text: 'After fifteen years of trade, the opportunity to go out on your own arrives — a van, a licence, your name on the side.',
+        choices: [
+          { text: 'Start your own contracting business', tag: 'entrepreneur', outcome: 'The first two years are hard. Year three turns a profit. Year five hires staff.', effect: (p) => { p.mo -= 10000; p.m += 10; p.addFlag('entrepreneur'); }, inject: null },
+          { text: 'Stay employed — the security matters', tag: null, outcome: 'Steady income, pension, no late-night stress calls. A different kind of good.', effect: (p) => { p.m += 5; }, inject: null },
+        ],
+        effect: null,
+        when: () => true,
+      },
+    ],
+  },
+  {
+    id: 'plumber',
+    title: 'Plumber',
+    field: 'plumber',
+    levels: [
+      { title: 'Apprentice Plumber', salaryRange: [20000, 33000] },
+      { title: 'Journeyman Plumber', salaryRange: [42000, 65000] },
+      { title: 'Master Plumber', salaryRange: [62000, 95000] },
+      { title: 'Plumbing Contractor', salaryRange: [88000, 190000] },
+    ],
+    requirements: { education: 'vocational', field: 'plumber', minSmarts: 38, minAge: 20 },
+    archetypeAvailable: 'all',
+    gdpRequired: 'low',
+    promotionChance: 0.12,
+    description: 'Essential work nobody thinks about until it goes wrong.',
+    events: [
+      {
+        id: 'career_plumber_emergency',
+        phase: 'midlife',
+        weight: 3,
+        text: (G) => ['subsaharan','developing_unstable','conflict_zone'].includes(G.character.country.archetype)
+          ? 'A burst pipe threatens the neighbourhood water supply. You are the one who knows how to fix it.'
+          : 'A burst pipe on Christmas morning. The call comes at 7am. Triple time, but it is Christmas.',
+        choices: [
+          { text: 'Go — the work needs doing', tag: null, outcome: 'The fix takes three hours. The family is grateful. The pay is excellent.', effect: (p) => { p.mo += 800; p.m += 5; p.karma += 5; }, inject: null },
+          { text: 'It is your day off', tag: null, outcome: 'Someone else goes. The income goes with them.', effect: (p) => { p.m += 8; }, inject: null },
+        ],
+        effect: null,
+        when: () => true,
+      },
+    ],
+  },
+  {
+    id: 'construction_worker',
+    title: 'Construction Worker',
+    field: 'construction',
+    levels: [
+      { title: 'Labourer', salaryRange: [18000, 30000] },
+      { title: 'Skilled Tradesperson', salaryRange: [35000, 55000] },
+      { title: 'Site Supervisor', salaryRange: [52000, 80000] },
+      { title: 'Project Manager', salaryRange: [75000, 140000] },
+    ],
+    requirements: { education: 'vocational', field: 'construction', minSmarts: 35, minAge: 18 },
+    archetypeAvailable: 'all',
+    gdpRequired: 'low',
+    promotionChance: 0.11,
+    description: 'Build the physical world.',
+    events: [
+      {
+        id: 'career_construction_safety',
+        phase: 'young_adult',
+        weight: 3,
+        text: (G) => ['subsaharan','developing_unstable','conflict_zone'].includes(G.character.country.archetype)
+          ? 'The scaffolding is inadequate — no regulation requires more. A colleague falls and is badly injured.'
+          : 'A scaffolding inspection reveals violations. The site could be shut down. Fixing it delays the project by two weeks.',
+        choices: [
+          { text: 'Halt work and fix it properly', tag: 'integrity', outcome: 'The project is delayed. No one is hurt. The outcome speaks for itself.', effect: (p) => { p.karma += 10; p.addFlag('integrity'); }, inject: null },
+          { text: 'Patch it and keep working', tag: null, outcome: 'The timeline holds. The risk does too.', effect: (p) => { p.m -= 5; }, inject: null },
+        ],
+        effect: null,
+        when: () => true,
+      },
+    ],
+  },
+  {
+    id: 'it_technician',
+    title: 'IT Technician',
+    field: 'IT',
+    levels: [
+      { title: 'IT Support', salaryRange: [25000, 40000] },
+      { title: 'Systems Administrator', salaryRange: [40000, 65000] },
+      { title: 'Senior IT Analyst', salaryRange: [62000, 95000] },
+      { title: 'IT Director', salaryRange: [90000, 160000] },
+    ],
+    requirements: { education: 'vocational', field: 'IT', minSmarts: 50, minAge: 20 },
+    archetypeAvailable: ['wealthy_west', 'wealthy_east', 'developing_urban', 'post_soviet'],
+    gdpRequired: 'medium',
+    promotionChance: 0.13,
+    description: 'Keep the systems running.',
+    events: [
+      {
+        id: 'career_it_breach',
+        phase: 'midlife',
+        weight: 2,
+        when: (G) => G.currentYear >= 2000,
+        text: 'A data breach exposes customer records on your watch. The security patch had been pending for three months. You flagged it. It was deprioritised.',
+        choices: [
+          { text: 'Come forward with the full timeline', tag: 'integrity', outcome: 'The audit exonerates you. The manager who deprioritised the patch resigns.', effect: (p) => { p.karma += 12; p.m -= 5; p.addFlag('integrity'); }, inject: null },
+          { text: 'Protect the team — absorb the blame', tag: null, outcome: 'Your loyalty is noted. The cost to you is real.', effect: (p) => { p.w -= 10; p.karma += 5; }, inject: null },
+        ],
+        effect: null,
+      },
+    ],
+  },
+
+  {
     id: 'sports_coach',
     title: 'Sports Coach',
     field: 'sports',

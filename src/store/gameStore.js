@@ -54,6 +54,7 @@ import {
   useSubstance,
 } from '../engine/gameEngine'
 import { COUNTRIES } from '../data/countries'
+import { CRIMES } from '../data/crimes'
 
 const INITIAL_STATE = {
   screen: 'title',
@@ -86,6 +87,8 @@ const INITIAL_STATE = {
   epitaph: '',
   money: 0,
   debt: 0,
+  creditScore: 700,
+  fitness: 50,
   hooksUpCount: 0,
   parents: null,
   karma: 50,
@@ -102,6 +105,7 @@ const INITIAL_STATE = {
   gpa: null,
   mentalHealth: { condition: null, medicating: false, therapy: false },
   hobbies: {},
+  pendingMinigame: null,
 }
 
 export const useGameStore = create((set, get) => ({
@@ -225,8 +229,57 @@ export const useGameStore = create((set, get) => ({
 
   commitCrime: (crimeId) => {
     const state = get()
-    if (state.pendingEvent || state.dead) return
+    if (state.pendingEvent || state.dead || state.pendingMinigame) return
+    // Check if this crime has a minigame
+    const crime = CRIMES.find(c => c.id === crimeId)
+    if (crime?.minigame) {
+      set({
+        pendingMinigame: {
+          ...crime.minigame,
+          _pendingCrimeId: crimeId,
+          _resolve: 'crime',
+        }
+      })
+      return
+    }
     const next = attemptCrime(state, crimeId)
+    set(next)
+  },
+
+  triggerMinigame: (config) => {
+    set({ pendingMinigame: config })
+  },
+
+  resolveMinigame: (success) => {
+    const state = get()
+    const mg = state.pendingMinigame
+    if (!mg) return
+
+    let next = { ...state, pendingMinigame: null }
+
+    if (mg._resolve === 'crime') {
+      // Import crimes synchronously — we need to handle this differently
+      // Apply effect based on success
+      const effect = success ? mg.onSuccess : mg.onFailure
+      if (effect) {
+        const { applyMinigameEffect } = require('../engine/gameEngine.js')
+        next = applyMinigameEffect(next, effect)
+      } else {
+        // Fallback: attempt the crime normally but override outcome
+        const { attemptCrime } = require('../engine/gameEngine.js')
+        next = { ...attemptCrime(next, mg._pendingCrimeId), pendingMinigame: null }
+      }
+    } else if (mg._resolve === 'event_choice') {
+      // Apply the success or failure effect from the stored choice
+      const result = success ? mg.onSuccess : mg.onFailure
+      if (result?.effect) {
+        const proxy = buildEffectProxy ? buildEffectProxy(next) : null
+        // Simple inline effect application
+        next.lastOutcome = typeof result.outcome === 'function' ? result.outcome(next) : result.outcome
+        next.log = [...next.log, { age: next.age, text: next.lastOutcome?.slice(0, 100) ?? '', isKey: true }]
+      }
+    }
+
     set(next)
   },
 
