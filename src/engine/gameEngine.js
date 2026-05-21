@@ -955,6 +955,25 @@ function checkIllnessRisk(state) {
     prob += riskCount * 0.005
     if (state.stats.health < 40) prob *= 1.5
 
+    // Comorbidity modifiers
+    if (illness.id === 'heart_disease') {
+      if (state.flags.includes('smoker')) prob *= 2.5
+      if (state.flags.includes('heavy_drinker')) prob *= 1.8
+      if (state.flags.includes('diagnosed_diabetes')) prob *= 2.0
+      if ((state.fitness ?? 50) < 30) prob *= 1.5
+    }
+    if (illness.id === 'cancer') {
+      if (state.flags.includes('smoker')) prob *= 3.0
+    }
+    if (illness.id === 'clinical_depression' || illness.id === 'anxiety_disorder') {
+      if (state.flags.includes('alcohol_addiction') || state.flags.includes('drug_addiction')) prob *= 2.0
+      if (state.regret > 70) prob *= 1.5
+    }
+    if (illness.id === 'diabetes') {
+      if ((state.fitness ?? 50) < 25) prob *= 2.0
+      if (state.stats.health < 40) prob *= 1.5
+    }
+
     if (!chance(prob)) continue
 
     const event = {

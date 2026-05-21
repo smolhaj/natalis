@@ -4465,4 +4465,108 @@ export const EVENTS = [
     ],
     effect: null,
   },
+
+  // FAME EVENTS
+  {
+    id: 'ya_tabloid_scandal',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => (G.fame ?? 0) >= 40 && !G.mem.tabloidEvent,
+    text: (G) => {
+      if (['wealthy_east'].includes(G.character.country.archetype))
+        return 'A gossip magazine publishes fabricated stories about your private life. In this industry, image is revenue.'
+      return 'A tabloid has published a story about you — half true, half fabrication, entirely damaging.'
+    },
+    choices: [
+      { text: 'Ignore it — engagement only amplifies it', tag: null, outcome: 'It dies in a week. The internet moves on.', effect: (p) => { p.m -= 5; p.setMem('tabloidEvent', true); }, inject: null },
+      { text: 'Sue for defamation', tag: null, outcome: 'The legal threat produces a retraction. The legal costs are real.', effect: (p) => { p.mo -= 15000; p.m += 5; p.setMem('tabloidEvent', true); }, inject: null },
+      { text: 'Use it — any publicity is publicity', tag: null, outcome: 'The notoriety converts to followers. Something in you shifts.', effect: (p) => { p.m -= 5; p.setMem('tabloidEvent', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mid_fan_encounter',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => (G.fame ?? 0) >= 50 && !G.mem.fanEncounter,
+    text: (G) => {
+      if (['wealthy_east'].includes(G.character.country.archetype))
+        return 'A fan outside the venue has been waiting for hours. Their dedication is unnerving and moving at once.'
+      return 'A fan approaches you in a coffee shop. They are shaking. You are the reason they got through a difficult year.'
+    },
+    choices: [
+      { text: 'Give them a full ten minutes', tag: 'compassionate', outcome: 'The moment costs you nothing significant. It means everything to them.', effect: (p) => { p.m += 8; p.karma += 10; p.setMem('fanEncounter', true); }, inject: null },
+      { text: 'A brief, warm acknowledgement and move on', tag: null, outcome: 'The interaction is complete and kind.', effect: (p) => { p.m += 3; p.setMem('fanEncounter', true); }, inject: null },
+      { text: 'Security removes them', tag: null, outcome: 'You see their face. It is not something you forget.', effect: (p) => { p.m -= 5; p.r += 5; p.setMem('fanEncounter', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mid_sponsorship_deal',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => (G.fame ?? 0) >= 60 && G.career?.field === 'sports' || (G.fame ?? 0) >= 65,
+    text: 'A major brand approaches your management with a sponsorship offer. The money is significant. The brand is… complicated.',
+    choices: [
+      { text: 'Accept — the money enables the work', tag: null, outcome: 'The deal pays for the next chapter of your career. The association lingers.', effect: (p) => { p.mo += 60000; p.m -= 3; p.setMem('sponsorship', true); }, inject: null },
+      { text: 'Negotiate for a better brand fit', tag: null, outcome: 'A smaller deal, better aligned. You sleep better.', effect: (p) => { p.mo += 25000; p.m += 5; p.setMem('sponsorship', true); }, inject: null },
+      { text: 'Decline — your image is not for sale', tag: 'integrity', outcome: 'The integrity dividend is real. So is the financial gap.', effect: (p) => { p.karma += 10; p.setMem('sponsorship', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mid_paparazzi',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => (G.fame ?? 0) >= 55 && !G.mem.paparazziEvent,
+    text: 'Photographers follow you from the venue to your car to your child\'s school. The intrusion is total.',
+    choices: [
+      { text: 'Establish firm boundaries — involve legal if needed', tag: null, outcome: 'The legal letters slow the intrusion. The fame remains.', effect: (p) => { p.mo -= 8000; p.m += 5; p.setMem('paparazziEvent', true); }, inject: null },
+      { text: 'Engage — control the narrative yourself', tag: null, outcome: 'You manage your own image. The candid shots stop mattering.', effect: (p) => { p.m += 3; p.setMem('paparazziEvent', true); }, inject: null },
+    ],
+    effect: null,
+  },
+
+  // DIVORCE REALISM
+  {
+    id: 'mid_custody_battle',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.flags.includes('divorced') && G.children.length > 0 && !G.mem.custodyResolved,
+    text: (G) => {
+      if (['wealthy_gulf','developing_unstable'].includes(G.character.country.archetype))
+        return 'The family court system is not neutral. Custody of the children will be shaped by custom and power as much as the law.'
+      return 'The divorce settlement has come to a custody dispute. Both sides are dug in. The children are watching.'
+    },
+    choices: [
+      { text: 'Mediation — put the children first', tag: null, outcome: 'The process is painful and productive. Shared custody is workable.', effect: (p) => { p.mo -= 5000; p.m -= 5; p.karma += 10; p.setMem('custodyResolved', true); }, inject: null },
+      { text: 'Fight for full custody', tag: null, outcome: (G) => G.flags.includes('integrity') ? 'The court awards primary custody. The fight was worth it.' : 'The case drags on. The children endure the most.', effect: (p) => { p.mo -= 20000; p.m -= 12; p.setMem('custodyResolved', true); }, inject: null },
+      { text: 'Cede custody — it is better for them', tag: null, outcome: 'The decision is selfless and corrosive at once. You see them on weekends.', effect: (p) => { p.m -= 15; p.r += 8; p.karma += 5; p.setMem('custodyResolved', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'mid_child_support',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.flags.includes('divorced') && G.children.length > 0 && !G.mem.childSupportEvent && G.money < 5000,
+    text: 'The child support payments are falling behind. The court will notice.',
+    choices: [
+      { text: 'Pay it — prioritise the children over everything', tag: null, outcome: 'The sacrifice is real. The relationship with your children is worth it.', effect: (p) => { p.mo -= 3000; p.m -= 5; p.karma += 8; p.setMem('childSupportEvent', true); }, inject: null },
+      { text: 'Apply for a reduction based on changed circumstances', tag: null, outcome: 'The court adjusts the amount. The process takes months.', effect: (p) => { p.mo -= 1000; p.m -= 3; p.setMem('childSupportEvent', true); }, inject: null },
+    ],
+    effect: null,
+  },
+  {
+    id: 'late_child_forgives_divorce',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.flags.includes('divorced') && G.children.length > 0 && !G.mem.childForgivenDivorce,
+    text: 'An adult child sits with you and says they understand now — the divorce, why it happened, what it cost everyone. They have carried it long enough.',
+    choices: [
+      { text: 'Receive it with full honesty', tag: null, outcome: 'The conversation takes three hours. Something long held loosens.', effect: (p) => { p.m += 15; p.r -= 10; p.setMem('childForgivenDivorce', true); }, inject: null },
+      { text: 'Deflect — some things are better unexamined', tag: null, outcome: 'The moment passes. The weight remains distributed as before.', effect: (p) => { p.m += 4; p.setMem('childForgivenDivorce', true); }, inject: null },
+    ],
+    effect: null,
+  },
 ]
