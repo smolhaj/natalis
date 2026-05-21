@@ -146,9 +146,9 @@ export default function ActivitiesPanel({ onClose }) {
         return (
           <>
             {/* Gym */}
-            <Btn disabled={noActions} onClick={() => go(() => takeActivity('gym'))} title="Go to the Gym" subtitle="Improve your fitness and health." cost="Cost: $20/visit" />
+            {state.age >= 16 && <Btn disabled={noActions} onClick={() => go(() => takeActivity('gym'))} title="Go to the Gym" subtitle="Improve your fitness and health." cost="Cost: $20/visit" />}
             {/* Walk */}
-            <Btn disabled={noActions} onClick={() => go(() => takeActivity('walk'))} title="Go for a Walk" subtitle="Clear your head and move your body." />
+            {state.age >= 6 && <Btn disabled={noActions} onClick={() => go(() => takeActivity('walk'))} title="Go for a Walk" subtitle="Clear your head and move your body." />}
             {/* Meditate */}
             {state.age >= 12 && <Btn disabled={noActions} onClick={() => go(() => takeActivity('meditate'))} title="Meditate" subtitle="Stillness and mental discipline." />}
             {/* Library */}
@@ -774,12 +774,40 @@ export default function ActivitiesPanel({ onClose }) {
               </>
             )}
             <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">Buy Vehicle</p>
-            {VEHICLE_TYPES.filter(t => t.id === 'bicycle' || state.licenceObtained).map(type => (
-              <Btn key={type.id} disabled={noActions || (state.money ?? 0) < type.basePrice}
-                onClick={() => { buyVehicle(type.id); onClose() }}
-                title={type.name} subtitle={type.description}
-                cost={`~$${type.basePrice.toLocaleString()} · Maint: $${type.annualMaintenance.toLocaleString()}/yr`} />
-            ))}
+            {(() => {
+              const TIER_LABELS = {
+                bicycle: '🚲 Bicycles',
+                motorcycle: '🏍️ Motorcycles',
+                used_car: '🚗 Used Cars',
+                new_car: '🚘 New Cars',
+                luxury_car: '🏎️ Luxury Cars',
+                supercar: '💎 Supercars',
+                watercraft: '⛵ Watercraft',
+              }
+              const hasLicence = state.licenceObtained
+              const tierKeys = ['bicycle', 'motorcycle', 'used_car', 'new_car', 'luxury_car', 'supercar', 'watercraft']
+              return tierKeys.map(tier => {
+                const tierVehicles = VEHICLE_TYPES.filter(t => {
+                  if (t.tier !== tier) return false
+                  if (tier === 'bicycle') return true
+                  if (tier === 'watercraft') return hasLicence
+                  return hasLicence
+                }).filter(t => !t.minYear || (state.currentYear ?? 2000) >= t.minYear)
+                if (tierVehicles.length === 0) return null
+                return (
+                  <div key={tier}>
+                    <p className="text-natalis-muted text-xs font-semibold px-1 pt-2 pb-1">{TIER_LABELS[tier]}</p>
+                    {tierVehicles.map(type => (
+                      <Btn key={type.id} disabled={noActions || (state.money ?? 0) < type.basePrice}
+                        onClick={() => { buyVehicle(type.id); onClose() }}
+                        title={`${type.make} ${type.model}`}
+                        subtitle={type.description}
+                        cost={`~$${type.basePrice.toLocaleString()} · $${type.annualMaintenance.toLocaleString()}/yr`} />
+                    ))}
+                  </div>
+                )
+              })
+            })()}
             {vehicles.length > 0 && (
               <>
                 <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">Sell Vehicle</p>
@@ -1482,6 +1510,12 @@ export default function ActivitiesPanel({ onClose }) {
           /* Top-level category list — BitLife style */
           <div className="p-3 space-y-1.5">
             {TOP_CATEGORIES.map(cat => {
+              if (cat.key === 'mind_body' && state.age < 6) return null
+              if (cat.key === 'hobbies' && state.age < 5) return null
+              if (cat.key === 'education' && state.age < 8) return null
+              if (cat.key === 'movies' && state.age < 5) return null
+              if (cat.key === 'salon' && state.age < 12) return null
+              if (cat.key === 'friends' && state.age < 5) return null
               if (cat.key === 'nightlife' && state.age < 18) return null
               if (cat.key === 'fertility' && state.age < 14) return null
               if (cat.key === 'plastic_surg' && state.age < 18) return null
@@ -1495,6 +1529,9 @@ export default function ActivitiesPanel({ onClose }) {
               if (cat.key === 'money' && state.age < 14) return null
               if (cat.key === 'rehab' && !hasAddiction && !(ACTIVITIES.body ?? []).some(a => (a.id === 'quit_smoking' || a.id === 'rehabilitation') && (!a.condition || a.condition(G)))) return null
               if (cat.key === 'substances' && state.age < 14) return null
+              if (cat.key === 'crime' && state.age < 12) return null
+              if (cat.key === 'travel' && state.age < 16) return null
+              if (cat.key === 'business' && state.age < 18) return null
               if (cat.key === 'underground' && !state.inPrison && !state.wanted && !state.flags.includes('escaped_prisoner')) return null
 
               const isUnderground = state.inPrison || state.wanted || state.flags.includes('escaped_prisoner')

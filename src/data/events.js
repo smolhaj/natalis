@@ -7379,6 +7379,83 @@ export const EVENTS = [
     ],
   },
 
+  // ── VEHICLE EVENTS ───────────────────────────────────────────────────────────
+
+  {
+    id: 'speeding_ticket',
+    phase: null,
+    weight: 6,
+    when: (G) => (G.flags.includes('has_vehicle') || (G.assets?.vehicles ?? []).some(v => v.tier !== 'bicycle')) && G.age >= 17 && !G.mem.speeding_2yr && Math.random() < 0.25,
+    text: 'Blue lights in the rear-view mirror. You were doing 52 in a 40. The officer is polite and professional about it, which somehow makes it worse.',
+    choices: [
+      { text: 'Pay the fine and take the points', tag: null, outcome: 'Seventy dollars and three points. Your insurance company will have thoughts.', effect: (p) => { p.mo -= 200; p.m -= 3; p.setMem('speeding_2yr', true) } },
+      { text: 'Contest it in traffic court', tag: null, outcome: 'You show up in a collared shirt. The judge reduces the fine but not the points.', effect: (p) => { p.mo -= 100; p.m -= 2; p.setMem('speeding_2yr', true) } },
+    ],
+  },
+
+  {
+    id: 'car_breakdown',
+    phase: null,
+    weight: 5,
+    when: (G) => (G.flags.includes('has_vehicle') || (G.assets?.vehicles ?? []).some(v => v.tier !== 'bicycle')) && G.age >= 17 && !G.mem.breakdown_yr,
+    text: 'The check engine light has been on for two weeks. Today it answered its own question. You\'re on the hard shoulder, hazards blinking, waiting for a tow.',
+    choices: [
+      { text: 'Get it towed to a garage — fix it properly', tag: null, outcome: 'The mechanic\'s diagnosis comes with a number that takes a day to emotionally accept.', effect: (p) => { p.mo -= 1800; p.m -= 5; p.setMem('breakdown_yr', true) } },
+      { text: 'Find the cheapest fix available', tag: null, outcome: 'It\'s running again. For now. You can hear something new every time you brake.', effect: (p) => { p.mo -= 600; p.m -= 4; p.setMem('breakdown_yr', true) } },
+      { text: 'Sell it and buy something newer', tag: null, outcome: 'You sell it as-is for less than it\'s worth. The relief is worth the loss.', effect: (p) => { p.mo -= 3000; p.m += 2; p.setMem('breakdown_yr', true) } },
+    ],
+  },
+
+  {
+    id: 'fender_bender',
+    phase: null,
+    weight: 5,
+    when: (G) => (G.flags.includes('has_vehicle') || (G.assets?.vehicles ?? []).some(v => v.tier !== 'bicycle')) && G.age >= 17 && !G.mem.fender_bender_yr,
+    text: 'A slow-speed collision in a car park. Yours or theirs — the damage is minor but the exchange of insurance details is not.',
+    choices: [
+      { text: 'Go through insurance', tag: null, outcome: 'The claim is straightforward. Your premium goes up the following year anyway.', effect: (p) => { p.mo -= 500; p.m -= 4; p.setMem('fender_bender_yr', true) } },
+      { text: 'Settle privately — pay them cash', tag: null, outcome: 'You trade numbers, exchange money, and try not to think about what might still show up.', effect: (p) => { p.mo -= 900; p.m -= 3; p.setMem('fender_bender_yr', true) } },
+    ],
+  },
+
+  {
+    id: 'road_rage_incident',
+    phase: null,
+    weight: 4,
+    when: (G) => (G.flags.includes('has_vehicle') || (G.assets?.vehicles ?? []).some(v => v.tier !== 'bicycle')) && G.age >= 18 && !G.mem.road_rage_yr,
+    text: 'You were cut off at the roundabout. What follows is a ten-minute escalation that you can see is going nowhere and participate in anyway.',
+    choices: [
+      { text: 'Let it go — it\'s not worth it', tag: null, outcome: 'You breathe out. They take the next exit. You\'re still a little angry but fine.', effect: (p) => { p.m -= 2; p.setMem('road_rage_yr', true) } },
+      { text: 'Honk, follow, confront at the lights', tag: null, outcome: 'The confrontation is brief and unsatisfying. Nothing was resolved. Your hands shook.', effect: (p) => { p.m -= 5; p.h -= 2; p.setMem('road_rage_yr', true) } },
+      { text: 'Call it in — record the plate', tag: null, outcome: 'The police non-emergency line takes a report. Nothing will happen but you feel marginally better.', effect: (p) => { p.m -= 1; p.setMem('road_rage_yr', true) } },
+    ],
+  },
+
+  {
+    id: 'car_stolen',
+    phase: null,
+    weight: 2,
+    isKey: true,
+    when: (G) => (G.flags.includes('has_vehicle') || (G.assets?.vehicles ?? []).some(v => v.tier !== 'bicycle')) && G.age >= 17 && !G.mem.car_stolen,
+    text: 'You walk to where you parked the car. The space is empty. You stand there for a moment making sure you are thinking about the right street.',
+    choices: [
+      { text: 'Report it immediately', tag: null, outcome: 'The police take a report. The car is found three days later, stripped, in an industrial estate.', effect: (p) => { p.m -= 10; p.mo -= 2000; p.setMem('car_stolen', true) } },
+      { text: 'Check with insurance first', tag: null, outcome: 'Insurance pays out minus the excess. The bureaucracy takes six weeks and is its own kind of ordeal.', effect: (p) => { p.m -= 12; p.mo -= 1500; p.setMem('car_stolen', true) } },
+    ],
+  },
+
+  {
+    id: 'supercar_attention',
+    phase: null,
+    weight: 4,
+    when: (G) => (G.assets?.vehicles ?? []).some(v => v.tier === 'supercar') && !G.mem.supercar_attention,
+    text: 'You drove it somewhere ordinary — a supermarket, a petrol station. Three people photographed it. Two knocked on your window at lights to ask what it is.',
+    choices: [
+      { text: 'Enjoy it — this is why you bought it', tag: null, outcome: 'The attention is part of the car. You lean into it.', effect: (p) => { p.m += 8; p.s += 3; p.setMem('supercar_attention', true) } },
+      { text: 'Find it exhausting', tag: null, outcome: 'You miss driving anonymously. The car stays in the garage on weekdays now.', effect: (p) => { p.m -= 3; p.setMem('supercar_attention', true) } },
+    ],
+  },
+
   // ── CHILDHOOD EVENTS ─────────────────────────────────────────────────────────
 
   {
