@@ -288,10 +288,11 @@ export function getNextEvent(state) {
   if (queueMatch) return queueMatch
 
   let pool = EVENTS.filter(e =>
-    e.phase === phase && !state.usedEventIds.has(e.id) && (!e.when || e.when(G))
+    e.phase === phase && !state.usedEventIds.has(e.id) && (!e.when || e.when(G)) &&
+    (!state.inPrison || e.prisonOk === true)
   )
 
-  if (state.career) {
+  if (state.career && !state.inPrison) {
     const careerDef = CAREERS.find(c => c.id === state.career.id)
     if (careerDef?.events?.length) {
       const careerEvents = careerDef.events.filter(e =>
@@ -1616,7 +1617,8 @@ export function resolveChoice(state, choiceIndex) {
   if (choice.tag) s.flags = [...new Set([...s.flags, choice.tag])]
   if (choice.inject) s.queue = [...s.queue, choice.inject]
   const evtText = typeof pendingEvent.text === 'function' ? pendingEvent.text(buildG(state)) : (pendingEvent.text ?? '')
-  s.log = [...s.log, { age: state.age, text: `${evtText.slice(0, 80)}… — ${choice.outcome}`, isKey: true }]
+  const outcomeText = typeof choice.outcome === 'function' ? choice.outcome(buildG(s)) : (choice.outcome ?? '')
+  s.log = [...s.log, { age: state.age, text: `${evtText.slice(0, 80)}… — ${outcomeText}`, isKey: true }]
   s.pendingEvent = null
   return s
 }

@@ -60,6 +60,11 @@ import {
   hireEmployee,
   closeBusiness,
   BUSINESS_TYPES,
+  prisonWork,
+  prisonCry,
+  prisonConjugalVisit,
+  prisonBribeGuard,
+  prisonStartRiot,
 } from '../engine/gameEngine'
 import { COUNTRIES } from '../data/countries'
 import { CRIMES } from '../data/crimes'
@@ -661,6 +666,14 @@ export const useGameStore = create((set, get) => ({
     if (state.dead) return
     set(closeBusiness(state))
   },
+
+  // ── Prison activities ────────────────────────────────────────────────────────
+
+  doPrisonWork: () => { const s = get(); if (!s.dead) set(prisonWork(s)) },
+  doPrisonCry: () => { const s = get(); if (!s.dead) set(prisonCry(s)) },
+  doPrisonConjugalVisit: () => { const s = get(); if (!s.dead) set(prisonConjugalVisit(s)) },
+  doPrisonBribeGuard: () => { const s = get(); if (!s.dead) set(prisonBribeGuard(s)) },
+  doPrisonStartRiot: () => { const s = get(); if (!s.dead) set(prisonStartRiot(s)) },
 
   // ── Fugitive actions ────────────────────────────────────────────────────────
 

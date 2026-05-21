@@ -7799,4 +7799,128 @@ export const EVENTS = [
       { text: 'Defend yourself directly', tag: null, outcome: 'The in-laws are offended. Your partner is grateful and also slightly horrified. Mixed results.', effect: (p) => { p.m += 2; p.s += 2; p.partnerRel(-2); p.setMem('inlaw_conflict', true) } },
     ],
   },
+
+  // ─── Prison events (prisonOk: true — only fire when inPrison) ─────────────────
+
+  {
+    id: 'prison_cellmate',
+    phase: null,
+    prisonOk: true,
+    weight: 8,
+    when: (G) => G.inPrison && !G.mem?.prison_cellmate_met,
+    text: 'Your new cellmate introduces himself. He seems calm, almost philosophical — says he\'s been in here for eleven years.',
+    choices: [
+      { text: 'Listen to his story', tag: null, outcome: 'He\'s done things you can\'t imagine, and paid for them. You spend the night thinking about choices.', effect: (p) => { p.m -= 3; p.e += 5; p.karma += 3; p.setMem('prison_cellmate_met', true) } },
+      { text: 'Keep to yourself', tag: null, outcome: 'You nod and face the wall. He doesn\'t push. The silence is respectful, at least.', effect: (p) => { p.m -= 2; p.setMem('prison_cellmate_met', true) } },
+      { text: 'Try to find common ground', tag: null, outcome: 'By lights-out you\'ve exchanged names and the rough outlines of how you both ended up here.', effect: (p) => { p.m += 4; p.s += 3; p.makeFriend({ name: 'Prison cellmate', rel: 30 }); p.setMem('prison_cellmate_met', true) } },
+    ],
+  },
+
+  {
+    id: 'prison_library',
+    phase: null,
+    prisonOk: true,
+    weight: 7,
+    when: (G) => G.inPrison && !G.mem?.prison_library_used,
+    text: 'The prison library is small — mostly legal manuals and donated paperbacks — but it\'s quiet. Open three afternoons a week.',
+    choices: [
+      { text: 'Study law — look for anything useful', tag: null, outcome: 'You read every case you can find. You understand the machinery better now.', effect: (p) => { p.e += 8; p.m += 5; p.setMem('prison_library_used', true) } },
+      { text: 'Read fiction — escape for a while', tag: null, outcome: 'You lose a week to novels. It\'s the first real rest your mind has had in months.', effect: (p) => { p.m += 12; p.setMem('prison_library_used', true) } },
+      { text: 'Work on a correspondence course', tag: null, outcome: 'You enroll in a program. It\'s slow, but something to anchor the days.', effect: (p) => { p.e += 10; p.m += 4; p.addFlag('studying_in_prison'); p.setMem('prison_library_used', true) } },
+    ],
+  },
+
+  {
+    id: 'prison_fight',
+    phase: null,
+    prisonOk: true,
+    weight: 6,
+    when: (G) => G.inPrison,
+    text: 'An inmate you\'ve never spoken to shoves you in the chow line. Everyone nearby goes quiet.',
+    choices: [
+      { text: 'Fight back', tag: null, outcome: 'The fight is short and brutal. Word gets around that you\'re not a soft target.', effect: (p) => { p.h -= 12; p.m += 8; p.s += 5; p.karma -= 3 } },
+      { text: 'Back down', tag: null, outcome: 'You let it go. Word gets around. The next few weeks are harder than they needed to be.', effect: (p) => { p.m -= 15; p.s -= 5 } },
+      { text: 'Report it to a guard', tag: null, outcome: 'The CO moves the guy. Safe, but your reputation inside takes a hit.', effect: (p) => { p.m -= 5; p.h -= 3; p.addFlag('prison_snitch') } },
+    ],
+  },
+
+  {
+    id: 'prison_medical',
+    phase: null,
+    prisonOk: true,
+    weight: 5,
+    when: (G) => G.inPrison && G.stats.health < 50,
+    text: 'You\'ve been running a fever for three days. The facility doctor finally sees you.',
+    choices: [
+      { text: 'Accept whatever treatment they offer', tag: null, outcome: 'Basic care — antibiotics, rest — but it helps. You\'re back to your cell in two days.', effect: (p) => { p.h += 15; p.m -= 5 } },
+      { text: 'Demand a specialist', tag: null, outcome: 'Request denied. You get the same treatment anyway. At least you tried.', effect: (p) => { p.h += 10; p.m += 3 } },
+    ],
+  },
+
+  {
+    id: 'prison_letter',
+    phase: null,
+    prisonOk: true,
+    weight: 7,
+    when: (G) => G.inPrison,
+    text: 'A letter arrives — handwritten, forwarded through the facility. It\'s from someone you used to know.',
+    choices: [
+      { text: 'Write back', tag: null, outcome: 'You fill three pages. More than you\'ve said to anyone in months. It helps.', effect: (p) => { p.m += 10; p.r -= 5 } },
+      { text: 'Don\'t reply — better to cut ties', tag: null, outcome: 'You fold the letter and put it under your mattress. You\'ll read it again later. You always do.', effect: (p) => { p.m -= 5; p.r += 5 } },
+    ],
+  },
+
+  {
+    id: 'prison_parole_hearing',
+    phase: null,
+    prisonOk: true,
+    weight: 6,
+    when: (G) => G.inPrison && G.prisonSentence >= 3,
+    text: 'A parole hearing is scheduled. You\'ve been a model inmate. This could be your shot at early release.',
+    choices: [
+      { text: 'Be honest and show genuine remorse', tag: null, outcome: 'The board grants parole. You\'ll be supervised, but you\'re getting out early.', effect: (p) => { p.m += 20; p.addFlag('on_parole') } },
+      { text: 'Say what you think they want to hear', tag: null, outcome: 'They see through it. Parole denied. Next hearing in two years.', effect: (p) => { p.m -= 15; p.r += 8 } },
+    ],
+  },
+
+  {
+    id: 'prison_gang_pressure',
+    phase: null,
+    prisonOk: true,
+    weight: 5,
+    when: (G) => G.inPrison && !G.mem?.prison_gang_answer,
+    text: 'A group inside approaches you. They run the block. They want to know if you\'re with them — or if you\'re a problem.',
+    choices: [
+      { text: 'Join for protection', tag: null, outcome: 'You\'re under their umbrella now. The block is calmer — and the debt will come due eventually.', effect: (p) => { p.m += 5; p.karma -= 10; p.addFlag('prison_gang_affiliated'); p.setMem('prison_gang_answer', 'joined') } },
+      { text: 'Refuse', tag: null, outcome: 'They nod and walk away. You\'re on your own. Life gets harder, but you owe nobody.', effect: (p) => { p.m -= 8; p.h -= 5; p.karma += 5; p.setMem('prison_gang_answer', 'refused') } },
+      { text: 'Stay neutral', tag: null, outcome: 'You stay neither friend nor enemy. It takes careful navigation.', effect: (p) => { p.s += 5; p.m -= 3; p.setMem('prison_gang_answer', 'neutral') } },
+    ],
+  },
+
+  {
+    id: 'prison_visitation',
+    phase: null,
+    prisonOk: true,
+    weight: 6,
+    when: (G) => G.inPrison,
+    text: 'Visitation day. The room is loud with the sound of plastic chairs and vending machines.',
+    choices: [
+      { text: 'A family member visits', tag: null, outcome: 'You talk about nothing important. You\'re both pretending everything is okay. It helps more than you expected.', effect: (p) => { p.m += 12; p.karma += 3 } },
+      { text: 'Nobody comes', tag: null, outcome: 'You sit in the common room instead. Some inmates get visitors. You try not to watch.', effect: (p) => { p.m -= 12; p.r += 5 } },
+    ],
+  },
+
+  {
+    id: 'prison_contraband',
+    phase: null,
+    prisonOk: true,
+    weight: 4,
+    when: (G) => G.inPrison,
+    text: 'Someone offers to sell you contraband — a phone, some pills, maybe something stronger. It\'s a risk.',
+    choices: [
+      { text: 'Buy a phone to stay connected', tag: null, outcome: 'The phone costs a fortune in prison currency, but you\'re finally in touch with the outside world.', effect: (p) => { p.mo -= 300; p.m += 15; p.addFlag('prison_phone') } },
+      { text: 'Pass — not worth the extra time', tag: null, outcome: 'You say no and walk away. Clean record stays clean.', effect: (p) => { p.m -= 3; p.karma += 2 } },
+      { text: 'Report the dealer', tag: null, outcome: 'You tell a CO. The dealer is transferred. You wonder if you did the right thing.', effect: (p) => { p.karma += 5; p.m -= 5; p.addFlag('prison_snitch') } },
+    ],
+  },
 ]
