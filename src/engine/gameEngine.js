@@ -1661,22 +1661,27 @@ export function sellProperty(state, propertyIdx) {
 }
 
 export function buyVehicle(state, typeId) {
-  if (!state.licenceObtained && typeId !== 'bicycle') {
-    return { ...state, log: [...state.log, { age: state.age, text: "You need a driving licence first.", isKey: false }] }
-  }
+  const bicycleTiers = ['bicycle']
   const type = VEHICLE_TYPES.find(t => t.id === typeId)
   if (!type) return state
-  const price = Math.round(randomBetween(type.priceRange[0], type.priceRange[1]))
-  if ((state.money ?? 0) < price) {
-    return { ...state, log: [...state.log, { age: state.age, text: `You can't afford a ${type.name}.`, isKey: false }] }
+  if (!state.licenceObtained && !bicycleTiers.includes(type.tier)) {
+    return { ...state, log: [...state.log, { age: state.age, text: "You need a driving licence first.", isKey: false }] }
   }
-  const vehicle = { typeId: type.id, name: type.name, purchasePrice: price, currentValue: price }
+  const price = Math.round(randomBetween(type.priceRange[0], type.priceRange[1]))
+  const displayName = type.make ? `${type.make} ${type.model}` : type.name
+  if ((state.money ?? 0) < price) {
+    return { ...state, log: [...state.log, { age: state.age, text: `You can't afford a ${displayName}.`, isKey: false }] }
+  }
+  const happinessDelta = type.tier === 'supercar' ? 12 : type.tier === 'luxury_car' ? 8 : type.tier === 'watercraft' ? 10 : 4
+  const vehicle = { typeId: type.id, tier: type.tier, name: displayName, purchasePrice: price, currentValue: price }
+  const newFlags = state.flags.includes('has_vehicle') ? state.flags : [...state.flags, 'has_vehicle']
   return {
     ...state,
     money: (state.money ?? 0) - price,
     assets: { ...state.assets, vehicles: [...(state.assets?.vehicles ?? []), vehicle] },
-    stats: { ...state.stats, happiness: clamp(state.stats.happiness + 4, 0, 100) },
-    log: [...state.log, { age: state.age, text: `You buy a ${type.name} for $${price.toLocaleString()}.`, isKey: false }],
+    flags: newFlags,
+    stats: { ...state.stats, happiness: clamp(state.stats.happiness + happinessDelta, 0, 100) },
+    log: [...state.log, { age: state.age, text: `You buy a ${displayName} for $${price.toLocaleString()}.`, isKey: false }],
   }
 }
 
