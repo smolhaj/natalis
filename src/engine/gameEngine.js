@@ -473,6 +473,16 @@ export function getAvailableCareers(state) {
 export function enterCareer(state, careerId) {
   const career = CAREERS.find(c => c.id === careerId)
   if (!career) return state
+  // Criminal record blocks certain careers
+  const recordBlockedFields = ['law_enforcement', 'military', 'government', 'finance', 'medical']
+  const hasRecord = (state.criminalRecord ?? []).length > 0
+  const hasViolent = (state.criminalRecord ?? []).some(e => {
+    const crime = typeof e === 'string' ? e : (e.crime ?? '')
+    return /murder|assault|robbery|manslaughter|killer/i.test(crime)
+  })
+  if (hasRecord && recordBlockedFields.includes(career.field)) {
+    return { ...state, log: [...state.log, { age: state.age, text: `Your criminal record disqualifies you from a career in ${career.field.replace(/_/g, ' ')}.`, isKey: false }] }
+  }
   const level = career.levels[0]
   const baseSalary = randomBetween(level.salaryRange[0], level.salaryRange[1])
   // Scale salary to country purchasing power
@@ -1258,6 +1268,52 @@ export function tick(state) {
     return s
   }
 
+  // Wanted / fugitive annual capture risk
+  if (s.wanted) {
+    let captureChance = 0.15
+    if (s.flags.includes('emigrated')) captureChance -= 0.07
+    if (s.flags.includes('assumed_identity')) captureChance -= 0.08
+    if (s.flags.includes('appearance_changed')) captureChance -= 0.05
+    if (s.flags.includes('illegal_immigrant')) captureChance -= 0.04
+    captureChance = Math.max(0.02, captureChance)
+    if (Math.random() < captureChance) {
+      const bonus = s.flags.includes('escaped_prisoner') ? 5 : 0
+      const sentence = Math.max(1, (s.prisonSentence ?? 0) + bonus)
+      s.wanted = false
+      s.inPrison = true
+      s.prisonSentence = sentence
+      s.flags = [...new Set([...s.flags, 'recaptured'])]
+      s.log = [...s.log, { age: s.age, text: `Police catch up with you after ${s.flags.includes('escaped_prisoner') ? 'your escape' : 'going on the run'}. You are arrested.${bonus > 0 ? ` An additional ${bonus} years added for the escape.` : ''}`, isKey: true }]
+      return s
+    }
+    // Still free — small stress effect
+    s.stats = { ...s.stats, happiness: clamp(s.stats.happiness - 3, 0, 100), health: clamp(s.stats.health - 1, 0, 100) }
+  }
+
+  // Post-murder investigation window (fires in the year after murder)
+  if (s.mem?.murder_pending_detection) {
+    const { risk } = s.mem.murder_pending_detection
+    if (Math.random() < risk) {
+      const sentence = 15 + Math.floor(Math.random() * 26)
+      s.mem = { ...s.mem, murder_pending_detection: null }
+      s.wanted = false
+      s.inPrison = true
+      s.prisonSentence = sentence
+      s.criminalRecord = [...(s.criminalRecord ?? []), { crime: 'Murder (convicted)', age: s.age }]
+      s.log = [...s.log, { age: s.age, text: `Investigators piece together evidence. You are charged with murder and sentenced to ${sentence} years.`, isKey: true }]
+      return s
+    } else {
+      // Reduce remaining detection window each year
+      const newRisk = (s.mem.murder_pending_detection.risk ?? 0) * 0.6
+      if (newRisk < 0.02) {
+        s.mem = { ...s.mem, murder_pending_detection: null }
+        s.log = [...s.log, { age: s.age, text: 'The murder investigation goes cold. You appear to have gotten away with it.', isKey: false }]
+      } else {
+        s.mem = { ...s.mem, murder_pending_detection: { ...s.mem.murder_pending_detection, risk: newRisk } }
+      }
+    }
+  }
+
   // Natural aging
   s = applyNaturalAging(s)
 
@@ -1700,6 +1756,9 @@ export function retire(state) {
 }
 
 export function emigrate(state, destCountryName) {
+  if (state.wanted) {
+    return { ...state, log: [...state.log, { age: state.age, text: 'You are wanted — border control will arrest you on sight. You must emigrate illegally.', isKey: false }] }
+  }
   if (state.flags.includes('emigrated')) return state
   const dest = COUNTRIES.find(c => c.name === destCountryName)
   if (!dest) return state
@@ -2253,6 +2312,73 @@ export function closeBusiness(state) {
     money: (state.money ?? 0) + salvage,
     business: { ...state.business, active: false },
     log: [...state.log, { age: state.age, text: `You close the ${state.business.name}. Salvage value: $${salvage.toLocaleString()}.`, isKey: true }],
+  }
+}
+
+// ─── Fugitive system ─────────────────────────────────────────────────────────
+
+export function breakOut(state) {
+  // Called after a successful prison escape minigame
+  return {
+    ...state,
+    inPrison: false,
+    wanted: true,
+    wantedFor: state.wantedFor ?? 'escaped_conviction',
+    flags: [...new Set([...state.flags, 'escaped_prisoner'])],
+    log: [...state.log, { age: state.age, text: 'You slip through the gaps and escape from prison. You are now a fugitive.', isKey: true }]
+  }
+}
+
+export function assumeIdentity(state) {
+  const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
+  const mult = gdpMult[state.character?.country?.gdp] ?? 1.0
+  const cost = Math.round(8000 * mult)
+  if ((state.money ?? 0) < cost) {
+    return { ...state, log: [...state.log, { age: state.age, text: `You need $${cost.toLocaleString()} for forged documents.`, isKey: false }] }
+  }
+  if (state.flags.includes('assumed_identity')) {
+    return { ...state, log: [...state.log, { age: state.age, text: 'You are already living under an assumed identity.', isKey: false }] }
+  }
+  const c = state.character?.country
+  const g = state.character?.gender
+  const namePool = g === 'male' ? c?.namePool?.male : c?.namePool?.female
+  const fakeName = (pickFrom(namePool ?? ['Alex', 'Sam', 'Jordan'])) + ' ' + (pickFrom(c?.surnames ?? ['Smith', 'Jones']))
+  return {
+    ...state,
+    money: (state.money ?? 0) - cost,
+    assumedIdentity: { name: fakeName, adoptedAt: state.age },
+    flags: [...new Set([...state.flags, 'assumed_identity'])],
+    log: [...state.log, { age: state.age, text: `For $${cost.toLocaleString()} you obtain forged documents and become ${fakeName}. Your old identity is buried.`, isKey: true }]
+  }
+}
+
+export function goIllegal(state, destCountryName) {
+  const dest = COUNTRIES.find(c => c.name === destCountryName)
+  if (!dest) return state
+  const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
+  const mult = gdpMult[state.character?.country?.gdp] ?? 1.0
+  const fee = Math.round(randomBetween(8000, 20000) * mult)
+  if ((state.money ?? 0) < fee) {
+    return { ...state, log: [...state.log, { age: state.age, text: `The smuggler wants $${fee.toLocaleString()}. You can't afford it.`, isKey: false }] }
+  }
+  if (chance(0.30)) {
+    const added = 2
+    return {
+      ...state,
+      money: (state.money ?? 0) - fee,
+      inPrison: true,
+      prisonSentence: (state.prisonSentence ?? 0) + added,
+      wanted: false,
+      log: [...state.log, { age: state.age, text: `You pay $${fee.toLocaleString()} but border guards intercept you. Deported and sentenced to ${added} additional years.`, isKey: true }]
+    }
+  }
+  return {
+    ...state,
+    money: (state.money ?? 0) - fee,
+    character: { ...state.character, country: dest },
+    flags: [...new Set([...state.flags, 'emigrated', 'illegal_immigrant'])],
+    stats: { ...state.stats, happiness: clamp(state.stats.happiness + 5, 0, 100) },
+    log: [...state.log, { age: state.age, text: `You pay a smuggler $${fee.toLocaleString()} and slip across the border into ${destCountryName}. A dangerous new chapter begins.`, isKey: true }]
   }
 }
 
