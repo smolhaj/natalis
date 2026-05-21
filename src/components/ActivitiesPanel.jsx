@@ -62,6 +62,9 @@ export default function ActivitiesPanel({ onClose }) {
   const [betAmount, setBetAmount] = useState(100)
   const [murderStep, setMurderStep] = useState(null) // null | 'victim' | 'method'
   const [murderVictim, setMurderVictim] = useState(null)
+  const [assaultStep, setAssaultStep] = useState(null) // null | 'victim'
+  const [assaultVictim, setAssaultVictim] = useState(null)
+  const [assaultCrimeId, setAssaultCrimeId] = useState('assault')
   const [datingAppStep, setDatingAppStep] = useState(null) // null | 'filters' | 'match'
   const [datingFilters, setDatingFilters] = useState({ ageRange: 'any', netWorth: 'any' })
 
@@ -800,6 +803,23 @@ export default function ActivitiesPanel({ onClose }) {
       }
 
       case 'crime': {
+        // ── Stranger victim archetypes (assault + murder) ────────────────────
+        // detectionMod: additive to base murder detection; arrestMod: additive to base arrest risk for assault
+        const STRANGER_VICTIMS = [
+          { label: 'A drunk person',        key: 'stranger_drunk',       emoji: '🍺', detectionMod: -0.07, arrestMod: -0.08, desc: 'Stumbling and oblivious.' },
+          { label: 'A homeless person',     key: 'stranger_homeless',    emoji: '🏚️', detectionMod: -0.09, arrestMod: -0.10, desc: 'Unlikely anyone will notice.' },
+          { label: 'A vagrant',             key: 'stranger_vagrant',     emoji: '🧳', detectionMod: -0.08, arrestMod: -0.09, desc: 'No fixed address. No witnesses.' },
+          { label: 'A sex worker',          key: 'stranger_sexworker',   emoji: '💋', detectionMod: -0.04, arrestMod: -0.05, desc: 'Isolated and vulnerable.' },
+          { label: 'A drug dealer',         key: 'stranger_dealer',      emoji: '💊', detectionMod: -0.03, arrestMod: -0.04, desc: 'Nobody asks questions in that world.' },
+          { label: 'A tourist',             key: 'stranger_tourist',     emoji: '📷', detectionMod: +0.06, arrestMod: +0.07, desc: 'Their disappearance will be noticed.' },
+          { label: 'A jogger',              key: 'stranger_jogger',      emoji: '🏃', detectionMod: +0.05, arrestMod: +0.06, desc: 'Their absence will be reported quickly.' },
+          { label: 'An elderly person',     key: 'stranger_elderly',     emoji: '👴', detectionMod: +0.03, arrestMod: +0.00, desc: 'Frail. Extremely bad for your karma.' },
+          { label: 'A businessman',         key: 'stranger_businessman', emoji: '💼', detectionMod: +0.10, arrestMod: +0.12, desc: 'High-profile. Expect a serious investigation.' },
+          { label: 'A biker',               key: 'stranger_biker',       emoji: '🏍️', detectionMod: -0.02, arrestMod: -0.03, desc: 'Rough crowd — they sort their own.' },
+          { label: 'A street performer',    key: 'stranger_performer',   emoji: '🎭', detectionMod: +0.04, arrestMod: +0.04, desc: 'Surrounded by crowds normally.' },
+          { label: 'A random stranger',     key: 'stranger_random',      emoji: '👤', detectionMod:  0.00, arrestMod:  0.00, desc: 'Unknown risk profile.' },
+        ]
+
         // Murder method detection rates (chance of being caught AFTER a successful kill)
         const MURDER_METHODS = [
           { name: 'Push Down Stairs',  detection: 0.12 },
@@ -835,9 +855,94 @@ export default function ActivitiesPanel({ onClose }) {
           else if (victim.key?.startsWith('ex_')) { const exs = [...(next.exPartners ?? [])]; if (exs[victim.idx]) exs[victim.idx] = { ...exs[victim.idx], alive: false }; next.exPartners = exs }
         }
 
+        // ── Assault victim picker ────────────────────────────────────────────
+        if (assaultStep === 'victim') {
+          const assaultCrime = CRIMES.find(c => c.id === assaultCrimeId)
+          const knownTargets = [
+            ...(state.partner ? [{ label: `${state.partner.name} (Partner)`, key: 'known_partner', isKnown: true }] : []),
+            ...(state.parents?.mother?.alive ? [{ label: `${state.parents.mother.name} (Mother)`, key: 'known_mother', isKnown: true }] : []),
+            ...(state.parents?.father?.alive ? [{ label: `${state.parents.father.name} (Father)`, key: 'known_father', isKnown: true }] : []),
+            ...((state.siblings ?? []).filter(s => s.alive).map((s, i) => ({ label: `${s.name} (Sibling)`, key: `known_sibling_${i}`, isKnown: true }))),
+            ...((state.friends ?? []).filter(f => f.alive).map((f, i) => ({ label: `${f.name} (Friend)`, key: `known_friend_${i}`, isKnown: true }))),
+          ]
+          return (
+            <>
+              <button onClick={() => { setAssaultStep(null); setAssaultVictim(null) }} className="text-bit-blue text-sm font-semibold mb-2">← Back</button>
+              <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1">People you know</p>
+              {knownTargets.map(v => (
+                <Btn key={v.key} danger onClick={() => {
+                  setAssaultVictim(v)
+                  setAssaultStep(null)
+                  onClose()
+                  triggerMinigame({
+                    ...assaultCrime.minigame,
+                    title: `${assaultCrime.name} — ${v.label}`,
+                    description: `You go after ${v.label.split(' (')[0]}.`,
+                    onSuccess: {
+                      outcome: `You get the better of ${v.label.split(' (')[0]}.`,
+                      effect: (s) => ({
+                        ...s,
+                        karma: Math.max(0, (s.karma ?? 50) - 15),
+                        actionsThisYear: (s.actionsThisYear ?? 0) + 1,
+                        flags: [...new Set([...s.flags, 'violent'])],
+                        log: [...(s.log ?? []), { age: s.age, text: `You assault ${v.label.split(' (')[0]}.`, isKey: true }],
+                      }),
+                    },
+                    onFailure: {
+                      outcome: `Caught. Arrested for ${assaultCrime.name}.`,
+                      effect: (s) => {
+                        const sent = calcSentence(assaultCrime)
+                        return { ...s, inPrison: sent > 0, prisonSentence: sent, actionsThisYear: (s.actionsThisYear ?? 0) + 1,
+                          criminalRecord: [...(s.criminalRecord ?? []), { crime: assaultCrime.criminalRecordEntry, age: s.age }],
+                          log: [...(s.log ?? []), { age: s.age, text: `Arrested for ${assaultCrime.name}. Sentenced to ${sent} year${sent !== 1 ? 's' : ''}.`, isKey: true }] }
+                      },
+                    },
+                  })
+                }} title={v.label} subtitle="Known target" />
+              ))}
+              <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-3 py-1">Strangers</p>
+              {STRANGER_VICTIMS.map(v => (
+                <Btn key={v.key} danger onClick={() => {
+                  setAssaultStep(null)
+                  onClose()
+                  const baseRisk = assaultCrime?.arrestRisk ?? 0.40
+                  const adjustedRisk = Math.max(0.05, Math.min(0.95, baseRisk + v.arrestMod))
+                  triggerMinigame({
+                    type: 'fight', difficulty: assaultCrimeId === 'aggravated_assault' ? 'hard' : 'normal',
+                    title: `${assaultCrime?.name} — ${v.label}`,
+                    description: `You go after ${v.label.toLowerCase()}. ${v.desc}`,
+                    onSuccess: {
+                      outcome: `You get the better of ${v.label.toLowerCase()}.`,
+                      effect: (s) => ({
+                        ...s,
+                        karma: Math.max(0, (s.karma ?? 50) - 12),
+                        actionsThisYear: (s.actionsThisYear ?? 0) + 1,
+                        flags: [...new Set([...s.flags, 'violent'])],
+                        log: [...(s.log ?? []), { age: s.age, text: `You assault ${v.label.toLowerCase()}.`, isKey: true }],
+                      }),
+                    },
+                    onFailure: {
+                      outcome: Math.random() < adjustedRisk ? `Caught. Arrested for ${assaultCrime?.name}.` : `You come off worse. Bruised and bleeding.`,
+                      effect: (s) => {
+                        if (Math.random() < adjustedRisk) {
+                          const sent = calcSentence(assaultCrime)
+                          return { ...s, inPrison: sent > 0, prisonSentence: sent, actionsThisYear: (s.actionsThisYear ?? 0) + 1,
+                            criminalRecord: [...(s.criminalRecord ?? []), { crime: assaultCrime?.criminalRecordEntry ?? 'Assault', age: s.age }],
+                            log: [...(s.log ?? []), { age: s.age, text: `Arrested for ${assaultCrime?.name}. Sentenced to ${calcSentence(assaultCrime)} year(s).`, isKey: true }] }
+                        }
+                        return { ...s, stats: { ...s.stats, health: Math.max(0, s.stats.health - 15) }, actionsThisYear: (s.actionsThisYear ?? 0) + 1, log: [...(s.log ?? []), { age: s.age, text: `You get beaten by ${v.label.toLowerCase()}.`, isKey: false }] }
+                      },
+                    },
+                  })
+                }} title={`${v.emoji} ${v.label}`} subtitle={v.desc} cost={`Arrest risk: ${Math.round(Math.max(0.05, (assaultCrime?.arrestRisk ?? 0.4) + v.arrestMod) * 100)}%`} />
+              ))}
+            </>
+          )
+        }
+
         // Murder victim selection flow
         if (murderStep === 'victim') {
-          const victims = [
+          const knownVictims = [
             ...(state.partner ? [{ label: `${state.partner.name} (Partner)`, key: 'partner' }] : []),
             ...(state.parents?.mother?.alive ? [{ label: `${state.parents.mother.name} (Mother)`, key: 'mother' }] : []),
             ...(state.parents?.father?.alive ? [{ label: `${state.parents.father.name} (Father)`, key: 'father' }] : []),
@@ -846,13 +951,26 @@ export default function ActivitiesPanel({ onClose }) {
             ...((state.friends ?? []).filter(f => f.alive).map((f, i) => ({ label: `${f.name} (Friend)`, key: `friend_${i}`, idx: i }))),
             ...((state.exPartners ?? []).filter(e => e.alive !== false).map((e, i) => ({ label: `${e.name} (Ex)`, key: `ex_${i}`, idx: i }))),
           ]
+          const strangerVictimsForMurder = STRANGER_VICTIMS.map(v => ({
+            label: `${v.label} (Stranger)`, key: v.key, isStranger: true, detectionMod: v.detectionMod, emoji: v.emoji, desc: v.desc,
+          }))
           return (
             <>
               <button onClick={() => setMurderStep(null)} className="text-bit-blue text-sm font-semibold mb-2">← Back</button>
-              <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1 mb-1">Pick your victim</p>
-              {victims.length === 0 && <p className="text-natalis-muted text-sm italic p-3">No viable victims in your life.</p>}
-              {victims.map(v => (
-                <Btn key={v.key} danger onClick={() => { setMurderVictim(v); setMurderStep('method') }} title={v.label} subtitle="Select as target" />
+              {knownVictims.length > 0 && (
+                <>
+                  <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1 mb-1">People you know</p>
+                  {knownVictims.map(v => (
+                    <Btn key={v.key} danger onClick={() => { setMurderVictim(v); setMurderStep('method') }} title={v.label} subtitle="Select as target" />
+                  ))}
+                </>
+              )}
+              <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-3 py-1 mb-1">Strangers</p>
+              {strangerVictimsForMurder.map(v => (
+                <Btn key={v.key} danger onClick={() => { setMurderVictim(v); setMurderStep('method') }}
+                  title={`${v.emoji} ${v.label}`}
+                  subtitle={v.desc}
+                />
               ))}
             </>
           )
@@ -861,6 +979,9 @@ export default function ActivitiesPanel({ onClose }) {
         if (murderStep === 'method' && murderVictim) {
           const murderCrime = CRIMES.find(c => c.id === 'murder')
           const victimFirstName = murderVictim.label.split(' (')[0]
+          const isStranger = !!murderVictim.isStranger
+          // Stranger victims adjust detection probability
+          const strangerDetMod = isStranger ? (murderVictim.detectionMod ?? 0) : 0
           return (
             <>
               <button onClick={() => setMurderStep('victim')} className="text-bit-blue text-sm font-semibold mb-2">← Back</button>
@@ -869,7 +990,9 @@ export default function ActivitiesPanel({ onClose }) {
                 <p className="text-red-500 text-xs mt-0.5">You're really feeling like you shouldn't be doing this.</p>
               </div>
               <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1 mb-1">Pick your method</p>
-              {MURDER_METHODS.map(({ name: method, detection }) => (
+              {MURDER_METHODS.map(({ name: method, detection }) => {
+                const adjDetection = Math.max(0.01, Math.min(0.97, detection + strangerDetMod))
+                return (
                 <Btn key={method} danger
                   onClick={() => {
                     const failSentence = calcSentence(murderCrime)
@@ -880,19 +1003,19 @@ export default function ActivitiesPanel({ onClose }) {
                     triggerMinigame({
                       type: 'fight', difficulty: 'hard',
                       title: `Murder · ${method}`,
-                      description: `You attempt to kill ${victimFirstName} using ${method.toLowerCase()}.`,
+                      description: `You attempt to kill ${victimFirstName.toLowerCase()} using ${method.toLowerCase()}.`,
                       onSuccess: {
-                        outcome: `You kill ${victimFirstName}. The deed is done.`,
+                        outcome: `You kill ${victimFirstName.toLowerCase()}. The deed is done.`,
                         effect: (s) => {
                           let next = { ...s }
                           next.karma = Math.max(0, (next.karma ?? 50) - 30)
                           next.flags = [...new Set([...next.flags, 'killer'])]
-                          killVictim(next, capturedV)
+                          if (!capturedV.isStranger) killVictim(next, capturedV)
                           next.actionsThisYear = (next.actionsThisYear ?? 0) + 1
-                          next.log = [...(next.log ?? []), { age: s.age, text: `You killed ${capturedV.label.split(' (')[0]} using ${method.toLowerCase()}.`, isKey: true }]
+                          next.log = [...(next.log ?? []), { age: s.age, text: `You killed ${capturedV.label.split(' (')[0].toLowerCase()} using ${method.toLowerCase()}.`, isKey: true }]
                           // Post-murder investigation window — decays each year
-                          next.mem = { ...next.mem, murder_pending_detection: { risk: detection } }
-                          if (detection <= 0.12) {
+                          next.mem = { ...next.mem, murder_pending_detection: { risk: adjDetection } }
+                          if (adjDetection <= 0.10) {
                             next.log = [...next.log, { age: s.age, text: 'The death is ruled an accident. For now, you are not a suspect.', isKey: false }]
                           } else {
                             next.log = [...next.log, { age: s.age, text: 'Police are treating the death as suspicious. An investigation has opened.', isKey: false }]
@@ -915,9 +1038,10 @@ export default function ActivitiesPanel({ onClose }) {
                     })
                   }}
                   title={method}
-                  subtitle={`Detection risk if successful: ${Math.round(detection * 100)}%`}
+                  subtitle={`Detection risk if successful: ${Math.round(adjDetection * 100)}%`}
                 />
-              ))}
+                )
+              })}
             </>
           )
         }
@@ -937,6 +1061,16 @@ export default function ActivitiesPanel({ onClose }) {
                   title="🔪 Murder"
                   subtitle="Choose your target and method. Getting away with it is not guaranteed."
                   cost="Varies by method"
+                />
+              )
+            }
+            if (crime.id === 'assault' || crime.id === 'aggravated_assault') {
+              return (
+                <Btn key={crime.id} disabled={noActions} danger
+                  onClick={() => { setAssaultCrimeId(crime.id); setAssaultStep('victim') }}
+                  title={`🥊 ${crime.name}`}
+                  subtitle={crime.description}
+                  cost={`Arrest risk: ${Math.round(crime.arrestRisk * 100)}%`}
                 />
               )
             }
