@@ -6763,4 +6763,369 @@ export const EVENTS = [
     ],
     effect: null,
   },
+
+  // ── DEVELOPING URBAN EVENTS ──────────────────────────────────────────────────
+
+  {
+    id: 'du_shantytown_childhood',
+    phase: 'childhood',
+    weight: 5,
+    when: (G) => G.character.country.archetype === 'developing_urban' && G.age >= 5 && G.age <= 12 && !G.mem.du_shantytown,
+    text: (G) => {
+      const name = G.character.country.name;
+      if (['Brazil', 'Colombia', 'Peru'].includes(name)) return 'The favela has its own geography. The alleys so narrow two people can\'t pass. Electricity tapped from the main line overhead. The view from the hilltop over the city below is genuinely beautiful and you know it even then.';
+      if (['Egypt', 'Morocco', 'Jordan'].includes(name)) return 'The city grew faster than the pipes. Your neighbourhood has electricity but shared water. The building was put up quickly by a relative thirty years ago and has been expanded room by room ever since.';
+      if (['Philippines', 'Indonesia', 'Vietnam'].includes(name)) return 'Your barangay floods every monsoon season. Everything important is stored high — documents in plastic, shoes on the shelf, the television on a table. Your family has lived in this house for twenty years, which makes you established.';
+      return 'The city has a formal face and an informal one. You grew up in the informal one — improvised, resourceful, dense with life and noise and the specific intimacy of people living closely.';
+    },
+    choices: [
+      {
+        text: 'You know every shortcut, every face — this place is home',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.h += 10; p.e += 3; p.setMem('du_shantytown', true); p.addFlag('urban_survivor'); },
+        inject: null,
+      },
+      {
+        text: 'You want out. You study harder than anyone.',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.e += 8; p.h -= 3; p.setMem('du_shantytown', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'du_informal_market',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'developing_urban' && G.age >= 7 && G.age <= 15 && !G.mem.du_market,
+    text: 'Your mother sells from a stall. Your father drives a motorbike taxi. The income is daily and inconsistent — good week, bad week, festival week, strike week. You help on weekends and understand before the age of ten that there is no sick leave, no holiday, no margin.',
+    choices: [
+      {
+        text: 'Help at the stall — learn the rhythms of trade',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.w += 5; p.e += 3; p.h += 3; p.setMem('du_market', true); },
+        inject: null,
+      },
+      {
+        text: 'Study on your own while they work',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.e += 8; p.setMem('du_market', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'du_urban_violence',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'developing_urban' && G.age >= 10 && G.age <= 20 && !G.mem.du_violence && ['Brazil', 'Colombia', 'South Africa', 'Mexico'].includes(G.character.country.name),
+    isKey: true,
+    text: (G) => {
+      const name = G.character.country.name;
+      if (name === 'Brazil') return 'A drug faction controls the end of your road. The rules are unwritten and clearly communicated: the bakery is open, the phone repair shop is neutral ground, Thursdays before midnight are generally fine. You grow up knowing the map.';
+      if (name === 'Colombia') return 'Your city was beautiful before the paramilitaries divided it. Now certain buses go certain ways. You know which murals mark which territory.';
+      if (name === 'South Africa') return 'The township has been this way for a long time. What outsiders call disorder has its own logic — the committee, the elders, the hierarchy of grievances. Violence happens at the edges, usually at night.';
+      if (name === 'Mexico') return 'The plaza belongs to the cartel by evening. The police agree. The shops close early on certain days for reasons everyone understands and nobody states.';
+      return 'Urban violence is part of the landscape — not constant, but structurally present. You navigate it.';
+    },
+    choices: [
+      {
+        text: 'Navigate carefully — know the rules and survive',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.m -= 5; p.e += 5; p.setMem('du_violence', true); p.addFlag('street_smart'); },
+        inject: null,
+      },
+      {
+        text: 'Lose a friend to it',
+        tag: null,
+        outcome: 'One night a friend doesn\'t come home. The grief is real. The anger has nowhere to go.',
+        effect: (p) => { p.h -= 15; p.m -= 8; p.r += 8; p.setMem('du_violence', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'du_china_gaokao',
+    phase: 'adolescence',
+    weight: 5,
+    when: (G) => G.character.country.name === 'China' && G.age >= 16 && G.age <= 19 && !G.mem.du_gaokao,
+    isKey: true,
+    text: 'The gaokao is in three days. You have been preparing for three years in earnest, twelve years in total. The exam will determine your university. Your university will determine your career. Your career will determine your marriage prospects. The three days feel like three years compressed into a single point.',
+    choices: [
+      {
+        text: 'You\'re as ready as you\'ll ever be — trust the preparation',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.e += 12; p.h -= 5; p.setMem('du_gaokao', true); p.addFlag('gaokao_survivor'); },
+        inject: null,
+      },
+      {
+        text: 'The pressure breaks you — you perform below your ability',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.e += 3; p.h -= 15; p.m -= 8; p.setMem('du_gaokao', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'du_remittance_sender',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'developing_urban' && G.age >= 20 && G.age <= 40 && G.career && !G.mem.du_remittance && G.money > 200,
+    text: 'The first paycheque is split before it arrives. A portion goes home to the village by bus or transfer. Your parents helped pay your school fees. Your younger siblings need uniforms. The expectation is not a burden, exactly — it is the structure of things. But it does affect the apartment you can afford.',
+    choices: [
+      {
+        text: 'Send reliably — it\'s the right thing to do',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.mo -= 1500; p.karma += 10; p.h += 5; p.setMem('du_remittance', true); },
+        inject: null,
+      },
+      {
+        text: 'Send less than expected — you need to build something here',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.mo -= 500; p.r += 8; p.setMem('du_remittance', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'du_megacity_commute',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'developing_urban' && G.career && G.age >= 22 && G.age <= 55 && !G.mem.du_commute,
+    text: (G) => {
+      const name = G.character.country.name;
+      if (name === 'China') return 'Three hours a day on the metro. Standing in the crush. The packed carriages at 8am are a full body of people pressing in the same direction. You read, you sleep standing, you arrive at work already used up.';
+      if (name === 'India') return 'The local train at rush hour is a different experience from a train. You do not take a train to work — you navigate a river of people that happens to be on rails. In twenty years, your shoulder muscles will remember this.';
+      if (['Mexico', 'Brazil', 'Indonesia', 'Philippines'].includes(name)) return 'The traffic in this city was not designed. It grew. What should be forty minutes is two hours some mornings. You become expert at the radio, at podcasts, at the particular patience that comes from having no other option.';
+      return 'The commute in this city is its own life — two, three hours daily in buses, trains, on foot. You become fluent in surviving it.';
+    },
+    choices: [
+      {
+        text: 'Find ways to use the time — read, learn, think',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.e += 5; p.setMem('du_commute', true); },
+        inject: null,
+      },
+      {
+        text: 'The commute grinds you down over years',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.m -= 8; p.h -= 5; p.r += 3; p.setMem('du_commute', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'du_middle_class_aspiration',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'developing_urban' && G.age >= 28 && G.age <= 45 && G.career && G.money > 5000 && !G.mem.du_middle_class,
+    isKey: true,
+    text: 'Your parents had nothing. You have a salary, an apartment, a motorbike that is actually yours. The refrigerator works. The children will go to private school. You are the first person in your family to own property. The generation above you has no vocabulary for what you have done — it didn\'t exist as a category.',
+    choices: [
+      {
+        text: 'Celebrate quietly — this is significant',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.h += 15; p.karma += 5; p.setMem('du_middle_class', true); p.addFlag('first_gen_middle_class'); },
+        inject: null,
+      },
+      {
+        text: 'The ladder goes further — you want more',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.w += 5; p.setMem('du_middle_class', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  // ── CROSS-ARCHETYPE TRAUMA / PTSD EVENTS ─────────────────────────────────────
+
+  {
+    id: 'trauma_flashback',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.flags.includes('conflict_survivor') && G.age >= 18 && !G.mem.trauma_shown && !G.mentalHealth?.condition,
+    isKey: true,
+    text: 'It comes back at odd moments. A car backfiring. The particular angle of afternoon light. A smell in the market. Your body responds before your mind catches up — heart hammering, vision narrowing, somewhere else entirely for a few seconds. People around you see nothing unusual. You have learnt to wait it out without moving.',
+    choices: [
+      {
+        text: 'Seek professional help — this is a real injury',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.m += 8; p.h -= 5; p.setMentalHealth({ condition: 'ptsd', therapy: true }); p.setMem('trauma_shown', true); },
+        inject: null,
+      },
+      {
+        text: 'Manage alone — you always have',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.m -= 8; p.h -= 10; p.setMentalHealth({ condition: 'ptsd' }); p.setMem('trauma_shown', true); },
+        inject: null,
+      },
+      {
+        text: 'Talk to someone who went through the same thing',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.h += 5; p.m += 3; p.setMentalHealth({ condition: 'ptsd', therapy: true }); p.setMem('trauma_shown', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'trauma_anniversary',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.mentalHealth?.condition === 'ptsd' && G.age >= 20 && !G.mem.trauma_anniversary,
+    text: 'The anniversary is harder than the other days. Not the worst day — somehow the anticipation of it is worse than the day itself, most years. You have learnt to recognise the approach: the shortening of sleep, the irritability, the way certain songs are suddenly unlistenable.',
+    choices: [
+      {
+        text: 'Mark the day consciously — acknowledge it',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.m += 5; p.h -= 5; p.karma += 5; p.setMem('trauma_anniversary', true); },
+        inject: null,
+      },
+      {
+        text: 'Work through it — keep moving',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.h -= 8; p.setMem('trauma_anniversary', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'cz_late_life_exile',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) => G.character.country.archetype === 'conflict_zone' && G.age >= 55 && G.flags.includes('refugee') && !G.mem.cz_exile_old,
+    isKey: true,
+    text: 'You have been away for longer than you were home. The country you left exists now as photographs, phone calls, and the specific way you cook certain things. Your children were born here, in this country that took you in. They speak the new language without an accent. The old place lives in you alone.',
+    choices: [
+      {
+        text: 'The exile is permanent — make peace with it',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.h += 5; p.r += 8; p.karma += 8; p.setMem('cz_exile_old', true); },
+        inject: null,
+      },
+      {
+        text: 'Return — whatever state it is in now',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.h += 15; p.r -= 5; p.setMem('cz_exile_old', true); },
+        inject: null,
+      },
+      {
+        text: 'Teach the children the old language before it is gone',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.h += 8; p.karma += 10; p.setMem('cz_exile_old', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'du_pollution_health',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) => ['developing_urban', 'developing_unstable'].includes(G.character.country.archetype) && G.age >= 10 && !G.mem.du_pollution,
+    text: 'The air in this city has a particular quality on still days — yellow-grey, heavy, scratching the back of the throat. Your schoolmates have chronic coughs that are treated as ordinary. The river your parents swam in is not swimmable. The fish are gone from that stretch.',
+    choices: null,
+    effect: (p) => { p.m -= 8; p.setMem('du_pollution', true); p.addFlag('pollution_exposure'); },
+  },
+
+  {
+    id: 'du_india_caste_encounter',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) => G.character.country.name === 'India' && G.age >= 10 && !G.mem.india_caste,
+    isKey: true,
+    text: 'Caste is in the air before you have a word for it. The seating at school has a pattern you don\'t fully understand. Your mother is careful about which water is offered at whose house. A friend\'s family does not eat with yours. Later, you find the official vocabulary. The experience had a name all along.',
+    choices: [
+      {
+        text: 'The system angers you — you push back where you can',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.karma += 8; p.h -= 5; p.e += 3; p.setMem('india_caste', true); p.addFlag('politically_aware'); },
+        inject: null,
+      },
+      {
+        text: 'Navigate it — the cost of confrontation is too high',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.r += 8; p.h -= 8; p.setMem('india_caste', true); },
+        inject: null,
+      },
+      {
+        text: 'Your family is from a higher caste — you benefit from it',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.w += 3; p.karma -= 5; p.setMem('india_caste', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'du_unstable_currency',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) => ['developing_unstable', 'developing_urban'].includes(G.character.country.archetype) && G.age >= 16 && !G.mem.du_currency && G.currentYear >= 1990,
+    text: (G) => {
+      const name = G.character.country.name;
+      if (name === 'Venezuela') return 'The bolivar lost half its value in a single week. Your savings are in a currency that is evaporating. The supermarket shelves are empty on the protein aisle and people are lining up for flour.';
+      if (name === 'Zimbabwe') return 'The zeros multiplied. The trillion-dollar note. The thing that was not supposed to be possible.';
+      return 'The exchange rate crisis arrives without announcement. Your salary buys less each month. People are converting to dollars wherever possible. The formal economy and the parallel economy are barely speaking to each other.';
+    },
+    choices: [
+      {
+        text: 'Convert savings to hard currency immediately',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.w += 8; p.e += 3; p.setMem('du_currency', true); },
+        inject: null,
+      },
+      {
+        text: 'You wait too long — the savings are gone',
+        tag: null,
+        outcome: null,
+        effect: (p) => { p.mo -= 3000; p.h -= 10; p.setMem('du_currency', true); },
+        inject: null,
+      },
+    ],
+    effect: null,
+  },
 ]
