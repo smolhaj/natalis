@@ -2429,6 +2429,343 @@ export function goIllegal(state, destCountryName) {
   }
 }
 
+// ─── Prison activities ────────────────────────────────────────────────────────
+
+export function prisonWork(state) {
+  if (!state.inPrison) return state
+  const earned = randomBetween(50, 200)
+  let healthDelta = -2
+  let logText = `You put in hours in the prison laundry/kitchen. $${earned} earned.`
+  const injured = chance(0.05)
+  if (injured) {
+    healthDelta -= 10
+    logText = `You put in hours in the prison laundry/kitchen. $${earned} earned. A work accident leaves you bruised and aching.`
+  }
+  return {
+    ...state,
+    money: (state.money ?? 0) + earned,
+    stats: {
+      ...state.stats,
+      health: clamp((state.stats.health ?? 50) + healthDelta, 0, 100),
+      happiness: clamp((state.stats.happiness ?? 50) - 3, 0, 100),
+    },
+    actionsThisYear: (state.actionsThisYear ?? 0) + 1,
+    log: [...state.log, { age: state.age, text: logText, isKey: false }],
+  }
+}
+
+export function prisonCry(state) {
+  if (!state.inPrison) return state
+  const comforted = chance(0.30)
+  const happinessDelta = comforted ? 8 + 3 : 8
+  const regretDelta = -3
+  const logText = comforted
+    ? 'You break down in your cell. Another inmate sits beside you in silence until you steady yourself — a small, unexpected kindness.'
+    : 'You allow yourself to fall apart for a while. The tears come, and then they stop. You feel hollow but lighter.'
+  return {
+    ...state,
+    stats: {
+      ...state.stats,
+      happiness: clamp((state.stats.happiness ?? 50) + happinessDelta, 0, 100),
+    },
+    regret: clamp((state.regret ?? 50) + regretDelta, 0, 100),
+    log: [...state.log, { age: state.age, text: logText, isKey: false }],
+  }
+}
+
+export function prisonConjugalVisit(state) {
+  if (!state.inPrison || !state.partner) return state
+  if (!state.partner.alive || (state.partner.relationshipQuality ?? 50) <= 30) {
+    return {
+      ...state,
+      log: [...state.log, { age: state.age, text: 'A conjugal visit isn\'t possible right now.', isKey: false }],
+    }
+  }
+  const noShow = chance(0.10)
+  if (noShow) {
+    return {
+      ...state,
+      stats: {
+        ...state.stats,
+        happiness: clamp((state.stats.happiness ?? 50) - 8, 0, 100),
+      },
+      regret: clamp((state.regret ?? 50) + 5, 0, 100),
+      actionsThisYear: (state.actionsThisYear ?? 0) + 1,
+      log: [...state.log, { age: state.age, text: `${state.partner.name} never shows. You wait in the visitation room until the guard walks you back.`, isKey: false }],
+    }
+  }
+  return {
+    ...state,
+    stats: {
+      ...state.stats,
+      happiness: clamp((state.stats.happiness ?? 50) + 15, 0, 100),
+    },
+    partner: {
+      ...state.partner,
+      relationshipQuality: clamp((state.partner.relationshipQuality ?? 50) + 10, 0, 100),
+    },
+    actionsThisYear: (state.actionsThisYear ?? 0) + 1,
+    log: [...state.log, { age: state.age, text: `${state.partner.name} visits. For a brief hour the walls don't feel so permanent.`, isKey: false }],
+  }
+}
+
+export function prisonBribeGuard(state) {
+  if (!state.inPrison) return state
+  const bribe = randomBetween(500, 3000)
+  if ((state.money ?? 0) < bribe) {
+    return {
+      ...state,
+      log: [...state.log, { age: state.age, text: `You don't have enough money to bribe a guard right now.`, isKey: false }],
+    }
+  }
+  const roll = Math.random()
+  let newSentence = state.prisonSentence ?? 0
+  let happinessDelta = 0
+  let regretDelta = 0
+  let logText
+  if (roll < 0.50) {
+    newSentence = Math.max(0, newSentence - 1)
+    happinessDelta = 10
+    logText = `You slip a guard $${bribe.toLocaleString()}. Days later, paperwork goes missing and a year disappears from your sentence.`
+  } else if (roll < 0.75) {
+    logText = `You pay the guard $${bribe.toLocaleString()}. He pockets it and nothing changes. You've been had.`
+  } else {
+    newSentence = newSentence + 1
+    regretDelta = 10
+    logText = `The guard reports you. $${bribe.toLocaleString()} confiscated, an extra year added to your sentence.`
+  }
+  return {
+    ...state,
+    money: (state.money ?? 0) - bribe,
+    prisonSentence: newSentence,
+    stats: {
+      ...state.stats,
+      happiness: clamp((state.stats.happiness ?? 50) + happinessDelta, 0, 100),
+    },
+    regret: clamp((state.regret ?? 50) + regretDelta, 0, 100),
+    actionsThisYear: (state.actionsThisYear ?? 0) + 1,
+    log: [...state.log, { age: state.age, text: logText, isKey: false }],
+  }
+}
+
+export function prisonStartRiot(state) {
+  if (!state.inPrison) return state
+  const success = chance(0.40)
+  let newState
+  if (success) {
+    const sentenceReduced = chance(0.25)
+    const newSentence = sentenceReduced
+      ? Math.max(0, (state.prisonSentence ?? 0) - 1)
+      : (state.prisonSentence ?? 0)
+    const logText = sentenceReduced
+      ? 'The riot you sparked descends into chaos. Guards retreat, paperwork burns — somehow a year gets wiped from your record in the confusion.'
+      : 'You ignite the ward. For a few violent hours the inmates run the block. The rush is like nothing else.'
+    newState = {
+      ...state,
+      prisonSentence: newSentence,
+      stats: {
+        ...state.stats,
+        happiness: clamp((state.stats.happiness ?? 50) + 20, 0, 100),
+      },
+      karma: clamp((state.karma ?? 50) - 5, 0, 100),
+      actionsThisYear: (state.actionsThisYear ?? 0) + 1,
+      flags: [...new Set([...state.flags, 'riot_instigator'])],
+      log: [...state.log, { age: state.age, text: logText, isKey: true }],
+    }
+  } else {
+    const extraYears = randomBetween(1, 2)
+    newState = {
+      ...state,
+      prisonSentence: (state.prisonSentence ?? 0) + extraYears,
+      stats: {
+        ...state.stats,
+        health: clamp((state.stats.health ?? 50) - 15, 0, 100),
+        happiness: clamp((state.stats.happiness ?? 50) - 10, 0, 100),
+        discipline: clamp((state.stats.discipline ?? 50) - 5, 0, 100),
+      },
+      actionsThisYear: (state.actionsThisYear ?? 0) + 1,
+      flags: [...new Set([...state.flags, 'riot_instigator'])],
+      log: [...state.log, { age: state.age, text: `The riot collapses almost immediately. You take a beating and earn ${extraYears} more year${extraYears > 1 ? 's' : ''} on your sentence.`, isKey: true }],
+    }
+  }
+  return newState
+}
+
+// ─── Stocks / Investment system ───────────────────────────────────────────────
+
+const STOCKS = [
+  { symbol: 'TECH', name: 'TechCorp',     sector: 'tech',    basePrice: 150, volatility: 0.15, minYear: 1990 },
+  { symbol: 'BANK', name: 'GlobalBank',   sector: 'finance', basePrice: 80,  volatility: 0.10 },
+  { symbol: 'HLTH', name: 'HealthPlus',   sector: 'health',  basePrice: 60,  volatility: 0.12 },
+  { symbol: 'ENRG', name: 'EnergyFirst',  sector: 'energy',  basePrice: 45,  volatility: 0.18 },
+  { symbol: 'RETL', name: 'RetailMax',    sector: 'retail',  basePrice: 30,  volatility: 0.20 },
+  { symbol: 'REIT', name: 'PropertyFund', sector: 'realty',  basePrice: 100, volatility: 0.08 },
+  { symbol: 'CRPT', name: 'CryptoCoin',   sector: 'crypto',  basePrice: 200, volatility: 0.50, minYear: 2010 },
+]
+
+export function getAvailableStocks(state) {
+  const currentYear = state.currentYear ?? 2000
+  const portfolio = state.stockPortfolio ?? []
+  return STOCKS
+    .filter(s => !s.minYear || currentYear >= s.minYear)
+    .map(s => {
+      const owned = portfolio.find(p => p.symbol === s.symbol)
+      return owned
+        ? { ...s, currentPrice: owned.currentPrice, sharesOwned: owned.shares }
+        : { ...s, currentPrice: s.basePrice, sharesOwned: 0 }
+    })
+}
+
+export function buyStock(state, symbol, shares) {
+  const stockDef = STOCKS.find(s => s.symbol === symbol)
+  if (!stockDef) {
+    return { ...state, log: [...state.log, { age: state.age, text: `Unknown stock symbol: ${symbol}.`, isKey: false }] }
+  }
+  if (!shares || shares <= 0) {
+    return { ...state, log: [...state.log, { age: state.age, text: 'You must buy at least one share.', isKey: false }] }
+  }
+  const portfolio = state.stockPortfolio ?? []
+  const existing = portfolio.find(p => p.symbol === symbol)
+  const currentPrice = existing ? existing.currentPrice : stockDef.basePrice
+  const cost = Math.round(shares * currentPrice)
+  if ((state.money ?? 0) < cost) {
+    return {
+      ...state,
+      log: [...state.log, { age: state.age, text: `You need $${cost.toLocaleString()} to buy ${shares} share${shares > 1 ? 's' : ''} of ${stockDef.name}. Not enough funds.`, isKey: false }],
+    }
+  }
+  let updatedPortfolio
+  if (existing) {
+    const totalShares = existing.shares + shares
+    const newAvg = ((existing.avgBuyPrice * existing.shares) + (currentPrice * shares)) / totalShares
+    updatedPortfolio = portfolio.map(p =>
+      p.symbol === symbol
+        ? { ...p, shares: totalShares, avgBuyPrice: Math.round(newAvg * 100) / 100 }
+        : p
+    )
+  } else {
+    updatedPortfolio = [
+      ...portfolio,
+      { symbol, name: stockDef.name, shares, avgBuyPrice: currentPrice, currentPrice, sector: stockDef.sector },
+    ]
+  }
+  return {
+    ...state,
+    money: (state.money ?? 0) - cost,
+    stockPortfolio: updatedPortfolio,
+    actionsThisYear: (state.actionsThisYear ?? 0) + 1,
+    log: [...state.log, { age: state.age, text: `You buy ${shares} share${shares > 1 ? 's' : ''} of ${stockDef.name} at $${currentPrice.toLocaleString()} each. Total cost: $${cost.toLocaleString()}.`, isKey: false }],
+  }
+}
+
+export function sellStock(state, symbol, shares) {
+  const portfolio = state.stockPortfolio ?? []
+  const existing = portfolio.find(p => p.symbol === symbol)
+  if (!existing) {
+    return { ...state, log: [...state.log, { age: state.age, text: `You don't own any shares of ${symbol}.`, isKey: false }] }
+  }
+  if (!shares || shares <= 0 || shares > existing.shares) {
+    return {
+      ...state,
+      log: [...state.log, { age: state.age, text: `You only own ${existing.shares} share${existing.shares !== 1 ? 's' : ''} of ${existing.name}.`, isKey: false }],
+    }
+  }
+  const salePrice = existing.currentPrice
+  const grossProceeds = Math.round(shares * salePrice)
+  const costBasis = Math.round(shares * existing.avgBuyPrice)
+  const rawGain = grossProceeds - costBasis
+  let taxPaid = 0
+  let netProceeds = grossProceeds
+  if (rawGain > 0) {
+    taxPaid = Math.round(rawGain * 0.15)
+    netProceeds = grossProceeds - taxPaid
+  }
+  const remainingShares = existing.shares - shares
+  const updatedPortfolio = remainingShares > 0
+    ? portfolio.map(p => p.symbol === symbol ? { ...p, shares: remainingShares } : p)
+    : portfolio.filter(p => p.symbol !== symbol)
+  let logText
+  if (rawGain > 0) {
+    logText = `You sell ${shares} share${shares > 1 ? 's' : ''} of ${existing.name} for $${grossProceeds.toLocaleString()}. Gain: $${rawGain.toLocaleString()} — capital gains tax of $${taxPaid.toLocaleString()} applied. Net: $${netProceeds.toLocaleString()}.`
+  } else if (rawGain < 0) {
+    logText = `You sell ${shares} share${shares > 1 ? 's' : ''} of ${existing.name} for $${grossProceeds.toLocaleString()}. Loss: $${Math.abs(rawGain).toLocaleString()}.`
+  } else {
+    logText = `You sell ${shares} share${shares > 1 ? 's' : ''} of ${existing.name} at break-even for $${grossProceeds.toLocaleString()}.`
+  }
+  return {
+    ...state,
+    money: (state.money ?? 0) + netProceeds,
+    stockPortfolio: updatedPortfolio,
+    actionsThisYear: (state.actionsThisYear ?? 0) + 1,
+    log: [...state.log, { age: state.age, text: logText, isKey: false }],
+  }
+}
+
+export function tickStocks(state) {
+  const portfolio = state.stockPortfolio ?? []
+  if (portfolio.length === 0) return state
+
+  const DIVIDEND_SECTORS = new Set(['finance', 'realty', 'health'])
+
+  const oldTotalValue = portfolio.reduce((sum, p) => sum + p.shares * p.currentPrice, 0)
+
+  const marketCrash = Math.random() < 0.05
+  const marketBoom = !marketCrash && Math.random() < 0.03
+
+  let dividendTotal = 0
+  const updatedPortfolio = portfolio.map(p => {
+    const stockDef = STOCKS.find(s => s.symbol === p.symbol)
+    const volatility = stockDef ? stockDef.volatility : 0.15
+    const basePrice = stockDef ? stockDef.basePrice : p.currentPrice
+
+    let newPrice = p.currentPrice * (1 + (Math.random() - 0.5) * 2 * volatility)
+
+    if (marketCrash) {
+      newPrice *= 1 - (0.30 + Math.random() * 0.20)
+    } else if (marketBoom) {
+      newPrice *= 1 + (0.20 + Math.random() * 0.20)
+    }
+
+    newPrice = clamp(newPrice, basePrice * 0.10, basePrice * 20)
+    newPrice = Math.round(newPrice * 100) / 100
+
+    if (DIVIDEND_SECTORS.has(p.sector)) {
+      const dividend = Math.round(p.shares * newPrice * 0.02)
+      dividendTotal += dividend
+    }
+
+    return { ...p, currentPrice: newPrice }
+  })
+
+  const newTotalValue = updatedPortfolio.reduce((sum, p) => sum + p.shares * p.currentPrice, 0)
+
+  const newLogs = [...state.log]
+
+  if (marketCrash) {
+    newLogs.push({ age: state.age, text: 'A market crash hammers your portfolio. Stock prices drop sharply across the board.', isKey: true })
+  } else if (marketBoom) {
+    newLogs.push({ age: state.age, text: 'A market-wide surge lifts your portfolio. Everything is up.', isKey: false })
+  } else if (oldTotalValue > 0) {
+    const pctChange = (newTotalValue - oldTotalValue) / oldTotalValue
+    if (Math.abs(pctChange) >= 0.20) {
+      const direction = pctChange > 0 ? 'up' : 'down'
+      const pctDisplay = Math.round(Math.abs(pctChange) * 100)
+      newLogs.push({ age: state.age, text: `Your stock portfolio is ${direction} ${pctDisplay}% this year. Total value: $${Math.round(newTotalValue).toLocaleString()}.`, isKey: false })
+    }
+  }
+
+  if (dividendTotal > 0) {
+    newLogs.push({ age: state.age, text: `Dividend payments deposited: $${dividendTotal.toLocaleString()}.`, isKey: false })
+  }
+
+  return {
+    ...state,
+    money: (state.money ?? 0) + dividendTotal,
+    stockPortfolio: updatedPortfolio,
+    log: newLogs,
+  }
+}
+
 // ─── Epitaph generator ───────────────────────────────────────────────────────
 
 export function generateEpitaph(state) {
