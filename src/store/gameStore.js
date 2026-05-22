@@ -135,6 +135,7 @@ const INITIAL_STATE = {
   currentCountry: null,
   residencyStatus: 'citizen',
   yearsAbroad: 0,
+  pendingTrial: null,
 }
 
 export const useGameStore = create((set, get) => ({
@@ -202,6 +203,7 @@ export const useGameStore = create((set, get) => ({
       criminalRecord: [],
       inPrison: false,
       prisonSentence: 0,
+      pendingTrial: null,
       worldEventsFired: new Set(),
       actionsThisYear: 0,
       dead: false,
@@ -686,6 +688,62 @@ export const useGameStore = create((set, get) => ({
   doPrisonConjugalVisit: () => { const s = get(); if (!s.dead) set(prisonConjugalVisit(s)) },
   doPrisonBribeGuard: () => { const s = get(); if (!s.dead) set(prisonBribeGuard(s)) },
   doPrisonStartRiot: () => { const s = get(); if (!s.dead) set(prisonStartRiot(s)) },
+
+  // ── Trial resolution ────────────────────────────────────────────────────────
+
+  resolveTrial: (lawyerTier) => {
+    const state = get()
+    if (!state.pendingTrial) return
+    const { sentence, crimeName, lawyerCosts, crimeCategory } = state.pendingTrial
+    // Legal quality by regime: democracy/constitutional = 1.0, authoritarian = 0.5, theocracy = 0.4, dictatorship = 0.35
+    const regime = state.currentCountry?.regime ?? state.character?.country?.regime ?? 'democracy'
+    const legalQuality = { democracy: 1.0, federal_republic: 0.95, parliamentary_republic: 0.95, constitutional_monarchy: 0.9, single_party_communist: 0.45, single_party_authoritarian: 0.4, military_dictatorship: 0.35, theocracy: 0.38, absolute_monarchy: 0.5 }[regime] ?? 0.7
+    const cost = lawyerCosts?.[lawyerTier] ?? 0
+    if ((state.money ?? 0) < cost) {
+      set({ log: [...state.log, { age: state.age, text: `You cannot afford this lawyer.`, isKey: false }] })
+      return
+    }
+    // Dismissal and reduction chances by tier × legal quality
+    const tierChances = {
+      none:   { dismiss: 0.03 * legalQuality, reduceTo: 0.6, reduceChance: 0.18 * legalQuality },
+      mid:    { dismiss: 0.12 * legalQuality, reduceTo: 0.4, reduceChance: 0.52 * legalQuality },
+      top:    { dismiss: 0.30 * legalQuality, reduceTo: 0.15, reduceChance: 0.80 * legalQuality },
+    }
+    const { dismiss, reduceTo, reduceChance } = tierChances[lawyerTier] ?? tierChances.none
+    const roll = Math.random()
+    let finalSentence = sentence
+    let outcomeText
+    if (roll < dismiss) {
+      finalSentence = 0
+      outcomeText = lawyerTier === 'none'
+        ? 'The judge finds a procedural error and dismisses the charges. You walk out.'
+        : 'Your lawyer demolishes the prosecution\'s case. The charges are dismissed.'
+    } else if (roll < dismiss + reduceChance) {
+      finalSentence = Math.max(1, Math.round(sentence * reduceTo))
+      outcomeText = lawyerTier === 'none'
+        ? `The judge is lenient. Your sentence is reduced to ${finalSentence} year${finalSentence !== 1 ? 's' : ''}.`
+        : `Your lawyer negotiates a plea. Sentence reduced to ${finalSentence} year${finalSentence !== 1 ? 's' : ''}.`
+    } else {
+      outcomeText = lawyerTier === 'none'
+        ? `You are sentenced to ${sentence} year${sentence !== 1 ? 's' : ''} in prison.`
+        : `Despite your lawyer\'s efforts, you are sentenced to the full ${sentence} year${sentence !== 1 ? 's' : ''}.`
+    }
+    let next = {
+      ...state,
+      money: (state.money ?? 0) - cost,
+      pendingTrial: null,
+      log: [...state.log, { age: state.age, text: outcomeText, isKey: true }],
+    }
+    if (finalSentence > 0) {
+      next.inPrison = true
+      next.prisonSentence = finalSentence
+      next.mem = { ...next.mem, originalSentence: finalSentence, prisonYearStart: state.age }
+      if (state.career && ['petty','property','violent','drug','organized','financial','organised'].includes(crimeCategory)) {
+        next.career = null
+      }
+    }
+    set(next)
+  },
 
   // ── Fugitive actions ────────────────────────────────────────────────────────
 

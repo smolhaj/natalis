@@ -67,6 +67,8 @@ export default function LifeScreen() {
   const children     = useGameStore(s => s.children)
   const inPrison     = useGameStore(s => s.inPrison)
   const prisonSentence = useGameStore(s => s.prisonSentence)
+  const pendingTrial = useGameStore(s => s.pendingTrial)
+  const resolveTrial = useGameStore(s => s.resolveTrial)
   const wanted       = useGameStore(s => s.wanted)
   const assumedIdentity = useGameStore(s => s.assumedIdentity)
   const actionsThisYear = useGameStore(s => s.actionsThisYear)
@@ -120,6 +122,7 @@ export default function LifeScreen() {
   }
 
   const karmaLabel = karma >= 85 ? 'Saint' : karma >= 70 ? 'Virtuous' : karma >= 50 ? 'Neutral' : karma >= 30 ? 'Questionable' : 'Sinister'
+  const genderMark = (g) => g === 'male' ? <span className="text-blue-400 text-xs ml-1">♂</span> : g === 'female' ? <span className="text-pink-400 text-xs ml-1">♀</span> : null
 
   const propertyEquity = (assets?.properties ?? []).reduce((sum, p) => sum + (p.currentValue ?? 0) - (p.mortgage ?? 0), 0)
   const vehicleValue = (assets?.vehicles ?? []).reduce((sum, v) => sum + (v.currentValue ?? 0), 0)
@@ -222,6 +225,43 @@ export default function LifeScreen() {
               <div>
                 <p className="font-bold text-orange-600 text-sm">Active Addiction</p>
                 <p className="text-orange-500 text-xs">Consider visiting Rehab in Activities.</p>
+              </div>
+            </div>
+          )}
+
+          {/* Trial modal — blocks Age Up until resolved */}
+          {pendingTrial && (
+            <div className="bg-white rounded-2xl shadow-card-lg overflow-hidden border border-red-200">
+              <div className="bg-red-600 px-5 py-3 flex items-center gap-2">
+                <span className="text-xl">⚖️</span>
+                <p className="text-white text-xs font-semibold uppercase tracking-widest">On Trial</p>
+              </div>
+              <div className="p-5 space-y-4">
+                <p className="text-natalis-text text-base font-medium leading-relaxed">
+                  You are charged with <strong>{pendingTrial.crimeName.toLowerCase()}</strong> and facing up to {pendingTrial.sentence} year{pendingTrial.sentence !== 1 ? 's' : ''} in prison. Choose your defense.
+                </p>
+                <div className="space-y-2 pt-1">
+                  <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider">Choose your defense</p>
+                  {[
+                    { tier: 'none', label: 'Represent yourself', sub: 'Free · Low chance of leniency', cost: 0 },
+                    { tier: 'mid',  label: 'Hire a local lawyer', sub: `$${(pendingTrial.lawyerCosts?.mid ?? 0).toLocaleString()} · Moderate chance of reduction`, cost: pendingTrial.lawyerCosts?.mid ?? 0 },
+                    { tier: 'top',  label: 'Hire a top firm', sub: `$${(pendingTrial.lawyerCosts?.top ?? 0).toLocaleString()} · Best chance of dismissal`, cost: pendingTrial.lawyerCosts?.top ?? 0 },
+                  ].map((opt, i) => {
+                    const canAfford = (money ?? 0) >= opt.cost
+                    return (
+                      <button
+                        key={opt.tier}
+                        disabled={!canAfford}
+                        onClick={() => resolveTrial(opt.tier)}
+                        className="w-full text-left px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-150 active:scale-95 disabled:opacity-40"
+                        style={{ background: !canAfford ? '#e5e5ea' : i === 0 ? 'linear-gradient(135deg,#636366,#48484a)' : i === 1 ? 'linear-gradient(135deg,#007aff,#0055cc)' : 'linear-gradient(135deg,#ff9500,#e07800)', color: !canAfford ? '#8e8e93' : 'white' }}
+                      >
+                        <div>{opt.label}</div>
+                        <div className="text-xs font-normal opacity-80 mt-0.5">{opt.sub}</div>
+                      </button>
+                    )
+                  })}
+                </div>
               </div>
             </div>
           )}
@@ -473,7 +513,7 @@ export default function LifeScreen() {
                   <p className="font-bold text-natalis-text text-sm mb-3">❤️ Partner</p>
                   <div className="flex justify-between items-center">
                     <div>
-                      <p className="font-semibold text-natalis-text">{partner.name}</p>
+                      <p className="font-semibold text-natalis-text">{partner.name}{genderMark(partner.gender)}</p>
                       <p className="text-natalis-muted text-xs">{partner.married ? '💍 Married' : partner.engaged ? '💌 Engaged' : '💑 Dating'}{partner.age ? ` · Age ${partner.age}` : ''}</p>
                     </div>
                     <RelBar value={partner.relationshipQuality} color={relColor(partner.relationshipQuality)} />
@@ -491,7 +531,7 @@ export default function LifeScreen() {
                       return (
                         <div key={i} className="flex justify-between items-center">
                           <div>
-                            <p className="text-natalis-dim text-sm">{child.name.split(' ')[0]}</p>
+                            <p className="text-natalis-dim text-sm">{child.name.split(' ')[0]}{genderMark(child.gender)}</p>
                             {childAge !== null && <p className="text-natalis-muted text-xs">Age {childAge}</p>}
                           </div>
                           <RelBar value={child.relationshipQuality} color={relColor(child.relationshipQuality)} />
@@ -513,7 +553,7 @@ export default function LifeScreen() {
                       return (
                         <div key={key} className="flex justify-between items-center">
                           <div>
-                            <p className="text-natalis-dim text-sm">{p.name.split(' ')[0]}</p>
+                            <p className="text-natalis-dim text-sm">{p.name.split(' ')[0]}{genderMark(key === 'mother' ? 'female' : 'male')}</p>
                             {p.currentAge && <p className="text-natalis-muted text-xs">{p.alive ? `Age ${p.currentAge}` : `Deceased · Age ${p.currentAge}`}</p>}
                             {!p.currentAge && !p.alive && <p className="text-natalis-muted text-xs">Deceased</p>}
                           </div>
@@ -538,7 +578,7 @@ export default function LifeScreen() {
                       return (
                         <div key={i} className="flex justify-between items-center">
                           <div>
-                            <p className="text-natalis-dim text-sm">{sib.name.split(' ')[0]}</p>
+                            <p className="text-natalis-dim text-sm">{sib.name.split(' ')[0]}{genderMark(sib.gender)}</p>
                             {sibAge !== null && <p className="text-natalis-muted text-xs">{sib.alive ? `Age ${Math.max(0, sibAge)}` : `Deceased · Age ${Math.max(0, sibAge)}`}</p>}
                             {sibAge === null && !sib.alive && <p className="text-natalis-muted text-xs">Deceased</p>}
                           </div>
@@ -717,8 +757,16 @@ export default function LifeScreen() {
               ))}
             </div>
 
-            {/* Activities button */}
-            {!inPrison && (
+            {/* Activities / Prison Life button */}
+            {inPrison ? (
+              <button
+                onClick={() => { setActiveTop('prison'); setShowActivities(v => !v) }}
+                className="flex-1 py-3 rounded-xl font-bold text-sm transition-all active:scale-95"
+                style={{ background: showActivities ? '#636366' : 'linear-gradient(135deg,#ff3b30,#c0392b)', color: 'white' }}
+              >
+                {showActivities ? '✕ Close' : '🔒 Prison Life'}
+              </button>
+            ) : (
               <button
                 onClick={() => setShowActivities(v => !v)}
                 disabled={actionsLeft <= 0}
@@ -732,13 +780,14 @@ export default function LifeScreen() {
               </button>
             )}
 
-            {/* Age Up — the big button */}
+            {/* Age Up — disabled during pending trial */}
             <button
               onClick={ageUp}
-              className="flex-1 py-3 rounded-xl font-black text-lg text-white transition-all active:scale-95 shadow-card"
-              style={{ background: 'linear-gradient(135deg, #34c759, #28a046)' }}
+              disabled={!!pendingTrial}
+              className="flex-1 py-3 rounded-xl font-black text-lg text-white transition-all active:scale-95 shadow-card disabled:opacity-50"
+              style={{ background: pendingTrial ? '#e5e5ea' : 'linear-gradient(135deg, #34c759, #28a046)', color: pendingTrial ? '#8e8e93' : 'white' }}
             >
-              Age Up +
+              {pendingTrial ? 'On Trial...' : 'Age Up +'}
             </button>
           </div>
         </div>

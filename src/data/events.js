@@ -11,6 +11,10 @@ import { MENTAL_HEALTH_EVENTS } from './events_mental_health.js'
 import { GRIEF_EVENTS } from './events_grief.js'
 import { GRIEF_MENTAL_EVENTS } from './events_grief_mental.js'
 import { RELIGION_ARC_EVENTS } from './events_religion_arc.js'
+import { LATE_LIFE_EVENTS } from './events_late_life.js'
+import { CHILDREN_ARC_EVENTS } from './events_children_arc.js'
+import { FAME_KARMA_EVENTS } from './events_fame_karma.js'
+import { TEXTURE_EVENTS } from './events_texture.js'
 
 const BASE_EVENTS = [
   // ── EARLY CHILDHOOD ─────────────────────────────────────────────────────────
@@ -4990,12 +4994,20 @@ const BASE_EVENTS = [
     id: 'school_first_day',
     phase: 'early_childhood',
     weight: 4,
-    when: (G) => G.age >= 5 && G.age <= 7 && !G.mem.school_first_day,
+    when: (G) => {
+      if (G.age < 5 || G.age > 7 || G.mem.school_first_day) return false
+      // Gate on literacy: if the country's gender-appropriate literacy is very low, school may not exist
+      const litRate = G.character.gender === 'female' ? (G.character.country.literacyFemale ?? 1) : (G.character.country.literacyMale ?? 1)
+      if (litRate < 0.25) return false  // extremely low literacy countries in early eras: school likely absent
+      return true
+    },
     text: G => {
       const arch = G.character.country.archetype;
       if (['conflict_zone', 'developing_unstable'].includes(arch)) return 'The makeshift classroom smells of chalk and old wood. You sit on a bench with six other children and wait for a teacher who arrives forty minutes late.';
-      if (['developing_urban', 'subsaharan'].includes(arch)) return 'The schoolyard is dusty and loud. Children shout in a mix of languages. Your new uniform is already too hot in the morning sun.';
-      return 'The gleaming school bus pulls up and the door opens. Thirty children in identical backpacks climb aboard. This is the first day of the rest of your education.';
+      if (['subsaharan'].includes(arch)) return 'The schoolyard is dusty and loud. Children shout in a mix of languages. Your new uniform — pressed the night before — is already too hot in the morning sun.';
+      if (['developing_urban', 'post_soviet'].includes(arch)) return 'The school is a concrete building with no shade. The playground is compacted earth. Inside it is orderly and serious. Your teacher does not smile, but she is thorough.';
+      if (['wealthy_east'].includes(arch)) return 'The classroom is quiet before the teacher arrives. The children sit in rows with their school bags on hooks behind them. Everything is in the right place. You understand that this is what school is.';
+      return 'The school bus pulls up. Thirty children in backpacks climb aboard. You are one of them now.';
     },
     isKey: true,
     choices: [
@@ -5129,7 +5141,15 @@ const BASE_EVENTS = [
     id: 'daycare_drama',
     phase: 'early_childhood',
     weight: 3,
-    when: (G) => G.age >= 2 && G.age <= 5 && !G.mem.daycare_drama,
+    when: (G) => {
+      if (G.age < 2 || G.age > 5 || G.mem.daycare_drama) return false
+      // Daycare is a modern, urban, higher-income institution
+      const wealthOk = ['upper','upper_middle','middle'].includes(G.character.wealthTier)
+      const archOk = ['wealthy_west','wealthy_east','wealthy_gulf'].includes(G.character.country.archetype)
+      const urbanOk = (G.ruralUrban === 'urban') && (G.character.country.urbanRate ?? 0) > 0.5
+      const yearOk = G.currentYear >= 1960
+      return yearOk && (archOk || (urbanOk && wealthOk))
+    },
     text: 'Another child at daycare has taken your favourite toy and refuses to give it back. The injustice is enormous. This is the worst thing that has ever happened.',
     choices: [
       {
@@ -5154,7 +5174,9 @@ const BASE_EVENTS = [
     id: 'childhood_talent_show',
     phase: 'childhood',
     weight: 3,
-    when: (G) => G.age >= 8 && G.age <= 14 && !G.mem.talent_show,
+    when: (G) => G.age >= 8 && G.age <= 14 && !G.mem.talent_show &&
+      !['conflict_zone', 'subsaharan'].includes(G.character.country.archetype) &&
+      G.currentYear >= 1955,
     text: 'The school is holding a talent show. Your name is on the list whether you signed up or not — a friend volunteered you. The auditorium will be full.',
     choices: [
       {
@@ -8177,4 +8199,4 @@ const BASE_EVENTS = [
   },
 ]
 
-export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS, ...TECHNOLOGY_EVENTS, ...IMMIGRATION_EVENTS, ...CAREER_REGIME_EVENTS, ...CONFLICT_CHILDHOOD_EVENTS, ...LGBTQ_EVENTS, ...MENTAL_HEALTH_EVENTS, ...GRIEF_EVENTS, ...GRIEF_MENTAL_EVENTS, ...RELIGION_ARC_EVENTS]
+export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS, ...TECHNOLOGY_EVENTS, ...IMMIGRATION_EVENTS, ...CAREER_REGIME_EVENTS, ...CONFLICT_CHILDHOOD_EVENTS, ...LGBTQ_EVENTS, ...MENTAL_HEALTH_EVENTS, ...GRIEF_EVENTS, ...GRIEF_MENTAL_EVENTS, ...RELIGION_ARC_EVENTS, ...LATE_LIFE_EVENTS, ...CHILDREN_ARC_EVENTS, ...FAME_KARMA_EVENTS, ...TEXTURE_EVENTS]

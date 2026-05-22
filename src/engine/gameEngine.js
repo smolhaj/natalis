@@ -313,6 +313,15 @@ function buildEffectProxy(state) {
   proxy.setEnrolled = (enrollment) => { proxy._newEnrolled = enrollment }
   proxy.setMem = (key, value) => { proxy.mem[key] = value }
   proxy.wipeMoney = (fraction = 1.0) => { proxy.mo -= Math.round((state.money ?? 0) * fraction) }
+  proxy.updateChildRel = (idx, delta) => {
+    if (!proxy._childRelDeltas) proxy._childRelDeltas = {}
+    proxy._childRelDeltas[idx] = (proxy._childRelDeltas[idx] ?? 0) + delta
+  }
+  proxy.updateFriendRel = (idx, delta) => {
+    if (!proxy._friendRelDeltas) proxy._friendRelDeltas = {}
+    proxy._friendRelDeltas[idx] = (proxy._friendRelDeltas[idx] ?? 0) + delta
+  }
+  proxy.killPartner = () => { proxy._killPartner = true }
   proxy.releaseFromPrison = () => { proxy._releaseFromPrison = true }
   proxy.killParent = (which) => { proxy._killParent = which }
   proxy.setResidency = (status) => { proxy._residencyStatus = status }
@@ -351,6 +360,23 @@ function resolveProxyExtras(state, proxy) {
   if (proxy._residencyStatus) next = { ...next, residencyStatus: proxy._residencyStatus }
   if (proxy._partnerRelDelta && next.partner) {
     next = { ...next, partner: { ...next.partner, relationshipQuality: clamp((next.partner.relationshipQuality ?? 60) + proxy._partnerRelDelta, 0, 100) } }
+  }
+  if (proxy._killPartner && next.partner) {
+    next = { ...next, partner: { ...next.partner, alive: false } }
+  }
+  if (proxy._childRelDeltas && next.children) {
+    next = { ...next, children: next.children.map((c, i) =>
+      proxy._childRelDeltas[i] !== undefined
+        ? { ...c, relationshipQuality: clamp((c.relationshipQuality ?? 50) + proxy._childRelDeltas[i], 0, 100) }
+        : c
+    )}
+  }
+  if (proxy._friendRelDeltas && next.friends) {
+    next = { ...next, friends: next.friends.map((f, i) =>
+      proxy._friendRelDeltas[i] !== undefined
+        ? { ...f, relationshipQuality: clamp((f.relationshipQuality ?? 50) + proxy._friendRelDeltas[i], 0, 100) }
+        : f
+    )}
   }
   if (proxy._mentalHealthUpdates) next = { ...next, mentalHealth: { ...(next.mentalHealth ?? {}), ...proxy._mentalHealthUpdates } }
   if (proxy._hobbyDeltas) {
@@ -1049,17 +1075,19 @@ export function attemptCrime(state, crimeId) {
     if (crime.criminalRecordEntry) updated.criminalRecord = [...updated.criminalRecord, crime.criminalRecordEntry]
     const flagToAdd = useNewFormat ? (crime.flagsAdded?.[0] ?? null) : crime.addFlag
     if (flagToAdd) updated.flags = [...new Set([...updated.flags, flagToAdd])]
-    if (updated.career && ['petty', 'property', 'violent', 'drug', 'organized', 'financial', 'organised'].includes(crime.category)) {
-      updated.log = [...updated.log, { age: state.age, text: `You are arrested for ${crime.name.toLowerCase()}. You lose your job.`, isKey: true }]
-      updated.career = null
-    } else {
-      updated.log = [...updated.log, { age: state.age, text: `You are arrested for ${crime.name.toLowerCase()}.`, isKey: true }]
-    }
+    updated.log = [...updated.log, { age: state.age, text: `You are arrested for ${crime.name.toLowerCase()}.`, isKey: true }]
     if (sentence > 0) {
-      updated.inPrison = true
-      updated.prisonSentence = sentence
-      updated.mem = { ...updated.mem, originalSentence: sentence, prisonYearStart: state.age }
-      updated.log = [...updated.log, { age: state.age, text: `You are sentenced to ${sentence} year${sentence > 1 ? 's' : ''} in prison.`, isKey: true }]
+      // Scale lawyer fees by country GDP
+      const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.18, low_medium: 0.08, low: 0.04, very_low: 0.02 }
+      const mult = gdpMult[updated.character?.country?.gdp] ?? 1.0
+      const midFee  = Math.round(clamp(2500  * mult, 100, 25000) / 100) * 100
+      const topFee  = Math.round(clamp(15000 * mult, 500, 150000) / 500) * 500
+      updated.pendingTrial = {
+        crimeName: crime.name,
+        crimeCategory: crime.category,
+        sentence,
+        lawyerCosts: { none: 0, mid: midFee, top: topFee },
+      }
     }
   } else {
     const proxy = buildEffectProxy(updated)
@@ -1187,6 +1215,25 @@ function tickSiblings(state) {
 }
 
 // ─── Fame ticking ─────────────────────────────────────────────────────────────
+
+function tickPartner(state) {
+  if (!state.partner || !state.partner.alive) return state
+  // Partner ages each year; approximate age from stored value
+  const partnerAge = (state.partner.age ?? 0) + 1
+  let partner = { ...state.partner, age: partnerAge }
+  // Natural death probability increases with age
+  let deathProb = 0
+  if (partnerAge >= 75) deathProb = 0.04 + (partnerAge - 75) * 0.012
+  else if (partnerAge >= 65) deathProb = 0.015 + (partnerAge - 65) * 0.0025
+  if (deathProb > 0 && chance(deathProb)) {
+    const log = [...state.log, { age: state.age, text: `${partner.name.split(' ')[0]} dies. You have been together for years. The house is immediately different.`, isKey: true }]
+    return { ...state, partner: { ...partner, alive: false }, flags: [...new Set([...state.flags, 'widowed', 'lost_partner'])], log }
+  }
+  // Relationship quality drifts slightly based on engagement
+  const drift = chance(0.3) ? (chance(0.5) ? 1 : -1) : 0
+  partner = { ...partner, relationshipQuality: clamp((partner.relationshipQuality ?? 60) + drift, 10, 100) }
+  return { ...state, partner }
+}
 
 function tickFame(state) {
   const fame = state.fame ?? 0
@@ -1496,6 +1543,9 @@ export function tick(state) {
 
   // Asset appreciation/depreciation/maintenance
   s = tickAssets(s)
+
+  // Partner aging and natural death
+  s = tickPartner(s)
 
   // Fame decay if not in entertainment/sports
   s = tickFame(s)
