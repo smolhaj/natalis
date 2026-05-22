@@ -485,7 +485,7 @@ function buildG(state) {
     religion: state.character?.religion ?? 'secular',
     ethnicity: state.character?.ethnicity ?? 'local',
     ruralUrban: state.character?.ruralUrban ?? 'urban',
-    literate: state.character?.literate ?? true,
+    literate: state.flags.includes('became_literate') ? true : (state.character?.literate ?? true),
     regime: getCountryRegime(state.character?.country, state.currentYear ?? new Date().getFullYear()),
     lgbtqCriminalized: isLgbtqCriminalized(state.character?.country, state.currentYear ?? new Date().getFullYear()),
     casteSystem: state.character?.country?.casteSystem ?? false,
@@ -846,9 +846,14 @@ export function fileForDivorce(state) {
   const name = state.partner.name
   const wasMarried = state.partner.married
   const cost = wasMarried ? randomBetween(2000, 25000) : 0
+  const updatedChildren = (state.children ?? []).map(child => ({
+    ...child,
+    relationshipQuality: clamp((child.relationshipQuality ?? 60) - 12, 0, 100),
+  }))
   return {
     ...state,
     partner: null,
+    children: updatedChildren,
     money: Math.max(0, (state.money ?? 0) - cost),
     flags: [...new Set([...state.flags, wasMarried ? 'divorced' : 'breakup'])],
     regret: clamp(state.regret + 8, 0, 100),
@@ -2040,7 +2045,14 @@ export function upgradeResidency(state) {
     return { ...state, log: [...state.log, { age: state.age, text: `The application fee is $${path.fee.toLocaleString()}. You can't afford it right now.`, isKey: false }] }
   }
 
-  const successChance = status === 'undocumented' || status === 'tourist_overstay' ? 0.35 : status === 'asylum_seeker' ? 0.55 : 0.75
+  const hasSeriousCrime = (state.criminalRecord ?? []).some(r => {
+    const c = typeof r === 'string' ? r : (r.crime ?? '')
+    return /murder|assault|robbery|trafficking|terrorism|rape|manslaughter/i.test(c)
+  })
+  const hasCriminalRecord = (state.criminalRecord ?? []).length > 0
+  let successChance = status === 'undocumented' || status === 'tourist_overstay' ? 0.35 : status === 'asylum_seeker' ? 0.55 : 0.75
+  if (hasSeriousCrime) successChance *= 0.15
+  else if (hasCriminalRecord) successChance *= 0.55
   if (Math.random() > successChance) {
     return {
       ...state,
