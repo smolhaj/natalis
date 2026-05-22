@@ -1049,17 +1049,19 @@ export function attemptCrime(state, crimeId) {
     if (crime.criminalRecordEntry) updated.criminalRecord = [...updated.criminalRecord, crime.criminalRecordEntry]
     const flagToAdd = useNewFormat ? (crime.flagsAdded?.[0] ?? null) : crime.addFlag
     if (flagToAdd) updated.flags = [...new Set([...updated.flags, flagToAdd])]
-    if (updated.career && ['petty', 'property', 'violent', 'drug', 'organized', 'financial', 'organised'].includes(crime.category)) {
-      updated.log = [...updated.log, { age: state.age, text: `You are arrested for ${crime.name.toLowerCase()}. You lose your job.`, isKey: true }]
-      updated.career = null
-    } else {
-      updated.log = [...updated.log, { age: state.age, text: `You are arrested for ${crime.name.toLowerCase()}.`, isKey: true }]
-    }
+    updated.log = [...updated.log, { age: state.age, text: `You are arrested for ${crime.name.toLowerCase()}.`, isKey: true }]
     if (sentence > 0) {
-      updated.inPrison = true
-      updated.prisonSentence = sentence
-      updated.mem = { ...updated.mem, originalSentence: sentence, prisonYearStart: state.age }
-      updated.log = [...updated.log, { age: state.age, text: `You are sentenced to ${sentence} year${sentence > 1 ? 's' : ''} in prison.`, isKey: true }]
+      // Scale lawyer fees by country GDP
+      const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.18, low_medium: 0.08, low: 0.04, very_low: 0.02 }
+      const mult = gdpMult[updated.character?.country?.gdp] ?? 1.0
+      const midFee  = Math.round(clamp(2500  * mult, 100, 25000) / 100) * 100
+      const topFee  = Math.round(clamp(15000 * mult, 500, 150000) / 500) * 500
+      updated.pendingTrial = {
+        crimeName: crime.name,
+        crimeCategory: crime.category,
+        sentence,
+        lawyerCosts: { none: 0, mid: midFee, top: topFee },
+      }
     }
   } else {
     const proxy = buildEffectProxy(updated)
