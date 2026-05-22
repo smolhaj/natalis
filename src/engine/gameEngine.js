@@ -295,6 +295,7 @@ function buildEffectProxy(state) {
     proxy._newEducation = { level, field: field ?? state.education.field }
   }
   proxy.setCareer = (careerId) => { proxy._newCareerId = careerId }
+  proxy.clearCareer = () => { proxy._clearCareer = true }
   proxy.setPartner = (partner) => { proxy._newPartner = partner }
   proxy.clearPartner = () => { proxy._clearPartner = true }
   proxy.addChild = (child) => { proxy._newChild = child }
@@ -344,6 +345,7 @@ function resolveProxyExtras(state, proxy) {
   let next = state
   if (proxy._newEducation)   next = { ...next, education: proxy._newEducation }
   if (proxy._newCareerId)    next = enterCareer(next, proxy._newCareerId)
+  if (proxy._clearCareer)    next = { ...next, career: null }
   if (proxy._newPartner !== undefined) next = { ...next, partner: proxy._newPartner }
   if (proxy._clearPartner)   next = { ...next, partner: null }
   if (proxy._newChild)       next = { ...next, children: [...next.children, proxy._newChild] }

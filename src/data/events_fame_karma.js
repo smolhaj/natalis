@@ -591,7 +591,7 @@ export const FAME_KARMA_EVENTS = [
         text: 'Confront them directly.',
         tag: null,
         outcome: 'They apologize, and mean it, and it is still not sufficient. You stay friends, but something has been handled and set down and will never be fully picked up again.',
-        effect: (p) => { p.m -= 14; p.r += 6; p.updatePartnerRel(-10); p.setMem('friendBetrayal', true) },
+        effect: (p) => { p.m -= 14; p.r += 6; p.updateFriendRel(0, -20); p.setMem('friendBetrayal', true) },
       },
       {
         text: 'Say nothing. Adjust what you share going forward.',
