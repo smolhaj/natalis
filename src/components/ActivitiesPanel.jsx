@@ -1707,6 +1707,7 @@ export default function ActivitiesPanel({ onClose }) {
               if (cat.key === 'plastic_surg' && state.age < 18) return null
               if (cat.key === 'licenses' && state.age < 16) return null
               if (cat.key === 'race_tracks' && state.age < 18) return null
+              if (cat.key === 'pets' && state.age < 8) return null
               if (cat.key === 'shopping' && state.age < 8) return null
               if (cat.key === 'social_media' && state.age < 13) return null
               if (cat.key === 'career' && state.age < 14) return null
