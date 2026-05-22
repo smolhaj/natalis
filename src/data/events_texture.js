@@ -740,7 +740,7 @@ export const TEXTURE_EVENTS = [
     when: (G) =>
       G.career &&
       G.age >= 40 && G.age <= 60 &&
-      G.stats.smarts >= 55 &&
+      (G.stats.smarts >= 55 || G.flags.includes('professionally_recognized')) &&
       !G.flags.includes('career_mentor_done'),
     text: 'There is a junior colleague who asks you questions that remind you of questions you used to ask. You start giving them time — not formally, nothing is scheduled, but a kind of availability that becomes its own thing. You notice you know more than you thought you did. You notice that what you learned was not just technique but judgment, and that judgment is hard to teach except by proximity. You are no longer the one being developed. You are the one doing it.',
     choices: [

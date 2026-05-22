@@ -457,7 +457,7 @@ const BASE_EVENTS = [
         text: 'Pursue them',
         tag: 'romantic',
         outcome: 'They say yes. It lasts a summer, but the feeling stays with you.',
-        effect: (p) => { p.m += 6; p.s += 4; },
+        effect: (p) => { p.m += 6; p.s += 4; p.addFlag('had_first_love'); },
         inject: null,
       },
       {
@@ -588,7 +588,7 @@ const BASE_EVENTS = [
     id: 'adol_scholarship',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => G.stats.smarts >= 60 && G.character.wealthTier <= 2,
+    when: (G) => (G.stats.smarts >= 60 || G.flags.includes('early_reader')) && G.character.wealthTier <= 2,
     text: 'A scholarship application lands in front of you. It would pay for university.',
     context: null,
     choices: [
@@ -789,7 +789,7 @@ const BASE_EVENTS = [
         text: 'Try out',
         tag: 'school_athlete',
         outcome: 'You make the team. The early mornings are brutal but you love it.',
-        effect: (p) => { p.h += 6; p.m += 5; p.s += 3; },
+        effect: (p) => { p.h += 6; p.m += 5; p.s += 3; p.addFlag('school_athlete'); },
         inject: null,
       },
       {
@@ -972,7 +972,7 @@ const BASE_EVENTS = [
         text: 'Commit fully',
         tag: 'devoted',
         outcome: 'A real relationship begins.',
-        effect: (p) => { p.m += 7; p.s += 5; p.addFlag('in_relationship'); },
+        effect: (p) => { p.m += 7; p.s += 5; p.addFlag('in_relationship'); p.makePartner(); },
         inject: {
           id: 'ya_relationship_test',
           phase: 'midlife',
@@ -8137,7 +8137,7 @@ const BASE_EVENTS = [
   },
   {
     id: 'rel_partner_mental_illness',
-    phase: 'adult',
+    phase: 'midlife',
     weight: 2,
     when: (G) => G.partner !== null && !G.flags.includes('partner_mental_health_event'),
     text: 'Your partner\'s depression or anxiety — which has always been there, in the background — becomes something you can no longer work around. They are not okay. The question of what you do with this is also the question of who you are.',
@@ -8150,7 +8150,7 @@ const BASE_EVENTS = [
   },
   {
     id: 'rel_parent_relationship_repair',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 2,
     when: (G) => G.age >= 28 && G.parents && !G.flags.includes('parent_relationship_examined') && !G.flags.includes('lost_parent_young'),
     text: 'You are old enough now to see your parents as people who failed where they could have done better — and also did better than anyone gave them credit for. The recalibration is quiet and significant.',
@@ -8159,6 +8159,52 @@ const BASE_EVENTS = [
       { text: 'Let the understanding change how you treat them', tag: null, outcome: 'The relationship shifts without the conversation. You are both more patient.', effect: (p) => { p.m += 6; p.addFlag('parent_relationship_examined') } },
     ],
     effect: null,
+  },
+
+  {
+    id: 'had_first_love_reunion',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.flags.includes('had_first_love') && G.age >= 30 && G.age <= 50 && !G.mem?.first_love_reunion,
+    text: 'You see them across a room at a wedding. Your first love. They look the same and entirely different. You were seventeen. You calculate the years. The number is larger than it should be.',
+    choices: [
+      { text: 'Go over and say hello', tag: null, outcome: 'The conversation is short and warm and slightly disorienting. You leave it where it is. That version of you was a different person. This one is better.', effect: (p) => { p.m += 5; p.r += 4; p.setMem('first_love_reunion', true) } },
+      { text: 'Leave it alone — some things are better as they were', tag: null, outcome: 'You catch their eye once. You both look away. You carry a small, clean grief home.', effect: (p) => { p.m -= 3; p.r += 8; p.setMem('first_love_reunion', true) } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'school_athlete_injury',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) => G.flags.includes('school_athlete') && G.age >= 18 && G.age <= 28 && !G.mem?.athlete_injury,
+    text: 'An injury during training — a knee, a tendon, the kind the doctor calls chronic — ends the competitive chapter. You sit in the car outside the clinic and understand that what defined most of your adolescence is over.',
+    choices: [
+      { text: 'Adapt — coaching, sports management, staying inside the world you know', tag: null, outcome: 'The identity shifts rather than disappears. You stay in it differently.', effect: (p) => { p.m -= 5; p.h -= 8; p.r += 5; p.addFlag('sports_identity_retained'); p.setMem('athlete_injury', true) } },
+      { text: 'Let it go — build the next version of yourself', tag: null, outcome: 'The gap fills slowly with other things. Some of them are good.', effect: (p) => { p.m -= 12; p.h -= 8; p.r += 8; p.setMem('athlete_injury', true) } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'first_job_teen_advantage',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.flags.includes('first_job_teen') && G.career && G.age >= 19 && G.age <= 25 && !G.mem?.teen_job_payoff,
+    text: 'The reference from your old part-time employer — the neighbour, the small business — turns out to matter. A hiring manager mentions it specifically. The year spent doing unglamorous tasks taught you things that people who went straight from school have to learn the hard way.',
+    choices: null,
+    effect: (p) => { p.s += 5; p.w += 4; p.addFlag('early_work_advantage'); p.setMem('teen_job_payoff', true) },
+  },
+
+  {
+    id: 'early_reader_local_award',
+    phase: 'adolescence',
+    weight: 2,
+    when: (G) => G.flags.includes('early_reader') && G.age >= 14 && G.age <= 17 && !G.mem?.reader_award,
+    text: 'The teacher asks the class to recommend a book they found meaningful. You have a list. You have always had a list. What comes out of that conversation is a small bursary from a local foundation that funds exactly the kind of student you are.',
+    choices: null,
+    effect: (p) => { p.mo += 1200; p.e += 4; p.m += 6; p.addFlag('scholarship_recipient'); p.setMem('reader_award', true) },
   },
 ]
 

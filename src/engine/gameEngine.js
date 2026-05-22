@@ -332,6 +332,26 @@ function buildEffectProxy(state) {
     proxy._hobbyDeltas[hobbyId] = (proxy._hobbyDeltas[hobbyId] ?? 0) + delta
   }
   proxy.partnerRel = (delta) => { proxy._partnerRelDelta = (proxy._partnerRelDelta ?? 0) + delta }
+  proxy.makePartner = (overrides = {}) => {
+    const myGender = state.character.gender
+    const isLGBTQ = proxy.flags.includes('lgbtq_identity')
+    const preferredGender = isLGBTQ ? myGender : (myGender === 'male' ? 'female' : 'male')
+    const gender = overrides.gender ?? preferredGender
+    const nameGender = gender === 'non-binary' ? pickFrom(['male', 'female']) : gender
+    const c = state.character.country
+    const name = `${pickFrom(nameGender === 'male' ? c.namePool.male : c.namePool.female)} ${pickFrom(c.surnames)}`
+    const age = clamp(randomBetween(Math.max(18, state.age - 5), state.age + 5), 16, 60)
+    proxy._newPartner = {
+      name, gender, birthGender: gender, age,
+      occupation: pickFrom(PARTNER_OCCUPATIONS),
+      looks: randomBetween(30, 90),
+      smarts: randomBetween(30, 90),
+      wealthStat: randomBetween(20, 80),
+      craziness: randomBetween(10, 70),
+      relationshipQuality: overrides.quality ?? randomBetween(55, 75),
+      married: false, engaged: false, years: 0,
+    }
+  }
   return proxy
 }
 
