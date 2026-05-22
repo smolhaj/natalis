@@ -443,6 +443,7 @@ function buildG(state) {
     childMarriageRisk: state.character?.country?.childMarriageRisk ?? 0,
     currentCountry: state.currentCountry ?? state.character?.country,
     residencyStatus: state.residencyStatus ?? 'citizen',
+    yearsAbroad: state.yearsAbroad ?? 0,
   }
 }
 
@@ -1345,11 +1346,14 @@ function tickEnrollment(state) {
 // ─── Main tick ────────────────────────────────────────────────────────────────
 
 export function tick(state) {
+  const isAbroad = state.flags.includes('emigrated') &&
+    state.currentCountry?.name !== state.character?.country?.name
   let s = {
     ...state,
     age: state.age + 1,
     currentYear: state.currentYear + 1,
     actionsThisYear: 0,
+    yearsAbroad: isAbroad ? (state.yearsAbroad ?? 0) + 1 : (state.yearsAbroad ?? 0),
   }
 
   // Prison year
@@ -1923,6 +1927,85 @@ export function emigrate(state, destCountryName) {
       smarts: clamp(state.stats.smarts + 5, 0, 100),
     },
     log: [...state.log, { age: state.age, text: logText, isKey: true }],
+  }
+}
+
+// ─── Residency upgrade ───────────────────────────────────────────────────────
+
+const RESIDENCY_LADDER = {
+  work_visa:          { next: 'permanent_resident', yearsRequired: 5,  fee: 3000  },
+  permanent_resident: { next: 'citizen',            yearsRequired: 10, fee: 1500  },
+  refugee_status:     { next: 'permanent_resident', yearsRequired: 3,  fee: 500   },
+  asylum_seeker:      { next: 'refugee_status',     yearsRequired: 1,  fee: 0     },
+  undocumented:       { next: 'work_visa',           yearsRequired: 0,  fee: 2000  },
+  tourist_overstay:   { next: 'work_visa',           yearsRequired: 0,  fee: 2000  },
+}
+
+export function upgradeResidency(state) {
+  const status = state.residencyStatus ?? 'citizen'
+  const path = RESIDENCY_LADDER[status]
+  if (!path) {
+    return { ...state, log: [...state.log, { age: state.age, text: 'You are already a citizen.', isKey: false }] }
+  }
+  const yearsAbroad = state.yearsAbroad ?? 0
+  if (yearsAbroad < path.yearsRequired) {
+    const rem = path.yearsRequired - yearsAbroad
+    return { ...state, log: [...state.log, { age: state.age, text: `You need ${rem} more year${rem !== 1 ? 's' : ''} of residency before you can apply.`, isKey: false }] }
+  }
+  if ((state.money ?? 0) < path.fee) {
+    return { ...state, log: [...state.log, { age: state.age, text: `The application fee is $${path.fee.toLocaleString()}. You can't afford it right now.`, isKey: false }] }
+  }
+
+  const successChance = status === 'undocumented' || status === 'tourist_overstay' ? 0.35 : status === 'asylum_seeker' ? 0.55 : 0.75
+  if (Math.random() > successChance) {
+    return {
+      ...state,
+      money: Math.max(0, (state.money ?? 0) - path.fee),
+      log: [...state.log, { age: state.age, text: `Your application for ${path.next.replace(/_/g, ' ')} was rejected. The fee is gone. You can try again later.`, isKey: true }],
+    }
+  }
+
+  const msgs = {
+    permanent_resident: `After years of paperwork and waiting, permanent residency is granted. You now have the right to stay.`,
+    citizen:            `The citizenship certificate arrives. You hold a passport with a different flag on the cover than the one you were born with.`,
+    refugee_status:     `Your refugee status is officially recognised. You realise you had been holding your breath for years.`,
+    work_visa:          `Your status is regularised. You are no longer invisible to the system.`,
+  }
+
+  return {
+    ...state,
+    residencyStatus: path.next,
+    money: Math.max(0, (state.money ?? 0) - path.fee),
+    flags: [...new Set([...state.flags, `achieved_${path.next}`])],
+    stats: { ...state.stats, happiness: clamp(state.stats.happiness + 10, 0, 100) },
+    log: [...state.log, { age: state.age, text: msgs[path.next] ?? `Status upgraded to ${path.next.replace(/_/g, ' ')}.`, isKey: true }],
+  }
+}
+
+export function seekAsylum(state) {
+  if (['citizen', 'permanent_resident'].includes(state.residencyStatus)) {
+    return { ...state, log: [...state.log, { age: state.age, text: 'You already have secure status here.', isKey: false }] }
+  }
+  if (state.residencyStatus === 'asylum_seeker' || state.residencyStatus === 'refugee_status') {
+    return { ...state, log: [...state.log, { age: state.age, text: 'Your asylum application is already in progress.', isKey: false }] }
+  }
+  const isConflict = state.flags.some(f => ['war_childhood', 'displaced', 'persecution', 'genocide_survivor', 'revolution_generation', 'learned_silence'].includes(f))
+  const accepted = Math.random() < (isConflict ? 0.65 : 0.35)
+  const dest = state.currentCountry ?? state.character?.country
+  return {
+    ...state,
+    residencyStatus: accepted ? 'refugee_status' : 'asylum_seeker',
+    flags: [...new Set([...state.flags, 'sought_asylum', 'emigrated'])],
+    currentCountry: dest,
+    yearsAbroad: state.yearsAbroad ?? 0,
+    stats: { ...state.stats, happiness: clamp(state.stats.happiness + (accepted ? 12 : -5), 0, 100) },
+    log: [...state.log, {
+      age: state.age,
+      text: accepted
+        ? `Your asylum claim is accepted. You have the right to remain in ${dest?.name}. The relief is physical.`
+        : `You file for asylum in ${dest?.name}. The decision is pending. You enter a waiting period with no defined end.`,
+      isKey: true,
+    }],
   }
 }
 

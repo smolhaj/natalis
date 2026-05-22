@@ -3,6 +3,7 @@ import { RELIGION_EVENTS } from './events_religion.js'
 import { HISTORICAL_EVENTS } from './events_historical.js'
 import { CULTURE_EVENTS } from './events_culture.js'
 import { TECHNOLOGY_EVENTS } from './events_technology.js'
+import { IMMIGRATION_EVENTS } from './events_immigration.js'
 
 const BASE_EVENTS = [
   // ── EARLY CHILDHOOD ─────────────────────────────────────────────────────────
@@ -7929,6 +7930,106 @@ const BASE_EVENTS = [
       { text: 'Report the dealer', tag: null, outcome: 'You tell a CO. The dealer is transferred. You wonder if you did the right thing.', effect: (p) => { p.karma += 5; p.m -= 5; p.addFlag('prison_snitch') } },
     ],
   },
+
+  // ── RELATIONSHIP DEPTH ───────────────────────────────────────────────────────
+  {
+    id: 'rel_friendship_ended',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => (G.friends ?? []).length > 0 && !G.flags.includes('lost_friend'),
+    text: 'A friendship ends. Not with an argument — with a slow cooling, an unreturned message, the gradual understanding that you have both moved on. You are not sure what you did, if anything.',
+    choices: [
+      { text: 'Try to reach out — save the friendship', tag: null, outcome: 'They respond warmly but distantly. You agree to stay in touch. You probably won\'t.', effect: (p) => { p.m -= 4; p.addFlag('lost_friend') } },
+      { text: 'Let it go — not everything is worth saving', tag: null, outcome: 'You feel the absence for a few weeks. Then it fills with other things.', effect: (p) => { p.m -= 3; p.r += 3; p.addFlag('lost_friend') } },
+    ],
+    effect: null,
+  },
+  {
+    id: 'rel_toxic_clarity',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => (G.friends ?? []).length > 0 && !G.flags.includes('toxic_friend_recognized'),
+    text: 'With some distance, you see it clearly: a friend has been draining you for years. You feel better after every period apart. Worse after every reunion. You have been mistaking longevity for value.',
+    choices: [
+      { text: 'End the friendship deliberately', tag: null, outcome: 'The guilt is real. So is the relief.', effect: (p) => { p.m += 8; p.r += 3; p.addFlag('toxic_friend_recognized') } },
+      { text: 'Reduce contact quietly', tag: null, outcome: 'You become unavailable, then less available, then gone. They don\'t ask why.', effect: (p) => { p.m += 5; p.addFlag('toxic_friend_recognized') } },
+    ],
+    effect: null,
+  },
+  {
+    id: 'rel_friend_success_envy',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => (G.friends ?? []).length > 0 && G.stats.wealth < 55,
+    text: 'A friend announces something large — a promotion, a house, a baby, a book deal. The congratulations you offer are genuine and also cost you something. You sit with that for a while.',
+    choices: [
+      { text: 'Be genuinely happy for them', tag: null, outcome: 'The envy fades. The friendship deepens. You are proud of yourself.', effect: (p) => { p.m += 5; p.karma += 5 } },
+      { text: 'Smile, then go home and feel the envy fully', tag: null, outcome: 'Honesty with yourself about this turns out to be useful.', effect: (p) => { p.m -= 4; p.r += 3; p.e += 3 } },
+    ],
+    effect: null,
+  },
+  {
+    id: 'rel_childhood_friend_rekindled',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.age >= 32 && !G.flags.includes('rekindled_old_friendship'),
+    text: 'A message arrives from someone you knew before you became whoever you are now. The name produces a flood of specific, almost physical memories. You meet for coffee. The strangeness of their face being older is also the strangeness of yours.',
+    choices: [
+      { text: 'Invest in rebuilding this', tag: null, outcome: 'Something returns that you hadn\'t known was lost.', effect: (p) => { p.m += 10; p.s += 3; p.addFlag('rekindled_old_friendship') } },
+      { text: 'Enjoy the coffee, leave it at that', tag: null, outcome: 'Some things belong to the version of you they remember. That\'s okay.', effect: (p) => { p.m += 5; p.addFlag('rekindled_old_friendship') } },
+    ],
+    effect: null,
+  },
+  {
+    id: 'rel_children_disagreement',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.partner !== null && !G.flags.includes('children_disagreement_resolved'),
+    text: 'You and your partner do not agree about children. One wants them. The other is not sure, or wants fewer, or wants to wait in a way that feels permanent. The conversation keeps arriving.',
+    choices: [
+      { text: 'Have the honest conversation — all of it', tag: null, outcome: 'You reach something that works, or you discover it doesn\'t. Either way, you know.', effect: (p) => { p.m -= 5; p.partnerRel(+8); p.addFlag('children_disagreement_resolved') } },
+      { text: 'Defer it — hope alignment comes with time', tag: null, outcome: 'Time does not produce alignment. It produces pressure.', effect: (p) => { p.r += 6; p.partnerRel(-5); p.addFlag('children_disagreement_resolved') } },
+    ],
+    effect: null,
+  },
+  {
+    id: 'rel_marriage_resentments',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.partner !== null && G.partner.married && G.age >= 35 && !G.flags.includes('marriage_examined'),
+    text: 'The marriage is not bad. It is also not what either of you said it would be. Small resentments have settled into the furniture of the relationship. Neither of you mentions them. Both of you know.',
+    choices: [
+      { text: 'Name it — try couples therapy', tag: null, outcome: 'Therapy is uncomfortable and useful. Naming things is half the work.', effect: (p) => { p.m -= 3; p.partnerRel(+12); p.mo -= 2000; p.addFlag('marriage_examined') } },
+      { text: 'Continue — this is what long marriages feel like', tag: null, outcome: 'The resentments stay. So does the history. So does the love.', effect: (p) => { p.m -= 5; p.r += 6; p.addFlag('marriage_examined') } },
+      { text: 'Begin quietly planning an exit', tag: null, outcome: 'The decision takes a year to finish making.', effect: (p) => { p.r += 8; p.addFlag('marriage_examined'); p.addFlag('considering_divorce') } },
+    ],
+    effect: null,
+  },
+  {
+    id: 'rel_partner_mental_illness',
+    phase: 'adult',
+    weight: 2,
+    when: (G) => G.partner !== null && !G.flags.includes('partner_mental_health_event'),
+    text: 'Your partner\'s depression or anxiety — which has always been there, in the background — becomes something you can no longer work around. They are not okay. The question of what you do with this is also the question of who you are.',
+    choices: [
+      { text: 'Stay and work through it with them', tag: null, outcome: 'Some years are very hard. The partnership deepens in a way that only that kind of difficulty produces.', effect: (p) => { p.m -= 8; p.h -= 4; p.partnerRel(+15); p.karma += 8; p.addFlag('partner_mental_health_event') } },
+      { text: 'Encourage treatment, but keep some distance for yourself', tag: null, outcome: 'You learn the difference between support and self-erasure.', effect: (p) => { p.m -= 4; p.partnerRel(+5); p.addFlag('partner_mental_health_event') } },
+      { text: 'Leave — you cannot be their carer and their partner', tag: null, outcome: 'The decision haunts you in different ways at different times.', effect: (p) => { p.r += 12; p.m -= 10; p.partnerRel(-20); p.addFlag('partner_mental_health_event') } },
+    ],
+    effect: null,
+  },
+  {
+    id: 'rel_parent_relationship_repair',
+    phase: 'adult',
+    weight: 2,
+    when: (G) => G.age >= 28 && G.parents && !G.flags.includes('parent_relationship_examined') && !G.flags.includes('lost_parent_young'),
+    text: 'You are old enough now to see your parents as people who failed where they could have done better — and also did better than anyone gave them credit for. The recalibration is quiet and significant.',
+    choices: [
+      { text: 'Call and say some of what you\'ve been carrying', tag: null, outcome: 'You say less than you planned. They hear more than you expected.', effect: (p) => { p.m += 8; p.r -= 8; p.addFlag('parent_relationship_examined') } },
+      { text: 'Let the understanding change how you treat them', tag: null, outcome: 'The relationship shifts without the conversation. You are both more patient.', effect: (p) => { p.m += 6; p.addFlag('parent_relationship_examined') } },
+    ],
+    effect: null,
+  },
 ]
 
-export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS, ...TECHNOLOGY_EVENTS]
+export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS, ...TECHNOLOGY_EVENTS, ...IMMIGRATION_EVENTS]

@@ -65,6 +65,8 @@ import {
   prisonConjugalVisit,
   prisonBribeGuard,
   prisonStartRiot,
+  upgradeResidency,
+  seekAsylum,
 } from '../engine/gameEngine'
 import { COUNTRIES } from '../data/countries'
 import { CRIMES } from '../data/crimes'
@@ -132,6 +134,7 @@ const INITIAL_STATE = {
   pendingPartner: null,
   currentCountry: null,
   residencyStatus: 'citizen',
+  yearsAbroad: 0,
 }
 
 export const useGameStore = create((set, get) => ({
@@ -235,6 +238,7 @@ export const useGameStore = create((set, get) => ({
       pendingPartner: null,
       currentCountry: character.country,
       residencyStatus: 'citizen',
+      yearsAbroad: 0,
     })
   },
 
@@ -756,6 +760,18 @@ export const useGameStore = create((set, get) => ({
       stats: { ...state.stats, happiness: Math.min(100, state.stats.happiness + 5) },
       log: [...state.log, { age: state.age, text: `You pay a smuggler $${fee.toLocaleString()} and cross the border into ${countryName}. A dangerous new chapter begins.`, isKey: true }],
     })
+  },
+
+  upgradeResidency: () => {
+    const state = get()
+    if (state.dead) return
+    set(upgradeResidency(state))
+  },
+
+  seekAsylum: () => {
+    const state = get()
+    if (state.dead) return
+    set(seekAsylum(state))
   },
 
   trackExPartner: (partner) => {
