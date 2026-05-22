@@ -3961,10 +3961,10 @@ const BASE_EVENTS = [
   // ── CHILDHOOD DEPTH ──────────────────────────────────────────────────────
 
   {
-    id: 'ch_first_best_friend',
+    id: 'ch_first_best_friend_deep',
     phase: 'childhood',
     weight: 4,
-    when: (G) => G.age >= 7 && G.age <= 10 && !G.mem.firstFriend,
+    when: (G) => G.age >= 7 && G.age <= 10 && !G.mem.firstFriend && G.stats.charisma <= 30,
     text: (G) => {
       if (['subsaharan', 'conflict_zone'].includes(G.character.country.archetype))
         return 'A child in your neighbourhood becomes your constant companion. You spend every daylight hour together.'
@@ -7626,6 +7626,268 @@ const BASE_EVENTS = [
     ],
   },
 
+  // ── LATE LIFE: CONTEXTUAL EXPANSION ──────────────────────────────────────────
+
+  {
+    id: 'late_pension_collapse_postsoviet',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 60 && !G.flags.includes('pension_collapse_experienced'),
+    text: 'The retirement fund was held by a state institution that no longer exists in the form it did. The currency was redenominated. The conversion rates applied to your savings were not the ones you were promised. You do the arithmetic on a piece of paper and then do it again, and the number is the same. Twenty-two years of contributions. The number is essentially nothing.',
+    choices: [
+      { text: 'Find part-time work to cover the gap', tag: null, outcome: 'The body is willing, barely. You work into your seventies. It is not the retirement you imagined.', effect: (p) => { p.m -= 10; p.w += 5; p.r += 8; p.addFlag('pension_collapse_experienced') } },
+      { text: 'Move in with family — there is no other option', tag: null, outcome: 'Your children take you in without complaint. The obligation is mutual and understood. You contribute in other ways.', effect: (p) => { p.m -= 5; p.r += 6; p.karma += 3; p.addFlag('pension_collapse_experienced') } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'late_healthcare_rationing',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => ['subsaharan', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype) && G.age >= 62 && !G.flags.includes('healthcare_rationing_experienced'),
+    text: 'The medication the doctor prescribed is not available at the clinic. It has not been available for four months. It can be purchased privately, at a price that would consume most of what you have. Your daughter researches alternatives. There are no clean alternatives. You make a decision that is not really a decision but a set of constraints.',
+    choices: [
+      { text: 'Purchase the medication privately — drain savings if needed', tag: null, outcome: 'The money goes. The body continues. You do not regret it.', effect: (p) => { p.h += 5; p.mo -= 2500; p.addFlag('healthcare_rationing_experienced') } },
+      { text: 'Manage without it — adjust, reduce, find workarounds', tag: null, outcome: 'The condition is controlled imperfectly. You learn to read your own body like a text that requires careful interpretation.', effect: (p) => { p.h -= 8; p.m -= 8; p.addFlag('healthcare_rationing_experienced') } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'late_multigenerational_household',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => ['subsaharan', 'developing_urban', 'developing_unstable', 'wealthy_east'].includes(G.character.country.archetype) && G.age >= 65 && G.children && G.children.length > 0 && !G.flags.includes('multigenerational_household'),
+    text: 'You move in with your adult child and their family. Three generations under one roof. There are frictions that are small and constant — schedules, noise, the children\'s habits, the television — and a warmth underneath them that is not available any other way. You are needed. At this age, that is not a small thing.',
+    choices: null,
+    effect: (p) => { p.m += 10; p.s += 5; p.r -= 5; p.addFlag('multigenerational_household') },
+  },
+
+  {
+    id: 'late_grandchild_hard_question',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.flags.includes('grandparent') && G.age >= 68 && !G.mem.grandchild_hard_question,
+    text: 'Your grandchild asks you something you have not been asked before, or not in this form: what is the worst thing you ever did. Not the worst thing that happened to you. The worst thing you did. They are twelve years old and completely serious. You sit with the question for longer than you expected.',
+    choices: [
+      { text: 'Tell them the truth — they\'re old enough', tag: null, outcome: 'You watch them absorb it. They do not love you less. You did not expect this to matter so much.', effect: (p) => { p.m += 8; p.r -= 12; p.karma += 5; p.setMem('grandchild_hard_question', true) } },
+      { text: 'Give them something true but not the full answer', tag: null, outcome: 'You answer honestly about something smaller. The real answer stays yours. Maybe that\'s right.', effect: (p) => { p.m += 4; p.r -= 5; p.setMem('grandchild_hard_question', true) } },
+      { text: 'Tell them you can\'t answer that yet', tag: null, outcome: 'They accept it. They will ask again someday. You know this.', effect: (p) => { p.m -= 3; p.r += 5; p.setMem('grandchild_hard_question', true) } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'late_first_peer_death',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 62 && G.age <= 70 && G.friends && G.friends.length > 0 && !G.mem.first_peer_death,
+    text: 'Your friend — not your oldest friend, but close, someone from this chapter of your life — dies. Not from illness discovered and fought, but quickly: a stroke on a Wednesday. You spoke to him on the Sunday. At the funeral you stand next to his wife and understand, for the first time in your body rather than just your mind, that this is what the years ahead will contain.',
+    choices: null,
+    effect: (p) => { p.m -= 15; p.r += 10; p.e += 5; p.setMem('first_peer_death', true) },
+  },
+
+  {
+    id: 'late_body_decline_specific',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) => G.age >= 68 && !G.mem.body_decline_specific,
+    text: 'The knee that started last winter is still there. The stiffness in the morning now takes twenty minutes to walk off instead of five. You cannot read small print without the glasses you have started keeping on your face full-time. The jar lid requires a second person. These are not events — they have no clear beginning. They are simply the new terms of your physical existence, arrived without announcement.',
+    choices: [
+      { text: 'Accept the body\'s renegotiation — adapt without resentment', tag: null, outcome: 'You stop measuring yourself against what you used to be able to do. It takes genuine effort and it helps.', effect: (p) => { p.m += 5; p.addFlag('acceptance'); p.setMem('body_decline_specific', true) } },
+      { text: 'Fight it — physio, exercise, stubbornness', tag: null, outcome: 'Some of it can be pushed back. Not all. You are slower to accept this than you\'d like.', effect: (p) => { p.h += 3; p.m -= 3; p.setMem('body_decline_specific', true) } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'late_cognitive_early_fear',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 70 && G.age <= 78 && !G.flags.includes('cognitive_decline') && !G.mem.cog_early_fear,
+    text: 'You are looking for your keys and find them in the freezer. You are mid-sentence and the word you need — a common word, a word you have used ten thousand times — simply isn\'t there. You stand in the gap where it should be, waiting. The word returns thirty seconds later. You do not tell anyone. You do not write it down. You stand in the bathroom that night and look at yourself for a while.',
+    choices: [
+      { text: 'See your doctor — face it directly', tag: null, outcome: 'The tests are reassuring, mostly. Normal aging, they say. You believe them and also do not entirely believe them.', effect: (p) => { p.m -= 8; p.h += 2; p.setMem('cog_early_fear', true) } },
+      { text: 'Say nothing — monitor it yourself', tag: null, outcome: 'You become a careful observer of your own mind. The scrutiny is its own kind of exhaustion.', effect: (p) => { p.m -= 12; p.r += 8; p.setMem('cog_early_fear', true) } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'late_digital_exclusion',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 72 && G.currentYear >= 2015 && !G.flags.includes('tech_adapted') && !G.mem.digital_exclusion,
+    text: 'The bank has closed the branch. The appointment system is an app. The government benefit form is online only. The bus times are not printed at the stop anymore — there is a QR code. You stand at the stop in the cold trying to understand the QR code while younger people walk past you with their phones already open. It is not that you are stupid. It is that the world redesigned itself for a different set of hands.',
+    choices: [
+      { text: 'Ask for help — from family, from the library, from whoever will show you', tag: null, outcome: 'You learn enough to manage. The learning takes real effort and costs something in dignity every time you have to ask.', effect: (p) => { p.m -= 5; p.e += 3; p.setMem('digital_exclusion', true) } },
+      { text: 'Push back — demand alternatives exist', tag: null, outcome: 'You write a letter to the bank. To the council. The letter is good. Some things change, slowly, for people like you.', effect: (p) => { p.m -= 3; p.karma += 5; p.s += 2; p.setMem('digital_exclusion', true) } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'late_partner_dementia',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.partner !== null && G.age >= 68 && !G.flags.includes('partner_dementia') && !G.flags.includes('devoted_carer'),
+    text: 'Your partner does not always know where they are. Some days are almost normal. On other days they call you by a sibling\'s name, or ask when your mother is coming to visit — your mother who has been dead for fifteen years. You answer these questions from whatever angle causes the least distress. You are losing them slowly. What you are losing is different from what death takes. There is no word that fits it precisely.',
+    choices: [
+      { text: 'Become their primary carer — you are not ready to hand this to strangers', tag: null, outcome: 'The years are exhausting and specific in their love. You hold things for them that they can no longer hold themselves.', effect: (p) => { p.m -= 15; p.h -= 8; p.karma += 10; p.addFlag('partner_dementia'); p.addFlag('devoted_carer') } },
+      { text: 'Find professional care — you cannot do this alone', tag: null, outcome: 'The facility is kind. You visit every day. You stop visiting every day and the guilt of this is its own country.', effect: (p) => { p.m -= 10; p.mo -= 8000; p.r += 10; p.addFlag('partner_dementia') } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'late_sibling_estrangement_repair',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.siblings && G.siblings.length > 0 && G.age >= 65 && (G.flags.includes('estranged_family') || G.regret > 20) && !G.flags.includes('sibling_reckoned') && !G.mem.sibling_repair,
+    text: 'Your sibling — the one you stopped speaking to properly after that thing, which was partly your fault and partly theirs and partly just the accumulated weight of being siblings — sends a message. Not an apology, not quite. An opening. It arrives on a Tuesday and you read it four times.',
+    choices: [
+      { text: 'Respond — meet if possible, call if not', tag: null, outcome: 'The conversation does not resolve everything. It does not need to. Something between you breathes again.', effect: (p) => { p.m += 12; p.r -= 10; p.addFlag('sibling_reckoned'); p.setMem('sibling_repair', true) } },
+      { text: 'Not yet — you still need more time', tag: null, outcome: 'You draft a response you don\'t send. The opening may still be there later. You are not sure.', effect: (p) => { p.m -= 5; p.r += 8; p.setMem('sibling_repair', true) } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'late_last_photograph',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.age >= 70 && !G.mem.last_photo_moment,
+    text: 'Your grandchild takes a photograph of you at a family gathering. Later someone shows it to you on a phone. You look at it for a moment. The person in the photograph is old — genuinely, recognizably old — and it is you. You have known this intellectually. The photograph makes it concrete in a way the mirror never quite has.',
+    choices: [
+      { text: 'Accept it — this is what seventy looks like', tag: null, outcome: 'You ask them to send you the photo. You keep it. This is who you are now and you are here.', effect: (p) => { p.m += 5; p.r -= 5; p.addFlag('acceptance'); p.setMem('last_photo_moment', true) } },
+      { text: 'Ask them not to share it', tag: null, outcome: 'They don\'t share it. The image stays in your head anyway.', effect: (p) => { p.m -= 5; p.r += 5; p.setMem('last_photo_moment', true) } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'late_stroke_survival',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.age >= 65 && G.stats.health < 50 && !G.flags.includes('stroke_survivor') && Math.random() < 0.10,
+    text: (G) => {
+      const base = 'The stroke happens on a Saturday morning. You know what it is when it starts — the lopsided face in the bathroom mirror, the arm that won\'t lift, the words that come out wrong. Someone calls the ambulance. You survive.'
+      if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype)) return base + ' The rehabilitation team is thorough and the progress is slow and real.'
+      if (['subsaharan', 'conflict_zone', 'developing_unstable'].includes(G.character.country.archetype)) return 'You collapse at home. By the time you reach the hospital, the window for intervention has passed. You survive, but not intact.'
+      return base
+    },
+    choices: [
+      { text: 'Commit to rehabilitation — reclaim what you can', tag: null, outcome: 'The speech therapist, the physio, the exercises you do alone at 6 AM. You recover sixty percent of what you lost. This is considered very good.', effect: (p) => { p.h -= 10; p.m -= 8; p.e += 5; p.addFlag('stroke_survivor') } },
+      { text: 'Accept the changed life — adapt to the new limits', tag: null, outcome: 'The left hand does not work the way it did. You learn which things still work and build from there.', effect: (p) => { p.h -= 15; p.m -= 5; p.addFlag('stroke_survivor'); p.addFlag('acceptance') } },
+    ],
+    effect: null,
+  },
+
+  // ── RELATIONSHIP DEPTH EVENTS ─────────────────────────────────────────────────
+
+  {
+    id: 'rel_friendship_ended_badly',
+    phase: 'adult',
+    weight: 2,
+    when: (G) => G.friends && G.friends.length > 0 && G.age >= 28 && !G.mem.friendship_ended_badly,
+    text: 'A friendship ends. Not in a confrontation — there was no clean break, no single event you can point to. You said something, or didn\'t say something, or you were going through a period and they needed more than you gave. The details are unclear in the way that makes them impossible to fully resolve. They stop returning calls. You stop making them.',
+    choices: [
+      { text: 'Reach out — ask directly what happened', tag: null, outcome: 'The conversation is uncomfortable and clarifying. Some of what you did makes more sense in retrospect. You do not become close again but the ending has a shape now.', effect: (p) => { p.m -= 5; p.r -= 8; p.s += 3; p.setMem('friendship_ended_badly', true) } },
+      { text: 'Let it remain unresolved — some things don\'t need a postmortem', tag: null, outcome: 'You carry the vagueness. Occasionally, at odd moments, it surfaces.', effect: (p) => { p.m -= 8; p.r += 8; p.setMem('friendship_ended_badly', true) } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'rel_toxic_friend_clarity',
+    phase: 'adult',
+    weight: 2,
+    when: (G) => G.age >= 28 && !G.mem.toxic_friend_clarity,
+    text: 'Six months after the friendship ended, you start to see it clearly. The small put-downs that you explained away at the time. The way every conversation circled back to them. The competitiveness that ran underneath everything. Distance is doing what closeness couldn\'t — it is giving you an honest view. You feel relief and then feel guilty about the relief.',
+    choices: null,
+    effect: (p) => { p.m += 8; p.e += 4; p.r -= 5; p.setMem('toxic_friend_clarity', true) },
+  },
+
+  {
+    id: 'rel_friend_success_envy_deep',
+    phase: 'adult',
+    weight: 3,
+    when: (G) => G.friends && G.friends.length > 0 && G.age >= 25 && !G.mem.friend_success_envy,
+    text: 'Your friend\'s book is published. Or they close the funding round. Or their face is in a magazine. You send the congratulations message immediately because you mean it, and also because you want to mean it without complication, and the complication is there anyway. It sits next to the genuine pride. You are not sure which one is louder.',
+    choices: [
+      { text: 'Examine the envy honestly — it tells you something about what you want', tag: null, outcome: 'You understand yourself a little better. The friendship survives being looked at honestly.', effect: (p) => { p.m -= 5; p.e += 5; p.r -= 3; p.setMem('friend_success_envy', true) } },
+      { text: 'Celebrate them wholeheartedly and set aside the rest', tag: null, outcome: 'The choice to be generous is a real choice and it costs something real. The friendship is better for it.', effect: (p) => { p.m += 5; p.karma += 5; p.setMem('friend_success_envy', true) } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'rel_childhood_friend_rekindled_deep',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.age >= 38 && G.age <= 50 && !G.mem.childhood_friend_rekindled,
+    text: 'Someone finds you — a childhood friend, from before everything, from the years when you were both unformed. The meeting is strange in a specific way: they know the person you were before you knew who you were going to be. There are gaps of twenty years. There is also, somehow, an immediacy that skips the usual distance.',
+    choices: [
+      { text: 'Invest in it — rebuild the friendship on adult terms', tag: null, outcome: 'It is a different friendship than the one you had. It is also something that could not be built any other way.', effect: (p) => { p.m += 12; p.s += 3; p.setMem('childhood_friend_rekindled', true) } },
+      { text: 'Keep it warm but light — the past is the past', tag: null, outcome: 'You stay in occasional contact. The warmth is real. The distance is chosen.', effect: (p) => { p.m += 5; p.setMem('childhood_friend_rekindled', true) } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'rel_children_disagreement_partner',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.partner !== null && G.age >= 26 && G.age <= 38 && !G.mem.children_disagreement,
+    text: 'One of you wants children. The other is not sure, or is sure in a different direction. This has come up before and been deferred. It is no longer deferrable. The conversation that happens is the longest and most honest one you have had in years. It does not resolve cleanly.',
+    choices: [
+      { text: 'Commit to having children — you both deserve certainty', tag: null, outcome: 'The decision is made together, imperfectly. It is a real decision and not everyone gets to make it clearly.', effect: (p) => { p.m += 5; p.r += 8; p.addFlag('family_planned'); p.setMem('children_disagreement', true) } },
+      { text: 'Agree not to — and live with what that means for you both', tag: null, outcome: 'One of you is relieved. The other carries a small grief that will surface periodically and then recede.', effect: (p) => { p.m -= 5; p.r += 10; p.setMem('children_disagreement', true) } },
+      { text: 'The disagreement is fundamental — the relationship may not survive it', tag: null, outcome: 'It doesn\'t. Not because either of you failed, but because the difference was real.', effect: (p) => { p.m -= 15; p.r += 12; p.addFlag('relationship_ended'); p.setMem('children_disagreement', true) } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'rel_marriage_small_resentments',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.partner !== null && G.partner.married && G.age >= 38 && !G.mem.marriage_resentments,
+    text: 'The resentments are not dramatic. They are: the way he dismisses your suggestions in public and then adopts them a week later. The way she has not once in nine years asked about your work in a way that expects a real answer. The division of household tasks that was never discussed and is never equitable. None of this is cause for anything. All of it is real. The distance between you is made of exactly this kind of thing.',
+    choices: [
+      { text: 'Name it — finally have the uncomfortable conversation', tag: null, outcome: 'The first conversation is difficult. The second is easier. The relief is real and so is the work that follows.', effect: (p) => { p.m += 8; p.r -= 8; p.s += 3; p.setMem('marriage_resentments', true) } },
+      { text: 'Manage it privately — most marriages have this', tag: null, outcome: 'You absorb it and compensate and the dynamic stays the same.', effect: (p) => { p.m -= 5; p.r += 10; p.setMem('marriage_resentments', true) } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'rel_affair_confessor',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.flags.includes('affair_ended') && G.partner !== null && !G.mem.affair_confession,
+    text: 'The affair is over and your partner doesn\'t know. You have been living with this for months. You have had good weeks where you were certain the right thing was to say nothing. You have had bad weeks where the silence feels like a second deception, larger than the first. You have not resolved which instinct is right.',
+    choices: [
+      { text: 'Confess — you can\'t carry it and be present at the same time', tag: null, outcome: 'The conversation takes three hours. Your partner leaves for two weeks. They come back. The damage is real and the work ahead is real and it is the honest path.', effect: (p) => { p.m -= 20; p.r += 5; p.karma += 10; p.setMem('affair_confession', true) } },
+      { text: 'Stay silent — protect what you\'ve repaired by staying', tag: null, outcome: 'You choose your partner by choosing not to hurt them with this. The weight is yours alone. You decide you can carry it.', effect: (p) => { p.m -= 8; p.r += 12; p.karma -= 5; p.setMem('affair_confession', true) } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'rel_partner_mental_illness_deep',
+    phase: 'adult',
+    weight: 2,
+    when: (G) => G.partner !== null && G.age >= 28 && !G.mem.partner_mental_illness,
+    text: 'Your partner is diagnosed with something — depression that doesn\'t lift, anxiety that has become structural, something with a longer name. The person you are with is still here and is also not entirely here. You read things. You adjust things. You learn which days require what. The love is not in question. What is in question is your own sustainability, and this is not a question you are allowed to ask loudly.',
+    choices: [
+      { text: 'Be the steady one — they need that from you right now', tag: null, outcome: 'You are steady. For a long time you are steady. There are periods when it costs you more than you show.', effect: (p) => { p.m -= 10; p.h -= 5; p.karma += 8; p.setMem('partner_mental_illness', true) } },
+      { text: 'Find support for yourself too — you can\'t pour from empty', tag: null, outcome: 'You see someone. It helps. The ability to name what you are carrying makes it more manageable.', effect: (p) => { p.m -= 5; p.h += 3; p.mo -= 600; p.setMem('partner_mental_illness', true) } },
+    ],
+    effect: null,
+  },
+
   // ── LAWSUIT EVENTS ────────────────────────────────────────────────────────────
 
   {
@@ -7804,130 +8066,6 @@ const BASE_EVENTS = [
       { text: 'Present a united front with your partner', tag: null, outcome: 'You and your partner respond as one. The in-laws back down. Your relationship is stronger for it.', effect: (p) => { p.m += 5; p.partnerRel(8); p.setMem('inlaw_conflict', true) } },
       { text: 'Stay silent and let your partner handle it', tag: null, outcome: 'Your partner handles it alone. They wish you\'d said something. The conversation on the drive home is difficult.', effect: (p) => { p.m -= 5; p.partnerRel(-5); p.setMem('inlaw_conflict', true) } },
       { text: 'Defend yourself directly', tag: null, outcome: 'The in-laws are offended. Your partner is grateful and also slightly horrified. Mixed results.', effect: (p) => { p.m += 2; p.s += 2; p.partnerRel(-2); p.setMem('inlaw_conflict', true) } },
-    ],
-  },
-
-  // ─── Prison events (prisonOk: true — only fire when inPrison) ─────────────────
-
-  {
-    id: 'prison_cellmate',
-    phase: null,
-    prisonOk: true,
-    weight: 8,
-    when: (G) => G.inPrison && !G.mem?.prison_cellmate_met,
-    text: 'Your new cellmate introduces himself. He seems calm, almost philosophical — says he\'s been in here for eleven years.',
-    choices: [
-      { text: 'Listen to his story', tag: null, outcome: 'He\'s done things you can\'t imagine, and paid for them. You spend the night thinking about choices.', effect: (p) => { p.m -= 3; p.e += 5; p.karma += 3; p.setMem('prison_cellmate_met', true) } },
-      { text: 'Keep to yourself', tag: null, outcome: 'You nod and face the wall. He doesn\'t push. The silence is respectful, at least.', effect: (p) => { p.m -= 2; p.setMem('prison_cellmate_met', true) } },
-      { text: 'Try to find common ground', tag: null, outcome: 'By lights-out you\'ve exchanged names and the rough outlines of how you both ended up here.', effect: (p) => { p.m += 4; p.s += 3; p.makeFriend({ name: 'Prison cellmate', rel: 30 }); p.setMem('prison_cellmate_met', true) } },
-    ],
-  },
-
-  {
-    id: 'prison_library',
-    phase: null,
-    prisonOk: true,
-    weight: 7,
-    when: (G) => G.inPrison && !G.mem?.prison_library_used,
-    text: 'The prison library is small — mostly legal manuals and donated paperbacks — but it\'s quiet. Open three afternoons a week.',
-    choices: [
-      { text: 'Study law — look for anything useful', tag: null, outcome: 'You read every case you can find. You understand the machinery better now.', effect: (p) => { p.e += 8; p.m += 5; p.setMem('prison_library_used', true) } },
-      { text: 'Read fiction — escape for a while', tag: null, outcome: 'You lose a week to novels. It\'s the first real rest your mind has had in months.', effect: (p) => { p.m += 12; p.setMem('prison_library_used', true) } },
-      { text: 'Work on a correspondence course', tag: null, outcome: 'You enroll in a program. It\'s slow, but something to anchor the days.', effect: (p) => { p.e += 10; p.m += 4; p.addFlag('studying_in_prison'); p.setMem('prison_library_used', true) } },
-    ],
-  },
-
-  {
-    id: 'prison_fight',
-    phase: null,
-    prisonOk: true,
-    weight: 6,
-    when: (G) => G.inPrison,
-    text: 'An inmate you\'ve never spoken to shoves you in the chow line. Everyone nearby goes quiet.',
-    choices: [
-      { text: 'Fight back', tag: null, outcome: 'The fight is short and brutal. Word gets around that you\'re not a soft target.', effect: (p) => { p.h -= 12; p.m += 8; p.s += 5; p.karma -= 3 } },
-      { text: 'Back down', tag: null, outcome: 'You let it go. Word gets around. The next few weeks are harder than they needed to be.', effect: (p) => { p.m -= 15; p.s -= 5 } },
-      { text: 'Report it to a guard', tag: null, outcome: 'The CO moves the guy. Safe, but your reputation inside takes a hit.', effect: (p) => { p.m -= 5; p.h -= 3; p.addFlag('prison_snitch') } },
-    ],
-  },
-
-  {
-    id: 'prison_medical',
-    phase: null,
-    prisonOk: true,
-    weight: 5,
-    when: (G) => G.inPrison && G.stats.health < 50,
-    text: 'You\'ve been running a fever for three days. The facility doctor finally sees you.',
-    choices: [
-      { text: 'Accept whatever treatment they offer', tag: null, outcome: 'Basic care — antibiotics, rest — but it helps. You\'re back to your cell in two days.', effect: (p) => { p.h += 15; p.m -= 5 } },
-      { text: 'Demand a specialist', tag: null, outcome: 'Request denied. You get the same treatment anyway. At least you tried.', effect: (p) => { p.h += 10; p.m += 3 } },
-    ],
-  },
-
-  {
-    id: 'prison_letter',
-    phase: null,
-    prisonOk: true,
-    weight: 7,
-    when: (G) => G.inPrison,
-    text: 'A letter arrives — handwritten, forwarded through the facility. It\'s from someone you used to know.',
-    choices: [
-      { text: 'Write back', tag: null, outcome: 'You fill three pages. More than you\'ve said to anyone in months. It helps.', effect: (p) => { p.m += 10; p.r -= 5 } },
-      { text: 'Don\'t reply — better to cut ties', tag: null, outcome: 'You fold the letter and put it under your mattress. You\'ll read it again later. You always do.', effect: (p) => { p.m -= 5; p.r += 5 } },
-    ],
-  },
-
-  {
-    id: 'prison_parole_hearing',
-    phase: null,
-    prisonOk: true,
-    weight: 6,
-    when: (G) => G.inPrison && G.prisonSentence >= 3,
-    text: 'A parole hearing is scheduled. You\'ve been a model inmate. This could be your shot at early release.',
-    choices: [
-      { text: 'Be honest and show genuine remorse', tag: null, outcome: 'The board grants parole. You\'ll be supervised, but you\'re getting out early.', effect: (p) => { p.m += 20; p.addFlag('on_parole') } },
-      { text: 'Say what you think they want to hear', tag: null, outcome: 'They see through it. Parole denied. Next hearing in two years.', effect: (p) => { p.m -= 15; p.r += 8 } },
-    ],
-  },
-
-  {
-    id: 'prison_gang_pressure',
-    phase: null,
-    prisonOk: true,
-    weight: 5,
-    when: (G) => G.inPrison && !G.mem?.prison_gang_answer,
-    text: 'A group inside approaches you. They run the block. They want to know if you\'re with them — or if you\'re a problem.',
-    choices: [
-      { text: 'Join for protection', tag: null, outcome: 'You\'re under their umbrella now. The block is calmer — and the debt will come due eventually.', effect: (p) => { p.m += 5; p.karma -= 10; p.addFlag('prison_gang_affiliated'); p.setMem('prison_gang_answer', 'joined') } },
-      { text: 'Refuse', tag: null, outcome: 'They nod and walk away. You\'re on your own. Life gets harder, but you owe nobody.', effect: (p) => { p.m -= 8; p.h -= 5; p.karma += 5; p.setMem('prison_gang_answer', 'refused') } },
-      { text: 'Stay neutral', tag: null, outcome: 'You stay neither friend nor enemy. It takes careful navigation.', effect: (p) => { p.s += 5; p.m -= 3; p.setMem('prison_gang_answer', 'neutral') } },
-    ],
-  },
-
-  {
-    id: 'prison_visitation',
-    phase: null,
-    prisonOk: true,
-    weight: 6,
-    when: (G) => G.inPrison,
-    text: 'Visitation day. The room is loud with the sound of plastic chairs and vending machines.',
-    choices: [
-      { text: 'A family member visits', tag: null, outcome: 'You talk about nothing important. You\'re both pretending everything is okay. It helps more than you expected.', effect: (p) => { p.m += 12; p.karma += 3 } },
-      { text: 'Nobody comes', tag: null, outcome: 'You sit in the common room instead. Some inmates get visitors. You try not to watch.', effect: (p) => { p.m -= 12; p.r += 5 } },
-    ],
-  },
-
-  {
-    id: 'prison_contraband',
-    phase: null,
-    prisonOk: true,
-    weight: 4,
-    when: (G) => G.inPrison,
-    text: 'Someone offers to sell you contraband — a phone, some pills, maybe something stronger. It\'s a risk.',
-    choices: [
-      { text: 'Buy a phone to stay connected', tag: null, outcome: 'The phone costs a fortune in prison currency, but you\'re finally in touch with the outside world.', effect: (p) => { p.mo -= 300; p.m += 15; p.addFlag('prison_phone') } },
-      { text: 'Pass — not worth the extra time', tag: null, outcome: 'You say no and walk away. Clean record stays clean.', effect: (p) => { p.m -= 3; p.karma += 2 } },
-      { text: 'Report the dealer', tag: null, outcome: 'You tell a CO. The dealer is transferred. You wonder if you did the right thing.', effect: (p) => { p.karma += 5; p.m -= 5; p.addFlag('prison_snitch') } },
     ],
   },
 
