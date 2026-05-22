@@ -15,6 +15,7 @@ import { LATE_LIFE_EVENTS } from './events_late_life.js'
 import { CHILDREN_ARC_EVENTS } from './events_children_arc.js'
 import { FAME_KARMA_EVENTS } from './events_fame_karma.js'
 import { TEXTURE_EVENTS } from './events_texture.js'
+import { SOCIETY_EVENTS } from './events_society.js'
 
 const BASE_EVENTS = [
   // ── EARLY CHILDHOOD ─────────────────────────────────────────────────────────
@@ -1791,31 +1792,6 @@ const BASE_EVENTS = [
         tag: null,
         outcome: 'The regret calcifies.',
         effect: (p) => { p.r += 8; p.m -= 5; },
-        inject: null,
-      },
-    ],
-    effect: null,
-  },
-  {
-    id: 'late_partner_illness',
-    phase: 'late_life',
-    weight: 3,
-    when: (G) => G.partner !== null,
-    text: "Your partner's health fails. The person beside you has been beside you for decades.",
-    context: null,
-    choices: [
-      {
-        text: 'Devote yourself to their care',
-        tag: 'devoted_carer',
-        outcome: 'The years are hard and full of love.',
-        effect: (p) => { p.m -= 5; p.s += 5; p.h -= 4; p.addFlag('devoted_carer'); },
-        inject: null,
-      },
-      {
-        text: 'Share the burden with family',
-        tag: null,
-        outcome: 'You cope together.',
-        effect: (p) => { p.m -= 3; p.s += 2; },
         inject: null,
       },
     ],
@@ -7757,19 +7733,6 @@ const BASE_EVENTS = [
   },
 
   {
-    id: 'late_partner_dementia',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => G.partner !== null && G.age >= 68 && !G.flags.includes('partner_dementia') && !G.flags.includes('devoted_carer'),
-    text: 'Your partner does not always know where they are. Some days are almost normal. On other days they call you by a sibling\'s name, or ask when your mother is coming to visit — your mother who has been dead for fifteen years. You answer these questions from whatever angle causes the least distress. You are losing them slowly. What you are losing is different from what death takes. There is no word that fits it precisely.',
-    choices: [
-      { text: 'Become their primary carer — you are not ready to hand this to strangers', tag: null, outcome: 'The years are exhausting and specific in their love. You hold things for them that they can no longer hold themselves.', effect: (p) => { p.m -= 15; p.h -= 8; p.karma += 10; p.addFlag('partner_dementia'); p.addFlag('devoted_carer') } },
-      { text: 'Find professional care — you cannot do this alone', tag: null, outcome: 'The facility is kind. You visit every day. You stop visiting every day and the guilt of this is its own country.', effect: (p) => { p.m -= 10; p.mo -= 8000; p.r += 10; p.addFlag('partner_dementia') } },
-    ],
-    effect: null,
-  },
-
-  {
     id: 'late_sibling_estrangement_repair',
     phase: 'late_life',
     weight: 2,
@@ -8199,4 +8162,4 @@ const BASE_EVENTS = [
   },
 ]
 
-export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS, ...TECHNOLOGY_EVENTS, ...IMMIGRATION_EVENTS, ...CAREER_REGIME_EVENTS, ...CONFLICT_CHILDHOOD_EVENTS, ...LGBTQ_EVENTS, ...MENTAL_HEALTH_EVENTS, ...GRIEF_EVENTS, ...GRIEF_MENTAL_EVENTS, ...RELIGION_ARC_EVENTS, ...LATE_LIFE_EVENTS, ...CHILDREN_ARC_EVENTS, ...FAME_KARMA_EVENTS, ...TEXTURE_EVENTS]
+export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS, ...TECHNOLOGY_EVENTS, ...IMMIGRATION_EVENTS, ...CAREER_REGIME_EVENTS, ...CONFLICT_CHILDHOOD_EVENTS, ...LGBTQ_EVENTS, ...MENTAL_HEALTH_EVENTS, ...GRIEF_EVENTS, ...GRIEF_MENTAL_EVENTS, ...RELIGION_ARC_EVENTS, ...LATE_LIFE_EVENTS, ...CHILDREN_ARC_EVENTS, ...FAME_KARMA_EVENTS, ...TEXTURE_EVENTS, ...SOCIETY_EVENTS]
