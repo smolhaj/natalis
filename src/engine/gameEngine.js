@@ -295,6 +295,7 @@ function buildEffectProxy(state) {
     proxy._newEducation = { level, field: field ?? state.education.field }
   }
   proxy.setCareer = (careerId) => { proxy._newCareerId = careerId }
+  proxy.clearCareer = () => { proxy._clearCareer = true }
   proxy.setPartner = (partner) => { proxy._newPartner = partner }
   proxy.clearPartner = () => { proxy._clearPartner = true }
   proxy.addChild = (child) => { proxy._newChild = child }
@@ -344,6 +345,7 @@ function resolveProxyExtras(state, proxy) {
   let next = state
   if (proxy._newEducation)   next = { ...next, education: proxy._newEducation }
   if (proxy._newCareerId)    next = enterCareer(next, proxy._newCareerId)
+  if (proxy._clearCareer)    next = { ...next, career: null }
   if (proxy._newPartner !== undefined) next = { ...next, partner: proxy._newPartner }
   if (proxy._clearPartner)   next = { ...next, partner: null }
   if (proxy._newChild)       next = { ...next, children: [...next.children, proxy._newChild] }
@@ -1199,7 +1201,7 @@ function tickSiblings(state) {
 
   const siblings = state.siblings.map(sib => {
     if (!sib.alive) return sib
-    const sibAge = state.age - sib.ageDiff
+    const sibAge = state.age + sib.ageDiff
     let deathProb = 0
     if (sibAge > 80) deathProb = 0.06 + (sibAge - 80) * 0.01
     else if (sibAge > 65) deathProb = 0.015

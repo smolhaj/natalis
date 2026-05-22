@@ -139,6 +139,7 @@ export default function ActivitiesPanel({ onClose }) {
   const useDatingApp       = useGameStore(s => s.useDatingApp)
   const doUpgradeResidency = useGameStore(s => s.upgradeResidency)
   const doSeekAsylum       = useGameStore(s => s.seekAsylum)
+  const doEmigrate         = useGameStore(s => s.emigrate)
 
   const actionsLeft = state.maxActionsPerYear - state.actionsThisYear
   const noActions = actionsLeft <= 0
@@ -1330,6 +1331,30 @@ export default function ActivitiesPanel({ onClose }) {
                 </div>
               )
             })}
+
+            {/* Emigrate section */}
+            {state.age >= 18 && (
+              <>
+                <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider px-1 pt-3 pb-1">🛫 Emigrate</p>
+                {state.flags.includes('emigrated') && state.currentCountry && (
+                  <div className="bg-blue-50 rounded-xl border border-blue-200 px-4 py-2 mb-2">
+                    <p className="text-blue-700 text-xs font-semibold">Currently living in {state.currentCountry.name}</p>
+                  </div>
+                )}
+                {COUNTRIES.filter(c => c.name !== (state.currentCountry ?? state.character?.country)?.name)
+                  .sort((a, b) => a.name.localeCompare(b.name))
+                  .map(c => (
+                    <Btn
+                      key={c.name}
+                      disabled={noActions}
+                      onClick={() => { doEmigrate(c.name); onClose() }}
+                      title={`Move to ${c.name}`}
+                      subtitle={`${c.archetype.replace(/_/g, ' ')} · Est. $3,000–$15,000 moving costs`}
+                    />
+                  ))
+                }
+              </>
+            )}
           </>
         )
       }
@@ -1707,6 +1732,7 @@ export default function ActivitiesPanel({ onClose }) {
               if (cat.key === 'plastic_surg' && state.age < 18) return null
               if (cat.key === 'licenses' && state.age < 16) return null
               if (cat.key === 'race_tracks' && state.age < 18) return null
+              if (cat.key === 'pets' && state.age < 8) return null
               if (cat.key === 'shopping' && state.age < 8) return null
               if (cat.key === 'social_media' && state.age < 13) return null
               if (cat.key === 'career' && state.age < 14) return null

@@ -257,6 +257,8 @@ export const SOCIETY_EVENTS = [
       p.m -= 10
       p.w -= 8
       p.r += 8
+      p.clearCareer()
+      p.addFlag('laid_off')
       p.setMem('fired_postwar', true)
     },
   },
