@@ -7781,7 +7781,7 @@ const BASE_EVENTS = [
 
   {
     id: 'rel_friendship_ended_badly',
-    phase: 'adult',
+    phase: 'midlife',
     weight: 2,
     when: (G) => G.friends && G.friends.length > 0 && G.age >= 28 && !G.mem.friendship_ended_badly,
     text: 'A friendship ends. Not in a confrontation — there was no clean break, no single event you can point to. You said something, or didn\'t say something, or you were going through a period and they needed more than you gave. The details are unclear in the way that makes them impossible to fully resolve. They stop returning calls. You stop making them.',
@@ -7794,7 +7794,7 @@ const BASE_EVENTS = [
 
   {
     id: 'rel_toxic_friend_clarity',
-    phase: 'adult',
+    phase: 'midlife',
     weight: 2,
     when: (G) => G.age >= 28 && !G.mem.toxic_friend_clarity,
     text: 'Six months after the friendship ended, you start to see it clearly. The small put-downs that you explained away at the time. The way every conversation circled back to them. The competitiveness that ran underneath everything. Distance is doing what closeness couldn\'t — it is giving you an honest view. You feel relief and then feel guilty about the relief.',
@@ -7804,7 +7804,7 @@ const BASE_EVENTS = [
 
   {
     id: 'rel_friend_success_envy_deep',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 3,
     when: (G) => G.friends && G.friends.length > 0 && G.age >= 25 && !G.mem.friend_success_envy,
     text: 'Your friend\'s book is published. Or they close the funding round. Or their face is in a magazine. You send the congratulations message immediately because you mean it, and also because you want to mean it without complication, and the complication is there anyway. It sits next to the genuine pride. You are not sure which one is louder.',
@@ -7870,7 +7870,7 @@ const BASE_EVENTS = [
 
   {
     id: 'rel_partner_mental_illness_deep',
-    phase: 'adult',
+    phase: 'midlife',
     weight: 2,
     when: (G) => G.partner !== null && G.age >= 28 && !G.mem.partner_mental_illness,
     text: 'Your partner is diagnosed with something — depression that doesn\'t lift, anxiety that has become structural, something with a longer name. The person you are with is still here and is also not entirely here. You read things. You adjust things. You learn which days require what. The love is not in question. What is in question is your own sustainability, and this is not a question you are allowed to ask loudly.',

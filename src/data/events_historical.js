@@ -151,7 +151,7 @@ export const HISTORICAL_EVENTS = [
 
   {
     id: 'hist_redlining',
-    phase: 'adult',
+    phase: 'midlife',
     weight: 5,
     when: (G) => G.character.country.name === 'United States' && G.character.ethnicity === 'black_american' && G.currentYear >= 1950 && G.currentYear <= 1975 && G.age >= 25 && G.age <= 45 && !G.mem?.redlining,
     text: 'You have saved enough for a down payment. The bank loan officer is polite. He tells you the property you want is in a "transitional" neighbourhood and the bank cannot approve the loan. The neighbourhood is where white families live.',
@@ -177,7 +177,7 @@ export const HISTORICAL_EVENTS = [
 
   {
     id: 'hist_kgb_informer',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 5,
     when: (G) => ['Russia', 'Ukraine', 'Kazakhstan', 'Georgia', 'Belarus'].includes(G.character.country.name) && G.currentYear >= 1955 && G.currentYear <= 1989 && G.age >= 20 && !G.mem?.kgb_contact,
     text: 'A man in a grey suit visits your workplace. He is not from your workplace. He asks questions about a colleague — about their beliefs, their friends, their habits. Then he asks if you would like to be useful to the state.',
@@ -348,7 +348,7 @@ export const HISTORICAL_EVENTS = [
 
   {
     id: 'hist_indigenous_language_revival',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 5,
     when: (G) => ['indigenous_american', 'aboriginal_australian', 'first_nations', 'maori'].includes(G.character.ethnicity) && G.age >= 25 && G.currentYear >= 1970 && !G.mem?.language_revival,
     text: 'There is a movement to teach the language again. To the children who were forbidden to speak it, to the grandchildren who never learned it. A gathering is organised. Will you go?',

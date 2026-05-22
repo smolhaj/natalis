@@ -207,7 +207,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'fg_adult_literacy',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 3,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -391,7 +391,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'fg_return_to_school',
-    phase: 'adult',
+    phase: 'midlife',
     weight: 3,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -613,7 +613,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'cm_adult_regret_reflection',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 2,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -688,7 +688,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'fgm_health_complications',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 3,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -723,7 +723,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'fgm_refusing_for_daughter',
-    phase: 'adult',
+    phase: 'midlife',
     weight: 3,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -870,7 +870,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'ra_poland_abortion_ban',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 4,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -941,7 +941,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'ra_husbands_signature',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 3,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -973,7 +973,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'ra_forced_sterilization',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 2,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -1003,7 +1003,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'ra_one_child_china',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 4,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -1055,7 +1055,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'ra_maternal_mortality_scare',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 3,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -1138,7 +1138,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'wd_glass_ceiling',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 4,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -1174,7 +1174,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'wd_sexual_harassment',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 4,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -1209,7 +1209,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'wd_equal_pay_discovery',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 4,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -1244,7 +1244,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'wd_maternity_leave_denied',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 3,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -1273,7 +1273,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'wd_credit_taken',
-    phase: 'adult',
+    phase: 'midlife',
     weight: 3,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -1308,7 +1308,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'wd_business_loan_denied',
-    phase: 'adult',
+    phase: 'midlife',
     weight: 3,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -1348,7 +1348,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'mp_eldest_son_inherits',
-    phase: 'adult',
+    phase: 'midlife',
     weight: 3,
     when: (G) =>
       G.character.gender === 'male' &&
@@ -1562,7 +1562,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'mp_honor_responsibility',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 3,
     when: (G) =>
       G.character.gender === 'male' &&
@@ -1601,7 +1601,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'mp_masculinity_crisis',
-    phase: 'adult',
+    phase: 'midlife',
     weight: 3,
     when: (G) =>
       G.character.gender === 'male' &&
@@ -1803,7 +1803,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'lgbtq_arrested',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 3,
     when: (G) =>
       G.flags.includes('same_sex_attracted') &&
@@ -1923,7 +1923,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'lgbtq_aids_crisis',
-    phase: 'adult',
+    phase: 'midlife',
     weight: 3,
     when: (G) =>
       G.character.gender === 'male' &&
@@ -1960,7 +1960,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'lgbtq_same_sex_marriage',
-    phase: 'adult',
+    phase: 'midlife',
     weight: 3,
     when: (G) =>
       G.flags.includes('same_sex_attracted') &&
@@ -2097,7 +2097,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'wid_widow_inheritance',
-    phase: 'adult',
+    phase: 'midlife',
     weight: 3,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -2134,7 +2134,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'wid_hindu_widowhood',
-    phase: 'adult',
+    phase: 'midlife',
     weight: 3,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -2172,7 +2172,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'wid_widow_disinherited',
-    phase: 'adult',
+    phase: 'midlife',
     weight: 3,
     when: (G) =>
       G.character.gender === 'female' &&

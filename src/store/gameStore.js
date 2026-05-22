@@ -248,7 +248,7 @@ export const useGameStore = create((set, get) => ({
 
   ageUp: () => {
     const state = get()
-    if (state.pendingEvent || state.dead || state.pendingMinigame) return
+    if (state.pendingEvent || state.dead || state.pendingMinigame || state.pendingTrial) return
     const next = tick({ ...state, lastOutcome: null })
     if (next.screen === 'death') {
       const epitaph = generateEpitaph(next)
