@@ -1,4 +1,8 @@
-export const EVENTS = [
+import { GENDER_EVENTS } from './events_gender.js'
+import { RELIGION_EVENTS } from './events_religion.js'
+import { HISTORICAL_EVENTS } from './events_historical.js'
+
+const BASE_EVENTS = [
   // ── EARLY CHILDHOOD ─────────────────────────────────────────────────────────
   {
     id: 'ec_warmth',
@@ -7924,3 +7928,5 @@ export const EVENTS = [
     ],
   },
 ]
+
+export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS]
