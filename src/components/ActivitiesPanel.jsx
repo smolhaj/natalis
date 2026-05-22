@@ -32,6 +32,7 @@ const TOP_CATEGORIES = [
   { key: 'friends',       label: 'Friends',          emoji: '👥', desc: 'Your social circle' },
   { key: 'travel',        label: 'Travel',           emoji: '✈️',  desc: 'See the world' },
   { key: 'underground',   label: 'Go Underground',   emoji: '🕵️', desc: 'Evade the law' },
+  { key: 'prison',        label: 'Prison Life',       emoji: '🔒', desc: 'Activities inside' },
 ]
 
 const MARTIAL_DISCIPLINES = ['Jiu-Jitsu', 'Taekwondo', 'Judo', 'Karate', 'Kung Fu']
@@ -121,6 +122,11 @@ export default function ActivitiesPanel({ onClose }) {
   const confirmBreakOut    = useGameStore(s => s.confirmBreakOut)
   const assumeIdentity     = useGameStore(s => s.assumeIdentity)
   const goIllegal          = useGameStore(s => s.goIllegal)
+  const doPrisonWork       = useGameStore(s => s.doPrisonWork)
+  const doPrisonCry        = useGameStore(s => s.doPrisonCry)
+  const doPrisonConjugalVisit = useGameStore(s => s.doPrisonConjugalVisit)
+  const doPrisonBribeGuard = useGameStore(s => s.doPrisonBribeGuard)
+  const doPrisonStartRiot  = useGameStore(s => s.doPrisonStartRiot)
   const pendingPartner     = useGameStore(s => s.pendingPartner)
   const acceptPartner      = useGameStore(s => s.acceptPartner)
   const declinePartner     = useGameStore(s => s.declinePartner)
@@ -128,7 +134,7 @@ export default function ActivitiesPanel({ onClose }) {
 
   const actionsLeft = state.maxActionsPerYear - state.actionsThisYear
   const noActions = actionsLeft <= 0
-  const G = { character: state.character, stats: state.stats, flags: state.flags, age: state.age, career: state.career, education: state.education, inPrison: state.inPrison, partner: state.partner }
+  const G = { character: state.character, stats: state.stats, flags: state.flags, age: state.age, career: state.career, education: state.education, inPrison: state.inPrison, partner: state.partner, regret: state.regret ?? 50, siblings: state.siblings ?? [], children: state.children ?? [], money: state.money ?? 0, assets: state.assets ?? { properties: [], vehicles: [] }, currentYear: state.currentYear }
 
   function go(fn) { fn(); onClose() }
 
@@ -186,7 +192,7 @@ export default function ActivitiesPanel({ onClose }) {
       case 'education': {
         const enrolled = state.education?.enrolled
         const gpa = state.gpa
-        const isGraduate = state.education.level === 'university'
+        const isGraduate = state.education?.level === 'university'
         return (
           <>
             {/* Enrollment status */}
@@ -1475,6 +1481,96 @@ export default function ActivitiesPanel({ onClose }) {
         )
       }
 
+      case 'prison': {
+        if (!state.inPrison) return <p className="text-natalis-muted text-sm italic p-3">You are not in prison.</p>
+        const bribeMin = 500
+        return (
+          <>
+            <div className="bg-gray-800 rounded-xl border border-gray-700 p-3 mb-3">
+              <p className="text-white text-xs font-semibold">🔒 Incarcerated</p>
+              <p className="text-gray-300 text-xs mt-0.5">Sentence remaining: <span className="text-white font-bold">{state.prisonSentence} year{state.prisonSentence !== 1 ? 's' : ''}</span></p>
+            </div>
+
+            <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1">Daily Life</p>
+
+            <Btn disabled={noActions}
+              onClick={() => { doPrisonWork(); onClose() }}
+              title="🧹 Prison Work Detail"
+              subtitle="Laundry, kitchen, yard crew. Earns a little cash."
+            />
+
+            <Btn disabled={noActions}
+              onClick={() => { doPrisonCry(); onClose() }}
+              title="😢 Have a Cry"
+              subtitle="Let it out. Surprisingly therapeutic."
+            />
+
+            <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-3 py-1">High-Risk Actions</p>
+
+            <Btn disabled={noActions || (state.money ?? 0) < bribeMin} danger
+              onClick={() => { doPrisonBribeGuard(); onClose() }}
+              title="💵 Bribe a Guard"
+              subtitle={`50% chance to cut sentence. 25% chance it backfires. Costs $500–$3,000.`}
+            />
+
+            <Btn disabled={noActions} danger
+              onClick={() => { doPrisonStartRiot(); onClose() }}
+              title="🔥 Start a Riot"
+              subtitle="40% success. Could reduce sentence — or add years and get you hurt."
+            />
+
+            {state.partner && (
+              <>
+                <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-3 py-1">Relationships</p>
+                <Btn disabled={noActions}
+                  onClick={() => { doPrisonConjugalVisit(); onClose() }}
+                  title={`💑 Conjugal Visit — ${state.partner.name}`}
+                  subtitle="Requires a strong relationship. 10% chance they don't show."
+                />
+              </>
+            )}
+
+            <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-3 py-1">Escape</p>
+            <div className="bg-red-50 rounded-xl border border-red-200 p-3 mb-2 text-xs text-red-700">
+              Sentence remaining: <strong>{state.prisonSentence} year{state.prisonSentence !== 1 ? 's' : ''}</strong>. Escaping makes you a wanted fugitive.
+            </div>
+            <Btn danger disabled={noActions}
+              onClick={() => {
+                onClose()
+                triggerMinigame({
+                  type: 'maze', difficulty: state.prisonSentence > 10 ? 'hard' : 'normal',
+                  title: 'Prison Break',
+                  description: 'Navigate through the facility before the alarm sounds.',
+                  skipable: true,
+                  onSuccess: {
+                    outcome: 'You slip through the gaps and escape. Now you\'re on the run.',
+                    effect: (s) => ({
+                      ...s,
+                      inPrison: false,
+                      wanted: true,
+                      wantedFor: s.wantedFor ?? 'escaped_conviction',
+                      flags: [...new Set([...s.flags, 'escaped_prisoner'])],
+                      log: [...s.log, { age: s.age, text: 'You escape from prison. You are now a fugitive.', isKey: true }],
+                    }),
+                  },
+                  onFailure: {
+                    outcome: 'Caught during the escape attempt. Three years added.',
+                    effect: (s) => ({
+                      ...s,
+                      prisonSentence: (s.prisonSentence ?? 0) + 3,
+                      stats: { ...s.stats, happiness: Math.max(0, s.stats.happiness - 15) },
+                      log: [...s.log, { age: s.age, text: 'Your escape attempt fails. Three years added to your sentence.', isKey: true }],
+                    }),
+                  },
+                })
+              }}
+              title="🏃 Attempt Prison Break"
+              subtitle="Maze minigame. Failure adds 3 years. Success: you're a fugitive."
+            />
+          </>
+        )
+      }
+
       default:
         return <p className="text-natalis-muted text-sm italic p-3">Select a category.</p>
     }
@@ -1533,9 +1629,14 @@ export default function ActivitiesPanel({ onClose }) {
               if (cat.key === 'travel' && state.age < 16) return null
               if (cat.key === 'business' && state.age < 18) return null
               if (cat.key === 'underground' && !state.inPrison && !state.wanted && !state.flags.includes('escaped_prisoner')) return null
+              if (cat.key === 'prison' && !state.inPrison) return null
+              // When in prison, hide most outside-world activities
+              const prisonBlockedCats = ['love', 'fertility', 'nightlife', 'movies', 'salon', 'shopping', 'social_media', 'plastic_surg', 'race_tracks', 'rehab', 'licenses', 'assets', 'crime', 'travel', 'business', 'career', 'underground']
+              if (state.inPrison && prisonBlockedCats.includes(cat.key)) return null
 
               const isUnderground = state.inPrison || state.wanted || state.flags.includes('escaped_prisoner')
-              const badge = cat.key === 'underground' && isUnderground ? { text: '!', color: '#ff3b30' } :
+              const badge = cat.key === 'prison' && state.inPrison ? { text: `${state.prisonSentence}yr`, color: '#ff3b30' } :
+                            cat.key === 'underground' && isUnderground ? { text: '!', color: '#ff3b30' } :
                             cat.key === 'rehab' && hasAddiction ? { text: '!', color: '#ff3b30' } :
                             cat.key === 'love' && pendingPartner && !state.partner ? { text: '💘', color: '#ff6b81' } :
                             cat.key === 'social_media' && sm.followers > 0 ? { text: sm.followers >= 1000 ? `${(sm.followers/1000).toFixed(0)}k` : sm.followers.toString(), color: '#007aff' } :
