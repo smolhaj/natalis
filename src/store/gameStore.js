@@ -130,6 +130,8 @@ const INITIAL_STATE = {
   assumedIdentity: null,
   exPartners: [],
   pendingPartner: null,
+  currentCountry: null,
+  residencyStatus: 'citizen',
 }
 
 export const useGameStore = create((set, get) => ({
@@ -231,6 +233,8 @@ export const useGameStore = create((set, get) => ({
       assumedIdentity: null,
       exPartners: [],
       pendingPartner: null,
+      currentCountry: character.country,
+      residencyStatus: 'citizen',
     })
   },
 

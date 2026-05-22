@@ -2,6 +2,7 @@ import { GENDER_EVENTS } from './events_gender.js'
 import { RELIGION_EVENTS } from './events_religion.js'
 import { HISTORICAL_EVENTS } from './events_historical.js'
 import { CULTURE_EVENTS } from './events_culture.js'
+import { TECHNOLOGY_EVENTS } from './events_technology.js'
 
 const BASE_EVENTS = [
   // ── EARLY CHILDHOOD ─────────────────────────────────────────────────────────
@@ -7930,4 +7931,4 @@ const BASE_EVENTS = [
   },
 ]
 
-export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS]
+export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS, ...TECHNOLOGY_EVENTS]

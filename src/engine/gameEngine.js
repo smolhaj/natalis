@@ -314,6 +314,7 @@ function buildEffectProxy(state) {
   proxy.setMem = (key, value) => { proxy.mem[key] = value }
   proxy.releaseFromPrison = () => { proxy._releaseFromPrison = true }
   proxy.killParent = (which) => { proxy._killParent = which }
+  proxy.setResidency = (status) => { proxy._residencyStatus = status }
   proxy.setMentalHealth = (updates) => { proxy._mentalHealthUpdates = { ...(proxy._mentalHealthUpdates ?? {}), ...updates } }
   proxy.practiceHobby = (hobbyId, delta = 1) => {
     if (!proxy._hobbyDeltas) proxy._hobbyDeltas = {}
@@ -346,6 +347,7 @@ function resolveProxyExtras(state, proxy) {
   if (proxy._killParent && next.parents?.[proxy._killParent]) {
     next = { ...next, parents: { ...next.parents, [proxy._killParent]: { ...next.parents[proxy._killParent], alive: false, relationshipQuality: 0 } } }
   }
+  if (proxy._residencyStatus) next = { ...next, residencyStatus: proxy._residencyStatus }
   if (proxy._partnerRelDelta && next.partner) {
     next = { ...next, partner: { ...next.partner, relationshipQuality: clamp((next.partner.relationshipQuality ?? 60) + proxy._partnerRelDelta, 0, 100) } }
   }
@@ -439,6 +441,8 @@ function buildG(state) {
     lgbtqCriminalized: isLgbtqCriminalized(state.character?.country, state.currentYear ?? new Date().getFullYear()),
     casteSystem: state.character?.country?.casteSystem ?? false,
     childMarriageRisk: state.character?.country?.childMarriageRisk ?? 0,
+    currentCountry: state.currentCountry ?? state.character?.country,
+    residencyStatus: state.residencyStatus ?? 'citizen',
   }
 }
 
@@ -460,7 +464,7 @@ function applyWorldEvents(state) {
     we.effect(proxy)
     updated = applyProxy(updated, proxy)
     updated.worldEventsFired = new Set([...updated.worldEventsFired, we.id])
-    updated.log = [...updated.log, { age: updated.age, text: `[World Event] ${we.narrative}`, isKey: true, isWorld: true }]
+    updated.log = [...updated.log, { age: updated.age, text: we.narrative, worldEventName: we.name, isKey: true, isWorld: true }]
     if (we.addFlags) updated.flags = [...new Set([...updated.flags, ...we.addFlags])]
   }
   return updated
@@ -557,6 +561,8 @@ export function getAvailableCareers(state) {
     }
     if (Array.isArray(career.archetypeAvailable) && !career.archetypeAvailable.includes(state.character.country.archetype)) return false
     if (career.requirements.flags && !career.requirements.flags.some(f => state.flags.includes(f))) return false
+    if (career.minYear && state.currentYear < career.minYear) return false
+    if (career.maxYear && state.currentYear > career.maxYear) return false
     if (state.career?.id === career.id) return false
     return true
   })
@@ -1892,12 +1898,22 @@ export function emigrate(state, destCountryName) {
   if (state.wanted) {
     return { ...state, log: [...state.log, { age: state.age, text: 'You are wanted — border control will arrest you on sight. You must emigrate illegally.', isKey: false }] }
   }
-  if (state.flags.includes('emigrated')) return state
   const dest = COUNTRIES.find(c => c.name === destCountryName)
   if (!dest) return state
+  const alreadyAbroad = state.flags.includes('emigrated')
+  if (alreadyAbroad && state.currentCountry?.name === dest.name) return state
   const moveCost = randomBetween(3000, 15000)
+  const isRefugee = state.flags.includes('refugee') || state.flags.includes('displaced')
+  const isIllegal = state.flags.includes('illegal_immigrant')
+  const initialStatus = isRefugee ? 'refugee_status' : isIllegal ? 'undocumented' : 'work_visa'
+  const fromName = (state.currentCountry ?? state.character?.country)?.name ?? state.character?.country?.name
+  const logText = alreadyAbroad
+    ? `You move from ${fromName} to ${dest.name}. Moving costs: $${moveCost.toLocaleString()}.`
+    : `You emigrate to ${dest.name}. Moving costs: $${moveCost.toLocaleString()}.`
   return {
     ...state,
+    currentCountry: dest,
+    residencyStatus: initialStatus,
     money: Math.max(0, (state.money ?? 0) - moveCost),
     flags: [...new Set([...state.flags, 'emigrated'])],
     stats: {
@@ -1906,7 +1922,7 @@ export function emigrate(state, destCountryName) {
       charisma: clamp(state.stats.charisma - 5, 0, 100),
       smarts: clamp(state.stats.smarts + 5, 0, 100),
     },
-    log: [...state.log, { age: state.age, text: `You emigrate to ${dest.name}. Moving costs: $${moveCost.toLocaleString()}.`, isKey: true }],
+    log: [...state.log, { age: state.age, text: logText, isKey: true }],
   }
 }
 
