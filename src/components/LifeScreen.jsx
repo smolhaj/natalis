@@ -399,7 +399,11 @@ export default function LifeScreen() {
                   <div className="flex justify-between items-center py-1">
                     <span className="text-natalis-muted text-xs">🏳️‍🌈 Sexuality</span>
                     <span className="text-natalis-text font-semibold text-xs">
-                      {flags.includes('lgbtq_identity') ? 'LGBTQ+' : 'Heterosexual'}
+                      {flags.includes('orientation_asexual') ? 'Asexual' :
+                       flags.includes('orientation_bisexual') ? 'Bisexual' :
+                       flags.includes('orientation_gay') ? (character.gender === 'female' ? 'Lesbian' : 'Gay') :
+                       flags.includes('lgbtq_identity') ? 'LGBTQ+' :
+                       'Heterosexual'}
                     </span>
                   </div>
                 </div>

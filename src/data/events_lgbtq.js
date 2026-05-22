@@ -22,9 +22,10 @@ export const LGBTQ_EVENTS = [
     phase: 'adolescence',
     weight: 3,
     when: (G) => !G.flags.includes('lgbtq_identity') && G.age >= 13 && G.age <= 19 && !G.mem?.lgbtq_named,
-    text: 'You read it in a book, or hear it spoken on a television programme, or find it in a search result you typed in private. The word for what you are. It lands with a precision you were not prepared for. You sit with it for a long time. It fits in a way nothing else has.',
+    text: 'You read it in a book, or hear it spoken on a television programme, or find it in a search result you typed in private. Words — for what you might be. They land with a precision you were not prepared for. You sit with them for a long time.',
     choices: [
-      { text: 'Accept the word — it is yours', tag: null, outcome: 'Something settles. Not everything, but something. You say the word to yourself in the mirror once. Just to hear it.', effect: (p) => { p.m += 6; p.e += 5; p.addFlag('lgbtq_identity'); p.setMem('lgbtq_named', true) } },
+      { text: 'Gay or lesbian — attracted to the same sex. That fits.', tag: null, outcome: 'Something settles. Not everything, but something. You say the word to yourself in the mirror once. Just to hear it.', effect: (p) => { p.m += 6; p.e += 5; p.addFlag('lgbtq_identity'); p.addFlag('orientation_gay'); p.setMem('lgbtq_named', true) } },
+      { text: 'Bisexual — attracted to more than one gender. That fits better.', tag: null, outcome: 'The word is less clean than the others but more accurate. You sit with the complexity of it, which turns out to be its own kind of relief.', effect: (p) => { p.m += 6; p.e += 5; p.addFlag('lgbtq_identity'); p.addFlag('orientation_bisexual'); p.setMem('lgbtq_named', true) } },
       { text: 'Reject it — maybe it does not apply to you', tag: null, outcome: 'You close the tab. But the word stays. You will return to it.', effect: (p) => { p.m -= 5; p.r += 4; p.setMem('lgbtq_named', true) } },
     ],
     effect: null,
@@ -117,7 +118,7 @@ export const LGBTQ_EVENTS = [
     text: 'You calculate. The company says the right things in its materials. One colleague mentions their same-sex partner casually in a meeting and nobody reacts. You decide the risk is low enough. You stop using the wrong pronouns when you talk about your life. The calculation, it turns out, was correct. This is its own strange relief.',
     choices: [
       { text: 'Come out openly and let it be known', tag: null, outcome: 'Most people were already half-aware. A few are warm about it. One colleague is quietly cold for a while, then adjusts.', effect: (p) => { p.m += 10; p.s += 5; p.addFlag('lgbtq_outed_at_work'); p.setMem('lgbtq_out_work', true) } },
-      { text: 'Be open to those who ask, but do not announce it', tag: null, outcome: 'A middle ground that requires less energy than hiding and less courage than announcing. It is not perfect. It is enough.', effect: (p) => { p.m += 5; p.setMem('lgbtq_out_work', true) } },
+      { text: 'Be open to those who ask, but do not announce it', tag: null, outcome: 'A middle ground that requires less energy than hiding and less courage than announcing. It is not perfect. It is enough.', effect: (p) => { p.m += 5; p.addFlag('lgbtq_outed_at_work'); p.setMem('lgbtq_out_work', true) } },
     ],
     effect: null,
   },
@@ -331,6 +332,74 @@ export const LGBTQ_EVENTS = [
     text: 'The younger people you know do not carry what you carried. They say the word for themselves without pausing first to measure the room. They have always had the word. They have had the examples. You watch a young couple hold hands on the train and they do not check the carriage first and you understand that this is the thing you were part of building, even when you did not know you were building it.',
     choices: null,
     effect: (p) => { p.m += 12; p.karma += 6; p.setMem('lgbtq_generational', true) },
+  },
+
+  // ── ASEXUAL ARC ──────────────────────────────────────────────────────────────
+
+  {
+    id: 'asexual_unnamed_feeling',
+    phase: 'adolescence',
+    weight: 2,
+    when: (G) => !G.flags.includes('orientation_asexual') && !G.flags.includes('lgbtq_identity') && G.age >= 13 && G.age <= 17 && !G.mem?.asexual_unnamed,
+    text: 'The other people your age talk about wanting someone in a way that sounds like a language you have not learned. You listen carefully and try to translate it into something you recognise. You find nothing that matches. You look at the people they describe and feel — not what they describe. You assume you are simply a late developer. You wait.',
+    choices: null,
+    effect: (p) => { p.e += 3; p.m -= 3; p.setMem('asexual_unnamed', true) },
+  },
+
+  {
+    id: 'asexual_name_arrives',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) => !G.flags.includes('orientation_asexual') && G.mem?.asexual_unnamed && G.age >= 15 && G.age <= 22 && !G.mem?.asexual_named,
+    text: (G) => {
+      if (G.currentYear >= 2000) return 'A forum thread. Someone describes experiencing the world the way you do — romantic feeling without sexual attraction, or neither, or something in between. The word they use is asexual. You read the thread from the beginning. You read it again. The waiting you have been doing for years suddenly has a name.'
+      return 'A book. The word is buried in a chapter on sexual variation and it is clinical and imprecise but it is closer than anything you have encountered before. Not the absence of feeling — the absence of one specific kind of feeling. You write the page number on a piece of paper and carry it in your pocket for a week.'
+    },
+    choices: [
+      { text: 'This is the word — you are asexual', tag: null, outcome: 'The relief is quiet. Not a crisis resolved but a confusion finally named. You have not been broken. You have been something else entirely.', effect: (p) => { p.m += 8; p.e += 5; p.addFlag('orientation_asexual'); p.setMem('asexual_named', true) } },
+      { text: 'Maybe not — keep waiting', tag: null, outcome: 'The doubt is reasonable. You file it away. But you return to the word at night, more often than you expected.', effect: (p) => { p.m -= 3; p.r += 4; p.setMem('asexual_named', true) } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'asexual_relationship_navigation',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) => G.flags.includes('orientation_asexual') && G.partner && G.age >= 20 && !G.mem?.asexual_relationship,
+    text: 'Your partner wants something from the relationship that you cannot give in the way they want it. The conversation is careful on both sides, which almost makes it harder. You are not broken. They are not wrong. You are two people with different needs trying to find a shape that fits both of you.',
+    choices: [
+      { text: 'Work something out together — honesty over convenience', tag: null, outcome: 'It requires ongoing negotiation. It is not easy. It may be sustainable.', effect: (p) => { p.m -= 5; p.partnerRel(-8); p.r += 5; p.addFlag('relationship_negotiated'); p.setMem('asexual_relationship', true) } },
+      { text: 'End it — this is not the right fit', tag: null, outcome: 'The breakup is mutual in the way that quiet incompatibilities tend to be. You part without bitterness. The loneliness afterward is specific.', effect: (p) => { p.m -= 15; p.r += 8; p.clearPartner(); p.setMem('asexual_relationship', true) } },
+    ],
+    effect: null,
+  },
+
+  // ── BISEXUAL SPECIFIC ─────────────────────────────────────────────────────────
+
+  {
+    id: 'bisexual_erasure',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) => G.flags.includes('orientation_bisexual') && G.age >= 18 && !G.mem?.bisexual_erasure,
+    text: 'It comes from both directions. From one: you are experimenting, you will choose eventually. From the other: you are really straight, just performing. You are in a relationship with someone and a third person tells you that your sexuality has been resolved now — that you have landed on a side. You have not landed. You are the same person you were before the relationship. You explain this. It does not take.',
+    choices: [
+      { text: 'Correct them directly — your identity is not conditional on your partner', tag: null, outcome: 'The conversation goes nowhere satisfying. But you have said the thing, which has its own value. You stop apologising for the complexity.', effect: (p) => { p.m -= 3; p.e += 5; p.addFlag('bisexual_advocate'); p.setMem('bisexual_erasure', true) } },
+      { text: 'Let it go — this argument costs more than it is worth', tag: null, outcome: 'You smile. You change the subject. You go home and feel the specific exhaustion of invisibility from people who were supposed to understand.', effect: (p) => { p.m -= 10; p.r += 7; p.setMem('bisexual_erasure', true) } },
+    ],
+    effect: null,
+  },
+
+  // ── DEAD-END FLAG FOLLOW-UPS ─────────────────────────────────────────────────
+
+  {
+    id: 'lgbtq_secret_relationship_ends',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.flags.includes('lgbtq_secret_relationship') && G.age >= 22 && !G.mem?.lgbtq_secret_rel_ended,
+    text: 'The relationship ends. It was built entirely in private — no photographs, no introductions, no shared history that exists outside the two of you — and when it ends there is nothing external to show for it. The people who might ask "are you alright?" do not know what they would be asking about. You sit with a loss that has no witnesses.',
+    choices: null,
+    effect: (p) => { p.m -= 18; p.r += 12; p.setMem('lgbtq_secret_rel_ended', true) },
   },
 
   {
