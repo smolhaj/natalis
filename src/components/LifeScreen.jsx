@@ -391,9 +391,16 @@ export default function LifeScreen() {
                     <span className="text-natalis-text font-semibold text-xs">{religionLabel}</span>
                   </div>
                   {/* Ethnicity */}
-                  <div className="flex justify-between items-center py-1">
+                  <div className="flex justify-between items-center py-1 border-b border-natalis-border">
                     <span className="text-natalis-muted text-xs">👤 Background</span>
                     <span className="text-natalis-text font-semibold text-xs">{ethnicName}</span>
+                  </div>
+                  {/* Sexual orientation */}
+                  <div className="flex justify-between items-center py-1">
+                    <span className="text-natalis-muted text-xs">🏳️‍🌈 Sexuality</span>
+                    <span className="text-natalis-text font-semibold text-xs">
+                      {flags.includes('lgbtq_identity') ? 'LGBTQ+' : 'Heterosexual'}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -760,7 +767,7 @@ export default function LifeScreen() {
             {/* Activities / Prison Life button */}
             {inPrison ? (
               <button
-                onClick={() => { setActiveTop('prison'); setShowActivities(v => !v) }}
+                onClick={() => setShowActivities(v => !v)}
                 className="flex-1 py-3 rounded-xl font-bold text-sm transition-all active:scale-95"
                 style={{ background: showActivities ? '#636366' : 'linear-gradient(135deg,#ff3b30,#c0392b)', color: 'white' }}
               >
