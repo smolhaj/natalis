@@ -313,6 +313,15 @@ function buildEffectProxy(state) {
   proxy.setEnrolled = (enrollment) => { proxy._newEnrolled = enrollment }
   proxy.setMem = (key, value) => { proxy.mem[key] = value }
   proxy.wipeMoney = (fraction = 1.0) => { proxy.mo -= Math.round((state.money ?? 0) * fraction) }
+  proxy.updateChildRel = (idx, delta) => {
+    if (!proxy._childRelDeltas) proxy._childRelDeltas = {}
+    proxy._childRelDeltas[idx] = (proxy._childRelDeltas[idx] ?? 0) + delta
+  }
+  proxy.updateFriendRel = (idx, delta) => {
+    if (!proxy._friendRelDeltas) proxy._friendRelDeltas = {}
+    proxy._friendRelDeltas[idx] = (proxy._friendRelDeltas[idx] ?? 0) + delta
+  }
+  proxy.killPartner = () => { proxy._killPartner = true }
   proxy.releaseFromPrison = () => { proxy._releaseFromPrison = true }
   proxy.killParent = (which) => { proxy._killParent = which }
   proxy.setResidency = (status) => { proxy._residencyStatus = status }
@@ -351,6 +360,23 @@ function resolveProxyExtras(state, proxy) {
   if (proxy._residencyStatus) next = { ...next, residencyStatus: proxy._residencyStatus }
   if (proxy._partnerRelDelta && next.partner) {
     next = { ...next, partner: { ...next.partner, relationshipQuality: clamp((next.partner.relationshipQuality ?? 60) + proxy._partnerRelDelta, 0, 100) } }
+  }
+  if (proxy._killPartner && next.partner) {
+    next = { ...next, partner: { ...next.partner, alive: false } }
+  }
+  if (proxy._childRelDeltas && next.children) {
+    next = { ...next, children: next.children.map((c, i) =>
+      proxy._childRelDeltas[i] !== undefined
+        ? { ...c, relationshipQuality: clamp((c.relationshipQuality ?? 50) + proxy._childRelDeltas[i], 0, 100) }
+        : c
+    )}
+  }
+  if (proxy._friendRelDeltas && next.friends) {
+    next = { ...next, friends: next.friends.map((f, i) =>
+      proxy._friendRelDeltas[i] !== undefined
+        ? { ...f, relationshipQuality: clamp((f.relationshipQuality ?? 50) + proxy._friendRelDeltas[i], 0, 100) }
+        : f
+    )}
   }
   if (proxy._mentalHealthUpdates) next = { ...next, mentalHealth: { ...(next.mentalHealth ?? {}), ...proxy._mentalHealthUpdates } }
   if (proxy._hobbyDeltas) {
@@ -1190,6 +1216,25 @@ function tickSiblings(state) {
 
 // ─── Fame ticking ─────────────────────────────────────────────────────────────
 
+function tickPartner(state) {
+  if (!state.partner || !state.partner.alive) return state
+  // Partner ages each year; approximate age from stored value
+  const partnerAge = (state.partner.age ?? 0) + 1
+  let partner = { ...state.partner, age: partnerAge }
+  // Natural death probability increases with age
+  let deathProb = 0
+  if (partnerAge >= 75) deathProb = 0.04 + (partnerAge - 75) * 0.012
+  else if (partnerAge >= 65) deathProb = 0.015 + (partnerAge - 65) * 0.0025
+  if (deathProb > 0 && chance(deathProb)) {
+    const log = [...state.log, { age: state.age, text: `${partner.name.split(' ')[0]} dies. You have been together for years. The house is immediately different.`, isKey: true }]
+    return { ...state, partner: { ...partner, alive: false }, flags: [...new Set([...state.flags, 'widowed', 'lost_partner'])], log }
+  }
+  // Relationship quality drifts slightly based on engagement
+  const drift = chance(0.3) ? (chance(0.5) ? 1 : -1) : 0
+  partner = { ...partner, relationshipQuality: clamp((partner.relationshipQuality ?? 60) + drift, 10, 100) }
+  return { ...state, partner }
+}
+
 function tickFame(state) {
   const fame = state.fame ?? 0
   if (fame <= 0) return state
@@ -1498,6 +1543,9 @@ export function tick(state) {
 
   // Asset appreciation/depreciation/maintenance
   s = tickAssets(s)
+
+  // Partner aging and natural death
+  s = tickPartner(s)
 
   // Fame decay if not in entertainment/sports
   s = tickFame(s)
