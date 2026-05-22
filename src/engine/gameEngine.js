@@ -1254,11 +1254,22 @@ function checkIllnessRisk(state) {
     const hcSuccessMod = { excellent: 1.15, good: 1.05, fair: 1.0, poor: 0.85, very_poor: 0.7 }
     const successMod = hcSuccessMod[state.character.country.healthcare] ?? 1.0
 
+    const archetype = state.character.country.archetype ?? 'wealthy_west'
+    const healthcare = state.character.country.healthcare ?? 'fair'
+    const illnessContext = {
+      excellent: `The tests come back quickly. The specialist explains everything clearly. You have options.`,
+      good:      `The GP refers you to a specialist. There is a wait. When you get there, the diagnosis is clear.`,
+      fair:      `The clinic is busy. You wait two hours. The doctor is straightforward. Treatment is available if you can afford it.`,
+      poor:      `The nearest hospital is hours away or the local clinic is understaffed. The diagnosis takes longer than it should.`,
+      very_poor: `There is no specialist here. The diagnosis is made by a doctor managing too many patients with too little. Treatment, if available, is rationed.`,
+    }
+    const illnessText = `${illnessContext[healthcare] ?? illnessContext.fair} You are diagnosed with ${illness.name}.`
+
     const event = {
       id: `illness_${illness.id}_${state.age}`,
       phase: getPhase(state.age),
       weight: 10,
-      text: `You are diagnosed with ${illness.name}.`,
+      text: illnessText,
       choices: illness.treatments.map(t => {
         const adjustedCost = Math.round(t.cost * costMult)
         const willSucceed = Math.random() < clamp(t.successChance * successMod, 0.05, 0.98)
@@ -3100,9 +3111,61 @@ export function generateEpitaph(state) {
     lines.push(`${He} owned ${propertyCount} properties. That meant something to ${him}.`)
   }
 
+  // — Immigration and citizenship —
+  if (flags.includes('achieved_citizen') || (state.residencyStatus === 'citizen' && flags.includes('emigrated'))) {
+    lines.push(`${He} earned citizenship in an adopted country — paperwork that meant more than its bureaucratic weight.`)
+  } else if (flags.includes('sought_asylum') && flags.includes('refugee_status')) {
+    lines.push(`${He} fled and was granted refuge. The years of waiting between were their own kind of sentence.`)
+  } else if (flags.includes('illegal_immigrant') && !flags.includes('achieved_citizen')) {
+    lines.push(`${He} lived without papers in a country that barely acknowledged ${his} existence, and built a life there anyway.`)
+  }
+
+  // — Mental health —
+  if (flags.includes('depression_managed') || flags.includes('anxiety_managed')) {
+    lines.push(`${He} lived with a condition that made ordinary things harder. ${He} managed it more often than not.`)
+  }
+
+  // — Grief carried —
+  if (flags.includes('lost_child')) {
+    lines.push(`${He} outlived a child. There is no adequate sentence for this.`)
+  } else if (flags.includes('lost_partner')) {
+    lines.push(`${He} lost the person ${he} had built a life with, and had to learn what came after.`)
+  }
+
+  // — Climate witness —
+  if (flags.includes('witnessed_climate_change') && flags.includes('disaster_survivor')) {
+    lines.push(`${He} lived through the consequences of a warming world. The century ${he} was born into was not the century ${he} died in.`)
+  }
+
+  // — LGBTQ life —
+  if (flags.includes('lgbtq_identity') && flags.includes('lgbtq_out_family')) {
+    lines.push(`${He} came out, at a cost that varied depending on who was in the room.`)
+  } else if (flags.includes('lgbtq_identity') && flags.includes('lgbtq_criminalized_country')) {
+    lines.push(`${He} lived in a country that criminalised what ${he} was. ${He} navigated it.`)
+  }
+
+  // — Career under regime —
+  if (flags.includes('journalism_threat') || flags.includes('censored')) {
+    lines.push(`${He} worked in journalism and learned what it costs to tell the truth in a place that prefers silence.`)
+  }
+  if (flags.includes('story_killed')) {
+    lines.push(`There was a story ${he} knew and could not publish. ${He} carried it.`)
+  }
+
+  // — Faith —
+  if (flags.includes('completed_hajj')) {
+    lines.push(`${He} made the pilgrimage to Mecca. Whatever ${he} went looking for, ${he} found something.`)
+  } else if (flags.includes('left_religion') && flags.includes('faith_crisis')) {
+    lines.push(`${He} walked away from the faith ${he} was raised in. It was not a small thing.`)
+  } else if (flags.includes('faith_deepened')) {
+    lines.push(`${His} faith grew rather than dimmed with age — the kind that asks hard questions and survives them.`)
+  }
+
   // — End of life —
   if (flags.includes('found_meaning') || flags.includes('acceptance') || flags.includes('peace')) {
     lines.push(`Near the end, ${name} seemed at peace with the shape ${his} life had taken.`)
+  } else if (flags.includes('life_reviewed')) {
+    lines.push(`${He} reviewed the life honestly before the end.`)
   } else if (regret > 75) {
     lines.push(`${He} died carrying a weight that had no name — a persistent sense that something essential had been missed.`)
   } else if (regret > 50) {

@@ -352,6 +352,92 @@ export const CULTURE_EVENTS = [
     effect: (p) => { p.m -= 25; p.h -= 8; p.r += 20; p.addFlag('arrested_for_orientation'); p.addFlag('learned_silence') },
   },
 
+  // ── LGBTQ HISTORICAL — UK SECTION 28 ─────────────────────────────────────────
+
+  {
+    id: 'cult_lgbtq_section28_school',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) => G.flags.includes('same_sex_attracted') &&
+      G.character.country.name === 'United Kingdom' &&
+      G.currentYear >= 1988 && G.currentYear <= 2003 &&
+      G.age >= 13 && G.age <= 17,
+    text: 'Section 28 of the Local Government Act is the law. It prohibits local authorities from "intentionally promoting homosexuality" or teaching it as a "pretended family relationship." What this means in practice: your school cannot acknowledge you exist. The teacher who noticed you struggling last term and started to reach out has stopped. The library does not stock books that would help you understand yourself. You are legislatively alone.',
+    choices: [
+      { text: 'Find communities outside the school — youth groups, the internet', tag: null, outcome: 'An early LGBTQ youth group meets in a church hall forty minutes away by bus. The internet — if you have access — has forums. You are not the only one. The law cannot reach the church hall or the forum.', effect: (p) => { p.m += 5; p.s += 4; p.addFlag('found_community') } },
+      { text: 'Endure it — school ends', tag: null, outcome: 'You count the years. In 2000 the law is repealed in Scotland. In 2003 in England and Wales. You survive until the law changes. That counts as something.', effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('learned_silence') } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'cult_lgbtq_section28_teacher',
+    phase: 'adolescence',
+    weight: 2,
+    when: (G) => G.flags.includes('same_sex_attracted') &&
+      G.character.country.name === 'United Kingdom' &&
+      G.currentYear >= 1988 && G.currentYear <= 2003,
+    text: 'A teacher at your school has a reputation for being approachable. You almost said something to them last term. Then you heard from an older student that they had been warned about Section 28 — that any conversation about your kind of life is technically grounds for disciplinary action. The teacher has their own protection to think about. You understand this. It does not make the silence smaller.',
+    choices: [
+      { text: 'Say something anyway — take the risk together', tag: null, outcome: 'The teacher closes the door. They do not say anything explicitly that could be reported. But they write a book title on a piece of paper and slide it across the desk. It is enough to know there is a person on the other side of the wall.', effect: (p) => { p.m += 4; p.addFlag('has_close_friend') } },
+      { text: 'Say nothing — you do not want to put them at risk', tag: null, outcome: 'You carry the silence home. The teacher sees you do it. Neither of you acknowledges what has passed between you. Years later you look them up to say thank you and cannot find the words.', effect: (p) => { p.m -= 5; p.r += 4 } },
+    ],
+    effect: null,
+  },
+
+  // ── LGBTQ COMING OUT — CONTEXTUALLY DIFFERENTIATED ───────────────────────────
+
+  {
+    id: 'cult_lgbtq_coming_out_muslim_majority',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.flags.includes('same_sex_attracted') &&
+      !G.lgbtqCriminalized &&
+      ['muslim_sunni', 'muslim_shia'].includes(G.character.religion) &&
+      G.age >= 18 && G.age <= 30 &&
+      !G.flags.includes('out'),
+    text: 'You are not in a country that will imprison you. But coming out in your community is not the same as coming out in Amsterdam. The faith your family lives by has a clear position. The culture goes further. The coming out conversation, if it happens, will not be followed by a long silence and then acceptance — it will be followed by grief, prayer, community pressure, and possibly a request that you leave.',
+    choices: [
+      { text: 'Come out to the most likely ally first — a sibling or cousin', tag: null, outcome: 'They do not betray you. They also do not know what to do with the information. The conversation ends without resolution and is never quite finished. You are more out than you were, which is not nothing.', effect: (p) => { p.m += 3; p.r += 5; p.addFlag('out') } },
+      { text: 'Live openly in the world outside the family — keep the two worlds separate', tag: null, outcome: 'The city you work in does not care. The house you grew up in still does. You become expert at the geography of this — which streets belong to which version of yourself.', effect: (p) => { p.m -= 4; p.r += 6; p.addFlag('out') } },
+      { text: 'Wait — the moment is not right yet', tag: null, outcome: 'The waiting is its own cost. Some moments never become right. You will have to decide at some point whether waiting forever is something you can live with.', effect: (p) => { p.m -= 6; p.r += 5 } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'cult_lgbtq_coming_out_netherlands',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.flags.includes('same_sex_attracted') &&
+      G.character.country.name === 'Netherlands' &&
+      G.currentYear >= 2000 &&
+      G.age >= 17 && G.age <= 28 &&
+      !G.flags.includes('out'),
+    text: 'The Netherlands was the first country in the world to legalise same-sex marriage, in 2001. You are coming out in a society that has been thinking about this longer than most, in a city where the canal houses have pride flags and where the school counselor would have known exactly what to say if you had asked. The conversation with your parents is still the conversation with your parents. But the legal and social structure is behind you.',
+    choices: [
+      { text: 'Tell your parents — this should be straightforward', tag: null, outcome: 'Your mother says she already knew. Your father takes three weeks. By the end of three weeks he is asking about your life in a way that feels like the beginning of something. The country made this possible. The family made it real.', effect: (p) => { p.m += 12; p.s += 5; p.addFlag('out') } },
+      { text: 'Come out publicly first — life first, conversation later', tag: null, outcome: 'Your parents find out from someone else. The conversation is harder than it needed to be. The outcome is the same: you are out, and they are navigating it.', effect: (p) => { p.m += 8; p.s += 3; p.r += 2; p.addFlag('out') } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'cult_lgbtq_conversion_fear',
+    phase: 'adolescence',
+    weight: 2,
+    when: (G) => G.flags.includes('same_sex_attracted') &&
+      G.lgbtqCriminalized &&
+      G.age >= 16 && G.age <= 22,
+    text: 'In your country, what you are is punishable. In your community, it is unspeakable. You have read that other countries have begun to recognize it. The distance between here and there is not just geographical.',
+    choices: [
+      { text: 'Plan a path out — save money, research asylum', tag: null, outcome: 'The planning itself gives you something to hold. The day you leave is still years away. The knowledge that you are working toward it keeps you functional.', effect: (p) => { p.m += 3; p.e += 4; p.addFlag('escape_planning') } },
+      { text: 'Build a secret life — find others like you quietly', tag: null, outcome: 'They exist in every city, in every country that has made this illegal. The network is invisible and vital. You are found.', effect: (p) => { p.m += 5; p.s += 3; p.addFlag('closeted_survival'); p.addFlag('found_community') } },
+      { text: 'Pray it away — perhaps it is something you can change', tag: null, outcome: 'You spend two years in this hypothesis. The prayers do not change the person. They do teach you something about desperation, and about the cruelty of telling someone their nature is negotiable.', effect: (p) => { p.m -= 12; p.r += 8; p.addFlag('closeted_survival') } },
+    ],
+    effect: null,
+  },
+
   // ── CHILD MARRIAGE ───────────────────────────────────────────────────────────
 
   {

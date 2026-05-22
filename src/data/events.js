@@ -4,6 +4,10 @@ import { HISTORICAL_EVENTS } from './events_historical.js'
 import { CULTURE_EVENTS } from './events_culture.js'
 import { TECHNOLOGY_EVENTS } from './events_technology.js'
 import { IMMIGRATION_EVENTS } from './events_immigration.js'
+import { CAREER_REGIME_EVENTS } from './events_career_regime.js'
+import { CONFLICT_CHILDHOOD_EVENTS } from './events_conflict_childhood.js'
+import { LGBTQ_EVENTS } from './events_lgbtq.js'
+import { MENTAL_HEALTH_EVENTS } from './events_mental_health.js'
 
 const BASE_EVENTS = [
   // ── EARLY CHILDHOOD ─────────────────────────────────────────────────────────
@@ -8170,4 +8174,4 @@ const BASE_EVENTS = [
   },
 ]
 
-export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS, ...TECHNOLOGY_EVENTS, ...IMMIGRATION_EVENTS]
+export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS, ...TECHNOLOGY_EVENTS, ...IMMIGRATION_EVENTS, ...CAREER_REGIME_EVENTS, ...CONFLICT_CHILDHOOD_EVENTS, ...LGBTQ_EVENTS, ...MENTAL_HEALTH_EVENTS]

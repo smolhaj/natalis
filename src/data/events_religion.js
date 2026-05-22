@@ -161,10 +161,10 @@ export const RELIGION_EVENTS = [
     phase: 'childhood',
     weight: 7,
     when: (G) => ['muslim_sunni', 'muslim_shia'].includes(G.character.religion) && G.age >= 8 && G.age <= 12 && !G.mem?.ramadan_first,
-    text: 'You decide this Ramadan you will fast the full month with the adults. Your mother says you are too young. Your father says it is your choice. Dawn comes and with it, hunger.',
+    text: 'This Ramadan, you tell your parents you want to fast the full month with the adults. Your mother touches your face. The first suhoor wakes you before dawn — your grandmother\'s hands moving in the dark kitchen, the specific smell of food that is also a clock. You eat before the fajr call. Then the long day begins.',
     choices: [
-      { text: 'Complete the full fast every day', tag: 'devout', outcome: 'By the third week it no longer feels like deprivation. It feels like clarity. You understand something that cannot be explained.', effect: (p) => { p.m += 10; p.h -= 3; p.e += 4; p.karma += 5; p.addFlag('devout'); p.setMem('ramadan_first', true) } },
-      { text: 'Break it on the third day', tag: null, outcome: 'You eat a date when no one is looking. You feel ashamed, then hungry, then relieved. You\'ll try again next year.', effect: (p) => { p.m -= 3; p.r += 3; p.setMem('ramadan_first', true) } },
+      { text: 'Complete the full fast every day', tag: 'devout', outcome: 'By the third week the hunger becomes something you manage rather than suffer. The iftar — the date first, always, then water, then the meal — acquires a weight that ordinary food never has. On the last night you hear the moon announced and understand that Eid al-Fitr is earned, not given. You carry this knowledge for the rest of your life.', effect: (p) => { p.m += 10; p.h -= 3; p.e += 4; p.karma += 5; p.addFlag('devout'); p.setMem('ramadan_first', true) } },
+      { text: 'Break it on the third day', tag: null, outcome: 'You eat a date when no one is watching. The shame is immediate and specific — not the shame of punishment but the shame of a promise you made to yourself. You tell no one. Next year you manage it.', effect: (p) => { p.m -= 3; p.r += 3; p.setMem('ramadan_first', true) } },
     ],
   },
 
@@ -214,9 +214,9 @@ export const RELIGION_EVENTS = [
     phase: 'adult',
     weight: 5,
     when: (G) => ['muslim_sunni', 'muslim_shia'].includes(G.character.religion) && G.age >= 30 && G.age <= 60 && !G.mem?.hajj && G.money > 5000,
-    text: 'You have saved for years. The fifth pillar: Hajj. Two million Muslims converging on Mecca. The cost, the logistics, the physical endurance required — and the promise of something that cannot be put into words.',
+    text: 'You have saved for years. The fifth pillar. Your name goes on the list, and when the confirmation comes, your hands are not steady. Two million Muslims converging from every country on earth — the same five days, the same sequence: Mecca, then Mina on the 8th of Dhul Hijjah, then the plain of Arafat where you stand from noon until sunset and ask for what you cannot ask anywhere else. Then Muzdalifah under an open sky, sleeping on stones, collecting pebbles for the stoning at Jamarat. The body does not forgive this easily. The soul is another matter.',
     choices: [
-      { text: 'Go — this year', tag: 'devout', outcome: 'Tawaf around the Ka\'aba in the pre-dawn dark, surrounded by millions. You weep. You have no explanation. You don\'t need one.', effect: (p) => { p.mo -= 6000; p.m += 20; p.karma += 10; p.h -= 5; p.addFlag('hajj_complete'); p.setMem('hajj', true) } },
+      { text: 'Go — this year', tag: 'devout', outcome: 'On the second night in Mina your shoes blister through. The tawaf at the Ka\'aba before dawn — seven circuits, millions of shoulders, the black stone at the corner — you weep without embarrassment. The man next to you is from Indonesia and speaks no Arabic and no language you share, and you understand each other completely. You come home changed in ways you cannot yet describe and may never fully articulate.', effect: (p) => { p.mo -= 6000; p.m += 20; p.karma += 10; p.h -= 5; p.addFlag('hajj_complete'); p.setMem('hajj', true) } },
       { text: 'Save more first — it should be done properly', tag: null, outcome: 'You wait. The pillar does not go anywhere. You return to the saving.', effect: (p) => { p.setMem('hajj', false) } },
     ],
   },
@@ -254,9 +254,18 @@ export const RELIGION_EVENTS = [
     phase: 'teens',
     weight: 8,
     when: (G) => G.character.religion === 'jewish' && G.age === 13 && !G.mem?.bar_bat_mitzvah,
-    text: (G) => `Your ${G.character.gender === 'male' ? 'Bar Mitzvah' : 'Bat Mitzvah'} has been in preparation for a year. You have learned the Torah portion, the blessings, the haftarah. Now you stand at the bimah before the entire congregation.`,
+    text: (G) => {
+      if (G.character.gender === 'male') {
+        return 'Your Bar Mitzvah has been in preparation for a year. The Torah portion was assigned months ago — you have read it in Hebrew and in translation more times than you can count. The blessings, the haftarah. Today you are called to the bimah before the entire congregation. You are, by Jewish law, now responsible for your own commandments.'
+      }
+      // Bat mitzvah history: not practiced in Orthodox Judaism; introduced in Conservative and Reform synagogues from the mid-20th century
+      if (G.currentYear < 1960) {
+        return 'In your community, girls are not called to the bimah the way boys are. The ceremony for you, if there is one, happens on a Friday night — quiet, smaller, without the full Torah reading. It is still yours. The weight of the tradition lands differently when you understand how recently girls were admitted to it at all.'
+      }
+      return 'Your Bat Mitzvah has been in preparation for a year. You have learned the Torah portion, the blessings, the haftarah. You stand at the bimah before the entire congregation. Your grandmother whispers to the woman next to her that in her day this was not done — and she means it as the highest compliment.'
+    },
     choices: [
-      { text: 'Deliver your Torah portion flawlessly', tag: null, outcome: 'The congregation applauds. Your grandfather, a Holocaust survivor, weeps quietly in the front row. You understand in that moment what you are carrying.', effect: (p) => { p.m += 15; p.s += 8; p.e += 5; p.mo += 500; p.setMem('bar_bat_mitzvah', true) } },
+      { text: 'Deliver your Torah portion without stumbling', tag: null, outcome: 'The congregation applauds. Your grandfather, a Holocaust survivor, weeps quietly in the front row. You understand in that moment what you are carrying — and how many were lost before it could be handed to you.', effect: (p) => { p.m += 15; p.s += 8; p.e += 5; p.mo += 500; p.setMem('bar_bat_mitzvah', true) } },
       { text: 'Stumble but recover', tag: null, outcome: 'You lose your place in the Hebrew. Your rabbi nods gently. You find it again. You finish. It is enough.', effect: (p) => { p.m += 8; p.s += 3; p.mo += 300; p.setMem('bar_bat_mitzvah', true) } },
     ],
   },
@@ -462,5 +471,83 @@ export const RELIGION_EVENTS = [
       { text: 'Confide in one trusted person', tag: null, outcome: 'They don\'t betray you. The secret, shared, becomes slightly lighter.', effect: (p) => { p.m -= 5; p.setMem('apostasy_risk', true) } },
       { text: 'Find a way to leave the country', tag: null, outcome: 'The paperwork takes years. The day you board the flight you are shaking. You don\'t stop shaking for three days.', effect: (p) => { p.m -= 10; p.e += 5; p.addFlag('emigrated'); p.setMem('apostasy_risk', true) } },
     ],
+  },
+
+  // ── FAITH CRISIS WITH SPECIFIC THEOLOGICAL CONTENT ─────────────────────────
+
+  {
+    id: 'rel_faith_crisis_evolution',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) => G.flags.includes('devout') && G.age >= 16 && G.age <= 28 && !G.mem?.faith_crisis_evolution &&
+      ['christian_protestant', 'christian_catholic', 'christian_orthodox'].includes(G.character.religion) &&
+      ['wealthy_west', 'wealthy_east', 'post_soviet', 'developing_urban'].includes(G.character.country.archetype),
+    text: 'In a biology class — or a university lecture, or a book you picked up without expecting it — natural selection is explained with a precision and explanatory power that your Sunday school never addressed. You sit with the question that nobody in your faith community has answered satisfactorily: if the world was created over six days and the genealogies in Genesis are literal, what do you do with 3.8 billion years of microbial life in the fossil record? The two things do not fit together. You have known this was a tension. Now you cannot un-know it.',
+    choices: [
+      { text: 'Accept theistic evolution — God as the author of the process', tag: null, outcome: 'You find theologians and scientists who have walked this road before you. The faith is smaller and more honest. It survives.', effect: (p) => { p.e += 8; p.m -= 2; p.r += 2; p.addFlag('questioned_faith'); p.setMem('faith_crisis_evolution', true) } },
+      { text: 'Reject creationism entirely — and feel the rest of the structure loosen', tag: null, outcome: 'One load-bearing wall comes down. Others follow. You are in a different place when the process ends — not certain of where, but honest about the journey.', effect: (p) => { p.e += 10; p.m -= 6; p.clearFlag('devout'); p.addFlag('questioned_faith'); p.setMem('faith_crisis_evolution', true) } },
+      { text: 'Double down — science has its limits and faith has its domain', tag: 'devout', outcome: 'You find a congregation that does not treat this as a contradiction. The intellectual tension does not go away. You learn to live in it.', effect: (p) => { p.m += 3; p.addFlag('devout'); p.setMem('faith_crisis_evolution', true) } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'rel_faith_crisis_problem_of_evil',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) => G.flags.includes('devout') && G.age >= 17 && G.age <= 30 && !G.mem?.faith_crisis_evil &&
+      ['christian_protestant', 'christian_catholic', 'jewish', 'muslim_sunni'].includes(G.character.religion),
+    text: 'Something happens — a child\'s death, a natural disaster, a senseless cruelty you witness or read about in precise detail — and the question sits in you without moving. If God is omnipotent, omniscient, and perfectly good, what is the explanation for this? You have heard "mysterious ways." You have heard "free will." The earthquake that buried the schoolchildren was not an act of human will. The children had none either. The theodicy problem is an old one. That does not make it easier.',
+    choices: [
+      { text: 'Wrestle with it — stay in the tradition while holding the question', tag: null, outcome: 'The faith you arrive at on the other side of this is not the faith you started with. It is more careful, less certain, and possibly stronger for having been tested. You find you are not the first to have sat with this: Job sat with it. Augustine sat with it. You are in good company.', effect: (p) => { p.e += 7; p.m -= 3; p.r += 3; p.addFlag('questioned_faith'); p.setMem('faith_crisis_evil', true) } },
+      { text: 'Accept the limits of human understanding — faith is not answers', tag: 'devout', outcome: 'You learn the difference between explanation and presence. You stop requiring the former and look for the latter. This is a different kind of theology — not less demanding, differently demanding.', effect: (p) => { p.m += 4; p.addFlag('devout'); p.setMem('faith_crisis_evil', true) } },
+      { text: 'Let it end the faith — you cannot reconcile this', tag: null, outcome: 'You stop going to services. Nobody asks you directly. You are not angry at God — you are done with the whole structure of the question. You find other frameworks. Some of them hold. None of them answer the problem of evil either.', effect: (p) => { p.e += 6; p.m -= 5; p.clearFlag('devout'); p.addFlag('questioned_faith'); p.setMem('faith_crisis_evil', true) } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'rel_faith_crisis_historical_criticism',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.flags.includes('devout') && G.age >= 18 && G.age <= 32 && !G.mem?.faith_crisis_text &&
+      ['christian_protestant', 'christian_catholic', 'jewish'].includes(G.character.religion) &&
+      G.stats.smarts >= 55,
+    text: 'A university course, or a book, or a conversation with someone who knows more than they let on — and suddenly you are looking at historical-critical scholarship on the biblical texts. The Documentary Hypothesis. Deutero-Isaiah. The consensus among archaeologists that there is no evidence of a large-scale Exodus from Egypt. The texts were written and edited across centuries, by multiple authors, in response to specific political and theological pressures of their time. The Bible, examined this way, is a human document.',
+    choices: [
+      { text: 'Engage it fully — the historical understanding changes but does not destroy', tag: null, outcome: 'You read Bart Ehrman and also the theologians who have read Bart Ehrman and remained believers. You arrive at a faith that does not require a supernatural origin for the text. It asks something different of you, and you give it.', effect: (p) => { p.e += 10; p.m -= 3; p.addFlag('questioned_faith'); p.setMem('faith_crisis_text', true) } },
+      { text: 'Retreat from the scholarship — you do not want this knowledge', tag: null, outcome: 'You close the book. The question stays. It will come back in a different form. Questions of this kind always do.', effect: (p) => { p.m -= 4; p.r += 5; p.setMem('faith_crisis_text', true) } },
+      { text: 'Accept it and let the faith go', tag: null, outcome: 'You call yourself "culturally" your religion now. You keep the holidays for the community. The metaphysics you leave behind. You feel, strangely, lighter.', effect: (p) => { p.e += 8; p.m += 2; p.clearFlag('devout'); p.setMem('faith_crisis_text', true) } },
+    ],
+    effect: null,
+  },
+
+  // ── RAMADAN AND EID ─────────────────────────────────────────────────────────
+
+  {
+    id: 'rel_ramadan_minority_country',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) => ['muslim_sunni', 'muslim_shia'].includes(G.character.religion) &&
+      G.character.country.archetype === 'wealthy_west' &&
+      G.age >= 16 && G.age <= 35 &&
+      !G.mem?.ramadan_minority,
+    text: 'Ramadan in a country where almost nobody else is fasting. The workday does not pause for Maghrib. Your colleagues eat lunch at the table next to yours and do not notice. You wake before dawn for suhoor alone — no family, no call to prayer audible through the window — and the fast is held together by intention rather than architecture. At iftar you break it with a date and water in a break room and call your mother.',
+    choices: [
+      { text: 'Keep the fast fully, privately', tag: 'devout', outcome: 'By the end of the month you understand something about interiority — that the practice does not require a collective infrastructure to be real. The Eid prayer you attend in a community center in an industrial part of the city is the most alive thing you have felt all year.', effect: (p) => { p.m += 8; p.karma += 6; p.addFlag('devout'); p.setMem('ramadan_minority', true) } },
+      { text: 'Modify the fast — make it workable', tag: null, outcome: 'You fast on the weekends and manage what you can during the week. You feel guilty and pragmatic in roughly equal measure. The intention is real. The execution is human.', effect: (p) => { p.m -= 2; p.r += 3; p.setMem('ramadan_minority', true) } },
+      { text: 'Let this Ramadan pass — next year you will be better placed', tag: null, outcome: 'You watch the month come and go. The absence is noticeable in the way that skipping something important is always noticeable.', effect: (p) => { p.m -= 4; p.r += 4; p.setMem('ramadan_minority', true) } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'rel_eid_al_fitr',
+    phase: 'childhood',
+    weight: 6,
+    when: (G) => ['muslim_sunni', 'muslim_shia'].includes(G.character.religion) && G.age >= 5 && G.age <= 14 && !G.mem?.eid_childhood,
+    text: 'The moon is announced. Ramadan is over. Eid al-Fitr begins at Fajr with a prayer that cannot be prayed at home — it must be done in congregation, in the open air or in the mosque, everyone in clean clothes, the children in new ones if the family can manage it. There is your grandmother\'s semolina, the neighbors bringing sweets, the money pressed into your hands by relatives. The holiday is three days but the first morning is the one.',
+    choices: null,
+    effect: (p) => { p.m += 14; p.karma += 4; p.setMem('eid_childhood', true) },
   },
 ]
