@@ -196,6 +196,8 @@ export const GENDER_EVENTS = [
     when: (G) =>
       G.character.gender === 'female' &&
       ['subsaharan', 'developing_unstable', 'developing_urban'].includes(G.character.country.archetype) &&
+      G.flags.includes('university_graduate') &&
+      !G.flags.includes('first_gen_graduate') &&
       G.stats.smarts >= 50,
     text: 'You are the first woman in your family to receive a university degree. Your grandmother does not understand what it means. Your mother cries. At the ceremony, your father sits very straight in the plastic chair and does not look away from you once.',
     context: null,

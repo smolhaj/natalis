@@ -1199,7 +1199,7 @@ function tickSiblings(state) {
 
   const siblings = state.siblings.map(sib => {
     if (!sib.alive) return sib
-    const sibAge = state.age - sib.ageDiff
+    const sibAge = state.age + sib.ageDiff
     let deathProb = 0
     if (sibAge > 80) deathProb = 0.06 + (sibAge - 80) * 0.01
     else if (sibAge > 65) deathProb = 0.015
