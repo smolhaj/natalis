@@ -73,7 +73,7 @@ export const CULTURE_EVENTS = [
   },
   {
     id: 'cult_dic_informant_fear',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 2,
     when: (G) => G.regime === 'military_dictatorship' && G.age >= 25,
     text: 'A colleague at work says something critical about the government — small, quiet, over coffee. You say nothing. Later you wonder if he was testing you. You are now careful about everything you say to everyone.',
@@ -160,7 +160,7 @@ export const CULTURE_EVENTS = [
   },
   {
     id: 'cult_com_secret_police',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 2,
     when: (G) => G.regime === 'single_party_communist' && G.age >= 25,
     text: 'A man comes to the door. He is politely dressed. He would like to ask you some questions about a colleague. He makes clear this is voluntary. You invite him in. You give answers that are true and also safe. After he leaves you sit still for a long time.',
@@ -250,7 +250,7 @@ export const CULTURE_EVENTS = [
   },
   {
     id: 'cult_theo_prayer_times',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 3,
     when: (G) => G.regime === 'theocracy' && G.age >= 20,
     text: 'Work stops for prayer five times a day. The call to prayer comes from every speaker on every corner. You were raised with this. It is the rhythm of the day, the season, the year. For some it is peace. For others it is pressure. Sometimes both at once.',
@@ -292,18 +292,18 @@ export const CULTURE_EVENTS = [
   },
   {
     id: 'cult_transition_hyperinflation',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 2,
     when: (G) => {
       if (!G.character.country.regimeHistory) return false
       return G.character.country.regimeHistory.some(r =>
         Math.abs(r.year - G.currentYear) <= 3 &&
-        (r.from === 'single_party_communist' || G.flags.includes('lived_through_coup'))
+        (r.to === 'federal_republic' || r.to === 'democracy' || G.flags.includes('lived_through_coup'))
       ) && G.money > 0
     },
     text: 'The currency reform happens. A zero is knocked off every denomination. The savings your family kept in the old banknotes are worth a tenth of what they were last week. You learn what it means for money to not be solid.',
     choices: null,
-    effect: (p) => { p.mo = -(p.mo ?? 0); p.m -= 15; p.r += 12; p.addFlag('survived_hyperinflation') },
+    effect: (p) => { p.wipeMoney(0.85); p.w -= 20; p.m -= 15; p.r += 12; p.addFlag('survived_hyperinflation') },
   },
 
   // ── LGBTQ UNDER CRIMINALIZATION ──────────────────────────────────────────────
@@ -544,7 +544,7 @@ export const CULTURE_EVENTS = [
   },
   {
     id: 'cult_eth_neighborhood_redlining',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 2,
     when: (G) => isDisadvantaged(G) && G.age >= 25 && G.money > 20000,
     text: 'You find a neighborhood you can afford in. The bank\'s mortgage officer is polite and asks a number of detailed questions about the area. The loan terms offered are less favorable than what a colleague received in a neighborhood across the city. You have enough to calculate the difference.',

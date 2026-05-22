@@ -312,6 +312,7 @@ function buildEffectProxy(state) {
   proxy.setGpa = (gpa) => { proxy._newGpa = gpa }
   proxy.setEnrolled = (enrollment) => { proxy._newEnrolled = enrollment }
   proxy.setMem = (key, value) => { proxy.mem[key] = value }
+  proxy.wipeMoney = (fraction = 1.0) => { proxy.mo -= Math.round((state.money ?? 0) * fraction) }
   proxy.releaseFromPrison = () => { proxy._releaseFromPrison = true }
   proxy.killParent = (which) => { proxy._killParent = which }
   proxy.setResidency = (status) => { proxy._residencyStatus = status }

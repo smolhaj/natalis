@@ -8,6 +8,9 @@ import { CAREER_REGIME_EVENTS } from './events_career_regime.js'
 import { CONFLICT_CHILDHOOD_EVENTS } from './events_conflict_childhood.js'
 import { LGBTQ_EVENTS } from './events_lgbtq.js'
 import { MENTAL_HEALTH_EVENTS } from './events_mental_health.js'
+import { GRIEF_EVENTS } from './events_grief.js'
+import { GRIEF_MENTAL_EVENTS } from './events_grief_mental.js'
+import { RELIGION_ARC_EVENTS } from './events_religion_arc.js'
 
 const BASE_EVENTS = [
   // ── EARLY CHILDHOOD ─────────────────────────────────────────────────────────
@@ -8174,4 +8177,4 @@ const BASE_EVENTS = [
   },
 ]
 
-export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS, ...TECHNOLOGY_EVENTS, ...IMMIGRATION_EVENTS, ...CAREER_REGIME_EVENTS, ...CONFLICT_CHILDHOOD_EVENTS, ...LGBTQ_EVENTS, ...MENTAL_HEALTH_EVENTS]
+export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS, ...TECHNOLOGY_EVENTS, ...IMMIGRATION_EVENTS, ...CAREER_REGIME_EVENTS, ...CONFLICT_CHILDHOOD_EVENTS, ...LGBTQ_EVENTS, ...MENTAL_HEALTH_EVENTS, ...GRIEF_EVENTS, ...GRIEF_MENTAL_EVENTS, ...RELIGION_ARC_EVENTS]

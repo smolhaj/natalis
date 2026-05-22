@@ -46,7 +46,7 @@ export const IMMIGRATION_EVENTS = [
 
   {
     id: 'imm_undoc_hospital_avoid',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 2,
     when: (G) => (G.residencyStatus === 'undocumented' || G.residencyStatus === 'tourist_overstay') && G.age >= 20,
     text: 'The pain has been present for three days. You know what the clinic visit would involve — a form, an ID number, a record. You look up the symptoms online and decide it is probably not serious. You take something over-the-counter and wait. The pain recedes after five days. You are relieved and also furious in a way you have nowhere to put.',
@@ -130,7 +130,7 @@ export const IMMIGRATION_EVENTS = [
 
   {
     id: 'imm_asylum_limbo',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 2,
     when: (G) => G.residencyStatus === 'asylum_seeker' && G.age >= 25 && !G.flags.includes('asylum_decision_received'),
     text: 'It has been three years. The case is still pending. You are not legally permitted to work. You are not permitted to move. You exist inside a bureaucratic pause of indefinite length, and the people in the offices that hold your file are not slow out of malice — they are simply overwhelmed, and you are a number in a queue, and the queue is very long.',
@@ -181,7 +181,7 @@ export const IMMIGRATION_EVENTS = [
 
   {
     id: 'imm_visa_citizenship_question',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 3,
     when: (G) => G.residencyStatus === 'work_visa' && G.age >= 28,
     text: 'A colleague from this country, well-meaning, asks why you don\'t just apply for citizenship. You explain the waiting periods, the financial requirements, the language tests, the character assessments, the dependent status of your family on each approval. He nods. You can see him trying to absorb this. He says "that sounds really complicated." You say yes.',
@@ -193,7 +193,7 @@ export const IMMIGRATION_EVENTS = [
 
   {
     id: 'imm_status_pr_granted',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 3,
     when: (G) => (G.residencyStatus === 'work_visa' || G.residencyStatus === 'refugee_status') && G.age >= 25 && !G.flags.includes('pr_granted'),
     text: 'The letter has a green tint to it, which seems deliberate. Permanent residency approved. You have been waiting for this document for four years. You read it twice and put it down. The relief comes in waves over the following week, not all at once — your nervous system has been braced for so long it doesn\'t know how to stop.',
@@ -203,7 +203,7 @@ export const IMMIGRATION_EVENTS = [
 
   {
     id: 'imm_status_citizenship_ceremony',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 2,
     when: (G) => G.residencyStatus === 'permanent_resident' && G.age >= 28 && G.flags.includes('pr_granted') && !G.flags.includes('naturalized_citizen'),
     text: 'You stand in a room with forty other people from thirty other countries and you say an oath to a country that is not the one you were born in. Some people cry. You do not, but you understand why they do. The official shakes your hand. You are given a small flag. On the way home you hold it and try to understand what has just changed and what has not.',
@@ -213,7 +213,7 @@ export const IMMIGRATION_EVENTS = [
 
   {
     id: 'imm_status_first_passport',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 2,
     when: (G) => G.flags.includes('naturalized_citizen') && !G.flags.includes('new_passport_received'),
     text: 'The passport arrives in a padded envelope. You open it. Your face looks like it always looks. Your name is spelled correctly. The cover has the emblem of a country you chose, which is a different kind of belonging than a country that chose you by accident of birth. You hold it for longer than you need to.',
@@ -223,7 +223,7 @@ export const IMMIGRATION_EVENTS = [
 
   {
     id: 'imm_status_return_visit',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 2,
     when: (G) => G.flags.includes('new_passport_received') && G.character.country.name !== G.currentCountry?.name && !G.flags.includes('returned_on_new_passport'),
     text: 'You fly back to the country you were born in. The border officer looks at your passport — the new one — and then at you, and something crosses his face that is not hostility but is not warmth either. He stamps it. You walk through. On the other side, everything is both familiar and unmistakably foreign. You are a visitor now in the place that made you.',
@@ -261,7 +261,7 @@ export const IMMIGRATION_EVENTS = [
 
   {
     id: 'imm_deported',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 2,
     when: (G) => G.flags.includes('deportation_ordered') && !G.flags.includes('deported'),
     text: 'The flight is at 6 AM. An officer accompanies you to the gate. He is not unkind. You have one bag. Everything else was left with people who said they would hold it. The shame is not about what you did — you were trying to live — but about returning without the thing you went to get. During the flight you do not sleep. You think about what comes next with the specific clarity of someone who has no other choice but to plan.',
@@ -276,7 +276,7 @@ export const IMMIGRATION_EVENTS = [
 
   {
     id: 'imm_integration_accent',
-    phase: 'adult',
+    phase: 'midlife',
     weight: 2,
     when: (G) => (G.residencyStatus === 'permanent_resident' || G.residencyStatus === 'citizen') && G.flags.includes('emigrated') && G.age >= 30 && !G.flags.includes('accent_receding'),
     text: 'You catch yourself dreaming in the new language. The accent is still there — it will always be there, to some people — but it is softer than it was. A shopkeeper guesses a different country from the right one. Your old friends back home notice when you call: the cadence has changed. You are becoming someone they recognize less. You are not sure how you feel about this.',
@@ -286,7 +286,7 @@ export const IMMIGRATION_EVENTS = [
 
   {
     id: 'imm_integration_children_correct',
-    phase: 'adult',
+    phase: 'midlife',
     weight: 2,
     when: (G) => (G.residencyStatus === 'permanent_resident' || G.residencyStatus === 'citizen') && G.flags.includes('emigrated') && G.children && G.children.length > 0 && G.age >= 35,
     text: 'Your child corrects your pronunciation at the dinner table. Not cruelly — they learned it at school and they are proud of knowing. They do not understand that the correction contains an entire taxonomy of distance. You repeat the word the way they say it. You both smile. Later you say it your way under your breath, quietly, for yourself.',
