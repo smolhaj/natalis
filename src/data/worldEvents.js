@@ -73,8 +73,22 @@ export const WORLD_EVENTS = [
     countries: null,
     narrative: 'Passenger planes are used as weapons. The world watches on television. Security everywhere is tightened, permanently.',
     effect: (p) => { p.m -= 5; },
-    addFlags: [],
+    addFlags: ['post_9_11_world'],
     minAge: 5,
+  },
+
+  {
+    id: 'nine_eleven_muslim_backlash',
+    name: 'Post-9/11 Backlash',
+    years: [2001, 2003],
+    archetypes: 'all',
+    countries: null,
+    narrative: 'In the weeks after the attacks, what you believe and what you look like becomes something strangers feel entitled to weigh in on. A neighbour who never spoke now speaks — to ask where you are really from, to tell you what you must think. The question of whether you belong somewhere you have always lived is suddenly open again.',
+    effect: (p) => { p.m -= 14; p.r += 8; p.addFlag('experienced_islamophobia'); },
+    addFlags: ['experienced_islamophobia'],
+    minAge: 8,
+    when: (G) => ['muslim_sunni', 'muslim_shia', 'muslim_sufi'].includes(G.character.religion) &&
+      (['wealthy_west', 'wealthy_east'].includes(G.currentCountry?.archetype) || ['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype)),
   },
   {
     id: 'iraq_war',

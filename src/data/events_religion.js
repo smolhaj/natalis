@@ -54,7 +54,7 @@ export const RELIGION_EVENTS = [
 
   {
     id: 'rel_prosperity_gospel',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 4,
     when: (G) => ['christian_protestant'].includes(G.character.religion) && ['subsaharan', 'developing_unstable'].includes(G.character.country.archetype) && G.age >= 25 && !G.mem?.prosperity_gospel,
     text: (G) => `The pastor at ${G.character.country.name === 'Nigeria' ? 'the new megachurch on the main road' : 'the biggest church in the city'} preaches that God wants you wealthy. Seed faith — sow money, reap miracles. The congregation is large and the message is intoxicating.`,
@@ -92,7 +92,7 @@ export const RELIGION_EVENTS = [
 
   {
     id: 'rel_catholic_ivf_conflict',
-    phase: 'adult',
+    phase: 'midlife',
     weight: 4,
     when: (G) => G.character.religion === 'christian_catholic' && G.age >= 28 && G.age <= 45 && G.partner && !G.mem?.ivf_religion_conflict && ['wealthy_west', 'developing_urban'].includes(G.character.country.archetype),
     text: 'You and your partner have been trying for a child without success. A doctor recommends IVF. The Church\'s position is unambiguous: it is forbidden.',
@@ -211,7 +211,7 @@ export const RELIGION_EVENTS = [
 
   {
     id: 'rel_muslim_hajj',
-    phase: 'adult',
+    phase: 'midlife',
     weight: 5,
     when: (G) => ['muslim_sunni', 'muslim_shia'].includes(G.character.religion) && G.age >= 30 && G.age <= 60 && !G.mem?.hajj && G.money > 5000,
     text: 'You have saved for years. The fifth pillar. Your name goes on the list, and when the confirmation comes, your hands are not steady. Two million Muslims converging from every country on earth — the same five days, the same sequence: Mecca, then Mina on the 8th of Dhul Hijjah, then the plain of Arafat where you stand from noon until sunset and ask for what you cannot ask anywhere else. Then Muzdalifah under an open sky, sleeping on stones, collecting pebbles for the stoning at Jamarat. The body does not forgive this easily. The soul is another matter.',

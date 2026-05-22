@@ -151,7 +151,7 @@ export const HISTORICAL_EVENTS = [
 
   {
     id: 'hist_redlining',
-    phase: 'adult',
+    phase: 'midlife',
     weight: 5,
     when: (G) => G.character.country.name === 'United States' && G.character.ethnicity === 'black_american' && G.currentYear >= 1950 && G.currentYear <= 1975 && G.age >= 25 && G.age <= 45 && !G.mem?.redlining,
     text: 'You have saved enough for a down payment. The bank loan officer is polite. He tells you the property you want is in a "transitional" neighbourhood and the bank cannot approve the loan. The neighbourhood is where white families live.',
@@ -177,7 +177,7 @@ export const HISTORICAL_EVENTS = [
 
   {
     id: 'hist_kgb_informer',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 5,
     when: (G) => ['Russia', 'Ukraine', 'Kazakhstan', 'Georgia', 'Belarus'].includes(G.character.country.name) && G.currentYear >= 1955 && G.currentYear <= 1989 && G.age >= 20 && !G.mem?.kgb_contact,
     text: 'A man in a grey suit visits your workplace. He is not from your workplace. He asks questions about a colleague — about their beliefs, their friends, their habits. Then he asks if you would like to be useful to the state.',
@@ -317,7 +317,7 @@ export const HISTORICAL_EVENTS = [
     when: (G) => G.character.country.name === 'India' && G.casteSystem && G.age >= 18 && G.age <= 30 && !G.mem?.intercaste_marriage && G.partner,
     text: 'You love someone from a different caste. Both families have discovered this. The reaction is not quiet. A village panchayat has been called. Words like honour and shame are used. Someone mentions violence.',
     choices: [
-      { text: 'Elope — leave before the panchayat decides', tag: null, outcome: 'You run. The first months are precarious and frightening and also the freest either of you has been.', effect: (p) => { p.m += 5; p.h -= 5; p.partnerRel(15); p.addFlag('eloped'); p.setMem('intercaste_marriage', true) } },
+      { text: 'Elope — leave before the panchayat decides', tag: null, outcome: 'You run. The first months are precarious and frightening and also the freest either of you has been.', effect: (p) => { p.m += 5; p.h -= 5; p.partnerRel(15); p.addFlag('eloped'); p.addFlag('estranged_family'); p.setMem('intercaste_marriage', true) } },
       { text: 'Submit to family pressure — end it', tag: null, outcome: 'You send a final message that says what it must say. The loss is not something you name for a long time.', effect: (p) => { p.m -= 20; p.r += 15; p.setMem('intercaste_marriage', true) } },
     ],
   },
@@ -348,7 +348,7 @@ export const HISTORICAL_EVENTS = [
 
   {
     id: 'hist_indigenous_language_revival',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 5,
     when: (G) => ['indigenous_american', 'aboriginal_australian', 'first_nations', 'maori'].includes(G.character.ethnicity) && G.age >= 25 && G.currentYear >= 1970 && !G.mem?.language_revival,
     text: 'There is a movement to teach the language again. To the children who were forbidden to speak it, to the grandchildren who never learned it. A gathering is organised. Will you go?',
@@ -433,5 +433,18 @@ export const HISTORICAL_EVENTS = [
     choices: [
       { text: 'Make it to the relief station', tag: null, outcome: 'The aid workers give you food. Your sister recovers. You will never again take a full stomach for granted.', effect: (p) => { p.h -= 15; p.m -= 15; p.setMem('ethiopia_famine', true) } },
     ],
+  },
+
+  {
+    id: 'hist_carries_guilt_late_reckoning',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) => G.flags.includes('carries_guilt') && G.age >= 55 && !G.mem?.guilt_reckoning,
+    text: 'There is a photograph in the newspaper. An anniversary. The face in it is not someone you knew, but the road is the road. You have driven past it hundreds of times since 1994. You have never stopped. Your grandchildren are in the next room.',
+    choices: [
+      { text: 'Write a letter — to the family, to the community court, to someone', tag: null, outcome: 'The letter takes three weeks to write. You do not know if it reaches anyone. You know you wrote it.', effect: (p) => { p.m -= 8; p.karma += 12; p.r -= 8; p.setMem('guilt_reckoning', true) } },
+      { text: 'Close the paper. You have lived with this as long as it takes to live with something.', tag: null, outcome: 'The photograph fades. The road does not.', effect: (p) => { p.m -= 15; p.r += 10; p.setMem('guilt_reckoning', true) } },
+    ],
+    effect: null,
   },
 ]

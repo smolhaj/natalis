@@ -185,7 +185,7 @@ export const TECHNOLOGY_EVENTS = [
   // ── COVID / REMOTE WORK ──────────────────────────────────────────────────────
   {
     id: 'tech_covid_zoom',
-    phase: 'adult',
+    phase: 'young_adult',
     weight: 3,
     when: (G) => G.currentYear >= 2020 && G.currentYear <= 2022 && G.age >= 18,
     text: 'Everything moves to a screen. Meetings, school, doctor appointments, funerals. You learn that you could always have worked from home, or your children could have had school at home, and nobody thought to try until there was no other option. The commute disappears. The boundary between work and home disappears with it.',
