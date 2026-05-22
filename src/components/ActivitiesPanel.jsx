@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useGameStore } from '../store/gameStore'
 import { ACTIVITIES } from '../data/activities'
 import { DESTINATIONS } from '../data/destinations'
@@ -31,6 +31,7 @@ const TOP_CATEGORIES = [
   { key: 'business',      label: 'Business',         emoji: '🏢', desc: 'Run your own company' },
   { key: 'friends',       label: 'Friends',          emoji: '👥', desc: 'Your social circle' },
   { key: 'travel',        label: 'Travel',           emoji: '✈️',  desc: 'See the world' },
+  { key: 'immigration',   label: 'Immigration',       emoji: '🛂', desc: 'Residency & citizenship' },
   { key: 'underground',   label: 'Go Underground',   emoji: '🕵️', desc: 'Evade the law' },
   { key: 'prison',        label: 'Prison Life',       emoji: '🔒', desc: 'Activities inside' },
 ]
@@ -70,6 +71,11 @@ export default function ActivitiesPanel({ onClose }) {
   const [datingFilters, setDatingFilters] = useState({ ageRange: 'any', netWorth: 'any' })
 
   const state = useGameStore(s => s)
+
+  // Auto-open the Prison Life tab when in prison so the user doesn't have to hunt for it
+  useEffect(() => {
+    if (state.inPrison && !activeTop) setActiveTop('prison')
+  }, [state.inPrison, activeTop])
   const takeActivity       = useGameStore(s => s.takeActivity)
   const commitCrime        = useGameStore(s => s.commitCrime)
   const enterCareer        = useGameStore(s => s.enterCareer)
@@ -131,6 +137,8 @@ export default function ActivitiesPanel({ onClose }) {
   const acceptPartner      = useGameStore(s => s.acceptPartner)
   const declinePartner     = useGameStore(s => s.declinePartner)
   const useDatingApp       = useGameStore(s => s.useDatingApp)
+  const doUpgradeResidency = useGameStore(s => s.upgradeResidency)
+  const doSeekAsylum       = useGameStore(s => s.seekAsylum)
 
   const actionsLeft = state.maxActionsPerYear - state.actionsThisYear
   const noActions = actionsLeft <= 0
@@ -1378,6 +1386,88 @@ export default function ActivitiesPanel({ onClose }) {
         )
       }
 
+      case 'immigration': {
+        const rs = state.residencyStatus ?? 'citizen'
+        const isAbroad = state.flags.includes('emigrated') && state.currentCountry?.name !== state.character?.country?.name
+        const yearsAbroad = state.yearsAbroad ?? 0
+
+        const LADDER = {
+          work_visa:          { next: 'Permanent Residency', yearsReq: 5,  fee: 3000  },
+          permanent_resident: { next: 'Citizenship',         yearsReq: 10, fee: 1500  },
+          refugee_status:     { next: 'Permanent Residency', yearsReq: 3,  fee: 500   },
+          asylum_seeker:      { next: 'Refugee Status',      yearsReq: 1,  fee: 0     },
+          undocumented:       { next: 'Work Visa',           yearsReq: 0,  fee: 2000  },
+          tourist_overstay:   { next: 'Work Visa',           yearsReq: 0,  fee: 2000  },
+        }
+        const path = LADDER[rs]
+        const RS_LABELS = {
+          citizen: 'Citizen', permanent_resident: 'Permanent Resident', work_visa: 'Work Visa',
+          undocumented: 'Undocumented', refugee_status: 'Refugee Status', asylum_seeker: 'Asylum Seeker',
+          tourist_overstay: 'Overstayed Visa',
+        }
+        const RS_COLORS = {
+          citizen: '#34c759', permanent_resident: '#34c759', work_visa: '#ff9500',
+          undocumented: '#ff3b30', refugee_status: '#ff9500', asylum_seeker: '#ff9500',
+          tourist_overstay: '#ff3b30',
+        }
+
+        return (
+          <>
+            <div className="bg-white rounded-xl border border-natalis-border p-4 mb-2 space-y-1">
+              <div className="flex justify-between items-center">
+                <span className="text-xs text-natalis-muted font-semibold uppercase tracking-wider">Current Status</span>
+                <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ color: RS_COLORS[rs] ?? '#8e8e93', backgroundColor: `${RS_COLORS[rs]}18` ?? '#8e8e9318' }}>
+                  {RS_LABELS[rs] ?? rs}
+                </span>
+              </div>
+              {isAbroad && <p className="text-xs text-natalis-muted">Living in {state.currentCountry?.name} · {yearsAbroad} year{yearsAbroad !== 1 ? 's' : ''} abroad</p>}
+              {rs === 'citizen' && <p className="text-xs text-natalis-muted">You are a citizen. No immigration actions required.</p>}
+            </div>
+
+            {rs !== 'citizen' && !isAbroad && (
+              <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-2">
+                <p className="text-xs text-amber-800">Immigration actions require living abroad. Use Travel to emigrate first.</p>
+              </div>
+            )}
+
+            {path && isAbroad && (
+              <>
+                <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider px-1 py-1">Upgrade Status</p>
+                <Btn
+                  disabled={noActions || yearsAbroad < path.yearsReq || (state.money ?? 0) < path.fee}
+                  onClick={() => { doUpgradeResidency(); onClose() }}
+                  title={`Apply for ${path.next}`}
+                  subtitle={
+                    yearsAbroad < path.yearsReq
+                      ? `Requires ${path.yearsReq - yearsAbroad} more year${path.yearsReq - yearsAbroad !== 1 ? 's' : ''} of residency`
+                      : path.fee > 0 ? `Application fee: $${path.fee.toLocaleString()}` : 'No fee'
+                  }
+                  cost={path.fee > 0 ? `$${path.fee.toLocaleString()}` : 'Free'}
+                />
+              </>
+            )}
+
+            {isAbroad && !['citizen', 'permanent_resident', 'refugee_status', 'asylum_seeker'].includes(rs) && (
+              <>
+                <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider px-1 pt-2">Asylum</p>
+                <Btn
+                  disabled={noActions}
+                  onClick={() => { doSeekAsylum(); onClose() }}
+                  title="Seek Asylum"
+                  subtitle="Claim protection based on persecution or conflict. Success varies with your history."
+                />
+              </>
+            )}
+
+            {rs === 'asylum_seeker' && (
+              <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 mt-1">
+                <p className="text-xs text-blue-800">Your asylum application is pending. After 1 year you may apply to convert it to Refugee Status.</p>
+              </div>
+            )}
+          </>
+        )
+      }
+
       case 'underground': {
         const isWanted = state.wanted || state.flags.includes('escaped_prisoner')
         const inJail = state.inPrison
@@ -1628,10 +1718,11 @@ export default function ActivitiesPanel({ onClose }) {
               if (cat.key === 'crime' && state.age < 12) return null
               if (cat.key === 'travel' && state.age < 16) return null
               if (cat.key === 'business' && state.age < 18) return null
+              if (cat.key === 'immigration' && state.residencyStatus === 'citizen' && !state.flags.includes('emigrated')) return null
               if (cat.key === 'underground' && !state.inPrison && !state.wanted && !state.flags.includes('escaped_prisoner')) return null
               if (cat.key === 'prison' && !state.inPrison) return null
               // When in prison, hide most outside-world activities
-              const prisonBlockedCats = ['love', 'fertility', 'nightlife', 'movies', 'salon', 'shopping', 'social_media', 'plastic_surg', 'race_tracks', 'rehab', 'licenses', 'assets', 'crime', 'travel', 'business', 'career', 'underground']
+              const prisonBlockedCats = ['love', 'fertility', 'nightlife', 'movies', 'salon', 'shopping', 'social_media', 'plastic_surg', 'race_tracks', 'rehab', 'licenses', 'assets', 'crime', 'travel', 'business', 'career', 'underground', 'immigration']
               if (state.inPrison && prisonBlockedCats.includes(cat.key)) return null
 
               const isUnderground = state.inPrison || state.wanted || state.flags.includes('escaped_prisoner')

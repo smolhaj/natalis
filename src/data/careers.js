@@ -245,6 +245,7 @@ export const CAREERS = [
     id: 'software_developer',
     title: 'Software Developer',
     field: 'technology',
+    minYear: 1985,
     levels: [
       { title: 'Junior Developer', salaryRange: [45000, 70000] },
       { title: 'Developer', salaryRange: [70000, 110000] },
@@ -1513,6 +1514,7 @@ export const CAREERS = [
     id: 'content_creator',
     title: 'Content Creator',
     field: 'media',
+    minYear: 2012,
     levels: [
       { title: 'Micro Creator', salaryRange: [5000, 20000] },
       { title: 'Growing Channel', salaryRange: [18000, 60000] },
@@ -1692,6 +1694,7 @@ export const CAREERS = [
     id: 'data_scientist',
     title: 'Data Scientist',
     field: 'technology',
+    minYear: 2010,
     levels: [
       { title: 'Junior Data Analyst', salaryRange: [45000, 70000] },
       { title: 'Data Scientist', salaryRange: [70000, 115000] },

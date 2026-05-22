@@ -312,7 +312,10 @@ function buildEffectProxy(state) {
   proxy.setGpa = (gpa) => { proxy._newGpa = gpa }
   proxy.setEnrolled = (enrollment) => { proxy._newEnrolled = enrollment }
   proxy.setMem = (key, value) => { proxy.mem[key] = value }
+  proxy.wipeMoney = (fraction = 1.0) => { proxy.mo -= Math.round((state.money ?? 0) * fraction) }
   proxy.releaseFromPrison = () => { proxy._releaseFromPrison = true }
+  proxy.killParent = (which) => { proxy._killParent = which }
+  proxy.setResidency = (status) => { proxy._residencyStatus = status }
   proxy.setMentalHealth = (updates) => { proxy._mentalHealthUpdates = { ...(proxy._mentalHealthUpdates ?? {}), ...updates } }
   proxy.practiceHobby = (hobbyId, delta = 1) => {
     if (!proxy._hobbyDeltas) proxy._hobbyDeltas = {}
@@ -342,6 +345,10 @@ function resolveProxyExtras(state, proxy) {
   }
   if (proxy.flags.includes('has_licence')) next = { ...next, licenceObtained: true }
   if (proxy._releaseFromPrison) next = { ...next, inPrison: false, prisonSentence: 0 }
+  if (proxy._killParent && next.parents?.[proxy._killParent]) {
+    next = { ...next, parents: { ...next.parents, [proxy._killParent]: { ...next.parents[proxy._killParent], alive: false, relationshipQuality: 0 } } }
+  }
+  if (proxy._residencyStatus) next = { ...next, residencyStatus: proxy._residencyStatus }
   if (proxy._partnerRelDelta && next.partner) {
     next = { ...next, partner: { ...next.partner, relationshipQuality: clamp((next.partner.relationshipQuality ?? 60) + proxy._partnerRelDelta, 0, 100) } }
   }
@@ -435,6 +442,9 @@ function buildG(state) {
     lgbtqCriminalized: isLgbtqCriminalized(state.character?.country, state.currentYear ?? new Date().getFullYear()),
     casteSystem: state.character?.country?.casteSystem ?? false,
     childMarriageRisk: state.character?.country?.childMarriageRisk ?? 0,
+    currentCountry: state.currentCountry ?? state.character?.country,
+    residencyStatus: state.residencyStatus ?? 'citizen',
+    yearsAbroad: state.yearsAbroad ?? 0,
   }
 }
 
@@ -456,7 +466,7 @@ function applyWorldEvents(state) {
     we.effect(proxy)
     updated = applyProxy(updated, proxy)
     updated.worldEventsFired = new Set([...updated.worldEventsFired, we.id])
-    updated.log = [...updated.log, { age: updated.age, text: `[World Event] ${we.narrative}`, isKey: true, isWorld: true }]
+    updated.log = [...updated.log, { age: updated.age, text: we.narrative, worldEventName: we.name, isKey: true, isWorld: true }]
     if (we.addFlags) updated.flags = [...new Set([...updated.flags, ...we.addFlags])]
   }
   return updated
@@ -553,6 +563,8 @@ export function getAvailableCareers(state) {
     }
     if (Array.isArray(career.archetypeAvailable) && !career.archetypeAvailable.includes(state.character.country.archetype)) return false
     if (career.requirements.flags && !career.requirements.flags.some(f => state.flags.includes(f))) return false
+    if (career.minYear && state.currentYear < career.minYear) return false
+    if (career.maxYear && state.currentYear > career.maxYear) return false
     if (state.career?.id === career.id) return false
     return true
   })
@@ -1243,11 +1255,22 @@ function checkIllnessRisk(state) {
     const hcSuccessMod = { excellent: 1.15, good: 1.05, fair: 1.0, poor: 0.85, very_poor: 0.7 }
     const successMod = hcSuccessMod[state.character.country.healthcare] ?? 1.0
 
+    const archetype = state.character.country.archetype ?? 'wealthy_west'
+    const healthcare = state.character.country.healthcare ?? 'fair'
+    const illnessContext = {
+      excellent: `The tests come back quickly. The specialist explains everything clearly. You have options.`,
+      good:      `The GP refers you to a specialist. There is a wait. When you get there, the diagnosis is clear.`,
+      fair:      `The clinic is busy. You wait two hours. The doctor is straightforward. Treatment is available if you can afford it.`,
+      poor:      `The nearest hospital is hours away or the local clinic is understaffed. The diagnosis takes longer than it should.`,
+      very_poor: `There is no specialist here. The diagnosis is made by a doctor managing too many patients with too little. Treatment, if available, is rationed.`,
+    }
+    const illnessText = `${illnessContext[healthcare] ?? illnessContext.fair} You are diagnosed with ${illness.name}.`
+
     const event = {
       id: `illness_${illness.id}_${state.age}`,
       phase: getPhase(state.age),
       weight: 10,
-      text: `You are diagnosed with ${illness.name}.`,
+      text: illnessText,
       choices: illness.treatments.map(t => {
         const adjustedCost = Math.round(t.cost * costMult)
         const willSucceed = Math.random() < clamp(t.successChance * successMod, 0.05, 0.98)
@@ -1335,11 +1358,14 @@ function tickEnrollment(state) {
 // ─── Main tick ────────────────────────────────────────────────────────────────
 
 export function tick(state) {
+  const isAbroad = state.flags.includes('emigrated') &&
+    state.currentCountry?.name !== state.character?.country?.name
   let s = {
     ...state,
     age: state.age + 1,
     currentYear: state.currentYear + 1,
     actionsThisYear: 0,
+    yearsAbroad: isAbroad ? (state.yearsAbroad ?? 0) + 1 : (state.yearsAbroad ?? 0),
   }
 
   // Prison year
@@ -1888,12 +1914,22 @@ export function emigrate(state, destCountryName) {
   if (state.wanted) {
     return { ...state, log: [...state.log, { age: state.age, text: 'You are wanted — border control will arrest you on sight. You must emigrate illegally.', isKey: false }] }
   }
-  if (state.flags.includes('emigrated')) return state
   const dest = COUNTRIES.find(c => c.name === destCountryName)
   if (!dest) return state
+  const alreadyAbroad = state.flags.includes('emigrated')
+  if (alreadyAbroad && state.currentCountry?.name === dest.name) return state
   const moveCost = randomBetween(3000, 15000)
+  const isRefugee = state.flags.includes('refugee') || state.flags.includes('displaced')
+  const isIllegal = state.flags.includes('illegal_immigrant')
+  const initialStatus = isRefugee ? 'refugee_status' : isIllegal ? 'undocumented' : 'work_visa'
+  const fromName = (state.currentCountry ?? state.character?.country)?.name ?? state.character?.country?.name
+  const logText = alreadyAbroad
+    ? `You move from ${fromName} to ${dest.name}. Moving costs: $${moveCost.toLocaleString()}.`
+    : `You emigrate to ${dest.name}. Moving costs: $${moveCost.toLocaleString()}.`
   return {
     ...state,
+    currentCountry: dest,
+    residencyStatus: initialStatus,
     money: Math.max(0, (state.money ?? 0) - moveCost),
     flags: [...new Set([...state.flags, 'emigrated'])],
     stats: {
@@ -1902,7 +1938,86 @@ export function emigrate(state, destCountryName) {
       charisma: clamp(state.stats.charisma - 5, 0, 100),
       smarts: clamp(state.stats.smarts + 5, 0, 100),
     },
-    log: [...state.log, { age: state.age, text: `You emigrate to ${dest.name}. Moving costs: $${moveCost.toLocaleString()}.`, isKey: true }],
+    log: [...state.log, { age: state.age, text: logText, isKey: true }],
+  }
+}
+
+// ─── Residency upgrade ───────────────────────────────────────────────────────
+
+const RESIDENCY_LADDER = {
+  work_visa:          { next: 'permanent_resident', yearsRequired: 5,  fee: 3000  },
+  permanent_resident: { next: 'citizen',            yearsRequired: 10, fee: 1500  },
+  refugee_status:     { next: 'permanent_resident', yearsRequired: 3,  fee: 500   },
+  asylum_seeker:      { next: 'refugee_status',     yearsRequired: 1,  fee: 0     },
+  undocumented:       { next: 'work_visa',           yearsRequired: 0,  fee: 2000  },
+  tourist_overstay:   { next: 'work_visa',           yearsRequired: 0,  fee: 2000  },
+}
+
+export function upgradeResidency(state) {
+  const status = state.residencyStatus ?? 'citizen'
+  const path = RESIDENCY_LADDER[status]
+  if (!path) {
+    return { ...state, log: [...state.log, { age: state.age, text: 'You are already a citizen.', isKey: false }] }
+  }
+  const yearsAbroad = state.yearsAbroad ?? 0
+  if (yearsAbroad < path.yearsRequired) {
+    const rem = path.yearsRequired - yearsAbroad
+    return { ...state, log: [...state.log, { age: state.age, text: `You need ${rem} more year${rem !== 1 ? 's' : ''} of residency before you can apply.`, isKey: false }] }
+  }
+  if ((state.money ?? 0) < path.fee) {
+    return { ...state, log: [...state.log, { age: state.age, text: `The application fee is $${path.fee.toLocaleString()}. You can't afford it right now.`, isKey: false }] }
+  }
+
+  const successChance = status === 'undocumented' || status === 'tourist_overstay' ? 0.35 : status === 'asylum_seeker' ? 0.55 : 0.75
+  if (Math.random() > successChance) {
+    return {
+      ...state,
+      money: Math.max(0, (state.money ?? 0) - path.fee),
+      log: [...state.log, { age: state.age, text: `Your application for ${path.next.replace(/_/g, ' ')} was rejected. The fee is gone. You can try again later.`, isKey: true }],
+    }
+  }
+
+  const msgs = {
+    permanent_resident: `After years of paperwork and waiting, permanent residency is granted. You now have the right to stay.`,
+    citizen:            `The citizenship certificate arrives. You hold a passport with a different flag on the cover than the one you were born with.`,
+    refugee_status:     `Your refugee status is officially recognised. You realise you had been holding your breath for years.`,
+    work_visa:          `Your status is regularised. You are no longer invisible to the system.`,
+  }
+
+  return {
+    ...state,
+    residencyStatus: path.next,
+    money: Math.max(0, (state.money ?? 0) - path.fee),
+    flags: [...new Set([...state.flags, `achieved_${path.next}`])],
+    stats: { ...state.stats, happiness: clamp(state.stats.happiness + 10, 0, 100) },
+    log: [...state.log, { age: state.age, text: msgs[path.next] ?? `Status upgraded to ${path.next.replace(/_/g, ' ')}.`, isKey: true }],
+  }
+}
+
+export function seekAsylum(state) {
+  if (['citizen', 'permanent_resident'].includes(state.residencyStatus)) {
+    return { ...state, log: [...state.log, { age: state.age, text: 'You already have secure status here.', isKey: false }] }
+  }
+  if (state.residencyStatus === 'asylum_seeker' || state.residencyStatus === 'refugee_status') {
+    return { ...state, log: [...state.log, { age: state.age, text: 'Your asylum application is already in progress.', isKey: false }] }
+  }
+  const isConflict = state.flags.some(f => ['war_childhood', 'displaced', 'persecution', 'genocide_survivor', 'revolution_generation', 'learned_silence'].includes(f))
+  const accepted = Math.random() < (isConflict ? 0.65 : 0.35)
+  const dest = state.currentCountry ?? state.character?.country
+  return {
+    ...state,
+    residencyStatus: accepted ? 'refugee_status' : 'asylum_seeker',
+    flags: [...new Set([...state.flags, 'sought_asylum', 'emigrated'])],
+    currentCountry: dest,
+    yearsAbroad: state.yearsAbroad ?? 0,
+    stats: { ...state.stats, happiness: clamp(state.stats.happiness + (accepted ? 12 : -5), 0, 100) },
+    log: [...state.log, {
+      age: state.age,
+      text: accepted
+        ? `Your asylum claim is accepted. You have the right to remain in ${dest?.name}. The relief is physical.`
+        : `You file for asylum in ${dest?.name}. The decision is pending. You enter a waiting period with no defined end.`,
+      isKey: true,
+    }],
   }
 }
 
@@ -2864,74 +2979,213 @@ export function tickStocks(state) {
 export function generateEpitaph(state) {
   const { character, flags, stats, regret, age, children, partner, career, money } = state
   const name = character.firstName
-  const pronoun = character.gender === 'male' ? 'He' : 'She'
-  const possessive = character.gender === 'male' ? 'his' : 'her'
+  const He = character.gender === 'male' ? 'He' : 'She'
+  const he = He.toLowerCase()
+  const His = character.gender === 'male' ? 'His' : 'Her'
+  const his = His.toLowerCase()
+  const him = character.gender === 'male' ? 'him' : 'her'
+  const country = character.country.name
+  const { fame, assets, siblings } = state
   const lines = []
 
-  lines.push(`${name} was born in ${character.country.name} and lived to the age of ${age}.`)
+  // — Opening line —
+  if (age < 20) {
+    lines.push(`${name} was born in ${country} and was gone at ${age} — a life that barely had time to begin.`)
+  } else if (age < 40) {
+    lines.push(`${name} was born in ${country} and died at ${age}, far too young.`)
+  } else {
+    lines.push(`${name} was born in ${country} and lived to the age of ${age}.`)
+  }
 
+  // — Childhood and origins —
+  if (flags.includes('war_childhood') || flags.includes('conflict_zone_birth')) {
+    lines.push(`${He} came into the world amid conflict, and it left a mark that never fully healed.`)
+  }
+  if (flags.includes('lost_parent_young') || flags.includes('orphaned')) {
+    lines.push(`${He} lost a parent before forming a clear memory of them — an absence that shaped everything quietly.`)
+  }
+  if (flags.includes('poverty_childhood') || flags.includes('food_insecurity')) {
+    lines.push(`The early years were lean. ${He} knew hunger.`)
+  }
+  if (flags.includes('secure_childhood')) {
+    lines.push(`${He} was given a childhood with warmth in it, something ${he} tried to pass on.`)
+  }
+
+  // — Displacement and migration —
   if (flags.includes('refugee') || flags.includes('displaced')) {
-    lines.push(`${pronoun} knew displacement — the particular grief of watching a home become a memory.`)
-  } else if (flags.includes('emigrated')) {
-    lines.push(`${pronoun} left ${character.country.name} in search of something different, and found it, at a cost.`)
+    lines.push(`${He} was displaced — carried across borders by forces larger than any single life.`)
+  } else if (flags.includes('emigrated') || flags.includes('diaspora')) {
+    lines.push(`${He} left ${country} in search of something different. ${He} found it, at a cost.`)
   }
 
-  if (flags.includes('first_gen_graduate')) {
-    lines.push(`${pronoun} was the first in ${possessive} family to finish a university education.`)
-  } else if (flags.includes('university_graduate')) {
-    lines.push(`Education was the thread ${pronoun} pulled hardest on.`)
+  // — Dark path: crime, violence, incarceration —
+  if (flags.includes('convicted_murder') || flags.includes('murderer')) {
+    lines.push(`${He} killed someone. It defined ${him} in ways ${he} spent the rest of ${his} life either fleeing or accepting.`)
+  } else if (flags.includes('convicted_manslaughter')) {
+    lines.push(`${He} caused a death — whether by accident or recklessness, the courts had a word for it.`)
+  } else if (flags.includes('violent_criminal') || flags.includes('assault_record')) {
+    lines.push(`${He} had a capacity for violence that got ${him} into serious trouble.`)
+  }
+  if (flags.includes('incarcerated') || flags.includes('served_time') || flags.includes('prison_phone')) {
+    lines.push(`${He} served time. Prison changed ${him}, as it always does.`)
+  } else if (flags.includes('escaped_prisoner')) {
+    lines.push(`${He} escaped from prison and lived as a fugitive — a chapter most people would find hard to believe.`)
+  }
+  if (flags.includes('drug_addiction') || flags.includes('alcohol_addiction') || flags.includes('addiction')) {
+    if (flags.includes('addiction_recovered') || flags.includes('sobriety')) {
+      lines.push(`${He} fought an addiction and won — though the fight never fully ended.`)
+    } else {
+      lines.push(`${He} struggled with addiction. It cost ${him} things ${he} never got back.`)
+    }
+  }
+  if (flags.includes('gang_member') || flags.includes('organized_crime')) {
+    lines.push(`${He} ran with people the law had a file on. Some of that life ${he} chose; some chose ${him}.`)
   }
 
+  // — Relationships —
   if (flags.includes('strong_marriage') && partner) {
-    lines.push(`${pronoun} loved ${partner.name} with a steadiness that was its own kind of achievement.`)
-  } else if (flags.includes('divorced')) {
-    lines.push(`${pronoun} married, and the marriage ended — a chapter ${pronoun} rarely spoke of directly.`)
+    lines.push(`${He} loved ${partner.name} with a steadiness that was its own kind of achievement.`)
+  } else if (partner && !flags.includes('divorced')) {
+    lines.push(`${He} shared ${his} life with ${partner.name}.`)
+  } else if (flags.includes('divorced') || flags.includes('divorce')) {
+    lines.push(`${He} married, and the marriage ended — a chapter ${he} rarely spoke of directly.`)
+  } else if (flags.includes('heartbroken') || flags.includes('lost_love')) {
+    lines.push(`${He} loved someone ${he} couldn't hold onto. It stayed with ${him}.`)
   }
-
   if (children?.length > 0) {
-    lines.push(`${pronoun} raised ${children.length === 1 ? 'a child' : `${children.length} children`}.`)
+    const n = children.length
+    lines.push(`${He} ${flags.includes('absent_parent') ? 'fathered' : 'raised'} ${n === 1 ? 'a child' : `${n} children`}.`)
   }
 
-  if (flags.includes('integrity') && flags.includes('trusted_person')) {
+  // — Integrity and moral arc —
+  if (flags.includes('corruption_exposed') || flags.includes('bribery') || flags.includes('fraud')) {
+    lines.push(`${He} was caught in a corruption scandal. The reputation never fully recovered.`)
+  } else if (flags.includes('compromised') || flags.includes('sold_out')) {
+    lines.push(`${He} made choices ${he} couldn't fully justify later.`)
+  } else if (flags.includes('integrity') && flags.includes('trusted_person')) {
     lines.push(`People trusted ${name}. That is rarer than it sounds.`)
-  } else if (flags.includes('compromised') || flags.includes('corruption_exposed')) {
-    lines.push(`${pronoun} made choices ${pronoun} couldn't fully justify later.`)
+  } else if (flags.includes('whistleblower')) {
+    lines.push(`${He} exposed something that needed exposing, at considerable personal cost.`)
   }
 
+  // — Identity and hardship —
+  if (flags.includes('lgbtq_persecuted') || flags.includes('arrested_for_orientation')) {
+    lines.push(`${He} was persecuted for who ${he} was. ${He} endured it.`)
+  } else if (flags.includes('came_out') || flags.includes('lgbtq_accepted')) {
+    lines.push(`${He} lived openly as ${he} was, which was not always easy.`)
+  }
+  if (flags.includes('genocide_survivor') || flags.includes('tutsi_hidden') || flags.includes('apartheid_pass_book')) {
+    lines.push(`${He} survived something that destroyed many of the people around ${him}.`)
+  }
+  if (flags.includes('caste_discrimination') || flags.includes('dalit_discrimination')) {
+    lines.push(`${He} spent ${his} life fighting a hierarchy ${he} was born into.`)
+  }
+
+  // — Education and career —
+  if (flags.includes('first_gen_graduate')) {
+    lines.push(`${He} was the first in ${his} family to earn a university degree.`)
+  } else if (flags.includes('university_graduate')) {
+    lines.push(`Education was the thread ${he} pulled hardest on.`)
+  } else if (flags.includes('school_dropout') || flags.includes('expelled')) {
+    lines.push(`${He} left school early. Whether that was a choice or a consequence depends who you ask.`)
+  }
   if (career) {
     const careerDef = CAREERS.find(c => c.id === career.id)
-    if (careerDef) lines.push(`${pronoun} spent ${possessive} working years as a ${career.title}.`)
+    if (careerDef) lines.push(`${He} spent ${his} working years as a ${career.title}.`)
   }
 
-  if (money > 1000000) {
-    lines.push(`${pronoun} left behind $${(money / 1000000).toFixed(2)}M — a testament to ${possessive} ambitions.`)
-  }
-
-  const { fame, assets, siblings } = state
+  // — Fame and wealth —
   if (fame > 70) {
-    lines.push(`${pronoun} was famous. The kind of famous that changes what it means to walk into a room.`)
+    lines.push(`${He} was famous. The kind of famous that changes what it means to walk into a room.`)
   } else if (fame > 40) {
     lines.push(`In certain circles, ${name} was well-known.`)
   }
-
+  if (money > 5000000) {
+    lines.push(`${He} built serious wealth — $${(money / 1000000).toFixed(1)}M — though what it cost ${him} is harder to measure.`)
+  } else if (money > 1000000) {
+    lines.push(`${He} left behind $${(money / 1000000).toFixed(2)}M.`)
+  } else if (flags.includes('destitute') || flags.includes('homeless')) {
+    lines.push(`${He} died with almost nothing. The circumstances were not entirely of ${his} making.`)
+  }
   const propertyCount = assets?.properties?.length ?? 0
   if (propertyCount >= 3) {
-    lines.push(`${pronoun} owned ${propertyCount} properties — a material fact that told its own story.`)
+    lines.push(`${He} owned ${propertyCount} properties. That meant something to ${him}.`)
   }
 
+  // — Immigration and citizenship —
+  if (flags.includes('achieved_citizen') || (state.residencyStatus === 'citizen' && flags.includes('emigrated'))) {
+    lines.push(`${He} earned citizenship in an adopted country — paperwork that meant more than its bureaucratic weight.`)
+  } else if (flags.includes('sought_asylum') && flags.includes('refugee_status')) {
+    lines.push(`${He} fled and was granted refuge. The years of waiting between were their own kind of sentence.`)
+  } else if (flags.includes('illegal_immigrant') && !flags.includes('achieved_citizen')) {
+    lines.push(`${He} lived without papers in a country that barely acknowledged ${his} existence, and built a life there anyway.`)
+  }
+
+  // — Mental health —
+  if (flags.includes('depression_managed') || flags.includes('anxiety_managed')) {
+    lines.push(`${He} lived with a condition that made ordinary things harder. ${He} managed it more often than not.`)
+  }
+
+  // — Grief carried —
+  if (flags.includes('lost_child')) {
+    lines.push(`${He} outlived a child. There is no adequate sentence for this.`)
+  } else if (flags.includes('lost_partner')) {
+    lines.push(`${He} lost the person ${he} had built a life with, and had to learn what came after.`)
+  }
+
+  // — Climate witness —
+  if (flags.includes('witnessed_climate_change') && flags.includes('disaster_survivor')) {
+    lines.push(`${He} lived through the consequences of a warming world. The century ${he} was born into was not the century ${he} died in.`)
+  }
+
+  // — LGBTQ life —
+  if (flags.includes('lgbtq_identity') && flags.includes('lgbtq_out_family')) {
+    lines.push(`${He} came out, at a cost that varied depending on who was in the room.`)
+  } else if (flags.includes('lgbtq_identity') && flags.includes('lgbtq_criminalized_country')) {
+    lines.push(`${He} lived in a country that criminalised what ${he} was. ${He} navigated it.`)
+  }
+
+  // — Career under regime —
+  if (flags.includes('journalism_threat') || flags.includes('censored')) {
+    lines.push(`${He} worked in journalism and learned what it costs to tell the truth in a place that prefers silence.`)
+  }
+  if (flags.includes('story_killed')) {
+    lines.push(`There was a story ${he} knew and could not publish. ${He} carried it.`)
+  }
+
+  // — Faith —
+  if (flags.includes('completed_hajj')) {
+    lines.push(`${He} made the pilgrimage to Mecca. Whatever ${he} went looking for, ${he} found something.`)
+  } else if (flags.includes('left_religion') && flags.includes('faith_crisis')) {
+    lines.push(`${He} walked away from the faith ${he} was raised in. It was not a small thing.`)
+  } else if (flags.includes('faith_deepened')) {
+    lines.push(`${His} faith grew rather than dimmed with age — the kind that asks hard questions and survives them.`)
+  }
+
+  // — End of life —
+  if (flags.includes('found_meaning') || flags.includes('acceptance') || flags.includes('peace')) {
+    lines.push(`Near the end, ${name} seemed at peace with the shape ${his} life had taken.`)
+  } else if (flags.includes('life_reviewed')) {
+    lines.push(`${He} reviewed the life honestly before the end.`)
+  } else if (regret > 75) {
+    lines.push(`${He} died carrying a weight that had no name — a persistent sense that something essential had been missed.`)
+  } else if (regret > 50) {
+    lines.push(`${He} carried some regrets. Most people do.`)
+  }
+
+  // — Survivors —
   const livingSiblings = (siblings ?? []).filter(s => s.alive).length
   if (livingSiblings > 0) {
-    lines.push(`${pronoun} left behind ${livingSiblings} sibling${livingSiblings > 1 ? 's' : ''}.`)
+    lines.push(`${He} left behind ${livingSiblings} sibling${livingSiblings > 1 ? 's' : ''}.`)
   }
 
-  if (flags.includes('found_meaning') || flags.includes('acceptance')) {
-    lines.push(`Near the end, ${name} seemed at peace.`)
-  } else if (regret > 60) {
-    lines.push(`${pronoun} carried a weight that had no name, a persistent sense that something had been missed.`)
-  }
-
+  // — Fallback: only if we have very few lines —
   if (lines.length < 3) {
-    lines.push(`${name} lived a life shaped by circumstances ${pronoun} did not choose and decisions ${pronoun} made from within them.`)
+    if (stats.happiness > 70) {
+      lines.push(`By most measures, ${name} lived a good life.`)
+    } else {
+      lines.push(`${name}'s life was shaped by circumstances ${he} did not choose and decisions ${he} made from within them.`)
+    }
   }
 
   return lines.join(' ')

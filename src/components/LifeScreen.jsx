@@ -3,6 +3,8 @@ import { useGameStore } from '../store/gameStore'
 import StatBar from './StatBar'
 import FlagChip from './FlagChip'
 import EventBox from './EventBox'
+import { getCountryFlag, REGIME_LABELS, REGIME_COLORS, RELIGION_LABELS, RESIDENCY_LABELS } from '../utils/countryUtils'
+import { getCountryRegime } from '../engine/gameEngine'
 import ActivitiesPanel from './ActivitiesPanel'
 
 const PHASE_LABELS = {
@@ -55,6 +57,8 @@ export default function LifeScreen() {
   const regret       = useGameStore(s => s.regret)
   const age          = useGameStore(s => s.age)
   const currentYear  = useGameStore(s => s.currentYear)
+  const currentCountry = useGameStore(s => s.currentCountry)
+  const residencyStatus = useGameStore(s => s.residencyStatus)
   const log          = useGameStore(s => s.log)
   const pendingEvent = useGameStore(s => s.pendingEvent)
   const career       = useGameStore(s => s.career)
@@ -93,6 +97,15 @@ export default function LifeScreen() {
   if (!character) return null
 
   const phase = getPhase(age)
+  const liveCountry = currentCountry ?? character.country
+  const birthCountry = character.country
+  const isAbroad = liveCountry?.name !== birthCountry?.name
+  const regime = getCountryRegime(liveCountry, currentYear)
+  const regimeLabel = REGIME_LABELS[regime] ?? regime
+  const regimeColor = REGIME_COLORS[regime] ?? '#8e8e93'
+  const religionLabel = RELIGION_LABELS[character.religion] ?? character.religion ?? 'Unknown'
+  const ethnicName = character.country.ethnicGroups?.find(eg => eg.id === character.ethnicity)?.name ?? character.ethnicity ?? 'Unknown'
+  const residencyLabel = RESIDENCY_LABELS[residencyStatus] ?? residencyStatus
   const recentLog = [...log].reverse().slice(0, 40)
   const actionsLeft = maxActionsPerYear - actionsThisYear
   const hasAddiction = flags.includes('alcohol_addiction') || flags.includes('gambling_addiction') || flags.includes('drug_addiction') || flags.includes('addiction') || flags.includes('addicted_gambling')
@@ -139,7 +152,10 @@ export default function LifeScreen() {
           </div>
           <div className="text-right">
             <p className="font-bold text-bit-green text-base leading-tight">{formatMoney(money)}</p>
-            <p className="text-natalis-muted text-xs">Age {age} · {currentYear}</p>
+            <p className="text-natalis-muted text-xs">
+              <span className="mr-1">{getCountryFlag(currentCountry ?? character.country)}</span>
+              Age {age} · {currentYear}
+            </p>
           </div>
         </div>
       </header>
@@ -235,6 +251,11 @@ export default function LifeScreen() {
                       : 'bg-white border-natalis-border text-natalis-dim'
                   }`}
                 >
+                  {entry.isWorld && entry.worldEventName && (
+                    <div className="text-xs font-bold uppercase tracking-wider text-amber-700 mb-1">
+                      🌐 {entry.worldEventName}
+                    </div>
+                  )}
                   <span className="font-bold mr-2 text-xs uppercase tracking-wider opacity-60">
                     Age {entry.age}
                   </span>
@@ -289,6 +310,51 @@ export default function LifeScreen() {
                       </div>
                     </div>
                   ))}
+                </div>
+              </div>
+
+              {/* Identity & World Context */}
+              <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
+                <p className="font-bold text-natalis-text text-sm mb-3">Identity & World</p>
+                <div className="space-y-2 text-sm">
+                  {/* Current country + flag */}
+                  <div className="flex justify-between items-center py-1 border-b border-natalis-border">
+                    <span className="text-natalis-muted text-xs">📍 Living in</span>
+                    <span className="text-natalis-text font-semibold text-xs">
+                      {getCountryFlag(liveCountry)} {liveCountry?.name}
+                    </span>
+                  </div>
+                  {isAbroad && (
+                    <div className="flex justify-between items-center py-1 border-b border-natalis-border">
+                      <span className="text-natalis-muted text-xs">🏠 Born in</span>
+                      <span className="text-natalis-text font-semibold text-xs">
+                        {getCountryFlag(birthCountry)} {birthCountry?.name}
+                      </span>
+                    </div>
+                  )}
+                  {isAbroad && residencyStatus !== 'citizen' && (
+                    <div className="flex justify-between items-center py-1 border-b border-natalis-border">
+                      <span className="text-natalis-muted text-xs">📋 Status</span>
+                      <span className="font-semibold text-xs" style={{ color: residencyStatus === 'undocumented' || residencyStatus === 'tourist_overstay' ? '#ff3b30' : residencyStatus === 'refugee_status' || residencyStatus === 'asylum_seeker' ? '#ff9500' : '#007aff' }}>
+                        {residencyLabel}
+                      </span>
+                    </div>
+                  )}
+                  {/* Regime */}
+                  <div className="flex justify-between items-center py-1 border-b border-natalis-border">
+                    <span className="text-natalis-muted text-xs">⚖️ Government</span>
+                    <span className="font-semibold text-xs" style={{ color: regimeColor }}>{regimeLabel}</span>
+                  </div>
+                  {/* Religion */}
+                  <div className="flex justify-between items-center py-1 border-b border-natalis-border">
+                    <span className="text-natalis-muted text-xs">🙏 Religion</span>
+                    <span className="text-natalis-text font-semibold text-xs">{religionLabel}</span>
+                  </div>
+                  {/* Ethnicity */}
+                  <div className="flex justify-between items-center py-1">
+                    <span className="text-natalis-muted text-xs">👤 Background</span>
+                    <span className="text-natalis-text font-semibold text-xs">{ethnicName}</span>
+                  </div>
                 </div>
               </div>
 
