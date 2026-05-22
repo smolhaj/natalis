@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useGameStore } from '../store/gameStore'
 import { ACTIVITIES } from '../data/activities'
 import { DESTINATIONS } from '../data/destinations'
@@ -70,6 +70,11 @@ export default function ActivitiesPanel({ onClose }) {
   const [datingFilters, setDatingFilters] = useState({ ageRange: 'any', netWorth: 'any' })
 
   const state = useGameStore(s => s)
+
+  // Auto-open the Prison Life tab when in prison so the user doesn't have to hunt for it
+  useEffect(() => {
+    if (state.inPrison && !activeTop) setActiveTop('prison')
+  }, [state.inPrison, activeTop])
   const takeActivity       = useGameStore(s => s.takeActivity)
   const commitCrime        = useGameStore(s => s.commitCrime)
   const enterCareer        = useGameStore(s => s.enterCareer)

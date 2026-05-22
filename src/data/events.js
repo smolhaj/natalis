@@ -1,6 +1,7 @@
 import { GENDER_EVENTS } from './events_gender.js'
 import { RELIGION_EVENTS } from './events_religion.js'
 import { HISTORICAL_EVENTS } from './events_historical.js'
+import { CULTURE_EVENTS } from './events_culture.js'
 
 const BASE_EVENTS = [
   // ── EARLY CHILDHOOD ─────────────────────────────────────────────────────────
@@ -22,7 +23,7 @@ const BASE_EVENTS = [
     text: 'One of your parents is gone before you can form a clear memory of them. The absence shapes everything quietly.',
     context: null,
     choices: null,
-    effect: (p) => { p.m -= 8; p.r += 5; p.addFlag('orphaned'); },
+    effect: (p) => { p.m -= 8; p.r += 5; p.addFlag('lost_parent_young'); p.killParent('father'); },
   },
   {
     id: 'ec_conflict_zone_birth',
@@ -2667,7 +2668,7 @@ const BASE_EVENTS = [
     id: 'ad_lgbtq_criminalized',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => G.age >= 14 && ['Nigeria','Saudi Arabia','Iran','Afghanistan','Somalia','Yemen'].includes(G.character.country.name) && Math.random() < 0.05,
+    when: (G) => false, // replaced by cult_lgbtq_criminal_realization in events_culture.js
     text: 'You understand something about yourself that this place has no room for. The law makes it a crime. The culture makes it a death. You keep this entirely to yourself.',
     choices: [
       { text: 'Suppress it completely to survive', tag: null, outcome: 'You become skilled at performing a version of yourself that is safe.', effect: (p) => { p.m -= 15; p.addFlag('learned_silence'); p.addFlag('guarded_heart') }, inject: null },
@@ -7929,4 +7930,4 @@ const BASE_EVENTS = [
   },
 ]
 
-export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS]
+export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS]
