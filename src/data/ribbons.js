@@ -474,4 +474,20 @@ export const RIBBONS = [
     priority: 85,
     color: 'red',
   },
+  {
+    id: 'the_generous_legacy',
+    name: 'The Open Hand',
+    description: 'You gave more than you kept. The people around you knew it and never forgot it.',
+    condition: (G) => G.flags.includes('generous_legacy'),
+    priority: 28,
+    color: 'green',
+  },
+  {
+    id: 'the_examined_life',
+    name: 'The Examined Life',
+    description: 'You looked at yourself honestly — with help, over years. That is harder than it sounds.',
+    condition: (G) => G.flags.includes('therapy_veteran') && G.stats.happiness > 55,
+    priority: 30,
+    color: 'blue',
+  },
 ]
