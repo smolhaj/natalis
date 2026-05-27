@@ -291,4 +291,83 @@ export const CONSEQUENCE_EVENTS = [
     effect: null,
   },
 
+  // ── ADDICTION RECOVERY ARC ───────────────────────────────────────────────────
+
+  {
+    id: 'recovery_social_drinking',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.flags.includes('in_recovery') && G.age >= 22 && !G.mem?.recoverySocialDrinking,
+    text: 'Work drinks. A colleague is leaving. The table fills with bottles and glasses and the specific pressure of a room where not drinking requires explanation. People are not hostile about it — most of them are fine. One of them is the kind of persistent that feels more like testing than friendliness.',
+    choices: [
+      {
+        text: 'Hold the line — you have a standard answer and you use it',
+        tag: null,
+        outcome: 'The evening passes. Nobody actually cared that much. Your answer becomes easier each time you use it.',
+        effect: (p) => { p.m += 6; p.addFlag('sobriety_held_publicly'); p.setMem('recoverySocialDrinking', true) },
+      },
+      {
+        text: 'One drink. Just the one.',
+        tag: null,
+        outcome: 'There is not just the one. You lose the month.',
+        effect: (p) => { p.m -= 15; p.h -= 8; p.addFlag('relapsed'); p.addFlag('alcohol_addiction'); p.setMem('recoverySocialDrinking', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'recovery_anniversary',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.flags.includes('in_recovery') && G.age >= 24 && G.mem?.recoveryStartYear &&
+      (G.currentYear - G.mem.recoveryStartYear) >= 2 && !G.mem?.recoveryAnniversary,
+    text: 'Two years. The date is not on any official calendar. You know it. The person who sponsored you calls. You meet for coffee. You have a conversation that most people will never have and cannot imagine. Something in the account of yourself that you carry shifts by a small, permanent amount.',
+    choices: null,
+    effect: (p) => { p.m += 12; p.r -= 6; p.karma += 5; p.addFlag('two_years_sober'); p.setMem('recoveryAnniversary', true) },
+  },
+
+  {
+    id: 'recovery_old_using_friend',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.flags.includes('in_recovery') && G.age >= 22 && !G.mem?.recoveryOldFriend,
+    text: 'Someone from before turns up. Not maliciously — they just appear, at a party, in a street. They are doing the same things they were doing when you left that life. They look the same and they look worse. They are pleased to see you and confused by who you are now.',
+    choices: [
+      {
+        text: 'Keep the conversation short and leave without explanation',
+        tag: null,
+        outcome: 'You leave. The pull is real and you move faster than it does.',
+        effect: (p) => { p.m -= 5; p.addFlag('maintained_recovery_distance'); p.setMem('recoveryOldFriend', true) },
+      },
+      {
+        text: 'Talk to them — maybe they are looking for a way out',
+        tag: null,
+        outcome: 'You say what you know. Whether they hear it is their decision.',
+        effect: (p) => { p.m -= 8; p.karma += 6; p.setMem('recoveryOldFriend', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'recovery_rehab_graduate_payoff',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.flags.includes('rehab_graduate') && G.age >= 35 && !G.mem?.recoveryGraduatePayoff,
+    text: 'You are asked to speak to a group of people at the beginning of a program. You stand in a room that looks exactly like the room where you started. You say true things in the specific way that only someone who has been through it can. Three people cry. You can see on one face the exact thing you felt the first time you heard someone say what you are now saying.',
+    choices: null,
+    effect: (p) => { p.m += 14; p.s += 5; p.karma += 10; p.addFlag('helped_others_recover'); p.setMem('recoveryGraduatePayoff', true) },
+  },
+
+  {
+    id: 'recovery_years_sober_milestone',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.flags.includes('two_years_sober') && G.age >= 35 && !G.mem?.recoverySoberMilestone,
+    text: 'The years of recovery have accumulated into something that is no longer the main fact about you — it has become one fact among others. You still know which table the coffee is on at the meeting. You still go, sometimes. But the emergency is over. What remains is a person who chose, repeatedly, over years, something specific and difficult. This is not nothing.',
+    choices: null,
+    effect: (p) => { p.m += 10; p.r -= 8; p.h += 5; p.karma += 6; p.addFlag('recovery_established'); p.setMem('recoverySoberMilestone', true) },
+  },
+
 ]

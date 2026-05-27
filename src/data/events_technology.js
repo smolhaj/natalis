@@ -215,4 +215,42 @@ export const TECHNOLOGY_EVENTS = [
     choices: null,
     effect: (p) => { p.e += 6; p.m -= 2 },
   },
+
+  // ── MOBILE MONEY (SUB-SAHARAN AFRICA) ────────────────────────────────────────
+
+  {
+    id: 'tech_mobile_money_mpesa',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) => ['Kenya', 'Tanzania', 'Uganda', 'Rwanda', 'Ethiopia', 'Mozambique'].includes(G.character.country.name) &&
+      G.currentYear >= 2007 && G.currentYear <= 2014 &&
+      G.age >= 16 && !G.flags.includes('mobile_money_user'),
+    text: 'The phone network has launched a money transfer service. You send money to your mother in the village with a text message. She collects it from the shop in town on the same day. There was no bank account involved, no branch, no form. You do this again the following month and the month after that. The way money moves has changed, for you, quietly and completely.',
+    choices: null,
+    effect: (p) => { p.e += 6; p.m += 8; p.addFlag('mobile_money_user'); p.addFlag('skipped_banking_era') },
+  },
+
+  {
+    id: 'tech_mobile_money_nigeria',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => ['Nigeria', 'Ghana', 'Senegal', 'DR Congo', 'Namibia'].includes(G.character.country.name) &&
+      G.currentYear >= 2012 && G.currentYear <= 2018 &&
+      G.age >= 16 && !G.flags.includes('mobile_money_user'),
+    text: 'Mobile money has reached here later than Kenya but it has arrived. Small traders use it at market. Your mother settles a debt with three button presses. You pay for goods without handling cash. The bank in the next town exists but is no longer the point.',
+    choices: null,
+    effect: (p) => { p.e += 4; p.m += 6; p.addFlag('mobile_money_user'); p.addFlag('skipped_banking_era') },
+  },
+
+  {
+    id: 'tech_mobile_money_business',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.flags.includes('mobile_money_user') && G.career?.id === 'entrepreneur' &&
+      G.currentYear >= 2010 && G.age >= 20,
+    text: 'Your business takes payments on a mobile number. You have customers in three towns. None of them have been to your premises. The infrastructure of trade that took wealthy countries a century to build — payment networks, credit, invoicing — exists here in something small enough to fit in a pocket.',
+    choices: null,
+    effect: (p) => { p.mo += 1500; p.e += 5; p.w += 4; p.addFlag('mobile_business') },
+  },
+
 ]
