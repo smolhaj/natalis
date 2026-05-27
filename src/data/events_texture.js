@@ -11,6 +11,99 @@ const wealthyWest = (G) => G.character.country.archetype === 'wealthy_west'
 const postSoviet = (G) => G.character.country.archetype === 'post_soviet'
 const wealthyWestOrSoviet = (G) => wealthyWest(G) || postSoviet(G)
 
+// Cities people from rural areas hear about as work destinations
+const WORK_CITIES = {
+  Nigeria: ['Lagos', 'Abuja', 'Kano'],
+  Ethiopia: ['Addis Ababa', 'Dire Dawa', 'Mekelle'],
+  Kenya: ['Nairobi', 'Mombasa', 'Kisumu'],
+  'DR Congo': ['Kinshasa', 'Lubumbashi', 'Goma'],
+  Ghana: ['Accra', 'Kumasi', 'Tema'],
+  Senegal: ['Dakar', 'Thiès', 'Saint-Louis'],
+  Mozambique: ['Maputo', 'Beira', 'Nampula'],
+  Rwanda: ['Kigali', 'Butare', 'Gisenyi'],
+  Tanzania: ['Dar es Salaam', 'Dodoma', 'Mwanza'],
+  Uganda: ['Kampala', 'Jinja', 'Gulu'],
+  Namibia: ['Windhoek', 'Walvis Bay', 'Swakopmund'],
+  Vietnam: ['Ho Chi Minh City', 'Hanoi', 'Da Nang'],
+  Philippines: ['Manila', 'Cebu', 'Davao'],
+  Indonesia: ['Jakarta', 'Surabaya', 'Bandung'],
+  Thailand: ['Bangkok', 'Chiang Mai', 'Nakhon Ratchasima'],
+  India: ['Mumbai', 'Delhi', 'Kolkata'],
+  China: ['Shenzhen', 'Shanghai', 'Guangzhou'],
+  Brazil: ['São Paulo', 'Rio de Janeiro', 'Brasília'],
+  Mexico: ['Mexico City', 'Guadalajara', 'Monterrey'],
+  Turkey: ['Istanbul', 'Ankara', 'Izmir'],
+  Colombia: ['Bogotá', 'Medellín', 'Cali'],
+  Argentina: ['Buenos Aires', 'Córdoba', 'Rosario'],
+  'South Africa': ['Johannesburg', 'Cape Town', 'Durban'],
+  Egypt: ['Cairo', 'Alexandria', 'Port Said'],
+  Morocco: ['Casablanca', 'Marrakesh', 'Rabat'],
+  Peru: ['Lima', 'Arequipa', 'Cusco'],
+  Chile: ['Santiago', 'Valparaíso', 'Concepción'],
+  Jordan: ['Amman', 'Zarqa', 'Irbid'],
+  Bangladesh: ['Dhaka', 'Chittagong', 'Sylhet'],
+  Pakistan: ['Karachi', 'Lahore', 'Islamabad'],
+  Venezuela: ['Caracas', 'Maracaibo', 'Valencia'],
+  Haiti: ['Port-au-Prince', 'Cap-Haïtien', 'Les Cayes'],
+  Zimbabwe: ['Harare', 'Bulawayo', 'Mutare'],
+  Cambodia: ['Phnom Penh', 'Siem Reap', 'Battambang'],
+  Iran: ['Tehran', 'Isfahan', 'Mashhad'],
+  Cuba: ['Havana', 'Santiago de Cuba', 'Camagüey'],
+  'Sri Lanka': ['Colombo', 'Kandy', 'Jaffna'],
+  Nepal: ['Kathmandu', 'Pokhara', 'Bhaktapur'],
+  Bolivia: ['Santa Cruz', 'La Paz', 'Cochabamba'],
+  Laos: ['Vientiane', 'Luang Prabang', 'Savannakhet'],
+  Guatemala: ['Guatemala City', 'Quetzaltenango', 'Antigua'],
+}
+
+// Remittance source cities: [domestic big city, foreign destination]
+const REMITTANCE_SOURCES = {
+  Nigeria: ['Lagos', 'London'],
+  Ethiopia: ['Addis Ababa', 'Riyadh'],
+  Kenya: ['Nairobi', 'London'],
+  'DR Congo': ['Kinshasa', 'Brussels'],
+  Ghana: ['Accra', 'London'],
+  Senegal: ['Dakar', 'Paris'],
+  Mozambique: ['Maputo', 'Johannesburg'],
+  Rwanda: ['Kigali', 'Brussels'],
+  Tanzania: ['Dar es Salaam', 'Doha'],
+  Uganda: ['Kampala', 'London'],
+  Namibia: ['Windhoek', 'Cape Town'],
+  Vietnam: ['Ho Chi Minh City', 'Seoul'],
+  Philippines: ['Manila', 'Riyadh'],
+  Indonesia: ['Jakarta', 'Abu Dhabi'],
+  Thailand: ['Bangkok', 'Singapore'],
+  India: ['Mumbai', 'Dubai'],
+  China: ['Shanghai', 'New York'],
+  Brazil: ['São Paulo', 'Boston'],
+  Mexico: ['Mexico City', 'Los Angeles'],
+  Turkey: ['Istanbul', 'Frankfurt'],
+  Colombia: ['Bogotá', 'Miami'],
+  Argentina: ['Buenos Aires', 'Madrid'],
+  'South Africa': ['Johannesburg', 'London'],
+  Egypt: ['Cairo', 'Riyadh'],
+  Morocco: ['Casablanca', 'Paris'],
+  Peru: ['Lima', 'Santiago'],
+  Chile: ['Santiago', 'Madrid'],
+  Jordan: ['Amman', 'Abu Dhabi'],
+  Bangladesh: ['Dhaka', 'Doha'],
+  Pakistan: ['Karachi', 'Dubai'],
+  Venezuela: ['Caracas', 'Bogotá'],
+  Haiti: ['Port-au-Prince', 'Miami'],
+  Zimbabwe: ['Harare', 'Johannesburg'],
+  Cambodia: ['Phnom Penh', 'Bangkok'],
+  Iran: ['Tehran', 'Dubai'],
+  Cuba: ['Havana', 'Miami'],
+  'Sri Lanka': ['Colombo', 'Riyadh'],
+  Nepal: ['Kathmandu', 'Doha'],
+  Bolivia: ['Santa Cruz', 'Buenos Aires'],
+  Laos: ['Vientiane', 'Bangkok'],
+  Guatemala: ['Guatemala City', 'Los Angeles'],
+}
+
+const getWorkCities = (G) => WORK_CITIES[G.character.country.name] || ['the capital', 'the port', 'the next province']
+const getRemittanceSources = (G) => REMITTANCE_SOURCES[G.character.country.name] || ['the city', 'abroad']
+
 export const TEXTURE_EVENTS = [
 
   // ── RURAL DEVELOPING WORLD ───────────────────────────────────────────────────
@@ -76,7 +169,10 @@ export const TEXTURE_EVENTS = [
       ruralDeveloping(G) &&
       G.age >= 8 && G.age <= 40 &&
       !G.flags.includes('rural_market_day_done'),
-    text: 'Market day is a weekly event that requires most of the previous day to prepare for. The walk to the nearest town takes two hours. Your mother wraps things in cloth and balances them. In the market there is noise, argument, news from other villages, the smell of things you do not eat every day. Someone tells your mother about a road being built. Someone else says a man from your village found work in Lagos, in Nairobi, in Dakar. The market is where the world arrives.',
+    text: (G) => {
+      const [c1, c2, c3] = getWorkCities(G)
+      return `Market day is a weekly event that requires most of the previous day to prepare for. The walk to the nearest town takes two hours. Your mother wraps things in cloth and balances them. In the market there is noise, argument, news from other villages, the smell of things you do not eat every day. Someone tells your mother about a road being built. Someone else says a man from your village found work in ${c1}, in ${c2}, in ${c3}. The market is where the world arrives.`
+    },
     choices: null,
     effect: (p) => { p.e += 4; p.s += 3; p.m += 6; p.addFlag('rural_market_day_done') },
   },
@@ -172,7 +268,10 @@ export const TEXTURE_EVENTS = [
       ruralDeveloping(G) &&
       G.age >= 6 && G.age <= 25 &&
       !G.flags.includes('rural_remittance_done'),
-    text: 'Money arrives from a relative in the city or abroad — from London, from Lagos, from Riyadh — in an envelope or a Western Union slip. The amount is specific. Your mother calculates immediately: school fees, the roof, the medical bill that has been pending. There is a portion left over that is not spent but held. The relative\'s name is said with a particular quality at dinner. You understand that obligation and gratitude are not always easy to separate.',
+    text: (G) => {
+      const [city, abroad] = getRemittanceSources(G)
+      return `Money arrives from a relative in the city or abroad — from ${city}, from ${abroad} — in an envelope or a Western Union slip. The amount is specific. Your mother calculates immediately: school fees, the roof, the medical bill that has been pending. There is a portion left over that is not spent but held. The relative's name is said with a particular quality at dinner. You understand that obligation and gratitude are not always easy to separate.`
+    },
     choices: null,
     effect: (p) => { p.mo += 180; p.m += 5; p.r += 3; p.addFlag('remittance_family'); p.addFlag('rural_remittance_done') },
   },
