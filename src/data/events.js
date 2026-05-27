@@ -7911,7 +7911,7 @@ const BASE_EVENTS = [
     id: 'lawsuit_wrongful_termination',
     phase: null,
     weight: 3,
-    when: (G) => G.age >= 30 && G.career && !G.mem.lawsuit_wrongful_term && G.flags.includes('manager'),
+    when: (G) => G.age >= 30 && G.career && (G.career.level ?? 0) >= 2 && !G.mem.lawsuit_wrongful_term,
     text: 'A former employee has filed a wrongful termination suit. The claims are partially accurate and partially not. HR is involved. You hire a lawyer on a Wednesday afternoon.',
     isKey: true,
     choices: [

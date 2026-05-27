@@ -22,7 +22,7 @@ export const FERTILITY_EVENTS = [
         text: 'Grieve it properly, together',
         tag: null,
         outcome: 'You give it the space it needs. Your partner does too. The loss sits between you and does not divide you.',
-        effect: (p) => { p.m -= 22; p.r += 8; p.addFlag('experienced_miscarriage'); p.updatePartnerRel(8); p.setMem('fertilityMiscarriage', true) },
+        effect: (p) => { p.m -= 22; p.r += 8; p.addFlag('experienced_miscarriage'); p.partnerRel(8); p.setMem('fertilityMiscarriage', true) },
       },
       {
         text: 'Move forward — get the timing right and try again',
@@ -50,7 +50,7 @@ export const FERTILITY_EVENTS = [
         text: 'Tell your partner — they should know',
         tag: null,
         outcome: 'You tell them. They sit with you. The sharing does not fix it but it changes what it is.',
-        effect: (p) => { p.m -= 18; p.r += 10; p.addFlag('multiple_miscarriage'); p.updatePartnerRel(6); p.setMem('fertilityMiscarriageLate', true) },
+        effect: (p) => { p.m -= 18; p.r += 10; p.addFlag('multiple_miscarriage'); p.partnerRel(6); p.setMem('fertilityMiscarriageLate', true) },
       },
       {
         text: 'Carry it privately',
