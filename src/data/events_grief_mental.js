@@ -22,7 +22,7 @@ export const GRIEF_MENTAL_EVENTS = [
     text: (G) => {
       const isNigeria = G.character.country.name === 'Nigeria'
       const isGhana = G.character.country.name === 'Ghana'
-      if (isNigeria && G.character.religion === 'christian_protestant') {
+      if (isNigeria && G.religion === 'christian_protestant') {
         return 'The church service runs four hours. The choir sings in Yoruba and English simultaneously, and the sound is so large it vibrates in your chest. Cousins you have not seen in a decade appear. Your mother\'s friends — women who have known her since before you existed — take turns keeping vigil through the night. The coffin is expensive. Funerals here are not quiet; they are a statement. The food afterward continues until midnight. People say: a good send-off. That is the obligation, and it is taken seriously.'
       }
       if (isGhana) {
@@ -39,11 +39,11 @@ export const GRIEF_MENTAL_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) =>
-      ['muslim_sunni', 'muslim_shia'].includes(G.character.religion) &&
+      ['muslim_sunni', 'muslim_shia'].includes(G.religion) &&
       (G.mem.parentDied || G.flags.includes('bereaved')) &&
       !G.mem.funeral_type_shown,
     text: (G) => {
-      const isSunni = G.character.religion === 'muslim_sunni'
+      const isSunni = G.religion === 'muslim_sunni'
       return 'The burial happens within twenty-four hours. That is not a custom — it is an obligation. The body is washed, wrapped in white cloth, and prayed over by the men of the community. There is no embalming, no delay, no time for relatives to fly in from far away. The urgency is the point: the soul should not wait. The women of the family gather at the house. You sit on the floor. People come and go for three days. The word they use is ' + (isSunni ? 'inna lillahi' : 'inna lillahi') + ' — we belong to God and to God we return. Someone says it every time a new person arrives, and every time it lands differently.'
     },
     choices: null,
@@ -82,7 +82,7 @@ export const GRIEF_MENTAL_EVENTS = [
     weight: 3,
     when: (G) =>
       ['Russia', 'Ukraine', 'Serbia', 'Romania', 'Georgia'].includes(G.character.country.name) &&
-      G.character.religion === 'christian_orthodox' &&
+      G.religion === 'christian_orthodox' &&
       (G.mem.parentDied || G.flags.includes('bereaved')) &&
       !G.mem.funeral_type_shown,
     text: (G) => {
@@ -113,7 +113,7 @@ export const GRIEF_MENTAL_EVENTS = [
     weight: 2,
     when: (G) =>
       ['wealthy_west'].includes(G.character.country.archetype) &&
-      !['muslim_sunni', 'muslim_shia'].includes(G.character.religion) &&
+      !['muslim_sunni', 'muslim_shia'].includes(G.religion) &&
       (G.mem.parentDied || G.flags.includes('bereaved')) &&
       !G.mem.funeral_type_shown,
     text: 'The service is forty minutes. A humanist celebrant who did not know your mother reads from notes you gave her over the phone last week. Someone plays a song on a laptop through a small Bluetooth speaker. The flower arrangements are correct. At the crematorium you are given a printed order of service. Afterwards everyone goes to a pub and says "she would have wanted this" and drinks more than they planned to. The whole thing is over in one day. You drive home thinking: it was not enough. There should be more of this. It should take longer.',
@@ -297,8 +297,8 @@ export const GRIEF_MENTAL_EVENTS = [
       G.mentalHealth.condition &&
       !G.mem.mh_stigma_shown,
     text: (G) => {
-      const isMuslim = ['muslim_sunni', 'muslim_shia'].includes(G.character.religion)
-      const isChristian = ['christian_protestant', 'christian_catholic'].includes(G.character.religion)
+      const isMuslim = ['muslim_sunni', 'muslim_shia'].includes(G.religion)
+      const isChristian = ['christian_protestant', 'christian_catholic'].includes(G.religion)
       if (isMuslim) {
         return 'The imam says what is in your heart is a test from Allah. The word "depression" does not appear in his response. Your uncle says you need more prayer, more structure, a wife, work that means something. There is no psychiatric service in the nearest town. There is a traditional healer two streets over whose methods you are uncertain of. Your body keeps the score in ways no one around you has language for.'
       }

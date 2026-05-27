@@ -11,7 +11,7 @@ export const RELIGION_ARC_EVENTS = [
     id: 'rela_bar_bat_mitzvah_prep',
     phase: 'childhood',
     weight: 4,
-    when: (G) => G.character.religion === 'jewish' && G.age >= 11 && G.age <= 12 && !G.mem?.bm_prep,
+    when: (G) => G.religion === 'jewish' && G.age >= 11 && G.age <= 12 && !G.mem?.bm_prep,
     text: 'The year before your Bar or Bat Mitzvah you study with a tutor three evenings a week. The Torah portion is in Hebrew and the cantillation marks are their own language. Your tutor is patient. You are less patient. But there are moments — a particular phrase, a vowel held long — when the sound of it is older than anything you can name.',
     choices: [
       { text: 'Commit fully — learn every note of the haftarah', tag: null, outcome: 'Your tutor tells your parents you are ready. You are ready. The preparation has given you something that exists independently of the ceremony.', effect: (p) => { p.e += 6; p.m += 5; p.setMem('bm_prep', true) } },
@@ -24,7 +24,7 @@ export const RELIGION_ARC_EVENTS = [
     id: 'rela_confirmation_day',
     phase: 'adolescence',
     weight: 4,
-    when: (G) => ['christian_catholic', 'christian_protestant'].includes(G.character.religion) && G.age >= 13 && G.age <= 16 && !G.mem?.confirmation_day,
+    when: (G) => ['christian_catholic', 'christian_protestant'].includes(G.religion) && G.age >= 13 && G.age <= 16 && !G.mem?.confirmation_day,
     text: 'Confirmation. You stand before the congregation and affirm that the faith is yours now — not inherited but chosen. The bishop or the pastor places hands on your head. The church smells of candle smoke and your grandmother is in the third row.',
     choices: [
       { text: 'Mean it — this is a real decision', tag: 'devout', outcome: 'You feel the weight of what you are saying. You say it anyway. Something settles.', effect: (p) => { p.m += 10; p.karma += 5; p.addFlag('devout'); p.setMem('confirmation_day', true) } },
@@ -37,7 +37,7 @@ export const RELIGION_ARC_EVENTS = [
     id: 'rela_ramadan_full_adult',
     phase: 'adolescence',
     weight: 4,
-    when: (G) => ['muslim_sunni', 'muslim_shia'].includes(G.character.religion) && G.age >= 14 && G.age <= 18 && !G.mem?.ramadan_adult,
+    when: (G) => ['muslim_sunni', 'muslim_shia'].includes(G.religion) && G.age >= 14 && G.age <= 18 && !G.mem?.ramadan_adult,
     text: 'The first Ramadan you observe as an adult, not a child practicing. Dawn to sunset. Thirty days. The hunger is manageable. What is less manageable is the quiet — the way fasting empties the noise of ordinary wanting and leaves something underneath that you do not have a precise word for.',
     choices: [
       { text: 'Observe it with full intention — this is worship', tag: 'devout', outcome: 'By the fourth week the fast is not deprivation. It is something else. You understand what your parents meant when they said it is a gift.', effect: (p) => { p.m += 10; p.karma += 6; p.h -= 3; p.addFlag('devout'); p.setMem('ramadan_adult', true) } },
@@ -50,7 +50,7 @@ export const RELIGION_ARC_EVENTS = [
     id: 'rela_hajj_lifetime',
     phase: 'midlife',
     weight: 3,
-    when: (G) => ['muslim_sunni', 'muslim_shia'].includes(G.character.religion) && G.age >= 35 && G.age <= 65 && !G.mem?.hajj_arc && G.money > 4000,
+    when: (G) => ['muslim_sunni', 'muslim_shia'].includes(G.religion) && G.age >= 35 && G.age <= 65 && !G.mem?.hajj_arc && G.money > 4000,
     text: 'You have been saving for years. The fifth pillar. You arrange everything — the visa, the accommodation, the time off work, someone to care for your family. When you finally arrive in Mecca and join the river of people circling the Ka\'aba, you feel a scale that personal faith rarely reaches.',
     choices: [
       { text: 'Make the Hajj', tag: 'devout', outcome: 'The tawaf before dawn. Millions of people saying the same words in the same direction. You understand in your body what the mind has held as abstraction. You return different.', effect: (p) => { p.mo -= 5000; p.m += 22; p.karma += 12; p.h -= 5; p.addFlag('devout'); p.addFlag('hajj_complete'); p.setMem('hajj_arc', true) } },
@@ -63,7 +63,7 @@ export const RELIGION_ARC_EVENTS = [
     id: 'rela_hindu_coming_of_age',
     phase: 'childhood',
     weight: 4,
-    when: (G) => G.character.religion === 'hindu' && G.age >= 9 && G.age <= 14 && !G.mem?.hindu_coming_of_age,
+    when: (G) => G.religion === 'hindu' && G.age >= 9 && G.age <= 14 && !G.mem?.hindu_coming_of_age,
     text: (G) => {
       if (G.character.gender === 'male') return 'The ceremony is prepared. A priest recites. Your head is shaved. There is a puja that takes three hours and your knees ache on the cold stone but you do not shift. Afterward, your family eats together and the older relatives press money into your hands and say things about the person you are becoming.'
       return 'The ceremony is simpler for girls in your family\'s tradition — a puja, new clothes, turmeric, the women of the household gathered. Your grandmother puts her hand on your head and says something in the old language that is not translated for you. You understand its weight anyway.'
@@ -114,7 +114,7 @@ export const RELIGION_ARC_EVENTS = [
     id: 'rela_fasting_experience',
     phase: 'young_adult',
     weight: 3,
-    when: (G) => ['muslim_sunni', 'muslim_shia', 'jewish', 'christian_orthodox', 'christian_catholic'].includes(G.character.religion) && G.age >= 20 && G.age <= 45 && !G.mem?.fasting_experience,
+    when: (G) => ['muslim_sunni', 'muslim_shia', 'jewish', 'christian_orthodox', 'christian_catholic'].includes(G.religion) && G.age >= 20 && G.age <= 45 && !G.mem?.fasting_experience,
     text: 'The fast. However your tradition names it. The physical part is easier than you expected after the first day; the body adjusts. What opens up in the space where ordinary appetite was is harder to describe. Some people call it spiritual clarity. You are not sure what to call it. You notice that the world looks different at sunset when the breaking comes.',
     choices: null,
     effect: (p) => { p.m += 8; p.h -= 2; p.karma += 5; p.setMem('fasting_experience', true) },

@@ -38,7 +38,7 @@ export const RIBBONS = [
     id: 'the_self_made',
     name: 'The Self-Made',
     description: 'You built something from nothing. The foundation was you.',
-    condition: (G) => G.character.wealthTier <= 1 && G.stats.wealth > 65 && G.flags.includes('first_gen_graduate'),
+    condition: (G) => G.wealthTier <= 1 && G.stats.wealth > 65 && G.flags.includes('first_gen_graduate'),
     priority: 100,
     color: 'gold',
   },

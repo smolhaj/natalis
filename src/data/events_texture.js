@@ -391,7 +391,7 @@ export const TEXTURE_EVENTS = [
     when: (G) =>
       wealthyWest(G) &&
       G.currentYear >= 1930 && G.currentYear <= 1937 &&
-      G.character.wealthTier <= 2 &&
+      G.wealthTier <= 2 &&
       G.age >= 5 && G.age <= 20 &&
       !G.flags.includes('era_breadline_done'),
     text: 'Your mother takes you to the distribution point. There is a queue that runs around the block and does not move quickly. The men in the queue do not look at each other. You are given bread and tinned goods. On the walk home your mother holds the package with both hands and does not speak. You learn that charity and dignity are not the same thing and that sometimes you cannot afford both.',
@@ -589,7 +589,7 @@ export const TEXTURE_EVENTS = [
     when: (G) =>
       G.currentYear >= 1920 && G.currentYear <= 1960 &&
       G.age >= 5 && G.age <= 18 &&
-      G.character.wealthTier >= 4 &&
+      G.wealthTier >= 4 &&
       !G.flags.includes('era_domestic_service_done'),
     text: 'There is a woman who comes every day and cleans and sometimes cooks. She arrived before you can remember. You know her name and she knows yours and there is a warmth between you that does not map neatly to any of the words for relationship. You notice, when you visit a school friend who does not have one, that your house runs differently. Later you will think about what she was paid.',
     choices: null,
@@ -603,7 +603,7 @@ export const TEXTURE_EVENTS = [
     when: (G) =>
       G.currentYear >= 1920 && G.currentYear <= 1960 &&
       G.age >= 5 && G.age <= 18 &&
-      G.character.wealthTier <= 2 &&
+      G.wealthTier <= 2 &&
       !G.flags.includes('era_domestic_service_done'),
     text: 'Your mother works as a domestic for a family in the better part of town. She leaves before you wake up and sometimes arrives home after you eat. The house she works in has a certain quality she describes in fragments: the silverware, the rooms you are not meant to enter, the children who treat her with kindness and the one who does not. The work is steady. The arrangements are clear. The dignity is something she maintains on her own terms.',
     choices: null,

@@ -1,7 +1,7 @@
 export const COUNTRIES = [
   // ── WEALTHY WEST ──────────────────────────────────────────────────────────
   {
-    name: 'United States', region: 'North America', archetype: 'wealthy_west',
+    name: 'United States', capital: 'Washington D.C.', currency: 'US dollar', region: 'North America', archetype: 'wealthy_west',
     gdp: 'very_high', healthcare: 'good', lifeExpectancy: 79,
     conflictRisk: 0.02, genderGap: 0.18, socialMobility: 'medium',
     wealthTierWeights: [0.12, 0.17, 0.32, 0.27, 0.12],
@@ -29,7 +29,7 @@ export const COUNTRIES = [
     literacyFemale: 0.99,
   },
   {
-    name: 'Canada', region: 'North America', archetype: 'wealthy_west',
+    name: 'Canada', capital: 'Ottawa', currency: 'Canadian dollar', region: 'North America', archetype: 'wealthy_west',
     gdp: 'very_high', healthcare: 'excellent', lifeExpectancy: 82,
     conflictRisk: 0.01, genderGap: 0.12, socialMobility: 'high',
     wealthTierWeights: [0.07, 0.13, 0.30, 0.35, 0.15],
@@ -57,7 +57,7 @@ export const COUNTRIES = [
     literacyFemale: 0.99,
   },
   {
-    name: 'United Kingdom', region: 'Western Europe', archetype: 'wealthy_west',
+    name: 'United Kingdom', capital: 'London', currency: 'pound sterling', region: 'Western Europe', archetype: 'wealthy_west',
     gdp: 'high', healthcare: 'excellent', lifeExpectancy: 81,
     conflictRisk: 0.01, genderGap: 0.15, socialMobility: 'medium',
     wealthTierWeights: [0.08, 0.15, 0.30, 0.33, 0.14],
@@ -84,7 +84,7 @@ export const COUNTRIES = [
     literacyFemale: 0.99,
   },
   {
-    name: 'Germany', region: 'Western Europe', archetype: 'wealthy_west',
+    name: 'Germany', capital: 'Berlin', currency: 'euro', region: 'Western Europe', archetype: 'wealthy_west',
     gdp: 'very_high', healthcare: 'excellent', lifeExpectancy: 81,
     conflictRisk: 0.01, genderGap: 0.13, socialMobility: 'medium',
     wealthTierWeights: [0.06, 0.12, 0.28, 0.38, 0.16],
@@ -110,7 +110,7 @@ export const COUNTRIES = [
     literacyFemale: 0.99,
   },
   {
-    name: 'France', region: 'Western Europe', archetype: 'wealthy_west',
+    name: 'France', capital: 'Paris', currency: 'euro', region: 'Western Europe', archetype: 'wealthy_west',
     gdp: 'high', healthcare: 'excellent', lifeExpectancy: 82,
     conflictRisk: 0.02, genderGap: 0.14, socialMobility: 'medium',
     wealthTierWeights: [0.07, 0.13, 0.29, 0.36, 0.15],
@@ -136,7 +136,7 @@ export const COUNTRIES = [
     literacyFemale: 0.99,
   },
   {
-    name: 'Sweden', region: 'Western Europe', archetype: 'wealthy_west',
+    name: 'Sweden', capital: 'Stockholm', currency: 'Swedish krona', region: 'Western Europe', archetype: 'wealthy_west',
     gdp: 'very_high', healthcare: 'excellent', lifeExpectancy: 83,
     conflictRisk: 0.01, genderGap: 0.07, socialMobility: 'high',
     wealthTierWeights: [0.03, 0.08, 0.25, 0.45, 0.19],
@@ -161,7 +161,7 @@ export const COUNTRIES = [
     literacyFemale: 0.99,
   },
   {
-    name: 'Norway', region: 'Western Europe', archetype: 'wealthy_west',
+    name: 'Norway', capital: 'Oslo', currency: 'Norwegian krone', region: 'Western Europe', archetype: 'wealthy_west',
     gdp: 'very_high', healthcare: 'excellent', lifeExpectancy: 83,
     conflictRisk: 0.01, genderGap: 0.07, socialMobility: 'high',
     wealthTierWeights: [0.02, 0.05, 0.22, 0.48, 0.23],
@@ -186,7 +186,7 @@ export const COUNTRIES = [
     literacyFemale: 0.99,
   },
   {
-    name: 'Netherlands', region: 'Western Europe', archetype: 'wealthy_west',
+    name: 'Netherlands', capital: 'Amsterdam', currency: 'euro', region: 'Western Europe', archetype: 'wealthy_west',
     gdp: 'very_high', healthcare: 'excellent', lifeExpectancy: 82,
     conflictRisk: 0.01, genderGap: 0.11, socialMobility: 'high',
     wealthTierWeights: [0.04, 0.10, 0.27, 0.40, 0.19],
@@ -213,7 +213,7 @@ export const COUNTRIES = [
     literacyFemale: 0.99,
   },
   {
-    name: 'Australia', region: 'Oceania', archetype: 'wealthy_west',
+    name: 'Australia', capital: 'Canberra', currency: 'Australian dollar', region: 'Oceania', archetype: 'wealthy_west',
     gdp: 'very_high', healthcare: 'excellent', lifeExpectancy: 83,
     conflictRisk: 0.01, genderGap: 0.13, socialMobility: 'medium',
     wealthTierWeights: [0.07, 0.13, 0.28, 0.35, 0.17],
@@ -240,7 +240,7 @@ export const COUNTRIES = [
     literacyFemale: 0.99,
   },
   {
-    name: 'New Zealand', region: 'Oceania', archetype: 'wealthy_west',
+    name: 'New Zealand', capital: 'Wellington', currency: 'New Zealand dollar', region: 'Oceania', archetype: 'wealthy_west',
     gdp: 'high', healthcare: 'excellent', lifeExpectancy: 82,
     conflictRisk: 0.01, genderGap: 0.10, socialMobility: 'high',
     wealthTierWeights: [0.06, 0.12, 0.28, 0.37, 0.17],
@@ -267,7 +267,7 @@ export const COUNTRIES = [
     literacyFemale: 0.99,
   },
   {
-    name: 'Spain', region: 'Western Europe', archetype: 'wealthy_west',
+    name: 'Spain', capital: 'Madrid', currency: 'euro', region: 'Western Europe', archetype: 'wealthy_west',
     gdp: 'medium_high', healthcare: 'excellent', lifeExpectancy: 83,
     conflictRisk: 0.01, genderGap: 0.14, socialMobility: 'medium',
     wealthTierWeights: [0.09, 0.16, 0.30, 0.32, 0.13],
@@ -295,7 +295,7 @@ export const COUNTRIES = [
     literacyFemale: 0.98,
   },
   {
-    name: 'Italy', region: 'Western Europe', archetype: 'wealthy_west',
+    name: 'Italy', capital: 'Rome', currency: 'euro', region: 'Western Europe', archetype: 'wealthy_west',
     gdp: 'medium_high', healthcare: 'excellent', lifeExpectancy: 83,
     conflictRisk: 0.01, genderGap: 0.15, socialMobility: 'low',
     wealthTierWeights: [0.09, 0.15, 0.30, 0.33, 0.13],
@@ -322,7 +322,7 @@ export const COUNTRIES = [
     literacyFemale: 0.99,
   },
   {
-    name: 'Ireland', region: 'Western Europe', archetype: 'wealthy_west',
+    name: 'Ireland', capital: 'Dublin', currency: 'euro', region: 'Western Europe', archetype: 'wealthy_west',
     gdp: 'very_high', healthcare: 'good', lifeExpectancy: 82,
     conflictRisk: 0.02, genderGap: 0.12, socialMobility: 'medium',
     wealthTierWeights: [0.07, 0.13, 0.28, 0.36, 0.16],
@@ -350,7 +350,7 @@ export const COUNTRIES = [
   },
   // ── WEALTHY EAST ──────────────────────────────────────────────────────────
   {
-    name: 'Japan', region: 'East Asia', archetype: 'wealthy_east',
+    name: 'Japan', capital: 'Tokyo', currency: 'yen', region: 'East Asia', archetype: 'wealthy_east',
     gdp: 'very_high', healthcare: 'excellent', lifeExpectancy: 84,
     conflictRisk: 0.01, genderGap: 0.25, socialMobility: 'medium',
     wealthTierWeights: [0.04, 0.09, 0.28, 0.43, 0.16],
@@ -377,7 +377,7 @@ export const COUNTRIES = [
     literacyFemale: 0.99,
   },
   {
-    name: 'South Korea', region: 'East Asia', archetype: 'wealthy_east',
+    name: 'South Korea', capital: 'Seoul', currency: 'South Korean won', region: 'East Asia', archetype: 'wealthy_east',
     gdp: 'high', healthcare: 'excellent', lifeExpectancy: 83,
     conflictRisk: 0.03, genderGap: 0.22, socialMobility: 'medium',
     wealthTierWeights: [0.05, 0.10, 0.28, 0.40, 0.17],
@@ -403,7 +403,7 @@ export const COUNTRIES = [
     literacyFemale: 0.99,
   },
   {
-    name: 'Singapore', region: 'Southeast Asia', archetype: 'wealthy_east',
+    name: 'Singapore', capital: 'Singapore', currency: 'Singapore dollar', region: 'Southeast Asia', archetype: 'wealthy_east',
     gdp: 'very_high', healthcare: 'excellent', lifeExpectancy: 83,
     conflictRisk: 0.01, genderGap: 0.12, socialMobility: 'high',
     wealthTierWeights: [0.05, 0.10, 0.25, 0.38, 0.22],
@@ -431,7 +431,7 @@ export const COUNTRIES = [
   },
   // ── POST-SOVIET ───────────────────────────────────────────────────────────
   {
-    name: 'Russia', region: 'Eastern Europe / Central Asia', archetype: 'post_soviet',
+    name: 'Russia', capital: 'Moscow', currency: 'ruble', region: 'Eastern Europe / Central Asia', archetype: 'post_soviet',
     gdp: 'medium', healthcare: 'fair', lifeExpectancy: 73,
     conflictRisk: 0.04, genderGap: 0.22, socialMobility: 'low',
     wealthTierWeights: [0.14, 0.22, 0.32, 0.22, 0.10],
@@ -458,7 +458,7 @@ export const COUNTRIES = [
     literacyFemale: 0.99,
   },
   {
-    name: 'Ukraine', region: 'Eastern Europe', archetype: 'post_soviet',
+    name: 'Ukraine', capital: 'Kyiv', currency: 'hryvnia', region: 'Eastern Europe', archetype: 'post_soviet',
     gdp: 'low', healthcare: 'poor', lifeExpectancy: 72,
     conflictRisk: 0.08, genderGap: 0.20, socialMobility: 'low',
     wealthTierWeights: [0.18, 0.26, 0.32, 0.18, 0.06],
@@ -485,7 +485,7 @@ export const COUNTRIES = [
     literacyFemale: 0.99,
   },
   {
-    name: 'Poland', region: 'Eastern Europe', archetype: 'post_soviet',
+    name: 'Poland', capital: 'Warsaw', currency: 'złoty', region: 'Eastern Europe', archetype: 'post_soviet',
     gdp: 'medium_high', healthcare: 'fair', lifeExpectancy: 78,
     conflictRisk: 0.01, genderGap: 0.17, socialMobility: 'medium',
     wealthTierWeights: [0.09, 0.17, 0.34, 0.30, 0.10],
@@ -512,7 +512,7 @@ export const COUNTRIES = [
     literacyFemale: 0.998,
   },
   {
-    name: 'Romania', region: 'Eastern Europe', archetype: 'post_soviet',
+    name: 'Romania', capital: 'Bucharest', currency: 'Romanian leu', region: 'Eastern Europe', archetype: 'post_soviet',
     gdp: 'medium', healthcare: 'poor', lifeExpectancy: 75,
     conflictRisk: 0.01, genderGap: 0.19, socialMobility: 'low',
     wealthTierWeights: [0.15, 0.23, 0.30, 0.24, 0.08],
@@ -539,7 +539,7 @@ export const COUNTRIES = [
     literacyFemale: 0.95,
   },
   {
-    name: 'Serbia', region: 'Balkans', archetype: 'post_soviet',
+    name: 'Serbia', capital: 'Belgrade', currency: 'Serbian dinar', region: 'Balkans', archetype: 'post_soviet',
     gdp: 'medium', healthcare: 'fair', lifeExpectancy: 76,
     conflictRisk: 0.03, genderGap: 0.19, socialMobility: 'low',
     wealthTierWeights: [0.12, 0.22, 0.32, 0.26, 0.08],
@@ -568,7 +568,7 @@ export const COUNTRIES = [
     literacyFemale: 0.95,
   },
   {
-    name: 'Hungary', region: 'Eastern Europe', archetype: 'post_soviet',
+    name: 'Hungary', capital: 'Budapest', currency: 'forint', region: 'Eastern Europe', archetype: 'post_soviet',
     gdp: 'medium_high', healthcare: 'fair', lifeExpectancy: 76,
     conflictRisk: 0.01, genderGap: 0.19, socialMobility: 'low',
     wealthTierWeights: [0.10, 0.18, 0.33, 0.29, 0.10],
@@ -595,7 +595,7 @@ export const COUNTRIES = [
     literacyFemale: 0.99,
   },
   {
-    name: 'Georgia', region: 'Caucasus', archetype: 'post_soviet',
+    name: 'Georgia', capital: 'Tbilisi', currency: 'Georgian lari', region: 'Caucasus', archetype: 'post_soviet',
     gdp: 'low_medium', healthcare: 'poor', lifeExpectancy: 74,
     conflictRisk: 0.06, genderGap: 0.25, socialMobility: 'low',
     wealthTierWeights: [0.20, 0.28, 0.30, 0.17, 0.05],
@@ -623,7 +623,7 @@ export const COUNTRIES = [
     literacyFemale: 0.99,
   },
   {
-    name: 'Kazakhstan', region: 'Central Asia', archetype: 'post_soviet',
+    name: 'Kazakhstan', capital: 'Astana', currency: 'Kazakhstani tenge', region: 'Central Asia', archetype: 'post_soviet',
     gdp: 'medium', healthcare: 'fair', lifeExpectancy: 74,
     conflictRisk: 0.02, genderGap: 0.28, socialMobility: 'low',
     wealthTierWeights: [0.16, 0.25, 0.32, 0.20, 0.07],
@@ -652,7 +652,7 @@ export const COUNTRIES = [
     literacyFemale: 0.99,
   },
   {
-    name: 'Uzbekistan', region: 'Central Asia', archetype: 'post_soviet',
+    name: 'Uzbekistan', capital: 'Tashkent', currency: 'Uzbekistani soum', region: 'Central Asia', archetype: 'post_soviet',
     gdp: 'low', healthcare: 'poor', lifeExpectancy: 72,
     conflictRisk: 0.03, genderGap: 0.32, socialMobility: 'very_low',
     wealthTierWeights: [0.25, 0.30, 0.28, 0.13, 0.04],
@@ -682,7 +682,7 @@ export const COUNTRIES = [
   },
   // ── DEVELOPING URBAN ─────────────────────────────────────────────────────
   {
-    name: 'Brazil', region: 'South America', archetype: 'developing_urban',
+    name: 'Brazil', capital: 'Brasília', currency: 'Brazilian real', region: 'South America', archetype: 'developing_urban',
     gdp: 'medium_high', healthcare: 'fair', lifeExpectancy: 76,
     conflictRisk: 0.06, genderGap: 0.24, socialMobility: 'low',
     wealthTierWeights: [0.17, 0.23, 0.28, 0.23, 0.09],
@@ -710,7 +710,7 @@ export const COUNTRIES = [
     literacyFemale: 0.82,
   },
   {
-    name: 'Mexico', region: 'North America', archetype: 'developing_urban',
+    name: 'Mexico', capital: 'Mexico City', currency: 'Mexican peso', region: 'North America', archetype: 'developing_urban',
     gdp: 'medium', healthcare: 'fair', lifeExpectancy: 75,
     conflictRisk: 0.08, genderGap: 0.28, socialMobility: 'low',
     wealthTierWeights: [0.18, 0.24, 0.28, 0.22, 0.08],
@@ -738,7 +738,7 @@ export const COUNTRIES = [
     literacyFemale: 0.89,
   },
   {
-    name: 'Turkey', region: 'Middle East / Europe', archetype: 'developing_urban',
+    name: 'Turkey', capital: 'Ankara', currency: 'Turkish lira', region: 'Middle East / Europe', archetype: 'developing_urban',
     gdp: 'medium_high', healthcare: 'fair', lifeExpectancy: 78,
     conflictRisk: 0.05, genderGap: 0.30, socialMobility: 'medium',
     wealthTierWeights: [0.12, 0.20, 0.30, 0.27, 0.11],
@@ -765,7 +765,7 @@ export const COUNTRIES = [
     literacyFemale: 0.81,
   },
   {
-    name: 'China', region: 'East Asia', archetype: 'developing_urban',
+    name: 'China', capital: 'Beijing', currency: 'renminbi', region: 'East Asia', archetype: 'developing_urban',
     regime: 'single_party_communist', regimeHistory: [{ year: 1949, to: 'single_party_communist' }],
     religionWeights: { buddhist: 0.18, folk_religion: 0.22, christian_protestant: 0.02, secular: 0.52, atheist: 0.06 },
     ethnicGroups: [{ id: 'han_chinese', name: 'Han Chinese', share: 0.92 }, { id: 'uyghur', name: 'Uyghur', share: 0.01, disadvantaged: true }, { id: 'tibetan', name: 'Tibetan', share: 0.005, disadvantaged: true }, { id: 'zhuang', name: 'Zhuang', share: 0.015 }, { id: 'hui_chinese', name: 'Hui Muslim', share: 0.009 }],
@@ -780,7 +780,7 @@ export const COUNTRIES = [
     yearRange: [1950, 2005],
   },
   {
-    name: 'Colombia', region: 'South America', archetype: 'developing_urban',
+    name: 'Colombia', capital: 'Bogotá', currency: 'Colombian peso', region: 'South America', archetype: 'developing_urban',
     gdp: 'medium', healthcare: 'fair', lifeExpectancy: 77,
     conflictRisk: 0.08, genderGap: 0.24, socialMobility: 'low',
     wealthTierWeights: [0.18, 0.23, 0.28, 0.22, 0.09],
@@ -808,7 +808,7 @@ export const COUNTRIES = [
     literacyFemale: 0.93,
   },
   {
-    name: 'Argentina', region: 'South America', archetype: 'developing_urban',
+    name: 'Argentina', capital: 'Buenos Aires', currency: 'Argentine peso', region: 'South America', archetype: 'developing_urban',
     gdp: 'medium', healthcare: 'fair', lifeExpectancy: 77,
     conflictRisk: 0.03, genderGap: 0.18, socialMobility: 'medium',
     wealthTierWeights: [0.14, 0.22, 0.29, 0.24, 0.11],
@@ -836,7 +836,7 @@ export const COUNTRIES = [
     literacyFemale: 0.98,
   },
   {
-    name: 'South Africa', region: 'Sub-Saharan Africa', archetype: 'developing_urban',
+    name: 'South Africa', capital: 'Pretoria', currency: 'South African rand', region: 'Sub-Saharan Africa', archetype: 'developing_urban',
     regime: 'single_party_authoritarian', regimeHistory: [{ year: 1948, to: 'single_party_authoritarian' }, { year: 1994, to: 'federal_republic' }],
     religionWeights: { christian_protestant: 0.40, christian_catholic: 0.08, christian_zionist: 0.15, muslim_sunni: 0.02, hindu: 0.01, animist: 0.06, secular: 0.18, atheist: 0.10 },
     ethnicGroups: [{ id: 'black_south_african', name: 'Black African', share: 0.81, disadvantaged: true }, { id: 'coloured_south_african', name: 'Coloured', share: 0.09 }, { id: 'white_south_african', name: 'White', share: 0.08 }, { id: 'indian_south_african', name: 'Indian', share: 0.025 }],
@@ -851,7 +851,7 @@ export const COUNTRIES = [
     yearRange: [1950, 2005],
   },
   {
-    name: 'Vietnam', region: 'Southeast Asia', archetype: 'developing_urban',
+    name: 'Vietnam', capital: 'Hanoi', currency: 'Vietnamese đồng', region: 'Southeast Asia', archetype: 'developing_urban',
     gdp: 'low_medium', healthcare: 'fair', lifeExpectancy: 73,
     conflictRisk: 0.02, genderGap: 0.25, socialMobility: 'medium',
     wealthTierWeights: [0.16, 0.24, 0.32, 0.21, 0.07],
@@ -880,7 +880,7 @@ export const COUNTRIES = [
     literacyFemale: 0.91,
   },
   {
-    name: 'Philippines', region: 'Southeast Asia', archetype: 'developing_urban',
+    name: 'Philippines', capital: 'Manila', currency: 'Philippine peso', region: 'Southeast Asia', archetype: 'developing_urban',
     gdp: 'low_medium', healthcare: 'fair', lifeExpectancy: 71,
     conflictRisk: 0.05, genderGap: 0.18, socialMobility: 'low',
     wealthTierWeights: [0.20, 0.26, 0.28, 0.19, 0.07],
@@ -909,7 +909,7 @@ export const COUNTRIES = [
     literacyFemale: 0.94,
   },
   {
-    name: 'Indonesia', region: 'Southeast Asia', archetype: 'developing_urban',
+    name: 'Indonesia', capital: 'Jakarta', currency: 'Indonesian rupiah', region: 'Southeast Asia', archetype: 'developing_urban',
     gdp: 'low_medium', healthcare: 'poor', lifeExpectancy: 71,
     conflictRisk: 0.04, genderGap: 0.27, socialMobility: 'low',
     wealthTierWeights: [0.20, 0.28, 0.28, 0.18, 0.06],
@@ -942,7 +942,7 @@ export const COUNTRIES = [
     literacyFemale: 0.82,
   },
   {
-    name: 'Thailand', region: 'Southeast Asia', archetype: 'developing_urban',
+    name: 'Thailand', capital: 'Bangkok', currency: 'Thai baht', region: 'Southeast Asia', archetype: 'developing_urban',
     gdp: 'medium', healthcare: 'fair', lifeExpectancy: 77,
     conflictRisk: 0.03, genderGap: 0.23, socialMobility: 'medium',
     wealthTierWeights: [0.14, 0.22, 0.30, 0.24, 0.10],
@@ -971,7 +971,7 @@ export const COUNTRIES = [
   },
   // ── DEVELOPING UNSTABLE ───────────────────────────────────────────────────
   {
-    name: 'Venezuela', region: 'South America', archetype: 'developing_unstable',
+    name: 'Venezuela', capital: 'Caracas', currency: 'Venezuelan bolívar', region: 'South America', archetype: 'developing_unstable',
     gdp: 'low', healthcare: 'poor', lifeExpectancy: 72,
     conflictRisk: 0.06, genderGap: 0.22, socialMobility: 'very_low',
     wealthTierWeights: [0.30, 0.30, 0.24, 0.12, 0.04],
@@ -998,7 +998,7 @@ export const COUNTRIES = [
     literacyFemale: 0.96,
   },
   {
-    name: 'Haiti', region: 'Caribbean', archetype: 'developing_unstable',
+    name: 'Haiti', capital: 'Port-au-Prince', currency: 'Haitian gourde', region: 'Caribbean', archetype: 'developing_unstable',
     gdp: 'very_low', healthcare: 'very_poor', lifeExpectancy: 63,
     conflictRisk: 0.12, genderGap: 0.30, socialMobility: 'very_low',
     wealthTierWeights: [0.52, 0.26, 0.14, 0.06, 0.02],
@@ -1023,7 +1023,7 @@ export const COUNTRIES = [
     literacyFemale: 0.51,
   },
   {
-    name: 'Zimbabwe', region: 'Sub-Saharan Africa', archetype: 'developing_unstable',
+    name: 'Zimbabwe', capital: 'Harare', currency: 'Zimbabwean dollar', region: 'Sub-Saharan Africa', archetype: 'developing_unstable',
     gdp: 'very_low', healthcare: 'very_poor', lifeExpectancy: 61,
     conflictRisk: 0.05, genderGap: 0.26, socialMobility: 'very_low',
     wealthTierWeights: [0.45, 0.28, 0.17, 0.08, 0.02],
@@ -1050,7 +1050,7 @@ export const COUNTRIES = [
     literacyFemale: 0.86,
   },
   {
-    name: 'Bangladesh', region: 'South Asia', archetype: 'developing_unstable',
+    name: 'Bangladesh', capital: 'Dhaka', currency: 'Bangladeshi taka', region: 'South Asia', archetype: 'developing_unstable',
     gdp: 'low', healthcare: 'poor', lifeExpectancy: 72,
     conflictRisk: 0.04, genderGap: 0.35, socialMobility: 'low',
     wealthTierWeights: [0.30, 0.30, 0.24, 0.13, 0.03],
@@ -1077,7 +1077,7 @@ export const COUNTRIES = [
     literacyFemale: 0.40,
   },
   {
-    name: 'Cambodia', region: 'Southeast Asia', archetype: 'developing_unstable',
+    name: 'Cambodia', capital: 'Phnom Penh', currency: 'Cambodian riel', region: 'Southeast Asia', archetype: 'developing_unstable',
     gdp: 'low', healthcare: 'very_poor', lifeExpectancy: 69,
     conflictRisk: 0.04, genderGap: 0.28, socialMobility: 'very_low',
     wealthTierWeights: [0.35, 0.30, 0.22, 0.10, 0.03],
@@ -1105,7 +1105,7 @@ export const COUNTRIES = [
   },
   // ── SUB-SAHARAN AFRICA ────────────────────────────────────────────────────
   {
-    name: 'Nigeria', region: 'West Africa', archetype: 'subsaharan',
+    name: 'Nigeria', capital: 'Abuja', currency: 'naira', region: 'West Africa', archetype: 'subsaharan',
     regime: 'federal_republic', regimeHistory: [{ year: 1966, to: 'military_dictatorship' }, { year: 1979, to: 'federal_republic' }, { year: 1983, to: 'military_dictatorship' }, { year: 1999, to: 'federal_republic' }],
     religionWeights: { muslim_sunni: 0.48, christian_protestant: 0.30, christian_catholic: 0.10, animist: 0.12 },
     ethnicGroups: [{ id: 'hausa_fulani', name: 'Hausa-Fulani', share: 0.29 }, { id: 'yoruba', name: 'Yoruba', share: 0.21 }, { id: 'igbo', name: 'Igbo', share: 0.18 }, { id: 'ijaw', name: 'Ijaw', share: 0.10 }, { id: 'kanuri', name: 'Kanuri', share: 0.04 }, { id: 'other_nigerian', name: 'Other', share: 0.18 }],
@@ -1120,7 +1120,7 @@ export const COUNTRIES = [
     yearRange: [1960, 2005],
   },
   {
-    name: 'Ethiopia', region: 'East Africa', archetype: 'subsaharan',
+    name: 'Ethiopia', capital: 'Addis Ababa', currency: 'Ethiopian birr', region: 'East Africa', archetype: 'subsaharan',
     regime: 'federal_republic', regimeHistory: [{ year: 1974, to: 'military_dictatorship' }, { year: 1991, to: 'federal_republic' }],
     religionWeights: { christian_orthodox: 0.43, muslim_sunni: 0.34, christian_protestant: 0.19, animist: 0.04 },
     ethnicGroups: [{ id: 'oromo', name: 'Oromo', share: 0.34 }, { id: 'amhara', name: 'Amhara', share: 0.27 }, { id: 'tigrinya_eth', name: 'Tigrinya', share: 0.06 }, { id: 'somali_eth', name: 'Somali', share: 0.06 }, { id: 'sidama', name: 'Sidama', share: 0.04 }, { id: 'other_eth', name: 'Other', share: 0.23 }],
@@ -1135,7 +1135,7 @@ export const COUNTRIES = [
     yearRange: [1950, 2005],
   },
   {
-    name: 'Kenya', region: 'East Africa', archetype: 'subsaharan',
+    name: 'Kenya', capital: 'Nairobi', currency: 'Kenyan shilling', region: 'East Africa', archetype: 'subsaharan',
     gdp: 'low', healthcare: 'poor', lifeExpectancy: 66,
     conflictRisk: 0.05, genderGap: 0.35, socialMobility: 'low',
     wealthTierWeights: [0.38, 0.28, 0.19, 0.11, 0.04],
@@ -1164,7 +1164,7 @@ export const COUNTRIES = [
     literacyFemale: 0.68,
   },
   {
-    name: 'DR Congo', region: 'Central Africa', archetype: 'subsaharan',
+    name: 'DR Congo', capital: 'Kinshasa', currency: 'Congolese franc', region: 'Central Africa', archetype: 'subsaharan',
     gdp: 'very_low', healthcare: 'very_poor', lifeExpectancy: 60,
     conflictRisk: 0.18, genderGap: 0.42, socialMobility: 'very_low',
     wealthTierWeights: [0.55, 0.25, 0.12, 0.06, 0.02],
@@ -1193,7 +1193,7 @@ export const COUNTRIES = [
     literacyFemale: 0.72,
   },
   {
-    name: 'Ghana', region: 'West Africa', archetype: 'subsaharan',
+    name: 'Ghana', capital: 'Accra', currency: 'Ghanaian cedi', region: 'West Africa', archetype: 'subsaharan',
     gdp: 'low', healthcare: 'poor', lifeExpectancy: 64,
     conflictRisk: 0.02, genderGap: 0.32, socialMobility: 'low',
     wealthTierWeights: [0.30, 0.30, 0.22, 0.13, 0.05],
@@ -1221,7 +1221,7 @@ export const COUNTRIES = [
     literacyFemale: 0.58,
   },
   {
-    name: 'Senegal', region: 'West Africa', archetype: 'subsaharan',
+    name: 'Senegal', capital: 'Dakar', currency: 'West African CFA franc', region: 'West Africa', archetype: 'subsaharan',
     gdp: 'very_low', healthcare: 'poor', lifeExpectancy: 68,
     conflictRisk: 0.03, genderGap: 0.37, socialMobility: 'very_low',
     wealthTierWeights: [0.40, 0.28, 0.18, 0.10, 0.04],
@@ -1250,7 +1250,7 @@ export const COUNTRIES = [
     literacyFemale: 0.37,
   },
   {
-    name: 'Mozambique', region: 'Southern Africa', archetype: 'subsaharan',
+    name: 'Mozambique', capital: 'Maputo', currency: 'Mozambican metical', region: 'Southern Africa', archetype: 'subsaharan',
     gdp: 'very_low', healthcare: 'very_poor', lifeExpectancy: 60,
     conflictRisk: 0.06, genderGap: 0.42, socialMobility: 'very_low',
     wealthTierWeights: [0.52, 0.25, 0.13, 0.07, 0.03],
@@ -1278,7 +1278,7 @@ export const COUNTRIES = [
     literacyFemale: 0.38,
   },
   {
-    name: 'Rwanda', region: 'East Africa', archetype: 'subsaharan',
+    name: 'Rwanda', capital: 'Kigali', currency: 'Rwandan franc', region: 'East Africa', archetype: 'subsaharan',
     regime: 'single_party_authoritarian', regimeHistory: [{ year: 1962, to: 'military_dictatorship' }, { year: 1994, to: 'federal_republic' }],
     religionWeights: { christian_catholic: 0.44, christian_protestant: 0.38, muslim_sunni: 0.02, animist: 0.10, secular: 0.06 },
     ethnicGroups: [{ id: 'hutu', name: 'Hutu', share: 0.85 }, { id: 'tutsi', name: 'Tutsi', share: 0.14 }, { id: 'twa', name: 'Twa', share: 0.01, disadvantaged: true }],
@@ -1294,7 +1294,7 @@ export const COUNTRIES = [
   },
   // ── CONFLICT ZONE ─────────────────────────────────────────────────────────
   {
-    name: 'Afghanistan', region: 'South Asia', archetype: 'conflict_zone',
+    name: 'Afghanistan', capital: 'Kabul', currency: 'Afghan afghani', region: 'South Asia', archetype: 'conflict_zone',
     regime: 'federal_republic', regimeHistory: [{ year: 1978, to: 'single_party_communist' }, { year: 1992, to: 'military_dictatorship' }, { year: 1996, to: 'theocracy' }, { year: 2001, to: 'federal_republic' }, { year: 2021, to: 'theocracy' }],
     religionWeights: { muslim_sunni: 0.80, muslim_shia: 0.19, secular: 0.01 },
     ethnicGroups: [{ id: 'pashtun', name: 'Pashtun', share: 0.42 }, { id: 'tajik_afghan', name: 'Tajik', share: 0.27 }, { id: 'hazara', name: 'Hazara', share: 0.09, disadvantaged: true }, { id: 'uzbek_afghan', name: 'Uzbek', share: 0.09 }, { id: 'other_afghan', name: 'Other', share: 0.13 }],
@@ -1309,7 +1309,7 @@ export const COUNTRIES = [
     yearRange: [1950, 2005],
   },
   {
-    name: 'Syria', region: 'Middle East', archetype: 'conflict_zone',
+    name: 'Syria', capital: 'Damascus', currency: 'Syrian pound', region: 'Middle East', archetype: 'conflict_zone',
     gdp: 'very_low', healthcare: 'very_poor', lifeExpectancy: 70,
     conflictRisk: 0.40, genderGap: 0.38, socialMobility: 'very_low',
     wealthTierWeights: [0.40, 0.28, 0.20, 0.09, 0.03],
@@ -1337,7 +1337,7 @@ export const COUNTRIES = [
     literacyFemale: 0.74,
   },
   {
-    name: 'Somalia', region: 'East Africa', archetype: 'conflict_zone',
+    name: 'Somalia', capital: 'Mogadishu', currency: 'Somali shilling', region: 'East Africa', archetype: 'conflict_zone',
     regime: 'single_party_authoritarian', regimeHistory: [{ year: 1991, to: 'military_dictatorship' }],
     religionWeights: { muslim_sunni: 0.99, animist: 0.01 },
     ethnicGroups: [{ id: 'somali_hawiye', name: 'Hawiye', share: 0.25 }, { id: 'somali_darod', name: 'Darod', share: 0.30 }, { id: 'somali_isaaq', name: 'Isaaq', share: 0.22 }, { id: 'somali_dir', name: 'Dir', share: 0.14 }, { id: 'somali_other', name: 'Other', share: 0.09 }],
@@ -1352,7 +1352,7 @@ export const COUNTRIES = [
     yearRange: [1960, 2005],
   },
   {
-    name: 'Yemen', region: 'Middle East', archetype: 'conflict_zone',
+    name: 'Yemen', capital: 'Sana\'a', currency: 'Yemeni rial', region: 'Middle East', archetype: 'conflict_zone',
     gdp: 'very_low', healthcare: 'very_poor', lifeExpectancy: 66,
     conflictRisk: 0.38, genderGap: 0.52, socialMobility: 'very_low',
     wealthTierWeights: [0.50, 0.25, 0.14, 0.08, 0.03],
@@ -1379,7 +1379,7 @@ export const COUNTRIES = [
     literacyFemale: 0.30,
   },
   {
-    name: 'Myanmar', region: 'Southeast Asia', archetype: 'conflict_zone',
+    name: 'Myanmar', capital: 'Naypyidaw', currency: 'Myanmar kyat', region: 'Southeast Asia', archetype: 'conflict_zone',
     gdp: 'low', healthcare: 'very_poor', lifeExpectancy: 67,
     conflictRisk: 0.20, genderGap: 0.32, socialMobility: 'very_low',
     wealthTierWeights: [0.35, 0.30, 0.22, 0.10, 0.03],
@@ -1411,7 +1411,7 @@ export const COUNTRIES = [
   },
   // ── WEALTHY GULF ──────────────────────────────────────────────────────────
   {
-    name: 'Saudi Arabia', region: 'Middle East', archetype: 'wealthy_gulf',
+    name: 'Saudi Arabia', capital: 'Riyadh', currency: 'Saudi riyal', region: 'Middle East', archetype: 'wealthy_gulf',
     regime: 'absolute_monarchy', regimeHistory: [],
     religionWeights: { muslim_sunni: 0.85, muslim_shia: 0.14, secular: 0.01 },
     ethnicGroups: [{ id: 'arab_saudi', name: 'Arab Saudi', share: 0.74 }, { id: 'afro_arab', name: 'Afro-Arab', share: 0.10 }, { id: 'south_asian_worker', name: 'South Asian Worker', share: 0.09 }, { id: 'other_saudi', name: 'Other', share: 0.07 }],
@@ -1426,7 +1426,7 @@ export const COUNTRIES = [
     yearRange: [1950, 2005],
   },
   {
-    name: 'UAE', region: 'Middle East', archetype: 'wealthy_gulf',
+    name: 'UAE', capital: 'Abu Dhabi', currency: 'UAE dirham', region: 'Middle East', archetype: 'wealthy_gulf',
     gdp: 'very_high', healthcare: 'excellent', lifeExpectancy: 78,
     conflictRisk: 0.02, genderGap: 0.28, socialMobility: 'medium',
     wealthTierWeights: [0.04, 0.08, 0.25, 0.38, 0.25],
@@ -1456,7 +1456,7 @@ export const COUNTRIES = [
   },
   // ── SOUTH ASIA ────────────────────────────────────────────────────────────
   {
-    name: 'India', region: 'South Asia', archetype: 'developing_urban',
+    name: 'India', capital: 'New Delhi', currency: 'Indian rupee', region: 'South Asia', archetype: 'developing_urban',
     regime: 'federal_republic', regimeHistory: [],
     religionWeights: { hindu: 0.80, muslim_sunni: 0.12, muslim_shia: 0.01, christian_protestant: 0.01, christian_catholic: 0.01, sikh: 0.017, buddhist: 0.008, secular: 0.025 },
     ethnicGroups: [{ id: 'brahmin', name: 'Brahmin', share: 0.05 }, { id: 'kshatriya', name: 'Kshatriya', share: 0.10 }, { id: 'vaishya', name: 'Vaishya', share: 0.08 }, { id: 'shudra', name: 'OBC/Shudra', share: 0.52 }, { id: 'dalit', name: 'Dalit', share: 0.17, disadvantaged: true }, { id: 'adivasi', name: 'Adivasi', share: 0.08, disadvantaged: true }],
@@ -1471,7 +1471,7 @@ export const COUNTRIES = [
     yearRange: [1947, 2005],
   },
   {
-    name: 'Pakistan', region: 'South Asia', archetype: 'developing_unstable',
+    name: 'Pakistan', capital: 'Islamabad', currency: 'Pakistani rupee', region: 'South Asia', archetype: 'developing_unstable',
     regime: 'federal_republic', regimeHistory: [{ year: 1958, to: 'military_dictatorship' }, { year: 1971, to: 'federal_republic' }, { year: 1977, to: 'military_dictatorship' }, { year: 1988, to: 'federal_republic' }, { year: 1999, to: 'military_dictatorship' }, { year: 2002, to: 'federal_republic' }],
     religionWeights: { muslim_sunni: 0.76, muslim_shia: 0.19, muslim_ahmadiyya: 0.01, hindu: 0.02, christian_protestant: 0.015 },
     ethnicGroups: [{ id: 'punjabi', name: 'Punjabi', share: 0.45 }, { id: 'pashtun', name: 'Pashtun', share: 0.15 }, { id: 'sindhi', name: 'Sindhi', share: 0.14 }, { id: 'muhajir', name: 'Muhajir', share: 0.08 }, { id: 'baloch', name: 'Baloch', share: 0.04, disadvantaged: true }, { id: 'other_pak', name: 'Other', share: 0.14 }],
@@ -1486,7 +1486,7 @@ export const COUNTRIES = [
     yearRange: [1947, 2005],
   },
   {
-    name: 'Iran', region: 'Middle East', archetype: 'developing_unstable',
+    name: 'Iran', capital: 'Tehran', currency: 'Iranian rial', region: 'Middle East', archetype: 'developing_unstable',
     regime: 'constitutional_monarchy', regimeHistory: [{ year: 1979, to: 'theocracy' }],
     religionWeights: { muslim_shia: 0.89, muslim_sunni: 0.09, christian_armenian: 0.003, jewish: 0.0008, zoroastrian: 0.001, secular: 0.01 },
     ethnicGroups: [{ id: 'persian', name: 'Persian', share: 0.61 }, { id: 'azerbaijani_iranian', name: 'Azerbaijani', share: 0.16 }, { id: 'kurd_iranian', name: 'Kurdish', share: 0.10, disadvantaged: true }, { id: 'arab_iranian', name: 'Arab', share: 0.02 }, { id: 'baloch_iranian', name: 'Baloch', share: 0.02, disadvantaged: true }, { id: 'other_iranian', name: 'Other', share: 0.09 }],
@@ -1501,7 +1501,7 @@ export const COUNTRIES = [
     yearRange: [1950, 2005],
   },
   {
-    name: 'Egypt', region: 'North Africa', archetype: 'developing_urban',
+    name: 'Egypt', capital: 'Cairo', currency: 'Egyptian pound', region: 'North Africa', archetype: 'developing_urban',
     gdp: 'low_medium', healthcare: 'poor', lifeExpectancy: 72,
     conflictRisk: 0.05, genderGap: 0.38, socialMobility: 'low',
     wealthTierWeights: [0.22, 0.28, 0.28, 0.16, 0.06],
@@ -1528,7 +1528,7 @@ export const COUNTRIES = [
     literacyFemale: 0.65,
   },
   {
-    name: 'Morocco', region: 'North Africa', archetype: 'developing_urban',
+    name: 'Morocco', capital: 'Rabat', currency: 'Moroccan dirham', region: 'North Africa', archetype: 'developing_urban',
     gdp: 'low_medium', healthcare: 'poor', lifeExpectancy: 76,
     conflictRisk: 0.02, genderGap: 0.32, socialMobility: 'low',
     wealthTierWeights: [0.22, 0.28, 0.28, 0.16, 0.06],
@@ -1554,7 +1554,7 @@ export const COUNTRIES = [
     literacyFemale: 0.52,
   },
   {
-    name: 'Cuba', region: 'Caribbean', archetype: 'developing_unstable',
+    name: 'Cuba', capital: 'Havana', currency: 'Cuban peso', region: 'Caribbean', archetype: 'developing_unstable',
     gdp: 'low_medium', healthcare: 'good', lifeExpectancy: 79,
     conflictRisk: 0.02, genderGap: 0.18, socialMobility: 'low',
     wealthTierWeights: [0.20, 0.32, 0.32, 0.13, 0.03],
@@ -1580,7 +1580,7 @@ export const COUNTRIES = [
     literacyFemale: 0.998,
   },
   {
-    name: 'Peru', region: 'South America', archetype: 'developing_urban',
+    name: 'Peru', capital: 'Lima', currency: 'Peruvian sol', region: 'South America', archetype: 'developing_urban',
     gdp: 'low_medium', healthcare: 'poor', lifeExpectancy: 77,
     conflictRisk: 0.04, genderGap: 0.24, socialMobility: 'low',
     wealthTierWeights: [0.22, 0.28, 0.27, 0.17, 0.06],
@@ -1609,7 +1609,7 @@ export const COUNTRIES = [
     literacyFemale: 0.90,
   },
   {
-    name: 'Sri Lanka', region: 'South Asia', archetype: 'developing_unstable',
+    name: 'Sri Lanka', capital: 'Sri Jayawardenepura Kotte', currency: 'Sri Lankan rupee', region: 'South Asia', archetype: 'developing_unstable',
     gdp: 'low_medium', healthcare: 'fair', lifeExpectancy: 77,
     conflictRisk: 0.08, genderGap: 0.24, socialMobility: 'low',
     wealthTierWeights: [0.18, 0.27, 0.30, 0.18, 0.07],
@@ -1637,7 +1637,7 @@ export const COUNTRIES = [
     literacyFemale: 0.91,
   },
   {
-    name: 'Nepal', region: 'South Asia', archetype: 'developing_unstable',
+    name: 'Nepal', capital: 'Kathmandu', currency: 'Nepalese rupee', region: 'South Asia', archetype: 'developing_unstable',
     gdp: 'very_low', healthcare: 'very_poor', lifeExpectancy: 70,
     conflictRisk: 0.06, genderGap: 0.35, socialMobility: 'very_low',
     wealthTierWeights: [0.38, 0.30, 0.20, 0.09, 0.03],
@@ -1668,7 +1668,7 @@ export const COUNTRIES = [
     literacyFemale: 0.57,
   },
   {
-    name: 'Chile', region: 'South America', archetype: 'developing_urban',
+    name: 'Chile', capital: 'Santiago', currency: 'Chilean peso', region: 'South America', archetype: 'developing_urban',
     gdp: 'medium_high', healthcare: 'good', lifeExpectancy: 80,
     conflictRisk: 0.02, genderGap: 0.20, socialMobility: 'medium',
     wealthTierWeights: [0.10, 0.18, 0.30, 0.29, 0.13],
@@ -1695,7 +1695,7 @@ export const COUNTRIES = [
     literacyFemale: 0.95,
   },
   {
-    name: 'Jordan', region: 'Middle East', archetype: 'developing_urban',
+    name: 'Jordan', capital: 'Amman', currency: 'Jordanian dinar', region: 'Middle East', archetype: 'developing_urban',
     gdp: 'low_medium', healthcare: 'fair', lifeExpectancy: 74,
     conflictRisk: 0.05, genderGap: 0.35, socialMobility: 'low',
     wealthTierWeights: [0.16, 0.26, 0.30, 0.20, 0.08],
@@ -1723,7 +1723,7 @@ export const COUNTRIES = [
     literacyFemale: 0.87,
   },
   {
-    name: 'Tanzania', region: 'East Africa', archetype: 'subsaharan',
+    name: 'Tanzania', capital: 'Dodoma', currency: 'Tanzanian shilling', region: 'East Africa', archetype: 'subsaharan',
     gdp: 'very_low', healthcare: 'very_poor', lifeExpectancy: 65,
     conflictRisk: 0.04, genderGap: 0.38, socialMobility: 'very_low',
     wealthTierWeights: [0.45, 0.28, 0.16, 0.08, 0.03],
@@ -1752,7 +1752,7 @@ export const COUNTRIES = [
     literacyFemale: 0.68,
   },
   {
-    name: 'Uganda', region: 'East Africa', archetype: 'subsaharan',
+    name: 'Uganda', capital: 'Kampala', currency: 'Ugandan shilling', region: 'East Africa', archetype: 'subsaharan',
     gdp: 'very_low', healthcare: 'very_poor', lifeExpectancy: 63,
     conflictRisk: 0.08, genderGap: 0.38, socialMobility: 'very_low',
     wealthTierWeights: [0.42, 0.28, 0.18, 0.09, 0.03],
@@ -1782,7 +1782,7 @@ export const COUNTRIES = [
     literacyFemale: 0.67,
   },
   {
-    name: 'Namibia', region: 'Southern Africa', archetype: 'subsaharan',
+    name: 'Namibia', capital: 'Windhoek', currency: 'Namibian dollar', region: 'Southern Africa', archetype: 'subsaharan',
     gdp: 'low_medium', healthcare: 'poor', lifeExpectancy: 63,
     conflictRisk: 0.02, genderGap: 0.26, socialMobility: 'very_low',
     wealthTierWeights: [0.28, 0.28, 0.22, 0.14, 0.08],
@@ -1813,7 +1813,7 @@ export const COUNTRIES = [
     literacyFemale: 0.85,
   },
   {
-    name: 'Czech Republic', region: 'Eastern Europe', archetype: 'post_soviet',
+    name: 'Czech Republic', capital: 'Prague', currency: 'Czech koruna', region: 'Eastern Europe', archetype: 'post_soviet',
     gdp: 'medium_high', healthcare: 'good', lifeExpectancy: 79,
     conflictRisk: 0.01, genderGap: 0.18, socialMobility: 'medium',
     wealthTierWeights: [0.06, 0.14, 0.33, 0.34, 0.13],
@@ -1841,7 +1841,7 @@ export const COUNTRIES = [
     literacyFemale: 0.999,
   },
   {
-    name: 'Bolivia', region: 'South America', archetype: 'developing_unstable',
+    name: 'Bolivia', capital: 'Sucre', currency: 'Bolivian boliviano', region: 'South America', archetype: 'developing_unstable',
     gdp: 'low_medium', healthcare: 'poor', lifeExpectancy: 71,
     conflictRisk: 0.05, genderGap: 0.26, socialMobility: 'low',
     wealthTierWeights: [0.25, 0.30, 0.26, 0.14, 0.05],
@@ -1871,7 +1871,7 @@ export const COUNTRIES = [
     literacyFemale: 0.90,
   },
   {
-    name: 'Laos', region: 'Southeast Asia', archetype: 'developing_unstable',
+    name: 'Laos', capital: 'Vientiane', currency: 'Lao kip', region: 'Southeast Asia', archetype: 'developing_unstable',
     gdp: 'low', healthcare: 'very_poor', lifeExpectancy: 67,
     conflictRisk: 0.04, genderGap: 0.30, socialMobility: 'very_low',
     wealthTierWeights: [0.35, 0.30, 0.22, 0.10, 0.03],
@@ -1899,7 +1899,7 @@ export const COUNTRIES = [
     literacyFemale: 0.72,
   },
   {
-    name: 'Guatemala', region: 'Central America', archetype: 'developing_unstable',
+    name: 'Guatemala', capital: 'Guatemala City', currency: 'Guatemalan quetzal', region: 'Central America', archetype: 'developing_unstable',
     gdp: 'low_medium', healthcare: 'poor', lifeExpectancy: 74,
     conflictRisk: 0.09, genderGap: 0.32, socialMobility: 'very_low',
     wealthTierWeights: [0.32, 0.30, 0.22, 0.12, 0.04],

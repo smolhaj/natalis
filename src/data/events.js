@@ -94,7 +94,7 @@ const BASE_EVENTS = [
     id: 'ec_poverty',
     phase: 'early_childhood',
     weight: 3,
-    when: (G) => G.character.wealthTier <= 1,
+    when: (G) => G.wealthTier <= 1,
     text: 'Hunger is a recurring companion. You understand scarcity before you understand much else.',
     context: null,
     choices: null,
@@ -173,7 +173,7 @@ const BASE_EVENTS = [
     id: 'ch_work',
     phase: 'childhood',
     weight: 2,
-    when: (G) => G.character.wealthTier <= 1 || G.character.familyStability === 'unstable',
+    when: (G) => G.wealthTier <= 1 || G.character.familyStability === 'unstable',
     text: 'Your parents need you to work. School becomes a place you go when you can.',
     context: null,
     choices: [
@@ -599,7 +599,7 @@ const BASE_EVENTS = [
     id: 'adol_scholarship',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => (G.stats.smarts >= 60 || G.flags.includes('early_reader')) && G.character.wealthTier <= 2,
+    when: (G) => (G.stats.smarts >= 60 || G.flags.includes('early_reader')) && G.wealthTier <= 2,
     text: 'A scholarship application lands in front of you. It would pay for university.',
     context: null,
     choices: [
@@ -1226,7 +1226,7 @@ const BASE_EVENTS = [
     id: 'ya_wealthy_inheritance',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.character.wealthTier >= 4,
+    when: (G) => G.wealthTier >= 4,
     text: 'A relative dies and leaves you something substantial. The family disagrees about what to do with it.',
     context: null,
     choices: [
@@ -1258,7 +1258,7 @@ const BASE_EVENTS = [
     id: 'ya_first_gen_graduate',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.flags.includes('university_graduate') && G.character.wealthTier <= 2,
+    when: (G) => G.flags.includes('university_graduate') && G.wealthTier <= 2,
     text: 'You are the first in your family to finish a university degree. The graduation ceremony is strange — joy and strangeness mixed.',
     context: null,
     choices: null,
@@ -1304,7 +1304,7 @@ const BASE_EVENTS = [
     id: 'ya_student_debt',
     phase: 'young_adult',
     weight: 3,
-    when: (G) => G.flags.includes('university_graduate') && G.character.wealthTier <= 3,
+    when: (G) => G.flags.includes('university_graduate') && G.wealthTier <= 3,
     text: 'The student loan statement arrives. The number is larger than you expected it to be.',
     context: null,
     choices: [
@@ -2220,7 +2220,7 @@ const BASE_EVENTS = [
     id: 'ec_parental_abuse',
     phase: 'early_childhood',
     weight: 2,
-    when: (G) => G.character.familyStability === 'unstable' && G.character.wealthTier <= 1,
+    when: (G) => G.character.familyStability === 'unstable' && G.wealthTier <= 1,
     text: 'Your parent hits you. Not once — it becomes the texture of your early years. You learn to read the room before anyone speaks.',
     choices: null,
     effect: (p) => { p.m -= 15; p.h -= 6; p.r += 10; p.addFlag('abused_child'); p.addFlag('guarded_heart'); },
@@ -2247,7 +2247,7 @@ const BASE_EVENTS = [
     id: 'ec_neglect',
     phase: 'early_childhood',
     weight: 2,
-    when: (G) => G.character.familyStability === 'unstable' && G.character.wealthTier <= 2,
+    when: (G) => G.character.familyStability === 'unstable' && G.wealthTier <= 2,
     text: 'Some days there is no adult home. Some days there is no food. You learn to manage, long before you should have to.',
     choices: null,
     effect: (p) => { p.m -= 10; p.h -= 8; p.r += 7; p.addFlag('neglected_child'); },
@@ -2300,7 +2300,7 @@ const BASE_EVENTS = [
     id: 'ch_substance_exposure',
     phase: 'childhood',
     weight: 2,
-    when: (G) => G.age >= 10 && (G.flags.includes('neglected_child') || G.flags.includes('gang_past') || G.character.wealthTier <= 1),
+    when: (G) => G.age >= 10 && (G.flags.includes('neglected_child') || G.flags.includes('gang_past') || G.wealthTier <= 1),
     text: 'Older kids in the neighbourhood offer you something. You are ten, maybe eleven. You are curious and you want to belong.',
     choices: [
       { text: 'Try it', tag: null, outcome: 'A small crossing of a line. Not the last.', effect: (p) => { p.m += 3; p.h -= 3; p.addFlag('early_substance_exposure') }, inject: null },
@@ -5131,7 +5131,7 @@ const BASE_EVENTS = [
     when: (G) => {
       if (G.age < 2 || G.age > 5 || G.mem.daycare_drama) return false
       // Daycare is a modern, urban, higher-income institution
-      const wealthOk = ['upper','upper_middle','middle'].includes(G.character.wealthTier)
+      const wealthOk = ['upper','upper_middle','middle'].includes(G.wealthTier)
       const archOk = ['wealthy_west','wealthy_east','wealthy_gulf'].includes(G.character.country.archetype)
       const urbanOk = (G.ruralUrban === 'urban') && (G.character.country.urbanRate ?? 0) > 0.5
       const yearOk = G.currentYear >= 1960
@@ -8220,3 +8220,11 @@ const BASE_EVENTS = [
 ]
 
 export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS, ...TECHNOLOGY_EVENTS, ...IMMIGRATION_EVENTS, ...CAREER_REGIME_EVENTS, ...CONFLICT_CHILDHOOD_EVENTS, ...LGBTQ_EVENTS, ...MENTAL_HEALTH_EVENTS, ...GRIEF_EVENTS, ...GRIEF_MENTAL_EVENTS, ...RELIGION_ARC_EVENTS, ...LATE_LIFE_EVENTS, ...CHILDREN_ARC_EVENTS, ...FAME_KARMA_EVENTS, ...TEXTURE_EVENTS, ...SOCIETY_EVENTS, ...CONSEQUENCE_EVENTS, ...ROMANCE_ARC_EVENTS, ...ACTIVITY_PAYOFF_EVENTS, ...FRIEND_EVENTS, ...BUSINESS_EVENTS, ...SIBLING_EVENTS, ...EDUCATION_ARC_EVENTS, ...ADOLESCENCE_EVENTS, ...FERTILITY_EVENTS, ...CAREER_WEALTH_EVENTS, ...GULF_EAST_EVENTS]
+
+// Phase index: pre-computed at module load so getNextEvent() only evaluates
+// guards for events in the current phase rather than scanning the entire array.
+export const EVENTS_BY_PHASE = {}
+for (const e of EVENTS) {
+  if (!EVENTS_BY_PHASE[e.phase]) EVENTS_BY_PHASE[e.phase] = []
+  EVENTS_BY_PHASE[e.phase].push(e)
+}

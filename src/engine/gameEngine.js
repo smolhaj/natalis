@@ -1,6 +1,6 @@
 import { COUNTRIES } from '../data/countries'
 import { DESTINATIONS } from '../data/destinations'
-import { EVENTS } from '../data/events'
+import { EVENTS, EVENTS_BY_PHASE } from '../data/events'
 import { WORLD_EVENTS } from '../data/worldEvents'
 import { RIBBONS } from '../data/ribbons'
 import { ACTIVITIES } from '../data/activities'
@@ -9,6 +9,14 @@ import { CAREERS } from '../data/careers'
 import { PROPERTY_TYPES, VEHICLE_TYPES } from '../data/assets'
 import { ILLNESSES } from '../data/illnesses'
 import { randomBetween, pickFrom, rollWeighted, clamp, chance } from '../utils/random'
+
+// ─── FlagSet ──────────────────────────────────────────────────────────────────
+// Extends Set with Array.prototype.includes as an alias for has(), so existing
+// event guards written as G.flags.includes('x') continue to work while getting
+// O(1) lookup instead of O(n) linear scan. New guards should prefer .has().
+class FlagSet extends Set {
+  includes(flag) { return this.has(flag) }
+}
 
 // ─── Weighted random helpers ──────────────────────────────────────────────────
 
@@ -326,6 +334,8 @@ function buildEffectProxy(state) {
   proxy.releaseFromPrison = () => { proxy._releaseFromPrison = true }
   proxy.killParent = (which) => { proxy._killParent = which }
   proxy.setResidency = (status) => { proxy._residencyStatus = status }
+  proxy.setReligion = (religion) => { proxy._religion = religion }
+  proxy.setClassTier = (tier) => { proxy._classTier = tier }
   proxy.setMentalHealth = (updates) => { proxy._mentalHealthUpdates = { ...(proxy._mentalHealthUpdates ?? {}), ...updates } }
   proxy.practiceHobby = (hobbyId, delta = 1) => {
     if (!proxy._hobbyDeltas) proxy._hobbyDeltas = {}
@@ -406,22 +416,53 @@ function resolveProxyExtras(state, proxy) {
     for (const [k, v] of Object.entries(proxy._hobbyDeltas)) hobbies[k] = Math.min(100, (hobbies[k] ?? 0) + v)
     next = { ...next, hobbies }
   }
+  if (proxy._religion !== undefined) next = { ...next, religion: proxy._religion }
+  if (proxy._classTier !== undefined) next = { ...next, classTier: proxy._classTier }
   return next
 }
 
 // ─── Event system ─────────────────────────────────────────────────────────────
 
+// Cooldown-aware availability check. Events with no cooldown fire at most once.
+// Events with cooldown: N can fire again N or more years after they last fired.
+function isEventAvailable(e, usedEventMap, currentYear) {
+  const lastFired = usedEventMap?.get(e.id)
+  if (lastFired === undefined) return true
+  if (!e.cooldown) return false
+  return currentYear - lastFired >= e.cooldown
+}
+
+// Dev mode: set localStorage.setItem('natalis_dev', 'true') to enable pool logging.
+function devLogPool(phase, pool, firedId, usedEventMap, phaseEvents) {
+  try {
+    if (typeof localStorage === 'undefined' || localStorage.getItem('natalis_dev') !== 'true') return
+    const skipped = (phaseEvents ?? []).filter(e => !pool.some(p => p.id === e.id))
+    console.group(`[natalis] phase:${phase} pool:${pool.length} fired:${firedId ?? 'none'}`)
+    if (skipped.length) {
+      console.table(skipped.map(e => ({
+        id: e.id,
+        reason: usedEventMap?.has(e.id) ? (e.cooldown ? 'on cooldown' : 'used') : 'when=false',
+      })))
+    }
+    console.groupEnd()
+  } catch (_) { /* localStorage not available in all environments */ }
+}
+
 export function getNextEvent(state) {
   const phase = getPhase(state.age)
   const G = buildG(state)
+  const usedEventMap = state.usedEventMap ?? new Map()
+  const currentYear = state.currentYear ?? 0
 
   const queueMatch = state.queue.find(e =>
-    e.phase === phase && !state.usedEventIds.has(e.id) && (!e.when || e.when(G))
+    e.phase === phase && isEventAvailable(e, usedEventMap, currentYear) && (!e.when || e.when(G))
   )
   if (queueMatch) return queueMatch
 
-  let pool = EVENTS.filter(e =>
-    e.phase === phase && !state.usedEventIds.has(e.id) && (!e.when || e.when(G)) &&
+  // Use phase index instead of filtering the full event array
+  const phaseEvents = EVENTS_BY_PHASE[phase] ?? []
+  let pool = phaseEvents.filter(e =>
+    isEventAvailable(e, usedEventMap, currentYear) && (!e.when || e.when(G)) &&
     (!state.inPrison || e.prisonOk === true)
   )
 
@@ -429,11 +470,13 @@ export function getNextEvent(state) {
     const careerDef = CAREERS.find(c => c.id === state.career.id)
     if (careerDef?.events?.length) {
       const careerEvents = careerDef.events.filter(e =>
-        e.phase === phase && !state.usedEventIds.has(e.id) && (!e.when || e.when(G))
+        e.phase === phase && isEventAvailable(e, usedEventMap, currentYear) && (!e.when || e.when(G))
       )
       pool = [...pool, ...careerEvents]
     }
   }
+
+  devLogPool(phase, pool, null, usedEventMap, phaseEvents)
 
   if (pool.length === 0) return null
 
@@ -447,13 +490,16 @@ export function getNextEvent(state) {
 }
 
 function buildG(state) {
+  const flagSet = new FlagSet(state.flags)
+  const currentYear = state.currentYear ?? new Date().getFullYear()
   return {
     character: state.character,
     stats: state.stats,
-    flags: state.flags,
+    // FlagSet: O(1) .has() and backward-compatible .includes() for all event guards
+    flags: flagSet,
     regret: state.regret,
     age: state.age,
-    currentYear: state.currentYear,
+    currentYear,
     career: state.career,
     education: state.education,
     partner: state.partner,
@@ -482,17 +528,24 @@ function buildG(state) {
     gpa: state.gpa ?? null,
     mentalHealth: state.mentalHealth ?? { condition: null, medicating: false, therapy: false },
     hobbies: state.hobbies ?? {},
-    religion: state.character?.religion ?? 'secular',
+    // Mutable religion: state.religion overrides character birth religion (for converts, apostates)
+    religion: state.religion ?? state.character?.religion ?? 'secular',
+    // Mutable classTier: state.classTier overrides birth wealthTier (for class mobility)
+    wealthTier: state.classTier ?? state.character?.wealthTier ?? 3,
     ethnicity: state.character?.ethnicity ?? 'local',
     ruralUrban: state.character?.ruralUrban ?? 'urban',
-    literate: state.flags.includes('became_literate') ? true : (state.character?.literate ?? true),
-    regime: getCountryRegime(state.character?.country, state.currentYear ?? new Date().getFullYear()),
-    lgbtqCriminalized: isLgbtqCriminalized(state.character?.country, state.currentYear ?? new Date().getFullYear()),
+    literate: flagSet.has('became_literate') ? true : (state.character?.literate ?? true),
+    regime: getCountryRegime(state.character?.country, currentYear),
+    lgbtqCriminalized: isLgbtqCriminalized(state.character?.country, currentYear),
     casteSystem: state.character?.country?.casteSystem ?? false,
     childMarriageRisk: state.character?.country?.childMarriageRisk ?? 0,
     currentCountry: state.currentCountry ?? state.character?.country,
     residencyStatus: state.residencyStatus ?? 'citizen',
     yearsAbroad: state.yearsAbroad ?? 0,
+    // Enriched prose helpers: available in text: (G) => functions
+    era: Math.floor(currentYear / 10) * 10,
+    capital: state.character?.country?.capital ?? '',
+    currency: state.character?.country?.currency ?? '',
   }
 }
 
@@ -1478,7 +1531,7 @@ export function tick(state) {
       const prisonEvent = getNextEvent(s)
       if (prisonEvent) {
         if (s.queue.some(e => e.id === prisonEvent.id)) s.queue = s.queue.filter(e => e.id !== prisonEvent.id)
-        s.usedEventIds = new Set([...s.usedEventIds, prisonEvent.id])
+        s.usedEventMap = new Map([...(s.usedEventMap ?? new Map()), [prisonEvent.id, s.currentYear]])
         if (!prisonEvent.choices || prisonEvent.choices.length === 0) {
           const proxy = buildEffectProxy(s)
           if (prisonEvent.effect) prisonEvent.effect(proxy)
@@ -1595,7 +1648,7 @@ export function tick(state) {
   s = tickEnrollment(s)
 
   // High school graduation at 18
-  if (s.age === 18 && !s.flags.includes('graduated_hs') && !s.flags.includes('dropped_out') && !s.flags.includes('child_labor') && !s.flags.includes('left_school_early') && !s.education?.enrolled && !s.usedEventIds.has('hs_graduation')) {
+  if (s.age === 18 && !s.flags.includes('graduated_hs') && !s.flags.includes('dropped_out') && !s.flags.includes('child_labor') && !s.flags.includes('left_school_early') && !s.education?.enrolled && !s.usedEventMap?.has('hs_graduation')) {
     const rawGpa = Math.min(4.0, parseFloat(((s.gpa ?? 2.0) + 0.1).toFixed(2)))
     s.education = { ...s.education, level: 'secondary' }
     s.flags = [...new Set([...s.flags, 'graduated_hs'])]
@@ -1798,7 +1851,7 @@ export function tick(state) {
   }
 
   if (s.queue.some(e => e.id === event.id)) s.queue = s.queue.filter(e => e.id !== event.id)
-  s.usedEventIds = new Set([...s.usedEventIds, event.id])
+  s.usedEventMap = new Map([...(s.usedEventMap ?? new Map()), [event.id, s.currentYear]])
 
   // Resolve function text so EventBox and logs always receive strings
   const resolvedText = typeof event.text === 'function' ? event.text(buildG(s)) : (event.text ?? '')
