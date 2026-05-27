@@ -641,6 +641,8 @@ export function enterCareer(state, careerId) {
     id: career.id, title: level.title, level: 0, salary,
     field: career.field, yearsInRole: 0, performance: 70,
     partTime: career.partTime ?? false,
+    promotionChance: career.promotionChance ?? 0.10,
+    maxLevel: career.levels.length - 1,
   }
   const log = [...state.log, { age: state.age, text: `You begin working as a ${level.title}. Starting salary: $${salary.toLocaleString()}/yr.`, isKey: true }]
   return { ...state, career: newCareer, log }
@@ -657,7 +659,9 @@ export function checkPromotion(state) {
   const smartsBonus = (state.stats.smarts - 50) * 0.001
   const perfBonus   = ((state.career.performance ?? 70) - 70) * 0.003
   const yearsBonus  = Math.min(state.career.yearsInRole * 0.03, 0.15)
-  if (!chance(baseChance + smartsBonus + perfBonus + yearsBonus)) return state
+  const peopleFacing = ['politics', 'law', 'entertainment', 'sports', 'education', 'healthcare', 'social_services', 'media'].includes(careerDef.field)
+  const charismaBonus = (state.stats.charisma - 50) * (peopleFacing ? 0.003 : 0.001)
+  if (!chance(baseChance + smartsBonus + perfBonus + yearsBonus + charismaBonus)) return state
 
   const newLevel = careerDef.levels[nextIdx]
   const gdpSalaryMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.22, low_medium: 0.1, low: 0.055, very_low: 0.03 }
@@ -1670,6 +1674,15 @@ export function tick(state) {
     }
   }
 
+  // Relapse risk for those in recovery under high stress
+  if (s.flags.includes('in_recovery') && s.stats.happiness < 30 && chance(0.18)) {
+    const hadAlcohol = s.flags.includes('rehab_graduate') && (s.mem?.alcoholUses ?? 0) > 3
+    const relapseTo = hadAlcohol ? 'alcohol_addiction' : 'drug_addiction'
+    s.flags = [...new Set([...s.flags, relapseTo, 'relapsed'])]
+    s.flags = s.flags.filter(f => f !== 'in_recovery')
+    s.log = [...s.log, { age: s.age, text: 'The recovery holds until it doesn\'t. The stress is too much and the old pattern reasserts itself. You relapse.', isKey: true }]
+  }
+
   // Illness risk check
   s = checkIllnessRisk(s)
 
@@ -2253,7 +2266,8 @@ export function postSocialMedia(state) {
   const mult = sm.genre ? (genreBonus[sm.genre] ?? 1.0) : 0.7
   const baseMin = famous ? 200 : sm.genre ? -50 : -100
   const baseMax = famous ? 5000 : sm.genre ? 400 : 300
-  const followerDelta = Math.round(randomBetween(baseMin, baseMax) * mult)
+  const charismaMult = 1 + (state.stats.charisma - 50) / 200
+  const followerDelta = Math.round(randomBetween(baseMin, baseMax) * mult * charismaMult)
   const newFollowers = Math.max(0, sm.followers + followerDelta)
   const nowVerified = sm.verified || (newFollowers >= 100000 && (state.fame ?? 0) >= 25)
   const genreLabel = sm.genre ? ` (${sm.genre})` : ''
@@ -2385,6 +2399,10 @@ export function useSubstance(state, substance) {
   if (!newFlags.includes(opt.addictionFlag) && chance(opt.addictChance + (newFlags.includes(opt.addFlag) ? 0.05 : 0))) {
     newFlags.push(opt.addictionFlag)
   }
+  // Track use count for addiction stage display
+  const substKey = ['alcohol'].includes(substance) ? 'alcoholUses' : 'drugUses'
+  const newUses = (state.mem?.[substKey] ?? 0) + 1
+  const newMem = { ...state.mem, [substKey]: newUses }
   // Overdose risk for hard drugs
   const overdoseRisk = { heroin: 0.06, cocaine: 0.03, pills: 0.02 }[substance] ?? 0
   if (chance(overdoseRisk)) {
@@ -2392,6 +2410,7 @@ export function useSubstance(state, substance) {
       ...state,
       money: Math.max(0, (state.money ?? 0) - opt.cost),
       flags: [...new Set([...newFlags, 'overdosed'])],
+      mem: newMem,
       stats: { ...state.stats, health: clamp(state.stats.health - 25, 0, 100), happiness: clamp(state.stats.happiness - 10, 0, 100) },
       actionsThisYear: state.actionsThisYear + 1,
       log: [...state.log, { age: state.age, text: `You overdose on ${substance}. Someone finds you in time. Barely.`, isKey: true }],
@@ -2401,6 +2420,7 @@ export function useSubstance(state, substance) {
     ...state,
     money: Math.max(0, (state.money ?? 0) - opt.cost),
     flags: [...new Set(newFlags)],
+    mem: newMem,
     stats: { ...state.stats, health: clamp(state.stats.health + opt.hDelta, 0, 100), happiness: clamp(state.stats.happiness + opt.mDelta, 0, 100) },
     actionsThisYear: state.actionsThisYear + 1,
     log: [...state.log, { age: state.age, text: `You use ${substance}. The effect is immediate.`, isKey: false }],

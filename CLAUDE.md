@@ -223,13 +223,49 @@ Generic events are a last resort. Specific events — ones that could only fire 
 - 42 society events: women's rights milestones by country/year (voting, credit, contraception, equal pay, divorce), healthcare system by archetype (NHS, US medical debt, Soviet polyclinic, developing world), language suppression and identity (Welsh Not, colonial education, code-switching, language grief)
 - 93 world events: Cold War specifics, famines, economic cycles, national traumas
 
-### What still needs work (priority order)
+### What still needs work — Priority Roadmap
 
-1. **Immigration activities** in ActivitiesPanel: "Apply for Permanent Residency" (after 5 years on work visa), "Apply for Citizenship" (after 10 years as permanent resident), "Seek Asylum"
-2. **Residency consequences**: undocumented characters should face different event gates, health/wealth penalties, risk of deportation events
-3. **More career-specific world event intersections**: a journalist in a military dictatorship faces different career events than one in a democracy
-4. **Relationship depth**: friends/partner relationship events beyond the current basics
-5. **Mobile money / fintech events**: characters in sub-Saharan Africa skipping the bank era for M-Pesa etc.
+#### P0 — Broken / Dead-End Mechanics (fix before anything else)
+
+1. **Immigration activity buttons** (`src/components/ActivitiesPanel.jsx`): "Apply for Permanent Residency" (gate: `residencyStatus === 'work_visa'` + 5 years), "Apply for Citizenship" (gate: `residencyStatus === 'permanent_resident'` + 10 years), "Seek Asylum" (gate: conflict/persecuted archetype). Currently the buttons either don't exist or do nothing.
+
+2. **Undocumented residency consequences**: Characters with `residencyStatus === 'undocumented'` or `'tourist_overstay'` face no special pressure. Add: periodic deportation-risk events (`events_immigration.js`), health/wealth drain each tick in `gameEngine.js tick()`, blocked careers in `ActivitiesPanel`.
+
+3. **`pendingTrial` edge case**: If a player dies with `pendingTrial !== null`, the trial is silently dropped. Should be resolved (auto-convicted, or acquitted due to death) when `die()` is called.
+
+#### P1 — High-Value Missing Content
+
+4. **Career × regime intersection events** (`src/data/events_career_regime.js`): Currently sparse. A journalist under a military dictatorship, a teacher under a theocracy, a doctor under a communist state — these are the most specific possible events (person × job × politics) and the file has room for 20–30 more.
+
+5. **Friend lifecycle events**: Friends currently have `relationshipQuality` and names but almost no events that change them outside the fame/karma module. Need: drifting apart, reconnecting after years, friend's divorce/illness/success affecting the player, a friend asking for money, a friend dying.
+
+6. **Romance: post-marriage arc**: `events_romance_arc.js` covers early relationship. Post-marriage needs events: infidelity (choice + consequence), couples therapy, long-haul quiet happiness, caring for a sick partner years before `tickPartner()` fires.
+
+7. **Business: growth and failure arc events** (`src/data/events.js` or new `events_business.js`): Business can be started but its `performance` stat is nearly unaffected by events. Need: key-hire event, losing a major client, hostile acquisition offer, market downturn forcing layoffs.
+
+8. **Mobile money / fintech**: Characters in sub-Saharan Africa (Kenya, Nigeria, Ghana, Tanzania, Uganda) post-2007 should have M-Pesa / mobile money events — skipping the bank era entirely. Gate on `currentCountry` + year range.
+
+#### P2 — Depth and Texture
+
+9. **Sibling relationship events**: Siblings exist in state (`state.siblings[]`) but have almost zero event coverage. A sibling's wedding, estrangement, borrowing money, moving abroad, a sibling's illness in late life.
+
+10. **Education depth**: University/college events are thin. Need: choosing a major, dropping out (with or without regret), academic failure, a professor who mattered, student debt becoming real post-graduation. Gate on `education.type === 'university'`.
+
+11. **Late-life health decisions**: Currently health just declines. Add: elective surgery choice (risk/reward), refusing treatment on principle, experimental treatment for a terminal illness, a diagnosis that reshapes the remaining years.
+
+12. **Retirement money realism**: Retirement fires an event but wealth stat and money don't reflect pension/savings vs. no savings distinction. Add a pension/savings flag earned through career decisions, and a `retired_poor` vs `retired_comfortable` branch in late-life events.
+
+13. **Second-generation immigrant identity events**: Characters born in one country who emigrated and now have children face specific events — child who speaks only the new language, child who doesn't know the homeland, generational tension between old-world values and new-world upbringing. Gate on `flags.includes('emigrated') && children.length > 0`.
+
+#### P3 — Polish and Completeness
+
+14. **Epitaph / DeathScreen gap analysis**: Run a flags audit on `generateEpitaph()` — confirm every major flag arc (generous_legacy, payoff events, rehab_graduate, etc.) has at least one sentence in the epitaph. Several recently-added flags may be missing.
+
+15. **Career events for white-collar careers**: Most professional careers (lawyer, doctor, accountant, engineer) have few or no career-specific events beyond the shared promotion/fired events. Each should have 2–3 events that are specific to what that job actually involves day to day.
+
+16. **`activities.js` cost/availability audit**: Several activities list `gdpTiers` gates but some combinations are unreachable (e.g., activities only available in `very_high` GDP but set to fire only before age 18). Cross-check against real data.
+
+17. **Addiction recovery arc events**: `rehab_graduate` and `in_recovery` flags fire but there are no events that specifically reward or test sobriety over time — a work event where drinking is expected, a years-sober milestone, seeing an old using friend. These are the "so recovery meant something" payoffs.
 
 ---
 
