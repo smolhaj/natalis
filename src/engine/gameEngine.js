@@ -1451,6 +1451,7 @@ export function tick(state) {
     s.stats = { ...s.stats, health: clamp(s.stats.health - 1, 0, 100), happiness: clamp(s.stats.happiness - 2, 0, 100) }
     const d = checkDeath(s)
     if (d.dead) {
+      if (s.pendingTrial) s = { ...s, pendingTrial: null }
       return { ...s, dead: true, causeOfDeath: `${d.cause} (in prison)`, ribbon: assignRibbon(s), screen: 'death' }
     }
     const remaining = s.prisonSentence - 1
@@ -1578,6 +1579,12 @@ export function tick(state) {
   // Partner aging and natural death
   s = tickPartner(s)
 
+  // Undocumented / overstay annual pressure
+  if (s.residencyStatus === 'undocumented' || s.residencyStatus === 'tourist_overstay') {
+    s.stats = { ...s.stats, health: clamp((s.stats.health ?? 80) - 2, 0, 100), happiness: clamp((s.stats.happiness ?? 50) - 3, 0, 100) }
+    s.money = (s.money ?? 0) - 200
+  }
+
   // Fame decay if not in entertainment/sports
   s = tickFame(s)
 
@@ -1689,6 +1696,10 @@ export function tick(state) {
   // Death check
   const death = checkDeath(s)
   if (death.dead) {
+    if (s.pendingTrial) {
+      s.log = [...s.log, { age: s.age, text: `The case against you — ${s.pendingTrial.crimeName} — is dropped when you die. Courts do not try the dead.`, isKey: false }]
+      s = { ...s, pendingTrial: null }
+    }
     return { ...s, dead: true, causeOfDeath: death.cause, ribbon: assignRibbon(s), screen: 'death' }
   }
 

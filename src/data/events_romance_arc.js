@@ -313,4 +313,126 @@ export const ROMANCE_ARC_EVENTS = [
     effect: (p) => { p.m -= 14; p.r += 6; p.e += 3; p.setMem('romanceTeenHeartbreak', true) },
   },
 
+  // ── POST-MARRIAGE ARC ────────────────────────────────────────────────────────
+
+  {
+    id: 'romance_infidelity',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) =>
+      G.partner &&
+      G.partner.married &&
+      (G.partner.years ?? 0) >= 5 &&
+      (G.partner.relationshipQuality ?? 60) < 45 &&
+      !G.mem?.romanceInfidelity,
+    text: (G) =>
+      `Something happens that you do not intend to happen and then happens again. It is not about ${G.partner?.name ?? 'your partner'}. Or it is partly about them and partly about something in yourself that you have been failing to look at. You carry it in your body the way certain things are carried — weightless in public, very heavy in certain silences.`,
+    choices: [
+      {
+        text: 'End it immediately and say nothing',
+        tag: null,
+        outcome: 'You end it. You do not tell your partner. The marriage continues on top of the thing that happened.',
+        effect: (p) => { p.m -= 12; p.r += 15; p.partnerRel(-8); p.setMem('romanceInfidelity', true) },
+      },
+      {
+        text: 'Tell your partner',
+        tag: null,
+        outcome: 'The conversation is the worst one you have had. Something breaks and something else, possibly, begins the long process of repair.',
+        effect: (p) => { p.m -= 20; p.r += 10; p.partnerRel(-25); p.karma += 5; p.setMem('romanceInfidelity', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'romance_couples_therapy',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) =>
+      G.partner &&
+      G.partner.married &&
+      (G.partner.years ?? 0) >= 6 &&
+      (G.partner.relationshipQuality ?? 60) < 40 &&
+      !G.mem?.romanceCouplesTherapy,
+    text: (G) =>
+      `The therapist has a room with two chairs facing each other at a slight angle. You sit in one, ${G.partner?.name ?? 'your partner'} in the other. She asks you to say what you want. It takes four sessions to get to what you actually want, which is different from what you said in the first session.`,
+    choices: [
+      {
+        text: 'Commit to the process — this is worth working for',
+        tag: null,
+        outcome: 'Eighteen months. Things shift. Not entirely, but meaningfully.',
+        effect: (p) => { p.mo -= 3000; p.m += 8; p.partnerRel(18); p.addFlag('went_to_therapy'); p.setMem('romanceCouplesTherapy', true) },
+      },
+      {
+        text: 'Attend but do not open — you are not ready',
+        tag: null,
+        outcome: 'The sessions pass. Your partner notices the wall. The therapist notes it professionally.',
+        effect: (p) => { p.mo -= 1500; p.m -= 4; p.partnerRel(-5); p.setMem('romanceCouplesTherapy', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'romance_partner_illness_early',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) =>
+      G.partner &&
+      G.partner.married &&
+      (G.partner.years ?? 0) >= 8 &&
+      G.age >= 40 && G.age <= 58 &&
+      !G.mem?.romancePartnerIllnessEarly,
+    text: (G) =>
+      `${G.partner?.name ?? 'Your partner'} receives a diagnosis that is not immediately terminal but is not minor. The next several months involve appointments and waiting rooms and the specific competence that crisis requires. The marriage becomes a different kind of partnership — practical, close, more honest than it has been in a while.`,
+    choices: [
+      {
+        text: 'Step fully into the caretaking role',
+        tag: null,
+        outcome: 'You are there for all of it. It takes something from you and gives something back.',
+        effect: (p) => { p.h -= 5; p.m -= 5; p.r += 5; p.karma += 10; p.partnerRel(20); p.addFlag('partner_illness_caretaker'); p.setMem('romancePartnerIllnessEarly', true) },
+      },
+      {
+        text: 'Share the caretaking with others — you cannot do this alone',
+        tag: null,
+        outcome: 'You build a network around the two of you. Your partner understands.',
+        effect: (p) => { p.m -= 3; p.s += 4; p.partnerRel(10); p.setMem('romancePartnerIllnessEarly', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'romance_long_haul_happiness',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      G.partner &&
+      G.partner.married &&
+      (G.partner.years ?? 0) >= 25 &&
+      (G.partner.relationshipQuality ?? 60) >= 65 &&
+      G.age >= 60 &&
+      !G.mem?.romanceLongHaul,
+    text: (G) =>
+      `You have been married for twenty-five years — or more. The calculation happens on an anniversary and surprises you, not the number but the texture of it. You know things about ${G.partner?.name ?? 'this person'} that could fill a book. They know the same about you. There is an ease that is not indifference. You have managed the main thing.`,
+    choices: null,
+    effect: (p) => { p.m += 15; p.r -= 8; p.karma += 8; p.addFlag('long_marriage'); p.setMem('romanceLongHaul', true) },
+  },
+
+  {
+    id: 'romance_separate_interests',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.partner &&
+      G.partner.married &&
+      (G.partner.years ?? 0) >= 10 &&
+      G.age >= 38 &&
+      !G.mem?.romanceSeparateInterests,
+    text: (G) =>
+      `You and ${G.partner?.name ?? 'your partner'} have developed separate interests and separate friends and a schedule that does not always overlap. Some people would find this concerning. You find it comfortable — two people who are still choosing each other from a full life rather than a half-empty one.`,
+    choices: null,
+    effect: (p) => { p.m += 8; p.partnerRel(5); p.setMem('romanceSeparateInterests', true) },
+  },
+
 ]

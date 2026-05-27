@@ -428,4 +428,106 @@ export const CAREER_REGIME_EVENTS = [
     ],
     effect: null,
   },
+
+  // ── LAWYER: THE WORK ITSELF ───────────────────────────────────────────────────
+
+  {
+    id: 'creg_lawyer_losing_case',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.career?.field === 'legal' && G.age >= 26 && !G.mem.lawyerLosingCase,
+    text: 'You lose a case you should not have lost. Not because you were wrong on the law — you were right on the law. But the other side had more resources, more time, a better-rested expert witness. Your client shakes your hand outside the courthouse. The handshake is the worst part.',
+    choices: [
+      { text: 'Write the post-mortem — understand exactly what happened', tag: null, outcome: 'You become a better lawyer. The cost was paid by someone who trusted you.', effect: (p) => { p.m -= 10; p.e += 6; p.r += 6; p.setMem('lawyerLosingCase', true) } },
+      { text: 'Move on — you cannot carry every outcome', tag: null, outcome: 'You move on. The habit of moving on has uses and costs.', effect: (p) => { p.m -= 5; p.r += 8; p.setMem('lawyerLosingCase', true) } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'creg_lawyer_ethics_grey',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.career?.field === 'legal' && G.age >= 30 && !G.mem.lawyerEthics,
+    text: 'The client is guilty. You know this, and knowing it is not the issue — the issue is a specific piece of evidence that could change the outcome. You are not obligated to disclose it. You are not obligated to use it. The rules of the profession say one thing. What you believe says another.',
+    choices: [
+      { text: 'Do your job — everyone is entitled to a defense', tag: null, outcome: 'You represent them fully. The system depends on this principle functioning even when it feels wrong.', effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('legal_defense_principle'); p.setMem('lawyerEthics', true) } },
+      { text: 'Find a legitimate reason to step down from the case', tag: null, outcome: 'You withdraw. Another lawyer takes it. The case continues without you.', effect: (p) => { p.m += 4; p.karma += 5; p.setMem('lawyerEthics', true) } },
+    ],
+    effect: null,
+  },
+
+  // ── ACCOUNTANT / FINANCE ─────────────────────────────────────────────────────
+
+  {
+    id: 'creg_accountant_fraud_discovery',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.career?.field === 'finance' && G.age >= 30 && !G.mem.accountantFraud,
+    text: 'The numbers do not add up. You check them twice. They still do not add up. You understand what the numbers are telling you. The person they are telling you about has an office two floors above yours and a family photograph on their desk.',
+    choices: [
+      { text: 'Escalate it — this is exactly what audit is for', tag: null, outcome: 'The investigation begins. Your position in the organization changes. You did the right thing.', effect: (p) => { p.m -= 8; p.karma += 12; p.addFlag('reported_fraud'); p.setMem('accountantFraud', true) } },
+      { text: 'Verify further before you escalate — you could be wrong', tag: null, outcome: 'You spend three weeks verifying. You are not wrong. The escalation is better supported.', effect: (p) => { p.m -= 5; p.e += 5; p.karma += 8; p.addFlag('reported_fraud'); p.setMem('accountantFraud', true) } },
+      { text: 'File it away — this is above your pay grade', tag: null, outcome: 'You do not report it. It surfaces three years later. Your involvement is reviewed.', effect: (p) => { p.m -= 12; p.r += 12; p.addFlag('covered_up_fraud'); p.setMem('accountantFraud', true) } },
+    ],
+    effect: null,
+  },
+
+  // ── ENGINEER: TECHNICAL ETHICS ───────────────────────────────────────────────
+
+  {
+    id: 'creg_engineer_safety_tradeoff',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.career?.field === 'engineering' && G.age >= 30 && !G.mem.engineerSafety,
+    text: 'The project is behind schedule. The proposed shortcut is technically within tolerance but not within the standard you would apply if timeline were not a factor. The project manager asks for your sign-off. You look at the specification. You look at the timeline.',
+    choices: [
+      { text: 'Sign off — it meets minimum standard', tag: null, outcome: 'The project completes on time. The structure holds. You add this to the list of decisions you have made that you do not discuss.', effect: (p) => { p.m -= 8; p.r += 8; p.addFlag('compromised'); p.setMem('engineerSafety', true) } },
+      { text: 'Refuse — you do not sign for work you would not put your name to', tag: null, outcome: 'The delay is noted. Your reputation in the project suffers. The structure is sound.', effect: (p) => { p.m -= 3; p.karma += 10; p.addFlag('integrity'); p.setMem('engineerSafety', true) } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'creg_engineer_project_overrun',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.career?.field === 'engineering' && G.age >= 28 && !G.mem.engineerOverrun,
+    text: 'The project is over budget and over schedule and the reasons are real: the ground conditions were wrong, the specification changed, the suppliers delivered late. None of these explanations are what the client wants to hear. They want to hear that someone is responsible. You are the engineer of record.',
+    choices: [
+      { text: 'Present the facts clearly and let them make of it what they will', tag: null, outcome: 'They are unhappy. The contract survives. Your professional reputation for honesty survives.', effect: (p) => { p.m -= 10; p.e += 4; p.s += 3; p.setMem('engineerOverrun', true) } },
+      { text: 'Shape the narrative — emphasize external factors', tag: null, outcome: 'The narrative holds, for now. The project is completed under new terms.', effect: (p) => { p.m -= 5; p.r += 5; p.setMem('engineerOverrun', true) } },
+    ],
+    effect: null,
+  },
+
+  // ── DOCTOR: ROUTINE WEIGHT ────────────────────────────────────────────────────
+
+  {
+    id: 'creg_doctor_difficult_patient',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.career?.field === 'healthcare' && G.age >= 28 &&
+      ['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype) && !G.mem.doctorDifficultPatient,
+    text: 'A patient contradicts your diagnosis with something they found on a health website. They have printed it out. They are not wrong to want to be involved in their own care. The website is not a reliable source. You have been doing this for eight years and are, at this moment, very tired.',
+    choices: [
+      { text: 'Walk them through the evidence carefully', tag: null, outcome: 'The conversation takes forty minutes. They leave satisfied. You are fifteen minutes behind on the rest of the day.', effect: (p) => { p.m -= 5; p.s += 4; p.karma += 5; p.setMem('doctorDifficultPatient', true) } },
+      { text: 'Acknowledge their concern and gently redirect', tag: null, outcome: 'They accept the redirect. Whether they followed the advice at home is between them and the internet.', effect: (p) => { p.m -= 3; p.setMem('doctorDifficultPatient', true) } },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'creg_doctor_burnout',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.career?.field === 'healthcare' && G.age >= 35 && (G.stats.happiness ?? 50) < 45 && !G.mem.doctorBurnout,
+    text: 'The standard answer to "how are you" is "fine, busy." You are both of these and also something else. The training does not include how to stop counting days. The ward is short-staffed again. You have learned not to mention this in certain company because the conversation that follows is always the same.',
+    choices: [
+      { text: 'Take the leave you are owed — the ward will survive', tag: null, outcome: 'You take two weeks. The ward survives. You come back with slightly more left in reserve.', effect: (p) => { p.m += 10; p.h += 6; p.setMem('doctorBurnout', true) } },
+      { text: 'Push through — people are depending on you', tag: null, outcome: 'You push. Something begins a slow structural failure. It becomes visible eighteen months later.', effect: (p) => { p.m -= 12; p.h -= 8; p.r += 5; p.addFlag('burnout'); p.setMem('doctorBurnout', true) } },
+    ],
+    effect: null,
+  },
+
 ]

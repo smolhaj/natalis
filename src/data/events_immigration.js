@@ -304,4 +304,77 @@ export const IMMIGRATION_EVENTS = [
     effect: (p) => { p.m += 8; p.e += 5; p.r += 5; p.addFlag('bilingual_integration') },
   },
 
+  // ── SECOND-GENERATION IDENTITY ───────────────────────────────────────────────
+
+  {
+    id: 'imm_secondgen_child_language',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.flags.includes('emigrated') && G.children && G.children.length > 0 &&
+      G.age >= 35 && !G.mem?.secondgenLanguage,
+    text: 'Your child answers in the language of this country. You spoke to them in the language of home — you tried, you were consistent — but the school won and the friends won and the television won. They understand the words you say. They cannot yet say the words you mean.',
+    choices: [
+      {
+        text: 'Accept it — they are building their own life here',
+        tag: null,
+        outcome: 'You make peace with it. The connection holds in different forms.',
+        effect: (p) => { p.m -= 6; p.r += 6; p.setMem('secondgenLanguage', true) },
+      },
+      {
+        text: 'Insist — enroll them in heritage language classes',
+        tag: null,
+        outcome: 'They complain. They attend. In their thirties, they will be glad.',
+        effect: (p) => { p.m -= 3; p.mo -= 500; p.e += 3; p.addFlag('heritage_language_preserved'); p.setMem('secondgenLanguage', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'imm_secondgen_homeland_question',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => G.flags.includes('emigrated') && G.children && G.children.length > 0 &&
+      G.age >= 38 && !G.mem?.secondgenHomeland,
+    text: 'Your child asks why you left the country where you were born. You answer the practical version. They ask a follow-up that you were not expecting and that requires the real version. You give them as much of it as you think they are ready for, which is more than you expected to say and less than the whole of it.',
+    choices: null,
+    effect: (p) => { p.m -= 4; p.r += 8; p.e += 4; p.addFlag('told_children_story'); p.setMem('secondgenHomeland', true) },
+  },
+
+  {
+    id: 'imm_secondgen_values_clash',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.flags.includes('emigrated') && G.children && G.children.length > 0 &&
+      G.age >= 42 && !G.mem?.secondgenValues,
+    text: 'Your child wants something — a relationship, a career direction, a way of being in the world — that would have been unthinkable in the place you came from. Here it is ordinary. You have brought them to a country whose values have made them different from you in ways you chose and also did not fully anticipate.',
+    choices: [
+      {
+        text: 'Support them — this is what you came for',
+        tag: null,
+        outcome: 'You give them what you did not have: permission to be exactly themselves.',
+        effect: (p) => { p.m += 8; p.karma += 10; p.updateChildRel(0, 15); p.setMem('secondgenValues', true) },
+      },
+      {
+        text: 'Hold the line on what matters to you — some things do not change',
+        tag: null,
+        outcome: 'The tension between your worlds becomes the texture of your relationship.',
+        effect: (p) => { p.m -= 6; p.r += 8; p.updateChildRel(0, -10); p.setMem('secondgenValues', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'imm_secondgen_trip_home',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.flags.includes('emigrated') && G.children && G.children.length > 0 &&
+      G.character.country.name !== G.currentCountry?.name && G.age >= 40 && !G.mem?.secondgenTripHome,
+    text: (G) =>
+      `You take your child to ${G.character.country.name} for the first time. They are polite and observant and slightly overwhelmed. They eat things and say they are good. They meet cousins they have only seen on screens. You watch them experiencing the place that made you and understand that it will never be the same place for them that it was for you. This is the correct outcome. It is also something like grief.`,
+    choices: null,
+    effect: (p) => { p.m += 5; p.r += 10; p.updateChildRel(0, 10); p.addFlag('took_children_to_homeland'); p.setMem('secondgenTripHome', true) },
+  },
+
 ]
