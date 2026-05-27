@@ -891,7 +891,52 @@ export const CAREERS = [
     gdpRequired: 'any',
     promotionChance: 0,
     description: 'Early mornings, a bike, and a route to learn.',
-    events: [],
+    events: [
+      {
+        id: 'career_paper_round_rain',
+        phase: 'adolescence',
+        weight: 3,
+        text: 'It is 5:45 AM and raining hard. You have forty-three papers left and the bags are already soaked through. The dog on Laurel Street is at the gate.',
+        choices: [
+          {
+            text: 'Finish the route — you took the job',
+            tag: null,
+            outcome: 'You are completely wet by the end. There is a strange satisfaction in it.',
+            effect: (p) => { p.h -= 3; p.m += 6; p.karma += 3; },
+          },
+          {
+            text: 'Cut it short — no one will know',
+            tag: null,
+            outcome: 'You go home dry. Three houses get no paper. You think about it all day.',
+            effect: (p) => { p.m -= 4; p.r += 3; },
+          },
+        ],
+        effect: null,
+        when: (G) => G.career?.id === 'paper_round',
+      },
+      {
+        id: 'career_paper_round_window',
+        phase: 'adolescence',
+        weight: 2,
+        text: 'On your route you notice a ground-floor window left open at a house that has been empty all week. A light is on inside that wasn\'t on yesterday.',
+        choices: [
+          {
+            text: 'Tell someone — ring the bell, or call it in',
+            tag: null,
+            outcome: 'You knock on a neighbour\'s door. They know who to call. The house turns out to be fine, but you feel like you did the right thing.',
+            effect: (p) => { p.m += 5; p.karma += 5; },
+          },
+          {
+            text: 'Not your business — keep going',
+            tag: null,
+            outcome: 'You deliver the paper and move on. Nothing bad happens. You don\'t think about it much.',
+            effect: (p) => { p.m -= 2; },
+          },
+        ],
+        effect: null,
+        when: (G) => G.career?.id === 'paper_round',
+      },
+    ],
   },
   {
     id: 'babysitter',
@@ -906,7 +951,52 @@ export const CAREERS = [
     gdpRequired: 'any',
     promotionChance: 0,
     description: 'Look after other people\'s children for cash.',
-    events: [],
+    events: [
+      {
+        id: 'career_babysitter_wont_sleep',
+        phase: 'adolescence',
+        weight: 3,
+        text: 'The kids were supposed to be asleep by eight. It is now ten-thirty. The youngest is still appearing at the top of the stairs with creative reasons to be downstairs. The parents said they\'d be back by eleven.',
+        choices: [
+          {
+            text: 'Hold the line — it is a school night and they need sleep',
+            tag: null,
+            outcome: 'You sit at the bottom of the stairs until the sounds upstairs go quiet. It takes until ten fifty.',
+            effect: (p) => { p.m -= 4; p.s += 4; },
+          },
+          {
+            text: 'Give in — one late night won\'t hurt',
+            tag: null,
+            outcome: 'You watch TV together. When the parents arrive, the youngest is asleep on the couch. They are not pleased.',
+            effect: (p) => { p.m += 3; p.karma -= 2; },
+          },
+        ],
+        effect: null,
+        when: (G) => G.career?.id === 'babysitter',
+      },
+      {
+        id: 'career_babysitter_question',
+        phase: 'adolescence',
+        weight: 2,
+        text: 'The child asks you, very seriously: what happens when people die. You were not prepared for this. You are fifteen.',
+        choices: [
+          {
+            text: 'Answer honestly — something about memories and love lasting',
+            tag: null,
+            outcome: 'They nod. They seem satisfied. You are slightly unsettled in a way that follows you home.',
+            effect: (p) => { p.m -= 3; p.e += 4; p.s += 3; },
+          },
+          {
+            text: 'Redirect — ask them what they think',
+            tag: null,
+            outcome: 'They have a full theory ready. You listen to it. It is oddly coherent.',
+            effect: (p) => { p.m += 4; p.e += 2; },
+          },
+        ],
+        effect: null,
+        when: (G) => G.career?.id === 'babysitter',
+      },
+    ],
   },
   {
     id: 'dog_walker',
@@ -921,7 +1011,39 @@ export const CAREERS = [
     gdpRequired: 'any',
     promotionChance: 0,
     description: 'Walk dogs, earn pocket money.',
-    events: [],
+    events: [
+      {
+        id: 'career_dog_walker_escape',
+        phase: 'adolescence',
+        weight: 3,
+        text: 'The big one — a retriever, the one that is always pulling — gets its lead around a park bench post at the same moment a squirrel appears, and before you can do anything the clip fails and it is gone.',
+        choices: [
+          {
+            text: 'Sprint after it — you are responsible for this dog',
+            tag: null,
+            outcome: 'You catch it three blocks away, sitting outside a bakery, looking pleased with itself.',
+            effect: (p) => { p.h += 3; p.m -= 5; p.karma += 4; },
+          },
+          {
+            text: 'Call the owner immediately',
+            tag: null,
+            outcome: 'They come and find it themselves. They are understanding. You feel terrible anyway.',
+            effect: (p) => { p.m -= 8; p.s += 2; },
+          },
+        ],
+        effect: null,
+        when: (G) => G.career?.id === 'dog_walker',
+      },
+      {
+        id: 'career_dog_walker_loss',
+        phase: 'adolescence',
+        weight: 2,
+        text: 'The small terrier you have been walking every Tuesday for eighteen months isn\'t at the door. The owner tells you she was put to sleep last week. She was seventeen. They didn\'t know how to call.',
+        choices: null,
+        effect: (p) => { p.m -= 10; p.r += 4; p.addFlag('experienced_loss'); },
+        when: (G) => G.career?.id === 'dog_walker',
+      },
+    ],
   },
   {
     id: 'fast_food',
@@ -936,7 +1058,39 @@ export const CAREERS = [
     gdpRequired: 'any',
     promotionChance: 0,
     description: 'Minimum wage, maximum chaos.',
-    events: [],
+    events: [
+      {
+        id: 'career_fast_food_first_day',
+        phase: 'adolescence',
+        weight: 3,
+        text: 'First shift. The headset is too loud and the fryer pops and the orders come faster than anyone told you they would. A customer calls you stupid in front of six people because you got the sauce wrong. You have three hours left on the clock.',
+        choices: [
+          {
+            text: 'Keep your composure and finish the shift',
+            tag: null,
+            outcome: 'You finish the shift. On the walk home you are angrier than you expected. The money is in your pocket.',
+            effect: (p) => { p.m -= 8; p.s += 4; p.w += 2; },
+          },
+          {
+            text: 'Walk off — this isn\'t worth minimum wage',
+            tag: null,
+            outcome: 'You take the apron off and leave. You need the money and you know it, but not today.',
+            effect: (p) => { p.m += 3; p.w -= 5; p.r += 5; },
+          },
+        ],
+        effect: null,
+        when: (G) => G.career?.id === 'fast_food',
+      },
+      {
+        id: 'career_fast_food_close',
+        phase: 'adolescence',
+        weight: 2,
+        text: 'The manager asks you to close up alone for the first time. Counting the till, locking the grease traps, setting the alarm. It is 10:45 PM and raining and you have the keys.',
+        choices: null,
+        effect: (p) => { p.m += 8; p.s += 5; p.addFlag('early_responsibility'); },
+        when: (G) => G.career?.id === 'fast_food',
+      },
+    ],
   },
   {
     id: 'cashier',
@@ -951,7 +1105,39 @@ export const CAREERS = [
     gdpRequired: 'any',
     promotionChance: 0,
     description: 'Scan items, count change, repeat.',
-    events: [],
+    events: [
+      {
+        id: 'career_cashier_shoplifter',
+        phase: 'adolescence',
+        weight: 3,
+        text: 'You watch a man in a grey jacket put two bottles of wine in his bag and then approach your till with a single pack of gum. He meets your eyes. He knows you saw.',
+        choices: [
+          {
+            text: 'Call it — press the button under the counter',
+            tag: null,
+            outcome: 'Security comes. There is a scene. Your manager nods at you. You feel the adrenaline for an hour.',
+            effect: (p) => { p.m -= 3; p.karma += 5; p.s += 2; },
+          },
+          {
+            text: 'Let it go — it\'s not your wine',
+            tag: null,
+            outcome: 'He pays for the gum and walks out. You say nothing. The moment passes.',
+            effect: (p) => { p.m -= 4; p.r += 3; },
+          },
+        ],
+        effect: null,
+        when: (G) => G.career?.id === 'cashier',
+      },
+      {
+        id: 'career_cashier_regular',
+        phase: 'adolescence',
+        weight: 2,
+        text: 'There is an elderly woman who comes in every Thursday morning. Always the same six items. Always exact change. She calls you by name. For three weeks she doesn\'t come in. On the fourth week she\'s back. She had pneumonia. She seems pleased you noticed.',
+        choices: null,
+        effect: (p) => { p.m += 8; p.s += 5; p.addFlag('first_job_teen'); },
+        when: (G) => G.career?.id === 'cashier',
+      },
+    ],
   },
   {
     id: 'politician',

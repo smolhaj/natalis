@@ -50,6 +50,7 @@ const TABS = [
 export default function LifeScreen() {
   const [showActivities, setShowActivities] = useState(false)
   const [activeTab, setActiveTab] = useState('life')
+  const [logMode, setLogMode] = useState('recent')
 
   const character    = useGameStore(s => s.character)
   const stats        = useGameStore(s => s.stats)
@@ -111,6 +112,26 @@ export default function LifeScreen() {
   const recentLog = [...log].reverse().slice(0, 40)
   const actionsLeft = maxActionsPerYear - actionsThisYear
   const hasAddiction = flags.includes('alcohol_addiction') || flags.includes('gambling_addiction') || flags.includes('drug_addiction') || flags.includes('addiction') || flags.includes('addicted_gambling')
+
+  const business     = useGameStore(s => s.business)
+  const travels      = useGameStore(s => s.travels)
+  const exPartners   = useGameStore(s => s.exPartners)
+  const mem          = useGameStore(s => s.mem)
+
+  // Derive addiction stage label for display
+  const getAddictionStage = () => {
+    const isAlcohol = flags.includes('alcohol_addiction') || flags.includes('heavy_drinker')
+    const isDrug = flags.includes('drug_addiction') || flags.includes('drug_user') || flags.includes('substance_abuser')
+    if (!isAlcohol && !isDrug && !flags.includes('gambling_addiction')) return null
+    const uses = (mem?.alcoholUses ?? 0) + (mem?.drugUses ?? 0)
+    const isAddicted = flags.includes('alcohol_addiction') || flags.includes('drug_addiction') || flags.includes('gambling_addiction')
+    const isOverdosed = flags.includes('overdosed')
+    if (isOverdosed || (isAddicted && uses > 20)) return { label: 'Stage 4 — Crisis', color: '#ff3b30' }
+    if (isAddicted) return { label: 'Stage 3 — Dependent', color: '#ff3b30' }
+    if (uses >= 5) return { label: 'Stage 2 — Heavy Use', color: '#ff9500' }
+    return { label: 'Stage 1 — Casual Use', color: '#ff9500' }
+  }
+  const addictionStage = getAddictionStage()
 
   const formatMoney = (n) => {
     if (n === null || n === undefined) return '$0'
@@ -219,12 +240,22 @@ export default function LifeScreen() {
           )}
 
           {/* Addiction warning */}
-          {hasAddiction && (
+          {hasAddiction && addictionStage && (
             <div className="bg-orange-50 border border-orange-200 rounded-2xl px-4 py-3 flex items-center gap-3">
               <span className="text-2xl">⚠️</span>
-              <div>
-                <p className="font-bold text-orange-600 text-sm">Active Addiction</p>
-                <p className="text-orange-500 text-xs">Consider visiting Rehab in Activities.</p>
+              <div className="flex-1">
+                <div className="flex items-center justify-between">
+                  <p className="font-bold text-orange-600 text-sm">Active Addiction</p>
+                  <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ backgroundColor: addictionStage.color + '22', color: addictionStage.color }}>
+                    {addictionStage.label}
+                  </span>
+                </div>
+                <p className="text-orange-500 text-xs mt-0.5">
+                  {addictionStage.label.includes('4') ? 'Seek help urgently — your health is at serious risk.' :
+                   addictionStage.label.includes('3') ? 'Dependent. Rehab is available in Activities.' :
+                   addictionStage.label.includes('2') ? 'Use is escalating. Consider addressing it now.' :
+                   'Early stage. You can still turn this around easily.'}
+                </p>
               </div>
             </div>
           )}
@@ -278,38 +309,74 @@ export default function LifeScreen() {
           )}
 
           {/* ── LIFE TAB ── */}
-          {activeTab === 'life' && (
-            <div className="space-y-3">
-              {recentLog.map((entry, i) => (
-                <div
-                  key={i}
-                  className={`rounded-xl px-4 py-3 border text-sm leading-relaxed ${
-                    entry.isWorld
-                      ? 'bg-amber-50 border-amber-200 text-amber-800'
-                      : entry.isKey
-                      ? 'bg-blue-50 border-blue-200 text-blue-800'
-                      : 'bg-white border-natalis-border text-natalis-dim'
-                  }`}
-                >
-                  {entry.isWorld && entry.worldEventName && (
-                    <div className="text-xs font-bold uppercase tracking-wider text-amber-700 mb-1">
-                      🌐 {entry.worldEventName}
+          {activeTab === 'life' && (() => {
+            const PHASE_ORDER = ['early_childhood','childhood','adolescence','young_adult','midlife','late_life']
+            const phaseForAge = (a) => a <= 5 ? 'early_childhood' : a <= 11 ? 'childhood' : a <= 17 ? 'adolescence' : a <= 29 ? 'young_adult' : a <= 49 ? 'midlife' : 'late_life'
+            const phaseLabel = { early_childhood: 'Early Childhood (0–5)', childhood: 'Childhood (6–11)', adolescence: 'Adolescence (12–17)', young_adult: 'Young Adult (18–29)', midlife: 'Midlife (30–49)', late_life: 'Late Life (50+)' }
+            return (
+              <div className="space-y-3">
+                {/* Toggle */}
+                <div className="flex gap-2 bg-white rounded-2xl p-1.5 border border-natalis-border">
+                  {[['recent','Recent 40'],['timeline','By Phase']].map(([mode, label]) => (
+                    <button key={mode} onClick={() => setLogMode(mode)}
+                      className="flex-1 py-1.5 rounded-xl text-xs font-semibold transition-all"
+                      style={{ background: logMode === mode ? '#007aff' : 'transparent', color: logMode === mode ? 'white' : '#8e8e93' }}>
+                      {label}
+                    </button>
+                  ))}
+                </div>
+
+                {logMode === 'recent' && recentLog.map((entry, i) => (
+                  <div key={i} className={`rounded-xl px-4 py-3 border text-sm leading-relaxed ${
+                    entry.isWorld ? 'bg-amber-50 border-amber-200 text-amber-800' :
+                    entry.isKey ? 'bg-blue-50 border-blue-200 text-blue-800' :
+                    'bg-white border-natalis-border text-natalis-dim'
+                  }`}>
+                    {entry.isWorld && entry.worldEventName && (
+                      <div className="text-xs font-bold uppercase tracking-wider text-amber-700 mb-1">🌐 {entry.worldEventName}</div>
+                    )}
+                    <span className="font-bold mr-2 text-xs uppercase tracking-wider opacity-60">Age {entry.age}</span>
+                    {entry.text}
+                  </div>
+                ))}
+
+                {logMode === 'timeline' && (() => {
+                  const grouped = {}
+                  for (const entry of [...log].reverse()) {
+                    const ph = phaseForAge(entry.age)
+                    if (!grouped[ph]) grouped[ph] = []
+                    grouped[ph].push(entry)
+                  }
+                  return PHASE_ORDER.filter(ph => grouped[ph]?.length > 0).map(ph => (
+                    <div key={ph} className="bg-white rounded-2xl border border-natalis-border overflow-hidden">
+                      <div className="px-4 py-2.5 bg-gray-50 border-b border-natalis-border">
+                        <span className="text-xs font-bold uppercase tracking-wider text-natalis-muted">{phaseLabel[ph]}</span>
+                      </div>
+                      <div className="divide-y divide-natalis-border">
+                        {grouped[ph].map((entry, i) => (
+                          <div key={i} className={`px-4 py-2.5 text-sm leading-relaxed ${
+                            entry.isWorld ? 'bg-amber-50 text-amber-800' :
+                            entry.isKey ? 'text-blue-800' : 'text-natalis-dim'
+                          }`}>
+                            <span className="font-bold mr-2 text-xs opacity-50">Age {entry.age}</span>
+                            {entry.isWorld && entry.worldEventName && <span className="text-xs font-bold mr-1">🌐 {entry.worldEventName} — </span>}
+                            {entry.text}
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  )}
-                  <span className="font-bold mr-2 text-xs uppercase tracking-wider opacity-60">
-                    Age {entry.age}
-                  </span>
-                  {entry.text}
-                </div>
-              ))}
-              {recentLog.length === 0 && (
-                <div className="bg-white rounded-2xl px-5 py-8 text-center border border-natalis-border">
-                  <p className="text-4xl mb-2">🌱</p>
-                  <p className="text-natalis-muted text-sm">Your life story begins here.</p>
-                </div>
-              )}
-            </div>
-          )}
+                  ))
+                })()}
+
+                {log.length === 0 && (
+                  <div className="bg-white rounded-2xl px-5 py-8 text-center border border-natalis-border">
+                    <p className="text-4xl mb-2">🌱</p>
+                    <p className="text-natalis-muted text-sm">Your life story begins here.</p>
+                  </div>
+                )}
+              </div>
+            )
+          })()}
 
           {/* ── STATS TAB ── */}
           {activeTab === 'stats' && (
@@ -515,6 +582,24 @@ export default function LifeScreen() {
                         style={{ width: `${career.performance ?? 70}%`, backgroundColor: (career.performance ?? 70) > 60 ? '#34c759' : (career.performance ?? 70) > 30 ? '#ff9500' : '#ff3b30' }} />
                     </div>
                   </div>
+                  {career.level < (career.maxLevel ?? 99) && (() => {
+                    const perf = career.performance ?? 70
+                    const basePct = career.promotionChance ?? 0.12
+                    const perfBonus = (perf - 70) * 0.003
+                    const yearsBonus = Math.min((career.yearsInRole ?? 0) * 0.03, 0.15)
+                    const smartsBonus = (stats.smarts - 50) * 0.001
+                    const charismaBonus = (stats.charisma - 50) * 0.001
+                    const effectivePct = Math.max(0, basePct + perfBonus + yearsBonus + smartsBonus + charismaBonus)
+                    const estYears = effectivePct > 0 ? Math.round(1 / effectivePct) : null
+                    return (
+                      <div className="mt-2 pt-2 border-t border-natalis-border flex justify-between items-center">
+                        <span className="text-xs text-natalis-muted">Promotion chance</span>
+                        <span className="text-xs font-semibold" style={{ color: effectivePct > 0.2 ? '#34c759' : effectivePct > 0.1 ? '#ff9500' : '#8e8e93' }}>
+                          ~{Math.round(effectivePct * 100)}%/yr{estYears ? ` · ~${estYears}yr avg` : ''}
+                        </span>
+                      </div>
+                    )
+                  })()}
                 </div>
               )}
 
@@ -631,6 +716,26 @@ export default function LifeScreen() {
                 </div>
               )}
 
+              {/* Ex-Partners */}
+              {exPartners && exPartners.length > 0 && (
+                <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
+                  <p className="font-bold text-natalis-text text-sm mb-3">💔 Past Relationships</p>
+                  <div className="space-y-2">
+                    {exPartners.map((ex, i) => (
+                      <div key={i} className="flex justify-between items-center py-1 border-b border-natalis-border last:border-0">
+                        <div>
+                          <p className="text-natalis-dim text-sm">{ex.name}{genderMark(ex.gender)}</p>
+                          <p className="text-natalis-muted text-xs">
+                            {ex.married ? 'Divorced' : 'Separated'}{ex.separatedAt ? ` · Age ${ex.separatedAt}` : ''}
+                          </p>
+                        </div>
+                        <span className="text-xs text-natalis-muted capitalize">{ex.occupation ?? ''}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {!partner && children.length === 0 && (!friends || friends.filter(f=>f.alive).length === 0) && (
                 <div className="bg-white rounded-2xl px-5 py-8 text-center border border-natalis-border">
                   <p className="text-4xl mb-2">🤝</p>
@@ -729,7 +834,78 @@ export default function LifeScreen() {
                 </div>
               )}
 
-              {assets?.properties?.length === 0 && assets?.vehicles?.length === 0 && (debt ?? 0) === 0 && (
+              {/* Business P&L */}
+              {business?.active && (
+                <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-lg">{business.emoji ?? '🏢'}</span>
+                    <p className="font-bold text-natalis-text text-sm">{business.name}</p>
+                    <span className="ml-auto text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-semibold">
+                      Yr {business.yearsOpen ?? 0}
+                    </span>
+                  </div>
+                  <div className="space-y-1.5 mb-3">
+                    {[
+                      { label: 'Revenue', value: business.revenue ?? 0, color: 'text-green-600' },
+                      { label: 'Expenses', value: -(business.expenses ?? 0), color: 'text-red-500' },
+                      { label: 'Profit', value: (business.revenue ?? 0) - (business.expenses ?? 0), color: ((business.revenue ?? 0) - (business.expenses ?? 0)) >= 0 ? 'text-green-700 font-bold' : 'text-red-600 font-bold' },
+                    ].map(({ label, value, color }) => (
+                      <div key={label} className="flex justify-between items-center text-xs">
+                        <span className="text-natalis-muted">{label}</span>
+                        <span className={color}>{value >= 0 ? '' : '−'}{formatMoney(Math.abs(value))}/yr</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="grid grid-cols-3 gap-2 pt-2 border-t border-natalis-border">
+                    <div className="text-center">
+                      <p className="text-xs text-natalis-muted">Employees</p>
+                      <p className="font-bold text-natalis-text text-sm">{business.employees ?? 0}</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-xs text-natalis-muted">Value</p>
+                      <p className="font-bold text-natalis-text text-sm">{formatMoney(business.value ?? 0)}</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-xs text-natalis-muted">Performance</p>
+                      <p className="font-bold text-sm" style={{ color: (business.performance ?? 50) > 60 ? '#34c759' : (business.performance ?? 50) > 35 ? '#ff9500' : '#ff3b30' }}>
+                        {Math.round(business.performance ?? 50)}%
+                      </p>
+                    </div>
+                  </div>
+                  <div className="mt-2">
+                    <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                      <div className="h-full rounded-full transition-all" style={{ width: `${business.performance ?? 50}%`, backgroundColor: (business.performance ?? 50) > 60 ? '#34c759' : (business.performance ?? 50) > 35 ? '#ff9500' : '#ff3b30' }} />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Closed business note */}
+              {business && !business.active && (
+                <div className="bg-gray-50 rounded-2xl p-4 border border-natalis-border">
+                  <p className="text-sm text-natalis-muted">{business.emoji ?? '🏢'} <span className="font-semibold text-natalis-dim">{business.name}</span> — closed after {business.yearsOpen ?? 0} year{business.yearsOpen !== 1 ? 's' : ''}.</p>
+                </div>
+              )}
+
+              {/* Travel history */}
+              {travels && travels.length > 0 && (
+                <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
+                  <div className="flex items-center justify-between mb-3">
+                    <p className="font-bold text-natalis-text text-sm">✈️ Travel</p>
+                    <span className="text-xs text-natalis-muted">{travels.length} trip{travels.length !== 1 ? 's' : ''}</span>
+                  </div>
+                  <div className="space-y-1">
+                    {[...travels].reverse().map((t, i) => (
+                      <div key={i} className="flex justify-between items-center py-1 border-b border-natalis-border last:border-0">
+                        <p className="text-natalis-dim text-sm">{t.name}</p>
+                        <p className="text-natalis-muted text-xs">Age {t.age} · {t.year}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {assets?.properties?.length === 0 && assets?.vehicles?.length === 0 && (debt ?? 0) === 0 && !business?.active && travels?.length === 0 && (
                 <div className="bg-white rounded-2xl px-5 py-8 text-center border border-natalis-border">
                   <p className="text-4xl mb-2">🏦</p>
                   <p className="text-natalis-muted text-sm">No assets yet. Start saving!</p>
