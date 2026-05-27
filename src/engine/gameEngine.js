@@ -297,6 +297,9 @@ function applyNaturalAging(state) {
 
 function buildEffectProxy(state) {
   const proxy = createProxy(state)
+  // Read-only state accessors for effects that need to branch on character context
+  proxy._state = state
+  proxy._age = state.age
   proxy.addFlag = (flag) => { if (!proxy.flags.includes(flag)) proxy.flags.push(flag) }
   proxy.clearFlag = (flag) => { proxy.flags = proxy.flags.filter(f => f !== flag) }
   proxy.setEducation = (level, field = null) => {
