@@ -1038,6 +1038,152 @@ Some of the game's strongest potential events involve no historical reference at
 
 ---
 
+#### BUILD 31 — The One-Child Policy Arc (China, 1980–2015)
+
+One of the most consequential demographic policies in history. Entirely absent from current coverage.
+
+**The little emperor**: Growing up as the sole focus of two parents and four grandparents. The specific weight of concentrated expectation. The loneliness of having no siblings in a culture where sibling relationships had always been the basic social unit.
+
+**The hidden second child**: The family that decides to have another anyway. The registration evasion, the family member who keeps the secret, the fine that arrives — a year's income, sometimes more. The child who technically doesn't exist on paper.
+
+**The missing sisters**: Sex-selective abortion and abandonment driven by the policy intersecting with son preference. A character who grows up knowing, without anyone saying, that they were not the first. The orphanage system. The international adoption wave (ties to BUILD 36).
+
+**The only child as sole support**: At 40, a character who is the sole caregiver for two aging parents and four aging grandparents. No siblings to split the cost, the time, the grief. Gate on China + `only_child` flag set at character creation.
+
+**The policy lifted**: A character who is 35 in 2015 when the two-child policy is announced. The specific experience of a government telling you to do what it just spent 35 years telling you not to do. Some have another child; some can't anymore; some don't want to.
+
+---
+
+#### BUILD 32 — Urban Slums and Informal Settlements
+
+The game has `ruralUrban` but no neighborhood-level specificity. A character born in Kibera has completely different events from one born in Nairobi's middle-class suburbs.
+
+**Add `neighborhood` to character state**: `'informal'|'working_class'|'middle_class'|'elite'`, set at character creation weighted by archetype/GDP, modifiable by wealth thresholds over the life course.
+
+**Informal settlement events** (gated on `neighborhood === 'informal'`):
+- The eviction notice: the city government wants the land for development. Sometimes the notice arrives with a week's warning; sometimes with bulldozers. The question of where to go.
+- The standpipe: water arrives in the settlement on a schedule — two hours a day, at 5am. The jerry can. The queue. The specific daily organization of life around water access.
+- The landlord who lives two streets away: slumlords in informal settlements are often not distant corporations but local figures who own five shacks and are also your neighbor's cousin.
+- The fire: informal settlements burn. The specific speed, the specific loss, the specific community rebuilding that begins before the embers cool.
+- Dharavi, Kibera, Rocinha, Mathare, Orangi Town — city-specific names and textures via `G.currentCountry`.
+
+**Gentrification** (midlife event, gated on `neighborhood` improving via wealth):
+- The character who bought their way into a better neighborhood returns to the old block and finds it unrecognizable — or priced out, returns to find they can't afford where they grew up.
+
+---
+
+#### BUILD 33 — The Sex Work Arc
+
+A major global labor category. Not sensationalized — treated as work with the same specificity applied to every other career.
+
+**Entry**: The decision, which is rarely simple. Economic necessity in one context, survival sex in a refugee camp in another, choice in a decriminalized European context in a third. Gate text on archetype/country/era.
+
+**The safety calculation**: Every shift involves a calculation that office workers don't make. Gate on country's legal status (criminalized vs. tolerated vs. legalized). The police as a variable: sometimes protection, often the opposite.
+
+**Legal context branching** (gates on country + year):
+- Netherlands post-2000: legalized, regulated, taxable, but stigma persists
+- Thailand: tolerated but not legal; the tourist economy built around it
+- Nigeria: criminalized; the specific danger of a state that can arrest you and then extort you
+- Refugee camp: survival sex with no legal framework at all, no exit in sight
+
+**The client economy**: The regular client who is almost kind, which is its own problem. The client who isn't.
+
+**The exit arc** (or the lack of one): The character who gets out — into what? The character who doesn't — why not? Gate on wealth, age, available alternatives, children.
+
+---
+
+#### BUILD 34 — The Refugee Camp as Childhood
+
+The immigration resettlement arc covers arrival in a host country. This covers *growing up in a camp* — a completely different experience.
+
+**Camp-born generation**: A character born in Kakuma, Dadaab, Zaatari, or Cox's Bazar who has never known anything else. The UNRWA school. The ration card as the document of your existence. The camp as the only geography known — its streets, its sections, its social hierarchies that exist nowhere else on earth.
+
+**The waiting**: Resettlement interviews are the only exit. A character who has been waiting since childhood is 17, then 25, then 35. The UNHCR officer who comes once a year. The list you may or may not be on.
+
+**The camp economy**: Formal employment is usually forbidden. The informal economy — the repair stall, the phone charging station, the cooking enterprise — is everything. A character who has built something within the camp's constraints, and what it means to leave it.
+
+**Palestinian UNRWA camps specifically**: The multigenerational camp — a character whose grandparents arrived in 1948 and whose parents were born in the camp and who is the third generation. The key kept on a hook. The house that exists as a memory and a legal claim and a story told to children.
+
+**Resettlement as rupture**: The character who finally gets resettlement papers at age 30, after 20 years in the camp. The specific disorientation of arrival in a world with supermarkets and traffic lights and social norms that were not taught.
+
+---
+
+#### BUILD 35 — The Informal Economy
+
+Billions of people work outside the formal career system. The current career system is entirely formal. This build adds informal work as a primary mode for low-GDP archetypes.
+
+**Informal work as a baseline state**: For `subsaharan`, `developing_unstable`, and `conflict_zone` archetypes at low GDP tiers, the default work state is informal — not a named career but a pattern of daily economic activity. Events fire around this pattern rather than career promotion tracks.
+
+**Event types**:
+- The hawker: the route, the product, the spot that belongs to you by informal convention, the municipal inspector who arrives with a fine or an open hand
+- The *matatu* / motorcycle taxi: the vehicle that is both asset and income, the repair that wipes a week's earnings, the police checkpoint that costs what it costs
+- The market stall: the supplier relationship, the credit extended and called in, the neighboring stall holder who becomes a kind of family, the market that is demolished for a development
+- The day laborer: the gathering point at 6am, the contractor who picks some and not others, the work that may or may not pay what was agreed
+
+**The formalization event** (midlife, gated on `informal_worker` flag + government policy + year): The government decides to license or tax informal workers. The character who gets documentation for the first time. What it costs. What it opens.
+
+---
+
+#### BUILD 36 — The Adoptee Arc
+
+Domestic adoption, international adoption, transracial adoption. Each has a different emotional and political texture.
+
+**Domestic adoption** (various contexts):
+- The Romanian orphanage system: Ceaușescu banned contraception; orphanages overflowed with children the state couldn't care for. Post-1989, Western families adopted en masse. A Romanian child who grows up in France or the US has a specific origin story.
+- The Chinese international adoption wave (1990s–2010s): almost entirely girls, product of the one-child policy intersecting with son preference. Growing up as the only person who looks like you in the family photo, in the town.
+- Korean adoption: the longest-running international adoption program, 1950s–present. The Korean-born adult who returns to Seoul and navigates a city that should feel like origin and doesn't.
+
+**The search** (young_adult or midlife event):
+- The decision to search for biological parents — or the decision not to. Both are live choices with different emotional logic.
+- The DNA test in 2010+ that changes the question. The match with a half-sibling in a country you've never been to.
+
+**The transracial identity question**: Growing up Black or Asian in a white family and a white town. The specific experience of being asked where you're *really* from by people who have known you for years.
+
+**The origin trip** (optional late arc event): Returning to the country of birth as an adult. What it resolves and what it doesn't.
+
+---
+
+#### BUILD 37 — Debt Bondage and Bonded Labor
+
+Not poverty — a legal/semi-legal trap with its own specific mechanism. Currently the `debt` state field exists but has no events.
+
+**The bonded labor system** (India, Pakistan, Nepal — gated on archetype + low GDP + low literacy):
+- The initial loan: a small amount taken during a family emergency, at interest rates that make repayment impossible. The work that services the interest without touching the principal. The debt passed to children at the parent's death.
+- The specific industries: brick kilns, carpet weaving, agriculture, domestic service. Each has its own texture.
+- The abolition that isn't: bonded labor has been illegal in India since 1976. The law exists; the practice continues. The character who reports it navigates a legal system designed to process the complaint slowly.
+- The liberation event (rare): an NGO or sympathetic official intervenes. The specific difficulty of leaving when the lender is also the landlord is also the person who controls your family's access to water.
+
+**The microfinance debt spiral** (Bangladesh, India, 2000s–present):
+- The Grameen model worked for some; for others, the monthly repayment meeting becomes a social pressure system where defaulting means humiliation in front of neighbors. A character who takes a second loan to repay the first.
+
+**Sharecropping in the American South** (gated on Black American ethnicity + US + 1930s–60s):
+- The specific accounting that ensures the sharecropper never comes out ahead. The ledger the landowner controls. The crop lien that means the harvest doesn't belong to the person who grew it.
+
+---
+
+#### BUILD 38 — The Children Left Behind
+
+The inverse of the emigration arc. The children whose parents are in Riyadh, Rome, or Hong Kong sending remittances — raised by grandmothers, communicating via video call, reuniting with a stranger.
+
+**The remittance family**: A child in the Philippines, Indonesia, Sri Lanka, Mexico, or Eastern Europe whose primary parent is working abroad. Material security purchased at the cost of presence. The birthday call. The package that arrives with things that don't fit.
+
+**The grandmother as primary parent** (character event, childhood phase):
+- The specific texture of being raised by a grandparent — different rules, different era, different capacity. The things the grandmother can and can't do that a parent would do.
+
+**The return**: The parent who comes home after five years. The specific disorientation of reunion with someone who is supposed to be known. The child who is now 15, not 10, and doesn't know how to be a child to this person anymore.
+
+**The cost accounting** (young adult event):
+- The character who is now 22 and considers whether the money was worth it. The house that was built. The education that was paid for. The relationship that wasn't. No right answer built into the event — just the accounting.
+
+**Specific geographies**:
+- Philippines → Saudi Arabia / Hong Kong / Italy (OFW arc, supplements BUILD 2)
+- Indonesia → Malaysia / Saudi Arabia
+- Sri Lanka → Middle East
+- Romania / Bulgaria → Spain / Italy / Germany (EU free movement era, 2004+)
+- Mexico → USA
+
+---
+
 #### MECHANICAL IDEAS (no build number — evaluate when relevant)
 
 *These are systemic additions worth considering alongside content builds.*
@@ -1052,6 +1198,18 @@ Some of the game's strongest potential events involve no historical reference at
 
 - **The oral tradition register**: For characters in pre-literate or low-literacy contexts, events are framed as told rather than written. "Your grandmother tells you about the year the rains didn't come." Historically accurate and a distinct prose register from the educated character's events.
 
+- **The neighborhood field**: Add `neighborhood: 'informal'|'working_class'|'middle_class'|'elite'` to character state, set at creation (weighted by archetype/GDP) and modifiable by wealth thresholds during the life course. Gates a whole class of events (BUILD 32) and makes the `ruralUrban` field more granular without replacing it.
+
+- **The soundtrack layer**: One-line cultural markers injected alongside newspaper headlines — not historical events but cultural ones. "Fela Kuti's *Zombie* is banned in Nigeria." "Celine Dion's *My Heart Will Go On* is playing everywhere." No stat effects. Same implementation cost as the headline UI, doubles its power.
+
+- **Infrastructure arrival as a life event**: Electricity arriving in a village is one of the largest single quality-of-life changes in a person's life — and it is a one-time historical event with a specific before and after. The morning the first bulb comes on. Gate on country + ruralUrban + year (electrification rates by country are well-documented). No stat model change needed; handled as a character event with a permanent memory flag.
+
+- **The `what your parents didn't say` mechanic**: When a parent has atrocity-adjacent flags (`holocaust_survived`, `gulag_survived`, `partition_survived`, etc.), an early-childhood event fires that is specifically about absence — the topic that is never named at the dinner table. No new state needed. Requires only that the parent-flag inheritance logic in character creation passes the flag through to the child's accessible G context.
+
+- **Formal debt as a character arc**: The `debt` field exists but almost no events engage with the *experience* of debt — the creditor call, the asset repossession, the bankruptcy decision, the decade of rebuilding. A `events_debt.js` module gated on `state.debt > threshold` + archetype/year would cover: credit card debt spiral (USA 1990s+), student loans as generational story (wealthy_west 2000s+), microfinance spiral (developing_urban, see BUILD 37), IMF structural adjustment as personal experience.
+
+- **The informal worker state**: A `workStatus: 'formal'|'informal'|'unemployed'|'subsistence'` field alongside the existing `career` field. For archetypes where formal employment is not the default, this unlocks informal economy events (BUILD 35) without needing a named career. Career remains the prestige track; `workStatus` covers everyone else.
+
 ---
 
 #### MICRO-EVENT DESIGN PRINCIPLE
@@ -1064,6 +1222,12 @@ The game's best events are not about big things but about one specific object or
 - **The moment of receipt**: For enormous historical events, the event as the character received it — where they were, what they were doing, who spoke first. Not "the revolution happened" but "you heard it from the neighbour who had a radio."
 - **The border crossing**: Not "you emigrated" but the physical moment — the fluorescent light, the desk, the question "purpose of travel," the specific object they removed from your bag and held up.
 - **The compromise sentence**: Under authoritarian regimes, the specific words spoken in complicity — in a meeting, at a checkpoint, to a colleague — and the pause before them. The moral weight lives in the pause, not the abstract fact of the regime.
+
+- **The oral report**: In pre-literate or low-literacy contexts, events should sometimes be framed as received speech rather than witnessed experience. Not "you read about it" but "your uncle came back from the market and said." One register change; completely different world.
+
+- **The gap in the record**: For events that are historically documented only from the outside (Holodomor, Great Leap famine, Bangladesh genocide), the character's knowledge should be partial and named as such — not as a disclaimer but as a narrative technique. "No one uses the word yet. It doesn't have one."
+
+- **The thing not unpacked**: In migration and displacement events, the object that was packed and then never unpacked. The box in the corner of the new apartment, still sealed three years later. What is inside it is not said. It doesn't need to be.
 
 These principles should inform the prose register of every new event, not just events in these specific categories.
 
