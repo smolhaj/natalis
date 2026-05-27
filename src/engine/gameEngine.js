@@ -222,12 +222,14 @@ export function deriveInitialParents(char) {
       currentAge: randomBetween(22, 34),
       alive: true,
       relationshipQuality: clamp(baseQ + randomBetween(-10, 10), 12, 100),
+      traits: pickTraits(ADULT_TRAITS),
     },
     father: {
       name: `${fatherFirst} ${altSurname}`,
       currentAge: randomBetween(24, 40),
       alive: fatherPresent,
       relationshipQuality: fatherPresent ? clamp(baseQ + randomBetween(-15, 10), 8, 100) : 0,
+      traits: fatherPresent ? pickTraits(ADULT_TRAITS) : [],
     },
   }
 }
@@ -340,6 +342,7 @@ function buildEffectProxy(state) {
   proxy.setReligion = (religion) => { proxy._religion = religion }
   proxy.setClassTier = (tier) => { proxy._classTier = tier }
   proxy.setMentalHealth = (updates) => { proxy._mentalHealthUpdates = { ...(proxy._mentalHealthUpdates ?? {}), ...updates } }
+  proxy.setDesire = (key) => { proxy._desire = key }
   proxy.practiceHobby = (hobbyId, delta = 1) => {
     if (!proxy._hobbyDeltas) proxy._hobbyDeltas = {}
     proxy._hobbyDeltas[hobbyId] = (proxy._hobbyDeltas[hobbyId] ?? 0) + delta
@@ -363,6 +366,7 @@ function buildEffectProxy(state) {
       craziness: randomBetween(10, 70),
       relationshipQuality: overrides.quality ?? randomBetween(55, 75),
       married: false, engaged: false, years: 0,
+      traits: pickTraits(ADULT_TRAITS),
     }
     // Partners met at 28+ have a rising chance of having kids from a prior relationship
     if (state.age >= 28 && !proxy.flags.includes('partner_has_kids')) {
@@ -426,6 +430,14 @@ function resolveProxyExtras(state, proxy) {
   }
   if (proxy._religion !== undefined) next = { ...next, religion: proxy._religion }
   if (proxy._classTier !== undefined) next = { ...next, classTier: proxy._classTier }
+  if (proxy._desire !== undefined) next = { ...next, desire: proxy._desire }
+  // Track year-of-death for grief fog in buildYearTexture
+  if (proxy._killParent && next.parents?.[proxy._killParent]) {
+    next = { ...next, mem: { ...(next.mem ?? {}), parentDeathYear: next.currentYear } }
+  }
+  if (proxy._killPartner && next.partner) {
+    next = { ...next, mem: { ...(next.mem ?? {}), partnerDeathYear: next.currentYear } }
+  }
   return next
 }
 
@@ -550,6 +562,7 @@ function buildG(state) {
     currentCountry: state.currentCountry ?? state.character?.country,
     residencyStatus: state.residencyStatus ?? 'citizen',
     yearsAbroad: state.yearsAbroad ?? 0,
+    desire: state.desire ?? null,
     // Enriched prose helpers: available in text: (G) => functions
     era: Math.floor(currentYear / 10) * 10,
     capital: state.character?.country?.capital ?? '',
@@ -563,11 +576,14 @@ function buildG(state) {
 // relationship tension/warmth > post-crisis > cultural conditions > phase > generic.
 function buildYearTexture(state) {
   const F = new FlagSet(state.flags ?? [])
-  const { partner, children, age, mem, career, friends, siblings, residencyStatus, yearsAbroad } = state
+  const { partner, children, age, currentYear, mem, career, friends, siblings, residencyStatus, yearsAbroad } = state
   const phase = getPhase(age)
   const mh = state.mentalHealth ?? {}
 
-  // Recent partner loss — grief arc just started
+  const yearsSincePartnerDeath = mem?.partnerDeathYear != null ? currentYear - mem.partnerDeathYear : null
+  const yearsSinceParentDeath  = mem?.parentDeathYear  != null ? currentYear - mem.parentDeathYear  : null
+
+  // Recent partner loss — immediate (grief events haven't fired yet)
   if (F.has('partner_died') && mem?.griefPartnerFirst && !mem?.griefPartnerDating) {
     const name = state.exPartners?.slice(-1)[0]?.name
     return name ? `${name}'s absence is still present in everything.` : 'The house is still the wrong size.'
@@ -577,12 +593,27 @@ function buildYearTexture(state) {
     return name ? `You still reach for ${name} sometimes. The habit hasn't broken yet.` : 'Some mornings the quiet is a different kind of quiet.'
   }
 
+  // Grief fog: 1–3 years after partner death (fills gap between discrete grief events)
+  if (yearsSincePartnerDeath !== null && yearsSincePartnerDeath >= 1 && yearsSincePartnerDeath <= 3) {
+    if (yearsSincePartnerDeath === 1) return 'There are still whole days that belong to the grief. Fewer than before.'
+    return 'The grief has changed shape. It has not left.'
+  }
+  // Grief fog: years 4–5, dimming
+  if (yearsSincePartnerDeath !== null && yearsSincePartnerDeath >= 4 && yearsSincePartnerDeath <= 5) {
+    return 'The grief is quiet enough now that you can sometimes forget it. Not always.'
+  }
+
   // Recent parent loss
   if (mem?.griefParentCall && !mem?.griefParentBelongings) {
     return 'Some mornings you reach for the phone before you remember.'
   }
   if (F.has('lost_parent') && !mem?.griefParentYearsLater) {
     return 'The absence of them is specific. It shows up in strange places.'
+  }
+
+  // Grief fog: 1–3 years after parent death
+  if (yearsSinceParentDeath !== null && yearsSinceParentDeath >= 1 && yearsSinceParentDeath <= 3) {
+    return 'You catch yourself sometimes about to tell them something.'
   }
 
   // Child death — never normalises
@@ -901,6 +932,31 @@ function fireFromJob(state) {
 
 // ─── Relationship system ──────────────────────────────────────────────────────
 
+const ADULT_TRAITS = [
+  'patient', 'restless', 'proud', 'gentle', 'stubborn', 'anxious',
+  'warm', 'distant', 'ambitious', 'funny', 'serious', 'generous',
+  'demanding', 'quiet', 'affectionate', 'critical', 'idealistic',
+  'practical', 'melancholy', 'cheerful',
+]
+const CHILD_TRAITS = [
+  'curious', 'shy', 'spirited', 'sensitive', 'stubborn', 'gentle',
+  'funny', 'serious', 'dreamy', 'anxious', 'affectionate', 'restless',
+]
+function pickTraits(pool, count = 2) {
+  return [...pool].sort(() => Math.random() - 0.5).slice(0, count)
+}
+
+export const DESIRE_LABELS = {
+  prove_worth: 'You want to prove you are not what they said.',
+  belong: 'You want to find somewhere that feels like yours.',
+  leave_mark: 'You want to make something that outlasts you.',
+  be_seen: 'You want to be known for something that is actually you.',
+  safety: 'You want to never feel that kind of fear again.',
+  connection: 'You want someone who stays.',
+  freedom: 'You want to not be owned by anyone\'s idea of you.',
+  redemption: 'You want to undo something.',
+}
+
 const PARTNER_OCCUPATIONS = [
   'Software Engineer', 'Teacher', 'Nurse', 'Doctor', 'Lawyer', 'Accountant',
   'Graphic Designer', 'Chef', 'Bartender', 'Sales Manager', 'Marketing Director',
@@ -942,6 +998,7 @@ export function generatePartnerProfile(state, overrides = {}) {
     looks, smarts, wealthStat, craziness,
     relationshipQuality: randomBetween(45, 72),
     married: false, engaged: false, years: 0,
+    traits: pickTraits(ADULT_TRAITS),
   }
 }
 
@@ -1075,7 +1132,7 @@ export function tryForChild(state) {
   const cGender = chance(0.5) ? 'male' : 'female'
   const c = state.character.country
   const childName = `${pickFrom(cGender === 'male' ? c.namePool.male : c.namePool.female)} ${state.character.surname}`
-  const child = { name: childName, gender: cGender, ageAtBirth: state.age, relationshipQuality: 80 }
+  const child = { name: childName, gender: cGender, ageAtBirth: state.age, relationshipQuality: 80, traits: pickTraits(CHILD_TRAITS) }
   return {
     ...state,
     children: [...state.children, child],
