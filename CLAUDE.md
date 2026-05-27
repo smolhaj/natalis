@@ -1362,6 +1362,162 @@ Education events exist but from the student's perspective only, and mostly at un
 
 ---
 
+#### BUILD 47 — The Mentor and the Protégé (Full Arc)
+
+The fame/karma events have a brief protégé payoff. This is the full arc: a relationship that develops across years, with consequences in both directions.
+
+**Implementation**: New file `events_mentor.js`, imported into `events.js`. Uses `G.mem` to track mentor relationship state across events. Flag sequence: `has_mentor` (young_adult) → `mentor_relationship_deep` (midlife) → `mentor_died` or `mentor_estranged` (late_life). Mirror flags for the mentoring side: `has_protege` → `protege_surpassed` → `protege_betrayed` or `protege_succeeded`.
+
+**Receiving mentorship** (young_adult, gated on career + smarts ≥ 60):
+- The person who sees you before you see yourself. What they give that isn't in the job description — the introduction made, the mistake quietly corrected before it became permanent. The specific debt that cannot be repaid directly, only forwarded.
+
+**Becoming the mentor** (midlife, gated on career seniority + `has_mentor` flag):
+- The first time a younger person seeks your advice and you realize you've become the person who knows things. The specific shift in social gravity — from being the one who asks to being the one who is asked.
+
+**The protégé who betrays** (midlife event, gated on `has_protege`):
+- Takes your methods, your clients, your contacts — and credits themselves. The specific bitterness of having been generous. A choice event: confront, let it go, or find a way to make it cost them.
+
+**The protégé who surpasses you** (late_life, gated on `has_protege`):
+- Watching someone you taught become someone you couldn't have become. The specific pride that sits alongside something harder to name. An outcome event, no choice — just the experience of having built someone better than yourself.
+
+**The mentor's death** (late_life, gated on `has_mentor`):
+- Losing the person who made you possible. The specific silence — the absence of the one person who knew you before you were known. Connects to grief module; sets `mentor_died` flag which gates a late-life reflection event at age 70+.
+
+---
+
+#### BUILD 48 — The Criminal Record as a Permanent Condition
+
+The prison system exists. The post-release experience is almost entirely absent. The criminal record is not a past event — it is a present condition.
+
+**Implementation**: Gate all events in this arc on `G.flags.includes('criminalRecord')`. Add `criminalRecord` check to existing job application events — where career promotion events currently fire unconditionally, they should check for the record and branch. New file `events_postrelease.js`.
+
+**The job application** (post-release, young_adult/midlife):
+- The checkbox that asks "have you ever been convicted." The specific moment of stopping. A choice event: lie (risk), disclose (likely rejection), or disclose and argue your case. Outcome branches on country + archetype + career type. Gate: `criminalRecord` + age 18–45.
+
+**Housing discrimination** (post-release event, gated on `criminalRecord` + low wealth):
+- Landlords who won't rent. The shelter, the couch, the specific instability that makes recidivism not a moral failure but a structural near-inevitability. A character who cannot get housing cannot maintain parole conditions. The loop closes.
+
+**Parole conditions** (recurring annual event while `inParole` flag active):
+- Reporting weekly, not leaving the county, the specific surveillance of freedom that isn't quite freedom. A choice event: the condition you technically violate without meaning to — miss a check-in because of a shift change, leave the county for a sick parent. What the officer decides.
+
+**Archetype branching is mandatory here**: In the USA, a Black man with a drug conviction navigates categorically different closed doors than a white-collar fraudster in Switzerland. Gate text explicitly on country + ethnicity + crime category. Do not write one text that tries to cover both.
+
+**The record that expires** (or doesn't): In the UK, convictions are "spent" after a clean period and need not be disclosed. In the USA, most are permanent. A character who waits out the clock in one country vs. a character who cannot.
+
+---
+
+#### BUILD 49 — The Famine from Inside
+
+Multiple famines exist as world events. What's missing is the granular character-level arc — what a famine actually feels like to live through across weeks and months, not as a single event.
+
+**Implementation**: A short arc of 3–4 sequential events gated on `famine_ongoing` world-event flag + `G.currentYear` within the famine years. Each event in the sequence guards on the previous one having fired via `G.mem`. New events added directly to the relevant country event files rather than a standalone module.
+
+**The price event** (week 1 of famine arc):
+- The first sign is never hunger — it is price. The market stall where the price of millet has doubled since last week, and the week before that it doubled too. A choice event: spend the savings now while something remains to buy, or wait.
+
+**The body changing** (week 3–6):
+- Not a choice event. The specific physical sequence: the hunger that is present and then becomes background noise, and then becomes the only thing. Children first, because they show it first.
+
+**The decision about what to sell** (choice event):
+- The asset that still has value. The livestock, the tool, the jewelry from the wedding. Each thing sold represents a future that closes. Gate on what asset flags the character holds.
+
+**The aid convoy** (if applicable, gated on international aid being present in that famine):
+- The queue. The categories of who gets priority. The specific indignity that aid can carry even when it saves your life — the forms, the classification, the foreign worker who cannot pronounce your name.
+
+**After** (memory flag event, fires 5–10 years post-famine):
+- The hoarding reflex that persists. The relationship with food that never returns to what it was. Gate on `famine_survived` flag; fires once in midlife.
+
+---
+
+#### BUILD 50 — Money Across a Life
+
+The `money` and `wealth` fields track amounts. The *experience* of money — what it feels like to have it, to lose it, to inherit it, to give it away — has almost no dedicated events.
+
+**Implementation**: New file `events_money.js`. Events gate on specific money thresholds, delta changes (sudden gain or loss), and life-stage combinations. These are character events, not world events, though they may reference world events (hyperinflation) in their text.
+
+**The first significant sum** (young_adult event, gated on `money > 1000` for first time):
+- The first paycheck that feels like real money. What you do with it — the specific temptation, the specific discipline. A choice event: spend it (immediate effect), save it (future flag), or send it home (karma boost, relationship with family flag).
+
+**Watching prices become meaningless** (gated on hyperinflation world event being active):
+- Weimar Germany 1923, Zimbabwe 2008, Argentina 1989, Turkey 2022. What do you do with a salary on payday when the price of bread has doubled by Friday? A choice event with no good options: spend immediately, convert to hard currency (if you have access), barter.
+
+**The inheritance** (midlife event, gated on parent death + parent had wealth):
+- Not just the money but the psychological complexity of inheriting from someone you had a complicated relationship with. The thing you didn't expect them to leave you. The thing you expected that wasn't there. A choice event: keep it, give it away, invest it.
+
+**The gift** (late_life event, gated on `money > 50000` + age 65+):
+- The character who gives significant money away before death. To a child, grandchild, cause. A choice event that shapes the epitaph: what you chose to do with what you accumulated says something about who you decided to be.
+
+**The scam** (late_life event, gated on age 65+ + wealth above threshold):
+- Elder financial abuse is the most common form of financial crime. Not a stranger but someone who presents as trustworthy — an investment advisor, a new friend, a distant relative. A choice event: trust them, be suspicious, investigate. Outcome branches on smarts stat.
+
+---
+
+#### BUILD 51 — Pregnancy and Birth as Physical Events
+
+The fertility arc covers outcomes (miscarriage, IVF, childlessness). The physical experience of pregnancy and birth — the months before the outcome — is entirely absent.
+
+**Implementation**: New events added to `events_fertility.js`. Gate sequence on `pregnant` flag (set when pregnancy begins) + `G.currentYear`. Arc fires across 2–3 age-up cycles for a pregnancy that proceeds normally; miscarriage arc diverges from it.
+
+**First trimester texture** (gated on `pregnant` + within 3 months of conception):
+- The nausea, the exhaustion that is unlike any other tiredness. The keeping of the secret for twelve weeks — being unwell in a way that cannot be explained at work or to friends. The specific loneliness of early pregnancy. A texture event, no choice required.
+
+**The birth** (fires when pregnancy reaches term):
+- Not just "you had a child." A choice event — the specific decision-points of labor. Gate on year/archetype for what medical options exist. A hospital birth in Denmark in 1990 vs. a home birth with a traditional birth attendant in rural Mali in 1970 are completely different events with completely different risk profiles. Outcome: child added to state, birth flags set.
+
+**Maternal complication** (low-probability branch off birth event, weighted by archetype/GDP/year):
+- Serious complications arise. Outcome branches on archetype + GDP + currentYear. Maternal mortality in the 19th century was a common risk; its near-elimination in wealthy countries over the 20th century is an educational payload worth surfacing. If maternal death occurs: handled by existing death system with specific epitaph text.
+
+**The postpartum period** (fires 1–6 months post-birth, gated on `has_child` + first birth):
+- The weeks after birth that no one in the character's life discusses. The body that does not return immediately. The gap between expectation and experience. Gate era-awareness: postpartum depression as a recognized medical condition is recent — pre-1980 characters experience it without a name for it.
+
+---
+
+#### BUILD 52 — The Elder as Authority
+
+BUILD 9 has notes on ageing by archetype. This expands those notes into a full late-life arc for archetypes where elders hold genuine social authority — and a parallel arc for archetypes where they don't.
+
+**Implementation**: New events added to `events_late_life.js`. Gate on `G.age >= 65` + archetype + `currentYear`. Two parallel tracks: `authority_elder` (subsaharan, wealthy_east, developing_urban, post_soviet archetypes) and `invisible_elder` (wealthy_west + 2000+). The same stat ranges, completely different events.
+
+**Being consulted** (authority track, age 65–70):
+- The first time a younger person seeks your advice and you realize you've become the repository of something. The specific shift in social gravity when you are no longer the one who asks.
+
+**The council seat / village elder role** (authority track, age 70+, gated on karma + community flags):
+- Formal or informal governance role. A character who reaches this position navigates the specific responsibility of collective decision-making on behalf of people who have known you your entire life.
+
+**You are the memory now** (authority track, age 75+):
+- You are one of a decreasing number of people who remember what this place was before. A younger person asks you to tell it. A choice event: tell everything, tell a version, or say it doesn't matter now.
+
+**The obsolescence that arrives anyway** (both tracks, age 80+):
+- Even in cultures that respect elders, technology and social change eventually outrun what any individual can hold. Being respected and irrelevant simultaneously. No choice — a texture event that lands differently depending on which track the character is on.
+
+**The polite dismissal** (invisible track, wealthy_west + 2000s+, age 65–70):
+- The meeting where your comment is heard and not answered. The adult child who explains the phone to you as if you are a different person than the one who taught them to read. The specific experience of competence that no longer registers as competence.
+
+---
+
+#### BUILD 53 — Natural Disaster as Biography
+
+Beyond the climate arc (future-facing), historical natural disasters that shaped specific lives.
+
+**Implementation**: World events in `worldEvents.js` for the large ones; character events in country-specific modules for recurring ones. Same `when` guard pattern as existing world events.
+
+**1976 Tangshan earthquake** (world event, China + 1976):
+- 250,000 dead in 23 seconds in a city of one million. The Chinese government initially refused international aid. A character in Tangshan or nearby: the specific sequence — the sound before the shaking, the building that holds and the one next to it that doesn't. Gate on China + age ≥ 5 + `currentYear === 1976`.
+
+**1970 Bhola cyclone** (world event, Bangladesh/East Pakistan + 1970):
+- 500,000 dead. The Pakistani government's inadequate response was a direct trigger of the Bangladesh liberation movement — the cyclone and the abandonment together. Gate on Bangladesh + 1970. Connects to the 1971 liberation war world event (BUILD 43) via flags.
+
+**1985 Mexico City earthquake** (supplements BUILD 10 Mexico):
+- Covered briefly in BUILD 10; deserves its own world event entry. The government's failure, the citizen self-organization that followed, the specific crediting of this event with the birth of Mexican civil society. Gate on Mexico + 1985.
+
+**Recurring flood as annual condition** (character event, gated on Bangladesh + rural + pre-2050):
+- Not a disaster but a condition. The annual flood that is expected, prepared for, lived around. The year it is worse than expected. The specific knowledge of living in a place that water visits regularly — the raised floor, the boat kept tied, the seed stored high. A texture event that fires every 3–5 years rather than once.
+
+**Earthquake risk as daily texture** (character event, gated on Japan/Turkey/Iran/Mexico + young_adult):
+- Countries where earthquakes are a known background risk: the drill practiced since childhood, the bag kept by the door, the building you assess when you enter it for the first time. A texture event rather than a disaster event — the preparedness as a form of living.
+
+---
+
 #### MECHANICAL IDEAS (no build number — evaluate when relevant)
 
 *These are systemic additions worth considering alongside content builds.*
@@ -1396,6 +1552,14 @@ Education events exist but from the student's perspective only, and mostly at un
 
 - **Time-of-life activity unlocks**: Activities should unlock and lock dynamically based on conditions, career status, and relationships — not just age ranges. A character with severe arthritis cannot take up rock climbing at 60. A character who just retired has time for things they never could before. A character in prison has a completely restricted activity set. This makes the activities panel feel like it reflects the actual life rather than a static menu.
 
+- **Seasonal event modifiers**: Some events should be weighted differently by time of year — harvest festivals, monsoon arrivals, holy days, winter hardships. Add a `season` field to `buildG()` derived from `currentYear` and a country-hemisphere flag. Events check `G.season` for texture without new state. Implementation: `buildG()` in `gameEngine.js`, add `season: getCountrySeason(character.country, currentYear % 1)`.
+
+- **The `lastMajorEvent` field**: Add `lastMajorEvent: { category: string, year: number }` to state. Track the most recent event by category (`'bereavement'|'birth'|'illness'|'loss'|'triumph'`). Events that should not fire too close to each other check `G.mem` or this field to space arcs. Prevents a miscarriage event firing immediately after a parent death. Implementation: set via `p.setMem('lastMajorEvent_bereavement', G.currentYear)` and guard with `!G.mem?.lastMajorEvent_bereavement || G.currentYear - G.mem.lastMajorEvent_bereavement > 2`.
+
+- **Letters as a UI element**: Pre-2000 characters with active relationship flags should occasionally receive a letter — formatted differently from events (indented block, italic, different prose register) from a sibling abroad, a parent, an old friend. Same event system; different visual treatment in `EventBox.jsx` via an `isLetter: true` property on the event. No new state required.
+
+- **The `legacy` field**: Add `legacy: number` (0–100) to state alongside karma and fame. Accumulates from: children raised (relationship quality), students mentored, community contributions, creative works completed, businesses that employed people. Used by `generateEpitaph` to describe what the character built that outlasts them. Currently the epitaph has no forward-looking dimension. Implementation: `p.legacy` delta in effect proxy, `G.legacy` in buildG, epitaph prose branch on `legacy > 60`, `legacy > 80`.
+
 ---
 
 #### MICRO-EVENT DESIGN PRINCIPLE
@@ -1412,6 +1576,8 @@ The game's best events are not about big things but about one specific object or
 - **The oral report**: In pre-literate or low-literacy contexts, events should sometimes be framed as received speech rather than witnessed experience. Not "you read about it" but "your uncle came back from the market and said." One register change; completely different world.
 
 - **The gap in the record**: For events that are historically documented only from the outside (Holodomor, Great Leap famine, Bangladesh genocide), the character's knowledge should be partial and named as such — not as a disclaimer but as a narrative technique. "No one uses the word yet. It doesn't have one."
+
+- **The follow-through sentence**: Every event that changes a flag should have at least one future event that references it. Before shipping any new event module, write the follow-through events first, then work backward to the triggering event. An event with no downstream consequence is just text — it disappears from the life the moment it resolves.
 
 - **The thing not unpacked**: In migration and displacement events, the object that was packed and then never unpacked. The box in the corner of the new apartment, still sealed three years later. What is inside it is not said. It doesn't need to be.
 
