@@ -697,6 +697,142 @@ export const LATE_LIFE_EVENTS = [
     effect: (p) => { p.m -= 8; p.r += 5; p.setMem('latePhoneCalls', true) },
   },
 
+  // ── LATE-LIFE HEALTH DECISIONS ───────────────────────────────────────────────
+
+  {
+    id: 'health_elective_surgery',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      !G.mem.healthElectiveSurgery &&
+      G.age >= 60 && G.age <= 80 &&
+      G.stats.health < 70,
+    text: (G) => {
+      const arch = G.character.country.archetype
+      if (['subsaharan', 'conflict_zone', 'developing_unstable'].includes(arch)) {
+        return 'A surgeon at the regional hospital can fix the hip that has been limiting you for two years. The operation is not without risk — the facilities are stretched and the anaesthetic equipment is older than it should be. The surgeon is confident. You are not sure how much of that confidence to trust.'
+      }
+      return 'Your orthopaedic surgeon recommends a hip replacement. The procedure is routine, she says — a word that does not account for what happens when a routine procedure on a sixty-eight-year-old body does not go quite as planned. The alternative is a further decline in mobility and increasing dependence on pain medication.'
+    },
+    choices: [
+      {
+        text: 'Have the surgery',
+        tag: null,
+        outcome: 'The recovery is longer than projected. By the fourth month you are walking without the pain, and the relief is so clean it surprises you.',
+        effect: (p) => { p.h += 15; p.m += 8; p.mo -= 6000; p.addFlag('had_surgery'); p.setMem('healthElectiveSurgery', true) },
+      },
+      {
+        text: 'Manage it conservatively — the risk is not worth it',
+        tag: null,
+        outcome: 'The pain continues. You adapt your life around it, quietly, in ways you do not fully account for.',
+        effect: (p) => { p.h -= 5; p.r += 6; p.addFlag('declined_surgery'); p.setMem('healthElectiveSurgery', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'health_serious_diagnosis',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      !G.mem.healthSeriousDiagnosis &&
+      G.age >= 65 &&
+      G.stats.health < 55,
+    text: 'The consultant closes the folder and says she wants to be honest with you. She uses the word "aggressive." She explains what treatment would involve — the duration, the side effects, the statistical outcomes. You ask the question you have been building toward and she answers it directly: without treatment, probably eighteen months. With it, two to three years, but not the same two to three years. You drive home and sit in the car in the driveway for a long time.',
+    choices: [
+      {
+        text: 'Pursue the full treatment — you want every month you can get',
+        tag: null,
+        outcome: 'The treatment is brutal and effective in the way they said. You lose your hair and six months of ordinary life. You gain time.',
+        effect: (p) => { p.h -= 10; p.m -= 12; p.mo -= 15000; p.addFlag('cancer_treatment'); p.r -= 5; p.setMem('healthSeriousDiagnosis', true) },
+      },
+      {
+        text: 'Choose palliative care — the quality of time matters more than the quantity',
+        tag: null,
+        outcome: 'The consultant respects the decision. She says most people who choose this do not regret it. The months you have are genuinely yours.',
+        effect: (p) => { p.m += 6; p.r -= 10; p.karma += 8; p.addFlag('chose_palliative'); p.setMem('healthSeriousDiagnosis', true) },
+      },
+      {
+        text: 'Ask about trials — is there a fourth option',
+        tag: null,
+        outcome: 'There is a trial. You meet the eligibility criteria. The outcome is uncertain in ways standard treatment is not. You enter it.',
+        effect: (p) => { p.h -= 5; p.e += 5; p.m -= 5; p.addFlag('experimental_treatment'); p.setMem('healthSeriousDiagnosis', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'health_refusing_treatment',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) =>
+      !G.mem.healthRefusingTreatment &&
+      G.flags.includes('faith_deepened') &&
+      G.age >= 68 &&
+      G.stats.health < 50,
+    text: 'The doctor outlines the treatment. You listen to the whole of it. Then you tell him that you will not be doing it. He asks if you have understood the prognosis. You tell him that you have. He asks if there is someone he can speak to. You tell him that you are the someone. He does not argue further. You walk out into an afternoon that is very ordinary and very bright.',
+    choices: [
+      {
+        text: 'Hold the decision',
+        tag: null,
+        outcome: 'The people in your life disagree with you to varying degrees. You hold the decision. It is, you have decided, yours to hold.',
+        effect: (p) => { p.m += 5; p.r -= 12; p.karma += 6; p.addFlag('declined_treatment_principle'); p.setMem('healthRefusingTreatment', true) },
+      },
+      {
+        text: 'Reconsider after talking to family',
+        tag: null,
+        outcome: 'Their distress changes the calculation. You agree to the minimum intervention. You are not certain this is the right decision. You make it anyway.',
+        effect: (p) => { p.m -= 5; p.h += 5; p.mo -= 8000; p.setMem('healthRefusingTreatment', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── RETIREMENT FINANCIAL ARC ─────────────────────────────────────────────────
+
+  {
+    id: 'retire_pension_decision',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.career &&
+      !G.flags.includes('retired') &&
+      !G.mem.retirePensionDecision &&
+      G.age >= 40 && G.age <= 55 &&
+      G.money > 5000,
+    text: 'Your employer\'s retirement plan documentation arrives for the annual review. You can increase your contribution to the maximum — it means less now, but considerably more compounding over the remaining twenty years. Or you can keep the current rate and have more available each month.',
+    choices: [
+      {
+        text: 'Maximise the pension contribution',
+        tag: null,
+        outcome: 'The monthly difference is noticeable but manageable. You make the adjustment and stop thinking about it.',
+        effect: (p) => { p.m -= 3; p.mo -= 2000; p.w += 5; p.addFlag('pension_saver'); p.setMem('retirePensionDecision', true) },
+      },
+      {
+        text: 'Keep the current rate — there are things you need the money for now',
+        tag: null,
+        outcome: 'The money stays liquid. The gap widens quietly over the following decade.',
+        effect: (p) => { p.m += 3; p.setMem('retirePensionDecision', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'retire_comfortable',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('retired') &&
+      !G.mem.retireComfortable &&
+      (G.flags.includes('pension_saver') || G.money > 80000),
+    text: 'The financial planner lays out the projection. The pension, the savings, the property — assembled over decades of small decisions — have produced something solid. You do not have to reduce anything significantly. You do not have to count the heating days. The anxiety you carried for thirty years about whether the numbers would work was not, it turns out, unfounded — but the answer came out on the correct side.',
+    choices: null,
+    effect: (p) => { p.m += 12; p.r -= 8; p.addFlag('retired_comfortable'); p.setMem('retireComfortable', true) },
+  },
+
   {
     id: 'late_digital_left_behind',
     phase: 'late_life',

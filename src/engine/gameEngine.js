@@ -2375,6 +2375,7 @@ export function goToRehab(state) {
     ...state,
     money: (state.money ?? 0) - cost,
     flags: [...new Set([...newFlags, 'rehab_graduate', 'in_recovery'])],
+    mem: { ...(state.mem ?? {}), recoveryStartYear: state.currentYear },
     stats: { ...state.stats, happiness: clamp(state.stats.happiness + 12, 0, 100), health: clamp(state.stats.health + 8, 0, 100) },
     actionsThisYear: state.actionsThisYear + 1,
     log: [...state.log, { age: state.age, text: `You complete a stint in rehab. Cost: $${cost.toLocaleString()}. You feel genuinely renewed.`, isKey: true }],
@@ -3286,6 +3287,85 @@ export function generateEpitaph(state) {
     lines.push(`${He} died carrying a weight that had no name — a persistent sense that something essential had been missed.`)
   } else if (regret > 50) {
     lines.push(`${He} carried some regrets. Most people do.`)
+  }
+
+  // — Business and entrepreneurship —
+  if (flags.includes('sold_business')) {
+    lines.push(`${He} built a business and sold it — the particular satisfaction of making something from nothing.`)
+  } else if (flags.includes('business_failed') && flags.includes('business_restart')) {
+    lines.push(`${He} built a business, watched it fail, and built another. The second time went better.`)
+  } else if (flags.includes('owns_business') || flags.includes('business_owner')) {
+    lines.push(`${He} ran ${his} own business — the specific freedom and weight of that.`)
+  }
+
+  // — Family bonds —
+  if (flags.includes('sibling_bond_strong')) {
+    lines.push(`${He} maintained a close bond with ${his} siblings — a relationship that outlasted many of the other constants.`)
+  }
+  if (flags.includes('long_marriage') || (partner && flags.includes('strong_marriage'))) {
+    lines.push(`${He} was married for a long time. The length of it was its own statement.`)
+  }
+
+  // — Language and heritage —
+  if (flags.includes('heritage_language_preserved')) {
+    lines.push(`${He} kept the first language alive, even in a country that did not need it.`)
+  }
+
+  // — Recovery and sobriety —
+  if (flags.includes('recovery_established') || (flags.includes('in_recovery') && flags.includes('rehab_graduate'))) {
+    lines.push(`${He} achieved sobriety and held it. That is harder than it sounds.`)
+  }
+
+  // — Technology and modernity —
+  if (flags.includes('mobile_money_user')) {
+    lines.push(`${He} was part of the generation that skipped the bank and went straight to the phone.`)
+  }
+
+  // — Retirement —
+  if (flags.includes('retired_comfortable')) {
+    lines.push(`${He} retired with enough. The enough was earned through decades of small decisions.`)
+  } else if (flags.includes('financial_hardship_late')) {
+    lines.push(`The final years were financially constrained in ways ${he} had not fully anticipated.`)
+  }
+
+  // — Rural-to-urban —
+  if (flags.includes('rural_to_urban')) {
+    lines.push(`${He} made the move from village to city — the defining migration of ${his} generation in that part of the world.`)
+  }
+
+  // — Discrimination and resilience —
+  if (flags.includes('experienced_discrimination') || flags.includes('gender_barrier_faced')) {
+    lines.push(`${He} encountered barriers that others did not. ${He} found ways through them.`)
+  }
+
+  // — Adolescent foundations —
+  if (flags.includes('talent_discovered')) {
+    lines.push(`${He} found a talent young and spent the rest of ${his} life seeing where it led.`)
+  }
+  if (flags.includes('political_awareness_early')) {
+    lines.push(`${He} understood early what kind of country ${he} was living in. The understanding shaped everything after.`)
+  }
+
+  // — Historical witnesses —
+  if (flags.includes('partition_survivor') || flags.includes('partition_refugee')) {
+    lines.push(`${He} lived through the Partition — one of the largest forced migrations in human history.`)
+  }
+  if (flags.includes('cultural_revolution_survived')) {
+    lines.push(`${He} survived the Cultural Revolution, which required a particular calibration of public and private self.`)
+  }
+  if (flags.includes('post_apartheid_generation')) {
+    lines.push(`${He} cast a vote in the first free election. ${He} knew what it had cost to get there.`)
+  }
+
+  // — Fertility and loss —
+  if (flags.includes('multiple_miscarriage') || flags.includes('experienced_miscarriage')) {
+    lines.push(`${He} lost pregnancies. The losses were private and not small.`)
+  }
+  if (flags.includes('chose_childless')) {
+    lines.push(`${He} chose not to have children. It was a complete answer.`)
+  }
+  if (flags.includes('ivf_success')) {
+    lines.push(`The family ${he} built required significant persistence to build.`)
   }
 
   // — Survivors —

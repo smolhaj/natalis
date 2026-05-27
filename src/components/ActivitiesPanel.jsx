@@ -1166,8 +1166,15 @@ export default function ActivitiesPanel({ onClose }) {
 
       case 'career': {
         const available = getAvailableCareers(state)
+        const isUndocumented = state.residencyStatus === 'undocumented' || state.residencyStatus === 'tourist_overstay'
         return (
           <>
+            {isUndocumented && (
+              <div className="px-3 py-3 rounded-xl border border-amber-200 bg-amber-50 mb-1">
+                <p className="text-amber-700 text-sm font-semibold">No formal employment available</p>
+                <p className="text-amber-600 text-xs mt-0.5">Without legal status, you cannot take a salaried position. Cash work comes through life events.</p>
+              </div>
+            )}
             {state.career && (
               <>
                 <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1">Current: {state.career.title}</p>
@@ -1180,7 +1187,7 @@ export default function ActivitiesPanel({ onClose }) {
             {state.age >= 55 && !state.retired && (
               <Btn onClick={() => go(retire)} title="Retire" subtitle="End your working life on your own terms." />
             )}
-            {available.length > 0 && (
+            {!isUndocumented && available.length > 0 && (
               <>
                 <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">Available Careers</p>
                 {available.map(career => (
@@ -1191,7 +1198,7 @@ export default function ActivitiesPanel({ onClose }) {
                 ))}
               </>
             )}
-            {available.length === 0 && !state.career && (
+            {!isUndocumented && available.length === 0 && !state.career && (
               <p className="text-natalis-muted text-sm italic p-3">No careers available for your current qualifications.</p>
             )}
           </>
