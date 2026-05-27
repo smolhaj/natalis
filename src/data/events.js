@@ -7537,7 +7537,7 @@ const BASE_EVENTS = [
     id: 'childhood_pet_dies',
     phase: 'childhood',
     weight: 4,
-    when: (G) => G.age >= 7 && G.age <= 14 && G.flags.includes('has_pet') && !G.mem.pet_died,
+    when: (G) => G.age >= 7 && G.age <= 14 && G.flags.includes('pet_owner') && !G.mem.pet_died,
     isKey: true,
     text: 'You find your pet still in the morning. The stillness is different from sleeping. You already know before your parents do.',
     choices: [
@@ -7897,7 +7897,7 @@ const BASE_EVENTS = [
     id: 'lawsuit_slip_fall',
     phase: null,
     weight: 3,
-    when: (G) => G.age >= 25 && !G.mem.lawsuit_slip && (G.career || G.flags.includes('business_owner')),
+    when: (G) => G.age >= 25 && !G.mem.lawsuit_slip && (G.career || G.flags.includes('entrepreneur')),
     text: 'A letter arrives from a law firm. Someone fell on premises you\'re responsible for — a sidewalk, a staircase, a wet floor. They are seeking damages of significant size.',
     isKey: true,
     choices: [
@@ -7938,7 +7938,7 @@ const BASE_EVENTS = [
     id: 'lawsuit_sued_by_business_partner',
     phase: null,
     weight: 3,
-    when: (G) => G.age >= 30 && G.flags.includes('business_owner') && !G.mem.partner_lawsuit,
+    when: (G) => G.age >= 30 && G.flags.includes('entrepreneur') && !G.mem.partner_lawsuit,
     text: 'Your business partner is suing you. The partnership is dissolving in the most expensive way possible. The operating agreement you both signed has seven pages of ambiguity.',
     isKey: true,
     choices: [

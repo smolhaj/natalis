@@ -455,12 +455,12 @@ export function getNextEvent(state) {
   const currentYear = state.currentYear ?? 0
 
   const queueMatch = state.queue.find(e =>
-    e.phase === phase && isEventAvailable(e, usedEventMap, currentYear) && (!e.when || e.when(G))
+    (e.phase === phase || e.phase == null) && isEventAvailable(e, usedEventMap, currentYear) && (!e.when || e.when(G))
   )
   if (queueMatch) return queueMatch
 
-  // Use phase index instead of filtering the full event array
-  const phaseEvents = EVENTS_BY_PHASE[phase] ?? []
+  // Use phase index; also include phase-agnostic events (phase: null) which rely on their when() guards
+  const phaseEvents = [...(EVENTS_BY_PHASE[phase] ?? []), ...(EVENTS_BY_PHASE[null] ?? [])]
   let pool = phaseEvents.filter(e =>
     isEventAvailable(e, usedEventMap, currentYear) && (!e.when || e.when(G)) &&
     (!state.inPrison || e.prisonOk === true)
@@ -935,7 +935,11 @@ export function tryForChild(state) {
   }
   const fertChance = state.partner.married ? 0.65 : 0.38
   if (!chance(fertChance)) {
-    return { ...state, log: [...state.log, { age: state.age, text: "You try for a child — it doesn't happen this year.", isKey: false }] }
+    return {
+      ...state,
+      flags: [...new Set([...state.flags, 'trying_for_child'])],
+      log: [...state.log, { age: state.age, text: "You try for a child — it doesn't happen this year.", isKey: false }],
+    }
   }
   const cGender = chance(0.5) ? 'male' : 'female'
   const c = state.character.country
@@ -944,7 +948,7 @@ export function tryForChild(state) {
   return {
     ...state,
     children: [...state.children, child],
-    flags: [...new Set([...state.flags, 'parent'])],
+    flags: [...new Set([...state.flags, 'parent', 'trying_for_child'])],
     stats: { ...state.stats, happiness: clamp(state.stats.happiness + 10, 0, 100) },
     log: [...state.log, { age: state.age, text: `${childName} is born. Everything shifts.`, isKey: true }],
   }
@@ -3347,7 +3351,7 @@ export function generateEpitaph(state) {
     lines.push(`${He} built a business and sold it — the particular satisfaction of making something from nothing.`)
   } else if (flags.includes('business_failed') && flags.includes('business_restart')) {
     lines.push(`${He} built a business, watched it fail, and built another. The second time went better.`)
-  } else if (flags.includes('owns_business') || flags.includes('business_owner')) {
+  } else if (flags.includes('owns_business') || flags.includes('entrepreneur')) {
     lines.push(`${He} ran ${his} own business — the specific freedom and weight of that.`)
   }
 

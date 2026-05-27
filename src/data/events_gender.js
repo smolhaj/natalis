@@ -78,7 +78,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'fg_teacher_dismisses',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 4,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -114,7 +114,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'fg_university_shameful',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 4,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -154,7 +154,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'fg_female_surpasses_peers',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 3,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -244,7 +244,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'fg_scholarship_refused',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 3,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -428,7 +428,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'cm_family_arranges_marriage',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 4,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -466,7 +466,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'cm_bride_price',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 4,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -517,7 +517,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'cm_first_pregnancy_young',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 3,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -547,7 +547,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'cm_older_husband_imbalance',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 3,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -1637,7 +1637,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'mp_male_sexual_assault',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 1,
     when: (G) =>
       G.character.gender === 'male' &&
@@ -1696,7 +1696,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'lgbtq_first_attraction',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 4,
     when: (G) =>
       G.age >= 13 && G.age <= 18 &&
@@ -1731,7 +1731,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'lgbtq_religious_household',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 4,
     when: (G) =>
       G.flags.includes('same_sex_attracted') &&
@@ -1872,7 +1872,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'lgbtq_conversion_therapy',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 2,
     when: (G) =>
       G.flags.includes('same_sex_attracted') &&
@@ -1990,7 +1990,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'lgbtq_trans_identity',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 3,
     when: (G) =>
       G.age >= 14 && G.age <= 22 &&
@@ -2025,7 +2025,7 @@ export const GENDER_EVENTS = [
 
   {
     id: 'lgbtq_homophobia_school',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 4,
     when: (G) =>
       G.flags.includes('same_sex_attracted') &&
