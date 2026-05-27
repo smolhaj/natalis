@@ -377,4 +377,151 @@ export const IMMIGRATION_EVENTS = [
     effect: (p) => { p.m += 5; p.r += 10; p.updateChildRel(0, 10); p.addFlag('took_children_to_homeland'); p.setMem('secondgenTripHome', true) },
   },
 
+  // ── REFUGEE RESETTLEMENT ARC ─────────────────────────────────────────────────
+  // Fires after 'asylum_approved'. Depicts the actual experience of landing
+  // in a third country, navigating bureaucracy, first job, first real home.
+
+  {
+    id: 'imm_resettlement_arrival',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.flags.includes('asylum_approved') &&
+      G.residencyStatus === 'refugee_status' &&
+      !G.mem?.resettlementArrival &&
+      G.age >= 18,
+    text: (G) => {
+      const dest = G.currentCountry?.name ?? 'the new country'
+      return `You are processed at the airport in ${dest} on a Tuesday morning. A caseworker meets you with a folder — appointments, numbers to call, the address of the accommodation. The folder is comprehensive in a way that assumes you already know how everything works. You do not know how anything works. The caseworker is kind. You follow her to a car and watch the country through the window and understand nothing you are seeing.`
+    },
+    choices: [
+      {
+        text: 'Learn everything — ask every question, read every document',
+        tag: null,
+        outcome: 'The folder becomes dog-eared. You learn the bus route, the office hours, the specific person at the welfare office who is more patient than the others. The knowledge is its own foothold.',
+        effect: (p) => { p.e += 6; p.m -= 8; p.addFlag('resettlement_arrived'); p.setMem('resettlementArrival', true) },
+      },
+      {
+        text: 'Focus on finding other people from home',
+        tag: null,
+        outcome: 'There is a community. Small, dispersed, but real. They explain things the folder does not. They feed you the first food that tastes like something.',
+        effect: (p) => { p.m += 2; p.s += 4; p.addFlag('resettlement_arrived'); p.addFlag('diaspora_community'); p.setMem('resettlementArrival', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'imm_resettlement_housing',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('resettlement_arrived') &&
+      !G.mem?.resettlementHousing &&
+      G.age >= 18,
+    text: 'The temporary accommodation is a room in a building with twelve other people. The walls are thin. You share a kitchen. There is a woman down the hall who is from a country very close to yours — close enough that the languages are partially mutual. She explains how the system works in terms the folder never used: that the waiting list for proper housing is two years, that you can contest a decision if you have the right form, that the social worker on Thursdays is better than the one on Mondays.',
+    choices: [
+      {
+        text: 'Work every legitimate channel to move up the housing list',
+        tag: null,
+        outcome: 'The paperwork is endless and the results are slow. After eleven months you receive a letter. A flat. Yours. The key is cold in your hand.',
+        effect: (p) => { p.m += 15; p.r -= 10; p.e += 4; p.addFlag('first_own_home'); p.setMem('resettlementHousing', true) },
+      },
+      {
+        text: 'Build a life in the temporary room — it\'s shelter',
+        tag: null,
+        outcome: 'You make the room habitable. A photograph. A plant. The impermanence becomes liveable, which is not the same as resolved.',
+        effect: (p) => { p.m += 5; p.r += 5; p.addFlag('adaptive_resilience'); p.setMem('resettlementHousing', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'imm_resettlement_first_job',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('resettlement_arrived') &&
+      !G.mem?.resettlementFirstJob &&
+      G.age >= 18,
+    text: (G) => {
+      const prevEdu = G.flags.includes('university_graduate') || G.flags.includes('first_gen_graduate')
+      if (prevEdu) {
+        return 'Your qualifications are not recognized here. The engineer who applies for the engineering position receives a letter saying foreign credentials require a two-year assessment process. You take the warehouse job. You are not the only overqualified person on your shift. This is understood between you without being discussed.'
+      }
+      return 'The job centre places you in a food processing plant. Early shift. The supervisor speaks slowly and clearly when he addresses you, which is kind and also slightly reductive. You work carefully and do not make errors. After two weeks he stops speaking slowly. After six weeks he gives you the better machine.'
+    },
+    choices: [
+      {
+        text: 'Take the job and build from there',
+        tag: null,
+        outcome: 'The foothold is real even if it is not the foothold you expected. You build from it.',
+        effect: (p) => { p.mo += 800; p.m += 6; p.addFlag('first_job_resettlement'); p.setMem('resettlementFirstJob', true) },
+      },
+      {
+        text: 'Keep looking for something that uses what you actually know',
+        tag: null,
+        outcome: 'The search takes longer than the warehouse would have. When it ends, the result is better.',
+        effect: (p) => { p.m -= 6; p.e += 5; p.addFlag('first_job_resettlement'); p.setMem('resettlementFirstJob', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'imm_resettlement_language',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('resettlement_arrived') &&
+      !G.mem?.resettlementLanguage &&
+      G.age >= 18,
+    text: 'The language class is two evenings a week. Everyone in the class is from somewhere different. The teacher is patient in the way that only people who have chosen this work are patient. The vocabulary you learn first is practical: emergency, I need, where is. Then: thank you, please, I understand. The last phrase is the one you use before you fully mean it, as a bridge toward meaning it.',
+    choices: [
+      {
+        text: 'Commit to it — total immersion outside the class too',
+        tag: null,
+        outcome: 'The television. The shop conversations. The small notebook for new words. After a year, you stop translating in your head before speaking.',
+        effect: (p) => { p.e += 8; p.s += 5; p.addFlag('language_learned_resettlement'); p.addFlag('heritage_language_preserved'); p.setMem('resettlementLanguage', true) },
+      },
+      {
+        text: 'Learn enough to function — your home language is still your real language',
+        tag: null,
+        outcome: 'The functional threshold is higher than you expected. You cross it. The mother tongue stays alive in the community around you.',
+        effect: (p) => { p.e += 4; p.s += 2; p.addFlag('language_learned_resettlement'); p.addFlag('heritage_language_preserved'); p.setMem('resettlementLanguage', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'imm_resettlement_contact_home',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('resettlement_arrived') &&
+      !G.mem?.resettlementContactHome,
+    text: (G) => {
+      const origin = G.character.country.name
+      return `You have a number for your sister in ${origin}. The connection drops twice before you hear her voice clearly. She asks if you are safe. You say yes. She asks what it is like. You try to describe it and stop. The gap between what you are experiencing and what she can imagine is not her fault or yours. You tell her you are well and that you miss her and that you are working on it. All three things are true.`
+    },
+    choices: null,
+    effect: (p) => { p.m += 8; p.r += 10; p.s += 3; p.addFlag('maintained_contact_home'); p.setMem('resettlementContactHome', true) },
+  },
+
+  {
+    id: 'imm_resettlement_anniversary',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) =>
+      G.flags.includes('resettlement_arrived') &&
+      G.mem?.resettlementArrival &&
+      !G.mem?.resettlementAnniversary &&
+      G.age >= 19,
+    text: 'One year. You have a flat and a job and a transit pass and a bank account and a phone plan and a medical card. A year ago you had none of these things and could not have explained how to get them. You have not become a different person. You have become the same person with a different set of tools and a different city behind your eyes. The counting of the specific things you now have is a private ceremony that nobody sees.',
+    choices: null,
+    effect: (p) => { p.m += 14; p.r -= 12; p.addFlag('resettlement_established'); p.setMem('resettlementAnniversary', true) },
+  },
+
 ]

@@ -540,4 +540,128 @@ export const GRIEF_EVENTS = [
     effect: (p) => { p.m += 10; p.r -= 8; p.addFlag('acceptance'); p.setMem('griefShifts', true) },
   },
 
+  // ── PARENT DEATH FOLLOW-UP ───────────────────────────────────────────────────
+
+  {
+    id: 'grief_parent_house',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('lost_parent') &&
+      !G.mem.griefParentHouse &&
+      G.age >= 35,
+    text: 'You are the one who volunteered to clear the house. Or you were assigned it, which amounts to the same thing. The practical inventory of a life: the drawer with the rubber bands and the dead batteries and the envelope of photos from the seventies. The coat still hanging by the door. The specific smell of the room that you now understand is temporary — in six months the new people will repaint and the smell will be gone and that will be that.',
+    choices: [
+      {
+        text: 'Take your time — this is the last time the house is theirs',
+        tag: null,
+        outcome: 'You take three days. You find things you did not know existed. You keep some of them and it is the right decision.',
+        effect: (p) => { p.m -= 12; p.r += 5; p.addFlag('cleared_parent_home'); p.setMem('griefParentHouse', true) },
+      },
+      {
+        text: 'Clear it efficiently — the drawn-out version is not kinder',
+        tag: null,
+        outcome: 'You do it in a weekend. The efficiency is real but the things you did not slow down for stay with you.',
+        effect: (p) => { p.m -= 16; p.r += 10; p.addFlag('cleared_parent_home'); p.setMem('griefParentHouse', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'grief_parent_first_holiday',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('lost_parent') &&
+      !G.mem.griefParentHoliday &&
+      G.age >= 35,
+    text: 'The first holiday without them. You do not fully account for it in advance. Then the day arrives and the phone number you have had for thirty years would just ring. The space where the call used to go is real. You sit through it. The family gathers and doesn\'t quite know what to do with the absence either, and you collectively construct something that is not quite the old version but is not nothing.',
+    choices: null,
+    effect: (p) => { p.m -= 14; p.r += 8; p.setMem('griefParentHoliday', true) },
+  },
+
+  {
+    id: 'grief_parent_inheritance',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) =>
+      G.flags.includes('lost_parent') &&
+      !G.mem.griefParentInheritance &&
+      G.siblings && G.siblings.filter(s => s.alive).length > 0 &&
+      G.age >= 35,
+    text: 'The solicitor reads the will. The amounts are smaller than you expected or larger than you expected, but the thing that lands is the item your parent specified by name: the piano, the watch, the ring from their own mother. Your sibling expected it. You can see it in their face. The grief goes somewhere complicated and you do not speak about the will at the reception.',
+    choices: [
+      {
+        text: 'Let it go — it isn\'t worth the relationship',
+        tag: null,
+        outcome: 'You say nothing at the time. Two weeks later you write your sibling a short note. They call. The call is brief and real.',
+        effect: (p) => { p.m -= 5; p.karma += 10; p.r += 4; p.setMem('griefParentInheritance', true) },
+      },
+      {
+        text: 'Raise it directly — this is something that needs to be said',
+        tag: null,
+        outcome: 'The conversation is harder than expected and more honest than you expected. It resolves something that would otherwise have sat for years.',
+        effect: (p) => { p.m -= 8; p.s += 5; p.r -= 4; p.setMem('griefParentInheritance', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── FRIEND DEATH FOLLOW-UP ───────────────────────────────────────────────────
+
+  {
+    id: 'grief_friend_death_followup',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) =>
+      G.flags.includes('friend_died') &&
+      !G.mem.griefFriendFollowup &&
+      G.age >= 35,
+    text: 'The group chat goes quiet for a week. Then someone posts an ordinary thing — something they would have laughed at — and the act of sending it is grief in a language you didn\'t know the group used. You screenshot it. You don\'t know why. The person who isn\'t in the chat anymore would have had the best reply.',
+    choices: [
+      {
+        text: 'Keep the group alive — it\'s what they would have wanted',
+        tag: null,
+        outcome: 'You suggest a gathering. People come. The seat that\'s empty is present in the room. You eat and drink and talk about them for two hours and the weight is less afterward.',
+        effect: (p) => { p.m += 6; p.s += 5; p.karma += 5; p.setMem('griefFriendFollowup', true) },
+      },
+      {
+        text: 'Step back — you need time to process alone',
+        tag: null,
+        outcome: 'The distance is protective for a while. When you rejoin, something has shifted in the group that you may have contributed to.',
+        effect: (p) => { p.m -= 5; p.r += 6; p.setMem('griefFriendFollowup', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── SIBLING DEATH FOLLOW-UP ──────────────────────────────────────────────────
+
+  {
+    id: 'grief_sibling_death_followup',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) =>
+      G.flags.includes('lost_sibling') &&
+      !G.mem.griefSiblingFollowup &&
+      G.age >= 35,
+    text: 'You are now the sibling who is left. The word "brother" or "sister" in a sentence now refers to someone who is gone, and you are still learning how to use the word in the past tense when the present tense was the only tense it had for forty years. Your parents, if they are still alive, are doing something more specific — outliving a child — and the grief in the house is layered in a way you cannot fully map.',
+    choices: [
+      {
+        text: 'Be present for your parents\' grief as well as your own',
+        tag: null,
+        outcome: 'The grief passes between you and them like something shared rather than doubled. Neither of you is less sad. Both of you are less alone.',
+        effect: (p) => { p.m -= 10; p.karma += 10; p.s += 4; p.addFlag('sibling_death_witness'); p.setMem('griefSiblingFollowup', true) },
+      },
+      {
+        text: 'Find your own way to grieve it',
+        tag: null,
+        outcome: 'The grief goes internal. You process it in ways that are private and genuine and leave a mark.',
+        effect: (p) => { p.m -= 14; p.r += 10; p.addFlag('sibling_death_witness'); p.setMem('griefSiblingFollowup', true) },
+      },
+    ],
+    effect: null,
+  },
+
 ]

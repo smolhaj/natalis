@@ -1083,4 +1083,138 @@ export const WORLD_EVENTS = [
     minAge: 10,
     when: (G) => G.ruralUrban === 'rural',
   },
+
+  // ── HISTORICAL TRAUMAS ────────────────────────────────────────────────────────
+
+  {
+    id: 'partition_of_india',
+    name: 'Partition of India',
+    years: [1947, 1948],
+    archetypes: 'all',
+    countries: ['India', 'Pakistan'],
+    narrative: 'The line is drawn. Fourteen million people move in both directions. Around a million are killed in the violence that follows. Families are severed. Villages are renamed. A country that existed for centuries becomes two countries overnight, and the grief of it will be carried for generations.',
+    effect: (p) => { p.m -= 20; p.h -= 10; p.addFlag('partition_survivor'); p.addFlag('displaced'); },
+    addFlags: ['partition_survivor', 'displaced', 'war_childhood'],
+    minAge: 0,
+    when: (G) => G.age <= 40,
+  },
+
+  {
+    id: 'partition_india_refugee',
+    name: 'Partition Displacement',
+    years: [1947, 1949],
+    archetypes: 'all',
+    countries: ['India', 'Pakistan'],
+    narrative: 'The column moves at night to avoid the militias on the road. You carry what you can. The village your grandparents built is now on the wrong side of a line that did not exist last year. The relatives who stayed are no longer reachable. You arrive somewhere that is supposed to be home. It is not home yet.',
+    effect: (p) => { p.m -= 25; p.h -= 15; p.w -= 10; p.addFlag('partition_refugee'); p.addFlag('lost_home'); },
+    addFlags: ['partition_refugee', 'lost_home'],
+    minAge: 0,
+    when: (G) => G.age <= 30 && !G.flags.includes('partition_survivor'),
+  },
+
+  {
+    id: 'rwandan_genocide_aftermath',
+    name: 'Rwanda: Aftermath',
+    years: [1994, 2000],
+    archetypes: 'all',
+    countries: ['Rwanda'],
+    narrative: 'Eight hundred thousand people were killed in a hundred days. Now the survivors live next to the survivors of those who did the killing. The gacaca courts process the cases. You give your testimony. The person who testified before you lost the same things you lost. The country is being asked to reconstitute itself from something that should not have been possible.',
+    effect: (p) => { p.m -= 18; p.r += 15; p.addFlag('genocide_survivor'); },
+    addFlags: ['genocide_survivor', 'genocide_witness'],
+    minAge: 5,
+    when: (G) => !G.flags.includes('rwandan_genocide'),
+  },
+
+  {
+    id: 'rwandan_genocide_acute',
+    name: 'Rwandan Genocide',
+    years: [1994, 1994],
+    archetypes: 'all',
+    countries: ['Rwanda'],
+    narrative: 'The radio names the group you belong to as the enemy. The roadblocks go up in the night. Neighbors you have known your whole life are making decisions about you that you did not know they were capable of making. You hide. You run. The hundred days pass and the count that comes after is a number that will not fit inside ordinary language.',
+    effect: (p) => { p.m -= 35; p.h -= 20; p.addFlag('genocide_survivor'); p.addFlag('tutsi_hidden'); },
+    addFlags: ['genocide_survivor', 'tutsi_hidden', 'war_childhood'],
+    minAge: 0,
+  },
+
+  {
+    id: 'post_apartheid_transition',
+    name: 'End of Apartheid',
+    years: [1994, 1998],
+    archetypes: 'all',
+    countries: ['South Africa'],
+    narrative: 'The first free election. The queues go for miles. People who have never voted in their country stand in them for hours without complaint. The vote cast is the weight of everything that came before it. The transition is not the end of what apartheid did — the land, the wealth, the schools remain organized by the old logic — but it is something new and real happening in a place that needed it.',
+    effect: (p) => { p.m += 12; p.addFlag('post_apartheid_generation'); },
+    addFlags: ['post_apartheid_generation'],
+    minAge: 10,
+  },
+
+  {
+    id: 'apartheid_pass_laws',
+    name: 'Apartheid Pass Laws',
+    years: [1950, 1990],
+    archetypes: 'all',
+    countries: ['South Africa'],
+    narrative: 'The pass book must be carried at all times. Failure to produce it means arrest. The book determines where you may live, where you may work, which train you may board. It is a document that describes your permitted life in a country you were born in.',
+    effect: (p) => { p.m -= 15; p.h -= 5; p.addFlag('apartheid_pass_book'); p.addFlag('systemic_discrimination'); },
+    addFlags: ['apartheid_pass_book', 'systemic_discrimination'],
+    minAge: 16,
+    when: (G) => {
+      const ethnicId = G.ethnicity
+      const country = G.character.country
+      const isBlack = country.ethnicGroups?.some(e => e.id === ethnicId && e.disadvantaged)
+      return isBlack
+    },
+  },
+
+  {
+    id: 'yugoslav_wars_impact',
+    name: 'Yugoslav Wars: Civilian Experience',
+    years: [1991, 1999],
+    archetypes: 'all',
+    countries: ['Bosnia and Herzegovina', 'Croatia', 'Serbia', 'Kosovo', 'Slovenia', 'North Macedonia'],
+    narrative: 'The shelling begins before you understand that the country you grew up in no longer exists. The neighbours you had are now across a front line. The city is besieged. You learn which streets are safe and which are not, and the knowledge changes the way you move through the world permanently. The ceasefire comes and goes and comes again. The Dayton Agreement is a document. What it does not contain is everything you lost.',
+    effect: (p) => { p.m -= 22; p.h -= 12; p.addFlag('yugoslav_war_survivor'); p.addFlag('war_childhood'); },
+    addFlags: ['yugoslav_war_survivor', 'displaced'],
+    minAge: 0,
+  },
+
+  {
+    id: 'iran_revolution_street',
+    name: 'Iranian Revolution: Street Level',
+    years: [1979, 1982],
+    archetypes: 'all',
+    countries: ['Iran'],
+    narrative: 'The revolution happened and then the revolution changed. What you marched for and what arrived are different things with the same name. The dress codes come first, then the book burnings, then the names of people you know appearing on lists. The Islamic Republic is not what the Shah was. It is also not what you were promised.',
+    effect: (p) => { p.m -= 14; p.addFlag('revolution_disillusionment'); p.addFlag('iran_revolution_lived'); },
+    addFlags: ['revolution_disillusionment', 'iran_revolution_lived'],
+    minAge: 10,
+    when: (G) => !G.flags.includes('revolution_generation'),
+  },
+
+  {
+    id: 'korean_war_aftermath',
+    name: 'Korean War Division',
+    years: [1953, 1960],
+    archetypes: 'all',
+    countries: ['South Korea', 'North Korea'],
+    narrative: 'The armistice is not a peace treaty. The country is divided along a line that separates families — relatives you cannot write to, a village that is now in another country. The division is understood to be temporary. It does not end in your lifetime.',
+    effect: (p) => { p.m -= 12; p.r += 10; p.addFlag('korean_division_generation'); },
+    addFlags: ['korean_division_generation', 'divided_family'],
+    minAge: 0,
+    when: (G) => G.age <= 25,
+  },
+
+  {
+    id: 'cultural_revolution_china',
+    name: 'Cultural Revolution',
+    years: [1966, 1976],
+    archetypes: 'all',
+    countries: ['China'],
+    narrative: 'The Red Guards arrive at the school. The teachers are made to stand in front of the students. The books are burned in the courtyard — which ones, exactly, depends on who is in charge of the bonfire. You learn to say the right things in the right order. What you actually think is kept entirely separate and never written down.',
+    effect: (p) => { p.m -= 18; p.e -= 8; p.addFlag('cultural_revolution_survived'); p.addFlag('sent_down_generation'); },
+    addFlags: ['cultural_revolution_survived'],
+    minAge: 5,
+  },
+
 ]
