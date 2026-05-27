@@ -213,66 +213,71 @@ Generic events are a last resort. Specific events — ones that could only fire 
 - `G.mem` key-value store for once-per-run event guards (use `p.setMem` / `G.mem?.key`)
 - Undocumented/tourist_overstay residency applies annual health (−2) + happiness (−3) + money (−$200) drain per tick
 
-**Event coverage (~1,000+ total events across 26 modules):**
+**Event coverage (~1,200+ total events across 30 modules):**
 - Base events covering all life phases with hundreds of inline events
 - 68 culture events (regime, ethnicity, caste, LGBTQ, child marriage, rural, wealth)
 - 23 technology timeline events (radio 1930s → COVID 2020s + mobile money for East/West Africa, 2007+)
-- 35 late-life events: retirement arc, partner decline/dementia/death arc, grandchildren, health decline, legacy reflection, loneliness
+- 41 late-life events: retirement arc, partner decline/dementia/death arc, grandchildren, health decline, legacy reflection, loneliness; **plus** elective surgery, serious diagnosis (with palliative/experimental branches), refusing treatment on principle, pension contribution decision, retired_comfortable milestone
 - 28 children arc events: school milestones, teen years, adult child relationships, child estrangement/reconciliation
 - 40 fame/karma events: fame consequences at different tiers, karma payoffs, hobby payoffs (painting, music, writing, fitness, language, cooking), friendship depth arcs
 - 41 texture events: rural developing world (with country-specific city names), pre-1960 era, career peak/decline
 - 42 society events: women's rights milestones by country/year, healthcare by archetype, language suppression/identity
-- 93 world events: Cold War specifics, famines, economic cycles, national traumas
-- 55+ career × regime events: journalist/teacher/soldier/police/civil servant/farmer/artist under authoritarian regimes; **plus** lawyer ethics, accountant fraud discovery, engineer safety tradeoffs, doctor burnout (all new)
+- 102 world events: Cold War specifics, famines, economic cycles, national traumas; **plus** Partition of India, Rwandan genocide (acute + aftermath), post-Apartheid election + pass laws, Yugoslav wars civilian experience, Iranian Revolution street-level, Korean War division, Cultural Revolution China
+- 55+ career × regime events: journalist/teacher/soldier/police/civil servant/farmer/artist under authoritarian regimes; plus lawyer ethics, accountant fraud discovery, engineer safety tradeoffs, doctor burnout
 - 11 friend lifecycle events: drifting apart, values clash, reconnecting, friend's divorce/success/illness/death, asking for money (`events_friends.js`)
 - 10 business arc events: key hire, first big client, acquisition offer, losing a client, market downturn, cashflow crisis, failure and restart (`events_business.js`)
 - 12 sibling events: childhood rivalry/alliance, sibling emigrates, wedding, borrowing money, estrangement, late illness, death (`events_siblings.js`)
 - 10 university depth events: first week, formative professor, academic failure, dropout decision, scholarship pressure, debt, first-gen, job gap (`events_education_arc.js`)
-- 17 post-marriage arc events added to `events_romance_arc.js`: infidelity, couples therapy, partner illness (pre-tickPartner), long-haul happiness, separate interests
+- 17 post-marriage arc events: infidelity, couples therapy, partner illness (pre-tickPartner), long-haul happiness, separate interests (`events_romance_arc.js`)
 - 5 addiction recovery arc events: social drinking test, anniversary, old using friend, rehab graduate speaking, long-term sobriety milestone (`events_consequence.js`)
-- 7 second-generation immigrant identity events added to `events_immigration.js`: child language loss, homeland question, values clash, trip home
+- 13 second-generation immigrant + refugee resettlement events: child language loss, homeland question, values clash, trip home; **plus** resettlement arrival, housing, first job, language class, contact home, one-year anniversary (`events_immigration.js`)
+- 7 adolescence identity events: racial/gender discrimination, religious doubt vs. family, talent discovery, defining friendship, betrayal, political awakening under authoritarianism, body image (`events_adolescence.js`)
+- 8 fertility depth events: miscarriage, late miscarriage, IVF consideration/outcome, traditional remedy, choosing childlessness, being questioned about it, late pregnancy complications (`events_fertility.js`)
+- 12 career late-arc + wealth gap + rural-to-urban events: senior room moment, defining case, protégé payoff, 20-year reflection; family approach for money, philanthropy, wealth isolation, estate planning; city arrival, accommodation, village network loss, family crisis pull (`events_career_wealth.js`)
+- 10 wealthy_gulf and wealthy_east events: Gulf oil boom childhood, Saudi female navigation, foreign worker observation, Hajj proximity, reform wave; Japan company culture and bubble burst; Korean exam pressure and military service; Singapore/Taiwan meritocracy (`events_gulf_east.js`)
+- 5 grief follow-up events: parent house-clearing, first holiday without parent, inheritance conflict, friend death follow-up, sibling death follow-up (`events_grief.js`)
 
 ### What still needs work — Priority Roadmap
 
+*Items 1–16 from the previous roadmap are complete. See git history for details.*
+
 #### P0 — Broken / Dead-End Mechanics
 
-1. **Undocumented career blocking** (`src/components/ActivitiesPanel.jsx`): Careers requiring formal employment should be unavailable to `undocumented` / `tourist_overstay` characters. The drain exists in the engine; the UI gate does not.
+1. **`activities.js` cost/availability audit**: Several activities list `gdpTiers` gates but some combinations are unreachable (e.g., activities only available in `very_high` GDP but set to fire only before age 18). Cross-check against real country data.
 
-2. **`recoveryStartYear` not set**: Addiction recovery events use `G.mem.recoveryStartYear` for the anniversary guard, but nothing currently sets it when `in_recovery` is first flagged. Wire it in `gameEngine.js` wherever `in_recovery` is first added to flags.
+2. **Event deduplication guard audit**: Some event modules use `G.mem?.key` (optional chaining) while others use `G.mem.key` (which throws if `mem` is undefined). Audit all event `when` guards for consistent `G.mem?.key` usage.
 
 #### P1 — High-Value Missing Content
 
-3. **Late-life health decisions** (`src/data/events_late_life.js`): Health declines passively but there are no decisions around it. Add: elective surgery choice (risk/reward at age 60+), refusing treatment on principle (character integrity vs. survival), experimental treatment for a terminal diagnosis, a diagnosis that reshapes the remaining years. Gate on age + health thresholds.
+3. **Country-specific event prose audit**: Scan all event text for hardcoded geography (country names, city names, institution names) that assumes a specific locale and convert them to dynamic lookups or split into country-specific variants. `events_texture.js` city-name lookup is the model.
 
-4. **Retirement money realism**: Retirement fires an event but wealth stat and money don't branch on savings vs. no savings. Add: a `pension_saver` flag earnable through career decisions, and `retired_poor` vs `retired_comfortable` branches in late-life events. Gate on flag + money amount.
+4. **Early childhood depth** (ages 0–5): This phase is thin — a few warmth/loss events. Add: first day of school (massive in many cultures), being the child of an immigrant, early illness, a specific memory that recurs. These form the emotional bedrock.
 
-5. **Pregnancy / fertility depth**: The fertility system exists but events around it are thin. Add: miscarriage (with grief), fertility treatment arc (IVF in wealthy countries, traditional remedies elsewhere), choosing to be childless intentionally, late pregnancy complications. Gate on age + gender + existing children count.
+5. **Post-Soviet arc events**: `post_soviet` archetype countries (Russia, Ukraine, Poland, Czech Republic, Hungary, Romania, etc.) have no dedicated coverage for the 1990s transition — hyperinflation, privatization, the specific disorientation of a system that promised certainty collapsing overnight.
 
-6. **Adolescence identity events** (`src/data/events.js`): The 12–17 phase is thin compared to others. Add: first experience of racial or gender discrimination, religious doubt at odds with family, discovering a talent that changes self-image, a defining friendship or betrayal. These shape who the character becomes.
+6. **India-specific depth**: The largest democracy in the world, with 1.4B people, gets generic `developing_urban` events plus caste coverage. Missing: the specific texture of Indian middle-class aspiration (engineering/medicine track), arranged marriage negotiation, joint family dynamics, regional language vs. Hindi vs. English identity conflict.
 
-7. **Refugee third-country resettlement arc** (`src/data/events_immigration.js`): After `refugee_status` is granted, there are no events depicting the actual resettlement experience — the language class exists but landing in a specific country, navigating bureaucracy, the first job, the first real home. 5–8 events following `asylum_approved`.
+7. **Late-life relationship repair arc**: Characters who have estranged children, a long-damaged sibling relationship, or a never-resolved falling-out have no mechanism for attempted reconciliation in their 60s–70s. This is one of the most human late-life experiences and currently has no event path.
+
+8. **Death of a child**: The `lost_child` flag exists and shows in the epitaph, but there are no events around it — the death itself, the aftermath, the way it changes a marriage. The hardest subject in the game and the most important to handle with care.
 
 #### P2 — Depth and Texture
 
-8. **Country-specific historical trauma events** (`src/data/worldEvents.js`): Several major national traumas have no coverage — Partition of India (1947), Rwandan genocide aftermath (1994–2000), post-Apartheid South Africa transition, Yugoslav wars, Iranian Revolution street-level impact. These should fire as world events for characters of the right age and country.
+9. **Ribbons audit**: Cross-check all flags set by new event modules (adolescence, fertility, career_wealth, gulf_east, resettlement arc) against `ribbons.js` — several new arc-completion flags likely have no ribbon.
 
-9. **Career late-arc events**: Most careers have promotion/fired coverage but no "decade into it" texture. A doctor 20 years in is different from a doctor 2 years in. Add 1–2 late-career events per major field: the protégé you mentored, the case that defined your career, the moment you realize you have become the senior person in the room.
+10. **`events_romance_arc.js` — early relationship events**: The romance arc jumps quickly to marriage/infidelity. Missing: the first serious relationship that doesn't lead to marriage, living together before marriage (culturally gated), a long-distance relationship that fails, choosing a partner your family disapproves of.
 
-10. **Grief depth for non-partner deaths**: Parent death triggers `ec_parent_loss` but the grief module doesn't fire follow-up events (inheritance conflict with siblings, clearing out the house, the first holiday without them). Similar gap for sibling death and friend death.
+11. **Latin America archetype depth**: Brazil, Mexico, Colombia, Argentina are categorized as `developing_urban` but have no events that couldn't fire in any developing urban country. Missing: evangelical church rise (Brazil), cartel-adjacent daily life (Mexico/Colombia), economic volatility (Argentina's recurring crises), football as national religion.
 
-11. **Wealth gap texture**: Characters in the top wealth tier (money > $500k) have almost no events that reflect what that actually means — philanthropy decisions, being approached for money by family/friends, the specific isolation that comes with it, estate planning. Gate on `money > 300000`.
-
-12. **Rural-to-urban migration arc**: Several archetypes have high rural-to-urban movement but almost no events depicting the experience of being a first-generation city dweller — finding accommodation, losing the village social network, the pull back during family crises. Gate on `ruralUrban === 'rural'` at birth + `flags.includes('rural_to_urban')`.
+12. **Health system events by archetype**: Characters in countries with universal healthcare vs. pay-per-visit vs. nothing experience illness very differently. The illness system fires but the financial/systemic context is absent — a cancer diagnosis in the UK is structurally different from the same diagnosis in the US or Nigeria.
 
 #### P3 — Polish and Completeness
 
-13. **Epitaph / DeathScreen gap analysis**: Run a flags audit on `generateEpitaph()` — confirm every major flag arc added in recent modules (`sibling_bond_strong`, `heritage_language_preserved`, `sold_business`, `first_gen_graduate`, `mobile_money_user`, `recovery_established`, `long_marriage`, etc.) has at least one sentence. Several recently-added flags are missing.
+13. **Life log readability**: The life log entries are functional but sometimes terse and mechanical. A pass through the log generation in `gameEngine.js` to improve prose quality for key moments (promotion, marriage, having a child, death of parent) would make the life summary screen more moving.
 
-14. **`activities.js` cost/availability audit**: Several activities list `gdpTiers` gates but some combinations are unreachable (e.g., activities only available in `very_high` GDP but set to fire only before age 18). Cross-check against real data.
+14. **`careers.js` field coverage audit**: Several career fields (`arts`, `sports`, `academia`, `hospitality`) have 1–2 events. A 20-year career in sports should have arc events: the injury that ended it, the transition out, the identity work of no longer being an athlete.
 
-15. **Country-specific event prose audit**: The city-name fix in `events_texture.js` is a model — scan all event text for hardcoded geography (country names, city names, institution names) that assumes a specific locale and convert them to dynamic lookups or split into country-specific variants.
-
-16. **Missing archetypes in event guards**: `wealthy_gulf` and `wealthy_east` countries (Saudi Arabia, Japan, South Korea, UAE, Singapore) have very thin dedicated event coverage. A character born in 1970s Saudi Arabia or 1980s South Korea should have specific events that couldn't fire anywhere else.
+15. **BirthScreen character creation depth**: The birth screen creates the character but the player has no agency in choosing family situation, religion beyond country-default, or urban/rural origin. Optional choices here would let players build more specific starting conditions.
 
 ---
 
@@ -305,7 +310,11 @@ src/
     events_business.js        — 10 business arc events (growth, setbacks, acquisition, failure)
     events_siblings.js        — 12 sibling events (rivalry, emigration, estrangement, late death)
     events_education_arc.js   — 10 university depth events (failure, dropout, debt, first-gen)
-    worldEvents.js            — 93 world history events (year+country/archetype gated)
+    events_adolescence.js     — 7 adolescence identity events (discrimination, faith doubt, talent, friendship, betrayal, politics, body)
+    events_fertility.js       — 8 fertility depth events (miscarriage, IVF, childlessness, late pregnancy)
+    events_career_wealth.js   — 12 career late-arc + wealth gap + rural-to-urban events
+    events_gulf_east.js       — 10 wealthy_gulf and wealthy_east specific events
+    worldEvents.js            — 102 world history events (year+country/archetype gated)
     careers.js                — all career definitions with career-specific events
     crimes.js                 — criminal activity system
     activities.js             — activities panel options
