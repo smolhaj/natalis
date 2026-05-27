@@ -127,7 +127,7 @@ export const HISTORICAL_EVENTS = [
 
   {
     id: 'hist_sundown_town',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 6,
     when: (G) => G.character.country.name === 'United States' && G.character.ethnicity === 'black_american' && G.currentYear >= 1950 && G.currentYear <= 1968 && G.age >= 12 && !G.mem?.sundown_town,
     text: 'You pass through a town on your way somewhere. A white man on the sidewalk catches your eye and nods at the sign: SUNDOWN TOWN. You have fifteen minutes before dark. His nod is not friendly. It is a warning.',
@@ -387,7 +387,7 @@ export const HISTORICAL_EVENTS = [
 
   {
     id: 'hist_diaspora_identity_crisis',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 6,
     when: (G) => G.age >= 14 && G.age <= 22 && G.flags.includes('emigrated') && !G.mem?.diaspora_identity && G.character.country.archetype === 'wealthy_west',
     text: 'At home you are foreign. In the country your parents came from, you are also foreign. You speak both languages with an accent that marks you in each direction. You belong completely to neither place and you are starting to understand that this might be permanent.',
