@@ -517,7 +517,7 @@ export const ACTIVITIES = {
         const roll = Math.random()
         if (roll < 0.30) { p.w += 12; p.m += 3; }
         else if (roll < 0.55) { p.w -= 5; }
-        else { p.w -= 14; p.m -= 5; p.addFlag('heavy_drinker'); }
+        else { p.w -= 14; p.m -= 5; p.addFlag('gambler'); }
       },
       condition: null,
       outcome: 'The odds are known and ignored.',

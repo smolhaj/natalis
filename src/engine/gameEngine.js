@@ -364,6 +364,11 @@ function buildEffectProxy(state) {
       relationshipQuality: overrides.quality ?? randomBetween(55, 75),
       married: false, engaged: false, years: 0,
     }
+    // Partners met at 28+ have a rising chance of having kids from a prior relationship
+    if (state.age >= 28 && !proxy.flags.includes('partner_has_kids')) {
+      const kidsChance = clamp((state.age - 22) * 0.018, 0, 0.38)
+      if (chance(kidsChance)) proxy.addFlag('partner_has_kids')
+    }
   }
   return proxy
 }
