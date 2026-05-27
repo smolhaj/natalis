@@ -3278,6 +3278,104 @@ export function tickStocks(state) {
   }
 }
 
+// ─── Living identity card ─────────────────────────────────────────────────────
+// Generates 3–4 sentences of present-tense prose from accumulated flags.
+// Displayed in the Stats tab and regenerated each year.
+// Logic parallels generateEpitaph but is present-tense and non-evaluative:
+// it describes, it doesn't judge.
+export function generateIdentityCard(state) {
+  const F = new FlagSet(state.flags ?? [])
+  const { age, partner, children, career, education } = state
+  const G = buildG(state)
+  const country = G.currentCountry ?? state.character?.country
+  const birthCountry = state.character?.country
+  const phase = getPhase(age)
+  const sentences = []
+
+  // Sentence 1: Age + location + occupation
+  let s1 = `You are ${age} years old`
+  if (country) s1 += `, living in ${country.name}`
+  if (career) s1 += `. You work as a ${career.title}`
+  else if (state.retired) s1 += `. You are retired`
+  else if (education?.enrolled) s1 += `. You are studying`
+  else if (phase === 'early_childhood' || phase === 'childhood') s1 += `. You are a child`
+  else if (phase === 'adolescence') s1 += `. You are a teenager`
+  sentences.push(s1 + '.')
+
+  // Sentence 2: Family / relationship status
+  if (state.inPrison) {
+    sentences.push('You are currently in prison.')
+  } else if (partner?.married) {
+    let s2 = `You are married to ${partner.name}`
+    if ((children ?? []).length > 0) s2 += ` and have ${children.length === 1 ? 'a child' : `${children.length} children`}`
+    sentences.push(s2 + '.')
+  } else if (partner && !partner.married) {
+    let s2 = `You are with ${partner.name}`
+    if ((children ?? []).length > 0) s2 += ` and have ${children.length === 1 ? 'a child' : `${children.length} children`}`
+    sentences.push(s2 + '.')
+  } else if (F.has('widowed') || F.has('partner_died')) {
+    const c = (children ?? []).length
+    sentences.push(c > 0 ? `You are widowed, with ${c === 1 ? 'one child' : `${c} children`}.` : 'You are widowed.')
+  } else if (F.has('divorced')) {
+    const c = (children ?? []).length
+    sentences.push(c > 0 ? `You are divorced, with ${c === 1 ? 'one child' : `${c} children`}.` : 'You are divorced.')
+  } else if ((children ?? []).length > 0) {
+    const c = children.length
+    sentences.push(`You are single and have ${c === 1 ? 'a child' : `${c} children`}.`)
+  }
+
+  // Sentence 3: Most significant identity marker (priority order)
+  if (F.has('emigrated') && birthCountry && country && birthCountry.name !== country.name) {
+    const yrs = G.yearsAbroad ?? 0
+    sentences.push(yrs >= 10
+      ? `You left ${birthCountry.name} ${yrs} years ago. It is in your dreams more than you expected.`
+      : `You left ${birthCountry.name} ${yrs} year${yrs !== 1 ? 's' : ''} ago. You are still finding your footing.`)
+  } else if (F.has('holocaust_survived') || F.has('genocide_survived') || F.has('gulag_survived')) {
+    sentences.push('You have survived things that most people only read about.')
+  } else if (F.has('lost_child')) {
+    sentences.push('You lost a child. That does not become a past thing.')
+  } else if (F.has('lgbtq_identity') || F.has('orientation_gay') || F.has('orientation_bisexual')) {
+    sentences.push(G.lgbtqCriminalized
+      ? 'You are queer in a country where that is not safe to name.'
+      : 'Being queer is simply part of who you are.')
+  } else if (F.has('cancer_survivor')) {
+    sentences.push('You are a cancer survivor. The word still fits differently than you expected.')
+  } else if (F.has('fled_child_marriage')) {
+    sentences.push('You refused the life that was arranged for you.')
+  } else if (F.has('defied_caste') && G.casteSystem) {
+    sentences.push('You have built a life outside the position you were born into.')
+  } else if (F.has('first_gen_university') && career) {
+    sentences.push('You were the first in your family to go to university. The gap that made did not close entirely.')
+  } else if (F.has('communist_childhood') && G.currentYear >= 1991) {
+    sentences.push('You grew up certain of things the world is no longer certain of.')
+  } else if (F.has('authoritarian_childhood') && G.career) {
+    sentences.push('You grew up in a place that taught you to read a room before you spoke in it.')
+  } else if (F.has('experienced_racism') && G.career) {
+    sentences.push('You have spent years navigating rooms that weren\'t built with you in mind.')
+  }
+
+  // Sentence 4: Belief / worldview / something quietly earned
+  if (F.has('lost_faith') || F.has('apostasy')) {
+    sentences.push('You left your faith behind. The shape it occupied is still there.')
+  } else if (F.has('faith_deepened') || F.has('religion_returned')) {
+    sentences.push('Your faith has become more important, not less, as you\'ve gotten older.')
+  } else if (F.has('abusive_relationship') && partner) {
+    sentences.push('You know the difference between fear and caution now. That took time.')
+  } else if (F.has('went_to_therapy') && !F.has('lgbtq_identity')) {
+    sentences.push('You have done the work of looking at yourself honestly. That is not nothing.')
+  } else if (F.has('mentor')) {
+    sentences.push('You have been someone\'s first real break. You remember what that felt like.')
+  } else if (F.has('philanthropist')) {
+    sentences.push('You give money away deliberately. This is not accidental.')
+  } else if (F.has('long_marriage') || (partner?.married && (partner?.years ?? 0) > 20)) {
+    sentences.push('You have been married for a long time. That is its own kind of work.')
+  } else if (F.has('career_fulfilled') && career) {
+    sentences.push('The work is genuinely good. You don\'t say that often, but you know it.')
+  }
+
+  return sentences.length > 1 ? sentences.join(' ') : null
+}
+
 // ─── Epitaph generator ───────────────────────────────────────────────────────
 
 export function generateEpitaph(state) {

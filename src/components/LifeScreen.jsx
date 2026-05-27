@@ -4,7 +4,7 @@ import StatBar from './StatBar'
 import FlagChip from './FlagChip'
 import EventBox from './EventBox'
 import { getCountryFlag, REGIME_LABELS, REGIME_COLORS, RELIGION_LABELS, RESIDENCY_LABELS } from '../utils/countryUtils'
-import { getCountryRegime } from '../engine/gameEngine'
+import { getCountryRegime, generateIdentityCard } from '../engine/gameEngine'
 import ActivitiesPanel from './ActivitiesPanel'
 
 const PHASE_LABELS = {
@@ -117,6 +117,7 @@ export default function LifeScreen() {
   const travels      = useGameStore(s => s.travels)
   const exPartners   = useGameStore(s => s.exPartners)
   const mem          = useGameStore(s => s.mem)
+  const fullState    = useGameStore(s => s)
 
   // Derive addiction stage label for display
   const getAddictionStage = () => {
@@ -381,6 +382,18 @@ export default function LifeScreen() {
           {/* ── STATS TAB ── */}
           {activeTab === 'stats' && (
             <div className="space-y-3">
+              {/* Who Am I — living identity card */}
+              {(() => {
+                const card = generateIdentityCard(fullState)
+                if (!card) return null
+                return (
+                  <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
+                    <p className="font-bold text-natalis-text text-sm mb-2">Who You Are</p>
+                    <p className="text-sm text-natalis-dim leading-relaxed italic">{card}</p>
+                  </div>
+                )
+              })()}
+
               {/* All stats */}
               <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card space-y-4">
                 <p className="font-bold text-natalis-text text-sm">Your Stats</p>
