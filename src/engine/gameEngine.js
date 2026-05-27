@@ -222,12 +222,14 @@ export function deriveInitialParents(char) {
       currentAge: randomBetween(22, 34),
       alive: true,
       relationshipQuality: clamp(baseQ + randomBetween(-10, 10), 12, 100),
+      traits: pickTraits(ADULT_TRAITS),
     },
     father: {
       name: `${fatherFirst} ${altSurname}`,
       currentAge: randomBetween(24, 40),
       alive: fatherPresent,
       relationshipQuality: fatherPresent ? clamp(baseQ + randomBetween(-15, 10), 8, 100) : 0,
+      traits: fatherPresent ? pickTraits(ADULT_TRAITS) : [],
     },
   }
 }
@@ -340,6 +342,7 @@ function buildEffectProxy(state) {
   proxy.setReligion = (religion) => { proxy._religion = religion }
   proxy.setClassTier = (tier) => { proxy._classTier = tier }
   proxy.setMentalHealth = (updates) => { proxy._mentalHealthUpdates = { ...(proxy._mentalHealthUpdates ?? {}), ...updates } }
+  proxy.setDesire = (key) => { proxy._desire = key }
   proxy.practiceHobby = (hobbyId, delta = 1) => {
     if (!proxy._hobbyDeltas) proxy._hobbyDeltas = {}
     proxy._hobbyDeltas[hobbyId] = (proxy._hobbyDeltas[hobbyId] ?? 0) + delta
@@ -363,6 +366,7 @@ function buildEffectProxy(state) {
       craziness: randomBetween(10, 70),
       relationshipQuality: overrides.quality ?? randomBetween(55, 75),
       married: false, engaged: false, years: 0,
+      traits: pickTraits(ADULT_TRAITS),
     }
     // Partners met at 28+ have a rising chance of having kids from a prior relationship
     if (state.age >= 28 && !proxy.flags.includes('partner_has_kids')) {
@@ -426,6 +430,14 @@ function resolveProxyExtras(state, proxy) {
   }
   if (proxy._religion !== undefined) next = { ...next, religion: proxy._religion }
   if (proxy._classTier !== undefined) next = { ...next, classTier: proxy._classTier }
+  if (proxy._desire !== undefined) next = { ...next, desire: proxy._desire }
+  // Track year-of-death for grief fog in buildYearTexture
+  if (proxy._killParent && next.parents?.[proxy._killParent]) {
+    next = { ...next, mem: { ...(next.mem ?? {}), parentDeathYear: next.currentYear } }
+  }
+  if (proxy._killPartner && next.partner) {
+    next = { ...next, mem: { ...(next.mem ?? {}), partnerDeathYear: next.currentYear } }
+  }
   return next
 }
 
@@ -550,6 +562,7 @@ function buildG(state) {
     currentCountry: state.currentCountry ?? state.character?.country,
     residencyStatus: state.residencyStatus ?? 'citizen',
     yearsAbroad: state.yearsAbroad ?? 0,
+    desire: state.desire ?? null,
     // Enriched prose helpers: available in text: (G) => functions
     era: Math.floor(currentYear / 10) * 10,
     capital: state.character?.country?.capital ?? '',
@@ -557,7 +570,148 @@ function buildG(state) {
   }
 }
 
-// ─── World events ─────────────────────────────────────────────────────────────
+// ─── Year texture ─────────────────────────────────────────────────────────────
+// Replaces the "A quiet year passes." fallback with flag-aware prose.
+// Called only when no event fires. Priority: bereavement > health crisis >
+// relationship tension/warmth > post-crisis > cultural conditions > phase > generic.
+function buildYearTexture(state) {
+  const F = new FlagSet(state.flags ?? [])
+  const { partner, children, age, currentYear, mem, career, friends, siblings, residencyStatus, yearsAbroad } = state
+  const phase = getPhase(age)
+  const mh = state.mentalHealth ?? {}
+
+  const yearsSincePartnerDeath = mem?.partnerDeathYear != null ? currentYear - mem.partnerDeathYear : null
+  const yearsSinceParentDeath  = mem?.parentDeathYear  != null ? currentYear - mem.parentDeathYear  : null
+
+  // Recent partner loss — immediate (grief events haven't fired yet)
+  if (F.has('partner_died') && mem?.griefPartnerFirst && !mem?.griefPartnerDating) {
+    const name = state.exPartners?.slice(-1)[0]?.name
+    return name ? `${name}'s absence is still present in everything.` : 'The house is still the wrong size.'
+  }
+  if (F.has('partner_died') && !partner) {
+    const name = state.exPartners?.slice(-1)[0]?.name
+    return name ? `You still reach for ${name} sometimes. The habit hasn't broken yet.` : 'Some mornings the quiet is a different kind of quiet.'
+  }
+
+  // Grief fog: 1–3 years after partner death (fills gap between discrete grief events)
+  if (yearsSincePartnerDeath !== null && yearsSincePartnerDeath >= 1 && yearsSincePartnerDeath <= 3) {
+    if (yearsSincePartnerDeath === 1) return 'There are still whole days that belong to the grief. Fewer than before.'
+    return 'The grief has changed shape. It has not left.'
+  }
+  // Grief fog: years 4–5, dimming
+  if (yearsSincePartnerDeath !== null && yearsSincePartnerDeath >= 4 && yearsSincePartnerDeath <= 5) {
+    return 'The grief is quiet enough now that you can sometimes forget it. Not always.'
+  }
+
+  // Recent parent loss
+  if (mem?.griefParentCall && !mem?.griefParentBelongings) {
+    return 'Some mornings you reach for the phone before you remember.'
+  }
+  if (F.has('lost_parent') && !mem?.griefParentYearsLater) {
+    return 'The absence of them is specific. It shows up in strange places.'
+  }
+
+  // Grief fog: 1–3 years after parent death
+  if (yearsSinceParentDeath !== null && yearsSinceParentDeath >= 1 && yearsSinceParentDeath <= 3) {
+    return 'You catch yourself sometimes about to tell them something.'
+  }
+
+  // Child death — never normalises
+  if (F.has('lost_child')) {
+    return 'The year moves. You move with it, or something like you does.'
+  }
+
+  // Active health crisis
+  if (F.has('cancer_treatment')) {
+    return 'Treatment continues. You measure time in appointments now.'
+  }
+  if (mh.condition === 'depression' && !mh.therapy && !mh.medicating) {
+    return 'The days are heavy in ways that are hard to explain to someone who hasn\'t felt it.'
+  }
+  if (mh.condition === 'anxiety' && !mh.therapy && !mh.medicating) {
+    return 'There is a low hum underneath everything. You have learned to work around it.'
+  }
+  if (mh.condition && !mh.therapy && !mh.medicating) {
+    return 'Something is off. You are managing, which is not the same as being fine.'
+  }
+
+  // Relationship tensions and warmth
+  if (partner) {
+    const q = partner.relationshipQuality ?? 60
+    if (q < 28) return `You and ${partner.name} are still in the same house. That is accurate and not quite the whole story.`
+    if (q < 40) return `You and ${partner.name} are polite in ways you didn't used to have to be.`
+    if (q > 85 && partner.married) return `A good year with ${partner.name}. The small things are the whole thing, some years.`
+    if (q > 78) return `A good year with ${partner.name}. Nothing dramatic — that's how the good ones go.`
+  }
+
+  // Estranged adult child
+  const estrangedChild = (children ?? []).find(c => c.age >= 18 && (c.relationshipQuality ?? 50) < 32)
+  if (estrangedChild) return `You haven't spoken to ${estrangedChild.name.split(' ')[0]} in a while. The silence has a weight.`
+
+  // Post-prison adjustment
+  if (F.has('recently_released')) {
+    return 'You are getting used to being outside again. It takes longer than people say it will.'
+  }
+
+  // Post-divorce, living alone
+  if ((F.has('divorced') || F.has('breakup')) && !partner && phase === 'midlife') {
+    return 'The first years alone have their own specific calendar.'
+  }
+
+  // Business failure aftermath
+  if (F.has('business_failed') && !F.has('business_started')) {
+    return 'You think about the business sometimes. Less than before, but still.'
+  }
+
+  // Undocumented / precarious residency
+  if (residencyStatus === 'undocumented' || residencyStatus === 'tourist_overstay') {
+    return 'You exist in the margins of official life, which has its own routines by now.'
+  }
+
+  // New emigrant (first 3 years)
+  if (F.has('emigrated') && (yearsAbroad ?? 0) <= 3 && (yearsAbroad ?? 0) > 0) {
+    return 'You are still learning what normal means here.'
+  }
+
+  // Authoritarian context
+  if (F.has('learned_silence') || F.has('authoritarian_childhood')) {
+    return 'Another year of knowing what not to say in which room.'
+  }
+
+  // Phase and age texture (sampled, not every year)
+  if (phase === 'midlife' && age >= 40 && age <= 43 && !mem?.quietYearMidlifeAck) {
+    const opts = [
+      'The middle of things. You are somewhere in the middle of things.',
+      'Forty. The years have a different weight from here.',
+    ]
+    return opts[Math.floor(Math.random() * opts.length)]
+  }
+  if (phase === 'late_life' && age >= 60 && age <= 63) {
+    const opts = [
+      'The body takes longer to begin in the mornings.',
+      'There is more behind you than ahead. That is not a sad thought, just a true one.',
+    ]
+    return opts[Math.floor(Math.random() * opts.length)]
+  }
+  if (phase === 'young_adult' && age >= 22 && age <= 26 && !partner && !career) {
+    return 'You are still working out the shape of things.'
+  }
+
+  // Career satisfaction (when present)
+  if (career && F.has('career_fulfilled')) return 'The work is good. You don\'t say that to people much, but it\'s true.'
+
+  // Generic fallback pool — better than one static string
+  const fallbacks = [
+    'A year without incident. These exist.',
+    'The days have a rhythm to them.',
+    'Nothing remarkable. You are grateful for that, mostly.',
+    'Time passes, as it does.',
+    'A quiet year.',
+  ]
+  return fallbacks[Math.floor(Math.random() * fallbacks.length)]
+}
+
+
 
 function applyWorldEvents(state) {
   let updated = { ...state }
@@ -778,6 +932,31 @@ function fireFromJob(state) {
 
 // ─── Relationship system ──────────────────────────────────────────────────────
 
+const ADULT_TRAITS = [
+  'patient', 'restless', 'proud', 'gentle', 'stubborn', 'anxious',
+  'warm', 'distant', 'ambitious', 'funny', 'serious', 'generous',
+  'demanding', 'quiet', 'affectionate', 'critical', 'idealistic',
+  'practical', 'melancholy', 'cheerful',
+]
+const CHILD_TRAITS = [
+  'curious', 'shy', 'spirited', 'sensitive', 'stubborn', 'gentle',
+  'funny', 'serious', 'dreamy', 'anxious', 'affectionate', 'restless',
+]
+function pickTraits(pool, count = 2) {
+  return [...pool].sort(() => Math.random() - 0.5).slice(0, count)
+}
+
+export const DESIRE_LABELS = {
+  prove_worth: 'You want to prove you are not what they said.',
+  belong: 'You want to find somewhere that feels like yours.',
+  leave_mark: 'You want to make something that outlasts you.',
+  be_seen: 'You want to be known for something that is actually you.',
+  safety: 'You want to never feel that kind of fear again.',
+  connection: 'You want someone who stays.',
+  freedom: 'You want to not be owned by anyone\'s idea of you.',
+  redemption: 'You want to undo something.',
+}
+
 const PARTNER_OCCUPATIONS = [
   'Software Engineer', 'Teacher', 'Nurse', 'Doctor', 'Lawyer', 'Accountant',
   'Graphic Designer', 'Chef', 'Bartender', 'Sales Manager', 'Marketing Director',
@@ -819,6 +998,7 @@ export function generatePartnerProfile(state, overrides = {}) {
     looks, smarts, wealthStat, craziness,
     relationshipQuality: randomBetween(45, 72),
     married: false, engaged: false, years: 0,
+    traits: pickTraits(ADULT_TRAITS),
   }
 }
 
@@ -952,7 +1132,7 @@ export function tryForChild(state) {
   const cGender = chance(0.5) ? 'male' : 'female'
   const c = state.character.country
   const childName = `${pickFrom(cGender === 'male' ? c.namePool.male : c.namePool.female)} ${state.character.surname}`
-  const child = { name: childName, gender: cGender, ageAtBirth: state.age, relationshipQuality: 80 }
+  const child = { name: childName, gender: cGender, ageAtBirth: state.age, relationshipQuality: 80, traits: pickTraits(CHILD_TRAITS) }
   return {
     ...state,
     children: [...state.children, child],
@@ -1858,7 +2038,7 @@ export function tick(state) {
   const event = getNextEvent(s)
   if (!event) {
     s.pendingEvent = null
-    s.log = [...s.log, { age: s.age, text: 'A quiet year passes.', isKey: false }]
+    s.log = [...s.log, { age: s.age, text: buildYearTexture(s), isKey: false }]
     return s
   }
 
@@ -3153,6 +3333,104 @@ export function tickStocks(state) {
     stockPortfolio: updatedPortfolio,
     log: newLogs,
   }
+}
+
+// ─── Living identity card ─────────────────────────────────────────────────────
+// Generates 3–4 sentences of present-tense prose from accumulated flags.
+// Displayed in the Stats tab and regenerated each year.
+// Logic parallels generateEpitaph but is present-tense and non-evaluative:
+// it describes, it doesn't judge.
+export function generateIdentityCard(state) {
+  const F = new FlagSet(state.flags ?? [])
+  const { age, partner, children, career, education } = state
+  const G = buildG(state)
+  const country = G.currentCountry ?? state.character?.country
+  const birthCountry = state.character?.country
+  const phase = getPhase(age)
+  const sentences = []
+
+  // Sentence 1: Age + location + occupation
+  let s1 = `You are ${age} years old`
+  if (country) s1 += `, living in ${country.name}`
+  if (career) s1 += `. You work as a ${career.title}`
+  else if (state.retired) s1 += `. You are retired`
+  else if (education?.enrolled) s1 += `. You are studying`
+  else if (phase === 'early_childhood' || phase === 'childhood') s1 += `. You are a child`
+  else if (phase === 'adolescence') s1 += `. You are a teenager`
+  sentences.push(s1 + '.')
+
+  // Sentence 2: Family / relationship status
+  if (state.inPrison) {
+    sentences.push('You are currently in prison.')
+  } else if (partner?.married) {
+    let s2 = `You are married to ${partner.name}`
+    if ((children ?? []).length > 0) s2 += ` and have ${children.length === 1 ? 'a child' : `${children.length} children`}`
+    sentences.push(s2 + '.')
+  } else if (partner && !partner.married) {
+    let s2 = `You are with ${partner.name}`
+    if ((children ?? []).length > 0) s2 += ` and have ${children.length === 1 ? 'a child' : `${children.length} children`}`
+    sentences.push(s2 + '.')
+  } else if (F.has('widowed') || F.has('partner_died')) {
+    const c = (children ?? []).length
+    sentences.push(c > 0 ? `You are widowed, with ${c === 1 ? 'one child' : `${c} children`}.` : 'You are widowed.')
+  } else if (F.has('divorced')) {
+    const c = (children ?? []).length
+    sentences.push(c > 0 ? `You are divorced, with ${c === 1 ? 'one child' : `${c} children`}.` : 'You are divorced.')
+  } else if ((children ?? []).length > 0) {
+    const c = children.length
+    sentences.push(`You are single and have ${c === 1 ? 'a child' : `${c} children`}.`)
+  }
+
+  // Sentence 3: Most significant identity marker (priority order)
+  if (F.has('emigrated') && birthCountry && country && birthCountry.name !== country.name) {
+    const yrs = G.yearsAbroad ?? 0
+    sentences.push(yrs >= 10
+      ? `You left ${birthCountry.name} ${yrs} years ago. It is in your dreams more than you expected.`
+      : `You left ${birthCountry.name} ${yrs} year${yrs !== 1 ? 's' : ''} ago. You are still finding your footing.`)
+  } else if (F.has('holocaust_survived') || F.has('genocide_survived') || F.has('gulag_survived')) {
+    sentences.push('You have survived things that most people only read about.')
+  } else if (F.has('lost_child')) {
+    sentences.push('You lost a child. That does not become a past thing.')
+  } else if (F.has('lgbtq_identity') || F.has('orientation_gay') || F.has('orientation_bisexual')) {
+    sentences.push(G.lgbtqCriminalized
+      ? 'You are queer in a country where that is not safe to name.'
+      : 'Being queer is simply part of who you are.')
+  } else if (F.has('cancer_survivor')) {
+    sentences.push('You are a cancer survivor. The word still fits differently than you expected.')
+  } else if (F.has('fled_child_marriage')) {
+    sentences.push('You refused the life that was arranged for you.')
+  } else if (F.has('defied_caste') && G.casteSystem) {
+    sentences.push('You have built a life outside the position you were born into.')
+  } else if (F.has('first_gen_university') && career) {
+    sentences.push('You were the first in your family to go to university. The gap that made did not close entirely.')
+  } else if (F.has('communist_childhood') && G.currentYear >= 1991) {
+    sentences.push('You grew up certain of things the world is no longer certain of.')
+  } else if (F.has('authoritarian_childhood') && G.career) {
+    sentences.push('You grew up in a place that taught you to read a room before you spoke in it.')
+  } else if (F.has('experienced_racism') && G.career) {
+    sentences.push('You have spent years navigating rooms that weren\'t built with you in mind.')
+  }
+
+  // Sentence 4: Belief / worldview / something quietly earned
+  if (F.has('lost_faith') || F.has('apostasy')) {
+    sentences.push('You left your faith behind. The shape it occupied is still there.')
+  } else if (F.has('faith_deepened') || F.has('religion_returned')) {
+    sentences.push('Your faith has become more important, not less, as you\'ve gotten older.')
+  } else if (F.has('abusive_relationship') && partner) {
+    sentences.push('You know the difference between fear and caution now. That took time.')
+  } else if (F.has('went_to_therapy') && !F.has('lgbtq_identity')) {
+    sentences.push('You have done the work of looking at yourself honestly. That is not nothing.')
+  } else if (F.has('mentor')) {
+    sentences.push('You have been someone\'s first real break. You remember what that felt like.')
+  } else if (F.has('philanthropist')) {
+    sentences.push('You give money away deliberately. This is not accidental.')
+  } else if (F.has('long_marriage') || (partner?.married && (partner?.years ?? 0) > 20)) {
+    sentences.push('You have been married for a long time. That is its own kind of work.')
+  } else if (F.has('career_fulfilled') && career) {
+    sentences.push('The work is genuinely good. You don\'t say that often, but you know it.')
+  }
+
+  return sentences.length > 1 ? sentences.join(' ') : null
 }
 
 // ─── Epitaph generator ───────────────────────────────────────────────────────

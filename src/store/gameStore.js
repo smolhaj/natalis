@@ -137,6 +137,7 @@ const INITIAL_STATE = {
   residencyStatus: 'citizen',
   yearsAbroad: 0,
   pendingTrial: null,
+  desire: null,
 }
 
 export const useGameStore = create((set, get) => ({

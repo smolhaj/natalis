@@ -1518,6 +1518,77 @@ Beyond the climate arc (future-facing), historical natural disasters that shaped
 
 ---
 
+#### BUILD 54 — Flag Audit & Follow-Through Pass (Ongoing)
+
+**The problem**: ~400 flags are set by events and never checked again. They function as labels with no downstream consequence — the game records trauma, resilience, love, and loss, but only uses that record at death (epitaph), not during the life.
+
+**The standard going forward**: Every new event module must ship its follow-through events *before* the triggering events. Write the downstream event first — what this thing becomes three years later, ten years later — then work backward to the trigger. An event with no follow-through consequence is just prose; it disappears from the life the moment it resolves.
+
+**What has already been implemented** (shipped with flag audit pass):
+
+*`events_followthrough.js`* — 25 follow-through events covering the most emotionally significant orphaned flags:
+- `experienced_racism` → career ceiling event (midlife), negotiated as a recurring condition
+- `double_consciousness` → ongoing daily navigation cost (midlife/young_adult)
+- `lgbtq_family_rejection` → letter event (midlife), reconciliation attempt or letting go
+- `lgbtq_out_family` → years-later event, fear that has become background noise
+- `abusive_relationship` → new-partner anxiety event + therapy prompt
+- `fled_child_marriage` → young adult identity construction event
+- `communist_childhood` → nostalgia for certainty after the collapse (post-1993)
+- `authoritarian_childhood` → authority-figure reflex in career context
+- `cancer_survivor` → annual scan callback (cooldown 3)
+- `food_insecurity` → adult pantry compulsion (once)
+- `first_gen_university` → child's university application moment (midlife)
+- `education_denied_gender` → adult literacy return (midlife, once)
+- `emigrated` → 10-year anniversary + home visit event
+- `career_defining_work` → legacy echo in late life
+- `defied_caste` → ongoing social cost in midlife (cooldown 8)
+- `interrogated_by_state` → hypervigilance habit (cooldown 10)
+- `learned_silence` → meeting cost (midlife, cooldown 10)
+- `lost_friend` → old photo midlife moment (once)
+- `boarding_school` → smell/memory trigger (once)
+- `rural_to_urban` → village return moment (once)
+- `criminalRecord` (array) → form-filling event (cooldown 4)
+
+*`events_relationship_quality.js`* — 13 events gated on relationship quality thresholds:
+- Partner quality < 28: `rq_partner_contempt` — an unkind thing said
+- Partner quality < 40: `rq_partner_silence` — functional dinners
+- Partner quality < 38 + married: `rq_partner_separate_lives` — parallel lives by default
+- Partner quality > 78: `rq_partner_warmth` — catching them reading
+- Partner quality > 82 + married + late_life: `rq_partner_long_warmth` — people asking how you do it
+- Partner quality < 35 + prior flag: `rq_partner_repair_attempt` — couples therapy suggestion
+- Child quality < 40 (adult): `rq_child_drift` — calls less now
+- Child quality < 24 (adult): `rq_child_estrangement` — over a year without contact
+- Child quality > 80 (adult): `rq_child_close` — texts about small things
+- Sibling quality < 36: `rq_sibling_formal` — birthday messages only
+- Sibling quality > 78: `rq_sibling_close` — decades of shorthand
+- Friend quality < 28: `rq_friend_fading` — seven months, surprised both of you
+
+*`buildYearTexture()` in gameEngine.js* — replaces "A quiet year passes." with flag-aware prose. Priority: partner/parent death (first year) → health crisis → relationship quality tension/warmth → post-crisis flags (prison release, divorce, business failure) → undocumented status → new emigrant → authoritarian context → phase/age texture → career flags → randomised generic fallbacks.
+
+**Remaining audit work (do not ship new event modules without checking these)**:
+
+Flags still orphaned that carry significant weight — add follow-through events when the relevant module is touched:
+- `lgbtq_had_relationship` — relationship texture event in adulthood
+- `caste_discrimination` — career/social navigation event (separate from `defied_caste`)
+- `corporate_scandal_covered` — late-career ethics event
+- `had_abortion` — follow-through in future pregnancy or partner contexts
+- `war_childhood` — adult PTSD-adjacent event (already partly covered by `conflict_childhood` events)
+- `betrayal_adolescence` — trust patterns in adult relationships
+- `harvest_failure` — adult food/security anxieties
+- `civil_war_lived` — ongoing texture event
+- `ethnic_minority_conflict` — adult identity navigation
+- `refugee_status` — resettlement anniversary event
+- `dissident_reader` — career or social cost in authoritarian regime contexts
+
+**Implementation notes**:
+- Follow-through events should use `G.mem.someKey` + `p.setMem('someKey', true)` for one-time fires
+- Use `cooldown: N` for recurring follow-through (grief callbacks, anniversary checks)
+- Do not set `cooldown: 0` unless the event should fire exactly once (guarded by `G.mem`)
+- Check `G._state` is not needed in effects — use `p._state` which is already set on the proxy
+- When a follow-through event changes a relationship, find the correct index by filtering `p._state.children` or `p._state.friends` inside the effect
+
+---
+
 #### MECHANICAL IDEAS (no build number — evaluate when relevant)
 
 *These are systemic additions worth considering alongside content builds.*

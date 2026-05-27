@@ -4,7 +4,7 @@ import StatBar from './StatBar'
 import FlagChip from './FlagChip'
 import EventBox from './EventBox'
 import { getCountryFlag, REGIME_LABELS, REGIME_COLORS, RELIGION_LABELS, RESIDENCY_LABELS } from '../utils/countryUtils'
-import { getCountryRegime } from '../engine/gameEngine'
+import { getCountryRegime, generateIdentityCard, DESIRE_LABELS } from '../engine/gameEngine'
 import ActivitiesPanel from './ActivitiesPanel'
 
 const PHASE_LABELS = {
@@ -117,6 +117,8 @@ export default function LifeScreen() {
   const travels      = useGameStore(s => s.travels)
   const exPartners   = useGameStore(s => s.exPartners)
   const mem          = useGameStore(s => s.mem)
+  const desire       = useGameStore(s => s.desire)
+  const fullState    = useGameStore(s => s)
 
   // Derive addiction stage label for display
   const getAddictionStage = () => {
@@ -381,6 +383,18 @@ export default function LifeScreen() {
           {/* ── STATS TAB ── */}
           {activeTab === 'stats' && (
             <div className="space-y-3">
+              {/* Who Am I — living identity card */}
+              {(() => {
+                const card = generateIdentityCard(fullState)
+                if (!card) return null
+                return (
+                  <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
+                    <p className="font-bold text-natalis-text text-sm mb-2">Who You Are</p>
+                    <p className="text-sm text-natalis-dim leading-relaxed italic">{card}</p>
+                  </div>
+                )
+              })()}
+
               {/* All stats */}
               <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card space-y-4">
                 <p className="font-bold text-natalis-text text-sm">Your Stats</p>
@@ -611,6 +625,13 @@ export default function LifeScreen() {
                     <div>
                       <p className="font-semibold text-natalis-text">{partner.name}{genderMark(partner.gender)}</p>
                       <p className="text-natalis-muted text-xs">{partner.married ? '💍 Married' : partner.engaged ? '💌 Engaged' : '💑 Dating'}{partner.age ? ` · Age ${partner.age}` : ''}</p>
+                      {partner.traits?.length > 0 && (
+                        <div className="flex gap-1 mt-1 flex-wrap">
+                          {partner.traits.map(t => (
+                            <span key={t} className="text-[10px] bg-natalis-bg px-1.5 py-0.5 rounded-full text-natalis-muted capitalize">{t}</span>
+                          ))}
+                        </div>
+                      )}
                     </div>
                     <RelBar value={partner.relationshipQuality} color={relColor(partner.relationshipQuality)} />
                   </div>
@@ -629,6 +650,13 @@ export default function LifeScreen() {
                           <div>
                             <p className="text-natalis-dim text-sm">{child.name.split(' ')[0]}{genderMark(child.gender)}</p>
                             {childAge !== null && <p className="text-natalis-muted text-xs">Age {childAge}</p>}
+                            {child.traits?.length > 0 && (
+                              <div className="flex gap-1 mt-0.5 flex-wrap">
+                                {child.traits.map(t => (
+                                  <span key={t} className="text-[10px] bg-natalis-bg px-1.5 py-0.5 rounded-full text-natalis-muted capitalize">{t}</span>
+                                ))}
+                              </div>
+                            )}
                           </div>
                           <RelBar value={child.relationshipQuality} color={relColor(child.relationshipQuality)} />
                         </div>
@@ -652,6 +680,13 @@ export default function LifeScreen() {
                             <p className="text-natalis-dim text-sm">{p.name.split(' ')[0]}{genderMark(key === 'mother' ? 'female' : 'male')}</p>
                             {p.currentAge && <p className="text-natalis-muted text-xs">{p.alive ? `Age ${p.currentAge}` : `Deceased · Age ${p.currentAge}`}</p>}
                             {!p.currentAge && !p.alive && <p className="text-natalis-muted text-xs">Deceased</p>}
+                            {p.alive && p.traits?.length > 0 && (
+                              <div className="flex gap-1 mt-0.5 flex-wrap">
+                                {p.traits.map(t => (
+                                  <span key={t} className="text-[10px] bg-natalis-bg px-1.5 py-0.5 rounded-full text-natalis-muted capitalize">{t}</span>
+                                ))}
+                              </div>
+                            )}
                           </div>
                           {p.alive
                             ? <RelBar value={p.relationshipQuality} color={relColor(p.relationshipQuality)} />
@@ -968,14 +1003,21 @@ export default function LifeScreen() {
             )}
 
             {/* Age Up — disabled during pending trial */}
-            <button
-              onClick={ageUp}
-              disabled={!!pendingTrial}
-              className="flex-1 py-3 rounded-xl font-black text-lg text-white transition-all active:scale-95 shadow-card disabled:opacity-50"
-              style={{ background: pendingTrial ? '#e5e5ea' : 'linear-gradient(135deg, #34c759, #28a046)', color: pendingTrial ? '#8e8e93' : 'white' }}
-            >
-              {pendingTrial ? 'On Trial...' : 'Age Up +'}
-            </button>
+            <div className="flex-1 flex flex-col gap-1">
+              {desire && DESIRE_LABELS[desire] && (
+                <p className="text-center text-[11px] italic text-natalis-muted leading-tight px-1">
+                  {DESIRE_LABELS[desire]}
+                </p>
+              )}
+              <button
+                onClick={ageUp}
+                disabled={!!pendingTrial}
+                className="w-full py-3 rounded-xl font-black text-lg text-white transition-all active:scale-95 shadow-card disabled:opacity-50"
+                style={{ background: pendingTrial ? '#e5e5ea' : 'linear-gradient(135deg, #34c759, #28a046)', color: pendingTrial ? '#8e8e93' : 'white' }}
+              >
+                {pendingTrial ? 'On Trial...' : 'Age Up +'}
+              </button>
+            </div>
           </div>
         </div>
       )}
