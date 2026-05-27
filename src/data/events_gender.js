@@ -434,7 +434,7 @@ export const GENDER_EVENTS = [
       G.character.gender === 'female' &&
       G.age >= 13 && G.age <= 16 &&
       G.character.country.childMarriageRisk > 0.25 &&
-      (G.character.religion === 'muslim_sunni' || G.character.religion === 'hindu') &&
+      (G.religion === 'muslim_sunni' || G.religion === 'hindu') &&
       G.character.ruralUrban === 'rural',
     text: 'Your father has accepted. A man from a family in the next village, thirty-one years old. The wedding will be before the rains. Your mother helps you pack a small bag. She does not meet your eyes.',
     context: null,
@@ -910,7 +910,7 @@ export const GENDER_EVENTS = [
     weight: 3,
     when: (G) =>
       G.character.gender === 'female' &&
-      (G.character.religion === 'christian_catholic' || G.character.country.genderGap > 0.22),
+      (G.religion === 'christian_catholic' || G.character.country.genderGap > 0.22),
     text: 'The pharmacist at the only chemist in your town refuses to dispense your prescription. "It goes against my beliefs," he says, loudly enough for the queue behind you to hear. He does not ask why you need it. He does not offer to call another pharmacist.',
     context: null,
     choices: [
@@ -977,7 +977,7 @@ export const GENDER_EVENTS = [
     weight: 2,
     when: (G) =>
       G.character.gender === 'female' &&
-      (G.character.wealthTier <= 1 || G.flags.includes('indigenous') || G.flags.includes('poverty_childhood')) &&
+      (G.wealthTier <= 1 || G.flags.includes('indigenous') || G.flags.includes('poverty_childhood')) &&
       G.character.country.archetype === 'wealthy_west' &&
       G.currentYear >= 1950 && G.currentYear <= 1985,
     text: (G) => `You are in hospital for another procedure. A doctor mentions, briefly, that he has "taken care of something else as well." You ask what. He explains what has been done to you, in language designed not to sound like what it is. You are ${G.age} years old. Nobody asked you.`,
@@ -1567,7 +1567,7 @@ export const GENDER_EVENTS = [
     when: (G) =>
       G.character.gender === 'male' &&
       (
-        G.character.religion === 'muslim_sunni' ||
+        G.religion === 'muslim_sunni' ||
         G.character.country.archetype === 'wealthy_gulf' ||
         G.character.country.archetype === 'developing_unstable'
       ),
@@ -1736,7 +1736,7 @@ export const GENDER_EVENTS = [
     when: (G) =>
       G.flags.includes('same_sex_attracted') &&
       G.age >= 14 && G.age <= 22 &&
-      (G.flags.includes('devout') || ['muslim_sunni', 'muslim_shia', 'christian_catholic', 'christian_protestant', 'christian_orthodox', 'hindu'].includes(G.character.religion)),
+      (G.flags.includes('devout') || ['muslim_sunni', 'muslim_shia', 'christian_catholic', 'christian_protestant', 'christian_orthodox', 'hindu'].includes(G.religion)),
     text: 'Your family prays together. The faith you were raised in says what you are is a sin or an illness or simply wrong. You know it is not. Holding this knowledge alongside your love for your family is the hardest thing you have yet had to carry.',
     context: null,
     choices: [
@@ -1877,7 +1877,7 @@ export const GENDER_EVENTS = [
     when: (G) =>
       G.flags.includes('same_sex_attracted') &&
       G.age >= 14 && G.age <= 22 &&
-      (G.flags.includes('devout') || ['christian_protestant', 'christian_catholic'].includes(G.character.religion)) &&
+      (G.flags.includes('devout') || ['christian_protestant', 'christian_catholic'].includes(G.religion)) &&
       (G.character.country.archetype === 'wealthy_west' || G.character.country.archetype === 'subsaharan'),
     text: 'Your parents have found someone: a pastor, a counselor, a man in an office who promises to fix you. They have done this out of love. The sessions use shame as their primary tool.',
     context: null,
@@ -2138,7 +2138,7 @@ export const GENDER_EVENTS = [
     weight: 3,
     when: (G) =>
       G.character.gender === 'female' &&
-      G.character.religion === 'hindu' &&
+      G.religion === 'hindu' &&
       G.character.country.name === 'India' &&
       G.flags.includes('married') &&
       !G.partner,

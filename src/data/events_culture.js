@@ -144,7 +144,7 @@ export const CULTURE_EVENTS = [
     id: 'cult_com_shortage',
     phase: 'childhood',
     weight: 3,
-    when: (G) => G.regime === 'single_party_communist' && G.character.wealthTier <= 2,
+    when: (G) => G.regime === 'single_party_communist' && G.wealthTier <= 2,
     text: 'There is no cooking oil at the market again. Your mother gets up at 4 AM to queue for bread. Sometimes the bread is there. Sometimes it isn\'t. You learn not to ask where food comes from — there is a wall between that question and the answer.',
     choices: null,
     effect: (p) => { p.h -= 4; p.m -= 8; p.addFlag('shortage_childhood') },
@@ -393,7 +393,7 @@ export const CULTURE_EVENTS = [
     weight: 2,
     when: (G) => G.flags.includes('same_sex_attracted') &&
       !G.lgbtqCriminalized &&
-      ['muslim_sunni', 'muslim_shia'].includes(G.character.religion) &&
+      ['muslim_sunni', 'muslim_shia'].includes(G.religion) &&
       G.age >= 18 && G.age <= 30 &&
       !G.flags.includes('out'),
     text: 'You are not in a country that will imprison you. But coming out in your community is not the same as coming out in Amsterdam. The faith your family lives by has a clear position. The culture goes further. The coming out conversation, if it happens, will not be followed by a long silence and then acceptance — it will be followed by grief, prayer, community pressure, and possibly a request that you leave.',
@@ -594,7 +594,7 @@ export const CULTURE_EVENTS = [
     id: 'cult_rural_harvest_failure',
     phase: 'childhood',
     weight: 2,
-    when: (G) => G.ruralUrban === 'rural' && G.character.wealthTier <= 2 && (G.character.country.archetype === 'subsaharan' || G.character.country.archetype === 'developing_unstable'),
+    when: (G) => G.ruralUrban === 'rural' && G.wealthTier <= 2 && (G.character.country.archetype === 'subsaharan' || G.character.country.archetype === 'developing_unstable'),
     text: 'The rains did not come on time. The harvest is less than half. Your family eats less. You watch your father sit outside for a long time looking at the field. You learn very young that the sky is not on anyone\'s side.',
     choices: null,
     effect: (p) => { p.h -= 6; p.m -= 10; p.r += 8; p.addFlag('harvest_failure') },
@@ -648,7 +648,7 @@ export const CULTURE_EVENTS = [
     id: 'cult_wealth_boarding_school',
     phase: 'childhood',
     weight: 2,
-    when: (G) => G.character.wealthTier >= 4 && G.age >= 8 && G.age <= 13,
+    when: (G) => G.wealthTier >= 4 && G.age >= 8 && G.age <= 13,
     text: 'You are sent to boarding school. Your parents drive away on a Sunday evening and you watch from the dormitory window. The school is excellent. You are also eight years old and alone for the first time. These two facts coexist for years.',
     choices: null,
     effect: (p) => { p.e += 10; p.s += 5; p.m -= 8; p.addFlag('boarding_school') },
@@ -657,7 +657,7 @@ export const CULTURE_EVENTS = [
     id: 'cult_wealth_servant_dynamic',
     phase: 'childhood',
     weight: 3,
-    when: (G) => G.character.wealthTier >= 4 && (G.character.country.archetype === 'developing_urban' || G.character.country.archetype === 'wealthy_gulf') && G.age >= 5,
+    when: (G) => G.wealthTier >= 4 && (G.character.country.archetype === 'developing_urban' || G.character.country.archetype === 'wealthy_gulf') && G.age >= 5,
     text: 'There is a person who cleans your house, another who cooks. They have been here longer than you can remember. You learn their names young. Later you notice that your friends in other countries find this arrangement unusual. You think about what you took for granted.',
     choices: null,
     effect: (p) => { p.e += 4; p.m -= 3; p.r += 4; p.addFlag('class_awareness') },
@@ -666,7 +666,7 @@ export const CULTURE_EVENTS = [
     id: 'cult_wealth_remittance_family',
     phase: 'childhood',
     weight: 3,
-    when: (G) => (G.character.country.archetype === 'subsaharan' || G.character.country.archetype === 'developing_unstable') && G.character.wealthTier >= 2 && G.character.wealthTier <= 3,
+    when: (G) => (G.character.country.archetype === 'subsaharan' || G.character.country.archetype === 'developing_unstable') && G.wealthTier >= 2 && G.wealthTier <= 3,
     text: 'The money arrives from abroad — from London, from Doha, from Minneapolis — in irregular packets that have unpredictable timing and enormous symbolic weight. A relative you have met once sends a Western Union. It pays the school fees. It comes with a different kind of obligation.',
     choices: null,
     effect: (p) => { p.mo += 200; p.m += 5; p.r += 3; p.addFlag('remittance_family') },
@@ -675,7 +675,7 @@ export const CULTURE_EVENTS = [
     id: 'cult_poverty_meal_skipped',
     phase: 'childhood',
     weight: 3,
-    when: (G) => G.character.wealthTier === 1 && G.age >= 5,
+    when: (G) => G.wealthTier === 1 && G.age >= 5,
     text: 'Some days there is one meal. Your mother eats last and says she isn\'t hungry. You are old enough to know this isn\'t true. You pretend to believe it. This is the first act of love you can remember performing.',
     choices: null,
     effect: (p) => { p.h -= 4; p.m -= 6; p.r += 5; p.addFlag('food_insecurity') },
@@ -716,7 +716,7 @@ export const CULTURE_EVENTS = [
     id: 'cult_edu_first_gen_university',
     phase: 'adolescence',
     weight: 3,
-    when: (G) => G.age >= 17 && G.age <= 20 && G.character.wealthTier <= 2 && (['subsaharan', 'developing_unstable', 'developing_urban'].includes(G.character.country.archetype)),
+    when: (G) => G.age >= 17 && G.age <= 20 && G.wealthTier <= 2 && (['subsaharan', 'developing_unstable', 'developing_urban'].includes(G.character.country.archetype)),
     text: 'No one in your family has been to university. Your father has opinions about whether it is worth the sacrifice. Your mother makes no opinions but works extra shifts. The form is complex and the fee is large and you do not know what you are supposed to know to fill it in. You ask a teacher. You apply.',
     choices: [
       { text: 'Go — you will figure it out', tag: null, outcome: 'You arrive knowing less than everyone else and learning faster. The debt is real. So is the change.', effect: (p) => { p.e += 12; p.m -= 5; p.r -= 3; p.addFlag('first_gen_university') } },
@@ -728,7 +728,7 @@ export const CULTURE_EVENTS = [
     id: 'cult_edu_factory_apprentice',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => G.currentYear >= 1955 && G.currentYear <= 1985 && G.age >= 15 && G.age <= 17 && ['wealthy_west', 'post_soviet'].includes(G.character.country.archetype) && G.character.wealthTier <= 2,
+    when: (G) => G.currentYear >= 1955 && G.currentYear <= 1985 && G.age >= 15 && G.age <= 17 && ['wealthy_west', 'post_soviet'].includes(G.character.country.archetype) && G.wealthTier <= 2,
     text: 'There is a choice at fifteen: stay in school or take the apprenticeship at the factory or the trade. Most of the boys from your street are doing the trade. The pay starts immediately. University is for people who aren\'t sure yet what the world is.',
     choices: [
       { text: 'Take the apprenticeship — real work, real money', tag: null, outcome: 'You learn to do something with your hands that is always needed. The money is steady for twenty years.', effect: (p) => { p.w += 8; p.e += 5; p.addFlag('trade_apprentice') } },

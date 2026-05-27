@@ -71,7 +71,7 @@ export const GRIEF_EVENTS = [
         return 'The funeral is three days. There is food and music and a crowd of people from your parent\'s whole life. Women from the church sing in rotation. Children run between the adults. The grief is communal in a way that exhausts and holds you simultaneously.'
       } else if (G.character.country.name === 'Japan') {
         return 'The ceremony is precise and unhurried. Incense. White. The attendants in black moving with a kind of choreographed quiet. You are not encouraged to weep openly. You carry the grief with the same posture as everyone else: straight-backed, present, inside.'
-      } else if (G.character.religion === 'muslim') {
+      } else if (G.religion === 'muslim') {
         return 'The burial happens within twenty-four hours, as it must. There is no time to prepare — only to do. You wash, you wrap, you say the prayers. The speed of it is both correct and brutal. By evening your parent is in the ground and you are sitting in a room full of people reciting Quran.'
       } else {
         return 'The service is in the church where your parent was married. People you have not seen in years come out of an old geography of your parent\'s life. At the reception, someone says they look just like you. You stand with a plate of food and do not eat it.'

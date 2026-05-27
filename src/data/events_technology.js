@@ -153,7 +153,7 @@ export const TECHNOLOGY_EVENTS = [
     id: 'tech_smartphone_first_in_family',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.currentYear >= 2011 && G.currentYear <= 2018 && (developing(G) || poor(G)) && G.age >= 16 && G.character.wealthTier <= 2,
+    when: (G) => G.currentYear >= 2011 && G.currentYear <= 2018 && (developing(G) || poor(G)) && G.age >= 16 && G.wealthTier <= 2,
     text: 'You are the first in your family to have a smartphone. Your mother asks you to show her how to video call your brother who is working abroad. You do. She sees his face on a screen for the first time in three years and covers her mouth. The phone has a specific weight after that.',
     choices: null,
     effect: (p) => { p.m += 15; p.e += 5; p.addFlag('has_smartphone') },

@@ -53,7 +53,7 @@ export const CONSEQUENCE_EVENTS = [
     phase: null,
     weight: 4,
     when: (G) => G.flags.includes('post_9_11_world') &&
-      ['muslim_sunni', 'muslim_shia', 'muslim_sufi'].includes(G.character.religion) &&
+      ['muslim_sunni', 'muslim_shia', 'muslim_sufi'].includes(G.religion) &&
       (['wealthy_west', 'wealthy_east'].includes(G.currentCountry?.archetype) || ['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype)) &&
       G.currentYear >= 2002 && G.currentYear <= 2015 &&
       G.age >= 16 && !G.mem?.post_911_airport,
@@ -70,7 +70,7 @@ export const CONSEQUENCE_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) => G.flags.includes('post_9_11_world') &&
-      ['muslim_sunni', 'muslim_shia', 'muslim_sufi'].includes(G.character.religion) &&
+      ['muslim_sunni', 'muslim_shia', 'muslim_sufi'].includes(G.religion) &&
       (['wealthy_west'].includes(G.currentCountry?.archetype) || ['wealthy_west'].includes(G.character.country.archetype)) &&
       G.currentYear >= 2001 && G.currentYear <= 2010 &&
       G.age >= 18 && !G.mem?.post_911_name,
@@ -87,7 +87,7 @@ export const CONSEQUENCE_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) => G.flags.includes('experienced_islamophobia') &&
-      ['muslim_sunni', 'muslim_shia', 'muslim_sufi'].includes(G.character.religion) &&
+      ['muslim_sunni', 'muslim_shia', 'muslim_sufi'].includes(G.religion) &&
       G.age >= 18 && !G.mem?.post_911_mosque,
     text: 'The mosque is fuller than it has ever been. Not because faith increased — because people need to be somewhere they are not suspects. You sit in the back. The imam speaks about patience and dignity. Someone three rows ahead of you is quietly crying. You recognise the specific grief of belonging to something that is being blamed for something it did not do.',
     choices: null,
@@ -99,7 +99,7 @@ export const CONSEQUENCE_EVENTS = [
     phase: 'midlife',
     weight: 3,
     when: (G) => G.flags.includes('experienced_islamophobia') &&
-      ['muslim_sunni', 'muslim_shia', 'muslim_sufi'].includes(G.character.religion) &&
+      ['muslim_sunni', 'muslim_shia', 'muslim_sufi'].includes(G.religion) &&
       G.age >= 35 && !G.mem?.post_911_long_shadow,
     text: 'Twenty years on, your children are growing up in the shadow of something that happened before they were born. They have been asked, at school, what they think about terrorism. They have been told their religion requires explanation. You watch them learn the same calibrations you learned — when to be visible, when to be careful.',
     choices: [

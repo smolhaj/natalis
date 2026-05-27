@@ -87,7 +87,7 @@ export const WORLD_EVENTS = [
     effect: (p) => { p.m -= 14; p.r += 8; p.addFlag('experienced_islamophobia'); },
     addFlags: ['experienced_islamophobia'],
     minAge: 8,
-    when: (G) => ['muslim_sunni', 'muslim_shia', 'muslim_sufi'].includes(G.character.religion) &&
+    when: (G) => ['muslim_sunni', 'muslim_shia', 'muslim_sufi'].includes(G.religion) &&
       (['wealthy_west', 'wealthy_east'].includes(G.currentCountry?.archetype) || ['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype)),
   },
   {
