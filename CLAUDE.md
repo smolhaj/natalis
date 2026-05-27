@@ -814,6 +814,246 @@ Each requires: full `countries.js` entry with all demographic fields, then count
 
 ---
 
+#### BUILD 19 — Indigenous Peoples
+
+Almost entirely absent from a game about human lives across history. These represent hundreds of millions of people across multiple continents, and their erasure from the game is currently its most significant blind spot.
+
+**Aboriginal Australians** (`events_aboriginal.js`):
+- The Stolen Generation (1910–1970): children forcibly removed from families, placed in missions or white households. A character who is Aboriginal in 1955 in Australia has a specific probability of this happening to their child. The welfare officer's knock. The long silence after.
+- Land rights and Mabo (1992): the High Court ruling that overturned terra nullius — the legal fiction that Australia was empty when colonised. A character who is alive in 1992 experiences a country officially acknowledging, for the first time, that they were always here. The word *mabo* enters the national vocabulary overnight.
+- Contemporary: the specific experience of being Aboriginal in an Australian city. The encounter with a system that was designed to eliminate you and now officially apologises (2008 National Apology). What the apology means and doesn't mean.
+
+**Native Americans / First Nations** (US and Canada):
+- Boarding schools (USA 1870s–1970s, Canada residential schools to 1996): "Kill the Indian, save the man." A character who is sent to residential school — the hair cut, the language forbidden, the name replaced with a number. The return home to a family that no longer shares your language.
+- Reservation life 1950s–present: the specific constraints of reservation existence — federal trust land, tribal sovereignty, the specific poverty produced by systematic resource extraction. The IHS clinic with a two-week wait. The drive to the nearest town.
+- AIM and Red Power (1968–1973, USA): the American Indian Movement, Wounded Knee 1973. A character who is young and radicalised in 1970 is inside a specific political awakening.
+- Canadian "Sixties Scoop": parallel to the Stolen Generation — Indigenous children adopted into white families throughout the 1960s–80s. A character discovers at 40 that their adoptive family is not their only family.
+
+**Māori in New Zealand** (1840–present):
+- Treaty of Waitangi 1840 and its immediate betrayal: the agreement promised protection; within 15 years, land confiscation was systematic. A character in 1860s Waikato whose land is seized under the New Zealand Wars.
+- Language suppression and revival: te reo banned in schools in the early 20th century, children punished for speaking it. The kōhanga reo (language nest) movement from 1982 — grandparents teaching language because parents don't know it.
+- Māori renaissance 1980s–present: Treaty settlements, parliamentary representation, the specific pride of a culture that refused to die. A character who goes through school in the 1970s (shame) vs. the 2000s (pride) has completely different events.
+
+**Amazonian Indigenous peoples** (Brazil/Peru/Colombia):
+- First contact as a living event (1970s–present): some communities made first contact with the outside world within living memory. A character who is on the government contact team, or who is the first person from an isolated community to leave the forest.
+- Deforestation: the logging road that arrives and doesn't stop. The specific experience of watching the place that contains your entire world shrink.
+- FUNAI and state violence: the Brazilian Indian Service — sometimes protector, sometimes enabler of extraction. The specific betrayal of an institution supposed to represent you.
+
+**Sami in Scandinavia** (Norway/Sweden/Finland/Russia):
+- Reindeer herding under state pressure: the industrial wind farms, the mining operations, the roads built through grazing routes. A Sami herder in 2010 Norway watches the state that pays universal income also carve up the land their family has herded for 10,000 years.
+- Language suppression and revival: Norwegian schools forbade Sami in the early 20th century (*fornorskingspolitikk*). The specific experience of a minority inside a welfare state that views itself as enlightened while systematically erasing you.
+
+---
+
+#### BUILD 20 — Labor, Strikes, and the Workers' Movement
+
+The labor movement shaped the lives of billions of working-class people across the 20th century and is almost completely absent from the game. The eight-hour day, the weekend, the minimum wage — these were won by people who went on strike and sometimes got shot for it.
+
+**The strike as a life event** (`events_labor.js`):
+- The decision: to cross or not. The picket line is not abstract — it is your colleagues, people you know, the question of what you owe to people whose interests align with yours. Gate on working-class career + union flag.
+- The duration: a strike that goes on for three months. The strike fund running out. Your child asking why there's no food. The specific calculus of solidarity vs. survival.
+- The outcome: losing. The specific experience of returning to work after a failed strike, to the same boss, to the same conditions. Or winning — the specific experience of a collective victory, which is rare enough to be specifically notable.
+
+**Key historical labor events** (world events):
+- **Triangle Shirtwaist fire 1911** (USA): 146 garment workers die because the fire exits are locked. The event that transforms the labour movement. A character who works in garment manufacturing in New York in 1911 is in the room where the century's labour politics begin.
+- **Spanish Civil War labor dimension** (1936–39): the anarchist unions (CNT/FAI) running factories in Barcelona during the brief period before they were suppressed by both Franco and the Communists. The specific experience of a Barcelonan worker in 1936 who is suddenly in a collectivised factory that runs without bosses.
+- **UK miners' strike 1984–85**: Thatcher vs. the NUM. A year-long strike that destroyed the British coalfields. A character from a mining village in County Durham in 1984 lives through the specific experience of a community deliberately starved into submission by a government that has decided to win.
+- **Solidarity in Poland as personal experience** (supplements Build 1 world events): not just the world event but the character-level experience. The underground publishing, the meetings in churches, the specific risk of being visible in a movement the state is watching.
+
+**The Luddite moment** (any era, gated on career + technology):
+- The specific experience of a skill made obsolete by a machine. The handloom weaver watching a power loom do in a day what took a week. The typesetter watching desktop publishing arrive. The accountant watching spreadsheet software arrive. The truck driver reading about autonomous vehicles. Different eras, same structure. Gate on career + relevant `currentYear` ranges.
+
+---
+
+#### BUILD 21 — Environmental Justice and Industrial Disasters
+
+**Bhopal 1984** (world event, India):
+- The Union Carbide pesticide plant leaks methyl isocyanate at 2am. 3,000 dead within days; 500,000 injured; 150,000 chronically ill. A character in Bhopal on December 3, 1984 — the specific sequence: the smell, the eyes burning, the running without knowing which direction, the morning after. The company's response: CEO Warren Anderson arrested, released, flies home, never extradited. Gate on India + Bhopal region flag.
+
+**Chernobyl 1986** (expand existing world event with personal texture):
+- Not just the disaster but the liquidators — the 600,000 people sent to contain it, told the doses were safe when they weren't. A Soviet character drafted as a liquidator. The health consequences they were told not to talk about.
+- The evacuation of Pripyat: 50,000 people told "bring nothing, you'll be back in three days." They never came back. A character from Pripyat in 1986 — the apartment they left exactly as it was.
+
+**Pollution as class** (ongoing character events, gated on archetype/GDP):
+- The river that runs orange: a character who lives downstream of a mine, whose children have high lead levels, whose fish have spots. Gate on `subsaharan` or `developing_urban` archetype + specific country flags.
+- The factory town: the specific trade — jobs vs. lung disease. A character who works at the factory that is poisoning the town, who knows it, who needs the job.
+
+**Aral Sea** (supplements Build 13 Central Asia):
+- A character from the town of Muynak, which was a fishing port in 1960, and by 1989 was 150km from water. The ships that sit rusting in the desert. The specific experience of a geography that used to be water.
+
+---
+
+#### BUILD 22 — The Body as Historical Experience
+
+The body is lived-in, not just statted. The current system has health as a number but the body as a physical, aging, culturally-mediated experience is almost entirely absent.
+
+**Menopause** (female character, ages 45–55):
+- A life event that affects half of all humans and appears nowhere in the game. The specific cultural variation: in Japan, a relatively low-symptom experience attributed to different diet and lifestyle; in the USA, a heavily medicated one. In many subsaharan communities, the specific social status change that comes with it — the woman who is post-reproductive has a different social role.
+
+**Pregnancy as physical texture** (beyond just "had a child"):
+- Not the outcome (child) but the physical experience. The first three months — the nausea, the specific exhaustion, the keeping a secret. The specific way a pregnant body is treated differently in different cultures: the Congolese woman who continues farm labor; the American woman on bed rest; the Japanese woman expected to eat specific foods.
+- Maternal mortality: a choice event where the character or a character's partner faces serious complications. The outcome branching on archetype/GDP/year. Maternal death in the 19th century was common enough to be an expected risk; the radical reduction in wealthy countries over the 20th century is itself an educational payload.
+
+**The aging body specifically**:
+- The first pair of reading glasses: the specific moment when the body requires external assistance for the first time. Small but universal.
+- The body after illness: the cancer survivor who is a different person in their body afterward. The stroke that changes how a word comes out.
+
+**Female genital mutilation** (character event, gated on specific countries/ethnicities/era):
+- Practiced in 30+ countries, affecting 200 million living women. A character who is a girl in rural Somalia or Mali in 1975 faces this as an expected cultural event. The choice structure: does the family comply, does the character resist, what is the consequence of resistance? Gate very carefully by country + rural + era. Written with the same restraint as all other events — not sensationalized, not sanitized.
+
+---
+
+#### BUILD 23 — The Diaspora Who Didn't Leave
+
+Emigration arcs are extensive. The inverse arc — the person who specifically chose to stay when their entire community left — has no events.
+
+**The person who stayed** (`events_stayer.js`):
+- The Jewish character in Berlin in 1937 who decides not to leave. The Irish character in 1950 who watches friends and siblings emigrate to England and America and stays. The South African character after apartheid ends who watches the white emigration to Australia and Perth and stays.
+- The specific experience is not passive — it is a weight. The relationships with those who went. The question of whether you were right.
+- Years later: the visit from the sibling who left. The comparison of lives. The specific resentment and the specific pride, on both sides.
+- The country that empties: what it means to live in a country where the most ambitious or the most scared leave. Ireland in the 1980s. Zimbabwe in the 2000s. Lebanon in the 2020s. The specific social atmosphere of a country mid-exodus.
+
+---
+
+#### BUILD 24 — Cults, Sectarianism, and High-Control Religion
+
+The religion arcs cover faith and doubt but not the specific experience of high-control religious environments.
+
+**The cult or high-control religion** (`events_religion_arc.js` extension):
+- Joining: the specific sequence — the genuine community offered, the love-bombing, the gradual increase in demands. Not generic but gated on specific religious flags + era + country.
+- Shunning mechanics: a character disfellowshipped from a Jehovah's Witness congregation loses their entire social world overnight. Gate on JW flag + relevant year.
+- Leaving: the specific experience of building a life outside the framework that organised everything. The re-entry problem — the specific skills of ordinary social life you were never taught.
+
+**Sectarian violence as daily texture** (supplements Build 18 Northern Ireland):
+- Not just the specific historical events but the ongoing texture: the murals, the painted kerbstones, the bonfire season, the walk to school that takes a specific route.
+- Expand to: Sunni/Shia in Lebanon or Iraq (the specific way religion maps to neighbourhood, employment, marriage pool). Hindu/Muslim in Ahmedabad. The daily navigation.
+
+---
+
+#### BUILD 25 — The Census, Documents, and Official Identity
+
+The state's power to define you — and to deny that definition — is a recurring historical mechanism with no specific events.
+
+**The identity document as fate**:
+- Rwanda 1994: Hutu ID card or Tutsi ID card. The ID card was colonial — Belgians invented the ethnic distinction and put it on a document. A character at a checkpoint in April 1994 with the wrong card. Gate on Rwanda + Tutsi ethnicity flag + 1994.
+- Nansen passport (1922+): stateless people after WWI could get a Nansen passport — a document for people without a country. 450,000 issued. The specific experience of a document that lets you travel but doesn't give you a country.
+- Soviet internal passport: without a *propiska* (residence permit), a Soviet citizen could not legally live in Moscow. The specific bureaucratic violence of being from a village and needing permission to exist in the city.
+- Statelessness today: 10 million stateless people globally. A character born on a boat, or whose parents forgot to register them, or whose country ceased to exist — moving through a world that requires documents they don't have. Gate on `residencyStatus === 'refugee_status'` + specific flags.
+
+**The census as a tool of power**:
+- Colonial census creating ethnic categories that didn't exist in the same way before. The specific transformation of fluid identity into fixed administrative category. An event that names the moment a category becomes dangerous.
+
+---
+
+#### BUILD 26 — Missing Country/Region Completions
+
+Significant countries and regions not yet covered in Builds 1–18:
+
+**Pakistan** (1947–present):
+- Partition and the specific experience of being Muslim in a newly-Muslim country built from displacement. The Muhajir (refugee) community in Karachi — people who gave up everything for a country that then treats them as second-class citizens.
+- The 1971 war and the Bangladesh secession: a character in West Pakistan watching East Pakistan declare independence, or in East Pakistan living through the nine-month genocide before liberation.
+- Zia ul-Haq's Islamisation 1977–88: Hudood ordinances (rape victims required to produce four male witnesses to avoid prosecution for adultery). A woman character navigates this as daily legal reality.
+- Nuclear tests 1998: the specific national pride in the streets of Islamabad versus the international sanctions that follow.
+
+**Sri Lanka**:
+- The Tamil Tigers and civil war 1983–2009: the specific experience of a Tamil civilian in Jaffna in 1995. The Vanni as the last LTTE territory, surrounded in 2009. The specific civilian experience of a war's end that involved mass killing.
+- Post-war Tamil diaspora: 800,000 Tamils in Melbourne and Toronto, many of whom funded the LTTE, now watching their money's consequences from abroad.
+
+**Sudan / South Sudan**:
+- Darfur 2003–present: a character who is Black African in Darfur in 2003 when the Janjaweed arrive. One of the 21st century's least-covered ongoing atrocities.
+- South Sudan independence 2011 and immediate civil war 2013: the world's newest country collapses into ethnic violence within two years. The specific experience of a person who celebrated independence and then fled it.
+
+**North Korea** (defection arc only):
+- Not life inside (unverifiable at ground level) but defection: the crossing of the Tumen River into China, the specific broker network, the specific danger (Chinese government returns defectors; North Korea executes returned defectors). Gate extremely carefully — only fire for characters who have explicitly accumulated a defection-path flag, not for all North Korean characters.
+
+**Tanzania**:
+- Julius Nyerere's Ujamaa: African socialism's most ambitious experiment. Villagisation moved 5 million people; agricultural output collapsed. A Tanzanian farmer in 1975 is moved to a new village and told this is the African way to develop. The specific texture of an ideology's failure from inside it.
+
+**New Zealand / Australia (non-Indigenous)**:
+- The White Australia policy (ended 1973): a character who is Chinese or South Asian applying to emigrate to Australia before 1973 encounters the dictation test — a test in any European language the examiner chooses.
+- New Zealand nuclear-free policy 1984: a character in Wellington in 1985 when the US frigate is refused port and the ANZUS alliance fractures. A small country choosing principle over alliance. The specific pride and the specific anxiety.
+
+---
+
+#### BUILD 27 — Generational Transmission of Trauma
+
+How parents who survived atrocity parent their children — and what those children carry.
+
+**Second-generation trauma arcs** (`events_inheritance.js`):
+- The child of Holocaust survivors: the specific parenting that emerges from extreme trauma — the hypervigilance, the food hoarding, the unsayable that structures everything. Gate on `holocaust_survived` parent flag.
+- The child of Partition survivors: growing up with the specific silences about the other side of the border. The house that was left. The name of a street in a city your parents never returned to.
+- The child of disappeared parents (Argentina, Chile): growing up with a photograph, with a government silence, with the grandmother who goes to the plaza. The specific task of being someone whose parent was erased by the state.
+- The intergenerational flag system: when a parent has `holocaust_survived`, `gulag_survived`, `apartheid_era`, or equivalent flags, there is a probability the child inherits a modified version (`holocaust_family_memory`, etc.) that gates specific events in their childhood and young adulthood. No new state model needed — flags carry across if the generational save mechanic (see below) is implemented, or can be approximated by early-childhood events conditioned on character birth year + country.
+
+---
+
+#### BUILD 28 — Automation, AI, and the 21st-Century Economy
+
+For the 2020s–2060s era, alongside climate, this is the defining economic disruption. Currently absent.
+
+**The automation event** (world events + career events, 2025–2050, gated on career):
+- The truck driver reading about autonomous vehicles in 2028. Not the abstract economic argument but the specific moment — the headline, the calculator that shows what his route now costs with no driver, the boss's face when he asks.
+- The radiologist whose hospital buys diagnostic AI in 2032. The specific experience of being made redundant not by a person but by a pattern-recognition system that is measurably better.
+- The legal clerk in 2030. The accountant in 2035. The customer service worker who trains the chatbot that replaces them. Each with specific text, gated by career + currentYear.
+- The people who benefit: the programmer who builds the system that replaces the worker. The specific moral discomfort of building something you know will hurt someone.
+
+**Universal Basic Income** (political event, wealthy_west + 2030s+):
+- The referendum, the argument over whether it's dignity or dependency. A character who needs it vs. a character who doesn't but has to vote on it. Gate on political_leaning for choice structure.
+
+---
+
+#### BUILD 29 — Voting, Elections, Referenda
+
+The game has political regimes and political leaning but almost no events about the specific act of political participation.
+
+**The first vote** (young_adult, gated on democracy + age 18–21):
+- Not a stat tick but an event. The booth, the pencil, the specific weight of the first time. Varies enormously by culture: profound obligation in some, civic routine in others, one of the things you did today along with buying bread.
+
+**The election that changes everything** (world events or character events, gated by country + year):
+- South Africa 1994: a character who queues for six hours to vote for the first time at age 60. The line extending further than they can see.
+- Germany March 1933: a character who votes against Hitler, watches the result come in, goes home and calculates what it means.
+- Zimbabwe 2008: Mugabe rigs an election so brazenly the opposition wins the first round, results delayed five weeks, run-off held with no opposition candidate. A Zimbabwean who voted in March 2008 and watches this unfold.
+
+**The referendum as biography** (character event, gated on country + year):
+- 1995 Quebec sovereignty referendum: 49.4% vote yes. A Francophone Quebecer who voted yes and watched the result decided by 50,000 votes. The specific experience of *almost*.
+- Brexit 2016: a character who voted Leave in a Remain area, or Remain in a Leave area. The specific social fracture around a table that doesn't heal.
+
+---
+
+#### BUILD 30 — The Small Life: Local, Particular, Unhistoric
+
+Some of the game's strongest potential events involve no historical reference at all — the texture of a life that leaves no record.
+
+**The local hero arc** (`events_local.js`):
+- The person who is genuinely significant in a radius of five kilometres. The football coach whose team wins the regional championship. The village healer whose knowledge keeps people alive. The local historian who is the only person who remembers what this place was. Small renown is a specific experience: you are known before you've done anything notable, and you are forgotten within a generation.
+
+**The garden / the allotment**:
+- Growing food as a psychological anchor. The specific community of a British allotment site. The Cuban *patio* garden during the Special Period. The Afghan widow's kitchen garden that is both survival and the thing the day is organised around. Gate on age 40+ + specific archetype/country combinations.
+
+**The letter**:
+- Pre-email, correspondence arrives with specific weight. The letter from the son in America. The letter from the government. The letter with no return address. Letters as physical objects that contain time — the envelope held before opening, the handwriting recognised or unfamiliar. Gate on era (pre-2000 preferred) + relationship flags.
+
+**The neighbour**:
+- A whole category of human experience — the person you didn't choose, who shares your wall. The neighbour who watches your children. The neighbour you've never spoken to in five years. The neighbour who reports you. The neighbour who hides you. Gate on regime for the dangerous variants; leave unmodified for the texture variants.
+
+---
+
+#### MECHANICAL IDEAS (no build number — evaluate when relevant)
+
+*These are systemic additions worth considering alongside content builds.*
+
+- **The generational save**: On death, play the character's child, inheriting specific flags (not stats). A child born to a character with `holocaust_survived` starts with `holocaust_family_memory`. The game becomes multi-generational without requiring it. This would make the intergenerational trauma arcs (Build 27) much more powerful.
+
+- **The dream/memory**: Occasionally an event "replays" an earlier event with new framing. At 55, a childhood event is recalled — not the original text but a memory of it, recontextualized by what the character has become. Requires no new state, just careful event design that references prior flags.
+
+- **The newspaper headline UI**: One-line historical headlines injected into the Life screen at historically accurate moments. Not events — just texture. "BERLIN WALL FALLS" on November 9, 1989. "MANDELA FREE" on February 11, 1990. These cost almost nothing to implement and dramatically increase immersion.
+
+- **Weather as texture**: Seasonal descriptors in the event or life log — "a dry harmattan wind carries red dust through the city" for Abuja in January, "the monsoon has been six weeks late" for Bangladesh in July. Gate on country + approximate season. No stat effects; purely atmospheric.
+
+- **The oral tradition register**: For characters in pre-literate or low-literacy contexts, events are framed as told rather than written. "Your grandmother tells you about the year the rains didn't come." Historically accurate and a distinct prose register from the educated character's events.
+
+---
+
 #### MICRO-EVENT DESIGN PRINCIPLE
 
 *Added based on brainstorm session. Applies to all new events going forward.*
