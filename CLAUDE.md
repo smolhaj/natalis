@@ -1184,6 +1184,184 @@ The inverse of the emigration arc. The children whose parents are in Riyadh, Rom
 
 ---
 
+#### BUILD 39 — Sport as a Social Institution
+
+Sport is mentioned in passing (Brazil/Argentina football, Korean military service, sports career injury) but never as a primary lens. It is one of the most universal human experiences across class, archetype, and era.
+
+**Football and national identity** (world events, gated on country + year):
+- Brazil 1970: the beautiful team as national mythology during the dictatorship
+- Argentina 1978: the dirty war regime using the World Cup as a propaganda instrument; a character who cheers and knows what is happening in the detention centres simultaneously
+- France 1998: Zidane's multiracial team as a specific national unity event, and what it meant three years later
+- Cameroon 1990: Roger Milla, the first African quarterfinal, the specific pride in a country that had been told its football didn't matter
+
+**The local match as community**: Not international — the Sunday game, the village tournament, the factory league. The sport that organizes the week and the social relationships around it.
+
+**Jesse Owens 1936** (world event, gated on Black American ethnicity + year 1936): four gold medals in Nazi Germany while Jim Crow is the law at home. What a Black American character hears when the radio announces it.
+
+**Cricket and the British Empire**: For characters in India, Pakistan, West Indies, Australia, South Africa — cricket is not a game but a political inheritance. The West Indian 1975 World Cup victory (Clive Lloyd's team) as a specific post-colonial pride event. The specific humiliation of colonial cricket — the counties that didn't select Black players, the tours of apartheid South Africa.
+
+**The Olympics boycotts** (world events, 1980 and 1984): a character who trained their entire life for a Games their country decides not to attend for political reasons. The specific injustice of being an athlete in a diplomat's dispute.
+
+**Sport as the only exit**: For a character in a subsaharan or developing_urban archetype with high fitness stat, professional sport may be the only plausible path to wealth mobility. The trial, the contract, the specific precariousness of a body that is also a livelihood. The injury that ends it before it begins.
+
+---
+
+#### BUILD 40 — The Arts Under Pressure
+
+Covered tangentially in Brazil (Tropicália) and Russia (dissident context), but never as a systematic arc. Culture workers navigating censorship and state power are a distinct experience.
+
+**Soviet samizdat** (gated on USSR/post_soviet + `writer` or `intellectual` career flag):
+- The manuscript in the drawer. The copy passed hand to hand, each person who touches it taking a risk. Brodsky's trial — sentenced to five years of hard labor for "social parasitism" because he wrote poetry without a union card. Solzhenitsyn's expulsion. Gate on year range + regime.
+
+**Nollywood as cultural phenomenon** (Nigeria, 1992+):
+- The Nigerian video film industry launched with *Living in Bondage* in 1992 — no studio system, no distribution infrastructure, shot in parking lots on borrowed cameras. A character who is an actor, director, or crew member navigates a completely informal, self-funded, extraordinarily prolific industry that becomes one of the world's largest film industries within a decade.
+
+**Jazz as Black American resistance** (gated on Black American ethnicity + 1920s–1960s):
+- The Harlem Renaissance, bebop as deliberate artistic complexity that refused to be entertainment for white audiences. The specific venues that existed because segregation created parallel institutions. A musician character in this context is doing something politically legible whether they intend to be or not.
+
+**The censored artist's choice**: stay and work in code, or leave?
+- Shostakovich stayed and survived, encoding the Party's demands into music it couldn't refuse
+- Brodsky was expelled
+- The Iranian filmmaker submits work to international festivals without government approval and negotiates what that costs domestically
+- The Cuban writer in 1971 after the Padilla affair — the letter of denunciation some signed and some didn't
+Gate on regime + career.
+
+**The art that couldn't be shown**: A character who makes something — writes it, paints it, films it — and puts it in a drawer because showing it would be dangerous. What it costs to make things that cannot be seen. What it costs not to make them.
+
+---
+
+#### BUILD 41 — Multilingualism and Language as Identity
+
+The game has language suppression events but almost nothing about the *positive* experience of multilingualism as a cognitive and identity resource.
+
+**The code-switch**: The specific experience of being a different self in each language. The person who argues in one language, dreams in another, does math in a third. Gate on second-generation immigrant flag or specific multilingual-country contexts (Belgium, Switzerland, Singapore, India, Cameroon).
+
+**The parent-child language gap** (character event, midlife):
+- First-generation immigrants whose children don't speak the home language fluently. The specific grief of a parent who cannot tell their own children certain things — certain jokes, certain memories, certain kinds of anger — because those things only exist in a language the children have lost or never fully had.
+
+**The mother tongue as a political act**:
+- Speaking Welsh in 1970s Cardiff, Kurdish in 1980s Turkey, Catalan under Franco, Breton in postwar France, Tibetan in contemporary China. The language that marks you as resistant, or as backward, depending on who is listening. Gate on country + year + ethnicity.
+
+**The lingua franca advantage** (young adult event):
+- A character who speaks English or French as a native language navigates a global economy with a built-in advantage that is invisible to them because it is the water they swim in. An event that makes this legible through contrast — the encounter with someone equally qualified who cannot access the same rooms.
+
+**Language death** (late life event, gated on specific minority language flags):
+- A character who is one of the last speakers of a language, or who watches their community's language die within their lifetime. What goes with it that cannot be translated. The last speaker of something is not a statistic — they are a specific person in a specific moment.
+
+**The translation loss** (career event, gated on `interpreter` career):
+- The specific moment when a word in one language has no equivalent in the other, and a choice must be made about which meaning to sacrifice. Gate on high-stakes contexts: medical, legal, testimony at a tribunal.
+
+---
+
+#### BUILD 42 — Water, Infrastructure, and the Body in Space
+
+Daily life is organized around infrastructure. Infrastructure is political. Almost entirely absent from current events.
+
+**The morning water run** (childhood event, gated on low GDP + rural + female):
+- The jerry can, the distance, the time. A girl who spends three hours a day carrying water is not in school for those three hours. One of the most significant gender-equity mechanisms in the developing world, and entirely absent from the game. Gate on subsaharan or developing_urban archetype + rural + pre-2010.
+
+**The borehole that arrives** (character event, gated on rural + low GDP + year):
+- A development organization drills a borehole in the village. The daily schedule changes overnight. The specific community reorganization around a new resource — who controls access, who benefits most, the new social hierarchy built around the pump.
+
+**The power cut as daily reality** (recurring annual event, gated on country + era):
+- Nigeria, Pakistan, Lebanon, Zimbabwe: load-shedding schedules that the day is organized around. The generator as status symbol. What cannot be refrigerated. The specific adaptations: phone charging, when to cook, the kerosene lamp kept for backup even after electrification.
+
+**Electrification arriving** (one-time character event, gated on rural + country + year):
+- Electricity arriving in a village is one of the largest single quality-of-life changes in a person's life. Gate on electrification rates by country (well-documented). The morning the first bulb comes on. The specific objects that change and the specific objects that don't. A permanent memory flag: `village_electrified`.
+
+**Water privatization — Cochabamba 2000** (world event, Bolivia):
+- The city's water supply privatized; prices triple overnight. Even rainwater collection becomes technically illegal. The uprising that reverses it. The specific experience of a city fighting a corporation over access to rain.
+
+**The open defecation transition** (character event, gated on rural India + year):
+- India's *Swachh Bharat* program from 2014, and the longer transition beforehand. The cultural resistance, the health consequences of not making the transition, the family that builds the latrine and the family that doesn't.
+
+---
+
+#### BUILD 43 — The 20th Century's Forgotten Wars
+
+Several significant conflicts have thin or no coverage.
+
+**Bangladesh Liberation War 1971** (world event, Bangladesh/Pakistan):
+- The Pakistani army's nine-month campaign against the Bengali population — one of the 20th century's most documented mass atrocities, with estimates of 300,000–3,000,000 dead. A character who is Bengali in East Pakistan in March 1971, when Operation Searchlight begins. The specific sequence: the night raids, the universities targeted first, the nine months before Indian intervention ends it. Mentioned in BUILD 26; needs the actual world event with character-level text.
+
+**Mozambique civil war 1977–1992**:
+- RENAMO vs. FRELIMO. One of the most destructive civil wars in African history, funded first by Rhodesia and then by apartheid South Africa as destabilization strategy. One million dead, five million displaced. A character born in Mozambique in 1977 is born into a country at war; they are 15 when it ends.
+
+**Angola civil war 1975–2002**:
+- 27 years of continuous war. Cold War proxy conflict (Cuba and USSR backing MPLA, US and South Africa backing UNITA), oil revenues, diamond revenues, landmines, child soldiers. A character born in Angola in 1975 is born into a country at war; they are 27 when it ends. The specific experience of a country where war is not an event but the background condition of every decision.
+
+**Algerian civil war 1991–2002** (the *décennie noire*):
+- After the military cancels elections the FIS was about to win, the country enters a decade of massacres — by the army, by the GIA, sometimes deliberately ambiguous. 200,000 dead; no one is ever officially responsible. A journalist, professional, or ordinary family in Algeria in the 1990s navigates a country where the most dangerous thing is not knowing which side carried out last night's massacre. Gate on Algeria + 1991–2002.
+
+**Iran-Iraq War Iraqi perspective** (supplements BUILD 10 Iran):
+- The war exists from the Iranian side in BUILD 10. It needs the Iraqi perspective too — the Shia soldier sent to fight a Shia country, the Kurdish civilian caught between two states that both consider them expendable, the Basra family near the front for eight years.
+
+**Biafran War 1967–70** (supplements Nigeria in BUILD 10):
+- The starvation of Biafra was the first televised famine — the images of kwashiorkor children that created the modern humanitarian NGO. A character who is Igbo in eastern Nigeria in 1967, or who is in the federal army, or who is in Lagos watching the news from the other side.
+
+---
+
+#### BUILD 44 — The Body in Later Life
+
+BUILD 3 covers chronic illness systems. BUILD 22 covers the body as historical experience. This covers the specific small events of physical aging that have no historical overlay — universal, undramatic, and almost entirely absent.
+
+**The first pair of reading glasses** (midlife event, age 42–48):
+- Small, universal, the first external prosthetic the body requires. The specific moment of a limit crossed — the menu held at arm's length, the admission, the optician's chair. No stat effect needed; a memory flag and a line of prose.
+
+**The knee** (midlife or late_life event, gated on high fitness or sports-adjacent flags):
+- The joint that fails first for most active people. The surgery decision. The recovery. The thing you can no longer do, and the negotiation of a self that was partly built around doing it.
+
+**Sleep at 60** (late_life event):
+- The body's circadian rhythm shifting earlier. Waking at 4am with no ability to return to sleep. The hours between 3am and 5am as their own territory — what lives there, what you do with them.
+
+**The hearing aid** (late_life event):
+- Resisted in many cultures because it makes decline visible. The years of asking people to repeat themselves, the social withdrawal that follows, the specific relief of finally hearing clearly again. The family member who asks and the character who says not yet.
+
+**The driving conversation** (late_life event, gated on `has_car` + age 75+):
+- The conversation about whether a parent should still be driving. The keys on the table. What the car represented — independence, competence, adulthood — and what taking it means. A choice event with real cost on both branches.
+
+---
+
+#### BUILD 45 — Sex and Intimacy Across a Life
+
+The game tracks partnership status and relationship quality but almost nothing about sexuality as a lived experience across time.
+
+**The sexual revolution** (gated on female + wealthy_west + 1965–1975):
+- The contraceptive pill arriving and changing the possible. A generation for whom this is new. Not just the freedom but the specific social negotiation — the women who took it, the families who didn't know, the doctors who wouldn't prescribe it to unmarried women.
+
+**Sexuality in middle age** (midlife event, gated on long partnership flag):
+- The long marriage in which desire has changed — not gone, changed. The specific negotiation of a relationship that predates who both people have become. Not infidelity (already covered) — just the texture of decades together, and what it costs to acknowledge that texture honestly.
+
+**The affair not taken** (midlife event, gated on partner + age 35–50):
+- A choice event. The moment that presents itself. The character who takes it and the character who doesn't — both paths have specific outcome text that doesn't editorialize. Gate on relationship quality for which choice is weighted.
+
+**Sexuality in a culture that doesn't name it**: A character in a context where sexuality is structurally unaddressed — neither celebrated nor condemned, simply absent from the available language. The specific privacy of a life lived in the gap between experience and vocabulary.
+
+**The late beginning** (young_adult or midlife event, gated on `no_partner` flag persisting past age 35):
+- A character who has their first significant relationship at 40. What that life looks like from inside it — the freedom that accumulated in the years alone, and the specific grief that accumulated alongside it.
+
+---
+
+#### BUILD 46 — The School as an Institution
+
+Education events exist but from the student's perspective only, and mostly at university level. The school itself — as a building, a community, a political space — is absent.
+
+**The school without enough** (childhood event, gated on low GDP + rural):
+- No textbooks, one teacher for three grade levels, the specific pedagogical adaptations that teachers make under resource poverty. Children sharing pencils. The teacher who hasn't been paid in three months and comes anyway. Gate on subsaharan or developing_unstable archetype.
+
+**The school in a war zone** (conflict_zone childhood event):
+- The children who attend school across checkpoints because it is the one thing that continues. The teacher who keeps the school open. The specific moral weight of insisting on ordinary institutions during extraordinary circumstances.
+
+**The scholarship student at an elite school** (childhood or adolescence event, gated on smarts stat + wealth gap):
+- The child who is academically exceptional, placed into a school built for children whose parents are wealthy. The specific social navigation — the uniform that fits differently, the things everyone else has and you don't, the specific loneliness of being there on merit in a room full of people who are there by right.
+
+**Class sizes as biography**: The specific experience of being one of 60 children in a classroom vs. one of 15. What you learn and what you don't; what the teacher can see.
+
+**The school reunion** (midlife event, age 35–45):
+- 20 or 25 years later. The specific social archaeology of returning to a room of people who knew you before you were who you are. Who became what. The person who never left. The person who succeeded beyond anyone's expectations and the person who didn't. The conversation that is entirely about the past.
+
+---
+
 #### MECHANICAL IDEAS (no build number — evaluate when relevant)
 
 *These are systemic additions worth considering alongside content builds.*
@@ -1209,6 +1387,14 @@ The inverse of the emigration arc. The children whose parents are in Riyadh, Rom
 - **Formal debt as a character arc**: The `debt` field exists but almost no events engage with the *experience* of debt — the creditor call, the asset repossession, the bankruptcy decision, the decade of rebuilding. A `events_debt.js` module gated on `state.debt > threshold` + archetype/year would cover: credit card debt spiral (USA 1990s+), student loans as generational story (wealthy_west 2000s+), microfinance spiral (developing_urban, see BUILD 37), IMF structural adjustment as personal experience.
 
 - **The informal worker state**: A `workStatus: 'formal'|'informal'|'unemployed'|'subsistence'` field alongside the existing `career` field. For archetypes where formal employment is not the default, this unlocks informal economy events (BUILD 35) without needing a named career. Career remains the prestige track; `workStatus` covers everyone else.
+
+- **The `conditions[]` retroactive audit**: Once BUILD 3 (chronic illness) ships, all existing events that reference health should be audited to check `conditions` state and branch text accordingly. A cancer survivor encountering a health scare event gets different text from someone who has never had a serious diagnosis. This is a pass over existing content, not new content.
+
+- **Flag weight in the epitaph**: The current epitaph generates prose from flags. Some flags should dominate the narrative if present; others should be background texture. Add a `weight: 'major'|'minor'` property to flag definitions (or a dedicated list in `generateEpitaph`) that the epitaph generator uses to prioritize. `holocaust_survived` and `widowed` should not share equal prominence with `won_local_chess_tournament`.
+
+- **The choice you didn't make**: Occasionally an event should reference a prior choice by naming what the other path would have looked like. "Your brother took the scholarship you turned down. He is a doctor in London now." Requires only careful event design referencing prior flags — no new state. Best used sparingly, at life-review moments (ages 40, 60).
+
+- **Time-of-life activity unlocks**: Activities should unlock and lock dynamically based on conditions, career status, and relationships — not just age ranges. A character with severe arthritis cannot take up rock climbing at 60. A character who just retired has time for things they never could before. A character in prison has a completely restricted activity set. This makes the activities panel feel like it reflects the actual life rather than a static menu.
 
 ---
 
