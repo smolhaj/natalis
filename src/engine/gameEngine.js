@@ -557,7 +557,130 @@ function buildG(state) {
   }
 }
 
-// ─── World events ─────────────────────────────────────────────────────────────
+// ─── Year texture ─────────────────────────────────────────────────────────────
+// Replaces the "A quiet year passes." fallback with flag-aware prose.
+// Called only when no event fires. Priority: bereavement > health crisis >
+// relationship tension/warmth > post-crisis > cultural conditions > phase > generic.
+function buildYearTexture(state) {
+  const F = new FlagSet(state.flags ?? [])
+  const { partner, children, age, mem, career, friends, siblings, residencyStatus, yearsAbroad } = state
+  const phase = getPhase(age)
+  const mh = state.mentalHealth ?? {}
+
+  // Recent partner loss — grief arc just started
+  if (F.has('partner_died') && mem?.griefPartnerFirst && !mem?.griefPartnerDating) {
+    const name = state.exPartners?.slice(-1)[0]?.name
+    return name ? `${name}'s absence is still present in everything.` : 'The house is still the wrong size.'
+  }
+  if (F.has('partner_died') && !partner) {
+    const name = state.exPartners?.slice(-1)[0]?.name
+    return name ? `You still reach for ${name} sometimes. The habit hasn't broken yet.` : 'Some mornings the quiet is a different kind of quiet.'
+  }
+
+  // Recent parent loss
+  if (mem?.griefParentCall && !mem?.griefParentBelongings) {
+    return 'Some mornings you reach for the phone before you remember.'
+  }
+  if (F.has('lost_parent') && !mem?.griefParentYearsLater) {
+    return 'The absence of them is specific. It shows up in strange places.'
+  }
+
+  // Child death — never normalises
+  if (F.has('lost_child')) {
+    return 'The year moves. You move with it, or something like you does.'
+  }
+
+  // Active health crisis
+  if (F.has('cancer_treatment')) {
+    return 'Treatment continues. You measure time in appointments now.'
+  }
+  if (mh.condition === 'depression' && !mh.therapy && !mh.medicating) {
+    return 'The days are heavy in ways that are hard to explain to someone who hasn\'t felt it.'
+  }
+  if (mh.condition === 'anxiety' && !mh.therapy && !mh.medicating) {
+    return 'There is a low hum underneath everything. You have learned to work around it.'
+  }
+  if (mh.condition && !mh.therapy && !mh.medicating) {
+    return 'Something is off. You are managing, which is not the same as being fine.'
+  }
+
+  // Relationship tensions and warmth
+  if (partner) {
+    const q = partner.relationshipQuality ?? 60
+    if (q < 28) return `You and ${partner.name} are still in the same house. That is accurate and not quite the whole story.`
+    if (q < 40) return `You and ${partner.name} are polite in ways you didn't used to have to be.`
+    if (q > 85 && partner.married) return `A good year with ${partner.name}. The small things are the whole thing, some years.`
+    if (q > 78) return `A good year with ${partner.name}. Nothing dramatic — that's how the good ones go.`
+  }
+
+  // Estranged adult child
+  const estrangedChild = (children ?? []).find(c => c.age >= 18 && (c.relationshipQuality ?? 50) < 32)
+  if (estrangedChild) return `You haven't spoken to ${estrangedChild.name.split(' ')[0]} in a while. The silence has a weight.`
+
+  // Post-prison adjustment
+  if (F.has('recently_released')) {
+    return 'You are getting used to being outside again. It takes longer than people say it will.'
+  }
+
+  // Post-divorce, living alone
+  if ((F.has('divorced') || F.has('breakup')) && !partner && phase === 'midlife') {
+    return 'The first years alone have their own specific calendar.'
+  }
+
+  // Business failure aftermath
+  if (F.has('business_failed') && !F.has('business_started')) {
+    return 'You think about the business sometimes. Less than before, but still.'
+  }
+
+  // Undocumented / precarious residency
+  if (residencyStatus === 'undocumented' || residencyStatus === 'tourist_overstay') {
+    return 'You exist in the margins of official life, which has its own routines by now.'
+  }
+
+  // New emigrant (first 3 years)
+  if (F.has('emigrated') && (yearsAbroad ?? 0) <= 3 && (yearsAbroad ?? 0) > 0) {
+    return 'You are still learning what normal means here.'
+  }
+
+  // Authoritarian context
+  if (F.has('learned_silence') || F.has('authoritarian_childhood')) {
+    return 'Another year of knowing what not to say in which room.'
+  }
+
+  // Phase and age texture (sampled, not every year)
+  if (phase === 'midlife' && age >= 40 && age <= 43 && !mem?.quietYearMidlifeAck) {
+    const opts = [
+      'The middle of things. You are somewhere in the middle of things.',
+      'Forty. The years have a different weight from here.',
+    ]
+    return opts[Math.floor(Math.random() * opts.length)]
+  }
+  if (phase === 'late_life' && age >= 60 && age <= 63) {
+    const opts = [
+      'The body takes longer to begin in the mornings.',
+      'There is more behind you than ahead. That is not a sad thought, just a true one.',
+    ]
+    return opts[Math.floor(Math.random() * opts.length)]
+  }
+  if (phase === 'young_adult' && age >= 22 && age <= 26 && !partner && !career) {
+    return 'You are still working out the shape of things.'
+  }
+
+  // Career satisfaction (when present)
+  if (career && F.has('career_fulfilled')) return 'The work is good. You don\'t say that to people much, but it\'s true.'
+
+  // Generic fallback pool — better than one static string
+  const fallbacks = [
+    'A year without incident. These exist.',
+    'The days have a rhythm to them.',
+    'Nothing remarkable. You are grateful for that, mostly.',
+    'Time passes, as it does.',
+    'A quiet year.',
+  ]
+  return fallbacks[Math.floor(Math.random() * fallbacks.length)]
+}
+
+
 
 function applyWorldEvents(state) {
   let updated = { ...state }
@@ -1858,7 +1981,7 @@ export function tick(state) {
   const event = getNextEvent(s)
   if (!event) {
     s.pendingEvent = null
-    s.log = [...s.log, { age: s.age, text: 'A quiet year passes.', isKey: false }]
+    s.log = [...s.log, { age: s.age, text: buildYearTexture(s), isKey: false }]
     return s
   }
 
