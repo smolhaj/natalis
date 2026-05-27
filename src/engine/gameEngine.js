@@ -238,7 +238,7 @@ function createProxy(state) {
   return {
     h: 0, m: 0, w: 0, e: 0, s: 0, lo: 0, r: 0, mo: 0, karma: 0, fame: 0,
     flags: [...state.flags],
-    mem: { ...state.mem },
+    mem: { ...(state.mem ?? {}) },
   }
 }
 
@@ -512,7 +512,7 @@ function buildG(state) {
     education: state.education,
     partner: state.partner,
     children: state.children,
-    mem: state.mem,
+    mem: state.mem ?? {},
     criminalRecord: state.criminalRecord,
     inPrison: state.inPrison,
     prisonSentence: state.prisonSentence ?? 0,
