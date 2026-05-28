@@ -259,7 +259,7 @@ Generic events are a last resort. Specific events — ones that could only fire 
 - **Relationship status labels**: Relationship cards in the Relationships tab show quality-derived labels (Estranged / Strained / Distant / Warm / Close / Devoted) plus flag-aware overrides (Caring for them / In therapy together / Reconciled) rendered as colored chips — no new data model, display layer only.
 - **Curated birth screen** (`CuratedBirthScreen.jsx`): 4-step wizard for intentional play. Step 1: country search + context card. Step 2: birth year slider + gender. Step 3: rural/urban, family stability, religion override chips. Step 4: preview card with approximate starting stats. `startCuratedGame(overrides)` in gameStore; `createCharacter()` in gameEngine accepts `familyStability`, `ruralUrban`, `religion` overrides.
 
-**Event coverage (~1,670+ total events across 48 modules):**
+**Event coverage (~1,750+ total events across 51 modules):**
 - Base events covering all life phases with hundreds of inline events
 - 68 culture events (regime, ethnicity, caste, LGBTQ, child marriage, rural, wealth)
 - 23 technology timeline events (radio 1930s → COVID 2020s + mobile money for East/West Africa, 2007+)
@@ -268,7 +268,7 @@ Generic events are a last resort. Specific events — ones that could only fire 
 - Fame/karma events: fame consequences at different tiers, karma payoffs, hobby payoffs (painting, music, writing, fitness, language, cooking), friendship depth arcs
 - Texture events: rural developing world (country-specific city names), pre-1960 era, career peak/decline
 - Society events: women's rights milestones by country/year, healthcare by archetype, language suppression/identity
-- 110+ world events: Cold War specifics, famines, economic cycles, national traumas; Partition of India, Rwandan genocide (acute + aftermath), post-Apartheid election + pass laws, Yugoslav wars, Iranian Revolution street-level, Korean War division, Cultural Revolution China, Chechen war (2 variants), 1998 Russian crash, Baltic Singing Revolution, Baltic economic recovery, post-Soviet hyperinflation, and more — 7 events have factual `context` fields (Rwandan genocide, Great Leap famine, Holodomor, Khmer Rouge, post-Soviet shock therapy, 9/11, Berlin Wall, Cultural Revolution)
+- 116 world events: Cold War specifics, famines, economic cycles, national traumas; Partition of India, Rwandan genocide (acute + aftermath), post-Apartheid election + pass laws, Yugoslav wars, Iranian Revolution street-level, Korean War division, Cultural Revolution China, Chechen war (2 variants), 1998 Russian crash, Baltic Singing Revolution, Baltic economic recovery, post-Soviet hyperinflation, and more — 7 events have factual `context` fields (Rwandan genocide, Great Leap famine, Holodomor, Khmer Rouge, post-Soviet shock therapy, 9/11, Berlin Wall, Cultural Revolution)
 - 55+ career × regime events: journalist/teacher/soldier/police/civil servant/farmer/artist under authoritarian regimes; lawyer ethics, accountant fraud discovery, engineer safety tradeoffs, doctor burnout
 - 11 friend lifecycle events: drifting apart, values clash, reconnecting, friend's divorce/success/illness/death, asking for money
 - 10 business arc events: key hire, first big client, acquisition offer, losing a client, market downturn, cashflow crisis, failure and restart
@@ -294,12 +294,19 @@ Generic events are a last resort. Specific events — ones that could only fire 
 - 30+ city-specific texture events: Lagos, Mumbai, Cairo, Mexico City, Moscow (era-split), and more
 - 29 rural/suburban texture events: water walk, market day, electrification, brain drain, kolkhoz dissolution, panchayat, ejido, Midwest church, post-Soviet village
 - **15 post-Soviet arc events** (events_post_soviet.js): communist childhood (Pioneer induction, space age optimism, job assignment), 1990s collapse (factory closure, savings wiped, sudden poverty shame), oligarch split (take it or decline), emigration wave (Jewish/Law of Return, German Spätaussiedler, professional brain drain), nostalgia and returning emigrant follow-throughs
+- **10 Vietnam arc events** (events_vietnam.js): Fall of Saigon southern experience, re-education camp families, boat people decision, Doi Moi reform, post-reunification north/south divide, Viet Kieu diaspora texture
+- **17 wealth mechanics events** (events_wealth_system.js): banking access, gold/jewelry hoarding, ROSCA/tontine, hyperinflation survival, joint family dissolution, marriage wealth transfers, gender financial restrictions, farming debt cycle, mobile money, patron-client dynamics, poverty trap
+- **7 money arc events** (events_money.js): first paycheck choice, hyperinflation survival, first debt, inheritance, the gift, elder scam, counting days to payment
+- **5 body-in-later-life events** (appended to events_late_life.js): first reading glasses, the knee, sleep at 60, hearing aid, driving conversation
+- **8 small-life events** (appended to events_small_life.js): garden/allotment, garden years callback, letter arrives (pre-1998), letter midlife echo, good neighbour, neighbour fence conflict, neighbour informer (regime-gated), school reunion
+- **2 civic character events** (in events.js BASE_EVENTS): first vote (democracy-gated), election night (political_leaning-gated)
+- **5 election/referendum world events** (in worldEvents.js): South Africa 1994 free election, Germany 1933 Reichstag, South Africa 1948 apartheid victory, Brexit 2016, Quebec 1995
 
 ### What still needs work — Priority Roadmap
 
 *Previous roadmap (items 1–16) complete. See git history. The roadmap below is built from a structured brainstorm session and reflects explicit design decisions.*
 
-*Completed since brainstorm: BUILD 3 (chronic illness system + parent care arc), BUILD 4 (relationship history UI — status labels on relationship cards), BUILD 6 (curated birth screen — 4-step wizard). See PR #42.*
+*Completed since brainstorm: BUILD 3 (chronic illness system + parent care arc), BUILD 4 (relationship history UI — status labels on relationship cards), BUILD 6 (curated birth screen — 4-step wizard). See PR #42. Vietnam arc (events_vietnam.js, 10 events) and wealth mechanics system (events_wealth_system.js, 17 events) added in PR #43. BUILD 29 (voting/elections), BUILD 30 partial (garden, letters, neighbours, school reunion), BUILD 44 (body in later life), and BUILD 50 (money across a life) added in current PR.*
 
 ---
 
@@ -307,11 +314,7 @@ Generic events are a last resort. Specific events — ones that could only fire 
 
 #### BUILD 2 — Geographic Depth (multiple PRs, can be parallelised)
 
-**Vietnam arc** (`events_vietnam.js` + world events):
-- Fall of Saigon 1975 world event — the south's experience, re-education camps for ARVN families
-- Boat people exodus — the specific decision to leave on a boat with no guaranteed destination
-- Doi Moi 1986 world event — command economy quietly admits failure
-- Post-Doi Moi generation — Communist in name, capitalist in practice; watching Vietnam become the world's factory
+**Vietnam arc** ✅ DONE (PR #43): `events_vietnam.js` (10 events). Fall of Saigon southern family experience, re-education camp aftermath, boat people decision arc, Doi Moi reform generation, Viet Kieu diaspora texture. World events for Fall of Saigon 1975 and Doi Moi 1986 still to be added to `worldEvents.js`.
 
 **Lebanon arc** (world events + character events):
 - Civil war childhood 1975–90 — the green line, crossing militia checkpoints, the specific sectarian geography of Beirut by neighbourhood
@@ -1031,7 +1034,7 @@ For the 2020s–2060s era, alongside climate, this is the defining economic disr
 
 ---
 
-#### BUILD 29 — Voting, Elections, Referenda
+#### BUILD 29 — Voting, Elections, Referenda ✅ DONE (current PR)
 
 The game has political regimes and political leaning but almost no events about the specific act of political participation.
 
@@ -1049,9 +1052,11 @@ The game has political regimes and political leaning but almost no events about 
 
 ---
 
-#### BUILD 30 — The Small Life: Local, Particular, Unhistoric
+#### BUILD 30 — The Small Life: Local, Particular, Unhistoric ✅ PARTIAL (current PR)
 
 Some of the game's strongest potential events involve no historical reference at all — the texture of a life that leaves no record.
+
+*Implemented: garden/garden-years, letter arrives + midlife echo, good neighbour, neighbour fence conflict, neighbour informer (regime-gated), school reunion. Remaining: local hero arc, events_local.js.*
 
 **The local hero arc** (`events_local.js`):
 - The person who is genuinely significant in a radius of five kilometres. The football coach whose team wins the regional championship. The village healer whose knowledge keeps people alive. The local historian who is the only person who remembers what this place was. Small renown is a specific experience: you are known before you've done anything notable, and you are forgotten within a generation.
@@ -1330,9 +1335,11 @@ Several significant conflicts have thin or no coverage.
 
 ---
 
-#### BUILD 44 — The Body in Later Life
+#### BUILD 44 — The Body in Later Life ✅ DONE (current PR)
 
 BUILD 3 covers chronic illness systems. BUILD 22 covers the body as historical experience. This covers the specific small events of physical aging that have no historical overlay — universal, undramatic, and almost entirely absent.
+
+*Implemented: first reading glasses, the knee, sleep at 60, hearing aid, driving conversation.*
 
 **The first pair of reading glasses** (midlife event, age 42–48):
 - Small, universal, the first external prosthetic the body requires. The specific moment of a limit crossed — the menu held at arm's length, the admission, the optician's chair. No stat effect needed; a memory flag and a line of prose.
@@ -1458,7 +1465,7 @@ Multiple famines exist as world events. What's missing is the granular character
 
 ---
 
-#### BUILD 50 — Money Across a Life
+#### BUILD 50 — Money Across a Life ✅ DONE (current PR)
 
 The `money` and `wealth` fields track amounts. The *experience* of money — what it feels like to have it, to lose it, to inherit it, to give it away — has almost no dedicated events.
 
@@ -1735,9 +1742,12 @@ src/
     events_cities_extended.js — extended city texture across more cities
     events_rural_texture.js   — rural/suburban texture (water walk, electrification, brain drain)
     events_post_soviet.js     — 15 post-Soviet arc events (communist childhood, 1990s collapse, oligarch split, emigration wave)
+    events_vietnam.js         — 10 Vietnam arc events (Saigon fall, re-education, boat people, Doi Moi, Viet Kieu)
+    events_wealth_system.js   — 17 wealth mechanics events (banking, ROSCA, hyperinflation, poverty trap, patron-client)
+    events_money.js           — 7 money-across-a-life events (first paycheck, inheritance, elder scam, hyperinflation personal, gift, counting days)
     events_illness.js         — 14 chronic illness events (diabetes, heart disease, cancer, COPD, back pain, HIV/AIDS, vision/hearing loss, depression, disability)
     events_parent_care.js     — 8-event parent care arc (first sign → final decline + killParent)
-    worldEvents.js            — 110+ world history events (year+country/archetype gated); 8 events have `context` fields
+    worldEvents.js            — 116 world history events (year+country/archetype gated); 7 events have `context` fields
     headlines.js              — ~70 major historical headline entries (year-matched, injected as log entries)
     careers.js                — all career definitions with career-specific events
     crimes.js                 — criminal activity system

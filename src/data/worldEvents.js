@@ -1353,4 +1353,76 @@ export const WORLD_EVENTS = [
     when: (G) => G.flags.includes('soviet_collapse_lived') || G.flags.includes('independence_generation'),
   },
 
+  // ── BUILD 29: ELECTIONS & REFERENDA ──────────────────────────────────────
+
+  {
+    id: 'we_south_africa_1994_election',
+    name: 'South Africa\'s First Free Election',
+    years: [1994, 1994],
+    archetypes: ['developing_urban'],
+    countries: ['South Africa'],
+    narrative: 'You queue for six hours. So does the person ahead of you, and the person behind. The line extends further than you can see. People have brought food and umbrellas and folding chairs. When you finally reach the booth it takes less than a minute. On the way out an old man is crying without apparent embarrassment. You understand why.',
+    context: 'South Africa held its first fully democratic elections on 27 April 1994, with all races eligible to vote for the first time. Over 19 million people voted, many queuing for hours. Nelson Mandela\'s ANC won with 62.6% of the vote. The day is now a public holiday — Freedom Day. The election was administered without significant violence, which surprised observers who had predicted chaos.',
+    effect: (p) => { p.m += 12; p.karma += 5; p.addFlag('voted_end_apartheid'); p.addFlag('post_apartheid_generation'); },
+    addFlags: ['voted_end_apartheid'],
+    minAge: 18,
+    when: (G) => !G.flags.includes('voted_end_apartheid'),
+  },
+
+  {
+    id: 'we_germany_1933_reichstag',
+    name: 'German Federal Election, March 1933',
+    years: [1933, 1933],
+    archetypes: ['wealthy_west'],
+    countries: ['Germany'],
+    narrative: 'The results come through on the radio. In the street the next morning nothing is visibly different. But the calculation you have been running privately for months has resolved. The NSDAP have forty-four percent. With their coalition partners it is enough. You think about the people you know who voted for them, and whether they understood what they were voting for, and whether that question matters now.',
+    context: 'The March 1933 Reichstag election was held five weeks after Hitler\'s appointment as Chancellor, under conditions of mass political intimidation. The SA patrolled polling stations. The NSDAP won 43.9% of the vote. The Enabling Act passed shortly after, giving Hitler dictatorial powers and formally ending the Weimar Republic. It was the last contested multi-party election in Germany until 1945.',
+    effect: (p) => { p.m -= 10; p.addFlag('witnessed_democracy_end'); },
+    addFlags: ['witnessed_democracy_end'],
+    minAge: 18,
+    when: (G) => !G.flags.includes('witnessed_democracy_end'),
+  },
+
+  {
+    id: 'we_south_africa_1948_election',
+    name: 'National Party Victory, South Africa',
+    years: [1948, 1948],
+    archetypes: ['developing_urban'],
+    countries: ['South Africa'],
+    narrative: 'The National Party wins on a platform of apartheid — separateness. For white South Africans the result is political. For Black, Coloured, and Indian South Africans — who could not vote — it is not a political result but an announcement: this is what the next forty-six years will look like.',
+    context: 'The 1948 South African general election was contested only by white voters under racial franchise laws. The National Party\'s victory under D.F. Malan began formal apartheid as government policy. The Population Registration Act, Group Areas Act, pass laws, and Bantu Education Act followed rapidly. The system remained in place until 1994.',
+    effect: (p) => { p.m -= 8; p.addFlag('apartheid_era'); },
+    addFlags: ['apartheid_era'],
+    minAge: 14,
+    when: (G) => !G.flags.includes('apartheid_era') && !G.flags.includes('apartheid_privileged'),
+  },
+
+  {
+    id: 'we_brexit_2016',
+    name: 'Brexit Referendum',
+    years: [2016, 2016],
+    archetypes: ['wealthy_west'],
+    countries: ['United Kingdom'],
+    narrative: 'The count runs past midnight. By four in the morning the maps are mostly blue. You look around at the people who voted the same way you did, or didn\'t, and you understand that this result will take years to mean something — and that whatever it means will be contested. The margin is fifty-two to forty-eight. This turns out to be enough.',
+    context: 'The UK\'s 2016 EU membership referendum produced a 51.9% Leave vote on a 72% turnout — the highest in a UK-wide vote since 1992. The result divided along lines of age, education, and geography. Formal withdrawal took place on 31 January 2020. The political and economic consequences continued to be debated through the following decade.',
+    effect: (p) => { p.m -= 5; p.addFlag('brexit_era'); },
+    addFlags: ['brexit_era'],
+    minAge: 18,
+    when: (G) => !G.flags.includes('brexit_era'),
+  },
+
+  {
+    id: 'we_quebec_1995',
+    name: 'Quebec Sovereignty Referendum',
+    years: [1995, 1995],
+    archetypes: ['wealthy_west'],
+    countries: ['Canada'],
+    narrative: '49.4 percent. A hundred thousand votes in a province of seven million. The margin is indistinguishable from accident. You stay up to hear the concession speech and then the prime minister\'s relief, which looks too much like relief to be pride. The country that almost wasn\'t continues.',
+    context: 'The 1995 Quebec independence referendum returned a No vote of 50.58% to Yes 49.42% on a 93.5% turnout — the highest turnout of any Quebec election. The near-result reshaped Canadian politics, producing the Clarity Act (2000) which established conditions for any future secession vote. Sovereignty remains a live political question in Quebec.',
+    effect: (p) => { p.m -= 4; p.addFlag('quebec_referendum_lived'); },
+    addFlags: ['quebec_referendum_lived'],
+    minAge: 18,
+    when: (G) => !G.flags.includes('quebec_referendum_lived'),
+  },
+
 ]

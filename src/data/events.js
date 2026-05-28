@@ -43,6 +43,7 @@ import { VIETNAM_EVENTS } from './events_vietnam.js'
 import { ILLNESS_EVENTS } from './events_illness.js'
 import { PARENT_CARE_EVENTS } from './events_parent_care.js'
 import { WEALTH_SYSTEM_EVENTS } from './events_wealth_system.js'
+import { MONEY_EVENTS } from './events_money.js'
 
 const BASE_EVENTS = [
   // ── EARLY CHILDHOOD ─────────────────────────────────────────────────────────
@@ -8233,9 +8234,39 @@ const BASE_EVENTS = [
     choices: null,
     effect: (p) => { p.mo += 1200; p.e += 4; p.m += 6; p.addFlag('scholarship_recipient'); p.setMem('reader_award', true) },
   },
+
+  // ── BUILD 29: VOTING & CIVIC LIFE ─────────────────────────────────────────
+
+  {
+    id: 'civic_first_vote',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      !G.mem?.firstVoteCast &&
+      G.age >= 18 && G.age <= 22 &&
+      ['democracy', 'federal_republic', 'parliamentary_republic', 'constitutional_monarchy'].includes(G.regime),
+    text: 'The polling station is quieter than you expected. The booth is smaller. There is a pencil on a string. You have thought about this for months and now the ballot is in front of you and the choice is a physical thing — a mark in a box. You fold it and push it through the slot. It makes a soft sound.',
+    choices: null,
+    effect: (p) => { p.m += 3; p.karma += 2; p.addFlag('voted_first_time'); p.setMem('firstVoteCast', true) },
+  },
+
+  {
+    id: 'civic_election_night',
+    phase: 'young_adult',
+    weight: 2,
+    cooldown: 8,
+    when: (G) =>
+      !G.mem?.electionNightMemo &&
+      G.age >= 22 && G.age <= 42 &&
+      G.political_leaning != null &&
+      ['democracy', 'federal_republic', 'parliamentary_republic', 'constitutional_monarchy'].includes(G.regime),
+    text: 'The result comes in around midnight. You watch it on a screen — a bar, a kitchen, someone\'s living room. By two in the morning it is settled. The country has chosen something. You understand, watching the numbers resolve, that elections are one of the few moments when the collective weight of other people\'s opinions becomes legible and absolute.',
+    choices: null,
+    effect: (p) => { p.addFlag('election_felt'); p.setMem('electionNightMemo', true) },
+  },
 ]
 
-export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS, ...TECHNOLOGY_EVENTS, ...IMMIGRATION_EVENTS, ...CAREER_REGIME_EVENTS, ...CONFLICT_CHILDHOOD_EVENTS, ...LGBTQ_EVENTS, ...MENTAL_HEALTH_EVENTS, ...GRIEF_EVENTS, ...GRIEF_MENTAL_EVENTS, ...RELIGION_ARC_EVENTS, ...LATE_LIFE_EVENTS, ...CHILDREN_ARC_EVENTS, ...FAME_KARMA_EVENTS, ...TEXTURE_EVENTS, ...SOCIETY_EVENTS, ...CONSEQUENCE_EVENTS, ...ROMANCE_ARC_EVENTS, ...ACTIVITY_PAYOFF_EVENTS, ...FRIEND_EVENTS, ...BUSINESS_EVENTS, ...SIBLING_EVENTS, ...EDUCATION_ARC_EVENTS, ...ADOLESCENCE_EVENTS, ...FERTILITY_EVENTS, ...CAREER_WEALTH_EVENTS, ...GULF_EAST_EVENTS, ...RELATIONSHIP_QUALITY_EVENTS, ...FOLLOWTHROUGH_EVENTS, ...DESIRES_EVENTS, ...SMALL_LIFE_EVENTS, ...FOLLOWTHROUGH_2_EVENTS, ...PLACES_EVENTS, ...INFRASTRUCTURE_EVENTS, ...CITY_EVENTS, ...DYING_CITY_EVENTS, ...CITIES_EXTENDED_EVENTS, ...RURAL_TEXTURE_EVENTS, ...POST_SOVIET_EVENTS, ...VIETNAM_EVENTS, ...ILLNESS_EVENTS, ...PARENT_CARE_EVENTS, ...WEALTH_SYSTEM_EVENTS]
+export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS, ...TECHNOLOGY_EVENTS, ...IMMIGRATION_EVENTS, ...CAREER_REGIME_EVENTS, ...CONFLICT_CHILDHOOD_EVENTS, ...LGBTQ_EVENTS, ...MENTAL_HEALTH_EVENTS, ...GRIEF_EVENTS, ...GRIEF_MENTAL_EVENTS, ...RELIGION_ARC_EVENTS, ...LATE_LIFE_EVENTS, ...CHILDREN_ARC_EVENTS, ...FAME_KARMA_EVENTS, ...TEXTURE_EVENTS, ...SOCIETY_EVENTS, ...CONSEQUENCE_EVENTS, ...ROMANCE_ARC_EVENTS, ...ACTIVITY_PAYOFF_EVENTS, ...FRIEND_EVENTS, ...BUSINESS_EVENTS, ...SIBLING_EVENTS, ...EDUCATION_ARC_EVENTS, ...ADOLESCENCE_EVENTS, ...FERTILITY_EVENTS, ...CAREER_WEALTH_EVENTS, ...GULF_EAST_EVENTS, ...RELATIONSHIP_QUALITY_EVENTS, ...FOLLOWTHROUGH_EVENTS, ...DESIRES_EVENTS, ...SMALL_LIFE_EVENTS, ...FOLLOWTHROUGH_2_EVENTS, ...PLACES_EVENTS, ...INFRASTRUCTURE_EVENTS, ...CITY_EVENTS, ...DYING_CITY_EVENTS, ...CITIES_EXTENDED_EVENTS, ...RURAL_TEXTURE_EVENTS, ...POST_SOVIET_EVENTS, ...VIETNAM_EVENTS, ...ILLNESS_EVENTS, ...PARENT_CARE_EVENTS, ...WEALTH_SYSTEM_EVENTS, ...MONEY_EVENTS]
 
 // Phase index: pre-computed at module load so getNextEvent() only evaluates
 // guards for events in the current phase rather than scanning the entire array.
