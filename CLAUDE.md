@@ -41,6 +41,7 @@ Key state fields:
 - `currentNeighborhoodName`: string|null — human-readable name of current neighbourhood
 - `desire`: string|null — core formative desire revealed by childhood wound event (e.g. `'approval'`, `'safety'`, `'freedom'`, `'justice'`)
 - `political_leaning`: `'left'|'centre'|'right'|'nationalist'|'dissident'|'apolitical'`|null — earned through events only, born neutral
+- `conditions`: `[{ id, severity: 'mild'|'moderate'|'severe', diagnosedYear, managed: bool }]` — chronic conditions; passive annual drain on health/happiness based on severity × managed status
 
 ### Life Phases (`src/engine/gameEngine.js: getPhase`)
 
@@ -100,6 +101,8 @@ Events live in:
 - `src/data/events_cities_extended.js` — extended city events across more cities
 - `src/data/events_rural_texture.js` — 29 rural/suburban texture events: water walk, market day, electrification, brain drain, kolkhoz, panchayat, ejido, Midwest church
 - `src/data/events_post_soviet.js` — 15 post-Soviet personal arc events: communist childhood (Pioneer, space optimism, job assignment), 1990s collapse (factory closure, savings wiped, sudden poverty), oligarch split, emigration wave (Jewish/Law of Return, German Spätaussiedler, professional brain drain), follow-through events
+- `src/data/events_illness.js` — 14 chronic illness events: diabetes (2 variants), heart disease, survivable cancer, COPD, back pain (2 variants), HIV/AIDS (era-branched: pre-1995 severe, 1996+ manageable), vision loss, hearing loss, chronic depression, disability from injury; plus follow-through callbacks (diabetes decade, cancer scan)
+- `src/data/events_parent_care.js` — 8-event arc: parental decline through to death (first sign → conversation → decision → daily reality → sibling disagreement → bad day → last conversation → final decline + `killParent()`)
 
 Event shape:
 ```js
@@ -119,7 +122,7 @@ Event shape:
 **Critical**: `effect` functions receive only `p` (the proxy). `G` is only available in `when` guards. Never put G-dependent logic in effects.
 
 The `G` object (built by `buildG()`) exposes everything event conditions need:
-`G.character`, `G.stats`, `G.flags`, `G.mem`, `G.age`, `G.currentYear`, `G.career`, `G.partner`, `G.children`, `G.parents`, `G.money`, `G.karma`, `G.fame`, `G.regime`, `G.lgbtqCriminalized`, `G.casteSystem`, `G.childMarriageRisk`, `G.ruralUrban`, `G.ethnicity`, `G.religion`, `G.currentCountry`, `G.residencyStatus`, `G.inPrison`, `G.place` (current place object from places.js, or null), `G.desire` (character's core formative desire), `G.political_leaning`
+`G.character`, `G.stats`, `G.flags`, `G.mem`, `G.age`, `G.currentYear`, `G.career`, `G.partner`, `G.children`, `G.parents`, `G.money`, `G.karma`, `G.fame`, `G.regime`, `G.lgbtqCriminalized`, `G.casteSystem`, `G.childMarriageRisk`, `G.ruralUrban`, `G.ethnicity`, `G.religion`, `G.currentCountry`, `G.residencyStatus`, `G.inPrison`, `G.place` (current place object from places.js, or null), `G.desire` (character's core formative desire), `G.political_leaning`, `G.conditions` (array of active chronic conditions)
 
 Effect proxy shorthands (all are additive deltas):
 - `p.m` → happiness, `p.h` → health, `p.e` → smarts, `p.s` → charisma, `p.w` → wealth stat, `p.lo` → looks
@@ -133,6 +136,8 @@ Effect proxy shorthands (all are additive deltas):
 - `p.addFriend(name, quality)`, `p.updatePartnerRel(delta)`
 - `p.updateChildRel(idx, delta)` — adjusts relationship quality for child at index idx
 - `p.updateFriendRel(idx, delta)` — adjusts relationship quality for friend at index idx
+- `p.addCondition(id, severity)` — adds a chronic condition (default severity `'moderate'`); no-ops if already present
+- `p.manageCondition(id, managed)` — sets `managed` flag on an existing condition (default `true`)
 
 ### World Events (`src/data/worldEvents.js`)
 
@@ -249,8 +254,12 @@ Generic events are a last resort. Specific events — ones that could only fire 
 - **Political leaning system**: `political_leaning` state field earned through events only (born null). Displayed in Stats tab. Shaped by adolescence awakening, career-regime events, world events.
 - **Historical context UI**: World events can have a `context` field (2–3 sentence factual note). Displayed as an optional expandable "Historical context" panel in the world event display.
 - **Newspaper headlines**: A `HEADLINES` array of major historical moments injected as styled log entries when the character lives through the matching year. One-line prose, different visual treatment from events.
+- **Chronic illness system**: `conditions[]` state field tracks active conditions with severity (`mild`/`moderate`/`severe`) and `managed` flag. Passive annual drain: unmanaged moderate = −3h/−2m; unmanaged severe = −6h/−4m. 14 illness events in `events_illness.js` cover diabetes, heart disease, cancer (survivable), COPD, back pain, HIV/AIDS (era-branched), vision loss, hearing loss, chronic depression, disability from injury. `p.addCondition(id, severity)` and `p.manageCondition(id, managed)` in effect proxy.
+- **Parent care arc**: 8-event arc in `events_parent_care.js` — parental decline from first sign (age 48+) through conversation, housing decision (move in / care facility / home care, with real money costs), daily reality of caregiving, sibling disagreement, a specific bad day, last good conversation, and final decline which calls `killParent()` and connects to the grief module.
+- **Relationship status labels**: Relationship cards in the Relationships tab show quality-derived labels (Estranged / Strained / Distant / Warm / Close / Devoted) plus flag-aware overrides (Caring for them / In therapy together / Reconciled) rendered as colored chips — no new data model, display layer only.
+- **Curated birth screen** (`CuratedBirthScreen.jsx`): 4-step wizard for intentional play. Step 1: country search + context card. Step 2: birth year slider + gender. Step 3: rural/urban, family stability, religion override chips. Step 4: preview card with approximate starting stats. `startCuratedGame(overrides)` in gameStore; `createCharacter()` in gameEngine accepts `familyStability`, `ruralUrban`, `religion` overrides.
 
-**Event coverage (~1,650+ total events across 46 modules):**
+**Event coverage (~1,670+ total events across 48 modules):**
 - Base events covering all life phases with hundreds of inline events
 - 68 culture events (regime, ethnicity, caste, LGBTQ, child marriage, rural, wealth)
 - 23 technology timeline events (radio 1930s → COVID 2020s + mobile money for East/West Africa, 2007+)
@@ -289,6 +298,8 @@ Generic events are a last resort. Specific events — ones that could only fire 
 ### What still needs work — Priority Roadmap
 
 *Previous roadmap (items 1–16) complete. See git history. The roadmap below is built from a structured brainstorm session and reflects explicit design decisions.*
+
+*Completed since brainstorm: BUILD 3 (chronic illness system + parent care arc), BUILD 4 (relationship history UI — status labels on relationship cards), BUILD 6 (curated birth screen — 4-step wizard). See PR #42.*
 
 ---
 
@@ -338,31 +349,17 @@ Generic events are a last resort. Specific events — ones that could only fire 
 
 ---
 
-#### BUILD 3 — Chronic Illness System + Parent Care Arc (one large PR)
+#### BUILD 3 — Chronic Illness System + Parent Care Arc ✅ DONE (PR #42)
 
-**State change**: Add `conditions: [{ id, severity: 'mild'|'moderate'|'severe', diagnosedYear, managed: bool }]` to INITIAL_STATE. Both congenital (small % set at character creation based on country/era) and acquired (diagnosed through events). Passive annual drain: `mild+managed`: none; `mild+unmanaged`: −1h; `moderate+unmanaged`: −3h/−2m; `severe+unmanaged`: −6h/−4m.
+`conditions[]` state field added. `events_illness.js`: 14 events covering diabetes (2 variants + decade follow-through), heart disease, survivable cancer (+ scan callback), COPD, back pain (2 variants), HIV/AIDS (era-branched pre/post-1995), vision loss, hearing loss, chronic depression, disability from injury. `events_parent_care.js`: 8-event arc from first sign through `killParent()`. `p.addCondition()` and `p.manageCondition()` proxy shorthands. Passive drain wired into `tick()`.
 
-**Condition list**: Type 2 diabetes, heart disease, chronic back pain, COPD, cancer (survivable track), HIV/AIDS (era-gated + archetype-gated), blindness, deafness, chronic depression (intersects mental health system), disability from injury.
-
-**Illness × poverty intersection**: Both different event text AND different baseline severity at diagnosis by archetype/GDP. Denmark: mild (caught early, well-managed). Nigeria: moderate-to-severe (late presentation, limited access, costs modelled differently).
-
-**Career gating**: Moderate = soft-gated (event asks if you continue, player decides). Severe = hard-gate specific careers (severe tremor removes surgery career, blindness removes driving-dependent).
-
-**Parent care arc** (`events_parent_care.js`, 8–10 events):
-- First sign of decline (the phone call where something is subtly wrong)
-- The conversation about what comes next
-- Moving in vs. care home decision with real cost modelling
-- The daily reality of caregiving (costs health, happiness; gains karma)
-- Siblings disagreement about responsibility split
-- A specific bad day
-- The last good conversation
-- The death (connects to existing `grief_parent_call` event chain)
+Partial from original spec — not yet implemented: congenital conditions at character creation; career hard-gating by condition severity.
 
 ---
 
 #### BUILD 4 — Systems Depth
 
-**Relationship history UI**: Translate relationship flags into readable labels on relationship cards in `LifeScreen.jsx`. "Had a falling-out (2003)", "Reconciled (2018)", "Estranged." No new data model — the flags exist, just need a display layer.
+**Relationship history UI** ✅ DONE: Quality-threshold labels (Estranged / Strained / Distant / Warm / Close / Devoted) + flag-aware overrides (Estranged, Reconciled, Caring for them, In therapy together) rendered as colored chips on relationship cards in `LifeScreen.jsx`. No new data model.
 
 **Political leaning system** ✅ DONE: `political_leaning` state field added, displayed in Stats tab. Earned through events only (born null). Wired from adolescence political awakening event, career-regime events, world events. `p.setPolitical(value)` available in effect proxy.
 
@@ -424,7 +421,7 @@ Generic events are a last resort. Specific events — ones that could only fire 
 
 **`careers.js` field coverage**: Sports arc (injury, transition out, identity work). Academia arc (tenure decision, publish-or-perish, the defining student). Hospitality arc (service grind at bottom, ownership arc at top).
 
-**BirthScreen depth**: Optional choices for urban/rural origin, family structure, religion override. Doesn't change random defaults — lets intentional players build specific starting conditions.
+**BirthScreen depth** ✅ DONE: `CuratedBirthScreen.jsx` — 4-step wizard (country search, birth year/gender, rural/urban + stability + religion, preview) accessible via "Craft a Life" on TitleScreen. `startCuratedGame(overrides)` in gameStore; `createCharacter()` accepts `familyStability`, `ruralUrban`, `religion` overrides.
 
 **Early 20s gap**: 8–10 events for the messy 18–25 sub-phase — first apartment, first real job, first adult failure, the specific vertigo of being responsible for your own life for the first time.
 
@@ -1738,6 +1735,8 @@ src/
     events_cities_extended.js — extended city texture across more cities
     events_rural_texture.js   — rural/suburban texture (water walk, electrification, brain drain)
     events_post_soviet.js     — 15 post-Soviet arc events (communist childhood, 1990s collapse, oligarch split, emigration wave)
+    events_illness.js         — 14 chronic illness events (diabetes, heart disease, cancer, COPD, back pain, HIV/AIDS, vision/hearing loss, depression, disability)
+    events_parent_care.js     — 8-event parent care arc (first sign → final decline + killParent)
     worldEvents.js            — 110+ world history events (year+country/archetype gated); 8 events have `context` fields
     headlines.js              — ~70 major historical headline entries (year-matched, injected as log entries)
     careers.js                — all career definitions with career-specific events
@@ -1759,12 +1758,14 @@ src/
                                 resolveTrial, pendingTrial state, relocateTo
   components/
     LifeScreen.jsx            — main game screen (tabs: Life, Stats, Activities, Relationships, Prison)
-                                includes trial modal, gender markers, "Who You Are" card, newspaper headlines
+                                includes trial modal, gender markers, "Who You Are" card, newspaper headlines,
+                                relationship status chips (quality labels + flag overrides), conditions display
     ActivitiesPanel.jsx       — activities tab
-    BirthScreen.jsx           — character creation
+    BirthScreen.jsx           — random character creation
+    CuratedBirthScreen.jsx    — 4-step curated birth wizard (country, birth year/gender, origin/stability/religion, preview)
     DeathScreen.jsx           — death/epitaph screen
     EventBox.jsx              — event display + world event context expandable
-    TitleScreen.jsx
+    TitleScreen.jsx           — title screen with "Random Life" + "Craft a Life" buttons
     StatBar.jsx
     FlagChip.jsx
   utils/
