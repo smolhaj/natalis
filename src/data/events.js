@@ -44,6 +44,7 @@ import { ILLNESS_EVENTS } from './events_illness.js'
 import { PARENT_CARE_EVENTS } from './events_parent_care.js'
 import { WEALTH_SYSTEM_EVENTS } from './events_wealth_system.js'
 import { MONEY_EVENTS } from './events_money.js'
+import { FOLLOWTHROUGH_3_EVENTS } from './events_followthrough_3.js'
 
 const BASE_EVENTS = [
   // ── EARLY CHILDHOOD ─────────────────────────────────────────────────────────
@@ -641,11 +642,15 @@ const BASE_EVENTS = [
     id: 'adol_art',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => G.stats.charisma >= 60,
-    text: 'You discover a creative outlet — music, painting, writing. Something that is entirely yours.',
+    when: (G) => G.stats.charisma >= 60 && !G.mem?.adol_art_done,
+    text: 'You find yourself drawn to making something. The feeling is specific — not a general desire to be creative, but a pull toward one particular form.',
     context: null,
-    choices: null,
-    effect: (p) => { p.m += 6; p.addFlag('creative'); },
+    choices: [
+      { text: 'Music', tag: 'creative', outcome: 'The instrument becomes the place you go when language fails.', effect: (p) => { p.m += 6; p.addFlag('creative'); p.practiceHobby('music', 12); p.setMem('adol_art_done', true); }, inject: null },
+      { text: 'Painting or drawing', tag: 'creative', outcome: 'The page asks nothing from you. You give it everything.', effect: (p) => { p.m += 6; p.addFlag('creative'); p.practiceHobby('painting', 12); p.setMem('adol_art_done', true); }, inject: null },
+      { text: 'Writing', tag: 'creative', outcome: 'You find you can say in writing what you cannot say aloud.', effect: (p) => { p.m += 6; p.addFlag('creative'); p.practiceHobby('writing', 12); p.setMem('adol_art_done', true); }, inject: null },
+    ],
+    effect: null,
   },
   {
     id: 'adol_corruption_witness',
@@ -974,8 +979,8 @@ const BASE_EVENTS = [
       {
         text: 'Take any job — start earning',
         tag: 'practical',
-        outcome: 'The work is humbling. The paycheck is real.',
-        effect: (p) => { p.w += 6; p.m -= 2; },
+        outcome: 'The work is humbling. The paycheck is real. You are employed.',
+        effect: (p) => { p.w += 4; p.m -= 2; p.setCareer('laborer'); },
         inject: null,
       },
       {
@@ -2689,7 +2694,7 @@ const BASE_EVENTS = [
     text: 'You understand something about yourself that this place has no room for. The law makes it a crime. The culture makes it a death. You keep this entirely to yourself.',
     choices: [
       { text: 'Suppress it completely to survive', tag: null, outcome: 'You become skilled at performing a version of yourself that is safe.', effect: (p) => { p.m -= 15; p.addFlag('learned_silence'); p.addFlag('guarded_heart') }, inject: null },
-      { text: 'Confide in one trusted person', tag: null, outcome: 'The risk is enormous. For now, you are not entirely alone.', effect: (p) => { p.m -= 5; p.addFlag('has_close_friend') }, inject: null },
+      { text: 'Confide in one trusted person', tag: null, outcome: 'The risk is enormous. For now, you are not entirely alone. They become the one person who knows the whole of you.', effect: (p) => { p.m -= 5; p.addFlag('has_close_friend'); p.makeFriend(68); }, inject: null },
     ],
     effect: null,
   },
@@ -3092,7 +3097,7 @@ const BASE_EVENTS = [
       return 'Your peers have died or moved. The social world shrinks. You notice that days can pass without meaningful conversation.'
     },
     choices: [
-      { text: 'Join a community group — find new connection', tag: null, outcome: 'The new friendships are smaller but warm.', effect: (p) => { p.m += 8; p.addFlag('has_close_friend') }, inject: null },
+      { text: 'Join a community group — find new connection', tag: null, outcome: 'The new friendships are smaller but warm. One person, in particular, begins to show up.', effect: (p) => { p.m += 8; p.addFlag('has_close_friend'); p.makeFriend(52); }, inject: null },
       { text: 'Accept the solitude', tag: null, outcome: 'You learn what you need and what you can live without.', effect: (p) => { p.m -= 5; p.addFlag('late_loneliness'); p.addFlag('acceptance') }, inject: null },
     ],
     effect: null,
@@ -8266,7 +8271,7 @@ const BASE_EVENTS = [
   },
 ]
 
-export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS, ...TECHNOLOGY_EVENTS, ...IMMIGRATION_EVENTS, ...CAREER_REGIME_EVENTS, ...CONFLICT_CHILDHOOD_EVENTS, ...LGBTQ_EVENTS, ...MENTAL_HEALTH_EVENTS, ...GRIEF_EVENTS, ...GRIEF_MENTAL_EVENTS, ...RELIGION_ARC_EVENTS, ...LATE_LIFE_EVENTS, ...CHILDREN_ARC_EVENTS, ...FAME_KARMA_EVENTS, ...TEXTURE_EVENTS, ...SOCIETY_EVENTS, ...CONSEQUENCE_EVENTS, ...ROMANCE_ARC_EVENTS, ...ACTIVITY_PAYOFF_EVENTS, ...FRIEND_EVENTS, ...BUSINESS_EVENTS, ...SIBLING_EVENTS, ...EDUCATION_ARC_EVENTS, ...ADOLESCENCE_EVENTS, ...FERTILITY_EVENTS, ...CAREER_WEALTH_EVENTS, ...GULF_EAST_EVENTS, ...RELATIONSHIP_QUALITY_EVENTS, ...FOLLOWTHROUGH_EVENTS, ...DESIRES_EVENTS, ...SMALL_LIFE_EVENTS, ...FOLLOWTHROUGH_2_EVENTS, ...PLACES_EVENTS, ...INFRASTRUCTURE_EVENTS, ...CITY_EVENTS, ...DYING_CITY_EVENTS, ...CITIES_EXTENDED_EVENTS, ...RURAL_TEXTURE_EVENTS, ...POST_SOVIET_EVENTS, ...VIETNAM_EVENTS, ...ILLNESS_EVENTS, ...PARENT_CARE_EVENTS, ...WEALTH_SYSTEM_EVENTS, ...MONEY_EVENTS]
+export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS, ...TECHNOLOGY_EVENTS, ...IMMIGRATION_EVENTS, ...CAREER_REGIME_EVENTS, ...CONFLICT_CHILDHOOD_EVENTS, ...LGBTQ_EVENTS, ...MENTAL_HEALTH_EVENTS, ...GRIEF_EVENTS, ...GRIEF_MENTAL_EVENTS, ...RELIGION_ARC_EVENTS, ...LATE_LIFE_EVENTS, ...CHILDREN_ARC_EVENTS, ...FAME_KARMA_EVENTS, ...TEXTURE_EVENTS, ...SOCIETY_EVENTS, ...CONSEQUENCE_EVENTS, ...ROMANCE_ARC_EVENTS, ...ACTIVITY_PAYOFF_EVENTS, ...FRIEND_EVENTS, ...BUSINESS_EVENTS, ...SIBLING_EVENTS, ...EDUCATION_ARC_EVENTS, ...ADOLESCENCE_EVENTS, ...FERTILITY_EVENTS, ...CAREER_WEALTH_EVENTS, ...GULF_EAST_EVENTS, ...RELATIONSHIP_QUALITY_EVENTS, ...FOLLOWTHROUGH_EVENTS, ...DESIRES_EVENTS, ...SMALL_LIFE_EVENTS, ...FOLLOWTHROUGH_2_EVENTS, ...PLACES_EVENTS, ...INFRASTRUCTURE_EVENTS, ...CITY_EVENTS, ...DYING_CITY_EVENTS, ...CITIES_EXTENDED_EVENTS, ...RURAL_TEXTURE_EVENTS, ...POST_SOVIET_EVENTS, ...VIETNAM_EVENTS, ...ILLNESS_EVENTS, ...PARENT_CARE_EVENTS, ...WEALTH_SYSTEM_EVENTS, ...MONEY_EVENTS, ...FOLLOWTHROUGH_3_EVENTS]
 
 // Phase index: pre-computed at module load so getNextEvent() only evaluates
 // guards for events in the current phase rather than scanning the entire array.
