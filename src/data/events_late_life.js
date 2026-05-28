@@ -876,4 +876,116 @@ export const LATE_LIFE_EVENTS = [
     effect: (p) => { p.m += 12; p.r -= 10; p.karma += 6; p.addFlag('acceptance'); p.setMem('lateAcceptance', true) },
   },
 
+  // ── BUILD 44: BODY IN LATER LIFE ────────────────────────────────────────────
+
+  {
+    id: 'll_first_reading_glasses',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      !G.mem?.firstGlasses &&
+      G.age >= 42 && G.age <= 52,
+    text: 'At the restaurant you hold the menu a little further from your face than usual. Then a little further still. The waiter waits. You order what you always order to avoid admitting it. On the walk home you stop at a pharmacy and look at the rack near the door.',
+    choices: [
+      {
+        text: 'Buy a pair',
+        tag: 'practical',
+        outcome: 'They sit awkwardly on your nose for a week. Then they don\'t.',
+        effect: (p) => { p.m += 3; p.addFlag('has_reading_glasses'); p.setMem('firstGlasses', true) },
+      },
+      {
+        text: 'Walk past',
+        tag: 'stubborn',
+        outcome: 'You manage. You always manage. The letters are smaller than they were.',
+        effect: (p) => { p.setMem('firstGlasses', true) },
+      },
+    ],
+  },
+
+  {
+    id: 'll_the_knee',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) =>
+      !G.mem?.kneeEvent &&
+      G.age >= 47 && G.age <= 62 &&
+      G.fitness >= 60,
+    text: 'The left knee has been complaining for two years. You adjusted without noticing — a different gait on stairs, the route that avoids the hill. The physiotherapist presses in three places and you feel exactly where it lives.',
+    choices: [
+      {
+        text: 'Book the surgery',
+        tag: 'practical',
+        outcome: 'Six weeks of recovery. Then, gradually, the stairs again.',
+        effect: (p) => { p.h += 6; p.mo -= 4000; p.addFlag('had_knee_surgery'); p.setMem('kneeEvent', true) },
+      },
+      {
+        text: 'Manage it with physio',
+        tag: 'careful',
+        outcome: 'It never fully goes, but you learn its moods. You know which days it will be worse.',
+        effect: (p) => { p.h += 2; p.mo -= 800; p.addFlag('bad_knee'); p.setMem('kneeEvent', true) },
+      },
+    ],
+  },
+
+  {
+    id: 'll_sleep_sixty',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      !G.mem?.sleepSixty &&
+      G.age >= 58 && G.age <= 66,
+    text: 'You wake at four in the morning and do not go back to sleep. It is not anxiety, not any particular thought — just the body announcing a new schedule. You lie there for a while. Then you get up. The house is dark and quiet. The hours between four and six are yours in a way daytime hours rarely are.',
+    choices: null,
+    effect: (p) => { p.m += 4; p.e += 2; p.setMem('sleepSixty', true) },
+  },
+
+  {
+    id: 'll_hearing_aid',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      !G.mem?.hearingAidEvent &&
+      G.age >= 66 && G.age <= 76,
+    text: 'You have been asking people to repeat themselves for three years. Last week at dinner you answered a question you hadn\'t quite caught. The audiologist shows you a graph with a slope. The device is smaller than you imagined — nearly invisible behind the ear.',
+    choices: [
+      {
+        text: 'Get the hearing aid',
+        tag: 'sensible',
+        outcome: 'The first week you hear things you had stopped expecting: the refrigerator, birds, the texture of speech.',
+        effect: (p) => { p.m += 6; p.s += 4; p.addFlag('has_hearing_aid'); p.setMem('hearingAidEvent', true) },
+      },
+      {
+        text: 'Not yet',
+        tag: 'resistant',
+        outcome: 'You manage. People learn to face you when they talk. Most learn.',
+        effect: (p) => { p.m -= 3; p.s -= 3; p.addFlag('hearing_loss_unmanaged'); p.setMem('hearingAidEvent', true) },
+      },
+    ],
+  },
+
+  {
+    id: 'll_driving_conversation',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) =>
+      !G.mem?.drivingConversation &&
+      G.age >= 75 &&
+      G.children?.length > 0,
+    text: 'Your child is careful about how they begin. They mention the car near the end of a different conversation. You understand what they are doing and why. The keys are on the table between you. You are not sure which of you put them there.',
+    choices: [
+      {
+        text: 'Agree to stop driving',
+        tag: 'graceful',
+        outcome: 'It is the right decision and it costs something anyway. The road was yours for fifty years.',
+        effect: (p) => { p.m -= 6; p.karma += 5; p.addFlag('driving_stopped'); p.setMem('drivingConversation', true); p.updateChildRel(0, 5) },
+      },
+      {
+        text: 'Keep the keys',
+        tag: 'stubborn',
+        outcome: 'The conversation ends. It will come back.',
+        effect: (p) => { p.m += 2; p.addFlag('driving_defiant'); p.setMem('drivingConversation', true) },
+      },
+    ],
+  },
+
 ]

@@ -405,4 +405,137 @@ export const SMALL_LIFE_EVENTS = [
     effect: (p) => { p.r += 2; p.e += 3; p.setMem('leftJobCallbackAck', true) },
   },
 
+  // ── BUILD 30: THE SMALL LIFE ────────────────────────────────────────────────
+
+  {
+    id: 'sl_the_garden',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      !G.mem?.gardenStarted &&
+      G.age >= 38 && G.age <= 58,
+    text: 'The back corner of the yard goes to seed one spring. The following year you buy seeds from the market. It becomes a thing you do in the mornings, before the day claims you. The plants do not know or care what else is happening. This turns out to be why you do it.',
+    choices: null,
+    effect: (p) => { p.m += 4; p.addFlag('has_garden'); p.setMem('gardenStarted', true) },
+  },
+
+  {
+    id: 'sl_garden_years',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      G.flags.has('has_garden') &&
+      !G.mem?.gardenYears &&
+      G.age >= 62,
+    text: 'The beds are different every year and the same every year. You know this soil. You have put things into it and taken things out of it for two decades. People ask what your secret is. There isn\'t one. It is just time and attention, which turns out to be the secret to most things.',
+    choices: null,
+    effect: (p) => { p.m += 5; p.h += 2; p.karma += 3; p.setMem('gardenYears', true) },
+  },
+
+  {
+    id: 'sl_letter_arrives',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      !G.mem?.letterEvent &&
+      G.currentYear < 1998 &&
+      (G.siblings?.length > 0 || G.flags.has('emigrated') || G.flags.has('sibling_emigrated')),
+    text: 'It comes in a pale envelope. The handwriting is familiar in a way that arrives before recognition. You open it at the kitchen table and read it twice — once fast, once slowly. The news is ordinary and specific: a job, a landlord, the name of a street.',
+    choices: [
+      {
+        text: 'Write back immediately',
+        tag: 'close',
+        outcome: 'You spend an hour on it. The distance is real and the letter is real, and together they make something that is neither.',
+        effect: (p) => { p.m += 5; p.s += 2; p.addFlag('letter_correspondent'); p.setMem('letterEvent', true) },
+      },
+      {
+        text: 'Set it aside to write later',
+        tag: 'delayed',
+        outcome: 'Two months pass before you do. The guilt of delay sits in the drawer with the paper.',
+        effect: (p) => { p.m += 2; p.r += 2; p.setMem('letterEvent', true) },
+      },
+    ],
+  },
+
+  {
+    id: 'sl_letter_midlife',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) =>
+      G.flags.has('letter_correspondent') &&
+      !G.mem?.letterMidlife &&
+      G.currentYear < 2002,
+    text: 'There have been dozens of letters now. You have kept the ones from the difficult years in a box. There is a register you use in letters that you use nowhere else — more careful, more considered, knowing the words will be read slowly and more than once.',
+    choices: null,
+    effect: (p) => { p.e += 3; p.m += 3; p.setMem('letterMidlife', true) },
+  },
+
+  {
+    id: 'sl_good_neighbour',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      !G.mem?.goodNeighbour &&
+      G.age >= 20 && G.age <= 40,
+    text: 'The woman across the landing — you have seen her every morning for two years without learning her name — takes in a package when you\'re not there. She leaves it inside your door. Nothing is said about it. Nothing needs to be.',
+    choices: null,
+    effect: (p) => { p.m += 4; p.karma += 2; p.addFlag('good_neighbour_experience'); p.setMem('goodNeighbour', true) },
+  },
+
+  {
+    id: 'sl_neighbour_fence',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) =>
+      !G.mem?.neighbourFence &&
+      G.age >= 32 && G.age <= 58,
+    text: 'It starts with the fence, or the car, or the music at eleven at night. These things have histories. You have been tolerant for two years. This time you knock.',
+    choices: [
+      {
+        text: 'Speak plainly',
+        tag: 'direct',
+        outcome: 'It is awkward for a month. Then less awkward. Then nothing.',
+        effect: (p) => { p.s += 2; p.m += 3; p.setMem('neighbourFence', true) },
+      },
+      {
+        text: 'Leave a note instead',
+        tag: 'cautious',
+        outcome: 'The note is read. The noise continues for another week, then stops. Some things resolve sideways.',
+        effect: (p) => { p.m += 1; p.setMem('neighbourFence', true) },
+      },
+      {
+        text: 'Say nothing',
+        tag: 'resigned',
+        outcome: 'You learn to sleep through it. This is also a skill.',
+        effect: (p) => { p.m -= 2; p.r += 2; p.setMem('neighbourFence', true) },
+      },
+    ],
+  },
+
+  {
+    id: 'sl_neighbour_informer',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) =>
+      !G.mem?.neighbourInformer &&
+      ['military_dictatorship', 'single_party_communist', 'single_party_authoritarian'].includes(G.regime) &&
+      G.age >= 20 && G.age <= 45,
+    text: 'The man across the hall has worked at the ministry for twenty years. He is polite in the elevator. You understand, without anyone saying so, that he notices things. You learn which conversations belong in the stairwell and which ones stay inside.',
+    choices: null,
+    effect: (p) => { p.m -= 5; p.addFlag('watched_by_neighbour'); p.addFlag('learned_silence'); p.setMem('neighbourInformer', true) },
+  },
+
+  {
+    id: 'sl_school_reunion',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) =>
+      !G.mem?.schoolReunion &&
+      G.age >= 36 && G.age <= 48 &&
+      (G.flags.has('university_graduate') || G.flags.has('first_gen_graduate')),
+    text: 'Twenty-five years. You recognise everyone and no one. The person who was certain of everything at eighteen is a dentist in a different city. You talk about traffic and schools and prices. The past is very close and very far, and the gap between who you were and who you became is invisible to everyone in the room except you.',
+    choices: null,
+    effect: (p) => { p.m += 3; p.r += 4; p.e += 2; p.setMem('schoolReunion', true) },
+  },
+
 ]
