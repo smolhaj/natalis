@@ -42,7 +42,7 @@ export const RELATIONSHIP_QUALITY_EVENTS = [
       {
         text: `Apologise.`,
         tag: 'apologised_in_marriage',
-        outcome: `You apologise that night. ${G.partner.name} accepts it. Something small is repaired. The larger thing is still there.`,
+        outcome: (G) => `You apologise that night. ${G.partner.name} accepts it. Something small is repaired. The larger thing is still there.`,
         effect: (p) => { p.m += 3; p.updatePartnerRel(10); p.karma += 2 },
       },
       {
@@ -65,7 +65,7 @@ export const RELATIONSHIP_QUALITY_EVENTS = [
       {
         text: `Suggest something together.`,
         tag: 'reached_toward_partner',
-        outcome: `You suggest a trip. ${G.partner.name} says yes, which surprises you a little. The trip is ordinary and that's exactly what it needed to be.`,
+        outcome: (G) => `You suggest a trip. ${G.partner.name} says yes, which surprises you a little. The trip is ordinary and that's exactly what it needed to be.`,
         effect: (p) => { p.m += 6; p.updatePartnerRel(12) },
       },
       {
@@ -116,7 +116,7 @@ export const RELATIONSHIP_QUALITY_EVENTS = [
       {
         text: `Not yet.`,
         tag: 'refused_couples_therapy',
-        outcome: `Not yet becomes a while. ${G.partner.name} doesn't bring it up again.`,
+        outcome: (G) => `Not yet becomes a while. ${G.partner.name} doesn't bring it up again.`,
         effect: (p) => { p.r += 5; p.updatePartnerRel(-6) },
       },
     ],
