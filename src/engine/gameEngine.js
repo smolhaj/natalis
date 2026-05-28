@@ -95,10 +95,11 @@ export function createCharacter(overrides = {}) {
   const stabilityRoll = Math.random()
   const stabilityBoost = wealthTier >= 3 ? 0.2 : wealthTier <= 1 ? -0.2 : 0
   const adjustedRoll = clamp(stabilityRoll + stabilityBoost, 0, 1)
-  const familyStability =
+  const familyStability = overrides.familyStability ?? (
     adjustedRoll < 0.2 ? 'unstable' :
     adjustedRoll < 0.45 ? 'struggling' :
     adjustedRoll < 0.75 ? 'stable' : 'secure'
+  )
 
   const familySize = clamp(randomBetween(1, 8) + (
     ['subsaharan', 'conflict_zone', 'developing_unstable'].includes(country.archetype) ? 2 : 0
@@ -117,7 +118,7 @@ export function createCharacter(overrides = {}) {
   const initialStats = { happiness, health, smarts, looks, charisma, wealth }
 
   // Assign religion
-  const religion = (() => {
+  const religion = overrides.religion ?? (() => {
     const weights = country.religionWeights
     if (!weights) return 'secular'
     return weightedRandom(weights)
@@ -136,9 +137,9 @@ export function createCharacter(overrides = {}) {
   // Earlier birth years = more rural (pre-1960 much more rural in developing world)
   const eraAdjust = birthYear < 1960 ? -0.15 : birthYear < 1980 ? -0.07 : 0
   const adjustedUrbanRate = Math.max(0.05, Math.min(0.98, baseUrbanRate + eraAdjust))
-  const ruralUrban = Math.random() < adjustedUrbanRate
+  const ruralUrban = overrides.ruralUrban ?? (Math.random() < adjustedUrbanRate
     ? (Math.random() < 0.3 ? 'suburban' : 'urban')
-    : 'rural'
+    : 'rural')
 
   // Assign literacy (affects event availability)
   const litRate = gender === 'female'
@@ -352,6 +353,14 @@ function buildEffectProxy(state) {
   proxy.setMentalHealth = (updates) => { proxy._mentalHealthUpdates = { ...(proxy._mentalHealthUpdates ?? {}), ...updates } }
   proxy.setDesire = (key) => { proxy._desire = key }
   proxy.setPolitical = (leaning) => { proxy._politicalLeaning = leaning }
+  proxy.addCondition = (id, severity = 'moderate') => {
+    if (!proxy._newConditions) proxy._newConditions = []
+    proxy._newConditions.push({ id, severity, diagnosedYear: state.currentYear, managed: false })
+  }
+  proxy.manageCondition = (id, managed = true) => {
+    if (!proxy._conditionManagedUpdates) proxy._conditionManagedUpdates = {}
+    proxy._conditionManagedUpdates[id] = managed
+  }
   proxy.relocate = (placeId, neighborhoodTier) => {
     proxy._relocateTo = placeId
     if (neighborhoodTier) proxy._relocateNeighborhoodTier = neighborhoodTier
@@ -446,6 +455,22 @@ function resolveProxyExtras(state, proxy) {
   if (proxy._classTier !== undefined) next = { ...next, classTier: proxy._classTier }
   if (proxy._desire !== undefined) next = { ...next, desire: proxy._desire }
   if (proxy._politicalLeaning !== undefined) next = { ...next, political_leaning: proxy._politicalLeaning }
+  if (proxy._newConditions?.length) {
+    const existing = next.conditions ?? []
+    const merged = [...existing]
+    for (const nc of proxy._newConditions) {
+      if (!merged.some(c => c.id === nc.id)) merged.push(nc)
+    }
+    next = { ...next, conditions: merged }
+  }
+  if (proxy._conditionManagedUpdates) {
+    const updated = (next.conditions ?? []).map(c =>
+      proxy._conditionManagedUpdates[c.id] !== undefined
+        ? { ...c, managed: proxy._conditionManagedUpdates[c.id] }
+        : c
+    )
+    next = { ...next, conditions: updated }
+  }
   if (proxy._relocateTo) {
     const destPlace = PLACES.find(p => p.id === proxy._relocateTo)
     if (destPlace) {
@@ -598,6 +623,7 @@ function buildG(state) {
     neighborhood: state.currentNeighborhoodName ?? state.character?.birthNeighborhoodName ?? null,
     neighborhoodTier: state.currentNeighborhoodTier ?? state.character?.birthNeighborhoodTier ?? null,
     political_leaning: state.political_leaning ?? null,
+    conditions: state.conditions ?? [],
     // Enriched prose helpers: available in text: (G) => functions
     era: Math.floor(currentYear / 10) * 10,
     capital: state.character?.country?.capital ?? '',
@@ -1992,6 +2018,25 @@ export function tick(state) {
     s.flags = [...new Set([...s.flags, relapseTo, 'relapsed'])]
     s.flags = s.flags.filter(f => f !== 'in_recovery')
     s.log = [...s.log, { age: s.age, text: 'The recovery holds until it doesn\'t. The stress is too much and the old pattern reasserts itself. You relapse.', isKey: true }]
+  }
+
+  // Chronic condition passive drain
+  if ((s.conditions ?? []).length > 0) {
+    let hDrain = 0, mDrain = 0
+    for (const cond of s.conditions) {
+      if (cond.severity === 'mild' && !cond.managed) { hDrain += 1 }
+      else if (cond.severity === 'moderate' && cond.managed) { hDrain += 1 }
+      else if (cond.severity === 'moderate' && !cond.managed) { hDrain += 3; mDrain += 2 }
+      else if (cond.severity === 'severe' && cond.managed) { hDrain += 2; mDrain += 1 }
+      else if (cond.severity === 'severe' && !cond.managed) { hDrain += 6; mDrain += 4 }
+    }
+    if (hDrain > 0 || mDrain > 0) {
+      s.stats = {
+        ...s.stats,
+        health:    clamp(s.stats.health    - hDrain, 0, 100),
+        happiness: clamp(s.stats.happiness - mDrain, 0, 100),
+      }
+    }
   }
 
   // Illness risk check

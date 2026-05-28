@@ -102,6 +102,7 @@ export default function LifeScreen() {
   const birthControl = useGameStore(s => s.birthControl)
   const criminalRecord = useGameStore(s => s.criminalRecord)
   const mentalHealth = useGameStore(s => s.mentalHealth)
+  const conditions   = useGameStore(s => s.conditions ?? [])
   const hobbies      = useGameStore(s => s.hobbies)
   const fitness      = useGameStore(s => s.fitness)
   const debt         = useGameStore(s => s.debt)
@@ -163,6 +164,21 @@ export default function LifeScreen() {
 
   const karmaLabel = karma >= 85 ? 'Saint' : karma >= 70 ? 'Virtuous' : karma >= 50 ? 'Neutral' : karma >= 30 ? 'Questionable' : 'Sinister'
   const genderMark = (g) => g === 'male' ? <span className="text-blue-400 text-xs ml-1">♂</span> : g === 'female' ? <span className="text-pink-400 text-xs ml-1">♀</span> : null
+
+  // Derives a readable status label from relationship quality
+  const relStatusLabel = (quality, extraFlags = []) => {
+    const labels = []
+    if (extraFlags.includes('estranged')) labels.push({ text: 'Estranged', color: '#ff3b30' })
+    else if (extraFlags.includes('reconciled')) labels.push({ text: 'Reconciled', color: '#34c759' })
+    else if (extraFlags.includes('abroad')) labels.push({ text: 'Lives abroad', color: '#8e8e93' })
+    else if (quality <= 24) labels.push({ text: 'Estranged', color: '#ff3b30' })
+    else if (quality <= 39) labels.push({ text: 'Strained', color: '#ff9500' })
+    else if (quality >= 90) labels.push({ text: 'Very close', color: '#34c759' })
+    else if (quality >= 76) labels.push({ text: 'Close', color: '#34c759' })
+    if (extraFlags.includes('caretaker')) labels.push({ text: 'You\'re their carer', color: '#007aff' })
+    if (extraFlags.includes('therapy')) labels.push({ text: 'In couples therapy', color: '#007aff' })
+    return labels
+  }
 
   const propertyEquity = (assets?.properties ?? []).reduce((sum, p) => sum + (p.currentValue ?? 0) - (p.mortgage ?? 0), 0)
   const vehicleValue = (assets?.vehicles ?? []).reduce((sum, v) => sum + (v.currentValue ?? 0), 0)
@@ -582,6 +598,7 @@ export default function LifeScreen() {
                     criminalRecord.length > 0 && { label: '⚠️ Criminal Record', value: `${criminalRecord.length} offence${criminalRecord.length !== 1 ? 's' : ''}` },
                     fitness !== undefined && { label: '💪 Fitness', value: `${Math.round(fitness ?? 50)}/100` },
                     mentalHealth?.condition && { label: '🧠 Mental Health', value: `${mentalHealth.condition}${mentalHealth.therapy ? ' · therapy' : ''}${mentalHealth.medicating ? ' · medicated' : ''}` },
+                    conditions.length > 0 && { label: '🩺 Conditions', value: conditions.map(c => `${c.id.replace(/_/g, ' ')}${c.managed ? ' (managed)' : ''}`).join(', ') },
                     (debt ?? 0) > 0 && { label: '💳 Debt', value: formatMoney(debt) },
                   ].filter(Boolean).map(({ label, value }) => (
                     <div key={label} className="flex justify-between items-center py-1 border-b border-natalis-border last:border-0">
@@ -708,6 +725,19 @@ export default function LifeScreen() {
                           ))}
                         </div>
                       )}
+                      {(() => {
+                        const pFlags = []
+                        if (flags.includes('partner_illness_caretaker')) pFlags.push('caretaker')
+                        if (flags.includes('couples_therapy')) pFlags.push('therapy')
+                        const labels = relStatusLabel(partner.relationshipQuality, pFlags)
+                        return labels.length > 0 ? (
+                          <div className="flex gap-1 mt-1 flex-wrap">
+                            {labels.map(l => (
+                              <span key={l.text} className="text-[10px] px-1.5 py-0.5 rounded-full font-semibold" style={{ color: l.color, background: l.color + '18' }}>{l.text}</span>
+                            ))}
+                          </div>
+                        ) : null
+                      })()}
                     </div>
                     <RelBar value={partner.relationshipQuality} color={relColor(partner.relationshipQuality)} />
                   </div>
@@ -733,6 +763,18 @@ export default function LifeScreen() {
                                 ))}
                               </div>
                             )}
+                            {(() => {
+                              const cFlags = []
+                              if (flags.includes('reconciled_with_child')) cFlags.push('reconciled')
+                              const labels = relStatusLabel(child.relationshipQuality ?? 50, cFlags)
+                              return labels.length > 0 ? (
+                                <div className="flex gap-1 mt-0.5 flex-wrap">
+                                  {labels.map(l => (
+                                    <span key={l.text} className="text-[10px] px-1.5 py-0.5 rounded-full font-semibold" style={{ color: l.color, background: l.color + '18' }}>{l.text}</span>
+                                  ))}
+                                </div>
+                              ) : null
+                            })()}
                           </div>
                           <RelBar value={child.relationshipQuality} color={relColor(child.relationshipQuality)} />
                         </div>
@@ -788,6 +830,20 @@ export default function LifeScreen() {
                             <p className="text-natalis-dim text-sm">{sib.name.split(' ')[0]}{genderMark(sib.gender)}</p>
                             {sibAge !== null && <p className="text-natalis-muted text-xs">{sib.alive ? `Age ${Math.max(0, sibAge)}` : `Deceased · Age ${Math.max(0, sibAge)}`}</p>}
                             {sibAge === null && !sib.alive && <p className="text-natalis-muted text-xs">Deceased</p>}
+                            {sib.alive && (() => {
+                              const sf = []
+                              if (flags.includes('sibling_estranged') && (sib.relationshipQuality ?? 50) < 40) sf.push('estranged')
+                              if (flags.includes('sibling_reconciled') && (sib.relationshipQuality ?? 50) >= 50) sf.push('reconciled')
+                              if (flags.includes('sibling_emigrated')) sf.push('abroad')
+                              const labels = relStatusLabel(sib.relationshipQuality ?? 50, sf)
+                              return labels.length > 0 ? (
+                                <div className="flex gap-1 mt-0.5 flex-wrap">
+                                  {labels.map(l => (
+                                    <span key={l.text} className="text-[10px] px-1.5 py-0.5 rounded-full font-semibold" style={{ color: l.color, background: l.color + '18' }}>{l.text}</span>
+                                  ))}
+                                </div>
+                              ) : null
+                            })()}
                           </div>
                           {sib.alive
                             ? <RelBar value={sib.relationshipQuality} color={relColor(sib.relationshipQuality)} />
@@ -805,12 +861,24 @@ export default function LifeScreen() {
                 <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
                   <p className="font-bold text-natalis-text text-sm mb-3">👥 Friends</p>
                   <div className="space-y-2">
-                    {friends.filter(f => f.alive).map((friend, i) => (
-                      <div key={i} className="flex justify-between items-center">
-                        <p className="text-natalis-dim text-sm">{friend.name.split(' ')[0]}</p>
-                        <RelBar value={friend.relationshipQuality} color={relColor(friend.relationshipQuality)} />
-                      </div>
-                    ))}
+                    {friends.filter(f => f.alive).map((friend, i) => {
+                      const fLabels = relStatusLabel(friend.relationshipQuality ?? 60, [])
+                      return (
+                        <div key={i} className="flex justify-between items-center">
+                          <div>
+                            <p className="text-natalis-dim text-sm">{friend.name.split(' ')[0]}</p>
+                            {fLabels.length > 0 && (
+                              <div className="flex gap-1 mt-0.5 flex-wrap">
+                                {fLabels.map(l => (
+                                  <span key={l.text} className="text-[10px] px-1.5 py-0.5 rounded-full font-semibold" style={{ color: l.color, background: l.color + '18' }}>{l.text}</span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                          <RelBar value={friend.relationshipQuality} color={relColor(friend.relationshipQuality)} />
+                        </div>
+                      )
+                    })}
                   </div>
                 </div>
               )}
