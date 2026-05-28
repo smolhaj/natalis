@@ -4,7 +4,7 @@ import StatBar from './StatBar'
 import FlagChip from './FlagChip'
 import EventBox from './EventBox'
 import { getCountryFlag, REGIME_LABELS, REGIME_COLORS, RELIGION_LABELS, RESIDENCY_LABELS } from '../utils/countryUtils'
-import { getCountryRegime, generateIdentityCard, DESIRE_LABELS } from '../engine/gameEngine'
+import { getCountryRegime, generateIdentityCard, DESIRE_LABELS, getWealthTierLabel, getFinancialReputationDisplay } from '../engine/gameEngine'
 import { PLACES, getPlacesForCountry, getRelocationCost } from '../data/places'
 import ActivitiesPanel from './ActivitiesPanel'
 
@@ -137,6 +137,13 @@ export default function LifeScreen() {
   const currentNeighborhoodName = useGameStore(s => s.currentNeighborhoodName)
   const currentNeighborhoodTier = useGameStore(s => s.currentNeighborhoodTier)
   const relocateTo   = useGameStore(s => s.relocateTo)
+  const gold              = useGameStore(s => s.gold ?? 0)
+  const householdContribution = useGameStore(s => s.householdContribution)
+  const rosca             = useGameStore(s => s.rosca)
+  const jointFamily       = useGameStore(s => s.jointFamily ?? false)
+  const jointFamilyPool   = useGameStore(s => s.jointFamilyPool ?? 0)
+  const banked            = useGameStore(s => s.banked ?? false)
+  const hardCurrencyReserve = useGameStore(s => s.hardCurrencyReserve ?? 0)
 
   // Derive addiction stage label for display
   const getAddictionStage = () => {
@@ -182,7 +189,7 @@ export default function LifeScreen() {
 
   const propertyEquity = (assets?.properties ?? []).reduce((sum, p) => sum + (p.currentValue ?? 0) - (p.mortgage ?? 0), 0)
   const vehicleValue = (assets?.vehicles ?? []).reduce((sum, v) => sum + (v.currentValue ?? 0), 0)
-  const netWorth = (money ?? 0) + propertyEquity + vehicleValue - (debt ?? 0)
+  const netWorth = (money ?? 0) + propertyEquity + vehicleValue + gold + hardCurrencyReserve - (debt ?? 0)
 
   const creditLabel = (cs) => {
     if (!cs) return 'Unknown'
@@ -925,20 +932,41 @@ export default function LifeScreen() {
           )}
 
           {/* ── ASSETS TAB ── */}
-          {activeTab === 'assets' && (
+          {activeTab === 'assets' && (() => {
+            const finRep = getFinancialReputationDisplay(fullState)
+            const isChild = age < 18 && !career
+            const familyTierLabel = isChild ? getWealthTierLabel(character.wealthTier ?? 3, character.country?.archetype) : null
+            const showHardCurrency = hardCurrencyReserve > 0
+            const hcLabel = ['wealthy_west','wealthy_east','post_soviet'].includes(character.country?.archetype) ? 'USD reserve' : 'Hard currency'
+
+            return (
             <div className="space-y-3">
+
+              {/* ── Family context (childhood only) ── */}
+              {isChild && familyTierLabel && (
+                <div className="bg-amber-50 rounded-2xl p-4 border border-amber-200 shadow-card">
+                  <p className="font-bold text-amber-800 text-sm mb-1">🏡 Family Background</p>
+                  <p className="text-amber-700 text-sm font-semibold">{familyTierLabel}</p>
+                  <p className="text-xs text-amber-500 mt-2">Your personal savings: <span className="font-semibold">{formatMoney(money ?? 0)}</span></p>
+                </div>
+              )}
+
               {/* Net Worth Summary */}
               <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-                <p className="font-bold text-natalis-text text-sm mb-3">💰 Net Worth</p>
-                <div className="text-center mb-4">
-                  <p className={`font-black text-2xl ${netWorth >= 0 ? 'text-green-600' : 'text-red-500'}`}>{formatMoney(netWorth)}</p>
-                  <p className="text-xs text-natalis-muted mt-1">total net worth</p>
-                </div>
+                <p className="font-bold text-natalis-text text-sm mb-3">💰 {isChild ? 'Personal Savings' : 'Net Worth'}</p>
+                {!isChild && (
+                  <div className="text-center mb-4">
+                    <p className={`font-black text-2xl ${netWorth >= 0 ? 'text-green-600' : 'text-red-500'}`}>{formatMoney(netWorth)}</p>
+                    <p className="text-xs text-natalis-muted mt-1">total net worth</p>
+                  </div>
+                )}
                 <div className="space-y-2">
                   {[
                     { label: 'Cash', value: money ?? 0, color: 'text-green-600' },
-                    propertyEquity !== 0 && { label: 'Property equity', value: propertyEquity, color: propertyEquity >= 0 ? 'text-green-600' : 'text-red-500' },
-                    vehicleValue > 0 && { label: 'Vehicles', value: vehicleValue, color: 'text-blue-600' },
+                    gold > 0 && { label: 'Gold & jewelry', value: gold, color: 'text-yellow-600' },
+                    showHardCurrency && { label: hcLabel, value: hardCurrencyReserve, color: 'text-blue-600' },
+                    propertyEquity !== 0 && !isChild && { label: 'Property equity', value: propertyEquity, color: propertyEquity >= 0 ? 'text-green-600' : 'text-red-500' },
+                    vehicleValue > 0 && !isChild && { label: 'Vehicles', value: vehicleValue, color: 'text-blue-600' },
                     (debt ?? 0) > 0 && { label: 'Outstanding debt', value: -(debt ?? 0), color: 'text-red-500' },
                   ].filter(Boolean).map(({ label, value, color }) => (
                     <div key={label} className="flex justify-between items-center text-sm">
@@ -954,14 +982,82 @@ export default function LifeScreen() {
                       <p className="font-bold text-blue-700">{formatMoney(career.salary)}</p>
                     </div>
                   )}
-                  {creditScore && (
+                  {/* Financial reputation: credit score for wealthy_west/east, archetype-appropriate otherwise */}
+                  {finRep && finRep.type === 'credit_score' && creditScore && (
                     <div className={`rounded-xl p-2.5 ${creditScore >= 700 ? 'bg-green-50' : creditScore >= 600 ? 'bg-yellow-50' : 'bg-red-50'}`}>
                       <p className={`text-xs font-semibold ${creditScore >= 700 ? 'text-green-600' : creditScore >= 600 ? 'text-yellow-600' : 'text-red-600'}`}>Credit Score</p>
                       <p className={`font-bold ${creditScore >= 700 ? 'text-green-700' : creditScore >= 600 ? 'text-yellow-700' : 'text-red-700'}`}>{creditScore} <span className="text-xs font-normal">({creditLabel(creditScore)})</span></p>
                     </div>
                   )}
+                  {finRep && finRep.type !== 'credit_score' && (
+                    <div className="bg-gray-50 rounded-xl p-2.5">
+                      <p className="text-xs text-natalis-muted font-semibold">{finRep.label}</p>
+                      <p className="font-bold text-natalis-dim text-sm">{finRep.value}</p>
+                    </div>
+                  )}
+                  {/* Banking status */}
+                  <div className={`rounded-xl p-2.5 ${banked ? 'bg-green-50' : 'bg-orange-50'}`}>
+                    <p className={`text-xs font-semibold ${banked ? 'text-green-600' : 'text-orange-600'}`}>Banking</p>
+                    <p className={`font-bold text-sm ${banked ? 'text-green-700' : 'text-orange-700'}`}>{banked ? 'Banked' : 'Unbanked'}</p>
+                  </div>
                 </div>
               </div>
+
+              {/* Household contribution */}
+              {householdContribution?.annualAmount > 0 && (
+                <div className="bg-orange-50 rounded-2xl p-4 border border-orange-200 shadow-card">
+                  <p className="font-bold text-orange-800 text-sm mb-2">🏠 Family Obligation</p>
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p className="text-orange-700 text-sm">
+                        {householdContribution.obligationType === 'zakat' ? 'Zakat (2.5% of savings)' :
+                         householdContribution.obligationType === 'remittance' ? 'Remittances home' :
+                         householdContribution.obligationType === 'joint_family' ? 'Joint family pool' :
+                         'Household support'}
+                      </p>
+                      {householdContribution.reduced && <p className="text-xs text-orange-500 mt-0.5">Negotiated reduction</p>}
+                    </div>
+                    <p className="font-bold text-orange-800">{formatMoney(householdContribution.annualAmount)}<span className="text-xs font-normal text-orange-600">/yr</span></p>
+                  </div>
+                </div>
+              )}
+
+              {/* Joint family pool */}
+              {jointFamily && jointFamilyPool > 0 && (
+                <div className="bg-amber-50 rounded-2xl p-4 border border-amber-200 shadow-card">
+                  <p className="font-bold text-amber-800 text-sm mb-1">🏘️ Joint Family Pool</p>
+                  <p className="text-amber-700 font-black text-xl">{formatMoney(jointFamilyPool)}</p>
+                  <p className="text-xs text-amber-600 mt-1">Shared family property — accessible via partition event</p>
+                </div>
+              )}
+
+              {/* ROSCA */}
+              {rosca && (
+                <div className="bg-purple-50 rounded-2xl p-4 border border-purple-200 shadow-card">
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="font-bold text-purple-800 text-sm">🔄 Savings Circle (ROSCA)</p>
+                    <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-semibold">Active</span>
+                  </div>
+                  <div className="space-y-1 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-purple-600">Monthly contribution</span>
+                      <span className="font-semibold text-purple-800">{formatMoney(rosca.monthly)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-purple-600">Annual contribution</span>
+                      <span className="font-semibold text-purple-800">{formatMoney(rosca.monthly * 12)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-purple-600">Your payout year</span>
+                      <span className="font-semibold text-purple-800">{rosca.nextPayoutYear}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-purple-600">Payout amount</span>
+                      <span className="font-bold text-purple-900">{formatMoney(rosca.payoutAmount)}</span>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Properties */}
               {assets?.properties?.length > 0 && (
@@ -1084,14 +1180,15 @@ export default function LifeScreen() {
                 </div>
               )}
 
-              {assets?.properties?.length === 0 && assets?.vehicles?.length === 0 && (debt ?? 0) === 0 && !business?.active && travels?.length === 0 && (
+              {assets?.properties?.length === 0 && assets?.vehicles?.length === 0 && (debt ?? 0) === 0 && !business?.active && travels?.length === 0 && !rosca && !jointFamily && gold === 0 && (
                 <div className="bg-white rounded-2xl px-5 py-8 text-center border border-natalis-border">
                   <p className="text-4xl mb-2">🏦</p>
                   <p className="text-natalis-muted text-sm">No assets yet. Start saving!</p>
                 </div>
               )}
             </div>
-          )}
+            )
+          })()}
 
         </div>
       </div>

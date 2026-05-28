@@ -218,6 +218,175 @@ export function deriveInitialMoney(char) {
   return Math.round(((base[char.wealthTier] ?? 0) + randomBetween(-200, 200) * char.wealthTier) * mult)
 }
 
+// ─── GDP multiplier (shared across wealth mechanics) ─────────────────────────
+const GDP_MULT = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
+
+// ─── Wealth tier labels (archetype-aware) ────────────────────────────────────
+const WEALTH_TIER_LABEL_MAP = {
+  0: { default: 'Destitute', wealthy_west: 'Destitute', subsaharan: 'Extreme poverty', post_soviet: 'Desperate' },
+  1: { default: 'Poor', wealthy_west: 'Working poor', subsaharan: 'Very poor', post_soviet: 'Struggling', wealthy_east: 'Lower working class' },
+  2: { default: 'Working class', wealthy_west: 'Working class', subsaharan: 'Low income', post_soviet: 'Ordinary', developing_urban: 'Lower middle class', wealthy_gulf: 'Modest' },
+  3: { default: 'Middle class', wealthy_west: 'Middle class', subsaharan: 'Middle class', post_soviet: 'Comfortable', developing_urban: 'Middle class', wealthy_gulf: 'Comfortable' },
+  4: { default: 'Wealthy', wealthy_west: 'Affluent', subsaharan: 'Elite', post_soviet: 'Privileged', developing_urban: 'Upper class', wealthy_east: 'Affluent', wealthy_gulf: 'Wealthy' },
+}
+export function getWealthTierLabel(tier, archetype) {
+  const row = WEALTH_TIER_LABEL_MAP[tier] ?? WEALTH_TIER_LABEL_MAP[3]
+  return row[archetype] ?? row.default
+}
+
+// ─── Gold / jewelry initial value ────────────────────────────────────────────
+export function deriveInitialGold(char) {
+  const archetype = char.country?.archetype
+  const gdp = char.country?.gdp
+  const mult = GDP_MULT[gdp] ?? 0.2
+  const goldCultures = ['India', 'Pakistan', 'Bangladesh', 'Nepal', 'Sri Lanka',
+    'Saudi Arabia', 'UAE', 'Iran', 'Egypt', 'Morocco', 'Ghana', 'Nigeria',
+    'Ethiopia', 'Turkey', 'Vietnam', 'China', 'South Korea', 'Indonesia']
+  const isGoldCulture = goldCultures.includes(char.country?.name) ||
+    (archetype === 'subsaharan' && char.wealthTier >= 2)
+  if (!isGoldCulture) return 0
+  const base = { 0: 0, 1: 60, 2: 300, 3: 1200, 4: 6000 }[char.wealthTier] ?? 0
+  if (base === 0) return 0
+  // Female characters hold significantly more gold — jewelry is their financial security
+  const genderMult = char.gender === 'female' ? 1.9 : 0.6
+  return Math.round(base * mult * genderMult * (0.7 + Math.random() * 0.6))
+}
+
+// ─── Banking access at birth ──────────────────────────────────────────────────
+export function initializeBanked(char) {
+  const archetype = char.country?.archetype
+  const year = char.birthYear
+  const tier = char.wealthTier
+  if (['wealthy_west', 'wealthy_east', 'wealthy_gulf'].includes(archetype)) return year > 1945 ? true : tier >= 2
+  if (archetype === 'post_soviet') return tier >= 1
+  if (archetype === 'developing_urban') {
+    if (year < 1970) return tier >= 3
+    if (year < 1995) return tier >= 2
+    return tier >= 1
+  }
+  if (archetype === 'subsaharan') {
+    if (year < 2000) return tier >= 3
+    return tier >= 2 // mobile money era lowers the barrier
+  }
+  if (['conflict_zone', 'developing_unstable'].includes(archetype)) return tier >= 4
+  return tier >= 2
+}
+
+// ─── Joint / extended family status at birth ─────────────────────────────────
+export function initializeJointFamily(char) {
+  const jointFamilyCountries = ['India', 'Pakistan', 'Bangladesh', 'Sri Lanka', 'Nepal']
+  if (!jointFamilyCountries.includes(char.country?.name)) return false
+  const eraFactor = char.birthYear < 1970 ? 0.72 : char.birthYear < 1990 ? 0.55 : 0.38
+  const ruralFactor = char.ruralUrban === 'rural' ? 1.3 : 0.75
+  const wealthFactor = char.wealthTier <= 2 ? 1.1 : char.wealthTier >= 4 ? 0.65 : 1.0
+  return Math.random() < clamp(eraFactor * ruralFactor * wealthFactor, 0, 0.92)
+}
+
+// ─── Household contribution calculation ──────────────────────────────────────
+export function calculateHouseholdContribution(state) {
+  const archetype = state.character?.country?.archetype
+  const gdp = state.character?.country?.gdp
+  const income = state.career ? state.career.salary : 0
+  if (income <= 0) return { annualAmount: 0, obligationType: null }
+
+  const parentsAlive = state.parents?.mother?.alive || state.parents?.father?.alive
+
+  const cfg = {
+    subsaharan:          { rate: 0.22, type: 'extended_family', persists: true  },
+    developing_urban:    { rate: 0.16, type: 'filial',          persists: false },
+    wealthy_east:        { rate: 0.13, type: 'filial',          persists: false },
+    post_soviet:         { rate: 0.07, type: 'filial',          persists: false },
+    developing_unstable: { rate: 0.18, type: 'extended_family', persists: true  },
+    conflict_zone:       { rate: 0.21, type: 'extended_family', persists: true  },
+    wealthy_west:        { rate: 0.0,  type: null,              persists: false },
+    wealthy_gulf:        { rate: 0.0,  type: 'zakat',           persists: false },
+  }[archetype] ?? { rate: 0, type: null, persists: false }
+
+  // Zakat is 2.5% of savings above nisab, not income-based
+  if (cfg.type === 'zakat') {
+    const mult = GDP_MULT[gdp] ?? 0.2
+    const nisab = 5000 * mult
+    if ((state.money ?? 0) > nisab) return { annualAmount: Math.round((state.money ?? 0) * 0.025), obligationType: 'zakat' }
+    return { annualAmount: 0, obligationType: 'zakat' }
+  }
+
+  if (cfg.rate === 0) return { annualAmount: 0, obligationType: cfg.type }
+
+  let rate = cfg.rate
+  if (!parentsAlive) rate *= cfg.persists ? 0.55 : 0.15
+  if (state.householdContribution?.reduced) rate *= 0.5
+
+  // Survival floor: don't drain to zero
+  const mult = GDP_MULT[gdp] ?? 0.2
+  if ((state.money ?? 0) < 400 * mult) rate *= 0.2
+
+  return { annualAmount: Math.round(income * rate), obligationType: cfg.type }
+}
+
+// ─── Financial reputation display ────────────────────────────────────────────
+export function getFinancialReputationDisplay(state) {
+  const archetype = state.character?.country?.archetype
+  const year = state.currentYear ?? 2000
+  const cs = state.creditScore ?? 700
+  const banked = state.banked ?? false
+  const rosca = state.rosca
+
+  if (archetype === 'wealthy_west') {
+    if (year >= 1985 && banked) return { type: 'credit_score', value: cs }
+    if (banked) return { type: 'bank_standing', label: 'Bank standing', value: cs >= 700 ? 'Good' : cs >= 600 ? 'Fair' : 'Poor' }
+    return null
+  }
+  if (archetype === 'wealthy_east') {
+    if (year >= 1992 && banked) return { type: 'credit_score', value: cs }
+    return null
+  }
+  if (archetype === 'wealthy_gulf') {
+    return { type: 'islamic_finance', label: 'Islamic finance standing', value: (state.debt ?? 0) === 0 ? 'Good standing' : 'Has obligations', zakatDue: state.householdContribution?.annualAmount > 0 }
+  }
+  if (archetype === 'post_soviet') {
+    if (year >= 2005 && banked) return { type: 'credit_score', value: cs }
+    const m = state.money ?? 0
+    return { type: 'network_standing', label: 'Network standing', value: m > 8000 ? 'Well-connected' : m > 1500 ? 'Reliable' : 'Precarious' }
+  }
+  if (archetype === 'subsaharan') {
+    if (rosca) return { type: 'rosca', label: 'Savings circle', value: 'Member in good standing', monthlyContribution: rosca.monthlyContribution, payoutYear: rosca.nextPayoutYear }
+    const m = state.money ?? 0
+    return { type: 'community_standing', label: 'Community standing', value: m > 5000 ? 'Respected' : m > 500 ? 'Known' : 'Struggling' }
+  }
+  if (archetype === 'developing_urban') {
+    if (banked && year >= 1995) return { type: 'credit_score', value: cs }
+    if (rosca) return { type: 'rosca', label: 'Savings circle', value: 'Member', monthlyContribution: rosca.monthlyContribution, payoutYear: rosca.nextPayoutYear }
+    return null
+  }
+  if (archetype === 'conflict_zone') return null
+  if (banked) return { type: 'credit_score', value: cs }
+  return null
+}
+
+// ─── Hyperinflation detection ─────────────────────────────────────────────────
+const HYPERINFLATION_PERIODS = [
+  { country: 'Germany',   start: 1921, end: 1923, severity: 'extreme'  },
+  { country: 'Hungary',   start: 1945, end: 1946, severity: 'extreme'  },
+  { country: 'China',     start: 1946, end: 1949, severity: 'severe'   },
+  { country: 'Bolivia',   start: 1984, end: 1986, severity: 'severe'   },
+  { country: 'Brazil',    start: 1989, end: 1994, severity: 'severe'   },
+  { country: 'Argentina', start: 1988, end: 1991, severity: 'severe'   },
+  { country: 'Peru',      start: 1988, end: 1991, severity: 'severe'   },
+  { country: 'Russia',    start: 1992, end: 1994, severity: 'moderate' },
+  { country: 'Ukraine',   start: 1993, end: 1995, severity: 'severe'   },
+  { country: 'Romania',   start: 1990, end: 1993, severity: 'moderate' },
+  { country: 'Zimbabwe',  start: 2007, end: 2009, severity: 'extreme'  },
+  { country: 'Venezuela', start: 2016, end: 2025, severity: 'severe'   },
+  { country: 'Turkey',    start: 2021, end: 2025, severity: 'moderate' },
+  { country: 'Lebanon',   start: 2020, end: 2025, severity: 'severe'   },
+]
+const HYPERINFLATION_DRAIN = { moderate: 0.22, severe: 0.55, extreme: 0.88 }
+
+function getHyperinflation(countryName, year, flags) {
+  if (flags?.includes?.('hyperinflation_active')) return { severity: 'severe' }
+  return HYPERINFLATION_PERIODS.find(h => h.country === countryName && year >= h.start && year <= h.end) ?? null
+}
+
 export function deriveInitialParents(char) {
   const { country, familyStability, surname } = char
   const motherFirst = pickFrom(country.namePool.female)
@@ -369,6 +538,17 @@ function buildEffectProxy(state) {
     if (!proxy._hobbyDeltas) proxy._hobbyDeltas = {}
     proxy._hobbyDeltas[hobbyId] = (proxy._hobbyDeltas[hobbyId] ?? 0) + delta
   }
+  proxy.addGold = (amount) => { proxy._goldDelta = (proxy._goldDelta ?? 0) + amount }
+  proxy.addDebt = (amount) => { proxy._debtDelta = (proxy._debtDelta ?? 0) + amount }
+  proxy.setDebt = (val) => { proxy._debtSet = val }
+  proxy.setBanked = (val) => { proxy._banked = val }
+  proxy.setJointFamily = (val) => { proxy._jointFamily = val }
+  proxy.setJointFamilyPool = (val) => { proxy._jointFamilyPool = val }
+  proxy.addJointFamilyPool = (delta) => { proxy._jointFamilyPoolDelta = (proxy._jointFamilyPoolDelta ?? 0) + delta }
+  proxy.setRosca = (rosca) => { proxy._rosca = rosca }
+  proxy.leaveRosca = () => { proxy._rosca = null }
+  proxy.convertToHardCurrency = (amount) => { proxy._hardCurrencyAdd = (proxy._hardCurrencyAdd ?? 0) + amount; proxy.mo -= amount }
+  proxy.reduceHouseholdContribution = () => { proxy._reduceHouseholdContribution = true }
   proxy.partnerRel = (delta) => { proxy._partnerRelDelta = (proxy._partnerRelDelta ?? 0) + delta }
   proxy.updatePartnerRel = proxy.partnerRel
   proxy.makePartner = (overrides = {}) => {
@@ -485,6 +665,16 @@ function resolveProxyExtras(state, proxy) {
       }
     }
   }
+  if (proxy._goldDelta !== undefined) next = { ...next, gold: Math.max(0, (next.gold ?? 0) + proxy._goldDelta) }
+  if (proxy._banked !== undefined) next = { ...next, banked: proxy._banked }
+  if (proxy._jointFamily !== undefined) next = { ...next, jointFamily: proxy._jointFamily }
+  if (proxy._jointFamilyPool !== undefined) next = { ...next, jointFamilyPool: proxy._jointFamilyPool }
+  if (proxy._jointFamilyPoolDelta !== undefined) next = { ...next, jointFamilyPool: Math.max(0, (next.jointFamilyPool ?? 0) + proxy._jointFamilyPoolDelta) }
+  if (proxy._rosca !== undefined) next = { ...next, rosca: proxy._rosca }
+  if (proxy._hardCurrencyAdd !== undefined) next = { ...next, hardCurrencyReserve: (next.hardCurrencyReserve ?? 0) + proxy._hardCurrencyAdd }
+  if (proxy._debtDelta !== undefined) next = { ...next, debt: Math.max(0, (next.debt ?? 0) + proxy._debtDelta) }
+  if (proxy._debtSet !== undefined) next = { ...next, debt: Math.max(0, proxy._debtSet) }
+  if (proxy._reduceHouseholdContribution) next = { ...next, householdContribution: { ...(next.householdContribution ?? {}), reduced: true } }
   // Track year-of-death for grief fog in buildYearTexture
   if (proxy._killParent && next.parents?.[proxy._killParent]) {
     next = { ...next, mem: { ...(next.mem ?? {}), parentDeathYear: next.currentYear } }
@@ -624,6 +814,13 @@ function buildG(state) {
     neighborhoodTier: state.currentNeighborhoodTier ?? state.character?.birthNeighborhoodTier ?? null,
     political_leaning: state.political_leaning ?? null,
     conditions: state.conditions ?? [],
+    gold: state.gold ?? 0,
+    householdContribution: state.householdContribution ?? { annualAmount: 0, obligationType: null, reduced: false },
+    rosca: state.rosca ?? null,
+    jointFamily: state.jointFamily ?? false,
+    jointFamilyPool: state.jointFamilyPool ?? 0,
+    banked: state.banked ?? false,
+    hardCurrencyReserve: state.hardCurrencyReserve ?? 0,
     // Enriched prose helpers: available in text: (G) => functions
     era: Math.floor(currentYear / 10) * 10,
     capital: state.character?.country?.capital ?? '',
@@ -1362,6 +1559,67 @@ export function applyActivity(state, activityId) {
     return updated
   }
 
+  // ── ROSCA joining ────────────────────────────────────────────────────────────
+  if (activityId === 'join_rosca') {
+    if (state.rosca) return { ...state, log: [...state.log, { age: state.age, text: 'You are already part of a savings circle.', isKey: false }] }
+    const gdp = state.character?.country?.gdp
+    const mult = GDP_MULT[gdp] ?? 0.1
+    const cycleLength = 10
+    const monthlyContribution = Math.max(3, Math.round(50 * mult))
+    const joinFee = monthlyContribution * 2
+    if ((state.money ?? 0) < joinFee) return { ...state, log: [...state.log, { age: state.age, text: `You can't afford the joining fee ($${joinFee}).`, isKey: false }] }
+    const position = Math.ceil(Math.random() * cycleLength)
+    const nextPayoutYear = state.currentYear + position
+    const updated = {
+      ...state,
+      money: (state.money ?? 0) - joinFee,
+      rosca: { monthlyContribution, cycleLength, cyclePosition: position, nextPayoutYear },
+      flags: [...new Set([...state.flags, 'rosca_member'])],
+      actionsThisYear: (state.actionsThisYear ?? 0) + 1,
+    }
+    updated.log = [...updated.log, { age: updated.age, text: `You join a savings circle — ${cycleLength} members, $${monthlyContribution}/month. Your payout year: ${nextPayoutYear}.`, isKey: true }]
+    return updated
+  }
+
+  if (activityId === 'leave_rosca') {
+    if (!state.rosca) return { ...state, log: [...state.log, { age: state.age, text: 'You are not in a savings circle.', isKey: false }] }
+    return {
+      ...state,
+      rosca: null,
+      flags: state.flags.filter(f => f !== 'rosca_member'),
+      actionsThisYear: (state.actionsThisYear ?? 0) + 1,
+      log: [...state.log, { age: state.age, text: 'You leave the savings circle. You lose your place in the rotation.', isKey: false }],
+    }
+  }
+
+  // ── Buy / sell gold ──────────────────────────────────────────────────────────
+  if (activityId === 'buy_gold') {
+    const gdp = state.character?.country?.gdp
+    const mult = GDP_MULT[gdp] ?? 0.2
+    const amount = Math.round(200 * mult)
+    if ((state.money ?? 0) < amount) return { ...state, log: [...state.log, { age: state.age, text: `You can't afford to buy gold right now ($${amount} needed).`, isKey: false }] }
+    return {
+      ...state,
+      money: (state.money ?? 0) - amount,
+      gold: (state.gold ?? 0) + amount,
+      actionsThisYear: (state.actionsThisYear ?? 0) + 1,
+      log: [...state.log, { age: state.age, text: `You convert $${amount.toLocaleString()} into gold. A tangible store of value.`, isKey: false }],
+    }
+  }
+
+  if (activityId === 'sell_gold') {
+    const gold = state.gold ?? 0
+    if (gold <= 0) return { ...state, log: [...state.log, { age: state.age, text: 'You have no gold to sell.', isKey: false }] }
+    const sellAmount = Math.round(gold * 0.92) // small transaction cost
+    return {
+      ...state,
+      money: (state.money ?? 0) + sellAmount,
+      gold: 0,
+      actionsThisYear: (state.actionsThisYear ?? 0) + 1,
+      log: [...state.log, { age: state.age, text: `You sell your gold for $${sellAmount.toLocaleString()}.`, isKey: false }],
+    }
+  }
+
   // ── Standard activities ──────────────────────────────────────────────────────
   const allActivities = [
     ...(ACTIVITIES.mind ?? []),
@@ -1494,6 +1752,90 @@ function tickParents(state) {
 }
 
 // ─── Asset ticking ───────────────────────────────────────────────────────────
+
+// ─── Poverty premium tick ─────────────────────────────────────────────────────
+function tickPovertyPremium(state) {
+  const money = state.money ?? 0
+  if (money <= 0) return state
+  const archetype = state.character?.country?.archetype
+  const gdp = state.character?.country?.gdp
+  const mult = GDP_MULT[gdp] ?? 0.2
+  // Welfare states reduce (but don't eliminate) the poverty premium
+  const welfareReduction = ['wealthy_west', 'wealthy_east'].includes(archetype) ? 0.4 : 1.0
+  let rate = 0
+  if      (money < 500   * mult) rate = 0.18
+  else if (money < 2000  * mult) rate = 0.12
+  else if (money < 8000  * mult) rate = 0.07
+  else if (money < 20000 * mult) rate = 0.03
+  else return state
+  const premium = Math.round(money * rate * welfareReduction)
+  if (premium <= 0) return state
+  return { ...state, money: Math.max(0, money - premium) }
+}
+
+// ─── Household contribution tick ──────────────────────────────────────────────
+function tickHouseholdContribution(state) {
+  if (state.inPrison) return state
+  const contrib = calculateHouseholdContribution(state)
+  if (contrib.annualAmount <= 0) {
+    // Keep obligationType visible even when amount is 0
+    return { ...state, householdContribution: { annualAmount: 0, obligationType: contrib.obligationType, reduced: state.householdContribution?.reduced ?? false } }
+  }
+  return {
+    ...state,
+    money: Math.max(0, (state.money ?? 0) - contrib.annualAmount),
+    householdContribution: { annualAmount: contrib.annualAmount, obligationType: contrib.obligationType, reduced: state.householdContribution?.reduced ?? false },
+  }
+}
+
+// ─── ROSCA tick ───────────────────────────────────────────────────────────────
+function tickROSCA(state) {
+  if (!state.rosca) return state
+  const { monthlyContribution, cycleLength, nextPayoutYear } = state.rosca
+  const annualContribution = monthlyContribution * 12
+  let s = { ...state, money: Math.max(0, (state.money ?? 0) - annualContribution) }
+  // Payout year: receive the whole pot
+  if (state.currentYear === nextPayoutYear) {
+    const payout = monthlyContribution * 12 * cycleLength
+    s.money = (s.money ?? 0) + payout
+    s.log = [...s.log, { age: s.age, text: `Your savings circle pays out — $${payout.toLocaleString()} arrives as a lump sum. ${cycleLength} months of everyone's contributions, yours to use.`, isKey: true }]
+    s.rosca = { ...s.rosca, nextPayoutYear: nextPayoutYear + cycleLength }
+    s.flags = [...new Set([...s.flags, 'rosca_payout_received'])]
+  }
+  return s
+}
+
+// ─── Gold appreciation tick ───────────────────────────────────────────────────
+function tickGold(state) {
+  if (!state.gold || state.gold <= 0) return state
+  // Gold averages 2-4% real return with high volatility
+  const returnRate = 1 + randomBetween(-6, 9) / 100
+  return { ...state, gold: Math.max(0, Math.round(state.gold * returnRate)) }
+}
+
+// ─── Hyperinflation tick ──────────────────────────────────────────────────────
+function tickHyperinflation(state) {
+  const countryName = (state.currentCountry ?? state.character?.country)?.name
+  const hyperinflation = getHyperinflation(countryName, state.currentYear, state.flags)
+  if (!hyperinflation) return state
+  const drain = HYPERINFLATION_DRAIN[hyperinflation.severity] ?? 0.3
+  const localMoney = state.money ?? 0
+  if (localMoney <= 0) return state
+  const lost = Math.round(localMoney * drain)
+  if (lost <= 0) return state
+  // First time: log the experience
+  const alreadyFlagged = state.flags.includes('hyperinflation_experienced')
+  let s = { ...state, money: Math.max(0, localMoney - lost) }
+  if (!alreadyFlagged) {
+    s.flags = [...new Set([...s.flags, 'hyperinflation_experienced'])]
+    const msgs = { moderate: 'Inflation eats into savings.', severe: 'Hyperinflation. Prices change while you queue. You lose a significant portion of your savings to currency collapse.', extreme: 'The currency is worthless. Prices triple overnight. Your savings are almost entirely erased.' }
+    s.log = [...s.log, { age: s.age, text: msgs[hyperinflation.severity] ?? msgs.severe, isKey: true }]
+  }
+  return s
+}
+
+// ─── Farming income variance ──────────────────────────────────────────────────
+// Applied inside tick() directly during career income calculation.
 
 function tickAssets(state) {
   if (!state.assets) return state
@@ -1905,6 +2247,9 @@ export function tick(state) {
   // Asset appreciation/depreciation/maintenance
   s = tickAssets(s)
 
+  // Gold appreciation
+  s = tickGold(s)
+
   // Partner aging and natural death
   s = tickPartner(s)
 
@@ -2070,7 +2415,14 @@ export function tick(state) {
 
   // Career income (actual salary → money)
   if (s.career) {
-    const annual = s.career.partTime ? Math.round(s.career.salary * 0.5) : s.career.salary
+    let annual = s.career.partTime ? Math.round(s.career.salary * 0.5) : s.career.salary
+    // Agriculture: harvest variance ±50% — a good year and a bad year feel completely different
+    if (s.career.field === 'agriculture') {
+      const harvestFactor = 1 + randomBetween(-50, 60) / 100
+      annual = Math.max(0, Math.round(annual * harvestFactor))
+      if (harvestFactor < 0.6) s.log = [...s.log, { age: s.age, text: 'A bad year for the harvest. You earn significantly less than expected.', isKey: false }]
+      else if (harvestFactor > 1.4) s.log = [...s.log, { age: s.age, text: 'A good harvest. The yield is better than most years.', isKey: false }]
+    }
     s.money = (s.money ?? 0) + annual
     // Sync wealth stat loosely from money (logarithmic quality-of-life indicator)
     const wealthLevel = clamp(Math.round((Math.log10(Math.max(1, s.money)) - 2.5) * 22), 5, 98)
@@ -2081,6 +2433,18 @@ export function tick(state) {
       s.fame = clamp((s.fame ?? 0) + fameGain, 0, 100)
     }
   }
+
+  // Household contribution (filial / extended family / zakat)
+  s = tickHouseholdContribution(s)
+
+  // ROSCA cycle: deduct contribution, pay out on schedule
+  s = tickROSCA(s)
+
+  // Poverty premium: cost of being poor
+  s = tickPovertyPremium(s)
+
+  // Hyperinflation: currency devaluation
+  s = tickHyperinflation(s)
 
   // Business annual income
   if (s.business?.active) {
