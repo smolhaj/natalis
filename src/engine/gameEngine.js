@@ -387,8 +387,118 @@ function getHyperinflation(countryName, year, flags) {
   return HYPERINFLATION_PERIODS.find(h => h.country === countryName && year >= h.start && year <= h.end) ?? null
 }
 
+// ─── Parent occupation assignment ─────────────────────────────────────────────
+// Returns an occupation object for a parent based on wealth tier, archetype, birth year,
+// gender, and family stability. Base salaries are in very_high GDP units; they get
+// scaled by GDP_MULT at display / tick time.
+function assignParentOccupation(wealthTier, archetype, birthYear, gender, familyStability) {
+  // Income types: 'formal' | 'informal' | 'subsistence' | 'barter' | 'none'
+  const isMother = gender === 'female'
+
+  // Mothers in many historical/cultural contexts were homemakers or informal workers.
+  // Post-Soviet and wealthy_west post-1960 had high formal female employment.
+  const motherFormalChance = (() => {
+    if (archetype === 'post_soviet') return 0.92
+    if (archetype === 'wealthy_west') return birthYear >= 1970 ? 0.72 : birthYear >= 1950 ? 0.45 : 0.2
+    if (archetype === 'wealthy_east') return 0.65
+    if (archetype === 'wealthy_gulf') return birthYear >= 1990 ? 0.35 : 0.1
+    if (archetype === 'subsaharan') return 0.45 // informal trade common
+    if (archetype === 'developing_urban') return 0.55
+    return 0.5
+  })()
+  const motherWorks = isMother ? (familyStability !== 'unstable' ? Math.random() < motherFormalChance : Math.random() < 0.3) : false
+
+  if (isMother && !motherWorks && !['post_soviet', 'wealthy_east'].includes(archetype)) {
+    return { title: 'Homemaker', field: 'domestic', incomeType: 'none', annualIncome: 0, incomeNote: null }
+  }
+
+  // Occupation pools: [title, field, incomeType, baseSalary]
+  // baseSalary is in very_high GDP dollars; multiply by GDP_MULT[gdp] to get local equivalent
+  const pools = {
+    wealthy_west: [
+      [['Unemployed'], ['Unemployed', 'none', 'none', 0]],
+      [['Day Laborer', 'Factory Worker', 'Farmhand', 'Cleaner'], ['trade', 'formal', 'formal', 18000]],
+      [['Factory Worker', 'Bus Driver', 'Post Office Worker', 'Tradesman', 'Police Officer'], ['trade', 'formal', 'formal', 28000]],
+      [['Teacher', 'Accountant', 'Manager', 'Engineer', 'Nurse'], ['education', 'formal', 'formal', 48000]],
+      [['Lawyer', 'Doctor', 'Business Owner', 'Senior Manager'], ['professional', 'formal', 'formal', 95000]],
+    ],
+    wealthy_east: [
+      [['Day Laborer'], ['trade', 'informal', 'informal', 8000]],
+      [['Factory Worker', 'Driver'], ['trade', 'formal', 'formal', 16000]],
+      [['Office Worker', 'Civil Servant', 'Teacher'], ['education', 'formal', 'formal', 30000]],
+      [['Engineer', 'Manager', 'Doctor'], ['professional', 'formal', 'formal', 55000]],
+      [['Business Owner', 'Lawyer', 'Executive'], ['professional', 'formal', 'formal', 110000]],
+    ],
+    post_soviet: [
+      [['Unemployed', 'Seasonal Worker'], ['trade', 'none', 'none', 0]],
+      [['Factory Worker', 'Construction Worker'], ['trade', 'formal', 'formal', 10000]],
+      [['Factory Worker', 'Teacher', 'Civil Servant', 'Driver'], ['trade', 'formal', 'formal', 12000]],
+      [['Engineer', 'Doctor', 'Academic', 'Civil Servant'], ['professional', 'formal', 'formal', 16000]],
+      [['Senior Official', 'Business Owner', 'Factory Director'], ['professional', 'formal', 'formal', 40000]],
+    ],
+    wealthy_gulf: [
+      [['Day Laborer', 'Migrant Worker'], ['trade', 'informal', 'informal', 10000]],
+      [['Driver', 'Shop Worker'], ['trade', 'formal', 'formal', 20000]],
+      [['Civil Servant', 'Teacher'], ['education', 'formal', 'formal', 35000]],
+      [['Engineer', 'Manager', 'Doctor'], ['professional', 'formal', 'formal', 65000]],
+      [['Business Owner', 'Senior Official'], ['professional', 'formal', 'formal', 150000]],
+    ],
+    developing_urban: [
+      [['Subsistence Farmer', 'Day Laborer'], ['agriculture', 'subsistence', 'subsistence', 0]],
+      [['Market Trader', 'Day Laborer', 'Domestic Worker'], ['trade', 'informal', 'informal', 4000]],
+      [['Civil Servant', 'Teacher', 'Shopkeeper', 'Driver'], ['trade', 'formal', 'formal', 8000]],
+      [['Engineer', 'Doctor', 'Business Owner', 'Government Official'], ['professional', 'formal', 'formal', 20000]],
+      [['Senior Official', 'Merchant', 'Business Executive'], ['professional', 'formal', 'formal', 55000]],
+    ],
+    subsaharan: [
+      [['Subsistence Farmer'], ['agriculture', 'subsistence', 'subsistence', 0]],
+      [['Smallholder Farmer', 'Market Trader', 'Craftsman'], ['agriculture', 'informal', 'informal', 3000]],
+      [['Teacher', 'Civil Servant', 'Shopkeeper'], ['education', 'formal', 'formal', 7000]],
+      [['Doctor', 'Government Official', 'Business Owner'], ['professional', 'formal', 'formal', 18000]],
+      [['Senior Official', 'Merchant', 'Business Executive'], ['professional', 'formal', 'formal', 45000]],
+    ],
+    developing_unstable: [
+      [['Subsistence Farmer', 'Day Laborer'], ['agriculture', 'subsistence', 'subsistence', 0]],
+      [['Smallholder Farmer', 'Street Vendor'], ['agriculture', 'informal', 'informal', 3000]],
+      [['Civil Servant', 'Teacher', 'Trader'], ['trade', 'formal', 'formal', 7000]],
+      [['Doctor', 'Business Owner', 'Government Official'], ['professional', 'formal', 'formal', 18000]],
+      [['Senior Official', 'Merchant'], ['professional', 'formal', 'formal', 40000]],
+    ],
+    conflict_zone: [
+      [['Displaced', 'Unemployed'], ['none', 'none', 'none', 0]],
+      [['Day Laborer', 'Farmer'], ['agriculture', 'informal', 'informal', 2000]],
+      [['Trader', 'Civil Servant'], ['trade', 'informal', 'informal', 5000]],
+      [['Doctor', 'Teacher', 'Aid Worker'], ['professional', 'formal', 'formal', 12000]],
+      [['Business Owner', 'Senior Official'], ['professional', 'formal', 'formal', 30000]],
+    ],
+  }
+
+  const archetypePool = pools[archetype] ?? pools.developing_urban
+  const tierEntry = archetypePool[clamp(wealthTier, 0, 4)] ?? archetypePool[2]
+  const [titles, [field, incomeType, , baseSalary]] = tierEntry
+
+  // Special handling for Soviet era barter: before 1991, Soviet workers had wages
+  // but consumer goods were scarce — income was real but purchasing power limited.
+  const postSovietCollapse = archetype === 'post_soviet' && birthYear >= 1991 && wealthTier <= 1
+  const actualIncomeType = postSovietCollapse ? 'informal' : incomeType
+
+  // Subsistence and barter economies: provide food/shelter but minimal cash
+  const incomeNote = incomeType === 'subsistence'
+    ? 'provides food and shelter'
+    : incomeType === 'barter' ? 'paid in kind' : null
+
+  return {
+    title: pickFrom(titles),
+    field,
+    incomeType: actualIncomeType,
+    annualIncome: baseSalary,
+    incomeNote,
+  }
+}
+
 export function deriveInitialParents(char) {
-  const { country, familyStability, surname } = char
+  const { country, familyStability, wealthTier, birthYear, surname } = char
+  const arch = country.archetype
   const motherFirst = pickFrom(country.namePool.female)
   const fatherFirst = pickFrom(country.namePool.male)
   const altSurname = pickFrom(country.surnames)
@@ -401,6 +511,7 @@ export function deriveInitialParents(char) {
       alive: true,
       relationshipQuality: clamp(baseQ + randomBetween(-10, 10), 12, 100),
       traits: pickTraits(ADULT_TRAITS),
+      occupation: assignParentOccupation(wealthTier, arch, birthYear, 'female', familyStability),
     },
     father: {
       name: `${fatherFirst} ${altSurname}`,
@@ -408,8 +519,89 @@ export function deriveInitialParents(char) {
       alive: fatherPresent,
       relationshipQuality: fatherPresent ? clamp(baseQ + randomBetween(-15, 10), 8, 100) : 0,
       traits: fatherPresent ? pickTraits(ADULT_TRAITS) : [],
+      occupation: fatherPresent
+        ? assignParentOccupation(wealthTier, arch, birthYear, 'male', familyStability)
+        : null,
     },
   }
+}
+
+// ─── Family income tick (childhood) ──────────────────────────────────────────
+// Runs each year when age < 18 and player has no career.
+// Calculates parental income surplus that flows into state.money.
+// Handles parent death, conflict zone disruption, post-Soviet collapse.
+export function tickFamilyIncome(state) {
+  if ((state.age ?? 0) >= 18 || state.career) return state
+  const parents = state.parents
+  if (!parents) return state
+
+  const gdp = state.character?.country?.gdp ?? 'medium'
+  const arch = state.character?.country?.archetype ?? 'developing_urban'
+  const year = state.currentYear ?? state.character?.birthYear ?? 1980
+  const mult = GDP_MULT[gdp] ?? 0.2
+  const tier = state.classTier ?? state.character?.wealthTier ?? 2
+
+  // Annual surplus that flows to child's accessible money (as % of parental income)
+  // Tier 0 families have no surplus — everything goes to survival
+  const surplusRates = { 0: 0.0, 1: 0.05, 2: 0.10, 3: 0.18, 4: 0.28 }
+  const surplusRate = surplusRates[tier] ?? 0.10
+
+  let totalParentalIncome = 0
+
+  for (const key of ['father', 'mother']) {
+    const parent = parents[key]
+    if (!parent || !parent.alive || !parent.occupation) continue
+    const occ = parent.occupation
+    if (occ.incomeType === 'none' || occ.incomeType === 'subsistence' || occ.incomeType === 'barter') continue
+
+    // Apply GDP scaling and annual variance
+    const scaled = Math.round(occ.annualIncome * mult)
+    const variancePct = occ.incomeType === 'informal' ? randomBetween(-35, 50) : randomBetween(-12, 18)
+    const annual = Math.max(0, Math.round(scaled * (1 + variancePct / 100)))
+    totalParentalIncome += annual
+  }
+
+  // Post-Soviet collapse: dramatic income reduction 1991–1994
+  if (arch === 'post_soviet' && year >= 1991 && year <= 1994) {
+    totalParentalIncome = Math.round(totalParentalIncome * 0.25)
+  }
+
+  // Conflict zone: income may disappear during active displacement
+  if (arch === 'conflict_zone' && state.flags?.includes('war_childhood')) {
+    totalParentalIncome = 0
+  }
+
+  // Income reduction if a parent (earner) died during childhood
+  if (state.mem?.primaryEarnerLostAge && state.age > state.mem.primaryEarnerLostAge) {
+    totalParentalIncome = Math.round(totalParentalIncome * 0.35)
+  }
+
+  const surplus = Math.round(totalParentalIncome * surplusRate)
+  if (surplus <= 0) return state
+
+  const newMoney = (state.money ?? 0) + surplus
+  const wealthLevel = clamp(Math.round((Math.log10(Math.max(1, newMoney)) - 2.5) * 22), 5, 98)
+  return {
+    ...state,
+    money: newMoney,
+    stats: { ...state.stats, wealth: wealthLevel },
+  }
+}
+
+// ─── Formatted parent income display ─────────────────────────────────────────
+// Returns a human-readable income string for the UI.
+export function formatParentIncome(occupation, gdp) {
+  if (!occupation) return null
+  const { incomeType, annualIncome, incomeNote, title } = occupation
+  if (incomeType === 'none') return 'No income'
+  if (incomeType === 'subsistence') return incomeNote ?? 'provides food and shelter'
+  if (incomeType === 'barter') return incomeNote ?? 'paid in kind'
+  if (!annualIncome) return null
+  const mult = GDP_MULT[gdp] ?? 0.2
+  const scaled = Math.round(annualIncome * mult)
+  if (scaled < 50) return '< $50/yr'
+  const fmt = scaled >= 1000 ? `$${(scaled / 1000).toFixed(1)}k/yr` : `$${scaled}/yr`
+  return incomeType === 'informal' ? `~${fmt}` : fmt
 }
 
 // ─── Stat proxy ───────────────────────────────────────────────────────────────
@@ -678,6 +870,13 @@ function resolveProxyExtras(state, proxy) {
   // Track year-of-death for grief fog in buildYearTexture
   if (proxy._killParent && next.parents?.[proxy._killParent]) {
     next = { ...next, mem: { ...(next.mem ?? {}), parentDeathYear: next.currentYear } }
+  }
+  // Track primary earner loss during childhood for tickFamilyIncome
+  if (proxy._killParent && next.parents?.[proxy._killParent] && (next.age ?? 99) < 18) {
+    const dyingParent = next.parents[proxy._killParent]
+    if (dyingParent.occupation && ['formal', 'informal'].includes(dyingParent.occupation.incomeType)) {
+      next = { ...next, mem: { ...(next.mem ?? {}), primaryEarnerLostAge: next.age } }
+    }
   }
   if (proxy._killPartner && next.partner) {
     next = { ...next, mem: { ...(next.mem ?? {}), partnerDeathYear: next.currentYear } }
@@ -2215,6 +2414,9 @@ export function tick(state) {
 
   // Natural aging
   s = applyNaturalAging(s)
+
+  // Family income during childhood (before career income, no career yet)
+  if (s.age < 18 && !s.career) s = tickFamilyIncome(s)
 
   // Debt interest accrual
   if (s.debt > 0) {

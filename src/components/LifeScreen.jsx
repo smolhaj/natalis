@@ -4,7 +4,7 @@ import StatBar from './StatBar'
 import FlagChip from './FlagChip'
 import EventBox from './EventBox'
 import { getCountryFlag, REGIME_LABELS, REGIME_COLORS, RELIGION_LABELS, RESIDENCY_LABELS } from '../utils/countryUtils'
-import { getCountryRegime, generateIdentityCard, DESIRE_LABELS, getWealthTierLabel, getFinancialReputationDisplay } from '../engine/gameEngine'
+import { getCountryRegime, generateIdentityCard, DESIRE_LABELS, getWealthTierLabel, getFinancialReputationDisplay, formatParentIncome } from '../engine/gameEngine'
 import { PLACES, getPlacesForCountry, getRelocationCost } from '../data/places'
 import ActivitiesPanel from './ActivitiesPanel'
 
@@ -799,12 +799,21 @@ export default function LifeScreen() {
                     {['mother', 'father'].map(key => {
                       const p = parents[key]
                       if (!p) return null
+                      const parentIncome = p.occupation ? formatParentIncome(p.occupation, character?.country?.gdp) : null
                       return (
                         <div key={key} className="flex justify-between items-center">
                           <div>
                             <p className="text-natalis-dim text-sm">{p.name.split(' ')[0]}{genderMark(key === 'mother' ? 'female' : 'male')}</p>
                             {p.currentAge && <p className="text-natalis-muted text-xs">{p.alive ? `Age ${p.currentAge}` : `Deceased · Age ${p.currentAge}`}</p>}
                             {!p.currentAge && !p.alive && <p className="text-natalis-muted text-xs">Deceased</p>}
+                            {p.occupation?.title && p.occupation.title !== 'Homemaker' && (
+                              <p className="text-natalis-muted text-xs italic">
+                                {p.occupation.title}{parentIncome ? ` · ${parentIncome}` : ''}
+                              </p>
+                            )}
+                            {p.occupation?.title === 'Homemaker' && (
+                              <p className="text-natalis-muted text-xs italic">Homemaker</p>
+                            )}
                             {p.alive && p.traits?.length > 0 && (
                               <div className="flex gap-1 mt-0.5 flex-wrap">
                                 {p.traits.map(t => (
