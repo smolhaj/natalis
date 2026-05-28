@@ -143,8 +143,8 @@ export const HISTORICAL_EVENTS = [
     when: (G) => G.character.country.name === 'United States' && G.character.ethnicity === 'black_american' && G.currentYear >= 1960 && G.currentYear <= 1968 && G.age >= 18 && G.age <= 35 && !G.mem?.civil_rights_march,
     text: 'The movement is building. There is a march. There will be police and possibly worse. There are also people — thousands of them — who believe that what is wrong can be made right by the weight of bodies in the street.',
     choices: [
-      { text: 'March', tag: 'activist', outcome: 'You are hit with a club. You do not move. The photographs are shown around the world. Things change — not enough, but something.', effect: (p) => { p.m += 5; p.h -= 10; p.s += 8; p.karma += 10; p.addFlag('activist'); p.setMem('civil_rights_march', true) } },
-      { text: 'Support from behind the scenes — donations, housing organizers', tag: null, outcome: 'The movement needs all kinds of courage. You provide the kind that doesn\'t end up in photographs.', effect: (p) => { p.m += 3; p.karma += 5; p.setMem('civil_rights_march', true) } },
+      { text: 'March', tag: 'activist', outcome: 'You are hit with a club. You do not move. The photographs are shown around the world. Things change — not enough, but something.', effect: (p) => { p.m += 5; p.h -= 10; p.s += 8; p.karma += 10; p.addFlag('activist'); p.setPolitical('left'); p.setMem('civil_rights_march', true) } },
+      { text: 'Support from behind the scenes — donations, housing organizers', tag: null, outcome: 'The movement needs all kinds of courage. You provide the kind that doesn\'t end up in photographs.', effect: (p) => { p.m += 3; p.karma += 5; p.setPolitical('left'); p.setMem('civil_rights_march', true) } },
       { text: 'Stay home — the risk is too great', tag: null, outcome: 'You watch the news. You feel both safe and ashamed, in roughly equal measure.', effect: (p) => { p.m -= 5; p.r += 8; p.setMem('civil_rights_march', true) } },
     ],
   },

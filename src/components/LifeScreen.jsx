@@ -129,7 +129,8 @@ export default function LifeScreen() {
   const travels      = useGameStore(s => s.travels)
   const exPartners   = useGameStore(s => s.exPartners)
   const mem          = useGameStore(s => s.mem)
-  const desire       = useGameStore(s => s.desire)
+  const desire            = useGameStore(s => s.desire)
+  const political_leaning = useGameStore(s => s.political_leaning)
   const fullState    = useGameStore(s => s)
   const currentPlace = useGameStore(s => s.currentPlace)
   const currentNeighborhoodName = useGameStore(s => s.currentNeighborhoodName)
@@ -386,15 +387,19 @@ export default function LifeScreen() {
 
                 {logMode === 'recent' && recentLog.map((entry, i) => (
                   <div key={i} className={`rounded-xl px-4 py-3 border text-sm leading-relaxed ${
+                    entry.isHeadline ? 'bg-zinc-900 border-zinc-700 text-zinc-100' :
                     entry.isWorld ? 'bg-amber-50 border-amber-200 text-amber-800' :
                     entry.isKey ? 'bg-blue-50 border-blue-200 text-blue-800' :
                     'bg-white border-natalis-border text-natalis-dim'
                   }`}>
+                    {entry.isHeadline && (
+                      <div className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-1">📰 NEWS</div>
+                    )}
                     {entry.isWorld && entry.worldEventName && (
                       <div className="text-xs font-bold uppercase tracking-wider text-amber-700 mb-1">🌐 {entry.worldEventName}</div>
                     )}
-                    <span className="font-bold mr-2 text-xs uppercase tracking-wider opacity-60">Age {entry.age}</span>
-                    {entry.text}
+                    {!entry.isHeadline && <span className="font-bold mr-2 text-xs uppercase tracking-wider opacity-60">Age {entry.age}</span>}
+                    <span className={entry.isHeadline ? 'font-bold tracking-wide text-sm' : ''}>{entry.text}</span>
                   </div>
                 ))}
 
@@ -413,12 +418,14 @@ export default function LifeScreen() {
                       <div className="divide-y divide-natalis-border">
                         {grouped[ph].map((entry, i) => (
                           <div key={i} className={`px-4 py-2.5 text-sm leading-relaxed ${
+                            entry.isHeadline ? 'bg-zinc-900 text-zinc-100' :
                             entry.isWorld ? 'bg-amber-50 text-amber-800' :
                             entry.isKey ? 'text-blue-800' : 'text-natalis-dim'
                           }`}>
-                            <span className="font-bold mr-2 text-xs opacity-50">Age {entry.age}</span>
+                            {!entry.isHeadline && <span className="font-bold mr-2 text-xs opacity-50">Age {entry.age}</span>}
+                            {entry.isHeadline && <span className="text-xs font-bold mr-1 text-zinc-400">📰 </span>}
                             {entry.isWorld && entry.worldEventName && <span className="text-xs font-bold mr-1">🌐 {entry.worldEventName} — </span>}
-                            {entry.text}
+                            <span className={entry.isHeadline ? 'font-bold tracking-wide' : ''}>{entry.text}</span>
                           </div>
                         ))}
                       </div>
@@ -533,7 +540,7 @@ export default function LifeScreen() {
                     <span className="text-natalis-text font-semibold text-xs">{ethnicName}</span>
                   </div>
                   {/* Sexual orientation */}
-                  <div className="flex justify-between items-center py-1">
+                  <div className={`flex justify-between items-center py-1${political_leaning ? ' border-b border-natalis-border' : ''}`}>
                     <span className="text-natalis-muted text-xs">🏳️‍🌈 Sexuality</span>
                     <span className="text-natalis-text font-semibold text-xs">
                       {flags.includes('orientation_asexual') ? 'Asexual' :
@@ -543,6 +550,19 @@ export default function LifeScreen() {
                        'Heterosexual'}
                     </span>
                   </div>
+                  {/* Political leaning — only shown once earned through events */}
+                  {political_leaning && (
+                    <div className="flex justify-between items-center py-1">
+                      <span className="text-natalis-muted text-xs">🗳️ Politics</span>
+                      <span className="font-semibold text-xs capitalize" style={{
+                        color: political_leaning === 'left' ? '#34c759' :
+                               political_leaning === 'right' ? '#ff3b30' :
+                               political_leaning === 'nationalist' ? '#ff3b30' :
+                               political_leaning === 'dissident' ? '#ff9500' :
+                               '#007aff'
+                      }}>{political_leaning.replace('_', ' ')}</span>
+                    </div>
+                  )}
                 </div>
               </div>
 

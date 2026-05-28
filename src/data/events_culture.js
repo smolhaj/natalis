@@ -36,7 +36,7 @@ export const CULTURE_EVENTS = [
     when: (G) => G.regime === 'military_dictatorship' && G.age >= 13,
     text: 'You find a book in your uncle\'s closet — one that isn\'t in any school library, one you are not supposed to have read. He makes you promise to tell no one. You read it in two days and hide it under the floorboard.',
     choices: [
-      { text: 'Read more banned material and think independently', tag: null, outcome: 'You start to understand the world differently from how you were taught to.', effect: (p) => { p.e += 8; p.m -= 5; p.addFlag('dissident_reader'); p.addFlag('independent_thinker') } },
+      { text: 'Read more banned material and think independently', tag: null, outcome: 'You start to understand the world differently from how you were taught to.', effect: (p) => { p.e += 8; p.m -= 5; p.addFlag('dissident_reader'); p.addFlag('independent_thinker'); p.setPolitical('dissident') } },
       { text: 'Return the book. It\'s not worth the risk.', tag: null, outcome: 'You hand it back. You know what it said. That cannot be taken back either.', effect: (p) => { p.e += 3; p.m -= 3; p.addFlag('cautious_survivor') } },
     ],
     effect: null,
