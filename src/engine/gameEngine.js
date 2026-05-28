@@ -3811,6 +3811,66 @@ export function generateEpitaph(state) {
   if (flags.includes('post_apartheid_generation')) {
     lines.push(`${He} cast a vote in the first free election. ${He} knew what it had cost to get there.`)
   }
+  if (flags.includes('witnessed_wall_fall')) {
+    lines.push(`${He} was in Berlin the night the Wall came down. The details never fully translated into words.`)
+  } else if (flags.includes('berlin_wall_era_lived')) {
+    lines.push(`${He} grew up in a city divided by concrete and wire, and knew both sides of what that meant.`)
+  }
+  if (flags.includes('survived_khmer_rouge')) {
+    lines.push(`${He} survived the Khmer Rouge years. That ${he} survived at all placed ${him} in a statistical minority.`)
+  }
+  if (flags.includes('buenos_aires_junta_era')) {
+    lines.push(`${He} lived under the Argentine military junta. ${He} knew people who did not come back from it.`)
+  }
+  if (flags.includes('witnessed_madres')) {
+    lines.push(`${He} watched the Mothers circle the Plaza de Mayo. The photographs they carried stayed with ${him}.`)
+  }
+  if (flags.includes('witnessed_truth_commission')) {
+    lines.push(`${He} witnessed a truth commission — a country trying, in public, to say what had happened to it.`)
+  }
+  if (flags.includes('tehran_revolution_witness')) {
+    lines.push(`${He} was in Tehran for the Revolution. The world it made was not the world it promised.`)
+  }
+  if (flags.includes('solidarity_era_lived')) {
+    lines.push(`${He} lived the Solidarity years in Poland — the underground presses, the church meetings, the specific risk of visible hope.`)
+  }
+  if (flags.includes('maidan_generation') || flags.includes('euromaidan_lived')) {
+    lines.push(`${He} stood in the Maidan. What followed was harder than the night on the square.`)
+  }
+  if (flags.includes('ghana_independence_generation') || flags.includes('nairobi_independence_generation')) {
+    lines.push(`${He} was alive when independence came. ${He} heard it announced on the radio and understood that the world had changed.`)
+  }
+  if (flags.includes('derg_era_survived')) {
+    lines.push(`${He} survived the Derg years in Ethiopia — the Red Terror, the famine, the years that followed both.`)
+  }
+  if (flags.includes('harare_hyperinflation_lived')) {
+    lines.push(`${He} lived through Zimbabwe's hyperinflation. The arithmetic of daily survival in those years was a specific education.`)
+  }
+  if (flags.includes('bolivarian_collapse_lived')) {
+    lines.push(`${He} watched Venezuela collapse — the pharmacy shelves, the currency, the people crossing into Colombia on foot.`)
+  }
+  if (flags.includes('left_junta_chile')) {
+    lines.push(`${He} left Chile after the coup. The leaving was its own kind of loss alongside everything else the coup took.`)
+  }
+  if (flags.includes('left_dying_city')) {
+    lines.push(`${He} left a city that was in the process of becoming something smaller. The leaving was not easy and was probably right.`)
+  } else if (flags.includes('rust_belt_stayer')) {
+    lines.push(`${He} stayed when others left. The place ${he} refused to abandon was not the same place at the end as at the beginning, but it was still there.`)
+  } else if (flags.includes('postsoviet_stayer')) {
+    lines.push(`${He} chose to stay in a city that most people were leaving. The city stabilized, eventually. ${He} was already there.`)
+  }
+  if (flags.includes('drought_survived')) {
+    lines.push(`${He} knew what a failed harvest meant at the level of the family's daily choices. The knowledge stayed with ${him} longer than the hunger did.`)
+  }
+  if (flags.includes('village_electrified')) {
+    lines.push(`${He} was there the night the first light came on in the village. ${He} never lost the specific memory of what came before it.`)
+  }
+  if (flags.includes('water_walk_childhood')) {
+    lines.push(`${He} carried water before school for years. The weight of it was part of what ${he} was made of.`)
+  }
+  if (flags.includes('kolkhoz_dissolved')) {
+    lines.push(`${He} lived through the dissolution of collective farming — the paper that said you owned land and the reality that was more complicated.`)
+  }
 
   // — Fertility and loss —
   if (flags.includes('multiple_miscarriage') || flags.includes('experienced_miscarriage')) {
