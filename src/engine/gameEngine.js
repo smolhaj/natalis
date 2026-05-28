@@ -9,6 +9,7 @@ import { CAREERS } from '../data/careers'
 import { PROPERTY_TYPES, VEHICLE_TYPES } from '../data/assets'
 import { ILLNESSES } from '../data/illnesses'
 import { PLACES, getPlacesForCountry, pickBirthPlace, pickNeighborhoodTier, pickNamedNeighborhood, getRelocationCost } from '../data/places'
+import { HEADLINES } from '../data/headlines'
 import { randomBetween, pickFrom, rollWeighted, clamp, chance } from '../utils/random'
 
 // ─── FlagSet ──────────────────────────────────────────────────────────────────
@@ -350,6 +351,7 @@ function buildEffectProxy(state) {
   proxy.setClassTier = (tier) => { proxy._classTier = tier }
   proxy.setMentalHealth = (updates) => { proxy._mentalHealthUpdates = { ...(proxy._mentalHealthUpdates ?? {}), ...updates } }
   proxy.setDesire = (key) => { proxy._desire = key }
+  proxy.setPolitical = (leaning) => { proxy._politicalLeaning = leaning }
   proxy.relocate = (placeId, neighborhoodTier) => {
     proxy._relocateTo = placeId
     if (neighborhoodTier) proxy._relocateNeighborhoodTier = neighborhoodTier
@@ -443,6 +445,7 @@ function resolveProxyExtras(state, proxy) {
   if (proxy._religion !== undefined) next = { ...next, religion: proxy._religion }
   if (proxy._classTier !== undefined) next = { ...next, classTier: proxy._classTier }
   if (proxy._desire !== undefined) next = { ...next, desire: proxy._desire }
+  if (proxy._politicalLeaning !== undefined) next = { ...next, political_leaning: proxy._politicalLeaning }
   if (proxy._relocateTo) {
     const destPlace = PLACES.find(p => p.id === proxy._relocateTo)
     if (destPlace) {
@@ -594,6 +597,7 @@ function buildG(state) {
     birthPlace: state.character?.birthPlace ?? null,
     neighborhood: state.currentNeighborhoodName ?? state.character?.birthNeighborhoodName ?? null,
     neighborhoodTier: state.currentNeighborhoodTier ?? state.character?.birthNeighborhoodTier ?? null,
+    political_leaning: state.political_leaning ?? null,
     // Enriched prose helpers: available in text: (G) => functions
     era: Math.floor(currentYear / 10) * 10,
     capital: state.character?.country?.capital ?? '',
@@ -765,6 +769,28 @@ function applyWorldEvents(state) {
     if (we.addFlags) updated.flags = [...new Set([...updated.flags, ...we.addFlags])]
   }
   return updated
+}
+
+function applyHeadlines(state) {
+  const year = state.currentYear
+  const archetype = state.character?.country?.archetype
+  const countryName = state.character?.country?.name
+  const seenKey = `headline_${year}`
+  if (state.mem?.[seenKey]) return state
+  const matching = HEADLINES.filter(h => {
+    if (h.year !== year) return false
+    if (h.minAge && state.age < h.minAge) return false
+    if (h.archetypes !== 'all' && !h.archetypes.includes(archetype)) return false
+    if (h.countries && !h.countries.includes(countryName)) return false
+    return true
+  })
+  if (matching.length === 0) return state
+  const newEntries = matching.map(h => ({ age: state.age, text: h.text, isKey: false, isHeadline: true }))
+  return {
+    ...state,
+    mem: { ...(state.mem ?? {}), [seenKey]: true },
+    log: [...state.log, ...newEntries],
+  }
 }
 
 // ─── Death ────────────────────────────────────────────────────────────────────
@@ -1867,6 +1893,7 @@ export function tick(state) {
 
   // World events
   s = applyWorldEvents(s)
+  s = applyHeadlines(s)
 
   // Education progression
   s = tickEnrollment(s)

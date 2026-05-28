@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import { useGameStore } from '../store/gameStore'
 
 export default function EventBox({ event }) {
   const resolveChoice = useGameStore(s => s.resolveChoice)
+  const [contextOpen, setContextOpen] = useState(false)
 
   if (!event) return null
 
@@ -17,15 +19,26 @@ export default function EventBox({ event }) {
       </div>
 
       <div className="p-5 space-y-4">
-        {event.context && (
-          <p className="text-natalis-muted text-xs italic border-l-2 border-bit-blue pl-3">
-            {event.context}
-          </p>
-        )}
-
         <p className="text-natalis-text text-base font-medium leading-relaxed">
           {event.text}
         </p>
+
+        {event.context && (
+          <div className="border-l-2 border-bit-blue pl-3">
+            <button
+              onClick={() => setContextOpen(o => !o)}
+              className="flex items-center gap-1.5 text-xs font-semibold text-bit-blue tracking-wide uppercase"
+            >
+              <span>{contextOpen ? '▾' : '▸'}</span>
+              Historical context
+            </button>
+            {contextOpen && (
+              <p className="mt-2 text-natalis-muted text-xs leading-relaxed italic">
+                {event.context}
+              </p>
+            )}
+          </div>
+        )}
 
         {!isAutomatic && (
           <div className="space-y-2 pt-1">

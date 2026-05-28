@@ -36,6 +36,11 @@ Key state fields:
 - `debt`, `creditScore`, `mortgage`
 - `mentalHealth`: `{ condition, medicating, therapy }`
 - `hobbies`, `fitness`, `gpa`, `socialMedia`, `martialArts`
+- `currentPlace`: string|null — place ID from `places.js` where the character currently lives
+- `currentNeighborhoodTier`: `'informal'|'working_class'|'middle_class'|'elite'`|null
+- `currentNeighborhoodName`: string|null — human-readable name of current neighbourhood
+- `desire`: string|null — core formative desire revealed by childhood wound event (e.g. `'approval'`, `'safety'`, `'freedom'`, `'justice'`)
+- `political_leaning`: `'left'|'centre'|'right'|'nationalist'|'dissident'|'apolitical'`|null — earned through events only, born neutral
 
 ### Life Phases (`src/engine/gameEngine.js: getPhase`)
 
@@ -67,11 +72,34 @@ Events live in:
 - `src/data/events_grief.js` — grief and loss events
 - `src/data/events_grief_mental.js` — grief-mental health intersection events
 - `src/data/events_religion_arc.js` — faith arc events (crisis, conversion, return)
-- `src/data/events_late_life.js` — 35 late-life events (retirement, partner decline, legacy, loneliness)
-- `src/data/events_children_arc.js` — 28 events (child milestones, teen years, adult child relationships)
-- `src/data/events_fame_karma.js` — 40 events (fame consequences, karma arcs, hobby payoffs, friendship depth)
-- `src/data/events_texture.js` — 41 events (rural developing world, pre-1960 era, career peak/decline)
-- `src/data/events_society.js` — 42 events (women's rights milestones by country/year, healthcare by archetype, language suppression/identity)
+- `src/data/events_late_life.js` — late-life events (retirement, partner decline, legacy, loneliness)
+- `src/data/events_children_arc.js` — children arc events (child milestones, teen years, adult child relationships)
+- `src/data/events_fame_karma.js` — fame/karma/hobby/friendship events
+- `src/data/events_texture.js` — rural developing world, pre-1960 era, career peak/decline
+- `src/data/events_society.js` — women's rights milestones by country/year, healthcare by archetype, language suppression/identity
+- `src/data/events_romance_arc.js` — post-marriage arc: infidelity, couples therapy, long-haul happiness, partner illness
+- `src/data/events_consequence.js` — downstream consequences: illiteracy, post-9/11 Muslim discrimination, addiction recovery arc, STI arc, driving licence
+- `src/data/events_friends.js` — friend lifecycle: drift, reconnect, friend's illness/divorce/death, money requests
+- `src/data/events_business.js` — business arc: key hire, first client, acquisition offer, cashflow crisis, failure and restart
+- `src/data/events_siblings.js` — sibling events: rivalry, emigration, estrangement, late illness/death
+- `src/data/events_education_arc.js` — university depth: failure, dropout decision, first-gen pressure, debt
+- `src/data/events_adolescence.js` — adolescence identity: racial/gender discrimination, faith doubt, talent, political awakening
+- `src/data/events_fertility.js` — fertility depth: miscarriage, IVF, childlessness, late pregnancy complications
+- `src/data/events_career_wealth.js` — career late-arc, wealth gap, rural-to-urban events
+- `src/data/events_gulf_east.js` — wealthy_gulf and wealthy_east specific events
+- `src/data/events_followthrough.js` — 25 follow-through events for previously orphaned flags
+- `src/data/events_followthrough_2.js` — 18 additional flag follow-through events
+- `src/data/events_relationship_quality.js` — 13 events gated on relationship quality thresholds (partner/child/sibling/friend)
+- `src/data/events_desires.js` — 12 formative wound events (early_childhood, fires once) + decade reflection events at 30/40/50/60
+- `src/data/events_small_life.js` — 21 small moments: named friendships, first crushes, formative teachers, stranger kindness, first home
+- `src/data/events_activity_payoffs.js` — 15 downstream consequences for activity flags (clubs, therapy_veteran, generous, tattooed)
+- `src/data/events_places.js` — 24 place-based events: family moves, internal migration, arrival texture
+- `src/data/events_infrastructure.js` — 10 infrastructure events: power cuts, floods, traffic, air quality, water shortage
+- `src/data/events_dying_city.js` — 11 Rust Belt + post-Soviet urban decline arc events
+- `src/data/events_cities.js` — 30 city-specific texture events (Lagos, Mumbai, Cairo, Mexico City, Moscow + era-branching)
+- `src/data/events_cities_extended.js` — extended city events across more cities
+- `src/data/events_rural_texture.js` — 29 rural/suburban texture events: water walk, market day, electrification, brain drain, kolkhoz, panchayat, ejido, Midwest church
+- `src/data/events_post_soviet.js` — 15 post-Soviet personal arc events: communist childhood (Pioneer, space optimism, job assignment), 1990s collapse (factory closure, savings wiped, sudden poverty), oligarch split, emigration wave (Jewish/Law of Return, German Spätaussiedler, professional brain drain), follow-through events
 
 Event shape:
 ```js
@@ -91,7 +119,7 @@ Event shape:
 **Critical**: `effect` functions receive only `p` (the proxy). `G` is only available in `when` guards. Never put G-dependent logic in effects.
 
 The `G` object (built by `buildG()`) exposes everything event conditions need:
-`G.character`, `G.stats`, `G.flags`, `G.mem`, `G.age`, `G.currentYear`, `G.career`, `G.partner`, `G.children`, `G.parents`, `G.money`, `G.karma`, `G.fame`, `G.regime`, `G.lgbtqCriminalized`, `G.casteSystem`, `G.childMarriageRisk`, `G.ruralUrban`, `G.ethnicity`, `G.religion`, `G.currentCountry`, `G.residencyStatus`, `G.inPrison`
+`G.character`, `G.stats`, `G.flags`, `G.mem`, `G.age`, `G.currentYear`, `G.career`, `G.partner`, `G.children`, `G.parents`, `G.money`, `G.karma`, `G.fame`, `G.regime`, `G.lgbtqCriminalized`, `G.casteSystem`, `G.childMarriageRisk`, `G.ruralUrban`, `G.ethnicity`, `G.religion`, `G.currentCountry`, `G.residencyStatus`, `G.inPrison`, `G.place` (current place object from places.js, or null), `G.desire` (character's core formative desire), `G.political_leaning`
 
 Effect proxy shorthands (all are additive deltas):
 - `p.m` → happiness, `p.h` → health, `p.e` → smarts, `p.s` → charisma, `p.w` → wealth stat, `p.lo` → looks
@@ -115,6 +143,7 @@ Effect proxy shorthands (all are additive deltas):
   archetypes: ['wealthy_west'] | 'all',
   countries: ['Germany'] | null,
   narrative: 'prose...',
+  context: '2–3 sentence factual note shown in optional expandable.',  // optional
   effect: (p) => { ... },
   addFlags: [],
   minAge: 0, maxAge: null,
@@ -126,7 +155,7 @@ Covers: WWII, Cold War (Berlin Wall, Cuban Missile Crisis, Prague Spring, Polish
 
 ### Country Data (`src/data/countries.js`)
 
-74 countries. Every country has:
+77 countries. Every country has:
 ```js
 {
   name, archetype, gdp, yearRange,
@@ -201,7 +230,7 @@ Generic events are a last resort. Specific events — ones that could only fire 
 ### What exists and works
 
 **Core systems:**
-- 74 fully-populated countries with all demographic/political fields
+- 77 fully-populated countries with all demographic/political fields (including Estonia, Latvia, Lithuania)
 - Career era-gating via `minYear`
 - Country flag display + "Identity & World" stats card
 - `currentCountry` + `residencyStatus` tracked separately from nationality
@@ -212,50 +241,56 @@ Generic events are a last resort. Specific events — ones that could only fire 
 - Gender markers (♂/♀) next to all people in the Relationships UI
 - `G.mem` key-value store for once-per-run event guards (use `p.setMem` / `G.mem?.key`)
 - Undocumented/tourist_overstay residency applies annual health (−2) + happiness (−3) + money (−$200) drain per tick
+- **Geographic place system**: `places.js` with 250+ named places across all 74 countries. Characters assigned a place at birth weighted by urbanRate. `relocateTo(placeId, tier)` action lets characters move. Places have `scale`, `region`, `type` fields. Used by infrastructure, city texture, and rural texture events.
+- **Desires/personality system**: Formative wound events fire once in early childhood (ages 6–11). Each wound reveals a persistent `desire` shown near the Age Up button. Desires: `approval`, `safety`, `control`, `connection`, `freedom`, `meaning`, `justice`, `pleasure`, `recognition`. Decade reflections at 30/40/50/60 gate on `desire` to show how the wound shaped the life.
+- **Living identity card** (`generateIdentityCard` in gameEngine.js): 3–4 sentences of present-tense identity prose, regenerated each year. Displayed in the Stats tab as "Who You Are". Surfaces flags/state without spoiling the epitaph.
+- **Year texture system** (`buildYearTexture` in gameEngine.js): Replaces generic "A quiet year passes." with flag-aware prose. Priorities: partner/parent death first year → health crisis → relationship quality tension/warmth → post-crisis flags → undocumented status → authoritarian context → phase/age texture → career flags → randomised fallbacks.
+- **Named persistent relationships**: Small-life events (events_small_life.js) create named friends and acquaintances stored in `G.mem`, referenced by later events — names persist across the life.
+- **Political leaning system**: `political_leaning` state field earned through events only (born null). Displayed in Stats tab. Shaped by adolescence awakening, career-regime events, world events.
+- **Historical context UI**: World events can have a `context` field (2–3 sentence factual note). Displayed as an optional expandable "Historical context" panel in the world event display.
+- **Newspaper headlines**: A `HEADLINES` array of major historical moments injected as styled log entries when the character lives through the matching year. One-line prose, different visual treatment from events.
 
-**Event coverage (~1,200+ total events across 30 modules):**
+**Event coverage (~1,650+ total events across 46 modules):**
 - Base events covering all life phases with hundreds of inline events
 - 68 culture events (regime, ethnicity, caste, LGBTQ, child marriage, rural, wealth)
 - 23 technology timeline events (radio 1930s → COVID 2020s + mobile money for East/West Africa, 2007+)
-- 41 late-life events: retirement arc, partner decline/dementia/death arc, grandchildren, health decline, legacy reflection, loneliness; **plus** elective surgery, serious diagnosis (with palliative/experimental branches), refusing treatment on principle, pension contribution decision, retired_comfortable milestone
-- 28 children arc events: school milestones, teen years, adult child relationships, child estrangement/reconciliation
-- 40 fame/karma events: fame consequences at different tiers, karma payoffs, hobby payoffs (painting, music, writing, fitness, language, cooking), friendship depth arcs
-- 41 texture events: rural developing world (with country-specific city names), pre-1960 era, career peak/decline
-- 42 society events: women's rights milestones by country/year, healthcare by archetype, language suppression/identity
-- 102 world events: Cold War specifics, famines, economic cycles, national traumas; **plus** Partition of India, Rwandan genocide (acute + aftermath), post-Apartheid election + pass laws, Yugoslav wars civilian experience, Iranian Revolution street-level, Korean War division, Cultural Revolution China
-- 55+ career × regime events: journalist/teacher/soldier/police/civil servant/farmer/artist under authoritarian regimes; plus lawyer ethics, accountant fraud discovery, engineer safety tradeoffs, doctor burnout
-- 11 friend lifecycle events: drifting apart, values clash, reconnecting, friend's divorce/success/illness/death, asking for money (`events_friends.js`)
-- 10 business arc events: key hire, first big client, acquisition offer, losing a client, market downturn, cashflow crisis, failure and restart (`events_business.js`)
-- 12 sibling events: childhood rivalry/alliance, sibling emigrates, wedding, borrowing money, estrangement, late illness, death (`events_siblings.js`)
-- 10 university depth events: first week, formative professor, academic failure, dropout decision, scholarship pressure, debt, first-gen, job gap (`events_education_arc.js`)
-- 17 post-marriage arc events: infidelity, couples therapy, partner illness (pre-tickPartner), long-haul happiness, separate interests (`events_romance_arc.js`)
-- 5 addiction recovery arc events: social drinking test, anniversary, old using friend, rehab graduate speaking, long-term sobriety milestone (`events_consequence.js`)
-- 13 second-generation immigrant + refugee resettlement events: child language loss, homeland question, values clash, trip home; **plus** resettlement arrival, housing, first job, language class, contact home, one-year anniversary (`events_immigration.js`)
-- 7 adolescence identity events: racial/gender discrimination, religious doubt vs. family, talent discovery, defining friendship, betrayal, political awakening under authoritarianism, body image (`events_adolescence.js`)
-- 8 fertility depth events: miscarriage, late miscarriage, IVF consideration/outcome, traditional remedy, choosing childlessness, being questioned about it, late pregnancy complications (`events_fertility.js`)
-- 12 career late-arc + wealth gap + rural-to-urban events: senior room moment, defining case, protégé payoff, 20-year reflection; family approach for money, philanthropy, wealth isolation, estate planning; city arrival, accommodation, village network loss, family crisis pull (`events_career_wealth.js`)
-- 10 wealthy_gulf and wealthy_east events: Gulf oil boom childhood, Saudi female navigation, foreign worker observation, Hajj proximity, reform wave; Japan company culture and bubble burst; Korean exam pressure and military service; Singapore/Taiwan meritocracy (`events_gulf_east.js`)
-- 5 grief follow-up events: parent house-clearing, first holiday without parent, inheritance conflict, friend death follow-up, sibling death follow-up (`events_grief.js`)
+- Late-life events: retirement arc, partner decline/dementia/death arc, grandchildren, health decline, legacy reflection, loneliness; elective surgery, serious diagnosis, pension contribution, retired_comfortable milestone
+- Children arc events: school milestones, teen years, adult child relationships, child estrangement/reconciliation
+- Fame/karma events: fame consequences at different tiers, karma payoffs, hobby payoffs (painting, music, writing, fitness, language, cooking), friendship depth arcs
+- Texture events: rural developing world (country-specific city names), pre-1960 era, career peak/decline
+- Society events: women's rights milestones by country/year, healthcare by archetype, language suppression/identity
+- 110+ world events: Cold War specifics, famines, economic cycles, national traumas; Partition of India, Rwandan genocide (acute + aftermath), post-Apartheid election + pass laws, Yugoslav wars, Iranian Revolution street-level, Korean War division, Cultural Revolution China, Chechen war (2 variants), 1998 Russian crash, Baltic Singing Revolution, Baltic economic recovery, post-Soviet hyperinflation, and more — 7 events have factual `context` fields (Rwandan genocide, Great Leap famine, Holodomor, Khmer Rouge, post-Soviet shock therapy, 9/11, Berlin Wall, Cultural Revolution)
+- 55+ career × regime events: journalist/teacher/soldier/police/civil servant/farmer/artist under authoritarian regimes; lawyer ethics, accountant fraud discovery, engineer safety tradeoffs, doctor burnout
+- 11 friend lifecycle events: drifting apart, values clash, reconnecting, friend's divorce/success/illness/death, asking for money
+- 10 business arc events: key hire, first big client, acquisition offer, losing a client, market downturn, cashflow crisis, failure and restart
+- 12 sibling events: childhood rivalry/alliance, sibling emigrates, wedding, borrowing money, estrangement, late illness, death
+- 10 university depth events: first week, formative professor, academic failure, dropout decision, scholarship pressure, debt, first-gen, job gap
+- 17 post-marriage arc events: infidelity, couples therapy, partner illness, long-haul happiness, separate interests
+- 26 consequence events: illiteracy, post-9/11 Muslim discrimination, years abroad, COVID downstream, addiction recovery arc (5 events), STI arc, driving licence, late-life smoking
+- 13 second-generation immigrant + refugee resettlement events: child language loss, homeland question, values clash, trip home; resettlement arrival, housing, first job, language class, contact home
+- 7 adolescence identity events: racial/gender discrimination, religious doubt vs. family, talent discovery, defining friendship, betrayal, political awakening, body image
+- 8 fertility depth events: miscarriage, late miscarriage, IVF consideration/outcome, traditional remedy, choosing childlessness, late pregnancy complications
+- 12 career late-arc + wealth gap + rural-to-urban events: senior room moment, defining case, protégé payoff, 20-year reflection; philanthropy, wealth isolation, estate planning; city arrival, village network loss
+- 10 wealthy_gulf and wealthy_east events: Gulf oil boom childhood, Saudi female navigation, foreign worker observation, Hajj proximity; Japan company culture; Korean exam pressure and military service; Singapore/Taiwan meritocracy
+- 5 grief follow-up events: parent house-clearing, first holiday without parent, inheritance conflict, friend/sibling death follow-up
+- 25 follow-through events (events_followthrough.js): flag follow-throughs for racism, lgbtq rejection, abusive relationship, communal childhood, cancer survivor, food insecurity, and more
+- 18 additional follow-through events (events_followthrough_2.js): extended flag arcs
+- 13 relationship quality events: threshold-gated events for partner contempt/warmth/repair, child drift/estrangement/closeness, sibling formality/warmth, fading friendship
+- 12 formative wound + decade reflection events: once-firing wound events (ages 6–11) + decade reflections at 30/40/50/60
+- 21 small-life moments: named friendships, first crushes, formative teachers, stranger kindness, first apartment
+- 15 activity payoff events: downstream consequences for extracurricular clubs, therapy veteran, generous, tattooed, pierced
+- 24 place-based events: family moves, internal migration, arrival texture, neighbourhood-specific conditions
+- 10 infrastructure events: power cuts, floods, traffic, air quality, water shortage
+- 11 Rust Belt + post-Soviet urban decline arc events (dying city)
+- 30+ city-specific texture events: Lagos, Mumbai, Cairo, Mexico City, Moscow (era-split), and more
+- 29 rural/suburban texture events: water walk, market day, electrification, brain drain, kolkhoz dissolution, panchayat, ejido, Midwest church, post-Soviet village
+- **15 post-Soviet arc events** (events_post_soviet.js): communist childhood (Pioneer induction, space age optimism, job assignment), 1990s collapse (factory closure, savings wiped, sudden poverty shame), oligarch split (take it or decline), emigration wave (Jewish/Law of Return, German Spätaussiedler, professional brain drain), nostalgia and returning emigrant follow-throughs
 
 ### What still needs work — Priority Roadmap
 
 *Previous roadmap (items 1–16) complete. See git history. The roadmap below is built from a structured brainstorm session and reflects explicit design decisions.*
 
 ---
-
-#### BUILD 1 — Post-Soviet Arc (two PRs, ships next)
-
-**PR A — World events** (self-contained):
-- Rolling series 1991–1998, per-country gated: Baltic states exit early and recover, Poland shock-therapy arc, Russia/Ukraine spiral through 1998 financial crisis
-- Key world events: Soviet collapse 1991, 1990s hyperinflation wave (Russia/Ukraine/Romania/Bulgaria), Chechen war 1994–96, 1998 Russian financial crash
-- Each event gets a `context` field (2–3 sentence factual note, surfaced as optional expandable in UI — see Build 6)
-- Sets flags: `soviet_collapse_lived`, `savings_wiped_hyperinflation`, `communist_childhood`, `post_soviet_chaos`
-
-**PR B — `events_post_soviet.js`** (depends on PR A flags):
-- **Communist childhood**: Soviet core — Pioneer movement, five-year plan certainty, space age optimism; Eastern bloc — the ambivalence of imposed Communism; East Germany — Stasi surveillance at the personal level; Romania/Bulgaria — the grimmer, harder variant
-- **1990s personal collapse**: factory closure notification, hyperinflation eating a lifetime's savings overnight (prices written in chalk, changed before you finish eating), the specific shame of sudden poverty after guaranteed stability
-- **Oligarch split**: player ends up on either side based on prior flags (money, business background, criminal record). Taking the privatization path unlocks subsequent events that make the cost explicit. Declining means watching from outside.
-- **Emigration wave**: gated by ethnicity/religion — Jewish characters → Israel (Law of Return); German-heritage → Germany (Spätaussiedler); everyone else → US/West (educated, credential-less, often driving taxis)
 
 ---
 
@@ -329,7 +364,7 @@ Generic events are a last resort. Specific events — ones that could only fire 
 
 **Relationship history UI**: Translate relationship flags into readable labels on relationship cards in `LifeScreen.jsx`. "Had a falling-out (2003)", "Reconciled (2018)", "Estranged." No new data model — the flags exist, just need a display layer.
 
-**Political leaning system**: `political_leaning` state field (`'left'|'centre'|'right'|'nationalist'|'dissident'|'apolitical'`), earned through events only (born neutral). Shaped by: adolescence political awakening event, career_regime events, world events (living through a coup, exile, etc.). Gates text variants and which choices appear.
+**Political leaning system** ✅ DONE: `political_leaning` state field added, displayed in Stats tab. Earned through events only (born null). Wired from adolescence political awakening event, career-regime events, world events. `p.setPolitical(value)` available in effect proxy.
 
 **Late-life reconciliation arc**: Attempt to repair estranged child/sibling relationship in 60s–70s. Success: `reconciled_damaged` flag (relationship quality restored but caps lower than undamaged). Failure: `permanently_estranged`. Both paths lead to some form of closure — the attempt itself is the arc.
 
@@ -339,9 +374,9 @@ Generic events are a last resort. Specific events — ones that could only fire 
 
 **Social media arc** (replaces current thin system): Era-gated, country-specific platforms (Facebook/MySpace in West, VKontakte in Russia, Weibo in China, MXit in South Africa). Arc: genuine excitement → addictive phase → toxicity/documented harm → choosing to leave or not. Character events at each stage, gated by `currentYear` and archetype.
 
-**Mid-life reflection events**: At 40 and 60, an optional event fires generating a short narrative of the life so far. Same flag-to-prose logic as `generateEpitaph` but framed as a living first-person reflection, not an obituary.
+**Mid-life reflection events** ✅ PARTIALLY DONE: Decade reflection events at 30/40/50/60 fire via `events_desires.js`, gated on `desire` to show how the character's formative wound has shaped them. Full flag-to-prose mid-life narrative (like a living epitaph) still not implemented.
 
-**Historical context `context` field** on world events: 2–3 sentence factual note per event, displayed as an optional expandable in the UI. Prioritise major traumas (genocide, famine, revolution) first; backfill economic events later.
+**Historical context `context` field** on world events ✅ DONE: `context` field added to world event shape, displayed as optional expandable in WorldEvent display component. All new world events should include a `context` field; backfill existing major events over time.
 
 ---
 
@@ -448,10 +483,7 @@ Generic events are a last resort. Specific events — ones that could only fire 
 - Default 'Random Life' flow unchanged — curated mode is the opt-in for intentional play
 - Educational use case: a teacher can assign "play as a woman born in 1965 in rural India" and the whole class starts from the same character
 
-**'Who Am I?' living identity card** (Stats tab):
-- 3–4 sentences of prose, regenerated each year, using the same flag-to-prose system as `generateEpitaph`
-- Framed as present-tense identity: "You are a 34-year-old Kenyan software developer. You emigrated at 26. You have two children and a marriage that has been tested. You left your faith behind in your twenties."
-- Surfaces accumulated identity without spoiling the epitaph — the living version is descriptive, not evaluative
+**'Who Am I?' living identity card** ✅ DONE: `generateIdentityCard(state)` in gameEngine.js. Displayed in Stats tab as "Who You Are". 3–4 sentences of present-tense identity prose, regenerated each year. Surfaces flags/state without spoiling the epitaph.
 
 **Ageing and elder status by archetype** (new late_life event variants):
 - `wealthy_east`, `subsaharan`, `developing_urban`, `post_soviet` archetypes: elders have social role, are consulted, are the repository of family memory — late-life events reflect authority and connection
@@ -1518,7 +1550,7 @@ Beyond the climate arc (future-facing), historical natural disasters that shaped
 
 ---
 
-#### BUILD 54 — Flag Audit & Follow-Through Pass (Ongoing)
+#### BUILD 54 — Flag Audit & Follow-Through Pass ✅ CORE DONE (ongoing maintenance)
 
 **The problem**: ~400 flags are set by events and never checked again. They function as labels with no downstream consequence — the game records trauma, resilience, love, and loss, but only uses that record at death (epitaph), not during the life.
 
@@ -1597,7 +1629,7 @@ Flags still orphaned that carry significant weight — add follow-through events
 
 - **The dream/memory**: Occasionally an event "replays" an earlier event with new framing. At 55, a childhood event is recalled — not the original text but a memory of it, recontextualized by what the character has become. Requires no new state, just careful event design that references prior flags.
 
-- **The newspaper headline UI**: One-line historical headlines injected into the Life screen at historically accurate moments. Not events — just texture. "BERLIN WALL FALLS" on November 9, 1989. "MANDELA FREE" on February 11, 1990. These cost almost nothing to implement and dramatically increase immersion.
+- **The newspaper headline UI** ✅ DONE: `src/data/headlines.js` — ~50 major historical moments injected as styled log entries. Rendered with distinct visual treatment in the life log.
 
 - **Weather as texture**: Seasonal descriptors in the event or life log — "a dry harmattan wind carries red dust through the city" for Abuja in January, "the monsoon has been six weeks late" for Bangladesh in July. Gate on country + approximate season. No stat effects; purely atmospheric.
 
@@ -1662,7 +1694,9 @@ These principles should inform the prose register of every new event, not just e
 src/
   data/
     countries.js              — 74 countries with full demographic data
-    events.js                 — root event file, imports and exports EVENTS array
+    places.js                 — 250+ named places across all 74 countries (scale, region, type, population)
+    headlines.js              — ~50 major historical headlines for life log injection
+    events.js                 — root event file, imports and exports EVENTS array (~1,600+ events total)
     events_culture.js         — regime/ethnicity/education/LGBTQ events
     events_gender.js          — gender-specific events
     events_historical.js      — historical period events
@@ -1676,44 +1710,60 @@ src/
     events_grief.js           — grief and loss events
     events_grief_mental.js    — grief-mental health intersection events
     events_religion_arc.js    — faith arc events
-    events_late_life.js       — 35 late-life events
-    events_children_arc.js    — 28 children arc events
-    events_fame_karma.js      — 40 fame/karma/hobby/friendship events
-    events_texture.js         — 41 rural/pre-1960/career texture events (city names dynamic per country)
-    events_society.js         — 42 society events (women's rights, healthcare, language)
-    events_friends.js         — 11 friend lifecycle events (drift, reconnect, illness, death, money)
-    events_business.js        — 10 business arc events (growth, setbacks, acquisition, failure)
-    events_siblings.js        — 12 sibling events (rivalry, emigration, estrangement, late death)
-    events_education_arc.js   — 10 university depth events (failure, dropout, debt, first-gen)
-    events_adolescence.js     — 7 adolescence identity events (discrimination, faith doubt, talent, friendship, betrayal, politics, body)
-    events_fertility.js       — 8 fertility depth events (miscarriage, IVF, childlessness, late pregnancy)
-    events_career_wealth.js   — 12 career late-arc + wealth gap + rural-to-urban events
-    events_gulf_east.js       — 10 wealthy_gulf and wealthy_east specific events
-    worldEvents.js            — 102 world history events (year+country/archetype gated)
+    events_late_life.js       — late-life events (retirement, partner decline, health decline, legacy)
+    events_children_arc.js    — children arc events
+    events_fame_karma.js      — fame/karma/hobby/friendship events
+    events_texture.js         — rural/pre-1960/career texture events
+    events_society.js         — women's rights, healthcare, language suppression/identity
+    events_romance_arc.js     — post-marriage arc events
+    events_consequence.js     — downstream consequence events (illiteracy, addiction arc, STI arc)
+    events_friends.js         — friend lifecycle events
+    events_business.js        — business arc events
+    events_siblings.js        — sibling events
+    events_education_arc.js   — university depth events
+    events_adolescence.js     — adolescence identity events
+    events_fertility.js       — fertility depth events
+    events_career_wealth.js   — career late-arc, wealth gap, rural-to-urban events
+    events_gulf_east.js       — wealthy_gulf and wealthy_east specific events
+    events_followthrough.js   — 25 flag follow-through events
+    events_followthrough_2.js — 18 additional flag follow-through events
+    events_relationship_quality.js — 13 relationship quality threshold events
+    events_desires.js         — formative wound events + decade reflections (30/40/50/60)
+    events_small_life.js      — named friendships, first crushes, formative teachers, first home
+    events_activity_payoffs.js — downstream consequences for activity flags
+    events_places.js          — place-based events (moves, arrival texture, migration)
+    events_infrastructure.js  — infrastructure events (power cuts, floods, traffic, water shortage)
+    events_dying_city.js      — Rust Belt + post-Soviet urban decline arc
+    events_cities.js          — city-specific texture (Lagos, Mumbai, Cairo, Mexico City, Moscow)
+    events_cities_extended.js — extended city texture across more cities
+    events_rural_texture.js   — rural/suburban texture (water walk, electrification, brain drain)
+    events_post_soviet.js     — 15 post-Soviet arc events (communist childhood, 1990s collapse, oligarch split, emigration wave)
+    worldEvents.js            — 110+ world history events (year+country/archetype gated); 8 events have `context` fields
+    headlines.js              — ~70 major historical headline entries (year-matched, injected as log entries)
     careers.js                — all career definitions with career-specific events
     crimes.js                 — criminal activity system
     activities.js             — activities panel options
     assets.js                 — property/vehicle data
     destinations.js           — travel destinations
     illnesses.js              — illness/disease system
-    ribbons.js                — end-of-life achievement ribbons
+    ribbons.js                — end-of-life achievement ribbons (60+)
   engine/
     gameEngine.js             — core simulation: buildG, advanceYear, emigrate,
-                                generateEpitaph, buildEffectProxy, resolveProxyExtras,
-                                tickPartner, attemptCrime
+                                generateEpitaph, generateIdentityCard, buildYearTexture,
+                                buildEffectProxy, resolveProxyExtras, tickPartner, attemptCrime
     casinoEngine.js
     gangEngine.js
     lotteryEngine.js
   store/
     gameStore.js              — Zustand store, INITIAL_STATE, all actions including
-                                resolveTrial, pendingTrial state
+                                resolveTrial, pendingTrial state, relocateTo
   components/
     LifeScreen.jsx            — main game screen (tabs: Life, Stats, Activities, Relationships, Prison)
-                                includes trial modal, gender markers on people, prison tab always accessible
+                                includes trial modal, gender markers, "Who You Are" card, newspaper headlines
     ActivitiesPanel.jsx       — activities tab
     BirthScreen.jsx           — character creation
     DeathScreen.jsx           — death/epitaph screen
-    EventBox.jsx              — event display component
+    EventBox.jsx              — event display + world event context expandable
     TitleScreen.jsx
     StatBar.jsx
     FlagChip.jsx
