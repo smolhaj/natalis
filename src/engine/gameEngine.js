@@ -359,6 +359,7 @@ function buildEffectProxy(state) {
     proxy._hobbyDeltas[hobbyId] = (proxy._hobbyDeltas[hobbyId] ?? 0) + delta
   }
   proxy.partnerRel = (delta) => { proxy._partnerRelDelta = (proxy._partnerRelDelta ?? 0) + delta }
+  proxy.updatePartnerRel = proxy.partnerRel
   proxy.makePartner = (overrides = {}) => {
     const myGender = state.character.gender
     const isLGBTQ = proxy.flags.includes('lgbtq_identity')

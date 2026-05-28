@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useGameStore } from '../store/gameStore'
 import StatBar from './StatBar'
 import FlagChip from './FlagChip'
@@ -52,6 +52,15 @@ export default function LifeScreen() {
   const [showActivities, setShowActivities] = useState(false)
   const [activeTab, setActiveTab] = useState('life')
   const [logMode, setLogMode] = useState('recent')
+  const eventRef = useRef(null)
+
+  const pendingEvent = useGameStore(s => s.pendingEvent)
+
+  useEffect(() => {
+    if (pendingEvent && eventRef.current) {
+      eventRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    }
+  }, [pendingEvent])
   const [showMoveModal, setShowMoveModal] = useState(false)
   const [moveStep, setMoveStep] = useState('pick') // 'pick' | 'confirm'
   const [selectedPlace, setSelectedPlace] = useState(null)
@@ -65,7 +74,6 @@ export default function LifeScreen() {
   const currentCountry = useGameStore(s => s.currentCountry)
   const residencyStatus = useGameStore(s => s.residencyStatus)
   const log          = useGameStore(s => s.log)
-  const pendingEvent = useGameStore(s => s.pendingEvent)
   const career       = useGameStore(s => s.career)
   const education    = useGameStore(s => s.education)
   const partner      = useGameStore(s => s.partner)
@@ -308,7 +316,9 @@ export default function LifeScreen() {
           )}
 
           {/* Pending event */}
-          {pendingEvent && <EventBox event={pendingEvent} />}
+          <div ref={eventRef}>
+            {pendingEvent && <EventBox event={pendingEvent} />}
+          </div>
 
           {/* Last outcome flash */}
           {lastOutcome && !pendingEvent && (
@@ -338,13 +348,15 @@ export default function LifeScreen() {
                       <span className="text-lg flex-shrink-0">📍</span>
                       <div className="min-w-0">
                         <p className="font-semibold text-natalis-text text-sm truncate">
-                          {liveNbr ? `${liveNbr}` : livePlace.name}
+                          {livePlace.name}{livePlace.region && livePlace.region !== livePlace.name ? `, ${livePlace.region}` : ''}
                         </p>
                         <p className="text-natalis-muted text-xs truncate">
-                          {liveNbr ? livePlace.name : livePlace.region}
+                          {liveNbr && <span>{liveNbr} <span className="opacity-60">· neighborhood</span></span>}
                           {nbTier && (
-                            <span className="ml-2 font-semibold" style={{ color: tierColors[nbTier] }}>
-                              · {tierLabel[nbTier]}
+                            <span className={liveNbr ? 'ml-2' : ''}>
+                              <span className="font-semibold" style={{ color: tierColors[nbTier] }}>
+                                {liveNbr ? '· ' : ''}{tierLabel[nbTier]}
+                              </span>
                             </span>
                           )}
                         </p>
@@ -1126,6 +1138,21 @@ export default function LifeScreen() {
                 )
               })()}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Pending event indicator (shown when event is waiting off-screen) ── */}
+      {pendingEvent && (
+        <div className="fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-natalis-border shadow-card-lg">
+          <div className="max-w-2xl mx-auto px-4 py-3">
+            <button
+              onClick={() => eventRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })}
+              className="w-full py-3 rounded-xl font-bold text-sm text-white transition-all active:scale-95"
+              style={{ background: 'linear-gradient(135deg, #007aff, #0055cc)' }}
+            >
+              ↑ A life event needs your decision
+            </button>
           </div>
         </div>
       )}
