@@ -176,7 +176,7 @@ export function deriveInitialSiblings(char) {
     return {
       name: `${firstName} ${char.surname}`,
       gender,
-      ageDiff: randomBetween(-8, 8),
+      ageDiff: randomBetween(-3, 8),
       alive: true,
       relationshipQuality: clamp(baseQ + randomBetween(-15, 15), 10, 100),
     }

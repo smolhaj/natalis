@@ -472,7 +472,8 @@ export const GENDER_EVENTS = [
       G.character.gender === 'female' &&
       G.age >= 13 && G.age <= 17 &&
       G.character.country.archetype === 'subsaharan' &&
-      G.character.country.childMarriageRisk > 0.15,
+      G.character.country.childMarriageRisk > 0.15 &&
+      G.parents?.father?.alive !== false,
     text: 'An older man\'s family has come to yours. They have brought cattle and cash. Your father counts it carefully. Nobody asks you anything. You understand this is already decided.',
     context: null,
     choices: [
