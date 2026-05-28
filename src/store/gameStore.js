@@ -143,6 +143,7 @@ const INITIAL_STATE = {
   pendingTrial: null,
   desire: null,
   political_leaning: null,
+  conditions: [],
 }
 
 export const useGameStore = create((set, get) => ({
@@ -155,6 +156,87 @@ export const useGameStore = create((set, get) => ({
   goToBirth: () => {
     const character = createCharacter()
     set({ ...INITIAL_STATE, screen: 'birth', character })
+  },
+
+  goToCuratedBirth: () => {
+    const character = createCharacter()
+    set({ ...INITIAL_STATE, screen: 'curated_birth', character })
+  },
+
+  startCuratedGame: (overrides) => {
+    const character = createCharacter(overrides)
+    const stats = deriveInitialStats(character)
+    const money = deriveInitialMoney(character)
+    const parents = deriveInitialParents(character)
+    const siblings = deriveInitialSiblings(character)
+    const initialGpa = parseFloat(Math.min(4.0, 1.5 + stats.smarts * 0.02).toFixed(2))
+    set({
+      screen: 'life',
+      character,
+      stats,
+      flags: [],
+      regret: 0,
+      age: 0,
+      currentYear: character.birthYear,
+      usedEventMap: new Map(),
+      queue: [],
+      pendingEvent: null,
+      mem: {},
+      log: [{ age: 0, text: deriveBirthText(character), isKey: true }],
+      career: null,
+      education: { level: 'none', field: null, enrolled: null },
+      partner: null,
+      children: [],
+      criminalRecord: [],
+      inPrison: false,
+      prisonSentence: 0,
+      pendingTrial: null,
+      worldEventsFired: new Set(),
+      actionsThisYear: 0,
+      dead: false,
+      causeOfDeath: null,
+      ribbon: null,
+      epitaph: '',
+      money,
+      debt: 0,
+      hooksUpCount: 0,
+      parents,
+      siblings,
+      karma: 50,
+      fame: 0,
+      pets: [],
+      travels: [],
+      assets: { properties: [], vehicles: [] },
+      licenceObtained: false,
+      retired: false,
+      friends: [],
+      socialMedia: { followers: 0, verified: false, genre: null },
+      martialArts: { discipline: null, belt: 0 },
+      birthControl: false,
+      gpa: initialGpa,
+      mentalHealth: { condition: null, medicating: false, therapy: false },
+      conditions: [],
+      hobbies: {},
+      fitness: 50,
+      creditScore: 700,
+      pendingMinigame: null,
+      business: null,
+      wanted: false,
+      wantedFor: null,
+      assumedIdentity: null,
+      exPartners: [],
+      pendingPartner: null,
+      currentCountry: character.country,
+      currentPlace: character.birthPlace ?? null,
+      currentNeighborhoodTier: character.birthNeighborhoodTier ?? null,
+      currentNeighborhoodName: character.birthNeighborhoodName ?? null,
+      residencyStatus: 'citizen',
+      yearsAbroad: 0,
+      religion: null,
+      classTier: null,
+      desire: null,
+      political_leaning: null,
+    })
   },
 
   // ── Birth screen ────────────────────────────────────────────────────────────

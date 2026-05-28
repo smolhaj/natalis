@@ -2,6 +2,7 @@ import { useGameStore } from '../store/gameStore'
 
 export default function TitleScreen() {
   const goToBirth = useGameStore(s => s.goToBirth)
+  const goToCuratedBirth = useGameStore(s => s.goToCuratedBirth)
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-natalis-bg px-6">
@@ -38,14 +39,22 @@ export default function TitleScreen() {
           ))}
         </div>
 
-        {/* Start button */}
-        <button
-          onClick={goToBirth}
-          className="w-full py-4 rounded-2xl text-white font-bold text-lg shadow-card-lg transition-all active:scale-95"
-          style={{ background: 'linear-gradient(135deg, #007aff, #0055cc)' }}
-        >
-          Start a New Life
-        </button>
+        {/* Start buttons */}
+        <div className="space-y-3">
+          <button
+            onClick={goToBirth}
+            className="w-full py-4 rounded-2xl text-white font-bold text-lg shadow-card-lg transition-all active:scale-95"
+            style={{ background: 'linear-gradient(135deg, #007aff, #0055cc)' }}
+          >
+            Random Life
+          </button>
+          <button
+            onClick={goToCuratedBirth}
+            className="w-full py-3 rounded-2xl font-bold text-bit-blue text-sm border-2 border-bit-blue bg-white transition-all active:scale-95"
+          >
+            Craft a Life
+          </button>
+        </div>
 
         <p className="text-natalis-muted text-xs">
           Your choices shape everything.
