@@ -5,6 +5,7 @@ import FlagChip from './FlagChip'
 import EventBox from './EventBox'
 import { getCountryFlag, REGIME_LABELS, REGIME_COLORS, RELIGION_LABELS, RESIDENCY_LABELS } from '../utils/countryUtils'
 import { getCountryRegime, generateIdentityCard, DESIRE_LABELS } from '../engine/gameEngine'
+import { PLACES, getPlacesForCountry, getRelocationCost } from '../data/places'
 import ActivitiesPanel from './ActivitiesPanel'
 
 const PHASE_LABELS = {
@@ -51,6 +52,9 @@ export default function LifeScreen() {
   const [showActivities, setShowActivities] = useState(false)
   const [activeTab, setActiveTab] = useState('life')
   const [logMode, setLogMode] = useState('recent')
+  const [showMoveModal, setShowMoveModal] = useState(false)
+  const [moveStep, setMoveStep] = useState('pick') // 'pick' | 'confirm'
+  const [selectedPlace, setSelectedPlace] = useState(null)
 
   const character    = useGameStore(s => s.character)
   const stats        = useGameStore(s => s.stats)
@@ -119,6 +123,10 @@ export default function LifeScreen() {
   const mem          = useGameStore(s => s.mem)
   const desire       = useGameStore(s => s.desire)
   const fullState    = useGameStore(s => s)
+  const currentPlace = useGameStore(s => s.currentPlace)
+  const currentNeighborhoodName = useGameStore(s => s.currentNeighborhoodName)
+  const currentNeighborhoodTier = useGameStore(s => s.currentNeighborhoodTier)
+  const relocateTo   = useGameStore(s => s.relocateTo)
 
   // Derive addiction stage label for display
   const getAddictionStage = () => {
@@ -315,8 +323,44 @@ export default function LifeScreen() {
             const PHASE_ORDER = ['early_childhood','childhood','adolescence','young_adult','midlife','late_life']
             const phaseForAge = (a) => a <= 5 ? 'early_childhood' : a <= 11 ? 'childhood' : a <= 17 ? 'adolescence' : a <= 29 ? 'young_adult' : a <= 49 ? 'midlife' : 'late_life'
             const phaseLabel = { early_childhood: 'Early Childhood (0–5)', childhood: 'Childhood (6–11)', adolescence: 'Adolescence (12–17)', young_adult: 'Young Adult (18–29)', midlife: 'Midlife (30–49)', late_life: 'Late Life (50+)' }
+            const livePlace = currentPlace ?? character.birthPlace
+            const liveNbr = currentNeighborhoodName ?? character.birthNeighborhoodName
+            const tierColors = { informal: '#ff3b30', working_class: '#ff9500', middle_class: '#34c759', elite: '#007aff' }
+            const tierLabel = { informal: 'Informal', working_class: 'Working Class', middle_class: 'Middle Class', elite: 'Elite' }
+            const nbTier = currentNeighborhoodTier ?? character.birthNeighborhoodTier
             return (
               <div className="space-y-3">
+
+                {/* Location bar */}
+                {livePlace && (
+                  <div className="bg-white rounded-2xl border border-natalis-border px-4 py-3 flex items-center justify-between">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="text-lg flex-shrink-0">📍</span>
+                      <div className="min-w-0">
+                        <p className="font-semibold text-natalis-text text-sm truncate">
+                          {liveNbr ? `${liveNbr}` : livePlace.name}
+                        </p>
+                        <p className="text-natalis-muted text-xs truncate">
+                          {liveNbr ? livePlace.name : livePlace.region}
+                          {nbTier && (
+                            <span className="ml-2 font-semibold" style={{ color: tierColors[nbTier] }}>
+                              · {tierLabel[nbTier]}
+                            </span>
+                          )}
+                        </p>
+                      </div>
+                    </div>
+                    {age >= 18 && !inPrison && (
+                      <button
+                        onClick={() => { setMoveStep('pick'); setSelectedPlace(null); setShowMoveModal(true) }}
+                        className="ml-2 flex-shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold bg-gray-100 text-natalis-muted hover:bg-gray-200 transition-all"
+                      >
+                        Move
+                      </button>
+                    )}
+                  </div>
+                )}
+
                 {/* Toggle */}
                 <div className="flex gap-2 bg-white rounded-2xl p-1.5 border border-natalis-border">
                   {[['recent','Recent 40'],['timeline','By Phase']].map(([mode, label]) => (
@@ -962,6 +1006,125 @@ export default function LifeScreen() {
             </div>
             <div className="overflow-y-auto max-h-[75vh]">
               <ActivitiesPanel onClose={() => setShowActivities(false)} />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Relocation Modal ───────────────────────────────────────────── */}
+      {showMoveModal && (
+        <div className="fixed inset-0 z-50 flex flex-col justify-end" onClick={() => setShowMoveModal(false)}>
+          <div className="absolute inset-0 bg-black/40" />
+          <div className="relative z-50 bg-natalis-bg rounded-t-3xl max-h-[85vh] overflow-hidden shadow-card-lg" onClick={e => e.stopPropagation()}>
+            <div className="flex justify-center pt-2 pb-1">
+              <div className="w-10 h-1 bg-gray-300 rounded-full" />
+            </div>
+            <div className="overflow-y-auto max-h-[80vh] pb-6">
+              {moveStep === 'pick' && (() => {
+                const liveCountry = currentCountry ?? character.country
+                const samePlaces = getPlacesForCountry(liveCountry.name).filter(p => p.id !== (currentPlace ?? character.birthPlace)?.id)
+                const fromPlace = currentPlace ?? character.birthPlace
+                const tierColors = { informal: '#ff3b30', working_class: '#ff9500', middle_class: '#34c759', elite: '#007aff' }
+                const tierLabel = { informal: 'Informal', working_class: 'Working Class', middle_class: 'Middle Class', elite: 'Elite' }
+                const scaleLabel = { village: 'Village', town: 'Town', mid_city: 'City', major_city: 'Major City', megacity: 'Megacity' }
+                return (
+                  <div className="px-4 py-3 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <p className="font-bold text-natalis-text text-base">Move Within {liveCountry.name}</p>
+                      <button onClick={() => setShowMoveModal(false)} className="text-natalis-muted text-sm">✕ Close</button>
+                    </div>
+                    <p className="text-natalis-muted text-xs">Select a destination. Cost shown is the moving expense.</p>
+                    {samePlaces.length === 0 && (
+                      <p className="text-natalis-dim text-sm text-center py-6">No other places available in {liveCountry.name}.</p>
+                    )}
+                    <div className="space-y-2">
+                      {samePlaces.map(place => {
+                        const cost = getRelocationCost(fromPlace, place)
+                        const canAfford = (money ?? 0) >= cost
+                        return (
+                          <button
+                            key={place.id}
+                            onClick={() => { setSelectedPlace(place); setMoveStep('confirm') }}
+                            disabled={!canAfford}
+                            className="w-full text-left bg-white rounded-xl px-4 py-3 border border-natalis-border transition-all active:scale-95 disabled:opacity-40"
+                          >
+                            <div className="flex items-center justify-between">
+                              <div className="min-w-0">
+                                <p className="font-semibold text-natalis-text text-sm">{place.name}</p>
+                                <p className="text-natalis-muted text-xs">{place.region} · {scaleLabel[place.scale] ?? place.scale}</p>
+                              </div>
+                              <div className="text-right ml-3 flex-shrink-0">
+                                <p className="font-bold text-sm" style={{ color: canAfford ? '#34c759' : '#ff3b30' }}>
+                                  {cost === 0 ? 'Free' : `$${cost.toLocaleString()}`}
+                                </p>
+                                <p className="text-xs text-natalis-muted">{canAfford ? 'Can afford' : 'Too expensive'}</p>
+                              </div>
+                            </div>
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </div>
+                )
+              })()}
+              {moveStep === 'confirm' && selectedPlace && (() => {
+                const fromPlace = currentPlace ?? character.birthPlace
+                const cost = getRelocationCost(fromPlace, selectedPlace)
+                const canAfford = (money ?? 0) >= cost
+                const nbTierColors = { informal: '#ff3b30', working_class: '#ff9500', middle_class: '#34c759', elite: '#007aff' }
+                const nbTierLabels = { informal: 'Informal', working_class: 'Working Class', middle_class: 'Middle Class', elite: 'Elite' }
+                const affordableNbrs = Object.entries(selectedPlace.neighborhoods ?? {}).map(([tier, names]) => ({
+                  tier, names, label: nbTierLabels[tier], color: nbTierColors[tier],
+                }))
+                return (
+                  <div className="px-4 py-3 space-y-4">
+                    <div className="flex items-center gap-2">
+                      <button onClick={() => setMoveStep('pick')} className="text-natalis-muted text-sm">← Back</button>
+                      <p className="font-bold text-natalis-text text-base flex-1 text-center">Moving to {selectedPlace.name}</p>
+                    </div>
+                    <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 flex items-center justify-between">
+                      <div>
+                        <p className="font-semibold text-blue-800 text-sm">{selectedPlace.name}</p>
+                        <p className="text-blue-600 text-xs">{selectedPlace.region}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-bold text-blue-800 text-sm">${cost.toLocaleString()}</p>
+                        <p className="text-blue-600 text-xs">moving cost</p>
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold text-natalis-muted uppercase tracking-wider mb-2">Neighbourhood (where you end up)</p>
+                      <div className="space-y-2">
+                        {affordableNbrs.map(({ tier, names, label, color }) => (
+                          <button
+                            key={tier}
+                            disabled={!canAfford}
+                            onClick={() => {
+                              relocateTo(selectedPlace.id, tier)
+                              setShowMoveModal(false)
+                              setSelectedPlace(null)
+                            }}
+                            className="w-full text-left bg-white rounded-xl px-4 py-3 border border-natalis-border transition-all active:scale-95 disabled:opacity-40"
+                          >
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <p className="font-semibold text-natalis-text text-sm">{label}</p>
+                                <p className="text-natalis-muted text-xs">{names[0]}{names.length > 1 ? ` · ${names[1]}` : ''}</p>
+                              </div>
+                              <span className="text-xs font-bold px-2 py-1 rounded-full" style={{ backgroundColor: color + '22', color }}>
+                                {label}
+                              </span>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    {!canAfford && (
+                      <p className="text-red-500 text-xs text-center">You need ${cost.toLocaleString()} to move here. You have ${(money ?? 0).toLocaleString()}.</p>
+                    )}
+                  </div>
+                )
+              })()}
             </div>
           </div>
         </div>

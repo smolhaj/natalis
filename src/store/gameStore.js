@@ -67,6 +67,7 @@ import {
   prisonStartRiot,
   upgradeResidency,
   seekAsylum,
+  relocate,
 } from '../engine/gameEngine'
 import { COUNTRIES } from '../data/countries'
 import { CRIMES } from '../data/crimes'
@@ -134,6 +135,9 @@ const INITIAL_STATE = {
   exPartners: [],
   pendingPartner: null,
   currentCountry: null,
+  currentPlace: null,
+  currentNeighborhoodTier: null,
+  currentNeighborhoodName: null,
   residencyStatus: 'citizen',
   yearsAbroad: 0,
   pendingTrial: null,
@@ -241,6 +245,9 @@ export const useGameStore = create((set, get) => ({
       exPartners: [],
       pendingPartner: null,
       currentCountry: character.country,
+      currentPlace: character.birthPlace ?? null,
+      currentNeighborhoodTier: character.birthNeighborhoodTier ?? null,
+      currentNeighborhoodName: character.birthNeighborhoodName ?? null,
       residencyStatus: 'citizen',
       yearsAbroad: 0,
       religion: null,
@@ -380,10 +387,16 @@ export const useGameStore = create((set, get) => ({
     set(retire(state))
   },
 
-  emigrate: (countryName) => {
+  emigrate: (countryName, destPlaceId) => {
     const state = get()
     if (state.dead) return
-    set(emigrate(state, countryName))
+    set(emigrate(state, countryName, destPlaceId))
+  },
+
+  relocateTo: (placeId, neighborhoodTier) => {
+    const state = get()
+    if (state.dead) return
+    set(relocate(state, placeId, neighborhoodTier))
   },
 
   // ── Relationship actions ────────────────────────────────────────────────────

@@ -8,6 +8,7 @@ import { CRIMES } from '../data/crimes'
 import { CAREERS } from '../data/careers'
 import { PROPERTY_TYPES, VEHICLE_TYPES } from '../data/assets'
 import { ILLNESSES } from '../data/illnesses'
+import { PLACES, getPlacesForCountry, pickBirthPlace, pickNeighborhoodTier, pickNamedNeighborhood, getRelocationCost } from '../data/places'
 import { randomBetween, pickFrom, rollWeighted, clamp, chance } from '../utils/random'
 
 // ─── FlagSet ──────────────────────────────────────────────────────────────────
@@ -147,11 +148,17 @@ export function createCharacter(overrides = {}) {
     ? -0.15 : birthYear < 1980 && (country.gdp === 'low' || country.gdp === 'very_low') ? -0.10 : 0
   const literate = Math.random() < Math.max(0.05, litRate + eraLitAdj)
 
+  // Assign birth place
+  const birthPlace = pickBirthPlace(country, ruralUrban, wealthTier)
+  const birthNeighborhoodTier = pickNeighborhoodTier(wealthTier)
+  const birthNeighborhoodName = pickNamedNeighborhood(birthPlace, birthNeighborhoodTier)
+
   return {
     firstName, surname, name: `${firstName} ${surname}`,
     country, gender, birthYear, wealthTier, familyStability, familySize,
     initialStats,
     religion, ethnicity, ruralUrban, literate,
+    birthPlace, birthNeighborhoodTier, birthNeighborhoodName,
   }
 }
 
@@ -343,6 +350,10 @@ function buildEffectProxy(state) {
   proxy.setClassTier = (tier) => { proxy._classTier = tier }
   proxy.setMentalHealth = (updates) => { proxy._mentalHealthUpdates = { ...(proxy._mentalHealthUpdates ?? {}), ...updates } }
   proxy.setDesire = (key) => { proxy._desire = key }
+  proxy.relocate = (placeId, neighborhoodTier) => {
+    proxy._relocateTo = placeId
+    if (neighborhoodTier) proxy._relocateNeighborhoodTier = neighborhoodTier
+  }
   proxy.practiceHobby = (hobbyId, delta = 1) => {
     if (!proxy._hobbyDeltas) proxy._hobbyDeltas = {}
     proxy._hobbyDeltas[hobbyId] = (proxy._hobbyDeltas[hobbyId] ?? 0) + delta
@@ -431,6 +442,20 @@ function resolveProxyExtras(state, proxy) {
   if (proxy._religion !== undefined) next = { ...next, religion: proxy._religion }
   if (proxy._classTier !== undefined) next = { ...next, classTier: proxy._classTier }
   if (proxy._desire !== undefined) next = { ...next, desire: proxy._desire }
+  if (proxy._relocateTo) {
+    const destPlace = PLACES.find(p => p.id === proxy._relocateTo)
+    if (destPlace) {
+      const tier = proxy._relocateNeighborhoodTier ?? pickNeighborhoodTier(next.classTier ?? next.character?.wealthTier ?? 3)
+      const nbrName = pickNamedNeighborhood(destPlace, tier)
+      next = {
+        ...next,
+        currentPlace: destPlace,
+        currentNeighborhoodTier: tier,
+        currentNeighborhoodName: nbrName,
+        flags: [...new Set([...next.flags, 'relocated'])],
+      }
+    }
+  }
   // Track year-of-death for grief fog in buildYearTexture
   if (proxy._killParent && next.parents?.[proxy._killParent]) {
     next = { ...next, mem: { ...(next.mem ?? {}), parentDeathYear: next.currentYear } }
@@ -563,10 +588,16 @@ function buildG(state) {
     residencyStatus: state.residencyStatus ?? 'citizen',
     yearsAbroad: state.yearsAbroad ?? 0,
     desire: state.desire ?? null,
+    // Place system
+    place: state.currentPlace ?? state.character?.birthPlace ?? null,
+    birthPlace: state.character?.birthPlace ?? null,
+    neighborhood: state.currentNeighborhoodName ?? state.character?.birthNeighborhoodName ?? null,
+    neighborhoodTier: state.currentNeighborhoodTier ?? state.character?.birthNeighborhoodTier ?? null,
     // Enriched prose helpers: available in text: (G) => functions
     era: Math.floor(currentYear / 10) * 10,
     capital: state.character?.country?.capital ?? '',
     currency: state.character?.country?.currency ?? '',
+    cityName: (state.currentPlace ?? state.character?.birthPlace)?.name ?? state.character?.country?.capital ?? '',
   }
 }
 
@@ -2256,7 +2287,64 @@ export function retire(state) {
   }
 }
 
-export function emigrate(state, destCountryName) {
+// ─── Internal relocation ─────────────────────────────────────────────────────
+
+export function relocate(state, destPlaceId, destNeighborhoodTier) {
+  const destPlace = PLACES.find(p => p.id === destPlaceId)
+  if (!destPlace) return state
+
+  const fromPlace = state.currentPlace ?? state.character?.birthPlace
+  if (fromPlace?.id === destPlace.id) return state
+
+  const moveCost = getRelocationCost(fromPlace, destPlace)
+  if ((state.money ?? 0) < moveCost) {
+    return { ...state, log: [...state.log, { age: state.age, text: `You need $${moveCost.toLocaleString()} to move to ${destPlace.name}. You can't afford it right now.`, isKey: false }] }
+  }
+
+  const tier = destNeighborhoodTier ?? pickNeighborhoodTier(state.classTier ?? state.character?.wealthTier ?? 3)
+  const nbrName = pickNamedNeighborhood(destPlace, tier)
+  const fromName = fromPlace?.name ?? (state.currentCountry ?? state.character?.country)?.name ?? 'where you were'
+
+  const isSameCountry = destPlace.country === (state.currentCountry ?? state.character?.country)?.name
+
+  const logText = isSameCountry
+    ? `You move from ${fromName} to ${destPlace.name}${nbrName ? ` — ${nbrName}` : ''}. Moving costs $${moveCost.toLocaleString()}.`
+    : `You move to ${destPlace.name}, ${destPlace.country}${nbrName ? ` — ${nbrName}` : ''}. Moving costs $${moveCost.toLocaleString()}.`
+
+  return {
+    ...state,
+    currentPlace: destPlace,
+    currentNeighborhoodTier: tier,
+    currentNeighborhoodName: nbrName,
+    money: Math.max(0, (state.money ?? 0) - moveCost),
+    flags: [...new Set([...state.flags, 'relocated'])],
+    queue: [...(state.queue ?? []), {
+      id: `place_arrival_${destPlace.id}_${state.age}`,
+      phase: null, cooldown: 0, when: null,
+      text: buildArrivalText(fromPlace, destPlace, state),
+      choices: null,
+      effect: (p) => { p.m -= 3; p.s += 2 },
+    }],
+    log: [...state.log, { age: state.age, text: logText, isKey: true }],
+  }
+}
+
+function buildArrivalText(fromPlace, toPlace, state) {
+  const fromCity = fromPlace?.name ?? 'where you were'
+  const toCity = toPlace.name
+  const isUrbanArrival = ['urban', 'major_city', 'megacity'].includes(toPlace.type) || ['major_city', 'megacity', 'mid_city'].includes(toPlace.scale)
+  const isRuralArrival = toPlace.type === 'rural'
+
+  if (isUrbanArrival) {
+    return `${toCity} is larger than anything you expected. The volume of it — the traffic, the crowds, the distances between things — takes adjustment. You learn the routes. You find where the cheap food is. You begin the work of making a new place ordinary.`
+  }
+  if (isRuralArrival) {
+    return `The quiet of ${toCity} is the first thing. After ${fromCity}, the absence of constant sound is its own kind of sound. The pace is different here. The days have different shapes.`
+  }
+  return `${toCity} takes time to become familiar. The streets, the rhythms, the unwritten rules of who goes where. You are still learning which of these will become yours.`
+}
+
+export function emigrate(state, destCountryName, destPlaceId) {
   if (state.wanted) {
     return { ...state, log: [...state.log, { age: state.age, text: 'You are wanted — border control will arrest you on sight. You must emigrate illegally.', isKey: false }] }
   }
@@ -2269,12 +2357,36 @@ export function emigrate(state, destCountryName) {
   const isIllegal = state.flags.includes('illegal_immigrant')
   const initialStatus = isRefugee ? 'refugee_status' : isIllegal ? 'undocumented' : 'work_visa'
   const fromName = (state.currentCountry ?? state.character?.country)?.name ?? state.character?.country?.name
+
+  // Pick destination place: explicit placeId > largest city in dest country > null
+  let destPlace = null
+  if (destPlaceId) {
+    destPlace = PLACES.find(p => p.id === destPlaceId) ?? null
+  }
+  if (!destPlace) {
+    const destPlaces = getPlacesForCountry(dest.name)
+    // Pick the largest city as default immigration destination
+    const scaleOrder = ['megacity', 'major_city', 'mid_city', 'town', 'village']
+    for (const scale of scaleOrder) {
+      const match = destPlaces.find(p => p.scale === scale)
+      if (match) { destPlace = match; break }
+    }
+    if (!destPlace && destPlaces.length) destPlace = destPlaces[0]
+  }
+
+  const destTier = pickNeighborhoodTier(state.classTier ?? state.character?.wealthTier ?? 2)
+  const destNbr = destPlace ? pickNamedNeighborhood(destPlace, destTier) : null
+
   const logText = alreadyAbroad
-    ? `You move from ${fromName} to ${dest.name}. Moving costs: $${moveCost.toLocaleString()}.`
-    : `You emigrate to ${dest.name}. Moving costs: $${moveCost.toLocaleString()}.`
+    ? `You move from ${fromName} to ${dest.name}${destPlace ? ` — ${destPlace.name}` : ''}. Moving costs: $${moveCost.toLocaleString()}.`
+    : `You emigrate to ${dest.name}${destPlace ? ` — ${destPlace.name}` : ''}. Moving costs: $${moveCost.toLocaleString()}.`
+
   return {
     ...state,
     currentCountry: dest,
+    currentPlace: destPlace ?? state.currentPlace,
+    currentNeighborhoodTier: destTier,
+    currentNeighborhoodName: destNbr,
     residencyStatus: initialStatus,
     money: Math.max(0, (state.money ?? 0) - moveCost),
     flags: [...new Set([...state.flags, 'emigrated'])],
