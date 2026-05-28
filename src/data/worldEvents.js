@@ -1425,4 +1425,83 @@ export const WORLD_EVENTS = [
     when: (G) => !G.flags.includes('quebec_referendum_lived'),
   },
 
+  // ── LATIN AMERICA WORLD EVENTS ────────────────────────────────────────────
+
+  {
+    id: 'chile_1973_coup',
+    name: 'Chilean Military Coup',
+    years: [1973, 1973],
+    archetypes: 'all',
+    countries: ['Chile'],
+    narrative: 'September 11, 1973. The air force bombs La Moneda palace. Salvador Allende dies inside. Within hours the junta announces curfews, dissolves Congress, suspends political parties. Estadio Nacional becomes a detention camp. The coup was expected by some. The scale of what follows is not.',
+    context: 'The September 11, 1973 coup ended Chile\'s elected socialist government and installed a military junta led by General Augusto Pinochet. An estimated 3,000 people were killed or disappeared and 80,000 were imprisoned in the following decade. The DINA (secret police) operated with legal impunity. The Rettig Commission (1991) documented 2,279 victims; the Valech Commission (2004) identified 28,000 torture survivors. Pinochet died under house arrest in 2006 without being convicted of any crime.',
+    effect: (p) => { p.m -= 15; p.addFlag('learned_silence'); p.addFlag('political_aware'); },
+    addFlags: ['learned_silence', 'political_aware'],
+    minAge: 8,
+  },
+
+  {
+    id: 'operation_condor',
+    name: 'Operation Condor',
+    years: [1974, 1983],
+    archetypes: 'all',
+    countries: ['Chile', 'Argentina', 'Uruguay', 'Brazil', 'Paraguay', 'Bolivia'],
+    narrative: 'The security services of six South American military regimes are sharing information across borders. The exile you believed would protect you has a database entry. Operation Condor: the specific knowledge that leaving your country does not make you safe.',
+    context: 'Operation Condor (1974–1983) was a US-backed intelligence network coordinating the security services of Chile, Argentina, Uruguay, Brazil, Paraguay, and Bolivia to locate and eliminate political dissidents abroad. An estimated 60,000–80,000 were killed in total across the member states; hundreds were forcibly transferred between countries without legal process. The operation\'s archive was discovered in Paraguay in 1992, providing documentary evidence of its scope.',
+    effect: (p) => { p.m -= 12; p.addFlag('condor_generation'); },
+    addFlags: ['condor_generation'],
+    minAge: 15,
+    when: (G) => G.flags.has('emigrated') || G.flags.has('political_active') || G.flags.has('dissident_reader'),
+  },
+
+  {
+    id: 'brazil_1964_coup',
+    name: 'Brazilian Military Coup',
+    years: [1964, 1964],
+    archetypes: 'all',
+    countries: ['Brazil'],
+    narrative: 'April 1, 1964. The military removes President Goulart with US support. The coup is announced as a revolution. Unions are dissolved. Communist and left-wing organisations are banned. Twenty-one years of military government follow. The coup is remembered by those who celebrated it, and differently by those who disappeared.',
+    effect: (p) => { p.m -= 10; p.addFlag('political_aware'); p.addFlag('brazil_dictatorship_lived'); },
+    addFlags: ['political_aware', 'brazil_dictatorship_lived'],
+    minAge: 8,
+  },
+
+  {
+    id: 'peru_shining_path',
+    name: 'Peruvian Civil War (Shining Path)',
+    years: [1984, 1993],
+    archetypes: 'all',
+    countries: ['Peru'],
+    narrative: 'Transmission towers bombed in the mountains, Lima\'s lights going out in sections. Car bombs. Blackouts. The Shining Path and the army are fighting a war whose front line shifts daily. 70,000 people die. Seventy-five percent of them are Quechua-speaking. The war ends when Guzmán is captured in a ballet studio in Surquillo.',
+    effect: (p) => { p.m -= 12; p.h -= 6; p.addFlag('sendero_generation'); p.addFlag('war_childhood'); },
+    addFlags: ['sendero_generation', 'war_childhood'],
+    minAge: 0,
+  },
+
+  {
+    id: 'guatemala_genocide_1982',
+    name: 'Guatemalan Genocide',
+    years: [1981, 1984],
+    archetypes: 'all',
+    countries: ['Guatemala'],
+    narrative: 'Under General Ríos Montt\'s scorched earth campaign, the army destroys 626 indigenous Maya villages. The logic is counterinsurgency: eliminate the population that supports the guerrillas. 200,000 people die in Guatemala\'s 36-year civil war; 83% of them are Maya.',
+    context: 'Guatemala\'s 1981–1983 scorched earth campaign under General Efraín Ríos Montt killed tens of thousands of Maya civilians in the western highlands. The 1999 UN-backed CEH (Commission for Historical Clarification) found that 93% of documented atrocities were committed by state and paramilitary forces and that these acts constituted genocide. In 2013, Ríos Montt was convicted of genocide by a Guatemalan court — the first time a former head of state was convicted of genocide in his own country\'s courts — before the conviction was overturned on procedural grounds.',
+    effect: (p) => { p.m -= 15; p.h -= 8; p.addFlag('genocide_survivor'); p.addFlag('war_childhood'); },
+    addFlags: ['genocide_survivor', 'war_childhood'],
+    minAge: 0,
+  },
+
+  {
+    id: 'haiti_earthquake_2010',
+    name: 'Haiti Earthquake',
+    years: [2010, 2010],
+    archetypes: 'all',
+    countries: ['Haiti'],
+    narrative: 'January 12, 2010. Magnitude 7.0. 220,000 people die and 1.5 million are displaced in a country of ten million. The Presidential Palace collapses. The parliament collapses. The main hospital collapses. International aid arrives in quantities that dwarf the country\'s GDP. The country does not recover to what it was.',
+    context: 'The 2010 Haiti earthquake was the deadliest natural disaster in the Western Hemisphere in over two centuries. Beyond 220,000 dead and 300,000 injured, a subsequent cholera outbreak — introduced by UN peacekeeping troops, a fact the UN denied for years — killed an additional 10,000 people. Ten years later, $13 billion in international aid had been disbursed; a 2021 survey found that reconstruction was still incomplete and that 1.5 million Haitians remained in poverty-related food insecurity.',
+    effect: (p) => { p.h -= 20; p.m -= 18; p.w -= 12; p.addFlag('disaster_survivor'); p.addFlag('earthquake_survivor'); },
+    addFlags: ['disaster_survivor', 'earthquake_survivor'],
+    minAge: 0,
+  },
+
 ]
