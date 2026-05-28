@@ -6,6 +6,9 @@ import {
   deriveInitialParents,
   deriveInitialSiblings,
   deriveBirthText,
+  deriveInitialGold,
+  initializeBanked,
+  initializeJointFamily,
   tick,
   resolveChoice,
   applyActivity,
@@ -144,6 +147,13 @@ const INITIAL_STATE = {
   desire: null,
   political_leaning: null,
   conditions: [],
+  gold: 0,
+  householdContribution: { annualAmount: 0, obligationType: null, reduced: false },
+  rosca: null,
+  jointFamily: false,
+  jointFamilyPool: 0,
+  banked: false,
+  hardCurrencyReserve: 0,
 }
 
 export const useGameStore = create((set, get) => ({
@@ -236,6 +246,13 @@ export const useGameStore = create((set, get) => ({
       classTier: null,
       desire: null,
       political_leaning: null,
+      gold: deriveInitialGold(character),
+      householdContribution: { annualAmount: 0, obligationType: null, reduced: false },
+      rosca: null,
+      jointFamily: initializeJointFamily(character),
+      jointFamilyPool: 0,
+      banked: initializeBanked(character),
+      hardCurrencyReserve: 0,
     })
   },
 
@@ -335,6 +352,13 @@ export const useGameStore = create((set, get) => ({
       yearsAbroad: 0,
       religion: null,
       classTier: null,
+      gold: deriveInitialGold(character),
+      householdContribution: { annualAmount: 0, obligationType: null, reduced: false },
+      rosca: null,
+      jointFamily: initializeJointFamily(character),
+      jointFamilyPool: 0,
+      banked: initializeBanked(character),
+      hardCurrencyReserve: 0,
     })
   },
 
