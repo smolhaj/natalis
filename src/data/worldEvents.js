@@ -1225,6 +1225,49 @@ export const WORLD_EVENTS = [
     minAge: 5,
   },
 
+  // ── BUILD 2: VIETNAM ARC ─────────────────────────────────────────────────────
+
+  {
+    id: 'fall_of_saigon',
+    name: 'Fall of Saigon',
+    years: [1975, 1976],
+    archetypes: 'all',
+    countries: ['Vietnam'],
+    narrative: 'On April 30, the tanks roll through the gates of the presidential palace. The city has been called Saigon your whole life. It will now be called Ho Chi Minh City. The helicopter on the roof of the American embassy is a photograph. The people not on it are not a photograph. They are a problem that the new government is in the process of defining.',
+    context: 'North Vietnamese forces captured Saigon on April 30, 1975, ending the Vietnam War. The South Vietnamese government surrendered unconditionally. Approximately 130,000 South Vietnamese were evacuated to the US; many more were left behind. The reunification of Vietnam under Communist Party rule followed in 1976. Between 1975 and 1995, an estimated 800,000–1 million "boat people" fled Vietnam by sea.',
+    effect: (p) => { p.m -= 20; p.w -= 12; p.addFlag('saigon_fell'); p.addFlag('south_vietnamese'); },
+    addFlags: ['saigon_fell', 'south_vietnamese'],
+    minAge: 0,
+    when: (G) => G.currentYear === 1975,
+  },
+
+  {
+    id: 'vietnam_doi_moi',
+    name: 'Đổi Mới: Vietnam\'s Reform',
+    years: [1986, 1990],
+    archetypes: 'all',
+    countries: ['Vietnam'],
+    narrative: 'The Party announces Đổi Mới — renovation. The command economy is quietly admitted to have failed. Farmers can now sell surplus grain. Private businesses can operate. The word for what this is cannot be said: it sounds too much like capitalism. But you can feel the difference. The market stall has things in it now. The price is what you negotiate, not what the state decided.',
+    context: 'Đổi Mới (renovation), announced at the Sixth National Congress in 1986, moved Vietnam from a command economy to a socialist-oriented market economy. Agricultural collectivisation was dismantled; private enterprise was permitted. Vietnam\'s GDP growth subsequently averaged over 7% annually. By 2000, poverty had fallen from roughly 60% to 30% of the population. The Communist Party retained political monopoly while liberalising the economy.',
+    effect: (p) => { p.w += 10; p.m += 6; p.e += 4; p.addFlag('doi_moi_generation'); },
+    addFlags: ['doi_moi_generation'],
+    minAge: 5,
+  },
+
+  {
+    id: 'vietnam_boat_people',
+    name: 'The Boat People Exodus',
+    years: [1978, 1992],
+    archetypes: 'all',
+    countries: ['Vietnam'],
+    narrative: 'The boat is smaller than you imagined when you paid the broker. There are more people than the number you agreed to. The sea is not what you were told to expect. The destination — Malaysia, Hong Kong, the Philippines — is a rumour. What you are leaving is certain. What you are going to is not.',
+    context: 'Between 1975 and 1995, an estimated 800,000–1 million Vietnamese fled by sea, primarily ethnic Chinese Vietnamese and former South Vietnamese. An estimated 200,000–400,000 died at sea from drowning, piracy, or dehydration. Those who reached land spent years in UNHCR camps in Southeast Asia and Hong Kong before being resettled or — from the late 1980s — repatriated. The crisis produced the largest refugee processing operation in UNHCR history.',
+    effect: (p) => { p.h -= 12; p.m -= 18; p.w -= 10; p.addFlag('boat_person'); p.addFlag('refugee'); p.addFlag('emigrated'); p.setResidency('refugee_status'); },
+    addFlags: ['boat_person', 'refugee', 'emigrated', 'south_vietnamese'],
+    minAge: 0,
+    when: (G) => G.flags.includes('south_vietnamese') || G.flags.includes('saigon_fell'),
+  },
+
   // ── BUILD 1: POST-SOVIET ARC ──────────────────────────────────────────────────
 
   {

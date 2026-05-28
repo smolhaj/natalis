@@ -907,17 +907,47 @@ export const PLACES = [
     id: 'vn_hanoi', name: 'Hanoi', country: 'Vietnam',
     type: 'urban', scale: 'major_city', region: 'North Vietnam',
     neighborhoods: {
-      informal:      ['Ngõ hẻm (back alleys) of Long Biên', 'Gia Lâm edge'],
+      informal:      ['Ngõ hẻm Long Biên', 'Gia Lâm edge', 'Thượng Thanh'],
       working_class: ['Hoàng Mai', 'Long Biên', 'Hai Bà Trưng outer', 'Đống Đa'],
       middle_class:  ['Cầu Giấy', 'Nam Từ Liêm', 'Hai Bà Trưng', 'Ba Đình'],
       elite:         ['Tây Hồ lakefront', 'Hoàn Kiếm', 'Ba Đình diplomatic quarter'],
     },
   },
   {
+    id: 'vn_hcmc', name: 'Ho Chi Minh City', country: 'Vietnam',
+    type: 'urban', scale: 'megacity', region: 'South Vietnam',
+    neighborhoods: {
+      informal:      ['Bình Dương outskirts', 'Thủ Thiêm old', 'Xóm Chiếu', 'Bình Chánh'],
+      working_class: ['Bình Thạnh', 'Tân Bình', 'Gò Vấp', 'Bình Dương border'],
+      middle_class:  ['Quận 3', 'Phú Nhuận', 'Quận 10', 'Thủ Đức'],
+      elite:         ['Quận 1', 'Quận 2 Thảo Điền', 'Phú Mỹ Hưng', 'Đa Kao'],
+    },
+  },
+  {
+    id: 'vn_danang', name: 'Đà Nẵng', country: 'Vietnam',
+    type: 'urban', scale: 'mid_city', region: 'Central Vietnam',
+    neighborhoods: {
+      informal:      ['Thanh Khê outer', 'Cẩm Lệ far'],
+      working_class: ['Thanh Khê', 'Liên Chiểu', 'Cẩm Lệ'],
+      middle_class:  ['Hải Châu', 'Sơn Trà', 'Ngũ Hành Sơn'],
+      elite:         ['Mỹ Khê beachfront', 'Bạch Đằng riverside', 'Ngũ Hành Sơn upper'],
+    },
+  },
+  {
+    id: 'vn_rural_north', name: 'Rural Red River Delta', country: 'Vietnam',
+    type: 'rural', scale: 'village', region: 'North Vietnam',
+    neighborhoods: {
+      informal:      ['Xóm trọ', 'Cuối làng'],
+      working_class: ['Xã trung tâm', 'Chợ xã'],
+      middle_class:  ['Gần UBND', 'Phố chợ huyện'],
+      elite:         ['Nhà cán bộ', 'Mặt đường lớn'],
+    },
+  },
+  {
     id: 'vn_rural', name: 'Rural Mekong Delta', country: 'Vietnam',
     type: 'rural', scale: 'village', region: 'South Vietnam',
     neighborhoods: {
-      informal:      ['Nhà ổ chuột ven sông', 'Xóm nghèo'],
+      informal:      ['Nhà ổ chuột ven sông', 'Xóm nghèo cuối kinh'],
       working_class: ['Xã trung tâm', 'Chợ xã'],
       middle_class:  ['Phố huyện', 'Gần UBND'],
       elite:         ['Nhà điền chủ', 'Mặt đường lớn'],
