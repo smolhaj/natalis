@@ -1,4 +1,4 @@
-// Geographic place data for all 74 countries.
+// Geographic place data for all 77 countries.
 // Each country has at minimum: 1 rural, 1 town/suburban, 1 urban entry.
 // Large countries (US, India, China, Brazil, Russia, Nigeria) get 4–8 entries.
 // Neighborhoods are real named districts, accurate to wealth tier and era.
@@ -907,17 +907,47 @@ export const PLACES = [
     id: 'vn_hanoi', name: 'Hanoi', country: 'Vietnam',
     type: 'urban', scale: 'major_city', region: 'North Vietnam',
     neighborhoods: {
-      informal:      ['Ngõ hẻm (back alleys) of Long Biên', 'Gia Lâm edge'],
+      informal:      ['Ngõ hẻm Long Biên', 'Gia Lâm edge', 'Thượng Thanh'],
       working_class: ['Hoàng Mai', 'Long Biên', 'Hai Bà Trưng outer', 'Đống Đa'],
       middle_class:  ['Cầu Giấy', 'Nam Từ Liêm', 'Hai Bà Trưng', 'Ba Đình'],
       elite:         ['Tây Hồ lakefront', 'Hoàn Kiếm', 'Ba Đình diplomatic quarter'],
     },
   },
   {
+    id: 'vn_hcmc', name: 'Ho Chi Minh City', country: 'Vietnam',
+    type: 'urban', scale: 'megacity', region: 'South Vietnam',
+    neighborhoods: {
+      informal:      ['Bình Dương outskirts', 'Thủ Thiêm old', 'Xóm Chiếu', 'Bình Chánh'],
+      working_class: ['Bình Thạnh', 'Tân Bình', 'Gò Vấp', 'Bình Dương border'],
+      middle_class:  ['Quận 3', 'Phú Nhuận', 'Quận 10', 'Thủ Đức'],
+      elite:         ['Quận 1', 'Quận 2 Thảo Điền', 'Phú Mỹ Hưng', 'Đa Kao'],
+    },
+  },
+  {
+    id: 'vn_danang', name: 'Đà Nẵng', country: 'Vietnam',
+    type: 'urban', scale: 'mid_city', region: 'Central Vietnam',
+    neighborhoods: {
+      informal:      ['Thanh Khê outer', 'Cẩm Lệ far'],
+      working_class: ['Thanh Khê', 'Liên Chiểu', 'Cẩm Lệ'],
+      middle_class:  ['Hải Châu', 'Sơn Trà', 'Ngũ Hành Sơn'],
+      elite:         ['Mỹ Khê beachfront', 'Bạch Đằng riverside', 'Ngũ Hành Sơn upper'],
+    },
+  },
+  {
+    id: 'vn_rural_north', name: 'Rural Red River Delta', country: 'Vietnam',
+    type: 'rural', scale: 'village', region: 'North Vietnam',
+    neighborhoods: {
+      informal:      ['Xóm trọ', 'Cuối làng'],
+      working_class: ['Xã trung tâm', 'Chợ xã'],
+      middle_class:  ['Gần UBND', 'Phố chợ huyện'],
+      elite:         ['Nhà cán bộ', 'Mặt đường lớn'],
+    },
+  },
+  {
     id: 'vn_rural', name: 'Rural Mekong Delta', country: 'Vietnam',
     type: 'rural', scale: 'village', region: 'South Vietnam',
     neighborhoods: {
-      informal:      ['Nhà ổ chuột ven sông', 'Xóm nghèo'],
+      informal:      ['Nhà ổ chuột ven sông', 'Xóm nghèo cuối kinh'],
       working_class: ['Xã trung tâm', 'Chợ xã'],
       middle_class:  ['Phố huyện', 'Gần UBND'],
       elite:         ['Nhà điền chủ', 'Mặt đường lớn'],
@@ -1805,6 +1835,125 @@ export const PLACES = [
       working_class: ['Hlavní ulice', 'U vlakového nádraží'],
       middle_class:  ['Náměstí', 'U kostela'],
       elite:         ['Zámecká zahrada', 'Vinice'],
+    },
+  },
+
+  // ── ESTONIA ────────────────────────────────────────────────────────────────
+
+  {
+    id: 'ee_tallinn', name: 'Tallinn', country: 'Estonia',
+    type: 'urban', scale: 'major_city', region: 'Northern Estonia',
+    neighborhoods: {
+      informal:      ['Lasnamäe outer blocks', 'Kopli peninsula', 'Pelgulinn edge'],
+      working_class: ['Lasnamäe', 'Mustamäe', 'Pelgulinn', 'Paljassaare'],
+      middle_class:  ['Kristiine', 'Põhja-Tallinn', 'Pirita', 'Nõmme'],
+      elite:         ['Kalamaja', 'Kadriorg', 'Vanalinn', 'Rocca al Mare'],
+    },
+  },
+  {
+    id: 'ee_tartu', name: 'Tartu', country: 'Estonia',
+    type: 'urban', scale: 'mid_city', region: 'Southern Estonia',
+    neighborhoods: {
+      informal:      ['Annelinn far blocks', 'Jaama area'],
+      working_class: ['Annelinn', 'Ränilinn', 'Ihaste'],
+      middle_class:  ['Ülejõe', 'Karlova', 'Tähtvere'],
+      elite:         ['Toomeküla', 'Supilinn', 'Raadi-Kruusamäe'],
+    },
+  },
+  {
+    id: 'ee_narva', name: 'Narva', country: 'Estonia',
+    type: 'urban', scale: 'mid_city', region: 'Northeastern Estonia',
+    neighborhoods: {
+      informal:      ['Pähklimäe', 'Kreenholm old workers\' housing'],
+      working_class: ['Kreenholm', 'Soldino', 'Joaoru'],
+      middle_class:  ['Kesklinn', 'Linda', 'Ругодив'],
+      elite:         ['Vanalinn area', 'Jõeäärne'],
+    },
+  },
+  {
+    id: 'ee_rural', name: 'Rural Saaremaa', country: 'Estonia',
+    type: 'rural', scale: 'village', region: 'Western Estonia',
+    neighborhoods: {
+      informal:      ['Talu äär', 'Vana-Soviet kolhoosi hooned'],
+      working_class: ['Küla keskus', 'Poe juures'],
+      middle_class:  ['Kihelkonnakeskus', 'Kirik'],
+      elite:         ['Mõis', 'Rannaäär'],
+    },
+  },
+
+  // ── LATVIA ─────────────────────────────────────────────────────────────────
+
+  {
+    id: 'lv_riga', name: 'Riga', country: 'Latvia',
+    type: 'urban', scale: 'major_city', region: 'Riga Region',
+    neighborhoods: {
+      informal:      ['Pļavnieki far edge', 'Imanta blocks', 'Ziepniekkalns outer'],
+      working_class: ['Pļavnieki', 'Purvciems', 'Āgenskalns', 'Ziepniekkalns'],
+      middle_class:  ['Mežaparks lower', 'Teika', 'Iļģuciems', 'Ķīpsala'],
+      elite:         ['Mežaparks', 'Vecriga', 'Jūrmala dacha zone', 'Čiekurkalns renovated'],
+    },
+  },
+  {
+    id: 'lv_daugavpils', name: 'Daugavpils', country: 'Latvia',
+    type: 'urban', scale: 'mid_city', region: 'Latgale',
+    neighborhoods: {
+      informal:      ['Jaunbūve', 'Stropu edge', 'Old factory zone'],
+      working_class: ['Grīva', 'Ciemupes', 'Jaunā forštate'],
+      middle_class:  ['Centrs', 'Ķīmiķi', 'Ruģeļu'],
+      elite:         ['Daugavpils fortress area', 'Mežciems'],
+    },
+  },
+  {
+    id: 'lv_rural', name: 'Rural Latgale', country: 'Latvia',
+    type: 'rural', scale: 'village', region: 'Eastern Latvia',
+    neighborhoods: {
+      informal:      ['Kolhoza mājas', 'Ezermala'],
+      working_class: ['Pagasta centrs', 'Veikala laukums'],
+      middle_class:  ['Skola un baznīca', 'Tirgus'],
+      elite:         ['Muižas teritorija', 'Ezera krasts'],
+    },
+  },
+
+  // ── LITHUANIA ──────────────────────────────────────────────────────────────
+
+  {
+    id: 'lt_vilnius', name: 'Vilnius', country: 'Lithuania',
+    type: 'urban', scale: 'major_city', region: 'Vilnius County',
+    neighborhoods: {
+      informal:      ['Šeškinė far towers', 'Viršuliškės edge', 'Naujoji Vilnia'],
+      working_class: ['Šeškinė', 'Žirmūnai', 'Justiniškės', 'Fabijoniškės'],
+      middle_class:  ['Naujamiestis', 'Žvėrynas', 'Antakalnis', 'Lazdynai'],
+      elite:         ['Senamiestis', 'Užupis', 'Verkiai', 'Turniškės'],
+    },
+  },
+  {
+    id: 'lt_kaunas', name: 'Kaunas', country: 'Lithuania',
+    type: 'urban', scale: 'mid_city', region: 'Kaunas County',
+    neighborhoods: {
+      informal:      ['Šilainiai outer', 'Eiguliai edge', 'Vilijampolė far end'],
+      working_class: ['Šilainiai', 'Eiguliai', 'Vilijampolė', 'Žaliakalnis lower'],
+      middle_class:  ['Žaliakalnis', 'Aleksotas', 'Petrašiūnai', 'Centras lower'],
+      elite:         ['Centras', 'Žaliakalnis upper', 'Ąžuolynas', 'Romainiai'],
+    },
+  },
+  {
+    id: 'lt_klaipeda', name: 'Klaipėda', country: 'Lithuania',
+    type: 'urban', scale: 'mid_city', region: 'Klaipėda County',
+    neighborhoods: {
+      informal:      ['Mažasis Kaimelis', 'Poilsio edge'],
+      working_class: ['Labriai', 'Debrecenas', 'Žardė'],
+      middle_class:  ['Naujamiestis', 'Senamiestis lower', 'Centrum'],
+      elite:         ['Senamiestis', 'Žvejybos uostas', 'Smiltynė'],
+    },
+  },
+  {
+    id: 'lt_rural', name: 'Rural Samogitia', country: 'Lithuania',
+    type: 'rural', scale: 'village', region: 'Western Lithuania',
+    neighborhoods: {
+      informal:      ['Kolūkio barakai', 'Miškas ir pelkė'],
+      working_class: ['Kaimo centras', 'Parduotuvė'],
+      middle_class:  ['Bažnytkaimis', 'Mokykla'],
+      elite:         ['Dvaras', 'Ežero pakrantė'],
     },
   },
 
