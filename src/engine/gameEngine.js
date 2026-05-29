@@ -999,7 +999,7 @@ function buildG(state) {
     partner: state.partner,
     children: state.children,
     mem: state.mem ?? {},
-    criminalRecord: state.criminalRecord,
+    criminalRecord: state.criminalRecord ?? [],
     inPrison: state.inPrison,
     prisonSentence: state.prisonSentence ?? 0,
     money: state.money ?? 0,

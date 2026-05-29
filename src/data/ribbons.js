@@ -72,7 +72,7 @@ export const RIBBONS = [
     id: 'the_criminal_empire',
     name: 'The Criminal',
     description: 'The law was a problem you solved around, not with.',
-    condition: (G) => G.flags.includes('criminal_life') && G.criminalRecord.length >= 4,
+    condition: (G) => G.flags.includes('criminal_life') && (G.criminalRecord?.length ?? 0) >= 4,
     priority: 85,
     color: 'red',
   },
