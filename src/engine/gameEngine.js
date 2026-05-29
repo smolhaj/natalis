@@ -2612,6 +2612,27 @@ export function tick(state) {
     }
   }
 
+  // Hobby milestone flags — set once when skill crosses threshold
+  {
+    const hb = s.hobbies ?? {}
+    const flagsSet = new Set(s.flags)
+    const HOBBY_FLAGS = [
+      [hb.music    ?? 0, 60, 'serious_musician'],
+      [hb.writing  ?? 0, 60, 'serious_writer'],
+      [hb.art      ?? 0, 60, 'serious_artist'],
+      [hb.fitness  ?? 0, 70, 'fitness_devotee'],
+      [hb.cooking  ?? 0, 65, 'accomplished_cook'],
+      [hb.language ?? 0, 65, 'polyglot'],
+      [hb.reading  ?? 0, 60, 'avid_reader'],
+      [hb.gardening?? 0, 60, 'dedicated_gardener'],
+    ]
+    let newFlags = [...s.flags]
+    for (const [skill, threshold, flag] of HOBBY_FLAGS) {
+      if (skill >= threshold && !flagsSet.has(flag)) newFlags = [...newFlags, flag]
+    }
+    if (newFlags.length !== s.flags.length) s = { ...s, flags: newFlags }
+  }
+
   // Fame decay if not in entertainment/sports
   s = tickFame(s)
 
