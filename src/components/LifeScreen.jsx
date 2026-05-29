@@ -838,7 +838,7 @@ export default function LifeScreen() {
                 <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
                   <p className="font-bold text-natalis-text text-sm mb-3">👫 Siblings</p>
                   <div className="space-y-2">
-                    {siblings.map((sib, i) => {
+                    {siblings.filter(sib => sib.ageDiff === undefined || age + sib.ageDiff >= 0).map((sib, i) => {
                       const sibAge = sib.ageDiff !== undefined ? age + sib.ageDiff : null
                       return (
                         <div key={i} className="flex justify-between items-center">
