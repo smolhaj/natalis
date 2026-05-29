@@ -267,7 +267,7 @@ Generic events are a last resort. Specific events — ones that could only fire 
 - **Childhood family income system**: Parents are assigned occupation objects (`title`, `field`, `incomeType`, `annualIncome`) at character creation, scaled by GDP tier and archetype. During childhood, annual parental income surplus flows into the character's `money`, with variance by income type (formal ±15%, informal ±40%). Post-Soviet collapse reduces income 1991–94; conflict-zone and parent-death flags disrupt it. Displayed in the Relationships tab beneath parent names. Subsistence/barter economies show no cash figure.
 - **Historical country names**: `historicalNames: [{ until: year, name: string }]` array on country objects. `getCountryNameForYear(country, year)` in `countryUtils.js` returns "USSR" for Russia before 1991, etc. Used in epitaph and birth screen (CuratedBirthScreen shows historical name in parentheses where it differs from current).
 
-**Event coverage (~1,950+ total events across 57 modules):**
+**Event coverage (~2,060+ total events across 63 modules):**
 - Base events covering all life phases with hundreds of inline events
 - 68 culture events (regime, ethnicity, caste, LGBTQ, child marriage, rural, wealth)
 - 23 technology timeline events (radio 1930s → COVID 2020s + mobile money for East/West Africa, 2007+)
@@ -313,12 +313,20 @@ Generic events are a last resort. Specific events — ones that could only fire 
 - **10 decolonisation era events** (events_decolonisation.js): independence morning (subsaharan 1956–1970), post-independence schools, first coup disillusionment, Pan-Africanism, structural adjustment lived experience, SAP clinic closure, brain drain wave, Nehruvian moment (India 1950–1964), post-adjustment generation, mobile phone leapfrog (2002–2012)
 - **9 labour movement events** (events_labor.js): union card joining, strike called (choice: join/cross), picket line endurance, three-month strike strain, strike defeat (auto), strike victory (auto, karma-gated), Luddite moment (era-branched across handloom → typesetters → truckers), solidarity test, first boss
 - **9 elder status + reconciliation events** (appended to events_late_life.js): elder consulted (authority archetypes, age 65–74), you are the memory now (age 73+), polite dismissal (wealthy_west 2000+), phone lesson (age 68+), obsolescence (age 78+, universal); reconciliation initiation (estranged child/sibling, age 62–74), warm response (sets `reconciled_damaged`), cold response (sets `permanently_estranged`), living with it (age 70+)
+- **28 country arc events** (events_country_arcs_2.js): China/Mao era (land reform wealth-branched, Great Leap famine, cadre quota, Red Guard joining, denunciation pause, send-down generation, Deng reforms, Tiananmen witness, one-child parent, little emperor); USA specificity (civil rights lunch counter ethnicity-gated, Birmingham bombing, Vietnam draft 3-branch, AIDS watch LGBTQ-gated, Rust Belt closure, McCarthyism, Great Migration, opioid crisis); Japan (hibakusha stigma, Anpo protests, Minamata, salaryman transfer, karoshi, bubble collapse, earthquake preparedness)
+- **25 Asia arc events** (events_asia_arcs.js): Cambodia (Khmer Rouge evacuation, Year Zero, denunciation choice, Vietnamese liberation, survivor silence, UNTAC 1993, ECCC trial, missing generation); Bangladesh (Liberation War, Victory Day, annual flood cooldown-4, garment worker female-gated, Rana Plaza flag-gated, cyclone era-branched, microfinance, remittance family); Pakistan (Muhajir arrival, East Wing war, Zia Islamisation female-gated, blasphemy law, nuclear tests, ISI shadow, Karachi violence, 2010 flood, arranged meeting)
+- **22 cross-cutting arc events** (events_crosscutting.js): domestic worker arc (uniform/entry, kind employer, unkind employer, children grow, wage negotiation, OFW Gulf kafala-adjacent, apartheid Joburg); city bombardment arc (first night, safe route cooldown-2, market Wednesday, run bag, neighbour gone, child explanation, ceasefire, war end clears flag); refugee camp arc (arrival child, UNRWA school, ration day cooldown-3, informal economy, resettlement interview, resettlement arrival, multigenerational)
+- **9 DRC arc events** (events_drc.js): independence speech 1960, Lumumba death news, Mobutu authenticité renaming (choice), Mobutu institution decay (career-gated corruption choice), Second Congo War auto-resolve, eastern displacement (flee/stay), coltan mining young adult rural, Kinshasa soukous texture, church community cooldown-10
+- **15 internet era events** (events_internet_era.js): AOL dial-up wealthy_west, AOL rural USA, PC bang Seoul (choice: competitive/social), cybercafé Lagos (choice: education/connection), cybercafé Cairo + digital dissent, VKontakte Russia, lan house Brazil + Orkut, M-Pesa Kenya/East Africa, Facebook arrival, smartphone arrival, dotcom optimism (choice), dotcom crash flag-gated, end-of-history 1990s, Asian crisis personal 1997
+- **6 Zimbabwe arc events** (events_zimbabwe.js): early independence era (1980s optimism), Gukurahundi (Ndebele ethnicity-gated, rural, 1983–87), land seizure white farming family (both perspectives choice), land reform Black Zimbabwean witness, hyperinflation (trillion-dollar note, currency choice), exodus to South Africa (leave/stay)
+- **3 Cuba world events**: Bay of Pigs 1961, Mariel boatlift 1980, Special Period 1991 (all with `context` fields; Cuban Missile Crisis and ration book already existed)
+- **Generational trauma seeding**: `deriveGenerationalFlags(char)` in gameEngine.js seeds 17 flags at character creation based on country + birthYear (`holocaust_family_memory`, `great_leap_family_memory`, `khmer_rouge_family_memory`, `disappeared_family_memory`, etc.)
 
 ### What still needs work — Priority Roadmap
 
 *Previous roadmap (items 1–16) complete. See git history. The roadmap below is built from a structured brainstorm session and reflects explicit design decisions.*
 
-*Completed since brainstorm: BUILD 3 (chronic illness system + parent care arc), BUILD 4 (relationship history UI — status labels on relationship cards), BUILD 6 (curated birth screen — 4-step wizard). See PR #42. Vietnam arc (events_vietnam.js, 10 events) and wealth mechanics system (events_wealth_system.js, 17 events) added in PR #43. BUILD 29 (voting/elections), BUILD 30 partial (garden, letters, neighbours, school reunion), BUILD 44 (body in later life), and BUILD 50 (money across a life) added in PR #44. Childhood family income system (parent occupations, GDP-scaled income during childhood phase) added in PR #45. BUILD 2 Latin America arc (events_latin_america.js, 50 events), BUILD 6 (historical country names, expanded ribbons), BUILD 10 partial (events_country_arcs.js, 22 events for Nigeria/India/South Korea/Egypt/Romania/Turkey/Kenya/Ghana/Ethiopia), and events_followthrough_3.js added in PRs #45–47. BUILD 6 early childhood + early 20s (events_early_life.js, 20 events), BUILD 5 partial (events_decolonisation.js + 7 world events: Spanish flu 1918, Great Depression 1929, oil shock periphery, Triangle Shirtwaist 1911, UK miners strike 1984, Spanish anarchist factories 1936), BUILD 20 labour/strikes (events_labor.js, 9 events), BUILD 9 elder status by archetype + BUILD 4 late-life reconciliation arc (9 events appended to events_late_life.js) added in PR #48.*
+*Completed since brainstorm: BUILD 3 (chronic illness system + parent care arc), BUILD 4 (relationship history UI — status labels on relationship cards), BUILD 6 (curated birth screen — 4-step wizard). See PR #42. Vietnam arc (events_vietnam.js, 10 events) and wealth mechanics system (events_wealth_system.js, 17 events) added in PR #43. BUILD 29 (voting/elections), BUILD 30 partial (garden, letters, neighbours, school reunion), BUILD 44 (body in later life), and BUILD 50 (money across a life) added in PR #44. Childhood family income system (parent occupations, GDP-scaled income during childhood phase) added in PR #45. BUILD 2 Latin America arc (events_latin_america.js, 50 events), BUILD 6 (historical country names, expanded ribbons), BUILD 10 partial (events_country_arcs.js, 22 events for Nigeria/India/South Korea/Egypt/Romania/Turkey/Kenya/Ghana/Ethiopia), and events_followthrough_3.js added in PRs #45–47. BUILD 6 early childhood + early 20s (events_early_life.js, 20 events), BUILD 5 partial (events_decolonisation.js + 7 world events: Spanish flu 1918, Great Depression 1929, oil shock periphery, Triangle Shirtwaist 1911, UK miners strike 1984, Spanish anarchist factories 1936), BUILD 20 labour/strikes (events_labor.js, 9 events), BUILD 9 elder status by archetype + BUILD 4 late-life reconciliation arc (9 events appended to events_late_life.js) added in PR #48. BUILD 10 expanded (events_country_arcs_2.js, 28 events: China/Mao era, USA specificity, Japan), BUILD 11 partial (events_asia_arcs.js 25 events: Cambodia/Bangladesh/Pakistan; events_drc.js 9 events: DRC arc; Cuba world events: Bay of Pigs, Mariel boatlift, Special Period), BUILD 12 (events_crosscutting.js, 22 events: domestic worker/city bombardment/refugee camp arcs), BUILD 15 partial (events_internet_era.js 15 events: PC bang Seoul, cybercafé Lagos, AOL Iowa, M-Pesa Kenya, dotcom arc, 1990s texture; 4 new world events: Asian financial crisis 1997, Indonesia May 1998), BUILD 27 (deriveGenerationalFlags() seeds 17 generational trauma flags at character creation), BUILD 2 partial (events_zimbabwe.js 6 events: land seizure both perspectives, hyperinflation, exodus, Gukurahundi). Ribbons: 25 new ribbons added. Headlines: 14 new entries added (Lumumba, Bangladesh, Cambodia, Mariel, DRC, Rana Plaza, M-Pesa, etc.).*
 
 ---
 
@@ -525,7 +533,7 @@ Partial from original spec — not yet implemented: congenital conditions at cha
 
 *These expand on Build 2's geographic depth with explicit event-level content for each country and era.*
 
-**PARTIAL ✅ (PR #47)**: `events_country_arcs.js` (22 events) covers Nigeria (coup radio, first-gen degree, Biafra colleague, oil boom), India (Partition rebuilding, Emergency 1975, Green Revolution), South Korea (Korean War displacement, Park Chung-hee bargain, DMZ family), Egypt (Nasser/Suez, 1967 defeat, Tahrir), Romania (Ceaușescu, Securitate, December 1989), Turkey (coup texture), Kenya (Mau Mau choice, Kenyatta, Moi kleptocracy), Ghana (Nkrumah radio, 1966 coup grief, brain drain), Ethiopia (Red Terror student, 1991 fall). Remaining: Argentina, Iran, China, South Africa, Japan, USA, France arcs not yet in events_country_arcs.js (see BUILD 2 Latin America for Argentina coverage). Also BUILD 10 world events added to worldEvents.js in PR #47.
+**PARTIAL ✅ (PRs #47–48)**: `events_country_arcs.js` (22 events) covers Nigeria, India, South Korea, Egypt, Romania, Turkey, Kenya, Ghana, Ethiopia. `events_country_arcs_2.js` (28 events, PR #48) adds China/Mao era (Great Leap famine, Cultural Revolution denunciation, send-down, Deng reforms, one-child), USA specificity (civil rights lunch counter, Vietnam draft, AIDS watch, Rust Belt, McCarthyism, Great Migration, opioid crisis), Japan (hibakusha, Anpo, Minamata, salaryman, karoshi, bubble). Remaining: Argentina already in events_latin_america.js; Iran, South Africa, France arcs still not in events_country_arcs files.
 
 ---
 
@@ -631,15 +639,11 @@ Partial from original spec — not yet implemented: congenital conditions at cha
 
 Each requires: full `countries.js` entry with all demographic fields, then country-specific world events and character events.
 
-**Cuba** (1930–2025, archetype: `single_party_communist` after 1959):
-- Pre-Revolution: Batista's Cuba, the specific texture of Havana in the 1950s (US-backed dictatorship with casinos, spectacular inequality, a lively middle class and extreme rural poverty)
-- The Revolution: the specific experience of 1959 not as triumph or defeat but as total reorganisation — what happened to your property, your school, your employer, your neighbours
-- Bay of Pigs 1961 and missile crisis 1962: the specific experience of being the target
-- Exodus waves: 1959 (bourgeoisie), 1980 Mariel boatlift (Marielitos — people Castro emptied from prisons and psychiatric facilities), 1994 balseros. Each wave is specific.
-- Special Period 1990s: USSR collapses, Soviet subsidies stop, Cuba enters a famine. The specific experience of a country that had universal healthcare and now has no medicine. The bicycle as the only transport. The bodyweight lost.
-- Remittance economy and the two-tier system: dollars vs. pesos, the specific experience of having family abroad who send money and family at home who don't
+**Cuba** ✅ PARTIAL (PR #48): Character events existed in events_latin_america.js (CDR, Special Period experience, balseros, double economy). World events added: Bay of Pigs 1961, Mariel boatlift 1980, Special Period 1991 (all with `context` fields). Cuban Missile Crisis and ration book already existed. Remaining: pre-Revolution Batista texture, 1959 revolution reorganisation event, remittance/two-tier economy character event.
 
-**DRC** (1955–2025, archetype: `conflict_zone`):
+**DRC** ✅ PARTIAL (PR #48): `events_drc.js` (9 events): independence speech, Lumumba death, Mobutu authenticité renaming, Mobutu institution decay (career-gated corruption), Second Congo War, eastern displacement, coltan mining, Kinshasa soukous, church community. World events: Lumumba assassination 1961, First Congo War 1996. Remaining: Mobutu-era kleptocracy depth events, Second Congo War civilian texture from the east.
+
+**DRC original spec** (1955–2025, archetype: `conflict_zone`):
 - Lumumba assassination 1961: the first post-independence prime minister killed with Belgian and CIA involvement. A character who believed in the independence project lives through its specific murder.
 - Mobutu's kleptocracy 1965–1997: 32 years of systematic looting. Zaire. The specific daily experience of a country whose leader renamed it and stole it simultaneously.
 - First and Second Congo Wars 1996–2003: the deadliest conflict since WWII. A character in eastern DRC lives inside the most violent conflict of the late 20th century.
@@ -659,11 +663,15 @@ Each requires: full `countries.js` entry with all demographic fields, then count
 
 ---
 
-#### BUILD 12 — Cross-Cutting Experience Arcs
+#### BUILD 12 — Cross-Cutting Experience Arcs ✅ PARTIAL (PR #48)
 
-*These fire across archetypes and eras, gated on occupation/situation flags rather than country.*
+**Domestic worker arc** ✅ DONE (events_crosscutting.js): uniform/entry, kind employer, unkind employer, children grow, wage negotiation, OFW Gulf (Filipina + kafala-adjacent), apartheid Joburg domestic.
 
-**Domestic worker arc** (`events_domestic_work.js`):
+**City under bombardment arc** ✅ DONE (events_crosscutting.js): first night (sets `city_under_bombardment`), safe route (cooldown 2), market Wednesday, run bag, neighbour gone, child explanation, ceasefire, war end (clears flag, sets `survived_bombardment`).
+
+**Refugee camp arc** ✅ DONE (events_crosscutting.js): arrival child, UNRWA school, ration day (cooldown 3), informal economy, resettlement interview, resettlement arrival, multigenerational.
+
+**Domestic worker arc original spec** (`events_domestic_work.js`):
 - The uniform, the separate entrance, the watching of a family from inside their private life
 - The employer who is kind vs. the employer who is not, and the specific texture of each
 - Specific variants: Filipina in Kuwait or Saudi Arabia (OFW contract, specific legal vulnerabilities); Black South African domestic worker in white Johannesburg suburb; Bolivian migrant in Buenos Aires middle-class home; Haitian in Dominican Republic

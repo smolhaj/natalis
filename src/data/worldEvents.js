@@ -1924,6 +1924,50 @@ export const WORLD_EVENTS = [
     when: (G) => !G.flags.includes('lumumba_generation'),
   },
 
+  // ── CUBA ARCS ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'bay_of_pigs_1961',
+    name: 'Bay of Pigs Invasion',
+    years: [1961, 1961],
+    archetypes: null,
+    countries: ['Cuba'],
+    narrative: 'Fourteen hundred Cuban exiles, trained by the CIA, land on the southern coast. They are defeated in seventy-two hours. Castro broadcasts the victory personally. On the streets of Havana people are cheering — genuinely — because the country they chose is still the country they chose. The United States has tried and failed to take it back.',
+    context: 'The Bay of Pigs invasion of April 1961 was a CIA-organised attempt by Cuban exiles to overthrow Fidel Castro. The Kennedy administration cancelled planned air support at the last minute; the invasion force was quickly overwhelmed and captured. The defeat was a significant propaganda victory for Castro, cementing his domestic position and deepening the US-Cuba antagonism that would shape the next six decades.',
+    effect: (p) => { p.m += 6; p.addFlag('bay_of_pigs_generation'); },
+    addFlags: ['bay_of_pigs_generation'],
+    minAge: 5,
+    when: (G) => !G.flags.includes('bay_of_pigs_generation'),
+  },
+
+  {
+    id: 'mariel_boatlift_1980',
+    name: 'Mariel Boatlift',
+    years: [1980, 1980],
+    archetypes: null,
+    countries: ['Cuba'],
+    narrative: 'Castro announces that anyone who wants to leave can go from the port of Mariel. One hundred and twenty-five thousand people leave in five months. He also empties some prison cells and psychiatric facilities into the boats. In the neighbourhood you grew up in, three families are gone by June. The ones who stayed do not discuss the ones who went.',
+    context: 'The Mariel boatlift of April–October 1980 was triggered when thousands of Cubans sought asylum in the Peruvian embassy in Havana. Castro\'s government permitted mass emigration from Mariel Harbor, with the condition that Miami\'s Cuban-American community provide the boats. Along with ordinary Cubans, the government released prisoners and psychiatric patients into the exodus, which became a political flashpoint in the United States.',
+    effect: (p) => { p.m -= 8; p.addFlag('mariel_generation'); },
+    addFlags: ['mariel_generation'],
+    minAge: 5,
+    when: (G) => !G.flags.includes('mariel_generation'),
+  },
+
+  {
+    id: 'cuba_special_period_1991',
+    name: 'Cuba: The Special Period',
+    years: [1991, 1998],
+    archetypes: null,
+    countries: ['Cuba'],
+    narrative: 'The Soviet Union dissolves and the subsidies that kept the economy running stop overnight. Caloric intake falls by thirty percent. The buses stop; bicycles appear everywhere. The government calls it a "Special Period in Time of Peace." What it means, practically, is that the price of everything has changed and the peso no longer buys what it did and the shelves are what they are. You learn to cook what is available. Your body learns too.',
+    context: 'Cuba\'s "Special Period in Peacetime" began when Soviet subsidies ended following the USSR\'s dissolution in 1991. Cuba lost roughly 80% of its imports and 80% of its export revenues. GDP fell by 35% between 1990 and 1993. The Cuban government responded with rationing, agricultural decentralisation, and opening to foreign tourism while maintaining the single-party system. The period officially ended in the early 2000s, though its economic legacy persisted.',
+    effect: (p) => { p.h -= 8; p.m -= 12; p.w -= 8; p.addFlag('special_period_generation'); },
+    addFlags: ['special_period_generation'],
+    minAge: 5,
+    when: (G) => !G.flags.includes('special_period_generation'),
+  },
+
   // ── FIRST CONGO WAR 1996-97 ───────────────────────────────────────────────
   {
     id: 'congo_war_1996',
