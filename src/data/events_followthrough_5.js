@@ -145,4 +145,124 @@ export const FOLLOWTHROUGH_5_EVENTS = [
     effect: (p) => { p.r += 4; p.e += 5; p.setMem('ft5FirstCoupPattern', true); },
   },
 
+  // ── BUILD 49 — FAMINE ARC ──────────────────────────────────────────────────
+  // Attaches to famine_survivor flag set by world events (Holodomor, Great Leap,
+  // Ethiopian famine, North Korea famine, Biafra blockade).
+  // Sequential arc chains via G.mem keys across 3 years + a late-life echo.
+
+  {
+    id: 'fam_arc_price',
+    phase: 'childhood',
+    weight: 6,
+    cooldown: 0,
+    when: (G) =>
+      G.flags.has('famine_survivor') &&
+      !G.mem?.famArcPrice &&
+      G.age >= 4,
+    text: (G) => {
+      const isChild = G.age < 12
+      if (isChild) return 'The adults stop finishing their sentences when you come into the room. The market is louder than usual — voices raised over prices. Your mother comes back with less than she went with. You are old enough to notice. You are not old enough to know what to call it.'
+      return 'The first sign is never hunger — it is the market. The price of millet has doubled since last week. The merchant shrugs and says it will be worse next week. Around him people are buying quickly, before next week comes. The word for what is coming does not exist yet. Everyone uses other words.'
+    },
+    choices: [
+      {
+        text: 'Buy what you can now, before prices climb further',
+        tag: null,
+        outcome: 'The money goes fast. What you have lasts two weeks longer than it would have.',
+        effect: (p) => {
+          p.setMem('famArcPrice', true)
+          p.setMem('famineAge', p._age)
+          p.mo -= Math.round((p._state.money ?? 0) * 0.3)
+          p.m -= 5
+        },
+      },
+      {
+        text: 'Wait — surely prices will correct',
+        tag: null,
+        outcome: 'They do not correct. You have the same money and less time to use it.',
+        effect: (p) => {
+          p.setMem('famArcPrice', true)
+          p.setMem('famineAge', p._age)
+          p.m -= 8
+        },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'fam_arc_body',
+    phase: 'childhood',
+    weight: 5,
+    cooldown: 0,
+    when: (G) =>
+      G.mem?.famArcPrice && !G.mem?.famArcBody,
+    text: (G) => {
+      const isChild = G.age < 12
+      if (isChild) return 'You are hungry in a way that is different from the hunger before a meal. That hunger is impatient. This hunger is quiet. It stops asking and starts being there all the time, like weather. The children are the first to show it. Your mother watches you the way people watch something they cannot fix.'
+      return 'The hunger stops being urgent after the second week. It becomes background — present the way cold is present in winter, a fact the body adjusts around. You eat when something is available. Between times, your body learns to do less: slow thoughts, slow movement, sleep that is not restful.'
+    },
+    choices: null,
+    effect: (p) => { p.setMem('famArcBody', true); p.h -= 10; p.m -= 10 },
+  },
+
+  {
+    id: 'fam_arc_selling',
+    phase: 'childhood',
+    weight: 4,
+    cooldown: 0,
+    when: (G) =>
+      G.mem?.famArcBody && !G.mem?.famArcSelling,
+    text: (G) => {
+      const hasAnimals = G.flags.has('rural_upbringing') || G.ruralUrban === 'rural'
+      if (hasAnimals) return 'The goat goes first — the one your father named. The buyer pays less than it is worth because everyone knows what everyone\'s situation is. The money feeds the household for three weeks. The goat is gone. You understand, at whatever age you are, that this is irreversible in a way that money cannot undo.'
+      return 'The object your mother brought from her home village. The sewing machine that was a wedding gift. Each thing has a price and a story and the price is always less than the story. You watch the inventory of the household diminish and understand something about how wealth works that you will not be able to unlearn.'
+    },
+    choices: [
+      {
+        text: 'Sell whatever is necessary',
+        tag: null,
+        outcome: 'It keeps you alive through the worst months. The household never recovers everything that was lost.',
+        effect: (p) => {
+          p.setMem('famArcSelling', true)
+          p.mo += 600; p.m -= 15; p.w -= 8
+          p.addFlag('famine_asset_loss')
+        },
+      },
+      {
+        text: 'Keep the most essential things — find another way',
+        tag: null,
+        outcome: 'Another way is harder to find. You manage, barely, by borrowing from people who also have little.',
+        effect: (p) => {
+          p.setMem('famArcSelling', true)
+          p.addDebt(400); p.m -= 18; p.h -= 5
+        },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'fam_arc_after',
+    phase: 'midlife',
+    weight: 4,
+    cooldown: 0,
+    when: (G) =>
+      G.flags.has('famine_survivor') &&
+      G.mem?.famArcSelling &&
+      G.age > (G.mem?.famineAge ?? 0) + 8 &&
+      G.age >= 25 &&
+      !G.mem?.famArcAfter,
+    text: (G) => {
+      const years = G.age - (G.mem?.famineAge ?? G.age - 20)
+      return `${years} years. Your pantry is overstocked in a way your partner finds puzzling. You cannot explain it rationally — there is no shortage, there has not been a shortage in years. But the reflex to store, to keep an extra month's worth of everything, arrived in the famine and has not left. The body learned something the mind keeps failing to override.`
+    },
+    choices: null,
+    effect: (p) => {
+      p.setMem('famArcAfter', true)
+      p.m -= 3; p.r += 5
+      p.addFlag('famine_memory')
+    },
+  },
+
 ]
