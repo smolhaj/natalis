@@ -1039,4 +1039,76 @@ export const RIBBONS = [
     priority: 72,
     color: 'blue',
   },
+
+  // ── BUILD 35/32 — INFORMAL ECONOMY ──────────────────────────────────────────
+  {
+    id: 'the_informal_worker',
+    name: 'The Informal Economy',
+    description: 'No contract, no sick pay, no pension. You built a living anyway, transaction by transaction.',
+    condition: (G) => G.flags.includes('micro_entrepreneur') || G.flags.includes('informal_saver'),
+    priority: 55,
+    color: 'orange',
+  },
+  {
+    id: 'the_formalised',
+    name: 'From the Margins',
+    description: 'You started outside the formal economy and found your way in. The paperwork was the easy part.',
+    condition: (G) => G.flags.includes('formalized_worker'),
+    priority: 58,
+    color: 'green',
+  },
+
+  // ── BUILD 48 — POST-RELEASE ──────────────────────────────────────────────────
+  {
+    id: 'the_decade_after',
+    name: 'A Decade Later',
+    description: 'Ten years after the conviction. The record is permanent. You are not.',
+    condition: (G) => G.flags.includes('decade_after_prison'),
+    priority: 60,
+    color: 'gray',
+  },
+  {
+    id: 'the_political_witness',
+    name: 'Bearing Witness',
+    description: 'You were imprisoned for what you believed or said. You spoke about it afterward. Not everyone does.',
+    condition: (G) => G.flags.includes('political_witness'),
+    priority: 78,
+    color: 'purple',
+  },
+  {
+    id: 'the_reentry',
+    name: 'Starting Over',
+    description: 'You came out and built something again. The record followed you everywhere. You kept building.',
+    condition: (G) => G.flags.includes('family_after_prison') || G.flags.includes('parole_compliant'),
+    priority: 55,
+    color: 'blue',
+  },
+
+  // ── BUILD 47 — MENTOR ARC ────────────────────────────────────────────────────
+  {
+    id: 'the_mentor',
+    name: 'The Mentor',
+    description: 'Someone became more because of what you gave them. That chain continues past what you can see.',
+    condition: (G) => G.flags.includes('is_mentor') || G.flags.includes('protege_exceeded'),
+    priority: 65,
+    color: 'gold',
+  },
+  {
+    id: 'the_chain',
+    name: 'Both Sides of the Door',
+    description: 'You were mentored and you mentored. The door that opened for you, you left open for someone else.',
+    condition: (G) => G.flags.includes('lost_mentor') && (G.flags.includes('is_mentor') || G.flags.includes('protege_exceeded')),
+    priority: 72,
+    color: 'gold',
+  },
+
+  // ── BUILD 49 — FAMINE ARC ────────────────────────────────────────────────────
+  {
+    id: 'the_famine_memory',
+    name: 'The Pantry Reflex',
+    description: 'You survived a famine. Decades later, the body still does not believe the food will be there tomorrow.',
+    condition: (G) => G.flags.includes('famine_memory'),
+    priority: 68,
+    color: 'gray',
+  },
 ]

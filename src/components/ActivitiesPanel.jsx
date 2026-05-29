@@ -936,7 +936,7 @@ export default function ActivitiesPanel({ onClose }) {
                       effect: (s) => {
                         const sent = calcSentence(assaultCrime)
                         return { ...s, inPrison: sent > 0, prisonSentence: sent, actionsThisYear: (s.actionsThisYear ?? 0) + 1,
-                          criminalRecord: [...(s.criminalRecord ?? []), { crime: assaultCrime.criminalRecordEntry, age: s.age }],
+                          criminalRecord: [...(s.criminalRecord ?? []), { crime: assaultCrime.criminalRecordEntry, age: s.age, category: 'violent' }],
                           log: [...(s.log ?? []), { age: s.age, text: `Arrested for ${assaultCrime.name}. Sentenced to ${sent} year${sent !== 1 ? 's' : ''}.`, isKey: true }] }
                       },
                     },
@@ -970,7 +970,7 @@ export default function ActivitiesPanel({ onClose }) {
                         if (Math.random() < adjustedRisk) {
                           const sent = calcSentence(assaultCrime)
                           return { ...s, inPrison: sent > 0, prisonSentence: sent, actionsThisYear: (s.actionsThisYear ?? 0) + 1,
-                            criminalRecord: [...(s.criminalRecord ?? []), { crime: assaultCrime?.criminalRecordEntry ?? 'Assault', age: s.age }],
+                            criminalRecord: [...(s.criminalRecord ?? []), { crime: assaultCrime?.criminalRecordEntry ?? 'Assault', age: s.age, category: 'violent' }],
                             log: [...(s.log ?? []), { age: s.age, text: `Arrested for ${assaultCrime?.name}. Sentenced to ${calcSentence(assaultCrime)} year(s).`, isKey: true }] }
                         }
                         return { ...s, stats: { ...s.stats, health: Math.max(0, s.stats.health - 15) }, actionsThisYear: (s.actionsThisYear ?? 0) + 1, log: [...(s.log ?? []), { age: s.age, text: `You get beaten by ${v.label.toLowerCase()}.`, isKey: false }] }
@@ -1074,7 +1074,7 @@ export default function ActivitiesPanel({ onClose }) {
                           prisonSentence: failSentence,
                           actionsThisYear: (s.actionsThisYear ?? 0) + 1,
                           karma: Math.max(0, (s.karma ?? 50) - 20),
-                          criminalRecord: [...(s.criminalRecord ?? []), { crime: 'Attempted murder', age: s.age }],
+                          criminalRecord: [...(s.criminalRecord ?? []), { crime: 'Attempted murder', age: s.age, category: 'violent' }],
                           log: [...(s.log ?? []), { age: s.age, text: `Arrested for attempted murder. Sentenced to ${failSentence} years.`, isKey: true }],
                         }),
                       },
@@ -1143,7 +1143,7 @@ export default function ActivitiesPanel({ onClose }) {
                         inPrison: sentence > 0,
                         prisonSentence: sentence,
                         actionsThisYear: (s.actionsThisYear ?? 0) + 1,
-                        criminalRecord: [...(s.criminalRecord ?? []), { crime: crime.criminalRecordEntry ?? crime.name, age: s.age }],
+                        criminalRecord: [...(s.criminalRecord ?? []), { crime: crime.criminalRecordEntry ?? crime.name, age: s.age, category: crime.category ?? 'other' }],
                         log: [...(s.log ?? []), { age: s.age, text: `Arrested for ${crime.name}. Sentenced to ${sentence} year${sentence !== 1 ? 's' : ''}.`, isKey: true }],
                       }
                     },

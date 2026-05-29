@@ -772,6 +772,7 @@ function buildEffectProxy(state) {
   proxy.leaveRosca = () => { proxy._rosca = null }
   proxy.convertToHardCurrency = (amount) => { proxy._hardCurrencyAdd = (proxy._hardCurrencyAdd ?? 0) + amount; proxy.mo -= amount }
   proxy.reduceHouseholdContribution = () => { proxy._reduceHouseholdContribution = true }
+  proxy.setWorkStatus = (val) => { proxy._workStatus = val }
   proxy.partnerRel = (delta) => { proxy._partnerRelDelta = (proxy._partnerRelDelta ?? 0) + delta }
   proxy.updatePartnerRel = proxy.partnerRel
   proxy.makePartner = (overrides = {}) => {
@@ -858,6 +859,7 @@ function resolveProxyExtras(state, proxy) {
   if (proxy._classTier !== undefined) next = { ...next, classTier: proxy._classTier }
   if (proxy._desire !== undefined) next = { ...next, desire: proxy._desire }
   if (proxy._politicalLeaning !== undefined) next = { ...next, political_leaning: proxy._politicalLeaning }
+  if (proxy._workStatus !== undefined) next = { ...next, workStatus: proxy._workStatus }
   if (proxy._newConditions?.length) {
     const existing = next.conditions ?? []
     const merged = [...existing]
@@ -1354,6 +1356,7 @@ export function enterCareer(state, careerId) {
   const recordBlockedFields = ['law_enforcement', 'military', 'government', 'finance', 'medical']
   const hasRecord = (state.criminalRecord ?? []).length > 0
   const hasViolent = (state.criminalRecord ?? []).some(e => {
+    if (typeof e === 'object' && e.category) return ['violent'].includes(e.category)
     const crime = typeof e === 'string' ? e : (e.crime ?? '')
     return /murder|assault|robbery|manslaughter|killer/i.test(crime)
   })
@@ -1923,7 +1926,7 @@ export function attemptCrime(state, crimeId) {
     const sentMin = Array.isArray(crime.sentence) ? crime.sentence[0] : crime.sentence.min
     const sentMax = Array.isArray(crime.sentence) ? crime.sentence[1] : crime.sentence.max
     const sentence = randomBetween(sentMin, sentMax)
-    if (crime.criminalRecordEntry) updated.criminalRecord = [...updated.criminalRecord, crime.criminalRecordEntry]
+    if (crime.criminalRecordEntry) updated.criminalRecord = [...updated.criminalRecord, { crime: crime.criminalRecordEntry, age: updated.age, category: crime.category ?? 'other' }]
     const flagToAdd = useNewFormat ? (crime.flagsAdded?.[0] ?? null) : crime.addFlag
     if (flagToAdd) updated.flags = [...new Set([...updated.flags, flagToAdd])]
     updated.log = [...updated.log, { age: state.age, text: `You are arrested for ${crime.name.toLowerCase()}.`, isKey: true }]
@@ -2361,6 +2364,7 @@ export function tick(state) {
     const remaining = s.prisonSentence - 1
     if (remaining <= 0) {
       s.inPrison = false; s.prisonSentence = 0
+      if (!s.flags.includes('served_prison_time')) s.flags = [...s.flags, 'served_prison_time']
       s.log = [...s.log, { age: s.age, text: 'You are released from prison.', isKey: true }]
       // Parole event — queue if sentence was long
       if ((s.mem?.originalSentence ?? 0) >= 3) {
@@ -2431,7 +2435,7 @@ export function tick(state) {
       s.wanted = false
       s.inPrison = true
       s.prisonSentence = sentence
-      s.criminalRecord = [...(s.criminalRecord ?? []), { crime: 'Murder (convicted)', age: s.age }]
+      s.criminalRecord = [...(s.criminalRecord ?? []), { crime: 'Murder (convicted)', age: s.age, category: 'violent' }]
       s.log = [...s.log, { age: s.age, text: `Investigators piece together evidence. You are charged with murder and sentenced to ${sentence} years.`, isKey: true }]
       return s
     } else {
