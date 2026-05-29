@@ -1074,4 +1074,213 @@ export const CHILDREN_ARC_EVENTS = [
     effect: (p) => { p.m -= 40; p.h -= 12; p.r += 30; p.addFlag('lost_child'); p.addFlag('bereaved'); p.setMem('childDeathAdult', true) },
   },
 
+  // ── EARLY PARENTHOOD (ages 0–5) ────────────────────────────────────────────
+
+  {
+    id: 'child_infant_night',
+    phase: 'midlife',
+    weight: 3,
+    cooldown: 0,
+    when: (G) => {
+      if (!G.children?.length) return false
+      if (G.mem?.childInfantNight) return false
+      return G.children.some(c => (G.age - c.ageAtBirth) <= 1)
+    },
+    text: (G) => {
+      const child = G.children.find(c => (G.age - c.ageAtBirth) <= 1)
+      const name = child?.name?.split(' ')[0] ?? 'The baby'
+      return `${name} does not sleep in a way that can be predicted. Nights have become a territory of two-hour windows and the strange lucid exhaustion of someone who is needed without rest. You look at them at 3am and the feeling is too large to live in the same sentence as the tiredness.`
+    },
+    choices: null,
+    effect: (p) => { p.setMem('childInfantNight', true); p.m -= 4; p.h -= 5; p.r += 3 },
+  },
+
+  {
+    id: 'child_first_word',
+    phase: 'midlife',
+    weight: 3,
+    cooldown: 0,
+    when: (G) => {
+      if (!G.children?.length) return false
+      if (G.mem?.childFirstWord) return false
+      return G.children.some(c => {
+        const ca = G.age - c.ageAtBirth
+        return ca >= 1 && ca <= 2
+      })
+    },
+    text: (G) => {
+      const child = G.children.find(c => { const ca = G.age - c.ageAtBirth; return ca >= 1 && ca <= 2 })
+      const name = child?.name?.split(' ')[0] ?? 'They'
+      return `${name} says something that is recognisably a word. Not clearly — more a sound that the context makes into a word. You hear it twice before you're sure. You are sure. You call someone to tell them and it sounds smaller in the telling than it was in the room.`
+    },
+    choices: null,
+    effect: (p) => { p.setMem('childFirstWord', true); p.m += 12 },
+  },
+
+  {
+    id: 'child_toddler_personality',
+    phase: 'midlife',
+    weight: 3,
+    cooldown: 0,
+    when: (G) => {
+      if (!G.children?.length) return false
+      if (G.mem?.childToddlerPersonality) return false
+      return G.children.some(c => {
+        const ca = G.age - c.ageAtBirth
+        return ca >= 2 && ca <= 4
+      })
+    },
+    text: (G) => {
+      const child = G.children.find(c => { const ca = G.age - c.ageAtBirth; return ca >= 2 && ca <= 4 })
+      const name = child?.name?.split(' ')[0] ?? 'They'
+      const traits = child?.traits ?? []
+      const trait = traits[0] ?? 'something specific'
+      return `${name} is becoming a person with preferences. The preference is ${trait === 'curious' ? 'to know how everything works — the drawer, the door hinge, your face when you say no' : trait === 'shy' ? 'to watch before they join — a minute at the door before entering any room' : trait === 'spirited' ? 'to be in the middle of whatever is happening, always, regardless of permission' : `something you\'re still learning to name`}. You are meeting someone who will know you for the rest of your life.`
+    },
+    choices: null,
+    effect: (p) => { p.setMem('childToddlerPersonality', true); p.m += 8 },
+  },
+
+  {
+    id: 'child_school_age_independence',
+    phase: 'midlife',
+    weight: 3,
+    cooldown: 0,
+    when: (G) => {
+      if (!G.children?.length) return false
+      if (G.mem?.childSchoolAgeIndep) return false
+      return G.children.some(c => {
+        const ca = G.age - c.ageAtBirth
+        return ca >= 5 && ca <= 8
+      })
+    },
+    text: (G) => {
+      const child = G.children.find(c => { const ca = G.age - c.ageAtBirth; return ca >= 5 && ca <= 8 })
+      const name = child?.name?.split(' ')[0] ?? 'They'
+      return `${name} has a life at school that you only know from reports. A best friend whose name you hear constantly. A teacher they talk about. A person who bothered them in the playground, resolved by the following Monday. You are becoming someone who receives news rather than being present. This is correct and a little strange.`
+    },
+    choices: null,
+    effect: (p) => { p.setMem('childSchoolAgeIndep', true); p.m += 5; p.r += 2 },
+  },
+
+  // ── CHILD'S EMERGING PATH ──────────────────────────────────────────────────
+
+  {
+    id: 'child_interest_emerges',
+    phase: 'midlife',
+    weight: 3,
+    cooldown: 0,
+    when: (G) => {
+      if (!G.children?.length) return false
+      if (G.mem?.childInterestEmerges) return false
+      return G.children.some(c => {
+        const ca = G.age - c.ageAtBirth
+        return ca >= 8 && ca <= 13
+      })
+    },
+    text: (G) => {
+      const child = G.children.find(c => { const ca = G.age - c.ageAtBirth; return ca >= 8 && ca <= 13 })
+      const name = child?.name?.split(' ')[0] ?? 'They'
+      const traits = child?.traits ?? []
+      const interest = traits.includes('curious') ? 'how things work — the engine, the keyboard, the question nobody thought to ask'
+        : traits.includes('sensitive') ? 'stories — reading them, making them up, telling them to anyone who will stay still long enough'
+        : traits.includes('spirited') ? 'sport, specifically the particular sport where the quality they have is most useful'
+        : traits.includes('funny') ? 'making people laugh, which is a skill that looks accidental and isn\'t'
+        : 'something you hadn\'t predicted, which is how it always goes'
+      return `${name} is interested in ${interest}. The interest has the texture of a vocation, not a phase. You are watching someone discover what they\'re for.`
+    },
+    choices: [
+      {
+        text: 'Invest in it — support the interest actively',
+        tag: null,
+        outcome: 'Lessons, materials, time. It costs something. So does watching something wither.',
+        effect: (p) => { p.setMem('childInterestEmerges', 'supported'); p.mo -= 300; p.m += 8; p.karma += 4 },
+      },
+      {
+        text: 'Encourage it without major investment',
+        tag: null,
+        outcome: 'You make room for it. The room is enough.',
+        effect: (p) => { p.setMem('childInterestEmerges', 'encouraged'); p.m += 5; p.karma += 2 },
+      },
+      {
+        text: 'Gently redirect — the interest isn\'t practical',
+        tag: null,
+        outcome: 'They redirect, mostly. The interest resurfaces in different forms over the years.',
+        effect: (p) => { p.setMem('childInterestEmerges', 'redirected'); p.m -= 2; p.r += 3 },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'child_disappoints_you',
+    phase: 'midlife',
+    weight: 2,
+    cooldown: 0,
+    when: (G) => {
+      if (!G.children?.length) return false
+      if (G.mem?.childDisappoints) return false
+      return G.children.some(c => {
+        const ca = G.age - c.ageAtBirth
+        return ca >= 14 && ca <= 18 && (c.relationshipQuality ?? 60) < 55
+      })
+    },
+    text: (G) => {
+      const child = G.children.find(c => {
+        const ca = G.age - c.ageAtBirth
+        return ca >= 14 && ca <= 18 && (c.relationshipQuality ?? 60) < 55
+      })
+      const name = child?.name?.split(' ')[0] ?? 'They'
+      return `${name} does something that disappoints you. Not catastrophically — no one is in danger — but a choice that reveals a gap between who you thought they were becoming and who they are. You have to decide how much space the disappointment gets.`
+    },
+    choices: [
+      {
+        text: 'Have the conversation — name what happened',
+        tag: null,
+        outcome: 'The conversation is uncomfortable and necessary. They hear some of it. That\'s enough for now.',
+        effect: (p) => { p.setMem('childDisappoints', 'talked'); p.m -= 3; p.karma += 3 },
+      },
+      {
+        text: 'Give it time — you don\'t want to push them further away',
+        tag: null,
+        outcome: 'The silence holds something. So does the distance.',
+        effect: (p) => { p.setMem('childDisappoints', 'waited'); p.m -= 5; p.r += 3 },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'child_adult_path_revealed',
+    phase: 'midlife',
+    weight: 3,
+    cooldown: 0,
+    when: (G) => {
+      if (!G.children?.length) return false
+      if (G.mem?.childAdultPath) return false
+      return G.children.some(c => (G.age - c.ageAtBirth) >= 18 && (G.age - c.ageAtBirth) <= 25)
+    },
+    text: (G) => {
+      const child = G.children.find(c => { const ca = G.age - c.ageAtBirth; return ca >= 18 && ca <= 25 })
+      const name = child?.name?.split(' ')[0] ?? 'They'
+      const q = child?.relationshipQuality ?? 60
+      if (q >= 70) {
+        return `${name} is finding their shape in the world. The path they are taking is not the one you imagined for them, and it is more clearly theirs than anything you imagined would have been. You tell them this. The conversation stays with you.`
+      }
+      return `${name} is finding their path, largely without your input. You hear about it in fragments. What you wanted for them and what they are choosing are not the same. You are working out how much that matters.`
+    },
+    choices: null,
+    effect: (p) => {
+      const children = p._state?.children ?? []
+      const child = children.find(c => {
+        const ca = (p._state?.age ?? 0) - c.ageAtBirth
+        return ca >= 18 && ca <= 25
+      })
+      const q = child?.relationshipQuality ?? 60
+      p.setMem('childAdultPath', true)
+      if (q >= 70) { p.m += 8; p.karma += 3 }
+      else { p.m -= 3; p.r += 5 }
+    },
+  },
+
 ]
