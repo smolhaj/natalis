@@ -2000,6 +2000,11 @@ export function applyActivity(state, activityId) {
 
   updated.actionsThisYear = state.actionsThisYear + 1
   updated.log = [...updated.log, { age: state.age, text: activity.outcome, isKey: false }]
+
+  // Track cumulative activity counts for flag generation in tick()
+  const countKey = `act_count_${activityId}`
+  updated.mem = { ...(updated.mem ?? {}), [countKey]: ((updated.mem?.[countKey] ?? 0) + 1) }
+
   return updated
 }
 
@@ -2646,6 +2651,28 @@ export function tick(state) {
     let newFlags = [...s.flags]
     for (const [skill, threshold, flag] of HOBBY_FLAGS) {
       if (skill >= threshold && !flagsSet.has(flag)) newFlags = [...newFlags, flag]
+    }
+    if (newFlags.length !== s.flags.length) s = { ...s, flags: newFlags }
+  }
+
+  // Activity milestone flags — set once when cumulative count crosses threshold
+  {
+    const m = s.mem ?? {}
+    const flagsSet = new Set(s.flags)
+    const ACT_FLAGS = [
+      [m.act_count_meditate  ?? 0, 8,  'contemplative'],
+      [m.act_count_volunteer ?? 0, 5,  'generous'],
+      [m.act_count_donate    ?? 0, 5,  'generous'],
+      [m.act_count_read      ?? 0, 10, 'avid_reader'],
+      [m.act_count_journal   ?? 0, 8,  'reflective_writer'],
+      [m.act_count_gym + (m.act_count_join_sports_team ?? 0) + (m.act_count_yoga ?? 0) ?? 0, 10, 'fitness_devotee'],
+      [m.act_count_philosophy?? 0, 6,  'philosophical_mind'],
+      [m.act_count_networking?? 0, 6,  'networker'],
+      [m.act_count_save      ?? 0, 5,  'disciplined_saver'],
+    ]
+    let newFlags = [...s.flags]
+    for (const [count, threshold, flag] of ACT_FLAGS) {
+      if ((count ?? 0) >= threshold && !flagsSet.has(flag)) newFlags = [...newFlags, flag]
     }
     if (newFlags.length !== s.flags.length) s = { ...s, flags: newFlags }
   }
