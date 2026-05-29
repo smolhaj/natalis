@@ -2279,4 +2279,19 @@ export const WORLD_EVENTS = [
     when: (G) => !G.flags.includes('tipping_point_generation'),
   },
 
+  {
+    id: 'beirut_port_explosion_2020',
+    name: 'Beirut Port Explosion',
+    years: [2020, 2021],
+    archetypes: null,
+    countries: ['Lebanon'],
+    narrative: 'The explosion at the port takes seconds. The shockwave moves through the city at the speed of sound. Windows shatter across West Beirut — not in one building but in every building facing the water, simultaneously. You feel it before you understand it. The warehouse held 2,750 tonnes of ammonium nitrate, confiscated in 2014 and stored without safety measures for six years because every official who knew looked at the paperwork and decided it was someone else\'s problem. 218 dead. 6,500 injured. 300,000 displaced. The grain silos that absorbed some of the blast — grain that the country now cannot replace. The government that stored the material will not resign. Several ministers announce investigations into themselves.',
+    context: '4 August 2020. The explosion at Beirut\'s port was one of the largest non-nuclear explosions in history, equivalent to a 3.5-magnitude earthquake and felt in Cyprus 240km away. 2,750 tonnes of ammonium nitrate had been stored in Hangar 12 since 2013 after being confiscated from an abandoned cargo ship. Lebanese customs, judiciary, and security services had all been alerted to the danger over the years; none acted. The explosion destroyed the grain silos that held Lebanon\'s strategic food reserve. The Beirut port blast killed 218 people confirmed, left 300,000 homeless, and caused $15 billion in damage — in an economy that was already collapsing.',
+    effect: (p) => { p.m -= 20; p.h -= 10; p.addFlag('beirut_blast_survived'); },
+    addFlags: ['beirut_blast_survived'],
+    minAge: 0,
+    maxAge: null,
+    when: null,
+  },
+
 ]
