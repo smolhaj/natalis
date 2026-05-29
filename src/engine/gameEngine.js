@@ -928,6 +928,28 @@ function isEventAvailable(e, usedEventMap, currentYear) {
   return currentYear - lastFired >= e.cooldown
 }
 
+// ── Desire-to-event affinity map ────────────────────────────────────────────
+// Each desire maps to an array of id substrings. Events whose id contains any
+// of these substrings get a 1.6× weight boost when G.desire matches.
+const DESIRE_PATTERNS = {
+  approval:    ['family', 'parent', 'career', 'boss', 'raise', 'fame', 'recog', 'honor', 'award', 'prom', 'protege', 'child_close', 'mentor'],
+  safety:      ['prison', 'housing', 'debt', 'evict', 'flee', 'insurance', 'stabil', 'relief', 'settle', 'legal', 'parole', 'saved'],
+  control:     ['career', 'boss', 'hire', 'business', 'manage', 'retire', 'leader', 'become_mentor', 'power', 'scheme', 'bribe'],
+  connection:  ['friend', 'romance', 'partner', 'sibling', 'child', 'neigh', 'commun', 'reunion', 'reconcil', 'warmth', 'love', 'rq_partner', 'rq_child', 'rq_friend'],
+  freedom:     ['emigr', 'leave', 'quit', 'prison', 'escape', 'rebel', 'resist', 'activist', 'politic', 'arts_censored', 'samizdat', 'dissident', 'refuge'],
+  meaning:     ['relig', 'faith', 'crisis', 'calling', 'legacy', 'dying', 'late_life', 'volunteer', 'karma', 'grief', 'loss', 'men_echo', 'desire_', 'reflection'],
+  justice:     ['civil_right', 'labor', 'strike', 'union', 'protest', 'discrim', 'lgbtq', 'caste', 'regime', 'corrupt', 'tribunal', 'apartheid', 'justice'],
+  pleasure:    ['hobby', 'travel', 'food', 'party', 'garden', 'music', 'art', 'feast', 'drink', 'club', 'holiday', 'fun', 'shop', 'mov'],
+  recognition: ['fame', 'award', 'prize', 'protege_surpass', 'published', 'art_shown', 'nollywood', 'first_', 'integrity_echo', 'elder_consult', 'memory_now'],
+}
+
+function desireWeight(eventId, desire) {
+  if (!desire || !eventId) return 1
+  const patterns = DESIRE_PATTERNS[desire]
+  if (!patterns) return 1
+  return patterns.some(p => eventId.includes(p)) ? 1.6 : 1
+}
+
 // Dev mode: set localStorage.setItem('natalis_dev', 'true') to enable pool logging.
 function devLogPool(phase, pool, firedId, usedEventMap, phaseEvents) {
   try {
@@ -976,10 +998,11 @@ export function getNextEvent(state) {
 
   if (pool.length === 0) return null
 
-  const totalWeight = pool.reduce((sum, e) => sum + (e.weight ?? 1), 0)
+  const desire = G.desire
+  const totalWeight = pool.reduce((sum, e) => sum + (e.weight ?? 1) * desireWeight(e.id, desire), 0)
   let r = Math.random() * totalWeight
   for (const event of pool) {
-    r -= event.weight ?? 1
+    r -= (event.weight ?? 1) * desireWeight(event.id, desire)
     if (r <= 0) return event
   }
   return pool[pool.length - 1]
