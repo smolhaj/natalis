@@ -21,8 +21,8 @@ export const POSTRELEASE_EVENTS = [
 
   {
     id: 'pr_release_morning',
-    phase: 'young_adult',
-    weight: 5,
+    phase: null,
+    weight: 10,
     cooldown: 0,
     when: (G) =>
       G.flags.has('served_prison_time') &&

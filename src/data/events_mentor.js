@@ -143,7 +143,7 @@ export const MENTOR_EVENTS = [
     cooldown: 0,
     when: (G) =>
       G.career !== null &&
-      G.career.level >= 3 &&
+      G.career.level >= 2 &&
       G.age >= 35 && G.age <= 50 &&
       !G.mem?.hasProtege &&
       (G.mem?.has_mentor || G.flags.has('mentored')),
