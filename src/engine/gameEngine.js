@@ -1210,7 +1210,7 @@ function applyWorldEvents(state) {
   for (const we of WORLD_EVENTS) {
     if (updated.worldEventsFired.has(we.id)) continue
     if (state.currentYear < we.years[0] || state.currentYear > we.years[1]) continue
-    const archetypesMatch = we.archetypes === 'all' || we.archetypes.includes(state.character.country.archetype)
+    const archetypesMatch = !we.archetypes || we.archetypes === 'all' || we.archetypes.includes(state.character.country.archetype)
     const countryMatch = !we.countries || we.countries.includes(state.character.country.name)
     if (!archetypesMatch || !countryMatch) continue
     if (we.minAge && state.age < we.minAge) continue
