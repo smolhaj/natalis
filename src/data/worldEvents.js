@@ -2174,6 +2174,90 @@ export const WORLD_EVENTS = [
     when: (G) => !G.flags.includes('maldives_evacuation_witnessed'),
   },
 
+  // ── VEL D'HIV 1942 — FRENCH PERSPECTIVE ──────────────────────────────────
+  {
+    id: 'vel_dhiv_1942_france',
+    name: 'Vel d\'Hiv Roundup',
+    years: [1942, 1942],
+    archetypes: null,
+    countries: ['France'],
+    narrative: 'French police, working from lists, arrest 13,000 Jewish residents of Paris over two days in July. They are held in the Vélodrome d\'Hiver — a bicycle stadium — for five days in summer heat before being transferred to Drancy and from there east. The Nazis had requested 22,000. The French police delivered 13,000 without being asked to explain the shortfall. This was done without German officers present. It was done with French officers, French buses, and French records.',
+    context: 'The Vel d\'Hiv roundup (Rafle du Vélodrome d\'Hiver) of 16–17 July 1942 was organised and carried out entirely by the French police under the Vichy government. Of the 13,152 arrested, 4,115 were children. Very few survived the deportation to Auschwitz. France did not officially acknowledge state responsibility until 1995, when President Chirac stated: "France, the land of the Enlightenment and of the Declaration of Rights... France, on that day, committed an irreparable act." The Vel d\'Hiv was demolished in 1959.',
+    effect: (p) => { p.m -= 8; p.r += 3; },
+    addFlags: [],
+    minAge: 8,
+    when: (G) => G.character.religion !== 'jewish', // Jewish characters get the deeper character event
+  },
+
+  // ── BIAFRA 1967–1970 ──────────────────────────────────────────────────────
+  {
+    id: 'biafra_war_1967',
+    name: 'Biafra War',
+    years: [1967, 1970],
+    archetypes: null,
+    countries: ['Nigeria'],
+    narrative: (G) => {
+      if (G.ethnicity === 'igbo') {
+        return 'Biafra has declared independence. The federal blockade is total — nothing goes in, including food. The photographs reaching the world show children with the distended stomachs of kwashiorkor protein deficiency. The word that is not being used is famine. The word that is also not being used is starvation. One to two million Biafran civilians die before the secession collapses in January 1970. The federal government\'s reconciliation policy is announced as "No victor, no vanquished."'
+      }
+      return 'The civil war in the east has been running for two years. The photographs coming out — children with swollen stomachs, field hospitals in churches — have reached international newspapers and produced a new kind of response: emergency aid flows from strangers in Europe and America. The secession will not succeed. The question being argued is what the blockade has made of Nigeria\'s claim to unity.'
+    },
+    context: 'The Nigerian Civil War (1967–70) followed the secession of the Eastern Region as the Republic of Biafra. The federal military government imposed a total blockade. Approximately 1–2 million Biafran civilians died from starvation and disease, making it one of the first televised humanitarian catastrophes and a formative event for the modern NGO movement (the founders of Médecins Sans Frontières were French doctors who served in Biafra). The war ended with federal forces entering Biafra\'s capital on 15 January 1970.',
+    effect: (p) => { p.m -= 8; p.h -= 3; },
+    addFlags: [],
+    minAge: 5,
+  },
+
+  // ── BHOPAL 1984 ───────────────────────────────────────────────────────────
+  {
+    id: 'bhopal_1984',
+    name: 'Bhopal Disaster',
+    years: [1984, 1985],
+    archetypes: null,
+    countries: ['India'],
+    narrative: (G) => {
+      const place = G.place?.name || ''
+      if (place === 'Bhopal' || (G.character.country?.name === 'India' && Math.random() < 0.15)) {
+        return 'The Union Carbide pesticide plant in Bhopal leaks methyl isocyanate gas at 2am, 3 December. The gas is heavier than air and settles into the low-lying neighbourhoods around the plant. You wake to your eyes burning and your neighbours running without knowing which direction. By morning, 3,000 people are dead within the week. 500,000 are injured. The company\'s CEO flies to India, is briefly arrested, and is released. He flies home. He is never extradited.'
+      }
+      return 'The Union Carbide pesticide plant in Bhopal, Madhya Pradesh, leaks methyl isocyanate gas on the night of 3 December. 3,000 dead in the immediate aftermath; estimates of total deaths range to 15,000. 500,000 people are exposed. The CEO of Union Carbide, Warren Anderson, is arrested in India, released, and never extradited. The company is eventually acquired; the site remains contaminated. The survivors\' compensation, settled in 1989, averages $550 per person.'
+    },
+    context: 'The Bhopal disaster is the world\'s worst industrial accident. Union Carbide\'s Bhopal plant had been cutting costs; multiple safety systems were non-functional on the night of the leak. The Indian government accepted a $470 million settlement in 1989 — about $550 per affected person. Clean-up of the site has never been completed; groundwater contamination continues. Warren Anderson, Union Carbide\'s CEO, was declared a fugitive in India but the US government refused extradition requests. He died in 2014, never having faced trial.',
+    effect: (p) => { p.m -= 6; p.h -= 2; p.addFlag('industrial_disaster_era'); },
+    addFlags: ['industrial_disaster_era'],
+    minAge: 5,
+  },
+
+  // ── ANGOLA CIVIL WAR 1975–2002 ────────────────────────────────────────────
+  {
+    id: 'angola_civil_war',
+    name: 'Angolan Civil War',
+    years: [1975, 1990],
+    archetypes: ['subsaharan', 'conflict_zone'],
+    countries: null,
+    narrative: 'The independence from Portugal that arrives in 1975 is immediately swallowed by a war between the three liberation movements: the MPLA backed by Cuba and the Soviet Union, UNITA backed by the United States and apartheid South Africa. The country is one of Africa\'s largest oil and diamond producers. The revenues fund both sides. Child soldiers, landmines that will kill people for the next fifty years, two million displaced. Twenty-seven years of continuous war in a country no one is looking at.',
+    context: 'The Angolan Civil War (1975–2002) was one of the Cold War\'s most destructive proxy conflicts, killing an estimated 500,000 people and displacing 4 million. It was funded on both sides by natural resource revenues — oil for the MPLA, diamonds for UNITA — a pattern that later became the model for analysing "resource curse" conflicts. The war formally ended only with Jonas Savimbi\'s death in 2002. Angola today is one of the world\'s most unequal societies, with oil wealth concentrated in Luanda while much of the country remains extremely poor.',
+    effect: (p) => { p.m -= 6; p.h -= 3; p.addFlag('civil_war_lived'); },
+    addFlags: [],
+    minAge: 0,
+    when: (G) => ['developing_unstable', 'conflict_zone', 'subsaharan'].includes(G.character.country?.archetype) &&
+      ['Angola', 'Namibia', 'Zambia', 'Zimbabwe', 'DRC', 'Congo'].includes(G.character.country?.name),
+  },
+
+  // ── MOZAMBIQUE CIVIL WAR 1977–1992 ────────────────────────────────────────
+  {
+    id: 'mozambique_civil_war',
+    name: 'Mozambique Civil War',
+    years: [1977, 1992],
+    archetypes: null,
+    countries: ['Mozambique'],
+    narrative: 'RENAMO, funded first by Rhodesia and then by apartheid South Africa as a destabilisation strategy, has been fighting FRELIMO\'s Marxist government since independence. One million dead. Five million displaced. The war has no clear front lines — it is present in villages, in roads, in schools burned and teachers targeted. Mozambique is one of the poorest countries on earth being deliberately made more so by its neighbour\'s government.',
+    context: 'The Mozambican Civil War (1977–1992) was primarily a Cold War proxy conflict in which apartheid South Africa funded and directed RENAMO to destabilise its Marxist neighbour. RENAMO\'s tactics specifically targeted civilian infrastructure — schools, health clinics, and transport routes — as a deliberate strategy. By the war\'s end, two-thirds of the country\'s schools and half its health clinics had been destroyed. The Rome General Peace Accords ended the conflict in 1992, and the first multi-party elections in 1994 were the first free elections in Mozambican history.',
+    effect: (p) => { p.m -= 8; p.h -= 4; p.addFlag('civil_war_lived'); },
+    addFlags: [],
+    minAge: 0,
+  },
+
   // ── CLIMATE TIPPING POINT 2045–2050 ──────────────────────────────────────
   {
     id: 'climate_tipping_point_2045',
