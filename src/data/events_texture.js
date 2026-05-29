@@ -162,7 +162,7 @@ export const TEXTURE_EVENTS = [
   },
 
   {
-    id: 'rural_market_day',
+    id: 'rural_market_day_texture',
     phase: 'childhood',
     weight: 3,
     when: (G) =>

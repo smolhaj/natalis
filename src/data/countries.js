@@ -85,6 +85,7 @@ export const COUNTRIES = [
   },
   {
     name: 'Germany', capital: 'Berlin', currency: 'euro', region: 'Western Europe', archetype: 'wealthy_west',
+    historicalNames: [{ until: 1990, name: 'West Germany' }],
     gdp: 'very_high', healthcare: 'excellent', lifeExpectancy: 81,
     conflictRisk: 0.01, genderGap: 0.13, socialMobility: 'medium',
     wealthTierWeights: [0.06, 0.12, 0.28, 0.38, 0.16],
@@ -432,6 +433,7 @@ export const COUNTRIES = [
   // ── POST-SOVIET ───────────────────────────────────────────────────────────
   {
     name: 'Russia', capital: 'Moscow', currency: 'ruble', region: 'Eastern Europe / Central Asia', archetype: 'post_soviet',
+    historicalNames: [{ until: 1991, name: 'the Soviet Union' }],
     gdp: 'medium', healthcare: 'fair', lifeExpectancy: 73,
     conflictRisk: 0.04, genderGap: 0.22, socialMobility: 'low',
     wealthTierWeights: [0.14, 0.22, 0.32, 0.22, 0.10],
@@ -459,6 +461,7 @@ export const COUNTRIES = [
   },
   {
     name: 'Ukraine', capital: 'Kyiv', currency: 'hryvnia', region: 'Eastern Europe', archetype: 'post_soviet',
+    historicalNames: [{ until: 1991, name: 'Soviet Ukraine' }],
     gdp: 'low', healthcare: 'poor', lifeExpectancy: 72,
     conflictRisk: 0.08, genderGap: 0.20, socialMobility: 'low',
     wealthTierWeights: [0.18, 0.26, 0.32, 0.18, 0.06],
@@ -540,6 +543,7 @@ export const COUNTRIES = [
   },
   {
     name: 'Serbia', capital: 'Belgrade', currency: 'Serbian dinar', region: 'Balkans', archetype: 'post_soviet',
+    historicalNames: [{ until: 1992, name: 'Yugoslavia' }],
     gdp: 'medium', healthcare: 'fair', lifeExpectancy: 76,
     conflictRisk: 0.03, genderGap: 0.19, socialMobility: 'low',
     wealthTierWeights: [0.12, 0.22, 0.32, 0.26, 0.08],
@@ -624,6 +628,7 @@ export const COUNTRIES = [
   },
   {
     name: 'Kazakhstan', capital: 'Astana', currency: 'Kazakhstani tenge', region: 'Central Asia', archetype: 'post_soviet',
+    historicalNames: [{ until: 1991, name: 'Soviet Kazakhstan' }],
     gdp: 'medium', healthcare: 'fair', lifeExpectancy: 74,
     conflictRisk: 0.02, genderGap: 0.28, socialMobility: 'low',
     wealthTierWeights: [0.16, 0.25, 0.32, 0.20, 0.07],
@@ -653,6 +658,7 @@ export const COUNTRIES = [
   },
   {
     name: 'Uzbekistan', capital: 'Tashkent', currency: 'Uzbekistani soum', region: 'Central Asia', archetype: 'post_soviet',
+    historicalNames: [{ until: 1991, name: 'Soviet Uzbekistan' }],
     gdp: 'low', healthcare: 'poor', lifeExpectancy: 72,
     conflictRisk: 0.03, genderGap: 0.32, socialMobility: 'very_low',
     wealthTierWeights: [0.25, 0.30, 0.28, 0.13, 0.04],
@@ -852,6 +858,7 @@ export const COUNTRIES = [
   },
   {
     name: 'Vietnam', capital: 'Hanoi', currency: 'Vietnamese đồng', region: 'Southeast Asia', archetype: 'developing_urban',
+    historicalNames: [{ until: 1975, name: 'South Vietnam' }],
     gdp: 'low_medium', healthcare: 'fair', lifeExpectancy: 73,
     conflictRisk: 0.02, genderGap: 0.25, socialMobility: 'medium',
     wealthTierWeights: [0.16, 0.24, 0.32, 0.21, 0.07],
@@ -1024,6 +1031,7 @@ export const COUNTRIES = [
   },
   {
     name: 'Zimbabwe', capital: 'Harare', currency: 'Zimbabwean dollar', region: 'Sub-Saharan Africa', archetype: 'developing_unstable',
+    historicalNames: [{ until: 1980, name: 'Rhodesia' }],
     gdp: 'very_low', healthcare: 'very_poor', lifeExpectancy: 61,
     conflictRisk: 0.05, genderGap: 0.26, socialMobility: 'very_low',
     wealthTierWeights: [0.45, 0.28, 0.17, 0.08, 0.02],
@@ -1078,6 +1086,7 @@ export const COUNTRIES = [
   },
   {
     name: 'Cambodia', capital: 'Phnom Penh', currency: 'Cambodian riel', region: 'Southeast Asia', archetype: 'developing_unstable',
+    historicalNames: [{ from: 1975, until: 1989, name: 'Kampuchea' }],
     gdp: 'low', healthcare: 'very_poor', lifeExpectancy: 69,
     conflictRisk: 0.04, genderGap: 0.28, socialMobility: 'very_low',
     wealthTierWeights: [0.35, 0.30, 0.22, 0.10, 0.03],
@@ -1380,6 +1389,7 @@ export const COUNTRIES = [
   },
   {
     name: 'Myanmar', capital: 'Naypyidaw', currency: 'Myanmar kyat', region: 'Southeast Asia', archetype: 'conflict_zone',
+    historicalNames: [{ until: 1989, name: 'Burma' }],
     gdp: 'low', healthcare: 'very_poor', lifeExpectancy: 67,
     conflictRisk: 0.20, genderGap: 0.32, socialMobility: 'very_low',
     wealthTierWeights: [0.35, 0.30, 0.22, 0.10, 0.03],
@@ -1724,6 +1734,7 @@ export const COUNTRIES = [
   },
   {
     name: 'Tanzania', capital: 'Dodoma', currency: 'Tanzanian shilling', region: 'East Africa', archetype: 'subsaharan',
+    historicalNames: [{ until: 1964, name: 'Tanganyika' }],
     gdp: 'very_low', healthcare: 'very_poor', lifeExpectancy: 65,
     conflictRisk: 0.04, genderGap: 0.38, socialMobility: 'very_low',
     wealthTierWeights: [0.45, 0.28, 0.16, 0.08, 0.03],
@@ -1783,6 +1794,7 @@ export const COUNTRIES = [
   },
   {
     name: 'Namibia', capital: 'Windhoek', currency: 'Namibian dollar', region: 'Southern Africa', archetype: 'subsaharan',
+    historicalNames: [{ until: 1990, name: 'South West Africa' }],
     gdp: 'low_medium', healthcare: 'poor', lifeExpectancy: 63,
     conflictRisk: 0.02, genderGap: 0.26, socialMobility: 'very_low',
     wealthTierWeights: [0.28, 0.28, 0.22, 0.14, 0.08],
@@ -1814,6 +1826,7 @@ export const COUNTRIES = [
   },
   {
     name: 'Czech Republic', capital: 'Prague', currency: 'Czech koruna', region: 'Eastern Europe', archetype: 'post_soviet',
+    historicalNames: [{ until: 1992, name: 'Czechoslovakia' }],
     gdp: 'medium_high', healthcare: 'good', lifeExpectancy: 79,
     conflictRisk: 0.01, genderGap: 0.18, socialMobility: 'medium',
     wealthTierWeights: [0.06, 0.14, 0.33, 0.34, 0.13],
@@ -1842,6 +1855,7 @@ export const COUNTRIES = [
   },
   {
     name: 'Estonia', capital: 'Tallinn', currency: 'euro (kroon before 2011)', region: 'Northern Europe', archetype: 'post_soviet',
+    historicalNames: [{ until: 1991, name: 'Soviet Estonia' }],
     gdp: 'high', healthcare: 'good', lifeExpectancy: 78,
     conflictRisk: 0.01, genderGap: 0.16, socialMobility: 'high',
     wealthTierWeights: [0.05, 0.12, 0.33, 0.36, 0.14],
@@ -1869,6 +1883,7 @@ export const COUNTRIES = [
   },
   {
     name: 'Latvia', capital: 'Riga', currency: 'euro (lats before 2014)', region: 'Northern Europe', archetype: 'post_soviet',
+    historicalNames: [{ until: 1991, name: 'Soviet Latvia' }],
     gdp: 'medium_high', healthcare: 'fair', lifeExpectancy: 76,
     conflictRisk: 0.01, genderGap: 0.17, socialMobility: 'medium',
     wealthTierWeights: [0.07, 0.15, 0.33, 0.33, 0.12],
@@ -1896,6 +1911,7 @@ export const COUNTRIES = [
   },
   {
     name: 'Lithuania', capital: 'Vilnius', currency: 'euro (litas before 2015)', region: 'Northern Europe', archetype: 'post_soviet',
+    historicalNames: [{ until: 1991, name: 'Soviet Lithuania' }],
     gdp: 'medium_high', healthcare: 'fair', lifeExpectancy: 76,
     conflictRisk: 0.01, genderGap: 0.18, socialMobility: 'medium',
     wealthTierWeights: [0.07, 0.15, 0.32, 0.34, 0.12],

@@ -29,6 +29,25 @@ const COUNTRY_ISO = {
   'Laos': 'LA', 'Guatemala': 'GT',
 }
 
+// Returns the country's name as it was known at `birthYear`, if different from current name.
+// Uses `historicalNames: [{ from?, until, name }]` array on country objects.
+export function getCountryDisplayName(country, birthYear) {
+  if (!country) return ''
+  if (!country.historicalNames || country.historicalNames.length === 0) return country.name
+  const match = country.historicalNames
+    .filter(h => birthYear <= h.until && birthYear >= (h.from ?? 0))
+    .sort((a, b) => b.until - a.until)[0]
+  return match ? match.name : country.name
+}
+
+// Returns display string like "Russia (born in the Soviet Union)" when historical name differs.
+export function getCountryDisplayWithHistory(country, birthYear) {
+  if (!country) return ''
+  const historical = getCountryDisplayName(country, birthYear)
+  if (historical === country.name) return country.name
+  return `${country.name} (then ${historical})`
+}
+
 export function getCountryFlag(countryNameOrObj) {
   const name = typeof countryNameOrObj === 'string' ? countryNameOrObj : countryNameOrObj?.name
   const code = COUNTRY_ISO[name]

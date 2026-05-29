@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import { useGameStore } from '../store/gameStore'
 import { COUNTRIES } from '../data/countries'
-import { RELIGION_LABELS } from '../utils/countryUtils'
+import { RELIGION_LABELS, getCountryDisplayName } from '../utils/countryUtils'
 import StatBar from './StatBar'
 
 const STABILITY_OPTIONS = [
@@ -174,7 +174,13 @@ export default function CuratedBirthScreen() {
               <div className="space-y-2">
                 <div className="flex justify-between text-xs font-semibold">
                   <span className="text-natalis-muted">Birth Year</span>
-                  <span className="text-bit-blue">{effectiveYear}</span>
+                  <span className="text-bit-blue">
+                    {effectiveYear}
+                    {selectedCountry && (() => {
+                      const hn = getCountryDisplayName(selectedCountry, effectiveYear)
+                      return hn !== selectedCountry.name ? <span className="text-natalis-muted font-normal"> · {hn}</span> : null
+                    })()}
+                  </span>
                 </div>
                 <input
                   type="range"
@@ -321,6 +327,10 @@ export default function CuratedBirthScreen() {
                   <p className="text-xl font-bold text-natalis-text">{selectedCountry.name}</p>
                   <p className="text-natalis-muted text-sm">
                     {gender === 'male' ? 'Male' : 'Female'} · Born {effectiveYear}
+                    {(() => {
+                      const hn = getCountryDisplayName(selectedCountry, effectiveYear)
+                      return hn !== selectedCountry.name ? ` · then ${hn}` : ''
+                    })()}
                   </p>
                 </div>
               </div>
