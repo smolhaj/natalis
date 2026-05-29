@@ -114,4 +114,21 @@ export const HEADLINES = [
   { year: 2021, text: 'MYANMAR MILITARY SEIZES POWER IN COUP', archetypes: 'all', countries: ['Myanmar'], minAge: 5 },
   { year: 2021, text: 'KABUL FALLS — AMERICA\'S LONGEST WAR ENDS IN CHAOS', archetypes: 'all', countries: null, minAge: 5 },
   { year: 2022, text: 'RUSSIA INVADES UKRAINE — EUROPE\'S LARGEST WAR SINCE 1945', archetypes: ['post_soviet', 'wealthy_west'], countries: null, minAge: 5 },
+
+  // ── HISTORICAL (earlier gaps) ─────────────────────────────────────────────
+  { year: 1971, text: 'BANGLADESH WINS INDEPENDENCE AFTER NINE MONTHS OF WAR AND MASS ATROCITY', archetypes: 'all', countries: ['Bangladesh'], minAge: 1 },
+  { year: 1992, text: 'HIGH COURT OVERTURNS TERRA NULLIUS — MABO DECISION REWRITES AUSTRALIAN LAW', archetypes: 'all', countries: ['Australia'], minAge: 5 },
+  { year: 2008, text: 'RUDD SAYS SORRY — AUSTRALIA APOLOGISES TO THE STOLEN GENERATIONS', archetypes: 'all', countries: ['Australia'], minAge: 5 },
+  { year: 2015, text: 'PARIS AGREEMENT SIGNED — 196 COUNTRIES PLEDGE TO LIMIT WARMING', archetypes: 'all', countries: null, minAge: 5 },
+  { year: 2015, text: 'CANADA\'S TRUTH AND RECONCILIATION COMMISSION: 94 CALLS TO ACTION', archetypes: 'all', countries: ['Canada'], minAge: 5 },
+  { year: 2015, text: 'ONE-CHILD POLICY ENDS IN CHINA AFTER 35 YEARS', archetypes: 'all', countries: ['China'], minAge: 5 },
+
+  // ── 2025+ ─────────────────────────────────────────────────────────────────
+  { year: 2025, text: 'GLOBAL TEMPERATURES BREACH 1.5°C THRESHOLD FOR FIRST TIME', archetypes: 'all', countries: null, minAge: 5 },
+  { year: 2030, text: 'GREAT BARRIER REEF: FOURTH CONSECUTIVE MASS BLEACHING', archetypes: 'all', countries: ['Australia'], minAge: 5 },
+  { year: 2035, text: 'PACIFIC ISLAND NATIONS DECLARE CLIMATE EMERGENCY — REQUEST MASS RESETTLEMENT', archetypes: 'all', countries: null, minAge: 5 },
+  { year: 2040, text: 'UN: 200 MILLION CLIMATE DISPLACED — REFUGEE CONVENTION DOES NOT COVER THEM', archetypes: 'all', countries: null, minAge: 5 },
+  { year: 2045, text: 'WEST ANTARCTIC ICE SHEET COLLAPSE CONFIRMED — SEA LEVEL RISE NOW LOCKED IN', archetypes: 'all', countries: null, minAge: 5 },
+  { year: 2055, text: 'GULF STATES ANNOUNCE MANDATORY INDOOR ORDINANCES FOR SUMMER MONTHS', archetypes: 'all', countries: null, minAge: 5 },
+  { year: 2065, text: 'MALDIVES COMPLETES NATIONAL EVACUATION — FIRST COUNTRY ERASED BY CLIMATE CHANGE', archetypes: 'all', countries: null, minAge: 1 },
 ]

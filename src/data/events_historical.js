@@ -334,29 +334,8 @@ export const HISTORICAL_EVENTS = [
   },
 
   // ── INDIGENOUS PEOPLES ───────────────────────────────────────────────────────
-
-  {
-    id: 'hist_residential_school',
-    phase: 'childhood',
-    weight: 7,
-    when: (G) => ['indigenous_american', 'aboriginal_australian', 'first_nations'].includes(G.character.ethnicity) && G.currentYear >= 1950 && G.currentYear <= 1975 && G.age >= 5 && G.age <= 12 && !G.mem?.residential_school,
-    text: 'Government officials come to the village. They explain that the children must go to the residential school — it is the law. You are taken from your family. At the school, speaking your language is punished. Your name is replaced with a number.',
-    choices: [
-      { text: 'Survive it — hold the language inside', tag: null, outcome: 'You learn to hide what you know. Some things cannot be beaten out. You carry them back years later, bent but not broken.', effect: (p) => { p.m -= 25; p.h -= 10; p.e += 5; p.addFlag('residential_school_survivor'); p.setMem('residential_school', true) } },
-    ],
-  },
-
-  {
-    id: 'hist_indigenous_language_revival',
-    phase: 'young_adult',
-    weight: 5,
-    when: (G) => ['indigenous_american', 'aboriginal_australian', 'first_nations', 'maori'].includes(G.character.ethnicity) && G.age >= 25 && G.currentYear >= 1970 && !G.mem?.language_revival,
-    text: 'There is a movement to teach the language again. To the children who were forbidden to speak it, to the grandchildren who never learned it. A gathering is organised. Will you go?',
-    choices: [
-      { text: 'Go — bring what you remember', tag: null, outcome: 'What returns is incomplete and precious. An elder weeps when she hears a word she hasn\'t spoken aloud in sixty years.', effect: (p) => { p.m += 12; p.karma += 8; p.s += 5; p.setMem('language_revival', true) } },
-      { text: 'The loss is too much to revisit', tag: null, outcome: 'You stay away. But you teach your child three words before bed, every night. It\'s something.', effect: (p) => { p.m -= 5; p.r += 5; p.karma += 5; p.setMem('language_revival', true) } },
-    ],
-  },
+  // Culture-specific Indigenous events now live in events_indigenous.js
+  // (replaces the 2 generic events that were here previously)
 
   // ── COLONIAL INDEPENDENCE ────────────────────────────────────────────────────
 

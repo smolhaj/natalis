@@ -103,4 +103,5 @@ export const RESIDENCY_LABELS = {
   refugee_status:      'Refugee Status',
   asylum_seeker:       'Asylum Seeker',
   tourist_overstay:    'Overstayed Visa',
+  climate_displaced:   'Climate Displaced',
 }

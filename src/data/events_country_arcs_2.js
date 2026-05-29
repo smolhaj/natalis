@@ -239,6 +239,90 @@ export const COUNTRY_ARC_2_EVENTS = [
     effect: (p) => { p.e += 5; p.m -= 4; p.r += 5; p.setMem('chinaOnlyChild', true); p.addFlag('little_emperor'); },
   },
 
+  // ── CHINA: ONE-CHILD POLICY (ADDITIONAL EVENTS) ──────────────────────────
+
+  {
+    id: 'ocp_missing_sisters',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'China' &&
+      G.currentYear >= 1990 && G.currentYear <= 2015 &&
+      G.flags.includes('little_emperor') &&
+      !G.mem?.ocpMissingSisters,
+    text: 'You are sorting through your parents\' things and find a photograph of a baby girl who is not you. You are an only child. Your mother has never mentioned a pregnancy before yours. The photograph is dated fourteen months before your birth. You have counted things and arrived at a number and the number is one — one child who did not arrive, who did not grow up in this apartment, who is not sitting at this table. The photograph is small. You put it back where you found it. You do not bring it up at dinner. You understand, without being told, that it is not to be brought up.',
+    choices: null,
+    effect: (p) => { p.m -= 10; p.r += 12; p.setMem('ocpMissingSisters', true); p.addFlag('ocp_missing_sibling'); },
+  },
+
+  {
+    id: 'ocp_missing_sisters_adult',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'China' &&
+      G.flags.includes('ocp_missing_sibling') &&
+      G.age >= 22 &&
+      !G.mem?.ocpMissingSistersAdult,
+    text: 'You ask your mother. She is quiet for a long time. Then she says: we didn\'t have a choice. You understand that she means it literally. The choice that she did not have was made by the work unit and the family planning committee and the government and the weight of what it would have cost to refuse. You do not ask again. What she said is enough and more than enough and not enough.',
+    choices: null,
+    effect: (p) => { p.m -= 6; p.r += 8; p.setMem('ocpMissingSistersAdult', true); },
+  },
+
+  {
+    id: 'ocp_sole_support',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'China' &&
+      G.flags.includes('little_emperor') &&
+      G.age >= 38 && G.age <= 55 &&
+      G.parents && G.parents.filter(p => p.status !== 'dead').length > 0 &&
+      !G.mem?.ocpSoleSupport,
+    text: 'Both sets of grandparents, both parents. You are one child. There is no sibling to share this with — no one to divide the hospital visits, the phone calls, the money, the guilt. Your parents saved for your education and did not save for their care, because the expectation was that you would be the savings. You are the savings. You do not resent them. You are also very tired.',
+    choices: [
+      {
+        text: 'Carry it — this is what family means here',
+        tag: null,
+        outcome: 'You carry it. Some years are harder than others. You become very good at managing several things at once, which is not a skill you chose to develop.',
+        effect: (p) => { p.m -= 12; p.h -= 5; p.karma += 8; p.setMem('ocpSoleSupport', true); p.addFlag('filial_burden'); },
+      },
+      {
+        text: 'Talk to your parents about what is sustainable',
+        tag: null,
+        outcome: 'The conversation is difficult and necessary. Some adjustments are made. The situation does not change completely, but it changes enough to be bearable, most years.',
+        effect: (p) => { p.m -= 6; p.h -= 2; p.karma += 5; p.s += 3; p.setMem('ocpSoleSupport', true); p.addFlag('filial_burden'); },
+      },
+    ],
+  },
+
+  {
+    id: 'ocp_policy_lifted',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'China' &&
+      G.currentYear >= 2015 && G.currentYear <= 2018 &&
+      G.flags.includes('little_emperor') &&
+      G.age >= 30 &&
+      !G.mem?.ocpPolicyLifted,
+    text: 'The government announces the two-child policy. After thirty-five years of the one-child policy — the fines, the forced procedures, the family planning officials who visited quarterly, the entire apparatus of demographic control — the government is now telling you to have a second child. You sit with this announcement for a while. The decision about whether to try is yours in a way it was not before, and the biology of the situation may have opinions of its own, and the city apartment that was sized for a family of three does not automatically expand.',
+    choices: [
+      {
+        text: 'Consider it — this is different now',
+        tag: null,
+        outcome: 'The consideration takes a year. There are conversations with your partner about what it would mean practically. The answer you arrive at is not simple.',
+        effect: (p) => { p.m += 3; p.setMem('ocpPolicyLifted', true); p.addFlag('post_one_child_generation'); },
+      },
+      {
+        text: 'The moment has passed — this is the family you have',
+        tag: null,
+        outcome: 'You are thirty-seven. The policy changed too late or at the wrong time or for a life that has already arranged itself around what was permitted. You do not resent the government for the irony. You do notice it.',
+        effect: (p) => { p.m -= 4; p.r += 6; p.setMem('ocpPolicyLifted', true); p.addFlag('post_one_child_generation'); },
+      },
+    ],
+  },
+
   // ── USA ───────────────────────────────────────────────────────────────────────
 
   {
