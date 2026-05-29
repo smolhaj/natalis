@@ -1,4 +1,5 @@
 import { COUNTRIES } from '../data/countries'
+import { getCountryDisplayName } from '../utils/countryUtils'
 import { DESTINATIONS } from '../data/destinations'
 import { EVENTS, EVENTS_BY_PHASE } from '../data/events'
 import { WORLD_EVENTS } from '../data/worldEvents'
@@ -189,6 +190,7 @@ export function deriveBirthText(char) {
   const { country, birthYear, familyStability, familySize, wealthTier, firstName, surname } = char
   const arch = country.archetype
   const name = `${firstName} ${surname}`
+  const cn = getCountryDisplayName(country, birthYear) // historical name if applicable
 
   const stabilityCtx = {
     secure: 'into a household of stability and warmth',
@@ -198,15 +200,15 @@ export function deriveBirthText(char) {
   }[familyStability] ?? 'into the world'
 
   const archCtx = {
-    wealthy_west: `In ${country.name} in ${birthYear}, the maternity ward is clean, the forms are in triplicate, and your parents drive home on a road with lane markings.`,
-    wealthy_east: `${country.name}, ${birthYear}. A modern hospital, careful documentation, grandparents waiting in the corridor with specific opinions about your name.`,
-    post_soviet: `${country.name}, ${birthYear}. The maternity ward smells of disinfectant. Your mother was not allowed to have your father in the room.`,
-    developing_urban: `${country.name}, ${birthYear}. The city is enormous and still growing. The neighbourhood you are born into will shape everything that follows.`,
-    developing_unstable: `${country.name}, ${birthYear}. The country is in motion — politically, economically, always. You arrive ${stabilityCtx}.`,
-    subsaharan: `${country.name}, ${birthYear}. You are born ${stabilityCtx}${familySize > 4 ? ', the newest in a large family' : ''}. ${country.name}'s sun is already through the window.`,
-    conflict_zone: `${country.name}, ${birthYear}. You are born during a time of conflict. Your mother's first priority was keeping you safe.`,
-    wealthy_gulf: `${country.name}, ${birthYear}. The hospital is modern, the air conditioning precise. You are born into a country of vast resources and layered rules.`,
-  }[arch] ?? `${name} enters the world in ${country.name}, ${birthYear}.`
+    wealthy_west: `In ${cn} in ${birthYear}, the maternity ward is clean, the forms are in triplicate, and your parents drive home on a road with lane markings.`,
+    wealthy_east: `${cn}, ${birthYear}. A modern hospital, careful documentation, grandparents waiting in the corridor with specific opinions about your name.`,
+    post_soviet: `${cn}, ${birthYear}. The maternity ward smells of disinfectant. Your mother was not allowed to have your father in the room.`,
+    developing_urban: `${cn}, ${birthYear}. The city is enormous and still growing. The neighbourhood you are born into will shape everything that follows.`,
+    developing_unstable: `${cn}, ${birthYear}. The country is in motion — politically, economically, always. You arrive ${stabilityCtx}.`,
+    subsaharan: `${cn}, ${birthYear}. You are born ${stabilityCtx}${familySize > 4 ? ', the newest in a large family' : ''}. The sun is already through the window.`,
+    conflict_zone: `${cn}, ${birthYear}. You are born during a time of conflict. Your mother's first priority was keeping you safe.`,
+    wealthy_gulf: `${cn}, ${birthYear}. The hospital is modern, the air conditioning precise. You are born into a country of vast resources and layered rules.`,
+  }[arch] ?? `${name} enters the world in ${cn}, ${birthYear}.`
 
   return archCtx
 }
@@ -4195,16 +4197,20 @@ export function generateEpitaph(state) {
   const his = His.toLowerCase()
   const him = character.gender === 'male' ? 'him' : 'her'
   const country = character.country.name
+  const birthCountryName = getCountryDisplayName(character.country, character.birthYear)
   const { fame, assets, siblings } = state
   const lines = []
 
   // — Opening line —
+  const bornIn = birthCountryName !== country
+    ? `${birthCountryName} (now ${country})`
+    : country
   if (age < 20) {
-    lines.push(`${name} was born in ${country} and was gone at ${age} — a life that barely had time to begin.`)
+    lines.push(`${name} was born in ${bornIn} and was gone at ${age} — a life that barely had time to begin.`)
   } else if (age < 40) {
-    lines.push(`${name} was born in ${country} and died at ${age}, far too young.`)
+    lines.push(`${name} was born in ${bornIn} and died at ${age}, far too young.`)
   } else {
-    lines.push(`${name} was born in ${country} and lived to the age of ${age}.`)
+    lines.push(`${name} was born in ${bornIn} and lived to the age of ${age}.`)
   }
 
   // — Childhood and origins —
