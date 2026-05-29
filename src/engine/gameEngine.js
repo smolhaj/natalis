@@ -1189,7 +1189,8 @@ function applyWorldEvents(state) {
     we.effect(proxy)
     updated = applyProxy(updated, proxy)
     updated.worldEventsFired = new Set([...updated.worldEventsFired, we.id])
-    updated.log = [...updated.log, { age: updated.age, text: we.narrative, worldEventName: we.name, isKey: true, isWorld: true }]
+    const narrativeText = typeof we.narrative === 'function' ? we.narrative(G) : we.narrative
+    updated.log = [...updated.log, { age: updated.age, text: narrativeText, worldEventName: we.name, isKey: true, isWorld: true }]
     if (we.addFlags) updated.flags = [...new Set([...updated.flags, ...we.addFlags])]
   }
   return updated

@@ -103,6 +103,9 @@ Events live in:
 - `src/data/events_post_soviet.js` — 15 post-Soviet personal arc events: communist childhood (Pioneer, space optimism, job assignment), 1990s collapse (factory closure, savings wiped, sudden poverty), oligarch split, emigration wave (Jewish/Law of Return, German Spätaussiedler, professional brain drain), follow-through events
 - `src/data/events_illness.js` — 14 chronic illness events: diabetes (2 variants), heart disease, survivable cancer, COPD, back pain (2 variants), HIV/AIDS (era-branched: pre-1995 severe, 1996+ manageable), vision loss, hearing loss, chronic depression, disability from injury; plus follow-through callbacks (diabetes decade, cancer scan)
 - `src/data/events_parent_care.js` — 8-event arc: parental decline through to death (first sign → conversation → decision → daily reality → sibling disagreement → bad day → last conversation → final decline + `killParent()`)
+- `src/data/events_latin_america.js` — 50 events covering Chile (DINA, exile, plebiscite, Rettig), Argentina (Proceso, Falklands, Nunca Más, Nietos), Brazil (AI-5, Tropicália, economic miracle, Diretas Já, evangelical rise), Colombia (cartel adjacency, cartel offer, kidnap culture, displacement), Mexico (PRI machine, 1985 earthquake, 1982 devaluation, 1994 NAFTA/Zapatista, maquiladora), Peru (Sendero, Fujimori), Venezuela (Chávez, exodus), Cuba (CDR, Special Period, balseros, double economy), Bolivia (coup texture, Evo Morales), Guatemala (Ríos Montt, 1996 peace), Haiti (Tonton Macoutes, 2010 earthquake), Operation Condor (cross-border mechanic), Football (1978 Mundial, 2014 Copa)
+- `src/data/events_country_arcs.js` — 22 events for deeper country arcs: Nigeria (coup radio, first-gen degree, Biafra colleague, oil boom surrealism), India (Partition rebuilding, Emergency 1975, Green Revolution), South Korea (Korean War displacement, Park Chung-hee bargain, DMZ family), Egypt (Nasser/Suez, 1967 defeat, Tahrir → betrayal), Romania (Ceaușescu systematisation, Securitate informer, December 1989), Turkey (coup-by-announcement texture), Kenya (Mau Mau choice, Kenyatta accommodation, Moi kleptocracy), Ghana (Nkrumah radio, 1966 coup grief, brain drain), Ethiopia (Red Terror student, 1991 Derg fall)
+- `src/data/events_followthrough_3.js` — additional flag follow-through events: `out` ordinary life milestone, `in_recovery` one-year chip, and other orphaned flag callbacks
 
 Event shape:
 ```js
@@ -141,7 +144,7 @@ Effect proxy shorthands (all are additive deltas):
 
 ### World Events (`src/data/worldEvents.js`)
 
-93 world events. Fire based on year range + archetype/country match, independent of the normal event queue. Shape:
+130+ world events. Fire based on year range + archetype/country match, independent of the normal event queue. Shape:
 ```js
 {
   id, name, years: [start, end],
@@ -258,8 +261,10 @@ Generic events are a last resort. Specific events — ones that could only fire 
 - **Parent care arc**: 8-event arc in `events_parent_care.js` — parental decline from first sign (age 48+) through conversation, housing decision (move in / care facility / home care, with real money costs), daily reality of caregiving, sibling disagreement, a specific bad day, last good conversation, and final decline which calls `killParent()` and connects to the grief module.
 - **Relationship status labels**: Relationship cards in the Relationships tab show quality-derived labels (Estranged / Strained / Distant / Warm / Close / Devoted) plus flag-aware overrides (Caring for them / In therapy together / Reconciled) rendered as colored chips — no new data model, display layer only.
 - **Curated birth screen** (`CuratedBirthScreen.jsx`): 4-step wizard for intentional play. Step 1: country search + context card. Step 2: birth year slider + gender. Step 3: rural/urban, family stability, religion override chips. Step 4: preview card with approximate starting stats. `startCuratedGame(overrides)` in gameStore; `createCharacter()` in gameEngine accepts `familyStability`, `ruralUrban`, `religion` overrides.
+- **Childhood family income system**: Parents are assigned occupation objects (`title`, `field`, `incomeType`, `annualIncome`) at character creation, scaled by GDP tier and archetype. During childhood, annual parental income surplus flows into the character's `money`, with variance by income type (formal ±15%, informal ±40%). Post-Soviet collapse reduces income 1991–94; conflict-zone and parent-death flags disrupt it. Displayed in the Relationships tab beneath parent names. Subsistence/barter economies show no cash figure.
+- **Historical country names**: `historicalNames: [{ until: year, name: string }]` array on country objects. `getCountryNameForYear(country, year)` in `countryUtils.js` returns "USSR" for Russia before 1991, etc. Used in epitaph and birth screen (CuratedBirthScreen shows historical name in parentheses where it differs from current).
 
-**Event coverage (~1,750+ total events across 51 modules):**
+**Event coverage (~1,850+ total events across 54 modules):**
 - Base events covering all life phases with hundreds of inline events
 - 68 culture events (regime, ethnicity, caste, LGBTQ, child marriage, rural, wealth)
 - 23 technology timeline events (radio 1930s → COVID 2020s + mobile money for East/West Africa, 2007+)
@@ -268,7 +273,7 @@ Generic events are a last resort. Specific events — ones that could only fire 
 - Fame/karma events: fame consequences at different tiers, karma payoffs, hobby payoffs (painting, music, writing, fitness, language, cooking), friendship depth arcs
 - Texture events: rural developing world (country-specific city names), pre-1960 era, career peak/decline
 - Society events: women's rights milestones by country/year, healthcare by archetype, language suppression/identity
-- 116 world events: Cold War specifics, famines, economic cycles, national traumas; Partition of India, Rwandan genocide (acute + aftermath), post-Apartheid election + pass laws, Yugoslav wars, Iranian Revolution street-level, Korean War division, Cultural Revolution China, Chechen war (2 variants), 1998 Russian crash, Baltic Singing Revolution, Baltic economic recovery, post-Soviet hyperinflation, and more — 7 events have factual `context` fields (Rwandan genocide, Great Leap famine, Holodomor, Khmer Rouge, post-Soviet shock therapy, 9/11, Berlin Wall, Cultural Revolution)
+- 130+ world events: Cold War specifics, famines, economic cycles, national traumas; Partition of India, Rwandan genocide, post-Apartheid election, Yugoslav wars, Iranian Revolution, Korean War division, Cultural Revolution China, Chechen war, 1998 Russian crash, Baltic Singing Revolution, Baltic economic recovery, post-Soviet hyperinflation, Chile 1973 coup, Argentina 1976, Operation Condor, Brazil abertura, Falklands, Haiti earthquake, 1973 oil shock, Nigeria oil boom world events, South Korea developmental state, Egypt Nasser/Suez/1967/2011, Ghana independence/1966 coup, Kenya Mau Mau/independence, Turkey military coups, Romania 1989, Ethiopia Red Terror/famine/fall of Derg, South Africa 1948/1994, and more — 7+ events have factual `context` fields
 - 55+ career × regime events: journalist/teacher/soldier/police/civil servant/farmer/artist under authoritarian regimes; lawyer ethics, accountant fraud discovery, engineer safety tradeoffs, doctor burnout
 - 11 friend lifecycle events: drifting apart, values clash, reconnecting, friend's divorce/success/illness/death, asking for money
 - 10 business arc events: key hire, first big client, acquisition offer, losing a client, market downturn, cashflow crisis, failure and restart
@@ -306,7 +311,7 @@ Generic events are a last resort. Specific events — ones that could only fire 
 
 *Previous roadmap (items 1–16) complete. See git history. The roadmap below is built from a structured brainstorm session and reflects explicit design decisions.*
 
-*Completed since brainstorm: BUILD 3 (chronic illness system + parent care arc), BUILD 4 (relationship history UI — status labels on relationship cards), BUILD 6 (curated birth screen — 4-step wizard). See PR #42. Vietnam arc (events_vietnam.js, 10 events) and wealth mechanics system (events_wealth_system.js, 17 events) added in PR #43. BUILD 29 (voting/elections), BUILD 30 partial (garden, letters, neighbours, school reunion), BUILD 44 (body in later life), and BUILD 50 (money across a life) added in current PR.*
+*Completed since brainstorm: BUILD 3 (chronic illness system + parent care arc), BUILD 4 (relationship history UI — status labels on relationship cards), BUILD 6 (curated birth screen — 4-step wizard). See PR #42. Vietnam arc (events_vietnam.js, 10 events) and wealth mechanics system (events_wealth_system.js, 17 events) added in PR #43. BUILD 29 (voting/elections), BUILD 30 partial (garden, letters, neighbours, school reunion), BUILD 44 (body in later life), and BUILD 50 (money across a life) added in PR #44. Childhood family income system (parent occupations, GDP-scaled income during childhood phase) added in PR #45. BUILD 2 Latin America arc (events_latin_america.js, 50 events), BUILD 6 (historical country names, expanded ribbons), BUILD 10 partial (events_country_arcs.js, 22 events for Nigeria/India/South Korea/Egypt/Romania/Turkey/Kenya/Ghana/Ethiopia), and events_followthrough_3.js added in PRs #45–47.*
 
 ---
 
@@ -315,6 +320,8 @@ Generic events are a last resort. Specific events — ones that could only fire 
 #### BUILD 2 — Geographic Depth (multiple PRs, can be parallelised)
 
 **Vietnam arc** ✅ DONE (PR #43): `events_vietnam.js` (10 events). Fall of Saigon southern family experience, re-education camp aftermath, boat people decision arc, Doi Moi reform generation, Viet Kieu diaspora texture. World events for Fall of Saigon 1975 and Doi Moi 1986 still to be added to `worldEvents.js`.
+
+**Latin America arc** ✅ DONE (PR #45): `events_latin_america.js` (50 events). Chile, Argentina, Brazil, Colombia, Mexico, Peru, Venezuela, Cuba, Bolivia, Guatemala, Haiti, Operation Condor cross-border mechanic, Football as national religion. See event file for full coverage.
 
 **Lebanon arc** (world events + character events):
 - Civil war childhood 1975–90 — the green line, crossing militia checkpoints, the specific sectarian geography of Beirut by neighbourhood
@@ -414,13 +421,13 @@ Partial from original spec — not yet implemented: congenital conditions at cha
 
 #### BUILD 6 — Polish and Completeness
 
-**Country historical names**: Add `historicalNames: [{ until: year, name: string }]` to country data. Display: current name with historical in parentheses where different ("Russia (then USSR)"). Used in epitaph and birth screen.
+**Country historical names** ✅ DONE (PR #47): `historicalNames` array added to countries.js, `getCountryNameForYear()` in countryUtils.js. CuratedBirthScreen shows historical name in parentheses. Epitaph uses year-accurate names.
 
 **`activities.js` audit**: Fix unreachable activity combinations (GDP × age × availability).
 
 **Event guard consistency**: Standardise all `when` guards on `G.mem?.key` optional chaining.
 
-**Ribbons audit**: Add missing ribbons for `resettlement_established`, `ivf_success`, `chose_childless`, `pension_saver`, `rural_to_urban`, `mentor`, `career_defining_work`, `post_apartheid_generation`, `completed_hajj`, and new flags from Builds 1–5.
+**Ribbons audit** ✅ DONE (PR #47): Added ribbons for `resettlement_established`, `ivf_success`, `chose_childless`, `pension_saver`, `rural_to_urban`, `first_gen_graduate`, `post_apartheid_generation`, `completed_hajj`, and flags from Latin America and country arc events. Ongoing: add ribbons for each new flag set going forward.
 
 **`careers.js` field coverage**: Sports arc (injury, transition out, identity work). Academia arc (tenure decision, publish-or-perish, the defining student). Hospitality arc (service grind at bottom, ownership arc at top).
 
@@ -519,6 +526,8 @@ Partial from original spec — not yet implemented: congenital conditions at cha
 #### BUILD 10 — Country-Specific Historical Arcs (deep specificity)
 
 *These expand on Build 2's geographic depth with explicit event-level content for each country and era.*
+
+**PARTIAL ✅ (PR #47)**: `events_country_arcs.js` (22 events) covers Nigeria (coup radio, first-gen degree, Biafra colleague, oil boom), India (Partition rebuilding, Emergency 1975, Green Revolution), South Korea (Korean War displacement, Park Chung-hee bargain, DMZ family), Egypt (Nasser/Suez, 1967 defeat, Tahrir), Romania (Ceaușescu, Securitate, December 1989), Turkey (coup texture), Kenya (Mau Mau choice, Kenyatta, Moi kleptocracy), Ghana (Nkrumah radio, 1966 coup grief, brain drain), Ethiopia (Red Terror student, 1991 fall). Remaining: Argentina, Iran, China, South Africa, Japan, USA, France arcs not yet in events_country_arcs.js (see BUILD 2 Latin America for Argentina coverage). Also BUILD 10 world events added to worldEvents.js in PR #47.
 
 ---
 

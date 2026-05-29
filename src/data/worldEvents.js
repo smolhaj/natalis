@@ -1761,4 +1761,116 @@ export const WORLD_EVENTS = [
     when: (G) => !G.flags.includes('hyperinflation_generation'),
   },
 
+  // ── OIL SHOCK 1973 — DEVELOPING WORLD ────────────────────────────────────
+  {
+    id: 'oil_shock_1973_periphery',
+    name: '1973 Oil Shock — Import Burden',
+    years: [1973, 1975],
+    archetypes: ['subsaharan', 'developing_urban', 'developing_unstable', 'conflict_zone'],
+    countries: null,
+    narrative: 'The price of everything made with petroleum — fertiliser, transport, plastics — is rising, and there is no cushion. Countries that import oil are paying twice what they paid last year for it. Food prices follow. The government has nothing in reserve to absorb it. The word that keeps appearing in the newspapers is one that was not there before: stagflation. You learn it without knowing what it means because the thing it describes is already in your kitchen.',
+    context: 'Oil-importing developing nations were the hardest hit by the 1973 oil shock. Countries like India, Brazil, South Korea, and sub-Saharan African nations faced sharp increases in import bills with no reserves to cushion the blow. Many were forced to borrow on international markets, accumulating the debt burdens that led to the 1980s debt crises and subsequent IMF structural adjustment programmes. The shock accelerated the divergence between oil exporters and oil importers in the developing world.',
+    effect: (p) => { p.m -= 12; p.h -= 5; p.w -= 10; p.wipeMoney(0.2); p.addFlag('oil_shock_generation'); },
+    addFlags: ['oil_shock_generation'],
+    minAge: 5,
+    when: (G) => !G.flags.includes('oil_shock_generation'),
+  },
+
+  // ── TRIANGLE SHIRTWAIST FIRE 1911 ─────────────────────────────────────────
+  {
+    id: 'triangle_shirtwaist_1911',
+    name: 'Triangle Shirtwaist Factory Fire',
+    years: [1911, 1911],
+    archetypes: ['wealthy_west'],
+    countries: ['United States'],
+    narrative: 'One hundred and forty-six garment workers die in a factory on Washington Place in lower Manhattan. Most are young immigrant women. The fire exits are locked — a practice common enough in the industry that no one thought to question it until now. The owners are acquitted at trial. The names of the dead are printed in the newspapers and then the newspapers move on.',
+    context: 'The Triangle Shirtwaist Factory fire of March 25, 1911 killed 146 workers, mostly immigrant women from Italy and Eastern Europe. The factory\'s owners had locked the stairwell doors to prevent unauthorized breaks and theft. The tragedy galvanized the American labor movement: within weeks, 80,000 people marched through New York in a funeral procession. The International Ladies\' Garment Workers\' Union grew to 250,000 members. The fire directly led to 36 new labor laws in New York State and became the foundational event of the 20th-century American labor movement.',
+    effect: (p) => { p.m -= 10; p.karma += 8; p.addFlag('triangle_generation'); p.setPolitical('left'); },
+    addFlags: ['triangle_generation'],
+    minAge: 10,
+    when: (G) => !G.flags.includes('triangle_generation'),
+  },
+
+  // ── UK MINERS' STRIKE 1984–85 ─────────────────────────────────────────────
+  {
+    id: 'uk_miners_strike_1984',
+    name: 'UK Miners\' Strike',
+    years: [1984, 1985],
+    archetypes: ['wealthy_west'],
+    countries: ['United Kingdom'],
+    narrative: 'The National Union of Mineworkers has called a strike against pit closures. It will last a year. The government has prepared — coal stockpiled, police deployed in numbers the coalfields have never seen. The communities built around the pits — County Durham, South Wales, Yorkshire — are choosing sides, and the choice cuts through families. There is no clean position.',
+    context: 'The UK miners\' strike of 1984–85 was a major industrial dispute between the NUM under Arthur Scargill and the Conservative government under Margaret Thatcher. The government had spent 18 months secretly stockpiling coal in preparation. 142,000 miners struck for a year; strike-breakers (\'scabs\') drove permanent community splits. The strike ended in defeat: 97 collieries were closed over the following decade, eliminating nearly all deep coal mining in Britain. The communities are still divided by the memory.',
+    effect: (p) => { p.m -= 12; p.w -= 8; p.wipeMoney(0.2); p.addFlag('miners_strike_generation'); },
+    addFlags: ['miners_strike_generation'],
+    minAge: 10,
+    when: (G) => !G.flags.includes('miners_strike_generation'),
+  },
+
+  // ── SPANISH CIVIL WAR LABOR DIMENSION 1936–37 ─────────────────────────────
+  {
+    id: 'spain_anarchist_factories_1936',
+    name: 'Spanish Republic — Collectivised Barcelona',
+    years: [1936, 1937],
+    archetypes: 'all',
+    countries: ['Spain'],
+    narrative: 'The anarchist unions — the CNT and the FAI — are running the factories in Barcelona. Not managed, not administered: run. Decisions made collectively, wages equalised, bosses gone. It is also a city at war with itself, with the fascists, and with other factions on the left who consider the anarchists a threat to discipline. The revolution and the war are happening simultaneously, and they are not the same project.',
+    context: 'Between July 1936 and May 1937, anarcho-syndicalist unions collectivised around 70% of Barcelona\'s industry, including transport, utilities, and most manufacturing. Workers\' committees replaced management. The experiment ended when the Republican government, backed by Soviet-aligned communists, moved to suppress anarchist militias in the May Days of 1937. George Orwell described this period in Homage to Catalonia. The collectivisations remain one of history\'s most significant experiments in worker self-management.',
+    effect: (p) => { p.m += 5; p.karma += 8; p.s += 4; p.addFlag('civil_war_generation'); p.addFlag('anarchist_barcelona'); },
+    addFlags: ['civil_war_generation', 'anarchist_barcelona'],
+    minAge: 12,
+    when: (G) => !G.flags.includes('civil_war_generation'),
+  },
+
+  // ── GREAT DEPRESSION 1929–35 ──────────────────────────────────────────────
+  {
+    id: 'great_depression_1929',
+    name: 'The Great Depression',
+    years: [1930, 1935],
+    archetypes: 'all',
+    countries: null,
+    narrative: (G) => {
+      const arch = G.character.country.archetype
+      if (arch === 'wealthy_west') {
+        return 'The bank has failed or the harvest has been unsold or the factory has closed — the mechanism varies but the result is the same. Men stand in lines. The word breadline enters the vocabulary. Things that felt certain six months ago are not certain. Your family does not say the word poverty. They say: times are hard.'
+      }
+      if (arch === 'subsaharan' || arch === 'developing_urban' || arch === 'developing_unstable') {
+        return 'The price of the export crop — cocoa, cotton, groundnuts, sisal — has collapsed because the buyers abroad have stopped buying. The cash that was entering the village from the market is gone. The colonial administration still requires its taxes. The gap between what the land produces and what survival costs has closed.'
+      }
+      return 'The global economy has contracted sharply. Prices for what your country sells abroad have fallen; prices for what your country buys have not. The adjustment is paid for by people who had no part in creating the crisis.'
+    },
+    context: 'The Great Depression began with the Wall Street Crash of October 1929 and spread to become a worldwide economic catastrophe. US GDP fell 30%, unemployment reached 25%. The Depression was transmitted globally through commodity price collapses: prices for cocoa, cotton, wheat, and rubber fell 40-70%, devastating colonial and developing economies. In Nigeria, cocoa prices fell 50%; in Kenya, settler farms collapsed; in India, the Depression catalysed the independence movement. The Depression transformed political economies everywhere it reached, accelerating both welfare states and fascism.',
+    effect: (p) => {
+      const arch = p._state?.character?.country?.archetype
+      if (arch === 'wealthy_west') {
+        p.m -= 18; p.h -= 8; p.w -= 20; p.wipeMoney(0.5); p.addFlag('depression_generation')
+      } else {
+        p.m -= 15; p.h -= 10; p.w -= 15; p.wipeMoney(0.35); p.addFlag('depression_generation')
+      }
+    },
+    addFlags: ['depression_generation'],
+    minAge: 5,
+    when: (G) => !G.flags.includes('depression_generation'),
+  },
+
+  // ── SPANISH FLU 1918 ──────────────────────────────────────────────────────
+  {
+    id: 'spanish_flu_1918',
+    name: 'The 1918 Influenza Pandemic',
+    years: [1918, 1919],
+    archetypes: 'all',
+    countries: null,
+    narrative: (G) => {
+      const arch = G.character.country.archetype
+      if (arch === 'wealthy_west') {
+        return 'Healthy in the morning, feverish by afternoon, and the hospitals are full. The second wave, in the autumn, is worse than the first. The dead include young adults at a rate that makes no statistical sense — it is the immune response, turned against the body, that kills the strongest fastest. The disease reaches everywhere the troop ships went. Public gatherings are cancelled. Newspapers report in euphemisms.'
+      }
+      return 'The illness has arrived from somewhere and is called by several names depending on which newspaper you read. It moves through the population quickly. The people who die are sometimes the people you would have expected least to die — the young, the strong. The ones who survive carry the memory of what a city sounds like when a third of its people are sick at the same time.'
+    },
+    context: 'The 1918 influenza pandemic killed an estimated 50-100 million people worldwide — more than all combat deaths in World War I. Unusually, mortality was highest in young adults aged 20-40, likely because the 1918 virus triggered a cytokine storm (extreme immune overreaction) in healthy immune systems. The pandemic infected 500 million people, roughly a third of the global population. India lost an estimated 17 million people, more than any other country. The pandemic was misnamed "Spanish flu" because Spain, neutral in the war, had a free press that reported it — belligerent nations censored their death counts.',
+    effect: (p) => { p.m -= 15; p.h -= 15; p.addFlag('flu_pandemic_survivor'); },
+    addFlags: ['flu_pandemic_survivor'],
+    minAge: 1,
+    when: (G) => !G.flags.includes('flu_pandemic_survivor'),
+  },
+
 ]
