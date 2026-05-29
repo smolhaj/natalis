@@ -1050,7 +1050,24 @@ function buildG(state) {
     // Mutable religion: state.religion overrides character birth religion (for converts, apostates)
     religion: state.religion ?? state.character?.religion ?? 'secular',
     // Mutable classTier: state.classTier overrides birth wealthTier (for class mobility)
-    wealthTier: state.classTier ?? state.character?.wealthTier ?? 3,
+    wealthTier: (() => {
+      // Dynamic: use actual money + property equity to determine current wealth tier
+      // Falls back to classTier (if manually set) or birth tier for young characters
+      const birthTier = state.classTier ?? state.character?.wealthTier ?? 3
+      const age = state.age ?? 0
+      if (age < 18) return birthTier // childhood — birth class determines everything
+      const money = state.money ?? 0
+      const propValue = (state.assets?.properties ?? []).reduce((s, p) => s + (p.value ?? 0), 0)
+      const debt = state.debt ?? 0
+      const netWorth = money + propValue - debt
+      // Thresholds intentionally broad — events shouldn't be hair-trigger on exact dollar amounts
+      if (netWorth >= 1_000_000) return 5
+      if (netWorth >= 200_000)   return 4
+      if (netWorth >= 30_000)    return 3
+      if (netWorth >= 5_000)     return 2
+      if (netWorth >= 0)         return 1
+      return 0 // negative net worth
+    })(),
     ethnicity: state.character?.ethnicity ?? 'local',
     ruralUrban: state.character?.ruralUrban ?? 'urban',
     literate: flagSet.has('became_literate') ? true : (state.character?.literate ?? true),
