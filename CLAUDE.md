@@ -106,6 +106,9 @@ Events live in:
 - `src/data/events_latin_america.js` — 50 events covering Chile (DINA, exile, plebiscite, Rettig), Argentina (Proceso, Falklands, Nunca Más, Nietos), Brazil (AI-5, Tropicália, economic miracle, Diretas Já, evangelical rise), Colombia (cartel adjacency, cartel offer, kidnap culture, displacement), Mexico (PRI machine, 1985 earthquake, 1982 devaluation, 1994 NAFTA/Zapatista, maquiladora), Peru (Sendero, Fujimori), Venezuela (Chávez, exodus), Cuba (CDR, Special Period, balseros, double economy), Bolivia (coup texture, Evo Morales), Guatemala (Ríos Montt, 1996 peace), Haiti (Tonton Macoutes, 2010 earthquake), Operation Condor (cross-border mechanic), Football (1978 Mundial, 2014 Copa)
 - `src/data/events_country_arcs.js` — 22 events for deeper country arcs: Nigeria (coup radio, first-gen degree, Biafra colleague, oil boom surrealism), India (Partition rebuilding, Emergency 1975, Green Revolution), South Korea (Korean War displacement, Park Chung-hee bargain, DMZ family), Egypt (Nasser/Suez, 1967 defeat, Tahrir → betrayal), Romania (Ceaușescu systematisation, Securitate informer, December 1989), Turkey (coup-by-announcement texture), Kenya (Mau Mau choice, Kenyatta accommodation, Moi kleptocracy), Ghana (Nkrumah radio, 1966 coup grief, brain drain), Ethiopia (Red Terror student, 1991 Derg fall)
 - `src/data/events_followthrough_3.js` — additional flag follow-through events: `out` ordinary life milestone, `in_recovery` one-year chip, and other orphaned flag callbacks
+- `src/data/events_early_life.js` — 20 events filling the thinnest phases: 10 early_childhood (ages 0–5: first school, absent parent, new sibling, object of your own, witnessing adults, early illness, hunger, television arrives, night fear, first friend) + 10 young_adult (ages 18–25: first apartment, just-a-job, first real failure, friend group scatters, adult breakup, money zero, flatmate, city arrival for rural characters, mistake owned, political moment)
+- `src/data/events_decolonisation.js` — 10 events covering the decolonisation era and its aftermath (1950s–2010s): independence morning, new schools, first coup, Pan-Africanism/OAU, structural adjustment, SAP clinic closed, brain drain wave, Nehruvian moment (India), post-adjustment generation, mobile phone leapfrog
+- `src/data/events_labor.js` — 9 events covering the labour movement: union card, strike called, picket line, three months in, strike defeat (auto), strike victory (auto), Luddite moment (era-branched), solidarity test, first boss
 
 Event shape:
 ```js
@@ -144,7 +147,7 @@ Effect proxy shorthands (all are additive deltas):
 
 ### World Events (`src/data/worldEvents.js`)
 
-130+ world events. Fire based on year range + archetype/country match, independent of the normal event queue. Shape:
+149+ world events. Fire based on year range + archetype/country match, independent of the normal event queue. Shape:
 ```js
 {
   id, name, years: [start, end],
@@ -264,7 +267,7 @@ Generic events are a last resort. Specific events — ones that could only fire 
 - **Childhood family income system**: Parents are assigned occupation objects (`title`, `field`, `incomeType`, `annualIncome`) at character creation, scaled by GDP tier and archetype. During childhood, annual parental income surplus flows into the character's `money`, with variance by income type (formal ±15%, informal ±40%). Post-Soviet collapse reduces income 1991–94; conflict-zone and parent-death flags disrupt it. Displayed in the Relationships tab beneath parent names. Subsistence/barter economies show no cash figure.
 - **Historical country names**: `historicalNames: [{ until: year, name: string }]` array on country objects. `getCountryNameForYear(country, year)` in `countryUtils.js` returns "USSR" for Russia before 1991, etc. Used in epitaph and birth screen (CuratedBirthScreen shows historical name in parentheses where it differs from current).
 
-**Event coverage (~1,850+ total events across 54 modules):**
+**Event coverage (~1,950+ total events across 57 modules):**
 - Base events covering all life phases with hundreds of inline events
 - 68 culture events (regime, ethnicity, caste, LGBTQ, child marriage, rural, wealth)
 - 23 technology timeline events (radio 1930s → COVID 2020s + mobile money for East/West Africa, 2007+)
@@ -273,7 +276,7 @@ Generic events are a last resort. Specific events — ones that could only fire 
 - Fame/karma events: fame consequences at different tiers, karma payoffs, hobby payoffs (painting, music, writing, fitness, language, cooking), friendship depth arcs
 - Texture events: rural developing world (country-specific city names), pre-1960 era, career peak/decline
 - Society events: women's rights milestones by country/year, healthcare by archetype, language suppression/identity
-- 130+ world events: Cold War specifics, famines, economic cycles, national traumas; Partition of India, Rwandan genocide, post-Apartheid election, Yugoslav wars, Iranian Revolution, Korean War division, Cultural Revolution China, Chechen war, 1998 Russian crash, Baltic Singing Revolution, Baltic economic recovery, post-Soviet hyperinflation, Chile 1973 coup, Argentina 1976, Operation Condor, Brazil abertura, Falklands, Haiti earthquake, 1973 oil shock, Nigeria oil boom world events, South Korea developmental state, Egypt Nasser/Suez/1967/2011, Ghana independence/1966 coup, Kenya Mau Mau/independence, Turkey military coups, Romania 1989, Ethiopia Red Terror/famine/fall of Derg, South Africa 1948/1994, and more — 7+ events have factual `context` fields
+- 149+ world events: Cold War specifics, famines, economic cycles, national traumas; Partition of India, Rwandan genocide, post-Apartheid election, Yugoslav wars, Iranian Revolution, Korean War division, Cultural Revolution China, Chechen war, 1998 Russian crash, Baltic Singing Revolution, Baltic economic recovery, post-Soviet hyperinflation, Chile 1973 coup, Argentina 1976, Operation Condor, Brazil abertura, Falklands, Haiti earthquake, 1973 oil shock (all archetype variants), Nigeria oil boom world events, South Korea developmental state, Egypt Nasser/Suez/1967/2011, Ghana independence/1966 coup, Kenya Mau Mau/independence, Turkey military coups, Romania 1989, Ethiopia Red Terror/famine/fall of Derg, South Africa 1948/1994, **Spanish flu 1918** (all archetypes), **Great Depression 1929** (archetype-branched prose), **Triangle Shirtwaist fire 1911** (USA), **UK miners' strike 1984–85** (UK), **Spanish anarchist factories 1936** (Spain), and more — 12+ events have factual `context` fields
 - 55+ career × regime events: journalist/teacher/soldier/police/civil servant/farmer/artist under authoritarian regimes; lawyer ethics, accountant fraud discovery, engineer safety tradeoffs, doctor burnout
 - 11 friend lifecycle events: drifting apart, values clash, reconnecting, friend's divorce/success/illness/death, asking for money
 - 10 business arc events: key hire, first big client, acquisition offer, losing a client, market downturn, cashflow crisis, failure and restart
@@ -306,12 +309,16 @@ Generic events are a last resort. Specific events — ones that could only fire 
 - **8 small-life events** (appended to events_small_life.js): garden/allotment, garden years callback, letter arrives (pre-1998), letter midlife echo, good neighbour, neighbour fence conflict, neighbour informer (regime-gated), school reunion
 - **2 civic character events** (in events.js BASE_EVENTS): first vote (democracy-gated), election night (political_leaning-gated)
 - **5 election/referendum world events** (in worldEvents.js): South Africa 1994 free election, Germany 1933 Reichstag, South Africa 1948 apartheid victory, Brexit 2016, Quebec 1995
+- **20 early_childhood + young_adult events** (events_early_life.js): ages 0–5 texture (first school, absent parent, new sibling, object of your own, night fear, first friend, early illness, hunger, television arrival, witnessing adults) + messy 18–25 arc (first apartment, just-a-job, first real failure, friend group scatters, adult breakup, money zero, flatmate, city arrival for rural characters, mistake owned, political formation moment)
+- **10 decolonisation era events** (events_decolonisation.js): independence morning (subsaharan 1956–1970), post-independence schools, first coup disillusionment, Pan-Africanism, structural adjustment lived experience, SAP clinic closure, brain drain wave, Nehruvian moment (India 1950–1964), post-adjustment generation, mobile phone leapfrog (2002–2012)
+- **9 labour movement events** (events_labor.js): union card joining, strike called (choice: join/cross), picket line endurance, three-month strike strain, strike defeat (auto), strike victory (auto, karma-gated), Luddite moment (era-branched across handloom → typesetters → truckers), solidarity test, first boss
+- **9 elder status + reconciliation events** (appended to events_late_life.js): elder consulted (authority archetypes, age 65–74), you are the memory now (age 73+), polite dismissal (wealthy_west 2000+), phone lesson (age 68+), obsolescence (age 78+, universal); reconciliation initiation (estranged child/sibling, age 62–74), warm response (sets `reconciled_damaged`), cold response (sets `permanently_estranged`), living with it (age 70+)
 
 ### What still needs work — Priority Roadmap
 
 *Previous roadmap (items 1–16) complete. See git history. The roadmap below is built from a structured brainstorm session and reflects explicit design decisions.*
 
-*Completed since brainstorm: BUILD 3 (chronic illness system + parent care arc), BUILD 4 (relationship history UI — status labels on relationship cards), BUILD 6 (curated birth screen — 4-step wizard). See PR #42. Vietnam arc (events_vietnam.js, 10 events) and wealth mechanics system (events_wealth_system.js, 17 events) added in PR #43. BUILD 29 (voting/elections), BUILD 30 partial (garden, letters, neighbours, school reunion), BUILD 44 (body in later life), and BUILD 50 (money across a life) added in PR #44. Childhood family income system (parent occupations, GDP-scaled income during childhood phase) added in PR #45. BUILD 2 Latin America arc (events_latin_america.js, 50 events), BUILD 6 (historical country names, expanded ribbons), BUILD 10 partial (events_country_arcs.js, 22 events for Nigeria/India/South Korea/Egypt/Romania/Turkey/Kenya/Ghana/Ethiopia), and events_followthrough_3.js added in PRs #45–47.*
+*Completed since brainstorm: BUILD 3 (chronic illness system + parent care arc), BUILD 4 (relationship history UI — status labels on relationship cards), BUILD 6 (curated birth screen — 4-step wizard). See PR #42. Vietnam arc (events_vietnam.js, 10 events) and wealth mechanics system (events_wealth_system.js, 17 events) added in PR #43. BUILD 29 (voting/elections), BUILD 30 partial (garden, letters, neighbours, school reunion), BUILD 44 (body in later life), and BUILD 50 (money across a life) added in PR #44. Childhood family income system (parent occupations, GDP-scaled income during childhood phase) added in PR #45. BUILD 2 Latin America arc (events_latin_america.js, 50 events), BUILD 6 (historical country names, expanded ribbons), BUILD 10 partial (events_country_arcs.js, 22 events for Nigeria/India/South Korea/Egypt/Romania/Turkey/Kenya/Ghana/Ethiopia), and events_followthrough_3.js added in PRs #45–47. BUILD 6 early childhood + early 20s (events_early_life.js, 20 events), BUILD 5 partial (events_decolonisation.js + 7 world events: Spanish flu 1918, Great Depression 1929, oil shock periphery, Triangle Shirtwaist 1911, UK miners strike 1984, Spanish anarchist factories 1936), BUILD 20 labour/strikes (events_labor.js, 9 events), BUILD 9 elder status by archetype + BUILD 4 late-life reconciliation arc (9 events appended to events_late_life.js) added in PR #48.*
 
 ---
 
@@ -373,7 +380,7 @@ Partial from original spec — not yet implemented: congenital conditions at cha
 
 **Political leaning system** ✅ DONE: `political_leaning` state field added, displayed in Stats tab. Earned through events only (born null). Wired from adolescence political awakening event, career-regime events, world events. `p.setPolitical(value)` available in effect proxy.
 
-**Late-life reconciliation arc**: Attempt to repair estranged child/sibling relationship in 60s–70s. Success: `reconciled_damaged` flag (relationship quality restored but caps lower than undamaged). Failure: `permanently_estranged`. Both paths lead to some form of closure — the attempt itself is the arc.
+**Late-life reconciliation arc** ✅ DONE (PR #48): Attempt to repair estranged child/sibling relationship in 60s–70s. `recon_initiate` (age 62–74, gated on child or sibling quality < 32) → `recon_response_warm` (sets `reconciled_damaged`, boosts relationship quality) or `recon_response_cold` (weight 3, sets `permanently_estranged`) → `recon_living_with_it` (age 70+, auto-resolve). Both closure paths implemented.
 
 **Death of a child arc**: Full arc — sparse restrained death event, marriage aftermath events (how it changes the partnership), years of carrying it events. Gate carefully. Connects to grief module.
 
@@ -393,17 +400,11 @@ Partial from original spec — not yet implemented: congenital conditions at cha
 - Great Depression lived experience by archetype: US Dust Bowl/breadlines, British means test humiliation, Australian wool price collapse, Nigerian cash crop disruption
 - WWII from non-European perspectives: Calcutta under Japanese threat and Bengal famine, Buenos Aires neutrality, Lagos and West African regiment contributions, colonised peoples drafted to fight for colonial powers
 
-**1950s–60s decolonisation arc** (`events_decolonisation.js`):
-- Independence generation: the specific optimism of 1960 Ghana, 1960 Nigeria, 1963 Kenya
-- The first coup: when the independence promise broke (Ghana 1966, Nigeria 1966, others)
-- IMF structural adjustment 1980s–90s: the post-colonial debt generation
-- Pan-Africanism and Negritude: the intellectual movement of the independence era
+**1930s–40s global texture** ✅ PARTIAL (PR #48): Spanish flu 1918 world event (all archetypes, function-narrative branched). Great Depression 1929 world event (all archetypes, archetype-branched prose). Triangle Shirtwaist fire 1911 (USA/wealthy_west). UK miners' strike 1984 (UK). Spanish anarchist factories 1936 (Spain). Remaining: WWII non-European perspectives, Bengal famine, Buenos Aires neutrality.
 
-**1970s global texture**:
-- Oil shock 1973 world event (all archetypes, impact varies by GDP tier)
-- Stagflation in the West: end of guaranteed prosperity
-- Latin American authoritarian wave (see Build 2)
-- Post-independence disillusionment in Africa: the gap between 1960 hopes and 1975 reality
+**1950s–60s decolonisation arc** ✅ DONE (PR #48): `events_decolonisation.js` (10 events). Independence morning (subsaharan 1956–1970, sets `independence_generation_self`), post-independence schools, first coup disillusionment (sets `first_coup_witness`, `learned_silence`), Pan-Africanism/OAU 1963, structural adjustment lived experience (1984–1998), SAP clinic closure, brain drain wave, Nehruvian moment (India 1950–1964), post-adjustment generation, mobile phone leapfrog (2002–2012).
+
+**1970s global texture** ✅ PARTIAL (PR #48): Oil shock 1973 periphery world event added (subsaharan/developing_urban/developing_unstable/conflict_zone), with context field. West and Gulf variants existed previously. Stagflation and post-independence disillusionment still to do.
 
 **2010s texture**:
 - Arab Spring consequences arc (expand existing)
@@ -433,9 +434,9 @@ Partial from original spec — not yet implemented: congenital conditions at cha
 
 **BirthScreen depth** ✅ DONE: `CuratedBirthScreen.jsx` — 4-step wizard (country search, birth year/gender, rural/urban + stability + religion, preview) accessible via "Craft a Life" on TitleScreen. `startCuratedGame(overrides)` in gameStore; `createCharacter()` accepts `familyStability`, `ruralUrban`, `religion` overrides.
 
-**Early 20s gap**: 8–10 events for the messy 18–25 sub-phase — first apartment, first real job, first adult failure, the specific vertigo of being responsible for your own life for the first time.
+**Early 20s gap** ✅ DONE (PR #48): 10 young_adult events in `events_early_life.js` — first apartment, just-a-job, first real failure (sets `knows_failure`), friend group scatters, adult breakup, money zero (gated `G.money < 400`), flatmate, city arrival for rural characters, mistake owned, political formation moment (sets `political_leaning` via `p.setPolitical()`).
 
-**Early childhood depth** (ages 0–5): First day of school (massive in many cultures), being the child of an immigrant, early illness, a formative memory that the game can reference later. The emotional bedrock phase is currently thin.
+**Early childhood depth** ✅ DONE (PR #48): 10 early_childhood events in `events_early_life.js` — first school (archetype-branched prose), absent parent (sets `absent_parent`, `learned_silence`), new sibling (gated `G.siblings.length > 0`), object of your own (sets `childhood_object`), witnessing adults (regime-gated, auto-resolve), early illness (archetype-branched treatment), hunger known (subsaharan/conflict/developing_unstable only, sets `food_insecurity`), television arrives (wealthy_west/developing_urban/post_soviet 1958–1985), night fear, first friend.
 
 ---
 
@@ -492,10 +493,7 @@ Partial from original spec — not yet implemented: congenital conditions at cha
 
 **'Who Am I?' living identity card** ✅ DONE: `generateIdentityCard(state)` in gameEngine.js. Displayed in Stats tab as "Who You Are". 3–4 sentences of present-tense identity prose, regenerated each year. Surfaces flags/state without spoiling the epitaph.
 
-**Ageing and elder status by archetype** (new late_life event variants):
-- `wealthy_east`, `subsaharan`, `developing_urban`, `post_soviet` archetypes: elders have social role, are consulted, are the repository of family memory — late-life events reflect authority and connection
-- `wealthy_west` archetype, especially 2000+: the specific invisibility of ageing in cultures that have medicalised and sidelined it — no longer consulted, moved out of the family unit, irrelevant to the economy
-- The same age, different worlds: gate on archetype + `currentYear` for when the Western pattern accelerates
+**Ageing and elder status by archetype** ✅ DONE (PR #48): 5 events appended to `events_late_life.js`. Authority track (subsaharan/developing_urban/post_soviet/wealthy_east, age 65+): `elder_consulted` (3 choices, sets `elder_authority`), `elder_you_are_memory` (age 73+, sets `oral_historian`). Invisible track (wealthy_west + `currentYear >= 2000`): `elder_polite_dismissal` (age 65–74, sets `elder_invisible`), `elder_phone_lesson` (age 68+, auto-resolve). Universal: `elder_obsolescence` (age 78+, fires for both tracks).
 
 **Congenital disability** (character creation + specific event chains):
 - Small probability at character creation (~2–4%, weighted by era and country health systems)
@@ -886,23 +884,13 @@ Almost entirely absent from a game about human lives across history. These repre
 
 ---
 
-#### BUILD 20 — Labor, Strikes, and the Workers' Movement
+#### BUILD 20 — Labor, Strikes, and the Workers' Movement ✅ DONE (PR #48)
 
-The labor movement shaped the lives of billions of working-class people across the 20th century and is almost completely absent from the game. The eight-hour day, the weekend, the minimum wage — these were won by people who went on strike and sometimes got shot for it.
+`events_labor.js` (9 events): union card joining (`lab_union_card`, needs career, 1920–2000), strike called (`lab_strike_called`, choice: honour the picket / cross the line), picket line endurance (`lab_picket_line`, needs `lab_striking`), three-month strain (`lab_strike_three_months`, sets `lab_holdout` or `lab_settled_early`), strike defeat auto-resolve (`lab_strike_outcome_defeat`, weight 4), strike victory auto-resolve (`lab_strike_outcome_win`, weight 1, karma-gated), Luddite moment (`lab_luddite_moment`, era-branched dynamic text across handloom/typesetters/truckers), solidarity test (`lab_solidarity_test`), first boss (`lab_first_boss`, young_adult).
 
-**The strike as a life event** (`events_labor.js`):
-- The decision: to cross or not. The picket line is not abstract — it is your colleagues, people you know, the question of what you owe to people whose interests align with yours. Gate on working-class career + union flag.
-- The duration: a strike that goes on for three months. The strike fund running out. Your child asking why there's no food. The specific calculus of solidarity vs. survival.
-- The outcome: losing. The specific experience of returning to work after a failed strike, to the same boss, to the same conditions. Or winning — the specific experience of a collective victory, which is rare enough to be specifically notable.
+World events: Triangle Shirtwaist fire 1911 (USA, with context), UK miners' strike 1984–85 (UK, with context), Spanish anarchist factories 1936 (Spain, with context) — all three added to worldEvents.js in PR #48.
 
-**Key historical labor events** (world events):
-- **Triangle Shirtwaist fire 1911** (USA): 146 garment workers die because the fire exits are locked. The event that transforms the labour movement. A character who works in garment manufacturing in New York in 1911 is in the room where the century's labour politics begin.
-- **Spanish Civil War labor dimension** (1936–39): the anarchist unions (CNT/FAI) running factories in Barcelona during the brief period before they were suppressed by both Franco and the Communists. The specific experience of a Barcelonan worker in 1936 who is suddenly in a collectivised factory that runs without bosses.
-- **UK miners' strike 1984–85**: Thatcher vs. the NUM. A year-long strike that destroyed the British coalfields. A character from a mining village in County Durham in 1984 lives through the specific experience of a community deliberately starved into submission by a government that has decided to win.
-- **Solidarity in Poland as personal experience** (supplements Build 1 world events): not just the world event but the character-level experience. The underground publishing, the meetings in churches, the specific risk of being visible in a movement the state is watching.
-
-**The Luddite moment** (any era, gated on career + technology):
-- The specific experience of a skill made obsolete by a machine. The handloom weaver watching a power loom do in a day what took a week. The typesetter watching desktop publishing arrive. The accountant watching spreadsheet software arrive. The truck driver reading about autonomous vehicles. Different eras, same structure. Gate on career + relevant `currentYear` ranges.
+Remaining from original spec — not yet done: Solidarity in Poland as personal character-level experience (world event exists; character events don't). Polish underground publishing arc.
 
 ---
 
