@@ -284,6 +284,35 @@ export function initializeJointFamily(char) {
   return Math.random() < clamp(eraFactor * ruralFactor * wealthFactor, 0, 0.92)
 }
 
+// ─── Generational trauma flag seeding ────────────────────────────────────────
+// Returns an array of flags to seed at game start based on country + birth year.
+// These represent family memory of atrocities the parent/grandparent generation survived.
+export function deriveGenerationalFlags(char) {
+  const { country, birthYear } = char
+  if (!country || !birthYear) return []
+  const flags = []
+  const cn = country.name
+
+  if (cn === 'Germany' && birthYear >= 1940 && birthYear <= 1960) flags.push('holocaust_family_memory')
+  if (cn === 'China' && birthYear >= 1950 && birthYear <= 1972) flags.push('great_leap_family_memory')
+  if (cn === 'China' && birthYear >= 1962 && birthYear <= 1980) flags.push('cultural_revolution_family')
+  if (cn === 'Cambodia' && birthYear >= 1975 && birthYear <= 1992) flags.push('khmer_rouge_family_memory')
+  if (['Russia', 'Ukraine', 'Kazakhstan', 'Georgia'].includes(cn) && birthYear >= 1930 && birthYear <= 1955) flags.push('gulag_family_memory')
+  if (cn === 'Japan' && birthYear >= 1945 && birthYear <= 1965) flags.push('hiroshima_family_memory')
+  if (cn === 'India' && birthYear >= 1947 && birthYear <= 1965) flags.push('partition_family_memory')
+  if (cn === 'Nigeria' && birthYear >= 1968 && birthYear <= 1982) flags.push('biafra_family_memory')
+  if (cn === 'Argentina' && birthYear >= 1976 && birthYear <= 1990) flags.push('disappeared_family_memory')
+  if (cn === 'Chile' && birthYear >= 1973 && birthYear <= 1988) flags.push('pinochet_family_memory')
+  if (cn === 'South Africa' && birthYear >= 1960 && birthYear <= 1980) flags.push('apartheid_family_memory')
+  if (cn === 'Vietnam' && birthYear >= 1975 && birthYear <= 1990) flags.push('reunification_family_memory')
+  if (cn === 'Ethiopia' && birthYear >= 1977 && birthYear <= 1992) flags.push('red_terror_family_memory')
+  if (['Rwanda', 'Burundi'].includes(cn) && birthYear >= 1994 && birthYear <= 2010) flags.push('genocide_family_memory')
+  if (cn === 'Iran' && birthYear >= 1979 && birthYear <= 1995) flags.push('revolution_family_memory')
+  if (cn === 'DR Congo' && birthYear >= 1996 && birthYear <= 2010) flags.push('congo_war_family_memory')
+
+  return flags
+}
+
 // ─── Household contribution calculation ──────────────────────────────────────
 export function calculateHouseholdContribution(state) {
   const archetype = state.character?.country?.archetype
@@ -1022,6 +1051,8 @@ function buildG(state) {
     jointFamilyPool: state.jointFamilyPool ?? 0,
     banked: state.banked ?? false,
     hardCurrencyReserve: state.hardCurrencyReserve ?? 0,
+    workStatus: state.workStatus ?? null,
+    archetype: state.character?.country?.archetype ?? null,
     // Enriched prose helpers: available in text: (G) => functions
     era: Math.floor(currentYear / 10) * 10,
     capital: state.character?.country?.capital ?? '',

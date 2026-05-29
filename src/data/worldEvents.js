@@ -1873,4 +1873,70 @@ export const WORLD_EVENTS = [
     when: (G) => !G.flags.includes('flu_pandemic_survivor'),
   },
 
+  // ── 1997 ASIAN FINANCIAL CRISIS ───────────────────────────────────────────
+  {
+    id: 'asian_financial_crisis_1997',
+    name: '1997 Asian Financial Crisis',
+    years: [1997, 1999],
+    archetypes: ['wealthy_east', 'developing_urban', 'developing_unstable'],
+    countries: ['Thailand', 'Indonesia', 'South Korea', 'Malaysia', 'Philippines'],
+    narrative: (G) => {
+      const cn = G.character.country.name
+      if (cn === 'Thailand') return 'The baht collapses on July 2nd. The news anchors say "managed float" but by the end of the week everyone knows it is a freefall. The currency halves in value inside six months. The middle class that took out dollar-denominated loans to buy apartments — a class that spent a decade believing in its own arrival — watches those loans double in real terms overnight. The IMF arrives with conditions attached. The conditions are: cut everything.'
+      if (cn === 'Indonesia') return 'The rupiah loses 80% of its value within months. Suharto\'s New Order, which staked its legitimacy on economic growth, is suddenly presiding over a famine of savings. The social fabric tears in a predictable direction: the ethnic Chinese community, 3% of the population and most visible in trade, becomes the target. The riots of May 1998 are not about economics. They are about what economics makes available to those who want to harm.'
+      if (cn === 'South Korea') return 'The won collapses and the government requires an IMF bailout of $58 billion. Companies that were considered industrial pillars — chaebols founded in the postwar miracle — begin to fail. The government asks citizens to donate their gold jewellery to pay the national debt. People bring rings, necklaces, wedding gifts. Several hundred tonnes of gold arrives.'
+      return 'The currency has lost half its value since spring. The savings your family kept in the bank have not changed in number, but what they will buy has. The debt, taken in dollars, has doubled. The government is negotiating with the IMF and the IMF\'s terms are familiar to anyone who lived through structural adjustment: cut pensions, cut public employment, raise interest rates, open the market.'
+    },
+    context: 'The 1997-98 Asian financial crisis began with Thailand\'s decision to float the baht after currency speculators attacked it. Within months, contagion spread to Indonesia, Malaysia, South Korea, and the Philippines. Indonesia\'s GDP fell 13.5% in one year — a peacetime economic collapse comparable to the Great Depression. In Indonesia, the crisis triggered political violence against the ethnic Chinese community (May 1998 Jakarta riots) and the fall of Suharto after 32 years. South Korea\'s gold collection campaign raised $2.2 billion. The IMF\'s structural adjustment conditions — widely blamed for deepening the crisis — reshaped regional politics for a generation.',
+    effect: (p) => { p.w -= 12; p.mo -= 3000; p.m -= 10; p.addFlag('asian_crisis_generation'); },
+    addFlags: ['asian_crisis_generation'],
+    minAge: 10,
+    when: (G) => !G.flags.includes('asian_crisis_generation'),
+  },
+
+  // ── INDONESIA MAY 1998 RIOTS (ethnicity-gated) ────────────────────────────
+  {
+    id: 'indonesia_may_1998_riots',
+    name: 'May 1998 Jakarta Riots',
+    years: [1998, 1998],
+    archetypes: null,
+    countries: ['Indonesia'],
+    narrative: 'Your neighbourhood goes quiet in the middle of the afternoon in a way that neighbourhoods do not go quiet. You know the sound of this kind of quiet from stories your parents told. The smoke is visible from three streets away. The mobs are not random — they move to specific addresses, specific shops. Your family has been here for three generations. This country is the only country any of you know.',
+    context: 'In May 1998, as Indonesia\'s economic crisis and political transition reached their peak, riots broke out in Jakarta and other cities targeting the ethnic Chinese Indonesian community. Approximately 1,200 people died, thousands of properties were destroyed, and mass sexual violence was documented against Chinese Indonesian women. The riots accelerated the end of Suharto\'s rule but also triggered an emigration wave: an estimated $40 billion in Chinese Indonesian capital left the country in the following years.',
+    effect: (p) => { p.m -= 20; p.h -= 8; p.addFlag('jakarta_98_survived'); },
+    addFlags: ['jakarta_98_survived'],
+    minAge: 5,
+    when: (G) => G.character.country.name === 'Indonesia' && (G.ethnicity === 'chinese_indonesian' || G.flags.includes('chinese_indonesian')) && !G.flags.includes('jakarta_98_survived'),
+  },
+
+  // ── LUMUMBA ASSASSINATION 1961 ────────────────────────────────────────────
+  {
+    id: 'lumumba_assassination_1961',
+    name: 'Assassination of Patrice Lumumba',
+    years: [1961, 1961],
+    archetypes: null,
+    countries: ['DR Congo'],
+    narrative: 'The radio announces it on February 13th: Lumumba is dead. Shot, they say, while trying to escape. Nobody believes the escape story. The first prime minister of your independent country, who gave the speech at independence that made you feel the word "dignity" for the first time, has been killed five months into his tenure. The Belgians knew. The CIA knew. Mobutu knew. The word betrayal is too small for what has happened.',
+    context: 'Patrice Lumumba, the Democratic Republic of Congo\'s first democratically elected prime minister, was assassinated on January 17, 1961. Belgium and the CIA had both actively worked to remove him, fearing his nationalist and pan-Africanist politics. His death, announced publicly on February 13, became a defining moment for African independence movements. The Belgian parliament formally apologized in 2002. His assassination opened the way for Mobutu Sese Seko\'s 32-year kleptocracy.',
+    effect: (p) => { p.m -= 18; p.karma -= 5; p.addFlag('lumumba_generation'); p.setPolitical('dissident'); },
+    addFlags: ['lumumba_generation'],
+    minAge: 5,
+    when: (G) => !G.flags.includes('lumumba_generation'),
+  },
+
+  // ── FIRST CONGO WAR 1996-97 ───────────────────────────────────────────────
+  {
+    id: 'congo_war_1996',
+    name: 'First Congo War',
+    years: [1996, 1997],
+    archetypes: null,
+    countries: ['DR Congo'],
+    narrative: 'The war that nobody calls a war moves west across the country. Mobutu\'s army dissolves ahead of the advance. In Kinshasa, people wait. Some prepare to leave. Some go to the market anyway because the bread still needs buying. When Kabila\'s Alliance of Democratic Forces for the Liberation of Congo enters the capital in May 1997, Mobutu has already gone. Thirty-two years of *l\'authenticité*, of the presidential leopard-skin hat, of a country renamed Zaïre and then renamed back — ended without a battle for the capital.',
+    context: 'The First Congo War (1996-97) began in eastern Congo following the Rwandan genocide, as Rwanda and Uganda backed Laurent-Désiré Kabila\'s rebel forces against Mobutu Sese Seko. It ended Mobutu\'s 32-year rule — one of the longest kleptocracies in African history, during which he amassed an estimated $5 billion while the country\'s infrastructure collapsed. Kabila renamed the country back to the Democratic Republic of Congo. The Second Congo War (1998-2003) would kill an estimated 5.4 million people, mainly from disease and hunger.',
+    effect: (p) => { p.m -= 12; p.h -= 6; p.addFlag('mobutu_fall_generation'); },
+    addFlags: ['mobutu_fall_generation'],
+    minAge: 5,
+    when: (G) => !G.flags.includes('mobutu_fall_generation'),
+  },
+
 ]
