@@ -931,16 +931,17 @@ function isEventAvailable(e, usedEventMap, currentYear) {
 // ── Desire-to-event affinity map ────────────────────────────────────────────
 // Each desire maps to an array of id substrings. Events whose id contains any
 // of these substrings get a 1.6× weight boost when G.desire matches.
+// Desire values are set by events_desires.js via p.setDesire():
+// prove_worth, belong, be_seen, safety, connection, leave_mark, freedom, redemption
 const DESIRE_PATTERNS = {
-  approval:    ['family', 'parent', 'career', 'boss', 'raise', 'fame', 'recog', 'honor', 'award', 'prom', 'protege', 'child_close', 'mentor'],
-  safety:      ['prison', 'housing', 'debt', 'evict', 'flee', 'insurance', 'stabil', 'relief', 'settle', 'legal', 'parole', 'saved'],
-  control:     ['career', 'boss', 'hire', 'business', 'manage', 'retire', 'leader', 'become_mentor', 'power', 'scheme', 'bribe'],
-  connection:  ['friend', 'romance', 'partner', 'sibling', 'child', 'neigh', 'commun', 'reunion', 'reconcil', 'warmth', 'love', 'rq_partner', 'rq_child', 'rq_friend'],
-  freedom:     ['emigr', 'leave', 'quit', 'prison', 'escape', 'rebel', 'resist', 'activist', 'politic', 'arts_censored', 'samizdat', 'dissident', 'refuge'],
-  meaning:     ['relig', 'faith', 'crisis', 'calling', 'legacy', 'dying', 'late_life', 'volunteer', 'karma', 'grief', 'loss', 'men_echo', 'desire_', 'reflection'],
-  justice:     ['civil_right', 'labor', 'strike', 'union', 'protest', 'discrim', 'lgbtq', 'caste', 'regime', 'corrupt', 'tribunal', 'apartheid', 'justice'],
-  pleasure:    ['hobby', 'travel', 'food', 'party', 'garden', 'music', 'art', 'feast', 'drink', 'club', 'holiday', 'fun', 'shop', 'mov'],
-  recognition: ['fame', 'award', 'prize', 'protege_surpass', 'published', 'art_shown', 'nollywood', 'first_', 'integrity_echo', 'elder_consult', 'memory_now'],
+  prove_worth: ['career', 'boss', 'raise', 'fame', 'award', 'recog', 'honor', 'prom', 'child_close', 'mentor', 'protege', 'scholarship', 'achieve'],
+  belong:      ['friend', 'commun', 'reunion', 'neigh', 'sibling', 'relig', 'club', 'family', 'cultural', 'village', 'diaspora', 'ethnic'],
+  be_seen:     ['fame', 'published', 'art_shown', 'nollywood', 'recognition', 'integrity_echo', 'first_', 'award', 'media', 'protest', 'art_'],
+  safety:      ['housing', 'debt', 'evict', 'flee', 'insurance', 'stabil', 'relief', 'settle', 'legal', 'parole', 'prison', 'saved', 'asylum'],
+  connection:  ['romance', 'partner', 'child', 'rq_partner', 'rq_child', 'rq_friend', 'warmth', 'love', 'reconcil', 'reunion', 'grief', 'men_deepens'],
+  leave_mark:  ['legacy', 'business', 'career_define', 'published', 'art', 'mentor', 'protege_surpass', 'both_arcs', 'children', 'plant', 'build'],
+  freedom:     ['emigr', 'leave', 'quit', 'escape', 'rebel', 'resist', 'activist', 'politic', 'samizdat', 'dissident', 'refuge', 'arts_censored'],
+  redemption:  ['karma', 'forgiv', 'reconcil', 'therapy', 'recovery', 'prison', 'recon_', 'ft_', 'atonement', 'make_peace'],
 }
 
 function desireWeight(eventId, desire) {
