@@ -116,7 +116,14 @@ export const HEADLINES = [
   { year: 2022, text: 'RUSSIA INVADES UKRAINE — EUROPE\'S LARGEST WAR SINCE 1945', archetypes: ['post_soviet', 'wealthy_west'], countries: null, minAge: 5 },
 
   // ── HISTORICAL (earlier gaps) ─────────────────────────────────────────────
+  { year: 1942, text: 'FRENCH POLICE ARREST 13,000 JEWISH RESIDENTS — VEL D\'HIV ROUNDUP', archetypes: 'all', countries: ['France'], minAge: 5 },
+  { year: 1967, text: 'BIAFRA DECLARES INDEPENDENCE — NIGERIA GOES TO WAR', archetypes: 'all', countries: ['Nigeria'], minAge: 5 },
+  { year: 1970, text: 'BIAFRA SURRENDERS — ONE MILLION CIVILIANS DEAD OF STARVATION', archetypes: 'all', countries: ['Nigeria'], minAge: 1 },
   { year: 1971, text: 'BANGLADESH WINS INDEPENDENCE AFTER NINE MONTHS OF WAR AND MASS ATROCITY', archetypes: 'all', countries: ['Bangladesh'], minAge: 1 },
+  { year: 1979, text: 'THE SHAH HAS LEFT — KHOMEINI RETURNS TO IRAN', archetypes: 'all', countries: ['Iran'], minAge: 5 },
+  { year: 1984, text: 'BHOPAL GAS LEAK KILLS THOUSANDS OVERNIGHT — UNION CARBIDE PLANT', archetypes: 'all', countries: ['India'], minAge: 1 },
+  { year: 1994, text: 'APARTHEID ENDS — SOUTH AFRICA VOTES IN FIRST FREE ELECTION', archetypes: 'all', countries: ['South Africa'], minAge: 5 },
+  { year: 1996, text: 'SOUTH AFRICA\'S TRUTH AND RECONCILIATION COMMISSION BEGINS HEARINGS', archetypes: 'all', countries: ['South Africa'], minAge: 5 },
   { year: 1992, text: 'HIGH COURT OVERTURNS TERRA NULLIUS — MABO DECISION REWRITES AUSTRALIAN LAW', archetypes: 'all', countries: ['Australia'], minAge: 5 },
   { year: 2008, text: 'RUDD SAYS SORRY — AUSTRALIA APOLOGISES TO THE STOLEN GENERATIONS', archetypes: 'all', countries: ['Australia'], minAge: 5 },
   { year: 2015, text: 'PARIS AGREEMENT SIGNED — 196 COUNTRIES PLEDGE TO LIMIT WARMING', archetypes: 'all', countries: null, minAge: 5 },
