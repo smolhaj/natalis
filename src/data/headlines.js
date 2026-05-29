@@ -29,6 +29,9 @@ export const HEADLINES = [
   { year: 1959, text: 'FIDEL CASTRO TAKES HAVANA — BATISTA FLEES', archetypes: 'all', countries: ['Cuba'], minAge: 1 },
 
   // ── 1960s ────────────────────────────────────────────────────────────────────
+  { year: 1960, text: 'LUMUMBA DECLARES INDEPENDENCE: "CONGO FOR THE CONGOLESE PEOPLE"', archetypes: 'all', countries: ['DR Congo'], minAge: 1 },
+  { year: 1961, text: 'LUMUMBA ASSASSINATED — CONGO\'S FIRST PRIME MINISTER IS DEAD', archetypes: 'all', countries: ['DR Congo'], minAge: 1 },
+  { year: 1961, text: 'BAY OF PIGS: CIA-BACKED INVASION OF CUBA COLLAPSES IN 72 HOURS', archetypes: ['wealthy_west'], countries: null, minAge: 5 },
   { year: 1961, text: 'BERLIN WALL GOES UP OVERNIGHT', archetypes: ['post_soviet', 'wealthy_west'], countries: null, minAge: 1 },
   { year: 1961, text: 'YURI GAGARIN ORBITS THE EARTH', archetypes: 'all', countries: null, minAge: 5 },
   { year: 1963, text: 'PRESIDENT KENNEDY ASSASSINATED IN DALLAS', archetypes: ['wealthy_west'], countries: ['United States'], minAge: 5 },
@@ -39,15 +42,19 @@ export const HEADLINES = [
   { year: 1969, text: 'MAN WALKS ON THE MOON', archetypes: 'all', countries: null, minAge: 3 },
 
   // ── 1970s ────────────────────────────────────────────────────────────────────
-  { year: 1971, text: 'BANGLADESH DECLARES INDEPENDENCE', archetypes: 'all', countries: ['Bangladesh'], minAge: 1 },
+  { year: 1970, text: 'CYCLONE BHOLA KILLS HALF A MILLION IN EAST PAKISTAN — GOVERNMENT SLOW TO RESPOND', archetypes: 'all', countries: ['Bangladesh'], minAge: 1 },
+  { year: 1971, text: 'BANGLADESH DECLARES INDEPENDENCE. NINE MONTHS OF WAR. INDIA INTERVENES. PAKISTAN SURRENDERS.', archetypes: 'all', countries: ['Bangladesh', 'Pakistan'], minAge: 1 },
   { year: 1973, text: 'OIL EMBARGO — PETROL QUEUES STRETCH FOR MILES', archetypes: ['wealthy_west', 'wealthy_east'], countries: null, minAge: 5 },
   { year: 1973, text: 'PINOCHET SEIZES POWER IN CHILE — ALLENDE DEAD', archetypes: 'all', countries: ['Chile'], minAge: 5 },
   { year: 1975, text: 'SAIGON FALLS — AMERICAN HELICOPTERS EVACUATE THE ROOF', archetypes: 'all', countries: ['Vietnam'], minAge: 1 },
+  { year: 1975, text: 'KHMER ROUGE TAKES PHNOM PENH — CITY EVACUATED AT GUNPOINT', archetypes: 'all', countries: ['Cambodia'], minAge: 1 },
   { year: 1976, text: 'MAO ZEDONG IS DEAD', archetypes: 'all', countries: ['China'], minAge: 1 },
   { year: 1979, text: 'SHAH OF IRAN FLEES — AYATOLLAH KHOMEINI RETURNS', archetypes: 'all', countries: ['Iran'], minAge: 1 },
   { year: 1979, text: 'SOVIET TROOPS ENTER AFGHANISTAN', archetypes: ['post_soviet'], countries: null, minAge: 5 },
 
   // ── 1980s ────────────────────────────────────────────────────────────────────
+  { year: 1979, text: 'VIETNAMESE TROOPS ENTER PHNOM PENH — POL POT\'S REGIME COLLAPSES', archetypes: 'all', countries: ['Cambodia', 'Vietnam'], minAge: 1 },
+  { year: 1980, text: 'MARIEL BOATLIFT: 125,000 CUBANS FLEE TO FLORIDA IN FIVE MONTHS', archetypes: 'all', countries: ['Cuba'], minAge: 1 },
   { year: 1980, text: 'IRAN-IRAQ WAR BEGINS', archetypes: 'all', countries: ['Iran', 'Iraq'], minAge: 1 },
   { year: 1981, text: 'DOCTORS REPORT STRANGE NEW ILLNESS AMONG GAY MEN IN NEW YORK', archetypes: ['wealthy_west'], countries: ['United States'], minAge: 10 },
   { year: 1984, text: 'BHOPAL GAS LEAK — THOUSANDS DEAD IN THE NIGHT', archetypes: 'all', countries: ['India'], minAge: 1 },
@@ -68,7 +75,11 @@ export const HEADLINES = [
   { year: 1994, text: 'MANDELA VOTES — SOUTH AFRICA\'S FIRST FREE ELECTION', archetypes: 'all', countries: ['South Africa'], minAge: 1 },
   { year: 1995, text: 'SREBRENICA MASSACRE — WORST ATROCITY IN EUROPE SINCE WORLD WAR II', archetypes: ['post_soviet', 'wealthy_west'], countries: null, minAge: 5 },
   { year: 1997, text: 'HONG KONG RETURNED TO CHINA', archetypes: 'all', countries: ['China'], minAge: 1 },
+  { year: 1991, text: 'USSR COLLAPSES — CUBA LOSES ITS MAIN TRADING PARTNER. THE SPECIAL PERIOD BEGINS.', archetypes: 'all', countries: ['Cuba'], minAge: 1 },
+  { year: 1994, text: 'BALSEROS: THOUSANDS OF CUBANS SET OUT ON RAFTS FOR FLORIDA', archetypes: 'all', countries: ['Cuba'], minAge: 1 },
+  { year: 1997, text: 'MOBUTU FLEES — KABILA\'S FORCES ENTER KINSHASA. ZAÏRE IS DEAD. THE DRC IS BORN AGAIN.', archetypes: 'all', countries: ['DR Congo'], minAge: 1 },
   { year: 1997, text: 'ASIAN FINANCIAL CRISIS — CURRENCIES COLLAPSING ACROSS THE CONTINENT', archetypes: ['wealthy_east', 'developing_urban'], countries: null, minAge: 5 },
+  { year: 1998, text: 'INDONESIA: SUHARTO RESIGNS AFTER 32 YEARS. RIOTS LEAVE THOUSANDS DEAD.', archetypes: 'all', countries: ['Indonesia'], minAge: 1 },
   { year: 1998, text: 'RUSSIA DEFAULTS — THE RUBLE COLLAPSES AGAIN', archetypes: ['post_soviet'], countries: null, minAge: 5 },
   { year: 1999, text: 'NATO BOMBS BELGRADE', archetypes: ['post_soviet', 'wealthy_west'], countries: null, minAge: 5 },
 
@@ -79,7 +90,8 @@ export const HEADLINES = [
   { year: 2005, text: 'HURRICANE KATRINA FLOODS NEW ORLEANS — GOVERNMENT FAILS', archetypes: ['wealthy_west'], countries: ['United States'], minAge: 5 },
   { year: 2008, text: 'BANKS COLLAPSE — GLOBAL FINANCIAL CRISIS', archetypes: ['wealthy_west', 'wealthy_east', 'post_soviet'], countries: null, minAge: 5 },
   { year: 2008, text: 'BARACK OBAMA ELECTED PRESIDENT OF THE UNITED STATES', archetypes: 'all', countries: ['United States'], minAge: 5 },
-  { year: 2008, text: 'ZIMBABWE PRINTS ONE HUNDRED TRILLION DOLLAR NOTES', archetypes: 'all', countries: ['Zimbabwe'], minAge: 1 },
+  { year: 2007, text: 'M-PESA LAUNCHES IN KENYA — MOBILE MONEY CHANGES AFRICA', archetypes: ['subsaharan'], countries: ['Kenya'], minAge: 5 },
+  { year: 2008, text: 'ZIMBABWE PRINTS ONE HUNDRED TRILLION DOLLAR NOTES. THE EXCHANGE RATE CHANGES HOURLY.', archetypes: 'all', countries: ['Zimbabwe'], minAge: 1 },
   { year: 2009, text: 'IRAN: MILLIONS TAKE TO THE STREETS — GREEN REVOLUTION CRUSHED', archetypes: 'all', countries: ['Iran'], minAge: 5 },
 
   // ── 2010s ────────────────────────────────────────────────────────────────────
@@ -88,6 +100,7 @@ export const HEADLINES = [
   { year: 2011, text: 'HOSNI MUBARAK RESIGNS — EGYPT\'S REVOLUTION SUCCEEDS', archetypes: 'all', countries: ['Egypt'], minAge: 5 },
   { year: 2011, text: 'OSAMA BIN LADEN KILLED IN PAKISTAN', archetypes: 'all', countries: null, minAge: 5 },
   { year: 2011, text: 'SOUTH SUDAN BECOMES THE WORLD\'S NEWEST COUNTRY', archetypes: 'all', countries: null, minAge: 5 },
+  { year: 2013, text: 'RANA PLAZA COLLAPSES IN BANGLADESH — 1,134 GARMENT WORKERS DEAD', archetypes: 'all', countries: ['Bangladesh'], minAge: 1 },
   { year: 2013, text: 'EDWARD SNOWDEN REVEALS THE NSA IS WATCHING EVERYONE', archetypes: ['wealthy_west'], countries: null, minAge: 10 },
   { year: 2014, text: 'RUSSIA ANNEXES CRIMEA', archetypes: ['post_soviet', 'wealthy_west'], countries: null, minAge: 5 },
   { year: 2016, text: 'BRITAIN VOTES TO LEAVE THE EUROPEAN UNION', archetypes: ['wealthy_west'], countries: null, minAge: 5 },

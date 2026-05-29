@@ -1761,4 +1761,226 @@ export const WORLD_EVENTS = [
     when: (G) => !G.flags.includes('hyperinflation_generation'),
   },
 
+  // ── OIL SHOCK 1973 — DEVELOPING WORLD ────────────────────────────────────
+  {
+    id: 'oil_shock_1973_periphery',
+    name: '1973 Oil Shock — Import Burden',
+    years: [1973, 1975],
+    archetypes: ['subsaharan', 'developing_urban', 'developing_unstable', 'conflict_zone'],
+    countries: null,
+    narrative: 'The price of everything made with petroleum — fertiliser, transport, plastics — is rising, and there is no cushion. Countries that import oil are paying twice what they paid last year for it. Food prices follow. The government has nothing in reserve to absorb it. The word that keeps appearing in the newspapers is one that was not there before: stagflation. You learn it without knowing what it means because the thing it describes is already in your kitchen.',
+    context: 'Oil-importing developing nations were the hardest hit by the 1973 oil shock. Countries like India, Brazil, South Korea, and sub-Saharan African nations faced sharp increases in import bills with no reserves to cushion the blow. Many were forced to borrow on international markets, accumulating the debt burdens that led to the 1980s debt crises and subsequent IMF structural adjustment programmes. The shock accelerated the divergence between oil exporters and oil importers in the developing world.',
+    effect: (p) => { p.m -= 12; p.h -= 5; p.w -= 10; p.wipeMoney(0.2); p.addFlag('oil_shock_generation'); },
+    addFlags: ['oil_shock_generation'],
+    minAge: 5,
+    when: (G) => !G.flags.includes('oil_shock_generation'),
+  },
+
+  // ── TRIANGLE SHIRTWAIST FIRE 1911 ─────────────────────────────────────────
+  {
+    id: 'triangle_shirtwaist_1911',
+    name: 'Triangle Shirtwaist Factory Fire',
+    years: [1911, 1911],
+    archetypes: ['wealthy_west'],
+    countries: ['United States'],
+    narrative: 'One hundred and forty-six garment workers die in a factory on Washington Place in lower Manhattan. Most are young immigrant women. The fire exits are locked — a practice common enough in the industry that no one thought to question it until now. The owners are acquitted at trial. The names of the dead are printed in the newspapers and then the newspapers move on.',
+    context: 'The Triangle Shirtwaist Factory fire of March 25, 1911 killed 146 workers, mostly immigrant women from Italy and Eastern Europe. The factory\'s owners had locked the stairwell doors to prevent unauthorized breaks and theft. The tragedy galvanized the American labor movement: within weeks, 80,000 people marched through New York in a funeral procession. The International Ladies\' Garment Workers\' Union grew to 250,000 members. The fire directly led to 36 new labor laws in New York State and became the foundational event of the 20th-century American labor movement.',
+    effect: (p) => { p.m -= 10; p.karma += 8; p.addFlag('triangle_generation'); p.setPolitical('left'); },
+    addFlags: ['triangle_generation'],
+    minAge: 10,
+    when: (G) => !G.flags.includes('triangle_generation'),
+  },
+
+  // ── UK MINERS' STRIKE 1984–85 ─────────────────────────────────────────────
+  {
+    id: 'uk_miners_strike_1984',
+    name: 'UK Miners\' Strike',
+    years: [1984, 1985],
+    archetypes: ['wealthy_west'],
+    countries: ['United Kingdom'],
+    narrative: 'The National Union of Mineworkers has called a strike against pit closures. It will last a year. The government has prepared — coal stockpiled, police deployed in numbers the coalfields have never seen. The communities built around the pits — County Durham, South Wales, Yorkshire — are choosing sides, and the choice cuts through families. There is no clean position.',
+    context: 'The UK miners\' strike of 1984–85 was a major industrial dispute between the NUM under Arthur Scargill and the Conservative government under Margaret Thatcher. The government had spent 18 months secretly stockpiling coal in preparation. 142,000 miners struck for a year; strike-breakers (\'scabs\') drove permanent community splits. The strike ended in defeat: 97 collieries were closed over the following decade, eliminating nearly all deep coal mining in Britain. The communities are still divided by the memory.',
+    effect: (p) => { p.m -= 12; p.w -= 8; p.wipeMoney(0.2); p.addFlag('miners_strike_generation'); },
+    addFlags: ['miners_strike_generation'],
+    minAge: 10,
+    when: (G) => !G.flags.includes('miners_strike_generation'),
+  },
+
+  // ── SPANISH CIVIL WAR LABOR DIMENSION 1936–37 ─────────────────────────────
+  {
+    id: 'spain_anarchist_factories_1936',
+    name: 'Spanish Republic — Collectivised Barcelona',
+    years: [1936, 1937],
+    archetypes: 'all',
+    countries: ['Spain'],
+    narrative: 'The anarchist unions — the CNT and the FAI — are running the factories in Barcelona. Not managed, not administered: run. Decisions made collectively, wages equalised, bosses gone. It is also a city at war with itself, with the fascists, and with other factions on the left who consider the anarchists a threat to discipline. The revolution and the war are happening simultaneously, and they are not the same project.',
+    context: 'Between July 1936 and May 1937, anarcho-syndicalist unions collectivised around 70% of Barcelona\'s industry, including transport, utilities, and most manufacturing. Workers\' committees replaced management. The experiment ended when the Republican government, backed by Soviet-aligned communists, moved to suppress anarchist militias in the May Days of 1937. George Orwell described this period in Homage to Catalonia. The collectivisations remain one of history\'s most significant experiments in worker self-management.',
+    effect: (p) => { p.m += 5; p.karma += 8; p.s += 4; p.addFlag('civil_war_generation'); p.addFlag('anarchist_barcelona'); },
+    addFlags: ['civil_war_generation', 'anarchist_barcelona'],
+    minAge: 12,
+    when: (G) => !G.flags.includes('civil_war_generation'),
+  },
+
+  // ── GREAT DEPRESSION 1929–35 ──────────────────────────────────────────────
+  {
+    id: 'great_depression_1929',
+    name: 'The Great Depression',
+    years: [1930, 1935],
+    archetypes: 'all',
+    countries: null,
+    narrative: (G) => {
+      const arch = G.character.country.archetype
+      if (arch === 'wealthy_west') {
+        return 'The bank has failed or the harvest has been unsold or the factory has closed — the mechanism varies but the result is the same. Men stand in lines. The word breadline enters the vocabulary. Things that felt certain six months ago are not certain. Your family does not say the word poverty. They say: times are hard.'
+      }
+      if (arch === 'subsaharan' || arch === 'developing_urban' || arch === 'developing_unstable') {
+        return 'The price of the export crop — cocoa, cotton, groundnuts, sisal — has collapsed because the buyers abroad have stopped buying. The cash that was entering the village from the market is gone. The colonial administration still requires its taxes. The gap between what the land produces and what survival costs has closed.'
+      }
+      return 'The global economy has contracted sharply. Prices for what your country sells abroad have fallen; prices for what your country buys have not. The adjustment is paid for by people who had no part in creating the crisis.'
+    },
+    context: 'The Great Depression began with the Wall Street Crash of October 1929 and spread to become a worldwide economic catastrophe. US GDP fell 30%, unemployment reached 25%. The Depression was transmitted globally through commodity price collapses: prices for cocoa, cotton, wheat, and rubber fell 40-70%, devastating colonial and developing economies. In Nigeria, cocoa prices fell 50%; in Kenya, settler farms collapsed; in India, the Depression catalysed the independence movement. The Depression transformed political economies everywhere it reached, accelerating both welfare states and fascism.',
+    effect: (p) => {
+      const arch = p._state?.character?.country?.archetype
+      if (arch === 'wealthy_west') {
+        p.m -= 18; p.h -= 8; p.w -= 20; p.wipeMoney(0.5); p.addFlag('depression_generation')
+      } else {
+        p.m -= 15; p.h -= 10; p.w -= 15; p.wipeMoney(0.35); p.addFlag('depression_generation')
+      }
+    },
+    addFlags: ['depression_generation'],
+    minAge: 5,
+    when: (G) => !G.flags.includes('depression_generation'),
+  },
+
+  // ── SPANISH FLU 1918 ──────────────────────────────────────────────────────
+  {
+    id: 'spanish_flu_1918',
+    name: 'The 1918 Influenza Pandemic',
+    years: [1918, 1919],
+    archetypes: 'all',
+    countries: null,
+    narrative: (G) => {
+      const arch = G.character.country.archetype
+      if (arch === 'wealthy_west') {
+        return 'Healthy in the morning, feverish by afternoon, and the hospitals are full. The second wave, in the autumn, is worse than the first. The dead include young adults at a rate that makes no statistical sense — it is the immune response, turned against the body, that kills the strongest fastest. The disease reaches everywhere the troop ships went. Public gatherings are cancelled. Newspapers report in euphemisms.'
+      }
+      return 'The illness has arrived from somewhere and is called by several names depending on which newspaper you read. It moves through the population quickly. The people who die are sometimes the people you would have expected least to die — the young, the strong. The ones who survive carry the memory of what a city sounds like when a third of its people are sick at the same time.'
+    },
+    context: 'The 1918 influenza pandemic killed an estimated 50-100 million people worldwide — more than all combat deaths in World War I. Unusually, mortality was highest in young adults aged 20-40, likely because the 1918 virus triggered a cytokine storm (extreme immune overreaction) in healthy immune systems. The pandemic infected 500 million people, roughly a third of the global population. India lost an estimated 17 million people, more than any other country. The pandemic was misnamed "Spanish flu" because Spain, neutral in the war, had a free press that reported it — belligerent nations censored their death counts.',
+    effect: (p) => { p.m -= 15; p.h -= 15; p.addFlag('flu_pandemic_survivor'); },
+    addFlags: ['flu_pandemic_survivor'],
+    minAge: 1,
+    when: (G) => !G.flags.includes('flu_pandemic_survivor'),
+  },
+
+  // ── 1997 ASIAN FINANCIAL CRISIS ───────────────────────────────────────────
+  {
+    id: 'asian_financial_crisis_1997',
+    name: '1997 Asian Financial Crisis',
+    years: [1997, 1999],
+    archetypes: ['wealthy_east', 'developing_urban', 'developing_unstable'],
+    countries: ['Thailand', 'Indonesia', 'South Korea', 'Malaysia', 'Philippines'],
+    narrative: (G) => {
+      const cn = G.character.country.name
+      if (cn === 'Thailand') return 'The baht collapses on July 2nd. The news anchors say "managed float" but by the end of the week everyone knows it is a freefall. The currency halves in value inside six months. The middle class that took out dollar-denominated loans to buy apartments — a class that spent a decade believing in its own arrival — watches those loans double in real terms overnight. The IMF arrives with conditions attached. The conditions are: cut everything.'
+      if (cn === 'Indonesia') return 'The rupiah loses 80% of its value within months. Suharto\'s New Order, which staked its legitimacy on economic growth, is suddenly presiding over a famine of savings. The social fabric tears in a predictable direction: the ethnic Chinese community, 3% of the population and most visible in trade, becomes the target. The riots of May 1998 are not about economics. They are about what economics makes available to those who want to harm.'
+      if (cn === 'South Korea') return 'The won collapses and the government requires an IMF bailout of $58 billion. Companies that were considered industrial pillars — chaebols founded in the postwar miracle — begin to fail. The government asks citizens to donate their gold jewellery to pay the national debt. People bring rings, necklaces, wedding gifts. Several hundred tonnes of gold arrives.'
+      return 'The currency has lost half its value since spring. The savings your family kept in the bank have not changed in number, but what they will buy has. The debt, taken in dollars, has doubled. The government is negotiating with the IMF and the IMF\'s terms are familiar to anyone who lived through structural adjustment: cut pensions, cut public employment, raise interest rates, open the market.'
+    },
+    context: 'The 1997-98 Asian financial crisis began with Thailand\'s decision to float the baht after currency speculators attacked it. Within months, contagion spread to Indonesia, Malaysia, South Korea, and the Philippines. Indonesia\'s GDP fell 13.5% in one year — a peacetime economic collapse comparable to the Great Depression. In Indonesia, the crisis triggered political violence against the ethnic Chinese community (May 1998 Jakarta riots) and the fall of Suharto after 32 years. South Korea\'s gold collection campaign raised $2.2 billion. The IMF\'s structural adjustment conditions — widely blamed for deepening the crisis — reshaped regional politics for a generation.',
+    effect: (p) => { p.w -= 12; p.mo -= 3000; p.m -= 10; p.addFlag('asian_crisis_generation'); },
+    addFlags: ['asian_crisis_generation'],
+    minAge: 10,
+    when: (G) => !G.flags.includes('asian_crisis_generation'),
+  },
+
+  // ── INDONESIA MAY 1998 RIOTS (ethnicity-gated) ────────────────────────────
+  {
+    id: 'indonesia_may_1998_riots',
+    name: 'May 1998 Jakarta Riots',
+    years: [1998, 1998],
+    archetypes: null,
+    countries: ['Indonesia'],
+    narrative: 'Your neighbourhood goes quiet in the middle of the afternoon in a way that neighbourhoods do not go quiet. You know the sound of this kind of quiet from stories your parents told. The smoke is visible from three streets away. The mobs are not random — they move to specific addresses, specific shops. Your family has been here for three generations. This country is the only country any of you know.',
+    context: 'In May 1998, as Indonesia\'s economic crisis and political transition reached their peak, riots broke out in Jakarta and other cities targeting the ethnic Chinese Indonesian community. Approximately 1,200 people died, thousands of properties were destroyed, and mass sexual violence was documented against Chinese Indonesian women. The riots accelerated the end of Suharto\'s rule but also triggered an emigration wave: an estimated $40 billion in Chinese Indonesian capital left the country in the following years.',
+    effect: (p) => { p.m -= 20; p.h -= 8; p.addFlag('jakarta_98_survived'); },
+    addFlags: ['jakarta_98_survived'],
+    minAge: 5,
+    when: (G) => G.character.country.name === 'Indonesia' && (G.ethnicity === 'chinese_indonesian' || G.flags.includes('chinese_indonesian')) && !G.flags.includes('jakarta_98_survived'),
+  },
+
+  // ── LUMUMBA ASSASSINATION 1961 ────────────────────────────────────────────
+  {
+    id: 'lumumba_assassination_1961',
+    name: 'Assassination of Patrice Lumumba',
+    years: [1961, 1961],
+    archetypes: null,
+    countries: ['DR Congo'],
+    narrative: 'The radio announces it on February 13th: Lumumba is dead. Shot, they say, while trying to escape. Nobody believes the escape story. The first prime minister of your independent country, who gave the speech at independence that made you feel the word "dignity" for the first time, has been killed five months into his tenure. The Belgians knew. The CIA knew. Mobutu knew. The word betrayal is too small for what has happened.',
+    context: 'Patrice Lumumba, the Democratic Republic of Congo\'s first democratically elected prime minister, was assassinated on January 17, 1961. Belgium and the CIA had both actively worked to remove him, fearing his nationalist and pan-Africanist politics. His death, announced publicly on February 13, became a defining moment for African independence movements. The Belgian parliament formally apologized in 2002. His assassination opened the way for Mobutu Sese Seko\'s 32-year kleptocracy.',
+    effect: (p) => { p.m -= 18; p.karma -= 5; p.addFlag('lumumba_generation'); p.setPolitical('dissident'); },
+    addFlags: ['lumumba_generation'],
+    minAge: 5,
+    when: (G) => !G.flags.includes('lumumba_generation'),
+  },
+
+  // ── CUBA ARCS ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'bay_of_pigs_1961',
+    name: 'Bay of Pigs Invasion',
+    years: [1961, 1961],
+    archetypes: null,
+    countries: ['Cuba'],
+    narrative: 'Fourteen hundred Cuban exiles, trained by the CIA, land on the southern coast. They are defeated in seventy-two hours. Castro broadcasts the victory personally. On the streets of Havana people are cheering — genuinely — because the country they chose is still the country they chose. The United States has tried and failed to take it back.',
+    context: 'The Bay of Pigs invasion of April 1961 was a CIA-organised attempt by Cuban exiles to overthrow Fidel Castro. The Kennedy administration cancelled planned air support at the last minute; the invasion force was quickly overwhelmed and captured. The defeat was a significant propaganda victory for Castro, cementing his domestic position and deepening the US-Cuba antagonism that would shape the next six decades.',
+    effect: (p) => { p.m += 6; p.addFlag('bay_of_pigs_generation'); },
+    addFlags: ['bay_of_pigs_generation'],
+    minAge: 5,
+    when: (G) => !G.flags.includes('bay_of_pigs_generation'),
+  },
+
+  {
+    id: 'mariel_boatlift_1980',
+    name: 'Mariel Boatlift',
+    years: [1980, 1980],
+    archetypes: null,
+    countries: ['Cuba'],
+    narrative: 'Castro announces that anyone who wants to leave can go from the port of Mariel. One hundred and twenty-five thousand people leave in five months. He also empties some prison cells and psychiatric facilities into the boats. In the neighbourhood you grew up in, three families are gone by June. The ones who stayed do not discuss the ones who went.',
+    context: 'The Mariel boatlift of April–October 1980 was triggered when thousands of Cubans sought asylum in the Peruvian embassy in Havana. Castro\'s government permitted mass emigration from Mariel Harbor, with the condition that Miami\'s Cuban-American community provide the boats. Along with ordinary Cubans, the government released prisoners and psychiatric patients into the exodus, which became a political flashpoint in the United States.',
+    effect: (p) => { p.m -= 8; p.addFlag('mariel_generation'); },
+    addFlags: ['mariel_generation'],
+    minAge: 5,
+    when: (G) => !G.flags.includes('mariel_generation'),
+  },
+
+  {
+    id: 'cuba_special_period_1991',
+    name: 'Cuba: The Special Period',
+    years: [1991, 1998],
+    archetypes: null,
+    countries: ['Cuba'],
+    narrative: 'The Soviet Union dissolves and the subsidies that kept the economy running stop overnight. Caloric intake falls by thirty percent. The buses stop; bicycles appear everywhere. The government calls it a "Special Period in Time of Peace." What it means, practically, is that the price of everything has changed and the peso no longer buys what it did and the shelves are what they are. You learn to cook what is available. Your body learns too.',
+    context: 'Cuba\'s "Special Period in Peacetime" began when Soviet subsidies ended following the USSR\'s dissolution in 1991. Cuba lost roughly 80% of its imports and 80% of its export revenues. GDP fell by 35% between 1990 and 1993. The Cuban government responded with rationing, agricultural decentralisation, and opening to foreign tourism while maintaining the single-party system. The period officially ended in the early 2000s, though its economic legacy persisted.',
+    effect: (p) => { p.h -= 8; p.m -= 12; p.w -= 8; p.addFlag('special_period_generation'); },
+    addFlags: ['special_period_generation'],
+    minAge: 5,
+    when: (G) => !G.flags.includes('special_period_generation'),
+  },
+
+  // ── FIRST CONGO WAR 1996-97 ───────────────────────────────────────────────
+  {
+    id: 'congo_war_1996',
+    name: 'First Congo War',
+    years: [1996, 1997],
+    archetypes: null,
+    countries: ['DR Congo'],
+    narrative: 'The war that nobody calls a war moves west across the country. Mobutu\'s army dissolves ahead of the advance. In Kinshasa, people wait. Some prepare to leave. Some go to the market anyway because the bread still needs buying. When Kabila\'s Alliance of Democratic Forces for the Liberation of Congo enters the capital in May 1997, Mobutu has already gone. Thirty-two years of *l\'authenticité*, of the presidential leopard-skin hat, of a country renamed Zaïre and then renamed back — ended without a battle for the capital.',
+    context: 'The First Congo War (1996-97) began in eastern Congo following the Rwandan genocide, as Rwanda and Uganda backed Laurent-Désiré Kabila\'s rebel forces against Mobutu Sese Seko. It ended Mobutu\'s 32-year rule — one of the longest kleptocracies in African history, during which he amassed an estimated $5 billion while the country\'s infrastructure collapsed. Kabila renamed the country back to the Democratic Republic of Congo. The Second Congo War (1998-2003) would kill an estimated 5.4 million people, mainly from disease and hunger.',
+    effect: (p) => { p.m -= 12; p.h -= 6; p.addFlag('mobutu_fall_generation'); },
+    addFlags: ['mobutu_fall_generation'],
+    minAge: 5,
+    when: (G) => !G.flags.includes('mobutu_fall_generation'),
+  },
+
 ]

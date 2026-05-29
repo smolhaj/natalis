@@ -988,4 +988,247 @@ export const LATE_LIFE_EVENTS = [
     ],
   },
 
+  // ── ELDER STATUS BY ARCHETYPE ─────────────────────────────────────────────
+
+  {
+    id: 'elder_consulted',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      G.age >= 65 && G.age <= 74 &&
+      ['subsaharan', 'developing_urban', 'post_soviet', 'wealthy_east'].includes(G.character.country.archetype) &&
+      !G.mem?.elder_consulted,
+    text: 'A younger person comes to you with a problem that requires more than information — it requires judgement. They do not say this, but you understand that this is what the visit is. The problem is particular: a family dispute, a professional decision with no clean answer, a question about what something meant. They sit across from you and wait. You have spent sixty-five years accumulating exactly this.',
+    choices: [
+      {
+        text: 'Give them the full account — what you know and what you don\'t',
+        tag: null,
+        outcome: 'They leave with more than they came with. What they do with it is theirs.',
+        effect: (p) => { p.m += 8; p.karma += 6; p.s += 4; p.setMem('elder_consulted', true); p.addFlag('elder_authority'); },
+      },
+      {
+        text: 'Give them the question they should be asking instead',
+        tag: null,
+        outcome: 'A long pause. Then they nod. The answer they needed was not the answer they asked for.',
+        effect: (p) => { p.m += 10; p.karma += 8; p.e += 3; p.setMem('elder_consulted', true); p.addFlag('elder_authority'); },
+      },
+      {
+        text: 'Tell them you don\'t know — what you have is just years, not answers',
+        tag: null,
+        outcome: 'The honesty lands differently than you expected. They come back the following week.',
+        effect: (p) => { p.m += 6; p.karma += 5; p.setMem('elder_consulted', true); p.addFlag('elder_authority'); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'elder_you_are_memory',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) =>
+      G.age >= 73 &&
+      !G.mem?.elder_memory &&
+      ['subsaharan', 'developing_urban', 'post_soviet', 'wealthy_east', 'developing_unstable'].includes(G.character.country.archetype),
+    text: 'A younger person — a grandchild, a neighbour\'s child, someone doing a project — wants to know what this place was like before. Before what they are asking about is not always specific. Before the internet. Before the road was tarred. Before the first coup. Before the factory was built or closed. You are one of a diminishing number of people who still remember, and memory is not the same as record. You hold something that will not exist after you.',
+    choices: [
+      {
+        text: 'Tell it — all of it, in the order it happened',
+        tag: null,
+        outcome: 'You speak for two hours. At the end, they ask if they can come back. You say yes.',
+        effect: (p) => { p.m += 10; p.karma += 8; p.setMem('elder_memory', true); p.addFlag('oral_historian'); },
+      },
+      {
+        text: 'Tell the parts that should be passed on, leave out what no longer matters',
+        tag: null,
+        outcome: 'You choose what survives. It is a kind of authorship. The things you leave out are also a choice.',
+        effect: (p) => { p.m += 8; p.karma += 5; p.setMem('elder_memory', true); p.addFlag('oral_historian'); },
+      },
+      {
+        text: 'Say: it\'s gone now. Some things don\'t need to follow you.',
+        tag: null,
+        outcome: 'They look disappointed. You are not certain you made the right call. The record ends here.',
+        effect: (p) => { p.m += 2; p.r += 8; p.setMem('elder_memory', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'elder_polite_dismissal',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      G.age >= 65 && G.age <= 74 &&
+      G.character.country.archetype === 'wealthy_west' &&
+      G.currentYear >= 2000 &&
+      !G.mem?.elder_dismissal,
+    text: 'You say something in a meeting — a sensible thing, based on forty years of watching this kind of decision play out. The room continues. Not rudely: no one is rude. The conversation simply moves on as if you had not spoken, and then, three minutes later, a younger colleague says something adjacent to what you said, and that gets a response. You sit with this for the rest of the afternoon.',
+    choices: [
+      {
+        text: 'Say it again, differently — make them hear it',
+        tag: null,
+        outcome: 'The second time lands. You are not sure if the content reached them or just the persistence.',
+        effect: (p) => { p.m -= 4; p.s += 3; p.setMem('elder_dismissal', true); p.addFlag('elder_invisible'); },
+      },
+      {
+        text: 'Let it go — the room will reach it eventually',
+        tag: null,
+        outcome: 'They do, six weeks later, at a cost that could have been avoided. You say nothing about this.',
+        effect: (p) => { p.m -= 8; p.karma += 5; p.r += 5; p.setMem('elder_dismissal', true); p.addFlag('elder_invisible'); },
+      },
+      {
+        text: 'Make a note — you know what you know',
+        tag: null,
+        outcome: 'The record exists whether or not the room wanted it. This is its own kind of stubbornness.',
+        effect: (p) => { p.m -= 3; p.e += 2; p.setMem('elder_dismissal', true); p.addFlag('elder_invisible'); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'elder_phone_lesson',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) =>
+      G.age >= 68 &&
+      G.currentYear >= 2012 &&
+      G.character.country.archetype === 'wealthy_west' &&
+      !G.mem?.elder_phone_lesson,
+    text: 'A grandchild — or a child, or a neighbour\'s child — explains something on a screen. They are patient in the way that young people are patient when they expect not to be understood. What they do not know is that you have watched four revolutions in how information moves, and you understand the structure of this one even if you do not know the particular gesture that makes it go. You let them explain. You do not say what you know.',
+    choices: null,
+    effect: (p) => { p.m += 5; p.r += 3; p.setMem('elder_phone_lesson', true); p.addFlag('elder_invisible'); },
+  },
+
+  {
+    id: 'elder_obsolescence',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) =>
+      G.age >= 78 &&
+      !G.mem?.elder_obsolescence,
+    text: 'The specific kind of knowledge you hold — accumulated over decades, tested, refined — has been displaced in ways that are difficult to argue with. Not replaced: the knowledge is still correct. But the world no longer needs it in the form you hold it. The young people around you are not wrong in what they know. You are not wrong in what you know. The two things no longer connect. This is the particular obsolescence that comes for everyone eventually, and it has arrived for you.',
+    choices: null,
+    effect: (p) => { p.m -= 8; p.r += 10; p.setMem('elder_obsolescence', true); p.addFlag('elder_obsolete'); },
+  },
+
+  // ── LATE-LIFE RECONCILIATION ARC ─────────────────────────────────────────
+
+  {
+    id: 'recon_initiate',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => {
+      const hasEstrangedChild = G.children && G.children.some(c => c.relationshipQuality < 32)
+      const hasEstrangedSibling = G.siblings && G.siblings.some(s => s.relationshipQuality < 32)
+      return (hasEstrangedChild || hasEstrangedSibling) &&
+        G.age >= 62 && G.age <= 74 &&
+        !G.mem?.recon_initiated &&
+        !G.flags.includes('permanently_estranged')
+    },
+    text: (G) => {
+      const estrangedChild = G.children && G.children.find(c => c.relationshipQuality < 32)
+      const estrangedSibling = G.siblings && G.siblings.find(s => s.relationshipQuality < 32)
+      const person = estrangedChild ? 'your child' : 'your sibling'
+      const name = estrangedChild ? (estrangedChild.name || 'them') : (estrangedSibling?.name || 'them')
+      return `You have been thinking about ${name}. Not continuously — it comes and goes, a background question that appears when you least expect it. The arithmetic of time is becoming less theoretical. You have not spoken in ${G.age - 52 > 0 ? G.age - 52 : 'several'} years, or not really spoken. The question is whether to try, and what trying means to you now.`
+    },
+    choices: [
+      {
+        text: 'Write a letter',
+        tag: null,
+        outcome: 'You write three drafts. The third is shorter than the first and says what actually needs to be said.',
+        effect: (p) => { p.m -= 3; p.r -= 5; p.setMem('recon_initiated', true); p.addFlag('recon_attempted'); },
+      },
+      {
+        text: 'Call — no preparation, just call',
+        tag: null,
+        outcome: 'The phone rings four times. They answer. You say their name. That is the whole first sentence.',
+        effect: (p) => { p.m -= 5; p.r -= 8; p.setMem('recon_initiated', true); p.addFlag('recon_attempted'); },
+      },
+      {
+        text: 'Show up in person',
+        tag: null,
+        outcome: 'It is either the bravest or the least fair thing you could do. You are not sure which. You go anyway.',
+        effect: (p) => { p.m -= 8; p.r -= 12; p.karma += 6; p.setMem('recon_initiated', true); p.addFlag('recon_attempted'); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'recon_response_warm',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) =>
+      G.flags.includes('recon_attempted') &&
+      !G.mem?.recon_resolved &&
+      G.age >= 63,
+    text: 'They responded. Not everything is resolved by the response — some of it will never be resolved, and both of you know that — but there is now a conversation happening where there was silence. The relationship that comes back is not the relationship that was there before. It is something smaller and more carefully made. It may be enough.',
+    choices: [
+      {
+        text: 'Take it at the pace it comes',
+        tag: null,
+        outcome: 'There are phone calls now. Sometimes weeks apart, sometimes weekly. The content doesn\'t always matter.',
+        effect: (p) => {
+          p.m += 14; p.r -= 10; p.karma += 8; p.setMem('recon_resolved', true); p.addFlag('reconciled_damaged');
+          const estrangedChildIdx = p._state?.children?.findIndex(c => c.relationshipQuality < 45)
+          if (estrangedChildIdx >= 0) p.updateChildRel(estrangedChildIdx, 28)
+          const estrangedSibIdx = p._state?.siblings?.findIndex(s => s.relationshipQuality < 45)
+          if (estrangedSibIdx >= 0 && estrangedChildIdx < 0) {
+            // use a workaround via flag since there's no updateSiblingRel proxy
+            p.addFlag('sibling_reconciled')
+          }
+        },
+      },
+      {
+        text: 'Ask for the conversation you never had',
+        tag: null,
+        outcome: 'It goes badly at first. Then, slowly, it goes better. The badly part was necessary.',
+        effect: (p) => { p.m += 10; p.r -= 8; p.karma += 10; p.setMem('recon_resolved', true); p.addFlag('reconciled_damaged'); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'recon_response_cold',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('recon_attempted') &&
+      !G.mem?.recon_resolved &&
+      G.age >= 63,
+    text: 'There is no response. Or there is a response, and it closes rather than opens. You sit with what you sent and the silence that came back. Some estrangements have reasons that survive any amount of time. The attempt was real. What you do with its failure is a different question.',
+    choices: [
+      {
+        text: 'Try once more, differently',
+        tag: null,
+        outcome: 'The second attempt is also met with silence. You stop. The door is closed from the other side.',
+        effect: (p) => { p.m -= 12; p.r += 15; p.setMem('recon_resolved', true); p.addFlag('permanently_estranged'); },
+      },
+      {
+        text: 'Accept that this is the answer',
+        tag: null,
+        outcome: 'The acceptance is not peace — it is the shape of the relationship now, which is absence. You learn to carry it.',
+        effect: (p) => { p.m -= 8; p.r += 10; p.karma += 4; p.setMem('recon_resolved', true); p.addFlag('permanently_estranged'); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'recon_living_with_it',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) =>
+      G.flags.includes('permanently_estranged') &&
+      G.age >= 70 &&
+      !G.mem?.recon_after,
+    text: 'You still think about them. Not every day — there are weeks now where it doesn\'t arrive. But then: a song, a smell, a stranger with the same walk. The estrangement is not a wound that healed; it is a part of the shape of things. You have become the person who carries this. You are not sure the carrying was a choice.',
+    choices: null,
+    effect: (p) => { p.m -= 5; p.r += 5; p.setMem('recon_after', true); },
+  },
+
 ]

@@ -9,6 +9,7 @@ import {
   deriveInitialGold,
   initializeBanked,
   initializeJointFamily,
+  deriveGenerationalFlags,
   tick,
   resolveChoice,
   applyActivity,
@@ -154,6 +155,7 @@ const INITIAL_STATE = {
   jointFamilyPool: 0,
   banked: false,
   hardCurrencyReserve: 0,
+  workStatus: null, // 'formal' | 'informal' | 'unemployed' | 'subsistence' | null (child)
 }
 
 export const useGameStore = create((set, get) => ({
@@ -184,7 +186,7 @@ export const useGameStore = create((set, get) => ({
       screen: 'life',
       character,
       stats,
-      flags: [],
+      flags: deriveGenerationalFlags(character),
       regret: 0,
       age: 0,
       currentYear: character.birthYear,
@@ -253,6 +255,7 @@ export const useGameStore = create((set, get) => ({
       jointFamilyPool: 0,
       banked: initializeBanked(character),
       hardCurrencyReserve: 0,
+      workStatus: null,
     })
   },
 
@@ -287,7 +290,7 @@ export const useGameStore = create((set, get) => ({
     set({
       screen: 'life',
       stats,
-      flags: [],
+      flags: deriveGenerationalFlags(character),
       regret: 0,
       age: 0,
       currentYear: character.birthYear,
@@ -359,6 +362,7 @@ export const useGameStore = create((set, get) => ({
       jointFamilyPool: 0,
       banked: initializeBanked(character),
       hardCurrencyReserve: 0,
+      workStatus: null,
     })
   },
 
