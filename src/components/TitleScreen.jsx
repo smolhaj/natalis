@@ -3,6 +3,11 @@ import { useGameStore } from '../store/gameStore'
 export default function TitleScreen() {
   const goToBirth = useGameStore(s => s.goToBirth)
   const goToCuratedBirth = useGameStore(s => s.goToCuratedBirth)
+  const continueSave = useGameStore(s => s.continueSave)
+  const deleteSave = useGameStore(s => s.deleteSave)
+
+  // Check for a save on every render (localStorage is sync)
+  const hasSave = !!localStorage.getItem('natalis_v1')
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-natalis-bg px-6">
@@ -32,7 +37,7 @@ export default function TitleScreen() {
 
         {/* Feature pills */}
         <div className="flex flex-wrap gap-2 justify-center">
-          {['50+ Countries', '59 Careers', '40+ Ribbons', 'Real History'].map(tag => (
+          {['78 Countries', '59 Careers', '40+ Ribbons', 'Real History'].map(tag => (
             <span key={tag} className="px-3 py-1 bg-white rounded-full text-xs font-semibold text-natalis-dim border border-natalis-border shadow-sm">
               {tag}
             </span>
@@ -41,12 +46,21 @@ export default function TitleScreen() {
 
         {/* Start buttons */}
         <div className="space-y-3">
+          {hasSave && (
+            <button
+              onClick={continueSave}
+              className="w-full py-4 rounded-2xl text-white font-bold text-lg shadow-card-lg transition-all active:scale-95"
+              style={{ background: 'linear-gradient(135deg, #34c759, #248a3d)' }}
+            >
+              Continue
+            </button>
+          )}
           <button
             onClick={goToBirth}
-            className="w-full py-4 rounded-2xl text-white font-bold text-lg shadow-card-lg transition-all active:scale-95"
+            className={`w-full py-${hasSave ? '3' : '4'} rounded-2xl text-white font-bold text-${hasSave ? 'sm' : 'lg'} shadow-card-lg transition-all active:scale-95`}
             style={{ background: 'linear-gradient(135deg, #007aff, #0055cc)' }}
           >
-            Random Life
+            {hasSave ? 'New Life' : 'Random Life'}
           </button>
           <button
             onClick={goToCuratedBirth}
@@ -54,6 +68,14 @@ export default function TitleScreen() {
           >
             Craft a Life
           </button>
+          {hasSave && (
+            <button
+              onClick={deleteSave}
+              className="w-full py-2 rounded-xl text-natalis-muted text-xs font-medium transition-all active:scale-95"
+            >
+              Delete save
+            </button>
+          )}
         </div>
 
         <p className="text-natalis-muted text-xs">
