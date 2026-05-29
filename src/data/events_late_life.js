@@ -1231,4 +1231,151 @@ export const LATE_LIFE_EVENTS = [
     effect: (p) => { p.m -= 5; p.r += 5; p.setMem('recon_after', true); },
   },
 
+  // ── RECURRING LATE-LIFE TEXTURE (cooldown-based, fire every 5-8 years) ─────
+  // These solve pool-exhaustion for 70+ characters by providing repeatable
+  // prose that varies the late-life log without once-firing mem guards.
+
+  {
+    id: 'll_recurring_body',
+    phase: 'late_life',
+    weight: 2,
+    cooldown: 5,
+    when: (G) => G.age >= 65,
+    text: (G) => {
+      const opts = [
+        'The body makes itself known in small ways. You have learned to negotiate rather than complain.',
+        'You notice things more slowly than you used to, or you notice different things. You are not sure which.',
+        'Something that used to be easy requires a plan now. You make the plan.',
+        'The body has opinions. You are getting better at listening to them before they become demands.',
+        'You move differently than you did at forty. Not worse — different. You have stopped expecting otherwise.',
+      ]
+      return opts[Math.floor(Math.random() * opts.length)]
+    },
+    choices: null,
+    effect: (p) => { p.r += 1 },
+  },
+
+  {
+    id: 'll_recurring_time',
+    phase: 'late_life',
+    weight: 2,
+    cooldown: 5,
+    when: (G) => G.age >= 65,
+    text: (G) => {
+      const opts = [
+        'The years are shorter from this side. Each one arrives before you\'ve finished with the one before.',
+        'You know more clearly now what you actually want from a day.',
+        'A year that passes without incident is a gift. You know this in a way you didn\'t at forty.',
+        'The arithmetic of time has changed. You hold each thing a little differently now.',
+        'There are certain things you no longer bother with. The list is longer than you would have predicted.',
+      ]
+      return opts[Math.floor(Math.random() * opts.length)]
+    },
+    choices: null,
+    effect: (p) => { p.r += 1 },
+  },
+
+  {
+    id: 'll_recurring_memory',
+    phase: 'late_life',
+    weight: 2,
+    cooldown: 6,
+    when: (G) => G.age >= 68,
+    text: (G) => {
+      const opts = [
+        'You find yourself thinking about someone from forty years ago with a specificity that surprises you. The memory is precise: the colour of a coat, a particular phrase.',
+        'You remember something you had not thought of in decades. The memory arrives complete, with texture.',
+        'A name comes back to you while you\'re doing something else. The name brings the whole person with it.',
+        'The past is not receding. If anything it is becoming more detailed. You wonder if this is how it ends — living forward and backward simultaneously.',
+      ]
+      return opts[Math.floor(Math.random() * opts.length)]
+    },
+    choices: null,
+    effect: (p) => { p.m += 2; p.r += 2 },
+  },
+
+  {
+    id: 'll_recurring_social_world',
+    phase: 'late_life',
+    weight: 2,
+    cooldown: 6,
+    when: (G) => G.age >= 65,
+    text: (G) => {
+      const hasFriends = (G.friends ?? []).length > 0
+      const hasPartner = !!G.partner
+      if (hasFriends && hasPartner) {
+        return 'The social world has a different size and texture now. Smaller, slower, more specific. You find you prefer it.'
+      }
+      if (hasFriends) {
+        return 'The people who remain in your life are the ones who turned out to matter. The selection was mostly not deliberate. It is accurate.'
+      }
+      if (hasPartner) {
+        return `You and ${G.partner.name} have become each other\'s primary company. That turns out to be enough, mostly. Some days it is more than enough.`
+      }
+      return 'The social world is quieter than it used to be. You have made your peace with that, or you are in the process.'
+    },
+    choices: null,
+    effect: (p) => { p.m += 1 },
+  },
+
+  {
+    id: 'll_recurring_gratitude',
+    phase: 'late_life',
+    weight: 2,
+    cooldown: 7,
+    when: (G) => G.age >= 70 && G.stats?.happiness >= 55,
+    text: (G) => {
+      const opts = [
+        'A year of moderate contentment. You do not take this for granted.',
+        'Nothing dramatic. The absence of drama is something you have learned to appreciate.',
+        'A good year in the way that late years can be good — quietly, without incident, with the pleasure of ordinary things.',
+        'The day proceeds. The day is enough. You note this.',
+      ]
+      return opts[Math.floor(Math.random() * opts.length)]
+    },
+    choices: null,
+    effect: (p) => { p.m += 3; p.karma += 1 },
+  },
+
+  {
+    id: 'll_recurring_hardship',
+    phase: 'late_life',
+    weight: 2,
+    cooldown: 7,
+    when: (G) => G.age >= 65 && G.stats?.happiness < 55,
+    text: (G) => {
+      const opts = [
+        'A difficult year. You are still here at the end of it.',
+        'The difficulty has a texture. You have become familiar with it, which is not the same as accepting it.',
+        'Some years you endure. This is one of those years.',
+        'You get through it. That is the year\'s achievement.',
+      ]
+      return opts[Math.floor(Math.random() * opts.length)]
+    },
+    choices: null,
+    effect: (p) => { p.r += 2 },
+  },
+
+  {
+    id: 'll_recurring_legacy_thought',
+    phase: 'late_life',
+    weight: 2,
+    cooldown: 8,
+    when: (G) => G.age >= 72,
+    text: (G) => {
+      const hasKids = (G.children ?? []).length > 0
+      const hasProtege = !!G.mem?.protegeName
+      if (hasKids) {
+        const names = G.children.map(c => c.name.split(' ')[0]).join(' and ')
+        return `You think about what ${names} will remember. Not the accomplishments — the smaller things. Whether you showed up. Whether you said what you meant. You are still working on the account.`
+      }
+      if (hasProtege) {
+        return `You think about what you passed on. Not the credentials but the ways of seeing, the things you knew how to do that you tried to show someone else. Whether it took.`
+      }
+      return 'You think about what continues after you. Not in a morbid way — in a factual one. What you built, what you changed, who knew you. It adds up to something. You are not sure exactly what.'
+    },
+    choices: null,
+    effect: (p) => { p.m += 2; p.r += 2 },
+  },
+
 ]

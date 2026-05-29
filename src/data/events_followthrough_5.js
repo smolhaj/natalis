@@ -250,11 +250,11 @@ export const FOLLOWTHROUGH_5_EVENTS = [
     when: (G) =>
       G.flags.has('famine_survivor') &&
       G.mem?.famArcSelling &&
-      G.age > (G.mem?.famineAge ?? 0) + 8 &&
+      G.age > (G.mem?.famineAge ?? G.age) + 8 &&
       G.age >= 25 &&
       !G.mem?.famArcAfter,
     text: (G) => {
-      const years = G.age - (G.mem?.famineAge ?? G.age - 20)
+      const years = G.age - (G.mem?.famineAge ?? G.age)
       return `${years} years. Your pantry is overstocked in a way your partner finds puzzling. You cannot explain it rationally — there is no shortage, there has not been a shortage in years. But the reflex to store, to keep an extra month's worth of everything, arrived in the famine and has not left. The body learned something the mind keeps failing to override.`
     },
     choices: null,

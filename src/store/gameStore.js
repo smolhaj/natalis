@@ -76,6 +76,48 @@ import {
 import { COUNTRIES } from '../data/countries'
 import { CRIMES } from '../data/crimes'
 
+const SAVE_KEY = 'natalis_v1'
+
+function serializeState(state) {
+  try {
+    return JSON.stringify({
+      ...state,
+      usedEventMap: [...(state.usedEventMap ?? new Map()).entries()],
+      worldEventsFired: [...(state.worldEventsFired ?? new Set()).values()],
+      // Functions can't be serialized — clear these; they'll be re-derived on next ageUp
+      queue: [],
+      pendingEvent: null,
+      pendingMinigame: null,
+    })
+  } catch { return null }
+}
+
+function deserializeState(raw) {
+  try {
+    const parsed = JSON.parse(raw)
+    parsed.usedEventMap = new Map(parsed.usedEventMap ?? [])
+    parsed.worldEventsFired = new Set(parsed.worldEventsFired ?? [])
+    parsed.queue = parsed.queue ?? []
+    parsed.pendingEvent = parsed.pendingEvent ?? null
+    parsed.pendingMinigame = parsed.pendingMinigame ?? null
+    return parsed
+  } catch { return null }
+}
+
+function saveToStorage(state) {
+  if (!state || state.screen === 'title' || state.screen === 'birth' || state.screen === 'curated_birth') return
+  const s = serializeState(state)
+  if (s) localStorage.setItem(SAVE_KEY, s)
+}
+
+function loadFromStorage() {
+  try {
+    const raw = localStorage.getItem(SAVE_KEY)
+    if (!raw) return null
+    return deserializeState(raw)
+  } catch { return null }
+}
+
 const INITIAL_STATE = {
   screen: 'title',
   birthYearMode: 'random',
@@ -158,12 +200,26 @@ const INITIAL_STATE = {
   workStatus: null, // 'formal' | 'informal' | 'unemployed' | 'subsistence' | null (child)
 }
 
+const _savedState = loadFromStorage()
+
 export const useGameStore = create((set, get) => ({
   ...INITIAL_STATE,
+  ...(_savedState ?? {}),
+
+  // ── Persistence ─────────────────────────────────────────────────────────────
+
+  hasSave: () => !!localStorage.getItem(SAVE_KEY),
+
+  continueSave: () => {
+    const saved = loadFromStorage()
+    if (saved) set(saved)
+  },
+
+  deleteSave: () => { localStorage.removeItem(SAVE_KEY); set(INITIAL_STATE) },
 
   // ── Navigation ──────────────────────────────────────────────────────────────
 
-  goToTitle: () => set(INITIAL_STATE),
+  goToTitle: () => { localStorage.removeItem(SAVE_KEY); set(INITIAL_STATE) },
 
   goToBirth: () => {
     const character = createCharacter()
@@ -374,9 +430,12 @@ export const useGameStore = create((set, get) => ({
     const next = tick({ ...state, lastOutcome: null })
     if (next.screen === 'death') {
       const epitaph = generateEpitaph(next)
-      set({ ...next, epitaph })
+      const final = { ...next, epitaph }
+      set(final)
+      localStorage.removeItem(SAVE_KEY)
     } else {
       set(next)
+      saveToStorage(next)
     }
   },
 
@@ -423,7 +482,9 @@ export const useGameStore = create((set, get) => ({
     }
 
     const next = resolveChoice(state, choiceIndex)
-    set({ ...next, lastOutcome: choice?.outcome ?? null })
+    const resolved = { ...next, lastOutcome: choice?.outcome ?? null }
+    set(resolved)
+    saveToStorage(resolved)
   },
 
   takeActivity: (activityId) => {

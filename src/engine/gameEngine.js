@@ -928,6 +928,29 @@ function isEventAvailable(e, usedEventMap, currentYear) {
   return currentYear - lastFired >= e.cooldown
 }
 
+// ── Desire-to-event affinity map ────────────────────────────────────────────
+// Each desire maps to an array of id substrings. Events whose id contains any
+// of these substrings get a 1.6× weight boost when G.desire matches.
+// Desire values are set by events_desires.js via p.setDesire():
+// prove_worth, belong, be_seen, safety, connection, leave_mark, freedom, redemption
+const DESIRE_PATTERNS = {
+  prove_worth: ['career', 'boss', 'raise', 'fame', 'award', 'recog', 'honor', 'prom', 'child_close', 'mentor', 'protege', 'scholarship', 'achieve'],
+  belong:      ['friend', 'commun', 'reunion', 'neigh', 'sibling', 'relig', 'club', 'family', 'cultural', 'village', 'diaspora', 'ethnic'],
+  be_seen:     ['fame', 'published', 'art_shown', 'nollywood', 'recognition', 'integrity_echo', 'first_', 'award', 'media', 'protest', 'art_'],
+  safety:      ['housing', 'debt', 'evict', 'flee', 'insurance', 'stabil', 'relief', 'settle', 'legal', 'parole', 'prison', 'saved', 'asylum'],
+  connection:  ['romance', 'partner', 'child', 'rq_partner', 'rq_child', 'rq_friend', 'warmth', 'love', 'reconcil', 'reunion', 'grief', 'men_deepens'],
+  leave_mark:  ['legacy', 'business', 'career_define', 'published', 'art', 'mentor', 'protege_surpass', 'both_arcs', 'children', 'plant', 'build'],
+  freedom:     ['emigr', 'leave', 'quit', 'escape', 'rebel', 'resist', 'activist', 'politic', 'samizdat', 'dissident', 'refuge', 'arts_censored'],
+  redemption:  ['karma', 'forgiv', 'reconcil', 'therapy', 'recovery', 'prison', 'recon_', 'ft_', 'atonement', 'make_peace'],
+}
+
+function desireWeight(eventId, desire) {
+  if (!desire || !eventId) return 1
+  const patterns = DESIRE_PATTERNS[desire]
+  if (!patterns) return 1
+  return patterns.some(p => eventId.includes(p)) ? 1.6 : 1
+}
+
 // Dev mode: set localStorage.setItem('natalis_dev', 'true') to enable pool logging.
 function devLogPool(phase, pool, firedId, usedEventMap, phaseEvents) {
   try {
@@ -976,10 +999,11 @@ export function getNextEvent(state) {
 
   if (pool.length === 0) return null
 
-  const totalWeight = pool.reduce((sum, e) => sum + (e.weight ?? 1), 0)
+  const desire = G.desire
+  const totalWeight = pool.reduce((sum, e) => sum + (e.weight ?? 1) * desireWeight(e.id, desire), 0)
   let r = Math.random() * totalWeight
   for (const event of pool) {
-    r -= event.weight ?? 1
+    r -= (event.weight ?? 1) * desireWeight(event.id, desire)
     if (r <= 0) return event
   }
   return pool[pool.length - 1]
@@ -1027,7 +1051,24 @@ function buildG(state) {
     // Mutable religion: state.religion overrides character birth religion (for converts, apostates)
     religion: state.religion ?? state.character?.religion ?? 'secular',
     // Mutable classTier: state.classTier overrides birth wealthTier (for class mobility)
-    wealthTier: state.classTier ?? state.character?.wealthTier ?? 3,
+    wealthTier: (() => {
+      // Dynamic: use actual money + property equity to determine current wealth tier
+      // Falls back to classTier (if manually set) or birth tier for young characters
+      const birthTier = state.classTier ?? state.character?.wealthTier ?? 3
+      const age = state.age ?? 0
+      if (age < 18) return birthTier // childhood — birth class determines everything
+      const money = state.money ?? 0
+      const propValue = (state.assets?.properties ?? []).reduce((s, p) => s + (p.value ?? 0), 0)
+      const debt = state.debt ?? 0
+      const netWorth = money + propValue - debt
+      // Thresholds intentionally broad — events shouldn't be hair-trigger on exact dollar amounts
+      if (netWorth >= 1_000_000) return 5
+      if (netWorth >= 200_000)   return 4
+      if (netWorth >= 30_000)    return 3
+      if (netWorth >= 5_000)     return 2
+      if (netWorth >= 0)         return 1
+      return 0 // negative net worth
+    })(),
     ethnicity: state.character?.ethnicity ?? 'local',
     ruralUrban: state.character?.ruralUrban ?? 'urban',
     literate: flagSet.has('became_literate') ? true : (state.character?.literate ?? true),
@@ -1193,13 +1234,85 @@ function buildYearTexture(state) {
   // Career satisfaction (when present)
   if (career && F.has('career_fulfilled')) return 'The work is good. You don\'t say that to people much, but it\'s true.'
 
-  // Generic fallback pool — better than one static string
+  // Hobby depth
+  const hobbies = state.hobbies ?? {}
+  if (F.has('serious_musician')) return 'The practice is something you look forward to. That surprises you sometimes.'
+  if (F.has('serious_writer')) return 'The pages accumulate. You don\'t show them to anyone yet.'
+  if (F.has('serious_artist')) return 'The work asks things of you that the rest of your life doesn\'t.'
+
+  // Flag-sensitive texture
+  if (F.has('famine_memory') && Math.random() < 0.3) return 'The pantry is full. You check it anyway.'
+  if (F.has('civil_rights_generation') && phase === 'late_life') return 'You have lived long enough to see some of what you fought for become unremarkable. That is what winning looks like.'
+  if (F.has('emigrated') && (yearsAbroad ?? 0) > 10) return 'There is a version of you that stayed. You don\'t think about it much.'
+  if (F.has('boarding_school') && phase === 'young_adult') return 'You notice you have trouble asking for things. You are not sure where that started.'
+  if (F.has('first_gen_university') && career) return 'You are the first in your family to have this kind of year. That means something, even when you forget it.'
+
+  // Late life specific
+  if (phase === 'late_life') {
+    const late = [
+      'The body keeps its own calendar. You have learned to negotiate.',
+      'You know more people who have died than you used to. That is how it goes.',
+      'A slower year. You are not sure if slower is worse or just different.',
+      'The years are shorter now. Each one passes before you have finished with it.',
+      'You notice small things more than you used to. The quality of morning light. How coffee smells before you drink it.',
+      'Some of the people who made you possible are gone now. You carry them.',
+    ]
+    return late[Math.floor(Math.random() * late.length)]
+  }
+
+  // Midlife specific
+  if (phase === 'midlife') {
+    const mid = [
+      'The middle of things. You are managing it, more or less.',
+      'Another year of more obligations than time.',
+      'Some weeks are almost invisible they are so routine. That is not necessarily bad.',
+      'You are becoming more yourself, or less — it is hard to tell from inside it.',
+      'The days are full in the way that midlife days are full: too much and none of it quite enough.',
+      'You catch yourself in mirrors in public places and are briefly surprised.',
+    ]
+    return mid[Math.floor(Math.random() * mid.length)]
+  }
+
+  // Young adult specific
+  if (phase === 'young_adult') {
+    const ya = [
+      'The shape of things is still forming.',
+      'You are working something out. You will be working it out for a while.',
+      'A year of learning what matters to you by process of elimination.',
+      'The future is still mostly theoretical.',
+      'You have not become who you are going to be yet. That is not a problem.',
+    ]
+    return ya[Math.floor(Math.random() * ya.length)]
+  }
+
+  // Childhood/adolescence specific
+  if (phase === 'adolescence') {
+    const adol = [
+      'The year moves in the way that years do when you are watching them closely.',
+      'You are bigger than you were. That is the year\'s clearest fact.',
+      'Something is being decided that you won\'t fully understand until later.',
+    ]
+    return adol[Math.floor(Math.random() * adol.length)]
+  }
+
+  if (phase === 'childhood') {
+    const child = [
+      'A year of ordinary things that will look remarkable from far enough away.',
+      'The world is still the size of the people in it.',
+      'Another year of the life you have been given.',
+    ]
+    return child[Math.floor(Math.random() * child.length)]
+  }
+
+  // Universal fallback pool
   const fallbacks = [
     'A year without incident. These exist.',
     'The days have a rhythm to them.',
     'Nothing remarkable. You are grateful for that, mostly.',
     'Time passes, as it does.',
-    'A quiet year.',
+    'A quiet year. Not every year needs to be a story.',
+    'The life continues.',
+    'A year of small decisions that add up to something.',
   ]
   return fallbacks[Math.floor(Math.random() * fallbacks.length)]
 }
@@ -1888,6 +2001,11 @@ export function applyActivity(state, activityId) {
 
   updated.actionsThisYear = state.actionsThisYear + 1
   updated.log = [...updated.log, { age: state.age, text: activity.outcome, isKey: false }]
+
+  // Track cumulative activity counts for flag generation in tick()
+  const countKey = `act_count_${activityId}`
+  updated.mem = { ...(updated.mem ?? {}), [countKey]: ((updated.mem?.[countKey] ?? 0) + 1) }
+
   return updated
 }
 
@@ -2515,6 +2633,49 @@ export function tick(state) {
     } else if (HEAT_T2.has(_heatCountry) && (s.currentYear ?? 0) >= 2065) {
       s.stats = { ...s.stats, health: clamp((s.stats.health ?? 80) - 2, 0, 100), happiness: clamp((s.stats.happiness ?? 50) - 2, 0, 100) }
     }
+  }
+
+  // Hobby milestone flags — set once when skill crosses threshold
+  {
+    const hb = s.hobbies ?? {}
+    const flagsSet = new Set(s.flags)
+    const HOBBY_FLAGS = [
+      [hb.music    ?? 0, 60, 'serious_musician'],
+      [hb.writing  ?? 0, 60, 'serious_writer'],
+      [hb.art      ?? 0, 60, 'serious_artist'],
+      [hb.fitness  ?? 0, 70, 'fitness_devotee'],
+      [hb.cooking  ?? 0, 65, 'accomplished_cook'],
+      [hb.language ?? 0, 65, 'polyglot'],
+      [hb.reading  ?? 0, 60, 'avid_reader'],
+      [hb.gardening?? 0, 60, 'dedicated_gardener'],
+    ]
+    let newFlags = [...s.flags]
+    for (const [skill, threshold, flag] of HOBBY_FLAGS) {
+      if (skill >= threshold && !flagsSet.has(flag)) newFlags = [...newFlags, flag]
+    }
+    if (newFlags.length !== s.flags.length) s = { ...s, flags: newFlags }
+  }
+
+  // Activity milestone flags — set once when cumulative count crosses threshold
+  {
+    const m = s.mem ?? {}
+    const flagsSet = new Set(s.flags)
+    const ACT_FLAGS = [
+      [m.act_count_meditate  ?? 0, 8,  'contemplative'],
+      [m.act_count_volunteer ?? 0, 5,  'generous'],
+      [m.act_count_donate    ?? 0, 5,  'generous'],
+      [m.act_count_read      ?? 0, 10, 'avid_reader'],
+      [m.act_count_journal   ?? 0, 8,  'reflective_writer'],
+      [m.act_count_gym + (m.act_count_join_sports_team ?? 0) + (m.act_count_yoga ?? 0) ?? 0, 10, 'fitness_devotee'],
+      [m.act_count_philosophy?? 0, 6,  'philosophical_mind'],
+      [m.act_count_networking?? 0, 6,  'networker'],
+      [m.act_count_save      ?? 0, 5,  'disciplined_saver'],
+    ]
+    let newFlags = [...s.flags]
+    for (const [count, threshold, flag] of ACT_FLAGS) {
+      if ((count ?? 0) >= threshold && !flagsSet.has(flag)) newFlags = [...newFlags, flag]
+    }
+    if (newFlags.length !== s.flags.length) s = { ...s, flags: newFlags }
   }
 
   // Fame decay if not in entertainment/sports
