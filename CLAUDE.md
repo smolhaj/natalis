@@ -109,6 +109,9 @@ Events live in:
 - `src/data/events_early_life.js` — 20 events filling the thinnest phases: 10 early_childhood (ages 0–5: first school, absent parent, new sibling, object of your own, witnessing adults, early illness, hunger, television arrives, night fear, first friend) + 10 young_adult (ages 18–25: first apartment, just-a-job, first real failure, friend group scatters, adult breakup, money zero, flatmate, city arrival for rural characters, mistake owned, political moment)
 - `src/data/events_decolonisation.js` — 10 events covering the decolonisation era and its aftermath (1950s–2010s): independence morning, new schools, first coup, Pan-Africanism/OAU, structural adjustment, SAP clinic closed, brain drain wave, Nehruvian moment (India), post-adjustment generation, mobile phone leapfrog
 - `src/data/events_labor.js` — 9 events covering the labour movement: union card, strike called, picket line, three months in, strike defeat (auto), strike victory (auto), Luddite moment (era-branched), solidarity test, first boss
+- `src/data/events_climate.js` — 18 climate arc events (2025–2100): hottest summer, climate anxiety, drought displacement, coastal flooding, Pacific extinction, Gulf wet-bulb, late-life witness, plus follow-throughs
+- `src/data/events_indigenous.js` — 21 Indigenous peoples events: Aboriginal Australian, Native American/USA, First Nations/Canada, Māori/NZ arcs + cross-cultural follow-throughs
+- `src/data/events_automation.js` — 12 automation/AI arc events (2025–2050): trucker, radiologist, lawyer, factory, programmer, data scientist, customer service, UBI debate, retraining outcome
 
 Event shape:
 ```js
@@ -321,12 +324,16 @@ Generic events are a last resort. Specific events — ones that could only fire 
 - **6 Zimbabwe arc events** (events_zimbabwe.js): early independence era (1980s optimism), Gukurahundi (Ndebele ethnicity-gated, rural, 1983–87), land seizure white farming family (both perspectives choice), land reform Black Zimbabwean witness, hyperinflation (trillion-dollar note, currency choice), exodus to South Africa (leave/stay)
 - **3 Cuba world events**: Bay of Pigs 1961, Mariel boatlift 1980, Special Period 1991 (all with `context` fields; Cuban Missile Crisis and ration book already existed)
 - **Generational trauma seeding**: `deriveGenerationalFlags(char)` in gameEngine.js seeds 17 flags at character creation based on country + birthYear (`holocaust_family_memory`, `great_leap_family_memory`, `khmer_rouge_family_memory`, `disappeared_family_memory`, etc.)
+- **Climate arc**: `events_climate.js` (18 events) covering hottest summer (archetype-branched), climate anxiety (young_adult wealthy), severe drought + displacement, coastal flooding (16-country guard), Pacific island extinction (sets `existential_homeland`), Gulf wet-bulb events (2050+), late-life witness (2070+), plus follow-throughs. `climate_displaced` residency status with passive −2h/−4m/−$150 annual drain. Extreme heat passive drain for Gulf/MENA post-2055. `RESIDENCY_LADDER` entry: `climate_displaced → refugee_status` (2 years). 10 new climate world events (Paris Agreement 2015, reef bleaching 2030s, mass displacement 2040s, Arctic ice-free 2040s, Gulf extreme heat 2055, Maldives evacuation 2065, tipping points). 14 climate/indigenous headlines added.
+- **Indigenous peoples arc**: `events_indigenous.js` (21 events) — Aboriginal Australian track (Stolen Generation 1910–1970, return, Country connection, Mabo personal, Apology personal, cultural reclaim); Native American/USA track (boarding school 1870–1975, aftermath, reservation life, AIM 1970s); First Nations/Canada track (residential school 1920–1996, Sixties Scoop 1960–1985, return, TRC 2015); Māori/NZ track (language suppression, kōhanga reo, Treaty settlement, renaissance); 3 cross-cultural follow-throughs. 2 world events (Mabo 1992, Australian Apology 2008) skip Aboriginal characters (who get deeper character events instead).
+- **Automation/AI arc**: `events_automation.js` (12 events) — driver/trucker arc (news 2025, reality 2030, depot closure); radiologist AI 2028; legal document review 2027; factory robot 2025; customer service chatbot 2025 (general); programmer guilt arc (2026 + follow-through at 40+); data scientist irony 2030 (auto-resolve); UBI debate 2035 (wealthy archetypes, 3-branch); retraining outcome follow-through (age 38+).
+- **One-child policy expanded**: 4 events added to `events_country_arcs_2.js` — `ocp_missing_sisters` (adolescence, finds photo of baby girl), `ocp_missing_sisters_adult` (follow-through, asks mother), `ocp_sole_support` (midlife, 4-way caregiver burden, 2 choices), `ocp_policy_lifted` (midlife 2015, ambivalent 2-choice).
 
 ### What still needs work — Priority Roadmap
 
 *Previous roadmap (items 1–16) complete. See git history. The roadmap below is built from a structured brainstorm session and reflects explicit design decisions.*
 
-*Completed since brainstorm: BUILD 3 (chronic illness system + parent care arc), BUILD 4 (relationship history UI — status labels on relationship cards), BUILD 6 (curated birth screen — 4-step wizard). See PR #42. Vietnam arc (events_vietnam.js, 10 events) and wealth mechanics system (events_wealth_system.js, 17 events) added in PR #43. BUILD 29 (voting/elections), BUILD 30 partial (garden, letters, neighbours, school reunion), BUILD 44 (body in later life), and BUILD 50 (money across a life) added in PR #44. Childhood family income system (parent occupations, GDP-scaled income during childhood phase) added in PR #45. BUILD 2 Latin America arc (events_latin_america.js, 50 events), BUILD 6 (historical country names, expanded ribbons), BUILD 10 partial (events_country_arcs.js, 22 events for Nigeria/India/South Korea/Egypt/Romania/Turkey/Kenya/Ghana/Ethiopia), and events_followthrough_3.js added in PRs #45–47. BUILD 6 early childhood + early 20s (events_early_life.js, 20 events), BUILD 5 partial (events_decolonisation.js + 7 world events: Spanish flu 1918, Great Depression 1929, oil shock periphery, Triangle Shirtwaist 1911, UK miners strike 1984, Spanish anarchist factories 1936), BUILD 20 labour/strikes (events_labor.js, 9 events), BUILD 9 elder status by archetype + BUILD 4 late-life reconciliation arc (9 events appended to events_late_life.js) added in PR #48. BUILD 10 expanded (events_country_arcs_2.js, 28 events: China/Mao era, USA specificity, Japan), BUILD 11 partial (events_asia_arcs.js 25 events: Cambodia/Bangladesh/Pakistan; events_drc.js 9 events: DRC arc; Cuba world events: Bay of Pigs, Mariel boatlift, Special Period), BUILD 12 (events_crosscutting.js, 22 events: domestic worker/city bombardment/refugee camp arcs), BUILD 15 partial (events_internet_era.js 15 events: PC bang Seoul, cybercafé Lagos, AOL Iowa, M-Pesa Kenya, dotcom arc, 1990s texture; 4 new world events: Asian financial crisis 1997, Indonesia May 1998), BUILD 27 (deriveGenerationalFlags() seeds 17 generational trauma flags at character creation), BUILD 2 partial (events_zimbabwe.js 6 events: land seizure both perspectives, hyperinflation, exodus, Gukurahundi). Ribbons: 25 new ribbons added. Headlines: 14 new entries added (Lumumba, Bangladesh, Cambodia, Mariel, DRC, Rana Plaza, M-Pesa, etc.).*
+*Completed since brainstorm: BUILD 3 (chronic illness system + parent care arc), BUILD 4 (relationship history UI — status labels on relationship cards), BUILD 6 (curated birth screen — 4-step wizard). See PR #42. Vietnam arc (events_vietnam.js, 10 events) and wealth mechanics system (events_wealth_system.js, 17 events) added in PR #43. BUILD 29 (voting/elections), BUILD 30 partial (garden, letters, neighbours, school reunion), BUILD 44 (body in later life), and BUILD 50 (money across a life) added in PR #44. Childhood family income system (parent occupations, GDP-scaled income during childhood phase) added in PR #45. BUILD 2 Latin America arc (events_latin_america.js, 50 events), BUILD 6 (historical country names, expanded ribbons), BUILD 10 partial (events_country_arcs.js, 22 events for Nigeria/India/South Korea/Egypt/Romania/Turkey/Kenya/Ghana/Ethiopia), and events_followthrough_3.js added in PRs #45–47. BUILD 6 early childhood + early 20s (events_early_life.js, 20 events), BUILD 5 partial (events_decolonisation.js + 7 world events: Spanish flu 1918, Great Depression 1929, oil shock periphery, Triangle Shirtwaist 1911, UK miners strike 1984, Spanish anarchist factories 1936), BUILD 20 labour/strikes (events_labor.js, 9 events), BUILD 9 elder status by archetype + BUILD 4 late-life reconciliation arc (9 events appended to events_late_life.js) added in PR #48. BUILD 10 expanded (events_country_arcs_2.js, 28 events: China/Mao era, USA specificity, Japan), BUILD 11 partial (events_asia_arcs.js 25 events: Cambodia/Bangladesh/Pakistan; events_drc.js 9 events: DRC arc; Cuba world events: Bay of Pigs, Mariel boatlift, Special Period), BUILD 12 (events_crosscutting.js, 22 events: domestic worker/city bombardment/refugee camp arcs), BUILD 15 partial (events_internet_era.js 15 events: PC bang Seoul, cybercafé Lagos, AOL Iowa, M-Pesa Kenya, dotcom arc, 1990s texture; 4 new world events: Asian financial crisis 1997, Indonesia May 1998), BUILD 27 (deriveGenerationalFlags() seeds 17 generational trauma flags at character creation), BUILD 2 partial (events_zimbabwe.js 6 events: land seizure both perspectives, hyperinflation, exodus, Gukurahundi). Ribbons: 25 new ribbons added. Headlines: 14 new entries added (Lumumba, Bangladesh, Cambodia, Mariel, DRC, Rana Plaza, M-Pesa, etc.). BUILD 8 (events_climate.js, 18 events: heat/drought/coastal-flood arcs, climate anxiety, Pacific island extinction, Gulf wet-bulb events, climate displacement residency status + passive drain, 10 climate world events in worldEvents.js, 14 climate headlines), BUILD 19 partial (events_indigenous.js, 21 events: Aboriginal Australian stolen generation/Mabo/apology/cultural reclaim arc, Native American boarding schools/reservation/AIM arc, First Nations Canada residential schools/Sixties Scoop arc, Māori language suppression/kōhanga reo/Treaty arc, cross-cultural follow-throughs; 2 world events: Mabo 1992, Australian Apology 2008), BUILD 28 (events_automation.js, 12 events: trucker/radiologist/lawyer/factory/software dev/data scientist/customer service career arcs, UBI debate, retraining outcome follow-through), BUILD 31 partial (4 events in events_country_arcs_2.js: missing sisters, missing sisters adult follow-through, sole support midlife, policy lifted 2015), BUILD 43 partial (bangladesh_liberation_1971 world event with era-branched adult/child narrative, context field).*
 
 ---
 
@@ -474,21 +481,11 @@ Partial from original spec — not yet implemented: congenital conditions at cha
 
 ---
 
-#### BUILD 8 — Climate Arc (2025–2100)
+#### BUILD 8 — Climate Arc (2025–2100) ✅ DONE
 
-**Game timeline extension to 2100**: Characters born in 2000 can live to 2090. The second half of the 21st century is the game's most urgent educational territory.
+`events_climate.js` (18 events): hottest summer (archetype-branched Gulf deaths / subsaharan harvest / wealthy_west desensitisation), climate anxiety young_adult (3-path: activist / grieving / pragmatist), severe drought + `climate_displaced` residency, coastal flooding (16-country guard), Pacific king tides (`existential_homeland`), Gulf wet-bulb events (2050+), late-life witness (2070+), plus follow-throughs (`clim_activist_decade`, `clim_displaced_year_later`, `clim_climate_solidarity_payoff`, `clim_existential_homeland_adult`). New `climate_displaced` residency status with −2h/−4m/−$150 passive annual drain; extreme heat passive drain for Gulf/MENA post-2055; `climate_displaced → refugee_status` in RESIDENCY_LADDER. 10 world events added: Paris Agreement 2015, reef bleaching 2030s, mass displacement 2040s, Arctic ice-free 2040s, Gulf extreme heat 2055, Maldives evacuation 2065, climate tipping point 2045, Bangladesh Liberation 1971 (see BUILD 43). 14 headlines (1.5°C breach through Maldives 2065). 4 ribbons: `the_climate_activist`, `the_climate_displaced`, `the_existential_homeland`, `the_climate_generation`.
 
-**Climate event design principle**: Follow IPCC median projections, presented as lived experience without hedging language. The character doesn't "hear scientists predict" — they live through it the same way a 1973 character lives through the oil shock.
-
-**GDP/archetype divergence**: The same event fires for all archetypes but the text branches explicitly on wealth. Sea level rise: Netherlands (managed, costly, survivable); Bangladesh (existential, displacement, loss); Maldives (gone by 2060). Heatwave: France (uncomfortable, dangerous for elderly); Nigeria (lethal for outdoor workers, crop failure).
-
-**Climate event arc (world events by decade)**:
-- 2025–2035: intensifying extreme weather, insurance markets withdrawing from coastal areas, first climate-related food price spikes
-- 2035–2050: first major coastal city permanent flooding events, climate refugee flows (new `climate_refugee` residency status), coral reef death world event
-- 2050–2070: agricultural zone shifts, parts of the Gulf become seasonally uninhabitable (wet-bulb temperature events), climate migration as mass phenomenon
-- 2070–2100: civilizational stress events — characters who live to 90 witness things that were scenarios in their childhood
-
-**Climate refugee arc**: New residency status `climate_displaced`. A Bangladeshi farmer, a Maldivian islander, a Sahel pastoralist driven north. Intersects with immigration arc — climate displacement is legally distinct from political asylum in most countries (currently, unfairly).
+Remaining from original spec: game timeline only extends to ~2090 by current character age logic — no hard extension needed. 2070–2100 events fire for characters who survive to that age.
 
 ---
 
@@ -861,34 +858,11 @@ Each requires: full `countries.js` entry with all demographic fields, then count
 
 ---
 
-#### BUILD 19 — Indigenous Peoples
+#### BUILD 19 — Indigenous Peoples ✅ PARTIAL
 
-Almost entirely absent from a game about human lives across history. These represent hundreds of millions of people across multiple continents, and their erasure from the game is currently its most significant blind spot.
+`events_indigenous.js` (21 events): replaces 2 generic events in events_historical.js with 4 culture-specific arcs. **Aboriginal Australian track** (6 events): Stolen Generation 1910–1970 (forced outcome, p.m −30), return home, Country connection, Mabo personal response, Apology personal 2008, cultural reclaim. **Native American/USA track** (4 events): boarding school 1870–1975 (forced), aftermath (language gap + land distance), reservation life 1950+, AIM movement 1968–1973 (sets `political_active`). **First Nations/Canada track** (4 events): residential school 1920–1996 (forced), Sixties Scoop 1960–1985 (forced), school return, TRC 2015. **Māori/NZ track** (4 events): language suppression (childhood, pre-1960 NZ), kōhanga reo movement (1982+), Treaty settlement (1990+), renaissance (2000+). **Cross-cultural follow-throughs** (3): cultural loss grief (age 30+), generational healing (age 45+, needs healing flag), land acknowledgment complexity (2010+, sets `reconciliation_complex`). 2 world events: Mabo 1992 and Australian Apology 2008 skip Aboriginal characters via `when` guard (they get the deeper character events above). 5 ribbons: `the_stolen_generation`, `the_boarding_school_survivor`, `the_residential_school`, `the_cultural_knowledge`, `the_language_carrier`.
 
-**Aboriginal Australians** (`events_aboriginal.js`):
-- The Stolen Generation (1910–1970): children forcibly removed from families, placed in missions or white households. A character who is Aboriginal in 1955 in Australia has a specific probability of this happening to their child. The welfare officer's knock. The long silence after.
-- Land rights and Mabo (1992): the High Court ruling that overturned terra nullius — the legal fiction that Australia was empty when colonised. A character who is alive in 1992 experiences a country officially acknowledging, for the first time, that they were always here. The word *mabo* enters the national vocabulary overnight.
-- Contemporary: the specific experience of being Aboriginal in an Australian city. The encounter with a system that was designed to eliminate you and now officially apologises (2008 National Apology). What the apology means and doesn't mean.
-
-**Native Americans / First Nations** (US and Canada):
-- Boarding schools (USA 1870s–1970s, Canada residential schools to 1996): "Kill the Indian, save the man." A character who is sent to residential school — the hair cut, the language forbidden, the name replaced with a number. The return home to a family that no longer shares your language.
-- Reservation life 1950s–present: the specific constraints of reservation existence — federal trust land, tribal sovereignty, the specific poverty produced by systematic resource extraction. The IHS clinic with a two-week wait. The drive to the nearest town.
-- AIM and Red Power (1968–1973, USA): the American Indian Movement, Wounded Knee 1973. A character who is young and radicalised in 1970 is inside a specific political awakening.
-- Canadian "Sixties Scoop": parallel to the Stolen Generation — Indigenous children adopted into white families throughout the 1960s–80s. A character discovers at 40 that their adoptive family is not their only family.
-
-**Māori in New Zealand** (1840–present):
-- Treaty of Waitangi 1840 and its immediate betrayal: the agreement promised protection; within 15 years, land confiscation was systematic. A character in 1860s Waikato whose land is seized under the New Zealand Wars.
-- Language suppression and revival: te reo banned in schools in the early 20th century, children punished for speaking it. The kōhanga reo (language nest) movement from 1982 — grandparents teaching language because parents don't know it.
-- Māori renaissance 1980s–present: Treaty settlements, parliamentary representation, the specific pride of a culture that refused to die. A character who goes through school in the 1970s (shame) vs. the 2000s (pride) has completely different events.
-
-**Amazonian Indigenous peoples** (Brazil/Peru/Colombia):
-- First contact as a living event (1970s–present): some communities made first contact with the outside world within living memory. A character who is on the government contact team, or who is the first person from an isolated community to leave the forest.
-- Deforestation: the logging road that arrives and doesn't stop. The specific experience of watching the place that contains your entire world shrink.
-- FUNAI and state violence: the Brazilian Indian Service — sometimes protector, sometimes enabler of extraction. The specific betrayal of an institution supposed to represent you.
-
-**Sami in Scandinavia** (Norway/Sweden/Finland/Russia):
-- Reindeer herding under state pressure: the industrial wind farms, the mining operations, the roads built through grazing routes. A Sami herder in 2010 Norway watches the state that pays universal income also carve up the land their family has herded for 10,000 years.
-- Language suppression and revival: Norwegian schools forbade Sami in the early 20th century (*fornorskingspolitikk*). The specific experience of a minority inside a welfare state that views itself as enlightened while systematically erasing you.
+Remaining: Amazonian Indigenous peoples (Brazil/Peru/Colombia deforestation arc), Sami in Scandinavia — not yet implemented.
 
 ---
 
@@ -1024,18 +998,9 @@ How parents who survived atrocity parent their children — and what those child
 
 ---
 
-#### BUILD 28 — Automation, AI, and the 21st-Century Economy
+#### BUILD 28 — Automation, AI, and the 21st-Century Economy ✅ DONE
 
-For the 2020s–2060s era, alongside climate, this is the defining economic disruption. Currently absent.
-
-**The automation event** (world events + career events, 2025–2050, gated on career):
-- The truck driver reading about autonomous vehicles in 2028. Not the abstract economic argument but the specific moment — the headline, the calculator that shows what his route now costs with no driver, the boss's face when he asks.
-- The radiologist whose hospital buys diagnostic AI in 2032. The specific experience of being made redundant not by a person but by a pattern-recognition system that is measurably better.
-- The legal clerk in 2030. The accountant in 2035. The customer service worker who trains the chatbot that replaces them. Each with specific text, gated by career + currentYear.
-- The people who benefit: the programmer who builds the system that replaces the worker. The specific moral discomfort of building something you know will hurt someone.
-
-**Universal Basic Income** (political event, wealthy_west + 2030s+):
-- The referendum, the argument over whether it's dignity or dependency. A character who needs it vs. a character who doesn't but has to vote on it. Gate on political_leaning for choice structure.
+`events_automation.js` (12 events): **Driver/trucker arc** — `auto_trucker_news` (2025+, learns about AV programme, sets `automation_aware`), `auto_trucker_reality` (2030+, routes shrinking, choice: retrain or wait), `auto_driver_displaced` (2033+, depot closing, 22-year career vs. retraining package). **Medical** — `auto_radiologist_ai` (2028+, AI reads scans in 12 minutes vs 40, choice: embrace oversight / push back). **Legal** — `auto_legal_document_review` (2027+, associates not renewed, choice: adapt / organise). **Factory** — `auto_factory_robot` (2025+, natural attrition, choice: union report / secure own position). **General service** — `auto_customer_service_replaced` (2025+, non-specialist careers, tier-one replaced by chatbot). **Software developer** — `auto_programmer_guilt` (2026+, moves ticket to Done knowing it replaces 38 FTE) + `auto_programmer_guilt_later` (follow-through, age 40+, conference Q&A). **Data scientist** — `auto_data_scientist_irony` (2030+, built this system's predecessor, auto-resolve). **UBI debate** — `auto_ubi_debate` (2035+, wealthy archetypes, 3-branch: support/oppose/nuanced). **Follow-through** — `auto_retraining_outcome` (age 38+, 12% pay cut, choice: accept it / refuse to call it fine). 3 ribbons: `the_automated_away`, `the_retrainer`, `the_automation_builder`.
 
 ---
 
@@ -1077,19 +1042,13 @@ Some of the game's strongest potential events involve no historical reference at
 
 ---
 
-#### BUILD 31 — The One-Child Policy Arc (China, 1980–2015)
+#### BUILD 31 — The One-Child Policy Arc (China, 1980–2015) ✅ PARTIAL
 
-One of the most consequential demographic policies in history. Entirely absent from current coverage.
+**Little emperor** ✅ DONE (PR #48, events_country_arcs_2.js): the concentrated expectation, the loneliness without siblings. Sets `little_emperor`.
 
-**The little emperor**: Growing up as the sole focus of two parents and four grandparents. The specific weight of concentrated expectation. The loneliness of having no siblings in a culture where sibling relationships had always been the basic social unit.
+4 new events added to `events_country_arcs_2.js`: `ocp_missing_sisters` (adolescence, China 1985–2005, needs `little_emperor`, finds baby photo, sets `ocp_missing_sibling`), `ocp_missing_sisters_adult` (young_adult follow-through, asks mother, "we didn't have a choice"), `ocp_sole_support` (midlife, no siblings to split burden, 2 choices: carry it silently / have the conversation, sets `filial_burden`), `ocp_policy_lifted` (midlife, 2015, ambivalent — moment may have passed, 2 choices). 2 ribbons: `the_little_emperor`, `the_filial_burden`.
 
-**The hidden second child**: The family that decides to have another anyway. The registration evasion, the family member who keeps the secret, the fine that arrives — a year's income, sometimes more. The child who technically doesn't exist on paper.
-
-**The missing sisters**: Sex-selective abortion and abandonment driven by the policy intersecting with son preference. A character who grows up knowing, without anyone saying, that they were not the first. The orphanage system. The international adoption wave (ties to BUILD 36).
-
-**The only child as sole support**: At 40, a character who is the sole caregiver for two aging parents and four aging grandparents. No siblings to split the cost, the time, the grief. Gate on China + `only_child` flag set at character creation.
-
-**The policy lifted**: A character who is 35 in 2015 when the two-child policy is announced. The specific experience of a government telling you to do what it just spent 35 years telling you not to do. Some have another child; some can't anymore; some don't want to.
+Remaining: **Hidden second child** arc (registration evasion, the fine, the child without papers) — not yet implemented.
 
 ---
 
@@ -1316,12 +1275,9 @@ Daily life is organized around infrastructure. Infrastructure is political. Almo
 
 ---
 
-#### BUILD 43 — The 20th Century's Forgotten Wars
+#### BUILD 43 — The 20th Century's Forgotten Wars ✅ PARTIAL
 
-Several significant conflicts have thin or no coverage.
-
-**Bangladesh Liberation War 1971** (world event, Bangladesh/Pakistan):
-- The Pakistani army's nine-month campaign against the Bengali population — one of the 20th century's most documented mass atrocities, with estimates of 300,000–3,000,000 dead. A character who is Bengali in East Pakistan in March 1971, when Operation Searchlight begins. The specific sequence: the night raids, the universities targeted first, the nine months before Indian intervention ends it. Mentioned in BUILD 26; needs the actual world event with character-level text.
+**Bangladesh Liberation War 1971** ✅ DONE: `bangladesh_liberation_1971` world event added to worldEvents.js — fires for Bangladesh/Pakistan 1971–1972, age ≥ 5. Narrative branches adult (≥ 15) vs. child perspective. Context field: "Estimates of 300,000–3,000,000 dead." Sets `liberation_war_witnessed`. Headline entry added for 1971.
 
 **Mozambique civil war 1977–1992**:
 - RENAMO vs. FRELIMO. One of the most destructive civil wars in African history, funded first by Rhodesia and then by apartheid South Africa as destabilization strategy. One million dead, five million displaced. A character born in Mozambique in 1977 is born into a country at war; they are 15 when it ends.
@@ -1752,8 +1708,11 @@ src/
     events_money.js           — 7 money-across-a-life events (first paycheck, inheritance, elder scam, hyperinflation personal, gift, counting days)
     events_illness.js         — 14 chronic illness events (diabetes, heart disease, cancer, COPD, back pain, HIV/AIDS, vision/hearing loss, depression, disability)
     events_parent_care.js     — 8-event parent care arc (first sign → final decline + killParent)
-    worldEvents.js            — 116 world history events (year+country/archetype gated); 7 events have `context` fields
-    headlines.js              — ~70 major historical headline entries (year-matched, injected as log entries)
+    events_climate.js         — 18 climate arc events (2025–2100): heat, drought, flooding, displacement, Pacific extinction, late-life witness
+    events_indigenous.js      — 21 Indigenous peoples events: Aboriginal Australian, Native American, First Nations, Māori arcs
+    events_automation.js      — 12 automation/AI arc events (2025–2050): career-specific disruption + UBI debate
+    worldEvents.js            — 126+ world history events (year+country/archetype gated); 12+ events have `context` fields
+    headlines.js              — ~85+ major historical headline entries (year-matched, injected as log entries)
     careers.js                — all career definitions with career-specific events
     crimes.js                 — criminal activity system
     activities.js             — activities panel options

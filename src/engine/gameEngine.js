@@ -2495,6 +2495,24 @@ export function tick(state) {
     s.money = (s.money ?? 0) - 200
   }
 
+  // Climate-displaced pressure (limbo residency — no legal status, limited services)
+  if (s.residencyStatus === 'climate_displaced') {
+    s.stats = { ...s.stats, health: clamp((s.stats.health ?? 80) - 2, 0, 100), happiness: clamp((s.stats.happiness ?? 50) - 4, 0, 100) }
+    s.money = (s.money ?? 0) - 150
+  }
+
+  // Extreme heat drain — Gulf/MENA countries post-2055 (wet-bulb seasonal uninhabitability)
+  {
+    const _heatCountry = s.currentCountry?.name || s.character?.country?.name
+    const HEAT_T1 = new Set(['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain'])
+    const HEAT_T2 = new Set(['Oman', 'Yemen', 'Iraq', 'Iran', 'Sudan', 'Djibouti'])
+    if (HEAT_T1.has(_heatCountry) && (s.currentYear ?? 0) >= 2055) {
+      s.stats = { ...s.stats, health: clamp((s.stats.health ?? 80) - 3, 0, 100), happiness: clamp((s.stats.happiness ?? 50) - 3, 0, 100) }
+    } else if (HEAT_T2.has(_heatCountry) && (s.currentYear ?? 0) >= 2065) {
+      s.stats = { ...s.stats, health: clamp((s.stats.health ?? 80) - 2, 0, 100), happiness: clamp((s.stats.happiness ?? 50) - 2, 0, 100) }
+    }
+  }
+
   // Fame decay if not in entertainment/sports
   s = tickFame(s)
 
@@ -3082,6 +3100,7 @@ const RESIDENCY_LADDER = {
   asylum_seeker:      { next: 'refugee_status',     yearsRequired: 1,  fee: 0     },
   undocumented:       { next: 'work_visa',           yearsRequired: 0,  fee: 2000  },
   tourist_overstay:   { next: 'work_visa',           yearsRequired: 0,  fee: 2000  },
+  climate_displaced:  { next: 'refugee_status',     yearsRequired: 2,  fee: 0     },
 }
 
 export function upgradeResidency(state) {

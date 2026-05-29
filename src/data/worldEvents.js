@@ -1983,4 +1983,216 @@ export const WORLD_EVENTS = [
     when: (G) => !G.flags.includes('mobutu_fall_generation'),
   },
 
+  // ── BANGLADESH LIBERATION WAR 1971 ───────────────────────────────────────
+  {
+    id: 'bangladesh_liberation_1971',
+    name: 'Bangladesh Liberation War',
+    years: [1971, 1971],
+    archetypes: 'all',
+    countries: ['Bangladesh'],
+    narrative: (G) => {
+      if (G.age >= 15) {
+        return 'Operation Searchlight begins on the night of March 25th. The Pakistani army moves on Dhaka. The targets are specific: the university, the Hindu quarter, the intellectual class. The word for what is happening does not exist yet in international law in a way that obliges anyone to stop it. Nine months. Indian intervention in December. On the 16th, the Pakistani forces surrender. The country is called Bangladesh — Sonar Bangla, Golden Bengal. The cost of it: a number between 300,000 and 3,000,000, depending on who is counting and why.'
+      }
+      return 'You are too young to understand what the adults are saying in low voices. What you understand: the fear in your mother\'s face, the sounds at night that are not wind, the neighbours who left and did not come back. Later someone will tell you what year it was and what it meant. You will know before they finish.'
+    },
+    context: 'The Bangladesh Liberation War lasted from March 25 to December 16, 1971. The Pakistani army\'s Operation Searchlight was a systematic campaign of mass killing, rape, and displacement targeting Bengali intellectuals, Hindus, and political opponents. Estimates of the death toll range from 300,000 to 3 million. India intervened militarily in December; Pakistan\'s forces surrendered on December 16, Bangladesh\'s Victory Day. The war produced 10 million refugees and created one of the world\'s newest nations.',
+    effect: (p) => {
+      if (p._state?.age >= 15) { p.m -= 18; p.h -= 10; p.addFlag('liberation_war_generation'); }
+      else { p.m -= 12; p.h -= 6; p.addFlag('liberation_war_generation'); }
+    },
+    addFlags: ['liberation_war_generation'],
+    minAge: 0,
+    when: (G) => !G.flags.includes('liberation_war_generation'),
+  },
+
+  // ── MABO DECISION 1992 (AUSTRALIA) ───────────────────────────────────────
+  {
+    id: 'australia_mabo_1992',
+    name: 'Mabo Decision',
+    years: [1992, 1993],
+    archetypes: 'all',
+    countries: ['Australia'],
+    narrative: (G) => {
+      if (G.character.ethnicity === 'aboriginal_australian') return null // handled by character event
+      return 'The High Court has found that Australia was not legally empty when the British arrived. Terra nullius — the legal fiction that underpinned two centuries of dispossession — is overturned. Eddie Mabo, a Torres Strait Islander, fought this case for a decade. He died four months before the decision. The ruling is narrow in law and vast in implication. The country will spend years arguing about what it means. The argument is not resolved.'
+    },
+    context: 'The Mabo v Queensland (No 2) decision of June 3, 1992 was a landmark ruling by Australia\'s High Court that recognised native title — the legal rights of Aboriginal and Torres Strait Islander peoples to their traditional lands. It overturned the doctrine of terra nullius ("land belonging to nobody") that had provided legal justification for the dispossession of Indigenous Australians since 1788. The Native Title Act 1993 followed. Eddie Koiki Mabo, a Meriam man from the Murray Islands, died of cancer in January 1992, four months before the decision bearing his name was handed down.',
+    effect: (p) => { p.m += 3; p.e += 3; p.addFlag('mabo_generation'); },
+    addFlags: ['mabo_generation'],
+    minAge: 10,
+    when: (G) => G.character.ethnicity !== 'aboriginal_australian' && !G.flags.includes('mabo_generation'),
+  },
+
+  // ── STOLEN GENERATIONS APOLOGY 2008 (AUSTRALIA) ──────────────────────────
+  {
+    id: 'australia_apology_2008',
+    name: 'National Apology to the Stolen Generations',
+    years: [2008, 2008],
+    archetypes: 'all',
+    countries: ['Australia'],
+    narrative: (G) => {
+      if (G.character.ethnicity === 'aboriginal_australian') return null // handled by character event
+      return 'Prime Minister Rudd stands in Parliament and says: we are sorry. The words are: "for the laws and policies of successive Parliaments and governments that have inflicted profound grief, suffering and loss on these our fellow Australians." People in the public gallery are crying. People watching on television are crying. The apology does not return what was taken. It is also something that was not there yesterday and is there today. The country is processing something it has been not-quite-saying for a long time.'
+    },
+    context: 'On February 13, 2008, Australian Prime Minister Kevin Rudd delivered a formal apology to Aboriginal Australians, specifically to the Stolen Generations — Indigenous children forcibly removed from their families under government policies that operated from the late 19th century until 1970. An estimated 100,000 Aboriginal children were removed under these policies. The apology had been refused by Prime Minister John Howard for 11 years. It was watched by thousands of Aboriginal people gathered on the lawns outside Parliament House and televised nationally.',
+    effect: (p) => { p.m += 4; p.e += 2; p.addFlag('apology_generation'); },
+    addFlags: ['apology_generation'],
+    minAge: 8,
+    when: (G) => G.character.ethnicity !== 'aboriginal_australian' && !G.flags.includes('apology_generation'),
+  },
+
+  // ── PARIS AGREEMENT 2015 ─────────────────────────────────────────────────
+  {
+    id: 'paris_agreement_2015',
+    name: 'Paris Climate Agreement',
+    years: [2015, 2016],
+    archetypes: 'all',
+    countries: null,
+    narrative: (G) => {
+      const arch = G.character.country.archetype
+      if (['wealthy_west', 'wealthy_east'].includes(arch)) {
+        return 'One hundred and ninety-six countries agree to limit warming to 1.5 degrees. The agreement is binding in intent and voluntary in mechanism. Scientists say it is insufficient. Diplomats say it is historic. Both are true. The planet will warm past 1.5 degrees. The agreement made it somewhat less warm than it would otherwise have been, which is something, and not enough.'
+      }
+      if (['subsaharan', 'developing_unstable', 'developing_urban'].includes(arch)) {
+        return 'Your country signed an agreement it did not cause to be necessary. The wealthy countries that burned coal and oil for two centuries agreed to slow down, somewhat. Your country — which contributed less than one percent of cumulative emissions — will experience the consequences of what the wealthy countries did. The agreement acknowledges this, in language. The reparations promised in that language remain theoretical.'
+      }
+      return 'The world agrees to limit warming. Whether it will is a different question from whether it agreed to.'
+    },
+    context: 'The Paris Agreement was adopted on December 12, 2015 by 196 parties at COP21. It committed signatories to limiting global temperature rise to well below 2°C above pre-industrial levels, pursuing 1.5°C. National pledges (NDCs) are voluntary; enforcement mechanisms are weak. Current NDCs, even if fully implemented, place warming on a trajectory of approximately 2.5-3°C. The agreement is widely considered necessary but insufficient.',
+    effect: (p) => { p.m -= 2; p.e += 3; p.addFlag('climate_generation'); },
+    addFlags: ['climate_generation'],
+    minAge: 10,
+    when: (G) => !G.flags.includes('climate_generation'),
+  },
+
+  // ── GREAT BARRIER REEF BLEACHING 2030s ───────────────────────────────────
+  {
+    id: 'reef_bleaching_2030s',
+    name: 'Great Barrier Reef Mass Bleaching',
+    years: [2030, 2035],
+    archetypes: 'all',
+    countries: null,
+    narrative: (G) => {
+      const country = G.currentCountry?.name || G.character.country.name
+      if (country === 'Australia') {
+        return 'The fourth consecutive mass bleaching event on the Great Barrier Reef. Sixty percent of the coral is now bleached or dead. The reef is 2,300 kilometres long and is the largest living structure on earth, or was. The tourism operators have a careful vocabulary for what is happening. The marine biologists do not bother with the careful vocabulary. What the bleaching means is that the water is too warm for the coral, and the water will not get cooler, and the reef is dying at a scale that no individual intervention can reverse.'
+      }
+      return 'The Great Barrier Reef is declared functionally extinct by the scientific bodies that track such things. It took 25 million years to form. It bleached to death in under a century. The thing that killed it — carbon dioxide warming the oceans — is still accumulating in the atmosphere. The reef is a specific loss: one species, one ecosystem, one measure of what was possible before.'
+    },
+    context: 'The Great Barrier Reef has experienced mass bleaching events in 1998, 2002, 2016, 2017, 2020, 2022, and 2024 — the last five consecutive years. Bleaching occurs when water temperatures rise above a threshold: the coral expels the symbiotic algae that provides 90% of its energy and colour. Prolonged bleaching causes death. The IPCC projects that at 1.5°C warming, 70-90% of coral reefs will decline; at 2°C, more than 99% will be lost.',
+    effect: (p) => { p.m -= 5; p.addFlag('climate_generation'); p.addFlag('reef_loss_generation'); },
+    addFlags: ['climate_generation', 'reef_loss_generation'],
+    minAge: 10,
+    when: (G) => !G.flags.includes('reef_loss_generation'),
+  },
+
+  // ── FIRST MASS CLIMATE DISPLACEMENT 2040s ────────────────────────────────
+  {
+    id: 'climate_mass_displacement_2040s',
+    name: 'First Mass Climate Displacement',
+    years: [2040, 2048],
+    archetypes: 'all',
+    countries: null,
+    narrative: (G) => {
+      const arch = G.character.country.archetype
+      if (['subsaharan', 'developing_unstable', 'developing_urban'].includes(arch)) {
+        return 'The UN estimates 200 million climate-displaced people by the end of the decade. The estimate is in a report. What the report cannot capture is what it looks like at ground level: the families who sold what they had and walked north, the camps outside cities that became cities themselves, the children who have never seen the land their parents describe. The word for these people — climate refugee — is still not in international law. They have no legal standing in the countries they arrived in. They are there anyway.'
+      }
+      return 'The television shows camps at the borders of your country. Climate refugees — though the law does not call them that. The argument about what to do with them has been going for twenty years. It is still going. The camps are permanent. Children are being born in them who have never been anywhere else.'
+    },
+    context: 'The World Bank\'s Groundswell report (2021) projected 216 million internal climate migrants by 2050, primarily from Sub-Saharan Africa, South Asia, and Latin America. Climate displacement currently has no dedicated legal framework: the 1951 Refugee Convention does not cover people displaced by climate change, only those fleeing persecution. This legal gap leaves climate-displaced people without international protection, even as displacement numbers rise.',
+    effect: (p) => {
+      const arch = p._state?.character?.country?.archetype
+      if (['subsaharan', 'developing_unstable', 'developing_urban', 'conflict_zone'].includes(arch)) {
+        p.m -= 10; p.h -= 4;
+      } else {
+        p.m -= 6;
+      }
+      p.addFlag('climate_generation');
+    },
+    addFlags: ['climate_generation'],
+    minAge: 12,
+    when: (G) => !G.flags.includes('climate_displacement_witnessed'),
+  },
+
+  // ── ARCTIC ICE-FREE SUMMER 2040s ──────────────────────────────────────────
+  {
+    id: 'arctic_ice_free_2040s',
+    name: 'First Ice-Free Arctic Summer',
+    years: [2042, 2048],
+    archetypes: 'all',
+    countries: null,
+    narrative: 'The Arctic Ocean is ice-free in summer for the first time in recorded human history — and, scientists say, for the first time in at least three million years. The news is treated as a milestone. Scientists resist the framing of milestone: a milestone implies a journey with a destination, and this is not that kind of journey. This is a door. It opens once.',
+    context: 'Sea ice in the Arctic has declined approximately 13% per decade since satellite measurements began in 1979. IPCC models project a first ice-free Arctic summer (defined as sea ice below 1 million km²) to occur before 2050 under high-emissions scenarios and possibly before 2040 under higher scenarios. The loss of sea ice accelerates warming through the ice-albedo feedback: dark ocean water absorbs heat that white ice would have reflected.',
+    effect: (p) => { p.m -= 5; p.e += 3; p.addFlag('climate_generation'); },
+    addFlags: ['climate_generation'],
+    minAge: 12,
+    when: (G) => !G.flags.includes('arctic_witnessed'),
+  },
+
+  // ── GULF EXTREME HEAT 2055+ ───────────────────────────────────────────────
+  {
+    id: 'gulf_extreme_heat_2055',
+    name: 'Gulf Region Seasonal Uninhabitability',
+    years: [2055, 2065],
+    archetypes: null,
+    countries: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman'],
+    narrative: 'The summer wet-bulb temperature in the Gulf has crossed the threshold beyond which a human body cannot cool itself outdoors, even in shade, even with water. This is not a heat wave — heat waves end. This is the summer now. The cities were built around air conditioning, which is infrastructure that can be maintained; they were also built around outdoor workers, which is a category of person that can no longer safely work here between June and September. The reconfiguration of what is possible in this climate is underway.',
+    context: 'Wet-bulb temperature (a combined measure of heat and humidity) above 35°C is fatal to humans after prolonged outdoor exposure regardless of activity level. IPCC reports project that wet-bulb temperatures above 35°C will become an annual occurrence across the Gulf region by mid-century under high-emissions scenarios. The UAE, Qatar, and Saudi Arabia have already recorded wet-bulb events above 30°C. Outdoor workers — primarily migrant laborers from South Asia — are disproportionately exposed.',
+    effect: (p) => { p.h -= 8; p.m -= 10; p.addFlag('heat_stress_generation'); p.addFlag('climate_generation'); },
+    addFlags: ['heat_stress_generation', 'climate_generation'],
+    minAge: 5,
+    when: (G) => !G.flags.includes('heat_stress_generation'),
+  },
+
+  // ── MALDIVES EVACUATION 2065+ ─────────────────────────────────────────────
+  {
+    id: 'maldives_evacuation_2065',
+    name: 'Maldives National Evacuation',
+    years: [2065, 2075],
+    archetypes: 'all',
+    countries: null,
+    narrative: (G) => {
+      const country = G.currentCountry?.name || G.character.country.name
+      if (['Maldives', 'Tuvalu', 'Kiribati', 'Marshall Islands'].includes(country)) {
+        return 'The government has completed the evacuation. The last families have left. There are islands — there will be islands for some years still, above water technically, but inhabited by no one. You carry the coordinates of where your house was. You carry the name of the island in the language that was spoken there. You are somewhere else now, which is called refuge, which is a word that means you are alive and does not mean you are home.'
+      }
+      return 'The Maldives completes its national evacuation — the first country to be rendered uninhabitable by sea level rise. 500,000 people relocated across several decades to higher ground in India, Sri Lanka, and Australia under climate refugee agreements that took fifteen years to negotiate. The last inhabited island goes underwater during a storm surge in the early 2070s. The government-in-exile continues to exist in international law, which is more than can be said for the land.'
+    },
+    context: 'The Maldives — an archipelago of 1,200 islands with an average elevation of 1.5 metres above sea level — has been purchasing land in India, Sri Lanka, and Australia as a contingency for national relocation since 2008. At 1.5°C warming, sea level rise of 26-77cm is projected by 2100; storm surges would make the islands uninhabitable well before they are permanently submerged. Kiribati and Tuvalu face similar timelines. This would be the first complete elimination of a nation-state by climate change.',
+    effect: (p) => {
+      const country = p._state?.currentCountry?.name || p._state?.character?.country?.name
+      if (['Maldives', 'Tuvalu', 'Kiribati', 'Marshall Islands'].includes(country)) {
+        p.m -= 25; p.h -= 8; p.r += 15; p.addFlag('climate_displaced'); p.setResidency('climate_displaced');
+      } else {
+        p.m -= 8; p.addFlag('climate_generation');
+      }
+    },
+    addFlags: ['climate_generation'],
+    minAge: 5,
+    when: (G) => !G.flags.includes('maldives_evacuation_witnessed'),
+  },
+
+  // ── CLIMATE TIPPING POINT 2045–2050 ──────────────────────────────────────
+  {
+    id: 'climate_tipping_point_2045',
+    name: 'Climate Tipping Point Confirmed',
+    years: [2046, 2053],
+    archetypes: 'all',
+    countries: null,
+    narrative: (G) => {
+      const arch = G.character.country.archetype
+      if (['wealthy_west', 'wealthy_east'].includes(arch)) {
+        return 'Scientists confirm that the West Antarctic Ice Sheet has entered an irreversible collapse. The process will take centuries, but it has begun and it cannot now be stopped. Sea level rise of one to three metres is now locked in regardless of what happens to emissions from this point. The news arrives on a Tuesday. People discuss it and go back to what they were doing. This is perhaps the most important thing that has happened in human history and it is received like weather.'
+      }
+      return 'Scientists say a tipping point has been crossed. The ice sheet that is collapsing will add a metre to the ocean over the next few centuries. The countries that will be underwater are, in the main, not the countries that emitted the carbon. The scientists are careful about language. The implication of what they are saying is not careful at all.'
+    },
+    context: 'Climate tipping points are thresholds beyond which changes become self-reinforcing and irreversible. Key tipping points include: West Antarctic Ice Sheet collapse (triggered at approximately 1.5°C), Greenland Ice Sheet collapse (triggered at 1.5-2°C), Amazon rainforest dieback, and permafrost carbon release. A 2022 Science study found that four of nine major tipping points may already have been triggered at current temperature levels (~1.2°C above pre-industrial). Each tipping point can trigger others in a cascade.',
+    effect: (p) => { p.m -= 8; p.e += 3; p.addFlag('climate_generation'); p.addFlag('tipping_point_generation'); },
+    addFlags: ['climate_generation', 'tipping_point_generation'],
+    minAge: 12,
+    when: (G) => !G.flags.includes('tipping_point_generation'),
+  },
+
 ]
