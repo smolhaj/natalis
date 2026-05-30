@@ -1128,202 +1128,453 @@ function buildG(state) {
 // relationship tension/warmth > post-crisis > cultural conditions > phase > generic.
 function buildYearTexture(state) {
   const F = new FlagSet(state.flags ?? [])
-  const { partner, children, age, currentYear, mem, career, friends, siblings, residencyStatus, yearsAbroad } = state
+  const { partner, children, age, currentYear, mem, career, residencyStatus, yearsAbroad, desire } = state
   const phase = getPhase(age)
   const mh = state.mentalHealth ?? {}
 
   const yearsSincePartnerDeath = mem?.partnerDeathYear != null ? currentYear - mem.partnerDeathYear : null
   const yearsSinceParentDeath  = mem?.parentDeathYear  != null ? currentYear - mem.parentDeathYear  : null
 
-  // Recent partner loss — immediate (grief events haven't fired yet)
+  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
+
+  // ─── GRIEF ───────────────────────────────────────────────────────────────────
+
   if (F.has('partner_died') && mem?.griefPartnerFirst && !mem?.griefPartnerDating) {
     const name = state.exPartners?.slice(-1)[0]?.name
     return name ? `${name}'s absence is still present in everything.` : 'The house is still the wrong size.'
   }
   if (F.has('partner_died') && !partner) {
     const name = state.exPartners?.slice(-1)[0]?.name
-    return name ? `You still reach for ${name} sometimes. The habit hasn't broken yet.` : 'Some mornings the quiet is a different kind of quiet.'
+    return name
+      ? pick([`You still reach for ${name} sometimes. The habit hasn't broken yet.`, `${name} is still everywhere in the house.`])
+      : pick(['Some mornings the quiet is a different kind of quiet.', 'The bed is the same size. You are still adjusting to that.'])
   }
-
-  // Grief fog: 1–3 years after partner death (fills gap between discrete grief events)
   if (yearsSincePartnerDeath !== null && yearsSincePartnerDeath >= 1 && yearsSincePartnerDeath <= 3) {
     if (yearsSincePartnerDeath === 1) return 'There are still whole days that belong to the grief. Fewer than before.'
     return 'The grief has changed shape. It has not left.'
   }
-  // Grief fog: years 4–5, dimming
   if (yearsSincePartnerDeath !== null && yearsSincePartnerDeath >= 4 && yearsSincePartnerDeath <= 5) {
     return 'The grief is quiet enough now that you can sometimes forget it. Not always.'
   }
 
-  // Recent parent loss
   if (mem?.griefParentCall && !mem?.griefParentBelongings) {
     return 'Some mornings you reach for the phone before you remember.'
   }
   if (F.has('lost_parent') && !mem?.griefParentYearsLater) {
-    return 'The absence of them is specific. It shows up in strange places.'
+    return pick([
+      'The absence of them is specific. It shows up in strange places.',
+      'You find yourself doing things the way they did them without meaning to.',
+    ])
   }
-
-  // Grief fog: 1–3 years after parent death
   if (yearsSinceParentDeath !== null && yearsSinceParentDeath >= 1 && yearsSinceParentDeath <= 3) {
-    return 'You catch yourself sometimes about to tell them something.'
+    return pick([
+      'You catch yourself sometimes about to tell them something.',
+      'The first year without them has its own texture. You are learning it.',
+    ])
   }
 
-  // Child death — never normalises
   if (F.has('lost_child')) {
-    return 'The year moves. You move with it, or something like you does.'
+    return pick([
+      'The year moves. You move with it, or something like you does.',
+      'There is a before and an after. You live in the after.',
+      'People say time helps. Time passes. That is what time does.',
+    ])
   }
 
-  // Active health crisis
+  // ─── ACTIVE HEALTH CRISIS ────────────────────────────────────────────────────
+
   if (F.has('cancer_treatment')) {
-    return 'Treatment continues. You measure time in appointments now.'
+    return pick([
+      'Treatment continues. You measure time in appointments now.',
+      'The body is the main subject of every day.',
+      'You have learned more than you wanted to about what the body can endure.',
+    ])
   }
   if (mh.condition === 'depression' && !mh.therapy && !mh.medicating) {
-    return 'The days are heavy in ways that are hard to explain to someone who hasn\'t felt it.'
+    return pick([
+      'The days are heavy in ways that are hard to explain to someone who hasn\'t felt it.',
+      'You are getting through the days. That is the accurate description.',
+      'Getting up is a decision. You don\'t say this to anyone.',
+    ])
   }
   if (mh.condition === 'anxiety' && !mh.therapy && !mh.medicating) {
-    return 'There is a low hum underneath everything. You have learned to work around it.'
+    return pick([
+      'There is a low hum underneath everything. You have learned to work around it.',
+      'The worry is always there. You have gotten better at not showing it.',
+    ])
   }
   if (mh.condition && !mh.therapy && !mh.medicating) {
     return 'Something is off. You are managing, which is not the same as being fine.'
   }
 
-  // Relationship tensions and warmth
+  // ─── PARTNERSHIP QUALITY ─────────────────────────────────────────────────────
+
   if (partner) {
     const q = partner.relationshipQuality ?? 60
-    if (q < 28) return `You and ${partner.name} are still in the same house. That is accurate and not quite the whole story.`
-    if (q < 40) return `You and ${partner.name} are polite in ways you didn't used to have to be.`
-    if (q > 85 && partner.married) return `A good year with ${partner.name}. The small things are the whole thing, some years.`
-    if (q > 78) return `A good year with ${partner.name}. Nothing dramatic — that's how the good ones go.`
+    const pn = partner.name.split(' ')[0]
+    if (q < 28) return pick([
+      `You and ${partner.name} are still in the same house. That is accurate and not quite the whole story.`,
+      `There are things you and ${pn} no longer say. The list has grown.`,
+    ])
+    if (q < 40) return pick([
+      `You and ${partner.name} are polite in ways you didn't used to have to be.`,
+      `You and ${pn} move around each other carefully. Neither of you names it.`,
+    ])
+    if (q > 85 && partner.married) return pick([
+      `A good year with ${partner.name}. The small things are the whole thing, some years.`,
+      `You and ${pn} still make each other laugh. That is not nothing after all this time.`,
+    ])
+    if (q > 78) return pick([
+      `A good year with ${partner.name}. Nothing dramatic — that's how the good ones go.`,
+      `${pn} knows what you mean before you finish. That is a specific kind of luck.`,
+    ])
   }
 
-  // Estranged adult child
+  // ─── FAMILY ──────────────────────────────────────────────────────────────────
+
   const estrangedChild = (children ?? []).find(c => c.age >= 18 && (c.relationshipQuality ?? 50) < 32)
-  if (estrangedChild) return `You haven't spoken to ${estrangedChild.name.split(' ')[0]} in a while. The silence has a weight.`
+  if (estrangedChild) return pick([
+    `You haven't spoken to ${estrangedChild.name.split(' ')[0]} in a while. The silence has a weight.`,
+    `There is a version of your family that would include ${estrangedChild.name.split(' ')[0]}. You carry that version.`,
+  ])
 
-  // Post-prison adjustment
+  if (F.has('reconciled_damaged') && (children ?? []).some(c => c.age >= 18)) {
+    return pick([
+      'The repair is slow. You are grateful for slow.',
+      'Things with your child are better. Not what they were. Better.',
+    ])
+  }
+
+  // ─── POST-CRISIS ADJUSTMENT ───────────────────────────────────────────────────
+
   if (F.has('recently_released')) {
-    return 'You are getting used to being outside again. It takes longer than people say it will.'
+    return pick([
+      'You are getting used to being outside again. It takes longer than people say it will.',
+      'Freedom has a specific texture you didn\'t expect. You are learning it.',
+    ])
   }
-
-  // Post-divorce, living alone
   if ((F.has('divorced') || F.has('breakup')) && !partner && phase === 'midlife') {
-    return 'The first years alone have their own specific calendar.'
+    return pick([
+      'The first years alone have their own specific calendar.',
+      'You are relearning how to be a single person. It takes longer than you thought.',
+    ])
   }
-
-  // Business failure aftermath
+  if ((F.has('divorced') || F.has('breakup')) && !partner && phase === 'young_adult') {
+    return 'You are learning that some things end, and the world keeps going regardless.'
+  }
   if (F.has('business_failed') && !F.has('business_started')) {
-    return 'You think about the business sometimes. Less than before, but still.'
+    return pick([
+      'You think about the business sometimes. Less than before, but still.',
+      'The failure has a particular shape you carry into the next thing.',
+    ])
+  }
+  if (F.has('in_recovery')) {
+    return pick([
+      'One day at a time is not a cliché. It is the actual method.',
+      'The work of staying clean is invisible to most people. You do it anyway.',
+    ])
+  }
+  if (F.has('survived_bombardment')) {
+    return 'The war is over, or over here. The sounds stay for a while.'
   }
 
-  // Undocumented / precarious residency
+  // ─── RESIDENCY / EMIGRANT TEXTURE ────────────────────────────────────────────
+
   if (residencyStatus === 'undocumented' || residencyStatus === 'tourist_overstay') {
-    return 'You exist in the margins of official life, which has its own routines by now.'
+    return pick([
+      'You exist in the margins of official life, which has its own routines by now.',
+      'You have learned the art of not being noticed. It has costs you don\'t always account.',
+    ])
+  }
+  if (residencyStatus === 'climate_displaced') {
+    return 'You are here because you had to be. That is not the same as being home.'
+  }
+  if (F.has('emigrated') && (yearsAbroad ?? 0) <= 2 && (yearsAbroad ?? 0) > 0) {
+    return pick([
+      'You are still learning what normal means here.',
+      'The customs are mostly decipherable now. Mostly.',
+    ])
+  }
+  if (F.has('emigrated') && (yearsAbroad ?? 0) >= 3 && (yearsAbroad ?? 0) <= 6) {
+    return pick([
+      'You have made a life here. It is a real life, not a placeholder.',
+      'The old country comes back in dreams, sometimes. The new one is where you are when you wake.',
+    ])
+  }
+  if (F.has('emigrated') && (yearsAbroad ?? 0) > 10) {
+    return pick([
+      'There is a version of you that stayed. You don\'t think about it much.',
+      'This is where you live now. The word home has become complicated.',
+      'You have been gone long enough that going back would be its own kind of leaving.',
+    ])
   }
 
-  // New emigrant (first 3 years)
-  if (F.has('emigrated') && (yearsAbroad ?? 0) <= 3 && (yearsAbroad ?? 0) > 0) {
-    return 'You are still learning what normal means here.'
-  }
+  // ─── AUTHORITARIAN / CONFLICT CONTEXT ────────────────────────────────────────
 
-  // Authoritarian context
   if (F.has('learned_silence') || F.has('authoritarian_childhood')) {
-    return 'Another year of knowing what not to say in which room.'
+    return pick([
+      'Another year of knowing what not to say in which room.',
+      'There are two conversations: the one you have, and the one underneath it.',
+    ])
+  }
+  if (F.has('dissident_writer') || F.has('dissident_reader')) {
+    return 'You continue. That is its own form of argument.'
   }
 
-  // Phase and age texture (sampled, not every year)
-  if (phase === 'midlife' && age >= 40 && age <= 43 && !mem?.quietYearMidlifeAck) {
-    const opts = [
-      'The middle of things. You are somewhere in the middle of things.',
-      'Forty. The years have a different weight from here.',
-    ]
-    return opts[Math.floor(Math.random() * opts.length)]
+  // ─── FLAG-AWARE TEXTURE ──────────────────────────────────────────────────────
+
+  if (F.has('famine_memory') && Math.random() < 0.3) return pick([
+    'The pantry is full. You check it anyway.',
+    'You do not leave food on the plate. Your children don\'t understand why.',
+  ])
+  if (F.has('civil_rights_generation') && phase === 'late_life') return pick([
+    'You have lived long enough to see some of what you fought for become unremarkable. That is what winning looks like.',
+    'The young people don\'t know what this cost. That is also what winning looks like.',
+  ])
+  if (F.has('independence_generation_self') && phase === 'late_life') {
+    return 'You were there when the flag went up. You have lived long enough to know what came after.'
   }
-  if (phase === 'late_life' && age >= 60 && age <= 63) {
-    const opts = [
-      'The body takes longer to begin in the mornings.',
-      'There is more behind you than ahead. That is not a sad thought, just a true one.',
-    ]
-    return opts[Math.floor(Math.random() * opts.length)]
+  if (F.has('boarding_school') && phase === 'young_adult') return pick([
+    'You notice you have trouble asking for things. You are not sure where that started.',
+    'Institutions feel familiar in ways that aren\'t comfortable to examine.',
+  ])
+  if (F.has('first_gen_university') && career) return pick([
+    'You are the first in your family to have this kind of year. That means something, even when you forget it.',
+    'There is no map for where you are. You are making one.',
+  ])
+  if (F.has('oral_historian') && phase === 'late_life') {
+    return 'They come to you with questions now. You try to answer accurately.'
   }
-  if (phase === 'young_adult' && age >= 22 && age <= 26 && !partner && !career) {
-    return 'You are still working out the shape of things.'
+  if (F.has('elder_authority') && phase === 'late_life') {
+    return 'The weight of being consulted is real. You have learned to carry it carefully.'
+  }
+  if (F.has('is_mentor') && (phase === 'midlife' || phase === 'late_life')) {
+    return 'You see something in the younger one that reminds you of an earlier version of yourself. You try not to say so.'
+  }
+  if (F.has('lost_mentor') && phase === 'midlife') {
+    return 'There is no one left who knew you before you knew yourself. That is a specific kind of alone.'
   }
 
-  // Career satisfaction (when present)
-  if (career && F.has('career_fulfilled')) return 'The work is good. You don\'t say that to people much, but it\'s true.'
+  // Career and hobbies
+  if (career && F.has('career_fulfilled')) return pick([
+    'The work is good. You don\'t say that to people much, but it\'s true.',
+    'You are doing the thing you are supposed to be doing. That is rarer than it sounds.',
+  ])
+  if (career && F.has('career_defining_work')) return 'The best work you have done is behind you. You are learning what comes after best.'
+  if (F.has('serious_musician')) return pick([
+    'The practice is something you look forward to. That surprises you sometimes.',
+    'The music asks for the part of you the day doesn\'t reach.',
+  ])
+  if (F.has('serious_writer')) return pick([
+    'The pages accumulate. You don\'t show them to anyone yet.',
+    'You are building something in the hours before and after everything else.',
+  ])
+  if (F.has('serious_artist')) return pick([
+    'The work asks things of you that the rest of your life doesn\'t.',
+    'The studio is the one place the day doesn\'t follow you.',
+  ])
+  if (F.has('fitness_devotee')) return 'The body is a project. You are consistent about it in a way you are not consistent about many things.'
+  if (F.has('dedicated_gardener') && (phase === 'midlife' || phase === 'late_life')) {
+    return pick([
+      'The garden is the same thing every year and different every year.',
+      'Something about watching things grow slowly is useful to you.',
+    ])
+  }
+  if (F.has('avid_reader') && phase === 'late_life') {
+    return 'You are working through the books you always meant to read. Some of them are as good as promised.'
+  }
 
-  // Hobby depth
-  const hobbies = state.hobbies ?? {}
-  if (F.has('serious_musician')) return 'The practice is something you look forward to. That surprises you sometimes.'
-  if (F.has('serious_writer')) return 'The pages accumulate. You don\'t show them to anyone yet.'
-  if (F.has('serious_artist')) return 'The work asks things of you that the rest of your life doesn\'t.'
+  // ─── DESIRE-AWARE TEXTURE (fires ~40% of remaining quiet years) ───────────────
+  if (desire && Math.random() < 0.4) {
+    const desireLines = {
+      prove_worth: {
+        early_childhood: 'You are already trying to be the best at something. You are not sure who you are trying to show.',
+        childhood: 'You work hard at the things that get noticed. It matters to you that they get noticed.',
+        adolescence: 'There is still the question of whether you are enough. You are trying to answer it with evidence.',
+        young_adult: 'You are building the evidence that you matter. The accumulation is slow.',
+        midlife: 'The accumulation of proof has not settled the question. You wonder sometimes if it ever will.',
+        late_life: 'You have stopped trying to prove it. That is either peace or the thing that comes before peace.',
+      },
+      belong: {
+        early_childhood: 'The world has rooms in it. You are learning which ones are yours.',
+        childhood: 'You watch how the other children are with each other. You are learning the rules.',
+        adolescence: 'The need to be included is almost physical. You would not admit that to anyone.',
+        young_adult: 'The search for a room where you don\'t feel like a guest continues.',
+        midlife: 'You have found, maybe, a few people who don\'t require you to perform. You hold onto them.',
+        late_life: 'You know now who loves you. The list is smaller than you thought and enough.',
+      },
+      be_seen: {
+        early_childhood: 'You do things hoping someone will notice. Sometimes they do.',
+        childhood: 'You have a sense that there is more of you than people are seeing. You don\'t know how to show it.',
+        adolescence: 'Visibility is everything. It is also terrifying. You want both at once.',
+        young_adult: 'The need to be recognized is still the engine of a lot of your decisions. You are becoming aware of this.',
+        midlife: 'You have made your mark, small or not. The question of whether it was enough is still there.',
+        late_life: 'You are seen by the people who matter. That took longer to understand than it should have.',
+      },
+      safety: {
+        early_childhood: 'You are always reading the room. You have been doing it for as long as you can remember.',
+        childhood: 'You are good at knowing when things are about to change. You watch for it.',
+        adolescence: 'The ground feels solid today. You are aware it can shift.',
+        young_adult: 'You build routines. Routines feel like shelter. You are aware this is a strategy.',
+        midlife: 'You have built something stable. You check it constantly, the way you check a lock.',
+        late_life: 'The fear of instability has dulled. Not gone. Dulled. That is progress.',
+      },
+      connection: {
+        early_childhood: 'You notice which children have friends and which don\'t. You watch this carefully.',
+        childhood: 'A good friend is the most important thing. You know this without being able to say it.',
+        adolescence: 'A close friendship is the whole world. You know this but cannot say it without it sounding small.',
+        young_adult: 'What you want most is someone who knows what you mean before you\'ve finished.',
+        midlife: 'The people who matter are fewer than they were. They are also more real.',
+        late_life: 'The longevity of some relationships is its own kind of proof of something you couldn\'t have named at twenty.',
+      },
+      leave_mark: {
+        early_childhood: 'You are already thinking about what you want to be. This seems important.',
+        childhood: 'You have an idea of the future you. The future you is larger than the current one.',
+        adolescence: 'The future you is more real to you than the present one. You are impatient.',
+        young_adult: 'You are trying to build something that will outlast the year.',
+        midlife: 'The work is there. Whether it matters is a separate question you try not to ask too often.',
+        late_life: 'Whatever you have made is mostly made. You are learning to let that be enough.',
+      },
+      freedom: {
+        early_childhood: 'The rules chafe. You don\'t have words for this yet.',
+        childhood: 'You test the edges of things. You want to know where they are.',
+        adolescence: 'What you want is out. You don\'t know what\'s on the other side of out. You want it anyway.',
+        young_adult: 'You resist the things that would bind you. You are aware this has costs. You are paying some of them.',
+        midlife: 'You are freer than you have been in some ways. Constrained in others you didn\'t anticipate.',
+        late_life: 'You have lived on your own terms, mostly. You are still deciding whether mostly is enough.',
+      },
+      redemption: {
+        early_childhood: 'There is already something you feel you owe. You couldn\'t name it if you tried.',
+        childhood: 'There is something you carry. You are not sure yet if it is yours to carry.',
+        adolescence: 'The weight of something is there. You move around it more than you face it.',
+        young_adult: 'The desire to make something right is still there, below the ordinary days.',
+        midlife: 'Some accounts have been settled. Others you are still working on. You don\'t know how many are left.',
+        late_life: 'What remains to be made right has become clearer. You are doing what you can with the time.',
+      },
+    }
+    const phaseKey = (phase === 'early_childhood') ? 'early_childhood'
+      : (phase === 'childhood') ? 'childhood'
+      : (phase === 'adolescence') ? 'adolescence'
+      : (phase === 'young_adult') ? 'young_adult'
+      : (phase === 'midlife') ? 'midlife'
+      : 'late_life'
+    const line = desireLines[desire]?.[phaseKey]
+    if (line) return line
+  }
 
-  // Flag-sensitive texture
-  if (F.has('famine_memory') && Math.random() < 0.3) return 'The pantry is full. You check it anyway.'
-  if (F.has('civil_rights_generation') && phase === 'late_life') return 'You have lived long enough to see some of what you fought for become unremarkable. That is what winning looks like.'
-  if (F.has('emigrated') && (yearsAbroad ?? 0) > 10) return 'There is a version of you that stayed. You don\'t think about it much.'
-  if (F.has('boarding_school') && phase === 'young_adult') return 'You notice you have trouble asking for things. You are not sure where that started.'
-  if (F.has('first_gen_university') && career) return 'You are the first in your family to have this kind of year. That means something, even when you forget it.'
+  // ─── EXPANDED PHASE POOLS ────────────────────────────────────────────────────
 
-  // Late life specific
   if (phase === 'late_life') {
-    const late = [
+    return pick([
       'The body keeps its own calendar. You have learned to negotiate.',
       'You know more people who have died than you used to. That is how it goes.',
       'A slower year. You are not sure if slower is worse or just different.',
       'The years are shorter now. Each one passes before you have finished with it.',
       'You notice small things more than you used to. The quality of morning light. How coffee smells before you drink it.',
       'Some of the people who made you possible are gone now. You carry them.',
-    ]
-    return late[Math.floor(Math.random() * late.length)]
+      'You have opinions about fewer things than you used to. The ones that remain are firm.',
+      'The body makes suggestions. You take most of them now.',
+      'You have learned to let some things go. You are still learning which things.',
+      'There is a satisfaction in days that are simply good. You have stopped waiting for them to add up to something.',
+      'The grandchildren are impossible and wonderful. Time with them passes at a different speed.',
+      'You have started to understand your parents. The understanding came too late for them to know.',
+      'Sleep is its own country now. You visit at odd hours.',
+      'Your memory is selective in ways you didn\'t authorize.',
+      'Some friendships have lasted forty years. You don\'t take that for granted anymore.',
+      'You have become the person younger people ask for advice. You give it carefully.',
+      'The things you were certain of at thirty look different from here.',
+      'A year of more behind than ahead. That is the arithmetic now.',
+      'You are learning the grammar of this phase. The sentences are shorter.',
+    ])
   }
 
-  // Midlife specific
   if (phase === 'midlife') {
-    const mid = [
+    return pick([
       'The middle of things. You are managing it, more or less.',
       'Another year of more obligations than time.',
       'Some weeks are almost invisible they are so routine. That is not necessarily bad.',
       'You are becoming more yourself, or less — it is hard to tell from inside it.',
       'The days are full in the way that midlife days are full: too much and none of it quite enough.',
       'You catch yourself in mirrors in public places and are briefly surprised.',
-    ]
-    return mid[Math.floor(Math.random() * mid.length)]
+      'The children are growing in a direction that no longer requires you at every step. You are still adjusting.',
+      'Your body has started keeping a different kind of account.',
+      'There is a version of yourself you thought you would be by now. You have stopped waiting for it.',
+      'The work takes up the same space it always has. The question of whether it is the right work is louder some years.',
+      'You know more now than you did. That is useful and insufficient simultaneously.',
+      'The relationships that have lasted have their own density now.',
+      'You have started to understand that most things cannot be fixed, only carried.',
+      'There is less drama than there used to be. You are not sure if that is maturity or just exhaustion.',
+      'The world has changed and you have changed and neither of you is quite what the other expected.',
+      'Some days are entirely administration. You have made peace with this, mostly.',
+      'You are in the middle of several things at once. That is the condition.',
+    ])
   }
 
-  // Young adult specific
   if (phase === 'young_adult') {
-    const ya = [
+    return pick([
       'The shape of things is still forming.',
       'You are working something out. You will be working it out for a while.',
       'A year of learning what matters to you by process of elimination.',
       'The future is still mostly theoretical.',
       'You have not become who you are going to be yet. That is not a problem.',
-    ]
-    return ya[Math.floor(Math.random() * ya.length)]
+      'You are building something — a life, a self, a version of both — and the blueprint keeps changing.',
+      'You are in the city / in the world / in the thing. It is larger than you expected.',
+      'The decisions that matter are not always the ones that look like decisions.',
+      'You have made some mistakes. The useful ones are teaching you something.',
+      'The people who knew you before are seeing you become someone they don\'t entirely recognise. You are learning to let that be.',
+      'You do not have enough money and you are fine. For now.',
+      'There is a gap between the life you imagined and the one you are building. You are learning which parts of that gap to close.',
+      'Your opinions are forming and hardening and sometimes cracking. You are letting them.',
+      'You are acquiring a self by trial and error, which is the only way.',
+    ])
   }
 
-  // Childhood/adolescence specific
   if (phase === 'adolescence') {
-    const adol = [
+    return pick([
       'The year moves in the way that years do when you are watching them closely.',
       'You are bigger than you were. That is the year\'s clearest fact.',
       'Something is being decided that you won\'t fully understand until later.',
-    ]
-    return adol[Math.floor(Math.random() * adol.length)]
+      'The body is doing things without your permission. You are making the best of it.',
+      'The world outside the family is becoming the more real one.',
+      'You are paying close attention to who you want to be. The answer changes.',
+      'Your friendships are the whole world. This is embarrassing to admit.',
+      'You are learning the distance between what you feel and what you say.',
+      'The future is abstract and extremely loud inside your head at the same time.',
+      'Something in you is building up pressure. You are not sure yet which direction it will go.',
+      'You are rehearsing yourself constantly. The audience is everyone and no one.',
+      'The adults are less sure of things than they seemed from a distance.',
+    ])
   }
 
   if (phase === 'childhood') {
-    const child = [
+    return pick([
       'A year of ordinary things that will look remarkable from far enough away.',
       'The world is still the size of the people in it.',
       'Another year of the life you have been given.',
-    ]
-    return child[Math.floor(Math.random() * child.length)]
+      'You are learning who you are by watching everyone around you be who they are.',
+      'The days are long in the way that childhood days are long — the afternoon is its own country.',
+      'You have a best friend. This is everything.',
+      'School is the main project of the year. You approach it accordingly.',
+      'Something your mother or father says will stay with you longer than they intend.',
+      'The world is large and mostly benign and occasionally strange.',
+      'You are storing things away without knowing you are storing them.',
+      'A year of questions. Most of them don\'t have the answer you wanted.',
+      'You are learning what the family expects of you. You are also learning what you think of that.',
+    ])
   }
 
-  // Universal fallback pool
-  const fallbacks = [
+  if (phase === 'early_childhood') {
+    return pick([
+      'The world is very close. Adults are very tall.',
+      'A year of firsts, most of which you will not remember.',
+      'You are learning the names of things. The names feel large.',
+      'The people around you are the entire world. You sense this.',
+      'You are discovering that you are a separate person from everyone else. This takes time.',
+    ])
+  }
+
+  // ─── UNIVERSAL FALLBACK ───────────────────────────────────────────────────────
+  return pick([
     'A year without incident. These exist.',
     'The days have a rhythm to them.',
     'Nothing remarkable. You are grateful for that, mostly.',
@@ -1331,8 +1582,16 @@ function buildYearTexture(state) {
     'A quiet year. Not every year needs to be a story.',
     'The life continues.',
     'A year of small decisions that add up to something.',
-  ]
-  return fallbacks[Math.floor(Math.random() * fallbacks.length)]
+    'You are here. That is the year\'s summary.',
+    'The ordinary is underrated.',
+    'Another year done. Not every year needs a name.',
+    'The routine holds. Routine is not nothing.',
+    'You are making your way through it. Everyone is.',
+    'A year of maintenance — of the life, of yourself, of the people in it.',
+    'Nothing major. The quiet kind of year that is sometimes the one you need.',
+    'The world did its thing. You did yours. Neither of you asked the other\'s permission.',
+    'You got through the year. Some years that is the achievement.',
+  ])
 }
 
 
@@ -2881,6 +3140,16 @@ export function tick(state) {
 
   // Illness risk check
   s = checkIllnessRisk(s)
+
+  // Charisma passive drain under authoritarian regimes (self-suppression of social energy)
+  if (s.flags.includes('learned_silence') || s.flags.includes('authoritarian_childhood')) {
+    const liveCountry = s.currentCountry ?? s.character?.country
+    const regime = getCountryRegime(liveCountry, s.currentYear)
+    const authRegimes = ['military_dictatorship', 'single_party_communist', 'single_party_authoritarian', 'theocracy', 'absolute_monarchy']
+    if (authRegimes.includes(regime)) {
+      s.stats = { ...s.stats, charisma: clamp(s.stats.charisma - 1, 10, 100) }
+    }
+  }
 
   // Death check
   const death = checkDeath(s)

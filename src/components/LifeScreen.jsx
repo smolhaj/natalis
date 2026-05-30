@@ -178,7 +178,8 @@ export default function LifeScreen() {
     return `${sign}$${Math.round(abs).toLocaleString()}`
   }
 
-  const karmaLabel = karma >= 85 ? 'Saint' : karma >= 70 ? 'Virtuous' : karma >= 50 ? 'Neutral' : karma >= 30 ? 'Questionable' : 'Sinister'
+  const karmaLabel = karma >= 85 ? 'Lives with deep purpose' : karma >= 70 ? 'More good than not' : karma >= 50 ? 'Navigating, as most do' : karma >= 30 ? 'Compromised by choices' : 'Haunted by what you\'ve done'
+  const karmaColor = karma >= 70 ? '#34c759' : karma >= 50 ? '#ff9500' : '#ff3b30'
   const genderMark = (g) => g === 'male' ? <span className="text-blue-400 text-xs ml-1">♂</span> : g === 'female' ? <span className="text-pink-400 text-xs ml-1">♀</span> : null
 
   // Derives a readable status label from relationship quality
@@ -406,6 +407,18 @@ export default function LifeScreen() {
                   </div>
                 )}
 
+                {/* Who You Are — identity card pinned to top of Life tab */}
+                {(() => {
+                  const card = generateIdentityCard(fullState)
+                  if (!card) return null
+                  return (
+                    <div className="bg-blue-50 rounded-2xl px-4 py-3 border border-blue-100">
+                      <p className="text-xs font-semibold text-blue-400 uppercase tracking-wider mb-1">Who you are</p>
+                      <p className="text-sm text-blue-900 leading-relaxed italic">{card}</p>
+                    </div>
+                  )
+                })()}
+
                 {/* Toggle */}
                 <div className="flex gap-1.5 bg-white rounded-2xl p-1.5 border border-natalis-border">
                   {[['recent','Recent'],['decades','Timeline'],['search','🔍 Search']].map(([mode, label]) => (
@@ -472,7 +485,10 @@ export default function LifeScreen() {
                     const yearEnd = Math.min(birthYear + decade + 9, currentYear)
                     const deathCount = entries.filter(e => e.isDeath).length
                     const worldCount = entries.filter(e => e.isWorld).length
-                    const keyPreview = entries.find(e => e.isKey || e.isDeath || e.isWorld)?.text ?? entries[0]?.text ?? ''
+
+                    // Up to 3 pull-quotes: prioritise key/death/world entries, then any
+                    const keyEntries = entries.filter(e => e.isKey || e.isDeath || e.isWorld)
+                    const previewEntries = keyEntries.length >= 2 ? keyEntries.slice(0, 3) : [...keyEntries, ...entries.filter(e => !e.isKey && !e.isDeath && !e.isWorld)].slice(0, 3)
 
                     return (
                       <div key={decade} className="bg-white rounded-2xl border border-natalis-border overflow-hidden">
@@ -494,8 +510,15 @@ export default function LifeScreen() {
                             <div className="text-[11px] text-natalis-muted mt-0.5">
                               {yearStart}–{yearEnd} · {entries.length} {entries.length === 1 ? 'entry' : 'entries'}
                             </div>
-                            {!isOpen && keyPreview && (
-                              <p className="text-[11px] text-natalis-muted italic mt-1 truncate pr-4">{keyPreview}</p>
+                            {!isOpen && previewEntries.length > 0 && (
+                              <div className="mt-1.5 space-y-0.5">
+                                {previewEntries.map((entry, pi) => (
+                                  <p key={pi} className={`text-[11px] italic truncate pr-4 ${entry.isWorld ? 'text-amber-600' : entry.isKey ? 'text-blue-500' : 'text-natalis-muted'}`}>
+                                    {pi > 0 && <span className="not-italic text-natalis-muted opacity-50 mr-1">·</span>}
+                                    {(entry.text ?? '').slice(0, 90)}{(entry.text ?? '').length > 90 ? '…' : ''}
+                                  </p>
+                                ))}
+                              </div>
                             )}
                           </div>
                           <span className="text-natalis-muted text-sm ml-2 mt-0.5 flex-shrink-0">{isOpen ? '▾' : '▸'}</span>
@@ -585,26 +608,29 @@ export default function LifeScreen() {
           {/* ── STATS TAB ── */}
           {activeTab === 'stats' && (
             <div className="space-y-3">
-              {/* Who Am I — living identity card */}
-              {(() => {
-                const card = generateIdentityCard(fullState)
-                if (!card) return null
-                return (
-                  <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-                    <p className="font-bold text-natalis-text text-sm mb-2">Who You Are</p>
-                    <p className="text-sm text-natalis-dim leading-relaxed italic">{card}</p>
-                  </div>
-                )
-              })()}
-
               {/* All stats */}
               <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card space-y-4">
                 <p className="font-bold text-natalis-text text-sm">Your Stats</p>
                 <StatBar stat="happiness" label="Happiness" value={stats.happiness} />
                 <StatBar stat="health"    label="Health"    value={stats.health} />
                 <StatBar stat="smarts"    label="Smarts"    value={stats.smarts} />
-                <StatBar stat="looks"     label="Looks"     value={stats.looks} />
-                <StatBar stat="charisma"  label="Charisma"  value={stats.charisma} />
+                <div>
+                  <StatBar stat="looks" label="Looks" value={stats.looks} />
+                  <p className="text-xs text-natalis-muted mt-0.5">
+                    {stats.looks >= 75 ? 'Appearance opens certain doors. Not all of them worth opening.' :
+                     stats.looks >= 50 ? 'Unremarkable in the best sense.' :
+                     'You have learned that appearance carries weight in the world.'}
+                  </p>
+                </div>
+                <div>
+                  <StatBar stat="charisma" label="Charisma" value={stats.charisma} />
+                  <p className="text-xs text-natalis-muted mt-0.5">
+                    {stats.charisma >= 75 ? 'People are drawn to you. Doors open before you knock.' :
+                     stats.charisma >= 50 ? 'You make friends without difficulty. Rooms feel open to you.' :
+                     stats.charisma >= 30 ? 'Some social situations cost you more than others.' :
+                     'You do better one-on-one than in groups. Groups are exhausting.'}
+                  </p>
+                </div>
                 <div>
                   <StatBar stat="wealth" label="Wealth (lifestyle score)" value={stats.wealth} />
                   <p className="text-xs text-natalis-muted mt-1">Cash: <span className="font-semibold text-natalis-text">{formatMoney(money)}</span> · Net Worth: <span className="font-semibold text-natalis-text">{formatMoney(netWorth)}</span></p>
@@ -615,8 +641,17 @@ export default function LifeScreen() {
               <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
                 <p className="font-bold text-natalis-text text-sm mb-3">Profile</p>
                 <div className="space-y-2">
+                  {/* Karma — shown as prose label, not a number */}
+                  <div className="flex items-center justify-between py-0.5">
+                    <div className="flex items-center gap-2">
+                      <span>{karma >= 70 ? '😇' : karma >= 50 ? '😐' : '😈'}</span>
+                      <span className="text-sm text-natalis-dim font-medium">Karma</span>
+                    </div>
+                    <span className="text-xs font-semibold" style={{ color: karmaColor }}>{karmaLabel}</span>
+                  </div>
+
+                  {/* Fame and Regret — still shown as bars */}
                   {[
-                    { label: `Karma · ${karmaLabel}`, value: karma, emoji: karma > 60 ? '😇' : karma < 40 ? '😈' : '😐', color: karma > 60 ? '#34c759' : karma < 40 ? '#ff3b30' : '#ff9500' },
                     { label: 'Fame', value: fame, emoji: '⭐', color: '#ffcc00' },
                     { label: 'Regret', value: regret, emoji: '😔', color: '#8e8e93' },
                   ].map(({ label, value, emoji, color }) => (
