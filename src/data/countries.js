@@ -2056,6 +2056,38 @@ export const COUNTRIES = [
     literacyMale: 0.76,
     literacyFemale: 0.63,
   },
+  {
+    name: 'Palestine', capital: 'Ramallah', currency: 'Jordanian dinar / Israeli shekel', region: 'Middle East', archetype: 'conflict_zone',
+    gdp: 'low_medium', healthcare: 'poor', lifeExpectancy: 74,
+    conflictRisk: 0.45, genderGap: 0.42, socialMobility: 'very_low',
+    wealthTierWeights: [0.35, 0.30, 0.22, 0.10, 0.03],
+    namePool: {
+      male: ['Mohammed', 'Ahmad', 'Ibrahim', 'Khalid', 'Hassan', 'Yusuf', 'Omar', 'Ali', 'Nasser', 'Tariq', 'Bilal', 'Faris', 'Hisham', 'Imad', 'Jihad', 'Kamal', 'Louay', 'Marwan', 'Nidal', 'Ramzi', 'Samir', 'Tawfiq', 'Wael', 'Yahya', 'Ziad', 'Adnan', 'Bassam', 'Dawud', 'Eyad', 'Fawzi'],
+      female: ['Maryam', 'Fatima', 'Aisha', 'Nour', 'Hana', 'Rima', 'Samira', 'Leila', 'Dina', 'Rana', 'Amal', 'Amira', 'Bushra', 'Duaa', 'Hiba', 'Intisar', 'Lamia', 'Manal', 'Nariman', 'Randa', 'Rula', 'Sabah', 'Sahar', 'Suha', 'Tahani', 'Wafa', 'Yasmin', 'Zainab', 'Abeer', 'Afaf'],
+    },
+    surnames: ['Abu Dayyeh', 'Al-Masri', 'Al-Khalidi', 'Barghouti', 'Dajani', 'Ghanem', 'Halabi', 'Husseini', 'Jaber', 'Khalil', 'Mansour', 'Nasser', 'Odeh', 'Qasim', 'Ramadan', 'Saleh', 'Shaka', 'Tamimi', 'Tuqan', 'Zu\'bi', 'Abu Amr', 'Abu Eid', 'Abu Samra', 'Al-Natsheh', 'Askar', 'Badawi', 'Dahlan', 'Faraj', 'Hammad', 'Jibril'],
+    languages: ['Arabic'],
+    context: 'Palestine exists in a condition without parallel — a territory under military occupation since 1967, split since 2006 between the West Bank under Palestinian Authority administration and Gaza under Hamas. The Nakba of 1948 displaced 700,000 Palestinians; their descendants number over seven million, many still in refugee camps in Lebanon, Jordan, and Syria. The checkpoint is the primary interface with the occupation: movement within the West Bank requires coordination with a permit system that is arbitrary in practice. House demolitions, settlement expansion, and the separation barrier define daily geography. In Gaza, a blockade since 2007 has created one of the densest and most restricted human spaces on earth. Despite everything, Palestinian literary culture, education rates, and civic life persist in forms that consistently surprise outside observers.',
+    yearRange: [1948, 2025],
+    regime: 'military_dictatorship',
+    regimeHistory: [
+      { year: 1948, to: 'military_dictatorship' },
+      { year: 1994, to: 'single_party_authoritarian' },
+    ],
+    religionWeights: { muslim_sunni: 0.85, christian_orthodox: 0.09, christian_catholic: 0.04, other: 0.02 },
+    ethnicGroups: [
+      { id: 'palestinian_arab', name: 'Palestinian Arab', share: 0.95 },
+      { id: 'bedouin_palestinian', name: 'Bedouin', share: 0.03, disadvantaged: true },
+      { id: 'other_palestinian', name: 'Other', share: 0.02 },
+    ],
+    casteSystem: false,
+    lgbtqCriminalized: true,
+    lgbtqLegalYear: null,
+    childMarriageRisk: 0.12,
+    urbanRate: 0.77,
+    literacyMale: 0.98,
+    literacyFemale: 0.96,
+  },
 ]
 
 export const COUNTRY_MAP = Object.fromEntries(COUNTRIES.map(c => [c.name, c]))
