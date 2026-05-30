@@ -2122,6 +2122,9 @@ export function applyActivity(state, activityId) {
     updated.hobbies = { ...(updated.hobbies ?? {}), [hobbyActivity.hobbyId]: Math.min(100, current + hobbyActivity.delta) }
     // Store primary hobby in mem if not set
     if (!updated.mem?.primaryHobby) updated.mem = { ...(updated.mem ?? {}), primaryHobby: hobbyActivity.hobbyId }
+    // Increment per-hobby activity counter so story events can fire at thresholds
+    const _countKey = `actCount_${hobbyActivity.hobbyId}`
+    updated.mem = { ...(updated.mem ?? {}), [_countKey]: ((updated.mem ?? {})[_countKey] ?? 0) + 1 }
     // Apply stat bonuses
     const b = hobbyActivity.statBonus ?? {}
     const s = updated.stats
@@ -2133,8 +2136,19 @@ export function applyActivity(state, activityId) {
       looks:     Math.min(100, (s.looks     ?? 50) + (b.s ?? 0)),
     }
     const newLevel = updated.hobbies[hobbyActivity.hobbyId]
-    const tier = newLevel >= 80 ? 'master' : newLevel >= 60 ? 'expert' : newLevel >= 40 ? 'skilled' : newLevel >= 20 ? 'learning' : 'beginner'
-    updated.log = [...updated.log, { age: updated.age, text: `You practice ${hobbyActivity.hobbyId}. Skill: ${newLevel}/100 (${tier}).`, isKey: false }]
+    const _hobbyProse = {
+      music:    ['You play for a while.', 'The practice session runs longer than you planned.', 'Something in a passage clicks that didn\'t last time.', 'You work through the same difficult section several times.'],
+      art:      ['You work on something for an hour or two.', 'The piece goes somewhere you didn\'t expect.', 'You discard what you started and begin again.', 'A version of it comes together.'],
+      writing:  ['You write.', 'The pages accumulate.', 'You work through a passage that has been resisting you.', 'The words come more easily today.'],
+      cooking:  ['You try a new dish.', 'The kitchen smells like something is working.', 'You adjust the recipe until it tastes right.', 'You cook for a while, attentively.'],
+      coding:   ['You build something small.', 'You debug something that has been broken for days.', 'A piece of logic clicks into place.', 'You write code for a few hours.'],
+      sport:    ['You train.', 'The run is harder than last time and that is the point.', 'You push past where you usually stop.', 'The body does what you ask of it.'],
+      reading:  ['You read.', 'A chapter turns into several.', 'You sit with the book longer than you meant to.', 'You finish a section and think about it for a while.'],
+      meditation: ['You sit with it.', 'The practice goes quietly.', 'The mind settles, eventually.', 'Fifteen minutes that are harder and more useful than they look.'],
+    }
+    const _prosePool = _hobbyProse[hobbyActivity.hobbyId] ?? [`You spend time on ${hobbyActivity.hobbyId}.`]
+    const _proseLine = _prosePool[Math.floor(Math.random() * _prosePool.length)]
+    updated.log = [...updated.log, { age: updated.age, text: _proseLine, isKey: false }]
     updated.actionsThisYear = (updated.actionsThisYear ?? 0) + 1
     return updated
   }
