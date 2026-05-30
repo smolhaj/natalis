@@ -2122,6 +2122,9 @@ export function applyActivity(state, activityId) {
     updated.hobbies = { ...(updated.hobbies ?? {}), [hobbyActivity.hobbyId]: Math.min(100, current + hobbyActivity.delta) }
     // Store primary hobby in mem if not set
     if (!updated.mem?.primaryHobby) updated.mem = { ...(updated.mem ?? {}), primaryHobby: hobbyActivity.hobbyId }
+    // Increment per-hobby activity counter so story events can fire at thresholds
+    const _countKey = `actCount_${hobbyActivity.hobbyId}`
+    updated.mem = { ...(updated.mem ?? {}), [_countKey]: ((updated.mem ?? {})[_countKey] ?? 0) + 1 }
     // Apply stat bonuses
     const b = hobbyActivity.statBonus ?? {}
     const s = updated.stats
@@ -2133,8 +2136,19 @@ export function applyActivity(state, activityId) {
       looks:     Math.min(100, (s.looks     ?? 50) + (b.s ?? 0)),
     }
     const newLevel = updated.hobbies[hobbyActivity.hobbyId]
-    const tier = newLevel >= 80 ? 'master' : newLevel >= 60 ? 'expert' : newLevel >= 40 ? 'skilled' : newLevel >= 20 ? 'learning' : 'beginner'
-    updated.log = [...updated.log, { age: updated.age, text: `You practice ${hobbyActivity.hobbyId}. Skill: ${newLevel}/100 (${tier}).`, isKey: false }]
+    const _hobbyProse = {
+      music:    ['You play for a while.', 'The practice session runs longer than you planned.', 'Something in a passage clicks that didn\'t last time.', 'You work through the same difficult section several times.'],
+      art:      ['You work on something for an hour or two.', 'The piece goes somewhere you didn\'t expect.', 'You discard what you started and begin again.', 'A version of it comes together.'],
+      writing:  ['You write.', 'The pages accumulate.', 'You work through a passage that has been resisting you.', 'The words come more easily today.'],
+      cooking:  ['You try a new dish.', 'The kitchen smells like something is working.', 'You adjust the recipe until it tastes right.', 'You cook for a while, attentively.'],
+      coding:   ['You build something small.', 'You debug something that has been broken for days.', 'A piece of logic clicks into place.', 'You write code for a few hours.'],
+      sport:    ['You train.', 'The run is harder than last time and that is the point.', 'You push past where you usually stop.', 'The body does what you ask of it.'],
+      reading:  ['You read.', 'A chapter turns into several.', 'You sit with the book longer than you meant to.', 'You finish a section and think about it for a while.'],
+      meditation: ['You sit with it.', 'The practice goes quietly.', 'The mind settles, eventually.', 'Fifteen minutes that are harder and more useful than they look.'],
+    }
+    const _prosePool = _hobbyProse[hobbyActivity.hobbyId] ?? [`You spend time on ${hobbyActivity.hobbyId}.`]
+    const _proseLine = _prosePool[Math.floor(Math.random() * _prosePool.length)]
+    updated.log = [...updated.log, { age: updated.age, text: _proseLine, isKey: false }]
     updated.actionsThisYear = (updated.actionsThisYear ?? 0) + 1
     return updated
   }
@@ -2749,6 +2763,21 @@ export function tick(state) {
     currentYear: state.currentYear + 1,
     actionsThisYear: 0,
     yearsAbroad: isAbroad ? (state.yearsAbroad ?? 0) + 1 : (state.yearsAbroad ?? 0),
+  }
+
+  // Phase transition marker — one quiet sentence when crossing a life phase boundary
+  const prevPhase = getPhase(state.age)
+  const newPhase = getPhase(s.age)
+  if (prevPhase !== newPhase) {
+    const _phaseLines = {
+      childhood:   'The early years end. You begin to know where you are.',
+      adolescence: 'The body is changing. The world is starting to require something from you.',
+      young_adult: 'You are eighteen. The life begins in earnest.',
+      midlife:     'You are thirty. The life you have been building has become recognizable as a life.',
+      late_life:   'You are fifty. What you carry into this half is mostly set.',
+    }
+    const _t = _phaseLines[newPhase]
+    if (_t) s.log = [...s.log, { age: s.age, text: _t, isKey: true, isPhaseTransition: true }]
   }
 
   // Prison year
@@ -4785,8 +4814,38 @@ export function generateIdentityCard(state) {
     }
   }
 
+  // ── INTERIOR 3: Relationship quality insight ─────────────────────────────────
+  if (interior.length < 3) {
+    if (partner) {
+      const q = partner.relationshipQuality ?? 60
+      const pn = partner.name.split(' ')[0]
+      if (q > 85 && (partner.years ?? 0) > 10) {
+        interior.push(`What you have built with ${pn} is the kind of thing people mean when they say they got lucky.`)
+      } else if (q < 32 && partner.married) {
+        interior.push(`You and ${pn} are still married. That fact is more complicated than it sounds.`)
+      }
+    } else if ((children ?? []).length > 0) {
+      const closeChild = (children ?? []).find(c => c.age >= 16 && (c.relationshipQuality ?? 50) > 82)
+      if (closeChild) interior.push(`${closeChild.name.split(' ')[0]} is someone you genuinely like. That is not automatic between parents and children.`)
+    }
+  }
+
+  // ── INTERIOR 4: Weight — regret translated to prose ───────────────────────
+  const regret = state.regret ?? 0
+  if (interior.length < 4) {
+    const weightLine = (() => {
+      if (regret > 70) return 'The accumulation of what you carry shapes how you hold yourself.'
+      if (regret > 50) return 'The weight of certain decisions has not diminished the way you expected it to.'
+      if (regret > 30) return 'You carry more than you planned to. Some of it you can name.'
+      if (regret > 15) return 'There are one or two things you would do differently, given another run at them.'
+      return null
+    })()
+    if (weightLine) interior.push(weightLine)
+  }
+
   const all = [...exterior, ...interior].filter(Boolean)
-  return all.length >= 2 ? all.join(' ') : null
+  // Cap at 6 sentences so the card doesn't become a wall
+  return all.length >= 2 ? all.slice(0, 6).join(' ') : null
 }
 
 // ─── Epitaph generator ───────────────────────────────────────────────────────
