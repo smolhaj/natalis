@@ -59,7 +59,7 @@ late_life        50+
 ### Event System
 
 Events live in:
-- `src/data/events.js` — base events (1000+ inline) + imports all modules into `EVENTS` export
+- `src/data/events.js` — base events (430+ inline) + imports all 86 modules into `EVENTS` export (~2,400+ total character events)
 - `src/data/events_gender.js` — gender-specific events
 - `src/data/events_religion.js` — religion-specific events
 - `src/data/events_historical.js` — historical period events
@@ -129,6 +129,25 @@ Events live in:
 - `src/data/events_neighborhoods.js` — 16 neighborhood-tier events (BUILD 32): informal tier (standpipe, settlement fire, nearby landlord, thin walls, generator envy, school distance, gang block, government upgrade, home business), working class (solidarity, noise), cross-tier (moving-up guilt, elite isolation, elite teen guilt, gentrification return, good-years memory)
 - `src/data/events_postrelease.js` — 12 post-release events (BUILD 48): release morning (political prisoner branch), job application checkbox (USA felony text, 3 choices), lie discovered (background check), housing difficulty (USA public housing text), parole conditions, parole near-breach, family reunion, recidivism trap, USA rights lost, spent conviction (UK/EU), decade clean, political prisoner dignity event
 - `src/data/events_mentor.js` — 10 mentor arc events (BUILD 47): mentor deepens (coffee meeting), favor asked, estrangement, mentor dies (sets lost_mentor), mentor echo at 58+; becoming mentor (generates protegeName), protégé surpasses, protégé betrayal (3 choices), both arcs reflection, adolescent teacher echo
+- `src/data/events_adolescence_2.js` — 21 adolescence depth events: first job, curfew break, authority clash, exam results, scholarship test, dropout temptation, peer betrayal, rumour, peer death, diaspora identity, family honour, faith doubt at home, peer pressure, first smoke, shoplifting, social media pressure, body image, leaving question, privilege mirror, school fight, community service
+- `src/data/events_childhood_texture.js` — 19 childhood texture events (Sprint 4): universal small-life events for ages 6–17, ensuring at least one event fires per year across the childhood span
+- `src/data/events_family_silence.js` — 20 generational memory events (Burst D): the "what your parents didn't say" mechanic — early-childhood events gated on generational trauma flags (holocaust_family_memory, gulag_family_memory, partition_family_memory, etc.), framed as absence rather than the atrocity itself
+- `src/data/events_dying_arc.js` — 6 events for the final years (Burst F): age 75+, the specific consciousness of a person who knows they are near the end; not about death as a stat but about how it reshapes the present
+- `src/data/events_solo_life.js` — 8 solo life events (Burst E): unpartnered characters moving through life — not loneliness as failure but the specific texture of a life that doesn't centre around couplehood
+- `src/data/events_coherence.js` — 11 coherence/follow-through events (Burst G): orphaned flag follow-throughs for flags without downstream consequences
+- `src/data/events_poverty.js` — 43 financial hardship events (Burst I): eviction, repossession, foreclosure, debt collectors, wage garnishment, homelessness, welfare, moving in with relatives — both childhood and adult phases
+- `src/data/events_pregnancy.js` — 13 pregnancy and birth arc events (Burst J): first-trimester texture, pregnancy arc, birth (archetype/GDP/year-branched), maternal complication, postpartum period; engine changes support `pregnant` flag + `pregnancyYear` mem for multi-year arc
+- `src/data/events_menopause.js` — 5 menopause arc events (Burst K–M): female character, ages 45–58, culturally-branched (Japan low-symptom, USA medicalised, subsaharan status change, post-Soviet stoicism)
+- `src/data/events_career_arcs.js` — 19 deep career arc events (Burst K–M): athlete (injury, identity, transition out), academic (tenure clock, publish-or-perish, defining student, burnout), chef/hospitality (kitchen grind, ownership arc, creative arc, staff cost)
+- `src/data/events_social_media.js` — 9 social media arc events (Burst K–M): country-specific platforms (Facebook/MySpace West, VKontakte Russia, WeChat/Weibo China, KakaoTalk Korea, MXit South Africa); arc from genuine excitement through addictive phase to damage and choosing to leave or not
+- `src/data/events_scandinavia.js` — 8 Nordic events (Burst N+O): welfare state from inside, Norway oil discovery, Finland Winter War, Sweden WWII neutrality/grey zone, Janteloven social pressure
+- `src/data/events_palestine.js` — 8 Palestine character events (Burst N+O): Nakba displacement family memory, checkpoint as daily fixture, house demolition, permit system, Oslo brief hope, intifadas, post-2006 Gaza/West Bank divergence
+- `src/data/events_gang.js` — 10 gang/organised crime arc events (Burst Q): archetype-specific entry points (post-Soviet bratva/krysha, Lagos Area Boys, cartel-adjacent Colombia); progression from petty crime through membership and consequences
+- `src/data/events_social_capital.js` — 8 social capital events (Sprint 3): charisma and looks as era- and culture-dependent resources; gated on stat thresholds
+- `src/data/events_world_response.js` — 6 world event response events (Sprint 2): character events that fire in the year of a major world event, giving one meaningful choice response; gates on the world event's flag already being set
+- `src/data/events_emigrant_integration.js` — 7 emigrant integration arc events (Sprint 5): staged by `G.yearsAbroad` — disorientation (yr 1), acclimation (yr 2–3), permanence question (yr 3–6), belonging with asterisk (yr 6–12), old country as destination (yr 12+)
+- `src/data/events_intimacy.js` — 12 sex and intimacy arc events (BUILD 45): sexual revolution arc (female/wealthy_west 1967–77 + midlife reckoning), long marriage desire shift, affair temptation choice (taken/not taken) with weight and echo follow-throughs, late beginning (solo vs. seeking), late love arriving, sexuality in cultures without vocabulary, body in late life, solo life texture, first love ending
+- `src/data/events_school.js` — 11 school institution events (BUILD 46): resource-poor classroom (60 children/1 teacher), teacher who came unpaid + midlife echo, shared textbook (rural), scholarship arrival + social texture (the lunch table) + young-adult payoff, war-zone school attendance choice, year-gap follow-through, national exam (archetype-branched) + exam echo
 
 Event shape:
 ```js
@@ -351,12 +370,39 @@ Generic events are a last resort. Specific events — ones that could only fire 
 - **Post-release arc**: `events_postrelease.js` (12 events, BUILD 48) — release morning (political prisoner branch via `political_prisoner` flag); job application checkbox (USA felony-box prose, 3 choices: disclose/lie/sidestep); lie discovered (employer background check); housing difficulty (USA public housing bar text); parole weekly reporting; parole near-breach (sick parent two counties away); family reunion; recidivism trap (structural loop, sets `recidivism_risk` or `seeking_reentry_support`); USA rights lost (voting/housing/loans); spent conviction (UK/EU clean-record path); decade clean (sets `decade_after_prison`); political prisoner dignity event.
 - **Mentor arc**: `events_mentor.js` (10 events, BUILD 47) — mentor deepens (coffee, "Is this what you meant to be doing?"); favor asked (uncomfortable request); estrangement (distance without a moment); mentor dies (sets `lost_mentor`, funeral, sits near the back); late echo at 58+ (hearing their phrasing in your own words); becoming a mentor (generates named `protegeName`); protégé surpasses (applauding in the audience); protégé betrayal (3 choices: confront/let go/document); both arcs reflection at 62+; adolescent teacher echo.
 - **Famine personal arc**: 4 events appended to `events_followthrough_5.js` (BUILD 49) — market price first sign (choice: buy now/wait), body changing (hunger becomes background, auto-resolve), selling assets (livestock or debt), midlife pantry reflex at 25+ years after (sets `famine_memory`).
+- **Save/load system**: `serializeState`/`deserializeState` in gameStore.js handles Map/Set/functions. "Continue" button on TitleScreen. localStorage persistence across sessions.
+- **Desire-weighted event selection**: `DESIRE_PATTERNS` in `getNextEvent()`, 1.6× multiplier for events matching `G.desire`. Keys: `prove_worth/belong/be_seen/safety/connection/leave_mark/freedom/redemption`.
+- **`buildYearTexture()` expanded**: phase-specific prose pools (late_life 6 strings, midlife 6, young_adult 5, adolescence 3, childhood 3); flag-aware paths for famine_memory/civil_rights/emigration/first_gen.
+- **Dynamic wealthTier**: computed in `buildG()` from actual net worth (money + property equity − debt) for age ≥ 18. All event guards using `G.wealthTier` now reflect real wealth.
+- **Hobby milestone flags**: auto-generated in `tick()` at skill thresholds: `serious_musician`, `artist`, `reflective_writer`, `fitness_devotee`, `accomplished_cook`, `polyglot`, `avid_reader`, `dedicated_gardener`.
+- **Activity-to-flag pipeline**: cumulative count tracking in `mem` → flags: `contemplative`, `generous`, `avid_reader`, `reflective_writer`, `fitness_devotee`, `philosophical_mind`, `networker`, `disciplined_saver`.
+- **Original-language word insertions** (Burst P): selective use of *blat*, *karoshi*, *ubuntu*, *inshallah*, *harambee*, *jugaad*, *sisu*, *trygghed* etc. in event prose — italicised, meaning clear from context, only where no English equivalent exists.
+- **UI improvements** (Sprints 1–5): career/education gap display, activities grouping by category, timeline pull-quotes, desire texture in obituary, arc-feeling prose layer.
+- **Childhood texture** (Sprint 4): `events_childhood_texture.js` (19 events) — universal small-life events for ages 6–17, ensuring ≥1 event per year across the childhood span.
+- **Generational silence** (Burst D): `events_family_silence.js` (20 events) — "what your parents didn't say" mechanic. Early-childhood events gated on generational trauma flags (`holocaust_family_memory`, `gulag_family_memory`, `partition_family_memory`, etc.), framed as absence rather than the atrocity itself.
+- **Dying arc** (Burst F): `events_dying_arc.js` (6 events) — age 75+. The specific consciousness of a person who knows they are near the end; not about death as a stat but about how it reshapes the present.
+- **Solo life** (Burst E): `events_solo_life.js` (8 events) — unpartnered characters. Not loneliness as failure but the texture of a life that doesn't centre around couplehood.
+- **Coherence pass** (Burst G): `events_coherence.js` (11 events) — orphaned flag follow-throughs for flags without downstream consequences.
+- **Financial hardship** (Burst I): `events_poverty.js` (43 events) — eviction, repossession, foreclosure, debt collectors, wage garnishment, homelessness, welfare, moving in with relatives. Both childhood and adult phases.
+- **Pregnancy arc** (Burst J / BUILD 51): `events_pregnancy.js` (13 events) — first-trimester texture, pregnancy arc, birth (archetype/GDP/year-branched), maternal complication, postpartum period. Engine changes: `pregnant` flag + `pregnancyYear` mem for multi-year arc.
+- **Menopause arc** (Burst K–M / BUILD 22 partial): `events_menopause.js` (5 events) — female, ages 45–58. Culturally-branched: Japan low-symptom, USA medicalised, subsaharan status change, post-Soviet stoicism.
+- **Deep career arcs** (Burst K–M / BUILD 6 careers extension): `events_career_arcs.js` (19 events) — athlete (injury/identity/transition out), academic (tenure clock/publish-or-perish/defining student/burnout), chef/hospitality (kitchen grind/ownership arc/creative arc/staff cost).
+- **Social media arc** (Burst K–M / BUILD 4 social media): `events_social_media.js` (9 events) — country-specific platforms (Facebook/MySpace West, VKontakte Russia, WeChat/Weibo China, KakaoTalk Korea, MXit South Africa); arc from excitement → addictive phase → damage → choosing to leave or not.
+- **Nordic arc** (Burst N+O / BUILD 14 Scandinavia): `events_scandinavia.js` (8 events) — welfare state from inside, Norway oil discovery, Finland Winter War, Sweden WWII neutrality/grey zone, Janteloven social pressure.
+- **Palestine arc** (Burst N+O / BUILD 7 partial): `events_palestine.js` (8 events) — Nakba displacement family memory, checkpoint as daily fixture, house demolition, permit system, Oslo brief hope, intifadas, post-2006 Gaza/West Bank divergence.
+- **Gang/organised crime arc** (Burst Q / BUILD 4 gang): `events_gang.js` (10 events) — archetype-specific entry points (post-Soviet bratva/krysha, Lagos Area Boys, cartel-adjacent Colombia); progression from petty crime through membership and consequences.
+- **Social capital arc** (Sprint 3): `events_social_capital.js` (8 events) — charisma and looks as era- and culture-dependent resources; gated on stat thresholds.
+- **World event response choices** (Sprint 2): `events_world_response.js` (6 events) — character events that fire in the year of a major world event, giving one meaningful choice response; gates on the world event's flag already being set.
+- **Emigrant integration arc** (Sprint 5): `events_emigrant_integration.js` (7 events) — staged by `G.yearsAbroad`: disorientation (yr 1), acclimation (yr 2–3), permanence question (yr 3–6), belonging with asterisk (yr 6–12), old country as destination (yr 12+).
+- **Adolescence depth** (BURST 1–11 / BUILD 55): `events_adolescence_2.js` (22 events) — first job, curfew break, authority clash, exam results, scholarship test, dropout temptation, peer betrayal, rumour, peer death, diaspora identity, family honour, faith doubt at home, peer pressure, first smoke, shoplifting, social media pressure, body image, leaving question, privilege mirror, school fight, community service.
+- **Child trajectory events**: 8 events appended to `events_children_arc.js` — infant night/first word/toddler personality/school-age independence/interest emerges/disappoints you/adult path revealed.
+- **Recurring late-life events**: 7 cooldown-based events appended to `events_late_life.js` — body/time/memory/social world/gratitude/hardship/legacy thought. Solve pool exhaustion for characters aged 70+.
 
 ### What still needs work — Priority Roadmap
 
 *Previous roadmap (items 1–16) complete. See git history. The roadmap below is built from a structured brainstorm session and reflects explicit design decisions.*
 
-*Completed since brainstorm: BUILD 3 (chronic illness system + parent care arc), BUILD 4 (relationship history UI — status labels on relationship cards), BUILD 6 (curated birth screen — 4-step wizard). See PR #42. Vietnam arc (events_vietnam.js, 10 events) and wealth mechanics system (events_wealth_system.js, 17 events) added in PR #43. BUILD 29 (voting/elections), BUILD 30 partial (garden, letters, neighbours, school reunion), BUILD 44 (body in later life), and BUILD 50 (money across a life) added in PR #44. Childhood family income system (parent occupations, GDP-scaled income during childhood phase) added in PR #45. BUILD 2 Latin America arc (events_latin_america.js, 50 events), BUILD 6 (historical country names, expanded ribbons), BUILD 10 partial (events_country_arcs.js, 22 events for Nigeria/India/South Korea/Egypt/Romania/Turkey/Kenya/Ghana/Ethiopia), and events_followthrough_3.js added in PRs #45–47. BUILD 6 early childhood + early 20s (events_early_life.js, 20 events), BUILD 5 partial (events_decolonisation.js + 7 world events: Spanish flu 1918, Great Depression 1929, oil shock periphery, Triangle Shirtwaist 1911, UK miners strike 1984, Spanish anarchist factories 1936), BUILD 20 labour/strikes (events_labor.js, 9 events), BUILD 9 elder status by archetype + BUILD 4 late-life reconciliation arc (9 events appended to events_late_life.js) added in PR #48. BUILD 10 expanded (events_country_arcs_2.js, 28 events: China/Mao era, USA specificity, Japan), BUILD 11 partial (events_asia_arcs.js 25 events: Cambodia/Bangladesh/Pakistan; events_drc.js 9 events: DRC arc; Cuba world events: Bay of Pigs, Mariel boatlift, Special Period), BUILD 12 (events_crosscutting.js, 22 events: domestic worker/city bombardment/refugee camp arcs), BUILD 15 partial (events_internet_era.js 15 events: PC bang Seoul, cybercafé Lagos, AOL Iowa, M-Pesa Kenya, dotcom arc, 1990s texture; 4 new world events: Asian financial crisis 1997, Indonesia May 1998), BUILD 27 (deriveGenerationalFlags() seeds 17 generational trauma flags at character creation), BUILD 2 partial (events_zimbabwe.js 6 events: land seizure both perspectives, hyperinflation, exodus, Gukurahundi). Ribbons: 25 new ribbons added. Headlines: 14 new entries added (Lumumba, Bangladesh, Cambodia, Mariel, DRC, Rana Plaza, M-Pesa, etc.). BUILD 8 (events_climate.js, 18 events: heat/drought/coastal-flood arcs, climate anxiety, Pacific island extinction, Gulf wet-bulb events, climate displacement residency status + passive drain, 10 climate world events in worldEvents.js, 14 climate headlines), BUILD 19 partial (events_indigenous.js, 21 events: Aboriginal Australian stolen generation/Mabo/apology/cultural reclaim arc, Native American boarding schools/reservation/AIM arc, First Nations Canada residential schools/Sixties Scoop arc, Māori language suppression/kōhanga reo/Treaty arc, cross-cultural follow-throughs; 2 world events: Mabo 1992, Australian Apology 2008), BUILD 28 (events_automation.js, 12 events: trucker/radiologist/lawyer/factory/software dev/data scientist/customer service career arcs, UBI debate, retraining outcome follow-through), BUILD 31 partial (4 events in events_country_arcs_2.js: missing sisters, missing sisters adult follow-through, sole support midlife, policy lifted 2015), BUILD 43 partial (bangladesh_liberation_1971 world event with era-branched adult/child narrative, context field). BUILD 10 expanded again (events_country_arcs_3.js 13 events: Iran/South Africa/France WWII/Biafra; world events: Vel d'Hiv, Biafra war, Bhopal 1984, Angola civil war, Mozambique civil war; 8 headlines, 7 ribbons). BUILD 40 (events_arts.js, 9 events: samizdat receiving/writing arcs, jazz bebop as refusal, Jim Crow touring, Nollywood entry + decade callback, censored artist stay-or-leave choice with dynamic text by country, work in the drawer, artistic integrity late echo). BUILD 54 partial (events_followthrough_4.js, 10 events: caste career ceiling, corporate scandal resurfaces, betrayal trust patterns, harvest failure pantry reflex, civil war news echo, ethnic minority identity navigation, dissident reader regime cost, refugee 5-year anniversary, political active regime cost, dissident writer arrest risk). Bug fix: applyWorldEvents null archetypes crash fixed in gameEngine.js (11 world events had archetypes: null, causing crash on every age-up). BUILD 54 partial continued (events_followthrough_5.js, 8 events: civil rights generation legacy, resistance through art recognized, art shown late, compromised ledger, censored journalist story, intimidated body reflex, independence generation reckoning, first coup not last). Lebanon added to countries.js (78th country, parliamentary_republic, archetype developing_urban, 18 sects, civil war regimeHistory 1976→1990). Beirut port explosion 2020 world event added to worldEvents.js (Lebanon-gated, context field, sets beirut_blast_survived). BUILD 35 (events_informal.js, 18 events: hawker/moto-taxi/market-stall/day-labor/subsistence-farm tracks, mobile money, savings circle, formalization flip; workStatus='informal' + p.setWorkStatus() proxy shorthand), BUILD 32 (events_neighborhoods.js, 16 events: standpipe, settlement fire, slumlord, gang block, government upgrade, moving-up guilt, elite isolation, gentrification return), BUILD 48 (events_postrelease.js, 12 events: release morning, job checkbox, housing bar, parole conditions/breach, recidivism trap, USA rights lost, spent conviction UK/EU, decade clean, political prisoner dignity; served_prison_time flag set on prison release; criminalRecord entries now store { crime, age, category } objects), BUILD 47 (events_mentor.js, 10 events: mentor deepens, favor, estrangement, death/echo, becoming mentor with named protegeName, protégé surpasses/betrayal, both-arcs reflection, teacher echo), BUILD 49 partial (4 famine personal arc events appended to events_followthrough_5.js: market price, body changing, selling assets, midlife pantry reflex). 9 new ribbons added (the_informal_worker, the_formalised, the_decade_after, the_political_witness, the_reentry, the_mentor, the_chain, the_famine_memory + existing the_mentor_ribbon updated). **Current PR (BURST 1–11)**: Bug fixes (famine famineAge fallback ×2, mentor level threshold, post-release phase/weight); localStorage save/load system (serializeState/deserializeState handles Map/Set/functions, Continue button on TitleScreen); desire-weighted event selection (DESIRE_PATTERNS in `getNextEvent()`, 1.6× multiplier for matching events — keys now correctly mapped to `prove_worth/belong/be_seen/safety/connection/leave_mark/freedom/redemption`); `buildYearTexture()` expanded (phase-specific pools: late_life 6 strings, midlife 6, young_adult 5, adolescence 3, childhood 3; flag-aware paths for famine_memory/civil_rights/emigration/first_gen); hobby milestone flags auto-generated in `tick()` at skill thresholds (serious_musician/artist/writer/fitness_devotee/accomplished_cook/polyglot/avid_reader/dedicated_gardener); activity-to-flag pipeline (cumulative count tracking in mem → flags: contemplative/generous/avid_reader/reflective_writer/fitness_devotee/philosophical_mind/networker/disciplined_saver); dynamic wealthTier in `buildG()` — computed from actual net worth (money + property equity - debt) for age ≥ 18; `events_adolescence_2.js` (22 new events: first_job/curfew_break/authority_clash/exam_results/scholarship_test/dropout_temptation/peer_betrayal/rumour/peer_death/diaspora_identity/family_honour/faith_doubt_home/peer_pressure/first_smoke/shoplifting/social_media_pressure/body_image/leaving_question/first_privilege_mirror/school_fight/community_service); child trajectory events appended to `events_children_arc.js` (8 events: infant_night/first_word/toddler_personality/school_age_independence/interest_emerges/disappoints_you/adult_path_revealed); 7 cooldown-based recurring late-life events in `events_late_life.js` (body/time/memory/social_world/gratitude/hardship/legacy_thought — solve pool exhaustion for 70+ characters).*
+*Completed since brainstorm: BUILD 3 (chronic illness system + parent care arc), BUILD 4 (relationship history UI — status labels on relationship cards), BUILD 6 (curated birth screen — 4-step wizard). See PR #42. Vietnam arc (events_vietnam.js, 10 events) and wealth mechanics system (events_wealth_system.js, 17 events) added in PR #43. BUILD 29 (voting/elections), BUILD 30 partial (garden, letters, neighbours, school reunion), BUILD 44 (body in later life), and BUILD 50 (money across a life) added in PR #44. Childhood family income system (parent occupations, GDP-scaled income during childhood phase) added in PR #45. BUILD 2 Latin America arc (events_latin_america.js, 50 events), BUILD 6 (historical country names, expanded ribbons), BUILD 10 partial (events_country_arcs.js, 22 events for Nigeria/India/South Korea/Egypt/Romania/Turkey/Kenya/Ghana/Ethiopia), and events_followthrough_3.js added in PRs #45–47. BUILD 6 early childhood + early 20s (events_early_life.js, 20 events), BUILD 5 partial (events_decolonisation.js + 7 world events: Spanish flu 1918, Great Depression 1929, oil shock periphery, Triangle Shirtwaist 1911, UK miners strike 1984, Spanish anarchist factories 1936), BUILD 20 labour/strikes (events_labor.js, 9 events), BUILD 9 elder status by archetype + BUILD 4 late-life reconciliation arc (9 events appended to events_late_life.js) added in PR #48. BUILD 10 expanded (events_country_arcs_2.js, 28 events: China/Mao era, USA specificity, Japan), BUILD 11 partial (events_asia_arcs.js 25 events: Cambodia/Bangladesh/Pakistan; events_drc.js 9 events: DRC arc; Cuba world events: Bay of Pigs, Mariel boatlift, Special Period), BUILD 12 (events_crosscutting.js, 22 events: domestic worker/city bombardment/refugee camp arcs), BUILD 15 partial (events_internet_era.js 15 events: PC bang Seoul, cybercafé Lagos, AOL Iowa, M-Pesa Kenya, dotcom arc, 1990s texture; 4 new world events: Asian financial crisis 1997, Indonesia May 1998), BUILD 27 (deriveGenerationalFlags() seeds 17 generational trauma flags at character creation), BUILD 2 partial (events_zimbabwe.js 6 events: land seizure both perspectives, hyperinflation, exodus, Gukurahundi). Ribbons: 25 new ribbons added. Headlines: 14 new entries added (Lumumba, Bangladesh, Cambodia, Mariel, DRC, Rana Plaza, M-Pesa, etc.). BUILD 8 (events_climate.js, 18 events: heat/drought/coastal-flood arcs, climate anxiety, Pacific island extinction, Gulf wet-bulb events, climate displacement residency status + passive drain, 10 climate world events in worldEvents.js, 14 climate headlines), BUILD 19 partial (events_indigenous.js, 21 events: Aboriginal Australian stolen generation/Mabo/apology/cultural reclaim arc, Native American boarding schools/reservation/AIM arc, First Nations Canada residential schools/Sixties Scoop arc, Māori language suppression/kōhanga reo/Treaty arc, cross-cultural follow-throughs; 2 world events: Mabo 1992, Australian Apology 2008), BUILD 28 (events_automation.js, 12 events: trucker/radiologist/lawyer/factory/software dev/data scientist/customer service career arcs, UBI debate, retraining outcome follow-through), BUILD 31 partial (4 events in events_country_arcs_2.js: missing sisters, missing sisters adult follow-through, sole support midlife, policy lifted 2015), BUILD 43 partial (bangladesh_liberation_1971 world event with era-branched adult/child narrative, context field). BUILD 10 expanded again (events_country_arcs_3.js 13 events: Iran/South Africa/France WWII/Biafra; world events: Vel d'Hiv, Biafra war, Bhopal 1984, Angola civil war, Mozambique civil war; 8 headlines, 7 ribbons). BUILD 40 (events_arts.js, 9 events: samizdat receiving/writing arcs, jazz bebop as refusal, Jim Crow touring, Nollywood entry + decade callback, censored artist stay-or-leave choice with dynamic text by country, work in the drawer, artistic integrity late echo). BUILD 54 partial (events_followthrough_4.js, 10 events: caste career ceiling, corporate scandal resurfaces, betrayal trust patterns, harvest failure pantry reflex, civil war news echo, ethnic minority identity navigation, dissident reader regime cost, refugee 5-year anniversary, political active regime cost, dissident writer arrest risk). Bug fix: applyWorldEvents null archetypes crash fixed in gameEngine.js (11 world events had archetypes: null, causing crash on every age-up). BUILD 54 partial continued (events_followthrough_5.js, 8 events: civil rights generation legacy, resistance through art recognized, art shown late, compromised ledger, censored journalist story, intimidated body reflex, independence generation reckoning, first coup not last). Lebanon added to countries.js (78th country, parliamentary_republic, archetype developing_urban, 18 sects, civil war regimeHistory 1976→1990). Beirut port explosion 2020 world event added to worldEvents.js (Lebanon-gated, context field, sets beirut_blast_survived). BUILD 35 (events_informal.js, 18 events: hawker/moto-taxi/market-stall/day-labor/subsistence-farm tracks, mobile money, savings circle, formalization flip; workStatus='informal' + p.setWorkStatus() proxy shorthand), BUILD 32 (events_neighborhoods.js, 16 events: standpipe, settlement fire, slumlord, gang block, government upgrade, moving-up guilt, elite isolation, gentrification return), BUILD 48 (events_postrelease.js, 12 events: release morning, job checkbox, housing bar, parole conditions/breach, recidivism trap, USA rights lost, spent conviction UK/EU, decade clean, political prisoner dignity; served_prison_time flag set on prison release; criminalRecord entries now store { crime, age, category } objects), BUILD 47 (events_mentor.js, 10 events: mentor deepens, favor, estrangement, death/echo, becoming mentor with named protegeName, protégé surpasses/betrayal, both-arcs reflection, teacher echo), BUILD 49 partial (4 famine personal arc events appended to events_followthrough_5.js: market price, body changing, selling assets, midlife pantry reflex). 9 new ribbons added (the_informal_worker, the_formalised, the_decade_after, the_political_witness, the_reentry, the_mentor, the_chain, the_famine_memory + existing the_mentor_ribbon updated). PRs #57–59 (BURST 1–11, Sprints 1–5, Bursts D–Q): save/load system, desire-weighted events, buildYearTexture expansion, dynamic wealthTier, hobby milestone flags, activity-to-flag pipeline, original-language word insertions, career/education gap UI, activities grouping, timeline pull-quotes; events_adolescence_2.js (22 events), child trajectory events (8 events, events_children_arc.js), recurring late-life events (7 events, events_late_life.js); events_childhood_texture.js (19), events_family_silence.js (20), events_dying_arc.js (6), events_solo_life.js (8), events_coherence.js (11), events_poverty.js (43), events_pregnancy.js (13), events_menopause.js (5), events_career_arcs.js (19), events_social_media.js (9), events_scandinavia.js (8), events_palestine.js (8), events_gang.js (10), events_social_capital.js (8), events_world_response.js (6), events_emigrant_integration.js (7). BUILD 4 social media arc and gang arc ✅. BUILD 7 Palestine partial ✅. BUILD 14 Scandinavia ✅. BUILD 22 menopause/pregnancy ✅. BUILD 27 generational silence ✅. BUILD 51 pregnancy arc ✅. **PR #60**: BUILD 45 (events_intimacy.js, 12 events: sexual revolution arc, long marriage desire shift, affair temptation/taken/not-taken/weight/echo, late beginning, late love arriving, sexuality without vocabulary, body in late life, solo life texture, first love ending), BUILD 46 (events_school.js, 11 events: resource-poor classroom, teacher unpaid + echo, shared textbook, scholarship arrival/lunch/payoff, war-zone school choice, year gap, national exam + echo), 2 world events (womens_liberation_march_1970 wealthy_west gender-branched context; afghanistan_girls_school_ban_2022 Afghanistan gender-branched context), 6 ribbons (the_late_love, the_affair_not_taken, the_solo_architecture, the_scholarship_student, the_war_school, the_teacher_remembered).*
 
 ---
 
@@ -421,9 +467,9 @@ Partial from original spec — not yet implemented: congenital conditions at cha
 
 **Death of a child arc**: Full arc — sparse restrained death event, marriage aftermath events (how it changes the partnership), years of carrying it events. Gate carefully. Connects to grief module.
 
-**Underground/gang system reimagined**: Full criminal career arc with archetype specificity — post-Soviet Russia organized crime 1990s, Lagos area boys, Colombian cartel-adjacent. Progression: petty crime → gang membership → leadership → inevitable consequences. Parallel to formal career but no legal safety net. Replaces the thin `gangEngine.js`.
+**Underground/gang system** ✅ DONE (PR #58, events_gang.js): 10 events. Post-Soviet bratva/krysha entry, Lagos Area Boys entry, cartel-adjacent Colombia entry. Progression from petty crime through membership and consequences. Archetype-gated.
 
-**Social media arc** (replaces current thin system): Era-gated, country-specific platforms (Facebook/MySpace in West, VKontakte in Russia, Weibo in China, MXit in South Africa). Arc: genuine excitement → addictive phase → toxicity/documented harm → choosing to leave or not. Character events at each stage, gated by `currentYear` and archetype.
+**Social media arc** ✅ DONE (PR #57–59, events_social_media.js): 9 events. Country-specific platforms (Facebook/MySpace West, VKontakte Russia, WeChat/Weibo China, KakaoTalk Korea, MXit South Africa). Arc: genuine excitement → addictive phase → damage → choosing to leave or not. Gated by `currentYear` and archetype.
 
 **Mid-life reflection events** ✅ PARTIALLY DONE: Decade reflection events at 30/40/50/60 fire via `events_desires.js`, gated on `desire` to show how the character's formative wound has shaped them. Full flag-to-prose mid-life narrative (like a living epitaph) still not implemented.
 
@@ -479,7 +525,9 @@ Partial from original spec — not yet implemented: congenital conditions at cha
 
 #### BUILD 7 — Stateless Peoples and Contested Geographies
 
-**Palestine as a country** (`countries.js` addition):
+**Palestine character events** ✅ PARTIAL (PR #58, events_palestine.js): 8 events — Nakba displacement family memory, checkpoint as daily fixture, house demolition, permit system, Oslo brief hope, intifadas, post-2006 Gaza/West Bank divergence. Remaining: adding Palestine as a full `countries.js` entry with all demographic fields.
+
+**Palestine as a country** (`countries.js` addition) — still needed:
 - `yearRange: [1948, 2025]`, `archetype: 'conflict_zone'`, `gdp: 'low_medium'`
 - Full arc: Nakba displacement 1948, UNRWA refugee camp generation, 1967 occupation, first and second intifadas, Oslo brief hope, post-2006 West Bank/Gaza divergence (different daily reality after Hamas takeover), siege of Gaza
 - Key events: the checkpoint as a daily fixture, house demolition, permit system, the specific bureaucratic violence of occupation, the 2000s-era hope and its collapse
@@ -754,7 +802,9 @@ Each requires: full `countries.js` entry with all demographic fields, then count
 
 ---
 
-**Scandinavia**:
+**Scandinavia** ✅ DONE (PR #58, events_scandinavia.js): 8 events — welfare state from inside, Norway oil discovery, Finland Winter War, Sweden WWII neutrality/grey zone, Janteloven social pressure.
+
+**Remaining Scandinavia detail** (could expand):
 - **The welfare state from inside** (Norway, Sweden, Denmark, Finland, 1960s–present): the game has no events from the world's most successful social democracies. A Swedish character in 1975 has universal healthcare, a year of parental leave, free university education, and a guaranteed minimum income. The specific texture of security: what decisions become possible when you know you won't be financially destroyed by illness. The Danish concept of *trygghed* (safety, security, being okay). The Finnish *sisu* (resilience, gut persistence) in the context of a country that fought the Soviet Union alone.
 - **Norway's oil**: oil discovered 1969, first revenues 1971. A country that had been poor — Norwegian emigrants went to Minnesota in the 1800s to escape rural poverty — becomes very wealthy. The specific political decision to put the money in a sovereign wealth fund rather than spend it. A Norwegian character in the 2000s lives in one of the world's most equal societies while being aware their wealth rests on fossil fuels extracted from the seabed.
 - **Finland: the Winter War** (1939–40): the Soviet Union invades Finland with 450,000 troops. Finland, with 300,000, holds them for three months. A Finnish character who fights, or whose husband fights, or who evacuates from Karelia (ceded to the USSR in the peace treaty). The specific grief of Karelian exiles — 400,000 Finns displaced from land their families had farmed for centuries.
@@ -920,18 +970,13 @@ Remaining from original spec — not yet done: Solidarity in Poland as personal 
 
 The body is lived-in, not just statted. The current system has health as a number but the body as a physical, aging, culturally-mediated experience is almost entirely absent.
 
-**Menopause** (female character, ages 45–55):
-- A life event that affects half of all humans and appears nowhere in the game. The specific cultural variation: in Japan, a relatively low-symptom experience attributed to different diet and lifestyle; in the USA, a heavily medicated one. In many subsaharan communities, the specific social status change that comes with it — the woman who is post-reproductive has a different social role.
+**Menopause** ✅ DONE (PR #57–59, events_menopause.js): 5 events — female, ages 45–58. Culturally-branched: Japan low-symptom, USA medicalised, subsaharan status change, post-Soviet stoicism.
 
-**Pregnancy as physical texture** (beyond just "had a child"):
-- Not the outcome (child) but the physical experience. The first three months — the nausea, the specific exhaustion, the keeping a secret. The specific way a pregnant body is treated differently in different cultures: the Congolese woman who continues farm labor; the American woman on bed rest; the Japanese woman expected to eat specific foods.
-- Maternal mortality: a choice event where the character or a character's partner faces serious complications. The outcome branching on archetype/GDP/year. Maternal death in the 19th century was common enough to be an expected risk; the radical reduction in wealthy countries over the 20th century is itself an educational payload.
+**Pregnancy as physical texture** ✅ DONE (PR #57–59, events_pregnancy.js): 13 events — first-trimester texture, multi-year arc, birth (archetype/GDP/year-branched), maternal complication, postpartum period.
 
-**The aging body specifically**:
-- The first pair of reading glasses: the specific moment when the body requires external assistance for the first time. Small but universal.
-- The body after illness: the cancer survivor who is a different person in their body afterward. The stroke that changes how a word comes out.
+**The aging body specifically** ✅ DONE (PR #44, events_late_life.js): first reading glasses, the knee, sleep at 60, hearing aid, driving conversation.
 
-**Female genital mutilation** (character event, gated on specific countries/ethnicities/era):
+**Female genital mutilation** (character event, gated on specific countries/ethnicities/era) — still needed:
 - Practiced in 30+ countries, affecting 200 million living women. A character who is a girl in rural Somalia or Mali in 1975 faces this as an expected cultural event. The choice structure: does the family comply, does the character resist, what is the consequence of resistance? Gate very carefully by country + rural + era. Written with the same restraint as all other events — not sensationalized, not sanitized.
 
 ---
@@ -1008,11 +1053,13 @@ Significant countries and regions not yet covered in Builds 1–18:
 
 ---
 
-#### BUILD 27 — Generational Transmission of Trauma
+#### BUILD 27 — Generational Transmission of Trauma ✅ DONE
+
+`deriveGenerationalFlags()` in gameEngine.js seeds 17 flags at character creation based on country + birthYear. `events_family_silence.js` (20 events): the "what your parents didn't say" mechanic — early-childhood events gated on those flags, framed as absence rather than atrocity.
 
 How parents who survived atrocity parent their children — and what those children carry.
 
-**Second-generation trauma arcs** (`events_inheritance.js`):
+**Second-generation trauma arcs** ✅ DONE (`events_family_silence.js`):
 - The child of Holocaust survivors: the specific parenting that emerges from extreme trauma — the hypervigilance, the food hoarding, the unsayable that structures everything. Gate on `holocaust_survived` parent flag.
 - The child of Partition survivors: growing up with the specific silences about the other side of the border. The house that was left. The name of a street in a city your parents never returned to.
 - The child of disappeared parents (Argentina, Chile): growing up with a photograph, with a government silence, with the grandmother who goes to the plaza. The specific task of being someone whose parent was erased by the state.
@@ -1026,7 +1073,7 @@ How parents who survived atrocity parent their children — and what those child
 
 ---
 
-#### BUILD 29 — Voting, Elections, Referenda ✅ DONE (current PR)
+#### BUILD 29 — Voting, Elections, Referenda ✅ DONE (PR #44)
 
 The game has political regimes and political leaning but almost no events about the specific act of political participation.
 
@@ -1044,7 +1091,7 @@ The game has political regimes and political leaning but almost no events about 
 
 ---
 
-#### BUILD 30 — The Small Life: Local, Particular, Unhistoric ✅ PARTIAL (current PR)
+#### BUILD 30 — The Small Life: Local, Particular, Unhistoric ✅ PARTIAL (PR #44)
 
 Some of the game's strongest potential events involve no historical reference at all — the texture of a life that leaves no record.
 
@@ -1294,7 +1341,7 @@ Daily life is organized around infrastructure. Infrastructure is political. Almo
 
 ---
 
-#### BUILD 44 — The Body in Later Life ✅ DONE (current PR)
+#### BUILD 44 — The Body in Later Life ✅ DONE (PR #44)
 
 BUILD 3 covers chronic illness systems. BUILD 22 covers the body as historical experience. This covers the specific small events of physical aging that have no historical overlay — universal, undramatic, and almost entirely absent.
 
@@ -1317,43 +1364,17 @@ BUILD 3 covers chronic illness systems. BUILD 22 covers the body as historical e
 
 ---
 
-#### BUILD 45 — Sex and Intimacy Across a Life
+#### BUILD 45 — Sex and Intimacy Across a Life ✅ DONE (PR #60)
 
-The game tracks partnership status and relationship quality but almost nothing about sexuality as a lived experience across time.
-
-**The sexual revolution** (gated on female + wealthy_west + 1965–1975):
-- The contraceptive pill arriving and changing the possible. A generation for whom this is new. Not just the freedom but the specific social negotiation — the women who took it, the families who didn't know, the doctors who wouldn't prescribe it to unmarried women.
-
-**Sexuality in middle age** (midlife event, gated on long partnership flag):
-- The long marriage in which desire has changed — not gone, changed. The specific negotiation of a relationship that predates who both people have become. Not infidelity (already covered) — just the texture of decades together, and what it costs to acknowledge that texture honestly.
-
-**The affair not taken** (midlife event, gated on partner + age 35–50):
-- A choice event. The moment that presents itself. The character who takes it and the character who doesn't — both paths have specific outcome text that doesn't editorialize. Gate on relationship quality for which choice is weighted.
-
-**Sexuality in a culture that doesn't name it**: A character in a context where sexuality is structurally unaddressed — neither celebrated nor condemned, simply absent from the available language. The specific privacy of a life lived in the gap between experience and vocabulary.
-
-**The late beginning** (young_adult or midlife event, gated on `no_partner` flag persisting past age 35):
-- A character who has their first significant relationship at 40. What that life looks like from inside it — the freedom that accumulated in the years alone, and the specific grief that accumulated alongside it.
+`events_intimacy.js` (12 events): sexual revolution arc (female/wealthy_west 1967–77, sets `liberation_generation`) + midlife reckoning follow-through; long marriage desire shift (12+ married years, sets `long_marriage_intimacy`); affair temptation choice — taken path (sets `affair_brief_secret`, −8m, +14r) and not-taken path (sets `affair_not_taken`, karma+7) — with weight follow-through (`int_affair_weight`, carries it quietly) and late echo at 58+ (`int_affair_not_taken_echo`); late beginning choice at 36–52 (solo by choice vs. late_love_seeking); late love arriving (sets `late_love_found`, +18m); sexuality in cultures without vocabulary (subsaharan/wealthy_gulf/developing_urban, sets `cultural_intimacy_silence`); body in late life with partner (63–82, +9m); solo life texture (sets `built_something_solo`); first love ending in young adulthood (sets `first_love_over`). World event: `womens_liberation_march_1970` (wealthy_west 1970–72, gender-branched, context field, sets `liberation_generation`). 3 ribbons: `the_late_love`, `the_affair_not_taken`, `the_solo_architecture`.
 
 ---
 
-#### BUILD 46 — The School as an Institution
+#### BUILD 46 — The School as an Institution ✅ DONE (PR #60)
 
-Education events exist but from the student's perspective only, and mostly at university level. The school itself — as a building, a community, a political space — is absent.
+`events_school.js` (11 events): resource-poor classroom — 60 children/1 teacher (subsaharan/developing_urban/developing_unstable, sets `resource_poor_school`); teacher who came unpaid for four months (sets `teacher_sacrifice`) + midlife echo at 38+ (`sch_teacher_sacrifice_echo`); shared textbook (rural, wealthTier ≤ 1); scholarship arrival choice at 13–16 (smarts ≥ 60, wealthTier ≤ 2) — accept (sets `scholarship_student`) or decline (sets `scholarship_declined`); lunch table social texture (`sch_scholarship_lunch`, sets `class_gap_known`); young-adult scholarship payoff (sets `scholarship_opened_doors`); war-zone school choice (conflict_zone ages 6–12) — attend (sets `war_school_attended`) or miss (sets `war_school_missed`); year-gap follow-through in adolescence for `war_school_missed`; national exam (developing_urban/subsaharan/post_soviet/wealthy_east, age 16–18, archetype-branched prose) — strong (sets `exam_result_strong`) or weak (sets `exam_result_weak`); exam echo in young_adult for `exam_result_weak`. World event: `afghanistan_girls_school_ban_2022` (Afghanistan 2022–25, gender-branched, context field, sets `education_denied_gender` for female). 3 ribbons: `the_scholarship_student`, `the_war_school`, `the_teacher_remembered`.
 
-**The school without enough** (childhood event, gated on low GDP + rural):
-- No textbooks, one teacher for three grade levels, the specific pedagogical adaptations that teachers make under resource poverty. Children sharing pencils. The teacher who hasn't been paid in three months and comes anyway. Gate on subsaharan or developing_unstable archetype.
-
-**The school in a war zone** (conflict_zone childhood event):
-- The children who attend school across checkpoints because it is the one thing that continues. The teacher who keeps the school open. The specific moral weight of insisting on ordinary institutions during extraordinary circumstances.
-
-**The scholarship student at an elite school** (childhood or adolescence event, gated on smarts stat + wealth gap):
-- The child who is academically exceptional, placed into a school built for children whose parents are wealthy. The specific social navigation — the uniform that fits differently, the things everyone else has and you don't, the specific loneliness of being there on merit in a room full of people who are there by right.
-
-**Class sizes as biography**: The specific experience of being one of 60 children in a classroom vs. one of 15. What you learn and what you don't; what the teacher can see.
-
-**The school reunion** (midlife event, age 35–45):
-- 20 or 25 years later. The specific social archaeology of returning to a room of people who knew you before you were who you are. Who became what. The person who never left. The person who succeeded beyond anyone's expectations and the person who didn't. The conversation that is entirely about the past.
+Remaining from original spec not yet implemented: the school reunion event (covered partially by `events_small_life.js` `sm_school_reunion`; full midlife social archaeology version not added).
 
 ---
 
@@ -1447,11 +1468,9 @@ The `money` and `wealth` fields track amounts. The *experience* of money — wha
 
 ---
 
-#### BUILD 51 — Pregnancy and Birth as Physical Events
+#### BUILD 51 — Pregnancy and Birth as Physical Events ✅ DONE
 
-The fertility arc covers outcomes (miscarriage, IVF, childlessness). The physical experience of pregnancy and birth — the months before the outcome — is entirely absent.
-
-**Implementation**: New events added to `events_fertility.js`. Gate sequence on `pregnant` flag (set when pregnancy begins) + `G.currentYear`. Arc fires across 2–3 age-up cycles for a pregnancy that proceeds normally; miscarriage arc diverges from it.
+`events_pregnancy.js` (13 events, PR #57–59): first-trimester texture, multi-year arc, birth (archetype/GDP/year-branched), maternal complication, postpartum period. Engine: `pregnant` flag + `pregnancyYear` mem for multi-year arc.
 
 **First trimester texture** (gated on `pregnant` + within 3 months of conception):
 - The nausea, the exhaustion that is unlike any other tiredness. The keeping of the secret for twelve weeks — being unwell in a way that cannot be explained at work or to friends. The specific loneliness of early pregnancy. A texture event, no choice required.
@@ -1467,11 +1486,9 @@ The fertility arc covers outcomes (miscarriage, IVF, childlessness). The physica
 
 ---
 
-#### BUILD 52 — The Elder as Authority
+#### BUILD 52 — The Elder as Authority ✅ DONE (PR #48)
 
-BUILD 9 has notes on ageing by archetype. This expands those notes into a full late-life arc for archetypes where elders hold genuine social authority — and a parallel arc for archetypes where they don't.
-
-**Implementation**: New events added to `events_late_life.js`. Gate on `G.age >= 65` + archetype + `currentYear`. Two parallel tracks: `authority_elder` (subsaharan, wealthy_east, developing_urban, post_soviet archetypes) and `invisible_elder` (wealthy_west + 2000+). The same stat ranges, completely different events.
+Events appended to `events_late_life.js`: `elder_consulted` (authority track, age 65–74), `elder_you_are_memory` (age 73+), `elder_polite_dismissal` (invisible track, wealthy_west 2000+, age 65–74), `elder_phone_lesson` (age 68+), `elder_obsolescence` (age 78+, universal). See BUILD 9 notes for full detail.
 
 **Being consulted** (authority track, age 65–70):
 - The first time a younger person seeks your advice and you realize you've become the repository of something. The specific shift in social gravity when you are no longer the one who asks.
@@ -1655,8 +1672,8 @@ src/
   data/
     countries.js              — 78 countries with full demographic data
     places.js                 — 250+ named places across all 75 countries (scale, region, type, population)
-    headlines.js              — ~50 major historical headlines for life log injection
-    events.js                 — root event file, imports and exports EVENTS array (~1,600+ events total)
+    headlines.js              — ~110 major historical headlines for life log injection
+    events.js                 — root event file, imports 86 modules, exports EVENTS array (~2,400+ total character events)
     events_culture.js         — regime/ethnicity/education/LGBTQ events
     events_gender.js          — gender-specific events
     events_historical.js      — historical period events
@@ -1714,39 +1731,60 @@ src/
     events_neighborhoods.js   — 16 neighborhood-tier events (BUILD 32): standpipe, settlement fire, slumlord, gang block, moving-up guilt, elite isolation, gentrification return
     events_postrelease.js     — 12 post-release events (BUILD 48): release morning, job checkbox, housing bar, parole, recidivism trap, USA rights lost, spent conviction, decade clean, political prisoner dignity
     events_mentor.js          — 10 mentor arc events (BUILD 47): mentor deepens, favor, estrangement, death, echo; becoming mentor, protégé surpasses/betrayal, both arcs, teacher echo
-    events_adolescence_2.js   — 22 adolescence depth events (BUILD 55): first job, curfew break, authority clash, exam results, scholarship test, dropout temptation, peer betrayal, rumour, peer death, diaspora identity, family honour, faith doubt at home, peer pressure, first smoke, shoplifting, social media pressure, body image, leaving question, privilege mirror, school fight, community service
-    worldEvents.js            — 127+ world history events (year+country/archetype gated); 13+ events have `context` fields
-    headlines.js              — ~85+ major historical headline entries (year-matched, injected as log entries)
+    events_adolescence_2.js   — 22 adolescence depth events: first job, curfew break, authority clash, exam results, scholarship test, dropout temptation, peer betrayal, rumour, peer death, diaspora identity, family honour, faith doubt at home, peer pressure, first smoke, shoplifting, social media pressure, body image, leaving question, privilege mirror, school fight, community service
+    events_childhood_texture.js — 19 childhood texture events: universal small-life for ages 6–17
+    events_family_silence.js  — 20 generational memory events: "what your parents didn't say" gated on trauma flags
+    events_dying_arc.js       — 6 final-years events: age 75+, the consciousness of approaching death
+    events_solo_life.js       — 8 solo-life events: unpartnered texture across all phases
+    events_coherence.js       — 11 coherence follow-throughs: orphaned flag callbacks
+    events_poverty.js         — 43 financial hardship events: eviction, repossession, homelessness, welfare
+    events_pregnancy.js       — 13 pregnancy arc events: first-trimester, birth (archetype/GDP/year-branched), postpartum
+    events_menopause.js       — 5 menopause arc events: female 45–58, culturally-branched
+    events_career_arcs.js     — 19 deep career arc events: athlete, academic, chef/hospitality
+    events_social_media.js    — 9 social media arc events: country-specific platforms, excitement→damage arc
+    events_scandinavia.js     — 8 Nordic events: welfare state, Norway oil, Finland Winter War, Janteloven
+    events_palestine.js       — 8 Palestine character events: Nakba memory, checkpoint, demolition, intifadas
+    events_gang.js            — 10 gang/organised crime arc events: post-Soviet bratva, Lagos Area Boys, cartel
+    events_social_capital.js  — 8 social capital events: charisma/looks as era-dependent resources
+    events_world_response.js  — 6 world event response events: character choices in year of major world events
+    events_emigrant_integration.js — 7 emigrant integration arc events: staged by yearsAbroad (yr 1 through yr 12+)
+    worldEvents.js            — 172+ world history events (year+country/archetype gated); 20+ events have `context` fields
+    headlines.js              — ~110 major historical headline entries (year-matched, injected as log entries)
     careers.js                — all career definitions with career-specific events
     crimes.js                 — criminal activity system
     activities.js             — activities panel options
     assets.js                 — property/vehicle data
     destinations.js           — travel destinations
     illnesses.js              — illness/disease system
-    ribbons.js                — end-of-life achievement ribbons (60+)
+    ribbons.js                — end-of-life achievement ribbons (136+ defined)
   engine/
     gameEngine.js             — core simulation: buildG, advanceYear, emigrate,
                                 generateEpitaph, generateIdentityCard, buildYearTexture,
-                                buildEffectProxy, resolveProxyExtras, tickPartner, attemptCrime
+                                buildEffectProxy, resolveProxyExtras, tickPartner, attemptCrime,
+                                deriveGenerationalFlags, DESIRE_PATTERNS
     casinoEngine.js
     gangEngine.js
     lotteryEngine.js
   store/
     gameStore.js              — Zustand store, INITIAL_STATE, all actions including
-                                resolveTrial, pendingTrial state, relocateTo
+                                resolveTrial, pendingTrial state, relocateTo,
+                                serializeState/deserializeState (save/load)
   components/
     LifeScreen.jsx            — main game screen (tabs: Life, Stats, Activities, Relationships, Prison)
                                 includes trial modal, gender markers, "Who You Are" card, newspaper headlines,
                                 relationship status chips (quality labels + flag overrides), conditions display
-    ActivitiesPanel.jsx       — activities tab
+    ActivitiesPanel.jsx       — activities tab (grouped by category)
     BirthScreen.jsx           — random character creation
     CuratedBirthScreen.jsx    — 4-step curated birth wizard (country, birth year/gender, origin/stability/religion, preview)
     DeathScreen.jsx           — death/epitaph screen
     EventBox.jsx              — event display + world event context expandable
-    TitleScreen.jsx           — title screen with "Random Life" + "Craft a Life" buttons
+    TitleScreen.jsx           — title screen with "Random Life" + "Craft a Life" + "Continue" buttons
+    MinigameScreen.jsx        — minigame container
     StatBar.jsx
     FlagChip.jsx
+    minigames/                — MazeGame, FightGame, HackGame, QuickTime, LockPick
   utils/
     countryUtils.js           — getCountryFlag, REGIME_LABELS/COLORS, RELIGION_LABELS,
-                                RESIDENCY_LABELS
+                                RESIDENCY_LABELS, getCountryNameForYear
+    random.js                 — randomisation utilities
 ```
