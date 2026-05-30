@@ -1027,6 +1027,7 @@ function buildG(state) {
     mem: state.mem ?? {},
     criminalRecord: state.criminalRecord ?? [],
     inPrison: state.inPrison,
+    wanted: state.wanted ?? false,
     prisonSentence: state.prisonSentence ?? 0,
     money: state.money ?? 0,
     debt: state.debt ?? 0,
@@ -2093,7 +2094,7 @@ function tickParents(state) {
     if (chance(deathProb)) {
       const inheritance = Math.round(randomBetween(500, 60000) * (parent.relationshipQuality / 100))
       money += inheritance
-      log.push({ age: state.age, text: `Your ${label}, ${parent.name}, passes away at age ${newAge}. You inherit $${inheritance.toLocaleString()}.`, isKey: true })
+      log.push({ age: state.age, text: `Your ${label}, ${parent.name}, passes away at age ${newAge}. You inherit $${inheritance.toLocaleString()}.`, isKey: true, isDeath: true })
       return { ...parent, currentAge: newAge, alive: false }
     }
     const drift = (60 - parent.relationshipQuality) * 0.02
@@ -2260,7 +2261,7 @@ function tickSiblings(state) {
     if (sibAge > 80) deathProb = 0.06 + (sibAge - 80) * 0.01
     else if (sibAge > 65) deathProb = 0.015
     if (chance(deathProb)) {
-      log.push({ age: state.age, text: `Your sibling ${sib.name} passes away.`, isKey: true })
+      log.push({ age: state.age, text: `Your sibling ${sib.name} passes away.`, isKey: true, isDeath: true })
       return { ...sib, alive: false }
     }
     const drift = (60 - sib.relationshipQuality) * 0.01
@@ -2282,7 +2283,7 @@ function tickPartner(state) {
   if (partnerAge >= 75) deathProb = 0.04 + (partnerAge - 75) * 0.012
   else if (partnerAge >= 65) deathProb = 0.015 + (partnerAge - 65) * 0.0025
   if (deathProb > 0 && chance(deathProb)) {
-    const log = [...state.log, { age: state.age, text: `${partner.name.split(' ')[0]} dies. You have been together for years. The house is immediately different.`, isKey: true }]
+    const log = [...state.log, { age: state.age, text: `${partner.name.split(' ')[0]} dies. You have been together for years. The house is immediately different.`, isKey: true, isDeath: true }]
     return { ...state, partner: { ...partner, alive: false }, flags: [...new Set([...state.flags, 'widowed', 'lost_partner'])], log }
   }
   // Relationship quality drifts slightly based on engagement

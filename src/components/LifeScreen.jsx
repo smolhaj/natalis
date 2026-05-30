@@ -410,19 +410,23 @@ export default function LifeScreen() {
 
                 {logMode === 'recent' && recentLog.map((entry, i) => (
                   <div key={i} className={`rounded-xl px-4 py-3 border text-sm leading-relaxed ${
-                    entry.isHeadline ? 'bg-zinc-900 border-zinc-700 text-zinc-100' :
-                    entry.isWorld ? 'bg-amber-50 border-amber-200 text-amber-800' :
-                    entry.isKey ? 'bg-blue-50 border-blue-200 text-blue-800' :
+                    entry.isDeath    ? 'bg-zinc-900 border-zinc-800 text-zinc-100' :
+                    entry.isHeadline ? 'bg-stone-100 border-stone-300 text-stone-700' :
+                    entry.isWorld    ? 'bg-amber-50 border-amber-200 text-amber-800' :
+                    entry.isKey      ? 'bg-blue-50 border-blue-200 text-blue-800' :
                     'bg-white border-natalis-border text-natalis-dim'
                   }`}>
+                    {entry.isDeath && (
+                      <div className="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1">Age {entry.age}</div>
+                    )}
                     {entry.isHeadline && (
-                      <div className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-1">📰 NEWS</div>
+                      <div className="text-xs font-semibold uppercase tracking-wider text-stone-500 mb-1">📰 {entry.age}</div>
                     )}
                     {entry.isWorld && entry.worldEventName && (
                       <div className="text-xs font-bold uppercase tracking-wider text-amber-700 mb-1">🌐 {entry.worldEventName}</div>
                     )}
-                    {!entry.isHeadline && <span className="font-bold mr-2 text-xs uppercase tracking-wider opacity-60">Age {entry.age}</span>}
-                    <span className={entry.isHeadline ? 'font-bold tracking-wide text-sm' : ''}>{entry.text}</span>
+                    {!entry.isHeadline && !entry.isDeath && <span className="font-bold mr-2 text-xs uppercase tracking-wider opacity-60">Age {entry.age}</span>}
+                    <span className={entry.isHeadline ? 'italic text-sm' : ''}>{entry.text}</span>
                   </div>
                 ))}
 
@@ -441,14 +445,16 @@ export default function LifeScreen() {
                       <div className="divide-y divide-natalis-border">
                         {grouped[ph].map((entry, i) => (
                           <div key={i} className={`px-4 py-2.5 text-sm leading-relaxed ${
-                            entry.isHeadline ? 'bg-zinc-900 text-zinc-100' :
-                            entry.isWorld ? 'bg-amber-50 text-amber-800' :
-                            entry.isKey ? 'text-blue-800' : 'text-natalis-dim'
+                            entry.isDeath    ? 'bg-zinc-900 text-zinc-100' :
+                            entry.isHeadline ? 'bg-stone-100 text-stone-700' :
+                            entry.isWorld    ? 'bg-amber-50 text-amber-800' :
+                            entry.isKey      ? 'text-blue-800' : 'text-natalis-dim'
                           }`}>
-                            {!entry.isHeadline && <span className="font-bold mr-2 text-xs opacity-50">Age {entry.age}</span>}
-                            {entry.isHeadline && <span className="text-xs font-bold mr-1 text-zinc-400">📰 </span>}
+                            {entry.isDeath && <span className="font-semibold mr-2 text-xs text-zinc-400 uppercase tracking-wider">Age {entry.age} — </span>}
+                            {!entry.isHeadline && !entry.isDeath && <span className="font-bold mr-2 text-xs opacity-50">Age {entry.age}</span>}
+                            {entry.isHeadline && <span className="text-xs font-semibold mr-1 text-stone-500">📰 {entry.age} — </span>}
                             {entry.isWorld && entry.worldEventName && <span className="text-xs font-bold mr-1">🌐 {entry.worldEventName} — </span>}
-                            <span className={entry.isHeadline ? 'font-bold tracking-wide' : ''}>{entry.text}</span>
+                            <span className={entry.isHeadline ? 'italic' : ''}>{entry.text}</span>
                           </div>
                         ))}
                       </div>
