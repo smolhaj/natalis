@@ -1112,6 +1112,34 @@ export const RIBBONS = [
     color: 'gray',
   },
 
+  // ── BUILD 38 — CHILDREN LEFT BEHIND ─────────────────────────────────────
+  {
+    id: 'the_left_behind',
+    name: 'The Left Behind',
+    description: 'You grew up holding the phone at the wrong hour. The package arrived with clothes in the wrong sizes. You carried both columns of the accounting.',
+    condition: (G) => G.flags.includes('understood_the_cost'),
+    priority: 60,
+    color: 'gray',
+  },
+  {
+    id: 'the_cycle_repeated',
+    name: 'The Cycle',
+    description: "You left like your parent left. Your child is now the age you were when the departure happened. You know both sides of it.",
+    condition: (G) => G.flags.includes('the_cycle_repeated'),
+    priority: 65,
+    color: 'blue',
+  },
+
+  // ── BUILD 23 — THE DIASPORA WHO DIDN'T LEAVE ─────────────────────────────
+  {
+    id: 'the_one_who_stayed',
+    name: 'The One Who Stayed',
+    description: 'Half the people you grew up with left. You watched them go and you stayed. The country did what it did. You were there for all of it.',
+    condition: (G) => G.flags.includes('chose_to_stay'),
+    priority: 62,
+    color: 'green',
+  },
+
   // ── BUILD 45 — INTIMACY ARC ──────────────────────────────────────────────
   {
     id: 'the_late_love',
