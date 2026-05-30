@@ -2751,6 +2751,21 @@ export function tick(state) {
     yearsAbroad: isAbroad ? (state.yearsAbroad ?? 0) + 1 : (state.yearsAbroad ?? 0),
   }
 
+  // Phase transition marker — one quiet sentence when crossing a life phase boundary
+  const prevPhase = getPhase(state.age)
+  const newPhase = getPhase(s.age)
+  if (prevPhase !== newPhase) {
+    const _phaseLines = {
+      childhood:   'The early years end. You begin to know where you are.',
+      adolescence: 'The body is changing. The world is starting to require something from you.',
+      young_adult: 'You are eighteen. The life begins in earnest.',
+      midlife:     'You are thirty. The life you have been building has become recognizable as a life.',
+      late_life:   'You are fifty. What you carry into this half is mostly set.',
+    }
+    const _t = _phaseLines[newPhase]
+    if (_t) s.log = [...s.log, { age: s.age, text: _t, isKey: true, isPhaseTransition: true }]
+  }
+
   // Prison year
   if (s.inPrison) {
     s.stats = { ...s.stats, health: clamp(s.stats.health - 1, 0, 100), happiness: clamp(s.stats.happiness - 2, 0, 100) }
@@ -4785,8 +4800,38 @@ export function generateIdentityCard(state) {
     }
   }
 
+  // ── INTERIOR 3: Relationship quality insight ─────────────────────────────────
+  if (interior.length < 3) {
+    if (partner) {
+      const q = partner.relationshipQuality ?? 60
+      const pn = partner.name.split(' ')[0]
+      if (q > 85 && (partner.years ?? 0) > 10) {
+        interior.push(`What you have built with ${pn} is the kind of thing people mean when they say they got lucky.`)
+      } else if (q < 32 && partner.married) {
+        interior.push(`You and ${pn} are still married. That fact is more complicated than it sounds.`)
+      }
+    } else if ((children ?? []).length > 0) {
+      const closeChild = (children ?? []).find(c => c.age >= 16 && (c.relationshipQuality ?? 50) > 82)
+      if (closeChild) interior.push(`${closeChild.name.split(' ')[0]} is someone you genuinely like. That is not automatic between parents and children.`)
+    }
+  }
+
+  // ── INTERIOR 4: Weight — regret translated to prose ───────────────────────
+  const regret = state.regret ?? 0
+  if (interior.length < 4) {
+    const weightLine = (() => {
+      if (regret > 70) return 'The accumulation of what you carry shapes how you hold yourself.'
+      if (regret > 50) return 'The weight of certain decisions has not diminished the way you expected it to.'
+      if (regret > 30) return 'You carry more than you planned to. Some of it you can name.'
+      if (regret > 15) return 'There are one or two things you would do differently, given another run at them.'
+      return null
+    })()
+    if (weightLine) interior.push(weightLine)
+  }
+
   const all = [...exterior, ...interior].filter(Boolean)
-  return all.length >= 2 ? all.join(' ') : null
+  // Cap at 6 sentences so the card doesn't become a wall
+  return all.length >= 2 ? all.slice(0, 6).join(' ') : null
 }
 
 // ─── Epitaph generator ───────────────────────────────────────────────────────

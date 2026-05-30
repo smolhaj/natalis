@@ -650,24 +650,34 @@ export default function LifeScreen() {
                     <span className="text-xs font-semibold" style={{ color: karmaColor }}>{karmaLabel}</span>
                   </div>
 
-                  {/* Fame and Regret — still shown as bars */}
-                  {[
-                    { label: 'Fame', value: fame, emoji: '⭐', color: '#ffcc00' },
-                    { label: 'Regret', value: regret, emoji: '😔', color: '#8e8e93' },
-                  ].map(({ label, value, emoji, color }) => (
-                    <div key={label} className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span>{emoji}</span>
-                        <span className="text-sm text-natalis-dim font-medium">{label}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="w-24 h-2 bg-gray-100 rounded-full overflow-hidden">
-                          <div className="h-full rounded-full" style={{ width: `${value}%`, backgroundColor: color }} />
-                        </div>
-                        <span className="text-xs font-bold text-natalis-muted w-8 text-right">{Math.round(value)}</span>
-                      </div>
+                  {/* Fame — bar */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span>⭐</span>
+                      <span className="text-sm text-natalis-dim font-medium">Fame</span>
                     </div>
-                  ))}
+                    <div className="flex items-center gap-2">
+                      <div className="w-24 h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div className="h-full rounded-full" style={{ width: `${fame}%`, backgroundColor: '#ffcc00' }} />
+                      </div>
+                      <span className="text-xs font-bold text-natalis-muted w-8 text-right">{Math.round(fame)}</span>
+                    </div>
+                  </div>
+
+                  {/* Weight — qualitative label, not a raw number */}
+                  <div className="flex items-center justify-between py-0.5">
+                    <div className="flex items-center gap-2">
+                      <span>🪨</span>
+                      <span className="text-sm text-natalis-dim font-medium">Weight</span>
+                    </div>
+                    <span className="text-xs font-semibold text-natalis-muted">
+                      {regret > 70 ? 'Heavy'
+                        : regret > 50 ? 'Considerable'
+                        : regret > 30 ? 'Something there'
+                        : regret > 15 ? 'A little'
+                        : 'Clear'}
+                    </span>
+                  </div>
                 </div>
               </div>
 
