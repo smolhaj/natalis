@@ -52,6 +52,8 @@ export default function LifeScreen() {
   const [showActivities, setShowActivities] = useState(false)
   const [activeTab, setActiveTab] = useState('life')
   const [logMode, setLogMode] = useState('recent')
+  const [openDecades, setOpenDecades] = useState(() => new Set([0]))
+  const [searchQuery, setSearchQuery] = useState('')
   const eventRef = useRef(null)
 
   const pendingEvent = useGameStore(s => s.pendingEvent)
@@ -61,6 +63,13 @@ export default function LifeScreen() {
       eventRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
     }
   }, [pendingEvent])
+
+  // Auto-open the current decade when the character enters a new one
+  const ageFromStore = useGameStore(s => s.age)
+  useEffect(() => {
+    const d = Math.floor(ageFromStore / 10) * 10
+    setOpenDecades(prev => prev.has(d) ? prev : new Set([...prev, d]))
+  }, [Math.floor(ageFromStore / 10)])
   const [showMoveModal, setShowMoveModal] = useState(false)
   const [moveStep, setMoveStep] = useState('pick') // 'pick' | 'confirm'
   const [selectedPlace, setSelectedPlace] = useState(null)
@@ -398,9 +407,16 @@ export default function LifeScreen() {
                 )}
 
                 {/* Toggle */}
-                <div className="flex gap-2 bg-white rounded-2xl p-1.5 border border-natalis-border">
-                  {[['recent','Recent 40'],['timeline','By Phase']].map(([mode, label]) => (
-                    <button key={mode} onClick={() => setLogMode(mode)}
+                <div className="flex gap-1.5 bg-white rounded-2xl p-1.5 border border-natalis-border">
+                  {[['recent','Recent'],['decades','Timeline'],['search','🔍 Search']].map(([mode, label]) => (
+                    <button key={mode}
+                      onClick={() => {
+                        setLogMode(mode)
+                        if (mode === 'decades') {
+                          const d = Math.floor(age / 10) * 10
+                          setOpenDecades(prev => prev.has(d) ? prev : new Set([...prev, d]))
+                        }
+                      }}
                       className="flex-1 py-1.5 rounded-xl text-xs font-semibold transition-all"
                       style={{ background: logMode === mode ? '#007aff' : 'transparent', color: logMode === mode ? 'white' : '#8e8e93' }}>
                       {label}
@@ -408,6 +424,7 @@ export default function LifeScreen() {
                   ))}
                 </div>
 
+                {/* ── RECENT VIEW ── */}
                 {logMode === 'recent' && recentLog.map((entry, i) => (
                   <div key={i} className={`rounded-xl px-4 py-3 border text-sm leading-relaxed ${
                     entry.isDeath    ? 'bg-zinc-900 border-zinc-800 text-zinc-100' :
@@ -430,37 +447,130 @@ export default function LifeScreen() {
                   </div>
                 ))}
 
-                {logMode === 'timeline' && (() => {
-                  const grouped = {}
-                  for (const entry of [...log].reverse()) {
-                    const ph = phaseForAge(entry.age)
-                    if (!grouped[ph]) grouped[ph] = []
-                    grouped[ph].push(entry)
+                {/* ── TIMELINE / DECADES VIEW ── */}
+                {logMode === 'decades' && (() => {
+                  const DECADE_LABELS = {
+                    0: 'Childhood', 10: 'Your Teens', 20: 'Your Twenties',
+                    30: 'Your Thirties', 40: 'Your Forties', 50: 'Your Fifties',
+                    60: 'Your Sixties', 70: 'Your Seventies', 80: 'Your Eighties', 90: 'Your Nineties',
                   }
-                  return PHASE_ORDER.filter(ph => grouped[ph]?.length > 0).map(ph => (
-                    <div key={ph} className="bg-white rounded-2xl border border-natalis-border overflow-hidden">
-                      <div className="px-4 py-2.5 bg-gray-50 border-b border-natalis-border">
-                        <span className="text-xs font-bold uppercase tracking-wider text-natalis-muted">{phaseLabel[ph]}</span>
-                      </div>
-                      <div className="divide-y divide-natalis-border">
-                        {grouped[ph].map((entry, i) => (
-                          <div key={i} className={`px-4 py-2.5 text-sm leading-relaxed ${
-                            entry.isDeath    ? 'bg-zinc-900 text-zinc-100' :
-                            entry.isHeadline ? 'bg-stone-100 text-stone-700' :
-                            entry.isWorld    ? 'bg-amber-50 text-amber-800' :
-                            entry.isKey      ? 'text-blue-800' : 'text-natalis-dim'
-                          }`}>
-                            {entry.isDeath && <span className="font-semibold mr-2 text-xs text-zinc-400 uppercase tracking-wider">Age {entry.age} — </span>}
-                            {!entry.isHeadline && !entry.isDeath && <span className="font-bold mr-2 text-xs opacity-50">Age {entry.age}</span>}
-                            {entry.isHeadline && <span className="text-xs font-semibold mr-1 text-stone-500">📰 {entry.age} — </span>}
-                            {entry.isWorld && entry.worldEventName && <span className="text-xs font-bold mr-1">🌐 {entry.worldEventName} — </span>}
-                            <span className={entry.isHeadline ? 'italic' : ''}>{entry.text}</span>
+                  const birthYear = character.birthYear ?? (currentYear - age)
+
+                  const grouped = {}
+                  for (const entry of log) {
+                    const d = Math.floor((entry.age ?? 0) / 10) * 10
+                    if (!grouped[d]) grouped[d] = []
+                    grouped[d].push(entry)
+                  }
+                  const sortedDecades = Object.keys(grouped).map(Number).sort((a, b) => a - b)
+
+                  return sortedDecades.map(decade => {
+                    const entries = grouped[decade]
+                    const isOpen = openDecades.has(decade)
+                    const label = DECADE_LABELS[decade] ?? `Your ${decade}s`
+                    const yearStart = birthYear + decade
+                    const yearEnd = Math.min(birthYear + decade + 9, currentYear)
+                    const deathCount = entries.filter(e => e.isDeath).length
+                    const worldCount = entries.filter(e => e.isWorld).length
+                    const keyPreview = entries.find(e => e.isKey || e.isDeath || e.isWorld)?.text ?? entries[0]?.text ?? ''
+
+                    return (
+                      <div key={decade} className="bg-white rounded-2xl border border-natalis-border overflow-hidden">
+                        <button
+                          className="w-full px-4 py-3 bg-gray-50 border-b border-natalis-border flex items-start justify-between text-left active:bg-gray-100 transition-colors"
+                          onClick={() => setOpenDecades(prev => {
+                            const next = new Set(prev)
+                            if (next.has(decade)) next.delete(decade)
+                            else next.add(decade)
+                            return next
+                          })}
+                        >
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <span className="text-xs font-bold uppercase tracking-wider text-natalis-text">{label}</span>
+                              {deathCount > 0 && <span className="text-[10px] font-semibold text-zinc-400 uppercase tracking-wide">· loss</span>}
+                              {worldCount > 0 && <span className="text-[10px] font-semibold text-amber-600 uppercase tracking-wide">· {worldCount} world</span>}
+                            </div>
+                            <div className="text-[11px] text-natalis-muted mt-0.5">
+                              {yearStart}–{yearEnd} · {entries.length} {entries.length === 1 ? 'entry' : 'entries'}
+                            </div>
+                            {!isOpen && keyPreview && (
+                              <p className="text-[11px] text-natalis-muted italic mt-1 truncate pr-4">{keyPreview}</p>
+                            )}
                           </div>
-                        ))}
+                          <span className="text-natalis-muted text-sm ml-2 mt-0.5 flex-shrink-0">{isOpen ? '▾' : '▸'}</span>
+                        </button>
+
+                        {isOpen && (
+                          <div className="divide-y divide-natalis-border">
+                            {entries.map((entry, i) => (
+                              <div key={i} className={`px-4 py-2.5 text-sm leading-relaxed ${
+                                entry.isDeath    ? 'bg-zinc-900 text-zinc-100' :
+                                entry.isHeadline ? 'bg-stone-100 text-stone-700' :
+                                entry.isWorld    ? 'bg-amber-50 text-amber-800' :
+                                entry.isKey      ? 'bg-blue-50 text-blue-800' :
+                                'text-natalis-dim'
+                              }`}>
+                                {entry.isDeath && <span className="font-semibold mr-1.5 text-xs text-zinc-400 uppercase">Age {entry.age} — </span>}
+                                {!entry.isHeadline && !entry.isDeath && <span className="font-bold mr-2 text-xs opacity-50">Age {entry.age}</span>}
+                                {entry.isHeadline && <span className="text-xs font-semibold mr-1 text-stone-500">📰 {entry.age} — </span>}
+                                {entry.isWorld && entry.worldEventName && <span className="text-xs font-bold mr-1">🌐 {entry.worldEventName} — </span>}
+                                <span className={entry.isHeadline ? 'italic' : ''}>{entry.text}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  ))
+                    )
+                  })
                 })()}
+
+                {/* ── SEARCH VIEW ── */}
+                {logMode === 'search' && (
+                  <div className="space-y-3">
+                    <div className="relative">
+                      <input
+                        type="text"
+                        placeholder="Search your life story…"
+                        value={searchQuery}
+                        onChange={e => setSearchQuery(e.target.value)}
+                        autoFocus
+                        className="w-full bg-white border border-natalis-border rounded-xl px-4 py-3 text-sm text-natalis-text placeholder-natalis-muted focus:outline-none focus:border-bit-blue"
+                      />
+                      {searchQuery && (
+                        <button onClick={() => setSearchQuery('')}
+                          className="absolute right-3 top-3 text-natalis-muted text-sm font-bold hover:text-natalis-text">✕</button>
+                      )}
+                    </div>
+                    {searchQuery.length >= 2 ? (() => {
+                      const q = searchQuery.toLowerCase()
+                      const matches = log.filter(e => e.text?.toLowerCase().includes(q))
+                      if (matches.length === 0) return (
+                        <p className="text-natalis-muted text-sm italic text-center py-6">No entries match "{searchQuery}"</p>
+                      )
+                      return (
+                        <>
+                          <p className="text-natalis-muted text-xs px-1">{matches.length} {matches.length === 1 ? 'result' : 'results'}</p>
+                          {matches.slice(0, 60).map((entry, i) => (
+                            <div key={i} className={`rounded-xl px-4 py-3 border text-sm leading-relaxed ${
+                              entry.isDeath    ? 'bg-zinc-900 border-zinc-800 text-zinc-100' :
+                              entry.isHeadline ? 'bg-stone-100 border-stone-300 text-stone-700' :
+                              entry.isWorld    ? 'bg-amber-50 border-amber-200 text-amber-800' :
+                              entry.isKey      ? 'bg-blue-50 border-blue-200 text-blue-800' :
+                              'bg-white border-natalis-border text-natalis-dim'
+                            }`}>
+                              <span className="font-bold mr-2 text-xs uppercase tracking-wider opacity-60">Age {entry.age}</span>
+                              {entry.isWorld && entry.worldEventName && <span className="text-xs font-bold mr-1">🌐 {entry.worldEventName} — </span>}
+                              <span className={entry.isHeadline ? 'italic' : ''}>{entry.text}</span>
+                            </div>
+                          ))}
+                        </>
+                      )
+                    })() : (
+                      <p className="text-natalis-muted text-sm italic text-center py-6">Type to search across your entire life story</p>
+                    )}
+                  </div>
+                )}
 
                 {log.length === 0 && (
                   <div className="bg-white rounded-2xl px-5 py-8 text-center border border-natalis-border">
