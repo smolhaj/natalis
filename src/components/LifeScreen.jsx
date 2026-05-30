@@ -485,7 +485,10 @@ export default function LifeScreen() {
                     const yearEnd = Math.min(birthYear + decade + 9, currentYear)
                     const deathCount = entries.filter(e => e.isDeath).length
                     const worldCount = entries.filter(e => e.isWorld).length
-                    const keyPreview = entries.find(e => e.isKey || e.isDeath || e.isWorld)?.text ?? entries[0]?.text ?? ''
+
+                    // Up to 3 pull-quotes: prioritise key/death/world entries, then any
+                    const keyEntries = entries.filter(e => e.isKey || e.isDeath || e.isWorld)
+                    const previewEntries = keyEntries.length >= 2 ? keyEntries.slice(0, 3) : [...keyEntries, ...entries.filter(e => !e.isKey && !e.isDeath && !e.isWorld)].slice(0, 3)
 
                     return (
                       <div key={decade} className="bg-white rounded-2xl border border-natalis-border overflow-hidden">
@@ -507,8 +510,15 @@ export default function LifeScreen() {
                             <div className="text-[11px] text-natalis-muted mt-0.5">
                               {yearStart}–{yearEnd} · {entries.length} {entries.length === 1 ? 'entry' : 'entries'}
                             </div>
-                            {!isOpen && keyPreview && (
-                              <p className="text-[11px] text-natalis-muted italic mt-1 truncate pr-4">{keyPreview}</p>
+                            {!isOpen && previewEntries.length > 0 && (
+                              <div className="mt-1.5 space-y-0.5">
+                                {previewEntries.map((entry, pi) => (
+                                  <p key={pi} className={`text-[11px] italic truncate pr-4 ${entry.isWorld ? 'text-amber-600' : entry.isKey ? 'text-blue-500' : 'text-natalis-muted'}`}>
+                                    {pi > 0 && <span className="not-italic text-natalis-muted opacity-50 mr-1">·</span>}
+                                    {(entry.text ?? '').slice(0, 90)}{(entry.text ?? '').length > 90 ? '…' : ''}
+                                  </p>
+                                ))}
+                              </div>
                             )}
                           </div>
                           <span className="text-natalis-muted text-sm ml-2 mt-0.5 flex-shrink-0">{isOpen ? '▾' : '▸'}</span>

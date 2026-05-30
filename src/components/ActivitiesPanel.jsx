@@ -6,6 +6,7 @@ import { CRIMES } from '../data/crimes'
 import { COUNTRIES } from '../data/countries'
 import { PROPERTY_TYPES, VEHICLE_TYPES } from '../data/assets'
 import { getAvailableCareers, dropOutOfSchool, BUSINESS_TYPES, getAvailableBusinessTypes, getPhase } from '../engine/gameEngine'
+import { CAREERS } from '../data/careers'
 
 const TOP_CATEGORIES = [
   { key: 'mind_body',     label: 'Mind & Body',     emoji: '🧘', desc: 'Work on yourself' },
@@ -1285,6 +1286,30 @@ export default function ActivitiesPanel({ onClose }) {
         const isFugitive = (state.wanted || state.flags.includes('escaped_prisoner')) && !state.flags.includes('assumed_identity')
         const hasAssumedId = state.flags.includes('assumed_identity')
         const isBlockedFromFormal = isUndocumented || isFugitive
+
+        // Careers locked by education alone (all other requirements pass)
+        const eduOrder = ['none', 'primary', 'secondary', 'university', 'graduate']
+        const eduLabels = { primary: 'primary school', secondary: 'secondary education', university: 'a university degree', graduate: 'a graduate degree' }
+        const playerEduIdx = eduOrder.indexOf(state.education?.level ?? 'none')
+        const availableIds = new Set(available.map(c => c.id))
+        const gdpOrder = ['very_low', 'low', 'low_medium', 'medium', 'medium_high', 'high', 'very_high']
+        const lockedByEdu = CAREERS.filter(career => {
+          if (availableIds.has(career.id)) return false
+          if (career.id === state.career?.id) return false
+          if (career.partTime) return false
+          if (career.requirements.minAge && state.age < career.requirements.minAge) return false
+          if (career.requirements.maxAge && state.age > career.requirements.maxAge) return false
+          if (career.minYear && state.currentYear < career.minYear) return false
+          if (career.maxYear && state.currentYear > career.maxYear) return false
+          if (career.requirements.minSmarts && state.stats.smarts < career.requirements.minSmarts) return false
+          if (career.gdpRequired && career.gdpRequired !== 'any' && gdpOrder.indexOf(state.character.country.gdp) < gdpOrder.indexOf(career.gdpRequired)) return false
+          if (Array.isArray(career.archetypeAvailable) && !career.archetypeAvailable.includes(state.character.country.archetype)) return false
+          if (career.requirements.flags && !career.requirements.flags.some(f => state.flags.includes(f))) return false
+          // Only include if the blocker is education level
+          const reqEduIdx = eduOrder.indexOf(career.requirements.education)
+          return reqEduIdx > 0 && playerEduIdx < reqEduIdx
+        }).slice(0, 4)
+
         return (
           <>
             {isHomeless && (
@@ -1341,6 +1366,24 @@ export default function ActivitiesPanel({ onClose }) {
             )}
             {!isBlockedFromFormal && available.length === 0 && !state.career && (
               <p className="text-natalis-muted text-sm italic p-3">No careers available for your current qualifications.</p>
+            )}
+            {!isBlockedFromFormal && lockedByEdu.length > 0 && (
+              <>
+                <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-3">Requires more education</p>
+                {lockedByEdu.map(career => (
+                  <div key={career.id} className="rounded-xl border border-natalis-border bg-gray-50 px-4 py-3 opacity-60">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold text-natalis-text truncate">{career.levels[0].title}</p>
+                        <p className="text-xs text-natalis-muted mt-0.5">{career.description}</p>
+                      </div>
+                      <span className="text-[10px] font-semibold text-stone-400 bg-stone-100 rounded-full px-2 py-0.5 whitespace-nowrap flex-shrink-0">
+                        Needs {eduLabels[career.requirements.education] ?? career.requirements.education}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </>
             )}
           </>
         )
