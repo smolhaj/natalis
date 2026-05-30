@@ -141,7 +141,9 @@ export const POSTRELEASE_EVENTS = [
       G.flags.has('served_prison_time') &&
       !G.mem?.prHousingDone &&
       G.money < 3000 &&
-      !G.inPrison,
+      !G.inPrison &&
+      !G.wanted &&
+      !G.flags.has('escaped_prisoner'),
     text: (G) => {
       const country = G.currentCountry?.name ?? ''
       if (country === 'United States') {

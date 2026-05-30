@@ -1002,10 +1002,11 @@ export const useGameStore = create((set, get) => ({
     set({
       ...state,
       money: (state.money ?? 0) - fee,
-      character: { ...state.character, country: dest },
+      currentCountry: dest,
+      residencyStatus: 'undocumented',
       flags: [...new Set([...state.flags, 'emigrated', 'illegal_immigrant'])],
       stats: { ...state.stats, happiness: Math.min(100, state.stats.happiness + 5) },
-      log: [...state.log, { age: state.age, text: `You pay a smuggler $${fee.toLocaleString()} and cross the border into ${countryName}. A dangerous new chapter begins.`, isKey: true }],
+      log: [...state.log, { age: state.age, text: `You pay a smuggler $${fee.toLocaleString()} and cross into ${countryName} illegally. A dangerous new chapter.`, isKey: true }],
     })
   },
 

@@ -7310,6 +7310,118 @@ const BASE_EVENTS = [
     ],
   },
 
+  // ── FUGITIVE LIFE ────────────────────────────────────────────────────────────
+
+  {
+    id: 'fug_cash_housing',
+    phase: null,
+    weight: 8,
+    when: (G) => G.flags.has('escaped_prisoner') && !G.mem?.fugHousingDone && !G.inPrison,
+    text: 'You need somewhere to sleep. Background checks and leases are not options. You find a room above a launderette through a man who deals in questions not asked. The room smells of damp and other people\'s decisions. You pay a month in advance, cash. He pockets it without counting it.',
+    choices: [
+      {
+        text: 'It\'s shelter — take it',
+        tag: null,
+        outcome: 'The walls are thin. You learn to read the building\'s sounds. Nothing moves below without you knowing.',
+        effect: (p) => { p.setMem('fugHousingDone', true); p.m -= 6; p.mo -= 900; p.addFlag('housing_fugitive') },
+      },
+      {
+        text: 'Sleep rough rather than owe someone this',
+        tag: null,
+        outcome: 'Three weeks outside teaches you things. When you finally take a room, you appreciate it in a way most people never do.',
+        effect: (p) => { p.setMem('fugHousingDone', true); p.m -= 15; p.h -= 8; p.e += 3 },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'fug_cash_work',
+    phase: null,
+    weight: 7,
+    when: (G) => G.flags.has('escaped_prisoner') && !G.career && !G.mem?.fugWorkDone && !G.inPrison,
+    text: (G) => {
+      const archetype = G.currentCountry?.archetype ?? G.character?.country?.archetype
+      if (archetype === 'developing_urban' || archetype === 'subsaharan' || archetype === 'developing_unstable') {
+        return 'A foreman at a construction site doesn\'t ask for papers. He asks if you can carry a beam. Cash at the end of each day, no record kept. The work is brutal and the pay is low and it exists in the correct amount of shadow.'
+      }
+      if (archetype === 'post_soviet') {
+        return 'A market trader needs someone to unload trucks before dawn. Three hours, cash in hand, no conversation necessary. He has his own reasons for keeping no books.'
+      }
+      return 'You find a restaurant kitchen that pays cash at the end of shift. The head chef doesn\'t speak much to anyone. He watches your hands while you work, not your face. That\'s all he cares about.'
+    },
+    choices: [
+      {
+        text: 'Take the work — income matters more than dignity right now',
+        tag: null,
+        outcome: 'The days have a rhythm. The rhythm is what keeps you functional.',
+        effect: (p) => { p.setMem('fugWorkDone', true); p.mo += 800; p.h -= 5; p.addFlag('informal_worker') },
+      },
+      {
+        text: 'Look for something that uses your actual skills',
+        tag: null,
+        outcome: 'It takes longer. The money is thinner in the gap. But you find something that asks less of your body.',
+        effect: (p) => { p.setMem('fugWorkDone', true); p.mo += 400; p.m -= 5; p.e += 2 },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'fug_assumed_identity_career',
+    phase: null,
+    weight: 4,
+    when: (G) => G.flags.has('assumed_identity') && G.flags.has('escaped_prisoner') && !G.mem?.fugIdCareerDone && G.age >= 22,
+    text: (G) => {
+      const idName = G.mem?.assumedIdentityName ?? 'your assumed name'
+      return `Under ${idName}, you apply for a job — a real one, with a contract and a salary and a reference check. Your documents are convincing. You sit across the desk and answer questions about a person who doesn\'t exist, using skills that are entirely real.`
+    },
+    choices: [
+      {
+        text: 'Push through — the identity will hold',
+        tag: null,
+        outcome: 'They hire you. For the first year, you are one Google search away from everything unravelling.',
+        effect: (p) => { p.setMem('fugIdCareerDone', true); p.mo += 2000; p.m += 5; p.addFlag('identity_career_risk') },
+      },
+      {
+        text: 'Back out — too much exposure',
+        tag: null,
+        outcome: 'You\'re right about the risk. You were also right that you could have gotten it.',
+        effect: (p) => { p.setMem('fugIdCareerDone', true); p.m -= 8; p.r += 6 },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'fug_identity_career_discovered',
+    phase: null,
+    weight: 5,
+    when: (G) => G.flags.has('identity_career_risk') && !G.mem?.fugIdDiscovered && !G.inPrison,
+    text: 'HR runs a deeper background check — standard procedure after a promotion shortlist. You watch your name move through a system you know will find the gap eventually. A call comes on a Thursday afternoon: the tone is careful, professional, and pointed.',
+    choices: [
+      {
+        text: 'Run before they can act',
+        tag: null,
+        outcome: 'The job evaporates. You have an hour\'s head start. You\'ve done this before.',
+        effect: (p) => { p.setMem('fugIdDiscovered', true); p.m -= 20; p.addFlag('identity_blown_career') },
+      },
+      {
+        text: 'Bluff — insist it\'s an error in the database',
+        tag: null,
+        outcome: 'They want to believe you. The pause before the next sentence tells you they don\'t.',
+        effect: (p) => { p.setMem('fugIdDiscovered', true); p.m -= 12; p.s -= 5; p.karma -= 5; p.addFlag('identity_blown_career') },
+      },
+      {
+        text: 'Come clean and take what comes',
+        tag: null,
+        outcome: 'They call the police. You knew it might end this way. There\'s something clarifying about it.',
+        effect: (p) => { p.setMem('fugIdDiscovered', true); p.karma += 10; p.m -= 15; p.addFlag('surrendered') },
+      },
+    ],
+    effect: null,
+  },
+
   // ── RELATIONSHIP ANNIVERSARIES ───────────────────────────────────────────────
 
   {

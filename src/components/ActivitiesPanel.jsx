@@ -1167,12 +1167,27 @@ export default function ActivitiesPanel({ onClose }) {
       case 'career': {
         const available = getAvailableCareers(state)
         const isUndocumented = state.residencyStatus === 'undocumented' || state.residencyStatus === 'tourist_overstay'
+        const isFugitive = (state.wanted || state.flags.includes('escaped_prisoner')) && !state.flags.includes('assumed_identity')
+        const hasAssumedId = state.flags.includes('assumed_identity')
+        const isBlockedFromFormal = isUndocumented || isFugitive
         return (
           <>
-            {isUndocumented && (
+            {isUndocumented && !isFugitive && (
               <div className="px-3 py-3 rounded-xl border border-amber-200 bg-amber-50 mb-1">
                 <p className="text-amber-700 text-sm font-semibold">No formal employment available</p>
                 <p className="text-amber-600 text-xs mt-0.5">Without legal status, you cannot take a salaried position. Cash work comes through life events.</p>
+              </div>
+            )}
+            {isFugitive && (
+              <div className="px-3 py-3 rounded-xl border border-red-200 bg-red-50 mb-1">
+                <p className="text-red-700 text-sm font-semibold">🚨 Formal work is not an option</p>
+                <p className="text-red-600 text-xs mt-0.5">Any employer will run a background check. You need cash work or a false identity first.</p>
+              </div>
+            )}
+            {hasAssumedId && (state.wanted || state.flags.includes('escaped_prisoner')) && (
+              <div className="px-3 py-3 rounded-xl border border-yellow-200 bg-yellow-50 mb-1">
+                <p className="text-yellow-700 text-sm font-semibold">⚠️ Operating under a false identity</p>
+                <p className="text-yellow-600 text-xs mt-0.5">Formal careers are available, but any background check may expose you.</p>
               </div>
             )}
             {state.career && (
@@ -1187,7 +1202,7 @@ export default function ActivitiesPanel({ onClose }) {
             {state.age >= 55 && !state.retired && (
               <Btn onClick={() => go(retire)} title="Retire" subtitle="End your working life on your own terms." />
             )}
-            {!isUndocumented && available.length > 0 && (
+            {!isBlockedFromFormal && available.length > 0 && (
               <>
                 <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">Available Careers</p>
                 {available.map(career => (
@@ -1198,7 +1213,7 @@ export default function ActivitiesPanel({ onClose }) {
                 ))}
               </>
             )}
-            {!isUndocumented && available.length === 0 && !state.career && (
+            {!isBlockedFromFormal && available.length === 0 && !state.career && (
               <p className="text-natalis-muted text-sm italic p-3">No careers available for your current qualifications.</p>
             )}
           </>
