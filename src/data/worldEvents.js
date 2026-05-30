@@ -2338,6 +2338,139 @@ export const WORLD_EVENTS = [
     when: null,
   },
 
+  // ── JESSE OWENS: BERLIN 1936 ─────────────────────────────────────────────
+  {
+    id: 'jesse_owens_berlin_1936',
+    name: 'Jesse Owens Wins Four Gold Medals in Berlin',
+    years: [1936, 1937],
+    archetypes: null,
+    countries: ['United States'],
+    narrative: (G) => {
+      const isBlack = G.ethnicity && G.ethnicity.toLowerCase().includes('black')
+      if (isBlack) {
+        return 'Four gold medals. Sprint, long jump, relays. In Berlin, in front of the regime that has built an entire political philosophy around racial hierarchy, a Black man from Cleveland is the fastest and longest of them all. The radio brings it back to you in a country where you cannot eat at the same counter as the people celebrating beside you. You hold both things at once. The pride is real. The irony is also real. When Owens returns home, the President does not invite him to the White House.'
+      }
+      return 'Jesse Owens wins four gold medals at the Berlin Olympics — 100m, 200m, long jump, and 4×100 relay. Hitler, who staged the Games as a showcase for Aryan supremacy, watches from the stands. The result is a specific kind of refutation. Back home, in a country with Jim Crow laws, Owens is not invited to the White House reception held for the Olympic team. Owens later says: "Hitler didn\'t snub me — it was FDR who snubbed me."'
+    },
+    context: 'Jesse Owens, son of an Alabama sharecropper, won four gold medals at the 1936 Berlin Olympics — the most by any athlete at those Games. When Owens returned to the United States, President Franklin Roosevelt sent no congratulations telegram and excluded Owens from the White House reception for the American Olympic team. Jim Crow laws remained in force across the American South. The narrative of Hitler snubbing Owens (which has some basis in a missing handshake) long obscured the more significant American government snub. Owens himself raised this contrast repeatedly.',
+    effect: (p) => {
+      const isBlack = p._state?.character?.ethnicity?.toLowerCase().includes('black')
+      if (isBlack) {
+        p.m += 10
+        p.karma += 5
+        p.addFlag('civil_rights_generation')
+      } else {
+        p.m += 4
+      }
+    },
+    addFlags: [],
+    minAge: 5,
+    when: null,
+  },
+
+  // ── BHOLA CYCLONE 1970 ───────────────────────────────────────────────────
+  {
+    id: 'bhola_cyclone_1970',
+    name: 'Bhola Cyclone',
+    years: [1970, 1971],
+    archetypes: null,
+    countries: ['Bangladesh'],
+    narrative: (G) => {
+      if (G.age <= 12) {
+        return 'The storm comes at night. The adults move the family to higher ground — the school building, the raised road — before the water follows. In the morning the water is still moving in directions it should not move. The count of what was lost takes longer than the water takes to recede. You are too young to understand the number. The adults understand it.'
+      }
+      return 'The cyclone comes in from the Bay of Bengal on the night of November 12. The storm surge reaches six metres in the delta. The Pakistani government\'s response, when it comes, comes slowly — the supplies, the personnel, the acknowledgment. The death toll will be estimated at between 300,000 and 500,000. It is one of the deadliest natural disasters in recorded history. The government\'s inadequacy is noticed, and not forgotten.'
+    },
+    context: 'The Bhola Cyclone struck East Pakistan (now Bangladesh) on 12 November 1970, killing an estimated 300,000–500,000 people — the deadliest tropical cyclone on record. The Pakistani central government\'s delayed and inadequate disaster response was a major factor in turning East Pakistani political discontent into a movement for independence. The Awami League\'s landslide election victory in December 1970 followed directly, leading to the Pakistani military crackdown and the 1971 Liberation War.',
+    effect: (p) => {
+      p.m -= 15
+      p.h -= 8
+      p.r += 6
+      p.addFlag('bhola_survivor')
+    },
+    addFlags: ['bhola_survivor'],
+    minAge: 0,
+    when: null,
+  },
+
+  // ── TANGSHAN EARTHQUAKE 1976 ─────────────────────────────────────────────
+  {
+    id: 'tangshan_earthquake_1976',
+    name: 'Tangshan Earthquake',
+    years: [1976, 1977],
+    archetypes: null,
+    countries: ['China'],
+    narrative: (G) => {
+      if (G.age <= 10) {
+        return 'The ground moves before the sound arrives — or the sound and the movement are the same thing. It lasts for seconds. What took years to build is not there anymore. Adults make decisions quickly, in the dark, without full information. You are held and moved. Later you will learn the number of dead. For now you only know what your street looks like now compared to yesterday.'
+      }
+      return 'The earthquake strikes at 3:42 in the morning, when the city is asleep. The city of one million is built on alluvial sediment that amplifies the shaking. Most of the buildings are unreinforced brick. They do not survive. 242,000 dead — the official figure. Other estimates are higher. The Chinese government initially refuses all foreign assistance, a political decision made in the middle of a humanitarian catastrophe. Rescue comes from within: soldiers arrive overland because roads are gone, and begin to dig.'
+    },
+    context: 'The 1976 Tangshan earthquake measured 7.6 magnitude and killed at least 242,000 people — possibly over 650,000 by some estimates, though official figures were not released until 1979. It struck at 3:42am, when residents were asleep. Tangshan, an industrial coal-mining city, was built primarily of unreinforced brick. The Mao-era government initially refused international aid and suppressed reporting on the scale of the disaster. Rescue was conducted almost entirely by the People\'s Liberation Army. The earthquake occurred during the politically chaotic final months of the Cultural Revolution, weeks after the death of Premier Zhou Enlai and months before Mao Zedong\'s own death.',
+    effect: (p) => {
+      p.m -= 18
+      p.h -= 10
+      p.r += 5
+      p.addFlag('tangshan_witness')
+    },
+    addFlags: ['tangshan_witness'],
+    minAge: 0,
+    maxAge: null,
+    when: null,
+  },
+
+  // ── WEST INDIES CRICKET 1975–1979 ────────────────────────────────────────
+  {
+    id: 'west_indies_cricket_1975',
+    name: 'West Indies Win the Cricket World Cup',
+    years: [1975, 1980],
+    archetypes: null,
+    countries: ['India', 'Pakistan', 'Sri Lanka', 'Bangladesh', 'South Africa', 'Zimbabwe', 'Kenya', 'Australia', 'New Zealand', 'United Kingdom'],
+    narrative: (G) => {
+      const cn = G.character.country.name
+      if (['India', 'Pakistan', 'Sri Lanka', 'Bangladesh'].includes(cn)) {
+        return 'The West Indies team wins the first World Cup and then the second. Clive Lloyd\'s team plays with a physical intensity that redefines what the game can be. For cricket countries that grew up under the same colonial arrangement, the victories carry something beyond sport — a post-colonial statement made in the language that was supposed to belong to the people who no longer control the game.'
+      }
+      if (['South Africa'].includes(cn)) {
+        return 'West Indies win the World Cup while South Africa is banned from international cricket because of apartheid. The irony is not lost on everyone — a team of Black West Indian cricketers wins the world championship while the country that enforced racial hierarchy in sport cannot participate. South African cricket does not allow Black South Africans to represent the country at any level.'
+      }
+      if (['Australia', 'New Zealand'].includes(cn)) {
+        return 'West Indies win the World Cup and then defend it. The team Clive Lloyd assembles — Richards, Roberts, Holding, Garner, Marshall — is the most dominant side the game has seen. The speed of the bowling. The certainty of the batting. Australia does not win either tournament, which is noticed.'
+      }
+      return 'The West Indies win. The team from the Caribbean, drawn from islands where cricket was a gift of the British Empire, has become the best team on earth. The empire\'s game now belongs to someone else.'
+    },
+    context: 'The West Indies won the first two Cricket World Cups (1975 and 1979), both held in England. The team captained by Clive Lloyd and featuring Vivian Richards, Michael Holding, Andy Roberts, and Gordon Greenidge dominated world cricket through the late 1970s and 1980s. Their success was widely understood as a post-colonial cultural statement. South Africa was banned from international cricket from 1970 to 1991 due to apartheid. The World Cup victories contributed to cricket\'s cultural transformation from a British imperial institution into a genuinely international sport.',
+    effect: (p) => {
+      p.m += 6
+      p.karma += 4
+      p.addFlag('cricket_generation')
+    },
+    addFlags: ['cricket_generation'],
+    minAge: 8,
+    when: (G) => !G.flags.includes('cricket_generation'),
+  },
+
+  // ── OLYMPIC BOYCOTT 1980 ─────────────────────────────────────────────────
+  {
+    id: 'olympics_boycott_1980',
+    name: 'Olympics Boycott',
+    years: [1980, 1985],
+    archetypes: ['wealthy_west', 'wealthy_east'],
+    countries: null,
+    narrative: (G) => {
+      const yr = G.currentYear
+      if (yr <= 1981) {
+        return '65 countries do not go to the Moscow Olympics. The USA boycott, in response to the Soviet invasion of Afghanistan, takes their athletes with it. The athletes who spent four years preparing for this have their preparation rendered irrelevant by a diplomatic decision that neither side believes will change anything. The Soviet Union invades Afghanistan regardless. The athletes train anyway, for the 1984 Games, which the Soviet bloc then boycotts in return. Both boycotts accomplish nothing except the cancellation of four years of human effort.'
+      }
+      return 'The 1984 Los Angeles Games proceed without the Soviet bloc. 14 countries stay away, mirroring the 1980 Western boycott. The cycle ends. The athletes compete. No political outcome of either boycott is ever identified.'
+    },
+    context: 'The 1980 Moscow Olympics were boycotted by 65 countries led by the United States, in response to the Soviet invasion of Afghanistan. US President Jimmy Carter initially threatened athletes who defied the boycott with passport revocation. Many athletes who had spent years preparing did not compete. In 1984, the Soviet Union and 13 allies boycotted the Los Angeles Olympics, officially citing security concerns but widely understood as retaliation. Neither boycott had any measurable effect on the political situations that prompted them.',
+    effect: (p) => { p.r += 4; p.m -= 3 },
+    addFlags: [],
+    minAge: 14,
+    when: (G) => !G.flags.includes('olympics_boycott_felt'),
+  },
+
   {
     id: 'beirut_port_explosion_2020',
     name: 'Beirut Port Explosion',

@@ -1209,4 +1209,64 @@ export const RIBBONS = [
     priority: 55,
     color: 'red',
   },
+
+  // ── BUILD 39 — SPORT ─────────────────────────────────────────────────────
+  {
+    id: 'the_sport_door',
+    name: 'The Door That Was There',
+    description: 'You saw the possibility of a different life through sport and walked toward it.',
+    condition: (G) => G.flags.includes('sport_exit_attempted'),
+    priority: 52,
+    color: 'blue',
+  },
+  {
+    id: 'the_played_into_adulthood',
+    name: 'The Sunday Leagues',
+    description: 'You played long after it stopped being serious. Serious enough for you.',
+    condition: (G) => G.flags.includes('played_into_adulthood'),
+    priority: 42,
+    color: 'green',
+  },
+  {
+    id: 'the_cricket_inheritance',
+    name: 'The Inherited Game',
+    description: 'You played the empire\'s game and made it yours.',
+    condition: (G) => G.flags.includes('cricket_colonial_inheritance'),
+    priority: 52,
+    color: 'blue',
+  },
+  {
+    id: 'the_world_cup_child',
+    name: 'The World Cup Child',
+    description: 'A tournament shaped how you understood what collective feeling was.',
+    condition: (G) => G.flags.includes('world_cup_generation'),
+    priority: 42,
+    color: 'blue',
+  },
+
+  // ── BUILD 53 — NATURAL DISASTERS ─────────────────────────────────────────
+  {
+    id: 'the_flood_country',
+    name: 'The Flood Country',
+    description: 'You lived with the water on its own terms. You knew its calendar.',
+    condition: (G) => G.flags.includes('flood_season_known'),
+    priority: 52,
+    color: 'blue',
+  },
+  {
+    id: 'the_earthquake_country',
+    name: 'The Earthquake Country',
+    description: 'You lived where the ground was unreliable and made your preparations.',
+    condition: (G) => G.flags.includes('earthquake_prepared'),
+    priority: 42,
+    color: 'blue',
+  },
+  {
+    id: 'the_storm_season',
+    name: 'The Storm Season',
+    description: 'Every year you prepared. You knew the calendar of the danger.',
+    condition: (G) => G.flags.includes('typhoon_season_known'),
+    priority: 42,
+    color: 'blue',
+  },
 ]
