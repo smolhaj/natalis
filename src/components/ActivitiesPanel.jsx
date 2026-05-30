@@ -5,7 +5,7 @@ import { DESTINATIONS } from '../data/destinations'
 import { CRIMES } from '../data/crimes'
 import { COUNTRIES } from '../data/countries'
 import { PROPERTY_TYPES, VEHICLE_TYPES } from '../data/assets'
-import { getAvailableCareers, dropOutOfSchool, BUSINESS_TYPES, getAvailableBusinessTypes } from '../engine/gameEngine'
+import { getAvailableCareers, dropOutOfSchool, BUSINESS_TYPES, getAvailableBusinessTypes, getPhase } from '../engine/gameEngine'
 
 const TOP_CATEGORIES = [
   { key: 'mind_body',     label: 'Mind & Body',     emoji: '🧘', desc: 'Work on yourself' },
@@ -140,10 +140,29 @@ export default function ActivitiesPanel({ onClose }) {
   const doUpgradeResidency = useGameStore(s => s.upgradeResidency)
   const doSeekAsylum       = useGameStore(s => s.seekAsylum)
   const doEmigrate         = useGameStore(s => s.emigrate)
+  const takePaydayLoan     = useGameStore(s => s.takePaydayLoan)
+  const applyForBenefits   = useGameStore(s => s.applyForBenefits)
+  const declareBankruptcy  = useGameStore(s => s.declareBankruptcy)
 
   const actionsLeft = state.maxActionsPerYear - state.actionsThisYear
   const noActions = actionsLeft <= 0
   const G = { character: state.character, stats: state.stats, flags: state.flags, age: state.age, career: state.career, education: state.education, inPrison: state.inPrison, partner: state.partner, regret: state.regret ?? 50, siblings: state.siblings ?? [], children: state.children ?? [], money: state.money ?? 0, assets: state.assets ?? { properties: [], vehicles: [] }, currentYear: state.currentYear }
+
+  const phase = getPhase(state.age)
+  const conditions = state.conditions ?? []
+  const hasCondition = (id) => conditions.some(c => c.id === id)
+  const hasSevereUnmanaged = (id) => conditions.some(c => c.id === id && c.severity === 'severe' && !c.managed)
+  const anySevereUnmanaged = conditions.some(c => c.severity === 'severe' && !c.managed)
+  const isHomeless = state.mem?.isHomeless === true
+
+  const CONDITION_LABELS = {
+    diabetes_type1: 'Type 1 Diabetes', diabetes_type2: 'Type 2 Diabetes',
+    heart_disease: 'Heart Disease', copd: 'COPD', cancer_treatment: 'Cancer',
+    back_pain: 'Back Pain', back_pain_chronic: 'Chronic Back Pain',
+    hiv_early: 'HIV', hiv_aids: 'HIV/AIDS', vision_loss: 'Vision Loss',
+    hearing_loss: 'Hearing Loss', depression_chronic: 'Chronic Depression',
+    disability_injury: 'Physical Disability',
+  }
 
   function go(fn) { fn(); onClose() }
 
@@ -160,8 +179,33 @@ export default function ActivitiesPanel({ onClose }) {
         const mindActivities = ACTIVITIES.mind ?? []
         return (
           <>
+            {/* Conditions overview */}
+            {conditions.length > 0 && (
+              <div className="bg-amber-50 rounded-xl border border-amber-200 px-4 py-3 mb-1">
+                <p className="text-amber-700 text-xs font-semibold uppercase tracking-wider mb-1">Your conditions</p>
+                {conditions.map(c => (
+                  <p key={c.id} className="text-xs text-amber-700">
+                    {CONDITION_LABELS[c.id] ?? c.id} — <span className="font-semibold">{c.severity}</span>{c.managed ? ' · managed' : ' · unmanaged'}
+                  </p>
+                ))}
+              </div>
+            )}
             {/* Gym */}
-            {state.age >= 16 && <Btn disabled={noActions} onClick={() => go(() => takeActivity('gym'))} title="Go to the Gym" subtitle="Improve your fitness and health." cost="Cost: $20/visit" />}
+            {state.age >= 16 && (
+              <>
+                {(hasSevereUnmanaged('heart_disease') || hasSevereUnmanaged('copd')) && (
+                  <div className="bg-red-50 rounded-xl border border-red-200 px-3 py-2 mb-1 text-xs text-red-700">
+                    ⚠️ Intense exercise carries real risk with your condition. Consider therapy or walking instead.
+                  </div>
+                )}
+                <Btn disabled={noActions || hasSevereUnmanaged('disability_injury')}
+                  onClick={() => go(() => takeActivity('gym'))}
+                  title="Go to the Gym"
+                  subtitle={hasSevereUnmanaged('disability_injury') ? "Not possible with your current injury." : "Improve your fitness and health."}
+                  cost="Cost: $20/visit"
+                />
+              </>
+            )}
             {/* Walk */}
             {state.age >= 6 && <Btn disabled={noActions} onClick={() => go(() => takeActivity('walk'))} title="Go for a Walk" subtitle="Clear your head and move your body." />}
             {/* Meditate */}
@@ -448,9 +492,14 @@ export default function ActivitiesPanel({ onClose }) {
 
         return (
           <>
+            {isHomeless && (
+              <div className="bg-amber-50 rounded-xl border border-amber-200 px-3 py-2 mb-2 text-xs text-amber-700">
+                Without a stable address, meeting someone new is harder. Most dating apps require a fixed location.
+              </div>
+            )}
             {state.age >= 16 && !state.partner && (
               <>
-                <Btn disabled={noActions} onClick={() => meetSomeone()} title="Meet Someone New" subtitle="Put yourself out there." />
+                <Btn disabled={noActions || isHomeless} onClick={() => meetSomeone()} title="Meet Someone New" subtitle={isHomeless ? "Not possible without a stable address." : "Put yourself out there."} />
                 {state.age >= 18 && (
                   <Btn
                     disabled={noActions || (state.money ?? 0) < 100}
@@ -652,9 +701,23 @@ export default function ActivitiesPanel({ onClose }) {
           { type: 'major',    label: 'Major Procedure',  desc: 'Significant changes. Higher risk.',     cost: '$12,000' },
           { type: 'facelift', label: 'Facelift',         desc: 'Reduce visible signs of aging.',        cost: '$7,500' },
         ]
-        return surgeries.map(s => (
-          <Btn key={s.type} disabled={noActions} onClick={() => go(() => getPlasticSurgery(s.type))} title={s.label} subtitle={s.desc} cost={s.cost} />
-        ))
+        return (
+          <>
+            {state.age >= 75 && (
+              <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-2 text-xs text-amber-800">
+                ⚠️ At your age, surgical risk is elevated. Anaesthetic complications are more likely.
+              </div>
+            )}
+            {(hasSevereUnmanaged('heart_disease') || hasSevereUnmanaged('copd')) && (
+              <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 mb-2 text-xs text-red-700">
+                Surgery under general anaesthetic carries serious risk with your heart or lung condition.
+              </div>
+            )}
+            {surgeries.map(s => (
+              <Btn key={s.type} disabled={noActions} onClick={() => go(() => getPlasticSurgery(s.type))} title={s.label} subtitle={s.desc} cost={s.cost} />
+            ))}
+          </>
+        )
       }
 
       case 'race_tracks': {
@@ -770,11 +833,16 @@ export default function ActivitiesPanel({ onClose }) {
         const vehicles = state.assets?.vehicles ?? []
         return (
           <>
+            {isHomeless && (
+              <div className="bg-amber-50 rounded-xl border border-amber-200 px-3 py-2 mb-2 text-xs text-amber-700">
+                Property purchase requires proof of address. Resolve your housing situation first.
+              </div>
+            )}
             <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1">Buy Property</p>
             {PROPERTY_TYPES.map(type => {
               const downPayment = Math.round(type.basePrice * type.downPaymentRate)
               return (
-                <Btn key={type.id} disabled={noActions || (state.money ?? 0) < downPayment || state.age < 18}
+                <Btn key={type.id} disabled={noActions || (state.money ?? 0) < downPayment || state.age < 18 || isHomeless}
                   onClick={() => { buyProperty(type.id); onClose() }}
                   title={type.name} subtitle={type.description}
                   cost={`~$${type.basePrice.toLocaleString()} · Deposit: $${downPayment.toLocaleString()}`} />
@@ -837,12 +905,59 @@ export default function ActivitiesPanel({ onClose }) {
 
       case 'money': {
         const moneyActivities = ACTIVITIES.money ?? []
-        return moneyActivities
-          .filter(a => (!a.minAge || state.age >= a.minAge) && (!a.maxAge || state.age <= a.maxAge))
-          .filter(a => !a.condition || a.condition(G))
-          .map(a => (
-            <Btn key={a.id} disabled={noActions} onClick={() => go(() => takeActivity(a.id))} title={a.name} subtitle={a.description} cost={a.cost > 0 ? `Cost: $${a.cost.toLocaleString()}` : null} />
-          ))
+        const debt = state.debt ?? 0
+        const money = state.money ?? 0
+        const WELFARE_COUNTRIES = ['United States','United Kingdom','Australia','Germany','France','Canada','Netherlands','Sweden','Norway','Denmark','Finland','Ireland','New Zealand','Switzerland','Belgium','Austria']
+        const hasWelfare = WELFARE_COUNTRIES.includes(state.character?.country?.name) || ['wealthy_west','wealthy_east','post_soviet'].includes(state.character?.country?.archetype)
+        return (
+          <>
+            {/* Hardship section */}
+            {state.age >= 18 && (
+              <>
+                {(debt > 8000 && money < 500) && (
+                  <div className="bg-red-50 rounded-xl border border-red-200 px-3 py-2 mb-2 text-xs text-red-700">
+                    ⚠️ Your debt is critical. You may qualify for bankruptcy protection.
+                  </div>
+                )}
+                {money < 300 && state.age >= 18 && (
+                  <Btn
+                    danger
+                    disabled={money >= 300}
+                    onClick={() => { takePaydayLoan(); onClose() }}
+                    title="Take a Payday Loan"
+                    subtitle="$300 now. $420 owed at next due date. Annual rate: 400%+."
+                    cost="Receive: $300 · Owe: $420"
+                  />
+                )}
+                {!state.career && money < 500 && hasWelfare && (
+                  <Btn
+                    disabled={!!state.career || money >= 500}
+                    onClick={() => { applyForBenefits(); onClose() }}
+                    title="Apply for Government Benefits"
+                    subtitle="Welfare, SNAP, Universal Credit, or equivalent. Requires no current employment."
+                    cost="Receive: ~$400"
+                  />
+                )}
+                {debt > 8000 && money < 500 && (
+                  <Btn
+                    danger
+                    disabled={debt <= 8000 || money >= 500}
+                    onClick={() => { declareBankruptcy(); onClose() }}
+                    title="File for Bankruptcy"
+                    subtitle="Wipes qualifying debt. Destroys your credit score. Removes non-exempt assets. A last resort."
+                  />
+                )}
+              </>
+            )}
+            {moneyActivities
+              .filter(a => (!a.minAge || state.age >= a.minAge) && (!a.maxAge || state.age <= a.maxAge))
+              .filter(a => !a.condition || a.condition(G))
+              .map(a => (
+                <Btn key={a.id} disabled={noActions} onClick={() => go(() => takeActivity(a.id))} title={a.name} subtitle={a.description} cost={a.cost > 0 ? `Cost: $${a.cost.toLocaleString()}` : null} />
+              ))
+            }
+          </>
+        )
       }
 
       case 'crime': {
@@ -1172,6 +1287,12 @@ export default function ActivitiesPanel({ onClose }) {
         const isBlockedFromFormal = isUndocumented || isFugitive
         return (
           <>
+            {isHomeless && (
+              <div className="px-3 py-3 rounded-xl border border-amber-200 bg-amber-50 mb-1">
+                <p className="text-amber-700 text-sm font-semibold">Job applications are harder without a fixed address</p>
+                <p className="text-amber-600 text-xs mt-0.5">Most employers require a permanent address. You can still apply, but expect fewer responses. Sorting your housing situation will improve your chances.</p>
+              </div>
+            )}
             {isUndocumented && !isFugitive && (
               <div className="px-3 py-3 rounded-xl border border-amber-200 bg-amber-50 mb-1">
                 <p className="text-amber-700 text-sm font-semibold">No formal employment available</p>
@@ -1193,7 +1314,12 @@ export default function ActivitiesPanel({ onClose }) {
             {state.career && (
               <>
                 <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1">Current: {state.career.title}</p>
-                <Btn onClick={() => go(workHarder)} title="Work Harder" subtitle="Extra effort. Costs health and happiness." />
+                {anySevereUnmanaged && (
+                  <div className="bg-amber-50 border border-amber-200 rounded-xl px-3 py-2 mb-1 text-xs text-amber-800">
+                    ⚠️ A severe unmanaged condition is affecting your capacity. Working harder carries additional health risk.
+                  </div>
+                )}
+                <Btn onClick={() => go(workHarder)} title="Work Harder" subtitle={anySevereUnmanaged ? "Extra effort — with your condition, this costs more health." : "Extra effort. Costs health and happiness."} />
                 <Btn onClick={() => go(schmoozeBoss)} title="Schmooze the Boss" subtitle="Charisma-based. Results vary." />
                 <Btn onClick={() => go(askForRaise)} title="Ask for a Raise" subtitle="Performance and charisma determine success." />
                 <Btn onClick={() => go(quitJob)} title="Quit Your Job" subtitle={`Leave your position as ${state.career.title}.`} danger />
@@ -1262,12 +1388,21 @@ export default function ActivitiesPanel({ onClose }) {
 
       case 'substances': {
         const isAddict = state.flags.includes('alcohol_addiction') || state.flags.includes('drug_addiction')
+        const substanceConditionWarning = hasCondition('heart_disease') || hasCondition('depression_chronic') || hasCondition('copd') || hasCondition('diabetes_type1') || hasCondition('diabetes_type2')
         return (
           <>
             {isAddict && (
               <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-xl px-4 py-3 mb-1">
                 <span className="text-lg">⚠️</span>
                 <p className="text-xs font-semibold text-bit-red">Active addiction. Consider rehab.</p>
+              </div>
+            )}
+            {substanceConditionWarning && (
+              <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 mb-1 text-xs text-amber-800">
+                {hasCondition('heart_disease') && <p>Heart disease: alcohol increases cardiovascular risk.</p>}
+                {hasCondition('depression_chronic') && <p>Depression: substances typically make this worse over time.</p>}
+                {hasCondition('copd') && <p>COPD: smoking or inhaled substances damage airways further.</p>}
+                {(hasCondition('diabetes_type1') || hasCondition('diabetes_type2')) && <p>Diabetes: alcohol affects blood sugar unpredictably.</p>}
               </div>
             )}
             <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider px-1 py-1">Alcohol</p>
@@ -1777,6 +1912,7 @@ export default function ActivitiesPanel({ onClose }) {
               const badge = cat.key === 'prison' && state.inPrison ? { text: `${state.prisonSentence}yr`, color: '#ff3b30' } :
                             cat.key === 'underground' && isUnderground ? { text: '!', color: '#ff3b30' } :
                             cat.key === 'rehab' && hasAddiction ? { text: '!', color: '#ff3b30' } :
+                            cat.key === 'mind_body' && anySevereUnmanaged ? { text: '⚕', color: '#ff9500' } :
                             cat.key === 'love' && pendingPartner && !state.partner ? { text: '💘', color: '#ff6b81' } :
                             cat.key === 'social_media' && sm.followers > 0 ? { text: sm.followers >= 1000 ? `${(sm.followers/1000).toFixed(0)}k` : sm.followers.toString(), color: '#007aff' } :
                             cat.key === 'friends' && (state.friends ?? []).filter(f => f.alive).length > 0 ? { text: (state.friends ?? []).filter(f => f.alive).length.toString(), color: '#34c759' } :

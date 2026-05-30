@@ -700,6 +700,54 @@ export const useGameStore = create((set, get) => ({
     set(getPlasticSurgery(state, type))
   },
 
+  // ── Financial hardship actions ────────────────────────────────────────────
+
+  takePaydayLoan: () => {
+    const state = get()
+    if (state.dead) return
+    if ((state.money ?? 0) >= 300) return
+    const received = 300
+    const repayDebt = 420
+    set({
+      ...state,
+      money: (state.money ?? 0) + received,
+      debt: (state.debt ?? 0) + repayDebt,
+      flags: [...new Set([...state.flags, 'took_payday_loan', 'debt_spiral_active'])],
+      log: [...state.log, { age: state.age, text: `You take a payday loan of $${received}. You owe $${repayDebt} at the next due date.`, isKey: false }],
+    })
+  },
+
+  applyForBenefits: () => {
+    const state = get()
+    if (state.dead) return
+    if (state.career || (state.money ?? 0) >= 500) return
+    const payment = 400
+    set({
+      ...state,
+      money: (state.money ?? 0) + payment,
+      flags: [...new Set([...state.flags, 'benefits_applied', 'benefits_recipient'])],
+      log: [...state.log, { age: state.age, text: `You apply for and receive ${payment > 0 ? `$${payment} in ` : ''}government assistance.`, isKey: false }],
+    })
+  },
+
+  declareBankruptcy: () => {
+    const state = get()
+    if (state.dead) return
+    if ((state.debt ?? 0) < 8000 || (state.money ?? 0) >= 500) return
+    // Remove non-exempt assets: vehicles first, then unsecured properties
+    const newVehicles = []
+    const newProperties = (state.assets?.properties ?? []).filter(p => p.mortgaged)
+    set({
+      ...state,
+      debt: 0,
+      money: Math.max(-2000, state.money ?? 0),
+      creditScore: 320,
+      assets: { ...(state.assets ?? {}), vehicles: newVehicles, properties: newProperties },
+      flags: [...new Set([...state.flags, 'bankrupt', 'declared_bankrupt', 'debt_spiral_survived'])],
+      log: [...state.log, { age: state.age, text: 'You file for bankruptcy. The debts are discharged. The relief is real. So is the cost.', isKey: true }],
+    })
+  },
+
   // ── Asset actions ───────────────────────────────────────────────────────────
 
   buyProperty: (typeId) => {
