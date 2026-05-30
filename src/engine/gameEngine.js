@@ -3141,6 +3141,16 @@ export function tick(state) {
   // Illness risk check
   s = checkIllnessRisk(s)
 
+  // Charisma passive drain under authoritarian regimes (self-suppression of social energy)
+  if (s.flags.includes('learned_silence') || s.flags.includes('authoritarian_childhood')) {
+    const liveCountry = s.currentCountry ?? s.character?.country
+    const regime = getCountryRegime(liveCountry, s.currentYear)
+    const authRegimes = ['military_dictatorship', 'single_party_communist', 'single_party_authoritarian', 'theocracy', 'absolute_monarchy']
+    if (authRegimes.includes(regime)) {
+      s.stats = { ...s.stats, charisma: clamp(s.stats.charisma - 1, 10, 100) }
+    }
+  }
+
   // Death check
   const death = checkDeath(s)
   if (death.dead) {

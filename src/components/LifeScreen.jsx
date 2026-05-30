@@ -604,8 +604,23 @@ export default function LifeScreen() {
                 <StatBar stat="happiness" label="Happiness" value={stats.happiness} />
                 <StatBar stat="health"    label="Health"    value={stats.health} />
                 <StatBar stat="smarts"    label="Smarts"    value={stats.smarts} />
-                <StatBar stat="looks"     label="Looks"     value={stats.looks} />
-                <StatBar stat="charisma"  label="Charisma"  value={stats.charisma} />
+                <div>
+                  <StatBar stat="looks" label="Looks" value={stats.looks} />
+                  <p className="text-xs text-natalis-muted mt-0.5">
+                    {stats.looks >= 75 ? 'Appearance opens certain doors. Not all of them worth opening.' :
+                     stats.looks >= 50 ? 'Unremarkable in the best sense.' :
+                     'You have learned that appearance carries weight in the world.'}
+                  </p>
+                </div>
+                <div>
+                  <StatBar stat="charisma" label="Charisma" value={stats.charisma} />
+                  <p className="text-xs text-natalis-muted mt-0.5">
+                    {stats.charisma >= 75 ? 'People are drawn to you. Doors open before you knock.' :
+                     stats.charisma >= 50 ? 'You make friends without difficulty. Rooms feel open to you.' :
+                     stats.charisma >= 30 ? 'Some social situations cost you more than others.' :
+                     'You do better one-on-one than in groups. Groups are exhausting.'}
+                  </p>
+                </div>
                 <div>
                   <StatBar stat="wealth" label="Wealth (lifestyle score)" value={stats.wealth} />
                   <p className="text-xs text-natalis-muted mt-1">Cash: <span className="font-semibold text-natalis-text">{formatMoney(money)}</span> · Net Worth: <span className="font-semibold text-natalis-text">{formatMoney(netWorth)}</span></p>
