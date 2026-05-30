@@ -177,7 +177,7 @@ export const COUNTRY_ARC_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => G.character.country.name === 'Kenya' && G.currentYear >= 1970 && G.currentYear <= 1990 && G.stats.wealth >= 50 && G.ruralUrban !== 'rural' && !G.mem?.kenyaNairobiMC,
-    text: 'Nairobi in the 1970s is East Africa\'s capital in more than name. Embassies, airlines, the UN\'s African headquarters. You work in a building with a lift that works. Your colleagues are Kikuyu, Luo, Luhya, Asian-Kenyan — the city holds a variety that the village you came from did not. The ethnic calculations are present but so is the possibility of a day when they matter less.',
+    text: 'Nairobi in the 1970s is East Africa\'s capital in more than name. Embassies, airlines, the UN\'s African headquarters. You work in a building with a lift that works. Your colleagues are Kikuyu, Luo, Luhya, Asian-Kenyan — the city holds a variety that the village you came from did not. Kenyatta\'s word for the project was *harambee* — pull together — and the city does pull together, unevenly, toward something that is not yet named.',
     choices: [
       { text: 'Build across tribal lines deliberately', tag: null, outcome: 'You cultivate friendships across the lines your parents observed. Some take. Some don\'t. You do not regret the attempt.', effect: (p) => { p.m += 8; p.s += 6; p.karma += 5; p.setMem('kenyaNairobiMC', true); } },
       { text: 'Navigate them practically — they are real', tag: null, outcome: 'You know which colleagues to approach for which things. This knowledge is not cynicism; it is reading a room accurately.', effect: (p) => { p.m += 5; p.e += 4; p.setMem('kenyaNairobiMC', true); } },

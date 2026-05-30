@@ -83,7 +83,7 @@ export const PALESTINE_EVENTS = [
       G.age >= 15 && G.age <= 40 &&
       (G.currentYear ?? 0) >= 1993 && (G.currentYear ?? 0) <= 1997 &&
       !G.mem?.palOsloDone,
-    text: 'The Oslo handshake is on every television screen. Yasser Arafat and Yitzhak Rabin on the White House lawn. The adults you know are divided: some are cautiously hopeful, some say Arafat has given everything for nothing, some say any document that ends the occupation is worth signing. You do not know yet which of them is right. Neither do they.',
+    text: 'The Oslo handshake is on every television screen. Yasser Arafat and Yitzhak Rabin on the White House lawn. The adults you know are divided: some are cautiously hopeful, some say Arafat has given everything for nothing, some say any document that ends the occupation is worth signing. An older man at the coffee house says *inshallah* — God willing — the way people say it when they have learned not to attach too much certainty to anything they want. You do not know yet which of them is right. Neither do they.',
     choices: [
       {
         text: 'Let yourself hope — the framework is something',
