@@ -2279,6 +2279,65 @@ export const WORLD_EVENTS = [
     when: (G) => !G.flags.includes('tipping_point_generation'),
   },
 
+  // ── WOMEN'S LIBERATION MARCH 1970 ─────────────────────────────────────────
+  {
+    id: 'womens_liberation_march_1970',
+    name: "Women's Liberation March",
+    years: [1970, 1972],
+    archetypes: ['wealthy_west'],
+    countries: null,
+    narrative: (G) => {
+      if (G.character.gender === 'female') {
+        return 'Fifty thousand women march down Fifth Avenue in New York. Similar marches happen in London and Paris the same week. The demands are concrete: equal pay, childcare, abortion rights. The energy in the streets is different from anything you have seen — not grief or anger exactly but a kind of collective recognition, the specific feeling of a thing finally being named.'
+      }
+      return 'Fifty thousand women march down Fifth Avenue in New York. You watch the news footage or read the coverage. Something is shifting in how the question is being asked — not whether women deserve equality but when and by what means. The answer to the first question is no longer in dispute in the room you grew up in. The second question is being answered in the streets.'
+    },
+    context: "The 1970 Women's Strike for Equality, organized by Betty Friedan and NOW, marked the 50th anniversary of women's suffrage. It was the largest women's rights demonstration in US history at that point. The strike called for free abortion on demand, free childcare, and equal opportunity in employment and education. Similar marches occurred in London and Paris. These events marked the peak of second-wave feminism's public visibility and directly preceded landmark legislation: the Equal Rights Amendment passed Congress in 1972, Title IX passed in 1972, and Roe v. Wade was decided in 1973.",
+    effect: (p) => {
+      if (p._state?.character?.gender === 'female') {
+        p.m += 8
+        p.addFlag('liberation_generation')
+      } else {
+        p.m += 3
+      }
+    },
+    addFlags: [],
+    minAge: 14,
+    when: (G) => !G.flags.includes('liberation_generation'),
+  },
+
+  // ── AFGHANISTAN GIRLS' SCHOOL BAN 2022 ────────────────────────────────────
+  {
+    id: 'afghanistan_girls_school_ban_2022',
+    name: "Taliban Bans Girls from Secondary School",
+    years: [2022, 2025],
+    archetypes: null,
+    countries: ['Afghanistan'],
+    narrative: (G) => {
+      if (G.character.gender === 'female' && G.age >= 12 && G.age <= 21) {
+        return 'The decree arrives without warning. Secondary schools for girls are closed. University is closed. The books are still in your bag. There is no explanation that makes sense as an explanation, only as an assertion of a particular kind of power over a particular kind of person. You understand this completely. Understanding it does not make it less total.'
+      }
+      if (G.character.gender === 'female') {
+        return 'The decree closes secondary schools and universities to girls and women. You are past the age of being directly affected. The girls in your family, your neighbourhood, the daughters of everyone you know — they are not.'
+      }
+      return 'Secondary schools and universities are closed to women and girls, effective immediately. In the city you know, this means half the students in every classroom are no longer permitted to be there. The international community issues statements. The schools remain closed.'
+    },
+    context: 'In March 2022, the Taliban reversed a brief reopening of secondary schools for girls, closing them again hours after students arrived. In December 2022, they banned women from universities. By 2023, Afghanistan was the only country in the world to formally prohibit women from attending secondary school. An estimated 2.5 million Afghan girls were denied access to education. The ban has been condemned by the United Nations, Islamic scholars internationally, and the Organisation of Islamic Cooperation, but remained in place as of 2025.',
+    effect: (p) => {
+      if (p._state?.character?.gender === 'female') {
+        p.m -= 15
+        p.r += 8
+        p.addFlag('education_denied_gender')
+      } else {
+        p.m -= 6
+        p.r += 3
+      }
+    },
+    addFlags: [],
+    minAge: 10,
+    when: null,
+  },
+
   {
     id: 'beirut_port_explosion_2020',
     name: 'Beirut Port Explosion',

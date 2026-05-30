@@ -1112,6 +1112,58 @@ export const RIBBONS = [
     color: 'gray',
   },
 
+  // ── BUILD 45 — INTIMACY ARC ──────────────────────────────────────────────
+  {
+    id: 'the_late_love',
+    name: 'The Late Beginning',
+    description: 'You found love after the age when people stop expecting to. You were surprised anyway.',
+    condition: (G) => G.flags.includes('late_love_found'),
+    priority: 62,
+    color: 'pink',
+  },
+  {
+    id: 'the_affair_not_taken',
+    name: 'The Road Not Taken',
+    description: 'You saw the door and chose not to open it. The decision cost something. You did not entirely regret it.',
+    condition: (G) => G.flags.includes('affair_not_taken'),
+    priority: 55,
+    color: 'blue',
+  },
+  {
+    id: 'the_solo_architecture',
+    name: 'The Built-For-One',
+    description: 'You built a life that did not centre around couplehood. It had its own structure. It did not need a name.',
+    condition: (G) => G.flags.includes('built_something_solo'),
+    priority: 58,
+    color: 'green',
+  },
+
+  // ── BUILD 46 — SCHOOL AS INSTITUTION ─────────────────────────────────────
+  {
+    id: 'the_scholarship_student',
+    name: 'The Scholarship Door',
+    description: 'You got in on merit, into a room built for people with money. You knew the difference. The door was real anyway.',
+    condition: (G) => G.flags.includes('scholarship_opened_doors'),
+    priority: 65,
+    color: 'blue',
+  },
+  {
+    id: 'the_war_school',
+    name: 'The School That Stayed Open',
+    description: 'You attended school in a city at war. The teacher was there every morning at seven-thirty. The routine held something together.',
+    condition: (G) => G.flags.includes('war_school_attended'),
+    priority: 60,
+    color: 'gray',
+  },
+  {
+    id: 'the_teacher_remembered',
+    name: 'The Teacher Who Came Anyway',
+    description: 'Somewhere in your education there was someone who showed up when they had every reason not to. You carried them without a name.',
+    condition: (G) => G.flags.includes('teacher_sacrifice'),
+    priority: 55,
+    color: 'green',
+  },
+
   // ── BURST Q — GANG ARC ────────────────────────────────────────────────────
   {
     id: 'the_way_out',
