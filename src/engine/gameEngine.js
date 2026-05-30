@@ -773,6 +773,9 @@ function buildEffectProxy(state) {
   proxy.convertToHardCurrency = (amount) => { proxy._hardCurrencyAdd = (proxy._hardCurrencyAdd ?? 0) + amount; proxy.mo -= amount }
   proxy.reduceHouseholdContribution = () => { proxy._reduceHouseholdContribution = true }
   proxy.setWorkStatus = (val) => { proxy._workStatus = val }
+  proxy.removeFirstVehicle = () => { proxy._removeFirstVehicle = true }
+  proxy.removeFirstMortgagedProperty = () => { proxy._removeFirstMortgagedProp = true }
+  proxy.setCreditScore = (val) => { proxy._creditScoreSet = val }
   proxy.partnerRel = (delta) => { proxy._partnerRelDelta = (proxy._partnerRelDelta ?? 0) + delta }
   proxy.updatePartnerRel = proxy.partnerRel
   proxy.makePartner = (overrides = {}) => {
@@ -899,6 +902,20 @@ function resolveProxyExtras(state, proxy) {
   if (proxy._hardCurrencyAdd !== undefined) next = { ...next, hardCurrencyReserve: (next.hardCurrencyReserve ?? 0) + proxy._hardCurrencyAdd }
   if (proxy._debtDelta !== undefined) next = { ...next, debt: Math.max(0, (next.debt ?? 0) + proxy._debtDelta) }
   if (proxy._debtSet !== undefined) next = { ...next, debt: Math.max(0, proxy._debtSet) }
+  if (proxy._creditScoreSet !== undefined) next = { ...next, creditScore: Math.max(300, Math.min(850, proxy._creditScoreSet)) }
+  if (proxy._removeFirstVehicle) {
+    const vehicles = next.assets?.vehicles ?? []
+    if (vehicles.length > 0) {
+      next = { ...next, assets: { ...(next.assets ?? {}), vehicles: vehicles.slice(1) } }
+    }
+  }
+  if (proxy._removeFirstMortgagedProp) {
+    const props = next.assets?.properties ?? []
+    const idx = props.findIndex(p => p.mortgaged)
+    if (idx !== -1) {
+      next = { ...next, assets: { ...(next.assets ?? {}), properties: props.filter((_, i) => i !== idx) } }
+    }
+  }
   if (proxy._reduceHouseholdContribution) next = { ...next, householdContribution: { ...(next.householdContribution ?? {}), reduced: true } }
   // Track year-of-death for grief fog in buildYearTexture
   if (proxy._killParent && next.parents?.[proxy._killParent]) {
@@ -2581,17 +2598,21 @@ export function tick(state) {
     const interest = Math.round(s.debt * interestRate)
     s.debt = s.debt + interest
     s.money = (s.money ?? 0) - Math.round(s.debt * 0.05) // minimum payment
-    if (s.money < -50000) {
-      s.flags = [...new Set([...s.flags, 'bankrupt'])]
+    if (s.money < -8000) {
+      s.flags = [...new Set([...s.flags, 'bankrupt', 'declared_bankrupt', 'debt_spiral_survived'])]
       s.debt = 0
-      s.money = -5000
-      s.creditScore = Math.max(300, (s.creditScore ?? 700) - 200)
+      s.money = -2000
+      s.creditScore = 320
       s.log = [...s.log, { age: s.age, text: 'You are declared bankrupt. A relief and a shame at once.', isKey: true }]
     }
   }
-  // Credit score slow recovery
+  // Auto-flag debt spiral when in trouble
+  if ((s.debt ?? 0) > 3000 && (s.money ?? 0) < 500) {
+    s.flags = [...new Set([...s.flags, 'debt_spiral_active'])]
+  }
+  // Credit score recovery: faster when debt-free, slower when in debt
   if (!s.debt && (s.creditScore ?? 700) < 800) {
-    s.creditScore = Math.min(800, (s.creditScore ?? 700) + 2)
+    s.creditScore = Math.min(800, (s.creditScore ?? 700) + 15)
   }
 
   // Parent aging and possible inheritance

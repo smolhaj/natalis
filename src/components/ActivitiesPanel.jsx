@@ -140,6 +140,9 @@ export default function ActivitiesPanel({ onClose }) {
   const doUpgradeResidency = useGameStore(s => s.upgradeResidency)
   const doSeekAsylum       = useGameStore(s => s.seekAsylum)
   const doEmigrate         = useGameStore(s => s.emigrate)
+  const takePaydayLoan     = useGameStore(s => s.takePaydayLoan)
+  const applyForBenefits   = useGameStore(s => s.applyForBenefits)
+  const declareBankruptcy  = useGameStore(s => s.declareBankruptcy)
 
   const actionsLeft = state.maxActionsPerYear - state.actionsThisYear
   const noActions = actionsLeft <= 0
@@ -150,6 +153,7 @@ export default function ActivitiesPanel({ onClose }) {
   const hasCondition = (id) => conditions.some(c => c.id === id)
   const hasSevereUnmanaged = (id) => conditions.some(c => c.id === id && c.severity === 'severe' && !c.managed)
   const anySevereUnmanaged = conditions.some(c => c.severity === 'severe' && !c.managed)
+  const isHomeless = state.mem?.isHomeless === true
 
   const CONDITION_LABELS = {
     diabetes_type1: 'Type 1 Diabetes', diabetes_type2: 'Type 2 Diabetes',
@@ -488,9 +492,14 @@ export default function ActivitiesPanel({ onClose }) {
 
         return (
           <>
+            {isHomeless && (
+              <div className="bg-amber-50 rounded-xl border border-amber-200 px-3 py-2 mb-2 text-xs text-amber-700">
+                Without a stable address, meeting someone new is harder. Most dating apps require a fixed location.
+              </div>
+            )}
             {state.age >= 16 && !state.partner && (
               <>
-                <Btn disabled={noActions} onClick={() => meetSomeone()} title="Meet Someone New" subtitle="Put yourself out there." />
+                <Btn disabled={noActions || isHomeless} onClick={() => meetSomeone()} title="Meet Someone New" subtitle={isHomeless ? "Not possible without a stable address." : "Put yourself out there."} />
                 {state.age >= 18 && (
                   <Btn
                     disabled={noActions || (state.money ?? 0) < 100}
@@ -824,11 +833,16 @@ export default function ActivitiesPanel({ onClose }) {
         const vehicles = state.assets?.vehicles ?? []
         return (
           <>
+            {isHomeless && (
+              <div className="bg-amber-50 rounded-xl border border-amber-200 px-3 py-2 mb-2 text-xs text-amber-700">
+                Property purchase requires proof of address. Resolve your housing situation first.
+              </div>
+            )}
             <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 py-1">Buy Property</p>
             {PROPERTY_TYPES.map(type => {
               const downPayment = Math.round(type.basePrice * type.downPaymentRate)
               return (
-                <Btn key={type.id} disabled={noActions || (state.money ?? 0) < downPayment || state.age < 18}
+                <Btn key={type.id} disabled={noActions || (state.money ?? 0) < downPayment || state.age < 18 || isHomeless}
                   onClick={() => { buyProperty(type.id); onClose() }}
                   title={type.name} subtitle={type.description}
                   cost={`~$${type.basePrice.toLocaleString()} · Deposit: $${downPayment.toLocaleString()}`} />
@@ -891,12 +905,59 @@ export default function ActivitiesPanel({ onClose }) {
 
       case 'money': {
         const moneyActivities = ACTIVITIES.money ?? []
-        return moneyActivities
-          .filter(a => (!a.minAge || state.age >= a.minAge) && (!a.maxAge || state.age <= a.maxAge))
-          .filter(a => !a.condition || a.condition(G))
-          .map(a => (
-            <Btn key={a.id} disabled={noActions} onClick={() => go(() => takeActivity(a.id))} title={a.name} subtitle={a.description} cost={a.cost > 0 ? `Cost: $${a.cost.toLocaleString()}` : null} />
-          ))
+        const debt = state.debt ?? 0
+        const money = state.money ?? 0
+        const WELFARE_COUNTRIES = ['United States','United Kingdom','Australia','Germany','France','Canada','Netherlands','Sweden','Norway','Denmark','Finland','Ireland','New Zealand','Switzerland','Belgium','Austria']
+        const hasWelfare = WELFARE_COUNTRIES.includes(state.character?.country?.name) || ['wealthy_west','wealthy_east','post_soviet'].includes(state.character?.country?.archetype)
+        return (
+          <>
+            {/* Hardship section */}
+            {state.age >= 18 && (
+              <>
+                {(debt > 8000 && money < 500) && (
+                  <div className="bg-red-50 rounded-xl border border-red-200 px-3 py-2 mb-2 text-xs text-red-700">
+                    ⚠️ Your debt is critical. You may qualify for bankruptcy protection.
+                  </div>
+                )}
+                {money < 300 && state.age >= 18 && (
+                  <Btn
+                    danger
+                    disabled={money >= 300}
+                    onClick={() => { takePaydayLoan(); onClose() }}
+                    title="Take a Payday Loan"
+                    subtitle="$300 now. $420 owed at next due date. Annual rate: 400%+."
+                    cost="Receive: $300 · Owe: $420"
+                  />
+                )}
+                {!state.career && money < 500 && hasWelfare && (
+                  <Btn
+                    disabled={!!state.career || money >= 500}
+                    onClick={() => { applyForBenefits(); onClose() }}
+                    title="Apply for Government Benefits"
+                    subtitle="Welfare, SNAP, Universal Credit, or equivalent. Requires no current employment."
+                    cost="Receive: ~$400"
+                  />
+                )}
+                {debt > 8000 && money < 500 && (
+                  <Btn
+                    danger
+                    disabled={debt <= 8000 || money >= 500}
+                    onClick={() => { declareBankruptcy(); onClose() }}
+                    title="File for Bankruptcy"
+                    subtitle="Wipes qualifying debt. Destroys your credit score. Removes non-exempt assets. A last resort."
+                  />
+                )}
+              </>
+            )}
+            {moneyActivities
+              .filter(a => (!a.minAge || state.age >= a.minAge) && (!a.maxAge || state.age <= a.maxAge))
+              .filter(a => !a.condition || a.condition(G))
+              .map(a => (
+                <Btn key={a.id} disabled={noActions} onClick={() => go(() => takeActivity(a.id))} title={a.name} subtitle={a.description} cost={a.cost > 0 ? `Cost: $${a.cost.toLocaleString()}` : null} />
+              ))
+            }
+          </>
+        )
       }
 
       case 'crime': {
@@ -1226,6 +1287,12 @@ export default function ActivitiesPanel({ onClose }) {
         const isBlockedFromFormal = isUndocumented || isFugitive
         return (
           <>
+            {isHomeless && (
+              <div className="px-3 py-3 rounded-xl border border-amber-200 bg-amber-50 mb-1">
+                <p className="text-amber-700 text-sm font-semibold">Job applications are harder without a fixed address</p>
+                <p className="text-amber-600 text-xs mt-0.5">Most employers require a permanent address. You can still apply, but expect fewer responses. Sorting your housing situation will improve your chances.</p>
+              </div>
+            )}
             {isUndocumented && !isFugitive && (
               <div className="px-3 py-3 rounded-xl border border-amber-200 bg-amber-50 mb-1">
                 <p className="text-amber-700 text-sm font-semibold">No formal employment available</p>
