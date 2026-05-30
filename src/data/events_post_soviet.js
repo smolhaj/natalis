@@ -114,7 +114,7 @@ export const POST_SOVIET_EVENTS = [
       {
         text: 'Use your connections — someone knows someone',
         tag: null,
-        outcome: 'The informal economy runs on relationships. You are not without them.',
+        outcome: 'The informal economy runs on *blat* — the network of favours and obligations that held the Soviet system together from below. You are not without it.',
         effect: (p) => { p.w -= 5; p.m -= 5; p.s += 4; p.addFlag('post_soviet_collapse'); p.addFlag('used_connections'); p.setMem('psFactoryClosure', true) },
       },
     ],

@@ -1111,4 +1111,22 @@ export const RIBBONS = [
     priority: 68,
     color: 'gray',
   },
+
+  // ── BURST Q — GANG ARC ────────────────────────────────────────────────────
+  {
+    id: 'the_way_out',
+    name: 'The Way Out',
+    description: 'You found the exit from organised crime and you took it. That alone is something.',
+    condition: (G) => G.flags.includes('left_gang'),
+    priority: 66,
+    color: 'green',
+  },
+  {
+    id: 'the_inside',
+    name: 'The Inside',
+    description: 'You went deep into organised crime. You know things that cannot be unknowed.',
+    condition: (G) => G.flags.includes('gang_leadership') || G.flags.includes('gang_senior'),
+    priority: 55,
+    color: 'red',
+  },
 ]

@@ -68,7 +68,7 @@ export const GRIEF_EVENTS = [
     text: (G) => {
       const arch = G.character.country.archetype
       if (arch === 'subsaharan') {
-        return 'The funeral is three days. There is food and music and a crowd of people from your parent\'s whole life. Women from the church sing in rotation. Children run between the adults. The grief is communal in a way that exhausts and holds you simultaneously.'
+        return 'The funeral is three days. There is food and music and a crowd of people from your parent\'s whole life. Women from the church sing in rotation. Children run between the adults. The grief is communal — *ubuntu*, the understanding that a person is a person through other people, which means their loss is also communal — in a way that exhausts and holds you simultaneously.'
       } else if (G.character.country.name === 'Japan') {
         return 'The ceremony is precise and unhurried. Incense. White. The attendants in black moving with a kind of choreographed quiet. You are not encouraged to weep openly. You carry the grief with the same posture as everyone else: straight-backed, present, inside.'
       } else if (G.religion === 'muslim') {

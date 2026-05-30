@@ -1763,6 +1763,9 @@ export function fileForDivorce(state) {
 
 export function tryForChild(state) {
   if (!state.partner) return state
+  if (state.flags.includes('pregnant')) {
+    return { ...state, log: [...state.log, { age: state.age, text: 'You are already expecting.', isKey: false }] }
+  }
   if (state.birthControl) {
     return { ...state, log: [...state.log, { age: state.age, text: "You're currently using birth control.", isKey: false }] }
   }
@@ -1777,16 +1780,16 @@ export function tryForChild(state) {
       log: [...state.log, { age: state.age, text: "You try for a child — it doesn't happen this year.", isKey: false }],
     }
   }
+  // Conception — store child details in mem; birth will be delivered by tick() ~2 years later
   const cGender = chance(0.5) ? 'male' : 'female'
   const c = state.character.country
   const childName = `${pickFrom(cGender === 'male' ? c.namePool.male : c.namePool.female)} ${state.character.surname}`
-  const child = { name: childName, gender: cGender, ageAtBirth: state.age, relationshipQuality: 80, traits: pickTraits(CHILD_TRAITS) }
+  const traits = pickTraits(CHILD_TRAITS)
   return {
     ...state,
-    children: [...state.children, child],
-    flags: [...new Set([...state.flags, 'parent', 'trying_for_child'])],
-    stats: { ...state.stats, happiness: clamp(state.stats.happiness + 10, 0, 100) },
-    log: [...state.log, { age: state.age, text: `${childName} is born. Everything shifts.`, isKey: true }],
+    flags: [...new Set([...state.flags, 'pregnant', 'trying_for_child'])],
+    mem: { ...(state.mem ?? {}), pregnancyYear: state.age, pendingChild: { name: childName, gender: cGender, traits } },
+    log: [...state.log, { age: state.age, text: 'You are pregnant. The knowledge of it sits in your body before you have words for it.', isKey: true }],
   }
 }
 
@@ -2588,6 +2591,57 @@ export function tick(state) {
 
   // Natural aging
   s = applyNaturalAging(s)
+
+  // Pending birth — deliver child after ~2 age-up cycles from conception
+  // This allows pregnancy texture events to fire before the birth year
+  if (s.flags.includes('pregnant')) {
+    // Normalise: if pregnancyYear not in mem (e.g. set by IVF event), initialise it
+    if (s.mem?.pregnancyYear === undefined) {
+      const cGender = chance(0.5) ? 'male' : 'female'
+      const c = s.character?.country
+      const childName = c ? `${pickFrom(cGender === 'male' ? c.namePool.male : c.namePool.female)} ${s.character.surname}` : 'Baby'
+      s.mem = { ...(s.mem ?? {}), pregnancyYear: s.age - 1, pendingChild: { name: childName, gender: cGender, traits: pickTraits(CHILD_TRAITS) } }
+    }
+    // Birth fires when age >= pregnancyYear + 2 (one year of pregnancy events, then birth)
+    if (s.age >= (s.mem.pregnancyYear ?? 0) + 2) {
+      const pc = s.mem.pendingChild
+      const archetype = s.character?.country?.archetype
+      const healthcare = s.character?.country?.healthcare
+      const isHighRisk = (s.currentYear < 1950) || archetype === 'subsaharan' || archetype === 'conflict_zone' ||
+        archetype === 'developing_unstable' || s.flags.includes('high_risk_pregnancy') ||
+        healthcare === 'very_poor' || healthcare === 'poor'
+      const deathProb   = isHighRisk ? 0.018 : 0.001
+      const compProb    = isHighRisk ? 0.10  : 0.03
+
+      // Generate child if somehow still missing
+      const childData = pc ?? (() => {
+        const cg = chance(0.5) ? 'male' : 'female'
+        const cc = s.character?.country
+        const cn = cc ? `${pickFrom(cg === 'male' ? cc.namePool.male : cc.namePool.female)} ${s.character.surname}` : 'Baby'
+        return { name: cn, gender: cg, traits: pickTraits(CHILD_TRAITS) }
+      })()
+
+      const child = { name: childData.name, gender: childData.gender, ageAtBirth: s.age, relationshipQuality: 80, traits: childData.traits }
+      s.children = [...s.children, child]
+      s.mem = { ...s.mem, pregnancyYear: undefined, pendingChild: undefined }
+
+      if (chance(deathProb)) {
+        // Maternal death — rare; child survives
+        s.flags = [...new Set([...s.flags.filter(f => f !== 'pregnant'), 'parent'])]
+        s.log = [...s.log, { age: s.age, text: `${child.name} is born. You do not survive the labour.`, isKey: true }]
+        return { ...s, dead: true, causeOfDeath: 'Complications in childbirth', ribbon: assignRibbon(s), screen: 'death' }
+      } else if (chance(compProb)) {
+        // Near-miss complication — events will pick this up via birth_complication_survived flag
+        s.flags = [...new Set([...s.flags.filter(f => f !== 'pregnant'), 'parent', 'birth_complication_survived'])]
+        s.stats = { ...s.stats, health: clamp(s.stats.health - 20, 0, 100) }
+        s.log = [...s.log, { age: s.age, text: `${child.name} is born. There were complications. You came close to not surviving.`, isKey: true }]
+      } else {
+        s.flags = [...new Set([...s.flags.filter(f => f !== 'pregnant'), 'parent'])]
+        s.stats = { ...s.stats, happiness: clamp(s.stats.happiness + 10, 0, 100) }
+        s.log = [...s.log, { age: s.age, text: `${child.name} is born. Everything shifts.`, isKey: true }]
+      }
+    }
+  }
 
   // Family income during childhood (before career income, no career yet)
   if (s.age < 18 && !s.career) s = tickFamilyIncome(s)
