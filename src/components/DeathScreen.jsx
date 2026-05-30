@@ -1,5 +1,5 @@
 import { useGameStore } from '../store/gameStore'
-import FlagChip from './FlagChip'
+import { generateLifeNotes } from '../engine/gameEngine'
 import StatBar from './StatBar'
 
 const RIBBON_STYLES = {
@@ -25,12 +25,15 @@ export default function DeathScreen() {
   const children      = useGameStore(s => s.children)
   const money         = useGameStore(s => s.money)
   const startNewLife  = useGameStore(s => s.startNewLife)
+  const fullState     = useGameStore(s => s)
 
   if (!character) return null
 
   const birthYear = character.birthYear
   const deathYear = birthYear + age
   const rs = RIBBON_STYLES[ribbon?.color ?? 'gray']
+  const lifeNotes = generateLifeNotes(fullState)
+  const epitaphParagraphs = epitaph ? epitaph.split('\n\n').filter(Boolean) : []
 
   const formatMoney = (n) => {
     if (!n) return '$0'
@@ -68,8 +71,15 @@ export default function DeathScreen() {
 
         {/* Epitaph */}
         <div className="bg-white rounded-2xl p-5 border border-natalis-border shadow-card">
-          <p className="text-xs font-bold uppercase tracking-wider text-natalis-muted mb-2">📜 Epitaph</p>
-          <p className="text-natalis-text text-sm leading-relaxed italic">{epitaph}</p>
+          <p className="text-xs font-bold uppercase tracking-wider text-natalis-muted mb-3">Obituary</p>
+          <div className="space-y-3">
+            {epitaphParagraphs.map((para, i) => (
+              <p key={i} className="text-natalis-text text-sm leading-relaxed italic">{para}</p>
+            ))}
+            {epitaphParagraphs.length === 0 && epitaph && (
+              <p className="text-natalis-text text-sm leading-relaxed italic">{epitaph}</p>
+            )}
+          </div>
         </div>
 
         {/* Stats summary */}
@@ -96,13 +106,18 @@ export default function DeathScreen() {
           </div>
         </div>
 
-        {/* Flags */}
-        {flags.length > 0 && (
-          <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-            <p className="font-bold text-natalis-text text-sm mb-3">Life Flags</p>
-            <div className="flex flex-wrap gap-1.5">
-              {flags.map(f => <FlagChip key={f} flag={f} />)}
-            </div>
+        {/* Life in brief */}
+        {lifeNotes.length > 0 && (
+          <div className="bg-white rounded-2xl p-5 border border-natalis-border shadow-card">
+            <p className="text-xs font-bold uppercase tracking-wider text-natalis-muted mb-3">Life in brief</p>
+            <ul className="space-y-1.5">
+              {lifeNotes.map((note, i) => (
+                <li key={i} className="text-sm text-natalis-text italic flex items-start gap-2">
+                  <span className="text-natalis-muted mt-0.5 shrink-0">—</span>
+                  <span>{note}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         )}
 

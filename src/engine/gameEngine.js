@@ -4416,349 +4416,400 @@ export function generateEpitaph(state) {
   const country = character.country.name
   const birthCountryName = getCountryDisplayName(character.country, character.birthYear)
   const { fame, assets, siblings } = state
-  const lines = []
 
-  // — Opening line —
+  const f = (flag) => flags.includes(flag)
+  const any = (...fs) => fs.some(g => flags.includes(g))
+
   const bornIn = birthCountryName !== country
     ? `${birthCountryName} (now ${country})`
     : country
+
+  // Paragraphs accumulate as string arrays; joined with double newline at end
+  const para1 = [] // origin + childhood
+  const para2 = [] // historical witness + displacement (the heavy weight)
+  const para3 = [] // dark path, work, ethics, identity
+  const para4 = [] // relationships, family, grief
+  const para5 = [] // close
+
+  // ── PARAGRAPH 1: Origin ──────────────────────────────────────────────────────
   if (age < 20) {
-    lines.push(`${name} was born in ${bornIn} and was gone at ${age} — a life that barely had time to begin.`)
+    para1.push(`${name} was born in ${bornIn} and was gone at ${age} — a life that barely had time to begin.`)
   } else if (age < 40) {
-    lines.push(`${name} was born in ${bornIn} and died at ${age}, far too young.`)
+    para1.push(`${name} was born in ${bornIn} and died at ${age}, too soon.`)
   } else {
-    lines.push(`${name} was born in ${bornIn} and lived to the age of ${age}.`)
+    para1.push(`${name} was born in ${bornIn} and lived to ${age}.`)
   }
 
-  // — Childhood and origins —
-  if (flags.includes('war_childhood') || flags.includes('conflict_zone_birth')) {
-    lines.push(`${He} came into the world amid conflict, and it left a mark that never fully healed.`)
-  }
-  if (flags.includes('lost_parent_young') || flags.includes('orphaned')) {
-    lines.push(`${He} lost a parent before forming a clear memory of them — an absence that shaped everything quietly.`)
-  }
-  if (flags.includes('poverty_childhood') || flags.includes('food_insecurity')) {
-    lines.push(`The early years were lean. ${He} knew hunger.`)
-  }
-  if (flags.includes('secure_childhood')) {
-    lines.push(`${He} was given a childhood with warmth in it, something ${he} tried to pass on.`)
-  }
-
-  // — Displacement and migration —
-  if (flags.includes('refugee') || flags.includes('displaced')) {
-    lines.push(`${He} was displaced — carried across borders by forces larger than any single life.`)
-  } else if (flags.includes('emigrated') || flags.includes('diaspora')) {
-    lines.push(`${He} left ${country} in search of something different. ${He} found it, at a cost.`)
-  }
-
-  // — Dark path: crime, violence, incarceration —
-  if (flags.includes('convicted_murder') || flags.includes('murderer')) {
-    lines.push(`${He} killed someone. It defined ${him} in ways ${he} spent the rest of ${his} life either fleeing or accepting.`)
-  } else if (flags.includes('convicted_manslaughter')) {
-    lines.push(`${He} caused a death — whether by accident or recklessness, the courts had a word for it.`)
-  } else if (flags.includes('violent_criminal') || flags.includes('assault_record')) {
-    lines.push(`${He} had a capacity for violence that got ${him} into serious trouble.`)
-  }
-  if (flags.includes('incarcerated') || flags.includes('served_time') || flags.includes('prison_phone')) {
-    lines.push(`${He} served time. Prison changed ${him}, as it always does.`)
-  } else if (flags.includes('escaped_prisoner')) {
-    lines.push(`${He} escaped from prison and lived as a fugitive — a chapter most people would find hard to believe.`)
-  }
-  if (flags.includes('drug_addiction') || flags.includes('alcohol_addiction') || flags.includes('addiction')) {
-    if (flags.includes('addiction_recovered') || flags.includes('sobriety')) {
-      lines.push(`${He} fought an addiction and won — though the fight never fully ended.`)
+  // Childhood texture — weave related facts together
+  const hadHardChildhood = any('war_childhood', 'conflict_zone_birth', 'poverty_childhood', 'food_insecurity', 'lost_parent_young', 'orphaned')
+  const hadWarmChildhood = f('secure_childhood')
+  if (any('war_childhood', 'conflict_zone_birth')) {
+    para1.push(`The first years were shaped by conflict before ${he} had language for it.`)
+  } else if (any('lost_parent_young', 'orphaned')) {
+    if (any('poverty_childhood', 'food_insecurity')) {
+      para1.push(`A parent was gone before there was a clear memory of them, and the early years were lean.`)
     } else {
-      lines.push(`${He} struggled with addiction. It cost ${him} things ${he} never got back.`)
+      para1.push(`A parent was gone before there was a clear memory of them — a founding absence.`)
+    }
+  } else if (any('poverty_childhood', 'food_insecurity')) {
+    para1.push(`The early years were lean. Hunger was part of the childhood.`)
+  } else if (hadWarmChildhood) {
+    para1.push(`${He} had a childhood with warmth in it — something ${he} would spend the rest of ${his} life trying to pass on.`)
+  }
+
+  if (f('water_walk_childhood')) {
+    para1.push(`For years, ${he} carried water before school. The weight of it became part of ${his} constitution.`)
+  }
+  if (f('talent_discovered')) {
+    para1.push(`${He} found a talent young and spent decades finding out where it led.`)
+  }
+  if (f('political_awareness_early')) {
+    para1.push(`${He} understood early what kind of country ${he} was living in.`)
+  }
+
+  // ── PARAGRAPH 2: Historical weight + displacement ─────────────────────────────
+  // The heaviest flags; only write this paragraph if something significant applies
+  const heavyHistory = any(
+    'genocide_survivor', 'tutsi_hidden', 'survived_khmer_rouge',
+    'partition_survivor', 'partition_refugee',
+    'buenos_aires_junta_era', 'tehran_revolution_witness',
+    'cultural_revolution_survived', 'derg_era_survived',
+    'harare_hyperinflation_lived', 'solidarity_era_lived',
+    'post_apartheid_generation', 'witnessed_wall_fall',
+    'ghana_independence_generation', 'nairobi_independence_generation',
+    'bolivarian_collapse_lived', 'left_junta_chile',
+    'maidan_generation', 'euromaidan_lived',
+    'independence_generation_self', 'beirut_blast_survived',
+    'refugee', 'displaced', 'emigrated', 'diaspora',
+  )
+
+  if (any('genocide_survivor', 'tutsi_hidden')) {
+    para2.push(`${He} survived something that killed many of the people around ${him}. The rest of ${his} life was lived in the long shadow of that fact, and somehow, beyond it.`)
+  } else if (f('survived_khmer_rouge')) {
+    para2.push(`${He} survived the Khmer Rouge years. That ${he} survived at all placed ${him} in a statistical minority.`)
+  } else if (any('partition_survivor', 'partition_refugee')) {
+    para2.push(`${He} lived through the Partition — one of the largest forced migrations in human history — and carried it quietly for decades.`)
+  } else if (f('tehran_revolution_witness')) {
+    para2.push(`${He} was in Tehran for the Revolution. The world it made was not the world it had promised.`)
+  } else if (f('cultural_revolution_survived')) {
+    para2.push(`The Cultural Revolution demanded a particular calibration of public and private self. ${name} navigated it.`)
+  } else if (f('derg_era_survived')) {
+    para2.push(`${He} survived the Derg years in Ethiopia — the Red Terror, the famine, and the long years after both.`)
+  } else if (f('harare_hyperinflation_lived')) {
+    para2.push(`Zimbabwe's hyperinflation turned daily arithmetic into survival. ${He} had that education, and kept it.`)
+  } else if (f('bolivarian_collapse_lived')) {
+    para2.push(`${He} watched Venezuela collapse — the pharmacy shelves, the currency, the people crossing the border on foot.`)
+  } else if (any('buenos_aires_junta_era', 'witnessed_madres')) {
+    if (f('witnessed_madres')) {
+      para2.push(`${He} lived under the Argentine military junta and watched the Mothers circle the plaza with photographs of people who had not come back.`)
+    } else {
+      para2.push(`${He} lived under the Argentine military junta. ${He} knew people who did not come back from it.`)
+    }
+  } else if (f('left_junta_chile')) {
+    para2.push(`${He} left Chile after the coup. The leaving was its own kind of loss alongside everything else the coup took.`)
+  } else if (f('solidarity_era_lived')) {
+    para2.push(`${He} lived the Solidarity years in Poland — the underground presses, the church halls, the specific risk of visible hope.`)
+  } else if (any('maidan_generation', 'euromaidan_lived')) {
+    para2.push(`${He} stood in the Maidan. What followed was harder than the night on the square.`)
+  } else if (f('witnessed_wall_fall')) {
+    para2.push(`${He} was in Berlin the night the Wall came down. The details never fully translated into words.`)
+  } else if (f('berlin_wall_era_lived')) {
+    para2.push(`${He} grew up in a city divided by concrete and wire, and knew both sides of what that meant.`)
+  } else if (any('post_apartheid_generation', 'witnessed_truth_commission')) {
+    if (f('witnessed_truth_commission')) {
+      para2.push(`${He} cast a vote in the first free election, and later sat in the room where a country tried, in public, to say what had happened to it.`)
+    } else {
+      para2.push(`${He} cast a vote in the first free election. ${He} knew what it had cost to get there.`)
+    }
+  } else if (any('ghana_independence_generation', 'nairobi_independence_generation', 'independence_generation_self')) {
+    para2.push(`${He} was alive when independence came — heard it announced and believed, in that moment, that the world had changed.`)
+  }
+
+  // Displacement / migration
+  if (any('refugee', 'displaced') && !any('genocide_survivor', 'tutsi_hidden')) {
+    if (any('sought_asylum', 'refugee_status')) {
+      para2.push(`${He} fled and was eventually granted refuge. The years of waiting between were their own kind of sentence.`)
+    } else {
+      para2.push(`${He} was carried across borders by forces larger than any single life.`)
+    }
+  } else if (any('emigrated', 'diaspora') && para2.length === 0) {
+    // Only add emigration if no heavy history already took up this paragraph
+    if (f('illegal_immigrant') && !f('achieved_citizen')) {
+      para2.push(`${He} crossed without papers and built a life in a country that barely acknowledged ${his} existence.`)
+    } else if (f('achieved_citizen') || (state.residencyStatus === 'citizen')) {
+      para2.push(`${He} left ${bornIn} and eventually earned citizenship in an adopted country — paperwork that meant more than its bureaucratic weight.`)
+    } else {
+      para2.push(`${He} left ${bornIn} in search of something different, and found it, at a cost.`)
     }
   }
-  if (flags.includes('gang_member') || flags.includes('organized_crime')) {
-    lines.push(`${He} ran with people the law had a file on. Some of that life ${he} chose; some chose ${him}.`)
+
+  if (f('famine_memory') || f('drought_survived')) {
+    para2.push(`${He} knew what a failed harvest meant at the level of a family's daily choices. The knowledge stayed longer than the hunger did.`)
+  }
+  if (f('kolkhoz_dissolved')) {
+    para2.push(`${He} lived through the dissolution of collective farming — the paper that said you owned land, and the reality that was more complicated.`)
   }
 
-  // — Relationships —
-  if (flags.includes('strong_marriage') && partner) {
-    lines.push(`${He} loved ${partner.name} with a steadiness that was its own kind of achievement.`)
-  } else if (partner && !flags.includes('divorced')) {
-    lines.push(`${He} shared ${his} life with ${partner.name}.`)
-  } else if (flags.includes('divorced') || flags.includes('divorce')) {
-    lines.push(`${He} married, and the marriage ended — a chapter ${he} rarely spoke of directly.`)
-  } else if (flags.includes('heartbroken') || flags.includes('lost_love')) {
-    lines.push(`${He} loved someone ${he} couldn't hold onto. It stayed with ${him}.`)
+  // ── PARAGRAPH 3: Dark path, work, ethics, identity ────────────────────────────
+  // Crime
+  if (any('convicted_murder', 'murderer')) {
+    para3.push(`${He} killed someone. It defined ${him} in ways ${he} spent the rest of ${his} life either fleeing or accepting.`)
+  } else if (f('convicted_manslaughter')) {
+    para3.push(`${He} caused a death. Whether by accident or recklessness, the courts had a word for it.`)
+  } else if (any('violent_criminal', 'assault_record')) {
+    para3.push(`${He} had a capacity for violence that led ${him} into serious trouble.`)
   }
-  if (children?.length > 0) {
-    const n = children.length
-    lines.push(`${He} ${flags.includes('absent_parent') ? 'fathered' : 'raised'} ${n === 1 ? 'a child' : `${n} children`}.`)
+  if (f('escaped_prisoner')) {
+    para3.push(`${He} escaped from prison and lived as a fugitive for a time — a chapter most people would find hard to believe.`)
+  } else if (any('served_prison_time', 'incarcerated', 'served_time', 'prison_phone')) {
+    para3.push(`${He} served time. Prison changes people.`)
   }
-
-  // — Integrity and moral arc —
-  if (flags.includes('corruption_exposed') || flags.includes('bribery') || flags.includes('fraud')) {
-    lines.push(`${He} was caught in a corruption scandal. The reputation never fully recovered.`)
-  } else if (flags.includes('compromised') || flags.includes('sold_out')) {
-    lines.push(`${He} made choices ${he} couldn't fully justify later.`)
-  } else if (flags.includes('integrity') && flags.includes('trusted_person')) {
-    lines.push(`People trusted ${name}. That is rarer than it sounds.`)
-  } else if (flags.includes('whistleblower')) {
-    lines.push(`${He} exposed something that needed exposing, at considerable personal cost.`)
+  if (any('gang_member', 'organized_crime')) {
+    para3.push(`${He} ran with people the law had files on. Some of that life ${he} chose; some of it chose ${him}.`)
   }
 
-  // — Identity and hardship —
-  if (flags.includes('lgbtq_persecuted') || flags.includes('arrested_for_orientation')) {
-    lines.push(`${He} was persecuted for who ${he} was. ${He} endured it.`)
-  } else if (flags.includes('came_out') || flags.includes('lgbtq_accepted')) {
-    lines.push(`${He} lived openly as ${he} was, which was not always easy.`)
-  }
-  if (flags.includes('genocide_survivor') || flags.includes('tutsi_hidden') || flags.includes('apartheid_pass_book')) {
-    lines.push(`${He} survived something that destroyed many of the people around ${him}.`)
-  }
-  if (flags.includes('caste_discrimination') || flags.includes('dalit_discrimination')) {
-    lines.push(`${He} spent ${his} life fighting a hierarchy ${he} was born into.`)
+  // Addiction
+  if (any('drug_addiction', 'alcohol_addiction', 'addiction')) {
+    if (any('addiction_recovered', 'sobriety', 'recovery_established', 'in_recovery', 'rehab_graduate')) {
+      para3.push(`${He} fought an addiction and won — or came close enough to winning that it amounted to the same thing.`)
+    } else {
+      para3.push(`${He} struggled with addiction. It cost ${him} things ${he} never got back.`)
+    }
   }
 
-  // — Education and career —
-  if (flags.includes('first_gen_graduate')) {
-    lines.push(`${He} was the first in ${his} family to earn a university degree.`)
-  } else if (flags.includes('university_graduate')) {
-    lines.push(`Education was the thread ${he} pulled hardest on.`)
-  } else if (flags.includes('school_dropout') || flags.includes('expelled')) {
-    lines.push(`${He} left school early. Whether that was a choice or a consequence depends who you ask.`)
-  }
-  if (career) {
-    const careerDef = CAREERS.find(c => c.id === career.id)
-    if (careerDef) lines.push(`${He} spent ${his} working years as a ${career.title}.`)
+  // LGBTQ
+  if (any('lgbtq_persecuted', 'arrested_for_orientation')) {
+    para3.push(`${He} was persecuted for who ${he} was and endured it.`)
+  } else if (any('came_out', 'lgbtq_accepted')) {
+    para3.push(`${He} lived openly as ${he} was. In some eras and places, that required more courage than it should have.`)
+  } else if (f('lgbtq_identity') && f('lgbtq_criminalized_country')) {
+    para3.push(`${He} lived in a country that criminalised what ${he} was, and navigated it with care.`)
   }
 
-  // — Fame and wealth —
+  // Caste / discrimination
+  if (any('caste_discrimination', 'dalit_discrimination', 'defied_caste')) {
+    para3.push(`${He} spent ${his} life fighting a hierarchy ${he} was born into.`)
+  } else if (any('experienced_discrimination', 'experienced_racism', 'gender_barrier_faced')) {
+    para3.push(`${He} encountered barriers that others did not. ${He} found ways through most of them.`)
+  }
+
+  // Ethics and integrity
+  if (any('corruption_exposed', 'bribery', 'fraud')) {
+    para3.push(`A corruption scandal marked the record and the reputation never fully recovered.`)
+  } else if (any('compromised', 'sold_out', 'censored_work')) {
+    para3.push(`There were choices ${he} made that ${he} couldn't fully justify later.`)
+  }
+  if (f('whistleblower')) {
+    para3.push(`${He} exposed something that needed exposing, at real personal cost.`)
+  }
+  if (any('journalism_threat', 'censored', 'censored_journalist')) {
+    para3.push(`${He} worked in journalism and learned what it costs to tell the truth somewhere that prefers silence.`)
+  } else if (f('story_killed') || f('art_in_drawer')) {
+    para3.push(`There was a thing ${he} knew — or made — that never reached the world. ${He} carried it.`)
+  } else if (f('resistance_through_art')) {
+    para3.push(`${He} made work that said what couldn't be said directly, in a time and place when that mattered.`)
+  }
+  if (any('dissident_writer', 'dissident_reader') && !f('journalism_threat')) {
+    para3.push(`${He} was someone the state kept a file on.`)
+  }
+
+  // Education and career
+  const educationLine = (() => {
+    if (f('first_gen_graduate')) return `the first in the family to earn a university degree`
+    if (f('university_graduate')) return `someone who pulled hard on the thread of education`
+    if (any('school_dropout', 'expelled', 'illiterate')) return null
+    return null
+  })()
+  const careerLine = (() => {
+    if (!career) return null
+    if (f('sold_business')) return `built a business and sold it`
+    if (f('business_failed') && f('business_restart')) return `built a business, watched it fail, and built another — the second time went better`
+    if (f('career_defining_work')) return `did the best of ${his} professional work as a ${career.title}`
+    return `spent the working years as a ${career.title}`
+  })()
+
+  if (educationLine && careerLine) {
+    para3.push(`${He} was ${educationLine}, and ${careerLine}.`)
+  } else if (educationLine) {
+    para3.push(`${He} was ${educationLine}.`)
+  } else if (careerLine) {
+    para3.push(`${He} ${careerLine}.`)
+  } else if (any('school_dropout', 'expelled')) {
+    para3.push(`${He} left school early. Whether that was a choice or a consequence depends who you ask.`)
+  }
+
+  // Fame and wealth (only if notable)
   if (fame > 70) {
-    lines.push(`${He} was famous. The kind of famous that changes what it means to walk into a room.`)
+    para3.push(`${He} was famous — the kind that changes what it means to walk into a room.`)
   } else if (fame > 40) {
-    lines.push(`In certain circles, ${name} was well-known.`)
+    para3.push(`In certain circles, ${name} was well-known.`)
   }
   if (money > 5000000) {
-    lines.push(`${He} built serious wealth — $${(money / 1000000).toFixed(1)}M — though what it cost ${him} is harder to measure.`)
+    para3.push(`${He} accumulated serious wealth, though what it cost is harder to measure than what it came to.`)
   } else if (money > 1000000) {
-    lines.push(`${He} left behind $${(money / 1000000).toFixed(2)}M.`)
-  } else if (flags.includes('destitute') || flags.includes('homeless')) {
-    lines.push(`${He} died with almost nothing. The circumstances were not entirely of ${his} making.`)
-  }
-  const propertyCount = assets?.properties?.length ?? 0
-  if (propertyCount >= 3) {
-    lines.push(`${He} owned ${propertyCount} properties. That meant something to ${him}.`)
+    para3.push(`${He} left behind more than most.`)
+  } else if (any('destitute', 'homeless')) {
+    para3.push(`${He} died with almost nothing. The circumstances were not entirely of ${his} making.`)
   }
 
-  // — Immigration and citizenship —
-  if (flags.includes('achieved_citizen') || (state.residencyStatus === 'citizen' && flags.includes('emigrated'))) {
-    lines.push(`${He} earned citizenship in an adopted country — paperwork that meant more than its bureaucratic weight.`)
-  } else if (flags.includes('sought_asylum') && flags.includes('refugee_status')) {
-    lines.push(`${He} fled and was granted refuge. The years of waiting between were their own kind of sentence.`)
-  } else if (flags.includes('illegal_immigrant') && !flags.includes('achieved_citizen')) {
-    lines.push(`${He} lived without papers in a country that barely acknowledged ${his} existence, and built a life there anyway.`)
+  // Faith
+  if (f('completed_hajj')) {
+    para3.push(`${He} made the pilgrimage to Mecca. Whatever ${he} went looking for, ${he} found something.`)
+  } else if (f('faith_deepened')) {
+    para3.push(`${His} faith grew rather than dimmed with age — the kind that asks hard questions and survives them.`)
+  } else if (f('left_religion') && f('faith_crisis')) {
+    para3.push(`${He} walked away from the faith ${he} was raised in. It was not a small thing.`)
   }
 
-  // — Mental health —
-  if (flags.includes('depression_managed') || flags.includes('anxiety_managed')) {
-    lines.push(`${He} lived with a condition that made ordinary things harder. ${He} managed it more often than not.`)
+  // Place and movement
+  if (f('village_electrified')) {
+    para3.push(`${He} was there the night the first light came on in the village and never lost the specific memory of what came before it.`)
+  }
+  if (f('rural_to_urban') && !any('emigrated', 'refugee')) {
+    para3.push(`${He} made the move from village to city — the defining migration of ${his} generation in that part of the world.`)
+  } else if (f('left_dying_city')) {
+    para3.push(`${He} left a city that was becoming something smaller. Probably the right call.`)
+  } else if (f('rust_belt_stayer')) {
+    para3.push(`${He} stayed when others left. The place ${he} refused to abandon wasn't the same at the end, but it was still there.`)
+  } else if (f('postsoviet_stayer')) {
+    para3.push(`${He} chose to stay in a city most people were leaving. The city stabilised, eventually. ${He} was already there.`)
   }
 
-  // — Grief carried —
-  if (flags.includes('lost_child')) {
-    lines.push(`${He} outlived a child. There is no adequate sentence for this.`)
-  } else if (flags.includes('lost_partner')) {
-    lines.push(`${He} lost the person ${he} had built a life with, and had to learn what came after.`)
+  // ── PARAGRAPH 4: Relationships, family, grief ─────────────────────────────────
+  // The heaviest grief comes first
+  if (f('lost_child')) {
+    para4.push(`${He} outlived a child. There is no adequate sentence for this.`)
   }
 
-  // — Climate witness —
-  if (flags.includes('witnessed_climate_change') && flags.includes('disaster_survivor')) {
-    lines.push(`${He} lived through the consequences of a warming world. The century ${he} was born into was not the century ${he} died in.`)
+  if (f('strong_marriage') && partner) {
+    para4.push(`${He} loved ${partner.name} with a steadiness that was its own kind of achievement.`)
+  } else if (f('long_marriage') && partner) {
+    para4.push(`${He} and ${partner.name} were married for a long time. The length of it was its own statement.`)
+  } else if (any('lost_partner', 'widowed')) {
+    para4.push(`${He} lost the person ${he} had built a life with, and had to learn what came after.`)
+  } else if (partner && !any('divorced', 'divorce')) {
+    para4.push(`${He} shared ${his} life with ${partner.name}.`)
+  } else if (any('divorced', 'divorce')) {
+    para4.push(`${He} married, and the marriage ended — a chapter ${he} rarely spoke of directly.`)
+  } else if (any('heartbroken', 'lost_love')) {
+    para4.push(`${He} loved someone ${he} couldn't hold onto. It stayed with ${him}.`)
   }
 
-  // — LGBTQ life —
-  if (flags.includes('lgbtq_identity') && flags.includes('lgbtq_out_family')) {
-    lines.push(`${He} came out, at a cost that varied depending on who was in the room.`)
-  } else if (flags.includes('lgbtq_identity') && flags.includes('lgbtq_criminalized_country')) {
-    lines.push(`${He} lived in a country that criminalised what ${he} was. ${He} navigated it.`)
+  if (children?.length > 0) {
+    const n = children.length
+    const verb = f('absent_parent') ? (character.gender === 'male' ? 'fathered' : 'had') : 'raised'
+    para4.push(`${He} ${verb} ${n === 1 ? 'a child' : `${n} children`}.`)
+  } else if (f('chose_childless')) {
+    para4.push(`${He} chose not to have children. It was a complete answer.`)
+  } else if (f('ivf_success')) {
+    para4.push(`The family ${he} built required real persistence to build.`)
+  } else if (any('multiple_miscarriage', 'experienced_miscarriage')) {
+    para4.push(`${He} lost pregnancies. The losses were private and not small.`)
   }
 
-  // — Career under regime —
-  if (flags.includes('journalism_threat') || flags.includes('censored')) {
-    lines.push(`${He} worked in journalism and learned what it costs to tell the truth in a place that prefers silence.`)
+  if (f('sibling_bond_strong')) {
+    para4.push(`${He} kept close with ${his} siblings — a bond that outlasted many of the other constants.`)
   }
-  if (flags.includes('story_killed')) {
-    lines.push(`There was a story ${he} knew and could not publish. ${He} carried it.`)
+  if (f('mentor') || f('is_mentor')) {
+    para4.push(`${He} was someone others came to with questions about what to do next.`)
   }
-
-  // — Faith —
-  if (flags.includes('completed_hajj')) {
-    lines.push(`${He} made the pilgrimage to Mecca. Whatever ${he} went looking for, ${he} found something.`)
-  } else if (flags.includes('left_religion') && flags.includes('faith_crisis')) {
-    lines.push(`${He} walked away from the faith ${he} was raised in. It was not a small thing.`)
-  } else if (flags.includes('faith_deepened')) {
-    lines.push(`${His} faith grew rather than dimmed with age — the kind that asks hard questions and survives them.`)
+  if (any('depression_managed', 'anxiety_managed', 'mental_health_journey')) {
+    para4.push(`${He} lived with a condition that made ordinary things harder, and managed it more often than not.`)
+  }
+  if (f('heritage_language_preserved') || f('oral_historian')) {
+    para4.push(`${He} kept things alive that might otherwise have been lost.`)
   }
 
-  // — End of life —
-  if (flags.includes('found_meaning') || flags.includes('acceptance') || flags.includes('peace')) {
-    lines.push(`Near the end, ${name} seemed at peace with the shape ${his} life had taken.`)
-  } else if (flags.includes('life_reviewed')) {
-    lines.push(`${He} reviewed the life honestly before the end.`)
+  // ── PARAGRAPH 5: Closing ──────────────────────────────────────────────────────
+  if (any('found_meaning', 'acceptance', 'peace')) {
+    para5.push(`Near the end, ${name} seemed at peace with the shape of the life.`)
+  } else if (f('life_reviewed') || f('legacy_thought')) {
+    para5.push(`${He} reviewed the life honestly before the end.`)
   } else if (regret > 75) {
-    lines.push(`${He} died carrying a weight that had no name — a persistent sense that something essential had been missed.`)
+    para5.push(`${He} carried something unresolved into the last years — a persistent sense that something essential had been missed.`)
   } else if (regret > 50) {
-    lines.push(`${He} carried some regrets. Most people do.`)
+    para5.push(`There were regrets. Most people have them.`)
+  } else if (f('retired_comfortable')) {
+    para5.push(`${He} retired with enough, which is more than enough to say.`)
+  } else if (stats.happiness > 70) {
+    para5.push(`By most measures, it was a life worth having.`)
+  } else {
+    para5.push(`${name}'s life was shaped by circumstances ${he} did not choose, and decisions ${he} made from within them.`)
   }
 
-  // — Business and entrepreneurship —
-  if (flags.includes('sold_business')) {
-    lines.push(`${He} built a business and sold it — the particular satisfaction of making something from nothing.`)
-  } else if (flags.includes('business_failed') && flags.includes('business_restart')) {
-    lines.push(`${He} built a business, watched it fail, and built another. The second time went better.`)
-  } else if (flags.includes('owns_business') || flags.includes('entrepreneur')) {
-    lines.push(`${He} ran ${his} own business — the specific freedom and weight of that.`)
+  // Fallback
+  if (para1.length + para2.length + para3.length + para4.length < 3) {
+    para5.push(`${name}'s life was shaped by circumstances ${he} did not choose, and decisions ${he} made from within them.`)
   }
 
-  // — Family bonds —
-  if (flags.includes('sibling_bond_strong')) {
-    lines.push(`${He} maintained a close bond with ${his} siblings — a relationship that outlasted many of the other constants.`)
-  }
-  if (flags.includes('long_marriage') || (partner && flags.includes('strong_marriage'))) {
-    lines.push(`${He} was married for a long time. The length of it was its own statement.`)
-  }
+  const parts = [para1, para2, para3, para4, para5]
+    .filter(p => p.length > 0)
+    .map(p => p.join(' '))
+  return parts.join('\n\n')
+}
 
-  // — Language and heritage —
-  if (flags.includes('heritage_language_preserved')) {
-    lines.push(`${He} kept the first language alive, even in a country that did not need it.`)
-  }
+// ─── Life notes generator ─────────────────────────────────────────────────────
+// Returns up to 8 short factual fragments for the death screen's "Life in brief"
+// section. Prioritises the most significant flags; filters out minor ones.
 
-  // — Recovery and sobriety —
-  if (flags.includes('recovery_established') || (flags.includes('in_recovery') && flags.includes('rehab_graduate'))) {
-    lines.push(`${He} achieved sobriety and held it. That is harder than it sounds.`)
-  }
+export function generateLifeNotes(state) {
+  const { character, flags, age, children, partner, career, money, siblings, fame } = state
+  const f = (flag) => flags.includes(flag)
+  const any = (...fs) => fs.some(g => flags.includes(g))
+  const He = character.gender === 'male' ? 'He' : 'She'
+  const he = He.toLowerCase()
+  const his = character.gender === 'male' ? 'his' : 'her'
 
-  // — Technology and modernity —
-  if (flags.includes('mobile_money_user')) {
-    lines.push(`${He} was part of the generation that skipped the bank and went straight to the phone.`)
-  }
+  const notes = [] // [{ priority, text }]
 
-  // — Retirement —
-  if (flags.includes('retired_comfortable')) {
-    lines.push(`${He} retired with enough. The enough was earned through decades of small decisions.`)
-  } else if (flags.includes('financial_hardship_late')) {
-    lines.push(`The final years were financially constrained in ways ${he} had not fully anticipated.`)
-  }
+  const add = (priority, text) => notes.push({ priority, text })
 
-  // — Rural-to-urban —
-  if (flags.includes('rural_to_urban')) {
-    lines.push(`${He} made the move from village to city — the defining migration of ${his} generation in that part of the world.`)
-  }
+  // Extreme survival (priority 100)
+  if (any('genocide_survivor', 'tutsi_hidden')) add(100, 'Survived genocide.')
+  if (f('survived_khmer_rouge')) add(100, 'Survived the Khmer Rouge.')
+  if (any('partition_survivor', 'partition_refugee')) add(100, 'Survived the Partition.')
 
-  // — Discrimination and resilience —
-  if (flags.includes('experienced_discrimination') || flags.includes('gender_barrier_faced')) {
-    lines.push(`${He} encountered barriers that others did not. ${He} found ways through them.`)
-  }
+  // Major historical witness (priority 90)
+  if (f('tehran_revolution_witness')) add(90, 'Witnessed the Iranian Revolution.')
+  if (f('cultural_revolution_survived')) add(90, 'Survived the Cultural Revolution.')
+  if (f('derg_era_survived')) add(90, 'Survived the Derg years in Ethiopia.')
+  if (f('post_apartheid_generation')) add(90, 'Voted in the first free South African election.')
+  if (f('witnessed_wall_fall')) add(90, 'Present in Berlin the night the Wall came down.')
 
-  // — Adolescent foundations —
-  if (flags.includes('talent_discovered')) {
-    lines.push(`${He} found a talent young and spent the rest of ${his} life seeing where it led.`)
-  }
-  if (flags.includes('political_awareness_early')) {
-    lines.push(`${He} understood early what kind of country ${he} was living in. The understanding shaped everything after.`)
-  }
+  // Personal extremis (priority 80)
+  if (f('lost_child')) add(80, 'Outlived a child.')
+  if (any('convicted_murder', 'murderer')) add(80, 'Convicted of murder.')
+  if (f('escaped_prisoner')) add(80, 'Escaped from prison.')
+  if (f('whistleblower')) add(80, 'A whistleblower.')
+  if (any('genocide_family_memory', 'holocaust_family_memory')) add(80, "Carried a family's memory of atrocity.")
 
-  // — Historical witnesses —
-  if (flags.includes('partition_survivor') || flags.includes('partition_refugee')) {
-    lines.push(`${He} lived through the Partition — one of the largest forced migrations in human history.`)
-  }
-  if (flags.includes('cultural_revolution_survived')) {
-    lines.push(`${He} survived the Cultural Revolution, which required a particular calibration of public and private self.`)
-  }
-  if (flags.includes('post_apartheid_generation')) {
-    lines.push(`${He} cast a vote in the first free election. ${He} knew what it had cost to get there.`)
-  }
-  if (flags.includes('witnessed_wall_fall')) {
-    lines.push(`${He} was in Berlin the night the Wall came down. The details never fully translated into words.`)
-  } else if (flags.includes('berlin_wall_era_lived')) {
-    lines.push(`${He} grew up in a city divided by concrete and wire, and knew both sides of what that meant.`)
-  }
-  if (flags.includes('survived_khmer_rouge')) {
-    lines.push(`${He} survived the Khmer Rouge years. That ${he} survived at all placed ${him} in a statistical minority.`)
-  }
-  if (flags.includes('buenos_aires_junta_era')) {
-    lines.push(`${He} lived under the Argentine military junta. ${He} knew people who did not come back from it.`)
-  }
-  if (flags.includes('witnessed_madres')) {
-    lines.push(`${He} watched the Mothers circle the Plaza de Mayo. The photographs they carried stayed with ${him}.`)
-  }
-  if (flags.includes('witnessed_truth_commission')) {
-    lines.push(`${He} witnessed a truth commission — a country trying, in public, to say what had happened to it.`)
-  }
-  if (flags.includes('tehran_revolution_witness')) {
-    lines.push(`${He} was in Tehran for the Revolution. The world it made was not the world it promised.`)
-  }
-  if (flags.includes('solidarity_era_lived')) {
-    lines.push(`${He} lived the Solidarity years in Poland — the underground presses, the church meetings, the specific risk of visible hope.`)
-  }
-  if (flags.includes('maidan_generation') || flags.includes('euromaidan_lived')) {
-    lines.push(`${He} stood in the Maidan. What followed was harder than the night on the square.`)
-  }
-  if (flags.includes('ghana_independence_generation') || flags.includes('nairobi_independence_generation')) {
-    lines.push(`${He} was alive when independence came. ${He} heard it announced on the radio and understood that the world had changed.`)
-  }
-  if (flags.includes('derg_era_survived')) {
-    lines.push(`${He} survived the Derg years in Ethiopia — the Red Terror, the famine, the years that followed both.`)
-  }
-  if (flags.includes('harare_hyperinflation_lived')) {
-    lines.push(`${He} lived through Zimbabwe's hyperinflation. The arithmetic of daily survival in those years was a specific education.`)
-  }
-  if (flags.includes('bolivarian_collapse_lived')) {
-    lines.push(`${He} watched Venezuela collapse — the pharmacy shelves, the currency, the people crossing into Colombia on foot.`)
-  }
-  if (flags.includes('left_junta_chile')) {
-    lines.push(`${He} left Chile after the coup. The leaving was its own kind of loss alongside everything else the coup took.`)
-  }
-  if (flags.includes('left_dying_city')) {
-    lines.push(`${He} left a city that was in the process of becoming something smaller. The leaving was not easy and was probably right.`)
-  } else if (flags.includes('rust_belt_stayer')) {
-    lines.push(`${He} stayed when others left. The place ${he} refused to abandon was not the same place at the end as at the beginning, but it was still there.`)
-  } else if (flags.includes('postsoviet_stayer')) {
-    lines.push(`${He} chose to stay in a city that most people were leaving. The city stabilized, eventually. ${He} was already there.`)
-  }
-  if (flags.includes('drought_survived')) {
-    lines.push(`${He} knew what a failed harvest meant at the level of the family's daily choices. The knowledge stayed with ${him} longer than the hunger did.`)
-  }
-  if (flags.includes('village_electrified')) {
-    lines.push(`${He} was there the night the first light came on in the village. ${He} never lost the specific memory of what came before it.`)
-  }
-  if (flags.includes('water_walk_childhood')) {
-    lines.push(`${He} carried water before school for years. The weight of it was part of what ${he} was made of.`)
-  }
-  if (flags.includes('kolkhoz_dissolved')) {
-    lines.push(`${He} lived through the dissolution of collective farming — the paper that said you owned land and the reality that was more complicated.`)
-  }
+  // Significant life facts (priority 70)
+  if (f('first_gen_graduate')) add(70, 'First in the family to graduate university.')
+  if (any('lgbtq_persecuted', 'arrested_for_orientation')) add(70, 'Persecuted for who they were.')
+  if (any('served_prison_time', 'incarcerated', 'served_time')) add(70, 'Served time in prison.')
+  if (any('refugee', 'displaced') && !any('genocide_survivor', 'tutsi_hidden')) add(70, 'A refugee.')
+  if (f('famine_memory') || f('famine_survivor')) add(70, 'Survived famine.')
 
-  // — Fertility and loss —
-  if (flags.includes('multiple_miscarriage') || flags.includes('experienced_miscarriage')) {
-    lines.push(`${He} lost pregnancies. The losses were private and not small.`)
-  }
-  if (flags.includes('chose_childless')) {
-    lines.push(`${He} chose not to have children. It was a complete answer.`)
-  }
-  if (flags.includes('ivf_success')) {
-    lines.push(`The family ${he} built required significant persistence to build.`)
-  }
+  // Notable choices (priority 60)
+  if (f('sold_business')) add(60, 'Built and sold a business.')
+  if (f('completed_hajj')) add(60, 'Made the pilgrimage to Mecca.')
+  if (f('chose_childless')) add(60, 'Chose not to have children.')
+  if (f('ivf_success')) add(60, 'Fought to have a family.')
+  if (any('came_out', 'lgbtq_accepted')) add(60, 'Lived openly.')
+  if (f('left_religion') && f('faith_crisis')) add(60, 'Walked away from the faith.')
+  if (any('drug_addiction', 'alcohol_addiction') && any('addiction_recovered', 'sobriety')) add(60, 'Fought addiction.')
+  if (fame > 70) add(60, 'Was famous.')
 
-  // — Survivors —
-  const livingSiblings = (siblings ?? []).filter(s => s.alive).length
-  if (livingSiblings > 0) {
-    lines.push(`${He} left behind ${livingSiblings} sibling${livingSiblings > 1 ? 's' : ''}.`)
-  }
+  // Carried things (priority 50)
+  if (f('story_killed') || f('art_in_drawer')) add(50, 'Made something that never reached the world.')
+  if (f('resistance_through_art')) add(50, 'Made work that said what couldn\'t be said directly.')
+  if (any('dissident_writer', 'dissident_reader')) add(50, 'A person the state kept a file on.')
+  if (f('oral_historian') || f('heritage_language_preserved')) add(50, 'Kept something alive that might have been lost.')
+  if (f('mentor') || f('is_mentor')) add(50, 'Mentored others.')
+  if (f('water_walk_childhood')) add(50, 'Carried water before school for years.')
+  if (f('village_electrified')) add(50, 'Present when the first light came on in the village.')
 
-  // — Fallback: only if we have very few lines —
-  if (lines.length < 3) {
-    if (stats.happiness > 70) {
-      lines.push(`By most measures, ${name} lived a good life.`)
-    } else {
-      lines.push(`${name}'s life was shaped by circumstances ${he} did not choose and decisions ${he} made from within them.`)
-    }
-  }
-
-  return lines.join(' ')
+  // Sort by priority, take top 8
+  notes.sort((a, b) => b.priority - a.priority)
+  return notes.slice(0, 8).map(n => n.text)
 }
