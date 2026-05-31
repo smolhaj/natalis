@@ -1138,6 +1138,7 @@ function buildG(state) {
     banked: state.banked ?? false,
     hardCurrencyReserve: state.hardCurrencyReserve ?? 0,
     workStatus: state.workStatus ?? null,
+    currentProject: state.currentProject ?? null,
     archetype: state.character?.country?.archetype ?? null,
     // Enriched prose helpers: available in text: (G) => functions
     era: Math.floor(currentYear / 10) * 10,
@@ -1587,6 +1588,126 @@ function buildYearTexture(state) {
         'The incident is in the past. Its shape is still present in certain rooms.',
       ])
     }
+  }
+
+  // ─── PROJECT LAYER (~35% when project active) ────────────────────────────────
+  const proj = state.currentProject
+  if (proj && proj.phase !== 'abandoned' && Math.random() < 0.35) {
+    const pname = proj.name ? ` on ${proj.name}` : ''
+    const projectLines = {
+      writing: {
+        early: [
+          `You are writing${pname}. It is mostly bad. You continue.`,
+          'The pages accumulate. You don\'t show them to anyone yet.',
+          'The work asks for early mornings and late nights. You are giving them.',
+        ],
+        middle: [
+          'The writing is in a difficult phase. You are pushing through it.',
+          'There are good paragraphs and bad ones. More of the latter. You keep going.',
+          'The project is real enough now that abandoning it would cost something.',
+        ],
+        late: [
+          'The work is further along than it has ever been. You don\'t say this to anyone.',
+          'You can see the shape of it now. Whether the shape is right is another question.',
+          'The end is somewhere ahead. You have been working toward it for years.',
+        ],
+        established: [
+          'You have been writing for long enough that it is part of who you are.',
+          'The practice has become something you don\'t question. You do it the way you brush your teeth.',
+          'You have made something. Whether it is good is a question you have stopped asking every day.',
+        ],
+      },
+      running: {
+        early: [
+          'The running is new enough that it still hurts the way new things hurt.',
+          'You are building the habit. Some weeks it holds; some weeks it doesn\'t.',
+          'You are slower than you want to be. You keep going anyway.',
+        ],
+        middle: [
+          'The body knows what to do now. The mind follows.',
+          'The run is the part of the day that belongs entirely to you.',
+          'You have been at this long enough that missing it feels wrong.',
+        ],
+        late: [
+          'The running has become a fact about you, the way height is a fact.',
+          'You can cover distances now that you couldn\'t have imagined starting out.',
+          'The habit is yours. You have carried it through years that tried to take it from you.',
+        ],
+        established: [
+          'You have been running for years. The body is different for it.',
+          'The early mornings are a constant. They have outlasted many other things.',
+          'You are still at it. Not everyone who starts is.',
+        ],
+      },
+      music: {
+        early: [
+          'The practice is rough and necessary. You do it anyway.',
+          'The instrument asks more than you have. You give it.',
+          'The music is somewhere ahead of your current ability. You are walking toward it.',
+        ],
+        middle: [
+          'You can play things now that would have defeated you two years ago.',
+          'The practice has a different quality — harder but closer to something real.',
+          'The music is becoming yours. It still belongs partly to the form. Less so each year.',
+        ],
+        late: [
+          'You have been playing long enough that the instrument feels like a part of the body.',
+          'The music you make is specific to you. No one else would make exactly this.',
+          'You have a sound now. It took years.',
+        ],
+        established: [
+          'The music has been with you so long that you don\'t know who you are without it.',
+          'You still practice. After all this time, still.',
+          'The playing has outlasted careers, relationships, houses. It continues.',
+        ],
+      },
+      art: {
+        early: [
+          'The work is private. You are not ready for it to be anything else.',
+          'You are making things you have no name for yet. That seems right.',
+          'The practice is tentative. You are learning to trust it.',
+        ],
+        middle: [
+          'The work has found its own logic. You are following it.',
+          'You are making things that surprise you. That is the sign.',
+          'The art is getting harder to hide, which means it is getting more real.',
+        ],
+        late: [
+          'You have been making this work for years. Its shape is clearer to you now.',
+          'The practice has accumulated into something. You are still deciding what.',
+          'The work is there whether anyone sees it or not. That has become enough, mostly.',
+        ],
+        established: [
+          'You are a person who makes things. That is a settled fact about you.',
+          'The work continues. It has outlasted doubt.',
+          'You have made enough by now that the quantity itself means something.',
+        ],
+      },
+      business: {
+        early: [
+          `The business${pname ? ` — ${proj.name} —` : ''} is in its first years. Everything is provisional.`,
+          'You are learning the distance between a plan and an operation.',
+          'The business is consuming more than you expected. You knew it would.',
+        ],
+        middle: [
+          'The business has found its footing. The crisis is ordinary now.',
+          'You are building something. What it becomes is still being decided.',
+          `${proj.name ?? 'The business'} has survived its first real tests. Not all businesses do.`,
+        ],
+        late: [
+          `${proj.name ?? 'The business'} is what it has become. You have some pride in that.`,
+          'You have built something that works without requiring you every hour. That took years.',
+          'The work has a shape now. Whether it is the shape you intended is another question.',
+        ],
+        established: [
+          `${proj.name ?? 'The business'} has been running for years. That is itself an achievement.`,
+          'You have built something that employs people and pays its bills. Not every idea gets this far.',
+          'The business is a fact of your life now. You have grown around it.',
+        ],
+      },
+    }
+    const lines = projectLines[proj.type]?.[proj.phase]
+    if (lines) return pickFrom(lines)
   }
 
   // ─── EXPANDED PHASE POOLS ────────────────────────────────────────────────────
@@ -3317,6 +3438,43 @@ export function tick(state) {
         health:    clamp(s.stats.health    - hDrain, 0, 100),
         happiness: clamp(s.stats.happiness - mDrain, 0, 100),
       }
+    }
+  }
+
+  // Auto-detect and advance slow-burn personal project
+  if (!s.currentProject) {
+    // Detect project from existing flags
+    const fl = s.flags
+    if (fl.includes('writing_in_drawer') || fl.includes('reflective_writer') || fl.includes('serious_writer')) {
+      s = { ...s, currentProject: { type: 'writing', startYear: s.currentYear, phase: 'early', name: null } }
+    } else if (fl.includes('runner_habit') || fl.includes('runner_entered_race')) {
+      s = { ...s, currentProject: { type: 'running', startYear: s.currentYear, phase: 'early', name: null } }
+    } else if (fl.includes('music_private') || fl.includes('musician_performing') || fl.includes('serious_musician')) {
+      s = { ...s, currentProject: { type: 'music', startYear: s.currentYear, phase: 'early', name: null } }
+    } else if (fl.includes('art_in_drawer') || fl.includes('serious_artist')) {
+      s = { ...s, currentProject: { type: 'art', startYear: s.currentYear, phase: 'early', name: null } }
+    } else if (fl.includes('business_started')) {
+      s = { ...s, currentProject: { type: 'business', startYear: s.currentYear, phase: 'early', name: s.business?.name ?? null } }
+    }
+  } else if (s.currentProject) {
+    // Advance phase based on years into project
+    const proj = s.currentProject
+    const yearsIn = s.currentYear - (proj.startYear ?? s.currentYear)
+    const newPhase = yearsIn >= 10 ? 'established' : yearsIn >= 5 ? 'late' : yearsIn >= 2 ? 'middle' : 'early'
+    if (newPhase !== proj.phase) {
+      s = { ...s, currentProject: { ...proj, phase: newPhase } }
+    }
+    // Clear project if the underlying flags are gone (abandoned)
+    const fl = s.flags
+    const typeActive = {
+      writing: fl.includes('writing_in_drawer') || fl.includes('reflective_writer') || fl.includes('serious_writer'),
+      running: fl.includes('runner_habit') || fl.includes('runner_entered_race') || fl.includes('played_into_adulthood'),
+      music: fl.includes('music_private') || fl.includes('musician_performing') || fl.includes('serious_musician'),
+      art: fl.includes('art_in_drawer') || fl.includes('serious_artist'),
+      business: fl.includes('business_started'),
+    }
+    if (proj.type && typeActive[proj.type] === false) {
+      s = { ...s, currentProject: { ...proj, phase: 'abandoned' } }
     }
   }
 
