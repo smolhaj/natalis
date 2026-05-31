@@ -703,7 +703,24 @@ function buildEffectProxy(state) {
   // Read-only state accessors for effects that need to branch on character context
   proxy._state = state
   proxy._age = state.age
-  proxy.addFlag = (flag) => { if (!proxy.flags.includes(flag)) proxy.flags.push(flag) }
+  // Flags that carry emotional weight and deserve memory-layer prose years later
+  const TIMESTAMPED_FLAGS = new Set([
+    'knows_failure', 'lab_crossed_line', 'solidarity_proven', 'compromised',
+    'art_in_drawer', 'runner_habit', 'music_private', 'writing_in_drawer',
+    'lost_parent_father', 'lost_parent_mother', 'lost_friend', 'widowed',
+    'famine_memory', 'experienced_racism', 'lgbtq_family_rejection',
+    'boarding_school', 'first_love_over', 'cancer_survivor',
+    'affair_brief_secret', 'affair_not_taken', 'emigrated',
+    'divorced', 'business_failed', 'graduated',
+  ])
+  proxy.addFlag = (flag) => {
+    if (!proxy.flags.includes(flag)) {
+      proxy.flags.push(flag)
+      if (TIMESTAMPED_FLAGS.has(flag)) {
+        proxy.mem[`${flag}Year`] = state.currentYear
+      }
+    }
+  }
   proxy.clearFlag = (flag) => { proxy.flags = proxy.flags.filter(f => f !== flag) }
   proxy.setEducation = (level, field = null) => {
     proxy._newEducation = { level, field: field ?? state.education.field }
@@ -778,6 +795,10 @@ function buildEffectProxy(state) {
   proxy.setCreditScore = (val) => { proxy._creditScoreSet = val }
   proxy.partnerRel = (delta) => { proxy._partnerRelDelta = (proxy._partnerRelDelta ?? 0) + delta }
   proxy.updatePartnerRel = proxy.partnerRel
+  proxy.addPartnerMoment = (text) => {
+    if (!proxy._partnerMomentsToAdd) proxy._partnerMomentsToAdd = []
+    proxy._partnerMomentsToAdd.push(text)
+  }
   proxy.makePartner = (overrides = {}) => {
     const myGender = state.character.gender
     const isLGBTQ = proxy.flags.includes('lgbtq_identity')
@@ -930,6 +951,10 @@ function resolveProxyExtras(state, proxy) {
   }
   if (proxy._killPartner && next.partner) {
     next = { ...next, mem: { ...(next.mem ?? {}), partnerDeathYear: next.currentYear } }
+  }
+  if (proxy._partnerMomentsToAdd?.length) {
+    const existing = next.mem?.partnerMoments ?? []
+    next = { ...next, mem: { ...(next.mem ?? {}), partnerMoments: [...existing, ...proxy._partnerMomentsToAdd].slice(-12) } }
   }
   return next
 }
@@ -1113,6 +1138,7 @@ function buildG(state) {
     banked: state.banked ?? false,
     hardCurrencyReserve: state.hardCurrencyReserve ?? 0,
     workStatus: state.workStatus ?? null,
+    currentProject: state.currentProject ?? null,
     archetype: state.character?.country?.archetype ?? null,
     // Enriched prose helpers: available in text: (G) => functions
     era: Math.floor(currentYear / 10) * 10,
@@ -1212,6 +1238,8 @@ function buildYearTexture(state) {
   if (partner) {
     const q = partner.relationshipQuality ?? 60
     const pn = partner.name.split(' ')[0]
+    const moments = state.mem?.partnerMoments ?? []
+
     if (q < 28) return pick([
       `You and ${partner.name} are still in the same house. That is accurate and not quite the whole story.`,
       `There are things you and ${pn} no longer say. The list has grown.`,
@@ -1220,14 +1248,29 @@ function buildYearTexture(state) {
       `You and ${partner.name} are polite in ways you didn't used to have to be.`,
       `You and ${pn} move around each other carefully. Neither of you names it.`,
     ])
-    if (q > 85 && partner.married) return pick([
-      `A good year with ${partner.name}. The small things are the whole thing, some years.`,
-      `You and ${pn} still make each other laugh. That is not nothing after all this time.`,
-    ])
-    if (q > 78) return pick([
-      `A good year with ${partner.name}. Nothing dramatic — that's how the good ones go.`,
-      `${pn} knows what you mean before you finish. That is a specific kind of luck.`,
-    ])
+    // Surface a specific partner moment (~30% of good years, if moments exist)
+    if (q >= 45 && moments.length > 0 && Math.random() < 0.30) {
+      return pickFrom(moments)
+    }
+    // Trait-aware prose for strong relationships
+    if (q > 85 && partner.married) {
+      const traitLine = partner.traits?.length
+        ? pick(TRAIT_PROSE[pickFrom(partner.traits.filter(t => TRAIT_PROSE[t]))] ?? [null])
+        : null
+      return traitLine ?? pick([
+        `A good year with ${partner.name}. The small things are the whole thing, some years.`,
+        `You and ${pn} still make each other laugh. That is not nothing after all this time.`,
+      ])
+    }
+    if (q > 78) {
+      const traitLine = partner.traits?.length && Math.random() < 0.5
+        ? pick(TRAIT_PROSE[pickFrom(partner.traits.filter(t => TRAIT_PROSE[t]))] ?? [null])
+        : null
+      return traitLine ?? pick([
+        `A good year with ${partner.name}. Nothing dramatic — that's how the good ones go.`,
+        `${pn} knows what you mean before you finish. That is a specific kind of luck.`,
+      ])
+    }
   }
 
   // ─── FAMILY ──────────────────────────────────────────────────────────────────
@@ -1460,6 +1503,211 @@ function buildYearTexture(state) {
       : 'late_life'
     const line = desireLines[desire]?.[phaseKey]
     if (line) return line
+  }
+
+  // ─── MEMORY LAYER (~30% of remaining quiet years) ────────────────────────────
+  // Surfaces specific past flags by name, using elapsed years for texture.
+  // Only fires when the flag was set and enough time has passed to feel like memory.
+  if (Math.random() < 0.30) {
+    const yr = state.currentYear
+    const mem = state.mem ?? {}
+    const age = state.age
+
+    const yrsAgo = (flagYear) => yr - (flagYear ?? yr)
+
+    if (mem.widowedYear && yrsAgo(mem.widowedYear) >= 2 && yrsAgo(mem.widowedYear) <= 12) {
+      const n = yrsAgo(mem.widowedYear)
+      return pick([
+        `${n === 2 ? 'Two' : n === 3 ? 'Three' : n} years since ${state.partner ? state.partner.name.split(' ')[0] : 'them'}. The house still holds the shape of two people.`,
+        `You have learned to do the things that used to be shared. You are still learning.',`,
+      ])
+    }
+    if (mem.partnerDeathYear && yrsAgo(mem.partnerDeathYear) >= 2 && yrsAgo(mem.partnerDeathYear) <= 15) {
+      return pick([
+        'You still reach for the phone to tell them something. That reflex has not gone.',
+        'The grief has changed shape. It is not smaller. It is more familiar.',
+      ])
+    }
+    if (mem.parentDeathYear && yrsAgo(mem.parentDeathYear) >= 1 && yrsAgo(mem.parentDeathYear) <= 8) {
+      const n = yrsAgo(mem.parentDeathYear)
+      return pick([
+        n <= 2
+          ? 'You are still finding things that bring it back. A sound, a smell, a phrase they used.'
+          : 'You think of them more than you say. That is probably true of most people.',
+        'Some things you only understand now that you cannot ask.',
+      ])
+    }
+    if (F.has('knows_failure') && mem.knows_failureYear && yrsAgo(mem.knows_failureYear) >= 2 && yrsAgo(mem.knows_failureYear) <= 10 && phase !== 'early_childhood') {
+      return pick([
+        'The failure was real. You have built on it, or around it, depending on the year.',
+        'You know what it feels like when something you believed in doesn\'t work. That is a kind of knowledge.',
+      ])
+    }
+    if (F.has('first_love_over') && mem.first_love_overYear && yrsAgo(mem.first_love_overYear) >= 3 && yrsAgo(mem.first_love_overYear) <= 15 && age <= 38) {
+      return pick([
+        'You think of them occasionally, without the weight you expected.',
+        'What you had was real. That it ended doesn\'t change what it was.',
+      ])
+    }
+    if (F.has('emigrated') && mem.emigratedYear && yrsAgo(mem.emigratedYear) >= 5 && yrsAgo(mem.emigratedYear) <= 20 && Math.random() < 0.5) {
+      return pick([
+        'The place you left exists without you. You have stopped being surprised by this.',
+        'You are fluent in the life here now. The old one comes back in small things.',
+      ])
+    }
+    if (F.has('cancer_survivor') && mem.cancer_survivorYear && yrsAgo(mem.cancer_survivorYear) >= 1 && yrsAgo(mem.cancer_survivorYear) <= 10) {
+      return pick([
+        'You have had years since then. You do not take that for granted.',
+        'The clear scan is still the most important appointment of the year.',
+      ])
+    }
+    if (F.has('business_failed') && mem.business_failedYear && yrsAgo(mem.business_failedYear) >= 2 && yrsAgo(mem.business_failedYear) <= 12) {
+      return pick([
+        'You built something and it didn\'t hold. You know more than you did. Both things are true.',
+        'The failure has become a reference point. You use it as one.',
+      ])
+    }
+    if (F.has('graduated') && mem.graduatedYear && yrsAgo(mem.graduatedYear) >= 5 && yrsAgo(mem.graduatedYear) <= 25 && phase === 'midlife') {
+      return 'The education is further behind you than it felt at the time. You still use it.'
+    }
+    if (F.has('affair_not_taken') && mem.affair_not_takenYear && yrsAgo(mem.affair_not_takenYear) >= 3 && yrsAgo(mem.affair_not_takenYear) <= 20) {
+      return pick([
+        'There was a door. You didn\'t open it. That is still occasionally present.',
+        'You made a choice and it became part of how you understand yourself.',
+      ])
+    }
+    if (F.has('lgbtq_family_rejection') && mem.lgbtq_family_rejectionYear && yrsAgo(mem.lgbtq_family_rejectionYear) >= 3) {
+      return pick([
+        'The family you chose is the one that held.',
+        'You have made a life that doesn\'t require their approval. Most of the time that is enough.',
+      ])
+    }
+    if (F.has('experienced_racism') && mem.experienced_racismYear && yrsAgo(mem.experienced_racismYear) >= 2 && phase !== 'early_childhood') {
+      return pick([
+        'You carry certain knowledge about how the world works. You did not ask to learn it this way.',
+        'The incident is in the past. Its shape is still present in certain rooms.',
+      ])
+    }
+  }
+
+  // ─── PROJECT LAYER (~35% when project active) ────────────────────────────────
+  const proj = state.currentProject
+  if (proj && proj.phase !== 'abandoned' && Math.random() < 0.35) {
+    const pname = proj.name ? ` on ${proj.name}` : ''
+    const projectLines = {
+      writing: {
+        early: [
+          `You are writing${pname}. It is mostly bad. You continue.`,
+          'The pages accumulate. You don\'t show them to anyone yet.',
+          'The work asks for early mornings and late nights. You are giving them.',
+        ],
+        middle: [
+          'The writing is in a difficult phase. You are pushing through it.',
+          'There are good paragraphs and bad ones. More of the latter. You keep going.',
+          'The project is real enough now that abandoning it would cost something.',
+        ],
+        late: [
+          'The work is further along than it has ever been. You don\'t say this to anyone.',
+          'You can see the shape of it now. Whether the shape is right is another question.',
+          'The end is somewhere ahead. You have been working toward it for years.',
+        ],
+        established: [
+          'You have been writing for long enough that it is part of who you are.',
+          'The practice has become something you don\'t question. You do it the way you brush your teeth.',
+          'You have made something. Whether it is good is a question you have stopped asking every day.',
+        ],
+      },
+      running: {
+        early: [
+          'The running is new enough that it still hurts the way new things hurt.',
+          'You are building the habit. Some weeks it holds; some weeks it doesn\'t.',
+          'You are slower than you want to be. You keep going anyway.',
+        ],
+        middle: [
+          'The body knows what to do now. The mind follows.',
+          'The run is the part of the day that belongs entirely to you.',
+          'You have been at this long enough that missing it feels wrong.',
+        ],
+        late: [
+          'The running has become a fact about you, the way height is a fact.',
+          'You can cover distances now that you couldn\'t have imagined starting out.',
+          'The habit is yours. You have carried it through years that tried to take it from you.',
+        ],
+        established: [
+          'You have been running for years. The body is different for it.',
+          'The early mornings are a constant. They have outlasted many other things.',
+          'You are still at it. Not everyone who starts is.',
+        ],
+      },
+      music: {
+        early: [
+          'The practice is rough and necessary. You do it anyway.',
+          'The instrument asks more than you have. You give it.',
+          'The music is somewhere ahead of your current ability. You are walking toward it.',
+        ],
+        middle: [
+          'You can play things now that would have defeated you two years ago.',
+          'The practice has a different quality — harder but closer to something real.',
+          'The music is becoming yours. It still belongs partly to the form. Less so each year.',
+        ],
+        late: [
+          'You have been playing long enough that the instrument feels like a part of the body.',
+          'The music you make is specific to you. No one else would make exactly this.',
+          'You have a sound now. It took years.',
+        ],
+        established: [
+          'The music has been with you so long that you don\'t know who you are without it.',
+          'You still practice. After all this time, still.',
+          'The playing has outlasted careers, relationships, houses. It continues.',
+        ],
+      },
+      art: {
+        early: [
+          'The work is private. You are not ready for it to be anything else.',
+          'You are making things you have no name for yet. That seems right.',
+          'The practice is tentative. You are learning to trust it.',
+        ],
+        middle: [
+          'The work has found its own logic. You are following it.',
+          'You are making things that surprise you. That is the sign.',
+          'The art is getting harder to hide, which means it is getting more real.',
+        ],
+        late: [
+          'You have been making this work for years. Its shape is clearer to you now.',
+          'The practice has accumulated into something. You are still deciding what.',
+          'The work is there whether anyone sees it or not. That has become enough, mostly.',
+        ],
+        established: [
+          'You are a person who makes things. That is a settled fact about you.',
+          'The work continues. It has outlasted doubt.',
+          'You have made enough by now that the quantity itself means something.',
+        ],
+      },
+      business: {
+        early: [
+          `The business${pname ? ` — ${proj.name} —` : ''} is in its first years. Everything is provisional.`,
+          'You are learning the distance between a plan and an operation.',
+          'The business is consuming more than you expected. You knew it would.',
+        ],
+        middle: [
+          'The business has found its footing. The crisis is ordinary now.',
+          'You are building something. What it becomes is still being decided.',
+          `${proj.name ?? 'The business'} has survived its first real tests. Not all businesses do.`,
+        ],
+        late: [
+          `${proj.name ?? 'The business'} is what it has become. You have some pride in that.`,
+          'You have built something that works without requiring you every hour. That took years.',
+          'The work has a shape now. Whether it is the shape you intended is another question.',
+        ],
+        established: [
+          `${proj.name ?? 'The business'} has been running for years. That is itself an achievement.`,
+          'You have built something that employs people and pays its bills. Not every idea gets this far.',
+          'The business is a fact of your life now. You have grown around it.',
+        ],
+      },
+    }
+    const lines = projectLines[proj.type]?.[proj.phase]
+    if (lines) return pickFrom(lines)
   }
 
   // ─── EXPANDED PHASE POOLS ────────────────────────────────────────────────────
@@ -1845,6 +2093,32 @@ const ADULT_TRAITS = [
   'demanding', 'quiet', 'affectionate', 'critical', 'idealistic',
   'practical', 'melancholy', 'cheerful',
 ]
+
+// Prose surfaced in year texture and partner moment generation.
+// Each trait maps to 2 lines so variety is possible across years.
+const TRAIT_PROSE = {
+  warm:        ['They still bring you tea when you\'re working late. You have stopped remarking on it.', 'The ease of being around them. You notice it most on the days when it isn\'t there.'],
+  funny:       ['A thing they said three years ago still makes you laugh when it comes back.', 'Their timing. No one else has their timing.'],
+  stubborn:    ['There is an argument you have been having, in various forms, for years now.', 'They don\'t change their mind easily. You have learned when to stop trying.'],
+  anxious:     ['Their worry before your trip, which annoyed you and also meant something.', 'They catastrophize. They are almost always wrong. You have learned to say so kindly.'],
+  ambitious:   ['The nights they stayed up finishing something. You learned not to wait up.', 'Their drive. You admire it. Some days you find it exhausting. Both things are true.'],
+  private:     ['There are parts of them you have never fully reached. You have made peace with that.', 'They keep things. You have learned not to push.'],
+  quiet:       ['The comfortable silences. Not every couple has them.', 'You can be in the same room without speaking and it isn\'t empty.'],
+  affectionate:['They still reach for your hand. You didn\'t expect that to last.', 'The hand on your back without thinking about it. Still.'],
+  gentle:      ['The way they are with small things — children, animals, anything broken.', 'How they speak to people they don\'t need to be kind to.'],
+  generous:    ['They give things away without calculating. You\'ve stopped being surprised by it.', 'There is always something for the person who needs it. This is how they move through the world.'],
+  melancholy:  ['Something quiet underneath them, always. You learned to sit with it instead of trying to fix it.', 'The sadness in them has no particular cause. You have learned not to make it worse.'],
+  cheerful:    ['They find the thing that\'s working. You don\'t always say so, but you depend on it.', 'Their ability to be fine when you can\'t be. You have borrowed it more than once.'],
+  patient:     ['They wait. You are not sure you have fully understood what it costs them.', 'They have never rushed you. After all this time, still.'],
+  restless:    ['The projects that start and don\'t finish. You have made room for this.', 'Their need for something new. You have learned when to follow and when to let it pass.'],
+  critical:    ['The standard they hold things to. You. This is part of how they love and it is not always easy.', 'Their expectations are high. You have decided this means they believe in you.'],
+  practical:   ['They fix things. Years in, you are still grateful for this.', 'The solution you couldn\'t see, they found in five minutes. This still happens.'],
+  serious:     ['When they laugh it means something because they don\'t do it constantly.', 'Their seriousness has a beauty to it that you didn\'t appreciate immediately.'],
+  demanding:   ['They want a lot. You have decided this is a form of respect.', 'Their standards are high. Trying to meet them has made you better, which was probably the plan.'],
+  idealistic:  ['They still believe things can be better. You have borrowed this belief more than you\'ve admitted.', 'The quality of their hope. It has kept something alive in you.'],
+  distant:     ['There are rooms in them you have been outside of for your entire relationship.', 'The parts of them that stay at a remove. You have learned not to take it personally. Most of the time.'],
+  proud:       ['They don\'t ask for help easily. You have learned to offer without being asked.', 'Their pride. It is both a limitation and the thing that got them where they are.'],
+}
 const CHILD_TRAITS = [
   'curious', 'shy', 'spirited', 'sensitive', 'stubborn', 'gentle',
   'funny', 'serious', 'dreamy', 'anxious', 'affectionate', 'restless',
@@ -3167,6 +3441,43 @@ export function tick(state) {
     }
   }
 
+  // Auto-detect and advance slow-burn personal project
+  if (!s.currentProject) {
+    // Detect project from existing flags
+    const fl = s.flags
+    if (fl.includes('writing_in_drawer') || fl.includes('reflective_writer') || fl.includes('serious_writer')) {
+      s = { ...s, currentProject: { type: 'writing', startYear: s.currentYear, phase: 'early', name: null } }
+    } else if (fl.includes('runner_habit') || fl.includes('runner_entered_race')) {
+      s = { ...s, currentProject: { type: 'running', startYear: s.currentYear, phase: 'early', name: null } }
+    } else if (fl.includes('music_private') || fl.includes('musician_performing') || fl.includes('serious_musician')) {
+      s = { ...s, currentProject: { type: 'music', startYear: s.currentYear, phase: 'early', name: null } }
+    } else if (fl.includes('art_in_drawer') || fl.includes('serious_artist')) {
+      s = { ...s, currentProject: { type: 'art', startYear: s.currentYear, phase: 'early', name: null } }
+    } else if (fl.includes('business_started')) {
+      s = { ...s, currentProject: { type: 'business', startYear: s.currentYear, phase: 'early', name: s.business?.name ?? null } }
+    }
+  } else if (s.currentProject) {
+    // Advance phase based on years into project
+    const proj = s.currentProject
+    const yearsIn = s.currentYear - (proj.startYear ?? s.currentYear)
+    const newPhase = yearsIn >= 10 ? 'established' : yearsIn >= 5 ? 'late' : yearsIn >= 2 ? 'middle' : 'early'
+    if (newPhase !== proj.phase) {
+      s = { ...s, currentProject: { ...proj, phase: newPhase } }
+    }
+    // Clear project if the underlying flags are gone (abandoned)
+    const fl = s.flags
+    const typeActive = {
+      writing: fl.includes('writing_in_drawer') || fl.includes('reflective_writer') || fl.includes('serious_writer'),
+      running: fl.includes('runner_habit') || fl.includes('runner_entered_race') || fl.includes('played_into_adulthood'),
+      music: fl.includes('music_private') || fl.includes('musician_performing') || fl.includes('serious_musician'),
+      art: fl.includes('art_in_drawer') || fl.includes('serious_artist'),
+      business: fl.includes('business_started'),
+    }
+    if (proj.type && typeActive[proj.type] === false) {
+      s = { ...s, currentProject: { ...proj, phase: 'abandoned' } }
+    }
+  }
+
   // Illness risk check
   s = checkIllnessRisk(s)
 
@@ -3275,6 +3586,28 @@ export function tick(state) {
       s.flags = [...new Set([...s.flags, 'breakup'])]
       s.stats = { ...s.stats, happiness: clamp(s.stats.happiness - 12, 0, 100) }
       s.log = [...s.log, { age: s.age, text: `Your relationship with ${name} falls apart.`, isKey: true }]
+    }
+  }
+
+  // Auto-generate partner moments from traits (lazy init on first qualifying year)
+  if (s.partner && s.partner.traits?.length && (s.partner.years ?? 0) >= 3 && !s.mem?.partnerMomentsGenerated) {
+    const moments = []
+    const shuffled = [...s.partner.traits].sort(() => Math.random() - 0.5)
+    for (const trait of shuffled.slice(0, 3)) {
+      const lines = TRAIT_PROSE[trait]
+      if (lines) moments.push(pick(lines))
+    }
+    s.mem = { ...(s.mem ?? {}), partnerMoments: moments, partnerMomentsGenerated: true }
+  }
+  // Refresh partner moments occasionally as the relationship continues
+  if (s.partner && s.partner.traits?.length && s.mem?.partnerMomentsGenerated && (s.partner.years ?? 0) > 0 && s.partner.years % 7 === 0) {
+    const existing = s.mem.partnerMoments ?? []
+    const trait = pickFrom(s.partner.traits.filter(t => TRAIT_PROSE[t]))
+    if (trait) {
+      const newMoment = pick(TRAIT_PROSE[trait])
+      if (!existing.includes(newMoment)) {
+        s.mem = { ...s.mem, partnerMoments: [...existing, newMoment].slice(-12) }
+      }
     }
   }
 
