@@ -703,7 +703,24 @@ function buildEffectProxy(state) {
   // Read-only state accessors for effects that need to branch on character context
   proxy._state = state
   proxy._age = state.age
-  proxy.addFlag = (flag) => { if (!proxy.flags.includes(flag)) proxy.flags.push(flag) }
+  // Flags that carry emotional weight and deserve memory-layer prose years later
+  const TIMESTAMPED_FLAGS = new Set([
+    'knows_failure', 'lab_crossed_line', 'solidarity_proven', 'compromised',
+    'art_in_drawer', 'runner_habit', 'music_private', 'writing_in_drawer',
+    'lost_parent_father', 'lost_parent_mother', 'lost_friend', 'widowed',
+    'famine_memory', 'experienced_racism', 'lgbtq_family_rejection',
+    'boarding_school', 'first_love_over', 'cancer_survivor',
+    'affair_brief_secret', 'affair_not_taken', 'emigrated',
+    'divorced', 'business_failed', 'graduated',
+  ])
+  proxy.addFlag = (flag) => {
+    if (!proxy.flags.includes(flag)) {
+      proxy.flags.push(flag)
+      if (TIMESTAMPED_FLAGS.has(flag)) {
+        proxy.mem[`${flag}Year`] = state.currentYear
+      }
+    }
+  }
   proxy.clearFlag = (flag) => { proxy.flags = proxy.flags.filter(f => f !== flag) }
   proxy.setEducation = (level, field = null) => {
     proxy._newEducation = { level, field: field ?? state.education.field }
@@ -1485,6 +1502,91 @@ function buildYearTexture(state) {
       : 'late_life'
     const line = desireLines[desire]?.[phaseKey]
     if (line) return line
+  }
+
+  // ─── MEMORY LAYER (~30% of remaining quiet years) ────────────────────────────
+  // Surfaces specific past flags by name, using elapsed years for texture.
+  // Only fires when the flag was set and enough time has passed to feel like memory.
+  if (Math.random() < 0.30) {
+    const yr = state.currentYear
+    const mem = state.mem ?? {}
+    const age = state.age
+
+    const yrsAgo = (flagYear) => yr - (flagYear ?? yr)
+
+    if (mem.widowedYear && yrsAgo(mem.widowedYear) >= 2 && yrsAgo(mem.widowedYear) <= 12) {
+      const n = yrsAgo(mem.widowedYear)
+      return pick([
+        `${n === 2 ? 'Two' : n === 3 ? 'Three' : n} years since ${state.partner ? state.partner.name.split(' ')[0] : 'them'}. The house still holds the shape of two people.`,
+        `You have learned to do the things that used to be shared. You are still learning.',`,
+      ])
+    }
+    if (mem.partnerDeathYear && yrsAgo(mem.partnerDeathYear) >= 2 && yrsAgo(mem.partnerDeathYear) <= 15) {
+      return pick([
+        'You still reach for the phone to tell them something. That reflex has not gone.',
+        'The grief has changed shape. It is not smaller. It is more familiar.',
+      ])
+    }
+    if (mem.parentDeathYear && yrsAgo(mem.parentDeathYear) >= 1 && yrsAgo(mem.parentDeathYear) <= 8) {
+      const n = yrsAgo(mem.parentDeathYear)
+      return pick([
+        n <= 2
+          ? 'You are still finding things that bring it back. A sound, a smell, a phrase they used.'
+          : 'You think of them more than you say. That is probably true of most people.',
+        'Some things you only understand now that you cannot ask.',
+      ])
+    }
+    if (F.has('knows_failure') && mem.knows_failureYear && yrsAgo(mem.knows_failureYear) >= 2 && yrsAgo(mem.knows_failureYear) <= 10 && phase !== 'early_childhood') {
+      return pick([
+        'The failure was real. You have built on it, or around it, depending on the year.',
+        'You know what it feels like when something you believed in doesn\'t work. That is a kind of knowledge.',
+      ])
+    }
+    if (F.has('first_love_over') && mem.first_love_overYear && yrsAgo(mem.first_love_overYear) >= 3 && yrsAgo(mem.first_love_overYear) <= 15 && age <= 38) {
+      return pick([
+        'You think of them occasionally, without the weight you expected.',
+        'What you had was real. That it ended doesn\'t change what it was.',
+      ])
+    }
+    if (F.has('emigrated') && mem.emigratedYear && yrsAgo(mem.emigratedYear) >= 5 && yrsAgo(mem.emigratedYear) <= 20 && Math.random() < 0.5) {
+      return pick([
+        'The place you left exists without you. You have stopped being surprised by this.',
+        'You are fluent in the life here now. The old one comes back in small things.',
+      ])
+    }
+    if (F.has('cancer_survivor') && mem.cancer_survivorYear && yrsAgo(mem.cancer_survivorYear) >= 1 && yrsAgo(mem.cancer_survivorYear) <= 10) {
+      return pick([
+        'You have had years since then. You do not take that for granted.',
+        'The clear scan is still the most important appointment of the year.',
+      ])
+    }
+    if (F.has('business_failed') && mem.business_failedYear && yrsAgo(mem.business_failedYear) >= 2 && yrsAgo(mem.business_failedYear) <= 12) {
+      return pick([
+        'You built something and it didn\'t hold. You know more than you did. Both things are true.',
+        'The failure has become a reference point. You use it as one.',
+      ])
+    }
+    if (F.has('graduated') && mem.graduatedYear && yrsAgo(mem.graduatedYear) >= 5 && yrsAgo(mem.graduatedYear) <= 25 && phase === 'midlife') {
+      return 'The education is further behind you than it felt at the time. You still use it.'
+    }
+    if (F.has('affair_not_taken') && mem.affair_not_takenYear && yrsAgo(mem.affair_not_takenYear) >= 3 && yrsAgo(mem.affair_not_takenYear) <= 20) {
+      return pick([
+        'There was a door. You didn\'t open it. That is still occasionally present.',
+        'You made a choice and it became part of how you understand yourself.',
+      ])
+    }
+    if (F.has('lgbtq_family_rejection') && mem.lgbtq_family_rejectionYear && yrsAgo(mem.lgbtq_family_rejectionYear) >= 3) {
+      return pick([
+        'The family you chose is the one that held.',
+        'You have made a life that doesn\'t require their approval. Most of the time that is enough.',
+      ])
+    }
+    if (F.has('experienced_racism') && mem.experienced_racismYear && yrsAgo(mem.experienced_racismYear) >= 2 && phase !== 'early_childhood') {
+      return pick([
+        'You carry certain knowledge about how the world works. You did not ask to learn it this way.',
+        'The incident is in the past. Its shape is still present in certain rooms.',
+      ])
+    }
   }
 
   // ─── EXPANDED PHASE POOLS ────────────────────────────────────────────────────
