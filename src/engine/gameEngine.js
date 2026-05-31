@@ -778,6 +778,10 @@ function buildEffectProxy(state) {
   proxy.setCreditScore = (val) => { proxy._creditScoreSet = val }
   proxy.partnerRel = (delta) => { proxy._partnerRelDelta = (proxy._partnerRelDelta ?? 0) + delta }
   proxy.updatePartnerRel = proxy.partnerRel
+  proxy.addPartnerMoment = (text) => {
+    if (!proxy._partnerMomentsToAdd) proxy._partnerMomentsToAdd = []
+    proxy._partnerMomentsToAdd.push(text)
+  }
   proxy.makePartner = (overrides = {}) => {
     const myGender = state.character.gender
     const isLGBTQ = proxy.flags.includes('lgbtq_identity')
@@ -930,6 +934,10 @@ function resolveProxyExtras(state, proxy) {
   }
   if (proxy._killPartner && next.partner) {
     next = { ...next, mem: { ...(next.mem ?? {}), partnerDeathYear: next.currentYear } }
+  }
+  if (proxy._partnerMomentsToAdd?.length) {
+    const existing = next.mem?.partnerMoments ?? []
+    next = { ...next, mem: { ...(next.mem ?? {}), partnerMoments: [...existing, ...proxy._partnerMomentsToAdd].slice(-12) } }
   }
   return next
 }
@@ -1212,6 +1220,8 @@ function buildYearTexture(state) {
   if (partner) {
     const q = partner.relationshipQuality ?? 60
     const pn = partner.name.split(' ')[0]
+    const moments = state.mem?.partnerMoments ?? []
+
     if (q < 28) return pick([
       `You and ${partner.name} are still in the same house. That is accurate and not quite the whole story.`,
       `There are things you and ${pn} no longer say. The list has grown.`,
@@ -1220,14 +1230,29 @@ function buildYearTexture(state) {
       `You and ${partner.name} are polite in ways you didn't used to have to be.`,
       `You and ${pn} move around each other carefully. Neither of you names it.`,
     ])
-    if (q > 85 && partner.married) return pick([
-      `A good year with ${partner.name}. The small things are the whole thing, some years.`,
-      `You and ${pn} still make each other laugh. That is not nothing after all this time.`,
-    ])
-    if (q > 78) return pick([
-      `A good year with ${partner.name}. Nothing dramatic — that's how the good ones go.`,
-      `${pn} knows what you mean before you finish. That is a specific kind of luck.`,
-    ])
+    // Surface a specific partner moment (~30% of good years, if moments exist)
+    if (q >= 45 && moments.length > 0 && Math.random() < 0.30) {
+      return pickFrom(moments)
+    }
+    // Trait-aware prose for strong relationships
+    if (q > 85 && partner.married) {
+      const traitLine = partner.traits?.length
+        ? pick(TRAIT_PROSE[pickFrom(partner.traits.filter(t => TRAIT_PROSE[t]))] ?? [null])
+        : null
+      return traitLine ?? pick([
+        `A good year with ${partner.name}. The small things are the whole thing, some years.`,
+        `You and ${pn} still make each other laugh. That is not nothing after all this time.`,
+      ])
+    }
+    if (q > 78) {
+      const traitLine = partner.traits?.length && Math.random() < 0.5
+        ? pick(TRAIT_PROSE[pickFrom(partner.traits.filter(t => TRAIT_PROSE[t]))] ?? [null])
+        : null
+      return traitLine ?? pick([
+        `A good year with ${partner.name}. Nothing dramatic — that's how the good ones go.`,
+        `${pn} knows what you mean before you finish. That is a specific kind of luck.`,
+      ])
+    }
   }
 
   // ─── FAMILY ──────────────────────────────────────────────────────────────────
@@ -1845,6 +1870,32 @@ const ADULT_TRAITS = [
   'demanding', 'quiet', 'affectionate', 'critical', 'idealistic',
   'practical', 'melancholy', 'cheerful',
 ]
+
+// Prose surfaced in year texture and partner moment generation.
+// Each trait maps to 2 lines so variety is possible across years.
+const TRAIT_PROSE = {
+  warm:        ['They still bring you tea when you\'re working late. You have stopped remarking on it.', 'The ease of being around them. You notice it most on the days when it isn\'t there.'],
+  funny:       ['A thing they said three years ago still makes you laugh when it comes back.', 'Their timing. No one else has their timing.'],
+  stubborn:    ['There is an argument you have been having, in various forms, for years now.', 'They don\'t change their mind easily. You have learned when to stop trying.'],
+  anxious:     ['Their worry before your trip, which annoyed you and also meant something.', 'They catastrophize. They are almost always wrong. You have learned to say so kindly.'],
+  ambitious:   ['The nights they stayed up finishing something. You learned not to wait up.', 'Their drive. You admire it. Some days you find it exhausting. Both things are true.'],
+  private:     ['There are parts of them you have never fully reached. You have made peace with that.', 'They keep things. You have learned not to push.'],
+  quiet:       ['The comfortable silences. Not every couple has them.', 'You can be in the same room without speaking and it isn\'t empty.'],
+  affectionate:['They still reach for your hand. You didn\'t expect that to last.', 'The hand on your back without thinking about it. Still.'],
+  gentle:      ['The way they are with small things — children, animals, anything broken.', 'How they speak to people they don\'t need to be kind to.'],
+  generous:    ['They give things away without calculating. You\'ve stopped being surprised by it.', 'There is always something for the person who needs it. This is how they move through the world.'],
+  melancholy:  ['Something quiet underneath them, always. You learned to sit with it instead of trying to fix it.', 'The sadness in them has no particular cause. You have learned not to make it worse.'],
+  cheerful:    ['They find the thing that\'s working. You don\'t always say so, but you depend on it.', 'Their ability to be fine when you can\'t be. You have borrowed it more than once.'],
+  patient:     ['They wait. You are not sure you have fully understood what it costs them.', 'They have never rushed you. After all this time, still.'],
+  restless:    ['The projects that start and don\'t finish. You have made room for this.', 'Their need for something new. You have learned when to follow and when to let it pass.'],
+  critical:    ['The standard they hold things to. You. This is part of how they love and it is not always easy.', 'Their expectations are high. You have decided this means they believe in you.'],
+  practical:   ['They fix things. Years in, you are still grateful for this.', 'The solution you couldn\'t see, they found in five minutes. This still happens.'],
+  serious:     ['When they laugh it means something because they don\'t do it constantly.', 'Their seriousness has a beauty to it that you didn\'t appreciate immediately.'],
+  demanding:   ['They want a lot. You have decided this is a form of respect.', 'Their standards are high. Trying to meet them has made you better, which was probably the plan.'],
+  idealistic:  ['They still believe things can be better. You have borrowed this belief more than you\'ve admitted.', 'The quality of their hope. It has kept something alive in you.'],
+  distant:     ['There are rooms in them you have been outside of for your entire relationship.', 'The parts of them that stay at a remove. You have learned not to take it personally. Most of the time.'],
+  proud:       ['They don\'t ask for help easily. You have learned to offer without being asked.', 'Their pride. It is both a limitation and the thing that got them where they are.'],
+}
 const CHILD_TRAITS = [
   'curious', 'shy', 'spirited', 'sensitive', 'stubborn', 'gentle',
   'funny', 'serious', 'dreamy', 'anxious', 'affectionate', 'restless',
@@ -3275,6 +3326,28 @@ export function tick(state) {
       s.flags = [...new Set([...s.flags, 'breakup'])]
       s.stats = { ...s.stats, happiness: clamp(s.stats.happiness - 12, 0, 100) }
       s.log = [...s.log, { age: s.age, text: `Your relationship with ${name} falls apart.`, isKey: true }]
+    }
+  }
+
+  // Auto-generate partner moments from traits (lazy init on first qualifying year)
+  if (s.partner && s.partner.traits?.length && (s.partner.years ?? 0) >= 3 && !s.mem?.partnerMomentsGenerated) {
+    const moments = []
+    const shuffled = [...s.partner.traits].sort(() => Math.random() - 0.5)
+    for (const trait of shuffled.slice(0, 3)) {
+      const lines = TRAIT_PROSE[trait]
+      if (lines) moments.push(pick(lines))
+    }
+    s.mem = { ...(s.mem ?? {}), partnerMoments: moments, partnerMomentsGenerated: true }
+  }
+  // Refresh partner moments occasionally as the relationship continues
+  if (s.partner && s.partner.traits?.length && s.mem?.partnerMomentsGenerated && (s.partner.years ?? 0) > 0 && s.partner.years % 7 === 0) {
+    const existing = s.mem.partnerMoments ?? []
+    const trait = pickFrom(s.partner.traits.filter(t => TRAIT_PROSE[t]))
+    if (trait) {
+      const newMoment = pick(TRAIT_PROSE[trait])
+      if (!existing.includes(newMoment)) {
+        s.mem = { ...s.mem, partnerMoments: [...existing, newMoment].slice(-12) }
+      }
     }
   }
 
