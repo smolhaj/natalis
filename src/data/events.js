@@ -95,6 +95,7 @@ import { FOLLOWTHROUGH_7_EVENTS } from './events_followthrough_7.js'
 import { FOLLOWTHROUGH_8_EVENTS } from './events_followthrough_8.js'
 import { ACTIVITY_CHOICE_EVENTS } from './events_activity_choice.js'
 import { PROJECT_ARC_EVENTS } from './events_project_arc.js'
+import { INDUSTRIAL_EVENTS } from './events_industrial.js'
 
 const BASE_EVENTS = [
   // ── EARLY CHILDHOOD ─────────────────────────────────────────────────────────
@@ -4441,6 +4442,30 @@ const BASE_EVENTS = [
     ],
     effect: null,
   },
+  {
+    id: 'ya_student_loan_reality',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country?.archetype === 'wealthy_west' &&
+      G.currentYear >= 2004 &&
+      G.flags.has('university_graduate') &&
+      G.age >= 22 && G.age <= 30 &&
+      !G.mem?.studentLoanReckoning,
+    text: (G) => {
+      const country = G.character.country?.name || ''
+      if (country === 'United States' || country === 'USA')
+        return 'The loan statement arrives in a year when you are also paying rent and eating and trying to start something. The total balance — principal plus accumulated interest — is larger than it was when you graduated. You have been making payments. The payments have been going to interest. The principal has barely moved. This is how the product was designed.'
+      if (country === 'United Kingdom' || country === 'UK')
+        return 'The student loan company calculates your repayment at nine percent of earnings above the threshold. In practice this means you will still be repaying in your fifties unless you earn significantly above median wage for your entire working life. This is the normal situation for people who went to university after 2012. Everyone treats it as normal.'
+      return 'The student loan is not like other debt. There is no defaulting on it in the conventional sense. It simply follows you — a fraction of every paycheque, for years, for decades, until either the balance is cleared or enough time passes for it to be written off. It is background noise until it is not. Today it is not.'
+    },
+    choices: [
+      { text: 'Set up an aggressive repayment plan', tag: null, outcome: 'You pay more than the minimum. It takes years. You do not go on holiday during them.', effect: (p) => { p.mo -= 2000; p.m -= 5; p.e += 3; p.setMem('studentLoanReckoning', true) }, inject: null },
+      { text: 'Pay the minimum and carry it', tag: null, outcome: 'The number stays large for a long time. So does the life you\'re building alongside it.', effect: (p) => { p.m -= 3; p.setMem('studentLoanReckoning', true) }, inject: null },
+    ],
+    effect: null,
+  },
 
   // FRIEND SYSTEM EVENTS
   {
@@ -8440,7 +8465,7 @@ const BASE_EVENTS = [
   },
 ]
 
-export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS, ...TECHNOLOGY_EVENTS, ...IMMIGRATION_EVENTS, ...CAREER_REGIME_EVENTS, ...CONFLICT_CHILDHOOD_EVENTS, ...LGBTQ_EVENTS, ...MENTAL_HEALTH_EVENTS, ...GRIEF_EVENTS, ...GRIEF_MENTAL_EVENTS, ...RELIGION_ARC_EVENTS, ...LATE_LIFE_EVENTS, ...CHILDREN_ARC_EVENTS, ...FAME_KARMA_EVENTS, ...TEXTURE_EVENTS, ...SOCIETY_EVENTS, ...CONSEQUENCE_EVENTS, ...ROMANCE_ARC_EVENTS, ...ACTIVITY_PAYOFF_EVENTS, ...FRIEND_EVENTS, ...BUSINESS_EVENTS, ...SIBLING_EVENTS, ...EDUCATION_ARC_EVENTS, ...ADOLESCENCE_EVENTS, ...ADOLESCENCE_2_EVENTS, ...FERTILITY_EVENTS, ...CAREER_WEALTH_EVENTS, ...GULF_EAST_EVENTS, ...RELATIONSHIP_QUALITY_EVENTS, ...FOLLOWTHROUGH_EVENTS, ...DESIRES_EVENTS, ...SMALL_LIFE_EVENTS, ...FOLLOWTHROUGH_2_EVENTS, ...PLACES_EVENTS, ...INFRASTRUCTURE_EVENTS, ...CITY_EVENTS, ...DYING_CITY_EVENTS, ...CITIES_EXTENDED_EVENTS, ...RURAL_TEXTURE_EVENTS, ...POST_SOVIET_EVENTS, ...VIETNAM_EVENTS, ...ILLNESS_EVENTS, ...PARENT_CARE_EVENTS, ...WEALTH_SYSTEM_EVENTS, ...MONEY_EVENTS, ...FOLLOWTHROUGH_3_EVENTS, ...LATIN_AMERICA_EVENTS, ...COUNTRY_ARC_EVENTS, ...COUNTRY_ARC_2_EVENTS, ...EARLY_LIFE_EVENTS, ...DECOLONISATION_EVENTS, ...LABOR_EVENTS, ...ASIA_ARC_EVENTS, ...CROSSCUTTING_EVENTS, ...DRC_EVENTS, ...INTERNET_ERA_EVENTS, ...ZIMBABWE_EVENTS, ...CLIMATE_EVENTS, ...INDIGENOUS_EVENTS, ...AUTOMATION_EVENTS, ...COUNTRY_ARC_3_EVENTS, ...ARTS_EVENTS, ...FOLLOWTHROUGH_4_EVENTS, ...FOLLOWTHROUGH_5_EVENTS, ...INFORMAL_EVENTS, ...NEIGHBORHOOD_EVENTS, ...POSTRELEASE_EVENTS, ...MENTOR_EVENTS, ...FAMILY_SILENCE_EVENTS, ...SOLO_LIFE_EVENTS, ...DYING_ARC_EVENTS, ...COHERENCE_EVENTS, ...POVERTY_EVENTS, ...PREGNANCY_EVENTS, ...MENOPAUSE_EVENTS, ...CAREER_ARC_EVENTS, ...SOCIAL_MEDIA_EVENTS, ...SCANDINAVIA_EVENTS, ...PALESTINE_EVENTS, ...GANG_EVENTS, ...WORLD_RESPONSE_EVENTS, ...SOCIAL_CAPITAL_EVENTS, ...CHILDHOOD_TEXTURE_EVENTS, ...EMIGRANT_INTEGRATION_EVENTS, ...INTIMACY_EVENTS, ...SCHOOL_EVENTS, ...FOLLOWTHROUGH_6_EVENTS, ...CHILDREN_ABROAD_EVENTS, ...STAYED_EVENTS, ...SPORT_EVENTS, ...DISASTER_EVENTS, ...FOLLOWTHROUGH_7_EVENTS, ...FOLLOWTHROUGH_8_EVENTS, ...ACTIVITY_CHOICE_EVENTS, ...PROJECT_ARC_EVENTS]
+export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS, ...TECHNOLOGY_EVENTS, ...IMMIGRATION_EVENTS, ...CAREER_REGIME_EVENTS, ...CONFLICT_CHILDHOOD_EVENTS, ...LGBTQ_EVENTS, ...MENTAL_HEALTH_EVENTS, ...GRIEF_EVENTS, ...GRIEF_MENTAL_EVENTS, ...RELIGION_ARC_EVENTS, ...LATE_LIFE_EVENTS, ...CHILDREN_ARC_EVENTS, ...FAME_KARMA_EVENTS, ...TEXTURE_EVENTS, ...SOCIETY_EVENTS, ...CONSEQUENCE_EVENTS, ...ROMANCE_ARC_EVENTS, ...ACTIVITY_PAYOFF_EVENTS, ...FRIEND_EVENTS, ...BUSINESS_EVENTS, ...SIBLING_EVENTS, ...EDUCATION_ARC_EVENTS, ...ADOLESCENCE_EVENTS, ...ADOLESCENCE_2_EVENTS, ...FERTILITY_EVENTS, ...CAREER_WEALTH_EVENTS, ...GULF_EAST_EVENTS, ...RELATIONSHIP_QUALITY_EVENTS, ...FOLLOWTHROUGH_EVENTS, ...DESIRES_EVENTS, ...SMALL_LIFE_EVENTS, ...FOLLOWTHROUGH_2_EVENTS, ...PLACES_EVENTS, ...INFRASTRUCTURE_EVENTS, ...CITY_EVENTS, ...DYING_CITY_EVENTS, ...CITIES_EXTENDED_EVENTS, ...RURAL_TEXTURE_EVENTS, ...POST_SOVIET_EVENTS, ...VIETNAM_EVENTS, ...ILLNESS_EVENTS, ...PARENT_CARE_EVENTS, ...WEALTH_SYSTEM_EVENTS, ...MONEY_EVENTS, ...FOLLOWTHROUGH_3_EVENTS, ...LATIN_AMERICA_EVENTS, ...COUNTRY_ARC_EVENTS, ...COUNTRY_ARC_2_EVENTS, ...EARLY_LIFE_EVENTS, ...DECOLONISATION_EVENTS, ...LABOR_EVENTS, ...ASIA_ARC_EVENTS, ...CROSSCUTTING_EVENTS, ...DRC_EVENTS, ...INTERNET_ERA_EVENTS, ...ZIMBABWE_EVENTS, ...CLIMATE_EVENTS, ...INDIGENOUS_EVENTS, ...AUTOMATION_EVENTS, ...COUNTRY_ARC_3_EVENTS, ...ARTS_EVENTS, ...FOLLOWTHROUGH_4_EVENTS, ...FOLLOWTHROUGH_5_EVENTS, ...INFORMAL_EVENTS, ...NEIGHBORHOOD_EVENTS, ...POSTRELEASE_EVENTS, ...MENTOR_EVENTS, ...FAMILY_SILENCE_EVENTS, ...SOLO_LIFE_EVENTS, ...DYING_ARC_EVENTS, ...COHERENCE_EVENTS, ...POVERTY_EVENTS, ...PREGNANCY_EVENTS, ...MENOPAUSE_EVENTS, ...CAREER_ARC_EVENTS, ...SOCIAL_MEDIA_EVENTS, ...SCANDINAVIA_EVENTS, ...PALESTINE_EVENTS, ...GANG_EVENTS, ...WORLD_RESPONSE_EVENTS, ...SOCIAL_CAPITAL_EVENTS, ...CHILDHOOD_TEXTURE_EVENTS, ...EMIGRANT_INTEGRATION_EVENTS, ...INTIMACY_EVENTS, ...SCHOOL_EVENTS, ...FOLLOWTHROUGH_6_EVENTS, ...CHILDREN_ABROAD_EVENTS, ...STAYED_EVENTS, ...SPORT_EVENTS, ...DISASTER_EVENTS, ...FOLLOWTHROUGH_7_EVENTS, ...FOLLOWTHROUGH_8_EVENTS, ...ACTIVITY_CHOICE_EVENTS, ...PROJECT_ARC_EVENTS, ...INDUSTRIAL_EVENTS]
 
 // Phase index: pre-computed at module load so getNextEvent() only evaluates
 // guards for events in the current phase rather than scanning the entire array.

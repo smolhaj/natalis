@@ -26,8 +26,14 @@ export const WORLD_EVENTS = [
     name: 'Chernobyl Disaster',
     years: [1986, 1987],
     archetypes: 'all',
-    countries: ['Ukraine', 'Russia'],
-    narrative: 'A reactor explodes in the night. The evacuation is quiet at first. Then the truth arrives slowly.',
+    countries: ['Ukraine', 'Russia', 'Belarus'],
+    narrative: (G) => {
+      const age = G.age
+      if (age <= 10) return 'At night, adults start moving. Something is burning but it is not the kind of burning you can see. Your parents pack a bag and tell you it is temporary. Fifty thousand people leave Pripyat. Most never return. The word \'radiation\' enters your vocabulary before you are old enough to know what it means.'
+      if (age <= 17) return 'The official statement is that there is no danger to the public. Then the iodine tablets arrive. Then the evacuation orders. Then, much later, the true scale. The reactors at Chernobyl will be too dangerous to approach without equipment for thousands of years. The evacuation was supposed to last three days.'
+      return 'Reactor Number Four at Chernobyl explodes at 1:23am on 26 April. The explosion is visible from fifty kilometres. The fire burns for ten days. The Soviet government does not announce the disaster publicly for thirty-six hours. The international community learns of it when Sweden detects radiation on a worker\'s shoe at a nuclear plant 1,100 kilometres away.'
+    },
+    context: 'The Chernobyl disaster contaminated 150,000 km² across Ukraine, Russia, and Belarus. Approximately 350,000 people were permanently evacuated. The Soviet government\'s delayed disclosure and systematic underreporting of health consequences continued for years; Ukraine did not have independent oversight until 1991. The exclusion zone around Chernobyl remains uninhabitable. The HBO series Chernobyl (2019) brought renewed attention to the liquidators\' experience.',
     effect: (p) => { p.h -= 12; p.addFlag('chernobyl_generation'); },
     addFlags: ['chernobyl_generation'],
     minAge: 0,
