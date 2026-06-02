@@ -1448,6 +1448,224 @@ function buildYearTexture(state) {
     'The habit of counting what is owed is hard to put down even when the answer is fine.',
   ])
 
+  // ─── TRAUMA AND LOSS TEXTURE ─────────────────────────────────────────────────
+
+  if (F.has('war_childhood') && Math.random() < 0.35) return pick([
+    phase === 'late_life'
+      ? 'You grew up in a war. That is the deepest layer. Everything else was built on top of it.'
+      : 'The sounds from childhood are not the sounds most people carry. You know this now.',
+    'There are things that are still loud for you that are quiet for other people.',
+    'You read the room the way someone reads a room where something has happened before.',
+  ])
+  if (F.has('genocide_survivor') && Math.random() < 0.35) return pick([
+    phase === 'late_life'
+      ? 'You have outlived what was meant to erase you. You carry that carefully.'
+      : 'The fact of having survived is still something you have not fully accounted for.',
+    'There is a gap between what happened and what can be said about it. You live in that gap.',
+  ])
+  if (F.has('civil_war_lived') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) return pick([
+    'The civil war is the line that divides your memory into before and after.',
+    'You know what your country did to itself. That knowledge sits in a particular place.',
+    'The country rebuilt itself. You rebuilt with it. You are not sure the reconstruction is finished.',
+  ])
+  if (F.has('conflict_zone_childhood') && Math.random() < 0.3) return pick([
+    'Some ordinary things still feel like a gift — running water, a day without a siren.',
+    'You grew up learning the shape of danger. Some of that knowledge is still useful.',
+  ])
+  if (F.has('political_prisoner') && !F.has('inPrison') && phase !== 'young_adult' && Math.random() < 0.3) return pick([
+    'You have been inside. The fact of it is with you in ordinary rooms.',
+    'What happened to you at the hands of the state is the kind of thing that reorganises everything else.',
+    phase === 'late_life'
+      ? 'They put you in prison for what you believed. You are still here. That is its own kind of testimony.'
+      : 'The years inside changed what you need, what you fear, and what you will not accept.',
+  ])
+  if (F.has('torture_survived') && Math.random() < 0.3) return pick([
+    'The body keeps the record longer than the mind wants it to.',
+    'What was done to you in that room is not something you carry in one place. It is distributed.',
+    phase === 'late_life'
+      ? 'You have lived long enough to see some of those who did it face questions. Not all of them. Not enough.'
+      : 'You know things about human capacity — your own and others\' — that you wish you didn\'t know.',
+  ])
+  if (F.has('traumatized_by_violence') && Math.random() < 0.3) return pick([
+    'There is a category of knowledge you carry that most people don\'t have. You did not choose to have it.',
+    'The nervous system has its own memory. Faster than thought, older than language.',
+    phase === 'late_life'
+      ? 'You have spent decades learning to live alongside what you saw. It is still there. So are you.'
+      : 'You know how to move through most situations. There are specific situations where you know this in a different way.',
+  ])
+  if (F.has('abusive_relationship') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) return pick([
+    'You still notice, sometimes, the reflex — the calculation of mood, the body\'s alertness to tone.',
+    'You left. That was the hardest thing you\'ve done and it doesn\'t have a ceremony.',
+    'You are in a different life now. The old one still has a gravity you sometimes feel.',
+  ])
+  if (F.has('double_consciousness') && Math.random() < 0.3) return pick([
+    'You move between worlds. The fluency costs something. You have stopped counting what.',
+    'There is the self you are in one room and the self you are in another. Both are real.',
+    phase === 'late_life'
+      ? 'You have been translating yourself your entire life. That is a kind of labour that doesn\'t retire.'
+      : 'The navigation is automatic now. That doesn\'t mean it\'s gone.',
+  ])
+  if (F.has('permanently_estranged') && Math.random() < 0.3) return pick([
+    'The door has been closed for long enough that it\'s the shape of the wall now.',
+    'You do not think about them every day. Some days you don\'t think about them at all. Then a day comes when you do.',
+    'The estrangement is permanent. You have accepted that in some part of yourself.',
+  ])
+  if (F.has('sibling_estranged') && Math.random() < 0.3) return pick([
+    'Your sibling is somewhere. You don\'t know the specifics. You have made your peace with not knowing.',
+    'There are conversations you will not be able to have when the time comes. You are learning to carry that.',
+    'The falling out was real. What\'s harder to hold is that the love was also real.',
+  ])
+  if (F.has('lost_sibling') && Math.random() < 0.3) return pick([
+    'Your sibling is gone. The particular absence of someone who knew you from the beginning is its own category.',
+    'There are references only they would have understood. You keep making them to no one.',
+    phase === 'late_life'
+      ? 'You are the last one who remembers certain things. That is a weight you were not warned about.'
+      : 'The sibling-shaped space in your life has a specific contour. You have learned its shape.',
+  ])
+  if ((F.has('experienced_miscarriage') || F.has('multiple_miscarriage')) && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.25) return pick([
+    'The loss was real, even without a name for it, even without a ceremony.',
+    F.has('multiple_miscarriage')
+      ? 'You have grieved that particular grief more than once. You know its shape.'
+      : 'You know something about the gap between what was expected and what arrived.',
+    'It is not a thing you talk about much. It is there in the year anyway.',
+  ])
+  if (F.has('bereaved') && !F.has('lost_parent') && !F.has('lost_child') && !F.has('widowed') && Math.random() < 0.25) return pick([
+    'Someone is gone from your life who cannot be replaced by someone else.',
+    'The grief from last year is quieter. It hasn\'t left. It has found a different room.',
+  ])
+  if ((F.has('aids_generation') || F.has('aids_crisis_generation')) && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) return pick([
+    'The epidemic took people who should still be here. You carry their absence in a specific way.',
+    'You watched a generation thin out faster than it should have. The gaps are still legible to you.',
+    F.has('aids_crisis_generation')
+      ? 'There was a time when the funerals were every few months. You learned to grieve on a schedule.'
+      : 'The death rate changed everything. The community after was built around what had been lost.',
+  ])
+  if (F.has('survived_aids_crisis') && Math.random() < 0.25) return pick([
+    'You survived when others didn\'t. The arithmetic of that has never fully resolved.',
+    'Your body held when other bodies didn\'t. You still don\'t know entirely what to do with that.',
+  ])
+  if (F.has('grief_drinking') && Math.random() < 0.25) return pick([
+    'You were not at your best in the year after. You know that. You did what you could.',
+    'The drinking was how you got through it. You got through it. That is the part you hold onto.',
+  ])
+  if (F.has('business_failed_and_restarted') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) return pick([
+    'You built something that fell, and built again. The second time had a different quality to it.',
+    'Failure is information. You collected more than you wanted and used what you could.',
+    'The restart was harder than the start. You know that now.',
+  ])
+  if (F.has('end_of_history_generation') && phase === 'late_life' && Math.random() < 0.3) return pick([
+    'You came of age when the answer seemed obvious. The question turned out to be harder than that.',
+    'The 90s confidence looks different from here. You believed it, though. That part was real.',
+  ])
+
+  // ─── ERA AND IDENTITY TEXTURE ─────────────────────────────────────────────────
+
+  if (F.has('cold_war_generation') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) return pick([
+    'The world you were born into was divided by something that seemed permanent and then wasn\'t.',
+    phase === 'late_life'
+      ? 'The Cold War is history to people you know well. To you it was the shape of things.'
+      : 'You learned to read the world as two halves. The habit didn\'t fully leave when the wall came down.',
+    'There was a specific seriousness to growing up when the stakes felt that large.',
+  ])
+  if (F.has('berlin_wall_era_lived') && Math.random() < 0.3) return pick([
+    'You remember a divided city — or a divided world — as a fact of ordinary life.',
+    phase === 'late_life'
+      ? 'You watched the wall come down on television. There was a year before that when it could not have happened, and then it did.'
+      : 'The border was real in a way that maps don\'t fully convey. People were shot crossing it.',
+    'The cold certainty of that era had something in it. It also had something monstrous.',
+  ])
+  if (F.has('apartheid_era') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) return pick([
+    'You grew up inside a system that required you to act as if certain things were normal. They weren\'t.',
+    phase === 'late_life'
+      ? 'The country changed. You changed with it, as much as you could. That process is not finished.'
+      : 'What apartheid did to people — all the people in it, in different ways — is not settled yet.',
+    'There are things you didn\'t say during those years that you could say now. Some of them you still don\'t.',
+  ])
+  if (F.has('apartheid_generation') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) return pick([
+    'You were young when the structures fell. What came after was not what the structures had promised.',
+    'The generation that grew up during apartheid carries it differently from the generation that fought it.',
+    phase === 'late_life'
+      ? 'You have lived on both sides of a historical divide. Not everyone understands what that costs.'
+      : 'The new South Africa was real. So were its limits. You hold both.',
+  ])
+  if (F.has('survived_soviet_collapse') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) return pick([
+    'You watched the world you were born into dissolve in under two years. Some of it you didn\'t miss.',
+    phase === 'late_life'
+      ? 'The collapse was complete. You built something in what remained. That is not a small thing.'
+      : 'The certainties of the Soviet years have the quality of a dream now. You remember believing them.',
+    'What came after was not what anyone had promised either. You know this in a way the history books don\'t quite capture.',
+  ])
+  if (F.has('oil_delta_witness') && Math.random() < 0.3) return pick([
+    'You grew up watching what the oil did to the delta. The damage was not incidental — it was the arrangement.',
+    'The river was wrong when you were a child and it is still wrong. You still know what it was like before.',
+    phase === 'late_life'
+      ? 'You have been watching what happens when a place is treated as a resource rather than a home for most of your life.'
+      : 'There is a cost to growing up next to something being destroyed for someone else\'s profit.',
+  ])
+  if (F.has('interrogated_by_state') && Math.random() < 0.3) return pick([
+    'The room where they questioned you is still a room you are in sometimes.',
+    'You know now what it feels like when the state turns toward you. The knowledge reorganised certain things.',
+    phase === 'late_life'
+      ? 'Decades since, and certain voices, certain silences, still activate something. You have learned to name it.'
+      : 'The hypervigilance is not gone. It\'s mostly useful. Sometimes it isn\'t.',
+  ])
+  if (F.has('internally_displaced') && Math.random() < 0.3) return pick([
+    'You were displaced within your own country — stranger and citizen simultaneously.',
+    'The place you came from is still a place that exists. You just cannot go back to it, or what is there has changed.',
+    'Internal displacement is not recorded the way refugee status is. The experience was not smaller for that.',
+  ])
+  if (F.has('climate_displaced') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) return pick([
+    'The place you left did not become uninhabitable slowly. It happened faster than the words for it.',
+    'You are a climate refugee in a world that is still debating whether climate refugees exist.',
+    phase === 'late_life'
+      ? 'You have been watching the world catch up to what you already knew. There is no satisfaction in being right about this.'
+      : 'You are ahead of a curve that most people don\'t yet understand they are on.',
+  ])
+  if (F.has('first_gen_graduate') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) return pick([
+    'You were the first in your family to graduate. That is a thing that can only happen once, and you were it.',
+    phase === 'late_life'
+      ? 'The degree opened things that it wouldn\'t have opened for someone else. You knew it at the time. You know it more clearly now.'
+      : 'You carry the education and the distance it created at the same time. Both are real.',
+    'What it cost the family to send you, and what it returned, are two calculations that don\'t quite balance.',
+  ])
+  if (F.has('lost_friend') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) return pick([
+    'Your friend is gone. There are things that were only funny to you and them that are now yours alone.',
+    'You still notice when something happens that they would have said the perfect thing about.',
+    phase === 'late_life'
+      ? 'The longer you live the more of them you carry. That is just what living this long means.'
+      : 'You think about them less frequently now. When you do, it is complete — the whole person, not just the fact of loss.',
+  ])
+  if (F.has('lost_parent_young') && Math.random() < 0.3) return pick([
+    'You grew up with a parent who wasn\'t there. The absence has a specific shape that presence never has.',
+    phase === 'late_life'
+      ? 'You are older now than they were when they died. That is a strange crossing to make.'
+      : phase === 'midlife'
+        ? 'There are milestones they didn\'t see. Each one is partly theirs and mostly yours, and you have learned to hold both.'
+        : 'You constructed them from other people\'s accounts and your own incomplete memories. That construction is them now.',
+    'You wonder sometimes who you would have been if they had stayed. It is not a productive question. You ask it anyway.',
+  ])
+  if (F.has('built_something_solo') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) return pick([
+    'You built the life without the architecture most people use. It took longer to understand what you were building.',
+    phase === 'late_life'
+      ? 'What you made is yours in a way that partnerships can\'t quite achieve. The tradeoffs were real. So was the thing.'
+      : 'You moved through your 30s and 40s on your own terms. There were years when that felt like freedom and years when it felt like something else.',
+    'You are the primary architect of your own life. That is a statement that contains more than it sounds like.',
+  ])
+  if (F.has('long_marriage_intimacy') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) return pick([
+    'The marriage has become something different from what it was. Not worse — different. The word for it is harder to find.',
+    phase === 'late_life'
+      ? 'You have been with this person long enough that they are part of the furniture of your self. You do not know what the room looks like without them.'
+      : 'The early urgency has become something steadier. You are still discovering things about them, but slowly, the way things reveal themselves over decades.',
+    'What you have is not what you expected when you started. It turned out to be something specific and irreplaceable.',
+  ])
+  if (F.has('conflict_injury') && Math.random() < 0.3) return pick([
+    'The injury from that time is still in the body. The body remembers what the mind has learned to manage.',
+    'You carry something from the conflict that is physical as well as everything else.',
+    phase === 'late_life'
+      ? 'Decades on, and the wound is still part of the architecture. You have built everything else around it.'
+      : 'The damage was real. You have built a life anyway. The two facts coexist.',
+  ])
+
   // ─── DESIRE-AWARE TEXTURE (fires ~40% of remaining quiet years) ───────────────
   if (desire && Math.random() < 0.4) {
     const desireLines = {
@@ -1607,6 +1825,31 @@ function buildYearTexture(state) {
       return pick([
         'You carry certain knowledge about how the world works. You did not ask to learn it this way.',
         'The incident is in the past. Its shape is still present in certain rooms.',
+      ])
+    }
+    if (F.has('compromised') && mem.compromisedYear && yrsAgo(mem.compromisedYear) >= 3) {
+      return pick([
+        'There is something you did that you would have told your younger self you wouldn\'t do. You did it.',
+        'The compromise is the kind of thing that doesn\'t go away. It has become part of how you understand what you are capable of.',
+        phase === 'late_life'
+          ? 'You have been living with what you did for long enough that it has changed shape. You are not sure if that is wisdom or accommodation.'
+          : 'You made a calculation. The calculation was correct by its own logic. Something else says it wasn\'t.',
+      ])
+    }
+    if (F.has('affair_brief_secret') && mem.affair_brief_secretYear && yrsAgo(mem.affair_brief_secretYear) >= 4) {
+      return pick([
+        'The thing that happened — the brief thing — is still there. Not as a wound but as a weight.',
+        'You carried it quietly. You are still carrying it. Some secrets don\'t expire.',
+        phase === 'late_life'
+          ? 'From here it looks different. Not forgiven, not forgotten. Just further away and still present.'
+          : 'You ended it before it became more than it was. You are not sure if that matters.',
+      ])
+    }
+    if (F.has('art_in_drawer') && mem.art_in_drawerYear && yrsAgo(mem.art_in_drawerYear) >= 2) {
+      return pick([
+        'There is work that you made and didn\'t show. It is still there. So are you.',
+        'The drawer is still closed. You don\'t open it often. When you do, the work is better than you remembered.',
+        'You made something you couldn\'t release. That is a particular kind of holding on.',
       ])
     }
   }
