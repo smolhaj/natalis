@@ -211,7 +211,7 @@ export const GANG_EVENTS = [
         text: 'Accept it — this is the arithmetic you agreed to',
         tag: null,
         outcome: 'You accept it. The acceptance is the most consequential thing you have done, because it removes a limit you were holding.',
-        effect: (p) => { p.m -= 12; p.h -= 3; p.karma -= 10; p.addFlag('witnessed_gang_violence'); p.setMem('gangViolenceDone', true) },
+        effect: (p) => { p.m -= 12; p.h -= 3; p.karma -= 10; p.addFlag('witnessed_gang_violence'); p.addFlag('traumatized_by_violence'); p.setMem('gangViolenceDone', true) },
       },
       {
         text: 'Start looking for the exit — this is not what you signed up for',

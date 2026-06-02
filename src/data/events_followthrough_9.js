@@ -2,8 +2,114 @@
 // Dedicated follow-through events for high-priority partial flags:
 // genocide_survivor, experienced_miscarriage, multiple_miscarriage,
 // sibling_estranged, lost_sibling.
+// Also: torture_survived (set here for political prisoners in authoritarian regimes)
+// and traumatized_by_violence follow-throughs.
 
 export const FOLLOWTHROUGH_9_EVENTS = [
+
+  // ── TORTURE SURVIVED (political prisoner in authoritarian regime) ─────────────
+
+  {
+    id: 'ft9_political_detention_torture',
+    phase: null,
+    weight: 3,
+    when: (G) =>
+      G.flags.has('political_prisoner') &&
+      ['military_dictatorship', 'single_party_communist', 'single_party_authoritarian', 'theocracy'].includes(G.regime) &&
+      G.inPrison &&
+      !G.mem?.ft9TortureSurvived,
+    text: 'They take you into a room with no windows and ask questions they already know the answers to. The point is not the information — the point is that you understand they can do this. That is the whole point. You do not break in the way they want. You break in ways they don\'t count.',
+    choices: null,
+    effect: (p) => {
+      p.m -= 20
+      p.h -= 12
+      p.r += 10
+      p.karma += 8
+      p.addFlag('torture_survived')
+      p.setMem('ft9TortureSurvived', true)
+    },
+  },
+
+  {
+    id: 'ft9_torture_midlife_body',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.flags.has('torture_survived') &&
+      G.age >= 35 &&
+      !G.mem?.ft9TortureMidlife,
+    text: 'The body keeps the record. There are things that trigger it — a particular quality of silence, the sound of a door locking, the way someone stands in a doorway. You know the difference between the past and the present. The nervous system does not always agree. You have learned to work around this. It costs something every time.',
+    choices: null,
+    effect: (p) => {
+      p.m -= 5
+      p.h -= 3
+      p.r += 5
+      p.setMem('ft9TortureMidlife', true)
+    },
+  },
+
+  {
+    id: 'ft9_torture_late_testimony',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) =>
+      G.flags.has('torture_survived') &&
+      G.age >= 60 &&
+      !G.mem?.ft9TortureLate,
+    text: 'There is a word for what was done to you in that room. For most of your life you did not use it — you called it "the questioning" or "what happened" or nothing at all. You use the word now. Not often. But you use it. That matters in ways you cannot fully explain.',
+    choices: null,
+    effect: (p) => {
+      p.m += 5
+      p.karma += 6
+      p.setMem('ft9TortureLate', true)
+    },
+  },
+
+  // ── TRAUMATIZED BY VIOLENCE ───────────────────────────────────────────────────
+
+  {
+    id: 'ft9_violence_trauma_body',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.flags.has('traumatized_by_violence') &&
+      G.age >= 20 &&
+      !G.mem?.ft9ViolenceTraumaBody,
+    text: 'You know this about yourself: there are things that happen in the body before the mind catches up. A loud sound, a certain kind of movement in the periphery, the particular posture of a person moving toward you too quickly. The reaction is faster than thought. You have learned to manage it. Management is not the same as it not being there.',
+    choices: [
+      {
+        text: 'Talk to someone — you cannot manage this alone indefinitely',
+        tag: 'trauma_addressed',
+        outcome: 'You find someone who understands what this is. It takes time and is not a cure. But the load shifts.',
+        effect: (p) => { p.m += 8; p.h += 4; p.addFlag('trauma_addressed'); p.setMem('ft9ViolenceTraumaBody', true) },
+      },
+      {
+        text: 'Keep managing — you know the triggers, you can work around them',
+        tag: null,
+        outcome: 'You continue as you have. The management is not nothing. You have built a life inside its limits.',
+        effect: (p) => { p.m -= 3; p.r += 5; p.setMem('ft9ViolenceTraumaBody', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ft9_violence_trauma_midlife',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) =>
+      G.flags.has('traumatized_by_violence') &&
+      !G.flags.has('trauma_addressed') &&
+      G.age >= 40 &&
+      !G.mem?.ft9ViolenceTraumaMidlife,
+    text: 'You have carried it for twenty years or more. The carrying has become so familiar you forget it is carrying. Then something small — not anything like what happened — brings it close again. Not as a memory exactly. More as a weather that passes through.',
+    choices: null,
+    effect: (p) => {
+      p.m -= 4
+      p.r += 4
+      p.setMem('ft9ViolenceTraumaMidlife', true)
+    },
+  },
 
   // ── GENOCIDE SURVIVOR ────────────────────────────────────────────────────────
 

@@ -178,6 +178,16 @@ export const CONFLICT_CHILDHOOD_EVENTS = [
   // ── PSYCHOLOGICAL AND SOCIAL ───────────────────────────────────────────────────
 
   {
+    id: 'conf_direct_violence',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) => inConflict(G) && G.age >= 7 && G.age <= 14 && !G.mem?.confDirectViolence,
+    text: 'You see something you are not supposed to see — not an explosion at a distance, not a rumour, but something directly in front of you that the eye cannot edit. Your mother covers your face a moment too late. You have already seen. There is no system in a child for processing this. The image goes into a place that is not yet labelled, and stays there.',
+    choices: null,
+    effect: (p) => { p.m -= 18; p.r += 12; p.h -= 5; p.addFlag('conflict_childhood'); p.addFlag('traumatized_by_violence'); p.setMem('confDirectViolence', true) },
+  },
+
+  {
     id: 'conf_psych_normalization',
     phase: 'childhood',
     weight: 3,

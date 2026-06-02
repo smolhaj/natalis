@@ -78,15 +78,15 @@ export const FLAG_REGISTRY = {
     category: 'trauma',
     description: 'Character was tortured by state or non-state actors.',
     intent: 'both',
-    notes: 'GENUINE GAP — this flag is NOT set anywhere via addFlag(). It should exist but does not. Suppressed_trauma is the closest proxy (set in events_career_regime.js). Needs a flag created in conflict/political prisoner events.',
+    notes: 'Set in events_followthrough_9.js for political prisoners under authoritarian regimes (fires while inPrison). Three follow-through events: body memory (midlife), naming it (late). Year texture path in buildYearTexture.',
   },
 
   traumatized_by_violence: {
     weight: 'major',
     category: 'trauma',
     description: 'Character witnessed or experienced severe violence that left lasting psychological marks.',
-    intent: 'year_texture',
-    notes: 'GENUINE GAP — not set via addFlag() anywhere. Needs to be added to conflict_childhood, crosscutting bombardment, and gang events. Currently no year texture path.',
+    intent: 'both',
+    notes: 'Set in events_conflict_childhood.js (conf_direct_violence), events_crosscutting.js (cc_bombardment_first_night), events_gang.js (gang_violence_witnessed accept branch). Follow-through events in followthrough_9. Year texture in buildYearTexture.',
   },
 
   conflict_injury: {

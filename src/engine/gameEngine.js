@@ -1479,6 +1479,20 @@ function buildYearTexture(state) {
       ? 'They put you in prison for what you believed. You are still here. That is its own kind of testimony.'
       : 'The years inside changed what you need, what you fear, and what you will not accept.',
   ])
+  if (F.has('torture_survived') && Math.random() < 0.3) return pick([
+    'The body keeps the record longer than the mind wants it to.',
+    'What was done to you in that room is not something you carry in one place. It is distributed.',
+    phase === 'late_life'
+      ? 'You have lived long enough to see some of those who did it face questions. Not all of them. Not enough.'
+      : 'You know things about human capacity — your own and others\' — that you wish you didn\'t know.',
+  ])
+  if (F.has('traumatized_by_violence') && Math.random() < 0.3) return pick([
+    'There is a category of knowledge you carry that most people don\'t have. You did not choose to have it.',
+    'The nervous system has its own memory. Faster than thought, older than language.',
+    phase === 'late_life'
+      ? 'You have spent decades learning to live alongside what you saw. It is still there. So are you.'
+      : 'You know how to move through most situations. There are specific situations where you know this in a different way.',
+  ])
   if (F.has('abusive_relationship') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) return pick([
     'You still notice, sometimes, the reflex — the calculation of mood, the body\'s alertness to tone.',
     'You left. That was the hardest thing you\'ve done and it doesn\'t have a ceremony.',

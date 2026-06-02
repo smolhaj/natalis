@@ -162,7 +162,7 @@ export const CROSSCUTTING_EVENTS = [
       G.age >= 5,
     text: 'The first night it starts in earnest, the sound is instructive. Close means a particular compression in the chest — not just heard but felt. The sound that missed you has a different quality, a lateral passage. Silence after a sound is not the absence of sound: it is the two seconds in which you calculate. By morning you understand a vocabulary you did not have yesterday. You do not know yet that you will carry it for the rest of your life.',
     choices: null,
-    effect: (p) => { p.m -= 18; p.h -= 5; p.addFlag('city_under_bombardment'); p.setMem('ccBombardmentStart', true) },
+    effect: (p) => { p.m -= 18; p.h -= 5; p.addFlag('city_under_bombardment'); p.addFlag('traumatized_by_violence'); p.setMem('ccBombardmentStart', true) },
   },
 
   {
