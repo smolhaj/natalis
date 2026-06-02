@@ -909,4 +909,60 @@ export const FLAG_REGISTRY = {
     notes: 'events_family_silence.js covers this.',
   },
 
+  reconstruction_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Came of age during Lebanon\'s 1990s reconstruction — the brief belief that Beirut would become what it once promised to be.',
+    intent: 'year_texture',
+    notes: 'Set by events_lebanon.js (lbn_solidere_belief). Follow-through in late life when the belief is audited against events.',
+  },
+
+  lira_collapse_lived: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the Lebanese pound hyperinflation — savings wiped, prices changing by the hour.',
+    intent: 'both',
+    notes: 'Set by events_lebanon.js (lbn_bank_freeze). Connects to existing hyperinflation patterns in year texture.',
+  },
+
+  infrastructure_collapse_lived: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Lived through systemic infrastructure failure — state electricity measured in hours, generator subscriptions, diesel queues.',
+    intent: 'year_texture',
+    notes: 'Set by events_lebanon.js (lbn_generator_economy). Texture label; cooldown prevents overfire.',
+  },
+
+  collectivization_witness: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed Soviet collectivisation — animals seized, pasture routes closed, nomadic or farming life destroyed by administrative order.',
+    intent: 'year_texture',
+    notes: 'Set by events_central_asia.js (ca_kaz_collectivization). Specific to Kazakhstan 1929–36. Carries sedentarization follow-through.',
+  },
+
+  cotton_childhood: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Grew up with school closing for cotton harvests — childhood education subordinated to state agricultural quotas.',
+    intent: 'year_texture',
+    notes: 'Set by events_central_asia.js (ca_uzb_cotton_harvest). Uzbekistan 1950–2015. Reflects Soviet and post-Soviet forced child labour in cotton.',
+  },
+
+  environmental_witness: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed large-scale environmental destruction within living memory — not abstract, but visible in the landscape of childhood.',
+    intent: 'year_texture',
+    notes: 'Set by events_central_asia.js (ca_uzb_aral_sea). Aral Sea desiccation. Complements grew_up_polluted.',
+  },
+
+  oil_economy_participant: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Participated in the oil-extraction economy — the salary, the towers, the work that does not ask difficult questions.',
+    intent: 'year_texture',
+    notes: 'Set by events_central_asia.js (ca_kaz_oil_boom) take-the-position branch. Kazakhstan 1995–2010.',
+  },
+
 }

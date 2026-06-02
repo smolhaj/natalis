@@ -1468,6 +1468,21 @@ function buildYearTexture(state) {
     'You know what your country did to itself. That knowledge sits in a particular place.',
     'The country rebuilt itself. You rebuilt with it. You are not sure the reconstruction is finished.',
   ])
+  if (F.has('lira_collapse_lived') && Math.random() < 0.35) return pick([
+    phase === 'late_life'
+      ? 'You grew up knowing that savings are a story a government tells you. You stopped believing the story early.'
+      : 'The number in the account is still there. You stopped trusting what numbers mean.',
+    'You learned to do the exchange rate conversion without thinking — old reflex, wrong country, still running.',
+    'The economist on the radio uses words like \'correction\' and \'stabilisation\'. You have heard these words before.',
+  ])
+  if (F.has('reconstruction_generation') && phase === 'late_life' && Math.random() < 0.3) return pick([
+    'You lived through the rebuilding. You thought it had worked. You were wrong about the foundation.',
+    'The downtown they built in the nineties was beautiful and is now rubble again. You watched both.',
+  ])
+  if (F.has('infrastructure_collapse_lived') && Math.random() < 0.3) return pick([
+    'You wake up and check the generator without thinking. The habit is faster than the thought.',
+    'You know which tasks to do when the electricity is on and which ones can wait. You resent knowing this.',
+  ])
   if (F.has('conflict_zone_childhood') && Math.random() < 0.3) return pick([
     'Some ordinary things still feel like a gift — running water, a day without a siren.',
     'You grew up learning the shape of danger. Some of that knowledge is still useful.',
@@ -1601,6 +1616,34 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'You have been watching what happens when a place is treated as a resource rather than a home for most of your life.'
       : 'There is a cost to growing up next to something being destroyed for someone else\'s profit.',
+  ])
+  if (F.has('collectivization_witness') && Math.random() < 0.3) return pick([
+    'You watched them write numbers in a book and take the animals. The act of recording something is still not neutral to you.',
+    phase === 'late_life'
+      ? 'The steppe routes your family used for generations. You know them. No one is using them anymore.'
+      : 'The knowledge of how to read the land is still in you. There is almost nowhere left to use it.',
+    'They collectivised the land but not the memory of what the land was before.',
+  ])
+  if (F.has('cotton_childhood') && Math.random() < 0.3) return pick([
+    'September still feels wrong to you — the season of missing school, of rows of cotton, of quotas on a board.',
+    'Your education has gaps from those years. Some of the gaps you filled later. Some you didn\'t.',
+    phase === 'midlife'
+      ? 'Your children\'s school runs a full year, September to June, no exceptions. You make sure of it.'
+      : 'The teachers were there too, counting what had been picked. That is the part that stayed with you.',
+  ])
+  if (F.has('environmental_witness') && Math.random() < 0.3) return pick([
+    'You saw what was left when the water retreated. Salt flats where fishing boats sat. The fishermen still in the town.',
+    'Large-scale destruction is slow and then complete. The slow part is what you witnessed. The complete part came after you had already understood what was happening.',
+    phase === 'late_life'
+      ? 'The sea was gone within a generation. You are the generation that saw it go.'
+      : 'The photographs of what it was look like a different place. They are not a different place.',
+  ])
+  if (F.has('oil_economy_participant') && Math.random() < 0.3) return pick([
+    'The money was real. The questions it didn\'t ask were also real. You found a way to live with both.',
+    'You worked in a system that extracted and distributed unevenly. You knew this. You stayed anyway.',
+    phase === 'late_life'
+      ? 'The towers are still there. The people who built them are not all in them. That was always the arrangement.'
+      : 'The salary solved problems that had no other solution. The accounting was complex.',
   ])
   if (F.has('interrogated_by_state') && Math.random() < 0.3) return pick([
     'The room where they questioned you is still a room you are in sometimes.',
