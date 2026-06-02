@@ -19,6 +19,9 @@ import { randomBetween, pickFrom, rollWeighted, clamp, chance } from '../utils/r
 // O(1) lookup instead of O(n) linear scan. New guards should prefer .has().
 class FlagSet extends Set {
   includes(flag) { return this.has(flag) }
+  some(predicate) { for (const v of this) { if (predicate(v)) return true } return false }
+  filter(predicate) { return [...this].filter(predicate) }
+  find(predicate) { for (const v of this) { if (predicate(v)) return v } return undefined }
 }
 
 // ─── Weighted random helpers ──────────────────────────────────────────────────
@@ -712,6 +715,7 @@ function buildEffectProxy(state) {
     'boarding_school', 'first_love_over', 'cancer_survivor',
     'affair_brief_secret', 'affair_not_taken', 'emigrated',
     'divorced', 'business_failed', 'graduated',
+    'chernobyl_liquidator', 'grew_up_polluted', 'industrial_upbringing', 'oil_delta_witness',
   ])
   proxy.addFlag = (flag) => {
     if (!proxy.flags.includes(flag)) {
@@ -1426,6 +1430,23 @@ function buildYearTexture(state) {
   if (F.has('avid_reader') && phase === 'late_life') {
     return 'You are working through the books you always meant to read. Some of them are as good as promised.'
   }
+  if (F.has('chernobyl_liquidator') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.35) return pick([
+    'The body keeps its own account. You are not always told what it is recording.',
+    'You do not mention Chernobyl to doctors unless they ask. They ask less than you expected.',
+    'There is a whole cohort of you. You are in touch with some of them. The news from that direction is rarely good.',
+  ])
+  if (F.has('grew_up_polluted') && phase === 'midlife' && Math.random() < 0.3) return pick([
+    'The river from your childhood comes back sometimes. The colour of it. The absence of the fish.',
+    'You understand now what the adults knew and didn\'t say about the water.',
+  ])
+  if (F.has('industrial_upbringing') && phase === 'midlife' && Math.random() < 0.3) return pick([
+    'You still know which wind direction means bad air. Old knowledge, hard to unlearn.',
+    'The neighbourhood you grew up in is doing better or worse than it was. Probably worse.',
+  ])
+  if ((F.has('debt_spiral_experienced') || F.has('debt_collector_known')) && phase === 'midlife' && Math.random() < 0.3) return pick([
+    'The numbers are manageable now. You check them more often than you need to.',
+    'The habit of counting what is owed is hard to put down even when the answer is fine.',
+  ])
 
   // ─── DESIRE-AWARE TEXTURE (fires ~40% of remaining quiet years) ───────────────
   if (desire && Math.random() < 0.4) {
