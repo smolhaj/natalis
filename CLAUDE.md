@@ -16,6 +16,8 @@ These are hard-won rules that govern all new work. Violating any of them produce
 
 **Follow-through first.** Before writing any triggering event, write its downstream consequence. What does this flag become three years later? Ten years later? An event with no follow-through consequence is just prose — it disappears from the life the moment it resolves. Write the echo before the stone hits the water.
 
+Every new flag with `weight: 'major'` or `'moderate'` MUST be added to `src/data/flags.js` (the FLAG_REGISTRY) with its `intent` field set. Every new flag module MUST ship its follow-through events or `buildYearTexture()` paths before the triggering event. Run `npm run check-flags` to audit coverage — the registry status is derived dynamically, never stored. Any new flag that the script reports as `orphaned` is a bug.
+
 **Specificity over coverage.** One event that could only fire for a Kurdish teenager in 1990s Turkey is worth more than five generic young-adult events. One sentence naming the specific sound, the specific object, the specific phrase someone used is worth more than a paragraph of emotional summary. Generic events are a last resort.
 
 **Invisible systems.** The best mechanics are felt but never shown. Partner traits, memory timestamps, project phases — none of these appear in the UI. They express themselves only through prose. A system that requires explanation has failed. A system that makes a sentence land differently has succeeded.
@@ -1795,6 +1797,9 @@ src/
     events_industrial.js      — 9 industrial disaster events (BUILD 21): Chernobyl liquidator arc, Bhopal settlement follow-through, pollution as class (river/factory/Niger Delta)
     worldEvents.js            — 172+ world history events (year+country/archetype gated); 20+ events have `context` fields
     headlines.js              — ~110 major historical headline entries (year-matched, injected as log entries)
+    flags.js                  — FLAG_REGISTRY: master design document for the flag system. 103 registered
+                                flags with weight/category/description/intent/notes per entry. Pure data,
+                                no imports. Run `npm run check-flags` to derive coverage dynamically.
     careers.js                — all career definitions with career-specific events
     crimes.js                 — criminal activity system
     activities.js             — activities panel options
@@ -1832,4 +1837,15 @@ src/
     countryUtils.js           — getCountryFlag, REGIME_LABELS/COLORS, RELIGION_LABELS,
                                 RESIDENCY_LABELS, getCountryNameForYear
     random.js                 — randomisation utilities
+scripts/
+  check-flags.js              — flag audit tool. Scans src/data/, src/engine/, src/store/ to find
+                                SET flags (addFlag, addFlags arrays) and CHECKED flags. Splits
+                                gameEngine.js into sections (buildYearTexture vs generateEpitaph vs
+                                generateIdentityCard) to avoid false-positive coverage. Reports
+                                ORPHANED / PARTIAL / COVERED per registry intent. Usage:
+                                  npm run check-flags
+                                  npm run check-flags -- --orphans
+                                  npm run check-flags -- --weight=major
+                                  npm run check-flags -- --unregistered
+                                  npm run check-flags -- --world
 ```
