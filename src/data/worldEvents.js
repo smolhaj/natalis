@@ -2493,6 +2493,21 @@ export const WORLD_EVENTS = [
   },
 
   {
+    id: 'anfal_campaign_1988',
+    name: 'The Anfal Campaign: Halabja',
+    years: [1988, 1989],
+    archetypes: null,
+    countries: ['Iraq'],
+    narrative: 'On 16 March 1988, Iraqi aircraft drop mustard gas and nerve agents on the town of Halabja. Five thousand people die within hours. Tens of thousands more will die in the months that follow as the Anfal campaign moves through Kurdish villages and valleys — helicopters, chemical weapons, mass executions at ravines in the desert. The Iraqi government calls it a military operation against traitors who collaborated with Iran. The word genocide will be applied later, in retrospect, by people who were not there. The people who were there did not need a word for it.',
+    context: 'The Anfal campaign was an Iraqi government military offensive against Kurdish populations in northern Iraq carried out by the Ba\'athist regime from February to September 1988. Named after a Quranic verse concerning war spoils, it involved chemical weapons attacks (including the Halabja massacre on 16 March 1988), mass executions, and the forced displacement of 500,000–1,000,000 people. Estimates of the death toll range from 50,000 to 182,000. The campaign was ordered by Saddam Hussein and personally supervised by his cousin Ali Hassan al-Majid (known as "Chemical Ali"). In 2006, an Iraqi tribunal found the campaign constituted genocide.',
+    effect: (p) => { p.m -= 20; p.h -= 5; p.addFlag('anfal_generation'); },
+    addFlags: ['anfal_generation'],
+    minAge: 5,
+    maxAge: null,
+    when: (G) => G.character.ethnicity === 'kurdish_iraq' || G.character.ethnicity === 'kurdish',
+  },
+
+  {
     id: 'beirut_port_explosion_2020',
     name: 'Beirut Port Explosion',
     years: [2020, 2021],

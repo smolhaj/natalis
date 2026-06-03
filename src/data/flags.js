@@ -1082,4 +1082,750 @@ export const FLAG_REGISTRY = {
     notes: 'Set by alg_late_reckoning (auto-resolve, late_life).',
   },
 
+  // ── INDONESIA 1998 FLAGS ──────────────────────────────────────────────────
+
+  asian_crisis_personal: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Character lived through the 1997–98 Asian financial crisis as a personal economic rupture — rupiah collapse, supply shortages.',
+    intent: 'event',
+    notes: 'Set by id98_crisis_texture (Indonesia, 1997–98).',
+  },
+
+  id98_targeted_by_name: {
+    weight: 'major',
+    category: 'discrimination',
+    description: 'Chinese-Indonesian character was specifically targeted by anti-Chinese graffiti or violence in the May 1998 riots.',
+    intent: 'both',
+    notes: 'Set by id98_graffiti. Gates id98_riot_night.',
+  },
+
+  reformasi_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Character witnessed or participated in Indonesia\'s democratic transition after Suharto\'s resignation (May 1998).',
+    intent: 'event',
+    notes: 'Set by id98_suharto_falls. Ribbon: the_reformasi_generation.',
+  },
+
+  chinese_culture_returned: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Character reclaimed or supported the revival of Chinese cultural expression in Indonesia after the 2000 ban was lifted.',
+    intent: 'event',
+    notes: 'Set by id98_ban_lifted and id98_decade_identity. Ribbon: the_returned_culture.',
+  },
+
+  id98_rebuilt: {
+    weight: 'moderate',
+    category: 'resilience',
+    description: 'Character or family rebuilt their business/life in Indonesia after the 1998 riots rather than emigrating.',
+    intent: 'event',
+    notes: 'Set by id98_aftermath_rebuild (rebuilt or stayed_changed paths).',
+  },
+
+  id98_emigrated: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Chinese-Indonesian character emigrated after the 1998 riots — to Singapore, Australia, or the United States.',
+    intent: 'both',
+    notes: 'Set by id98_aftermath_rebuild (emigrated path). Also sets emigrated flag.',
+  },
+
+  id98_witness_bystander: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Non-Chinese Indonesian character witnessed the targeting of ethnic Chinese during the May 1998 riots and faced a choice about intervention.',
+    intent: 'both',
+    notes: 'Set by id98_bystander. The choice (help/watch) shapes karma and carries into later reflection.',
+  },
+
+  id98_reckoned: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Character has reached a late-life reckoning with the fact that no one was ever prosecuted for the May 1998 riots.',
+    intent: 'year_texture',
+    notes: 'Set by id98_late_reckoning (late_life, auto-resolve).',
+  },
+
+  // ── KURDISH IDENTITY FLAGS ────────────────────────────────────────────────
+
+  kurd_identity_suppressed: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Kurdish character\'s language and cultural identity were officially suppressed — through school systems, naming laws, or citizenship denial.',
+    intent: 'both',
+    notes: 'Set by kurd_tr_language_school (Turkey, pre-1991) and kurd_sy_stateless (Syria, pre-2011). Follow-through: kurd_late_reckoning.',
+  },
+
+  kurd_village_evacuated: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Kurdish character\'s village in southeast Turkey was forcibly evacuated and burned by the military during the 1990s security operations.',
+    intent: 'both',
+    notes: 'Set by kurd_tr_village_evacuation. Follow-through: kurd_village_midlife_echo. Ribbon: the_stateless_nation.',
+  },
+
+  kurd_europe_diaspora: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Kurdish character lives in European diaspora — typically Germany, Sweden, or the Netherlands — carrying unresolved questions of belonging.',
+    intent: 'both',
+    notes: 'Set when village evacuation leads abroad. Follow-through: kurd_diaspora_question.',
+  },
+
+  kurd_language_moment: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Kurdish character experienced the specific moment of hearing their language publicly for the first time after decades of suppression.',
+    intent: 'event',
+    notes: 'Set by kurd_tr_language_lifted (pulling over to listen to the radio).',
+  },
+
+  kurd_reform_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Kurdish character in Turkey lived through the EU-accession reform era — Kurdish TV, optional courses — and carries ambivalence about its incompleteness.',
+    intent: 'year_texture',
+    notes: 'Set by kurd_tr_eu_reforms (2002–2010).',
+  },
+
+  anfal_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Kurdish character or family was touched by the Anfal campaign (1988) — the Iraqi government\'s genocide of Kurdish civilians, including chemical weapons at Halabja.',
+    intent: 'both',
+    notes: 'Set by the anfal_campaign_1988 world event. Gates kurd_anfal_diaspora_news. Ribbon: the_anfal_generation.',
+  },
+
+  kurd_stateless: {
+    weight: 'major',
+    category: 'legal',
+    description: 'Syrian Kurdish character was officially stateless under the post-1962 citizenship law — listed as ajanib (foreigner) despite generations of Syrian residence.',
+    intent: 'both',
+    notes: 'Set by kurd_sy_stateless. Cleared conditionally by kurd_citizenship_restored. Ribbon: the_stateless_nation.',
+  },
+
+  rojava_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Syrian Kurdish character witnessed or participated in the Rojava self-administration experiment (2012+) — the first Kurdish-administered territory in modern history.',
+    intent: 'both',
+    notes: 'Set by kurd_sy_rojava. Ribbon: the_rojava_generation.',
+  },
+
+  kurd_militant_adjacent: {
+    weight: 'major',
+    category: 'political',
+    description: 'Kurdish character in Turkey provided active support to the PKK — carrying messages, housing members, attending meetings — during the 1984–2000 conflict.',
+    intent: 'both',
+    notes: 'Set by kurd_tr_pkk_question (active choice). Carries ongoing risk in authoritarian Turkey.',
+  },
+
+  kurd_citizenship_restored: {
+    weight: 'moderate',
+    category: 'legal',
+    description: 'Syrian Kurdish character received Syrian citizenship under the April 2011 presidential decree — after 49 years of statelessness.',
+    intent: 'event',
+    notes: 'Set by kurd_sy_citizenship_restored. The timing (uprising\'s first weeks) is part of its meaning.',
+  },
+
+  kurd_returned_home: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Kurdish diaspora character returned to Turkey/Kurdistan, finding the country of a relative rather than their own.',
+    intent: 'event',
+    notes: 'Set by kurd_diaspora_question (go back path). Carries dissonance — Germany made you German.',
+  },
+
+  // ── FORMAL DEBT ARC FLAGS ─────────────────────────────────────────────────
+
+  debt_spiral: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Character is in an active debt spiral — carrying compounding interest, minimum payments that extend rather than reduce the principal.',
+    intent: 'event',
+    notes: 'Set by debt_first_card (carries_balance) and debt_microfinance_spiral. Clears on bankruptcy or recovery. Gates debt_collector_call.',
+  },
+
+  debt_spiral_experienced: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Character has experienced a debt spiral — the specific knowledge of what it means to owe money that grows while you pay it.',
+    intent: 'both',
+    notes: 'Set alongside debt_spiral and persists after recovery. Follow-throughs: debt_decade_clean, debt_teaching_children, debt_student_loan_decade, debt_late_life_free.',
+  },
+
+  debt_bankrupt: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Character filed for bankruptcy — either Chapter 7 (discharged, seven-year credit damage) or Chapter 13 (restructured payments).',
+    intent: 'both',
+    notes: 'Set by debt_bankruptcy. Year-textured for seven years post-filing.',
+  },
+
+  debt_restructured: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Character negotiated or was placed in a formal debt restructuring — bank hardship plan, Chapter 13, or similar.',
+    intent: 'event',
+    notes: 'Set by debt_spiral_deepens (called_bank) and debt_bankruptcy (chapter13).',
+  },
+
+  debt_recovered: {
+    weight: 'moderate',
+    category: 'resilience',
+    description: 'Character has recovered from a debt crisis — credit rebuilt, obligations discharged, the specific absence of a weight carried for years.',
+    intent: 'both',
+    notes: 'Set by debt_decade_clean and debt_late_life_free. Ribbon: the_debt_recovered.',
+  },
+
+  microfinance_borrower: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Character participates in a microfinance group-lending circle — jointly liable, weekly meetings, social collateral.',
+    intent: 'event',
+    notes: 'Set by debt_microfinance_entry (joined). Gates debt_microfinance_pressure and debt_microfinance_spiral.',
+  },
+
+  microfinance_declined: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Character declined to join a microfinance lending circle, having seen group liability go wrong.',
+    intent: 'none',
+    notes: 'Set by debt_microfinance_entry (declined). Prevents future microfinance events.',
+  },
+
+  structural_adjustment_era: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Character lived through an IMF Structural Adjustment Programme — public sector hiring freezes, food subsidy removal, clinic closures experienced personally.',
+    intent: 'both',
+    notes: 'Set by debt_imf_arrives. Follow-through: debt_sap_clinic_closed. Ribbon: the_structural_adjustment.',
+  },
+
+  medical_debt: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Character carries or carried medical debt from a US hospital bill — the specific American experience of healthcare as financial risk.',
+    intent: 'event',
+    notes: 'Set by debt_medical_bill (all three paths). The negotiation path is an educational payload.',
+  },
+
+  // ── HAITI FLAGS ───────────────────────────────────────────────────────────
+
+  tonton_macoute_era: {
+    weight: 'major',
+    category: 'political',
+    description: 'Character grew up under the Duvalier dynasty with the Tonton Macoutes — state-sponsored terror that operated outside law, paid in impunity.',
+    intent: 'both',
+    notes: 'Set by hai_macoute_texture (childhood, Haiti 1957–86). Follow-through: hai_duvalier_midlife_echo.',
+  },
+
+  haitian_diaspora: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Haitian character emigrated to Brooklyn, Miami, or Montreal — carrying the obligation to send money home and the specific diaspora identity of someone who left.',
+    intent: 'both',
+    notes: 'Set by hai_diaspora_decision. Follow-throughs: hai_diaspora_earthquake_call, hai_diaspora_late_reckoning. Ribbon: the_dyaspora.',
+  },
+
+  earthquake_2010_survived: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Character survived the January 12, 2010 Haiti earthquake — 35 seconds, 220,000+ dead, 1.5 million displaced.',
+    intent: 'both',
+    notes: 'Set by hai_earthquake_2010. Follow-through: hai_earthquake_camp. Ribbon: the_haiti_earthquake.',
+  },
+
+  earthquake_family_loss: {
+    weight: 'major',
+    category: 'grief',
+    description: 'Character lost family members in the 2010 Haiti earthquake — learned by the phone calls that never connected.',
+    intent: 'both',
+    notes: 'Set by hai_diaspora_earthquake_call (lost_family path).',
+  },
+
+  earthquake_camp_survivor: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Character lived in a displacement camp after the 2010 earthquake — blue UNHCR tarpaulins, twice-weekly water trucks, UN cholera.',
+    intent: 'event',
+    notes: 'Set by hai_earthquake_camp.',
+  },
+
+  knows_the_debt: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Character knows about the 122-year French debt Haiti paid for its own independence — the ransom for freedom.',
+    intent: 'event',
+    notes: 'Set by hai_debt_of_independence. An educational payload: most Haitians were not taught this in school.',
+  },
+
+  hai_transition_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Character witnessed Baby Doc\'s fall on February 7, 1986 — twenty-nine years of Duvalierism ending in a morning.',
+    intent: 'event',
+    notes: 'Set by hai_baby_doc_falls. The euphoria and its subsequent failure are both part of this.',
+  },
+
+  // ── SRI LANKA FLAGS ───────────────────────────────────────────────────────
+
+  black_july_survived: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Tamil Sri Lankan character survived the July 1983 anti-Tamil pogrom in Colombo — electoral registers used to identify Tamil homes, police standing by.',
+    intent: 'both',
+    notes: 'Set by slk_black_july. Ribbon: the_black_july. A founding event of the Tamil diaspora.',
+  },
+
+  tamil_diaspora: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Tamil Sri Lankan character emigrated during or after the civil war — to Toronto, London, or Melbourne — carrying the war and the diaspora obligation.',
+    intent: 'both',
+    notes: 'Set by slk_diaspora_decision. Follow-through: slk_diaspora_war_end. Ribbon: the_eelam_generation.',
+  },
+
+  internally_displaced: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Character was internally displaced within their own country — fled north from Colombo in July 1983, or forced from their village by conflict.',
+    intent: 'event',
+    notes: 'Set by slk_black_july (fled_north path).',
+  },
+
+  aragalaya_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Character participated in the 2022 Aragalaya (struggle) — Sri Lanka\'s multiethnic protest movement that brought down the Rajapaksa presidency.',
+    intent: 'event',
+    notes: 'Set by slk_2022_collapse (protested path). Ribbon: the_aragalaya.',
+  },
+
+  // ── MOROCCO FLAGS ─────────────────────────────────────────────────────────
+
+  amazigh_identity: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Amazigh Moroccan character navigates a country where their language was excluded from official life — school in Arabic, name from the approved list.',
+    intent: 'both',
+    notes: 'Set by mor_amazigh_school and mor_amazigh_name. Follow-through: mor_amazigh_recognition.',
+  },
+
+  years_of_lead_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Character lived through the Années de Plomb — Hassan II\'s era of political detention, disappearances, and the specific learned silence of a Moroccan university in the 1970s.',
+    intent: 'both',
+    notes: 'Set by mor_years_of_lead. Follow-through: mor_years_of_lead_echo. Ribbon: the_years_of_lead.',
+  },
+
+  moroccan_diaspora: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Moroccan character emigrated to France, Spain, or elsewhere — carrying the Darija of someone who left, and the obligation to send money home.',
+    intent: 'both',
+    notes: 'Set by mor_strait_decision (crossed path). Follow-through: mor_diaspora_late.',
+  },
+
+  amazigh_recognition_era: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Amazigh character witnessed the 2011 constitutional recognition of Tifinagh — ambivalent about whether recognition without resources is meaningful.',
+    intent: 'event',
+    notes: 'Set by mor_amazigh_recognition (both paths).',
+  },
+
+  // ── ROHINGYA FLAGS ────────────────────────────────────────────────────────
+
+  rohingya_stateless: {
+    weight: 'major',
+    category: 'legal',
+    description: 'Rohingya character is stateless under Myanmar\'s 1982 Citizenship Law — listed as temporary resident in the country where their family has lived for generations.',
+    intent: 'both',
+    notes: 'Set by roh_stateless_document. Gates roh_restricted_movement. Ribbon: the_temporary_resident.',
+  },
+
+  rohingya_displacement: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Rohingya character was displaced in the August 2017 military clearance operations — villages burned, walking to the river, crossing to Bangladesh.',
+    intent: 'both',
+    notes: 'Set by roh_village_burning. Follow-through: roh_crossing → roh_coxs_bazar. Ribbon: the_clearance_operation.',
+  },
+
+  rohingya_coxs_bazar: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Rohingya character lives in Cox\'s Bazar — the world\'s largest refugee camp, 1 million people, no legal status in Bangladesh.',
+    intent: 'both',
+    notes: 'Set by roh_crossing. Follow-throughs: roh_coxs_bazar_years, roh_resettlement_interview.',
+  },
+
+  rohingya_resettled: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Rohingya character was resettled in a third country — the first passport, citizenship, children who have never been stateless.',
+    intent: 'both',
+    notes: 'Set by roh_resettlement_arrives. Follow-through: roh_diaspora_late. Ribbon: the_first_passport.',
+  },
+
+  // ── TANZANIA FLAGS ────────────────────────────────────────────────────────
+
+  ujamaa_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Tanzanian character lived through Nyerere\'s ujamaa era — believed in or sceptical of the Arusha Declaration, was moved in Operation Vijiji, carries the complexity of a failed vision that built real schools.',
+    intent: 'both',
+    notes: 'Set by tan_arusha_declaration. Follow-throughs: tan_villagisation, tan_ujamaa_late_reckoning, tan_nyerere_death.',
+  },
+
+  swahili_educated: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'Tanzanian character educated in Swahili — giving national cohesion and a ceiling against international opportunity simultaneously.',
+    intent: 'event',
+    notes: 'Set by tan_swahili_education. A specific trade-off that distinguishes Tanzania from all other African education systems.',
+  },
+
+  multiparty_generation: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Character witnessed their country\'s first multiparty elections — the specific experience of an opposition name on a ballot for the first time.',
+    intent: 'event',
+    notes: 'Set by tan_multiparty and other transitions to democracy events.',
+  },
+
+  // ── MULTILINGUALISM FLAGS ─────────────────────────────────────────────────
+
+  multilingual_identity: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Character lives between languages — arguing in one, dreaming in another, inhabiting a third that exists only in the gaps between them.',
+    intent: 'both',
+    notes: 'Set by mul_code_switch. Follow-throughs: mul_parent_language_grief, mul_grandparent_tongue.',
+  },
+
+  minority_language_speaker: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Character speaks a minority or endangered language — one that is not in the official register, may be suppressed, and whose speakers are decreasing.',
+    intent: 'both',
+    notes: 'Set by language suppression events and cultural identity events. Follow-through: mul_language_death.',
+  },
+
+  seen_the_gap: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Character has experienced the gap between what was said and what was translated — the word that had no equivalent, the meaning that went on the record as something else.',
+    intent: 'event',
+    notes: 'Set by mul_interpreter_impossible_word.',
+  },
+
+  // ── SOLDIER ARC FLAGS ────────────────────────────────────────────────────
+
+  deployed_to_conflict: {
+    weight: 'major',
+    category: 'military',
+    description: 'Character was deployed to an active conflict zone — the flight, the specific smell, the recalibration of what safe and not-safe feel like.',
+    intent: 'both',
+    notes: 'Set by sol_deployment_orders. Gates all subsequent soldier arc events.',
+  },
+
+  combat_veteran: {
+    weight: 'major',
+    category: 'military',
+    description: 'Character served in a combat zone — carries what was done, what was seen, the friend who was gone by Thursday.',
+    intent: 'both',
+    notes: 'Set by sol_first_week. Follow-throughs: sol_the_order, sol_return_home, sol_not_sleeping, sol_late_reckoning.',
+  },
+
+  returned_veteran: {
+    weight: 'major',
+    category: 'military',
+    description: 'Character returned from deployment — back in the airport, the sign someone made, the specific wrongness of everything being too clean and too loud.',
+    intent: 'both',
+    notes: 'Set by sol_return_home. Follow-throughs: sol_not_sleeping, sol_the_question, sol_anniversary.',
+  },
+
+  moral_weight_carried: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Character followed an order or made a decision whose weight has not reduced with time — not unresolved, just present.',
+    intent: 'both',
+    notes: 'Set by sol_the_order and other high-stakes compliance events. Follow-through: sol_late_reckoning.',
+  },
+
+  veteran_silence: {
+    weight: 'moderate',
+    category: 'military',
+    description: 'Character has learned the short answer — the version of their service that fits in a conversation. The longer version travels with them.',
+    intent: 'event',
+    notes: 'Set by sol_the_question. Surfaces in year texture for characters with returned_veteran flag.',
+  },
+
+  veteran_solidarity: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Character has found someone else who served — the specific shorthand, not having to perform the short answer.',
+    intent: 'event',
+    notes: 'Set by sol_veteran_recognition.',
+  },
+
+  // ── DOCUMENT/IDENTITY FLAGS ───────────────────────────────────────────────
+
+  colonial_category: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Character\'s ethnic identity was fixed and documented by a colonial administration — the ledger entry that became more real than what was said.',
+    intent: 'both',
+    notes: 'Set by doc_colonial_census. Follow-through: doc_category_becomes_fate.',
+  },
+
+  stateless_childhood: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Character grew up without a registered birth — enrolled in school in pencil, existing in the community but not in the official record.',
+    intent: 'both',
+    notes: 'Set by doc_no_birth_certificate. Follow-throughs: doc_first_passport, doc_stateless_marriage.',
+  },
+
+  stateless_navigator: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Character has learned to read the specific quality of the pause at a border checkpoint — this pause means it might work, that pause means it won\'t.',
+    intent: 'both',
+    notes: 'Set by doc_stateless_crossing. Follow-through: doc_first_passport.',
+  },
+
+  first_passport_received: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Character received their first passport — a country saying they are theirs. They sat with it for longer than the object probably merited.',
+    intent: 'event',
+    notes: 'Set by doc_first_passport. Terminal event in the statelessness arc.',
+  },
+
+  rwandan_survivor: {
+    weight: 'major',
+    category: 'persecution',
+    description: 'Character survived the 1994 Rwandan genocide — crossed a checkpoint, watched who did not cross, has never fully stopped walking past it.',
+    intent: 'both',
+    notes: 'Set by doc_rwandan_id_1994. High-weight flag; should dominate the epitaph.',
+  },
+
+  // ── CENTRAL ASIA FLAGS ────────────────────────────────────────────────────
+
+  asharshylyk_survivor: {
+    weight: 'major',
+    category: 'disaster',
+    description: 'Kazakh character survived the Asharshylyk — the 1931-33 famine that killed one in three Kazakhs during forced collectivisation.',
+    intent: 'both',
+    notes: 'Set by cas_kazakh_famine. Specific flag for the Kazakh famine distinct from other famine_survivor uses.',
+  },
+
+  aral_sea_witness: {
+    weight: 'moderate',
+    category: 'environment',
+    description: 'Character watched the Aral Sea disappear — the ship hulls in the sand where the water was, the sea they knew only as a story from their grandfather.',
+    intent: 'event',
+    notes: 'Set by cas_aral_sea. Educational payload: cotton monoculture as environmental destruction.',
+  },
+
+  forced_harvest: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Character was mobilised for state agricultural harvest as a child or student — Uzbek cotton quota, school closed September-November.',
+    intent: 'both',
+    notes: 'Set by cas_uzbek_cotton and cas_uzbek_harvest_adult.',
+  },
+
+  // ── CLERGY / RELIGIOUS INSTITUTION FLAGS ────────────────────────────────
+
+  clergy_ordained: {
+    weight: 'major',
+    category: 'career',
+    description: 'Character was ordained into a religious institution — holding genuine authority over people\'s lives, the weight of which is assumed rather than stated.',
+    intent: 'both',
+    notes: 'Set by cle_ireland_ordination, cle_cambodia_monk. Gates all downstream clergy arc events.',
+  },
+
+  institutional_power: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Character held power through an institution — the school, the hospital, the moral economy of the parish. Power exercised through structure rather than force.',
+    intent: 'both',
+    notes: 'Set by cle_ireland_ordination. Relates to institutional_complicity and institutional_doubt follow-throughs.',
+  },
+
+  institutional_doubt: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Character began to ask questions of the institution from inside it — noticing the shape of the power they hold, the gap between what is said and what is known.',
+    intent: 'both',
+    notes: 'Set by cle_ireland_parish_power (noticed branch), cle_yeshiva_compact (uncomfortable branch). Follow-through: cle_ireland_collapse.',
+  },
+
+  institutional_complicity: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Character remained inside an institution while knowing of its harms — not perpetrating but not naming. The specific moral position of silence within power.',
+    intent: 'both',
+    notes: 'Set by cle_ireland_knowledge (silent branch). High weight; affects epitaph. Follow-through: cle_ireland_collapse.',
+  },
+
+  institutional_dissent: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Character dissented from within their institution — wrote to the bishop, named what they saw, in contexts where this had cost.',
+    intent: 'event',
+    notes: 'Set by cle_ireland_knowledge (wrote branch).',
+  },
+
+  institutional_reckoning: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Character went through the public reckoning of an institution they gave their life to — watching it named for what it was, in real time, from inside.',
+    intent: 'event',
+    notes: 'Set by cle_ireland_collapse. Terminal event in the Irish clergy arc.',
+  },
+
+  sangha_member: {
+    weight: 'major',
+    category: 'religion',
+    description: 'Character is a Buddhist monk — member of the sangha that in Cambodia predates and outlasts every government, providing education and care where the state does not.',
+    intent: 'both',
+    notes: 'Set by cle_cambodia_monk. Gates cle_cambodia_khmer_rouge.',
+  },
+
+  faith_survived_suppression: {
+    weight: 'major',
+    category: 'religion',
+    description: 'Character\'s faith survived an attempt to destroy it entirely — the robes removed, the institution dissolved, the self preserved because there was nowhere else for it to go.',
+    intent: 'both',
+    notes: 'Set by cle_cambodia_khmer_rouge. Follow-through: cle_cambodia_rebuilding.',
+  },
+
+  rebuilt_institution: {
+    weight: 'major',
+    category: 'community',
+    description: 'Character rebuilt a religious or civic institution from near-zero — teaching what remained of a tradition to a generation that grew up without any.',
+    intent: 'event',
+    notes: 'Set by cle_cambodia_rebuilding. The specific solemnity of rebuilding from almost nothing.',
+  },
+
+  clergy_adapted: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Character adapted their religious practice to an authoritarian context — preaching within a permitted frame, encoding what could not be said directly.',
+    intent: 'both',
+    notes: 'Set by cle_indonesia_imam_suharto. Cross-references resistance_through_art for encoded-speech path.',
+  },
+
+  yeshiva_trained: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'Character completed deep Torah study in a yeshiva — the world of the beit midrash, the compact with the state, the asymmetry it creates.',
+    intent: 'both',
+    notes: 'Set by cle_yeshiva_compact. Follow-through: cle_yeshiva_1967.',
+  },
+
+  // ── SENEGAL FLAGS ─────────────────────────────────────────────────────────
+
+  mouride_member: {
+    weight: 'moderate',
+    category: 'religion',
+    description: 'Character is part of the Mouride Sufi brotherhood — its economy, its spiritual authority, its city of Touba, its transnational dahira network that predates and outlasts the nation-state.',
+    intent: 'both',
+    notes: 'Set by sen_magal_touba. Follow-throughs: sen_marabout_authority, sen_diaspora_dahira.',
+  },
+
+  diaspora_community_built: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Character built or joined a diaspora community structure — a savings circle, a prayer group, a mutual aid network that recreates belonging in a new geography.',
+    intent: 'event',
+    notes: 'Set by sen_diaspora_dahira. Cross-cultural flag also set by other diaspora community events.',
+  },
+
+  francophone_educated: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'Character educated in the French colonial tradition — carrying tools that open doors in Paris and Dakar, with specific ambivalence about who those tools were made for.',
+    intent: 'both',
+    notes: 'Set by sen_gorée_school. Specific to Francophone Africa; relates to Négritude and the colonial education project.',
+  },
+
+  // ── ADOPTEE FLAGS ─────────────────────────────────────────────────────────
+
+  adopted: {
+    weight: 'major',
+    category: 'family',
+    description: 'Character was adopted — domestic or international, transracial or same-race. The origin story was made for a child; the fact is more complicated and they are old enough to sense the edges of it.',
+    intent: 'both',
+    notes: 'Set by adp_always_knew in childhood. Gates all subsequent adoptee arc events. Core identity flag.',
+  },
+
+  found_birth_family: {
+    weight: 'major',
+    category: 'family',
+    description: 'Character made contact with birth family — a half-sibling found via DNA, a first cousin twice removed. The first call was forty minutes and they did not know what to call each other at the end of it.',
+    intent: 'both',
+    notes: 'Set by adp_search. Significant milestone; follow-through in future relationship events.',
+  },
+
+  origin_country_visited: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Character visited the country they were born in as an adoptee — landscape matching something they could not have remembered, sharing faces with people who are supposed to be an origin.',
+    intent: 'event',
+    notes: 'Set by adp_origin_trip. Midlife event; the specific feeling has no single word in either language.',
+  },
+
+  // ── UYGHUR FLAGS ──────────────────────────────────────────────────────────
+
+  uyghur_suppressed: {
+    weight: 'major',
+    category: 'persecution',
+    description: 'Uyghur character lives under systematic cultural suppression — Ramadan restrictions enforced at work, language policy, the memo arriving via the work unit, saying yes to lunch while fasting at home.',
+    intent: 'both',
+    notes: 'Set by uyg_ramadan_restricted. Follow-throughs: uyg_camp_era, uyg_diaspora_silence.',
+  },
+
+  uyghur_detained: {
+    weight: 'major',
+    category: 'persecution',
+    description: 'Uyghur character was detained in a Vocational Education and Training Center — the months inside, the things that were not described afterward, the training in not describing them.',
+    intent: 'both',
+    notes: 'Set by uyg_camp_era (comply branch). One of the most significant ongoing human rights situations in current events.',
+  },
+
+  uyghur_diaspora: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Uyghur character fled to Kazakhstan, Turkey, or a third country before the invitation became a summons — phone number changed, told no one who might be asked.',
+    intent: 'both',
+    notes: 'Set by uyg_camp_era (fled branch). Follow-through: uyg_diaspora_silence — the testimony decision when family is still inside.',
+  },
+
+  // ── PUERTO RICO FLAGS ─────────────────────────────────────────────────────
+
+  maria_survivor: {
+    weight: 'major',
+    category: 'disaster',
+    description: 'Character survived Hurricane Maria in 2017 — the sixteen days without power becoming weeks, the government reporting 64 deaths while 2,975 people died.',
+    intent: 'both',
+    notes: 'Set by pr_maria_2017. The gap between the official count and the actual count is educational payload. Follow-through in diaspora events.',
+  },
+
+  colonial_subject: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Character from Puerto Rico: US citizen, not eligible to vote for US president, represented by a non-voting delegate. The other word is not used in official documents.',
+    intent: 'both',
+    notes: 'Set by pr_colonial_status. The specific constitutional paradox of Puerto Rico\'s status makes this a useful educational event.',
+  },
+
 }
