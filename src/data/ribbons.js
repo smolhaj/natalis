@@ -1415,4 +1415,82 @@ export const RIBBONS = [
     priority: 68,
     color: 'gray',
   },
+
+  // ── HAITI ─────────────────────────────────────────────────────────────────
+  {
+    id: 'the_dyaspora',
+    name: 'Dyaspora',
+    description: 'You built a life that could send money home. You sent enough to build a house, twice.',
+    condition: (G) => G.flags.includes('haitian_diaspora'),
+    priority: 65,
+    color: 'blue',
+  },
+  {
+    id: 'the_haiti_earthquake',
+    name: 'Thirty-Five Seconds',
+    description: 'You know what the city sounded like before. You were there when it stopped sounding like that.',
+    condition: (G) => G.flags.includes('earthquake_2010_survived'),
+    priority: 80,
+    color: 'red',
+  },
+  {
+    id: 'the_haiti_debt',
+    name: 'The Ransom',
+    description: 'You know about the 122 years. You carry it — not as anger, or not only as anger.',
+    condition: (G) => G.flags.includes('knows_the_debt'),
+    priority: 60,
+    color: 'purple',
+  },
+
+  // ── SRI LANKA ─────────────────────────────────────────────────────────────
+  {
+    id: 'the_black_july',
+    name: 'Black July',
+    description: 'Someone had printed the lists. The police were present in the specific way of people who had been told to be present without acting.',
+    condition: (G) => G.flags.includes('black_july_survived'),
+    priority: 82,
+    color: 'red',
+  },
+  {
+    id: 'the_eelam_generation',
+    name: 'The Eelam Generation',
+    description: 'You grew up with the war as the background condition of every decision. The exam still happened.',
+    condition: (G) => G.flags.includes('tamil_diaspora') || G.flags.includes('war_childhood'),
+    priority: 72,
+    color: 'purple',
+  },
+  {
+    id: 'the_aragalaya',
+    name: 'Aragalaya',
+    description: 'The struggle. Multiethnic, furious, peaceful — it surprised everyone, including itself.',
+    condition: (G) => G.flags.includes('aragalaya_generation'),
+    priority: 58,
+    color: 'green',
+  },
+
+  // ── MOROCCO ───────────────────────────────────────────────────────────────
+  {
+    id: 'the_years_of_lead',
+    name: 'The Years of Lead',
+    description: 'You learned the politics of the room before you spoke. The people who didn\'t learned something else.',
+    condition: (G) => G.flags.includes('years_of_lead_generation'),
+    priority: 72,
+    color: 'gray',
+  },
+  {
+    id: 'the_amazigh',
+    name: 'Amazigh',
+    description: 'You were educated in two languages that were not the language you spoke at home. You passed anyway.',
+    condition: (G) => G.flags.includes('amazigh_identity'),
+    priority: 65,
+    color: 'gold',
+  },
+  {
+    id: 'the_strait',
+    name: 'The Strait',
+    description: 'On a clear day from Tangier you can see Spain. Fourteen kilometres.',
+    condition: (G) => G.flags.includes('moroccan_diaspora'),
+    priority: 62,
+    color: 'blue',
+  },
 ]

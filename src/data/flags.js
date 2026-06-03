@@ -1312,4 +1312,130 @@ export const FLAG_REGISTRY = {
     notes: 'Set by debt_medical_bill (all three paths). The negotiation path is an educational payload.',
   },
 
+  // ── HAITI FLAGS ───────────────────────────────────────────────────────────
+
+  tonton_macoute_era: {
+    weight: 'major',
+    category: 'political',
+    description: 'Character grew up under the Duvalier dynasty with the Tonton Macoutes — state-sponsored terror that operated outside law, paid in impunity.',
+    intent: 'both',
+    notes: 'Set by hai_macoute_texture (childhood, Haiti 1957–86). Follow-through: hai_duvalier_midlife_echo.',
+  },
+
+  haitian_diaspora: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Haitian character emigrated to Brooklyn, Miami, or Montreal — carrying the obligation to send money home and the specific diaspora identity of someone who left.',
+    intent: 'both',
+    notes: 'Set by hai_diaspora_decision. Follow-throughs: hai_diaspora_earthquake_call, hai_diaspora_late_reckoning. Ribbon: the_dyaspora.',
+  },
+
+  earthquake_2010_survived: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Character survived the January 12, 2010 Haiti earthquake — 35 seconds, 220,000+ dead, 1.5 million displaced.',
+    intent: 'both',
+    notes: 'Set by hai_earthquake_2010. Follow-through: hai_earthquake_camp. Ribbon: the_haiti_earthquake.',
+  },
+
+  earthquake_family_loss: {
+    weight: 'major',
+    category: 'grief',
+    description: 'Character lost family members in the 2010 Haiti earthquake — learned by the phone calls that never connected.',
+    intent: 'both',
+    notes: 'Set by hai_diaspora_earthquake_call (lost_family path).',
+  },
+
+  earthquake_camp_survivor: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Character lived in a displacement camp after the 2010 earthquake — blue UNHCR tarpaulins, twice-weekly water trucks, UN cholera.',
+    intent: 'event',
+    notes: 'Set by hai_earthquake_camp.',
+  },
+
+  knows_the_debt: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Character knows about the 122-year French debt Haiti paid for its own independence — the ransom for freedom.',
+    intent: 'event',
+    notes: 'Set by hai_debt_of_independence. An educational payload: most Haitians were not taught this in school.',
+  },
+
+  hai_transition_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Character witnessed Baby Doc\'s fall on February 7, 1986 — twenty-nine years of Duvalierism ending in a morning.',
+    intent: 'event',
+    notes: 'Set by hai_baby_doc_falls. The euphoria and its subsequent failure are both part of this.',
+  },
+
+  // ── SRI LANKA FLAGS ───────────────────────────────────────────────────────
+
+  black_july_survived: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Tamil Sri Lankan character survived the July 1983 anti-Tamil pogrom in Colombo — electoral registers used to identify Tamil homes, police standing by.',
+    intent: 'both',
+    notes: 'Set by slk_black_july. Ribbon: the_black_july. A founding event of the Tamil diaspora.',
+  },
+
+  tamil_diaspora: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Tamil Sri Lankan character emigrated during or after the civil war — to Toronto, London, or Melbourne — carrying the war and the diaspora obligation.',
+    intent: 'both',
+    notes: 'Set by slk_diaspora_decision. Follow-through: slk_diaspora_war_end. Ribbon: the_eelam_generation.',
+  },
+
+  internally_displaced: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Character was internally displaced within their own country — fled north from Colombo in July 1983, or forced from their village by conflict.',
+    intent: 'event',
+    notes: 'Set by slk_black_july (fled_north path).',
+  },
+
+  aragalaya_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Character participated in the 2022 Aragalaya (struggle) — Sri Lanka\'s multiethnic protest movement that brought down the Rajapaksa presidency.',
+    intent: 'event',
+    notes: 'Set by slk_2022_collapse (protested path). Ribbon: the_aragalaya.',
+  },
+
+  // ── MOROCCO FLAGS ─────────────────────────────────────────────────────────
+
+  amazigh_identity: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Amazigh Moroccan character navigates a country where their language was excluded from official life — school in Arabic, name from the approved list.',
+    intent: 'both',
+    notes: 'Set by mor_amazigh_school and mor_amazigh_name. Follow-through: mor_amazigh_recognition.',
+  },
+
+  years_of_lead_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Character lived through the Années de Plomb — Hassan II\'s era of political detention, disappearances, and the specific learned silence of a Moroccan university in the 1970s.',
+    intent: 'both',
+    notes: 'Set by mor_years_of_lead. Follow-through: mor_years_of_lead_echo. Ribbon: the_years_of_lead.',
+  },
+
+  moroccan_diaspora: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Moroccan character emigrated to France, Spain, or elsewhere — carrying the Darija of someone who left, and the obligation to send money home.',
+    intent: 'both',
+    notes: 'Set by mor_strait_decision (crossed path). Follow-through: mor_diaspora_late.',
+  },
+
+  amazigh_recognition_era: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Amazigh character witnessed the 2011 constitutional recognition of Tifinagh — ambivalent about whether recognition without resources is meaningful.',
+    intent: 'event',
+    notes: 'Set by mor_amazigh_recognition (both paths).',
+  },
+
 }
