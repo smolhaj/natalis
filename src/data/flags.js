@@ -1904,4 +1904,90 @@ export const FLAG_REGISTRY = {
     notes: 'Set by events_culture.js mandatory service event (serve branch). Follow-through: career resentment, difficulty re-entering civilian work.',
   },
 
+  // ── KENYA ──────────────────────────────────────────────────────────────────
+
+  ken_silent_under_moi: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Stayed quiet during the Moi single-party era in Kenya (1982–91) — the learned suppression of political speech, the monitoring of who talks too much.',
+    intent: 'event',
+    notes: 'Set by ken_moi_silence (silent branch). Follow-through: ken_moi_silence_late (late_life reflection on the silence).',
+  },
+
+  ken_crossed_nairobi: {
+    weight: 'minor',
+    category: 'conflict',
+    description: 'Crossed Nairobi during the 2007–08 post-election violence, navigating roadblocks listening for names and accents.',
+    intent: 'none',
+    notes: 'Set by ken_post_election_2007 (crossed branch). No follow-through required — the experience is self-contained.',
+  },
+
+  // ── ETHIOPIA ───────────────────────────────────────────────────────────────
+
+  eth_red_terror_survived: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'Survived the Derg Red Terror 1977–78 by staying invisible — watching neighbours disappear, learning the calculus of silence under a regime that killed on lists.',
+    intent: 'event',
+    notes: 'Set by eth_red_terror_1977 (survived branch). Follow-through: eth_red_terror_echo (late_life, when asked about it as history).',
+  },
+
+  // ── ZIMBABWE (registering existing unregistered flags) ────────────────────
+
+  gukurahundi_generation: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'Ndebele child or adolescent in Matabeleland during the Gukurahundi massacres 1983–87 — twenty thousand killed by the North Korean-trained Fifth Brigade, the silence enforced for decades.',
+    intent: 'event',
+    notes: 'Set by zim_gukurahundi in events_zimbabwe.js. Follow-through: zim_gukurahundi_late (late_life, when the word enters the historical record).',
+  },
+
+  zim_hyperinflation_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived through Zimbabwe\'s hyperinflation 2007–09 — hundred-trillion-dollar notes, morning shopping before prices changed, the abstract collapse of numerical meaning.',
+    intent: 'event',
+    notes: 'Set by zim_hyperinflation in events_zimbabwe.js. Follow-through: zim_hyperinflation_late (late_life, when asked to explain it).',
+  },
+
+  zimbabwe_independence_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Grew up in the first decade of Zimbabwean independence (1980s) when the country was genuinely building — schools, clinics, a functioning economy.',
+    intent: 'none',
+    notes: 'Set by zim_mugabe_early (childhood). The optimism of that era shapes how the later collapse is experienced.',
+  },
+
+  zim_land_reform_witness: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Witnessed the Fast Track Land Reform — commercial farms going to party officials, food supply collapsing, the gap between the stated and actual purpose of the programme.',
+    intent: 'none',
+    notes: 'Set by zim_land_reform_black in events_zimbabwe.js.',
+  },
+
+  zim_diaspora: {
+    weight: 'minor',
+    category: 'immigration',
+    description: 'Left Zimbabwe for the diaspora (South Africa, UK, Botswana) during the economic collapse — part of the three million who left.',
+    intent: 'none',
+    notes: 'Set by zim_exodus_south. Overlaps with emigrated flag which carries the primary diaspora follow-through.',
+  },
+
+  murambatsvina_witness: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Witnessed Operation Murambatsvina (2005) — 700,000 people made homeless or unemployed as informal settlements and markets were demolished.',
+    intent: 'none',
+    notes: 'Set by zim_murambatsvina in events_zimbabwe.js.',
+  },
+
+  zim_mugabe_era_end: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Lived through the November 2017 military removal of Mugabe — watched the generals\' statement, the resignation, the street celebrations.',
+    intent: 'none',
+    notes: 'Set by zim_mugabe_fall_2017 in events_zimbabwe.js.',
+  },
+
 }

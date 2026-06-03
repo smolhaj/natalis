@@ -129,4 +129,64 @@ export const ZIMBABWE_EVENTS = [
     effect: (p) => { p.m -= 22; p.h -= 8; p.addFlag('gukurahundi_generation'); p.setMem('zimGukurahundi', true); },
   },
 
+  // ── OPERATION MURAMBATSVINA 2005 ─────────────────────────────────────────
+
+  {
+    id: 'zim_murambatsvina',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Zimbabwe' &&
+      G.currentYear >= 2005 && G.currentYear <= 2006 &&
+      !G.mem?.zimMurambatsvina,
+    text: 'Operation Restore Order. Seven hundred thousand people lose their homes, their livelihoods, or both in two months. The informal market stalls are demolished. The backyard extensions are torn down. The government says it is clearing slums. What it is also clearing is the urban informal economy, and the people whose political independence can be managed by making them mobile and desperate. You know three families whose situations change overnight.',
+    choices: null,
+    effect: (p) => { p.m -= 12; p.mo -= 600; p.addFlag('murambatsvina_witness'); p.setMem('zimMurambatsvina', true); },
+  },
+
+  // ── MUGABE FALL 2017 ─────────────────────────────────────────────────────
+
+  {
+    id: 'zim_mugabe_fall_2017',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Zimbabwe' &&
+      G.currentYear >= 2017 && G.currentYear <= 2018 &&
+      G.age >= 25 &&
+      !G.mem?.zimMugabeFall,
+    text: 'The generals issue a statement. They do not call it a coup. The army surrounds the state broadcaster and the president is on television, wearing a suit, looking at a speech he does not appear to have written. He resigns on the nineteenth. People dance in the streets of Harare in a way they have not danced in years. What comes next is not yet clear, which feels, for now, like enough.',
+    choices: null,
+    effect: (p) => { p.m += 10; p.addFlag('zim_mugabe_era_end'); p.setMem('zimMugabeFall', true); },
+  },
+
+  // ── FOLLOW-THROUGHS ──────────────────────────────────────────────────────
+
+  {
+    id: 'zim_gukurahundi_late',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) =>
+      G.flags.has('gukurahundi_generation') &&
+      G.age >= 55 &&
+      !G.mem?.zimGukurahundiLate,
+    text: 'The commissions talk about it now. Some survivors speak publicly. The word has entered the historical record. What has not entered the record is the particular texture of the silence that followed — how long it lasted, how many people maintained it, what that maintaining required.',
+    choices: null,
+    effect: (p) => { p.r += 5; p.karma += 3; p.setMem('zimGukurahundiLate', true); },
+  },
+
+  {
+    id: 'zim_hyperinflation_late',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) =>
+      G.flags.has('zim_hyperinflation_generation') &&
+      G.currentYear >= 2015 &&
+      G.age >= 50 &&
+      !G.mem?.zimHyperinflationLate,
+    text: 'The Zimbabwe dollar was discontinued in 2015. You remember what it was to carry numbers so large they became abstract. Younger people did not experience it, which means you sometimes have to explain that no, it was not primarily funny. The hundred-trillion-dollar note is for sale as a souvenir on the internet. That is a thing you know how to feel about.',
+    choices: null,
+    effect: (p) => { p.r += 3; p.setMem('zimHyperinflationLate', true); },
+  },
+
 ]
