@@ -1,3 +1,5 @@
+import { randomBetween } from '../utils/random.js'
+
 export const HISTORICAL_EVENTS = [
 
   // ── RWANDAN GENOCIDE (1994) ─────────────────────────────────────────────────
@@ -105,7 +107,7 @@ export const HISTORICAL_EVENTS = [
     phase: null,
     weight: 8,
     when: (G) => G.character.country.name === 'South Africa' && G.currentYear === 1994 && G.age >= 18 && !G.mem?.election_1994,
-    text: (G) => `April 27, 1994. You queue to vote for the first time. The line stretches for miles. ${G.character.ethnicity === 'black_south_african' ? 'You have never been allowed to vote before. You are forty-two years old.' : G.character.ethnicity === 'white_south_african' ? 'The country you knew is being voted away. You are also voting. You\'re not sure how you feel.' : 'You vote. The country holds its breath.'}`,
+    text: (G) => `April 27, 1994. You queue to vote for the first time. The line stretches for miles. ${G.character.ethnicity === 'black_south_african' ? 'You have never been allowed to vote before. The person in front of you is eighty-one. The person behind you was born the year the ANC was banned.' : G.character.ethnicity === 'white_south_african' ? 'The country you knew is being voted away. You are also voting. You\'re not sure how you feel.' : 'You vote. The country holds its breath.'}`,
     choices: [
       { text: 'Wait the full day — nothing could make you leave', tag: null, outcome: 'Seven hours in the heat. You cast your vote. You weep on the way home and don\'t know why it surprises you.', effect: (p) => { p.m += 20; p.karma += 10; p.setMem('election_1994', true) } },
     ],
@@ -218,7 +220,7 @@ export const HISTORICAL_EVENTS = [
     when: (G) => ['Russia', 'Ukraine', 'Poland', 'Romania', 'Kazakhstan'].includes(G.character.country.name) && G.currentYear >= 1992 && G.currentYear <= 1998 && G.age >= 20 && !G.mem?.voucher_privatization,
     text: 'The government issues everyone a voucher — a share of formerly state-owned industry. A man at the market will buy yours for cash today, a week\'s groceries, rather than wait for dividends that may never come.',
     choices: [
-      { text: 'Hold the voucher — invest it properly', tag: null, outcome: 'For some this makes them rich. For most it becomes worthless as the companies are stripped by connected insiders.', effect: (p) => { p.m += Math.random() > 0.7 ? 10 : -5; p.setMem('voucher_privatization', true) } },
+      { text: 'Hold the voucher — invest it properly', tag: null, outcome: 'For some this makes them rich. For most it becomes worthless as the companies are stripped by connected insiders.', effect: (p) => { p.m += randomBetween(0, 10) > 7 ? 10 : -5; p.setMem('voucher_privatization', true) } },
       { text: 'Sell it for cash — the family needs food now', tag: null, outcome: 'You survive the winter. The man who bought your voucher becomes a millionaire in four years.', effect: (p) => { p.mo += 300; p.m += 3; p.r += 5; p.setMem('voucher_privatization', true) } },
     ],
   },
@@ -290,7 +292,7 @@ export const HISTORICAL_EVENTS = [
     id: 'hist_caste_school_denial',
     phase: 'childhood',
     weight: 8,
-    when: (G) => G.character.country.name === 'India' && G.character.ethnicity === 'dalit' && G.character.ruralUrban === 'rural' && G.age >= 6 && G.age <= 12 && !G.mem?.caste_school_denial,
+    when: (G) => G.character.country.name === 'India' && G.character.ethnicity === 'dalit' && G.character.ruralUrban === 'rural' && G.age >= 6 && G.age <= 12 && G.currentYear < 1990 && !G.mem?.caste_school_denial,
     text: 'The upper-caste teacher sits Dalit children at the back of the classroom, separated by a line of chalk. You are not allowed to touch the communal water pot. When you raise your hand to answer a question, he looks through you.',
     choices: [
       { text: 'Keep coming to school regardless', tag: null, outcome: 'Some teachers are different. Eventually, one sees you. That one is enough to keep you there.', effect: (p) => { p.e += 5; p.m -= 8; p.r += 5; p.setMem('caste_school_denial', true) } },
@@ -302,7 +304,7 @@ export const HISTORICAL_EVENTS = [
     id: 'hist_caste_well_untouchability',
     phase: 'childhood',
     weight: 7,
-    when: (G) => G.character.country.name === 'India' && G.character.ethnicity === 'dalit' && G.age >= 8 && G.age <= 16 && !G.mem?.caste_well,
+    when: (G) => G.character.country.name === 'India' && G.character.ethnicity === 'dalit' && G.age >= 8 && G.age <= 16 && G.currentYear < 1990 && !G.mem?.caste_well,
     text: 'You reach for the village well. An upper-caste man grabs your wrist and pulls you back. Dalits do not touch the well. You are sent to fetch water from a different source — further, dirtier. Your mother doesn\'t look surprised when you tell her.',
     choices: [
       { text: 'Accept it — you know what defiance costs here', tag: null, outcome: 'You fetch the water. The long walk becomes its own lesson in what the world costs certain people.', effect: (p) => { p.m -= 10; p.r += 8; p.setMem('caste_well', true) } },
@@ -368,7 +370,7 @@ export const HISTORICAL_EVENTS = [
     id: 'hist_diaspora_identity_crisis',
     phase: 'adolescence',
     weight: 6,
-    when: (G) => G.age >= 14 && G.age <= 22 && G.flags.includes('emigrated') && !G.mem?.diaspora_identity && G.character.country.archetype === 'wealthy_west',
+    when: (G) => G.age >= 14 && G.age <= 22 && G.flags.includes('emigrated') && !G.mem?.diaspora_identity && G.currentCountry?.archetype === 'wealthy_west',
     text: 'At home you are foreign. In the country your parents came from, you are also foreign. You speak both languages with an accent that marks you in each direction. You belong completely to neither place and you are starting to understand that this might be permanent.',
     choices: [
       { text: 'Build your own identity from both parts', tag: null, outcome: 'It takes time. But the double perspective becomes something you bring to every room you enter. A gift and a burden.', effect: (p) => { p.e += 8; p.s += 5; p.m += 3; p.setMem('diaspora_identity', true) } },

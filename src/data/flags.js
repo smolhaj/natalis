@@ -1884,4 +1884,24 @@ export const FLAG_REGISTRY = {
     notes: 'Set by pr_colonial_status. The specific constitutional paradox of Puerto Rico\'s status makes this a useful educational event.',
   },
 
+  // ── HEALTH WORLD EVENTS ───────────────────────────────────────────────────
+
+  ebola_survivor: {
+    weight: 'moderate',
+    category: 'health',
+    description: 'Lived through the 2014–2016 Ebola epidemic in West Africa — the quarantine lines, the fear of touching the sick, the neighbors who did not recover.',
+    intent: 'both',
+    notes: 'Set by worldEvents.js Ebola world event for West Africa. Year texture prose for aftermath; health anxiety; survivor guilt.',
+  },
+
+  // ── CAREER FLAGS ──────────────────────────────────────────────────────────
+
+  interrupted_career: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Career interrupted by mandatory military service — the years of civilian professional life lost, the difficulty of re-entering where others had not stopped.',
+    intent: 'both',
+    notes: 'Set by events_culture.js mandatory service event (serve branch). Follow-through: career resentment, difficulty re-entering civilian work.',
+  },
+
 }

@@ -17,7 +17,7 @@ export const RELIGION_EVENTS = [
 
   {
     id: 'rel_protestant_confirmation',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 5,
     when: (G) => ['christian_protestant'].includes(G.religion) && G.age >= 12 && G.age <= 16 && !G.mem?.confirmation,
     text: 'Confirmation class meets on Wednesday evenings. You\'re supposed to affirm that you believe — really believe — before the whole congregation.',
@@ -29,7 +29,7 @@ export const RELIGION_EVENTS = [
 
   {
     id: 'rel_protestant_born_again',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 4,
     when: (G) => ['christian_protestant'].includes(G.religion) && G.age >= 14 && G.age <= 22 && ['subsaharan', 'developing_urban', 'developing_unstable'].includes(G.character.country.archetype) && !G.mem?.born_again,
     text: 'At a revival meeting, the pastor calls people forward. The music is overwhelming. Something cracks open in your chest that you didn\'t know was sealed shut.',
@@ -170,7 +170,7 @@ export const RELIGION_EVENTS = [
 
   {
     id: 'rel_muslim_hijab_decision',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 7,
     when: (G) => ['muslim_sunni', 'muslim_shia'].includes(G.religion) && G.character.gender === 'female' && G.age >= 11 && G.age <= 16 && !G.mem?.hijab_decision,
     text: (G) => {
@@ -186,7 +186,7 @@ export const RELIGION_EVENTS = [
 
   {
     id: 'rel_muslim_friday_prayers',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 5,
     when: (G) => G.religion === 'muslim_sunni' && G.character.gender === 'male' && G.age >= 13 && G.age <= 18 && !G.mem?.friday_prayers,
     text: 'Friday Jumu\'ah is the most important prayer of the week. Your father expects you to attend the mosque with him. But you had other plans.',
@@ -237,7 +237,7 @@ export const RELIGION_EVENTS = [
 
   {
     id: 'rel_shia_minority_pressure',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 5,
     when: (G) => G.religion === 'muslim_shia' && ['Pakistan', 'Afghanistan', 'Saudi Arabia'].includes(G.character.country.name) && G.age >= 12 && G.age <= 20 && !G.mem?.shia_minority,
     text: 'In a country where most Muslims are Sunni, your Shia practice draws suspicion. A classmate calls your prayers heresy. A neighbourhood notice excludes "Shia" from a community event.',
@@ -251,7 +251,7 @@ export const RELIGION_EVENTS = [
 
   {
     id: 'rel_jewish_bar_bat_mitzvah',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 8,
     when: (G) => G.religion === 'jewish' && G.age === 13 && !G.mem?.bar_bat_mitzvah,
     text: (G) => {
@@ -284,7 +284,7 @@ export const RELIGION_EVENTS = [
 
   {
     id: 'rel_jewish_antisemitism',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 6,
     when: (G) => G.religion === 'jewish' && G.age >= 12 && G.age <= 22 && !G.mem?.antisemitism,
     text: (G) => `Someone at school discovers you\'re Jewish. The jokes start — small ones at first, then not small. ${G.character.country.archetype === 'post_soviet' ? 'Eastern Europe has not forgotten its old suspicions.' : 'You thought this country was different.'}`,
@@ -385,7 +385,7 @@ export const RELIGION_EVENTS = [
 
   {
     id: 'rel_sikh_turban_dilemma',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 6,
     when: (G) => G.religion === 'sikh' && G.character.gender === 'male' && G.character.country.archetype === 'wealthy_west' && G.age >= 13 && G.age <= 18 && !G.mem?.turban_dilemma,
     text: 'In school photos you stand out. Some kids ask questions; others make jokes. Your father wears his dastar proudly. You\'re still figuring out what pride looks like for you.',
@@ -420,7 +420,7 @@ export const RELIGION_EVENTS = [
 
   {
     id: 'rel_animist_coming_of_age',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 6,
     when: (G) => ['animist'].includes(G.religion) && G.age >= 13 && G.age <= 17 && !G.mem?.animist_initiation,
     text: 'The initiation ceremony has been done in your village for as long as anyone can remember. You will spend several days in the bush, undergoing trials, learning what only adults are permitted to know.',
@@ -434,7 +434,7 @@ export const RELIGION_EVENTS = [
 
   {
     id: 'rel_atheist_family_clash',
-    phase: 'teens',
+    phase: 'adolescence',
     weight: 6,
     when: (G) => ['secular', 'atheist'].includes(G.religion) && G.age >= 14 && G.age <= 22 && !G.mem?.atheist_family_clash && ['subsaharan', 'developing_urban', 'developing_unstable', 'post_soviet', 'conflict_zone', 'wealthy_gulf'].includes(G.character.country.archetype),
     text: 'You tell your family you don\'t believe anymore. The silence that follows is its own kind of sound. Your mother looks as though you have said something that cannot be unsaid.',
