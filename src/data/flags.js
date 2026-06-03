@@ -1079,7 +1079,63 @@ export const FLAG_REGISTRY = {
     category: 'trauma',
     description: 'Character has arrived at a late-life reckoning with the Black Decade — the impunity, the amnesty, the unexamined past.',
     intent: 'year_texture',
-    notes: 'Set by alg_late_reckoning (auto-resolve, late_life).',
+    notes: 'Set by alg_late_reckoning (auto-resolve, late_life). Year-texture path added in gameEngine.js. Follow-through echo: ft10_decennie_noire_echo.',
+  },
+
+  kafala_documented: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'OFW character in a Gulf country has had their passport held by an employer under the kafala sponsorship system.',
+    intent: 'event',
+    notes: 'Set by ft10_ofw_gulf_passport. Represents the specific power asymmetry of kafala — not criminally distinct but felt as captivity.',
+  },
+
+  ofw_broker_paid: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'OFW character has paid off their broker/agency fee loan in full.',
+    intent: 'event',
+    notes: 'Set by ft10_ofw_broker_paid_off. Resolution of ofw_broker_debt arc.',
+  },
+
+  ofw_new_placement: {
+    weight: 'minor',
+    category: 'labor',
+    description: 'OFW runaway successfully secured a new legitimate employer placement.',
+    intent: 'event',
+    notes: 'Set by ft10_ofw_runaway_shelter (find new placement branch).',
+  },
+
+  informal_abroad: {
+    weight: 'minor',
+    category: 'labor',
+    description: 'OFW character is working informally in a foreign country after fleeing their employer.',
+    intent: 'event',
+    notes: 'Set by ft10_ofw_runaway_shelter (work informally branch). Distinct from workStatus=informal — this is specifically abroad and specifically precarious.',
+  },
+
+  care_work_done: {
+    weight: 'minor',
+    category: 'labor',
+    description: 'Character has spent significant time doing care work — tending to an elderly or dependent person professionally.',
+    intent: 'event',
+    notes: 'Set by ft10_ofw_italy_badante and potentially other care-work events. Quiet flag for ribbon eligibility.',
+  },
+
+  intellectual_target_reckoned: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Character who was targeted as an intellectual during the Algerian Black Decade has reached a midlife reckoning with that experience.',
+    intent: 'event',
+    notes: 'Set by ft10_intellectual_target_midlife. Gates ft10_intellectual_target_late.',
+  },
+
+  ofw_cycle_witness: {
+    weight: 'minor',
+    category: 'migration',
+    description: 'OFW who returned has now watched their own child begin the same migration cycle.',
+    intent: 'event',
+    notes: 'Set by ofw_cycle_repeating. Completes the generational arc of the OFW system.',
   },
 
 }
