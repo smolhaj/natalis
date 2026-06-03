@@ -2280,6 +2280,21 @@ export const WORLD_EVENTS = [
   },
 
   {
+    id: 'algeria_black_decade_begins',
+    name: 'Algeria: The Cancelled Election',
+    years: [1992, 1993],
+    archetypes: null,
+    countries: ['Algeria'],
+    narrative: 'On 11 January 1992, Algeria\'s military cancels the second round of legislative elections. The Front Islamique du Salut had won 188 seats in the first round and was on course for a parliamentary supermajority. President Chadli Bendjedid resigns. A High State Committee takes power. Within months, a state of emergency is declared and the FIS is banned. What follows will be called the *décennie noire* — the Black Decade. 200,000 dead over ten years, in a country of 26 million. The army, the GIA, and eventually splinter groups will all carry out killings. Some massacres are never officially attributed. The deliberate confusion is part of the architecture.',
+    context: 'The 1991–92 Algerian electoral crisis began after the Islamic Salvation Front (FIS) won 47% of the vote in the first round of legislative elections, pointing toward a two-thirds parliamentary majority. The military stepped in, cancelling the second round and arresting FIS leadership, triggering an armed insurgency. The décennie noire lasted from 1992 to 2002 and killed an estimated 150,000–200,000 people. Both the GIA (Groupe Islamique Armé) and the DRS (military intelligence) were accused of atrocities; several major massacres — including Rais (August 1997, ~300 dead) and Bentalha (September 1997, ~400 dead) — remain without official attribution. President Bouteflika\'s 1999 Civil Concord offered amnesty to surrendering fighters but no accountability process.',
+    effect: (p) => { p.m -= 12; p.addFlag('decennie_noire_generation'); },
+    addFlags: ['decennie_noire_generation'],
+    minAge: 10,
+    maxAge: null,
+    when: null,
+  },
+
+  {
     id: 'beirut_port_explosion_2020',
     name: 'Beirut Port Explosion',
     years: [2020, 2021],

@@ -1112,6 +1112,32 @@ export const RIBBONS = [
     color: 'gray',
   },
 
+  // ── BUILD 43 — ALGERIAN DÉCENNIE NOIRE ──────────────────────────────────────
+  {
+    id: 'the_black_decade',
+    name: 'The Black Decade',
+    description: 'You lived through the Algerian civil war — a decade defined by ambiguity about who was killing whom, and why, and for whom.',
+    condition: (G) => G.flags.includes('decennie_noire_generation'),
+    priority: 72,
+    color: 'gray',
+  },
+  {
+    id: 'the_exile_return',
+    name: 'The Return',
+    description: 'You left Algeria during the Black Decade and came back. The country you returned to was not the country you left.',
+    condition: (G) => G.flags.includes('algeria_returned'),
+    priority: 65,
+    color: 'blue',
+  },
+  {
+    id: 'the_knew_the_truth',
+    name: 'The Reckoning',
+    description: 'You knew what happened at Rais and Bentalha. You knew which question was not being asked. You lived with that knowledge.',
+    condition: (G) => G.flags.includes('knew_the_truth'),
+    priority: 70,
+    color: 'purple',
+  },
+
   // ── BURST Q — GANG ARC ────────────────────────────────────────────────────
   {
     id: 'the_way_out',
