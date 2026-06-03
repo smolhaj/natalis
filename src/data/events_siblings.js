@@ -37,7 +37,7 @@ export const SIBLING_EVENTS = [
     phase: 'childhood',
     weight: 3,
     when: (G) => G.siblings && G.siblings.length > 0 && G.age >= 7 &&
-      (G.character.familyStability === 'unstable' || G.character.familyStability === 'difficult') &&
+      (G.character.familyStability === 'unstable' || G.character.familyStability === 'struggling') &&
       !G.mem.sibAlliance,
     text: (G) => {
       const s = G.siblings[0]
