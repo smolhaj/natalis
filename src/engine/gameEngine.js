@@ -716,6 +716,7 @@ function buildEffectProxy(state) {
     'affair_brief_secret', 'affair_not_taken', 'emigrated',
     'divorced', 'business_failed', 'graduated',
     'chernobyl_liquidator', 'grew_up_polluted', 'industrial_upbringing', 'oil_delta_witness',
+    'uyghur_suppressed', 'kafala_documented', 'forced_harvest', 'ebola_survivor',
   ])
   proxy.addFlag = (flag) => {
     if (!proxy.flags.includes(flag)) {
@@ -1902,6 +1903,30 @@ function buildYearTexture(state) {
         'You made something you couldn\'t release. That is a particular kind of holding on.',
       ])
     }
+    if (F.has('uyghur_suppressed') && mem.uyghur_suppressedYear && yrsAgo(mem.uyghur_suppressedYear) >= 3) {
+      return pick([
+        'The learned silence still comes first. Before the thought, before the sentence, the calculation.',
+        'You say yes when you mean something else. That has become automatic in the way breathing is automatic.',
+      ])
+    }
+    if (F.has('kafala_documented') && mem.kafala_documentedYear && yrsAgo(mem.kafala_documentedYear) >= 1 && yrsAgo(mem.kafala_documentedYear) <= 15) {
+      return pick([
+        'You know what it is to hold your own document after someone else has held it.',
+        'The passport lives in the bag you carry. That is a decision you make every morning.',
+      ])
+    }
+    if (F.has('forced_harvest') && mem.forced_harvestYear && yrsAgo(mem.forced_harvestYear) >= 5) {
+      return pick([
+        'September still has a particular texture. The body remembers the work before the mind does.',
+        'You were not asked. That is the part that has lasted.',
+      ])
+    }
+    if (F.has('ebola_survivor') && mem.ebola_survivorYear && yrsAgo(mem.ebola_survivorYear) >= 1 && yrsAgo(mem.ebola_survivorYear) <= 12) {
+      return pick([
+        'The reflex from the outbreak years is still in you. You notice your own temperature before other people do.',
+        'Quarantine taught you what the walls of a room actually look like. You still sometimes count them.',
+      ])
+    }
   }
 
   // ─── PROJECT LAYER (~35% when project active) ────────────────────────────────
@@ -2024,6 +2049,46 @@ function buildYearTexture(state) {
     if (lines) return pickFrom(lines)
   }
 
+  // ─── FLAG-AWARE TEXTURE PATHS (~22% each, fires before generic pools) ─────────
+  // Surfaces flags whose follow-through lives in year texture rather than events.
+
+  if (F.has('interrupted_career') && phase === 'midlife' && Math.random() < 0.22) {
+    return pick([
+      'The career you left behind is still a presence. You don\'t name it most days. It is there when you account for things.',
+      'You took a different path than the one you were on. The original path still exists somewhere as a version of you that didn\'t.',
+    ])
+  }
+  if (F.has('francophone_educated') && Math.random() < 0.22) {
+    return pick([
+      'You think in two languages still. The one you were schooled in carries a particular kind of authority you are still measuring.',
+      'French was the language of advancement. You learned it. That was a transaction, and you got what you paid for.',
+    ])
+  }
+  if (F.has('id98_reckoned') && phase !== 'early_childhood' && phase !== 'childhood' && Math.random() < 0.22) {
+    return pick([
+      'You reckoned with what 1998 was. That reckoning doesn\'t end with the decision.',
+      'What you understood about Jakarta — about what the city did to people who looked like certain people — is still knowledge you carry.',
+    ])
+  }
+  if (F.has('kurd_reform_era') && Math.random() < 0.22) {
+    return pick([
+      'The reforms arrived. You watched what they gave and what they didn\'t. That watching has become part of how you see things.',
+      'The language is permitted in more places now. That is not the same as the weight being lifted.',
+    ])
+  }
+  if (F.has('colonial_subject') && phase !== 'early_childhood' && Math.random() < 0.22) {
+    return pick([
+      'You were born into a document that described you as a subject. That word is behind you now. Its structure is not entirely behind you.',
+      'Independence changed the flag. The deeper architecture — who gets what, who decides — those changed more slowly.',
+    ])
+  }
+  if (F.has('institutional_doubt') && phase !== 'early_childhood' && Math.random() < 0.20) {
+    return pick([
+      'You do not trust the institution the way you once did. That is an earned position, not a chosen one.',
+      'The doubt came from somewhere specific. You remember what it was. It has become a permanent part of your assessment.',
+    ])
+  }
+
   // ─── EXPANDED PHASE POOLS ────────────────────────────────────────────────────
 
   if (phase === 'late_life') {
@@ -2069,6 +2134,18 @@ function buildYearTexture(state) {
       'The world has changed and you have changed and neither of you is quite what the other expected.',
       'Some days are entirely administration. You have made peace with this, mostly.',
       'You are in the middle of several things at once. That is the condition.',
+      'The years are getting their own texture now — not just generic time but specific weather, specific griefs.',
+      'Something that mattered enormously at twenty-five you have quietly let go of. You are not sure when.',
+      'The body is not unreliable yet. But it has started to leave notes.',
+      'You have fewer people to impress. The remaining ones matter more.',
+      'The question of what kind of person you have become is harder to avoid at this distance.',
+      'Some friendships are built deep enough now that they require less maintenance than a houseplant.',
+      'You have stopped needing the thing you thought you needed at twenty. That took longer than it should have.',
+      'There is a pleasure in competence — in knowing how to do things — that is different from ambition.',
+      'You are far enough from youth to see it clearly and close enough to late life to feel the arithmetic.',
+      'The accumulation of ordinary days has become something. You are not entirely sure what.',
+      'You have opinions about things you didn\'t used to notice. Neighbours. Sleep. How people eat.',
+      'This is, statistically, the middle. You try not to think about the second half too directly.',
     ])
   }
 
