@@ -1610,6 +1610,48 @@ export const RIBBONS = [
     color: 'blue',
   },
 
+  // ── CLERGY / RELIGIOUS INSTITUTION ───────────────────────────────────────
+  {
+    id: 'the_parish_priest',
+    name: 'The Parish',
+    description: 'The bank manager was in your congregation. The county council deferred to you. You were the institution, and the institution\'s options were what they were.',
+    condition: (G) => G.flags.includes('institutional_power') && G.flags.includes('clergy_ordained'),
+    priority: 65,
+    color: 'blue',
+  },
+  {
+    id: 'the_reckoning',
+    name: 'The Reports',
+    description: 'The names were read on the radio in voices that were calm and specific. You sat in the house you had lived in for thirty years and did not answer the phone.',
+    condition: (G) => G.flags.includes('institutional_reckoning'),
+    priority: 78,
+    color: 'red',
+  },
+  {
+    id: 'the_sangha_survived',
+    name: 'The Sangha',
+    description: 'They killed sixty thousand monks. You were among the three thousand. The robes went somewhere inside you that the regime could not reach.',
+    condition: (G) => G.flags.includes('faith_survived_suppression'),
+    priority: 90,
+    color: 'gold',
+  },
+  {
+    id: 'the_rebuilt',
+    name: 'Rebuilt',
+    description: 'Young men came to you who had grown up with no religious institution at all, in a country that tried to make religion impossible. You taught what you knew.',
+    condition: (G) => G.flags.includes('rebuilt_institution'),
+    priority: 75,
+    color: 'green',
+  },
+  {
+    id: 'the_encoded_sermon',
+    name: 'The Encoded Sermon',
+    description: 'Surveillance listens for direct statements. The congregation understands the encoding. The gap between those two things is where you operated.',
+    condition: (G) => G.flags.includes('clergy_adapted') && G.flags.includes('resistance_through_art'),
+    priority: 68,
+    color: 'purple',
+  },
+
   // ── SENEGAL ───────────────────────────────────────────────────────────────
   {
     id: 'the_mouride',

@@ -1642,6 +1642,96 @@ export const FLAG_REGISTRY = {
     notes: 'Set by cas_uzbek_cotton and cas_uzbek_harvest_adult.',
   },
 
+  // ── CLERGY / RELIGIOUS INSTITUTION FLAGS ────────────────────────────────
+
+  clergy_ordained: {
+    weight: 'major',
+    category: 'career',
+    description: 'Character was ordained into a religious institution — holding genuine authority over people\'s lives, the weight of which is assumed rather than stated.',
+    intent: 'both',
+    notes: 'Set by cle_ireland_ordination, cle_cambodia_monk. Gates all downstream clergy arc events.',
+  },
+
+  institutional_power: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Character held power through an institution — the school, the hospital, the moral economy of the parish. Power exercised through structure rather than force.',
+    intent: 'both',
+    notes: 'Set by cle_ireland_ordination. Relates to institutional_complicity and institutional_doubt follow-throughs.',
+  },
+
+  institutional_doubt: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Character began to ask questions of the institution from inside it — noticing the shape of the power they hold, the gap between what is said and what is known.',
+    intent: 'both',
+    notes: 'Set by cle_ireland_parish_power (noticed branch), cle_yeshiva_compact (uncomfortable branch). Follow-through: cle_ireland_collapse.',
+  },
+
+  institutional_complicity: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Character remained inside an institution while knowing of its harms — not perpetrating but not naming. The specific moral position of silence within power.',
+    intent: 'both',
+    notes: 'Set by cle_ireland_knowledge (silent branch). High weight; affects epitaph. Follow-through: cle_ireland_collapse.',
+  },
+
+  institutional_dissent: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Character dissented from within their institution — wrote to the bishop, named what they saw, in contexts where this had cost.',
+    intent: 'event',
+    notes: 'Set by cle_ireland_knowledge (wrote branch).',
+  },
+
+  institutional_reckoning: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Character went through the public reckoning of an institution they gave their life to — watching it named for what it was, in real time, from inside.',
+    intent: 'event',
+    notes: 'Set by cle_ireland_collapse. Terminal event in the Irish clergy arc.',
+  },
+
+  sangha_member: {
+    weight: 'major',
+    category: 'religion',
+    description: 'Character is a Buddhist monk — member of the sangha that in Cambodia predates and outlasts every government, providing education and care where the state does not.',
+    intent: 'both',
+    notes: 'Set by cle_cambodia_monk. Gates cle_cambodia_khmer_rouge.',
+  },
+
+  faith_survived_suppression: {
+    weight: 'major',
+    category: 'religion',
+    description: 'Character\'s faith survived an attempt to destroy it entirely — the robes removed, the institution dissolved, the self preserved because there was nowhere else for it to go.',
+    intent: 'both',
+    notes: 'Set by cle_cambodia_khmer_rouge. Follow-through: cle_cambodia_rebuilding.',
+  },
+
+  rebuilt_institution: {
+    weight: 'major',
+    category: 'community',
+    description: 'Character rebuilt a religious or civic institution from near-zero — teaching what remained of a tradition to a generation that grew up without any.',
+    intent: 'event',
+    notes: 'Set by cle_cambodia_rebuilding. The specific solemnity of rebuilding from almost nothing.',
+  },
+
+  clergy_adapted: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Character adapted their religious practice to an authoritarian context — preaching within a permitted frame, encoding what could not be said directly.',
+    intent: 'both',
+    notes: 'Set by cle_indonesia_imam_suharto. Cross-references resistance_through_art for encoded-speech path.',
+  },
+
+  yeshiva_trained: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'Character completed deep Torah study in a yeshiva — the world of the beit midrash, the compact with the state, the asymmetry it creates.',
+    intent: 'both',
+    notes: 'Set by cle_yeshiva_compact. Follow-through: cle_yeshiva_1967.',
+  },
+
   // ── SENEGAL FLAGS ─────────────────────────────────────────────────────────
 
   mouride_member: {
