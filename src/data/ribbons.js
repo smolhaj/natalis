@@ -1548,6 +1548,68 @@ export const RIBBONS = [
     color: 'purple',
   },
 
+  // ── SOLDIER ARC ───────────────────────────────────────────────────────────
+  {
+    id: 'the_deployed',
+    name: 'Deployed',
+    description: 'You landed and it was already different from everything you were told. Training and the actual thing are related but not the same.',
+    condition: (G) => G.flags.includes('deployed_to_conflict'),
+    priority: 68,
+    color: 'gray',
+  },
+  {
+    id: 'the_veteran_silence',
+    name: 'The Short Answer',
+    description: 'You learned the short answer. The long answer starts somewhere too far back. You use the short answer.',
+    condition: (G) => G.flags.includes('veteran_silence'),
+    priority: 60,
+    color: 'gray',
+  },
+  {
+    id: 'the_moral_weight',
+    name: 'The Weight',
+    description: 'The legality of it and the weight of it are separate things. They do not cancel each other out.',
+    condition: (G) => G.flags.includes('moral_weight_carried'),
+    priority: 72,
+    color: 'red',
+  },
+
+  // ── DOCUMENTS / IDENTITY ──────────────────────────────────────────────────
+  {
+    id: 'the_rwandan_survivor',
+    name: 'The Checkpoint',
+    description: 'The identity card was Belgian — the Belgians invented the ethnic column. The militiaman looked at it. You crossed.',
+    condition: (G) => G.flags.includes('rwandan_survivor'),
+    priority: 95,
+    color: 'red',
+  },
+  {
+    id: 'the_stateless_navigator',
+    name: 'The Pause',
+    description: 'You learned to read the specific quality of the pause at a border. This pause means it might work. That pause means it won\'t.',
+    condition: (G) => G.flags.includes('stateless_navigator'),
+    priority: 78,
+    color: 'gray',
+  },
+
+  // ── CENTRAL ASIA ──────────────────────────────────────────────────────────
+  {
+    id: 'the_asharshylyk',
+    name: 'Asharshylyk',
+    description: 'The great hunger. One in three Kazakhs. You were not yet a statistic.',
+    condition: (G) => G.flags.includes('asharshylyk_survivor'),
+    priority: 92,
+    color: 'red',
+  },
+  {
+    id: 'the_aral_witness',
+    name: 'The Sea That Was',
+    description: 'Ship hulls in the sand where the water was. Your grandfather fished there.',
+    condition: (G) => G.flags.includes('aral_sea_witness'),
+    priority: 65,
+    color: 'blue',
+  },
+
   // ── SENEGAL ───────────────────────────────────────────────────────────────
   {
     id: 'the_mouride',

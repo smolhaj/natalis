@@ -1524,6 +1524,124 @@ export const FLAG_REGISTRY = {
     notes: 'Set by mul_interpreter_impossible_word.',
   },
 
+  // ── SOLDIER ARC FLAGS ────────────────────────────────────────────────────
+
+  deployed_to_conflict: {
+    weight: 'major',
+    category: 'military',
+    description: 'Character was deployed to an active conflict zone — the flight, the specific smell, the recalibration of what safe and not-safe feel like.',
+    intent: 'both',
+    notes: 'Set by sol_deployment_orders. Gates all subsequent soldier arc events.',
+  },
+
+  combat_veteran: {
+    weight: 'major',
+    category: 'military',
+    description: 'Character served in a combat zone — carries what was done, what was seen, the friend who was gone by Thursday.',
+    intent: 'both',
+    notes: 'Set by sol_first_week. Follow-throughs: sol_the_order, sol_return_home, sol_not_sleeping, sol_late_reckoning.',
+  },
+
+  returned_veteran: {
+    weight: 'major',
+    category: 'military',
+    description: 'Character returned from deployment — back in the airport, the sign someone made, the specific wrongness of everything being too clean and too loud.',
+    intent: 'both',
+    notes: 'Set by sol_return_home. Follow-throughs: sol_not_sleeping, sol_the_question, sol_anniversary.',
+  },
+
+  moral_weight_carried: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Character followed an order or made a decision whose weight has not reduced with time — not unresolved, just present.',
+    intent: 'both',
+    notes: 'Set by sol_the_order and other high-stakes compliance events. Follow-through: sol_late_reckoning.',
+  },
+
+  veteran_silence: {
+    weight: 'moderate',
+    category: 'military',
+    description: 'Character has learned the short answer — the version of their service that fits in a conversation. The longer version travels with them.',
+    intent: 'event',
+    notes: 'Set by sol_the_question. Surfaces in year texture for characters with returned_veteran flag.',
+  },
+
+  veteran_solidarity: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Character has found someone else who served — the specific shorthand, not having to perform the short answer.',
+    intent: 'event',
+    notes: 'Set by sol_veteran_recognition.',
+  },
+
+  // ── DOCUMENT/IDENTITY FLAGS ───────────────────────────────────────────────
+
+  colonial_category: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Character\'s ethnic identity was fixed and documented by a colonial administration — the ledger entry that became more real than what was said.',
+    intent: 'both',
+    notes: 'Set by doc_colonial_census. Follow-through: doc_category_becomes_fate.',
+  },
+
+  stateless_childhood: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Character grew up without a registered birth — enrolled in school in pencil, existing in the community but not in the official record.',
+    intent: 'both',
+    notes: 'Set by doc_no_birth_certificate. Follow-throughs: doc_first_passport, doc_stateless_marriage.',
+  },
+
+  stateless_navigator: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Character has learned to read the specific quality of the pause at a border checkpoint — this pause means it might work, that pause means it won\'t.',
+    intent: 'both',
+    notes: 'Set by doc_stateless_crossing. Follow-through: doc_first_passport.',
+  },
+
+  first_passport_received: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Character received their first passport — a country saying they are theirs. They sat with it for longer than the object probably merited.',
+    intent: 'event',
+    notes: 'Set by doc_first_passport. Terminal event in the statelessness arc.',
+  },
+
+  rwandan_survivor: {
+    weight: 'major',
+    category: 'persecution',
+    description: 'Character survived the 1994 Rwandan genocide — crossed a checkpoint, watched who did not cross, has never fully stopped walking past it.',
+    intent: 'both',
+    notes: 'Set by doc_rwandan_id_1994. High-weight flag; should dominate the epitaph.',
+  },
+
+  // ── CENTRAL ASIA FLAGS ────────────────────────────────────────────────────
+
+  asharshylyk_survivor: {
+    weight: 'major',
+    category: 'disaster',
+    description: 'Kazakh character survived the Asharshylyk — the 1931-33 famine that killed one in three Kazakhs during forced collectivisation.',
+    intent: 'both',
+    notes: 'Set by cas_kazakh_famine. Specific flag for the Kazakh famine distinct from other famine_survivor uses.',
+  },
+
+  aral_sea_witness: {
+    weight: 'moderate',
+    category: 'environment',
+    description: 'Character watched the Aral Sea disappear — the ship hulls in the sand where the water was, the sea they knew only as a story from their grandfather.',
+    intent: 'event',
+    notes: 'Set by cas_aral_sea. Educational payload: cotton monoculture as environmental destruction.',
+  },
+
+  forced_harvest: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Character was mobilised for state agricultural harvest as a child or student — Uzbek cotton quota, school closed September-November.',
+    intent: 'both',
+    notes: 'Set by cas_uzbek_cotton and cas_uzbek_harvest_adult.',
+  },
+
   // ── SENEGAL FLAGS ─────────────────────────────────────────────────────────
 
   mouride_member: {
