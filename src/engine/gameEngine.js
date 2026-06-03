@@ -1479,6 +1479,13 @@ function buildYearTexture(state) {
     'You lived through the rebuilding. You thought it had worked. You were wrong about the foundation.',
     'The downtown they built in the nineties was beautiful and is now rubble again. You watched both.',
   ])
+  if (F.has('decennie_noire_memory') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.35) return pick([
+    'The decade is not one you discuss in full. There are people still in positions of authority who were on the other side of it. You know which rooms they are in.',
+    'The Black Decade. Ten years that your country has not agreed on how to call. The amnesty provisions mean everyone goes on living in the same places. You have learned where not to look.',
+    phase === 'late_life'
+      ? 'You have outlasted the decade that tried to erase people like you. The specific accounting of that — who survived, who didn\'t, what it cost — is still not finished.'
+      : 'Something in the news from elsewhere — a journalist threatened, a government claiming order — and the nineties are back in a specific way. Not nostalgic. The opposite of nostalgic.',
+  ])
   if (F.has('infrastructure_collapse_lived') && Math.random() < 0.3) return pick([
     'You wake up and check the generator without thinking. The habit is faster than the thought.',
     'You know which tasks to do when the electricity is on and which ones can wait. You resent knowing this.',
