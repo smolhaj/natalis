@@ -775,6 +775,10 @@ function buildEffectProxy(state) {
     if (!proxy._conditionManagedUpdates) proxy._conditionManagedUpdates = {}
     proxy._conditionManagedUpdates[id] = managed
   }
+  proxy.worsenCondition = (id) => {
+    if (!proxy._conditionWorsenIds) proxy._conditionWorsenIds = []
+    proxy._conditionWorsenIds.push(id)
+  }
   proxy.relocate = (placeId, neighborhoodTier) => {
     proxy._relocateTo = placeId
     if (neighborhoodTier) proxy._relocateNeighborhoodTier = neighborhoodTier
@@ -901,6 +905,15 @@ function resolveProxyExtras(state, proxy) {
     const updated = (next.conditions ?? []).map(c =>
       proxy._conditionManagedUpdates[c.id] !== undefined
         ? { ...c, managed: proxy._conditionManagedUpdates[c.id] }
+        : c
+    )
+    next = { ...next, conditions: updated }
+  }
+  if (proxy._conditionWorsenIds?.length) {
+    const SEV_UP = { mild: 'moderate', moderate: 'severe', severe: 'severe' }
+    const updated = (next.conditions ?? []).map(c =>
+      proxy._conditionWorsenIds.includes(c.id)
+        ? { ...c, severity: SEV_UP[c.severity] ?? c.severity }
         : c
     )
     next = { ...next, conditions: updated }
@@ -1927,6 +1940,201 @@ function buildYearTexture(state) {
         'Quarantine taught you what the walls of a room actually look like. You still sometimes count them.',
       ])
     }
+  }
+
+  // ─── CONDITIONS LAYER (~30% when chronic conditions present) ─────────────────
+  // Generates year-specific prose for living with a chronic condition.
+  // Picks the most severe active condition; prose varies by severity × managed.
+  const _activeConds = (state.conditions ?? []).filter(c => c.id !== 'cancer_survivable')
+  if (_activeConds.length > 0 && Math.random() < 0.30) {
+    const _SEV = { mild: 1, moderate: 2, severe: 3 }
+    const _c = [..._activeConds].sort((a, b) => (_SEV[b.severity] ?? 2) - (_SEV[a.severity] ?? 2))[0]
+    const _s = _c.severity ?? 'moderate'
+    const _m = _c.managed ? 'y' : 'n'
+    const _CP = {
+      diabetes: {
+        mild: {
+          y: ['You check your blood sugar before meals. It has become as automatic as checking the time.',
+              'The carbohydrate count is in your head now. You do it without a calculator.'],
+          n: ['The numbers are not where they should be. You know this without being told.',
+              'The thirst some mornings when you wake — you know what it means and what you are not doing about it.'],
+        },
+        moderate: {
+          y: ['The A1C came back better this time. That is the goal — every three months, that is the whole goal.',
+              'The medication is working, more or less. "More or less" is what managed looks like from the inside.'],
+          n: ['The doctor has said this before, in different words. You have heard it before, in a different register.',
+              'The feet are starting to be a concern. The specialist uses the word neuropathy and you carry it home.'],
+        },
+        severe: {
+          y: ['The insulin schedule is its own calendar. You live inside it now, and have for years.',
+              'The kidney function is being watched. A different kind of watching from what you were used to.'],
+          n: ['The complications the doctor described years ago are arriving on schedule.',
+              'The peripheral neuropathy is no longer a risk they mention — it is a thing you manage every day.'],
+        },
+      },
+      heart_disease: {
+        mild: {
+          y: ['The morning pill is the first thing. That is the protocol, and you have kept it.',
+              'You know which exertions to moderate. The body sends the signal; you have learned to read it.'],
+          n: ['The shortness of breath on stairs is something you have been attributing to other things.',
+              'The cardiologist said things about lifestyle. You are still working out what working on it means.'],
+        },
+        moderate: {
+          y: ['The stent has been in for three years. You do not feel it — you feel the absence of what came before.',
+              'Four medications on schedule. This is what managed heart disease looks like from the inside.'],
+          n: ['The tightness in your chest is the kind that makes you stop what you are doing. Not dramatic. Just stop.',
+              'The doctor is recommending intervention again. You are still deciding what you are deciding.'],
+        },
+        severe: {
+          y: ['The cardiac rehab was six months. You finished it. The condition is stable. That is not nothing.',
+              'You know what you are carrying now and what it requires of you. That clarity is a kind of health.'],
+          n: ['The last episode changed the texture of ordinary days. Everything is slightly to the side of before.',
+              'You are counting exertions now. That is not the life, but it is the condition of the life.'],
+        },
+      },
+      copd: {
+        mild: {
+          y: ['The inhaler is in your pocket. You use it before stairs. It has been two years and you don\'t think about it.',
+              'The spirometry numbers are holding. Holding is the goal for now.'],
+          n: ['The cough is part of mornings now. You do not think about it until someone asks.',
+              'Winter is harder on your lungs than summer. That is knowledge now, not something you are still figuring out.'],
+        },
+        moderate: {
+          y: ['A bad air quality day means staying in. That is not dramatic — that is the arithmetic of breathing.',
+              'The maintenance inhaler is twice daily. You have not missed a dose in months.'],
+          n: ['The breathlessness on flat ground is something you have catalogued as new this year.',
+              'The cough keeps you up some nights. This is information you have not yet acted on.'],
+        },
+        severe: {
+          y: ['The portable oxygen is small enough to carry. You are still getting used to what people\'s faces do.',
+              'You know the difference between a good breathing day and a functional breathing day.'],
+          n: ['A flight of stairs is a project now. You have stopped treating that as temporary.',
+              'The question of what you can do has a different answer every season.'],
+        },
+      },
+      back_pain: {
+        mild: {
+          y: ['You know which chairs will betray you by the second hour. You have learned to choose accordingly.',
+              'The physio exercises are twenty minutes each morning. Some mornings that is the first thing you accomplish.'],
+          n: ['The lower back announces itself after sitting too long, which is most of the work day.',
+              'You have learned to stand differently. That was not a choice — it was an adaptation.'],
+        },
+        moderate: {
+          y: ['Some mornings the first step out of bed is the hardest part of the day. It gets better after moving. You know this.',
+              'The programme takes thirty minutes. You do it most days. That is what most days looks like.'],
+          n: ['Certain positions are catalogued as unavailable. The list is longer than it was a year ago.',
+              'The pain management specialist has a waiting list. You are somewhere on it.'],
+        },
+        severe: {
+          y: ['The pain is a landscape now rather than an event. On good days you notice it less. That is the measure.',
+              'The nerve block helped — less than promised, more than nothing. That is the register you work in.'],
+          n: ['There are things you no longer attempt. This is not self-pity — it is information about the body.',
+              'Some weeks the pain is the whole context and everything else fits around it.'],
+        },
+      },
+      hiv: {
+        mild: {
+          y: ['The pill is small. You take it at the same time every morning. That is what undetectable requires.',
+              'Undetectable. You know what that word means in clinical terms and in the terms of your actual life.'],
+          n: ['The count is what the doctor watches. You have learned to understand the numbers.',
+              'The CD4 is higher than last year. You know the direction you need to go and are working toward it.'],
+        },
+        moderate: {
+          y: ['The regimen has been the same for four years. The stability is its own kind of progress.',
+              'The viral load is undetectable. That is the word you carry. You know what it cost to get here.'],
+          n: ['The count is lower than it was last year. The doctor is watching. You are also watching.',
+              'The medication is available. The decision about when to start it is getting harder to defer.'],
+        },
+        severe: {
+          y: ['You are here. The sentence required the most work. You are here.',
+              'The combination that is working now was not available when you were first diagnosed. Time did something.'],
+          n: ['The infections that come with a compromised immune system are the body\'s announcement.',
+              'This is the point the doctors described at the beginning. You are past due for treatment.'],
+        },
+      },
+      chronic_depression: {
+        mild: {
+          y: ['The medication has been the same for a year. Stability is not the same as joy. It is something.',
+              'The therapy appointment is Tuesday. That is an anchor. You have found it useful to have anchors.'],
+          n: ['A flat week. Nothing wrong exactly and nothing right exactly.',
+              'You are performing functioning. You are good at performing functioning. That is not the same thing.'],
+        },
+        moderate: {
+          y: ['The medication has been adjusted twice. The current version is better than the last. That counts.',
+              'You know the early signs now. Sleep changes first. Then appetite. Then the rest follows.'],
+          n: ['Getting out of bed was the goal this week. Whether you achieved it is the whole question.',
+              'The energy goes somewhere you cannot locate. You have enough to survive but not much beyond that.'],
+        },
+        severe: {
+          y: ['The hospitalisation was two years ago. You have been building something carefully since then.',
+              'Treatment is working in the sense that you are here, which is the baseline from which everything is measured.'],
+          n: ['The days are very long right now and very empty at the same time.',
+              'You have not told anyone how bad this is. You are not sure if that is protective or something else.'],
+        },
+      },
+      blindness: {
+        mild: {
+          y: ['The glasses do some of the work they used to. Not all of it, but some.',
+              'The injections are quarterly now. The progression has slowed. Slowed is the goal.'],
+          n: ['Reading takes longer than it used to. You have started attributing it to other things.',
+              'The central vision is where the loss is. The peripheral compensates, somewhat.'],
+        },
+        moderate: {
+          y: ['The magnifier lives by the kitchen table. You do not think about it anymore — you just use it.',
+              'The audiodescription is on by default now. That is a setting that has become a preference.'],
+          n: ['Faces at distance are uncertain now. You are working around this without fully naming it.',
+              'The macular specialist confirmed what you already knew: progressive. The word means what it says.'],
+        },
+        severe: {
+          y: ['The navigation is mostly tactile and aural now. You know your home by its sounds and resistances.',
+              'What you cannot see you reconstruct from other information. You have gotten good at reconstruction.'],
+          n: ['The aids available would help. The distance between knowing that and acting on it has been a year.',
+              'The independence you relied on is requiring more negotiation than it used to.'],
+        },
+      },
+      deafness: {
+        mild: {
+          y: ['The hearing aids take two weeks to stop noticing. You stopped noticing them months ago.',
+              'What you were missing before the aids you didn\'t know you were missing. Now you know.'],
+          n: ['You ask people to repeat themselves more than before. You have become expert at seeming not to need to.',
+              'You know the television volume is too loud. So do the neighbours.'],
+        },
+        moderate: {
+          y: ['Group conversations still require effort. One-on-one, the aids do what they are supposed to.',
+              'The batteries are a weekly ritual. You keep spares in three places.'],
+          n: ['Meetings at work have become something you navigate by context rather than content.',
+              'The hearing has been declining for three years. The denial has been declining more slowly.'],
+        },
+        severe: {
+          y: ['You communicate differently than you used to. Differently is not the same as less.',
+              'The community around what you share with other people in this situation was not what you expected. It exists.'],
+          n: ['You have withdrawn from things that require what you no longer have. The withdrawal is quiet and gradual.',
+              'The isolation is made of small social costs that accumulate without announcement.'],
+        },
+      },
+      disability_injury: {
+        mild: {
+          y: ['The adaptation — the brace, the workaround, the modified approach — is yours now in the way tools become yours.',
+              'The physiotherapy continues. Progress is measured differently than it was in the first year.'],
+          n: ['What the body can do and what you ask of it are in ongoing negotiation.',
+              'You have found workarounds. Some of them are better than the original.'],
+        },
+        moderate: {
+          y: ['The rehabilitation was a year of learning a body you didn\'t choose. You know it now.',
+              'There are good days and days that remind you what the injury cost. The ratio has improved.'],
+          n: ['The gap between what you expected to recover and what you have recovered has narrowed — mostly.',
+              'The accommodation you didn\'t ask for at work is the accommodation you need. That is its own adjustment.'],
+        },
+        severe: {
+          y: ['The life has reorganised around what you have rather than what you lost. That reorganisation took years.',
+              'You know your body\'s architecture very specifically now — intimate knowledge, earned at a cost.'],
+          n: ['The secondary conditions that come with the injury are what the doctor is watching this year.',
+              'Some things remain closed. You have stopped waiting for them to open.'],
+        },
+      },
+    }
+    const _pool = _CP[_c.id]?.[_s]?.[_m]
+    if (_pool?.length) return pick(_pool)
   }
 
   // ─── PROJECT LAYER (~35% when project active) ────────────────────────────────
