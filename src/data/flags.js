@@ -1438,4 +1438,38 @@ export const FLAG_REGISTRY = {
     notes: 'Set by mor_amazigh_recognition (both paths).',
   },
 
+  // ── ROHINGYA FLAGS ────────────────────────────────────────────────────────
+
+  rohingya_stateless: {
+    weight: 'major',
+    category: 'legal',
+    description: 'Rohingya character is stateless under Myanmar\'s 1982 Citizenship Law — listed as temporary resident in the country where their family has lived for generations.',
+    intent: 'both',
+    notes: 'Set by roh_stateless_document. Gates roh_restricted_movement. Ribbon: the_temporary_resident.',
+  },
+
+  rohingya_displacement: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Rohingya character was displaced in the August 2017 military clearance operations — villages burned, walking to the river, crossing to Bangladesh.',
+    intent: 'both',
+    notes: 'Set by roh_village_burning. Follow-through: roh_crossing → roh_coxs_bazar. Ribbon: the_clearance_operation.',
+  },
+
+  rohingya_coxs_bazar: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Rohingya character lives in Cox\'s Bazar — the world\'s largest refugee camp, 1 million people, no legal status in Bangladesh.',
+    intent: 'both',
+    notes: 'Set by roh_crossing. Follow-throughs: roh_coxs_bazar_years, roh_resettlement_interview.',
+  },
+
+  rohingya_resettled: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Rohingya character was resettled in a third country — the first passport, citizenship, children who have never been stateless.',
+    intent: 'both',
+    notes: 'Set by roh_resettlement_arrives. Follow-through: roh_diaspora_late. Ribbon: the_first_passport.',
+  },
+
 }

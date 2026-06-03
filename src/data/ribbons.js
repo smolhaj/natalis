@@ -1493,4 +1493,30 @@ export const RIBBONS = [
     priority: 62,
     color: 'blue',
   },
+
+  // ── ROHINGYA ──────────────────────────────────────────────────────────────
+  {
+    id: 'the_temporary_resident',
+    name: 'Temporary Resident',
+    description: 'Your family has been here for generations. The document called you temporary.',
+    condition: (G) => G.flags.includes('rohingya_stateless'),
+    priority: 82,
+    color: 'gray',
+  },
+  {
+    id: 'the_clearance_operation',
+    name: 'The Clearance',
+    description: 'You heard the helicopters before dawn. You walked for four days to the river.',
+    condition: (G) => G.flags.includes('rohingya_displacement'),
+    priority: 90,
+    color: 'red',
+  },
+  {
+    id: 'the_first_passport',
+    name: 'The First Passport',
+    description: 'A document with your name spelled correctly. Your children were born into citizenship. This is not a small thing.',
+    condition: (G) => G.flags.includes('rohingya_resettled'),
+    priority: 75,
+    color: 'green',
+  },
 ]
