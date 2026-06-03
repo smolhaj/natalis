@@ -1031,4 +1031,55 @@ export const FLAG_REGISTRY = {
     notes: 'Set by ofw_contract_violation (find new employer secretly branch). Illegal under Gulf kafala; legal but risky in HK/EU. Follow-through not yet written.',
   },
 
+
+  // ── BUILD 43 — ALGERIAN DÉCENNIE NOIRE ──────────────────────────────────
+
+  decennie_noire_generation: {
+    weight: 'major',
+    category: 'world_event',
+    description: 'Character lived through the Algerian Black Decade (1992–2002) — the cancelled election, the armed insurgency, the massacres whose attribution was never settled.',
+    intent: 'both',
+    notes: 'Set by world event algeria_black_decade_begins. Follow-throughs: alg_decade_silence, alg_telling_children, alg_late_reckoning.',
+  },
+
+  intellectual_target: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Character was threatened or targeted because of their intellectual or creative work during the Black Decade.',
+    intent: 'event',
+    notes: 'Set by alg_journalist_target. Follow-through via existing arts and censored_work flags.',
+  },
+
+  algeria_exile: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Character fled Algeria during the Black Decade and lived in exile, most commonly in France.',
+    intent: 'both',
+    notes: 'Set by alg_journalist_target (leave path) and alg_the_list (leave path). Follow-through: alg_exile_return.',
+  },
+
+  algeria_returned: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Character who fled Algeria during the Black Decade chose to return after violence subsided.',
+    intent: 'event',
+    notes: 'Set by alg_exile_return (return choice). Ribbon: the_exile_return.',
+  },
+
+  knew_the_truth: {
+    weight: 'major',
+    category: 'political',
+    description: 'Character knows — or believes — that state forces were involved in the Bentalha or Rais massacres and the official attribution is incomplete.',
+    intent: 'both',
+    notes: 'Set by alg_massacre_news (say what you think). Ribbon: the_knew_the_truth. The ambiguity is deliberate.',
+  },
+
+  decennie_noire_memory: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Character has arrived at a late-life reckoning with the Black Decade — the impunity, the amnesty, the unexamined past.',
+    intent: 'year_texture',
+    notes: 'Set by alg_late_reckoning (auto-resolve, late_life).',
+  },
+
 }

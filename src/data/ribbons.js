@@ -712,14 +712,6 @@ export const RIBBONS = [
     color: 'gray',
   },
   {
-    id: 'the_ofw',
-    name: 'The Overseas Worker',
-    description: 'You sent money home for years from a country that needed your labour but not you. The house was built. The distance remained.',
-    condition: (G) => G.flags.includes('ofw_gulf_worker'),
-    priority: 72,
-    color: 'blue',
-  },
-  {
     id: 'the_aids_witness',
     name: 'The Lost Generation',
     description: 'You watched your friends die one by one from something that had no name, then a name, then a treatment that arrived too late for some of them.',
@@ -1216,6 +1208,32 @@ export const RIBBONS = [
     condition: (G) => G.flags.includes('ofw_passport_held'),
     priority: 78,
     color: 'red',
+  },
+
+  // ── BUILD 43 — ALGERIAN DÉCENNIE NOIRE ──────────────────────────────────
+  {
+    id: 'the_black_decade',
+    name: 'The Black Decade',
+    description: 'You lived through the Algerian civil war — a decade defined by ambiguity about who was killing whom, and why, and for whom.',
+    condition: (G) => G.flags.includes('decennie_noire_generation'),
+    priority: 72,
+    color: 'gray',
+  },
+  {
+    id: 'the_exile_return',
+    name: 'The Return',
+    description: 'You left Algeria during the Black Decade and came back. The country you returned to was not the country you left.',
+    condition: (G) => G.flags.includes('algeria_returned'),
+    priority: 65,
+    color: 'blue',
+  },
+  {
+    id: 'the_knew_the_truth',
+    name: 'The Unspoken Knowledge',
+    description: 'You knew what you were not supposed to say about who ordered the massacres. You carried it.',
+    condition: (G) => G.flags.includes('knew_the_truth'),
+    priority: 70,
+    color: 'purple',
   },
 
   // ── BURST Q — GANG ARC ────────────────────────────────────────────────────
