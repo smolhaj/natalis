@@ -965,4 +965,121 @@ export const FLAG_REGISTRY = {
     notes: 'Set by events_central_asia.js (ca_kaz_oil_boom) take-the-position branch. Kazakhstan 1995–2010.',
   },
 
+  // ── OFW ARC (events_ofw.js) ───────────────────────────────────────────────
+
+  ofw_worker: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Character has left the Philippines as an Overseas Filipino Worker.',
+    intent: 'both',
+    notes: 'Set by ofw_poea_signing. Gates complication events (contract violation, Sunday calls, balikbayan box, remittance ritual). Downstream: ofw_late_reckoning in late_life, ofw_cycle_repeating when children reach working age.',
+  },
+
+  ofw_gulf: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'OFW character is working in a Gulf country (Saudi Arabia, UAE, Kuwait, Qatar).',
+    intent: 'event',
+    notes: 'Gates ofw_arrival_gulf texture event. Intersects with cc_domestic_ofw_gulf in events_crosscutting.js which provides inside-the-house texture. mem.ofwDestination === "gulf" used for dynamic text in multi-destination events.',
+  },
+
+  ofw_hongkong: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'OFW character is working in Hong Kong or Singapore.',
+    intent: 'event',
+    notes: 'Gates ofw_arrival_hongkong event (Victoria Park Sunday texture). HK OFWs have legally-mandated rest days — events reflect the difference from Gulf kafala conditions.',
+  },
+
+  ofw_italy: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'OFW character is working in Italy or another EU country.',
+    intent: 'event',
+    notes: 'Gates ofw_arrival_italy event (care work texture, Filipino community center).',
+  },
+
+  ofw_returned: {
+    weight: 'major',
+    category: 'migration',
+    description: 'OFW character has returned to the Philippines permanently.',
+    intent: 'both',
+    notes: 'Gates ofw_late_reckoning (65+), ofw_cost_accounting (young_adult), ofw_cycle_repeating (midlife, when own child considers leaving). Also gates ribbon the_ofw_returned.',
+  },
+
+  ofw_broker_debt: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Character took out a loan to pay the agency/broker fee before departing as OFW.',
+    intent: 'event',
+    notes: 'Set by ofw_broker_fee loan choice. Represents the structural trap: in debt before earning anything. Follow-through via ofw_cost_accounting.',
+  },
+
+  ofw_passport_held: {
+    weight: 'moderate',
+    category: 'rights',
+    description: 'OFW worker\'s passport confiscated by Gulf employer (kafala system — "held for safekeeping").',
+    intent: 'event',
+    notes: 'Set by ofw_arrival_gulf. Gates ribbon the_kafala_survivor. The condition is the point — no single resolution event exists.',
+  },
+
+  ofw_runaway: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'OFW worker fled an employer to find a new placement without formal transfer.',
+    intent: 'event',
+    notes: 'Set by ofw_contract_violation (find new employer secretly branch). Illegal under Gulf kafala; legal but risky in HK/EU. Follow-through not yet written.',
+  },
+
+
+  // ── BUILD 43 — ALGERIAN DÉCENNIE NOIRE ──────────────────────────────────
+
+  decennie_noire_generation: {
+    weight: 'major',
+    category: 'world_event',
+    description: 'Character lived through the Algerian Black Decade (1992–2002) — the cancelled election, the armed insurgency, the massacres whose attribution was never settled.',
+    intent: 'both',
+    notes: 'Set by world event algeria_black_decade_begins. Follow-throughs: alg_decade_silence, alg_telling_children, alg_late_reckoning.',
+  },
+
+  intellectual_target: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Character was threatened or targeted because of their intellectual or creative work during the Black Decade.',
+    intent: 'event',
+    notes: 'Set by alg_journalist_target. Follow-through via existing arts and censored_work flags.',
+  },
+
+  algeria_exile: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Character fled Algeria during the Black Decade and lived in exile, most commonly in France.',
+    intent: 'both',
+    notes: 'Set by alg_journalist_target (leave path) and alg_the_list (leave path). Follow-through: alg_exile_return.',
+  },
+
+  algeria_returned: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Character who fled Algeria during the Black Decade chose to return after violence subsided.',
+    intent: 'event',
+    notes: 'Set by alg_exile_return (return choice). Ribbon: the_exile_return.',
+  },
+
+  knew_the_truth: {
+    weight: 'major',
+    category: 'political',
+    description: 'Character knows — or believes — that state forces were involved in the Bentalha or Rais massacres and the official attribution is incomplete.',
+    intent: 'both',
+    notes: 'Set by alg_massacre_news (say what you think). Ribbon: the_knew_the_truth. The ambiguity is deliberate.',
+  },
+
+  decennie_noire_memory: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Character has arrived at a late-life reckoning with the Black Decade — the impunity, the amnesty, the unexamined past.',
+    intent: 'year_texture',
+    notes: 'Set by alg_late_reckoning (auto-resolve, late_life).',
+  },
+
 }
