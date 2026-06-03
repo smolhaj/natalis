@@ -1547,4 +1547,68 @@ export const RIBBONS = [
     priority: 70,
     color: 'purple',
   },
+
+  // ── SENEGAL ───────────────────────────────────────────────────────────────
+  {
+    id: 'the_mouride',
+    name: 'Mouride',
+    description: 'Three million people converging on Touba. The state simply does not apply here. You understood this the first time you arrived.',
+    condition: (G) => G.flags.includes('mouride_member'),
+    priority: 55,
+    color: 'gold',
+  },
+  {
+    id: 'the_dahira',
+    name: 'The Dahira',
+    description: 'Every two weeks in an apartment — a savings circle, a prayer group, a connection to Touba. The state doesn\'t know it exists. It doesn\'t need to.',
+    condition: (G) => G.flags.includes('diaspora_community_built'),
+    priority: 60,
+    color: 'green',
+  },
+
+  // ── ADOPTEE ───────────────────────────────────────────────────────────────
+  {
+    id: 'the_origin_story',
+    name: 'The Origin Story',
+    description: 'The story they told you was made for the child. The fact is more complicated. You are old enough now to sense the edges of it.',
+    condition: (G) => G.flags.includes('adopted'),
+    priority: 60,
+    color: 'blue',
+  },
+  {
+    id: 'the_dna_match',
+    name: 'The Match',
+    description: 'The first call was forty minutes. You did not know what to call each other at the end of it.',
+    condition: (G) => G.flags.includes('found_birth_family'),
+    priority: 65,
+    color: 'green',
+  },
+
+  // ── UYGHUR ────────────────────────────────────────────────────────────────
+  {
+    id: 'the_veatc',
+    name: 'The Invitation',
+    description: 'It was called a Vocational Education and Training Center. You have been trained not to describe what happened there.',
+    condition: (G) => G.flags.includes('uyghur_detained'),
+    priority: 88,
+    color: 'gray',
+  },
+  {
+    id: 'the_testimony_diaspora',
+    name: 'The Testimony',
+    description: 'Your name is in a report read by diplomats who did not act on it. Your family did not contact you again.',
+    condition: (G) => G.flags.includes('political_active') && G.flags.includes('uyghur_diaspora'),
+    priority: 80,
+    color: 'red',
+  },
+
+  // ── PUERTO RICO ───────────────────────────────────────────────────────────
+  {
+    id: 'the_maria_survivor',
+    name: 'Después del Huracán',
+    description: 'Sixteen days without power became weeks. The government said sixty-four. Everyone knew it was more.',
+    condition: (G) => G.flags.includes('maria_survivor'),
+    priority: 72,
+    color: 'gray',
+  },
 ]

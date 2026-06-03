@@ -1524,4 +1524,100 @@ export const FLAG_REGISTRY = {
     notes: 'Set by mul_interpreter_impossible_word.',
   },
 
+  // ── SENEGAL FLAGS ─────────────────────────────────────────────────────────
+
+  mouride_member: {
+    weight: 'moderate',
+    category: 'religion',
+    description: 'Character is part of the Mouride Sufi brotherhood — its economy, its spiritual authority, its city of Touba, its transnational dahira network that predates and outlasts the nation-state.',
+    intent: 'both',
+    notes: 'Set by sen_magal_touba. Follow-throughs: sen_marabout_authority, sen_diaspora_dahira.',
+  },
+
+  diaspora_community_built: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Character built or joined a diaspora community structure — a savings circle, a prayer group, a mutual aid network that recreates belonging in a new geography.',
+    intent: 'event',
+    notes: 'Set by sen_diaspora_dahira. Cross-cultural flag also set by other diaspora community events.',
+  },
+
+  francophone_educated: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'Character educated in the French colonial tradition — carrying tools that open doors in Paris and Dakar, with specific ambivalence about who those tools were made for.',
+    intent: 'both',
+    notes: 'Set by sen_gorée_school. Specific to Francophone Africa; relates to Négritude and the colonial education project.',
+  },
+
+  // ── ADOPTEE FLAGS ─────────────────────────────────────────────────────────
+
+  adopted: {
+    weight: 'major',
+    category: 'family',
+    description: 'Character was adopted — domestic or international, transracial or same-race. The origin story was made for a child; the fact is more complicated and they are old enough to sense the edges of it.',
+    intent: 'both',
+    notes: 'Set by adp_always_knew in childhood. Gates all subsequent adoptee arc events. Core identity flag.',
+  },
+
+  found_birth_family: {
+    weight: 'major',
+    category: 'family',
+    description: 'Character made contact with birth family — a half-sibling found via DNA, a first cousin twice removed. The first call was forty minutes and they did not know what to call each other at the end of it.',
+    intent: 'both',
+    notes: 'Set by adp_search. Significant milestone; follow-through in future relationship events.',
+  },
+
+  origin_country_visited: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Character visited the country they were born in as an adoptee — landscape matching something they could not have remembered, sharing faces with people who are supposed to be an origin.',
+    intent: 'event',
+    notes: 'Set by adp_origin_trip. Midlife event; the specific feeling has no single word in either language.',
+  },
+
+  // ── UYGHUR FLAGS ──────────────────────────────────────────────────────────
+
+  uyghur_suppressed: {
+    weight: 'major',
+    category: 'persecution',
+    description: 'Uyghur character lives under systematic cultural suppression — Ramadan restrictions enforced at work, language policy, the memo arriving via the work unit, saying yes to lunch while fasting at home.',
+    intent: 'both',
+    notes: 'Set by uyg_ramadan_restricted. Follow-throughs: uyg_camp_era, uyg_diaspora_silence.',
+  },
+
+  uyghur_detained: {
+    weight: 'major',
+    category: 'persecution',
+    description: 'Uyghur character was detained in a Vocational Education and Training Center — the months inside, the things that were not described afterward, the training in not describing them.',
+    intent: 'both',
+    notes: 'Set by uyg_camp_era (comply branch). One of the most significant ongoing human rights situations in current events.',
+  },
+
+  uyghur_diaspora: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Uyghur character fled to Kazakhstan, Turkey, or a third country before the invitation became a summons — phone number changed, told no one who might be asked.',
+    intent: 'both',
+    notes: 'Set by uyg_camp_era (fled branch). Follow-through: uyg_diaspora_silence — the testimony decision when family is still inside.',
+  },
+
+  // ── PUERTO RICO FLAGS ─────────────────────────────────────────────────────
+
+  maria_survivor: {
+    weight: 'major',
+    category: 'disaster',
+    description: 'Character survived Hurricane Maria in 2017 — the sixteen days without power becoming weeks, the government reporting 64 deaths while 2,975 people died.',
+    intent: 'both',
+    notes: 'Set by pr_maria_2017. The gap between the official count and the actual count is educational payload. Follow-through in diaspora events.',
+  },
+
+  colonial_subject: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Character from Puerto Rico: US citizen, not eligible to vote for US president, represented by a non-voting delegate. The other word is not used in official documents.',
+    intent: 'both',
+    notes: 'Set by pr_colonial_status. The specific constitutional paradox of Puerto Rico\'s status makes this a useful educational event.',
+  },
+
 }
