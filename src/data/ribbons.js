@@ -1519,4 +1519,32 @@ export const RIBBONS = [
     priority: 75,
     color: 'green',
   },
+
+  // ── TANZANIA ──────────────────────────────────────────────────────────────
+  {
+    id: 'the_ujamaa_generation',
+    name: 'Ujamaa',
+    description: 'The school was real. So was the failed harvest. You hold both at once — which is what this generation learned to do.',
+    condition: (G) => G.flags.includes('ujamaa_generation'),
+    priority: 62,
+    color: 'green',
+  },
+
+  // ── MULTILINGUALISM ───────────────────────────────────────────────────────
+  {
+    id: 'the_between_languages',
+    name: 'The Third Language',
+    description: 'You argue in one, dream in another, and speak a third that exists only in the gap between them.',
+    condition: (G) => G.flags.includes('multilingual_identity'),
+    priority: 55,
+    color: 'gold',
+  },
+  {
+    id: 'the_last_speakers',
+    name: 'The Last Speakers',
+    description: 'Fewer than fifty. A linguist came with a recorder and asked you to say the words for different qualities of rain.',
+    condition: (G) => G.flags.includes('minority_language_speaker') && G.age >= 65,
+    priority: 70,
+    color: 'purple',
+  },
 ]

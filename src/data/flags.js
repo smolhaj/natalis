@@ -1472,4 +1472,56 @@ export const FLAG_REGISTRY = {
     notes: 'Set by roh_resettlement_arrives. Follow-through: roh_diaspora_late. Ribbon: the_first_passport.',
   },
 
+  // ── TANZANIA FLAGS ────────────────────────────────────────────────────────
+
+  ujamaa_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Tanzanian character lived through Nyerere\'s ujamaa era — believed in or sceptical of the Arusha Declaration, was moved in Operation Vijiji, carries the complexity of a failed vision that built real schools.',
+    intent: 'both',
+    notes: 'Set by tan_arusha_declaration. Follow-throughs: tan_villagisation, tan_ujamaa_late_reckoning, tan_nyerere_death.',
+  },
+
+  swahili_educated: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'Tanzanian character educated in Swahili — giving national cohesion and a ceiling against international opportunity simultaneously.',
+    intent: 'event',
+    notes: 'Set by tan_swahili_education. A specific trade-off that distinguishes Tanzania from all other African education systems.',
+  },
+
+  multiparty_generation: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Character witnessed their country\'s first multiparty elections — the specific experience of an opposition name on a ballot for the first time.',
+    intent: 'event',
+    notes: 'Set by tan_multiparty and other transitions to democracy events.',
+  },
+
+  // ── MULTILINGUALISM FLAGS ─────────────────────────────────────────────────
+
+  multilingual_identity: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Character lives between languages — arguing in one, dreaming in another, inhabiting a third that exists only in the gaps between them.',
+    intent: 'both',
+    notes: 'Set by mul_code_switch. Follow-throughs: mul_parent_language_grief, mul_grandparent_tongue.',
+  },
+
+  minority_language_speaker: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Character speaks a minority or endangered language — one that is not in the official register, may be suppressed, and whose speakers are decreasing.',
+    intent: 'both',
+    notes: 'Set by language suppression events and cultural identity events. Follow-through: mul_language_death.',
+  },
+
+  seen_the_gap: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Character has experienced the gap between what was said and what was translated — the word that had no equivalent, the meaning that went on the record as something else.',
+    intent: 'event',
+    notes: 'Set by mul_interpreter_impossible_word.',
+  },
+
 }
