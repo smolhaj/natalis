@@ -1345,4 +1345,74 @@ export const RIBBONS = [
     priority: 35,
     color: 'blue',
   },
+
+  // ── INDONESIA 1998 ────────────────────────────────────────────────────────
+  {
+    id: 'the_reformasi_generation',
+    name: 'Reformasi',
+    description: 'You watched thirty-two years end on a television screen. The word for what came next took years to define.',
+    condition: (G) => G.flags.includes('reformasi_generation'),
+    priority: 62,
+    color: 'green',
+  },
+  {
+    id: 'the_returned_culture',
+    name: 'The Lifted Ban',
+    description: 'The lion dance performed in the street. You stood at the back of the crowd and did not know what to call what you felt.',
+    condition: (G) => G.flags.includes('chinese_culture_returned'),
+    priority: 65,
+    color: 'gold',
+  },
+  {
+    id: 'the_jakarta_survivor',
+    name: 'May 1998',
+    description: 'You were in Jakarta when the city burned. You counted people you could not reach.',
+    condition: (G) => G.flags.includes('jakarta_98_survived'),
+    priority: 78,
+    color: 'red',
+  },
+
+  // ── KURDISH IDENTITY ──────────────────────────────────────────────────────
+  {
+    id: 'the_stateless_nation',
+    name: 'The Largest Stateless Nation',
+    description: 'Forty million people. No country. You know what it is to carry a language the map does not recognise.',
+    condition: (G) => G.flags.includes('kurd_identity_suppressed') || G.flags.includes('kurd_stateless'),
+    priority: 80,
+    color: 'red',
+  },
+  {
+    id: 'the_anfal_generation',
+    name: 'After Halabja',
+    description: 'The news arrived through the community before any newspaper. You know what the word genocide means from the inside.',
+    condition: (G) => G.flags.includes('anfal_generation'),
+    priority: 82,
+    color: 'purple',
+  },
+  {
+    id: 'the_rojava_generation',
+    name: 'Rojava',
+    description: 'For the first time in your memory, there was a piece of the world administered in your language. You were not sure it would last.',
+    condition: (G) => G.flags.includes('rojava_generation'),
+    priority: 74,
+    color: 'green',
+  },
+
+  // ── DEBT ARC ──────────────────────────────────────────────────────────────
+  {
+    id: 'the_debt_recovered',
+    name: 'The Weight Was Gone',
+    description: 'You paid the balance in full every month. You knew what the minimum payment feeling was like. Your children would not.',
+    condition: (G) => G.flags.includes('debt_recovered'),
+    priority: 55,
+    color: 'green',
+  },
+  {
+    id: 'the_structural_adjustment',
+    name: 'Structural Adjustment',
+    description: 'The IMF called it a programme. The clinic called it closed. You called it Tuesday.',
+    condition: (G) => G.flags.includes('structural_adjustment_era'),
+    priority: 68,
+    color: 'gray',
+  },
 ]

@@ -1082,4 +1082,234 @@ export const FLAG_REGISTRY = {
     notes: 'Set by alg_late_reckoning (auto-resolve, late_life).',
   },
 
+  // ── INDONESIA 1998 FLAGS ──────────────────────────────────────────────────
+
+  asian_crisis_personal: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Character lived through the 1997–98 Asian financial crisis as a personal economic rupture — rupiah collapse, supply shortages.',
+    intent: 'event',
+    notes: 'Set by id98_crisis_texture (Indonesia, 1997–98).',
+  },
+
+  id98_targeted_by_name: {
+    weight: 'major',
+    category: 'discrimination',
+    description: 'Chinese-Indonesian character was specifically targeted by anti-Chinese graffiti or violence in the May 1998 riots.',
+    intent: 'both',
+    notes: 'Set by id98_graffiti. Gates id98_riot_night.',
+  },
+
+  reformasi_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Character witnessed or participated in Indonesia\'s democratic transition after Suharto\'s resignation (May 1998).',
+    intent: 'event',
+    notes: 'Set by id98_suharto_falls. Ribbon: the_reformasi_generation.',
+  },
+
+  chinese_culture_returned: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Character reclaimed or supported the revival of Chinese cultural expression in Indonesia after the 2000 ban was lifted.',
+    intent: 'event',
+    notes: 'Set by id98_ban_lifted and id98_decade_identity. Ribbon: the_returned_culture.',
+  },
+
+  id98_rebuilt: {
+    weight: 'moderate',
+    category: 'resilience',
+    description: 'Character or family rebuilt their business/life in Indonesia after the 1998 riots rather than emigrating.',
+    intent: 'event',
+    notes: 'Set by id98_aftermath_rebuild (rebuilt or stayed_changed paths).',
+  },
+
+  id98_emigrated: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Chinese-Indonesian character emigrated after the 1998 riots — to Singapore, Australia, or the United States.',
+    intent: 'both',
+    notes: 'Set by id98_aftermath_rebuild (emigrated path). Also sets emigrated flag.',
+  },
+
+  id98_witness_bystander: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Non-Chinese Indonesian character witnessed the targeting of ethnic Chinese during the May 1998 riots and faced a choice about intervention.',
+    intent: 'both',
+    notes: 'Set by id98_bystander. The choice (help/watch) shapes karma and carries into later reflection.',
+  },
+
+  id98_reckoned: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Character has reached a late-life reckoning with the fact that no one was ever prosecuted for the May 1998 riots.',
+    intent: 'year_texture',
+    notes: 'Set by id98_late_reckoning (late_life, auto-resolve).',
+  },
+
+  // ── KURDISH IDENTITY FLAGS ────────────────────────────────────────────────
+
+  kurd_identity_suppressed: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Kurdish character\'s language and cultural identity were officially suppressed — through school systems, naming laws, or citizenship denial.',
+    intent: 'both',
+    notes: 'Set by kurd_tr_language_school (Turkey, pre-1991) and kurd_sy_stateless (Syria, pre-2011). Follow-through: kurd_late_reckoning.',
+  },
+
+  kurd_village_evacuated: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Kurdish character\'s village in southeast Turkey was forcibly evacuated and burned by the military during the 1990s security operations.',
+    intent: 'both',
+    notes: 'Set by kurd_tr_village_evacuation. Follow-through: kurd_village_midlife_echo. Ribbon: the_stateless_nation.',
+  },
+
+  kurd_europe_diaspora: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Kurdish character lives in European diaspora — typically Germany, Sweden, or the Netherlands — carrying unresolved questions of belonging.',
+    intent: 'both',
+    notes: 'Set when village evacuation leads abroad. Follow-through: kurd_diaspora_question.',
+  },
+
+  kurd_language_moment: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Kurdish character experienced the specific moment of hearing their language publicly for the first time after decades of suppression.',
+    intent: 'event',
+    notes: 'Set by kurd_tr_language_lifted (pulling over to listen to the radio).',
+  },
+
+  kurd_reform_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Kurdish character in Turkey lived through the EU-accession reform era — Kurdish TV, optional courses — and carries ambivalence about its incompleteness.',
+    intent: 'year_texture',
+    notes: 'Set by kurd_tr_eu_reforms (2002–2010).',
+  },
+
+  anfal_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Kurdish character or family was touched by the Anfal campaign (1988) — the Iraqi government\'s genocide of Kurdish civilians, including chemical weapons at Halabja.',
+    intent: 'both',
+    notes: 'Set by the anfal_campaign_1988 world event. Gates kurd_anfal_diaspora_news. Ribbon: the_anfal_generation.',
+  },
+
+  kurd_stateless: {
+    weight: 'major',
+    category: 'legal',
+    description: 'Syrian Kurdish character was officially stateless under the post-1962 citizenship law — listed as ajanib (foreigner) despite generations of Syrian residence.',
+    intent: 'both',
+    notes: 'Set by kurd_sy_stateless. Cleared conditionally by kurd_citizenship_restored. Ribbon: the_stateless_nation.',
+  },
+
+  rojava_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Syrian Kurdish character witnessed or participated in the Rojava self-administration experiment (2012+) — the first Kurdish-administered territory in modern history.',
+    intent: 'both',
+    notes: 'Set by kurd_sy_rojava. Ribbon: the_rojava_generation.',
+  },
+
+  kurd_militant_adjacent: {
+    weight: 'major',
+    category: 'political',
+    description: 'Kurdish character in Turkey provided active support to the PKK — carrying messages, housing members, attending meetings — during the 1984–2000 conflict.',
+    intent: 'both',
+    notes: 'Set by kurd_tr_pkk_question (active choice). Carries ongoing risk in authoritarian Turkey.',
+  },
+
+  kurd_citizenship_restored: {
+    weight: 'moderate',
+    category: 'legal',
+    description: 'Syrian Kurdish character received Syrian citizenship under the April 2011 presidential decree — after 49 years of statelessness.',
+    intent: 'event',
+    notes: 'Set by kurd_sy_citizenship_restored. The timing (uprising\'s first weeks) is part of its meaning.',
+  },
+
+  kurd_returned_home: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Kurdish diaspora character returned to Turkey/Kurdistan, finding the country of a relative rather than their own.',
+    intent: 'event',
+    notes: 'Set by kurd_diaspora_question (go back path). Carries dissonance — Germany made you German.',
+  },
+
+  // ── FORMAL DEBT ARC FLAGS ─────────────────────────────────────────────────
+
+  debt_spiral: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Character is in an active debt spiral — carrying compounding interest, minimum payments that extend rather than reduce the principal.',
+    intent: 'event',
+    notes: 'Set by debt_first_card (carries_balance) and debt_microfinance_spiral. Clears on bankruptcy or recovery. Gates debt_collector_call.',
+  },
+
+  debt_spiral_experienced: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Character has experienced a debt spiral — the specific knowledge of what it means to owe money that grows while you pay it.',
+    intent: 'both',
+    notes: 'Set alongside debt_spiral and persists after recovery. Follow-throughs: debt_decade_clean, debt_teaching_children, debt_student_loan_decade, debt_late_life_free.',
+  },
+
+  debt_bankrupt: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Character filed for bankruptcy — either Chapter 7 (discharged, seven-year credit damage) or Chapter 13 (restructured payments).',
+    intent: 'both',
+    notes: 'Set by debt_bankruptcy. Year-textured for seven years post-filing.',
+  },
+
+  debt_restructured: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Character negotiated or was placed in a formal debt restructuring — bank hardship plan, Chapter 13, or similar.',
+    intent: 'event',
+    notes: 'Set by debt_spiral_deepens (called_bank) and debt_bankruptcy (chapter13).',
+  },
+
+  debt_recovered: {
+    weight: 'moderate',
+    category: 'resilience',
+    description: 'Character has recovered from a debt crisis — credit rebuilt, obligations discharged, the specific absence of a weight carried for years.',
+    intent: 'both',
+    notes: 'Set by debt_decade_clean and debt_late_life_free. Ribbon: the_debt_recovered.',
+  },
+
+  microfinance_borrower: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Character participates in a microfinance group-lending circle — jointly liable, weekly meetings, social collateral.',
+    intent: 'event',
+    notes: 'Set by debt_microfinance_entry (joined). Gates debt_microfinance_pressure and debt_microfinance_spiral.',
+  },
+
+  microfinance_declined: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Character declined to join a microfinance lending circle, having seen group liability go wrong.',
+    intent: 'none',
+    notes: 'Set by debt_microfinance_entry (declined). Prevents future microfinance events.',
+  },
+
+  structural_adjustment_era: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Character lived through an IMF Structural Adjustment Programme — public sector hiring freezes, food subsidy removal, clinic closures experienced personally.',
+    intent: 'both',
+    notes: 'Set by debt_imf_arrives. Follow-through: debt_sap_clinic_closed. Ribbon: the_structural_adjustment.',
+  },
+
+  medical_debt: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Character carries or carried medical debt from a US hospital bill — the specific American experience of healthcare as financial risk.',
+    intent: 'event',
+    notes: 'Set by debt_medical_bill (all three paths). The negotiation path is an educational payload.',
+  },
+
 }
