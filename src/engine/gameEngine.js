@@ -2307,6 +2307,25 @@ function buildYearTexture(state) {
     'The 90s confidence looks different from here. You believed it, though. That part was real.',
   ])
 
+  // ─── KARMA TEXTURE (~18% when karma is high or low) ──────────────────────────
+  {
+    const karma = state.karma ?? 50
+    if (karma >= 78 && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.18) return pick([
+      'You have been kind more often than was strictly required. The ledger exists whether you keep it or not.',
+      'The small acts — the ones you don\'t account — have added up to something. You sense this without knowing the total.',
+      phase === 'late_life'
+        ? 'You have treated people well, mostly. "Mostly" is doing real work in that sentence and it is still mostly.'
+        : 'The reflex to help is now faster than the reflex to calculate whether to help. That is a change you made over years.',
+    ])
+    if (karma <= 32 && phase !== 'early_childhood' && Math.random() < 0.18) return pick([
+      'There are things you have done that you have not accounted for. The unaccounted accumulates.',
+      'You have taken more than you have given in some registers. You are aware of this without always addressing it.',
+      phase === 'late_life'
+        ? 'The late accounting: what you owe, to whom, what is still repairable and what isn\'t. You sit with this now.'
+        : 'The cost you have imposed on others is not invisible to you, even when you act as if it is.',
+    ])
+  }
+
   // ─── ERA AND IDENTITY TEXTURE ─────────────────────────────────────────────────
 
   if (F.has('cold_war_generation') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) return pick([
