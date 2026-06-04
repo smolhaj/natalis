@@ -1351,6 +1351,38 @@ function buildYearTexture(state) {
 
   // ─── FAMILY ──────────────────────────────────────────────────────────────────
 
+  // Young children texture — present-tense parenting in young_adult/midlife
+  {
+    const youngChildren = (children ?? []).filter(c => c.age <= 12 && (c.relationshipQuality ?? 50) >= 55)
+    if (youngChildren.length > 0 && (phase === 'young_adult' || phase === 'midlife') && Math.random() < 0.25) {
+      const yc = youngChildren[Math.floor(Math.random() * youngChildren.length)]
+      const cn = yc.name?.split(' ')[0] ?? 'your child'
+      const ya = yc.age ?? 6
+      return pick([
+        `${cn} is ${ya}. The world is still explicable to them. Some days it seems more explicable to them than to you.`,
+        `${cn} has a specific question every morning before breakfast. You don't always have the answer. You try.`,
+        ya <= 5
+          ? `${cn} is at the age where everything is new. Being around that is both exhausting and something else.`
+          : `${cn} is at school. That is a new country they go to every morning and come back from changed, incrementally.`,
+        `The ${ya}-year-old logic of ${cn} is both wrong and completely coherent from the inside. You are learning to follow it.`,
+        youngChildren.length > 1
+          ? `You are outnumbered by small people who trust you completely. This is among the most complicated feelings available.'`
+          : `The specific way ${cn} laughs at something they find funny — you would not trade that for anything available at your age.`,
+      ])
+    }
+    const teenChildren = (children ?? []).filter(c => c.age >= 13 && c.age <= 17 && (c.relationshipQuality ?? 50) >= 55)
+    if (teenChildren.length > 0 && (phase === 'young_adult' || phase === 'midlife') && Math.random() < 0.2) {
+      const tc = teenChildren[Math.floor(Math.random() * teenChildren.length)]
+      const cn = tc.name?.split(' ')[0] ?? 'your teenager'
+      return pick([
+        `${cn} is ${tc.age}. The negotiations required at this age are different from all the previous negotiations.`,
+        `${cn} is at the age where you can see who they are becoming and you can't see all of it. That is by design, you understand.`,
+        `${cn} is unreachable some days and then sits next to you and talks for an hour. You have learned not to schedule the second kind.`,
+        `The relationship with ${cn} right now is the most complex relationship in your life. That is not a criticism.`,
+      ])
+    }
+  }
+
   const estrangedChild = (children ?? []).find(c => c.age >= 18 && (c.relationshipQuality ?? 50) < 32)
   if (estrangedChild) {
     const cn = estrangedChild.name.split(' ')[0]
