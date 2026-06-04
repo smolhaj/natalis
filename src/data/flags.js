@@ -3379,4 +3379,248 @@ export const FLAG_REGISTRY = {
     notes: 'Set by yem_humanitarian_collapse.',
   },
 
+  // ── GIFTED ARC FLAGS ──────────────────────────────────────────────────────
+
+  born_gifted_intellectual: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Character was born with exceptional mathematical or scientific reasoning — patterns visible where others see noise, problems solved before the method is taught.',
+    intent: 'both',
+    notes: 'Set at birth roll (4% chance) in deriveGenerationalFlags. Gates all gifted arc events for this type. Surfaced in identity card.',
+  },
+
+  born_gifted_musical: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Character was born with exceptional musical ability — perfect or near-perfect pitch, structural hearing, an ear that understands sound as language.',
+    intent: 'both',
+    notes: 'Set at birth roll. Gates gifted_musical arc events.',
+  },
+
+  born_gifted_athletic: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Character was born with exceptional physical ability — the body cooperates at a level that suggests a different relationship to movement.',
+    intent: 'both',
+    notes: 'Set at birth roll. Gates gifted_athletic arc events. Intersects with career_arcs.js athlete events.',
+  },
+
+  born_gifted_artistic: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Character was born with exceptional visual or spatial perception — they see the composition inside things before it exists.',
+    intent: 'both',
+    notes: 'Set at birth roll. Gates gifted_artistic arc events.',
+  },
+
+  born_gifted_linguistic: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Character was born with exceptional facility with language — words arrive complete, phrasing comes pre-formed, they hear the gap between what is said and what is meant.',
+    intent: 'both',
+    notes: 'Set at birth roll. Gates gifted_linguistic arc events. Distinct from general high smarts.',
+  },
+
+  gift_recognized: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Someone external — a teacher, coach, mentor — witnessed the gift and named it. The first mirror.',
+    intent: 'both',
+    notes: 'Set by gift_teacher_recognition. Required for all subsequent arc branching.',
+  },
+
+  gift_cultivated: {
+    weight: 'major',
+    category: 'achievement',
+    description: 'The gift entered a structured development path — scholarship, programme, formal training. The arc has a favorable fork.',
+    intent: 'both',
+    notes: 'Set by gift_door_opens (accept choice). Gates favorable young-adult and extraordinary talent events.',
+  },
+
+  gift_suppressed: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Structural barriers — poverty, racism, gender, geography — blocked the formal path for the gift. The door closed.',
+    intent: 'both',
+    notes: 'Set by gift_door_closes. Gates hostile path events (community mentor, civil rights channel, underground). Surfaces in identity card and year texture.',
+  },
+
+  gift_underground: {
+    weight: 'major',
+    category: 'identity',
+    description: 'After the formal path closed, the character kept working at the gift in private — in margins, late at night, in borrowed time.',
+    intent: 'both',
+    notes: 'Set by gift_underground (keep working choice). Year texture fires for this state. Can transition to gift_rekindled.',
+  },
+
+  gift_deferred: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'The path was offered but declined — family obligation, fear, wrong timing. The gift is on hold.',
+    intent: 'event',
+    notes: 'Set by gift_door_opens (decline choice). Should trigger late-bloomer path in young_adult.',
+  },
+
+  gift_rekindled: {
+    weight: 'major',
+    category: 'achievement',
+    description: 'After suppression or deferral, the gift found a channel — a mentor, a movement, a late opening.',
+    intent: 'both',
+    notes: 'Set by gift_community_mentor, gift_civil_rights_channel. Gates extraordinary talent events alongside gift_cultivated.',
+  },
+
+  gift_set_aside: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Character chose to let the gift go — built a different life deliberately, not because forced.',
+    intent: 'year_texture',
+    notes: 'Set by gift_underground (let it go choice). Softer regret arc than gift_wasted.',
+  },
+
+  gift_wasted: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'The gift was real, no path opened, no rekindling found. The character knows exactly what they could have been.',
+    intent: 'both',
+    notes: 'Set by gift_midlife_reckoning_hostile. Midlife regret flag. Surfaces in identity card age 40+.',
+  },
+
+  gift_fulfilled: {
+    weight: 'major',
+    category: 'achievement',
+    description: 'The gifted arc completed — the extraordinary work was done, the gift expressed fully.',
+    intent: 'both',
+    notes: 'Set by several extraordinary talent events. Identity card surfaces this. Year texture has dedicated path.',
+    timestamped: true,
+  },
+
+  gift_partial: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Gift developed but capped below potential — systemic ceiling, injury, wrong era. Competent but not what was possible.',
+    intent: 'event',
+    notes: 'Set by favorable fork choices that don\'t fully commit, or by world stage athletic (partial choice).',
+  },
+
+  gift_passed_on: {
+    weight: 'major',
+    category: 'achievement',
+    description: 'Character taught the gift to someone younger — child, student, community. The arc continues through another person.',
+    intent: 'both',
+    notes: 'Set by gift_teaching_impulse (intervene choice), athletic after (coach), and extraordinary talent late events.',
+  },
+
+  gift_extraordinary: {
+    weight: 'major',
+    category: 'achievement',
+    description: 'Character reached the extraordinary ceiling — world-class performance, canonical work, landmark discovery.',
+    intent: 'both',
+    notes: 'Set by gift_athletic_legendary, gift_tenured_professor, gift_music_canonical, gift_art_major_prize, gift_voice_of_generation.',
+    timestamped: true,
+  },
+
+  gift_milestone_1: {
+    weight: 'moderate',
+    category: 'achievement',
+    description: 'First major public milestone of the gifted arc — first publication, HBCU graduation, first recognised performance.',
+    intent: 'year_texture',
+    notes: 'Set by gift_hbcu_graduation and gift_first_public_moment.',
+  },
+
+  gift_midlife_peace: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Character made peace with the arc of their gift — what it cost, what it produced.',
+    intent: 'year_texture',
+    notes: 'Set by gift_midlife_reckoning_favorable (accept choice).',
+  },
+
+  gift_midlife_doubt: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Midlife questioning of what the gift cost — the path taken, what was spent to take it.',
+    intent: 'year_texture',
+    notes: 'Set by gift_midlife_reckoning_favorable (doubt choice). Different from gift_wasted — the arc succeeded, but at cost.',
+  },
+
+  gift_late_accounting: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Late-life reckoning with the full arc — the gift, the path, what was built, what was prevented.',
+    intent: 'none',
+    notes: 'Set by gift_late_accounting. Terminal flag in the arc.',
+  },
+
+  systemic_ceiling: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Character explicitly encountered a structural barrier to their advancement — not personal failure but systemic exclusion.',
+    intent: 'year_texture',
+    notes: 'Set by gift_first_ceiling. Broader than experienced_racism — includes class, gender, geography barriers.',
+  },
+
+  hbcu_graduate: {
+    weight: 'moderate',
+    category: 'achievement',
+    description: 'Graduated from a historically Black college or university — HBCU network, specific cultural formation, the weight of what it means.',
+    intent: 'year_texture',
+    notes: 'Set by gift_hbcu_graduation. USA-specific. Related to first_gen_university.',
+  },
+
+  pro_athlete: {
+    weight: 'major',
+    category: 'achievement',
+    description: 'Reached professional athletic level — contract, competition at the highest tier, career as athlete.',
+    intent: 'both',
+    notes: 'Set by gift_athletic_world_stage. Distinct from career=athlete (many athletes never reach this).',
+  },
+
+  intellectual_breakthrough: {
+    weight: 'major',
+    category: 'achievement',
+    description: 'Produced research or work that changed the field — cited, built upon, named.',
+    intent: 'both',
+    notes: 'Set by gift_intellectual_breakthrough. Gates gift_intellectual_legacy.',
+  },
+
+  tenured_professor: {
+    weight: 'moderate',
+    category: 'achievement',
+    description: 'Achieved tenure — the specific freedom to pursue inconvenient work without removal.',
+    intent: 'both',
+    notes: 'Set by gift_tenured_professor.',
+  },
+
+  acclaimed_musician: {
+    weight: 'major',
+    category: 'achievement',
+    description: 'Musical work reached canonical status — the record that defines a moment, the work younger musicians cite.',
+    intent: 'both',
+    notes: 'Set by gift_music_landmark. Gates gift_music_canonical.',
+  },
+
+  acclaimed_artist: {
+    weight: 'major',
+    category: 'achievement',
+    description: 'Visual or artistic work received serious critical recognition — retrospective, prize, institutional acknowledgement.',
+    intent: 'both',
+    notes: 'Set by gift_art_critical_moment. Gates gift_art_major_prize.',
+  },
+
+  acclaimed_writer: {
+    weight: 'major',
+    category: 'achievement',
+    description: 'Writing reached published recognition — the work reviewed seriously, read, cited, argued with.',
+    intent: 'both',
+    notes: 'Set by gift_writing_published. Gates gift_literary_prize and gift_voice_of_generation.',
+  },
+
+  perfectionism_burden: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'The twice-as-good tax — performing flawlessly as a survival strategy in hostile institutional environments.',
+    intent: 'year_texture',
+    notes: 'Set by gift_integration_pioneer. USA/racism-specific. Chronic happiness drain.',
+  },
+
 }

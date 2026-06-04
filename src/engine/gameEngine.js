@@ -313,6 +313,24 @@ export function deriveGenerationalFlags(char) {
   if (cn === 'Iran' && birthYear >= 1979 && birthYear <= 1995) flags.push('revolution_family_memory')
   if (cn === 'DR Congo' && birthYear >= 1996 && birthYear <= 2010) flags.push('congo_war_family_memory')
 
+  // ── Gift roll — 4% chance of exceptional innate ability ───────────────────
+  if (Math.random() < 0.04) {
+    const GIFT_TYPES = [
+      'born_gifted_intellectual',
+      'born_gifted_musical',
+      'born_gifted_athletic',
+      'born_gifted_artistic',
+      'born_gifted_linguistic',
+    ]
+    const GIFT_WEIGHTS = [0.25, 0.25, 0.25, 0.15, 0.10]
+    let r = Math.random()
+    let cum = 0
+    for (let i = 0; i < GIFT_TYPES.length; i++) {
+      cum += GIFT_WEIGHTS[i]
+      if (r < cum) { flags.push(GIFT_TYPES[i]); break }
+    }
+  }
+
   return flags
 }
 
@@ -1250,6 +1268,147 @@ function buildYearTexture(state) {
   }
   if (mh.condition && !mh.therapy && !mh.medicating) {
     return 'Something is off. You are managing, which is not the same as being fine.'
+  }
+
+  // ─── GIFTED ARC TEXTURE ──────────────────────────────────────────────────────
+
+  const isGiftedChar = F.has('born_gifted_intellectual') || F.has('born_gifted_musical') ||
+    F.has('born_gifted_athletic') || F.has('born_gifted_artistic') || F.has('born_gifted_linguistic')
+
+  if (isGiftedChar && Math.random() < 0.3) {
+    // Peak performance states — extraordinary ceiling reached
+    if (F.has('gift_extraordinary')) {
+      return pick([
+        'The work at the highest level has a texture that is hard to describe to someone who hasn\'t been there — not difficulty, something more like altitude.',
+        'You are performing at the level you were made for. That is a specific and rare thing.',
+        'What the gift has made possible is becoming clear — not as a list of achievements but as a quality of presence in the work.',
+      ])
+    }
+    // Pro athlete active years
+    if (F.has('pro_athlete') && (phase === 'young_adult' || (phase === 'midlife' && age <= 35))) {
+      return pick([
+        'The body at this level is a working instrument. You know every room it operates in. The maintenance is constant and the results are still remarkable to you.',
+        'The career is at its peak. The training has become so embedded that performance feels less like doing and more like being.',
+      ])
+    }
+    // Intellectual breakthrough — the work that changed something
+    if (F.has('intellectual_breakthrough') && (phase === 'midlife' || phase === 'young_adult')) {
+      return pick([
+        'The paper is out there now. It is being read and argued with. That is what you wanted. The arguing is what you wanted.',
+        'The follow-up work that the breakthrough made necessary is more than one person can do. That is the correct problem to have.',
+        'Being cited is a strange feeling — the work leaving the lab and entering someone else\'s thinking.',
+      ])
+    }
+    // Gift recognised — the early knowledge of being seen
+    if (F.has('gift_recognized') && !F.has('gift_cultivated') && !F.has('gift_suppressed') && (phase === 'childhood' || phase === 'adolescence')) {
+      return pick([
+        'Someone has seen the thing in you. The question of what happens with that is still open.',
+        'The recognition sits differently than you expected — not as confirmation but as a responsibility you didn\'t ask for.',
+      ])
+    }
+    // Acclaimed work in active phase
+    if (F.has('acclaimed_writer') && (phase === 'midlife' || phase === 'young_adult')) {
+      return pick([
+        'The work is being read. That is still not a neutral fact.',
+        'The correspondence that arrives now has a different quality — not about the work itself but about what it did to the people who read it.',
+      ])
+    }
+    if (F.has('acclaimed_musician') && (phase === 'midlife' || phase === 'young_adult')) {
+      return pick([
+        'The music is in circulation in a way it wasn\'t before. You hear it in contexts you didn\'t put it in.',
+        'What the music means to other people has become a separate thing from what it meant while being made.',
+      ])
+    }
+    if (F.has('acclaimed_artist') && (phase === 'midlife' || phase === 'young_adult')) {
+      return pick([
+        'The work is being discussed by people who don\'t know you. That is the correct distance for it.',
+        'The institutional recognition has its own texture — validating and slightly beside the point simultaneously.',
+      ])
+    }
+    // Tenured — the specific freedom
+    if (F.has('tenured_professor') && phase === 'midlife') {
+      return pick([
+        'The security that tenure provides is real. You are only beginning to understand what you will do with it.',
+        'The freedom to pursue inconvenient research is theoretical until you use it. You are starting to use it.',
+      ])
+    }
+    // Perfectionism burden — the twice-as-good tax
+    if (F.has('perfectionism_burden') && Math.random() < 0.4) {
+      return pick([
+        'The performance of flawlessness is so practised now that you cannot always tell where the performance ends.',
+        'You have been twice as good for long enough that twice-as-good feels like baseline. The standard doesn\'t relax when you leave the building.',
+        'The cost of the standard you keep is real and invisible. You pay it every day.',
+      ])
+    }
+    // Systemic ceiling — the specific knowledge of what was blocked
+    if (F.has('systemic_ceiling') && !F.has('gift_fulfilled') && phase === 'midlife' && Math.random() < 0.35) {
+      return pick([
+        'You know the shape of the door that was closed. The knowledge is specific, not abstract.',
+        'The structure of what was blocked has become clearer over time. The clarity is not the same as resolution.',
+      ])
+    }
+    // Gift wasted — midlife and late life
+    if (F.has('gift_wasted') && (phase === 'midlife' || phase === 'late_life')) {
+      return pick([
+        'You know exactly what you were made for. The knowledge is still there. It does not become less specific.',
+        'The inventory of what didn\'t happen is not the same as regret. It is more like a persistent awareness. You carry it.',
+        'There are days when the distance between the life you have and the life you were built for is legible and specific. Today is one of them.',
+      ])
+    }
+    // Gift set aside — softer, a choice made
+    if (F.has('gift_set_aside') && Math.random() < 0.4) {
+      return pick([
+        'The thing you were born good at is still in you somewhere. You put it down deliberately. Most days that is not a weight.',
+        'You made the choice to build a different life. It is a real life. The other one was also real.',
+      ])
+    }
+    // Gift fulfilled — what it's like to have done it
+    if (F.has('gift_fulfilled') && (phase === 'young_adult' || phase === 'midlife')) {
+      return pick([
+        'The gift has found its shape. The work the shape requires is more than you expected.',
+        'You are doing the thing. That is not a small sentence.',
+        'The path you built is still being built. You can see further into it now than you could from the beginning.',
+      ])
+    }
+    // Underground — private work against suppression
+    if (F.has('gift_underground') && !F.has('gift_rekindled') && !F.has('gift_fulfilled')) {
+      return pick([
+        'You keep working at it in the margins of the life you actually have. Nobody knows what you\'re building. That is almost the point.',
+        'The gift doesn\'t leave. You have found ways to keep it company.',
+        'You work on it late. The official life happens during the day. This is the real one.',
+      ])
+    }
+    // Rekindled — came back to it
+    if (F.has('gift_rekindled') && !F.has('gift_fulfilled')) {
+      return pick([
+        'Late to it, but working. The path is narrower than it would have been. It is still a path.',
+        'You came to it sideways. That is not the same as not arriving.',
+        'The mentorship and the detour and the years it took all led here. You are finally here.',
+      ])
+    }
+    // Suppressed — aware of the gap, midlife
+    if (F.has('gift_suppressed') && !F.has('gift_rekindled') && phase === 'midlife') {
+      if (Math.random() < 0.5) return pick([
+        'You are aware of what you were built for. The awareness is specific and doesn\'t fade.',
+        'The gap between the life you have and the life the gift would have made is still legible. You have learned to live in it.',
+      ])
+    }
+    // Cultivated — still developing, not yet arrived
+    if (F.has('gift_cultivated') && (phase === 'adolescence' || phase === 'young_adult') && !F.has('gift_fulfilled')) {
+      return pick([
+        'The work the gift requires of you is more than you expected. You do it anyway.',
+        'You are inside the thing you always knew you could do. The question now is how far.',
+        'The training is everything it is supposed to be. You are not yet everything you are supposed to be. The gap is closing.',
+      ])
+    }
+    // Gift passed on — teaching texture
+    if (F.has('gift_passed_on') && age >= 40 && Math.random() < 0.4) {
+      return pick([
+        'Watching the gift in someone else is its own satisfaction. Different from having it yourself — something more like recognising a relative.',
+        'You have given someone what you were given, or what you weren\'t given. Either way, it has passed forward.',
+        'The student is making the work their own. That is the right outcome. It is also slightly strange to witness.',
+      ])
+    }
   }
 
   // ─── PARTNERSHIP QUALITY ─────────────────────────────────────────────────────
@@ -8102,6 +8261,13 @@ export function generateIdentityCard(state) {
     if (F.has('famine_memory') || F.has('food_insecurity')) return 'You grew up knowing hunger. That knowledge changed how you relate to having enough.'
     if (F.has('war_childhood')) return 'You grew up during a conflict. The body still knows certain sounds.'
     if (F.has('abusive_relationship') && !partner) return 'You got out of something that was damaging you. That took longer than it should have.'
+    // Gifted arc resolution
+    if (F.has('gift_extraordinary')) return 'You reached the extraordinary ceiling of what you were born to do. The work exists. It outlasts the making of it.'
+    if (F.has('gift_fulfilled')) return 'Your gift found a path. You are still deciding what that path cost.'
+    if (F.has('gift_wasted') && age >= 40) return 'You know exactly what you were made for. The world had other arrangements.'
+    if (F.has('gift_suppressed') && !F.has('gift_rekindled') && !F.has('gift_wasted')) return 'You carry a gift the world never got to see properly. It has shaped what you notice anyway.'
+    if (F.has('gift_rekindled') && !F.has('gift_fulfilled')) return 'You came to the thing you were made for late and sideways. That turns out to be a kind of path too.'
+    if ((F.has('born_gifted_intellectual') || F.has('born_gifted_musical') || F.has('born_gifted_athletic') || F.has('born_gifted_artistic') || F.has('born_gifted_linguistic')) && !F.has('gift_recognized') && phase === 'childhood') return 'Something in you is arranged differently from most people. The world hasn\'t quite noticed yet.'
     return null
   })()
   if (interiorFact) interior.push(interiorFact)
