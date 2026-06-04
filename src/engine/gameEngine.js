@@ -2072,6 +2072,59 @@ function buildYearTexture(state) {
     'The habit of counting what is owed is hard to put down even when the answer is fine.',
   ])
 
+  // ─── FITNESS SCORE TEXTURE ────────────────────────────────────────────────────
+  {
+    const fitnessScore = state.fitness ?? 50
+    if (fitnessScore > 72 && !F.has('fitness_devotee') && Math.random() < 0.18) return pick([
+      'The body is doing what you ask of it. You have not always been this consistent. You notice the difference.',
+      phase === 'late_life'
+        ? 'The physical upkeep takes more effort than it used to. The return on the effort is still there. You have chosen to keep paying it.'
+        : 'You are in better shape than you need to be for the life you are living. That reserve is worth something.',
+      'The energy at the end of the day is still there. Not everyone has this. You are aware that you have it.',
+    ])
+    if (fitnessScore < 30 && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.2) return pick([
+      phase === 'late_life'
+        ? 'The body is telling you things you are still deciding how to respond to. The responses available are not what they were.'
+        : 'The body is not in the state you would choose for it. The gap between the state you\'d choose and the current state is information.',
+      'Stairs have become an opinion. The body has started to express preferences you did not give it.',
+      phase === 'late_life'
+        ? 'You have been making small accommodations for the body for years. The accommodations are becoming the daily structure.'
+        : 'There are physical things you used to do easily that you now approach differently. You are tracking this.',
+    ])
+    if (fitnessScore < 18 && phase === 'late_life' && Math.random() < 0.25) return pick([
+      'The body has become the main fact of certain days. You are learning to work within its current vocabulary.',
+      'What you can do and what you want to do have diverged. That divergence is its own kind of loss, separate from the others.',
+    ])
+  }
+
+  // ─── SOCIAL MEDIA TEXTURE ─────────────────────────────────────────────────────
+  {
+    const sm = state.socialMedia ?? {}
+    const followers = sm.followers ?? 0
+    const genre = sm.genre
+    if (followers >= 500000 && Math.random() < 0.2) return pick([
+      'The number in the top corner of the profile has grown past anything you can visualise as faces. You have stopped trying.',
+      'The comments come in faster than you can read them. You have learned to decide whether to read them.',
+      sm.verified
+        ? 'The blue tick and the follower count mean something to the platform\'s algorithm. What they mean to you is a more complicated question.'
+        : `You have ${(followers / 1000).toFixed(0)}k followers and the reach that comes with that. The responsibility that comes with it is something you are still working out.`,
+      genre
+        ? `The ${genre} audience you built is specific. You know what they respond to. You are deciding how much to give them exactly what they want.`
+        : 'You know which posts perform and which don\'t. That knowledge has started to influence what you make, and you are watching that influence.',
+    ])
+    if (followers >= 50000 && followers < 500000 && Math.random() < 0.18) return pick([
+      'The platform is part of the work now. You are still deciding how much of the work it should be.',
+      genre
+        ? `The ${genre} side of what you do online has found its audience. The audience is real. So is the maintenance it requires.`
+        : 'The following is large enough to matter in specific practical ways. Not large enough to change the general shape of the day.',
+      'The sponsored post conversation has started. You are working out what you will and won\'t do.',
+    ])
+    if (followers >= 10000 && followers < 50000 && Math.random() < 0.15) return pick([
+      'The account is growing. You are in the phase where every thousand matters more than it will when there are more.',
+      'You are making things for an audience you can almost visualise. That is a different kind of making.',
+    ])
+  }
+
   // ─── FINANCIAL STATE TEXTURE ─────────────────────────────────────────────────
   {
     const debt = state.debt ?? 0
@@ -2323,6 +2376,40 @@ function buildYearTexture(state) {
       phase === 'late_life'
         ? 'The late accounting: what you owe, to whom, what is still repairable and what isn\'t. You sit with this now.'
         : 'The cost you have imposed on others is not invisible to you, even when you act as if it is.',
+    ])
+  }
+
+  // ─── FAME TEXTURE (~20% when fame is significant) ────────────────────────────
+  {
+    const fame = state.fame ?? 0
+    if (fame >= 65 && Math.random() < 0.2) return pick([
+      'Strangers recognise you. The recognition has a specific texture — the pause, the second look, the decision about whether to approach. You have learned to read the pause.',
+      'You have a public image. The public image is not false, exactly. It is a selection. You live with the knowledge of what didn\'t make the selection.',
+      'The loss of ordinary anonymity happened gradually and then all at once. You adapted. Some of the adaptation cost you something.',
+      phase === 'late_life'
+        ? 'You have been recognised for decades. What it means to be known by people who don\'t know you has changed its shape over time.'
+        : 'Fame is a relationship with people you have never met. They have decided things about you based on a portion of the record. You manage this.',
+      F.has('paparazzi_experience')
+        ? 'The camera outside the restaurant was not the worst of it. The worst of it was what happened to how you moved through ordinary space.'
+        : 'The attention comes with a specific kind of loneliness. The room is full. The full room is still looking.',
+    ])
+    if (fame >= 30 && fame < 65 && Math.random() < 0.18) return pick([
+      'You are known in a certain context, to a certain audience. Outside that context, nobody looks. You notice both.',
+      'The local recognition — at the venue, in the professional community, in the room — is real without being overwhelming. You have calibrated your life to it.',
+      phase === 'late_life'
+        ? 'What you are known for is specific and bounded. The specificity suits you better than broader recognition would have.'
+        : 'There is a circle in which your name means something. You operate in that circle and you are aware of its edges.',
+    ])
+    if (F.has('cancelled') && fame < 30 && Math.random() < 0.22) return pick([
+      'The thing that happened online has a shape in your life now. The shape has not disappeared. You have arranged your life around it.',
+      'After the cancellation: who reached out, who went quiet, who said nothing in either direction. The tally was instructive.',
+      phase === 'late_life'
+        ? 'The event that ended one version of your public life was years ago. The version that came after is the one you actually lived in.'
+        : 'You are still here. What "here" means has been redefined. The redefinition was not voluntary.',
+    ])
+    if (F.has('famous_not_rich') && Math.random() < 0.2) return pick([
+      'The recognition and the money do not match. This surprises people who don\'t know how the system works.',
+      'You are known in a way that does not translate to the number in the account. The gap between them is its own education.',
     ])
   }
 
