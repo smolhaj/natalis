@@ -1299,4 +1299,310 @@ export const LATIN_AMERICA_EVENTS = [
     effect: null,
   },
 
+  // ═══════════════════════════════════════════════════════════════════════
+  // MEXICO — additional events
+  // ═══════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'la_mex_tlatelolco_1968',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Mexico' &&
+      G.currentYear >= 1968 && G.currentYear <= 1970 &&
+      G.age >= 15 &&
+      !G.mem?.mex_tlatelolco,
+    text: 'October 2, 1968. Ten days before the Olympics open. The student movement has been gathering in the Plaza de las Tres Culturas at Tlatelolco all evening. The army has surrounded the square. In the space of twenty minutes, from positions on the surrounding buildings, soldiers open fire. The official count is thirty-three dead. The real count is unknown; the bodies are moved before dawn. The Olympics open on schedule. The government has arranged for this not to exist in the newspapers.',
+    choices: [
+      {
+        text: 'You were in the square.',
+        tag: 'tlatelolco_present',
+        outcome: 'You are alive because of where you were standing. The specific contingency of that is something you carry without being able to explain it to people who weren\'t there.',
+        effect: (p) => { p.m -= 20; p.r += 10; p.h -= 5; p.karma += 6; p.addFlag('tlatelolco_generation'); p.addFlag('traumatized_by_violence'); p.addFlag('political_aware'); p.setMem('mex_tlatelolco', true); },
+      },
+      {
+        text: 'You heard about it the next day, from someone who was there.',
+        tag: null,
+        outcome: 'The account is specific and does not match the newspapers. You have to decide what to do with that gap.',
+        effect: (p) => { p.m -= 10; p.r += 5; p.karma += 3; p.addFlag('tlatelolco_generation'); p.addFlag('political_aware'); p.setMem('mex_tlatelolco', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'la_mex_dirty_war_guerrero',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'Mexico' &&
+      G.currentYear >= 1969 && G.currentYear <= 1982 &&
+      G.age >= 18 &&
+      (G.flags.has('political_active') || G.flags.has('tlatelolco_generation') || G.career?.field === 'education' || G.career?.field === 'journalism') &&
+      !G.mem?.mex_dirty_war,
+    text: 'The Mexican army\'s disappearances are quieter than Chile\'s — less documented, counted in the hundreds rather than the tens of thousands. The Brigada Blanca operates without insignia. In Guerrero, the Liga Comunista 23 de Septiembre. You know someone who went to a meeting and didn\'t come back. The official response is silence, which is a kind of answer.',
+    choices: null,
+    effect: (p) => { p.m -= 12; p.r += 8; p.addFlag('mexico_dirty_war_era'); p.addFlag('learned_silence'); p.setMem('mex_dirty_war', true); },
+  },
+
+  {
+    id: 'la_mex_pri_falls',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Mexico' &&
+      G.currentYear === 2000 &&
+      G.age >= 25 &&
+      !G.mem?.mex_pri_falls,
+    text: 'July 2, 2000. The PRI loses the presidency for the first time in seventy-one years. Vicente Fox\'s margin is undeniable. The PRI does not contest it. The specific disorientation is this: you have always known who was going to win before voting. Your parents knew. Your grandparents knew. Tonight the answer is different and the machinery of everyday life — the patronage, the mordida economy, the telephone call that fixes a permit — has no certain shape anymore.',
+    choices: null,
+    effect: (p) => { p.m += 6; p.r += 3; p.addFlag('pri_transition_generation'); p.setMem('mex_pri_falls', true); },
+  },
+
+  {
+    id: 'la_mex_narco_era',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Mexico' &&
+      G.currentYear >= 2006 && G.currentYear <= 2020 &&
+      G.age >= 25 &&
+      !G.mem?.mex_narco_era,
+    text: 'President Calderón deploys the army against the cartels. This produces a different kind of violence from the old Sinaloa arrangement — not organized extortion with understood rules but open warfare on highways, in city centres. The counting of bodies has become part of the morning news. The specific change in your own life: there is a name you know now on the list, or a route you no longer take after dark, or a conversation at the school gate about whether to move.',
+    choices: [
+      {
+        text: 'Move your family somewhere safer.',
+        tag: 'narco_displaced',
+        outcome: 'The new city is safer by the metrics that are measured. It is not home. Both things are true.',
+        effect: (p) => { p.m -= 8; p.r += 5; p.addFlag('narco_era_generation'); p.addFlag('internally_displaced'); p.setMem('mex_narco_era', true); },
+      },
+      {
+        text: 'Stay. Adjust what you say and where you go.',
+        tag: null,
+        outcome: 'You become an expert in the geography of risk. The expertise costs something that isn\'t counted anywhere.',
+        effect: (p) => { p.m -= 10; p.r += 6; p.addFlag('narco_era_generation'); p.addFlag('regime_self_censorship'); p.setMem('mex_narco_era', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'la_mex_femicidio',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Mexico' &&
+      G.character.gender === 'female' &&
+      G.currentYear >= 2010 &&
+      G.age >= 18 &&
+      !G.mem?.mex_femicidio,
+    text: 'The pink crosses on the highway median near Ciudad Juárez started in the 1990s for the women found in the desert. By 2010 the phenomenon has a name — feminicidio — and the cases don\'t get investigated, or the investigations go nowhere. There is a specific arithmetic that you and every woman you know perform: what time, which route, who you text when you arrive, and the calculation that runs under every ordinary evening out.',
+    choices: [
+      {
+        text: 'March with the others. The crosses need witnesses.',
+        tag: null,
+        outcome: 'The march is large and then it ends and the cases continue to go uninvestigated. You go again anyway.',
+        effect: (p) => { p.m -= 4; p.karma += 6; p.addFlag('femicidio_generation'); p.addFlag('political_active'); p.setMem('mex_femicidio', true); },
+      },
+      {
+        text: 'Manage the fear as a daily practice. There is nothing else to do.',
+        tag: null,
+        outcome: 'The management is successful in that you are still here. The cost of maintaining it accumulates.',
+        effect: (p) => { p.m -= 8; p.r += 5; p.addFlag('femicidio_generation'); p.setMem('mex_femicidio', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // VENEZUELA — additional events
+  // ═══════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'la_ven_caracazo',
+    phase: 'young_adult',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'Venezuela' &&
+      G.currentYear === 1989 &&
+      G.age >= 12 &&
+      !G.mem?.ven_caracazo,
+    text: 'February 27, 1989. Carlos Andrés Pérez has implemented the IMF package: price controls lifted, fuel prices tripled. By morning the barrios have come down into Caracas and taken what they haven\'t been able to afford. The army is ordered out. The official death toll will be two hundred and seventy-six. Human rights organizations start their counts at five hundred. The bodies in mass graves near Caracas will not be found until 2009. You know someone who was in a barrio when the soldiers arrived.',
+    choices: [
+      {
+        text: 'You were in the street — in a barrio when it started.',
+        tag: 'caracazo_witnessed',
+        outcome: 'You have seen what the army does when it is given orders and a population. That knowledge does not go anywhere when the shooting stops.',
+        effect: (p) => { p.m -= 18; p.h -= 8; p.r += 10; p.addFlag('caracazo_generation'); p.addFlag('traumatized_by_violence'); p.addFlag('political_aware'); p.setMem('ven_caracazo', true); },
+      },
+      {
+        text: 'You watched from somewhere with a locked door.',
+        tag: null,
+        outcome: 'The distance was luck. The knowledge of what you watched is not separable from the luck.',
+        effect: (p) => { p.m -= 10; p.r += 6; p.addFlag('caracazo_generation'); p.addFlag('political_aware'); p.setMem('ven_caracazo', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'la_ven_polarization',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Venezuela' &&
+      G.currentYear >= 2002 && G.currentYear <= 2012 &&
+      G.age >= 25 &&
+      !G.mem?.ven_polarization,
+    text: 'The country has divided into two that cannot see each other. Families do not discuss politics at Christmas, or they discuss nothing else. The April 2002 coup lasted forty-seven hours; Chávez returned by helicopter from the presidential guard loyal to him. The oil strike that followed. The recall referendum of 2004. The opposition calls the Chavistas enchufados — plugged in, connected, taking. The barrios call the opposition escuálidos — the puny, the privileged. The word for the other side has become a tone of voice.',
+    choices: null,
+    effect: (p) => { p.m -= 8; p.r += 5; p.addFlag('venezuela_polarized_generation'); p.setMem('ven_polarization', true); },
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // BRAZIL — additional events
+  // ═══════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'la_bra_cor_identity',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Brazil' &&
+      G.age >= 13 && G.age <= 22 &&
+      !G.mem?.bra_cor,
+    text: 'The census form asks your cor — colour. Branco, pardo, preto, amarelo, indígena. You are not sure which box is yours, which is the family argument, which is what people in shops assume. Brazil has the ideology of racial democracy and the facts of racial hierarchy, and both are present simultaneously in the same room. The word embranquecimento — whitening — describes both the country\'s demographic history and the social pressure you feel when you present yourself.',
+    choices: [
+      {
+        text: 'Check the box that reflects how others see you.',
+        tag: null,
+        outcome: 'The box you check is also a statement about how you have decided to be seen, which is not always the same thing as what you are.',
+        effect: (p) => { p.r += 4; p.addFlag('brazil_racial_reckoning'); p.addFlag('double_consciousness'); p.setMem('bra_cor', true); },
+      },
+      {
+        text: 'Check the box that reflects how you see yourself.',
+        tag: null,
+        outcome: 'Some people are surprised. That tells you something about the gap between how you see yourself and how you present.',
+        effect: (p) => { p.m += 2; p.r += 2; p.karma += 3; p.addFlag('brazil_racial_reckoning'); p.setMem('bra_cor', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'la_bra_lula_2002',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Brazil' &&
+      G.currentYear === 2002 &&
+      G.age >= 16 &&
+      !G.mem?.bra_lula_2002,
+    text: 'October 27, 2002. Luiz Inácio Lula da Silva is elected president. He is the seventh child of a sharecropper from Pernambuco. He never finished primary school. He lost a finger in a factory press at nineteen. He ran for president three times before this night. When the announcement comes at ten in the evening, the music in the favelas plays until morning. The international markets have already priced in catastrophe. They will be wrong about this, at least for a decade.',
+    choices: [
+      {
+        text: 'This is yours — your class, your vote, your victory.',
+        tag: null,
+        outcome: 'You have never seen someone who looks like your father in the room where the decisions are made. That has changed tonight, for the first time.',
+        effect: (p) => { p.m += 14; p.karma += 5; p.addFlag('lula_generation'); p.setPolitical('left'); p.setMem('bra_lula_2002', true); },
+      },
+      {
+        text: 'You voted for him from the middle — this was the least-bad option.',
+        tag: null,
+        outcome: 'The speech is better than you expected. You decide to wait and see what the next year looks like before deciding what you think.',
+        effect: (p) => { p.m += 5; p.addFlag('lula_generation'); p.setMem('bra_lula_2002', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'la_bra_favela_texture',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Brazil' &&
+      G.currentYear >= 1975 && G.currentYear <= 2005 &&
+      (G.stats?.wealth ?? 50) < 35 &&
+      G.age >= 8 && G.age <= 16 &&
+      !G.mem?.bra_favela,
+    text: 'The favela has its own governance, older than the traffickers. The water collective, the electricity run from the grid in ways that both parties understand. The neighbourhood association that organizes what the city won\'t provide. The baile funk on Saturday when the sound system takes the whole hillside and the traffic stops by agreement, not enforcement. The drug factions came later and organized themselves on top of a structure that was already there. You know both layers.',
+    choices: null,
+    effect: (p) => { p.m += 4; p.s += 3; p.addFlag('favela_community_generation'); p.setMem('bra_favela', true); },
+  },
+
+  {
+    id: 'la_bra_bolsa_familia',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Brazil' &&
+      G.currentYear >= 2004 && G.currentYear <= 2015 &&
+      (G.stats?.wealth ?? 50) < 30 &&
+      G.age >= 18 &&
+      !G.mem?.bra_bolsa,
+    text: 'The Bolsa Família arrives: conditional cash transfer, one hundred and fifty reais per month, contingent on keeping children in school and vaccination records current. The requirement to show up at the health post, to produce documentation, to prove the children are going — some people resent the conditions. Most just use it. The poverty rate in Brazil will fall by half in the next decade. That number is made of millions of individual calculations, and this is yours.',
+    choices: null,
+    effect: (p) => { p.mo += 600; p.m += 5; p.h += 3; p.addFlag('bolsa_familia_generation'); p.setMem('bra_bolsa', true); },
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // COLOMBIA — additional events
+  // ═══════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'la_col_la_violencia',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Colombia' &&
+      G.currentYear >= 1948 && G.currentYear <= 1958 &&
+      G.age >= 14 &&
+      !G.mem?.col_la_violencia,
+    text: 'April 9, 1948. Jorge Eliécer Gaitán is shot in Bogotá at 1:15 in the afternoon. Within hours the city is burning — El Bogotazo. In the countryside what follows will last ten years and kill two hundred thousand people. The killing has a specific character: Liberal killing Conservative and Conservative killing Liberal, and the borders run through families and through villages, and a neighbor is now a calculation rather than a person.',
+    choices: [
+      {
+        text: 'Your family is Liberal. The persecution comes from one direction.',
+        tag: null,
+        outcome: 'You learn which roads to take and which villages to avoid. This knowledge is now the geography of your life.',
+        effect: (p) => { p.m -= 18; p.r += 10; p.h -= 6; p.addFlag('la_violencia_generation'); p.addFlag('political_aware'); p.setMem('col_la_violencia', true); },
+      },
+      {
+        text: 'You are trying to stay out of it. The politics are not yours.',
+        tag: null,
+        outcome: 'In a war where the categories are defined by others, neutrality is also a position, and it also has enemies.',
+        effect: (p) => { p.m -= 14; p.r += 8; p.h -= 4; p.addFlag('la_violencia_generation'); p.setMem('col_la_violencia', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'la_col_auc_paramilitares',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Colombia' &&
+      G.currentYear >= 1994 && G.currentYear <= 2006 &&
+      G.age >= 25 &&
+      !G.mem?.col_auc &&
+      !G.flags.has('colombia_cartel_adjacent'),
+    text: 'The Autodefensas Unidas de Colombia are not the cartels. They operate alongside the army, or in coordination with it, in regions the FARC controls. The human rights reports use the phrase "false positives" — soldiers who require kill counts present civilians killed and dressed in guerrilla clothing. Your cousin is twenty-two and works at a farm outside Ocaña. The week an army battalion passes through, a man from his village goes missing. The army\'s communiqué mentions a FARC combatant killed in action.',
+    choices: [
+      {
+        text: 'Report it. Push the family to pursue it.',
+        tag: null,
+        outcome: 'The investigation goes nowhere in the way that these investigations go nowhere. The knowledge that you tried is not the same as the knowledge that it mattered.',
+        effect: (p) => { p.m -= 10; p.karma += 8; p.addFlag('paramilitary_era_lived'); p.addFlag('corruption_exposed'); p.setMem('col_auc', true); },
+      },
+      {
+        text: 'Do nothing. The arithmetic of risk is clear.',
+        tag: null,
+        outcome: 'You live with the arithmetic. This is not cowardice — it is the accurate assessment of what speaking costs in that place, at that time.',
+        effect: (p) => { p.m -= 12; p.r += 8; p.addFlag('paramilitary_era_lived'); p.setMem('col_auc', true); },
+      },
+    ],
+    effect: null,
+  },
+
 ]

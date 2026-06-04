@@ -1426,6 +1426,56 @@ export const FLAG_REGISTRY = {
     notes: 'Set by hai_baby_doc_falls. The euphoria and its subsequent failure are both part of this.',
   },
 
+  // ── LATIN AMERICA HISTORICAL FLAGS ───────────────────────────────────────
+
+  tlatelolco_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed or was present at the 1968 Tlatelolco massacre in Mexico City — soldiers firing into a student gathering ten days before the Olympics.',
+    intent: 'year_texture',
+    notes: 'Set by la_mex_tlatelolco_1968. Surfaces in year texture (political trauma, state violence memory) and potential follow-through events for Mexico characters.',
+  },
+
+  narco_era_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the 2006+ Mexican drug war as personal lived texture — a name on the news list, a route no longer taken, a conversation about whether to move.',
+    intent: 'year_texture',
+    notes: 'Set by la_mex_narco_era. Year texture probe for ongoing risk/displacement calculus; gates narco follow-through.',
+  },
+
+  caracazo_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through El Caracazo, Venezuela 1989 — the army firing on civilian protesters, official death toll 276, real count higher, mass graves found twenty years later.',
+    intent: 'year_texture',
+    notes: 'Set by la_ven_caracazo character event and venezuela_caracazo_1989 world event. Year texture (state violence memory) + Venezuela political arc follow-through.',
+  },
+
+  la_violencia_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through La Violencia, Colombia 1948–58 — partisan civil war between Liberals and Conservatives that killed two hundred thousand people.',
+    intent: 'year_texture',
+    notes: 'Set by la_col_la_violencia character event and colombia_bogotazo_1948 world event. Year texture for older Colombian characters; gates generational memory follow-through.',
+  },
+
+  femicidio_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Female Mexican character shaped by the ongoing femicide crisis — the arithmetic of what time, which route, who to text when you arrive.',
+    intent: 'year_texture',
+    notes: 'Set by la_mex_femicidio. Year texture for Mexican women; can surface as persistent background anxiety.',
+  },
+
+  paramilitary_era_lived: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived under or was directly affected by AUC paramilitary operations in Colombia — the false positives, the missing cousin, the arithmetic of speaking.',
+    intent: 'year_texture',
+    notes: 'Set by la_col_auc_paramilitares. Year texture (state/non-state violence); follow-through for Colombia peace process events.',
+  },
+
   // ── SRI LANKA FLAGS ───────────────────────────────────────────────────────
 
   black_july_survived: {
