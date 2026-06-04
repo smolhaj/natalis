@@ -3181,4 +3181,54 @@ export const FLAG_REGISTRY = {
     notes: 'Set by zmb_evangelical_wave.',
   },
 
+  // ─── MOZAMBIQUE ───────────────────────────────────────────────────────────────
+
+  mozambican_frelimo_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Grew up under FRELIMO\'s one-party socialist state — independence, nationalisation, "A luta continua", the infrastructure-sparse inheritance of Portuguese colonialism',
+    intent: 'year_texture',
+    notes: 'Set by moz_frelimo_independence.',
+  },
+
+  mozambican_civil_war_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the RENAMO civil war 1977–1992 — destruction of schools/clinics, 1 million dead, South African destabilisation',
+    intent: 'year_texture',
+    notes: 'Set by moz_renamo_civil_war.',
+  },
+
+  mozambican_machel_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Alive when Samora Machel died in the 1986 plane crash — the only president Mozambique had known, suspicion of South African involvement',
+    intent: 'year_texture',
+    notes: 'Set by moz_machel_death_1986.',
+  },
+
+  mozambican_peace_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed the 1992 Rome Peace Accords and the first Mozambican multi-party elections — the war ending after fifteen years',
+    intent: 'year_texture',
+    notes: 'Set by moz_peace_accords_1992.',
+  },
+
+  mozambican_floods_generation: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Lived through the 2000 Mozambique floods — Cyclone Eline, 800 dead, 500,000 displaced, baby Rosita born in a tree',
+    intent: 'year_texture',
+    notes: 'Set by moz_floods_2000.',
+  },
+
+  mozambican_gas_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Came of age when offshore gas was discovered and the Cabo Delgado insurgency began — the resource and the violence arriving together',
+    intent: 'year_texture',
+    notes: 'Set by moz_gas_cabo_delgado.',
+  },
+
 }

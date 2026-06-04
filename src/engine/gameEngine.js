@@ -3927,6 +3927,45 @@ function buildYearTexture(state) {
     'The man who started the Arab Spring was a street vendor whose cart was confiscated. That detail is specific on purpose — it is the whole economic model visible in one scene.',
   ])
 
+  // ─── MOZAMBIQUE TEXTURE ──────────────────────────────────────────────────────
+  if (F.has('mozambican_frelimo_generation') && Math.random() < 0.18) return pick([
+    '"A luta continua." The struggle continues. You grew up with that phrase as the civic background — FRELIMO as the party that ended colonialism and the party that was now everything else.',
+    'Samora Machel\'s Mozambique: free healthcare, free education, nationalised land, no private schools. The Portuguese had left almost no trained teachers. FRELIMO filled the gap with what it could find, which was not enough and was also remarkable.',
+    phase === 'late_life'
+      ? 'You are old enough to remember when independence meant something specific and immediate — the flag, the language, the sense that what was being built was for you. What was built turned out to be more complicated than that felt.'
+      : 'You were born into a country still assembling itself after colonialism. The assembling was slow and the materials were scarce and the people doing it believed in what they were doing.',
+  ])
+  if (F.has('mozambican_civil_war_generation') && Math.random() < 0.22) return pick([
+    'RENAMO\'s war was not about territory. It was about infrastructure — destroying the things that FRELIMO had built, the schools and clinics and bridges that were the point of independence. You lived in the debris of that strategy.',
+    'One million dead. Five million displaced. Fifteen years. Teachers targeted. Clinics targeted. The countryside made into a place you could not be safe in. That is what the war was.',
+    phase === 'late_life'
+      ? 'You are in the generation that survived it and rebuilt in it and is still living in the rebuilding. The country you are in now was built around the holes the war left.'
+      : 'The landmines are still in the ground in places. Not all of them. They cleared what they could. The ones they missed are still there, patient.',
+    'South Africa built RENAMO. Rhodesia started it. The destabilisation of a neighbouring socialist country was the strategic calculation. The million dead were the cost of that calculation.',
+  ])
+  if (F.has('mozambican_machel_generation') && Math.random() < 0.17) return pick([
+    'Samora Machel died in a plane that hit a hillside in South Africa. There was a navigation beacon that had been moved. The South African government said pilot error. The evidence suggests otherwise. You have your own conclusion.',
+    'The only president Mozambique had ever had. Gone in one night in October. The suspicion about what happened is not something that goes away — it is part of what that night means.',
+  ])
+  if (F.has('mozambican_peace_generation') && Math.random() < 0.17) return pick([
+    'The General Peace Agreement: Rome, October 1992. FRELIMO and RENAMO after fifteen years of war. The UN came. The elections happened. The ceasefire held. The mines were still in the ground but the killing had stopped.',
+    'The first multi-party elections in 1994. Chissano won. Dhlakama accepted it. There are countries where this has not happened. Mozambique is not one of those countries now.',
+    phase === 'late_life'
+      ? 'You watched the war end and the reconstruction begin and you have now seen what thirty years of peace has made. The reconstruction took longer than anyone said it would and produced more than anyone expected and less than what was promised.'
+      : 'The peace was not what it sounded like from the outside — it was not a return to something, it was the beginning of a new thing, building in the rubble of the old thing.',
+  ])
+  if (F.has('mozambican_floods_generation') && Math.random() < 0.17) return pick([
+    'February 2000. Cyclone Eline. The Limpopo and the Save and the Zambezi all at once. The country had not finished rebuilding from the war. The water came anyway.',
+    'A woman gave birth in a tree while the waters rose around her. The helicopter rescue crew helped. The baby was named Rosita. The world paid attention to that. The world was less attentive to the months of recovery.',
+    phase === 'late_life'
+      ? 'You have lived through the war and the peace and the floods and the rebuilding after the floods. The country survives. It does not do this lightly.'
+      : 'Eight hundred dead. Half a million displaced. The floods were not the worst thing that had happened. They arrived in a country that had not finished recovering from the last worst thing.',
+  ])
+  if (F.has('mozambican_gas_generation') && Math.random() < 0.15) return pick([
+    'The gas was supposed to change everything. The offshore reserves are among the largest in Africa. Total and ENI and ExxonMobil all said they were coming. In Cabo Delgado, the insurgency said something else.',
+    'The connection between the gas discovery and the insurgency in Cabo Delgado is not simple. It is also not a coincidence. Nine hundred thousand displaced. Total evacuated its base. The gas is still there.',
+  ])
+
   // ─── ZAMBIA TEXTURE ──────────────────────────────────────────────────────────
   if (F.has('zambian_kaunda_generation') && Math.random() < 0.17) return pick([
     'Zambian Humanism: Man at the Centre. The philosophy was in the school curriculum. The copper was in the state. The one-party system was in the background of every civic fact.',
