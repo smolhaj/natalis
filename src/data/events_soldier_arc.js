@@ -185,4 +185,26 @@ export const SOLDIER_ARC_EVENTS = [
     effect: (p) => { p.m -= 6; p.karma += 8; p.setMem('solLateReckoning', true) },
   },
 
+  {
+    id: 'sol_wound_sustained',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) => G.flags.has('deployed_to_conflict') && !G.mem.solWound,
+    text: 'It happens in a moment too fast to have a shape. There is the world before it and then there is something in your body that wasn\'t there before, and the medic is speaking, and you are trying to establish whether you can continue. The honest answer and the answer you give are not the same answer.',
+    choices: [
+      {
+        text: 'Report the full extent of it. Go to the aid station.',
+        tag: 'wound_reported',
+        outcome: 'They send you out of theatre. The paperwork is thorough. You are angry at the thoroughness in a way you cannot explain to anyone who wasn\'t there.',
+        effect: (p) => { p.h -= 12; p.addFlag('conflict_injury'); p.addFlag('returned_veteran'); p.setMem('solWound', true) },
+      },
+      {
+        text: 'Report it as minor. Stay with your unit.',
+        tag: 'wound_concealed',
+        outcome: 'You continue. The body compensates in the way bodies do when they are given no alternative. You know, somewhere, that this will be in you for a long time.',
+        effect: (p) => { p.h -= 18; p.addFlag('conflict_injury'); p.setMem('solWound', true) },
+      },
+    ],
+  },
+
 ]
