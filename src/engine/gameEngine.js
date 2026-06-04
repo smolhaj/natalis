@@ -2968,6 +2968,49 @@ function buildYearTexture(state) {
     'Being Nigerian abroad in the 1990s and 2000s: the email opens and the person across the desk has already decided something. You have learned the specific labour of undeciding it.',
   ])
 
+  // ─── UGANDA TEXTURE ──────────────────────────────────────────────────────────
+  if (F.has('amin_generation') && Math.random() < 0.22) return pick([
+    'The Amin years: the ambient fear of a government that killed without accounting. You learned to read the environment for signals that people elsewhere did not have to read.',
+    phase === 'late_life'
+      ? 'You have outlasted Idi Amin. You have outlasted several of the people who served him. The length of a life is sometimes measured in who you have outlasted.'
+      : 'The word "disappeared" acquired its Ugandan meaning in those years. You use it with the weight of someone who was present when the word changed.',
+  ])
+  if (F.has('amin_asian_expulsion') && Math.random() < 0.25) return pick([
+    'Ninety days to pack three generations. The business, the property, the network of relationships — all of it left, or abandoned, which is not the same thing.',
+    phase === 'late_life'
+      ? 'You built something new after the expulsion, in the country that took you in. The thing you built is real. The thing left behind is also real. You carry both.'
+      : 'Uganda is where your family was from, in the sense that matters — the streets known, the language learned, the decades accumulated there. The passport said otherwise.',
+  ])
+  if (F.has('lra_northern_generation') && Math.random() < 0.25) return pick([
+    'The night commute: the mat by the door, the route known by dark, the return in the morning light. That is a childhood texture that does not dissolve when the war ends.',
+    'Gulu. Kitgum. Pader. The names of the towns were the names of the crisis. You know what those names contain.',
+    phase === 'late_life'
+      ? 'The LRA years in the north are over. The trauma counsellors call it post-conflict recovery. You call it continuing to live in a place that had something done to it.'
+      : 'The children abducted by the LRA came back changed, when they came back. The ones who didn\'t come back did not come back.',
+  ])
+  if (F.has('ugandan_aids_generation') && Math.random() < 0.22) return pick([
+    '"Slim." The village learned the word before the word AIDS arrived. The learning was in watching — the weight lost, the progression, the specific shape of it.',
+    'Uganda was first. That is both true and not something that explains what it meant to be in a village where people were dying of something that had no name yet.',
+    phase === 'late_life'
+      ? 'The ABC campaign came. The numbers improved. Uganda is held up in global health discussions as a success story. The success story includes the village you knew in 1988.'
+      : 'The disease followed the roads — truck routes, trading routes, the routes of movement. That is how you understood the geography of risk before you had that vocabulary.',
+  ])
+  if (F.has('museveni_liberation_generation') && Math.random() < 0.18) return pick([
+    '"No army has the right to mishandle you." You were present for the speech. You knew what it meant to hear that sentence in Uganda in January 1986.',
+    phase === 'late_life'
+      ? 'You remember what the 1986 hope felt like. The distance between that hope and what followed is the education. You have it. You would not give it back.'
+      : 'The liberation was real. The question of what it became is also real. You are old enough to hold both.',
+  ])
+  if (F.has('museveni_consolidation_generation') && Math.random() < 0.2) return pick([
+    'He removed the term limits. The man who had called term limits essential for African democracy removed his own. You were present for the original speech and for the amendment.',
+    phase === 'late_life'
+      ? 'Thirty-five years. You have lived your entire adult life under the same government. That is a specific kind of knowledge about what governments become.'
+      : 'The NRM that liberated Uganda and the NRM that managed the 2021 election are technically the same party. The distance between them is the story.',
+  ])
+  if (F.has('kampala_informal_generation') && Math.random() < 0.15) return pick([
+    'The boda-boda gets you there faster than anything else in Kampala traffic. That it also kills more people than almost anything else in Uganda is the trade-off you have learned to make.',
+  ])
+
   // ─── NEIGHBORHOOD TIER TEXTURE ───────────────────────────────────────────────
   {
     const nbhTier = state.currentNeighborhoodTier

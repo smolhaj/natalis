@@ -2580,4 +2580,55 @@ export const FLAG_REGISTRY = {
     notes: 'Set by nga_419_scam_culture.',
   },
 
+  // ── Uganda ────────────────────────────────────────────────────────────────────
+  amin_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived under Idi Amin\'s Uganda 1971–79 — State Research Bureau terror, arbitrary disappearances, fear as the ambient condition',
+    intent: 'year_texture',
+    notes: 'Set by uga_amin_era.',
+  },
+  amin_asian_expulsion: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Asian-Ugandan expelled in 1972 — 90 days to leave, businesses and properties confiscated, three generations of belonging erased',
+    intent: 'year_texture',
+    notes: 'Set by uga_asian_expulsion_1972. Asian ethnicity guard.',
+  },
+  ugandan_aids_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Grew up in Uganda during the "Slim" epidemic — watched the village lose people before the disease had a name, ABC campaign era',
+    intent: 'year_texture',
+    notes: 'Set by uga_slim_disease.',
+  },
+  museveni_liberation_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Present for the 1986 NRA liberation — the hope of the January 26 moment, the specific quality of believing in a government for the first time',
+    intent: 'year_texture',
+    notes: 'Set by uga_museveni_liberation_1986.',
+  },
+  lra_northern_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the LRA years in northern Uganda — night commuting, child abductions, the geography of fear in Gulu and Kitgum',
+    intent: 'year_texture',
+    notes: 'Set by uga_lra_northern. Two branches: in the north, or in Kampala.',
+  },
+  museveni_consolidation_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Watched Museveni remove term limits and consolidate 30+ year rule — the distance between 1986 and now as the education',
+    intent: 'year_texture',
+    notes: 'Set by uga_museveni_consolidation.',
+  },
+  kampala_informal_generation: {
+    weight: 'minor',
+    category: 'experience',
+    description: 'Lived in the boda-boda city — Kampala organized around motorcycle taxis, the informal economy\'s most visible institution',
+    intent: 'year_texture',
+    notes: 'Set by uga_boda_boda_city.',
+  },
+
 }
