@@ -2593,6 +2593,37 @@ function buildYearTexture(state) {
     'The thing that was true about Serbia for eleven years stopped being true in an afternoon. The adjustment took longer.',
   ])
 
+  // ─── SOUTH KOREA TEXTURE ─────────────────────────────────────────────────────
+  if (F.has('gwangju_generation') && Math.random() < 0.3) return pick([
+    'Gwangju was suppressed from the national record for almost a decade. You knew before the record admitted it. That gap is a specific kind of knowledge.',
+    phase === 'late_life'
+      ? 'The country has now officially named what happened in Gwangju. The naming came thirty years after the fact. You were there for the thirty years of not-naming.'
+      : 'May 18, 1980: the paratroopers, the nine days, the disputed number. You have held this in an unofficial way for years.',
+  ])
+  if (F.has('korean_imf_generation') && Math.random() < 0.3) return pick([
+    'IMF agejeong — the category large enough to have a name. The desks that emptied stayed empty. The people who lost their jobs that year have a specific relationship to job security that those who didn\'t cannot quite access.',
+    'The gold donation drives: wedding rings, school medals. The gesture was real. The structural adjustment happened anyway. You remember both.',
+    phase === 'late_life'
+      ? 'The 1997 crisis restructured an economy and a generation. The generation got restructured whether it wanted to or not.'
+      : 'The won fell, the IMF came, the conditions arrived. You were in the middle of your working life. You adjusted.',
+  ])
+  if (F.has('june_struggle_generation') && Math.random() < 0.2) return pick([
+    'June 1987: Lee Han-yeol falls, the photograph circulates, and the office workers come out into the street beside the students. The direct election happens. You voted in it.',
+    'After twenty-six years of military government, democracy arrived because enough people were in the street at the same time. You were one of the conditions for its arrival.',
+  ])
+  if (F.has('hallyu_generation') && Math.random() < 0.2) return pick([
+    'Korean drama is on screens in countries your grandparents never heard of. You grew up in a country that was not a cultural exporter. The country that exports culture now is the same country with a different relationship to what it made.',
+    'The hallyu wave was not an accident. After 1997, the government put money into cultural industries. The music and the dramas are real things that also happened to be policy.',
+  ])
+  if (F.has('korean_speed_culture') && Math.random() < 0.2) return pick([
+    'Ppalli-ppalli: the pace you were raised at. Somewhere else, you notice slowness the way other people notice speed. The default is set and you cannot unset it.',
+    'The broadband is the fastest. The delivery comes in thirty minutes. The expectation is that everything arrives before it has finished being made. You have internalized this.',
+  ])
+  if (F.has('korean_economic_miracle_worker') && Math.random() < 0.2) return pick([
+    'You worked in the factory during the miracle years. The country\'s GDP doubled. Your wages rose slightly. The ratio stayed roughly constant. You built the thing that gets called the miracle.',
+    'The Saemaul Undong posters said diligence, self-help, cooperation. The posters were correct about what was required. They were less clear about who it was required for.',
+  ])
+
   // ─── ERA TEXTURE ─────────────────────────────────────────────────────────────
   if (F.has('spanish_flu_generation') && Math.random() < 0.25) return pick([
     'The disease moved through the city in 1918 faster than any official account could follow. You remember the funerals, or the absence of funerals — the bodies moved quietly.',

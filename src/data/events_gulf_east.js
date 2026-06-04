@@ -236,6 +236,129 @@ export const GULF_EAST_EVENTS = [
     effect: null,
   },
 
+  {
+    id: 'korea_factory_1970s',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'South Korea' &&
+      G.currentYear >= 1965 && G.currentYear <= 1985 &&
+      G.age >= 18 && G.age <= 35 &&
+      !G.mem.koreaFactory,
+    text: 'The factory is part of the miracle. South Korea\'s growth rate is 9.2 percent per year. It requires labour, and the labour is you. The shifts are twelve hours. The dormitories hold eight to a room. The Saemaul Undong posters on the wall say diligence, self-help, cooperation. The wages are low enough that the chaebol model requires them to be low. You are building the country that you were told you were building. You are also building the profit margin of someone you will never meet.',
+    choices: [
+      {
+        text: 'You stay. You send money home and study at night.',
+        tag: null,
+        outcome: 'Three years. You move to a slightly better position. The country\'s GDP doubles. Your wages rise slightly. The ratio stays roughly constant.',
+        effect: (p) => { p.m -= 5; p.e += 4; p.mo += 800; p.addFlag('korean_economic_miracle_worker'); p.setMem('koreaFactory', true) },
+      },
+      {
+        text: 'You join the labour organizers.',
+        tag: null,
+        outcome: 'The KCIA\'s interest in labour organizers is not theoretical. You learn the cost of the category before you finish learning what the category means.',
+        effect: (p) => { p.m -= 8; p.karma += 8; p.addFlag('korean_economic_miracle_worker'); p.addFlag('labor_organizer'); p.setMem('koreaFactory', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'korea_gwangju_1980',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'South Korea' &&
+      G.currentYear === 1980 &&
+      G.age >= 15 &&
+      !G.mem.koreaGwangju,
+    text: 'May 18, 1980. Gwangju. After Park Chung-hee\'s assassination, Chun Doo-hwan seizes power by military coup. When students and citizens protest in Gwangju, the paratroopers are sent in. What happens in the following nine days will be suppressed from national discourse for almost a decade. The number of dead is disputed. The military\'s tally is 144. Civil society\'s is higher. For those who are not in Gwangju, the news arrives in fragments and then does not arrive at all.',
+    choices: [
+      {
+        text: 'You are in Gwangju.',
+        tag: null,
+        outcome: 'You will not talk about it for years because there is no safe context in which to talk about it. The memory acquires the specific quality of things that cannot yet be named.',
+        effect: (p) => { p.m -= 18; p.h -= 8; p.r += 10; p.addFlag('gwangju_generation'); p.setMem('koreaGwangju', true) },
+      },
+      {
+        text: 'You are not in Gwangju, but you know people who were.',
+        tag: null,
+        outcome: 'The official account and the accounts of people you trust do not agree. You file this. You continue to file this for the next decade, until the country is ready to look at it.',
+        effect: (p) => { p.m -= 10; p.r += 7; p.addFlag('gwangju_generation'); p.setMem('koreaGwangju', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'korea_democracy_1987',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'South Korea' &&
+      G.currentYear === 1987 &&
+      G.age >= 18 &&
+      !G.mem.koreaDemocracy,
+    text: 'June 1987. The student protests have been running for weeks. On June 9, a student named Lee Han-yeol is hit by a tear-gas canister at Yonsei University and photographs of his fall circulate. The protests become something else — not just students but office workers, the middle class, people in suits. On June 29 Roh Tae-woo announces direct presidential elections. The moment has a name now: the June Democratic Struggle. After twenty-six years of military government, direct elections will happen.',
+    choices: null,
+    effect: (p) => { p.m += 10; p.karma += 5; p.addFlag('june_struggle_generation'); p.setMem('koreaDemocracy', true) },
+  },
+
+  {
+    id: 'korea_imf_crisis_1997',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'South Korea' &&
+      G.currentYear >= 1997 && G.currentYear <= 1999 &&
+      G.age >= 28 &&
+      !G.mem.koreaIMF,
+    text: 'November 1997. The won collapses. The IMF arrives with $58 billion and conditions: mass layoffs, asset sales to foreign investors, labour market "flexibility." The chaebols — Daewoo, Hyundai, Samsung — begin restructuring. Daewoo will cease to exist. Your father\'s generation considered lifetime employment a social contract. The IMF calls the contract inefficient. People donate gold jewellery to help pay the national debt — wedding rings, school medals. The donations are real, and the gesture is real, and the structural adjustment happens anyway.',
+    choices: [
+      {
+        text: 'You lose your job in the restructuring.',
+        tag: null,
+        outcome: 'The category is IMF agejeong — IMF laid-off. It is large enough to have a name. You are in it.',
+        effect: (p) => { p.m -= 16; p.mo -= Math.floor((p.mo ?? 0) * 0.4); p.addFlag('korean_imf_generation'); p.setMem('koreaIMF', true) },
+      },
+      {
+        text: 'Your job survives. Your colleagues\' do not.',
+        tag: null,
+        outcome: 'The survivor\'s version: you keep your desk, your badge, your salary, and you watch the restructuring happen around you. The desks that empty stay empty for a long time.',
+        effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('korean_imf_generation'); p.setMem('koreaIMF', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'korea_hallyu_2000s',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'South Korea' &&
+      G.currentYear >= 2000 && G.currentYear <= 2015 &&
+      G.age >= 30 &&
+      !G.mem.koreaHallyu,
+    text: 'Korean drama is being watched in China, Vietnam, the Philippines. Korean music is charting in markets that a generation ago would not have recognized the country\'s name. The cultural wave has a name: hallyu. It is a soft-power outcome of the IMF crisis, in an indirect way — the government invested in cultural industries when the manufacturing economy failed. The country you grew up in was not a cultural exporter. The country your children are growing up in is.',
+    choices: null,
+    effect: (p) => { p.m += 6; p.addFlag('hallyu_generation'); p.setMem('koreaHallyu', true) },
+  },
+
+  {
+    id: 'korea_ppalli_ppalli',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'South Korea' &&
+      G.currentYear >= 1990 && G.currentYear <= 2020 &&
+      G.age >= 22 &&
+      !G.mem.koreaPpalli,
+    text: 'Ppalli-ppalli: hurry, hurry. The phrase is a cultural value. The broadband is the fastest in the world. The delivery arrives in thirty minutes. The social expectation is that everything happens faster than the speed at which anything naturally happens. You have internalized this. You notice it when you are somewhere else — the slowness of other cities, the way people wait — and what you feel is not quite impatience. It is the specific disorientation of a pace that is no longer yours.',
+    choices: null,
+    effect: (p) => { p.m -= 3; p.e += 3; p.addFlag('korean_speed_culture'); p.setMem('koreaPpalli', true) },
+  },
+
   // ── WEALTHY EAST (SINGAPORE/TAIWAN) ──────────────────────────────────────────
 
   {

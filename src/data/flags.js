@@ -2260,4 +2260,48 @@ export const FLAG_REGISTRY = {
     notes: 'Set by decolonisation_disillusionment_1970s world event. Affects subsaharan/developing_urban/developing_unstable archetypes, ages 15+.',
   },
 
+  // ── South Korea ───────────────────────────────────────────────────────────────
+  korean_economic_miracle_worker: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Worked in the chaebol factory economy during South Korea\'s 9.2% annual growth miracle, 1960s-80s',
+    intent: 'year_texture',
+    notes: 'Set by korea_factory_1970s. Two branches: stayed/studied, or organized labour.',
+  },
+  gwangju_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through or near the May 18, 1980 Gwangju Uprising — paratroopers, suppressed death count, decade of silence',
+    intent: 'year_texture',
+    notes: 'Set by korea_gwangju_1980. Two branches: in Gwangju, or knew people who were.',
+  },
+  june_struggle_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed the June 1987 democratic struggle — Lee Han-yeol, office workers in streets, direct elections won',
+    intent: 'year_texture',
+    notes: 'Set by korea_democracy_1987.',
+  },
+  korean_imf_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the 1997-98 IMF crisis — won collapse, mass layoffs, gold donation drives, chaebol restructuring',
+    intent: 'year_texture',
+    notes: 'Set by korea_imf_crisis_1997. Two branches: laid off, or survived.',
+  },
+  hallyu_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived to see Korean cultural exports (drama, music) become a global force — hallyu wave 2000s-2010s',
+    intent: 'year_texture',
+    notes: 'Set by korea_hallyu_2000s.',
+  },
+  korean_speed_culture: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Internalized ppalli-ppalli (hurry-hurry) — South Korea\'s cultural tempo as a personal rhythm',
+    intent: 'year_texture',
+    notes: 'Set by korea_ppalli_ppalli.',
+  },
+
 }
