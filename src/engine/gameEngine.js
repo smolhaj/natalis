@@ -1386,6 +1386,37 @@ function buildYearTexture(state) {
     ])
   }
 
+  // ─── SIBLING TEXTURE ──────────────────────────────────────────────────────────
+
+  {
+    const sibs = state.siblings ?? []
+    const closeSib = sibs.find(s => s.alive && (s.relationshipQuality ?? 50) >= 68)
+    if (closeSib && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.18) {
+      const sn = closeSib.name.split(' ')[0]
+      if (phase === 'late_life') return pick([
+        `${sn} is one of the few people who knew you before you became the person you are. There is a specific relief in not having to explain your origins.`,
+        `You and ${sn} speak on the phone with the ease of people who have been having the same conversation, in different forms, for decades.`,
+        `${sn} was there from the beginning. You have moved through different versions of yourself and ${sn} has known all of them. That is a particular kind of being known.`,
+        `The relationship with ${sn} in your later years is a long thread that started before you had any say in who would be at the other end.`,
+      ])
+      return pick([
+        `You and ${sn} are at different points in lives that started from the same place. You find this interesting.`,
+        `${sn} is having a difficult year. You are not sure how much to offer and how much to leave alone. You navigate this.`,
+        `${sn} calls. The conversation covers the usual territory. Some conversations don't need to break new ground to be worth having.`,
+        `You and ${sn} are still in each other's lives. That is not guaranteed — you know families where it is not — and you don't take it for granted.`,
+      ])
+    }
+    const deadSib = sibs.find(s => !s.alive)
+    if (deadSib && F.has('lost_sibling') && phase === 'late_life' && Math.random() < 0.15) {
+      const sn = deadSib.name.split(' ')[0]
+      return pick([
+        `You are one of the people who remember ${sn} as they were. That becomes, in time, a responsibility you did not ask for.`,
+        `${sn} would have been ${age + Math.abs(deadSib.ageDiff ?? 0)} this year. You note it and move through it.`,
+        `You are the last one who remembers certain things about ${sn}. You try to hold them carefully.`,
+      ])
+    }
+  }
+
   // ─── POST-CRISIS ADJUSTMENT ───────────────────────────────────────────────────
 
   if (F.has('recently_released')) {
@@ -1417,6 +1448,30 @@ function buildYearTexture(state) {
   }
   if (F.has('survived_bombardment')) {
     return 'The war is over, or over here. The sounds stay for a while.'
+  }
+
+  // ─── CRIMINAL RECORD AMBIENT ──────────────────────────────────────────────────
+
+  {
+    const crimRecord = state.criminalRecord ?? []
+    if (crimRecord.length > 0 && !state.inPrison && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.2) {
+      const hasViolent = crimRecord.some(r => r.category === 'violent')
+      if (hasViolent) return pick([
+        'The record includes what it includes. You have stopped expecting it to say something other than what it says.',
+        'Some things you did are documented. The documentation is permanent. You are working out what to do with a permanent thing.',
+        phase === 'late_life'
+          ? 'You are a different person from the one in the record. The record has not updated to reflect this. Records don\'t.'
+          : 'The violent conviction is there. You carry it without, most days, leading with it. That is the work.',
+      ])
+      return pick([
+        'There is a box on the form. You know the box. You have learned the specific texture of the pause before you mark it.',
+        'The record follows you in ways that are not dramatic — not every day — but appear at the moments that matter.',
+        'You have built something on top of the record. The record is still there, underneath. That is the arrangement.',
+        phase === 'late_life'
+          ? 'Decades past the conviction. The distance is not the same as absence. But it is something.'
+          : 'Some opportunities have a requirement that you do not meet. You have learned to identify which ones before applying.',
+      ])
+    }
   }
 
   // ─── RESIDENCY / EMIGRANT TEXTURE ────────────────────────────────────────────
