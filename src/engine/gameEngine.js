@@ -4127,6 +4127,72 @@ function buildYearTexture(state) {
     'The connection between the gas discovery and the insurgency in Cabo Delgado is not simple. It is also not a coincidence. Nine hundred thousand displaced. Total evacuated its base. The gas is still there.',
   ])
 
+  // ─── AFGHANISTAN TEXTURE ─────────────────────────────────────────────────────
+  if (F.has('afghan_saur_generation') && Math.random() < 0.16) return pick([
+    'The communists who took power in 1978 were trying to change a country faster than the country could be changed. The disappearances were part of the project.',
+    'The red flag with the Soviet-backed star. The literacy campaigns. The land reform. The Islamic scholars in the prisons. You grew up in the collision of those forces.',
+  ])
+  if (F.has('afghan_soviet_war_generation') && Math.random() < 0.22) return pick([
+    'A million dead. Five million refugees. Ten years. The Soviet army left in 1989. The country it left behind was a different country from the one it entered.',
+    'The war was everywhere and nowhere at once — in some provinces it was over the ridge, in others it was in the next village, in Kabul it was in the rockets landing from the south.',
+    phase === 'late_life'
+      ? 'You have been carrying this war for most of your life. The country had wars after that war. You carry those too.'
+      : 'The Stinger missiles the CIA provided through Pakistan changed the air war. That is a fact about geopolitics. You experienced it as survival arithmetic.',
+  ])
+  if (F.has('afghan_combatant') && Math.random() < 0.2) return pick([
+    'You were a fighter in a war that lasted ten years and did not end cleanly. The things it asked of you are specific.',
+    'The men you fought with — some of them are dead, some of them are in the diaspora, some of them became something else when the war became something else.',
+    phase === 'late_life'
+      ? 'You are old enough now to think about what the fighting made of you, not just what it cost. The two questions are different.'
+      : 'The war trained you in something that peacetime does not ask for and cannot untrain.',
+  ])
+  if (F.has('afghan_refugee') && Math.random() < 0.2) return pick([
+    'Peshawar. Quetta. Tehran. The diaspora apartment. Afghan in a place that was not Afghanistan. That was the condition and it lasted longer than anyone said it would.',
+    'The country you left exists in two versions now: the one in your memory and the one that has continued without you. The two have diverged.',
+    phase === 'late_life'
+      ? 'You spent more of your life outside Afghanistan than in it. The Afghan-ness is still the primary fact, even from a distance.'
+      : 'The refugee camp or the city apartment or the diaspora cousin\'s floor. You built a life on that beginning. That is not a small thing.',
+  ])
+  if (F.has('afghan_civil_war_generation') && Math.random() < 0.2) return pick([
+    'The country that defeated the Soviet Union was destroyed by the men who defeated it. Kabul was reduced to rubble by the mujahideen factions who had agreed they would share it and then did not.',
+    'Seventy thousand civilians in Kabul. Four years. The rockets came from Hekmatyar to the south and Massoud\'s men returned them and the people in between were the ones who died.',
+  ])
+  if (F.has('afghan_women_under_taliban') && Math.random() < 0.25) return pick([
+    'The school was closed. The job was forbidden. The public space was not yours. You existed inside a set of rules designed to make your existence conditional.',
+    'The women you know found different strategies for surviving inside the Taliban rules. You found yours. The strategies are not the same as freedom. They are what you had.',
+    phase === 'late_life'
+      ? 'You have now seen women\'s rights in Afghanistan taken away twice. The second time, you knew exactly what was coming and what it would cost.'
+      : 'The knowledge of what a government can take from you in twenty-four hours is not theoretical. It is something you carry.',
+  ])
+  if (F.has('afghan_taliban_generation') && !F.has('afghan_women_under_taliban') && Math.random() < 0.2) return pick([
+    'The beard was mandatory. The music was gone. The kite in the sky that used to be ordinary was gone. You calibrated your life to the new rules, which is different from accepting them.',
+    'The Taliban\'s Afghanistan had a specific quality of enforced public piety. What happened in private was between you and the religious police\'s ability to find out.',
+    phase === 'late_life'
+      ? 'You have lived under Taliban rule twice. The second time you understood faster what would be taken and what you could protect and what you could not.'
+      : 'The rules were specific and the enforcement was specific and the ways around them were specific. You learned all three.',
+  ])
+  if (F.has('afghan_2001_generation') && Math.random() < 0.18) return pick([
+    'The Kabul of 2003 and 2005 and 2008 was something being built. You were part of what was being built. The building was real even when the corruption was also real.',
+    'Girls in school. Music back. The aid economy creating a new middle class. The international presence making certain things possible. That was a real decade. The end of it was also real.',
+    phase === 'late_life'
+      ? 'You lived through the hope of it and the slow erosion of it and the end of it. The hope was not naive — it was in specific buildings and specific faces and you knew them.'
+      : 'The international community came with their Land Cruisers and their salaries and their projects. Some of what they built lasted. Some of it lasted until August 2021.',
+  ])
+  if (F.has('afghan_fall_2021') && Math.random() < 0.22) return pick([
+    'August 15, 2021. Eleven days. The army dissolved without fighting. The president left. The Taliban walked into the presidential palace and took photographs.',
+    'The airport in those days: tens of thousands of people pushing at the gates, people falling from planes, the chaos of an evacuation that was not planned for the speed of the collapse.',
+    phase === 'late_life'
+      ? 'You have now seen Afghanistan fall twice to the Taliban. The second time you knew what was coming before it arrived. The knowing did not make it different.'
+      : 'The girls\' schools closed again. The women who had built careers as doctors, journalists, judges — they disappeared into houses. The twenty years had to find new containers.',
+  ])
+  if (F.has('afghan_evacuee') && Math.random() < 0.2) return pick([
+    'You are out. The country you left is specific. The things you left behind are specific. You know exactly what you had and what you no longer have access to.',
+    'The country you arrived in does not know your name. You are starting again in the only way available: forward.',
+    phase === 'late_life'
+      ? 'You got out in August 2021. That sentence requires understanding what August 2021 was to have its full weight.'
+      : 'Afghan in a place that is not Afghanistan. Again. The second time the exile has different weight from the first.',
+  ])
+
   // ─── ZAMBIA TEXTURE ──────────────────────────────────────────────────────────
   if (F.has('zambian_kaunda_generation') && Math.random() < 0.17) return pick([
     'Zambian Humanism: Man at the Centre. The philosophy was in the school curriculum. The copper was in the state. The one-party system was in the background of every civic fact.',

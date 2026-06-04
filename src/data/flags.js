@@ -3231,4 +3231,86 @@ export const FLAG_REGISTRY = {
     notes: 'Set by moz_gas_cabo_delgado.',
   },
 
+  // ─── AFGHANISTAN ──────────────────────────────────────────────────────────────
+
+  afghan_saur_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up during the Saur Revolution and Soviet-backed PDPA communist rule — land reform, literacy campaigns, and disappearances',
+    intent: 'year_texture',
+    notes: 'Set by afg_saur_revolution_1978.',
+  },
+
+  afghan_soviet_war_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the Soviet-Afghan War 1979–1989 — 1 million dead, 5 million refugees, mujahideen jihad',
+    intent: 'year_texture',
+    notes: 'Set by afg_soviet_occupation.',
+  },
+
+  afghan_combatant: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Fought in the Afghan wars — as mujahideen, soldier, or resistance; carries the specific knowledge of having been in the war',
+    intent: 'year_texture',
+    notes: 'Set by afg_soviet_occupation (choice 1).',
+  },
+
+  afghan_refugee: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Fled Afghanistan — to Pakistan, Iran, or the diaspora; Afghan in a place that is not Afghanistan',
+    intent: 'year_texture',
+    notes: 'Set by afg_soviet_occupation (choice 2).',
+  },
+
+  afghan_civil_war_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the post-Soviet civil war 1992–1996 — warlords, Kabul destroyed, 70,000 civilian dead',
+    intent: 'year_texture',
+    notes: 'Set by afg_civil_war_kabul.',
+  },
+
+  afghan_taliban_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived under Taliban rule 1996–2001 — schools closed for girls, music/TV/kite-flying banned, religious police',
+    intent: 'year_texture',
+    notes: 'Set by afg_taliban_rule.',
+  },
+
+  afghan_women_under_taliban: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Experienced Taliban rule as a woman — banned from work, school, public life without a male guardian',
+    intent: 'year_texture',
+    notes: 'Set by afg_taliban_rule (choice 1, female experience).',
+  },
+
+  afghan_2001_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the 2001 US invasion and the "Kabul bubble" — girls\' schools reopening, aid economy, reconstruction hope',
+    intent: 'year_texture',
+    notes: 'Set by afg_us_invasion_2001.',
+  },
+
+  afghan_fall_2021: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Alive when Kabul fell in August 2021 — eleven days, airport chaos, Taliban return, everything built in 20 years at risk',
+    intent: 'year_texture',
+    notes: 'Set by afg_taliban_return_2021.',
+  },
+
+  afghan_evacuee: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Evacuated from Afghanistan in August 2021 — through the airport, the border, or some other route; starting over',
+    intent: 'year_texture',
+    notes: 'Set by afg_taliban_return_2021 (choice 1, got out).',
+  },
+
 }
