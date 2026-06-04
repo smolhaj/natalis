@@ -1634,25 +1634,52 @@ function buildYearTexture(state) {
   if (residencyStatus === 'climate_displaced') {
     return 'You are here because you had to be. That is not the same as being home.'
   }
-  if (F.has('emigrated') && (yearsAbroad ?? 0) <= 2 && (yearsAbroad ?? 0) > 0) {
-    return pick([
-      'You are still learning what normal means here.',
-      'The customs are mostly decipherable now. Mostly.',
-    ])
-  }
-  if (F.has('emigrated') && (yearsAbroad ?? 0) >= 3 && (yearsAbroad ?? 0) <= 6) {
-    return pick([
-      'You have made a life here. It is a real life, not a placeholder.',
-      'The old country comes back in dreams, sometimes. The new one is where you are when you wake.',
-    ])
-  }
-  if (F.has('emigrated') && (yearsAbroad ?? 0) > 10) {
-    return pick([
-      'There is a version of you that stayed. You don\'t think about it much.',
-      'This is where you live now. The word home has become complicated.',
-      'You have been gone long enough that going back would be its own kind of leaving.',
-    ])
-  }
+  if (residencyStatus === 'work_visa' && F.has('emigrated') && Math.random() < 0.3) return pick([
+    'The visa has an expiry date. Your life here does not feel like it should expire on that date.',
+    'The status is temporary by definition. You are building something permanent inside a temporary category.',
+    'The paperwork for renewal arrives and you process it the way you process maintenance on the apartment — something that must be done, not something that asks anything of your inner life.',
+  ])
+  if (residencyStatus === 'asylum_seeker' && Math.random() < 0.4) return pick([
+    'The claim is pending. The pending is how you live now.',
+    'You wait in the specific suspension of an unresolved status. You have become expert at waiting in this specific way.',
+    'The decision is somewhere in a queue. The queue is not visible. You arrange your life around a centre that has not yet said yes.',
+  ])
+  if (residencyStatus === 'refugee_status' && F.has('emigrated') && Math.random() < 0.3) return pick([
+    'You have the right to remain. That sentence — the right to remain — took time to fully arrive.',
+    'Refugee status is a category. Inside the category is a specific person in a specific situation. The category gives you the protection. The specificity is yours to carry.',
+    phase === 'late_life'
+      ? 'You built a life on refugee status. The protection held. The life it held is real.'
+      : 'You are here legally. The legal word on the paper does not cover the whole of what you are.',
+  ])
+  if (F.has('emigrated') && (yearsAbroad ?? 0) >= 1 && (yearsAbroad ?? 0) <= 2) return pick([
+    'You are still learning what normal means here.',
+    'The customs are mostly decipherable now. Mostly.',
+    'The language is getting easier. The subtleties are still arriving.',
+    'The supermarket is legible. The rest of it is still being figured out.',
+  ])
+  if (F.has('emigrated') && (yearsAbroad ?? 0) >= 3 && (yearsAbroad ?? 0) <= 6) return pick([
+    'You have made a life here. It is a real life, not a placeholder.',
+    'The old country comes back in dreams, sometimes. The new one is where you are when you wake.',
+    'You have friends here who do not know you from before. That is both freedom and a particular kind of loss.',
+    partner
+      ? 'You and ' + (partner.name?.split(' ')[0] ?? 'your partner') + ' have built something here. The building took more than you expected.'
+      : 'The network you have built here is smaller and more deliberate than the one you were born into.',
+  ])
+  if (F.has('emigrated') && (yearsAbroad ?? 0) >= 7 && (yearsAbroad ?? 0) <= 12) return pick([
+    'You have been here long enough that going back for a visit requires explaining who you have become.',
+    'The old habits are still there, below the acquired ones. They surface in times of stress.',
+    'You exist in a specific way: fully here and carrying elsewhere. That is the permanent condition now.',
+    'The accent — yours, or your children\'s, or the lack of one in the second generation — tells the story without you having to.',
+  ])
+  if (F.has('emigrated') && (yearsAbroad ?? 0) > 12) return pick([
+    'There is a version of you that stayed. You don\'t think about it much.',
+    'This is where you live now. The word home has become complicated.',
+    'You have been gone long enough that going back would be its own kind of leaving.',
+    phase === 'late_life'
+      ? 'You spent more of your life here than where you came from. The numbers don\'t resolve the question of where you\'re from.'
+      : 'The country you came from has changed. The country you are in has changed. You are somewhere between both.',
+    'The old country is for holidays and funerals. The new one is for ordinary Tuesdays. The distribution has been clear for years.',
+  ])
 
   // ─── AUTHORITARIAN / CONFLICT CONTEXT ────────────────────────────────────────
 
