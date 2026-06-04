@@ -3840,6 +3840,41 @@ function buildYearTexture(state) {
     'The man who started the Arab Spring was a street vendor whose cart was confiscated. That detail is specific on purpose — it is the whole economic model visible in one scene.',
   ])
 
+  // ─── ZAMBIA TEXTURE ──────────────────────────────────────────────────────────
+  if (F.has('zambian_kaunda_generation') && Math.random() < 0.17) return pick([
+    'Zambian Humanism: Man at the Centre. The philosophy was in the school curriculum. The copper was in the state. The one-party system was in the background of every civic fact.',
+    'The welfare state that copper built was real — the schools, the clinics, the civil service. It was built on a single commodity and a single party, and you grew up inside that arrangement.',
+  ])
+  if (F.has('zambian_copper_belt_generation') && Math.random() < 0.22) return pick([
+    'The Copper Belt in the good years: Kitwe, Ndola, Luanshya, Chingola. The miner\'s wage was the best wage in the country. The company provided the housing and the school and the clinic.',
+    'Zambia was briefly wealthier per capita than South Korea. The copper did that. The copper gave and then the copper took.',
+    phase === 'late_life'
+      ? 'You were in the Copper Belt when the copper was paying. The compound, the union meetings, the expectation of improvement that seemed reasonable then. You watched those expectations get revised.'
+      : 'The copper miner\'s union was organised, articulate, connected to the international labour movement. That world had a specific weight and texture and you were in it.',
+  ])
+  if (F.has('zambian_copper_crash_generation') && Math.random() < 0.22) return pick([
+    '1975: the copper price collapses. Ninety-five percent of Zambia\'s export earnings. The welfare state that copper built starts to hollow out. The schools are still the schools but the budget is not the budget.',
+    'The IMF structural adjustment: cut subsidies, devalue the currency, retrench the state. The mealie meal subsidy is removed. The bread riots happen. The explanation is macroeconomically correct. The mealie meal is still more expensive.',
+    phase === 'late_life'
+      ? 'You are old enough to remember the Zambia that was being built and the Zambia that was deferred when the copper price collapsed. Both versions are in the same memory.'
+      : 'The contraction was not sudden — it was gradual, a hollowing-out. The housing maintained less well. The clinic with fewer drugs. The expectation that things would improve, quietly revised.',
+  ])
+  if (F.has('zambian_democracy_generation') && Math.random() < 0.18) return pick([
+    'Kaunda said: "I have been defeated." He had governed since independence in 1964. He said it and stepped down. That was not supposed to happen in southern Africa in 1991 and it did.',
+    'The MMD won with 76 percent. The cheering in the streets was for the transfer itself as much as for Chiluba. The act of counting and accepting — that was what people were cheering.',
+  ])
+  if (F.has('zambian_aids_generation') && Math.random() < 0.22) return pick([
+    'One in five Zambian adults HIV-positive by the mid-1990s. Life expectancy from fifty-four in 1980 to forty in 2000. You know people who are sick. You know people who have died.',
+    'The anti-retrovirals arrive in the early 2000s — slowly, expensively. Before them, the treatment was absence of treatment. The generation between twenty and forty bears most of the dying.',
+    phase === 'late_life'
+      ? 'You are in the generation that survived. The ones who didn\'t are specific people with specific names. You carry their names differently as the years accumulate.'
+      : 'The copper belt towns are among the worst hit — the mobile mining workforce, the trucking routes, the compound life that was designed for density without understanding what density means for transmission.',
+  ])
+  if (F.has('zambian_evangelical_generation') && Math.random() < 0.15) return pick([
+    'Zambia is a Christian nation — constitutionally, officially, since 1991. The Pentecostal churches grew faster than any other institution in the country through the contraction years.',
+    'The church provides what the contracting state no longer provides: the social network, the crisis fund, the Sunday. The prosperity gospel has a particular appeal in a country where the copper promises didn\'t all arrive.',
+  ])
+
   // ─── NEIGHBORHOOD TIER TEXTURE ───────────────────────────────────────────────
   {
     const nbhTier = state.currentNeighborhoodTier

@@ -3131,4 +3131,54 @@ export const FLAG_REGISTRY = {
     notes: 'Set by lby_gaddafi_oil_state.',
   },
 
+  // ─── ZAMBIA ───────────────────────────────────────────────────────────────────
+
+  zambian_kaunda_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up under Kenneth Kaunda\'s Humanism — the copper-funded welfare state, UNIP, Man at the Centre',
+    intent: 'year_texture',
+    notes: 'Set by zmb_kaunda_humanism.',
+  },
+
+  zambian_copper_belt_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Came of age in the Copper Belt company towns — Kitwe, Ndola, Luanshya, the miner\'s wage, the brief oil-state-of-Africa moment',
+    intent: 'year_texture',
+    notes: 'Set by zmb_copper_belt.',
+  },
+
+  zambian_copper_crash_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the 1975 copper price collapse and the IMF structural adjustment years — the hollowing-out of a welfare state',
+    intent: 'year_texture',
+    notes: 'Set by zmb_copper_crash.',
+  },
+
+  zambian_democracy_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed Zambia\'s 1991 democratic transfer of power — Kaunda loses to Chiluba, the first in southern Africa',
+    intent: 'year_texture',
+    notes: 'Set by zmb_democratic_transition_1991.',
+  },
+
+  zambian_aids_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the Zambian AIDS crisis — life expectancy falls to 40, the generation between 20 and 40 bears most of the dying',
+    intent: 'year_texture',
+    notes: 'Set by zmb_aids_crisis_1990s.',
+  },
+
+  zambian_evangelical_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Part of the Zambian evangelical wave — Zambia declared a Christian nation 1991, Pentecostal churches filling the gap left by the state',
+    intent: 'year_texture',
+    notes: 'Set by zmb_evangelical_wave.',
+  },
+
 }
