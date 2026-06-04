@@ -198,6 +198,7 @@ const INITIAL_STATE = {
   banked: false,
   hardCurrencyReserve: 0,
   workStatus: null, // 'formal' | 'informal' | 'unemployed' | 'subsistence' | null (child)
+  currentProject: null, // { type, startYear, phase, name } — slow-burn personal project
 }
 
 const _savedState = loadFromStorage()

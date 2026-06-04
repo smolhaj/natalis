@@ -6,35 +6,38 @@ import { CRIMES } from '../data/crimes'
 import { COUNTRIES } from '../data/countries'
 import { PROPERTY_TYPES, VEHICLE_TYPES } from '../data/assets'
 import { getAvailableCareers, dropOutOfSchool, BUSINESS_TYPES, getAvailableBusinessTypes, getPhase } from '../engine/gameEngine'
+import { CAREERS } from '../data/careers'
 
 const TOP_CATEGORIES = [
-  { key: 'mind_body',     label: 'Mind & Body',     emoji: '🧘', desc: 'Work on yourself' },
-  { key: 'hobbies',       label: 'Hobbies',          emoji: '🎸', desc: 'Practice skills and creative pursuits' },
-  { key: 'education',     label: 'Education',        emoji: '📚', desc: 'Study and learn' },
-  { key: 'love',          label: 'Love',             emoji: '❤️',  desc: 'Relationships' },
-  { key: 'fertility',     label: 'Fertility',        emoji: '👶', desc: 'Family planning' },
-  { key: 'nightlife',     label: 'Nightlife',        emoji: '🍸', desc: 'Go out and party' },
-  { key: 'movies',        label: 'Movie Theater',    emoji: '🎬', desc: 'Catch a film' },
-  { key: 'salon',         label: 'Salon & Spa',      emoji: '💆', desc: 'Take care of yourself' },
-  { key: 'shopping',      label: 'Shopping',         emoji: '🛍️',  desc: 'Treat yourself' },
-  { key: 'social_media',  label: 'Social Media',     emoji: '📱', desc: 'Manage your online presence' },
-  { key: 'plastic_surg',  label: 'Plastic Surgery',  emoji: '✂️',  desc: 'Enhance your appearance' },
-  { key: 'race_tracks',   label: 'Race Tracks',      emoji: '🏇', desc: 'Bet on the races' },
-  { key: 'rehab',         label: 'Rehab',            emoji: '☀️',  desc: 'Battle addictions' },
-  { key: 'substances',   label: 'Substances',       emoji: '💊', desc: 'Alcohol and drugs' },
-  { key: 'pets',          label: 'Pets',             emoji: '🐾', desc: 'Your animal companions' },
-  { key: 'licenses',      label: 'Licenses',         emoji: '🪪', desc: 'Get licenced' },
-  { key: 'assets',        label: 'Assets',           emoji: '🏠', desc: 'Property & vehicles' },
-  { key: 'money',         label: 'Money',            emoji: '💰', desc: 'Financial activities' },
-  { key: 'crime',         label: 'Crime',            emoji: '⚠️',  desc: 'Illegal activities' },
-  { key: 'career',        label: 'Career',           emoji: '💼', desc: 'Your working life' },
-  { key: 'business',      label: 'Business',         emoji: '🏢', desc: 'Run your own company' },
-  { key: 'friends',       label: 'Friends',          emoji: '👥', desc: 'Your social circle' },
-  { key: 'travel',        label: 'Travel',           emoji: '✈️',  desc: 'See the world' },
-  { key: 'immigration',   label: 'Immigration',       emoji: '🛂', desc: 'Residency & citizenship' },
-  { key: 'underground',   label: 'Go Underground',   emoji: '🕵️', desc: 'Evade the law' },
-  { key: 'prison',        label: 'Prison Life',       emoji: '🔒', desc: 'Activities inside' },
+  { key: 'mind_body',     label: 'Mind & Body',     emoji: '🧘', desc: 'Work on yourself',              group: 'Self' },
+  { key: 'salon',         label: 'Salon & Spa',      emoji: '💆', desc: 'Take care of yourself',         group: 'Self' },
+  { key: 'shopping',      label: 'Shopping',         emoji: '🛍️',  desc: 'Treat yourself',                group: 'Self' },
+  { key: 'plastic_surg',  label: 'Plastic Surgery',  emoji: '✂️',  desc: 'Enhance your appearance',       group: 'Self' },
+  { key: 'hobbies',       label: 'Hobbies',          emoji: '🎸', desc: 'Practice skills and creative pursuits', group: 'Pursuits' },
+  { key: 'education',     label: 'Education',        emoji: '📚', desc: 'Study and learn',               group: 'Pursuits' },
+  { key: 'movies',        label: 'Movie Theater',    emoji: '🎬', desc: 'Catch a film',                  group: 'Pursuits' },
+  { key: 'nightlife',     label: 'Nightlife',        emoji: '🍸', desc: 'Go out and party',              group: 'Pursuits' },
+  { key: 'love',          label: 'Love',             emoji: '❤️',  desc: 'Relationships',                 group: 'Relationships' },
+  { key: 'fertility',     label: 'Fertility',        emoji: '👶', desc: 'Family planning',               group: 'Relationships' },
+  { key: 'friends',       label: 'Friends',          emoji: '👥', desc: 'Your social circle',            group: 'Relationships' },
+  { key: 'pets',          label: 'Pets',             emoji: '🐾', desc: 'Your animal companions',        group: 'Relationships' },
+  { key: 'career',        label: 'Career',           emoji: '💼', desc: 'Your working life',             group: 'Work & Money' },
+  { key: 'business',      label: 'Business',         emoji: '🏢', desc: 'Run your own company',          group: 'Work & Money' },
+  { key: 'assets',        label: 'Assets',           emoji: '🏠', desc: 'Property & vehicles',           group: 'Work & Money' },
+  { key: 'money',         label: 'Money',            emoji: '💰', desc: 'Financial activities',          group: 'Work & Money' },
+  { key: 'licenses',      label: 'Licenses',         emoji: '🪪', desc: 'Get licenced',                  group: 'Work & Money' },
+  { key: 'social_media',  label: 'Social Media',     emoji: '📱', desc: 'Manage your online presence',   group: 'Social' },
+  { key: 'travel',        label: 'Travel',           emoji: '✈️',  desc: 'See the world',                 group: 'Social' },
+  { key: 'immigration',   label: 'Immigration',       emoji: '🛂', desc: 'Residency & citizenship',       group: 'Social' },
+  { key: 'crime',         label: 'Crime',            emoji: '⚠️',  desc: 'Illegal activities',            group: 'Risk' },
+  { key: 'substances',   label: 'Substances',       emoji: '💊', desc: 'Alcohol and drugs',             group: 'Risk' },
+  { key: 'race_tracks',   label: 'Race Tracks',      emoji: '🏇', desc: 'Bet on the races',              group: 'Risk' },
+  { key: 'rehab',         label: 'Rehab',            emoji: '☀️',  desc: 'Battle addictions',             group: 'Risk' },
+  { key: 'underground',   label: 'Go Underground',   emoji: '🕵️', desc: 'Evade the law',                 group: 'Risk' },
+  { key: 'prison',        label: 'Prison Life',       emoji: '🔒', desc: 'Activities inside',             group: 'Risk' },
 ]
+
+const CATEGORY_GROUP_ORDER = ['Self', 'Pursuits', 'Relationships', 'Work & Money', 'Social', 'Risk']
 
 const MARTIAL_DISCIPLINES = ['Jiu-Jitsu', 'Taekwondo', 'Judo', 'Karate', 'Kung Fu']
 const BELT_NAMES = ['white', 'yellow', 'orange', 'green', 'blue', 'purple', 'red', 'brown', 'black']
@@ -1285,6 +1288,30 @@ export default function ActivitiesPanel({ onClose }) {
         const isFugitive = (state.wanted || state.flags.includes('escaped_prisoner')) && !state.flags.includes('assumed_identity')
         const hasAssumedId = state.flags.includes('assumed_identity')
         const isBlockedFromFormal = isUndocumented || isFugitive
+
+        // Careers locked by education alone (all other requirements pass)
+        const eduOrder = ['none', 'primary', 'secondary', 'university', 'graduate']
+        const eduLabels = { primary: 'primary school', secondary: 'secondary education', university: 'a university degree', graduate: 'a graduate degree' }
+        const playerEduIdx = eduOrder.indexOf(state.education?.level ?? 'none')
+        const availableIds = new Set(available.map(c => c.id))
+        const gdpOrder = ['very_low', 'low', 'low_medium', 'medium', 'medium_high', 'high', 'very_high']
+        const lockedByEdu = CAREERS.filter(career => {
+          if (availableIds.has(career.id)) return false
+          if (career.id === state.career?.id) return false
+          if (career.partTime) return false
+          if (career.requirements.minAge && state.age < career.requirements.minAge) return false
+          if (career.requirements.maxAge && state.age > career.requirements.maxAge) return false
+          if (career.minYear && state.currentYear < career.minYear) return false
+          if (career.maxYear && state.currentYear > career.maxYear) return false
+          if (career.requirements.minSmarts && state.stats.smarts < career.requirements.minSmarts) return false
+          if (career.gdpRequired && career.gdpRequired !== 'any' && gdpOrder.indexOf(state.character.country.gdp) < gdpOrder.indexOf(career.gdpRequired)) return false
+          if (Array.isArray(career.archetypeAvailable) && !career.archetypeAvailable.includes(state.character.country.archetype)) return false
+          if (career.requirements.flags && !career.requirements.flags.some(f => state.flags.includes(f))) return false
+          // Only include if the blocker is education level
+          const reqEduIdx = eduOrder.indexOf(career.requirements.education)
+          return reqEduIdx > 0 && playerEduIdx < reqEduIdx
+        }).slice(0, 4)
+
         return (
           <>
             {isHomeless && (
@@ -1341,6 +1368,24 @@ export default function ActivitiesPanel({ onClose }) {
             )}
             {!isBlockedFromFormal && available.length === 0 && !state.career && (
               <p className="text-natalis-muted text-sm italic p-3">No careers available for your current qualifications.</p>
+            )}
+            {!isBlockedFromFormal && lockedByEdu.length > 0 && (
+              <>
+                <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-3">Requires more education</p>
+                {lockedByEdu.map(career => (
+                  <div key={career.id} className="rounded-xl border border-natalis-border bg-gray-50 px-4 py-3 opacity-60">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold text-natalis-text truncate">{career.levels[0].title}</p>
+                        <p className="text-xs text-natalis-muted mt-0.5">{career.description}</p>
+                      </div>
+                      <span className="text-[10px] font-semibold text-stone-400 bg-stone-100 rounded-full px-2 py-0.5 whitespace-nowrap flex-shrink-0">
+                        Needs {eduLabels[career.requirements.education] ?? career.requirements.education}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </>
             )}
           </>
         )
@@ -1875,71 +1920,85 @@ export default function ActivitiesPanel({ onClose }) {
       {/* Content */}
       <div className="overflow-y-auto" style={{ maxHeight: '60vh' }}>
         {!activeTop ? (
-          /* Top-level category list — BitLife style */
-          <div className="p-3 space-y-1.5">
-            {TOP_CATEGORIES.map(cat => {
-              if (cat.key === 'mind_body' && state.age < 6) return null
-              if (cat.key === 'hobbies' && state.age < 5) return null
-              if (cat.key === 'education' && state.age < 8) return null
-              if (cat.key === 'movies' && state.age < 5) return null
-              if (cat.key === 'salon' && state.age < 12) return null
-              if (cat.key === 'friends' && state.age < 5) return null
-              if (cat.key === 'nightlife' && state.age < 18) return null
-              if (cat.key === 'fertility' && state.age < 14) return null
-              if (cat.key === 'plastic_surg' && state.age < 18) return null
-              if (cat.key === 'licenses' && state.age < 16) return null
-              if (cat.key === 'race_tracks' && state.age < 18) return null
-              if (cat.key === 'pets' && state.age < 8) return null
-              if (cat.key === 'shopping' && state.age < 8) return null
-              if (cat.key === 'social_media' && state.age < 13) return null
-              if (cat.key === 'career' && state.age < 14) return null
-              if (cat.key === 'love' && state.age < 13) return null
-              if (cat.key === 'assets' && state.age < 18) return null
-              if (cat.key === 'money' && state.age < 14) return null
-              if (cat.key === 'rehab' && !hasAddiction && !(ACTIVITIES.body ?? []).some(a => (a.id === 'quit_smoking' || a.id === 'rehabilitation') && (!a.condition || a.condition(G)))) return null
-              if (cat.key === 'substances' && state.age < 14) return null
-              if (cat.key === 'crime' && state.age < 12) return null
-              if (cat.key === 'travel' && state.age < 16) return null
-              if (cat.key === 'business' && state.age < 18) return null
-              if (cat.key === 'immigration' && state.residencyStatus === 'citizen' && !state.flags.includes('emigrated')) return null
-              if (cat.key === 'underground' && !state.inPrison && !state.wanted && !state.flags.includes('escaped_prisoner')) return null
-              if (cat.key === 'prison' && !state.inPrison) return null
-              // When in prison, hide most outside-world activities
-              const prisonBlockedCats = ['love', 'fertility', 'nightlife', 'movies', 'salon', 'shopping', 'social_media', 'plastic_surg', 'race_tracks', 'rehab', 'licenses', 'assets', 'crime', 'travel', 'business', 'career', 'underground', 'immigration']
-              if (state.inPrison && prisonBlockedCats.includes(cat.key)) return null
-
+          /* Top-level category list — grouped */
+          <div className="p-3 space-y-4">
+            {CATEGORY_GROUP_ORDER.map(groupLabel => {
+              const groupCats = TOP_CATEGORIES.filter(c => c.group === groupLabel)
               const isUnderground = state.inPrison || state.wanted || state.flags.includes('escaped_prisoner')
-              const badge = cat.key === 'prison' && state.inPrison ? { text: `${state.prisonSentence}yr`, color: '#ff3b30' } :
-                            cat.key === 'underground' && isUnderground ? { text: '!', color: '#ff3b30' } :
-                            cat.key === 'rehab' && hasAddiction ? { text: '!', color: '#ff3b30' } :
-                            cat.key === 'mind_body' && anySevereUnmanaged ? { text: '⚕', color: '#ff9500' } :
-                            cat.key === 'love' && pendingPartner && !state.partner ? { text: '💘', color: '#ff6b81' } :
-                            cat.key === 'social_media' && sm.followers > 0 ? { text: sm.followers >= 1000 ? `${(sm.followers/1000).toFixed(0)}k` : sm.followers.toString(), color: '#007aff' } :
-                            cat.key === 'friends' && (state.friends ?? []).filter(f => f.alive).length > 0 ? { text: (state.friends ?? []).filter(f => f.alive).length.toString(), color: '#34c759' } :
-                            null
+              const prisonBlockedCats = ['love', 'fertility', 'nightlife', 'movies', 'salon', 'shopping', 'social_media', 'plastic_surg', 'race_tracks', 'rehab', 'licenses', 'assets', 'crime', 'travel', 'business', 'career', 'underground', 'immigration']
+
+              const visibleCats = groupCats.filter(cat => {
+                if (cat.key === 'mind_body' && state.age < 6) return false
+                if (cat.key === 'hobbies' && state.age < 5) return false
+                if (cat.key === 'education' && state.age < 8) return false
+                if (cat.key === 'movies' && state.age < 5) return false
+                if (cat.key === 'salon' && state.age < 12) return false
+                if (cat.key === 'friends' && state.age < 5) return false
+                if (cat.key === 'nightlife' && state.age < 18) return false
+                if (cat.key === 'fertility' && state.age < 14) return false
+                if (cat.key === 'plastic_surg' && state.age < 18) return false
+                if (cat.key === 'licenses' && state.age < 16) return false
+                if (cat.key === 'race_tracks' && state.age < 18) return false
+                if (cat.key === 'pets' && state.age < 8) return false
+                if (cat.key === 'shopping' && state.age < 8) return false
+                if (cat.key === 'social_media' && state.age < 13) return false
+                if (cat.key === 'career' && state.age < 14) return false
+                if (cat.key === 'love' && state.age < 13) return false
+                if (cat.key === 'assets' && state.age < 18) return false
+                if (cat.key === 'money' && state.age < 14) return false
+                if (cat.key === 'rehab' && !hasAddiction && !(ACTIVITIES.body ?? []).some(a => (a.id === 'quit_smoking' || a.id === 'rehabilitation') && (!a.condition || a.condition(G)))) return false
+                if (cat.key === 'substances' && state.age < 14) return false
+                if (cat.key === 'crime' && state.age < 12) return false
+                if (cat.key === 'travel' && state.age < 16) return false
+                if (cat.key === 'business' && state.age < 18) return false
+                if (cat.key === 'immigration' && state.residencyStatus === 'citizen' && !state.flags.includes('emigrated')) return false
+                if (cat.key === 'underground' && !state.inPrison && !state.wanted && !state.flags.includes('escaped_prisoner')) return false
+                if (cat.key === 'prison' && !state.inPrison) return false
+                if (state.inPrison && prisonBlockedCats.includes(cat.key)) return false
+                return true
+              })
+
+              if (visibleCats.length === 0) return null
 
               return (
-                <button
-                  key={cat.key}
-                  onClick={() => setActiveTop(cat.key)}
-                  className="w-full flex items-center justify-between px-4 py-3 bg-white rounded-xl border border-natalis-border hover:border-bit-blue hover:bg-blue-50 transition-all active:scale-95 shadow-sm"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl w-8 text-center">{cat.emoji}</span>
-                    <div className="text-left">
-                      <p className="font-semibold text-natalis-text text-sm">{cat.label}</p>
-                      <p className="text-natalis-muted text-xs">{cat.desc}</p>
-                    </div>
+                <div key={groupLabel}>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-natalis-muted px-1 pb-1">{groupLabel}</p>
+                  <div className="space-y-1.5">
+                    {visibleCats.map(cat => {
+                      const badge = cat.key === 'prison' && state.inPrison ? { text: `${state.prisonSentence}yr`, color: '#ff3b30' } :
+                                    cat.key === 'underground' && isUnderground ? { text: '!', color: '#ff3b30' } :
+                                    cat.key === 'rehab' && hasAddiction ? { text: '!', color: '#ff3b30' } :
+                                    cat.key === 'mind_body' && anySevereUnmanaged ? { text: '⚕', color: '#ff9500' } :
+                                    cat.key === 'love' && pendingPartner && !state.partner ? { text: '💘', color: '#ff6b81' } :
+                                    cat.key === 'social_media' && sm.followers > 0 ? { text: sm.followers >= 1000 ? `${(sm.followers/1000).toFixed(0)}k` : sm.followers.toString(), color: '#007aff' } :
+                                    cat.key === 'friends' && (state.friends ?? []).filter(f => f.alive).length > 0 ? { text: (state.friends ?? []).filter(f => f.alive).length.toString(), color: '#34c759' } :
+                                    null
+                      return (
+                        <button
+                          key={cat.key}
+                          onClick={() => setActiveTop(cat.key)}
+                          className="w-full flex items-center justify-between px-4 py-3 bg-white rounded-xl border border-natalis-border hover:border-bit-blue hover:bg-blue-50 transition-all active:scale-95 shadow-sm"
+                        >
+                          <div className="flex items-center gap-3">
+                            <span className="text-2xl w-8 text-center">{cat.emoji}</span>
+                            <div className="text-left">
+                              <p className="font-semibold text-natalis-text text-sm">{cat.label}</p>
+                              <p className="text-natalis-muted text-xs">{cat.desc}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            {badge && (
+                              <span className="text-xs font-bold px-2 py-0.5 rounded-full text-white" style={{ backgroundColor: badge.color }}>
+                                {badge.text}
+                              </span>
+                            )}
+                            <span className="text-natalis-muted text-base">›</span>
+                          </div>
+                        </button>
+                      )
+                    })}
                   </div>
-                  <div className="flex items-center gap-2">
-                    {badge && (
-                      <span className="text-xs font-bold px-2 py-0.5 rounded-full text-white" style={{ backgroundColor: badge.color }}>
-                        {badge.text}
-                      </span>
-                    )}
-                    <span className="text-natalis-muted text-base">›</span>
-                  </div>
-                </button>
+                </div>
               )
             })}
           </div>

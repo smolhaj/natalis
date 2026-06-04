@@ -57,7 +57,7 @@ export const POVERTY_EVENTS = [
     when: (G) =>
       !G.mem?.povLightsOut &&
       G.age >= 6 && G.age <= 12 &&
-      (G.character.familyStability === 'unstable' || G.character.familyStability === 'difficult') &&
+      (G.character.familyStability === 'unstable' || G.character.familyStability === 'struggling') &&
       ['wealthy_west', 'wealthy_east', 'post_soviet', 'developing_urban'].includes(G.archetype),
     text: 'The lights go out in the evening, and the next morning too. Your parent is on the phone for a long time using a voice you know means something is wrong. The electricity company has cut the service. Your neighbour lets you charge a torch from their socket. For two weeks you do your homework by the light of it.',
     choices: null,
@@ -77,7 +77,7 @@ export const POVERTY_EVENTS = [
     when: (G) =>
       !G.mem?.povFreeLunch &&
       G.age >= 6 && G.age <= 12 &&
-      (G.character.familyStability === 'unstable' || G.character.familyStability === 'difficult') &&
+      (G.character.familyStability === 'unstable' || G.character.familyStability === 'struggling') &&
       ['wealthy_west', 'wealthy_east'].includes(G.archetype),
     text: 'There is a form your parent has to sign. Free school lunches. You are not meant to know what it is, but you see the word Free in bold and understand. You watch the lunch queue from the side, deciding whether to stand in it or wait until no one is looking.',
     choices: [
@@ -116,7 +116,7 @@ export const POVERTY_EVENTS = [
     when: (G) =>
       !G.mem?.povParentsFight &&
       G.age >= 7 && G.age <= 13 &&
-      (G.character.familyStability === 'unstable' || G.character.familyStability === 'difficult'),
+      (G.character.familyStability === 'unstable' || G.character.familyStability === 'struggling'),
     text: 'You wake to the sound of it — the same argument, the same word, the same pause before the door slams. The word is money. You lie still and listen, learning the grammar of what financial pressure does to two people who love each other and are exhausted and afraid.',
     choices: null,
     effect: (p) => {
@@ -135,7 +135,7 @@ export const POVERTY_EVENTS = [
     when: (G) =>
       !G.mem?.povChildhoodEviction &&
       G.age >= 7 && G.age <= 14 &&
-      (G.character.familyStability === 'unstable' || G.character.familyStability === 'difficult'),
+      (G.character.familyStability === 'unstable' || G.character.familyStability === 'struggling'),
     text: 'Men come to the door with paperwork. Your parent does not open the door at first, and then does. You watch from the top of the stairs as your parent reads the letter standing up, in the hall, not moving. That evening you pack a bin bag with clothes. You do not ask where you are going.',
     choices: null,
     effect: (p) => {
@@ -175,7 +175,7 @@ export const POVERTY_EVENTS = [
     when: (G) =>
       !G.mem?.povFoodBankChild &&
       G.age >= 7 && G.age <= 14 &&
-      (G.character.familyStability === 'unstable' || G.character.familyStability === 'difficult') &&
+      (G.character.familyStability === 'unstable' || G.character.familyStability === 'struggling') &&
       ['wealthy_west', 'wealthy_east'].includes(G.archetype),
     text: 'Your parent takes you on a Saturday morning to a church hall. There are other families there, queuing quietly, not making eye contact. Each family is given a cardboard box. On the walk home your parent carries it and you carry what doesn\'t fit. The food in the box is different from what you normally eat but it is food.',
     choices: null,

@@ -335,7 +335,7 @@ export const WEALTH_SYSTEM_EVENTS = [
         (G.character?.country?.name === 'Saudi Arabia' && G.currentYear < 2019) ||
         (G.character?.country?.name === 'Kuwait' && G.currentYear < 2015) ||
         (G.character?.country?.name === 'Iran' && G.currentYear < 1990 && G.regime === 'theocracy') ||
-        (G.character?.country?.name === 'Japan' && G.currentYear < 1947 && G.regime !== 'democracy')
+        (G.character?.country?.name === 'Japan' && G.currentYear < 1947)
       ),
     text: (G) => {
       if (G.character?.country?.name === 'Saudi Arabia') return 'You try to open a bank account. The teller asks for your guardian\'s signature. Your father is in another city. You make a note to return when you have arranged it. The money you earn goes home with you in your bag.'

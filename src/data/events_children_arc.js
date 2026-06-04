@@ -1283,4 +1283,85 @@ export const CHILDREN_ARC_EVENTS = [
     },
   },
 
+  // ── MILESTONE MOMENTS ─────────────────────────────────────────────────────
+
+  {
+    id: 'child_milestone_ten',
+    phase: 'midlife',
+    weight: 3,
+    cooldown: 0,
+    when: (G) => {
+      if (!G.children?.length || G.mem?.childMilestoneTen) return false
+      return G.children.some(c => { const ca = G.age - c.ageAtBirth; return ca >= 9 && ca <= 11 })
+    },
+    text: (G) => {
+      const child = G.children.find(c => { const ca = G.age - c.ageAtBirth; return ca >= 9 && ca <= 11 })
+      const name = child?.name?.split(' ')[0] ?? 'Your child'
+      return `${name} is ten. You have photographs of them as a baby that feel impossible — not like a different child but like a different creature, something pre-verbal and soft. The person who now corrects your mispronunciations and has opinions about their friends and sometimes goes quiet for entire evenings is continuous with that creature. You cannot locate the transition. It happened while you were present.`
+    },
+    choices: null,
+    effect: (p) => { p.m += 6; p.r += 2; p.setMem('childMilestoneTen', true) },
+  },
+
+  {
+    id: 'child_milestone_sixteen',
+    phase: 'midlife',
+    weight: 3,
+    cooldown: 0,
+    when: (G) => {
+      if (!G.children?.length || G.mem?.childMilestoneSixteen) return false
+      return G.children.some(c => { const ca = G.age - c.ageAtBirth; return ca >= 15 && ca <= 17 })
+    },
+    text: (G) => {
+      const child = G.children.find(c => { const ca = G.age - c.ageAtBirth; return ca >= 15 && ca <= 17 })
+      const name = child?.name?.split(' ')[0] ?? 'Your child'
+      const q = child?.relationshipQuality ?? 60
+      if (q >= 65) {
+        return `${name} is sixteen. There are parts of their life you are not part of — friends you have not met, conversations you will not hear. This is correct. You watch them from a small distance and feel the specific satisfaction of a person becoming themselves without requiring your permission.`
+      }
+      return `${name} is sixteen. The distance between you is real and it has been growing for two years. You tell yourself this is normal. You tell yourself they will come back when they are older. You hope you are right, and you do not know how to accelerate it.`
+    },
+    choices: null,
+    effect: (p) => {
+      const child = (p._state?.children ?? []).find(c => {
+        const ca = (p._state?.age ?? 0) - c.ageAtBirth
+        return ca >= 15 && ca <= 17
+      })
+      const q = child?.relationshipQuality ?? 60
+      if (q >= 65) { p.m += 5; p.karma += 2 } else { p.m -= 3; p.r += 4 }
+      p.setMem('childMilestoneSixteen', true)
+    },
+  },
+
+  {
+    id: 'child_milestone_leaving',
+    phase: 'midlife',
+    weight: 4,
+    cooldown: 0,
+    when: (G) => {
+      if (!G.children?.length || G.mem?.childMilestoneLeaving) return false
+      return G.children.some(c => { const ca = G.age - c.ageAtBirth; return ca >= 17 && ca <= 20 })
+    },
+    text: (G) => {
+      const child = G.children.find(c => { const ca = G.age - c.ageAtBirth; return ca >= 17 && ca <= 20 })
+      const name = child?.name?.split(' ')[0] ?? 'Your child'
+      return `${name} is moving out. The room they leave behind is exactly the room they lived in — the same furniture, the same light from the same window — and now it is a room of absence. You stand in the doorway for a moment. You close the door. You try to remember that this is what you were for, all of it. This departure was the destination.`
+    },
+    choices: [
+      {
+        text: 'You hold it together until they are gone.',
+        tag: 'composed_sendoff',
+        outcome: 'They leave with their bags and a hug that is slightly longer than usual. After the car turns the corner you sit down for a while.',
+        effect: (p) => { p.m -= 5; p.r += 3; p.karma += 4; p.setMem('childMilestoneLeaving', true) },
+      },
+      {
+        text: 'You tell them how proud you are.',
+        tag: 'told_them',
+        outcome: 'They absorb it in the awkward way that genuine things land. You think they will remember it.',
+        effect: (p) => { p.m += 3; p.karma += 8; p.setMem('childMilestoneLeaving', true) },
+      },
+    ],
+    effect: null,
+  },
+
 ]

@@ -57,7 +57,7 @@ export const CULTURE_EVENTS = [
     when: (G) => G.regime === 'military_dictatorship' && G.age >= 18 && G.age <= 22 && G.character.gender === 'male',
     text: 'The conscription notice arrives. You are the right age and the right gender. A representative comes to explain that service to the nation is an honor. Two years. You go.',
     choices: [
-      { text: 'Serve and try to build useful skills', tag: null, outcome: 'Two years. You come back older and harder. You are good at following orders and very tired of it.', effect: (p) => { p.h -= 5; p.s += 6; p.addFlag('military_service'); p.addFlag('authoritarian_veteran'); p.setCareer('soldier'); } },
+      { text: 'Serve and try to build useful skills', tag: null, outcome: 'Two years. You come back older and harder. You are good at following orders and very tired of it.', effect: (p) => { p.h -= 5; p.s += 6; p.addFlag('military_service'); p.addFlag('authoritarian_veteran'); p.addFlag('interrupted_career'); p.setCareer('soldier'); } },
       { text: 'Find a way to avoid service', tag: null, outcome: 'Through connections, a false medical report, or sheer luck — you are passed over. You are not entirely proud of this.', effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('evaded_service') } },
     ],
     effect: null,

@@ -211,7 +211,7 @@ export const GANG_EVENTS = [
         text: 'Accept it — this is the arithmetic you agreed to',
         tag: null,
         outcome: 'You accept it. The acceptance is the most consequential thing you have done, because it removes a limit you were holding.',
-        effect: (p) => { p.m -= 12; p.h -= 3; p.karma -= 10; p.addFlag('witnessed_gang_violence'); p.setMem('gangViolenceDone', true) },
+        effect: (p) => { p.m -= 12; p.h -= 3; p.karma -= 10; p.addFlag('witnessed_gang_violence'); p.addFlag('traumatized_by_violence'); p.setMem('gangViolenceDone', true) },
       },
       {
         text: 'Start looking for the exit — this is not what you signed up for',
@@ -299,7 +299,7 @@ export const GANG_EVENTS = [
       !G.mem?.gangArrestDone,
     text: (G) => {
       const regime = G.regime ?? ''
-      if (regime === 'democracy' || regime === 'parliamentary_republic' || regime === 'federal_republic') {
+      if (regime === 'parliamentary_republic' || regime === 'federal_republic') {
         return `The police have been watching the operation for months. You know because two people were arrested who were careful. If they were arrested being careful, the net is wider than you thought. The investigation has a specific quality that feels different from the usual periodic enforcement: there is a prosecutor behind it, not just a precinct.`
       }
       return `The police arrive at a location you were at two days before. The timing means something — either a decision not to catch you yet, or information that is one step behind. Either way, you move carefully for the next six months. The calculus of when to be where is recalculated.`

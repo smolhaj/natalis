@@ -5,7 +5,7 @@ export const WORLD_EVENTS = [
     years: [1991, 1993],
     archetypes: ['post_soviet'],
     countries: null,
-    narrative: 'The Soviet Union dissolves. Prices explode overnight. The economy your parents understood no longer exists.',
+    narrative: 'The Soviet Union dissolves. Prices double, then double again, within weeks. The salary you were paid last month is no longer what it was worth. The economy your parents understood — the one with fixed prices and guaranteed jobs — no longer exists, and neither does the country.',
     effect: (p) => { p.w -= 15; p.m -= 8; },
     addFlags: ['survived_soviet_collapse'],
     minAge: 0,
@@ -16,7 +16,7 @@ export const WORLD_EVENTS = [
     years: [1989, 1992],
     archetypes: ['post_soviet', 'wealthy_west'],
     countries: null,
-    narrative: 'The certainties of an entire world order dissolve. For some, liberation; for others, chaos.',
+    narrative: 'The wall comes down. The world you were told was fixed — the two sides, the permanent standoff — is not fixed. People are walking through the Brandenburg Gate. History, which felt like a geological fact, is clearly not. Whatever comes next, you are watching the before and after happen in a single night.',
     effect: (p) => { p.m -= 5; },
     addFlags: ['cold_war_generation'],
     minAge: 6,
@@ -26,8 +26,14 @@ export const WORLD_EVENTS = [
     name: 'Chernobyl Disaster',
     years: [1986, 1987],
     archetypes: 'all',
-    countries: ['Ukraine', 'Russia'],
-    narrative: 'A reactor explodes in the night. The evacuation is quiet at first. Then the truth arrives slowly.',
+    countries: ['Ukraine', 'Russia', 'Belarus'],
+    narrative: (G) => {
+      const age = G.age
+      if (age <= 10) return 'At night, adults start moving. Something is burning but it is not the kind of burning you can see. Your parents pack a bag and tell you it is temporary. Fifty thousand people leave Pripyat. Most never return. The word \'radiation\' enters your vocabulary before you are old enough to know what it means.'
+      if (age <= 17) return 'The official statement is that there is no danger to the public. Then the iodine tablets arrive. Then the evacuation orders. Then, much later, the true scale. The reactors at Chernobyl will be too dangerous to approach without equipment for thousands of years. The evacuation was supposed to last three days.'
+      return 'Reactor Number Four at Chernobyl explodes at 1:23am on 26 April. The explosion is visible from fifty kilometres. The fire burns for ten days. The Soviet government does not announce the disaster publicly for thirty-six hours. The international community learns of it when Sweden detects radiation on a worker\'s shoe at a nuclear plant 1,100 kilometres away.'
+    },
+    context: 'The Chernobyl disaster contaminated 150,000 km² across Ukraine, Russia, and Belarus. Approximately 350,000 people were permanently evacuated. The Soviet government\'s delayed disclosure and systematic underreporting of health consequences continued for years; Ukraine did not have independent oversight until 1991. The exclusion zone around Chernobyl remains uninhabitable. The HBO series Chernobyl (2019) brought renewed attention to the liquidators\' experience.',
     effect: (p) => { p.h -= 12; p.addFlag('chernobyl_generation'); },
     addFlags: ['chernobyl_generation'],
     minAge: 0,
@@ -38,7 +44,7 @@ export const WORLD_EVENTS = [
     years: [1994, 1994],
     archetypes: 'all',
     countries: ['Rwanda'],
-    narrative: 'In one hundred days, nearly a million people are killed. The country becomes defined by an atrocity.',
+    narrative: 'In one hundred days, nearly a million people are killed — not by armies at a distance but by neighbours, at checkpoints, with names on lists. The international community watches. The word genocide is debated in foreign capitals while the killing continues. The people who survive will spend the rest of their lives living next to the people who tried to kill them.',
     effect: (p) => { p.h -= 15; p.m -= 20; p.addFlag('genocide_survivor'); },
     addFlags: ['genocide_survivor', 'war_childhood'],
     minAge: 0,
@@ -49,7 +55,7 @@ export const WORLD_EVENTS = [
     years: [1991, 1999],
     archetypes: 'all',
     countries: ['Serbia'],
-    narrative: 'The country breaks apart. Lines on a map are redrawn in blood. Neighbors become enemies.',
+    narrative: 'The country you knew dissolves into countries that did not exist last year. The city you grew up in is in a different state from the city your cousins grew up in. People you shared language and school and football matches with are now, officially, on the other side. The logic that got here seemed local at every step.',
     effect: (p) => { p.h -= 8; p.m -= 12; p.addFlag('war_childhood'); },
     addFlags: ['war_childhood', 'displaced'],
     minAge: 0,
@@ -60,7 +66,7 @@ export const WORLD_EVENTS = [
     years: [1990, 1991],
     archetypes: ['wealthy_gulf', 'conflict_zone'],
     countries: null,
-    narrative: 'War in the Gulf. The region is remade. Daily life is disrupted by conflict and the fear of it.',
+    narrative: 'Coalition forces push into Iraq. The war is forty-three days long — short by war standards — but the images are everywhere and the oil fields burn for months. The region will not be the same. The price of everything connected to oil has already moved.',
     effect: (p) => { p.m -= 8; p.h -= 5; },
     addFlags: [],
     minAge: 0,
@@ -71,7 +77,7 @@ export const WORLD_EVENTS = [
     years: [2001, 2001],
     archetypes: 'all',
     countries: null,
-    narrative: 'Passenger planes are used as weapons. The world watches on television. Security everywhere is tightened, permanently.',
+    narrative: 'In the morning, two planes hit the towers. By afternoon, a third hits the Pentagon and a fourth goes down in a Pennsylvania field. The tallest buildings in New York are gone. You watch the footage repeat on television. What follows — the security lines, the databases, the wars — will outlast everyone alive today.',
     context: 'On September 11, 2001, al-Qaeda hijackers flew four commercial aircraft into the World Trade Center, the Pentagon, and a Pennsylvania field, killing 2,977 people. The attacks triggered the US-led "War on Terror," the invasion of Afghanistan in 2001 and Iraq in 2003, and a permanent transformation of global airport security, surveillance law, and the public experience of civil liberties.',
     effect: (p) => { p.m -= 5; },
     addFlags: ['post_9_11_world'],
@@ -97,7 +103,7 @@ export const WORLD_EVENTS = [
     years: [2003, 2011],
     archetypes: ['conflict_zone', 'wealthy_gulf'],
     countries: null,
-    narrative: 'Foreign armies occupy the country. The infrastructure of the state dissolves. What follows is sectarian violence and uncertainty.',
+    narrative: 'The invasion begins with televised air strikes on Baghdad in the night. The regime collapses in weeks. The chaos that follows takes years. You watch the map of a country come apart into something with no clear centre. The word reconstruction appears in press releases that do not match the images.',
     effect: (p) => { p.h -= 10; p.m -= 12; p.w -= 8; },
     addFlags: ['lived_through_occupation'],
     minAge: 0,
@@ -108,7 +114,7 @@ export const WORLD_EVENTS = [
     years: [2010, 2013],
     archetypes: 'all',
     countries: ['Egypt', 'Syria', 'Yemen', 'Jordan', 'Morocco'],
-    narrative: 'Protests sweep the region. The government falls or it does not. Either way, things are different.',
+    narrative: 'The protests start in Tunisia — a young man sets himself on fire over a confiscated fruit cart — and they don\'t stop. Egypt. Libya. Syria. Yemen. Bahrain. For a moment it looks like the region is changing. Some governments fall. Others crack down and hold. What comes after the falling is, in most places, worse or simply different.',
     effect: (p) => { p.m -= 6; p.addFlag('lived_through_revolution'); },
     addFlags: ['lived_through_revolution'],
     minAge: 10,
@@ -119,7 +125,7 @@ export const WORLD_EVENTS = [
     years: [1997, 1999],
     archetypes: ['wealthy_east', 'developing_urban'],
     countries: ['South Korea', 'Indonesia', 'Thailand', 'Philippines', 'Vietnam'],
-    narrative: 'Currencies collapse overnight. Companies fold. A generation\'s savings evaporate in weeks.',
+    narrative: 'The baht goes first, then the rupiah, then the won. The savings your family held in the national currency are worth half what they were last month. Companies that existed for decades are gone over a weekend. The IMF arrives with conditions — cut public services, raise interest rates, open the markets — while people are already struggling.',
     effect: (p) => { p.w -= 12; p.m -= 7; },
     addFlags: [],
     minAge: 5,
@@ -130,7 +136,7 @@ export const WORLD_EVENTS = [
     years: [2008, 2009],
     archetypes: 'all',
     countries: null,
-    narrative: 'The global financial system teeters. Savings evaporate, jobs vanish, and trust in institutions fractures.',
+    narrative: 'The banks are not actually solid. This becomes clear in September. Firms that existed for a century are gone over a weekend. Governments that said there was no money for schools find money for banks. The unemployment numbers rise for years afterward. The people who caused the crash keep their bonuses.',
     effect: (p) => { p.w -= 10; p.m -= 4; },
     addFlags: [],
     minAge: 10,
@@ -141,7 +147,7 @@ export const WORLD_EVENTS = [
     years: [2020, 2022],
     archetypes: 'all',
     countries: null,
-    narrative: 'A pandemic sweeps the world. Borders close, economies contract, and death becomes a daily statistic.',
+    narrative: 'The news in January is about a virus in one city. By March, you are not allowed to leave your home. The streets are empty. The hospitals are not. By the end of the year, more people have died than in any year since the Second World War. Normal resumes slowly and unevenly, and is not the same normal as before.',
     effect: (p) => { p.h -= 8; p.m -= 7; p.w -= 6; },
     addFlags: ['lived_through_pandemic'],
     minAge: 0,
@@ -152,7 +158,7 @@ export const WORLD_EVENTS = [
     years: [2022, 2025],
     archetypes: 'all',
     countries: ['Ukraine', 'Russia', 'Poland', 'Romania', 'Georgia'],
-    narrative: 'A full-scale invasion begins. Millions flee. The European order is upended. Energy and food prices surge globally.',
+    narrative: 'Russian tanks cross into Ukraine in the early morning. The capital is shelled. Refugees — millions of them — move westward. The war that everyone said wouldn\'t happen is happening. Food prices, fuel prices, the order of Europe: all of it shifts. You watch this on a phone, in a world that is no longer arranged the way it was yesterday.',
     effect: (p) => { p.h -= 10; p.m -= 15; p.w -= 8; p.addFlag('war_generation'); },
     addFlags: ['war_generation', 'displaced'],
     minAge: 0,
@@ -163,7 +169,7 @@ export const WORLD_EVENTS = [
     years: [2015, 2017],
     archetypes: ['conflict_zone', 'developing_unstable'],
     countries: null,
-    narrative: 'Millions attempt the crossing. Some make it. The politics of where to go are decided by strangers.',
+    narrative: 'You are among hundreds of thousands crossing the Mediterranean in an inflatable boat. The crossing takes hours. Some boats sink. Whether you reach land, and which land, and what happens when you do — these are decided by wind and coast guards and the politics of countries that are not yours.',
     effect: (p) => { p.m -= 12; p.h -= 6; p.addFlag('refugee'); },
     addFlags: ['refugee', 'displaced', 'emigrated'],
     minAge: 0,
@@ -185,7 +191,7 @@ export const WORLD_EVENTS = [
     years: [1995, 2005],
     archetypes: ['wealthy_west', 'wealthy_east', 'developing_urban'],
     countries: null,
-    narrative: 'A network that began in universities becomes everything. Information, commerce, and connection are transformed.',
+    narrative: 'The internet moves from universities to homes, then to pockets. What information means, what distance means, what a shop is, what a friend is — all of it is changing faster than anyone can name accurately. The rules are being made up as it goes.',
     effect: (p) => { p.e += 5; p.w += 3; },
     addFlags: ['internet_generation'],
     minAge: 10,
@@ -197,7 +203,7 @@ export const WORLD_EVENTS = [
     years: [2021, 2023],
     archetypes: 'all',
     countries: ['Myanmar'],
-    narrative: 'The military seizes power. Protests fill the streets. Crackdowns follow. The brief experiment with democracy ends.',
+    narrative: 'The military removes the elected government before dawn. People fill the streets by afternoon. The crackdown comes within days — live fire on protesters. The brief years of democratic experiment, imperfect and always qualified, are over. The generals are back. The internet is cut.',
     effect: (p) => { p.m -= 12; p.h -= 5; p.addFlag('lived_through_coup'); },
     addFlags: ['lived_through_coup', 'war_generation'],
     minAge: 0,
@@ -219,7 +225,7 @@ export const WORLD_EVENTS = [
     years: [2015, 2020],
     archetypes: 'all',
     countries: ['Venezuela'],
-    narrative: 'The economy collapses. Food shortages become normal. Millions leave. Those who stay endure.',
+    narrative: 'The shelves empty first in the middle of the month, then in the middle of the week. The bolivar is worth less every morning than it was the night before. People you know are leaving — for Colombia, for Spain, for anywhere. The ones who stay, stay for reasons they don\'t always explain.',
     effect: (p) => { p.w -= 18; p.h -= 8; p.m -= 10; },
     addFlags: ['economic_collapse_survivor'],
     minAge: 0,
@@ -232,7 +238,7 @@ export const WORLD_EVENTS = [
     years: [1983, 1986],
     archetypes: 'all',
     countries: ['Ethiopia'],
-    narrative: 'Drought and civil war combine into famine. Aid workers arrive. Cameras follow. People die before the world notices.',
+    narrative: 'The rains didn\'t come. Then they didn\'t come again. The government is fighting a war in the north and the grain quotas do not change. Aid organisations arrive with cameras and food. The food arrives after the people the cameras photographed have died. You understand what the word famine means now — not as a description but as a condition you are living inside.',
     effect: (p) => { p.h -= 18; p.m -= 15; p.w -= 10; p.addFlag('hunger_childhood'); },
     addFlags: ['hunger_childhood', 'famine_survivor'],
     minAge: 0,
@@ -243,7 +249,7 @@ export const WORLD_EVENTS = [
     years: [1985, 2005],
     archetypes: ['subsaharan'],
     countries: null,
-    narrative: 'The disease moves quietly at first, then openly. Funerals become the dominant social event. Orphans accumulate. Teachers, doctors, parents — everyone is affected.',
+    narrative: 'The funerals start to overlap. You go to three in a month, then five. The disease doesn\'t have a face yet — no one says the word aloud. People you know are sick, then dying, and the word used is not the right word. The children left behind are everywhere. The classroom has empty seats that are not explained.',
     effect: (p) => { p.h -= 10; p.m -= 12; p.addFlag('aids_generation'); },
     addFlags: ['aids_generation'],
     minAge: 0,
@@ -390,9 +396,9 @@ export const WORLD_EVENTS = [
     archetypes: 'all',
     countries: ['Nigeria', 'Senegal', 'Ghana'],
     narrative: 'A hemorrhagic fever spreads across borders. Healthcare systems collapse under the strain. 11,000 die before it is contained.',
-    effect: (p) => { p.h -= 10; p.m -= 10; p.addFlag('aids_generation'); },
+    effect: (p) => { p.h -= 10; p.m -= 10; p.addFlag('ebola_survivor'); },
     addFlags: [],
-    minAge: 0,
+    minAge: 5,
   },
   {
     id: 'nigerian_civil_war',
@@ -410,7 +416,7 @@ export const WORLD_EVENTS = [
     name: 'Lebanese Civil War',
     years: [1975, 1990],
     archetypes: 'all',
-    countries: ['Jordan', 'Syria'],
+    countries: ['Jordan', 'Syria', 'Lebanon'],
     narrative: 'Beirut, once the Paris of the Middle East, tears itself apart along sectarian lines. Refugees spill across borders.',
     effect: (p) => { p.m -= 12; p.h -= 6; p.addFlag('war_childhood'); },
     addFlags: ['war_childhood', 'displaced'],
@@ -464,6 +470,7 @@ export const WORLD_EVENTS = [
     addFlags: [],
     minAge: 18,
     maxAge: 19,
+    when: (G) => G.character.gender === 'male' || G.currentYear >= 2015,
   },
   {
     id: 'us_medical_debt',
@@ -490,12 +497,36 @@ export const WORLD_EVENTS = [
     when: (G) => Math.random() < 0.3,
   },
   {
-    id: 'sahel_drought',
+    id: 'sahel_drought_1968',
     name: 'Sahel Drought',
-    years: [1968, 1974, 1984, 2010, 2022],
+    years: [1968, 1974],
     archetypes: ['subsaharan'],
     countries: ['Ethiopia', 'Nigeria', 'Kenya', 'Tanzania', 'Senegal', 'Uganda'],
     narrative: 'The rains do not come. Then they do not come again. The fields produce little. The market prices rise. Children in the village look smaller than they should.',
+    effect: (p) => { p.m -= 12; p.h -= 10; p.addFlag('drought_survivor'); },
+    addFlags: ['drought_survivor'],
+    minAge: 3,
+    when: (G) => G.stats.wealth < 60,
+  },
+  {
+    id: 'sahel_drought_1984',
+    name: 'Sahel Famine',
+    years: [1984, 1985],
+    archetypes: ['subsaharan'],
+    countries: ['Ethiopia', 'Nigeria', 'Kenya', 'Tanzania', 'Senegal', 'Uganda'],
+    narrative: 'The drought is the worst in living memory. Camps fill. Photographs circulate in foreign newspapers. Strangers on other continents hold concerts and donate money. The food arrives, eventually. Not for everyone.',
+    effect: (p) => { p.m -= 12; p.h -= 10; p.addFlag('drought_survivor'); },
+    addFlags: ['drought_survivor'],
+    minAge: 3,
+    when: (G) => G.stats.wealth < 60,
+  },
+  {
+    id: 'sahel_drought_2010',
+    name: 'Sahel Drought',
+    years: [2010, 2012],
+    archetypes: ['subsaharan'],
+    countries: ['Ethiopia', 'Nigeria', 'Kenya', 'Tanzania', 'Senegal', 'Uganda'],
+    narrative: 'The scientists call it climate-intensified. The word means little when the wells are dry. The rains arrive late again, and shorter than before. The cycle is no longer a cycle — it is a direction.',
     effect: (p) => { p.m -= 12; p.h -= 10; p.addFlag('drought_survivor'); },
     addFlags: ['drought_survivor'],
     minAge: 3,
@@ -2277,6 +2308,228 @@ export const WORLD_EVENTS = [
     addFlags: ['climate_generation', 'tipping_point_generation'],
     minAge: 12,
     when: (G) => !G.flags.includes('tipping_point_generation'),
+  },
+
+  // ── WOMEN'S LIBERATION MARCH 1970 ─────────────────────────────────────────
+  {
+    id: 'womens_liberation_march_1970',
+    name: "Women's Liberation March",
+    years: [1970, 1972],
+    archetypes: ['wealthy_west'],
+    countries: null,
+    narrative: (G) => {
+      if (G.character.gender === 'female') {
+        return 'Fifty thousand women march down Fifth Avenue in New York. Similar marches happen in London and Paris the same week. The demands are concrete: equal pay, childcare, abortion rights. The energy in the streets is different from anything you have seen — not grief or anger exactly but a kind of collective recognition, the specific feeling of a thing finally being named.'
+      }
+      return 'Fifty thousand women march down Fifth Avenue in New York. You watch the news footage or read the coverage. Something is shifting in how the question is being asked — not whether women deserve equality but when and by what means. The answer to the first question is no longer in dispute in the room you grew up in. The second question is being answered in the streets.'
+    },
+    context: "The 1970 Women's Strike for Equality, organized by Betty Friedan and NOW, marked the 50th anniversary of women's suffrage. It was the largest women's rights demonstration in US history at that point. The strike called for free abortion on demand, free childcare, and equal opportunity in employment and education. Similar marches occurred in London and Paris. These events marked the peak of second-wave feminism's public visibility and directly preceded landmark legislation: the Equal Rights Amendment passed Congress in 1972, Title IX passed in 1972, and Roe v. Wade was decided in 1973.",
+    effect: (p) => {
+      if (p._state?.character?.gender === 'female') {
+        p.m += 8
+        p.addFlag('liberation_generation')
+      } else {
+        p.m += 3
+      }
+    },
+    addFlags: [],
+    minAge: 14,
+    when: (G) => !G.flags.includes('liberation_generation'),
+  },
+
+  // ── AFGHANISTAN GIRLS' SCHOOL BAN 2022 ────────────────────────────────────
+  {
+    id: 'afghanistan_girls_school_ban_2022',
+    name: "Taliban Bans Girls from Secondary School",
+    years: [2022, 2025],
+    archetypes: null,
+    countries: ['Afghanistan'],
+    narrative: (G) => {
+      if (G.character.gender === 'female' && G.age >= 12 && G.age <= 21) {
+        return 'The decree arrives without warning. Secondary schools for girls are closed. University is closed. The books are still in your bag. There is no explanation that makes sense as an explanation, only as an assertion of a particular kind of power over a particular kind of person. You understand this completely. Understanding it does not make it less total.'
+      }
+      if (G.character.gender === 'female') {
+        return 'The decree closes secondary schools and universities to girls and women. You are past the age of being directly affected. The girls in your family, your neighbourhood, the daughters of everyone you know — they are not.'
+      }
+      return 'Secondary schools and universities are closed to women and girls, effective immediately. In the city you know, this means half the students in every classroom are no longer permitted to be there. The international community issues statements. The schools remain closed.'
+    },
+    context: 'In March 2022, the Taliban reversed a brief reopening of secondary schools for girls, closing them again hours after students arrived. In December 2022, they banned women from universities. By 2023, Afghanistan was the only country in the world to formally prohibit women from attending secondary school. An estimated 2.5 million Afghan girls were denied access to education. The ban has been condemned by the United Nations, Islamic scholars internationally, and the Organisation of Islamic Cooperation, but remained in place as of 2025.',
+    effect: (p) => {
+      if (p._state?.character?.gender === 'female') {
+        p.m -= 15
+        p.r += 8
+        p.addFlag('education_denied_gender')
+      } else {
+        p.m -= 6
+        p.r += 3
+      }
+    },
+    addFlags: [],
+    minAge: 10,
+    when: null,
+  },
+
+  // ── JESSE OWENS: BERLIN 1936 ─────────────────────────────────────────────
+  {
+    id: 'jesse_owens_berlin_1936',
+    name: 'Jesse Owens Wins Four Gold Medals in Berlin',
+    years: [1936, 1937],
+    archetypes: null,
+    countries: ['United States'],
+    narrative: (G) => {
+      const isBlack = G.ethnicity && G.ethnicity.toLowerCase().includes('black')
+      if (isBlack) {
+        return 'Four gold medals. Sprint, long jump, relays. In Berlin, in front of the regime that has built an entire political philosophy around racial hierarchy, a Black man from Cleveland is the fastest and longest of them all. The radio brings it back to you in a country where you cannot eat at the same counter as the people celebrating beside you. You hold both things at once. The pride is real. The irony is also real. When Owens returns home, the President does not invite him to the White House.'
+      }
+      return 'Jesse Owens wins four gold medals at the Berlin Olympics — 100m, 200m, long jump, and 4×100 relay. Hitler, who staged the Games as a showcase for Aryan supremacy, watches from the stands. The result is a specific kind of refutation. Back home, in a country with Jim Crow laws, Owens is not invited to the White House reception held for the Olympic team. Owens later says: "Hitler didn\'t snub me — it was FDR who snubbed me."'
+    },
+    context: 'Jesse Owens, son of an Alabama sharecropper, won four gold medals at the 1936 Berlin Olympics — the most by any athlete at those Games. When Owens returned to the United States, President Franklin Roosevelt sent no congratulations telegram and excluded Owens from the White House reception for the American Olympic team. Jim Crow laws remained in force across the American South. The narrative of Hitler snubbing Owens (which has some basis in a missing handshake) long obscured the more significant American government snub. Owens himself raised this contrast repeatedly.',
+    effect: (p) => {
+      const isBlack = p._state?.character?.ethnicity?.toLowerCase().includes('black')
+      if (isBlack) {
+        p.m += 10
+        p.karma += 5
+        p.addFlag('civil_rights_generation')
+      } else {
+        p.m += 4
+      }
+    },
+    addFlags: [],
+    minAge: 5,
+    when: null,
+  },
+
+  // ── BHOLA CYCLONE 1970 ───────────────────────────────────────────────────
+  {
+    id: 'bhola_cyclone_1970',
+    name: 'Bhola Cyclone',
+    years: [1970, 1971],
+    archetypes: null,
+    countries: ['Bangladesh'],
+    narrative: (G) => {
+      if (G.age <= 12) {
+        return 'The storm comes at night. The adults move the family to higher ground — the school building, the raised road — before the water follows. In the morning the water is still moving in directions it should not move. The count of what was lost takes longer than the water takes to recede. You are too young to understand the number. The adults understand it.'
+      }
+      return 'The cyclone comes in from the Bay of Bengal on the night of November 12. The storm surge reaches six metres in the delta. The Pakistani government\'s response, when it comes, comes slowly — the supplies, the personnel, the acknowledgment. The death toll will be estimated at between 300,000 and 500,000. It is one of the deadliest natural disasters in recorded history. The government\'s inadequacy is noticed, and not forgotten.'
+    },
+    context: 'The Bhola Cyclone struck East Pakistan (now Bangladesh) on 12 November 1970, killing an estimated 300,000–500,000 people — the deadliest tropical cyclone on record. The Pakistani central government\'s delayed and inadequate disaster response was a major factor in turning East Pakistani political discontent into a movement for independence. The Awami League\'s landslide election victory in December 1970 followed directly, leading to the Pakistani military crackdown and the 1971 Liberation War.',
+    effect: (p) => {
+      p.m -= 15
+      p.h -= 8
+      p.r += 6
+      p.addFlag('bhola_survivor')
+    },
+    addFlags: ['bhola_survivor'],
+    minAge: 0,
+    when: null,
+  },
+
+  // ── TANGSHAN EARTHQUAKE 1976 ─────────────────────────────────────────────
+  {
+    id: 'tangshan_earthquake_1976',
+    name: 'Tangshan Earthquake',
+    years: [1976, 1977],
+    archetypes: null,
+    countries: ['China'],
+    narrative: (G) => {
+      if (G.age <= 10) {
+        return 'The ground moves before the sound arrives — or the sound and the movement are the same thing. It lasts for seconds. What took years to build is not there anymore. Adults make decisions quickly, in the dark, without full information. You are held and moved. Later you will learn the number of dead. For now you only know what your street looks like now compared to yesterday.'
+      }
+      return 'The earthquake strikes at 3:42 in the morning, when the city is asleep. The city of one million is built on alluvial sediment that amplifies the shaking. Most of the buildings are unreinforced brick. They do not survive. 242,000 dead — the official figure. Other estimates are higher. The Chinese government initially refuses all foreign assistance, a political decision made in the middle of a humanitarian catastrophe. Rescue comes from within: soldiers arrive overland because roads are gone, and begin to dig.'
+    },
+    context: 'The 1976 Tangshan earthquake measured 7.6 magnitude and killed at least 242,000 people — possibly over 650,000 by some estimates, though official figures were not released until 1979. It struck at 3:42am, when residents were asleep. Tangshan, an industrial coal-mining city, was built primarily of unreinforced brick. The Mao-era government initially refused international aid and suppressed reporting on the scale of the disaster. Rescue was conducted almost entirely by the People\'s Liberation Army. The earthquake occurred during the politically chaotic final months of the Cultural Revolution, weeks after the death of Premier Zhou Enlai and months before Mao Zedong\'s own death.',
+    effect: (p) => {
+      p.m -= 18
+      p.h -= 10
+      p.r += 5
+      p.addFlag('tangshan_witness')
+    },
+    addFlags: ['tangshan_witness'],
+    minAge: 0,
+    maxAge: null,
+    when: null,
+  },
+
+  // ── WEST INDIES CRICKET 1975–1979 ────────────────────────────────────────
+  {
+    id: 'west_indies_cricket_1975',
+    name: 'West Indies Win the Cricket World Cup',
+    years: [1975, 1980],
+    archetypes: null,
+    countries: ['India', 'Pakistan', 'Sri Lanka', 'Bangladesh', 'South Africa', 'Zimbabwe', 'Kenya', 'Australia', 'New Zealand', 'United Kingdom'],
+    narrative: (G) => {
+      const cn = G.character.country.name
+      if (['India', 'Pakistan', 'Sri Lanka', 'Bangladesh'].includes(cn)) {
+        return 'The West Indies team wins the first World Cup and then the second. Clive Lloyd\'s team plays with a physical intensity that redefines what the game can be. For cricket countries that grew up under the same colonial arrangement, the victories carry something beyond sport — a post-colonial statement made in the language that was supposed to belong to the people who no longer control the game.'
+      }
+      if (['South Africa'].includes(cn)) {
+        return 'West Indies win the World Cup while South Africa is banned from international cricket because of apartheid. The irony is not lost on everyone — a team of Black West Indian cricketers wins the world championship while the country that enforced racial hierarchy in sport cannot participate. South African cricket does not allow Black South Africans to represent the country at any level.'
+      }
+      if (['Australia', 'New Zealand'].includes(cn)) {
+        return 'West Indies win the World Cup and then defend it. The team Clive Lloyd assembles — Richards, Roberts, Holding, Garner, Marshall — is the most dominant side the game has seen. The speed of the bowling. The certainty of the batting. Australia does not win either tournament, which is noticed.'
+      }
+      return 'The West Indies win. The team from the Caribbean, drawn from islands where cricket was a gift of the British Empire, has become the best team on earth. The empire\'s game now belongs to someone else.'
+    },
+    context: 'The West Indies won the first two Cricket World Cups (1975 and 1979), both held in England. The team captained by Clive Lloyd and featuring Vivian Richards, Michael Holding, Andy Roberts, and Gordon Greenidge dominated world cricket through the late 1970s and 1980s. Their success was widely understood as a post-colonial cultural statement. South Africa was banned from international cricket from 1970 to 1991 due to apartheid. The World Cup victories contributed to cricket\'s cultural transformation from a British imperial institution into a genuinely international sport.',
+    effect: (p) => {
+      p.m += 6
+      p.karma += 4
+      p.addFlag('cricket_generation')
+    },
+    addFlags: ['cricket_generation'],
+    minAge: 8,
+    when: (G) => !G.flags.includes('cricket_generation'),
+  },
+
+  // ── OLYMPIC BOYCOTT 1980 ─────────────────────────────────────────────────
+  {
+    id: 'olympics_boycott_1980',
+    name: 'Olympics Boycott',
+    years: [1980, 1985],
+    archetypes: ['wealthy_west', 'wealthy_east'],
+    countries: null,
+    narrative: (G) => {
+      const yr = G.currentYear
+      if (yr <= 1981) {
+        return '65 countries do not go to the Moscow Olympics. The USA boycott, in response to the Soviet invasion of Afghanistan, takes their athletes with it. The athletes who spent four years preparing for this have their preparation rendered irrelevant by a diplomatic decision that neither side believes will change anything. The Soviet Union invades Afghanistan regardless. The athletes train anyway, for the 1984 Games, which the Soviet bloc then boycotts in return. Both boycotts accomplish nothing except the cancellation of four years of human effort.'
+      }
+      return 'The 1984 Los Angeles Games proceed without the Soviet bloc. 14 countries stay away, mirroring the 1980 Western boycott. The cycle ends. The athletes compete. No political outcome of either boycott is ever identified.'
+    },
+    context: 'The 1980 Moscow Olympics were boycotted by 65 countries led by the United States, in response to the Soviet invasion of Afghanistan. US President Jimmy Carter initially threatened athletes who defied the boycott with passport revocation. Many athletes who had spent years preparing did not compete. In 1984, the Soviet Union and 13 allies boycotted the Los Angeles Olympics, officially citing security concerns but widely understood as retaliation. Neither boycott had any measurable effect on the political situations that prompted them.',
+    effect: (p) => { p.r += 4; p.m -= 3 },
+    addFlags: [],
+    minAge: 14,
+    when: (G) => !G.flags.includes('olympics_boycott_felt'),
+  },
+
+  {
+    id: 'algeria_black_decade_begins',
+    name: 'Algeria: The Cancelled Election',
+    years: [1992, 1993],
+    archetypes: null,
+    countries: ['Algeria'],
+    narrative: 'On 11 January 1992, Algeria\'s military cancels the second round of legislative elections. The Front Islamique du Salut had won 188 seats in the first round and was on course for a parliamentary supermajority. President Chadli Bendjedid resigns. A High State Committee takes power. Within months, a state of emergency is declared and the FIS is banned. What follows will be called the *décennie noire* — the Black Decade. 200,000 dead over ten years, in a country of 26 million. The army, the GIA, and eventually splinter groups will all carry out killings. Some massacres are never officially attributed. The deliberate confusion is part of the architecture.',
+    context: 'The 1991–92 Algerian electoral crisis began after the Islamic Salvation Front (FIS) won 47% of the vote in the first round of legislative elections, pointing toward a two-thirds parliamentary majority. The military stepped in, cancelling the second round and arresting FIS leadership, triggering an armed insurgency. The décennie noire lasted from 1992 to 2002 and killed an estimated 150,000–200,000 people. Both the GIA (Groupe Islamique Armé) and the DRS (military intelligence) were accused of atrocities; several major massacres — including Rais (August 1997, ~300 dead) and Bentalha (September 1997, ~400 dead) — remain without official attribution. President Bouteflika\'s 1999 Civil Concord offered amnesty to surrendering fighters but no accountability process.',
+    effect: (p) => { p.m -= 12; p.addFlag('decennie_noire_generation'); },
+    addFlags: ['decennie_noire_generation'],
+    minAge: 10,
+    maxAge: null,
+    when: null,
+  },
+
+  {
+    id: 'anfal_campaign_1988',
+    name: 'The Anfal Campaign: Halabja',
+    years: [1988, 1989],
+    archetypes: null,
+    countries: ['Iraq'],
+    narrative: 'On 16 March 1988, Iraqi aircraft drop mustard gas and nerve agents on the town of Halabja. Five thousand people die within hours. Tens of thousands more will die in the months that follow as the Anfal campaign moves through Kurdish villages and valleys — helicopters, chemical weapons, mass executions at ravines in the desert. The Iraqi government calls it a military operation against traitors who collaborated with Iran. The word genocide will be applied later, in retrospect, by people who were not there. The people who were there did not need a word for it.',
+    context: 'The Anfal campaign was an Iraqi government military offensive against Kurdish populations in northern Iraq carried out by the Ba\'athist regime from February to September 1988. Named after a Quranic verse concerning war spoils, it involved chemical weapons attacks (including the Halabja massacre on 16 March 1988), mass executions, and the forced displacement of 500,000–1,000,000 people. Estimates of the death toll range from 50,000 to 182,000. The campaign was ordered by Saddam Hussein and personally supervised by his cousin Ali Hassan al-Majid (known as "Chemical Ali"). In 2006, an Iraqi tribunal found the campaign constituted genocide.',
+    effect: (p) => { p.m -= 20; p.h -= 5; p.addFlag('anfal_generation'); },
+    addFlags: ['anfal_generation'],
+    minAge: 5,
+    maxAge: null,
+    when: (G) => G.character.ethnicity === 'kurdish_iraq' || G.character.ethnicity === 'kurdish',
   },
 
   {

@@ -76,6 +76,18 @@ export const CONFLICT_CHILDHOOD_EVENTS = [
     effect: null,
   },
   {
+    id: 'conf_teen_girl_threat',
+    phase: 'adolescence',
+    weight: 2,
+    when: (G) => inConflict(G) && G.character.gender === 'female' && G.age >= 13 && G.age <= 17 && !G.flags.includes('conf_girl_threat_survived'),
+    text: 'The route to the well is no longer the route to the well. Three girls from the upper quarter have not come home and no one says the word for what happened to them, only that they are gone. Your mother wakes before you do and is already calculating when you come downstairs. She has a plan. She does not tell you everything the plan is protecting you from.',
+    choices: [
+      { text: 'Stop going to school', tag: null, outcome: 'You stay inside. The books sit on the shelf. The year closes without you in it.', effect: (p) => { p.e -= 8; p.m -= 10; p.addFlag('conf_girl_threat_survived'); p.addFlag('education_interrupted') } },
+      { text: 'Go with the group your mother arranged', tag: null, outcome: 'You go in a cluster of four, a different path each day, never the same hour twice. You arrive. You learn what it costs to move through the world like this.', effect: (p) => { p.m -= 8; p.h -= 3; p.addFlag('conf_girl_threat_survived'); p.addFlag('conf_survived_adolescence') } },
+    ],
+    effect: null,
+  },
+  {
     id: 'conf_teen_checkpoint',
     phase: 'adolescence',
     weight: 4,
@@ -176,6 +188,16 @@ export const CONFLICT_CHILDHOOD_EVENTS = [
   },
 
   // ── PSYCHOLOGICAL AND SOCIAL ───────────────────────────────────────────────────
+
+  {
+    id: 'conf_direct_violence',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) => inConflict(G) && G.age >= 7 && G.age <= 14 && !G.mem?.confDirectViolence,
+    text: 'You see something you are not supposed to see — not an explosion at a distance, not a rumour, but something directly in front of you that the eye cannot edit. Your mother covers your face a moment too late. You have already seen. There is no system in a child for processing this. The image goes into a place that is not yet labelled, and stays there.',
+    choices: null,
+    effect: (p) => { p.m -= 18; p.r += 12; p.h -= 5; p.addFlag('conflict_childhood'); p.addFlag('traumatized_by_violence'); p.setMem('confDirectViolence', true) },
+  },
 
   {
     id: 'conf_psych_normalization',

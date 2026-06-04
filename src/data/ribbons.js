@@ -712,14 +712,6 @@ export const RIBBONS = [
     color: 'gray',
   },
   {
-    id: 'the_ofw',
-    name: 'The Overseas Worker',
-    description: 'You sent money home for years from a country that needed your labour but not you. The house was built. The distance remained.',
-    condition: (G) => G.flags.includes('ofw_gulf_worker'),
-    priority: 72,
-    color: 'blue',
-  },
-  {
     id: 'the_aids_witness',
     name: 'The Lost Generation',
     description: 'You watched your friends die one by one from something that had no name, then a name, then a treatment that arrived too late for some of them.',
@@ -1112,7 +1104,113 @@ export const RIBBONS = [
     color: 'gray',
   },
 
-  // ── BUILD 43 — ALGERIAN DÉCENNIE NOIRE ──────────────────────────────────────
+  // ── BUILD 38 — CHILDREN LEFT BEHIND ─────────────────────────────────────
+  {
+    id: 'the_left_behind',
+    name: 'The Left Behind',
+    description: 'You grew up holding the phone at the wrong hour. The package arrived with clothes in the wrong sizes. You carried both columns of the accounting.',
+    condition: (G) => G.flags.includes('understood_the_cost'),
+    priority: 60,
+    color: 'gray',
+  },
+  {
+    id: 'the_cycle_repeated',
+    name: 'The Cycle',
+    description: "You left like your parent left. Your child is now the age you were when the departure happened. You know both sides of it.",
+    condition: (G) => G.flags.includes('the_cycle_repeated'),
+    priority: 65,
+    color: 'blue',
+  },
+
+  // ── BUILD 23 — THE DIASPORA WHO DIDN'T LEAVE ─────────────────────────────
+  {
+    id: 'the_one_who_stayed',
+    name: 'The One Who Stayed',
+    description: 'Half the people you grew up with left. You watched them go and you stayed. The country did what it did. You were there for all of it.',
+    condition: (G) => G.flags.includes('chose_to_stay'),
+    priority: 62,
+    color: 'green',
+  },
+
+  // ── BUILD 45 — INTIMACY ARC ──────────────────────────────────────────────
+  {
+    id: 'the_late_love',
+    name: 'The Late Beginning',
+    description: 'You found love after the age when people stop expecting to. You were surprised anyway.',
+    condition: (G) => G.flags.includes('late_love_found'),
+    priority: 62,
+    color: 'pink',
+  },
+  {
+    id: 'the_affair_not_taken',
+    name: 'The Road Not Taken',
+    description: 'You saw the door and chose not to open it. The decision cost something. You did not entirely regret it.',
+    condition: (G) => G.flags.includes('affair_not_taken'),
+    priority: 55,
+    color: 'blue',
+  },
+  {
+    id: 'the_solo_architecture',
+    name: 'The Built-For-One',
+    description: 'You built a life that did not centre around couplehood. It had its own structure. It did not need a name.',
+    condition: (G) => G.flags.includes('built_something_solo'),
+    priority: 58,
+    color: 'green',
+  },
+
+  // ── BUILD 46 — SCHOOL AS INSTITUTION ─────────────────────────────────────
+  {
+    id: 'the_scholarship_student',
+    name: 'The Scholarship Door',
+    description: 'You got in on merit, into a room built for people with money. You knew the difference. The door was real anyway.',
+    condition: (G) => G.flags.includes('scholarship_opened_doors'),
+    priority: 65,
+    color: 'blue',
+  },
+  {
+    id: 'the_war_school',
+    name: 'The School That Stayed Open',
+    description: 'You attended school in a city at war. The teacher was there every morning at seven-thirty. The routine held something together.',
+    condition: (G) => G.flags.includes('war_school_attended'),
+    priority: 60,
+    color: 'gray',
+  },
+  {
+    id: 'the_teacher_remembered',
+    name: 'The Teacher Who Came Anyway',
+    description: 'Somewhere in your education there was someone who showed up when they had every reason not to. You carried them without a name.',
+    condition: (G) => G.flags.includes('teacher_sacrifice'),
+    priority: 55,
+    color: 'green',
+  },
+
+  // ── OFW ARC ───────────────────────────────────────────────────────────────
+  {
+    id: 'the_ofw',
+    name: 'The Overseas Worker',
+    description: 'You left to build something for the people you love. The distance was not an absence — it was a form of presence.',
+    condition: (G) => G.flags.includes('ofw_worker'),
+    priority: 72,
+    color: 'blue',
+  },
+  {
+    id: 'the_ofw_returned',
+    name: 'The One Who Came Back',
+    description: 'You built it from abroad and then you came home to live in it. That takes a particular kind of courage.',
+    condition: (G) => G.flags.includes('ofw_returned'),
+    priority: 75,
+    color: 'gold',
+  },
+  {
+    id: 'the_kafala_survivor',
+    name: 'The Kafala Survivor',
+    description: 'Your passport was taken. You did the work anyway. You found a way through a system not designed to let you through.',
+    condition: (G) => G.flags.includes('ofw_passport_held'),
+    priority: 78,
+    color: 'red',
+  },
+
+  // ── BUILD 43 — ALGERIAN DÉCENNIE NOIRE ──────────────────────────────────
   {
     id: 'the_black_decade',
     name: 'The Black Decade',
@@ -1131,8 +1229,8 @@ export const RIBBONS = [
   },
   {
     id: 'the_knew_the_truth',
-    name: 'The Reckoning',
-    description: 'You knew what happened at Rais and Bentalha. You knew which question was not being asked. You lived with that knowledge.',
+    name: 'The Unspoken Knowledge',
+    description: 'You knew what you were not supposed to say about who ordered the massacres. You carried it.',
     condition: (G) => G.flags.includes('knew_the_truth'),
     priority: 70,
     color: 'purple',
@@ -1154,5 +1252,467 @@ export const RIBBONS = [
     condition: (G) => G.flags.includes('gang_leadership') || G.flags.includes('gang_senior'),
     priority: 55,
     color: 'red',
+  },
+
+  // ── BUILD 39 — SPORT ─────────────────────────────────────────────────────
+  {
+    id: 'the_sport_door',
+    name: 'The Door That Was There',
+    description: 'You saw the possibility of a different life through sport and walked toward it.',
+    condition: (G) => G.flags.includes('sport_exit_attempted'),
+    priority: 52,
+    color: 'blue',
+  },
+  {
+    id: 'the_played_into_adulthood',
+    name: 'The Sunday Leagues',
+    description: 'You played long after it stopped being serious. Serious enough for you.',
+    condition: (G) => G.flags.includes('played_into_adulthood'),
+    priority: 42,
+    color: 'green',
+  },
+  {
+    id: 'the_cricket_inheritance',
+    name: 'The Inherited Game',
+    description: 'You played the empire\'s game and made it yours.',
+    condition: (G) => G.flags.includes('cricket_colonial_inheritance'),
+    priority: 52,
+    color: 'blue',
+  },
+  {
+    id: 'the_world_cup_child',
+    name: 'The World Cup Child',
+    description: 'A tournament shaped how you understood what collective feeling was.',
+    condition: (G) => G.flags.includes('world_cup_generation'),
+    priority: 42,
+    color: 'blue',
+  },
+
+  // ── BUILD 53 — NATURAL DISASTERS ─────────────────────────────────────────
+  {
+    id: 'the_flood_country',
+    name: 'The Flood Country',
+    description: 'You lived with the water on its own terms. You knew its calendar.',
+    condition: (G) => G.flags.includes('flood_season_known'),
+    priority: 52,
+    color: 'blue',
+  },
+  {
+    id: 'the_earthquake_country',
+    name: 'The Earthquake Country',
+    description: 'You lived where the ground was unreliable and made your preparations.',
+    condition: (G) => G.flags.includes('earthquake_prepared'),
+    priority: 42,
+    color: 'blue',
+  },
+  {
+    id: 'the_storm_season',
+    name: 'The Storm Season',
+    description: 'Every year you prepared. You knew the calendar of the danger.',
+    condition: (G) => G.flags.includes('typhoon_season_known'),
+    priority: 42,
+    color: 'blue',
+  },
+  {
+    id: 'the_liquidator',
+    name: 'The Liquidator',
+    description: 'You went to Chernobyl when the state said the risk was manageable. You learned what manageable meant.',
+    condition: (G) => G.flags.includes('chernobyl_liquidator'),
+    priority: 72,
+    color: 'red',
+  },
+  {
+    id: 'the_river_wrong_colour',
+    name: 'The River',
+    description: 'You grew up beside water that had been changed by something upstream. The fish left first.',
+    condition: (G) => G.flags.includes('grew_up_polluted') || G.flags.includes('industrial_upbringing'),
+    priority: 48,
+    color: 'blue',
+  },
+  {
+    id: 'the_delta_witness',
+    name: 'The Delta',
+    description: 'You watched the creek your family fished for generations turn the colour it should not be.',
+    condition: (G) => G.flags.includes('oil_delta_witness'),
+    priority: 55,
+    color: 'blue',
+  },
+  {
+    id: 'the_student_debt',
+    name: 'The Debt That Follows',
+    description: 'You paid for an education that cost more than the statement said it would.',
+    condition: (G) => G.flags.includes('university_graduate') && G.mem?.studentLoanReckoning,
+    priority: 35,
+    color: 'blue',
+  },
+
+  // ── INDONESIA 1998 ────────────────────────────────────────────────────────
+  {
+    id: 'the_reformasi_generation',
+    name: 'Reformasi',
+    description: 'You watched thirty-two years end on a television screen. The word for what came next took years to define.',
+    condition: (G) => G.flags.includes('reformasi_generation'),
+    priority: 62,
+    color: 'green',
+  },
+  {
+    id: 'the_returned_culture',
+    name: 'The Lifted Ban',
+    description: 'The lion dance performed in the street. You stood at the back of the crowd and did not know what to call what you felt.',
+    condition: (G) => G.flags.includes('chinese_culture_returned'),
+    priority: 65,
+    color: 'gold',
+  },
+  {
+    id: 'the_jakarta_survivor',
+    name: 'May 1998',
+    description: 'You were in Jakarta when the city burned. You counted people you could not reach.',
+    condition: (G) => G.flags.includes('jakarta_98_survived'),
+    priority: 78,
+    color: 'red',
+  },
+
+  // ── KURDISH IDENTITY ──────────────────────────────────────────────────────
+  {
+    id: 'the_stateless_nation',
+    name: 'The Largest Stateless Nation',
+    description: 'Forty million people. No country. You know what it is to carry a language the map does not recognise.',
+    condition: (G) => G.flags.includes('kurd_identity_suppressed') || G.flags.includes('kurd_stateless'),
+    priority: 80,
+    color: 'red',
+  },
+  {
+    id: 'the_anfal_generation',
+    name: 'After Halabja',
+    description: 'The news arrived through the community before any newspaper. You know what the word genocide means from the inside.',
+    condition: (G) => G.flags.includes('anfal_generation'),
+    priority: 82,
+    color: 'purple',
+  },
+  {
+    id: 'the_rojava_generation',
+    name: 'Rojava',
+    description: 'For the first time in your memory, there was a piece of the world administered in your language. You were not sure it would last.',
+    condition: (G) => G.flags.includes('rojava_generation'),
+    priority: 74,
+    color: 'green',
+  },
+
+  // ── DEBT ARC ──────────────────────────────────────────────────────────────
+  {
+    id: 'the_debt_recovered',
+    name: 'The Weight Was Gone',
+    description: 'You paid the balance in full every month. You knew what the minimum payment feeling was like. Your children would not.',
+    condition: (G) => G.flags.includes('debt_recovered'),
+    priority: 55,
+    color: 'green',
+  },
+  {
+    id: 'the_structural_adjustment',
+    name: 'Structural Adjustment',
+    description: 'The IMF called it a programme. The clinic called it closed. You called it Tuesday.',
+    condition: (G) => G.flags.includes('structural_adjustment_era'),
+    priority: 68,
+    color: 'gray',
+  },
+
+  // ── HAITI ─────────────────────────────────────────────────────────────────
+  {
+    id: 'the_dyaspora',
+    name: 'Dyaspora',
+    description: 'You built a life that could send money home. You sent enough to build a house, twice.',
+    condition: (G) => G.flags.includes('haitian_diaspora'),
+    priority: 65,
+    color: 'blue',
+  },
+  {
+    id: 'the_haiti_earthquake',
+    name: 'Thirty-Five Seconds',
+    description: 'You know what the city sounded like before. You were there when it stopped sounding like that.',
+    condition: (G) => G.flags.includes('earthquake_2010_survived'),
+    priority: 80,
+    color: 'red',
+  },
+  {
+    id: 'the_haiti_debt',
+    name: 'The Ransom',
+    description: 'You know about the 122 years. You carry it — not as anger, or not only as anger.',
+    condition: (G) => G.flags.includes('knows_the_debt'),
+    priority: 60,
+    color: 'purple',
+  },
+
+  // ── SRI LANKA ─────────────────────────────────────────────────────────────
+  {
+    id: 'the_black_july',
+    name: 'Black July',
+    description: 'Someone had printed the lists. The police were present in the specific way of people who had been told to be present without acting.',
+    condition: (G) => G.flags.includes('black_july_survived'),
+    priority: 82,
+    color: 'red',
+  },
+  {
+    id: 'the_eelam_generation',
+    name: 'The Eelam Generation',
+    description: 'You grew up with the war as the background condition of every decision. The exam still happened.',
+    condition: (G) => G.flags.includes('tamil_diaspora') || G.flags.includes('war_childhood'),
+    priority: 72,
+    color: 'purple',
+  },
+  {
+    id: 'the_aragalaya',
+    name: 'Aragalaya',
+    description: 'The struggle. Multiethnic, furious, peaceful — it surprised everyone, including itself.',
+    condition: (G) => G.flags.includes('aragalaya_generation'),
+    priority: 58,
+    color: 'green',
+  },
+
+  // ── MOROCCO ───────────────────────────────────────────────────────────────
+  {
+    id: 'the_years_of_lead',
+    name: 'The Years of Lead',
+    description: 'You learned the politics of the room before you spoke. The people who didn\'t learned something else.',
+    condition: (G) => G.flags.includes('years_of_lead_generation'),
+    priority: 72,
+    color: 'gray',
+  },
+  {
+    id: 'the_amazigh',
+    name: 'Amazigh',
+    description: 'You were educated in two languages that were not the language you spoke at home. You passed anyway.',
+    condition: (G) => G.flags.includes('amazigh_identity'),
+    priority: 65,
+    color: 'gold',
+  },
+  {
+    id: 'the_strait',
+    name: 'The Strait',
+    description: 'On a clear day from Tangier you can see Spain. Fourteen kilometres.',
+    condition: (G) => G.flags.includes('moroccan_diaspora'),
+    priority: 62,
+    color: 'blue',
+  },
+
+  // ── ROHINGYA ──────────────────────────────────────────────────────────────
+  {
+    id: 'the_temporary_resident',
+    name: 'Temporary Resident',
+    description: 'Your family has been here for generations. The document called you temporary.',
+    condition: (G) => G.flags.includes('rohingya_stateless'),
+    priority: 82,
+    color: 'gray',
+  },
+  {
+    id: 'the_clearance_operation',
+    name: 'The Clearance',
+    description: 'You heard the helicopters before dawn. You walked for four days to the river.',
+    condition: (G) => G.flags.includes('rohingya_displacement'),
+    priority: 90,
+    color: 'red',
+  },
+  {
+    id: 'the_first_passport',
+    name: 'The First Passport',
+    description: 'A document with your name spelled correctly. Your children were born into citizenship. This is not a small thing.',
+    condition: (G) => G.flags.includes('rohingya_resettled'),
+    priority: 75,
+    color: 'green',
+  },
+
+  // ── TANZANIA ──────────────────────────────────────────────────────────────
+  {
+    id: 'the_ujamaa_generation',
+    name: 'Ujamaa',
+    description: 'The school was real. So was the failed harvest. You hold both at once — which is what this generation learned to do.',
+    condition: (G) => G.flags.includes('ujamaa_generation'),
+    priority: 62,
+    color: 'green',
+  },
+
+  // ── MULTILINGUALISM ───────────────────────────────────────────────────────
+  {
+    id: 'the_between_languages',
+    name: 'The Third Language',
+    description: 'You argue in one, dream in another, and speak a third that exists only in the gap between them.',
+    condition: (G) => G.flags.includes('multilingual_identity'),
+    priority: 55,
+    color: 'gold',
+  },
+  {
+    id: 'the_last_speakers',
+    name: 'The Last Speakers',
+    description: 'Fewer than fifty. A linguist came with a recorder and asked you to say the words for different qualities of rain.',
+    condition: (G) => G.flags.includes('minority_language_speaker') && G.age >= 65,
+    priority: 70,
+    color: 'purple',
+  },
+
+  // ── SOLDIER ARC ───────────────────────────────────────────────────────────
+  {
+    id: 'the_deployed',
+    name: 'Deployed',
+    description: 'You landed and it was already different from everything you were told. Training and the actual thing are related but not the same.',
+    condition: (G) => G.flags.includes('deployed_to_conflict'),
+    priority: 68,
+    color: 'gray',
+  },
+  {
+    id: 'the_veteran_silence',
+    name: 'The Short Answer',
+    description: 'You learned the short answer. The long answer starts somewhere too far back. You use the short answer.',
+    condition: (G) => G.flags.includes('veteran_silence'),
+    priority: 60,
+    color: 'gray',
+  },
+  {
+    id: 'the_moral_weight',
+    name: 'The Weight',
+    description: 'The legality of it and the weight of it are separate things. They do not cancel each other out.',
+    condition: (G) => G.flags.includes('moral_weight_carried'),
+    priority: 72,
+    color: 'red',
+  },
+
+  // ── DOCUMENTS / IDENTITY ──────────────────────────────────────────────────
+  {
+    id: 'the_rwandan_survivor',
+    name: 'The Checkpoint',
+    description: 'The identity card was Belgian — the Belgians invented the ethnic column. The militiaman looked at it. You crossed.',
+    condition: (G) => G.flags.includes('rwandan_survivor'),
+    priority: 95,
+    color: 'red',
+  },
+  {
+    id: 'the_stateless_navigator',
+    name: 'The Pause',
+    description: 'You learned to read the specific quality of the pause at a border. This pause means it might work. That pause means it won\'t.',
+    condition: (G) => G.flags.includes('stateless_navigator'),
+    priority: 78,
+    color: 'gray',
+  },
+
+  // ── CENTRAL ASIA ──────────────────────────────────────────────────────────
+  {
+    id: 'the_asharshylyk',
+    name: 'Asharshylyk',
+    description: 'The great hunger. One in three Kazakhs. You were not yet a statistic.',
+    condition: (G) => G.flags.includes('asharshylyk_survivor'),
+    priority: 92,
+    color: 'red',
+  },
+  {
+    id: 'the_aral_witness',
+    name: 'The Sea That Was',
+    description: 'Ship hulls in the sand where the water was. Your grandfather fished there.',
+    condition: (G) => G.flags.includes('aral_sea_witness'),
+    priority: 65,
+    color: 'blue',
+  },
+
+  // ── CLERGY / RELIGIOUS INSTITUTION ───────────────────────────────────────
+  {
+    id: 'the_parish_priest',
+    name: 'The Parish',
+    description: 'The bank manager was in your congregation. The county council deferred to you. You were the institution, and the institution\'s options were what they were.',
+    condition: (G) => G.flags.includes('institutional_power') && G.flags.includes('clergy_ordained'),
+    priority: 65,
+    color: 'blue',
+  },
+  {
+    id: 'the_reckoning',
+    name: 'The Reports',
+    description: 'The names were read on the radio in voices that were calm and specific. You sat in the house you had lived in for thirty years and did not answer the phone.',
+    condition: (G) => G.flags.includes('institutional_reckoning'),
+    priority: 78,
+    color: 'red',
+  },
+  {
+    id: 'the_sangha_survived',
+    name: 'The Sangha',
+    description: 'They killed sixty thousand monks. You were among the three thousand. The robes went somewhere inside you that the regime could not reach.',
+    condition: (G) => G.flags.includes('faith_survived_suppression'),
+    priority: 90,
+    color: 'gold',
+  },
+  {
+    id: 'the_rebuilt',
+    name: 'Rebuilt',
+    description: 'Young men came to you who had grown up with no religious institution at all, in a country that tried to make religion impossible. You taught what you knew.',
+    condition: (G) => G.flags.includes('rebuilt_institution'),
+    priority: 75,
+    color: 'green',
+  },
+  {
+    id: 'the_encoded_sermon',
+    name: 'The Encoded Sermon',
+    description: 'Surveillance listens for direct statements. The congregation understands the encoding. The gap between those two things is where you operated.',
+    condition: (G) => G.flags.includes('clergy_adapted') && G.flags.includes('resistance_through_art'),
+    priority: 68,
+    color: 'purple',
+  },
+
+  // ── SENEGAL ───────────────────────────────────────────────────────────────
+  {
+    id: 'the_mouride',
+    name: 'Mouride',
+    description: 'Three million people converging on Touba. The state simply does not apply here. You understood this the first time you arrived.',
+    condition: (G) => G.flags.includes('mouride_member'),
+    priority: 55,
+    color: 'gold',
+  },
+  {
+    id: 'the_dahira',
+    name: 'The Dahira',
+    description: 'Every two weeks in an apartment — a savings circle, a prayer group, a connection to Touba. The state doesn\'t know it exists. It doesn\'t need to.',
+    condition: (G) => G.flags.includes('diaspora_community_built'),
+    priority: 60,
+    color: 'green',
+  },
+
+  // ── ADOPTEE ───────────────────────────────────────────────────────────────
+  {
+    id: 'the_origin_story',
+    name: 'The Origin Story',
+    description: 'The story they told you was made for the child. The fact is more complicated. You are old enough now to sense the edges of it.',
+    condition: (G) => G.flags.includes('adopted'),
+    priority: 60,
+    color: 'blue',
+  },
+  {
+    id: 'the_dna_match',
+    name: 'The Match',
+    description: 'The first call was forty minutes. You did not know what to call each other at the end of it.',
+    condition: (G) => G.flags.includes('found_birth_family'),
+    priority: 65,
+    color: 'green',
+  },
+
+  // ── UYGHUR ────────────────────────────────────────────────────────────────
+  {
+    id: 'the_veatc',
+    name: 'The Invitation',
+    description: 'It was called a Vocational Education and Training Center. You have been trained not to describe what happened there.',
+    condition: (G) => G.flags.includes('uyghur_detained'),
+    priority: 88,
+    color: 'gray',
+  },
+  {
+    id: 'the_testimony_diaspora',
+    name: 'The Testimony',
+    description: 'Your name is in a report read by diplomats who did not act on it. Your family did not contact you again.',
+    condition: (G) => G.flags.includes('political_active') && G.flags.includes('uyghur_diaspora'),
+    priority: 80,
+    color: 'red',
+  },
+
+  // ── PUERTO RICO ───────────────────────────────────────────────────────────
+  {
+    id: 'the_maria_survivor',
+    name: 'Después del Huracán',
+    description: 'Sixteen days without power became weeks. The government said sixty-four. Everyone knew it was more.',
+    condition: (G) => G.flags.includes('maria_survivor'),
+    priority: 72,
+    color: 'gray',
   },
 ]
