@@ -1831,6 +1831,131 @@ function buildYearTexture(state) {
     'You are doing the thing you are supposed to be doing. That is rarer than it sounds.',
   ])
   if (career && F.has('career_defining_work')) return 'The best work you have done is behind you. You are learning what comes after best.'
+
+  // ─── CAREER FIELD TEXTURE (~22% when working) ────────────────────────────────
+  if (career && !F.has('career_fulfilled') && Math.random() < 0.22) {
+    const field = career.field
+    const title = career.title
+    const fieldLines = {
+      education: [
+        'A classroom full of people learning something for the first time. You have seen this enough times to know it doesn\'t get old.',
+        `The work of teaching is not the lesson plan — it is the thing that happens when the lesson plan encounters thirty separate people.`,
+        phase === 'late_life'
+          ? `You have been a ${title} for decades. There are students who are now older than you were when you taught them. That arithmetic sits in the background of some days.`
+          : 'You are responsible for something being understood that was not understood before. That is the measure of the work.',
+        'The difficult student this year is the one you will remember.',
+      ],
+      healthcare: [
+        'The body is the baseline and everything else is the context. You have learned to read both.',
+        `The shift ended at the hour it was scheduled to end and also two hours after that. That is the rhythm.`,
+        phase === 'midlife' || phase === 'late_life'
+          ? 'You have been doing this long enough that the cases that stay with you are specific. You can still name them.'
+          : 'The distance between what the textbook says and what the patient is doing is where most of the work lives.',
+        'You know what people look like when they are frightened. You have learned to be steady in that room.',
+      ],
+      law: [
+        'The law is a language. You have been fluent for long enough that you hear the ambiguities before the sentence is finished.',
+        'The client has a problem; the law has a vocabulary for addressing it; the gap between those two things is what you are paid to close.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'You have argued the same principle in different courtrooms with different facts around it. The principle doesn\'t change. Everything else does.'
+          : 'The study of law is the study of what people do to each other and what the state does to people and what can be done about both.',
+      ],
+      technology: [
+        'The stack has changed since you started. The fundamentals have not. You try to keep track of both.',
+        'You are building something that does not yet exist in the way it will exist when you are done. That is the job.',
+        phase === 'midlife'
+          ? 'You have seen several paradigms come and be superseded. You are better at distinguishing the paradigm shift from the trend than you were a decade ago.'
+          : 'The problem is interesting. The solution is unclear. You are in the part of the job that is just thinking.',
+      ],
+      agriculture: [
+        'The season is what it is. You work with it.',
+        'The soil has a memory. What you do this year is in next year\'s yield.',
+        phase === 'late_life'
+          ? 'You have been farming this land long enough to have seen the same bad years twice. The second time you knew what to do.'
+          : 'The gap between what you planted and what the market will pay for it is the whole problem compressed into a season.',
+        'Rain on the wrong day. You have learned to build the buffer before you need it.',
+      ],
+      manufacturing: [
+        'The line runs or it doesn\'t. Today it ran.',
+        'You know the machine by its sounds. Anything new in the sound means something.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'The factory has changed twice in the years you have been here. You changed with it.'
+          : 'The work is physical and repetitive and requires a specific competence that is harder to see from outside than it is to do.',
+      ],
+      transport: [
+        'You know the roads the way people know their neighbourhoods — the slow corners, the shortcuts, the time the traffic changes.',
+        'The vehicle is the office. The office moves.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'You have driven enough miles to have seen the country from a specific angle available only to people who cross it on the ground.'
+          : 'The job is moving things from one place to another. That sounds simple. The logistics are not simple.',
+      ],
+      social_services: [
+        'The case load is what it is. You do what you can with what the system provides, which is never enough.',
+        'You are in the business of seeing people at their most difficult. That requires a specific steadiness.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'You have been doing this long enough to see the same family patterns appear in the next generation. The structural causes are unchanged. You work anyway.'
+          : 'The distance between what someone needs and what the service can provide is where you spend most of your days.',
+      ],
+      law_enforcement: [
+        'You see the city at the hours and in the corners that most people don\'t.',
+        'The rules of engagement are clear on paper. The situations are not.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'You have been a police officer long enough to know what changed and what did not. The uniform is the same. The phone is different. Some things are harder to name.'
+          : 'The work requires judgment under time pressure with incomplete information. You are still developing the judgment.',
+      ],
+      media: [
+        'The story is there. Getting to it is the job.',
+        'You are in the business of deciding what is news. That is a kind of power that is worth being precise about.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'The industry has changed since you started. The technology changed. The question of what journalism is for has not changed.'
+          : 'You are learning to write the thing precisely enough that someone who was not there can understand what happened.',
+      ],
+      government: [
+        'The state is a slow machine. You are somewhere inside it, trying to make one part move.',
+        'The bureaucracy exists for reasons. Some of those reasons are still valid. Others outlived their usefulness decades ago.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'You have served through multiple administrations. The policy changes. The institution remains. You have learned to work the institution.'
+          : 'The gap between the regulation as written and the policy as practised is where most of the actual work happens.',
+      ],
+      finance: [
+        'The numbers are one language. The reasons behind the numbers are another. Your job is both.',
+        'Capital wants to be somewhere. Your job is to have an opinion about where and to be right more often than you are wrong.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'You have been through at least one crash. The theory held up less well than expected. The experience held up better.'
+          : 'The market is a collective judgment that can be wrong in aggregate for longer than seems possible. You work inside this.',
+      ],
+      arts: [
+        'The work is never finished — it is abandoned. You have made peace with this.',
+        phase === 'late_life'
+          ? 'You have made things. Some of them persist. You are trying not to measure yourself by which ones.'
+          : 'The thing you are making does not yet exist. That is both the problem and the point.',
+      ],
+      writing: [
+        'The sentence that was wrong yesterday is still wrong today. You have not fixed it yet.',
+        'You are making something out of words, which are inexact instruments for exact purposes.',
+        phase === 'late_life'
+          ? 'You have been writing for long enough that the early work is like a letter from someone you no longer are.'
+          : 'The blank page is not an enemy. It is a problem. Problems can be solved.',
+      ],
+      military: [
+        'The training is the preparation for a situation that may or may not occur. You keep training.',
+        'The hierarchy is the frame that everything else operates inside. You know your place in it precisely.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'You have been in the service long enough to know what the institution is and what it tells you it is. The gap between those two things is where the judgment goes.'
+          : 'The military gives you a structure and takes something in exchange. You are still working out what the exchange was.',
+      ],
+      science: [
+        'The experiment failed. That is data. You redesign.',
+        'The field moves slower than it looks from the outside. You are advancing it by the width of one result.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'You have been doing science long enough that some of your early work has been built on by people you taught. That is the continuity of it.'
+          : 'The question is more precisely formed than it was last year. That is progress, even when no answer has arrived.',
+      ],
+    }
+    const lines = fieldLines[field]
+    if (lines?.length) return pick(lines)
+  }
+
   if (F.has('serious_musician')) return pick([
     'The practice is something you look forward to. That surprises you sometimes.',
     'The music asks for the part of you the day doesn\'t reach.',
