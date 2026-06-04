@@ -2745,6 +2745,76 @@ function buildYearTexture(state) {
     'The queue lasted weeks. The government\'s assumption was that cash savings meant black money. Your savings were in cash because the bank was two hours away. The assumption did not include you.',
   ])
 
+  // ─── IRELAND TEXTURE ─────────────────────────────────────────────────────────
+  if (F.has('irish_emigrant_generation') && Math.random() < 0.3) return pick([
+    'You are Irish at one remove. The remove is maintained by the specific labour of keeping up with what is happening in a place you are not.',
+    phase === 'late_life'
+      ? 'You left on the boat-train. You have been calculating the distance ever since — between here and there, between who you became here and who you would have been there.'
+      : 'The emigrant\'s specific condition: belonging to a place you are not in, which is a form of belonging that requires more maintenance than the other kind.',
+  ])
+  if (F.has('celtic_tiger_generation') && Math.random() < 0.2) return pick([
+    'The cranes were everywhere. The feeling of wealth was specific and convincing and based on house prices that assumed the growth continued. The growth did not continue.',
+    'The Celtic Tiger was real and it was built on an assumption. The assumption was tested in 2008 and answered. You were in it before and after the answer.',
+  ])
+  if (F.has('irish_crash_generation') && Math.random() < 0.25) return pick([
+    'The government guaranteed the bank debts in a single September night in 2008. Four hundred billion euros. The guarantee is still being discussed. The austerity happened immediately.',
+    phase === 'late_life'
+      ? 'You lived through two Irish economic collapses and two emigration waves. The pattern is more visible from here than it was from inside either one.'
+      : 'The people who left in 2010 and 2011 were the children of the people who left in 1983. The country exported its young twice in thirty years.',
+  ])
+  if (F.has('irish_church_reckoning') && Math.random() < 0.25) return pick([
+    'The institution that ran the schools and the hospitals and the Magdalene laundries is producing findings. The findings do not produce most of the convictions. The country is becoming something else.',
+    'You grew up Catholic in a structural sense — the Church was not a choice, it was the furniture of the country. What the reports revealed about the furniture has not been fully processed.',
+  ])
+  if (F.has('stayed_in_ireland') && Math.random() < 0.2) return pick([
+    'You watched the town empty in increments. The people who left sent back letters and then phone calls and then nothing much. You are still here and the question of whether staying was a choice or a default has never fully resolved.',
+    phase === 'late_life'
+      ? 'Everyone in your generation either left or came back. You never left. The ones who came back are different from the ones who stayed. You are one of the ones who stayed.'
+      : 'The structural condition of twentieth-century Ireland was emigration. You are the exception to the structural condition. The exception has its own costs.',
+  ])
+  if (F.has('troubles_adjacent') && Math.random() < 0.2) return pick([
+    'In the Republic, technically not in the conflict. The bombs in Dublin in 1974 clarified the word technically.',
+    'The Troubles were on the other side of the border in the way that a fire in a shared building is on the other side of a wall.',
+  ])
+
+  // ─── TURKEY TEXTURE ──────────────────────────────────────────────────────────
+  if (F.has('turkish_coup_generation') && Math.random() < 0.3) return pick([
+    'September 12, 1980: 650,000 detained in three years. The torture in the military prisons was documented, systematic, and denied. You know this from inside the category or from its immediate vicinity.',
+    phase === 'late_life'
+      ? 'You have watched Turkey have three coups and one coup attempt. The pattern is not accident. The country has a specific relationship between the military and civilian government that takes decades to change.'
+      : 'The constitution was rewritten in 1982 under military supervision. You have been living in the country produced by the rewriting since then.',
+  ])
+  if (F.has('marmara_earthquake_generation') && Math.random() < 0.25) return pick([
+    'The buildings fell because the permits were obtainable without the construction. Corruption made concrete, which is what much corruption eventually becomes. You know this in your body.',
+    'August 17, 1999, 3:02am. Seventeen thousand dead in the official count. The specific thing that killed people was a system, not a force of nature alone.',
+  ])
+  if (F.has('gezi_generation') && Math.random() < 0.25) return pick([
+    'Gezi was the line. Before it you could argue about whether what was coming was what was coming. After it you could not. You were there for both sides of the line.',
+    phase === 'late_life'
+      ? 'The protest started over a park and became a question about what kind of country this was. The answer has been arriving in stages since 2013.'
+      : 'Water cannon and tear gas and seven thousand detained. The crackdown clarified something that the preceding decade had left ambiguous.',
+  ])
+  if (F.has('turkish_historical_silence') && Math.random() < 0.2) return pick([
+    'You know the shape of what the state has decided the past is allowed to be. The shape includes 1915 and the word that is not used and the people charged for using it.',
+    'Orhan Pamuk charged for telling a Swiss newspaper the numbers. Charges dropped under international pressure. The pressure required is itself a piece of information about the country.',
+  ])
+  if (F.has('turkish_growth_generation') && Math.random() < 0.2) return pick([
+    'The decade when GDP tripled: highways, hospitals, inflation down from 68 to 8 percent. The growth was real. The question of what it was building toward took a decade to arrive at an answer.',
+    'The AKP\'s first decade produced something real in the economy and something real in the political landscape that were related and would take years to fully disentangle.',
+  ])
+  if (F.has('kemalist_generation') && Math.random() < 0.2) return pick([
+    'The Kemalist settlement: secularism enforced from above, the military as its guardian, the headscarf question as one of its recurring tests. You grew up inside the settlement and its terms feel correct to you.',
+    'Ataturk\'s republic at its core: the state secular, the army watching, the laicite not a preference but a constitutional principle. You know what was built and what the building required.',
+  ])
+  if (F.has('post_kemalist_generation') && Math.random() < 0.2) return pick([
+    'The headscarf ban excluded specific women from specific universities for a specific religious practice. The principle of secularism and the exclusion of those women were not, to you, the same thing.',
+    'You watched Kemalist secularism hold the line by barring women from lecture halls. The line it held began to look different from where you were standing than from where it was being defended.',
+  ])
+  if (F.has('turkish_conservative_generation') && Math.random() < 0.2) return pick([
+    'The AKP spoke to people who had been outside the Kemalist networks — the Anatolian middle class, the practicing Muslim professional, the voter the Republican People\'s Party had not found a way to address. You were one of those people.',
+    'The 2002 election was a realignment. The people who voted for it were not voting against democracy. They were voting against the version of Turkey that had excluded them from its benefits.',
+  ])
+
   // ─── EXPANDED PHASE POOLS ────────────────────────────────────────────────────
 
   // Late life specific

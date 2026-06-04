@@ -2406,4 +2406,106 @@ export const FLAG_REGISTRY = {
     notes: 'Set by ind_demonetization_2016. Two branches: had formal banking, or had cash savings.',
   },
 
+  // ── Ireland ───────────────────────────────────────────────────────────────────
+  irish_emigrant_generation: {
+    weight: 'major',
+    category: 'experience',
+    description: 'Left Ireland as part of the structural emigration wave — the boat-train, London/Boston/Sydney',
+    intent: 'year_texture',
+    notes: 'Set by ire_emigration_wave (left branch). Irish emigration was a generational condition through most of the 20th century.',
+  },
+  stayed_in_ireland: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Stayed in Ireland while their generation emigrated — watching the town empty',
+    intent: 'year_texture',
+    notes: 'Set by ire_emigration_wave (stayed branch).',
+  },
+  troubles_adjacent: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived in the Republic during the Troubles — not in the conflict, but not outside it either',
+    intent: 'year_texture',
+    notes: 'Set by ire_troubles_border.',
+  },
+  celtic_tiger_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the Celtic Tiger years — cranes, returning emigrants, house prices doubling, the feeling of wealth',
+    intent: 'year_texture',
+    notes: 'Set by ire_celtic_tiger. Two branches: bought in, or held back.',
+  },
+  irish_crash_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the 2008-2013 Irish crash — bank guarantee, IMF, austerity, second emigration wave',
+    intent: 'year_texture',
+    notes: 'Set by ire_crash_2008. Two branches: lost job/house, or adjacent observer.',
+  },
+  irish_church_reckoning: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed the Irish Catholic Church institutional collapse — Ryan Report, Murphy Report, Magdalene laundries, industrial schools',
+    intent: 'year_texture',
+    notes: 'Set by ire_church_collapse.',
+  },
+
+  // ── Turkey ────────────────────────────────────────────────────────────────────
+  turkish_coup_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the September 12, 1980 Turkish military coup — 650,000 detained, systematic torture, constitution rewritten',
+    intent: 'year_texture',
+    notes: 'Set by tur_coup_1980. Two branches: politically active (detained risk), or observer.',
+  },
+  kemalist_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Turkish secular Kemalist — holds the headscarf ban and laicite as correct principles',
+    intent: 'year_texture',
+    notes: 'Set by tur_secularism_tension (secular choice).',
+  },
+  post_kemalist_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Turkish post-Kemalist — sees the headscarf ban as exclusion rather than secularism',
+    intent: 'year_texture',
+    notes: 'Set by tur_secularism_tension (religious freedom choice).',
+  },
+  marmara_earthquake_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived the August 1999 Marmara earthquake — 17,000+ dead, corruption-built buildings, slow government response',
+    intent: 'year_texture',
+    notes: 'Set by tur_earthquake_1999.',
+  },
+  gezi_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was in Gezi Park protests May 2013 — the line before and after which the trajectory of Turkey was clear',
+    intent: 'year_texture',
+    notes: 'Set by tur_erdogan_arc (Gezi branch).',
+  },
+  turkish_conservative_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'AKP supporter — saw the Kemalist establishment as the obstacle and Erdogan\'s decade as legitimate development',
+    intent: 'year_texture',
+    notes: 'Set by tur_erdogan_arc (conservative branch).',
+  },
+  turkish_historical_silence: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Knows the shape of what Turkey\'s state has decided the past is allowed to be — 1915, Article 301, Orhan Pamuk',
+    intent: 'year_texture',
+    notes: 'Set by tur_armenian_silence.',
+  },
+  turkish_growth_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age during Turkey\'s 2002-2012 economic triple — the AKP\'s first decade, inflation down, infrastructure up',
+    intent: 'year_texture',
+    notes: 'Set by tur_economic_miracle_2000s.',
+  },
+
 }
