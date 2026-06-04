@@ -2380,6 +2380,39 @@ function buildYearTexture(state) {
 
   // ─── EXPANDED PHASE POOLS ────────────────────────────────────────────────────
 
+  // Latin America historical trauma texture
+  if (F.has('tlatelolco_generation') && Math.random() < 0.3) {
+    const opts = phase === 'late_life'
+      ? ['The October of 1968 is still a date you know differently from the way the history books say it. The Olympics opened on schedule. You know what that cost.',
+         'The state that did it was the same state that ran the election, built the school, and issued the identity document. You have had a long time to think about what that means.',
+         'You have watched how Mexico handles its memory of Tlatelolco — what gets taught, what gets elided, what gets named. The anniversary is in the calendar.']
+      : ['There was a night in October. The newspapers did not report what happened. You know the gap between those two facts.',
+         'The state that did it was the same state that ran the election, built the school, and issued the identity document. You have had a long time to think about what that means.',
+         'The version in the official account is not the version you carry.']
+    return opts[Math.floor(Math.random() * opts.length)]
+  }
+  if (F.has('caracazo_generation') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) {
+    const opts = phase === 'late_life'
+      ? ['The mass graves from 1989 were found years later. The accounting was slow and incomplete. That is the pattern you have been watching ever since.',
+         'You were in Venezuela when the army was given orders to fire on its own people. That is knowledge about what a government will do that does not leave you.',
+         'Twenty years later they found the bodies near Caracas. You had known approximately where they would be.']
+      : ['The Caracazo is the line in your life that separates what you believed about the state from what you know about it.',
+         'You were in Venezuela when the army was given orders to fire on its own people. That is knowledge about what a government will do that does not leave you.',
+         'The Caracazo is the beginning of the end of the old Venezuela — and the beginning of something else. You watched both.']
+    return opts[Math.floor(Math.random() * opts.length)]
+  }
+  if (F.has('la_violencia_generation') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) {
+    const opts = phase === 'late_life'
+      ? ['You lived through La Violencia and what came after. The FARC, the paramilitaries, the cartels — you have watched your country find new containers for the same impulse. That is a long observation.',
+         'The decade that divided your country by party affiliation still structures certain silences. Not everyone forgave. Not everyone forgot what was done in the name of belonging to one side.']
+      : ['You know what Colombia is capable of because you were there for one of the earlier versions of it.',
+         'The decade that divided your country by party affiliation still structures certain silences. Not everyone forgave. Not everyone forgot what was done in the name of belonging to one side.']
+    return opts[Math.floor(Math.random() * opts.length)]
+  }
+
+  // ─── EXPANDED PHASE POOLS ────────────────────────────────────────────────────
+
+  // Late life specific
   if (phase === 'late_life') {
     return pick([
       'The body keeps its own calendar. You have learned to negotiate.',
