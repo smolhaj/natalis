@@ -2593,6 +2593,22 @@ function buildYearTexture(state) {
     'The thing that was true about Serbia for eleven years stopped being true in an afternoon. The adjustment took longer.',
   ])
 
+  // ─── ERA TEXTURE ─────────────────────────────────────────────────────────────
+  if (F.has('spanish_flu_generation') && Math.random() < 0.25) return pick([
+    'The disease moved through the city in 1918 faster than any official account could follow. You remember the funerals, or the absence of funerals — the bodies moved quietly.',
+    'You grew up knowing that the world had almost ended in 1918 and nobody had been allowed to say so clearly at the time. That knowledge has a specific texture.',
+    phase === 'late_life'
+      ? 'You have outlived the pandemic and the war that ran alongside it. The doctors said the second wave killed the young and healthy fastest. You were young and healthy. You are still here.'
+      : 'Your generation learned early that institutions do not tell you the full number. You count what you can count yourself.',
+  ])
+  if (F.has('independence_disillusionment') && Math.random() < 0.3) return pick([
+    phase === 'late_life'
+      ? 'You watched the independence generation age into the thing it replaced. You are not sure this is a betrayal, exactly. You are not sure it isn\'t.'
+      : 'The gap between what independence was supposed to produce and what it produced has been your generation\'s primary political education.',
+    'The faces on the currency changed. The underlying question — who owns the land, who holds the contracts — has been slower to change.',
+    'The leaders who led the independence movement are older now, and some of them have become the thing they replaced. You noticed this when you were old enough to notice it, and you have not forgotten.',
+  ])
+
   // ─── EXPANDED PHASE POOLS ────────────────────────────────────────────────────
 
   // Late life specific

@@ -2244,4 +2244,20 @@ export const FLAG_REGISTRY = {
     notes: 'Year texture in buildYearTexture.',
   },
 
+  spanish_flu_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the 1918-20 Spanish flu pandemic — the second wave, the lung deaths, the suppressed funerals',
+    intent: 'year_texture',
+    notes: 'Set by spanish_flu_1918 world event. Era-defining mortality experience; precedes any modern public health infrastructure.',
+  },
+
+  independence_disillusionment: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Came of age in a newly independent nation whose post-colonial promise was visibly narrowing by the 1970s',
+    intent: 'year_texture',
+    notes: 'Set by decolonisation_disillusionment_1970s world event. Affects subsaharan/developing_urban/developing_unstable archetypes, ages 15+.',
+  },
+
 }

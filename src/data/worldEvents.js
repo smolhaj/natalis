@@ -2586,4 +2586,34 @@ export const WORLD_EVENTS = [
     when: null,
   },
 
+  {
+    id: 'spanish_flu_1918',
+    name: 'Spanish Flu',
+    years: [1918, 1920],
+    archetypes: 'all',
+    countries: null,
+    minAge: 0,
+    maxAge: null,
+    narrative: 'A disease is moving through the country. It is being called influenza, though it is unlike any influenza anyone has seen. The second wave, in the autumn of 1918, kills within hours: the lungs fill. Fifty million people will die of it worldwide — more than the war that is ending at the same time. The funerals are discouraged. The newspapers in some countries are not allowed to report the numbers.',
+    context: 'The 1918-19 influenza pandemic infected an estimated 500 million people globally — one third of the world\'s population. It killed between 50 and 100 million, disproportionately killing healthy adults aged 20-40 through an immune overresponse. Wartime censorship suppressed accurate reporting in many countries; Spain, which was neutral, reported freely, giving the pandemic its misleading name.',
+    effect: (p) => { p.m -= 10; p.h -= 8 },
+    addFlags: ['spanish_flu_generation'],
+    when: null,
+  },
+
+  {
+    id: 'decolonisation_disillusionment_1970s',
+    name: 'Disillusionment of Independence',
+    years: [1970, 1980],
+    archetypes: ['subsaharan', 'developing_urban', 'developing_unstable'],
+    countries: null,
+    minAge: 15,
+    maxAge: null,
+    narrative: 'Independence was ten, fifteen years ago. The flags changed. The faces on the currency changed. The underlying structure — who owns the land, where the export revenue goes, which families hold the contracts — has been slower to change. The leaders who led the independence movement are older now, and some of them have become the thing they replaced. You are old enough to notice this.',
+    context: 'Much of the developing world gained independence from European powers in the 1950s-60s. By the 1970s, many newly independent nations faced coups, single-party states, IMF structural adjustment conditions, and continued economic dependency on former colonial powers. The gap between independence-era promise and lived reality shaped a generation\'s political consciousness.',
+    effect: (p) => { p.m -= 6; p.r += 6 },
+    addFlags: ['independence_disillusionment'],
+    when: (G) => !G.flags.has('independence_disillusionment'),
+  },
+
 ]
