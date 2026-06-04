@@ -3428,6 +3428,43 @@ function buildYearTexture(state) {
       : 'You are in the generation that had to decide what to do when the army came back in 2021. You made your decision. You live in it.',
   ])
 
+  // ─── TUNISIA TEXTURE ─────────────────────────────────────────────────────────
+  if (F.has('tunisian_womens_rights_generation') && Math.random() < 0.15) return pick([
+    'The Code of Personal Status is sixty years old. It is not everywhere in the Arab world. Tunisia has it. That fact is not abstract when you know what is absent elsewhere.',
+    'You are in the only Arab country where polygamy is prohibited by law. That sentence requires knowing what it means for it to be the only one.',
+  ])
+  if (F.has('tunisian_ben_ali_generation') && Math.random() < 0.2) return pick([
+    'The Ben Ali years had their own texture: the subsidised bread, the functioning state, the silence that was the price for both.',
+    'The police politique was not something that touched most people directly. It was something that shaped what you said and where and to whom. That is a different kind of touching.',
+    phase === 'late_life'
+      ? 'You spent the decades of your working life in a country with no public politics. The revolution was not something you predicted. Nobody predicted it.'
+      : 'You learned which conversations to have in which rooms. That is knowledge that does not disappear when the system that made it necessary does.',
+  ])
+  if (F.has('tunisian_revolution_generation') && Math.random() < 0.22) return pick([
+    'Twenty-eight days. From Bouazizi\'s act in Sidi Bouzid to Ben Ali\'s plane to Jeddah. That speed was not supposed to be possible.',
+    'Tunisia started the Arab Spring. You know what it felt like in those weeks — the acceleration, the unreality of the news actually happening.',
+    phase === 'late_life'
+      ? 'You are in the generation that made the revolution and watched what became of it, twice: once the hope, once the reversal. That is a complete arc.'
+      : 'The revolution was real. The country it made is still being argued about. That is not a failure — that is what democratic politics looks like when it exists.',
+    'January 14, 2011. The date is precise the way the dates of significant things are precise.',
+  ])
+  if (F.has('tunisian_democratic_generation') && Math.random() < 0.17) return pick([
+    'The 2014 constitution was built through compromise between people who disagreed profoundly. That is how it got done and also why it lasted as long as it did.',
+    'The Quartet won the Nobel Prize in 2015 for holding the transition together. You were living in the thing they were holding together. The prize felt accurate.',
+    'Tunisia was the experiment. The rest of the world watched to see if it could work. For a decade, the answer was: cautiously.',
+  ])
+  if (F.has('tunisian_saied_generation') && Math.random() < 0.2) return pick([
+    'The constitution from the revolution — the one with freedom of conscience, the independent judiciary, the gender equality provisions — is gone.',
+    'Saied was elected to fix what was broken. What he did with the mandate is what you are still processing.',
+    phase === 'late_life'
+      ? 'You have now lived through Ben Ali and through the revolution that ended him and through the new consolidation of power that followed it. The arc does not have a clean ending yet.'
+      : 'The experiment that lasted a decade was dismantled by someone the experiment produced. You are sorting out what to do with that information.',
+  ])
+  if (F.has('tunisian_interior_generation') && Math.random() < 0.17) return pick([
+    'Sidi Bouzid has fifty percent youth unemployment. That is the number behind the revolution. The coast has another number. They share a country.',
+    'The man who started the Arab Spring was a street vendor whose cart was confiscated. That detail is specific on purpose — it is the whole economic model visible in one scene.',
+  ])
+
   // ─── NEIGHBORHOOD TIER TEXTURE ───────────────────────────────────────────────
   {
     const nbhTier = state.currentNeighborhoodTier

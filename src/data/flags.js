@@ -2857,4 +2857,54 @@ export const FLAG_REGISTRY = {
     notes: 'Set by mya_coup_2021 (first branch).',
   },
 
+  // ── TUNISIA ──────────────────────────────────────────────────────────────────
+
+  tunisian_womens_rights_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Tunisian woman aware of the 1956 Code of Personal Status — the only Arab country to abolish polygamy and require consent for marriage at independence',
+    intent: 'year_texture',
+    notes: 'Set by tun_code_personal_status.',
+  },
+
+  tunisian_ben_ali_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up or came of age under Ben Ali\'s police state — the controlled bread and silence, the police politique, the art of living in permitted spaces',
+    intent: 'year_texture',
+    notes: 'Set by tun_ben_ali_state.',
+  },
+
+  tunisian_revolution_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Witnessed Tunisia\'s Jasmine Revolution — Bouazizi\'s act, the twenty-eight days, Ben Ali\'s flight, the one Arab Spring that completed its arc',
+    intent: 'year_texture',
+    notes: 'Set by tun_bouazizi_revolution_2011.',
+  },
+
+  tunisian_democratic_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through Tunisia\'s democratic transition 2012–19 — the Nobel-winning constitution, Ennahda negotiating with secularists, the experiment the world watched',
+    intent: 'year_texture',
+    notes: 'Set by tun_democratic_transition.',
+  },
+
+  tunisian_saied_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through Saied\'s 2021 constitutional coup — the purging of the constitution written by the revolution, the democracy dismantled by its own president',
+    intent: 'year_texture',
+    notes: 'Set by tun_saied_coup_2021.',
+  },
+
+  tunisian_interior_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Aware of the coast/interior divide — the economic model that left Sidi Bouzid behind, the structural context of the man who started the revolution',
+    intent: 'year_texture',
+    notes: 'Set by tun_economic_interior.',
+  },
+
 }
