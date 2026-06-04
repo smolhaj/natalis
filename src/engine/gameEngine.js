@@ -2002,6 +2002,64 @@ function buildYearTexture(state) {
       : 'There was a moment where you found out where your limits were. They were further than you expected. That is the kind of self-knowledge that changes how you understand other people.',
   ])
 
+  // ─── PARTIAL FLAG TEXTURE (filling gaps in year coverage) ───────────────────
+
+  if ((F.has('combat_veteran') || F.has('returned_veteran')) && Math.random() < 0.22) return pick([
+    'There are things from the war that the civilian world has no register for. You have learned which things to stop trying to translate.',
+    'The specific alertness that you learned in the field — the way a room is assessed before anything else — is still present. It has costs in peacetime.',
+    F.has('returned_veteran')
+      ? pick([
+          'The return home was the hardest deployment. You were prepared for the war. Nobody prepares you for the ordinary Tuesday after.',
+          'The people who love you are glad you are back. They do not fully understand what came back with you. Neither do you, sometimes.',
+        ])
+      : 'The things you did and the things you witnessed have a specific weight that you carry in a specific way. The carrying is yours.',
+    phase === 'late_life'
+      ? 'You have been carrying the war for decades. The distance helps some things and not others. You have learned which is which.'
+      : 'The war ends. The effects of having been in it do not end on the same schedule.',
+    'You know things about what people are capable of — yourself included — that you would not have chosen to know.',
+  ])
+  if (F.has('debt_bankrupt') && Math.random() < 0.25) return pick([
+    'The bankruptcy is in the record. Seven years. You do not explain it unless you have to. You have learned the situations where you have to.',
+    'The credit score is what it is after bankruptcy. Certain doors are closed. You work with the doors that are open.',
+    'The fresh start the bankruptcy promised is real in the legal sense. In the practical sense it has edges.',
+    phase === 'midlife'
+      ? 'You have rebuilt from the bankruptcy further than you expected you could. The process was slow and humiliating in specific ways that the legal language does not cover.'
+      : 'The bankruptcy was the end of one version of the financial life and the beginning of another. You are building in the second version.',
+    'You know what it is to have nothing and to have to tell that to every institution that asks. The knowledge has made you careful in ways you were not before.',
+  ])
+  if (F.has('clergy_ordained') && Math.random() < 0.22) return pick([
+    'The vocation is the frame. The days fill the frame with ordinary things: the preparation, the service, the conversation after, the account you keep of what was done well and what was not.',
+    'You took vows. The vows are specific. You live inside them and you know which ones are easy and which ones are not.',
+    phase === 'late_life'
+      ? 'You have been doing this work for decades. The faith that sustains it has changed shape. It is less about the answers and more about the practice of asking.'
+      : 'The people who come to you bring their hardest things. You try to receive what they bring without letting it become yours to carry alone.',
+    'The sacred and the administrative coexist in this work in a ratio you were not warned about. You have made your peace with the ratio.',
+    'There is a version of loneliness specific to this role — surrounded by community, distinct from it in ways the role requires.',
+  ])
+  if (F.has('structural_adjustment_era') && Math.random() < 0.2) return pick([
+    'The IMF came. The conditions came with it: cut subsidies, devalue the currency, retrench the state. The explanation was macroeconomic. The effect was that the bread cost more.',
+    'Structural adjustment is what it is called in the policy documents. What it is called in the kitchen is the price going up again.',
+    phase === 'late_life'
+      ? 'You lived through the structural adjustment years. The state that came out the other side was leaner. The people who suffered the leanness were not the ones the policies were written for.'
+      : 'The clinic that closed was not a policy decision from the inside. It was the absence of medicine when someone needed medicine.',
+    'The reform that was supposed to create growth was creating hardship first. You were in the hardship. The growth, if it came, came to different people.',
+  ])
+  if (F.has('found_birth_family') && Math.random() < 0.2) return pick([
+    'You found them. The finding answered some questions and opened others. The questions that opened are the ones you did not know you were carrying.',
+    'The birth family is a real thing now — faces, names, a whole history that exists parallel to the one you grew up in. You are still working out what to do with two sets of everything.',
+    phase === 'late_life'
+      ? 'The search and what it found is far enough back now to see in its full shape. What you gained from the finding and what remained unresolved are both clear from here.'
+      : 'There is grief in the finding that you did not expect. The loss was the loss of a particular way of imagining who they might be.',
+  ])
+  if (F.has('adopted') && !F.has('found_birth_family') && Math.random() < 0.18) return pick([
+    'You have always known. The always-known is part of the texture of things — not painful most of the time, just present.',
+    'The question of where you came from has two answers. You learned early to navigate between them.',
+    phase === 'late_life'
+      ? 'You are the age now where some people start to wonder where they came from. You have been living with that question your whole life. The wondering has changed shape.'
+      : 'The family that raised you is your family. That is true. The people you came from are also something. You are still working out what.',
+    'You look at yourself in the mirror and know that nobody else in the family looks like this. That knowledge is its own territory, familiar and not particularly troubling most days.',
+  ])
+
   // Career and hobbies
   if (career && F.has('career_fulfilled') && Math.random() < 0.6) return pick([
     'The work is good. You don\'t say that to people much, but it\'s true.',
