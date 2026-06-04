@@ -1756,24 +1756,73 @@ function buildYearTexture(state) {
   if (F.has('serious_musician')) return pick([
     'The practice is something you look forward to. That surprises you sometimes.',
     'The music asks for the part of you the day doesn\'t reach.',
+    'You can hear the gap between what you play and what you hear in your head. That gap is what you practice toward.',
+    phase === 'late_life'
+      ? 'You have been playing for decades. The music is something the rest of you has grown around.'
+      : 'The practice is the one appointment you rarely cancel.',
+    'Music has a way of absorbing the year\'s weather. This year sounds like this year.',
   ])
   if (F.has('serious_writer')) return pick([
     'The pages accumulate. You don\'t show them to anyone yet.',
     'You are building something in the hours before and after everything else.',
+    'Writing requires you to know what you think. That is sometimes the most useful part of it.',
+    phase === 'late_life'
+      ? 'You have been writing long enough that the early drafts are unrecognizable as the thing they became. That is not a metaphor.'
+      : 'The blank page is the problem you come back to. You are still coming back.',
+    'Something from the year found its way onto the page without you exactly choosing it.',
   ])
   if (F.has('serious_artist')) return pick([
     'The work asks things of you that the rest of your life doesn\'t.',
     'The studio is the one place the day doesn\'t follow you.',
+    'You are making things you wouldn\'t know how to explain. That\'s how you know they\'re right.',
+    phase === 'late_life'
+      ? 'The work in your late years is different from the work earlier — freer, or more deliberate, depending on the day.'
+      : 'The practice has been going long enough that you have a body of work. You are starting to see its shape.',
+    'Art takes the things you can\'t say and makes something else out of them. This year had material.',
   ])
-  if (F.has('fitness_devotee')) return 'The body is a project. You are consistent about it in a way you are not consistent about many things.'
+  if (F.has('fitness_devotee')) return pick([
+    'The body is a project. You are consistent about it in a way you are not consistent about many things.',
+    phase === 'late_life'
+      ? 'The body requires more maintenance than it used to. You provide it. The return on investment has changed.'
+      : 'The run, the lift, the session — these anchor the week. When they don\'t happen the week feels off.',
+    'There is a specific satisfaction in doing a physical thing well. You have not gotten tired of it.',
+    'You are stronger or faster or more capable than you were a year ago. The direction is clear.',
+  ])
   if (F.has('dedicated_gardener') && (phase === 'midlife' || phase === 'late_life')) {
     return pick([
       'The garden is the same thing every year and different every year.',
       'Something about watching things grow slowly is useful to you.',
+      'The garden requires patience and responds to patience. That is a relationship worth having.',
+      phase === 'late_life'
+        ? 'You have been growing things for many years. You know the garden\'s patterns the way you know old friends — their bad habits, their reliable moments.'
+        : 'The garden doesn\'t care about the rest of the day. You go into it and the day doesn\'t follow you.',
     ])
   }
-  if (F.has('avid_reader') && phase === 'late_life') {
-    return 'You are working through the books you always meant to read. Some of them are as good as promised.'
+  if (F.has('avid_reader')) return pick([
+    phase === 'late_life'
+      ? 'You are working through the books you always meant to read. Some of them are as good as promised.'
+      : 'You are reading more than you used to. That is a sign of something — time, or need, or both.',
+    'The book you finished last week is still with you. That is the test of a book.',
+    phase === 'late_life'
+      ? 'The reading in your later years has a different quality — not the ambition of keeping up, but the pleasure of going deep.'
+      : 'You read the way some people run — not competitively, but because not doing it costs something.',
+  ])
+  if (F.has('cooking_serious') && Math.random() < 0.3) return pick([
+    'The cooking is the activity that is also thinking. You go in with a problem and come out having made something.',
+    'You know what the food is supposed to taste like before you start. That knowledge took years to develop.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'The table you set for other people is one of the ways you take care. That is a language you have been developing.'
+      : 'You cook for yourself and for other people. The for-other-people version is better.',
+  ])
+  {
+    const meditationScore = state.hobbies?.meditation ?? 0
+    if (meditationScore >= 20 && Math.random() < 0.22) return pick([
+      'The practice is the thing you return to when the week has been the kind of week it has been.',
+      meditationScore >= 60
+        ? 'The stillness is not the absence of the noise. It is learning to notice the noise without becoming it.'
+        : 'You sit with it. The ten minutes or twenty minutes that cost nothing and return something hard to name.',
+      'The meditation is a form of arriving in the day rather than being launched into it. You have learned this.',
+    ])
   }
   if (F.has('chernobyl_liquidator') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.35) return pick([
     'The body keeps its own account. You are not always told what it is recording.',
