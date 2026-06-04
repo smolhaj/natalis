@@ -2682,4 +2682,55 @@ export const FLAG_REGISTRY = {
     notes: 'Set by som_somaliland_stability. Isaaq ethnicity guard.',
   },
 
+  // ── Thailand ──────────────────────────────────────────────────────────────────
+  thai_uncolonized_identity: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Absorbed the Thai national curriculum narrative of uncolonized pride — the only mainland SE Asian country to survive intact, with what that leaves out',
+    intent: 'year_texture',
+    notes: 'Set by tha_uncolonized_pride.',
+  },
+  thai_lese_majeste_awareness: {
+    weight: 'major',
+    category: 'experience',
+    description: 'Navigates the specific self-censorship of Article 112 — the pause before the opinion, accumulating counts, decades in prison for criticism',
+    intent: 'year_texture',
+    notes: 'Set by tha_lese_majeste.',
+  },
+  thai_1997_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the 1997 baht collapse — the construction cranes stopping, the companies folding, Thailand as the trigger of the Asian contagion',
+    intent: 'year_texture',
+    notes: 'Set by tha_1997_baht_crisis. Two branches: direct cost / survived with difficulty.',
+  },
+  thai_red_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Red Shirt — rural north/northeast, remembers Thaksin\'s policies (universal healthcare, village funds), the coup that undid them',
+    intent: 'year_texture',
+    notes: 'Set by tha_red_yellow_conflict.',
+  },
+  thai_yellow_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Yellow Shirt — urban middle class, royalist establishment, believed democratic form was insufficient to override corruption',
+    intent: 'year_texture',
+    notes: 'Set by tha_red_yellow_conflict.',
+  },
+  thai_coup_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed one of Thailand\'s thirteen coups — the tanks on the streets, the peaceful curfew, the generals explaining necessity on television',
+    intent: 'year_texture',
+    notes: 'Set by tha_coup_generation.',
+  },
+  thai_middle_income_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Part of Thailand\'s working/lower-middle class built by manufacturing and tourism — the thirty-year middle income plateau',
+    intent: 'year_texture',
+    notes: 'Set by tha_economic_middle_income.',
+  },
+
 }

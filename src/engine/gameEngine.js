@@ -3118,6 +3118,44 @@ function buildYearTexture(state) {
     'You grew up in a place the world decided did not officially exist. The place exists. You exist in it. The decision is the world\'s problem.',
   ])
 
+  // ─── THAILAND TEXTURE ────────────────────────────────────────────────────────
+  if (F.has('thai_uncolonized_identity') && Math.random() < 0.15) return pick([
+    'The curriculum taught that Thailand survived by playing the colonial powers against each other. The curriculum was right about the survival and incomplete about the cost of it.',
+    phase === 'late_life'
+      ? 'You have lived in the country that did not become a colony. The history of what that required — ceded territories, tributary relationships — is something you understand better late than you did young.'
+      : 'To be Thai is to carry a particular national pride. That pride has a specific shape: we were not taken. What we gave to stay free is a different conversation.',
+  ])
+  if (F.has('thai_lese_majeste_awareness') && Math.random() < 0.22) return pick([
+    'The pause before the opinion. That pause is what Article 112 produces — not silence, exactly, but the awareness that silence is available and speaking is not always safe.',
+    'You know people who were careful and still found themselves accused. The law does not require actual insult — only accusation. You have learned the specific shape of that risk.',
+    phase === 'late_life'
+      ? 'You have lived your entire adult life inside Article 112. The self-censorship is so practised now that you cannot always tell where the law ends and your own caution begins.'
+      : 'Every phone, every post, the forwarded article — each is potentially a count. The counts accumulate. People you know have had a decade assembled from individual counts.',
+  ])
+  if (F.has('thai_1997_generation') && Math.random() < 0.2) return pick([
+    'The baht. The construction sites that stopped. The cranes left up while the buildings below them stalled. The 1997 crisis arrives in your memory as a set of specific images.',
+    'Thailand started it — or the speculator who bet against the baht started it, depending on your economics. The contagion spread to the whole region. You were in the country that was the trigger.',
+  ])
+  if (F.has('thai_red_generation') && Math.random() < 0.2) return pick([
+    'Thirty baht to see a doctor. The village fund. You remember what the policy was before the coup ended it. The election result that brought it back was overturned too. You track this.',
+    'The Red Shirts stood in Bangkok for two months in 2010. Ninety people died when the army moved in. The government that came after repealed the policies that the Red Shirts had voted for.',
+  ])
+  if (F.has('thai_yellow_generation') && Math.random() < 0.18) return pick([
+    'The corruption was real. The question was whether a corrupt democracy is preferable to a managed transition. You answered it the way you answered it. You are still living with the answer.',
+    'Thaksin is in exile. His party wins the next election. Is dissolved by the court. Wins again. Is dissolved again. You have watched this cycle enough times to know it does not resolve.',
+  ])
+  if (F.has('thai_coup_generation') && Math.random() < 0.18) return pick([
+    'Thailand has had more successful coups than most countries have had elections. That is an odd thing to be from.',
+    'The general on television said: this is temporary, for national stability, elections will follow. You have heard this before. You have noticed what "temporary" means here.',
+    phase === 'late_life'
+      ? 'You have lived through multiple coups. The pattern is legible now: the tanks, the curfew, the junta with a roadmap to elections, the elections that produce the wrong result, the tanks again.'
+      : 'The coup is not violent in the way you expected. The tanks are in the streets and the sky is blue and the restaurants are open. This is specifically Thai.',
+  ])
+  if (F.has('thai_middle_income_generation') && Math.random() < 0.15) return pick([
+    'The economists call it the middle-income trap: you leave agriculture, you enter manufacturing, you grow, and then the growth slows before you cross into the wealthy tier. Thailand has been in the trap for thirty years.',
+    'The factory gave you a wage and the wage gave you a life that your parents did not have. The question of what the next step is has been open for a generation.',
+  ])
+
   // ─── NEIGHBORHOOD TIER TEXTURE ───────────────────────────────────────────────
   {
     const nbhTier = state.currentNeighborhoodTier
