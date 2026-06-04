@@ -2631,4 +2631,55 @@ export const FLAG_REGISTRY = {
     notes: 'Set by uga_boda_boda_city.',
   },
 
+  // ── Somalia ───────────────────────────────────────────────────────────────────
+  somalia_state_collapse: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the 1991 collapse of the Somali state — Barre falls, militia takes the streets, the specific texture of a country without a government',
+    intent: 'year_texture',
+    notes: 'Set by som_state_collapse_1991. Two branches: in Mogadishu, or fled.',
+  },
+  somali_clan_identity: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Navigates identity through clan — the checkpoint question, the 2am phone call, xeer as the safety net when the state is absent',
+    intent: 'year_texture',
+    notes: 'Set by som_clan_calculus.',
+  },
+  mogadishu_1993_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Present for the Battle of Mogadishu / Black Hawk Down — what October 3-4, 1993 means from inside the city vs. the film',
+    intent: 'year_texture',
+    notes: 'Set by som_unosom_black_hawk_down.',
+  },
+  alshabaab_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived under al-Shabaab control or in Mogadishu fighting it — music banned, phone restrictions, the order that comes with terror',
+    intent: 'year_texture',
+    notes: 'Set by som_alshabaab_generation. Two branches: territory, or AMISOM Mogadishu.',
+  },
+  somali_diaspora_connection: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Connected to the diaspora economy — remittances through hawala, the relative in Minnesota/Oslo/London who phones and sends',
+    intent: 'year_texture',
+    notes: 'Set by som_remittance_economy.',
+  },
+  somalia_famine_2011: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the 2011 famine — 260,000 dead, UN famine declaration, drought and conflict overlapping',
+    intent: 'year_texture',
+    notes: 'Set by som_famine_2011.',
+  },
+  somaliland_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up in Somaliland — the unrecognized state that works: elections, currency, police, constitution without international recognition',
+    intent: 'year_texture',
+    notes: 'Set by som_somaliland_stability. Isaaq ethnicity guard.',
+  },
+
 }

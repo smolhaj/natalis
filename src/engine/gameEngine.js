@@ -3011,6 +3011,42 @@ function buildYearTexture(state) {
     'The boda-boda gets you there faster than anything else in Kampala traffic. That it also kills more people than almost anything else in Uganda is the trade-off you have learned to make.',
   ])
 
+  // ─── SOMALIA TEXTURE ─────────────────────────────────────────────────────────
+  if (F.has('somalia_state_collapse') && Math.random() < 0.25) return pick([
+    'The city that existed before 1991 exists now only in what people your parents\' age describe. The city you grew up in was the one built on top of the collapse.',
+    phase === 'late_life'
+      ? 'You have lived in a country that had no government for most of your adult life. You have outlasted the warlords, the famines, the interventions. That is a specific kind of durability.'
+      : 'The checkpoint was where you learned what your clan was worth on that particular day, to that particular person. The arithmetic was always changing.',
+  ])
+  if (F.has('somali_clan_identity') && Math.random() < 0.2) return pick([
+    'The clan question: which one, from which lineage, from where. You have answered it at checkpoints and at weddings and at job interviews and in hospitals. The answer changes what happens next.',
+    'The xeer — the customary law — runs on clan. The state was absent. The clan was not. You have been grateful for this and burdened by it in the same years.',
+  ])
+  if (F.has('mogadishu_1993_generation') && Math.random() < 0.18) return pick([
+    'The Battle of Mogadishu was a film title in America. In Mogadishu it was an October day in a city that had been fighting for two years. The film and the day are different things.',
+    'The American soldiers came to capture one man. The helicopter went down. Eighteen Americans died, and several hundred Somalis, and the Americans went home. The Somalis stayed in the city.',
+  ])
+  if (F.has('alshabaab_generation') && Math.random() < 0.25) return pick([
+    'The music was the first thing. No music in the streets, no music in the teahouses, no music from the phones. You understand now that the music was the announcement — everything else followed from it.',
+    phase === 'late_life'
+      ? 'Al-Shabaab is still there, in the rural south, in the checkpoints, in the bombs in Mogadishu markets. It is not the whole country. It is a permanent fact of the country.'
+      : 'The rules change by district. In this district: phones require registration. In that district: women do not travel without a male relative. You know the map of the rules the way you know a geography.',
+  ])
+  if (F.has('somali_diaspora_connection') && Math.random() < 0.2) return pick([
+    'The money comes through the hawala broker. The broker\'s system works because it runs on trust and on reputation across generations of the same network. You trust it. It has not failed you yet.',
+    'Your relative in Oslo calls. The call is about the money and also about everything else — the family, the news, the distance. The call is the lifeline in both directions.',
+  ])
+  if (F.has('somalia_famine_2011') && Math.random() < 0.22) return pick([
+    '260,000 people. The number was announced by the UN after the fact. From inside it, the number did not exist. The specific people did.',
+    phase === 'late_life'
+      ? 'The 2011 famine is one of the things you describe when people ask what it was like. It is not the only thing, but it is one of the things that landed differently from the usual hardship.'
+      : 'The drought and the fighting were in the same places that year. The aid could not reach where the fighting was. The people in those places are in both facts at once.',
+  ])
+  if (F.has('somaliland_generation') && Math.random() < 0.2) return pick([
+    'Somaliland is not recognised. It has a government, elections, a currency, a police force, a constitution. The non-recognition is an international administrative fact. The governance is a lived fact.',
+    'You grew up in a place the world decided did not officially exist. The place exists. You exist in it. The decision is the world\'s problem.',
+  ])
+
   // ─── NEIGHBORHOOD TIER TEXTURE ───────────────────────────────────────────────
   {
     const nbhTier = state.currentNeighborhoodTier
