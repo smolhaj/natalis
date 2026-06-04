@@ -3042,6 +3042,41 @@ function buildYearTexture(state) {
     ])
   }
 
+  // ─── RETIREMENT TEXTURE ──────────────────────────────────────────────────────
+
+  if ((state.retired || F.has('retired') || F.has('semi_retired')) && phase === 'late_life' && Math.random() < 0.28) {
+    const forcedOut = F.has('forced_out')
+    const semiRetired = F.has('semi_retired') && !F.has('retired')
+    if (semiRetired) return pick([
+      'You are still doing some of the work. Less of it, and differently. That adjustment is ongoing.',
+      'The partial version of the career turns out to have its own rhythms. You are still finding them.',
+      'The years of full-time have become the years of some-time. The some-time has its own pleasures.',
+    ])
+    if (forcedOut) return pick([
+      'You did not choose to stop. The career made the decision and you are still accounting for it.',
+      'The work ended before you were ready. You are doing the thing of finding what comes after a thing you did not finish.',
+      'You have built something in the years since the job ended. It is not the same thing. It is something.',
+      phase === 'late_life' && age >= 70
+        ? 'From this distance, the forced retirement looks different. You had more years than the job was going to give you. You used them.'
+        : 'The ending was not yours to choose. The years after it are.',
+    ])
+    return pick([
+      'You are retired. The word still requires some adjustment, depending on the day.',
+      'The structure of a working life — the schedule, the identity, the reason to be somewhere at a specific time — is something you are replacing slowly.',
+      'The mornings are yours now in a way they have never been yours before. You are working out what to do with that.',
+      'You have been the person with the job for forty years. Becoming a different version of the person is the project now.',
+      age >= 70
+        ? 'The retirement has settled into something. Not the absence of work — something with its own texture. You are in it.'
+        : 'The first year of retirement was strange. You are somewhere past the first year now.',
+      partner
+        ? `You and ${partner.name.split(' ')[0]} are in each other's space in a new way. You are negotiating the hours together that were previously filled by the separate going-away.`
+        : 'The days have a shape that is yours to set. You are still setting it.',
+      career
+        ? `The ${career.title} years are behind you now. You look at younger people doing what you did and you recognise something in how they carry it.`
+        : 'You have more time than you know what to do with, which is the problem of a life that was previously too busy to encounter it.',
+    ])
+  }
+
   // ─── EXPANDED PHASE POOLS ────────────────────────────────────────────────────
 
   // Late life specific
