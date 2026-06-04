@@ -2783,4 +2783,78 @@ export const FLAG_REGISTRY = {
     notes: 'Set by nep_youth_exodus.',
   },
 
+  // ── MYANMAR ──────────────────────────────────────────────────────────────────
+
+  myanmar_socialist_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Grew up under Ne Win\'s Burmese Way to Socialism — the isolation, the nationalisation, the shortwave radio as the only window',
+    intent: 'year_texture',
+    notes: 'Set by mya_socialist_isolation.',
+  },
+
+  myanmar_1988_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Witnessed or participated in the 8888 Uprising — hundreds of thousands in the streets, 3,000 killed, SLORC coup',
+    intent: 'year_texture',
+    notes: 'Set by mya_1988_uprising.',
+  },
+
+  myanmar_activist: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Was in the streets during the 8888 Uprising — carries the memory of the crowd and what followed',
+    intent: 'year_texture',
+    notes: 'Set by mya_1988_uprising (first branch).',
+  },
+
+  myanmar_junta_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the SLORC/SPDC decades — junta cronies, forced labour, the stolen 1990 election',
+    intent: 'year_texture',
+    notes: 'Set by mya_slorc_years.',
+  },
+
+  myanmar_saffron_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Witnessed the 2007 Saffron Revolution — monks with upturned bowls, the crackdown, Kenji Nagai shot',
+    intent: 'year_texture',
+    notes: 'Set by mya_saffron_revolution_2007.',
+  },
+
+  myanmar_nargis_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived Cyclone Nargis 2008 — 140,000 dead in the Irrawaddy Delta, the junta blocking international aid',
+    intent: 'year_texture',
+    notes: 'Set by mya_cyclone_nargis_2008.',
+  },
+
+  myanmar_civilian_hope_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived the 2011–21 opening — press freedom, Suu Kyi freed and elected, foreign investment, the decade of cautious hope',
+    intent: 'year_texture',
+    notes: 'Set by mya_civilian_opening_2011.',
+  },
+
+  myanmar_coup_2021: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the February 2021 military coup — CDM strikes, crackdown, PDF resistance, the decade of opening reversed',
+    intent: 'year_texture',
+    notes: 'Set by mya_coup_2021.',
+  },
+
+  myanmar_cdm_participant: {
+    weight: 'major',
+    category: 'political',
+    description: 'Participated in the Civil Disobedience Movement after the 2021 coup — left the job, joined the strike, put their name on a list',
+    intent: 'year_texture',
+    notes: 'Set by mya_coup_2021 (first branch).',
+  },
+
 }

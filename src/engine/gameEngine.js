@@ -3343,6 +3343,59 @@ function buildYearTexture(state) {
     'The economy cannot absorb the educated youth. The alternative — Kathmandu\'s government jobs, going to the connected — is not enough either. The airport is the third option.',
   ])
 
+  // ─── MYANMAR TEXTURE ─────────────────────────────────────────────────────────
+  if (F.has('myanmar_socialist_generation') && Math.random() < 0.14) return pick([
+    'The Burmese Way to Socialism kept the world at a specific distance. You grew up knowing the outside was there the way you know about countries you have never visited.',
+    'The economy was nationalised and the result was shortage. Not catastrophic — just persistent. The word for it was "scarcity." The shelves had something on them; not always what you needed.',
+  ])
+  if (F.has('myanmar_1988_generation') && Math.random() < 0.22) return pick([
+    'August 1988. You are not sure you have fully put it somewhere. The feeling of the city that week — the hundreds of thousands of people who came out — is not something that fits in a sentence.',
+    'The generals came back. That is the thing about 1988 that matters most in retrospect. The crowd was real. The army was also real. The army was more persistent.',
+    phase === 'late_life'
+      ? 'You were young during the uprising. You have spent your adult life in the country the crackdown made. The arithmetic of that is not something you have finished with.'
+      : 'Three thousand people died in September 1988. The official number is lower. You don\'t use the official number.',
+  ])
+  if (F.has('myanmar_activist') && Math.random() < 0.2) return pick([
+    'You were in the streets in 1988. You know what it felt like when the city was briefly something else. That feeling is yours and has no safe destination.',
+    'The activist in you did not disappear when the army came back. It went underground. That is a different shape but it is still the same thing.',
+  ])
+  if (F.has('myanmar_junta_generation') && Math.random() < 0.18) return pick([
+    'The NLD won 82 percent of the seats in 1990. The junta never transferred power. That fact is still the foundation underneath everything that has happened since.',
+    'Life under the SPDC had its own protocols: what you said, to whom, in what room, with which windows closed. You learned these before you learned their names.',
+  ])
+  if (F.has('myanmar_saffron_generation') && Math.random() < 0.2) return pick([
+    'The monks walked with their bowls upside down. That gesture — refusing to accept alms from the military — was a religious condemnation the generals had no answer for except the one they gave.',
+    'The Saffron Revolution was crushed in a week. The internet was shut down. The camera footage that survived went out on drives and memory cards carried by hand.',
+    phase === 'late_life'
+      ? 'You saw the monks in the streets in 2007. That image is part of your memory of what Myanmar is, alongside the crackdown that followed.'
+      : 'The question of what a nonviolent protest can achieve against an army that is willing to shoot monks is a question 2007 answered.',
+  ])
+  if (F.has('myanmar_nargis_generation') && Math.random() < 0.22) return pick([
+    'The Irrawaddy Delta in May 2008: 140,000 dead. The junta blocked the foreign aid teams for weeks. The two facts belong together.',
+    'Nargis arrived faster than the warning did. You remember where you were and what the air smelled like before the storm changed everything about what was possible to remember from before.',
+    phase === 'late_life'
+      ? 'You have lived in the country the cyclone made and the country the junta\'s response to the cyclone made. They are the same country. The coincidence tells you something.'
+      : 'You spent weeks trying to find out who survived. The information came slowly. Some of it never came.',
+  ])
+  if (F.has('myanmar_civilian_hope_generation') && Math.random() < 0.17) return pick([
+    'The newspapers published things in 2012 that would have meant prison in 2010. You noticed that. You also noticed the military still controlled the ministries.',
+    'The decade from 2011 to 2021 had a specific texture: the feeling that the opening was real but narrow, that something better was possible if the generals could be managed. You gave that texture its due. Then 2021 happened.',
+  ])
+  if (F.has('myanmar_coup_2021') && Math.random() < 0.22) return pick([
+    'February 1, 2021: the NLD won 83 percent of the vote and the military\'s answer was to arrest the government before dawn.',
+    phase === 'late_life'
+      ? 'You have now lived through both 1988 and 2021. The pattern is legible. The army does not surrender power. That is the axiom everything else follows from.'
+      : 'The Civil Disobedience Movement was millions of people refusing to function as the coup required. The military had guns. The question of which force wins is still being answered.',
+    'The decade of opening was real. It was also reversible. You know both of those things now.',
+  ])
+  if (F.has('myanmar_cdm_participant') && Math.random() < 0.2) return pick([
+    'You joined the Civil Disobedience Movement. Your name is in someone\'s records somewhere. You have decided to live with that.',
+    'The strike meant no salary, possibly no career, and the particular courage of refusing to make the coup function. You know why you did it. You check the decision sometimes and it holds.',
+    phase === 'late_life'
+      ? 'The years after the CDM cost specific things. You are still accounting for what you gained that cannot be subtracted.'
+      : 'You are in the generation that had to decide what to do when the army came back in 2021. You made your decision. You live in it.',
+  ])
+
   // ─── NEIGHBORHOOD TIER TEXTURE ───────────────────────────────────────────────
   {
     const nbhTier = state.currentNeighborhoodTier
