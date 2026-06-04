@@ -2355,4 +2355,55 @@ export const FLAG_REGISTRY = {
     notes: 'Set by egy_tahrir_aftermath. Gates on tahrir_generation.',
   },
 
+  // ── India ─────────────────────────────────────────────────────────────────────
+  emergency_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the 1975-77 Emergency — opposition arrests, press censorship, sterilization programmes, the parenthesis in Indian democracy',
+    intent: 'year_texture',
+    notes: 'Set by ind_emergency_1975. Two branches: adapted, or knew someone detained.',
+  },
+  india_1984_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Witnessed the 1984 anti-Sikh violence after Indira Gandhi\'s assassination — organized mobs, absent police, 2,733+ dead',
+    intent: 'year_texture',
+    notes: 'Set by ind_1984_sikh_massacre. Two branches: in Delhi, or at distance.',
+  },
+  babri_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed the December 6, 1992 demolition of the Babri Masjid and subsequent riots — the constitutional fault line exposed',
+    intent: 'year_texture',
+    notes: 'Set by ind_babri_masjid_1992.',
+  },
+  liberalization_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age during the 1991 Indian economic liberalization — licence raj dismantled, IT boom, new class formations',
+    intent: 'year_texture',
+    notes: 'Set by ind_liberalization_1991. Two branches: entered new economy, or left behind.',
+  },
+  gujarat_2002_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the 2002 Gujarat violence — organized communal killing, state government accountability disputed for decades',
+    intent: 'year_texture',
+    notes: 'Set by ind_gujarat_2002.',
+  },
+  bpo_generation: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Worked in India\'s BPO/call centre economy — night shifts on American time, adopted work name, salary above parents\' generation',
+    intent: 'year_texture',
+    notes: 'Set by ind_call_centre_generation.',
+  },
+  demonetization_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the November 2016 demonetization — 86% of currency withdrawn overnight, weeks of queues',
+    intent: 'year_texture',
+    notes: 'Set by ind_demonetization_2016. Two branches: had formal banking, or had cash savings.',
+  },
+
 }

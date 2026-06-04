@@ -41,7 +41,8 @@ export const PAKISTAN_EVENTS = [
       G.character.country.name === 'Pakistan' &&
       G.currentYear === 1971 &&
       G.age >= 16 &&
-      !G.mem?.pak1971,
+      !G.mem?.pak1971 &&
+      !G.mem?.pkEastWingWar,
     text: 'East Pakistan is separating. In March, the army was sent in — Operation Searchlight — to suppress the independence movement. By December there is a war with India, and by December 16 the Pakistani forces in Dhaka have surrendered. Ninety-three thousand soldiers become prisoners of war. East Pakistan is now Bangladesh, a country that did not exist in the morning and exists in the evening. The official account will take decades to address what happened between March and December. In West Pakistan, the version is: we were betrayed.',
     choices: [
       {
@@ -83,7 +84,8 @@ export const PAKISTAN_EVENTS = [
       G.character.gender === 'female' &&
       G.currentYear >= 1979 && G.currentYear <= 1988 &&
       G.age >= 16 &&
-      !G.mem?.pakZiaFemale,
+      !G.mem?.pakZiaFemale &&
+      !G.mem?.pkZiaIslamisation,
     text: 'The Law of Evidence: in some categories of case, a woman\'s testimony is worth half a man\'s. The Zina Ordinance makes extramarital sex a crime, and because proof is difficult, women who report rape risk being prosecuted for adultery instead. You understand the legal architecture now. It was designed somewhere and signed by someone, and it operates in the courts, and you live inside it.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 7; p.addFlag('zia_generation'); p.addFlag('womens_rights_restricted'); p.setMem('pakZiaFemale', true) },

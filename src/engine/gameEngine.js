@@ -2678,6 +2678,40 @@ function buildYearTexture(state) {
     'Intifadat al-haita — the uprising of the thieves, the government called it. The people who were in the streets called it bread, honour, freedom. You know which account is more accurate.',
   ])
 
+  // ─── INDIA TEXTURE ────────────────────────────────────────────────────────────
+  if (F.has('emergency_generation') && Math.random() < 0.25) return pick([
+    'The Emergency was twenty-one months in which India inserted a parenthesis into its own democracy and then closed it again. The country has not fully processed what was inside the parenthesis.',
+    phase === 'late_life'
+      ? 'You lived through the Emergency and came out the other side. The elections of 1977 produced a result that could not have been predicted from inside the Emergency. That fact still surprises you slightly.'
+      : 'Indira Gandhi called elections in 1977 and lost. The parenthesis closed. The fact that it could be closed by elections is a piece of information about the country that coexists with the fact that the parenthesis was opened.',
+  ])
+  if (F.has('india_1984_generation') && Math.random() < 0.3) return pick([
+    'The official figure is 2,733. Other counts are higher. The commissions of inquiry produced findings. The findings did not produce most of the convictions. That gap is also a piece of information.',
+    phase === 'late_life'
+      ? 'You have watched India process 1984 over four decades. The processing is incomplete. The gap between what you saw and what was subsequently said about it has narrowed somewhat and not entirely.'
+      : 'October 31, 1984: the specific thing that was organized and how. What you saw and what was said about it do not match. You have filed the mismatch.',
+  ])
+  if (F.has('babri_generation') && Math.random() < 0.25) return pick([
+    'December 6, 1992: the mosque was 464 years old. The crowd was several hundred thousand. The constitutional principle of secularism survived the afternoon as a word. What it was as a practice is a longer question.',
+    'The Babri demolition produced a line in Indian politics that is still visible. The question of which side of the line you are on is not optional. You chose, or the category chose for you.',
+  ])
+  if (F.has('liberalization_generation') && Math.random() < 0.2) return pick([
+    'The licence raj ended in 1991. What replaced it produced a class that did not exist in the 1980s and concentrations of wealth that the old model, for all its inefficiencies, did not produce either.',
+    'Manmohan Singh\'s 1991 budget changed the language of the Indian economy. The new words — outsourcing, software, Bangalore — arrived in your life at a specific age and made different things possible.',
+  ])
+  if (F.has('bpo_generation') && Math.random() < 0.2) return pick([
+    'Twelve-hour shifts on American time. The work name — Michael, Jessica — because the clients find the Indian name harder. The accent shift after eighteen months. You know what it cost and what it produced.',
+    'Your salary was four times your father\'s government salary. He does not entirely understand what you do. He understands the salary. The suburb where you rented was full of people on similar shifts.',
+  ])
+  if (F.has('gujarat_2002_generation') && Math.random() < 0.2) return pick([
+    '2002: organized violence, three months, the chief minister\'s role disputed in courts for years. You know what the account looked like from inside Gujarat and what it looked like from outside it.',
+    'The question of state accountability for 2002 structured Indian politics for a generation. You were alive for both the events and the accounting, and you have watched the gap between them.',
+  ])
+  if (F.has('demonetization_generation') && Math.random() < 0.2) return pick([
+    'November 8, 2016, 8pm: 86 percent of the currency in circulation, gone by midnight. The informal economy runs on cash. It was not given four hours to prepare.',
+    'The queue lasted weeks. The government\'s assumption was that cash savings meant black money. Your savings were in cash because the bank was two hours away. The assumption did not include you.',
+  ])
+
   // ─── EXPANDED PHASE POOLS ────────────────────────────────────────────────────
 
   // Late life specific
