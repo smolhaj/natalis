@@ -3553,6 +3553,41 @@ function buildYearTexture(state) {
       : 'You are in the generation that had to decide what to do when the army came back in 2021. You made your decision. You live in it.',
   ])
 
+  // ─── ANGOLA TEXTURE ──────────────────────────────────────────────────────────
+  if (F.has('angola_civil_war_generation') && Math.random() < 0.22) return pick([
+    'The war lasted twenty-seven years. It began the day independence arrived. Those two facts are not unrelated.',
+    'Cold War proxy wars leave a specific inheritance: weapons, orphaned alliances, no accountability for any of it.',
+    phase === 'late_life'
+      ? 'You lived through the entire arc of the civil war — the independence, the first war, the ceasefire, the second war, the peace. That arc is your adult life.'
+      : 'The Cubans and the South Africans and the Soviets and the Americans chose Angola as their venue. You were in it.',
+  ])
+  if (F.has('angola_mpla_supporter') && Math.random() < 0.17) return pick([
+    'The MPLA won. That meant the cities, the oil, the international recognition. What it meant for the party over forty years is something else.',
+    'You were on the side that won. The settlement of what winning cost is still being made.',
+  ])
+  if (F.has('angola_landmine_generation') && Math.random() < 0.2) return pick([
+    'Fifteen million mines in the soil. You know which paths exist because other paths are mined. That knowledge is not abstract.',
+    'Angola has more amputees per capita than almost any country in the world. The mines that caused this are still being found.',
+    phase === 'late_life'
+      ? 'The deminers in orange vests were a constant sight along the roads for thirty years. You know what they were doing and why it took so long.'
+      : 'The field you walk across — you know where the path is because someone established which ground is safe and which isn\'t. That knowledge was paid for.',
+  ])
+  if (F.has('angola_peace_generation') && Math.random() < 0.2) return pick([
+    'February 22, 2002. Savimbi killed in Moxico. Six weeks later: ceasefire. The war ended because one side\'s leader was dead. That is the summary of twenty-seven years.',
+    'The peace came when you were in the middle of your life. You had not fully planned for the version of yourself that would exist when it came.',
+    phase === 'late_life'
+      ? 'The Angola you are old in is a different country from the one you were young in. Both are called Angola. They share a geography. The war ran between them.'
+      : 'Reconstruction from a twenty-seven-year civil war is not a metaphor. It is literal roads, literal hospitals, literal children who have never seen a country not at war.',
+  ])
+  if (F.has('angola_oil_boom_generation') && Math.random() < 0.17) return pick([
+    'The construction cranes were on Luanda\'s skyline for a decade. Not all of what they built was for the people who needed it most.',
+    'Luanda was briefly the most expensive city in the world for foreign workers. The Angolans who lived there had a different cost of living from the one in the expat surveys.',
+  ])
+  if (F.has('angola_mpla_generation') && Math.random() < 0.17) return pick([
+    'The MPLA has been in power since 1975. That is longer than most independent countries\' entire histories.',
+    'Dos Santos in power for thirty-eight years. His daughter runs the oil company. His son runs the sovereign wealth fund. The movement that fought colonialism became a family business. You live inside this.',
+  ])
+
   // ─── SUDAN TEXTURE ───────────────────────────────────────────────────────────
   if (F.has('sudan_islamist_law_generation') && Math.random() < 0.17) return pick([
     'The September Laws were never a complete description of daily life in Sudan. They were a frame around daily life. The frame changed what was inside it.',

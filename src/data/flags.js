@@ -2965,4 +2965,54 @@ export const FLAG_REGISTRY = {
     notes: 'Set by sdn_coup_2021.',
   },
 
+  // ── ANGOLA ───────────────────────────────────────────────────────────────────
+
+  angola_civil_war_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through Angola\'s 27-year civil war (1975–2002) — 500,000 dead, 4 million displaced, Cold War proxy conflict',
+    intent: 'year_texture',
+    notes: 'Set by ang_independence_civil_war_1975.',
+  },
+
+  angola_mpla_supporter: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Supported the MPLA in the civil war — the Marxist movement that held Luanda and won international recognition',
+    intent: 'year_texture',
+    notes: 'Set by ang_independence_civil_war_1975 (first branch).',
+  },
+
+  angola_landmine_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Grew up with landmines as a background fact — 15 million mines in Angolan soil, the paths that exist because other paths are mined',
+    intent: 'year_texture',
+    notes: 'Set by ang_war_years_midlife and ang_landmine_reality.',
+  },
+
+  angola_peace_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Experienced Angola\'s 2002 peace — Savimbi killed, Luena Memorandum signed, end of a war that ran for 27 years',
+    intent: 'year_texture',
+    notes: 'Set by ang_peace_2002.',
+  },
+
+  angola_oil_boom_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the post-war oil boom — Luanda as the world\'s most expensive city for expats, construction cranes, MPLA wealth capture',
+    intent: 'year_texture',
+    notes: 'Set by ang_oil_boom.',
+  },
+
+  angola_mpla_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived under Dos Santos\' 38-year MPLA rule — the party that fought colonialism becoming its own extraction machine',
+    intent: 'year_texture',
+    notes: 'Set by ang_dos_santos_rule.',
+  },
+
 }
