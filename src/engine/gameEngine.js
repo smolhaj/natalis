@@ -2640,6 +2640,44 @@ function buildYearTexture(state) {
     'The leaders who led the independence movement are older now, and some of them have become the thing they replaced. You noticed this when you were old enough to notice it, and you have not forgotten.',
   ])
 
+  // ─── EGYPT TEXTURE ───────────────────────────────────────────────────────────
+  if (F.has('naksa_generation') && Math.random() < 0.3) return pick([
+    'The radio in 1967 reported victories until it couldn\'t. The gap between the broadcast and what came back from the front was the education.',
+    phase === 'late_life'
+      ? 'You have watched Egypt contain the 1967 defeat for decades. The word Naksa — setback — was calibrated to minimize what happened. You know what happened.'
+      : 'June 1967: the Sinai gone in six days. Nasser\'s resignation offered and then taken back because the crowds in the streets would not accept it. You were in those streets.',
+    'The dream of Arab unity was tested against the morning of June 5, 1967, and the morning answered. You have been living with the answer since.',
+  ])
+  if (F.has('tahrir_generation') && Math.random() < 0.3) return pick([
+    phase === 'late_life'
+      ? 'You were in Tahrir for eighteen days. You have been describing what the nights in the square were like for a decade and the description does not fully arrive.'
+      : 'February 11, 2011: the vice president reads the statement. The sound from Tahrir enters every window in Cairo at the same time.',
+    'Eighteen days. The thing that was assumed to be permanent ended in eighteen days. You were there for both assumptions.',
+  ])
+  if (F.has('arab_spring_disillusionment') && Math.random() < 0.3) return pick([
+    'The counter-revolution has a specific texture: the emergency law coming back, the square meaning something different now, the people you knew in 2011 in three places — prison, exile, silence.',
+    'What followed Tahrir is the long answer to the short question of February 11. You have been living inside the long answer.',
+    phase === 'late_life'
+      ? 'You are old enough to have watched two versions of Egypt promise something and then not deliver it. The specific quality of the second disappointment is that you knew better.'
+      : 'The revolution produced a counter-revolution that produced the features of the old system with some of the personnel changed. That is also a piece of information.',
+  ])
+  if (F.has('nasser_generation') && Math.random() < 0.2) return pick([
+    'Nasser\'s voice on the radio had a quality that made people stop what they were doing. You remember the stopping.',
+    'The Suez Canal, returned. The canal that had been someone else\'s for seventy-five years, returned. The radio made it sound like what it was: the first thing in a long time that went correctly.',
+  ])
+  if (F.has('mubarak_emergency_generation') && Math.random() < 0.2) return pick([
+    'Thirty years of emergency law: the things you do not say in certain contexts, the groups you do not join, the petitions you do not sign. These are the shape of the law expressed in behaviour.',
+    'The Emergency Law was renewed every three years. Each renewal was a statement about what the state assumed about the people it governed.',
+  ])
+  if (F.has('infitah_generation') && Math.random() < 0.2) return pick([
+    'The door was open. Not everyone was on the same side of it. This is the sentence that describes the infitah most accurately.',
+    'Consumer goods appeared in Cairo that had not been there before. The people who benefited immediately were those who already had capital or connections. That is also an economic policy.',
+  ])
+  if (F.has('egypt_bread_generation') && Math.random() < 0.2) return pick([
+    'January 1977: the bread price doubled overnight. The streets filled. Seventy-nine people died. The government re-imposed the subsidies two days later. The government backed down. That fact is a piece of information that stays.',
+    'Intifadat al-haita — the uprising of the thieves, the government called it. The people who were in the streets called it bread, honour, freedom. You know which account is more accurate.',
+  ])
+
   // ─── EXPANDED PHASE POOLS ────────────────────────────────────────────────────
 
   // Late life specific

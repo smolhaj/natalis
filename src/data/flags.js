@@ -2304,4 +2304,55 @@ export const FLAG_REGISTRY = {
     notes: 'Set by korea_ppalli_ppalli.',
   },
 
+  // ── Egypt ─────────────────────────────────────────────────────────────────────
+  nasser_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up during the Nasser era — Suez nationalization, pan-Arab nationalism, radio speeches that stopped rooms',
+    intent: 'year_texture',
+    notes: 'Set by egy_nasser_dream. Egypt 1956-67.',
+  },
+  naksa_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the June 1967 Six-Day War defeat — the Naksa, the collapse of the Nasser dream',
+    intent: 'year_texture',
+    notes: 'Set by egy_naksa_1967. Two branches: personal belief shattered, or brother at front.',
+  },
+  infitah_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age during Sadat\'s infitah (open door) — foreign goods, class stratification, not everyone on the same side',
+    intent: 'year_texture',
+    notes: 'Set by egy_sadat_infitah.',
+  },
+  mubarak_emergency_generation: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Lived under the 1981-2011 Emergency Law — detention without charge, the shape of what you don\'t say',
+    intent: 'year_texture',
+    notes: 'Set by egy_mubarak_emergency.',
+  },
+  egypt_bread_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed the 1977 bread riots — intifadat al-haita, the government backing down, the fact of it',
+    intent: 'year_texture',
+    notes: 'Set by egy_bread_riots_1977.',
+  },
+  tahrir_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed or participated in the January-February 2011 Tahrir Square revolution — 18 days, Mubarak gone',
+    intent: 'year_texture',
+    notes: 'Set by egy_tahrir_2011. Two branches: in Tahrir, or outside it.',
+  },
+  arab_spring_disillusionment: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived the post-Tahrir counter-revolution — emergency law returns, square holds different meaning',
+    intent: 'year_texture',
+    notes: 'Set by egy_tahrir_aftermath. Gates on tahrir_generation.',
+  },
+
 }
