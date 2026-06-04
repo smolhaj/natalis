@@ -2815,6 +2815,37 @@ function buildYearTexture(state) {
     'The 2002 election was a realignment. The people who voted for it were not voting against democracy. They were voting against the version of Turkey that had excluded them from its benefits.',
   ])
 
+  // ─── NEIGHBORHOOD TIER TEXTURE ───────────────────────────────────────────────
+  {
+    const nbhTier = state.currentNeighborhoodTier
+    const nbhName = state.currentNeighborhoodName
+    if (nbhTier === 'informal' && Math.random() < 0.3) return pick([
+      nbhName
+        ? `The water in ${nbhName} runs from the standpipe at the corner until mid-morning. You have arranged your life around this.`
+        : 'The water runs from the standpipe until mid-morning. You have arranged your life around this.',
+      'The title to the land the house is on is not the kind of title that appears in government records. You know this and you have learned to live with knowing it.',
+      'The electricity comes from a line that someone ran off the main grid years ago. It is reliable in the way things are reliable when a community maintains them together.',
+      'When it rains hard, the lane floods. You know which rains are the kind you prepare for and which are the kind you just wait out.',
+      phase === 'late_life'
+        ? 'You have lived here long enough to see the settlement become a neighbourhood — the shops, the school, the church or mosque, the names the streets acquired because someone started using them.'
+        : 'The neighbourhood was not built by a plan. It was built by people solving immediate problems one decision at a time, and it works with the logic of that.',
+    ])
+    if (nbhTier === 'working_class' && Math.random() < 0.2) return pick([
+      'A quiet year. The work is steady. The margin is thin but it is there.',
+      'The neighbours know your name. This has value that is not easy to account for in any framework that doesn\'t include it.',
+      phase === 'midlife' || phase === 'late_life'
+        ? 'You have lived in this neighbourhood long enough to see it change and not change. The things that are the same are the things that matter most.'
+        : 'The neighbourhood is not what the magazines show but it is yours — the specific corner, the specific shop, the specific route you take.',
+    ])
+    if (nbhTier === 'elite' && Math.random() < 0.2) return pick([
+      'The neighbourhood has a quality of maintained distance from the problems of other parts of the city. You notice this more in some years than others.',
+      'You can afford not to think about certain things that people in other parts of the city cannot stop thinking about. This is the structural fact underneath the comfort.',
+      phase === 'late_life'
+        ? 'The walls, the guards, the distance from what is difficult. You have been comfortable for long enough to understand that the comfort is not neutral.'
+        : 'The address opens certain doors. You did not choose to be born to this or to arrive here — or you did choose, and the choice required a specific set of prior circumstances. Either way, the address is real.',
+    ])
+  }
+
   // ─── EXPANDED PHASE POOLS ────────────────────────────────────────────────────
 
   // Late life specific
