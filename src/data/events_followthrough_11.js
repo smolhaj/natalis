@@ -569,4 +569,87 @@ export const FOLLOWTHROUGH_11_EVENTS = [
     effect: null,
   },
 
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // PART 3 — IDENTITY FLAG FOLLOW-THROUGHS (Mode B: never-checked identity flags)
+  // ═══════════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'ft11_military_reunion',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) =>
+      G.flags.has('military_service') &&
+      G.age >= 40 && G.age <= 60 &&
+      !G.mem?.ft11MilReunion,
+    text: 'Someone from your service years gets back in touch — a reunion, or a message, or a name in someone else\'s news. You had forgotten how well you knew those people, or at least how much you knew about them in a specific context. The context was extreme enough that what you knew felt like more than it was. The person in the message is the same person. They are also someone who has had twenty years of life you weren\'t part of.',
+    choices: [
+      {
+        text: 'Respond. Go, if there\'s a gathering.',
+        tag: null,
+        outcome: 'The conversation has the strangeness of all reunions — the version of you they remember and the version you are now both present at once. It is stranger with people who knew you under pressure.',
+        effect: (p) => { p.m += 6; p.s += 3; p.setMem('ft11MilReunion', true) },
+      },
+      {
+        text: 'Leave it. That chapter is closed.',
+        tag: null,
+        outcome: 'You don\'t respond. You think about them occasionally for the next few weeks. Then you don\'t.',
+        effect: (p) => { p.r += 3; p.setMem('ft11MilReunion', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ft11_compliance_reckoning',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      G.flags.has('pragmatic_compliance') &&
+      G.age >= 55 &&
+      !G.mem?.ft11ComplianceReckoning,
+    text: 'The system you accommodated has changed — ended, or softened, or renamed itself, or simply become something people speak of in the past tense. Someone asks you what it was like. A younger person who knows the history but not the texture. You are trying to find the accurate thing to say: not self-exonerating, not self-flagellating. The accurate thing is somewhere in between and hard to put into words that the person asking will understand without having been there.',
+    choices: [
+      {
+        text: 'Tell them the fuller version. Including the parts you\'re not proud of.',
+        tag: null,
+        outcome: 'The telling is harder than you expected. They listen seriously. You are not sure if they understand, but the attempt matters.',
+        effect: (p) => { p.m -= 4; p.karma += 8; p.r += 5; p.setMem('ft11ComplianceReckoning', true) },
+      },
+      {
+        text: 'Give them the version that preserves your dignity. It isn\'t a lie.',
+        tag: null,
+        outcome: 'They seem satisfied. You are less satisfied. That gap is now a permanent fixture.',
+        effect: (p) => { p.r += 8; p.setMem('ft11ComplianceReckoning', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ft11_lost_home_return',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) =>
+      G.flags.has('lost_home') &&
+      G.age >= 35 && G.age <= 65 &&
+      !G.mem?.ft11LostHomeReturn,
+    text: 'You pass through the neighbourhood, or the street, or you hear specific news of the place and find yourself looking it up. The building is still there or it isn\'t. If it\'s still there, it looks different in the way that things look different when they no longer have anything to do with you. If it isn\'t, there is something else there now, which is its own specific thing to feel.',
+    choices: [
+      {
+        text: 'Go closer. Walk through it.',
+        tag: null,
+        outcome: 'The sensory memory is more complete than the visual one. A smell, a particular quality of light, something about the acoustics of that street. You stay longer than you intended.',
+        effect: (p) => { p.m -= 6; p.r += 6; p.karma += 3; p.setMem('ft11LostHomeReturn', true) },
+      },
+      {
+        text: 'Look from a distance. That\'s enough.',
+        tag: null,
+        outcome: 'You look for long enough to know you\'ve seen it and then you leave. That feels like the right amount.',
+        effect: (p) => { p.m -= 3; p.r += 3; p.setMem('ft11LostHomeReturn', true) },
+      },
+    ],
+    effect: null,
+  },
+
 ]

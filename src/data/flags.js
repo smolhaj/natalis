@@ -2040,4 +2040,54 @@ export const FLAG_REGISTRY = {
     notes: 'Set by zim_mugabe_fall_2017 in events_zimbabwe.js.',
   },
 
+  // ── IDENTITY FLAGS (Mode B: never-checked identity flags) ─────────────────────
+
+  lost_home: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lost the place they called home — through conflict, eviction, displacement, or partition',
+    intent: 'both',
+    notes: 'Set by conflict childhood, poverty eviction, gentrification, partition world events. Year texture + ft11_lost_home_return.',
+  },
+
+  independent_thinker: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Habitually reaches their own conclusions; resists conformity to official or social pressure',
+    intent: 'year_texture',
+    notes: 'Set by career_regime events (resigned on principle, refused loyalty declaration), culture events. Tension arc with pragmatic_compliance.',
+  },
+
+  military_service: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Completed military service (non-combat; distinct from deployed_to_conflict)',
+    intent: 'both',
+    notes: 'Set by conscription events, Korea service, gender events. Does NOT gate soldier arc (that requires deployed_to_conflict). Year texture + ft11_military_reunion.',
+  },
+
+  pragmatic_compliance: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Made pragmatic accommodations with an authoritarian system — signed, joined, complied to survive',
+    intent: 'both',
+    notes: 'Set by career_regime (loyalty declaration, collectivization), culture (party membership), Kurdish PKK events. Year texture + ft11_compliance_reckoning.',
+  },
+
+  passed_checkpoint: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Passed through military or police checkpoints as normalized daily life',
+    intent: 'year_texture',
+    notes: 'Set by conflict_childhood, Lebanon, Algeria events. Body-memory hypervigilance reflex that outlasts the context.',
+  },
+
+  gaokao_survivor: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Survived the Chinese university entrance examination — the gaokao',
+    intent: 'year_texture',
+    notes: 'Set by events_culture.js gaokao events. Performance-under-examination reflex; China-specific pressure psychology.',
+  },
+
 }

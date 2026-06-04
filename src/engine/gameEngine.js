@@ -1417,6 +1417,88 @@ function buildYearTexture(state) {
     return 'There is no one left who knew you before you knew yourself. That is a specific kind of alone.'
   }
 
+  // ─── IDENTITY AND EXPERIENCE TEXTURE ─────────────────────────────────────────
+
+  if (F.has('lost_home') && Math.random() < 0.3) return pick([
+    phase === 'late_life'
+      ? 'The place you grew up in is somewhere. You have not been back, or you went back and it wasn\'t there anymore in the way that mattered. That is its own category of loss.'
+      : 'Home is the thing that was there and then wasn\'t. You carry the address in a specific part of memory that other addresses don\'t reach.',
+    'You know the smell and the light of a place that no longer belongs to you, or no longer exists, or exists with someone else\'s things in it.',
+    phase === 'midlife'
+      ? 'You have built something since. It is real. It is not the same.'
+      : 'There is the home you lost and then all the other places since. They are places. The first was something else.',
+    'The loss of a place is different from other losses because the place often continues to exist — just without you in it.',
+  ])
+  if (F.has('independent_thinker') && Math.random() < 0.3) return pick([
+    phase === 'late_life'
+      ? 'You have spent your life reaching your own conclusions. That habit has cost you things. You would still do it.'
+      : 'The habit of questioning the given conclusion is still the one that gets you in trouble in certain rooms.',
+    'You know the specific loneliness of a position no one else has arrived at yet.',
+    phase === 'midlife'
+      ? 'You have found, over time, the other people who think this way. They are scattered but they are real.'
+      : 'The reflex is to find the flaw in the argument everyone else accepts. Sometimes you wish you couldn\'t.',
+    F.has('pragmatic_compliance')
+      ? 'There is the self you are and the positions you have taken for practical reasons. You live with both.'
+      : 'You have not taken positions you didn\'t hold. That is both a form of integrity and a kind of stubbornness you can\'t entirely defend.',
+  ])
+  if (F.has('pragmatic_compliance') && Math.random() < 0.3) return pick([
+    phase === 'late_life'
+      ? 'You made your peace with the system while it lasted. Now it has passed and you are living with the accounting of that peace.'
+      : 'You signed what you needed to sign. You joined what you needed to join. You kept your head down and your family fed. That is one way of surviving.',
+    'There is a version of yourself that didn\'t comply. You know this person existed as a possibility. You chose differently.',
+    F.has('independent_thinker')
+      ? 'The gap between what you think and what you signed is a gap you have been living inside for a long time.'
+      : 'The compliance was rational at the time. You could reconstruct the logic of it even now. Something else says it wasn\'t.',
+    phase === 'midlife'
+      ? 'The system you accommodated has changed or ended or weakened. What remains is the knowledge of what you were willing to do to stay inside it.'
+      : 'You watch people who refuse similar things and feel something you can\'t name clearly: admiration, or its complicated sibling.',
+  ])
+  if (F.has('passed_checkpoint') && Math.random() < 0.25) return pick([
+    'The body reads the uniform before the thought forms. That reflex is faster than reason and older than most of what you know.',
+    phase === 'late_life'
+      ? 'You have spent years in places where the checkpoint was part of ordinary life. That knowledge does not leave the nervous system.'
+      : 'There is a specific alertness that activates near certain barriers. You have learned to manage it without showing it.',
+    'The checkpoint question — where are you going, show your document — has a shape in your memory that routine encounters can still activate.',
+  ])
+  if (F.has('military_service') && !F.has('deployed_to_conflict') && Math.random() < 0.3) return pick([
+    phase === 'late_life'
+      ? 'The years of service are somewhere back there. The discipline, the physical life, the particular way of existing alongside people under constraint — it shaped things you still use.'
+      : 'You know how to function in hierarchies in a particular way. The knowledge is occasionally useful and occasionally a limitation.',
+    'The people you served with had a specific reality. Some of them you are still in contact with. Most you are not.',
+    phase === 'midlife'
+      ? 'You are of the generation that did service. Your children may not be. The gap between those experiences is larger than you expected it would be.'
+      : 'The body remembers a certain posture, a certain readiness. Civilian life runs at a different register. You have translated between them.',
+  ])
+  if (F.has('gaokao_survivor') && Math.random() < 0.3) return pick([
+    phase === 'late_life'
+      ? 'The gaokao determined the shape of your life in a way that a single day\'s performance should not be able to. It did. You have been the person the test said you were ever since.'
+      : 'You are still, sometimes, performing under examination. That reflex was installed early and has not fully uninstalled.',
+    'The specific anxiety of the gaokao — the narrowing of everything to a number on a particular morning — is something your body still knows.',
+    phase === 'midlife'
+      ? 'You have watched younger people approach the exam with the full knowledge of what it is. The knowledge does not make the watching easier.'
+      : 'You passed through the exam season and came out the other side with a number that opened or closed doors. Those doors are the map of your life since.',
+  ])
+  if (F.has('internet_generation') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.25) return pick([
+    'You remember when the world was still mostly offline. The transition has been the texture of your adult life. You are fluent in both registers.',
+    phase === 'late_life'
+      ? 'You were there for the early internet — the specific sound, the sense of something enormous arriving in stages. You have watched what it became from the beginning.'
+      : 'The internet arrived when you were young enough to shape yourself around it and old enough to remember what came before.',
+  ])
+  if (F.has('experienced_loss') && !F.has('lost_child') && !F.has('lost_parent') && !F.has('widowed') && !F.has('partner_died') && Math.random() < 0.2) return pick([
+    'You have lost something that mattered. The specific thing is in a particular place in memory. You know where it is.',
+    'Loss accumulates differently from how it arrives. It arrives as an event. It becomes part of the texture.',
+  ])
+  if (F.has('drug_user') && !F.has('addiction') && !F.has('in_recovery') && Math.random() < 0.2) return pick([
+    'You use sometimes. It has stayed at sometimes. You keep a quiet eye on whether that continues to be accurate.',
+    'The thing you take sometimes smooths the edge off certain evenings. You have decided that is acceptable. You check the decision occasionally.',
+  ])
+  if (F.has('violent') && !F.has('violent_criminal') && Math.random() < 0.2) return pick([
+    'You know what you are capable of under certain conditions. That knowledge is not comfortable. It is accurate.',
+    phase === 'late_life'
+      ? 'The person you were in that moment is still part of you. You have spent years deciding what to do with them.'
+      : 'There was a moment where you found out where your limits were. They were further than you expected. That is the kind of self-knowledge that changes how you understand other people.',
+  ])
+
   // Career and hobbies
   if (career && F.has('career_fulfilled')) return pick([
     'The work is good. You don\'t say that to people much, but it\'s true.',
