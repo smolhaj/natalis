@@ -2508,4 +2508,76 @@ export const FLAG_REGISTRY = {
     notes: 'Set by tur_economic_miracle_2000s.',
   },
 
+  // ── West Africa ───────────────────────────────────────────────────────────────
+  nkrumah_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up in Nkrumah\'s Ghana — the first independence, the pan-African project, the idea that was supposed to show what African self-governance could be',
+    intent: 'year_texture',
+    notes: 'Set by gha_nkrumah_dream.',
+  },
+  rawlings_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through Rawlings\' Ghana — coups, structural adjustment, the PNDC years',
+    intent: 'year_texture',
+    notes: 'Set by gha_rawlings_era.',
+  },
+  ghana_democracy_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed Ghana\'s 1992 democratization and the 2000 peaceful transfer of power to opposition',
+    intent: 'year_texture',
+    notes: 'Set by gha_democracy_1992.',
+  },
+  ivorian_miracle_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up during the Ivorian Miracle — 7% growth, the model West African economy, cocoa and coffee abundance',
+    intent: 'year_texture',
+    notes: 'Set by cdi_houphouet_era.',
+  },
+  ivoirite_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the ivoirité crisis — authenticity politics that excluded northerners/migrants and prefigured civil war',
+    intent: 'year_texture',
+    notes: 'Set by cdi_ivoirite_crisis. Two branches: affected, or benefiting.',
+  },
+  ivorian_civil_war_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the 2002-2011 Ivorian civil war — country split north/south, zone of confidence, Abidjan vs Bouaké',
+    intent: 'year_texture',
+    notes: 'Set by cdi_civil_war.',
+  },
+  nigerian_oil_boom_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age during the 1973-81 Nigerian oil boom — naira strength, federal abundance, the before of the SAP',
+    intent: 'year_texture',
+    notes: 'Set by nga_oil_boom.',
+  },
+  sap_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through Nigeria\'s IMF structural adjustment programme — devaluation, cuts, the floor systematically removed',
+    intent: 'year_texture',
+    notes: 'Set by nga_sap_1980s. The word SAP used for decades to describe what was done.',
+  },
+  saro_wiwa_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed the November 1995 execution of Ken Saro-Wiwa — the Ogoni activists, Shell, the delta that continued to burn',
+    intent: 'year_texture',
+    notes: 'Set by nga_saro_wiwa_1995.',
+  },
+  nigerian_diaspora_stigma: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Managed the 419 national stereotype abroad — the assumption that being Nigerian meant fraud association',
+    intent: 'year_texture',
+    notes: 'Set by nga_419_scam_culture.',
+  },
+
 }

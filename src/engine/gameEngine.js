@@ -1258,15 +1258,61 @@ function buildYearTexture(state) {
     const q = partner.relationshipQuality ?? 60
     const pn = partner.name.split(' ')[0]
     const moments = state.mem?.partnerMoments ?? []
+    const yrs = partner.years ?? 0
 
     if (q < 28) return pick([
       `You and ${partner.name} are still in the same house. That is accurate and not quite the whole story.`,
       `There are things you and ${pn} no longer say. The list has grown.`,
+      yrs >= 15
+        ? `${yrs} years and you have become strangers of the specific kind — the kind who know too much about each other to leave easily.`
+        : `You and ${pn} are in the same life and not quite in the same life.`,
     ])
     if (q < 40) return pick([
       `You and ${partner.name} are polite in ways you didn't used to have to be.`,
       `You and ${pn} move around each other carefully. Neither of you names it.`,
+      yrs >= 20
+        ? `Two decades and you and ${pn} have settled into a distance that is too familiar to call unhappiness and too persistent to call fine.`
+        : `Something has shifted between you and ${pn}. Neither of you has said it out loud yet.`,
     ])
+    // Long-marriage texture — years bracket unlocks specific prose (before moment surfacing)
+    if (yrs >= 40 && Math.random() < 0.45) {
+      if (q > 65) return pick([
+        `Forty years with the same person is long enough that you have lived multiple versions of each other. You are not who ${pn} married. ${pn} is not who you married. The marriage contains everyone you have both been.`,
+        `You find ${pn} in the same place at the same time of day you have always found them. The fact of that has accumulated into something you do not have a word for.`,
+        `There are things you only understand about yourself because you have been seen by ${pn} for this long. That is not a small thing to have given each other.`,
+        `The early years of a marriage are the rehearsal. This, the late years, is the thing itself.`,
+      ])
+      return pick([
+        `Forty years with the same person. You have learned to separate the person from the accumulated weight of everything that has passed between you. Some days this is possible.`,
+        `You and ${pn} have made it this far. The making-it-far is real. You try not to measure too carefully what it has cost.`,
+      ])
+    }
+    if (yrs >= 30 && Math.random() < 0.4) {
+      if (q > 65) return pick([
+        `${pn} knows the version of yourself you have kept from almost everyone else. That is what three decades of the same person buys.`,
+        `You have been through enough together that the old arguments don't reach the same depth they used to. You have argued everything already.`,
+        `You can read ${pn}'s silences. That took years to learn. You are glad you did the learning.`,
+        phase === 'late_life'
+          ? `Thirty years. You are old enough to know what it means that you are still here together. You know people who are not.`
+          : `Three decades of the same person. The shared history is so thick by now that it is sometimes hard to tell which memories are yours and which belong to both of you.`,
+      ])
+      return pick([
+        `You and ${pn} have settled into something you could not have described at the beginning. It is more complicated than the word marriage and less complicated than the word unhappy.`,
+        `Thirty years of being known by the same person. You are no longer sure you know how to be unknown.`,
+      ])
+    }
+    if (yrs >= 20 && Math.random() < 0.35) {
+      if (q > 72) return pick([
+        `You know ${pn}'s three difficult subjects, their body language in crowds, the sound of their key in the lock from two rooms away. That is the work of years and you have done it.`,
+        `${pn} finishes your sentences and gets them right most of the time. After twenty years that is not nothing.`,
+        `The early arguments feel like archaeology now — structures you can identify but no longer inhabit.`,
+        `You chose ${pn} and kept choosing them and here you are. The simple version of this is still the true one.`,
+      ])
+      if (q < 52) return pick([
+        `You and ${pn} have learned to coexist across two decades without too much friction. You are not sure when coexistence became the goal.`,
+        `There is a version of this marriage you imagined at the beginning. You no longer check it against the current version.`,
+      ])
+    }
     // Surface a specific partner moment (~30% of good years, if moments exist)
     if (q >= 45 && moments.length > 0 && Math.random() < 0.30) {
       return pickFrom(moments)
@@ -2813,6 +2859,58 @@ function buildYearTexture(state) {
   if (F.has('turkish_conservative_generation') && Math.random() < 0.2) return pick([
     'The AKP spoke to people who had been outside the Kemalist networks — the Anatolian middle class, the practicing Muslim professional, the voter the Republican People\'s Party had not found a way to address. You were one of those people.',
     'The 2002 election was a realignment. The people who voted for it were not voting against democracy. They were voting against the version of Turkey that had excluded them from its benefits.',
+  ])
+
+  // ─── WEST AFRICA TEXTURE ─────────────────────────────────────────────────────
+  if (F.has('nkrumah_generation') && Math.random() < 0.2) return pick([
+    'Ghana, free forever. The idea was large enough for the whole continent to borrow from. You grew up in the country that was supposed to show what African self-governance could be.',
+    phase === 'late_life'
+      ? 'You watched the pan-African project begin in Ghana in 1957 and watched what happened over the decades after. The idea survived the disappointments differently than Nkrumah survived his coup.'
+      : 'The coup happened in 1966 while Nkrumah was in Hanoi on a peace mission. The army took the airport back and renamed it. The idea took longer to name differently.',
+  ])
+  if (F.has('rawlings_generation') && Math.random() < 0.2) return pick([
+    'The PNDC years: the corruption tribunals, the executions, the structural adjustment the IMF required. Ghana was being remade. The people you knew were paying for the remaking.',
+    phase === 'late_life'
+      ? 'Rawlings is the only person you know of who led two coups, then won a democratic election, then stepped down when he lost. The trajectory of it is not easy to summarise.'
+      : 'The economy grew in the statistics during the adjustment years. The people you knew were careful with money in ways that statistics do not record.',
+  ])
+  if (F.has('ghana_democracy_generation') && Math.random() < 0.2) return pick([
+    'The 2000 election: Kufuor wins, Rawlings steps down, the army stays in the barracks. Ghana became the thing the continent was promised in 1957 through the long route of several coups and structural adjustments.',
+    'Ghana is one of the few African countries with a clean record of peaceful democratic transfers of power now. You were alive for the transitions. You know what it cost to get here.',
+  ])
+  if (F.has('ivorian_miracle_generation') && Math.random() < 0.2) return pick([
+    'The Ivorian Miracle: 7 percent growth per year, the cocoa and coffee economy, Abidjan as the model African city. The miracle required four million migrants. The question of who belonged came later.',
+    phase === 'late_life'
+      ? 'Houphouët-Boigny ruled for thirty-three years. The miracle years were the first half. The second half was the slow emergence of the question his miracle had suppressed.'
+      : 'The economy worked, in the years you grew up, in the way that economies work when commodity prices are high and the government is stable and the labour costs are kept low by the presence of people who have fewer rights than you.',
+  ])
+  if (F.has('ivoirite_generation') && Math.random() < 0.25) return pick([
+    'Ivoirité: the concept was introduced to exclude a presidential candidate and expanded into a theory of who belongs in a country that was built on migrant labour. The civil war was inside the concept before the civil war was in the streets.',
+    phase === 'late_life'
+      ? 'You lived through the miracle years when the question of who was truly Ivorian was not asked, and then through the years when it was asked at volume and with violence.'
+      : 'Four million people from Burkina Faso and Mali who built the cocoa economy found themselves in an ambiguous legal position when the concept arrived. The concept did not arrive from nowhere.',
+  ])
+  if (F.has('ivorian_civil_war_generation') && Math.random() < 0.25) return pick([
+    'The line across the middle of the country. The zone of confidence. Abidjan in the south, Bouaké in the north, French troops and UN peacekeepers in the middle. You learned to navigate a country that had become two.',
+    'The ceasefire line ran across the country for nine years. The things that crossed it — goods, people, phone signals — all crossed under specific conditions that you knew.',
+  ])
+  if (F.has('nigerian_oil_boom_generation') && Math.random() < 0.2) return pick([
+    'The boom years: the naira strong, the roads being built, the government salaries that made sense. The structural problem was legible but the feeling of the moment was abundance. You remember the abundance.',
+    'Oil at $35 a barrel and then higher. The federal government suddenly wealthy. The problem — that the wealth was flowing through patronage rather than into productive capacity — would become visible later.',
+  ])
+  if (F.has('sap_generation') && Math.random() < 0.25) return pick([
+    'The SAP generation: the structural adjustment programme that removed the floor. Naira devaluation. University fees. Government salaries that could not keep up. You are one of the people the word SAP describes.',
+    phase === 'late_life'
+      ? 'You watched the oil boom become the SAP in the space of a decade. The generation that came after you inherited the aftermath. You inherited it first.'
+      : 'The gap between the oil boom your parents described and the structural adjustment you lived is the gap that explains much of what followed.',
+  ])
+  if (F.has('saro_wiwa_generation') && Math.random() < 0.2) return pick([
+    'November 10, 1995. The execution went ahead. The Commonwealth suspended Nigeria. The oil continued to be extracted. The delta continued to burn. These things happened in sequence and the sequence is information.',
+    'Ken Saro-Wiwa documented what Shell\'s extraction had done to the Ogoni land and water and was hanged for it. The documentation is still accurate. The delta is still burning.',
+  ])
+  if (F.has('nigerian_diaspora_stigma') && Math.random() < 0.2) return pick([
+    'The 419 stereotype: 120 million people held responsible for the reputation established by a smaller number. You have managed the assumption in rooms where it was already made. You will manage it again.',
+    'Being Nigerian abroad in the 1990s and 2000s: the email opens and the person across the desk has already decided something. You have learned the specific labour of undeciding it.',
   ])
 
   // ─── NEIGHBORHOOD TIER TEXTURE ───────────────────────────────────────────────
