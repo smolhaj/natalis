@@ -3627,6 +3627,46 @@ function buildYearTexture(state) {
       : 'You are in the generation that had to decide what to do when the army came back in 2021. You made your decision. You live in it.',
   ])
 
+  // ─── LIBYA TEXTURE ───────────────────────────────────────────────────────────
+  if (F.has('libyan_jamahiriya_generation') && Math.random() < 0.18) return pick([
+    'The Green Book was the theory. The Revolutionary Guards were the practice. Both were real.',
+    'Gaddafi\'s Libya had free housing, free university, free healthcare. You did not get politics. That was the deal.',
+    'The basic popular congresses — the direct democracy of the Jamahiriya — met regularly. The Mukhabarat also met regularly. The second institution had more effect on what you said at the first one.',
+  ])
+  if (F.has('libyan_sanctions_generation') && Math.random() < 0.17) return pick([
+    'The sanctions meant no international flights. Libya was there, the world was there, and between them the ban on travel held for eleven years.',
+    'Lockerbie happened. The world blamed Libya. Libya was sanctioned. You were born here. The connection between those facts is the context of your young adulthood.',
+  ])
+  if (F.has('libyan_rehabilitation_generation') && Math.random() < 0.14) return pick([
+    'The rehabilitation happened: Gaddafi discloses the WMD, pays Lockerbie families, the sanctions lift, the oil companies return. The lesson in international relations is specific.',
+    'Blair arrived in Tripoli, shook hands, and the world moved on. You watched this and drew your conclusions.',
+  ])
+  if (F.has('libyan_revolution_generation') && Math.random() < 0.22) return pick([
+    'Gaddafi was captured outside Sirte in a drainage pipe and killed by the crowd on October 20, 2011. He ruled for forty-two years. That is what the end looked like.',
+    'The revolution worked in that it removed Gaddafi. What it left in his place is what you have been navigating since.',
+    phase === 'late_life'
+      ? 'You have lived in Gaddafi\'s Libya and in what came after. Both took everything you had to navigate. They were not the same kind of everything.'
+      : 'The video of the last minutes circulated immediately. You saw it. The man who had been the frame of your entire life.',
+  ])
+  if (F.has('libyan_revolutionary') && Math.random() < 0.2) return pick([
+    'You were on the side of the revolution. You still are, in the sense that you cannot be anything else. The revolution\'s products are more complicated.',
+    'You wanted what the revolution said it was bringing. Some of it arrived. Some of what arrived was not what you wanted.',
+    phase === 'late_life'
+      ? 'The revolution you supported produced a fragmented state and a decade of militia war. That is not the revolution you were part of. It is the country you live in.'
+      : 'The gap between the revolution and the country it produced is the gap you live in. You are still deciding what to do with it.',
+  ])
+  if (F.has('libyan_fragmentation_generation') && Math.random() < 0.22) return pick([
+    'Two governments. Multiple militia factions. The oil fields as bargaining chips. You are navigating a country that is not one thing.',
+    'The state Gaddafi built was him. When he died, the state died with him. What replaced it is a negotiation between armed groups that has not resolved.',
+    phase === 'late_life'
+      ? 'You are old in a country that does not know what it is yet. That requires a specific kind of patience you did not choose to have.'
+      : 'The map of who controls what in Libya changes faster than the news can update it. You read it through personal networks, not official sources.',
+  ])
+  if (F.has('libyan_oil_state_generation') && Math.random() < 0.16) return pick([
+    'Libya has the largest oil reserves in Africa. One man decided how that was distributed. The distribution included you, and the Mukhabarat, simultaneously.',
+    'The welfare state was real — the free housing, the free university, the subsidised everything. The surveillance that came with it was also real. You built your life inside both.',
+  ])
+
   // ─── JORDAN TEXTURE ──────────────────────────────────────────────────────────
   if (F.has('jordanian_palestinian_identity') && Math.random() < 0.22) return pick([
     'You are from Jordan and from somewhere else. Both are true. The somewhere else is specific: it has a village name, a direction from Amman, a story of how it became inaccessible.',

@@ -3073,4 +3073,62 @@ export const FLAG_REGISTRY = {
     notes: 'Set by jor_king_hussein_era.',
   },
 
+  // ── LIBYA ────────────────────────────────────────────────────────────────────
+
+  libyan_jamahiriya_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up in Gaddafi\'s Jamahiriya — the Green Book ideology, basic popular congresses, free oil-funded welfare state, Revolutionary Guard surveillance',
+    intent: 'year_texture',
+    notes: 'Set by lby_gaddafi_jamahiriya.',
+  },
+
+  libyan_sanctions_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived under UN sanctions 1992–2003 — Lockerbie, no flights, frozen assets, the thinner shelves of international isolation',
+    intent: 'year_texture',
+    notes: 'Set by lby_lockerbie_sanctions.',
+  },
+
+  libyan_rehabilitation_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Watched Libya\'s 2003 rehabilitation — WMD disclosed, sanctions lifted, Blair shaking Gaddafi\'s hand, Western oil companies returning',
+    intent: 'year_texture',
+    notes: 'Set by lby_rehabilitation_2003.',
+  },
+
+  libyan_revolution_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the 2011 revolution — Benghazi uprising, NATO, Gaddafi killed in a drainage pipe, the 42-year state dissolving overnight',
+    intent: 'year_texture',
+    notes: 'Set by lby_revolution_2011.',
+  },
+
+  libyan_revolutionary: {
+    weight: 'major',
+    category: 'political',
+    description: 'Joined or supported the 2011 uprising against Gaddafi — and has been living with what the revolution produced',
+    intent: 'year_texture',
+    notes: 'Set by lby_revolution_2011 (first branch).',
+  },
+
+  libyan_fragmentation_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lives in post-Gaddafi Libya — two governments, militias, oil fields as bargaining chips, Islamic State in Benghazi',
+    intent: 'year_texture',
+    notes: 'Set by lby_post_gaddafi_chaos.',
+  },
+
+  libyan_oil_state_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age in the Gaddafi oil state — free housing, free university, free healthcare, the Mukhabarat as the price',
+    intent: 'year_texture',
+    notes: 'Set by lby_gaddafi_oil_state.',
+  },
+
 }
