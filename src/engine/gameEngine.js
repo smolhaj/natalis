@@ -1629,10 +1629,23 @@ function buildYearTexture(state) {
     return pick([
       'You exist in the margins of official life, which has its own routines by now.',
       'You have learned the art of not being noticed. It has costs you don\'t always account.',
+      'The margin of official life has its own geography: which services ask, which don\'t, which counters to avoid.',
+      'The documentation question is always somewhere in the room, even when nobody asks it.',
+      phase === 'late_life'
+        ? 'You have been living in this in-between for years now. You have built a life inside it, which the in-between was not designed to accommodate.'
+        : 'The status is precarious in ways you no longer let yourself think about too directly. The thinking has costs of its own.',
+      'Some things you do not write down. Some institutions you do not visit. The list has become so familiar you apply it without consulting it.',
     ])
   }
   if (residencyStatus === 'climate_displaced') {
-    return 'You are here because you had to be. That is not the same as being home.'
+    return pick([
+      'You are here because you had to be. That is not the same as being home.',
+      'The place you left is still in the present tense in your mind. The map says otherwise.',
+      phase === 'late_life'
+        ? 'You have built a life in the place you were forced to reach. The forcing was not the destination\'s fault. You know this. The knowledge doesn\'t always help.'
+        : 'The language of climate displacement does not capture what it feels like to be a person from somewhere that changed beyond habitability.',
+      'Some things the new place has. Some things it will never have. You have made the accounting.',
+    ])
   }
   if (residencyStatus === 'work_visa' && F.has('emigrated') && Math.random() < 0.3) return pick([
     'The visa has an expiry date. Your life here does not feel like it should expire on that date.',
@@ -1687,10 +1700,28 @@ function buildYearTexture(state) {
     return pick([
       'Another year of knowing what not to say in which room.',
       'There are two conversations: the one you have, and the one underneath it.',
+      'The habit of watching who is in the room before speaking is so deep now it does not feel like a habit.',
+      'You are fluent in the language of the careful sentence — the one that says what it needs to say and does not say the rest.',
+      phase === 'late_life'
+        ? 'You have spent your life in the gap between what you think and what you say. That gap has its own geography.'
+        : 'The calculation of who can be told what is so automatic you no longer notice you are doing it.',
+      phase === 'midlife' || phase === 'late_life'
+        ? 'The younger ones don\'t fully understand what it cost — the ongoing maintenance of a life built to be invisible to the wrong eyes.'
+        : 'You are careful in ways your family taught you to be careful. The lesson arrived before you could ask why.',
+      'The system requires legibility. You have become very good at performing it.',
+      'Some years are quieter than others. The quiet is not peace — it is the absence of events that would require you to choose.',
     ])
   }
   if (F.has('dissident_writer') || F.has('dissident_reader')) {
-    return 'You continue. That is its own form of argument.'
+    return pick([
+      'You continue. That is its own form of argument.',
+      phase === 'late_life'
+        ? 'The written thing outlasts the state that forbade it. You have lived long enough to see that happen, sometimes.'
+        : 'The risk is not theoretical. You have decided it is worth it. You revisit that decision regularly.',
+      'The work goes where it can go. Not always where it should go. You work with the routes available.',
+      'There are people who have read what you have written or thought what you have thought and who have paid for it. You do not forget them.',
+      'The manuscript exists. Where it exists is the question. You know the answer. You are the only one who does.',
+    ])
   }
 
   // ─── FLAG-AWARE TEXTURE ──────────────────────────────────────────────────────
@@ -1703,29 +1734,53 @@ function buildYearTexture(state) {
     'You have lived long enough to see some of what you fought for become unremarkable. That is what winning looks like.',
     'The young people don\'t know what this cost. That is also what winning looks like.',
   ])
-  if (F.has('independence_generation_self') && phase === 'late_life') {
-    return 'You were there when the flag went up. You have lived long enough to know what came after.'
-  }
+  if (F.has('independence_generation_self') && phase === 'late_life' && Math.random() < 0.5) return pick([
+    'You were there when the flag went up. You have lived long enough to know what came after.',
+    'Independence was the beginning. The beginning was real. What it turned into is also real and took longer to understand.',
+    'The generation that lived through the end of colonial rule and what followed — that arc is in your body as knowledge.',
+    'You remember before. Most people around you don\'t. That gives your silence a weight they can\'t quite read.',
+  ])
   if (F.has('boarding_school') && phase === 'young_adult') return pick([
     'You notice you have trouble asking for things. You are not sure where that started.',
     'Institutions feel familiar in ways that aren\'t comfortable to examine.',
+    'You know how to perform compliance. The performance is so fluent you sometimes forget you are performing.',
+    'The school taught you a version of yourself that was useful in certain rooms. You have spent years figuring out what to do with it in other rooms.',
   ])
   if (F.has('first_gen_university') && career) return pick([
     'You are the first in your family to have this kind of year. That means something, even when you forget it.',
     'There is no map for where you are. You are making one.',
+    'The world you moved into when you went to university is not the world you came from. You hold both. Neither released you.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'You have been in this world for decades now — the world you entered as a first-gen. You are no longer new to it. The original strangeness is almost gone.'
+      : 'The code-switching is second nature. You translate between registers without thinking. The translation has a cost you rarely add up.',
   ])
-  if (F.has('oral_historian') && phase === 'late_life') {
-    return 'They come to you with questions now. You try to answer accurately.'
-  }
-  if (F.has('elder_authority') && phase === 'late_life') {
-    return 'The weight of being consulted is real. You have learned to carry it carefully.'
-  }
-  if (F.has('is_mentor') && (phase === 'midlife' || phase === 'late_life')) {
-    return 'You see something in the younger one that reminds you of an earlier version of yourself. You try not to say so.'
-  }
-  if (F.has('lost_mentor') && phase === 'midlife') {
-    return 'There is no one left who knew you before you knew yourself. That is a specific kind of alone.'
-  }
+  if (F.has('oral_historian') && phase === 'late_life' && Math.random() < 0.5) return pick([
+    'They come to you with questions now. You try to answer accurately.',
+    'You are the record that exists in a living form. You know what happens when that form ends.',
+    'The questions they ask are the ones that wouldn\'t have needed asking if the record had been kept differently. You answer them.',
+    'What you carry is not in any archive. When you are gone, it goes with you. This is not a complaint — it is a fact you have made your peace with.',
+  ])
+  if (F.has('elder_authority') && phase === 'late_life' && Math.random() < 0.5) return pick([
+    'The weight of being consulted is real. You have learned to carry it carefully.',
+    'The younger ones come with their problems. You give them what you have, which is mostly the pattern-recognition of having been here before.',
+    'Your authority is not institutional — it is accumulated, personal, based on having survived the specific things you survived.',
+    'Being the elder is a responsibility that arrived without a ceremony. You noticed it in how people began to frame their requests.',
+  ])
+  if (F.has('is_mentor') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.45) return pick([
+    'You see something in the younger one that reminds you of an earlier version of yourself. You try not to say so.',
+    'The thing you know that they don\'t yet know is not the fact — it is how long the fact takes to matter.',
+    'You give them the map you didn\'t have. The territory has changed slightly since you made it. You give it anyway.',
+    phase === 'late_life'
+      ? 'Some of the people you mentored have outrun you. That was the point. That is still the point, even when it costs something.'
+      : 'The mentoring requires that you have more patience than certainty. You are still working on the balance.',
+    'They make a mistake you would have made at their age. You say very little. The learning is theirs to do.',
+  ])
+  if (F.has('lost_mentor') && phase === 'midlife' && Math.random() < 0.45) return pick([
+    'There is no one left who knew you before you knew yourself. That is a specific kind of alone.',
+    'You catch yourself wanting to tell them something. The wanting comes fast and then the absence of them comes faster.',
+    'The standard they set is still in your head. You are still measuring yourself against it, even now.',
+    'The person who saw what you could be before you saw it — gone. You are working with their vision of you, still.',
+  ])
 
   // ─── PAKISTAN TEXTURE ─────────────────────────────────────────────────────
   if (F.has('muhajir_identity') && Math.random() < 0.3) return pick([
@@ -1853,11 +1908,22 @@ function buildYearTexture(state) {
   ])
 
   // Career and hobbies
-  if (career && F.has('career_fulfilled')) return pick([
+  if (career && F.has('career_fulfilled') && Math.random() < 0.6) return pick([
     'The work is good. You don\'t say that to people much, but it\'s true.',
     'You are doing the thing you are supposed to be doing. That is rarer than it sounds.',
+    'The work fits. That sentence took a long time to become true and you know it.',
+    phase === 'late_life'
+      ? 'You found the work that was yours. You did it. The not-finding would have been worse — you know people who never found it.'
+      : 'There is a specific satisfaction in a day\'s work that is actually your work. You notice it especially on the days it\'s absent.',
   ])
-  if (career && F.has('career_defining_work')) return 'The best work you have done is behind you. You are learning what comes after best.'
+  if (career && F.has('career_defining_work') && Math.random() < 0.55) return pick([
+    'The best work you have done is behind you. You are learning what comes after best.',
+    'The defining work was specific to a moment — a confluence of readiness and circumstance. You cannot manufacture it again. You have been learning to accept that.',
+    phase === 'late_life'
+      ? 'The career built to a point and then past it. The work after the peak is still work. It does not have to be the best to matter.'
+      : 'You did the defining work. That it came when it came, and not later, is the fact you are still sitting with.',
+    'The work that mattered most is known in certain circles. Those circles are smaller than the work deserved. You have made a kind of peace with this.',
+  ])
 
   // ─── CAREER FIELD TEXTURE (~22% when working) ────────────────────────────────
   if (career && !F.has('career_fulfilled') && Math.random() < 0.22) {
