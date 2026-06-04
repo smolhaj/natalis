@@ -3823,6 +3823,59 @@ function buildYearTexture(state) {
   }
 
   if (phase === 'childhood') {
+    // Era-specific childhood texture (~35% chance when available)
+    const era = Math.floor(currentYear / 10) * 10
+    if (Math.random() < 0.35) {
+      const eraChildLines = {
+        1940: [
+          'The war is in the news and on the radio and in the faces of adults who go quiet when they think you are not watching.',
+          'Things are rationed in ways that have become so normal you do not yet know they are rationed.',
+          'The world is at war. You are at school. The two facts coexist in the way that only childhood can hold.',
+        ],
+        1950: [
+          'The postwar world is being built. New houses, new suburbs, new expectations. You are growing up inside the construction.',
+          'Television is new enough to still be a wonder. You know exactly how many families on the street have one.',
+          'The Cold War is the background hum of adult conversation. You absorb it as weather.',
+        ],
+        1960: [
+          'The decade is loud in ways you will understand better later. Right now it is background noise to school and summers.',
+          'Things are changing faster than the adults can explain them. You notice the change without having a name for it.',
+          'The music your older siblings listen to is not the music your parents approve of. This distinction is present in your house.',
+        ],
+        1970: [
+          'The decade has a specific texture: oil prices, inflation, the feeling that the postwar boom had peaked.',
+          'The television is on in the afternoons. The news is about things adults argue about and then switch off.',
+          'You are growing up at the end of something. You won\'t know what until much later.',
+        ],
+        1980: [
+          'The VCR or the cassette player or the early computer — there is one thing that is new and remarkable in the household.',
+          'The decade has an energy to it: pop music, primary colours, the feeling that things are moving fast.',
+          'The Cold War is winding down. You sense the change in the way children sense changes — in mood, not in information.',
+        ],
+        1990: [
+          'The internet is arriving, slowly. You know someone whose family has it.',
+          'The decade feels like a transition between a world you were born into and one that is being built around you.',
+          'The video game or the CD player or the mobile phone — there is one thing that has arrived and changed everything.',
+        ],
+        2000: [
+          'The phone is becoming a different kind of object. This is happening gradually and then very fast.',
+          'The September of 2001 is something the adults explain without quite explaining.',
+          'The internet is everywhere. You do not remember when it wasn\'t.',
+        ],
+        2010: [
+          'The phone is always there. Everyone\'s phone is always there. You have not known a world without this.',
+          'The decade has a specific ambient anxiety that the adults carry and you absorb without naming.',
+          'You are growing up in the years when everything is documented. You will understand later what that means.',
+        ],
+        2020: [
+          'The pandemic is the first global event you are old enough to carry. School was online. That year has a specific texture.',
+          'You are growing up in a decade where the crisis is both everywhere and disputed. You absorb the ambient uncertainty.',
+          'The world outside is both closer and more dangerous than the world inside the house. You are learning to navigate this.',
+        ],
+      }
+      const eraLines = eraChildLines[era] ?? eraChildLines[Math.max(1940, Math.min(2020, Math.round(era / 10) * 10))]
+      if (eraLines?.length) return pick(eraLines)
+    }
     return pick([
       'A year of ordinary things that will look remarkable from far enough away.',
       'The world is still the size of the people in it.',
@@ -3836,6 +3889,9 @@ function buildYearTexture(state) {
       'You are storing things away without knowing you are storing them.',
       'A year of questions. Most of them don\'t have the answer you wanted.',
       'You are learning what the family expects of you. You are also learning what you think of that.',
+      'The school year has a shape to it: September\'s anxiety, December\'s end, the summer spread out like a gift.',
+      'You are smaller than you will be. You know this and are impatient about it.',
+      'There is one subject you are good at and one you are not. Both are defining you in ways you won\'t notice for years.',
     ])
   }
 
@@ -3846,6 +3902,9 @@ function buildYearTexture(state) {
       'You are learning the names of things. The names feel large.',
       'The people around you are the entire world. You sense this.',
       'You are discovering that you are a separate person from everyone else. This takes time.',
+      'The texture of the blanket. The sound of a particular song. The smell of the kitchen. These are what you are storing.',
+      'You can count on your fingers. You are learning to trust that what goes away comes back.',
+      'Someone is always watching. You have not learned to mind this yet.',
     ])
   }
 
