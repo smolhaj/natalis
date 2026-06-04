@@ -1173,7 +1173,7 @@ function buildG(state) {
 // relationship tension/warmth > post-crisis > cultural conditions > phase > generic.
 function buildYearTexture(state) {
   const F = new FlagSet(state.flags ?? [])
-  const { partner, children, age, currentYear, mem, career, residencyStatus, yearsAbroad, desire } = state
+  const { partner, children, age, currentYear, mem, career, residencyStatus, yearsAbroad, desire, political_leaning } = state
   const phase = getPhase(age)
   const mh = state.mentalHealth ?? {}
 
@@ -2165,6 +2165,61 @@ function buildYearTexture(state) {
       ? 'Decades on, and the wound is still part of the architecture. You have built everything else around it.'
       : 'The damage was real. You have built a life anyway. The two facts coexist.',
   ])
+
+  // ─── POLITICAL LEANING TEXTURE (~25% when leaning is set) ───────────────────
+  if (political_leaning && phase !== 'early_childhood' && Math.random() < 0.25) {
+    const leaningLines = {
+      left: {
+        childhood:   'There is already something in you that registers unfairness before it registers anything else.',
+        adolescence: 'The inequality you see is not abstract. It has a shape and a texture. You are starting to understand it.',
+        young_adult: 'The political convictions are clear enough to cause friction now. That seems right.',
+        midlife:     'The analysis has not changed much over the decades. The question is what it demands of you now.',
+        late_life:   'You have spent a life noticing what is unjust. Whether noticing was enough is a question that does not resolve.',
+      },
+      centre: {
+        childhood:   'You try to understand both sides. You find the extremes of both unsatisfying.',
+        adolescence: 'You occupy a position in arguments that satisfies no one completely, including yourself.',
+        young_adult: 'The centre is not a comfortable position. Both sides find it suspect.',
+        midlife:     'You are pragmatic about politics in ways that some find principled and others find evasive.',
+        late_life:   'You never attached fully to any flag. You are not sure whether that was wisdom or something else.',
+      },
+      right: {
+        childhood:   'Order and tradition feel solid to you in a way that feels right.',
+        adolescence: 'You are skeptical of the theories that would upend what has been built. You trust what has survived.',
+        young_adult: 'The politics are ordered around what you have and want to protect. You do not see this as selfish.',
+        midlife:     'The conservative instinct has served you in some ways and blinded you in others. You know which.',
+        late_life:   'You have defended the institutions you believed in. Whether they deserved the defense is a question you revisit.',
+      },
+      nationalist: {
+        childhood:   'The nation is something you feel before you understand it.',
+        adolescence: 'National pride feels like clarity when other things are confusing.',
+        young_adult: 'The national identity is the container for most of your political feeling. This gives it shape and limits.',
+        midlife:     'The nationalism you hold is not simple. You know enough history to know that.',
+        late_life:   'What you loved about the nation was real. What was done in its name is also real. Both are true.',
+      },
+      dissident: {
+        childhood:   'You notice the gap between what you are told and what you see. This is your particular curse.',
+        adolescence: 'Dissidence is not a choice so much as a reflex. The official version rarely holds.',
+        young_adult: 'The cost of saying what you think is visible now. You say it anyway, mostly.',
+        midlife:     'You have paid for your opinions in specific ways. You would pay again. This is not bravery so much as necessity.',
+        late_life:   'The positions that got you into trouble were right, mostly. That is not the same as saying they were safe.',
+      },
+      apolitical: {
+        childhood:   'The arguments about power bore you. The people having them seem very certain about things that seem uncertain.',
+        adolescence: 'You stay out of the political arguments. This is its own kind of position, which you do not fully acknowledge.',
+        young_adult: 'Apolitical is a stance that works until the political finds you. You have not yet been found.',
+        midlife:     'The events of the last years have made neutrality harder to maintain. You maintain it anyway.',
+        late_life:   'You stayed out of it, mostly. The world came to you anyway, as it does.',
+      },
+    }
+    const phaseKey = (phase === 'childhood' || phase === 'early_childhood') ? 'childhood'
+      : (phase === 'adolescence') ? 'adolescence'
+      : (phase === 'young_adult') ? 'young_adult'
+      : (phase === 'midlife') ? 'midlife'
+      : 'late_life'
+    const line = leaningLines[political_leaning]?.[phaseKey]
+    if (line) return line
+  }
 
   // ─── DESIRE-AWARE TEXTURE (fires ~40% of remaining quiet years) ───────────────
   if (desire && Math.random() < 0.4) {
