@@ -2907,4 +2907,62 @@ export const FLAG_REGISTRY = {
     notes: 'Set by tun_economic_interior.',
   },
 
+  // ── SUDAN ────────────────────────────────────────────────────────────────────
+
+  sudan_islamist_law_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived under Nimeiry\'s September Laws 1983 — Sharia applied to Sudan, public executions, Mahmoud Taha executed',
+    intent: 'year_texture',
+    notes: 'Set by sdn_nimeiry_sharia_1983.',
+  },
+
+  sudan_bashir_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through Bashir\'s 30-year Islamist military dictatorship — ghost houses, dissolved unions, the Khartoum of the NIF',
+    intent: 'year_texture',
+    notes: 'Set by sdn_bashir_coup_1989.',
+  },
+
+  darfur_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Witnessed or was affected by the Darfur genocide 2003+ — Janjaweed, 300,000-400,000 dead, ICC arrest warrant for Bashir',
+    intent: 'year_texture',
+    notes: 'Set by sdn_darfur_2003.',
+  },
+
+  sudan_south_separation_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed South Sudan\'s independence 2011 — a third of Sudan\'s territory and most of the oil leaving',
+    intent: 'year_texture',
+    notes: 'Set by sdn_south_sudan_independence_2011.',
+  },
+
+  sudan_revolution_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through Sudan\'s 2019 revolution — Bashir falls after bread protests, the sit-in at military HQ, June 3 massacre, transitional agreement',
+    intent: 'year_texture',
+    notes: 'Set by sdn_revolution_2019.',
+  },
+
+  sudanese_activist: {
+    weight: 'major',
+    category: 'political',
+    description: 'Was at the Khartoum sit-in in 2019 — present when the revolution was made and when the RSF fired into it on June 3',
+    intent: 'year_texture',
+    notes: 'Set by sdn_revolution_2019 (first branch).',
+  },
+
+  sudan_coup_2021_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the October 2021 coup that ended the transitional government — the second reversal in three years',
+    intent: 'year_texture',
+    notes: 'Set by sdn_coup_2021.',
+  },
+
 }

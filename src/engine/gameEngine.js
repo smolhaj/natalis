@@ -3553,6 +3553,52 @@ function buildYearTexture(state) {
       : 'You are in the generation that had to decide what to do when the army came back in 2021. You made your decision. You live in it.',
   ])
 
+  // ─── SUDAN TEXTURE ───────────────────────────────────────────────────────────
+  if (F.has('sudan_islamist_law_generation') && Math.random() < 0.17) return pick([
+    'The September Laws were never a complete description of daily life in Sudan. They were a frame around daily life. The frame changed what was inside it.',
+    'Mahmoud Taha was executed for apostasy in 1985. He was 76. He believed Islam was compatible with democracy. That is the thing they killed him for.',
+  ])
+  if (F.has('sudan_bashir_generation') && Math.random() < 0.2) return pick([
+    'Bashir was in power for thirty years. That is a shape that daily life grows around without noticing.',
+    'The ghost houses were unofficial detention centres. You knew this the way you know things that are not stated — through omission, through who does not come back.',
+    phase === 'late_life'
+      ? 'You watched Bashir arrested on television in 2019. After thirty years the sight required time to process. It was not a thing you had rehearsed.'
+      : 'The Sudan that Bashir made is the Sudan you made your adult life inside. That is a sentence that requires some sitting with.',
+  ])
+  if (F.has('darfur_generation') && Math.random() < 0.22) return pick([
+    'The International Criminal Court issued an arrest warrant for a sitting head of state and he travelled freely. That is what Darfur is, in one sentence.',
+    '300,000 to 400,000 people. The margin of uncertainty in that estimate is wider than the total death toll of some countries\' wars.',
+    phase === 'late_life'
+      ? 'You are old enough to have watched the Janjaweed become the Rapid Support Forces. The rebranding did not change what they are.'
+      : 'The systematic burning of villages in Darfur was documented in real time by NGOs and survivors. The documentation was not sufficient. You know this.',
+    'Genocide takes specific things from specific people. The word covers the category. It does not cover your specific people.',
+  ])
+  if (F.has('sudan_south_separation_generation') && Math.random() < 0.15) return pick([
+    'South Sudan became independent on July 9, 2011. Sudan became the country that remained. The oil went with the south. The problems were distributed differently.',
+    'Africa\'s longest civil war ended in 2005 and produced the world\'s newest country in 2011. You watched that arc. The Sudan that remained afterward was smaller and poorer.',
+  ])
+  if (F.has('sudan_revolution_generation') && Math.random() < 0.22) return pick([
+    'Bashir fell on April 11, 2019. The price of bread went up and the people of Atbara went into the streets and a year later the man who had ruled for thirty years was in prison.',
+    'The sit-in at the military headquarters in Khartoum lasted months. Millions of people held the space. On June 3 the RSF moved on the camp. You know what happened on June 3.',
+    phase === 'late_life'
+      ? 'You lived through the Bashir years and the revolution and the coup that followed the revolution. That sequence is the complete arc of something you are still naming.'
+      : 'The revolution happened and the counter-revolution happened and you are in what comes after. You are still working out what comes after.',
+  ])
+  if (F.has('sudanese_activist') && Math.random() < 0.2) return pick([
+    'You were at the sit-in. You were also there on June 3 or you know people who were. The distinction between before and after June 3 is permanent.',
+    'The chant was: bread, freedom, civilian rule. Three things. After decades of Bashir they were revolutionary demands.',
+    phase === 'late_life'
+      ? 'The revolution you participated in was partially reversed. That is not the same as it not having happened. It happened. You were there.'
+      : 'The body at the military headquarters in April 2019 — the crowd, the music, the doctors in the sit-in — that is something you carry as a reference point for what is possible.',
+  ])
+  if (F.has('sudan_coup_2021_generation') && Math.random() < 0.2) return pick([
+    'October 2021. Burhan dissolved the transitional government and arrested the civilian leadership. The transition lasted two years. The coup confirmed what the military\'s participation in the transition had always implied.',
+    'The military was never actually sharing power. The transition was a managed process. The coup in 2021 made the management visible.',
+    phase === 'late_life'
+      ? 'You have lived through Nimeiry, Bashir, the revolution, and the coup after the revolution. The patterns are legible. The question is what to do with legible patterns.'
+      : 'The people who went into the streets in 2018 and 2019 are still there. The crackdowns are still happening. You are deciding what this requires of you.',
+  ])
+
   // ─── TUNISIA TEXTURE ─────────────────────────────────────────────────────────
   if (F.has('tunisian_womens_rights_generation') && Math.random() < 0.15) return pick([
     'The Code of Personal Status is sixty years old. It is not everywhere in the Arab world. Tunisia has it. That fact is not abstract when you know what is absent elsewhere.',
