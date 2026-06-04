@@ -2733,4 +2733,54 @@ export const FLAG_REGISTRY = {
     notes: 'Set by tha_economic_middle_income.',
   },
 
+  // ── NEPAL ────────────────────────────────────────────────────────────────────
+
+  nepal_maoist_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through Nepal\'s Maoist People\'s War 1996–2006 — the rural insurgency, the new authority, the decade of conflict that killed 13,000',
+    intent: 'year_texture',
+    notes: 'Set by nep_maoist_insurgency.',
+  },
+
+  nepal_royal_massacre_generation: {
+    weight: 'moderate',
+    category: 'world_event',
+    description: 'Witnessed the 2001 royal massacre — Crown Prince Dipendra kills the royal family, dies as king, the 240-year Shah dynasty fractures',
+    intent: 'year_texture',
+    notes: 'Set by nep_royal_massacre_2001.',
+  },
+
+  nepal_republic_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed Nepal become a federal republic in 2008 — the end of the world\'s only Hindu kingdom by popular vote',
+    intent: 'year_texture',
+    notes: 'Set by nep_republic_2006.',
+  },
+
+  nepal_gulf_worker: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Part of Nepal\'s Gulf labor migration wave — the kafala system, the remittance economy, the one-way ticket',
+    intent: 'year_texture',
+    notes: 'Set by nep_gulf_migration.',
+  },
+
+  nepal_earthquake_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived the 2015 Gorkha earthquake — 9,000 dead, 600,000 houses destroyed, the silence after the shaking stopped',
+    intent: 'year_texture',
+    notes: 'Set by nep_earthquake_2015.',
+  },
+
+  nepal_youth_exodus_generation: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Part of the generation that left Nepal or watched 1,500 young people a day leave — the village empty of anyone their age',
+    intent: 'year_texture',
+    notes: 'Set by nep_youth_exodus.',
+  },
+
 }

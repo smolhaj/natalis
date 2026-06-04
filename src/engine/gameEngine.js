@@ -3205,6 +3205,43 @@ function buildYearTexture(state) {
     'The factory gave you a wage and the wage gave you a life that your parents did not have. The question of what the next step is has been open for a generation.',
   ])
 
+  // ─── NEPAL TEXTURE ───────────────────────────────────────────────────────────
+  if (F.has('nepal_maoist_generation') && Math.random() < 0.2) return pick([
+    'The Maoists had a presence in this area. That meant something specific about who you reported a dispute to, and who you did not.',
+    'The People\'s War lasted ten years. 13,000 people died. Most of them are not in any history your children will read.',
+    phase === 'late_life'
+      ? 'The Maoist war is a history lesson now. You remember it as weather — something that changed the air, changed who could be in a room together, changed what you said out loud.'
+      : 'The distinction between the Maoists and the army was not always clear from the ground. The clearness was in the newspaper. The ground was something else.',
+  ])
+  if (F.has('nepal_royal_massacre_generation') && Math.random() < 0.18) return pick([
+    'Crown Prince Dipendra shot his parents, shot eight members of the royal family, then shot himself. He was declared king while on life support. He died three days later. The official account is disputed.',
+    'The royal massacre happened in the palace. The conspiracy theories accumulated in the absence of a credible investigation. A country in which the king was also a god found that the god had bled.',
+  ])
+  if (F.has('nepal_republic_generation') && Math.random() < 0.18) return pick([
+    'In May 2008 the Constituent Assembly voted to abolish the monarchy. The world\'s only Hindu kingdom — 240 years of Shah dynasty — ended by vote.',
+    phase === 'late_life'
+      ? 'You were born a subject of the Shah dynasty and became a citizen of the federal republic. That arc took forty years and a people\'s movement and a civil war to complete.'
+      : 'The republic is new. The flags are new. The government is new. The habits of hierarchy that the monarchy ran on are older than the republic and take longer to change.',
+  ])
+  if (F.has('nepal_gulf_worker') && Math.random() < 0.22) return pick([
+    'The remittance comes every month. The money crosses a border your body crossed years ago.',
+    'Kafala means your employer holds your residency. You knew this before you went. Knowing it did not change what the money meant at home.',
+    phase === 'late_life'
+      ? 'The years in the Gulf were a transaction. You knew that when you went. The question is whether the transaction was worth what it cost in the ways that cannot be counted.'
+      : 'You are one of the 1,500 young Nepalis who leave every day. The statistic does not capture what the airport felt like.',
+  ])
+  if (F.has('nepal_earthquake_generation') && Math.random() < 0.22) return pick([
+    'The shaking lasted almost a minute. You know what that feels like. Most people do not.',
+    'After the 2015 earthquake, Kathmandu\'s brick buildings — the ones that had been buildings for a hundred years — were rubble. The medieval squares of Bhaktapur were rubble.',
+    phase === 'late_life'
+      ? 'You have described where you were when the earthquake hit more times than you can count. The story has settled into a shape. The feeling underneath the shape has not.'
+      : '9,000 people died in the earthquake. The international aid arrived faster than the government could distribute it. You spent weeks navigating that gap.',
+  ])
+  if (F.has('nepal_youth_exodus_generation') && Math.random() < 0.17) return pick([
+    'The village is full of women and older people and children. The young men are in Qatar or Malaysia or Kuwait. This is what a remittance economy looks like from the inside.',
+    'The economy cannot absorb the educated youth. The alternative — Kathmandu\'s government jobs, going to the connected — is not enough either. The airport is the third option.',
+  ])
+
   // ─── NEIGHBORHOOD TIER TEXTURE ───────────────────────────────────────────────
   {
     const nbhTier = state.currentNeighborhoodTier
