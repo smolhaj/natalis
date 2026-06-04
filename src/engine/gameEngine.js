@@ -331,6 +331,28 @@ export function deriveGenerationalFlags(char) {
     }
   }
 
+  // ── Disability rolls ──────────────────────────────────────────────────────
+  const archetype = country.archetype ?? ''
+  const disabilityBaseRate = archetype === 'conflict_zone' ? 0.04 : 0.02
+  if (Math.random() < disabilityBaseRate) flags.push('born_with_disability')
+  if (Math.random() < 0.0015) flags.push('born_deaf')
+
+  // ── Child soldier path — conflict zone, born before 2005 ─────────────────
+  if (archetype === 'conflict_zone' && birthYear < 2005 && Math.random() < 0.15) {
+    flags.push('child_soldier_path')
+  }
+
+  // ── Addiction in family — elevated in certain archetypes ─────────────────
+  const addictionFamilyRate = {
+    wealthy_west: 0.10,
+    post_soviet: 0.14,
+    developing_urban: 0.07,
+    developing_unstable: 0.06,
+    subsaharan: 0.05,
+    conflict_zone: 0.08,
+  }[archetype] ?? 0.06
+  if (Math.random() < addictionFamilyRate) flags.push('addiction_in_family')
+
   return flags
 }
 
@@ -1571,6 +1593,374 @@ function buildYearTexture(state) {
         'The achievement is real. The accounting of what it took to get here is also real. Both are ongoing.',
       ])
     }
+  }
+
+  // ─── GIFTED ARC — EXPANSION III TEXTURE ────────────────────────────────────
+
+  if (isGiftedChar) {
+    if (F.has('gift_major_prize') && Math.random() < 0.45) return pick([
+      'The prize exists and the work that produced it exists. The prize is the world\'s way of pointing at the work. You are more interested in the work.',
+      'The recognition is permanent now. It changes nothing about the work that still needs doing.',
+    ])
+    if (F.has('gift_world_stage') && !F.has('gift_major_prize') && Math.random() < 0.4) return pick([
+      'You have been placed at the centre of the field. The field is watching. You have been working for this; now that it is here it is mostly pressure with some satisfaction.',
+      'The world stage is larger than any stage you have stood on before. The gift performs here the same way it performs anywhere — by being itself.',
+    ])
+    if (F.has('gift_after_peak') && phase === 'late_life' && Math.random() < 0.4) return pick([
+      'The peak is behind you. The gift is still here. The relationship to it is quieter and more interesting than it was when you were proving something.',
+      'Late gift is different from early gift. Less urgent. No longer pointed at the height of what can be achieved.',
+    ])
+    if (F.has('gift_olympiad_success') && (phase === 'adolescence' || phase === 'young_adult') && Math.random() < 0.4) return pick([
+      'The result of the competition is documented. Universities in other countries have been in contact. The path, if you want it, is visible.',
+      'The global field turned out to be the right scale for what you can do. That is a specific kind of knowledge.',
+    ])
+    if (F.has('gift_olympiad_path') && !F.has('gift_olympiad_success') && Math.random() < 0.35) return pick([
+      'The recalibration from the global field is still settling. You are not the most capable person in the world at this. You are in the top fraction of that person.',
+      'Meeting someone at your level for the first time changed something. The gift has been calibrated against a real ceiling.',
+    ])
+    if (F.has('gift_gender_fought') && Math.random() < 0.35) return pick([
+      'You arrived somewhere the framing said you couldn\'t reach. The framing was wrong. The cost of being right about that is still being accounted.',
+      'The push-through cost something. The arrival is real. You are here.',
+    ])
+    if (F.has('gift_gender_midlife_reckoned') && Math.random() < 0.35) return pick([
+      'The younger women in the field navigate the same terrain with better maps than you had. The costs that moved the landscape forward were yours and others\'.',
+      'What you went through to get here became part of what made the terrain easier for the people behind you. That is a form of completion.',
+    ])
+    if (F.has('gift_disability_intersection') && Math.random() < 0.4) return pick([
+      'The body and the gift occupy the same life. The world sees the condition first. You have spent considerable energy creating the conditions under which the gift is visible too.',
+      'The gift doesn\'t care about the condition. The world requires more persuading. The work of persuading is ongoing and separate from the work itself.',
+    ])
+    if (F.has('gift_public_performer') && (phase === 'adolescence' || phase === 'young_adult') && Math.random() < 0.35) return pick([
+      'The gift that was private has been made public. The public version and the private version are not exactly the same thing.',
+      'Performing the gift in public requires something the gift did not originally include. You are developing that something.',
+    ])
+    if (F.has('gift_parent_dismissed') && (phase === 'childhood' || phase === 'adolescence') && Math.random() < 0.4) return pick([
+      'Working without the acknowledgement. This turns out to be a skill as much as a loss.',
+      'The gift went unnoticed at home. You have learned to locate the recognition elsewhere.',
+    ])
+  }
+
+  // ─── CHINA ARC TEXTURE ───────────────────────────────────────────────────────
+
+  const _currentCountry = state.currentCountry ?? state.character?.country
+  const _fame = state.fame ?? 0
+  if (_currentCountry?.name === 'China') {
+    if (F.has('class_enemy_family') && Math.random() < 0.4) return pick([
+      'The family classification shapes the field of what is possible. Every door has the classification behind it.',
+      'The landlord label, the rightist label — it follows the children of the children. You carry it in every interaction with a form.',
+    ])
+    if (F.has('sent_down_youth') && !F.has('sent_down_returned') && Math.random() < 0.4) return pick([
+      'The countryside. The expected work, the unexpected decade. You are learning what you were not intended to learn here.',
+      'The years the programme took were intended to erase the intellectual. They did not succeed.',
+    ])
+    if (F.has('sent_down_returned') && Math.random() < 0.35) return pick([
+      'The decade gap where education should have been. You work around it. The gap is still there.',
+      'Back in the city with a résumé that has a ten-year hole in it that everyone recognises and no one mentions directly.',
+    ])
+    if (F.has('tiananmen_witness') && Math.random() < 0.4) return pick([
+      'June 1989. You were there. The calibration of what the state is capable of is permanent now.',
+      'The square. The tank. The silence after. These are not abstractions for you — they are a specific Tuesday in June.',
+    ])
+    if (F.has('left_behind_child') && (phase === 'childhood' || phase === 'adolescence') && Math.random() < 0.4) return pick([
+      'Your parents are in the city. You are here with your grandparents. The phone calls are your family for now.',
+      'The phone rings on Sunday. The voice is your mother\'s. The distance between that voice and this village is the distance you measure your childhood by.',
+    ])
+    if (F.has('little_emperor') && (phase === 'childhood' || phase === 'adolescence') && Math.random() < 0.35) return pick([
+      'Four grandparents, two parents, all of the expectation. All of it directed at you.',
+      'Only child in a country that decided one child was enough. The singularity of the investment is something you feel in every decision you make.',
+    ])
+    if (F.has('zero_covid_lockdown') && Math.random() < 0.4) return pick([
+      'The apartment. The window. The street below empty for the second month. You had not previously understood what walls were for.',
+      'The lockdown has produced a relationship to interior space that is new. The outside is a concept now.',
+    ])
+    if (F.has('iron_rice_bowl_broken') && Math.random() < 0.35) return pick([
+      'The state-sector job that was supposed to be permanent was not permanent. The floor you thought was solid is not there.',
+      'The lifetime guarantee turned out to last twenty years. The floor and the ceiling both have to be found again.',
+    ])
+    if (F.has('lying_flat_generation') && Math.random() < 0.35) return pick([
+      'Tang ping. Lying flat. The 996 grind has been observed for long enough to decide not to enter it.',
+      'You have declined the invitation to compete at a scale that requires giving everything. The declining is its own kind of choice.',
+    ])
+    if (F.has('gaokao_succeeded') && (phase === 'adolescence' || phase === 'young_adult') && Math.random() < 0.4) return pick([
+      'The gaokao score opened the gate. You are on the other side of it now.',
+      'Elite university entry in a country that moves on that number. The number did what it was supposed to do.',
+    ])
+    if (F.has('china_entrepreneur') && Math.random() < 0.35) return pick([
+      'The private business in an era when private business was newly possible. Your parents could not have done this. That is not a small thing.',
+      'Building something in China\'s reform era — the specific combination of risk and possibility that the window produced.',
+    ])
+    if (F.has('migrant_worker_china') && Math.random() < 0.35) return pick([
+      'The city. The factory floor. The dormitory. The money sent home. The hukou that makes you a guest in the place you live.',
+      'One of two hundred million internal migrants. The scale of the movement is invisible from inside it.',
+    ])
+    if (F.has('one_child_policy_complied') && Math.random() < 0.3) return pick([
+      'One child, one set of everything, all of the family\'s expectation pointed in a single direction.',
+      'The policy and the child are the same fact, experienced differently at different ages.',
+    ])
+    if (F.has('one_child_policy_resisted') && Math.random() < 0.3) return pick([
+      'The second child cost money and social standing. The child exists. The cost was paid.',
+      'You kept the second child. The system had opinions about this. You had the child anyway.',
+    ])
+  }
+
+  // ─── KOREA ARC TEXTURE ───────────────────────────────────────────────────────
+
+  if (_currentCountry?.name === 'South Korea') {
+    if (F.has('hagwon_childhood') && (phase === 'childhood' || phase === 'adolescence') && Math.random() < 0.4) return pick([
+      'English hagwon, math hagwon, private tutor on Wednesdays. You are nine and your schedule is a job.',
+      'The car between academies. You eat in the car. This is the childhood that preparation for the future requires.',
+    ])
+    if (F.has('suneung_year') && !F.has('suneung_succeeded') && Math.random() < 0.4) return pick([
+      'The planes are grounded for the listening component. Your mother has been praying since April. The exam is nine hours.',
+      'Before and after. The exam divides the life cleanly. You are in the before.',
+    ])
+    if (F.has('sky_university') && (phase === 'adolescence' || phase === 'young_adult') && Math.random() < 0.4) return pick([
+      'The name on the door. The name the family said at every dinner. The relief in the house is not celebration — it is something more fundamental.',
+      'Seoul National. Korea. Yonsei. The number qualified you. Three years of collective weight, lifted.',
+    ])
+    if (F.has('suneung_survived') && (phase === 'adolescence' || phase === 'young_adult') && Math.random() < 0.35) return pick([
+      'Not the name on the door your family said. A real future. The weight of the difference will carry further than you expected.',
+      'A good university. A path. The difference between this path and the other path is specific and will be felt at every reunion.',
+    ])
+    if (F.has('gwangju_witness') && Math.random() < 0.4) return pick([
+      'May 18th. The paratroopers in Gwangju. The ten days. The crushing. What the state is capable of is no longer abstract.',
+      'The calculus of what to say around certain people has been permanently recalibrated. Gwangju taught you that.',
+    ])
+    if (F.has('chaebol_worker') && Math.random() < 0.35) return pick([
+      'The Samsung floor, the Hyundai tower, the LG hierarchy. The company and the life are the same thing here.',
+      'The company considers itself a family. You have learned to work inside that language without fully becoming it.',
+    ])
+    if (F.has('compressed_generation_korea') && phase === 'midlife' && Math.random() < 0.35) return pick([
+      'Your parents were farmers. You went to university. Your children may go abroad. Three generations of mobility compressed into one.',
+      'The speed of what happened to this country — what you are somewhere in the middle of — is the defining fact about being Korean at this moment.',
+    ])
+    if (F.has('night_study_generation') && (phase === 'adolescence' || phase === 'young_adult') && Math.random() < 0.4) return pick([
+      'School library until eleven. Last bus home. Five-thirty tomorrow. The competition is a fixed number of seats that does not expand.',
+      'Seven hours studied. Three more to go. Everyone in this library is doing the same calculation.',
+    ])
+    if (F.has('korea_marriage_pressure') && Math.random() < 0.35) return pick([
+      'Thirty and unmarried. Chuseok. The conversation circles and then lands directly. You have the answer prepared. It is not the answer they want.',
+      'The matchmaking app. The blind date your aunt arranged. The government\'s opinions on the birth rate, delivered through relatives.',
+    ])
+  }
+
+  // ─── DISABILITY ARC TEXTURE ──────────────────────────────────────────────────
+
+  if (F.has('born_with_disability') || F.has('born_deaf') || F.has('disability_acquired')) {
+    if (F.has('disability_acquired') && F.has('disability_before_after') && Math.random() < 0.4) return pick([
+      'The body before and the body after. You remember both. You live in the after.',
+      'Before the accident there was a different relationship to the body — invisible, taken for granted. That relationship is gone.',
+    ])
+    if (F.has('cochlear_implant') && Math.random() < 0.4) return pick([
+      'The sound is different from what people describe sound being. You are learning what you are hearing.',
+      'The implant gives access. What it means for who you are is a question the Deaf community has been asking longer than the device has existed.',
+    ])
+    if (F.has('cochlear_implant_refused') && Math.random() < 0.4) return pick([
+      'Deafness is not a condition to be fixed. You know this. You have made peace with the people who don\'t.',
+      'The refusal is yours. The community it belongs to is yours. The hearing world has opinions about this. The opinions are noted.',
+    ])
+    if (F.has('deaf_identity_claimed') && Math.random() < 0.4) return pick([
+      'The capital D. The language. The community. You claimed it. The claiming was the right action.',
+      'Deaf identity — not a deficit description but the actual name for what you are and who you are with.',
+    ])
+    if (F.has('disability_late_peace') && phase === 'late_life' && Math.random() < 0.4) return pick([
+      'Peace with the body — not despite it, not overcoming it, with it. The distinction took a long time to make.',
+      'You have been in this body your entire life. Late in life you have stopped arguing with it. That is a form of arrival.',
+    ])
+    if (F.has('teacher_letter_received') && F.has('born_with_disability') && Math.random() < 0.35) return pick([
+      'The letter came fifteen years later. The student found you to say what mattered. The disability was in the room; the teaching was what lasted.',
+    ])
+  }
+
+  // ─── ADDICTION ARC TEXTURE ───────────────────────────────────────────────────
+
+  if (F.has('drug_addiction') || F.has('alcohol_addiction')) {
+    if (F.has('addiction_spiral') && !F.has('in_recovery') && Math.random() < 0.4) return pick([
+      'The compulsion is governing more than it should. You know this. Knowing it and stopping it are not the same thing.',
+      'The days are structured around the thing now rather than the other way. You are aware of the structure.',
+    ])
+    if (F.has('addiction_overdose_survived') && !F.has('in_recovery') && Math.random() < 0.5) return pick([
+      'You are still alive. The understanding that this can kill is specific now. Specific and not yet enough to change the direction.',
+      'The overdose was survived. The pattern that led to it is still the pattern.',
+    ])
+    if (F.has('in_recovery') && !F.has('recovery_long_term') && Math.random() < 0.4) return pick([
+      'The not-using is the primary work. Everything else is arranged around it.',
+      'One day, and then the next one. That is what recovery is. You are doing it.',
+    ])
+    if (F.has('recovery_long_term') && Math.random() < 0.4) return pick([
+      'Long-term sobriety. The compulsion is background now rather than foreground. You know it is still there.',
+      'The years of not using have accumulated. The accumulation is its own kind of achievement.',
+    ])
+    if (F.has('recovery_relapse') && !F.has('recovery_long_term') && Math.random() < 0.4) return pick([
+      'The relapse happened. The relapse is part of the disease, not the end of recovery. You are starting again.',
+      'You went back to it. You came back from it. The coming back is the point.',
+    ])
+  }
+
+  // ─── CHILD SOLDIER ARC TEXTURE ───────────────────────────────────────────────
+
+  if (F.has('child_soldier_taken')) {
+    if (!F.has('child_soldier_free') && Math.random() < 0.4) return pick([
+      'The unit, the weapon, the rotation. This is the world now.',
+      'You watch the rotation. You know the window. You have not yet decided whether to take it.',
+    ])
+    if (F.has('child_soldier_order_followed') && !F.has('child_soldier_free') && Math.random() < 0.4) return pick([
+      'The thing that was done is done. You carry it. The carrying changes in quality but not in weight.',
+      'The commanders produced what they intended. You have to live inside what they produced.',
+    ])
+    if (F.has('child_soldier_free') && !F.has('child_soldier_returned_home') && Math.random() < 0.45) return pick([
+      'Free in the specific sense: no longer in the unit. Not yet understanding what person you are outside of it.',
+      'The UN compound. The documents. The person at the gate who looked at you for a long time before speaking.',
+    ])
+    if (F.has('child_soldier_returned_home') && (phase === 'adolescence' || phase === 'young_adult') && Math.random() < 0.4) return pick([
+      'Your mother\'s face when you arrived. You hold the knowledge of what happened in the years between in a place that is not the surface yet.',
+      'Home. The village knows you were there. Some of it knows what happened there. The welcome is real and complicated.',
+    ])
+    if (F.has('child_soldier_civilian_hard') && Math.random() < 0.4) return pick([
+      'The civilian world demands civilian skills. The years built military skills. The gap between them is the work.',
+      'A loud noise. A uniform. The wrong kind of eye contact. The body has responses that civilian life doesn\'t know how to receive.',
+    ])
+    if (F.has('trauma_responses') && !F.has('child_soldier_taken') && Math.random() < 0.35) return pick([
+      'The body has responses that civilian contexts don\'t know how to receive. You have learned to manage the gap between the response and the room.',
+      'Certain sounds. Certain silences. The body has its own memory of what happened.',
+    ])
+    if (F.has('child_soldier_late_reckoning') && phase === 'late_life' && Math.random() < 0.4) return pick([
+      'You were twelve. The name soldier was false. The things done were real. Both things are true. You have stopped needing them to resolve.',
+      'Looking at children the age you were when it happened. The gap between what they understand and what you understood too early is the distance the commanders put between you and the life you should have had.',
+    ])
+  }
+
+  // ─── WWI / GREAT DEPRESSION TEXTURE ─────────────────────────────────────────
+
+  if (F.has('ww1_soldier') || F.has('depression_era')) {
+    if (F.has('ww1_trenches') && !F.has('ww1_survived') && Math.random() < 0.4) return pick([
+      'The mud is permanent. The shells are categorised by sound now. You sleep in the noise.',
+      'Ten feet deep, four feet wide, nine months. The wall on the other side of no man\'s land has men in the same mud.',
+    ])
+    if (F.has('ww1_survived') && !F.has('ww1_veteran') && Math.random() < 0.4) return pick([
+      'The guns stopped. The silence had a texture. You sat down in the mud.',
+      'Armistice. The word covers the absence of the noise. You have not yet learned what to put in the place of it.',
+    ])
+    if (F.has('ww1_veteran') && Math.random() < 0.4) return pick([
+      'The village lost fourteen. You are one of the ones who came back. The ones who came back carry a specific weight.',
+      'Home is the word you used for four years. The home is the same. You are different. The family treats you carefully, which is love and distance simultaneously.',
+    ])
+    if (F.has('depression_unemployed') && !F.has('depression_survivor') && Math.random() < 0.4) return pick([
+      'The queue at the employment exchange. Around the block. The end of the job was also the end of the identity that came with it.',
+      'The job ended not because of anything you did. Because of something larger than any individual employer or employee.',
+    ])
+    if (F.has('depression_breadline') && Math.random() < 0.4) return pick([
+      'The shame of the queue is there before the hunger becomes urgent. You stand in it. You are not alone in it.',
+      'You are in the photograph you used to see in newspapers about other people.',
+    ])
+    if (F.has('depression_survivor') && Math.random() < 0.35) return pick([
+      'Work came back. The decade produced a specific way of being: saving everything, distrusting security, kitchen garden long after the garden is necessary.',
+      'The prosperity that followed the Depression is real and suspect simultaneously. You cannot quite believe it will last.',
+    ])
+    if (F.has('flu_1918_loss') && Math.random() < 0.4) return pick([
+      'The flu took someone from the household. The war took young men in uniform. The flu took without the uniform and without the ceremony.',
+      'The grief from the flu is different — no grave registration, no official letter, no public name to put to it.',
+    ])
+  }
+
+  // ─── DIVORCE ARC TEXTURE ─────────────────────────────────────────────────────
+
+  if (F.has('divorced')) {
+    if (F.has('divorce_year_one') && Math.random() < 0.4) return pick([
+      'The structural losses of a marriage ending: the shared decision-making, the presence in the bed, the reporting of a day to someone who cares how it went.',
+      'The shape the shared life had. The shape is gone. You are learning what the interior looks like without it.',
+    ])
+    if (F.has('coparenting_difficult') && Math.random() < 0.4) return pick([
+      'The children hear the edges of things. They are becoming skilled at reading rooms. This is not what you wanted to give them.',
+      'The conflict is not contained for the schedule. The schedule continues anyway.',
+    ])
+    if (F.has('coparenting_cooperative') && Math.random() < 0.35) return pick([
+      'The cooperation requires swallowing things regularly. The children seem okay — not the okay you planned, but a real okay.',
+      'You and your former partner manage the schedule. The management is professional and costs something ongoing.',
+    ])
+    if (F.has('divorce_integrated') && Math.random() < 0.35) return pick([
+      'The divorce is part of the landscape now rather than the defining feature. You think of your former partner rarely and specifically.',
+      'Five years out. The regret is no longer about the decision. It is about the years and the version of the life that was possible in them.',
+    ])
+  }
+
+  // ─── DEMENTIA ARC TEXTURE ────────────────────────────────────────────────────
+
+  if (F.has('dementia_personal') || F.has('dementia_parent')) {
+    if (F.has('dementia_personal') && !F.has('dementia_clear_days') && Math.random() < 0.4) return pick([
+      'The words are behind the usual place words are. The search is longer. You notice the length of the search.',
+      'The diagnosis has become the condition of planning. You make decisions for the future self who will not be able to make them.',
+    ])
+    if (F.has('dementia_clear_days') && Math.random() < 0.4) return pick([
+      'A clear day. The fog absent. You can see the distance it has put between you and yourself.',
+      'On clear days the disease is visible from the outside. These are gifts. They are also, in their own way, the hardest ones.',
+    ])
+    if (F.has('dementia_parent') && !F.has('dementia_parent_forgot_me') && Math.random() < 0.4) return pick([
+      'The same story from the beginning again. You have learned to receive it as if hearing it for the first time.',
+      'Your parent called you by your sibling\'s name. Then by another name. The search for your name is getting longer.',
+    ])
+    if (F.has('dementia_parent_forgot_me') && Math.random() < 0.4) return pick([
+      'Your parent looked at you and didn\'t know you. The polite look. The nod that wasn\'t recognition. You left the room before you cried.',
+      'You had to say who you were. The nod that followed was not recognition. It was doing its best.',
+    ])
+    if (F.has('dementia_primary_carer') && Math.random() < 0.35) return pick([
+      'Your own life has reorganised around the care. What you give is real. What it costs is also real.',
+      'The care is enormous and you carry it. The carrying is the right thing and the right thing and the right thing.',
+    ])
+    if (F.has('dementia_care_facility') && Math.random() < 0.35) return pick([
+      'The care facility was chosen carefully. The guilt about it is real. The decision was still correct.',
+      'Professional care for your parent. The guilt does not mean the decision was wrong. Both things are true simultaneously.',
+    ])
+  }
+
+  // ─── CELEBRITY ARC TEXTURE ───────────────────────────────────────────────────
+
+  if (_fame >= 40) {
+    if (F.has('celebrity_public_self') && !F.has('celebrity_scaled_back') && Math.random() < 0.35) return pick([
+      'There is a version of you in the world that you did not exactly create. It is partial and permanent and searchable.',
+      'When you meet people, you can see them briefly checking you against the version. You are never quite the version.',
+    ])
+    if (F.has('celebrity_spiral') && Math.random() < 0.4) return pick([
+      'The fame and the unhappiness coexist in a way that confuses everyone including you.',
+      'You come home from the room full of people and the apartment doesn\'t know you are significant.',
+    ])
+    if (F.has('celebrity_scaled_back') && Math.random() < 0.4) return pick([
+      'The public life has become optional. You are choosing which opportunities actually matter.',
+      'Stepped back from the edge of the public life. It is still there. You are using it differently.',
+    ])
+    if (F.has('celebrity_private_life') && Math.random() < 0.4) return pick([
+      'The afternoon where no one knows what you achieved. The meal where no one is watching. These are ordinary things made extraordinary by contrast.',
+      'Private life, returned to. The ordinary is new again after the distance.',
+    ])
+  }
+
+  // ─── TEACHER ARC TEXTURE ─────────────────────────────────────────────────────
+
+  if (career?.id === 'teacher' || F.has('teacher_career')) {
+    if (F.has('teacher_that_student') && !F.has('teacher_letter_received') && Math.random() < 0.4) return pick([
+      'There is a student. The difficult one. The extra time. Something is shifting.',
+      'The student who was different has been in the room long enough that you\'ve started adjusting the approach.',
+    ])
+    if (F.has('teacher_letter_received') && Math.random() < 0.4) return pick([
+      'The letter arrived. Fifteen years later. The student found you to say what students rarely say at the time: it mattered.',
+      'You had forgotten the specific moment. They had not. Fifteen years, and they found you to give it back.',
+    ])
+    if (F.has('teacher_resource_poor') && Math.random() < 0.35) return pick([
+      'Own chalk. One textbook between three. Roof that leaks in the long rains. The students who want to learn are learning.',
+      'The gap between what the students deserve and what the resources provide is filled by your own energy. The subtraction is steady.',
+    ])
+    if (F.has('teacher_late_career') && Math.random() < 0.4) return pick([
+      'The subject is conversation now, not performance. The depth that the first version didn\'t have.',
+      'The new teachers look to you for the thing that isn\'t in the training: how to still find the student worth the effort in March.',
+    ])
+    if (F.has('teacher_retired') && Math.random() < 0.4) return pick([
+      'The last class. The applause. The materials from the nineties still in the drawers. The hallway on the way out the same hallway.',
+      'Thirty-five years. The classroom is the next person\'s now. The hallway on the way out was always this hallway.',
+    ])
+    if (F.has('teacher_life_accounted') && Math.random() < 0.4) return pick([
+      'Not in salary. In the names you still remember. In the specific moment of dawning. In the letter that arrived fifteen years later.',
+      'The measure of a teaching life is not recorded anywhere. It exists in you.',
+    ])
   }
 
   // ─── PARTNERSHIP QUALITY ─────────────────────────────────────────────────────
@@ -8423,6 +8813,27 @@ export function generateIdentityCard(state) {
     if (F.has('famine_memory') || F.has('food_insecurity')) return 'You grew up knowing hunger. That knowledge changed how you relate to having enough.'
     if (F.has('war_childhood')) return 'You grew up during a conflict. The body still knows certain sounds.'
     if (F.has('abusive_relationship') && !partner) return 'You got out of something that was damaging you. That took longer than it should have.'
+    // Child soldier
+    if (F.has('child_soldier_late_reckoning')) return 'You were taken as a child and made into something with the name soldier. In late life you understand that the name was false. The things done were real. You carry both.'
+    if (F.has('child_soldier_order_refused')) return 'You were a child given an impossible order. You refused. The refusal is yours.'
+    if (F.has('child_soldier_taken')) return 'You were taken from your village as a child. What happened next is not something most people understand from the outside.'
+    // WWI/Depression
+    if (F.has('ww1_veteran')) return F.has('ww1_shell_shock') ? 'You came back from the trenches. The hands still shake sometimes. The army called it shell shock.' : 'You are a veteran of the Great War. Among the ones who came back.'
+    if (F.has('depression_survivor') && age >= 50) return 'You lived through the Depression. The decade produced a way of being in the world that never fully left: saving everything, distrusting security.'
+    // Dementia
+    if (F.has('dementia_personal') && F.has('dementia_advance_plan')) return 'You are living with dementia. You made the plans while you could still make them.'
+    // Disability
+    if (F.has('cochlear_implant_refused')) return 'You are Deaf and chose to stay that way. The choice is yours. The community is yours.'
+    if (F.has('born_deaf') && F.has('deaf_identity_claimed')) return 'You are Deaf — capital D. The identity, the language, the community. That is who you are.'
+    if (F.has('born_with_disability')) return age >= 50 ? 'You have been in this body your entire life. You have arrived at something close to peace with it.' : 'You were born with a disability. The world was not built for you. You have built your own ways through it.'
+    if (F.has('disability_acquired') && F.has('disability_before_after')) return 'Your life divides into before the accident and after. You live in the after.'
+    // Recovery
+    if (F.has('recovery_long_term')) return 'You fought an addiction and have been winning for a long time. The compulsion is background now, not foreground.'
+    if (F.has('in_recovery')) return 'You are in recovery. One day, and then the next one.'
+    // Korea / China specific
+    if (F.has('gwangju_witness')) return 'You were alive in May 1980. The paratroopers in Gwangju. What the state is capable of is not an abstraction for you.'
+    if (F.has('sent_down_returned')) return 'You are part of the sent-down generation — the decade of rural labour instead of education. The gap is permanent.'
+    if (F.has('class_enemy_family') && age >= 40) return 'You grew up carrying a family classification that shaped what every door was willing to offer you.'
     // Gifted arc resolution
     if (F.has('gift_realized')) return 'Your gift found its fullest expression. The work exists and will outlast you. You know this.'
     if (F.has('gift_extraordinary')) return 'You reached the extraordinary ceiling of what you were born to do. The work exists. It outlasts the making of it.'
@@ -8732,6 +9143,51 @@ export function generateEpitaph(state) {
   }
   if (f('gift_passed_on') && !f('gift_realized') && !f('gift_second_generation')) {
     para3.push(`${He} made sure someone younger didn't face the same closed door.`)
+  }
+  if (f('gift_major_prize') && f('gift_world_stage')) {
+    para3.push(`${He} reached the highest level of ${his} field and received the recognition that comes with it.`)
+  }
+
+  // Child soldier arc
+  if (f('child_soldier_taken')) {
+    if (f('child_soldier_late_reckoning')) {
+      para3.push(`${He} was taken as a child and made to do things children should not do. In late life ${he} understood that the name soldier was false. The things done were real. Both things were true and ${he} held them.`)
+    } else if (f('child_soldier_order_refused')) {
+      para3.push(`${He} was taken as a child and given an order ${he} refused. The refusal was ${his}. The consequences were immediate. ${He} survived them.`)
+    } else {
+      para3.push(`${He} was taken as a child soldier. The commanders produced what they intended. ${He} spent years learning to live inside what they produced.`)
+    }
+  }
+
+  // WWI / Depression
+  if (f('ww1_veteran')) {
+    if (f('ww1_shell_shock')) {
+      para3.push(`${He} served in the trenches of the First World War and came back carrying something the military called shell shock. ${He} carried it the rest of ${his} life.`)
+    } else {
+      para3.push(`${He} was a veteran of the Great War. ${He} was among the ones who came back.`)
+    }
+  }
+  if (f('depression_survivor')) {
+    para3.push(`${He} lived through the Depression — the decade of queues and shuttered factories. It produced a specific and permanent way of being in the world.`)
+  }
+
+  // Dementia
+  if (f('dementia_personal')) {
+    para3.push(`${He} developed dementia in later years. ${He} made ${his} plans while ${he} could still make them.`)
+  }
+
+  // Celebrity
+  if (f('celebrity_scaled_back') && !f('celebrity_private_life')) {
+    para3.push(`${He} was well-known for a period and chose to step back from public life. The choice was largely invisible to the public, which was the point.`)
+  } else if (f('celebrity_private_life')) {
+    para3.push(`${He} achieved significant public recognition and ultimately found the private life more sustaining.`)
+  }
+
+  // Teacher arc
+  if (f('teacher_life_accounted')) {
+    para3.push(`${He} spent ${his} working life as a teacher. The accounting of it is not done in salary.`)
+  } else if (f('teacher_letter_received')) {
+    para3.push(`${He} taught for decades. A letter arrived from a former student fifteen years later, which told ${him} that it had mattered.`)
   }
 
   // Education and career
