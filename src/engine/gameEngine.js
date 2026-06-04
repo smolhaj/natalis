@@ -1295,15 +1295,48 @@ function buildYearTexture(state) {
   // ─── FAMILY ──────────────────────────────────────────────────────────────────
 
   const estrangedChild = (children ?? []).find(c => c.age >= 18 && (c.relationshipQuality ?? 50) < 32)
-  if (estrangedChild) return pick([
-    `You haven't spoken to ${estrangedChild.name.split(' ')[0]} in a while. The silence has a weight.`,
-    `There is a version of your family that would include ${estrangedChild.name.split(' ')[0]}. You carry that version.`,
-  ])
+  if (estrangedChild) {
+    const cn = estrangedChild.name.split(' ')[0]
+    if (phase === 'late_life') return pick([
+      `${cn} does not call. You have stopped expecting the call and started expecting to have to manage not expecting it.`,
+      `There is a version of your family that would include ${cn}. You carry that version into your late years. It is not light.`,
+      `You are old enough now to see that the distance between you and ${cn} may not close before one of you is gone. You sit with this.`,
+      `You did something, or failed to do something, and ${cn} holds it. You understand the holding even when you disagree with the account.`,
+    ])
+    return pick([
+      `You haven't spoken to ${cn} in a while. The silence has a weight.`,
+      `There is a version of your family that would include ${cn}. You carry that version.`,
+      `${cn}'s absence from the table. You have learned to set the table without a place for it.`,
+      `Something between you and ${cn} has not resolved. You are not sure if it is resolvable. You are not sure you have done everything you could to make it resolvable.`,
+    ])
+  }
+
+  // Close children in late life — abroad or distant
+  if (phase === 'late_life' && (children ?? []).length > 0) {
+    const aboadChildren = (children ?? []).filter(c => c.age >= 18 && (c.relationshipQuality ?? 50) >= 50)
+    if (aboadChildren.length > 0 && F.has('children_abroad_separation')) {
+      const cn = aboadChildren[0].name.split(' ')[0]
+      return pick([
+        `${cn} calls on Sunday. You have learned to hold an entire week of things to say compressed into the duration of a phone call.`,
+        `The grandchildren exist on a screen. You know their voices before you know the weight of them.',`,
+        `The distance between you and ${aboadChildren[0].name.split(' ')[0]} is in kilometres and in the specific things that don't arrive over video call.`,
+      ])
+    }
+    const closeChildren = (children ?? []).filter(c => c.age >= 18 && (c.relationshipQuality ?? 50) >= 70)
+    if (closeChildren.length > 0) {
+      const cn = closeChildren[0].name.split(' ')[0]
+      if (Math.random() < 0.3) return pick([
+        `${cn} visits on Sunday. You have stopped pretending you don't count the Sundays.`,
+        `The relationship with ${cn} in these years is the longest conversation you have ever had with anyone. It contains everything.`,
+      ])
+    }
+  }
 
   if (F.has('reconciled_damaged') && (children ?? []).some(c => c.age >= 18)) {
     return pick([
       'The repair is slow. You are grateful for slow.',
       'Things with your child are better. Not what they were. Better.',
+      phase === 'late_life' ? 'You repaired it before it was too late. That is the sentence you want to be able to say and you can say it.' : 'The repair is ongoing. That is still better than the alternative.',
     ])
   }
 
