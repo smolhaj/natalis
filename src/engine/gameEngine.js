@@ -1417,6 +1417,49 @@ function buildYearTexture(state) {
     return 'There is no one left who knew you before you knew yourself. That is a specific kind of alone.'
   }
 
+  // ─── PAKISTAN TEXTURE ─────────────────────────────────────────────────────
+  if (F.has('muhajir_identity') && Math.random() < 0.3) return pick([
+    'The Urdu your family speaks is not quite the Urdu of anyone around you — too formal, too careful, carrying the register of a city that doesn\'t exist for you anymore.',
+    'The question of where you are from has two answers, and which one you give depends on who is asking.',
+    'Your parents\' stories of before are so specific — a street, a house, a particular sweet sold at a particular corner — that the before becomes more real than the here.',
+  ])
+  if (F.has('partition_memory_family') && Math.random() < 0.25) return pick([
+    'Something your parents said about 1947 surfaces without warning. The neighbour who helped. The neighbour who didn\'t. You have inherited the distinction.',
+    'The partition is not history in your family. It is last week, spoken in the present tense.',
+  ])
+  if (F.has('zia_generation') && Math.random() < 0.25) return pick([
+    'Certain things that were sayable before 1977 are no longer sayable in the same register. You calibrate accordingly.',
+    'The public language changed during the Zia years and the private language followed it slowly, which is the more disorienting change.',
+  ])
+  if (F.has('karachi_violence_generation') && Math.random() < 0.3) return pick([
+    'You still read the neighborhoods in Karachi the way you learned to in the 1990s — by what was happening in them at the time, by which routes you took and didn\'t.',
+    'The map of the city you carry in your head has layers: before, during, after. The during is the largest layer.',
+  ])
+  if (F.has('1971_war_lived') && Math.random() < 0.25) return pick([
+    '1971 never became a settled story. The official version was produced for official purposes. The actual version is not in the textbooks.',
+    'What happened in East Pakistan before December 16, 1971 is a question your country has not finished answering.',
+  ])
+  if (F.has('womens_rights_restricted') && Math.random() < 0.25) return pick([
+    'You learned the law as a set of constraints that applied to you specifically and not to others in the same room. You made the calculations the law required.',
+    'The law was signed by someone and operates in the courts. You have lived inside it long enough that the adjustments it required are no longer adjustments — they are just how you move.',
+  ])
+  if (F.has('nuclear_pakistan_generation') && Math.random() < 0.2) return pick([
+    'May 28, 1998: the Chagai tests. For a few weeks the usual divisions closed over a shared pride. The pride was real. The stakes that made it necessary were also real.',
+    'You were alive the day Pakistan became a nuclear state. The equation changed, which is what they said. You have been watching the equation ever since.',
+  ])
+  if (F.has('afghan_crisis_neighbor') && Math.random() < 0.2) return pick([
+    'The Kalashnikov culture had a name by the late 1980s — a consequence with an obvious cause. The weapons came back across the border in both directions.',
+    'Three million Afghan refugees — the largest population in the world at the time. The crisis was in the news and in what was available on the street.',
+  ])
+  if (F.has('media_skeptic') && Math.random() < 0.2) return pick([
+    'You learned to read the gap between what the broadcast said and what was actually happening. It is a skill that generalizes.',
+    'State radio described a situation that was clearly not the situation. The gap was the education. You have not forgotten the lesson.',
+  ])
+  if (F.has('religious_education') && Math.random() < 0.2) return pick([
+    'You read Arabic before you read anything else. The structure of the days was clear and organized around the text.',
+    'The education was real — it shaped how you think, what you know, what you hold as given. The question of what it left out is a later question.',
+  ])
+
   // ─── IDENTITY AND EXPERIENCE TEXTURE ─────────────────────────────────────────
 
   if (F.has('lost_home') && Math.random() < 0.3) return pick([
@@ -2491,6 +2534,64 @@ function buildYearTexture(state) {
          'The decade that divided your country by party affiliation still structures certain silences. Not everyone forgave. Not everyone forgot what was done in the name of belonging to one side.']
     return opts[Math.floor(Math.random() * opts.length)]
   }
+  if (F.has('narco_era_generation') && Math.random() < 0.3) return pick([
+    'You still read the news from certain Mexican cities the way you learned to: not for information about events but for information about which routes, which towns, which names have become dangerous to say.',
+    'The arithmetic of the narco years: who you knew, which city they were in, whether they are still there. You run the calculation without meaning to.',
+    'A name appears in the news. You know which city that name operates from because everyone in your generation knows which city each name operates from.',
+  ])
+  if (F.has('paramilitary_era_lived') && Math.random() < 0.25) return pick([
+    'The arithmetic of speaking under the AUC was: who is in the room, who might report what, what is safe to say and what requires the indirect version. You still do this without thinking.',
+    'You have known people who disappeared during the paramilitary years and people who did the disappearing, and in some cases they are the same person at different ages.',
+    'The peace process produced paper. What it could not produce was the version of you that existed before you learned to calculate every room.',
+  ])
+  if (F.has('femicidio_generation') && Math.random() < 0.3) return pick([
+    'The arithmetic you learned young: what time, which route, who to tell when you leave, who to text when you arrive. You do it automatically. You will do it until you can\'t.',
+    'A name appears. Another name. The news gives an age and a city. You read it and move on because the alternative — stopping to feel the weight of each one — is not something you can afford to do every day.',
+    'You know the route home at night the way you know your own face. By the parts that require attention.',
+  ])
+
+  // ─── SOUTHEAST EUROPE TEXTURE ────────────────────────────────────────────────
+  if (F.has('romania_decree_generation') && Math.random() < 0.3) return pick([
+    'The women in your generation know something about what the state will and will not allow you. The knowledge was passed between you in a register just below speech.',
+    'Decree 770 is not something you discuss. It is something you managed. What it cost is in the management.',
+    'You know what it means to have a decision made for you by people who did not consider your situation among their variables.',
+  ])
+  if (F.has('romanian_austerity_generation') && Math.random() < 0.25) return pick([
+    'The electricity went off on a schedule. The bread was rationed. You know how to manage on less than the official definition of subsistence, which is information that stays with you.',
+    'Something about the way food is wasted now — by people who have never had to calculate the calories — stays unpleasant in a way you cannot entirely account for.',
+  ])
+  if (F.has('yugoslav_dissolution_lived') && Math.random() < 0.3) return pick([
+    'The category that was supposed to supersede the others turned out to have been organizing them. You still think about that.',
+    'You grew up with a word for what you were that no longer applies to a country. The word still applies to you in some register you cannot quite name.',
+    'The dissolution produced people who are very certain about which category they belong to. You understand the certainty. You did not arrive at it yourself.',
+  ])
+  if (F.has('yugoslav_hyperinflation_lived') && Math.random() < 0.25) return pick([
+    'You learned to keep savings in Deutschmarks, or cigarettes. The conversion tables from that year are still in your head. You notice that this is not something people who weren\'t there understand instinctively.',
+    'The year the dinar lost all meaning was also the year you understood that money is an agreement, and agreements can be revoked.',
+  ])
+  if (F.has('nato_bombing_survived') && Math.random() < 0.3) return pick([
+    'You learned the sound of the air-raid warning so well that you heard it in your sleep for years after it stopped.',
+    'Seventy-eight nights. The bridges came down. The justification and the experience were separate things that didn\'t reduce to each other, and you lived on the side of the experience.',
+    'The electricity went out in rotation during the bombing. You still notice when the lights flicker.',
+  ])
+  if (F.has('tito_generation') && Math.random() < 0.2) return pick([
+    'You remember the mourning in 1980 as genuine and enormous. What came after took a decade to arrive, but it was already implied in the question nobody was asking yet.',
+    'Tito held it together. The question of who holds it together after Tito turned out to have the answer you didn\'t want.',
+  ])
+  if (F.has('romanian_transition_generation') && Math.random() < 0.25) return pick([
+    'The revolution produced a new government that was not quite a new government, and the decade after was neither the thing you had nor the thing you wanted. You built inside that.',
+    'The jubilation in December 1989 was real. The Mineriads in 1990 were also real. You were there for both.',
+    'What foreign correspondents filmed was the jubilation. What they didn\'t film was the next decade, which is what you actually lived.',
+  ])
+  if (F.has('romania_orphan_generation') && Math.random() < 0.25) return pick([
+    'You learned early that institutions do not have space for the individual child. The lesson generalized.',
+    'The orphanage taught you to manage in large groups with limited resources. You notice that this is not a skill that gets named as such, but it is a skill.',
+    'There were 170,000 of you in state care. The number makes you legible as a category. The category doesn\'t quite fit the specific contours of what it was.',
+  ])
+  if (F.has('serbian_democratic_transition') && Math.random() < 0.2) return pick([
+    'October 5, 2000: the specific feeling of something you\'d been pressing against for eleven years suddenly not being there. You didn\'t expect it to feel like that.',
+    'The thing that was true about Serbia for eleven years stopped being true in an afternoon. The adjustment took longer.',
+  ])
 
   // ─── EXPANDED PHASE POOLS ────────────────────────────────────────────────────
 

@@ -2090,4 +2090,158 @@ export const FLAG_REGISTRY = {
     notes: 'Set by events_culture.js gaokao events. Performance-under-examination reflex; China-specific pressure psychology.',
   },
 
+  // ── Southeast Europe ──────────────────────────────────────────────────────────
+  romania_decree_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Romanian woman whose reproductive choices were constrained by Decree 770 (1966–89)',
+    intent: 'year_texture',
+    notes: 'Set by eur_rom_decree_770. State-mandated pregnancy risk; knowledge shared between women below official channels.',
+  },
+  romanian_austerity_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Survived the 1981–89 Romanian electricity rationing and food scarcity under Ceaușescu debt repayment',
+    intent: 'year_texture',
+    notes: 'Set by eur_rom_rationing_1980s. Sub-subsistence calories; near-zero meat; scheduled blackouts.',
+  },
+  romanian_transition_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived the post-1989 Romanian transition — Mineriads, factory closings, neither the old nor the promised new',
+    intent: 'year_texture',
+    notes: 'Set by eur_rom_post89_transition. Two branches: stayed or emigrated.',
+  },
+  romania_orphan_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Spent childhood in Romanian state orphanage system (up to 170,000 children, 1:30 staff ratio)',
+    intent: 'year_texture',
+    notes: 'Set by eur_rom_orphanage_generation. Emotional neglect; group-management survival skills.',
+  },
+  stayed_when_others_left: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Chose to remain in a country or city others fled — transition, conflict, or collapse',
+    intent: 'year_texture',
+    notes: 'Set by eur_rom_post89_transition (Romania) and potentially other emigration-choice events.',
+  },
+  tito_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Old enough to remember Tito\'s death (May 4, 1980) and feel the mourning — and the unasked question',
+    intent: 'year_texture',
+    notes: 'Set by eur_ser_tito_death. Marks end of non-aligned Yugoslav prestige era.',
+  },
+  yugoslav_dissolution_lived: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed Yugoslavia dissolve into successor states 1991–93 — identity category replaced by subcategory',
+    intent: 'year_texture',
+    notes: 'Set by eur_ser_yugoslav_identity (two branches: took new identity, or stayed Yugoslav).',
+  },
+  yugoslav_hyperinflation_lived: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the 1993 Yugoslav hyperinflation (116 trillion percent — second worst in recorded history)',
+    intent: 'year_texture',
+    notes: 'Set by eur_ser_hyperinflation_1993. Deutschmark/cigarette parallel economy; salary spent same hour earned.',
+  },
+  nato_bombing_survived: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived the 78-day NATO bombing of Serbia/Belgrade, March–June 1999',
+    intent: 'year_texture',
+    notes: 'Set by eur_ser_nato_bombing_1999. Two branches: stayed in Belgrade, left city.',
+  },
+  serbian_democratic_transition: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed October 5, 2000 — the fall of Milošević and the DOS electoral revolution',
+    intent: 'year_texture',
+    notes: 'Set by eur_ser_milosevic_falls. Specific feeling of sudden absence after long resistance.',
+  },
+
+  // ── PAKISTAN ARC (events_pakistan.js) ────────────────────────────────────
+
+  muhajir_identity: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Muhajir — partition migrant identity, Urdu-speaking Karachi',
+    intent: 'year_texture',
+    notes: 'Pakistan post-partition displacement arc. Year texture in buildYearTexture.',
+  },
+
+  partition_memory_family: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Family memory of the 1947 partition violence',
+    intent: 'year_texture',
+    notes: 'Pakistan/India partition. Year texture in buildYearTexture.',
+  },
+
+  '1971_war_lived': {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the 1971 East Pakistan/Bangladesh war from West Pakistan',
+    intent: 'year_texture',
+    notes: 'Pakistan 1971. Year texture in buildYearTexture.',
+  },
+
+  zia_generation: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Grew up under Zia ul-Haq Islamization, 1977-88',
+    intent: 'year_texture',
+    notes: 'Pakistan Zia era. Year texture in buildYearTexture.',
+  },
+
+  karachi_violence_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through Karachi ethnic violence and targeted killings, 1986-1999',
+    intent: 'year_texture',
+    notes: 'Pakistan Karachi. Year texture in buildYearTexture.',
+  },
+
+  nuclear_pakistan_generation: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Witnessed Pakistan nuclear tests 1998',
+    intent: 'year_texture',
+    notes: 'Pakistan 1998. Year texture in buildYearTexture.',
+  },
+
+  afghan_crisis_neighbor: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Lived with Afghan refugee crisis and Afghan war spillover',
+    intent: 'year_texture',
+    notes: 'Pakistan 1980s. Year texture in buildYearTexture.',
+  },
+
+  womens_rights_restricted: {
+    weight: 'major',
+    category: 'discrimination',
+    description: 'Experienced legal discrimination under gender-unequal legal framework',
+    intent: 'year_texture',
+    notes: 'Pakistan Hudood/Zina; may overlap with other countries. Year texture in buildYearTexture.',
+  },
+
+  media_skeptic: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Learned not to trust state media through lived experience of the gap between broadcast and reality',
+    intent: 'year_texture',
+    notes: 'Year texture in buildYearTexture.',
+  },
+
+  religious_education: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Primary education was religious/madrassah rather than secular state schooling',
+    intent: 'year_texture',
+    notes: 'Year texture in buildYearTexture.',
+  },
+
 }
