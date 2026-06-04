@@ -1724,6 +1724,101 @@ function buildYearTexture(state) {
     ])
   }
 
+  // ─── FAITH AND RELIGION TEXTURE ──────────────────────────────────────────────
+  {
+    const religion = state.religion ?? state.character?.religion ?? 'secular'
+    if (F.has('devout') && Math.random() < 0.28) {
+      const isMuslim = religion?.startsWith('muslim')
+      const isChristian = religion?.startsWith('christian')
+      const isHindu = religion === 'hindu'
+      const isBuddhist = religion === 'buddhist'
+      const isJewish = religion === 'jewish'
+      const isSikh = religion === 'sikh'
+      const isAnimist = religion === 'animist'
+      if (isMuslim) return pick([
+        'The five prayers are the structure of the day. Not every day is easy. The structure is the point.',
+        'Ramadan comes around and the month has a quality nothing else does — the hunger part of it and the other part.',
+        phase === 'late_life'
+          ? 'You have been praying five times a day for most of your adult life. The practice has changed what you are, in the accumulated way that any practice does.'
+          : 'Friday prayers are the week\'s hinge. The rest of the week moves around it.',
+        'The Quran is the language that runs under the other languages. You think in it without deciding to.',
+      ])
+      if (isChristian) return pick([
+        'Sunday is Sunday. The rest of the week has its rhythm; Sunday has its own.',
+        phase === 'late_life'
+          ? 'You have sat in the same pew or near it for so many years that the church is as familiar as the house. More familiar, maybe.'
+          : 'The faith is not something you perform. It is the water the rest of the day moves through.',
+        'The prayer is private, which is why it can be honest.',
+        'You believe in something larger than the visible situation. That belief is not naive — it has been tested.',
+      ])
+      if (isHindu) return pick([
+        'The puja is the morning\'s first language. The rest of the day follows from it.',
+        'The gods are not distant figures. They are specific, present, with their own characters that you have known since you could know anything.',
+        phase === 'late_life'
+          ? 'The religious practice has changed shape over the decades — more inward, less about the outer forms. The inward form is the one that held.'
+          : 'The festival calendar is how you know where you are in the year.',
+      ])
+      if (isBuddhist) return pick([
+        'The meditation practice is the same as ever — some days easy, some days the mind runs and runs.',
+        'The teaching is about impermanence, and the proof is in the year. You are sitting with that.',
+        phase === 'late_life'
+          ? 'The practice has had decades now to work on you. You are different than you would have been without it. Quieter, maybe. Less attached to outcomes.'
+          : 'The refuge in the three jewels is real — not metaphorical, not convenient. Real.',
+      ])
+      if (isJewish) return pick([
+        'Shabbat is Shabbat. The week has a shape because of it.',
+        'The holidays are the year\'s punctuation. Without them the year would be unmarked time.',
+        phase === 'late_life'
+          ? 'You have kept most of the practices for most of your life. The keeping is not separate from the belief — it is the belief, expressed in time.'
+          : 'The prayer book opens to the same pages worn with use. That wear is a kind of record.',
+      ])
+      if (isSikh) return pick([
+        'The ardas is the prayer that holds everything else — the named, the unnamed, the present need.',
+        'The langar is the practice made visible: everyone eats, no one sits above anyone else. You have been in that room and understood it.',
+      ])
+      if (isAnimist) return pick([
+        'The ancestors are not elsewhere. They are in the practice, in the specific words, in the attention paid to certain thresholds.',
+        'The land is not separate from the sacred. They are one thing. You have always known this.',
+        phase === 'late_life'
+          ? 'You are becoming one of the ones who carries the knowledge. That is a role that arrived gradually and requires more than you expected.'
+          : 'The rituals have purposes beyond the visible purposes. You have learned to trust that without requiring the explanation.',
+      ])
+      // Generic devout
+      return pick([
+        'The practice anchors the week. Without it the week is just time.',
+        'You believe. The belief is not theoretical — it is in what you do and how you do it.',
+        phase === 'late_life'
+          ? 'The faith you have now is the faith you earned. The one you started with was given to you.'
+          : 'The religion is the frame for how you understand what happens. You have not found a better frame.',
+      ])
+    }
+    if (F.has('faith_crisis') && !F.has('lost_faith') && Math.random() < 0.22) return pick([
+      'The doubt is still there. You have decided it is part of the practice, not the opposite of it.',
+      'You are not sure you believe everything you used to believe. You are not ready to stop going.',
+      'The question you can\'t resolve has not resolved. You are learning to live with open questions.',
+      phase === 'late_life'
+        ? 'You have been carrying the doubt for years now. It has become something you know rather than something you are afraid of.'
+        : 'The faith survived the test differently than you expected. Less certain. Still here.',
+    ])
+    if ((F.has('lost_faith') || F.has('left_religion')) && Math.random() < 0.2) return pick([
+      'The space where the religion was is not empty — it is occupied by the absence of the religion, which is its own thing.',
+      'You do not pray. You notice that you do not pray.',
+      phase === 'late_life'
+        ? 'You left the faith decades ago. The structure it provided is not something you replaced with a single thing — you replaced it with other things, slowly. Some of them held.'
+        : 'You are building the secular life from scratch. There is no map for this that comes already made.',
+      F.has('left_religion') && !F.has('lost_faith')
+        ? 'The institution went. The questions the institution was answering did not go with it.'
+        : 'You do not know if there is a God. That sentence used to have more urgency than it does now.',
+    ])
+    if (F.has('faith_deepened') && Math.random() < 0.2) return pick([
+      'The faith is quieter now and deeper. You are less interested in explaining it.',
+      'The practice is not what it was at the beginning — it is what a practice becomes after decades: less formal, more interior, more yours.',
+      phase === 'late_life'
+        ? 'You have arrived at a faith that requires no argument. That is not certainty — it is a different kind of knowing.'
+        : 'The deepening was not gradual. There was a point when the practice became something you needed rather than something you did.',
+    ])
+  }
+
   // ─── FLAG-AWARE TEXTURE ──────────────────────────────────────────────────────
 
   if (F.has('famine_memory') && Math.random() < 0.3) return pick([
