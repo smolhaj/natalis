@@ -4185,6 +4185,55 @@ function buildYearTexture(state) {
     'The connection between the gas discovery and the insurgency in Cabo Delgado is not simple. It is also not a coincidence. Nine hundred thousand displaced. Total evacuated its base. The gas is still there.',
   ])
 
+  // ─── YEMEN TEXTURE ───────────────────────────────────────────────────────────
+  if (F.has('yemeni_saleh_generation') && Math.random() < 0.17) return pick([
+    'Saleh described his governance as dancing on the heads of snakes. From the inside, the dance looked like ordinary life. The snakes were not theoretical.',
+    'The qat session in the afternoon — the leaves stuffed in the cheek, the gathering of the men, the place where the politics actually happens. That was the real parliament.',
+    phase === 'late_life'
+      ? 'You grew up in the Saleh era without knowing it would end the way it ended. The governance was corrupt and it was also the only governance there was.'
+      : 'The tribal affiliation preceded every negotiation. The state that ran alongside it was thinner than it looked.',
+  ])
+  if (F.has('yemeni_unification_generation') && Math.random() < 0.15) return pick([
+    'Two Yemens that had been different societies for twenty-five years became one Yemen. The north had the army. The south had the grievances and, briefly, the hope.',
+    'The reunification was real on paper and complicated on the ground. What it meant to be Yemeni from the south was not the same as what it meant from the north. That difference did not unify.',
+  ])
+  if (F.has('yemeni_1994_generation') && Math.random() < 0.18) return pick([
+    'The south tried to separate in 1994 and was crushed in seventy days. The accounting of what was taken — the land, the jobs, the assets — has never been settled.',
+    'The jihadists who came back from Afghanistan in the early 1990s fought against the south in 1994. The political geography of Yemen includes that history.',
+    phase === 'late_life'
+      ? 'You have watched the southern grievance from 1994 become the Southern Transitional Council and become the STC\'s war within a war. The original injustice was not resolved — it reproduced itself.'
+      : 'The war that crushed the south was fast. The consequences of it are still present in who controls what and who owes whom.',
+  ])
+  if (F.has('yemeni_revolution_generation') && Math.random() < 0.18) return pick([
+    'Change Square in 2011: the tent city, the students, the tribesmen, the southerners — all in the same space asking for the same thing. That was real and it was also brief.',
+    'Saleh signed the transition agreement and got immunity. The immunity was the price. The transition was partial. The hope was real while it lasted.',
+  ])
+  if (F.has('yemeni_war_generation') && Math.random() < 0.22) return pick([
+    'The war is the most complex proxy conflict on earth in the same country that was already the poorest in the Arab world. You are a person living inside that sentence.',
+    'Saudi coalition, Houthi movement, Hadi government, Southern Transitional Council, Al-Qaeda in the Arabian Peninsula, Iranian weapons, Emirati money — all operating in a country of twenty-five million people. You navigate between them.',
+    phase === 'late_life'
+      ? 'You have survived a war that has gone on for nearly a decade with no clean ending. Survival is the life. The life around it was also real while it lasted.'
+      : 'The war has no clean sides. There are just different sets of people doing harm to the same population. You are in the population.',
+    F.has('yemeni_war_north')
+      ? 'The airstrikes come from the sky without warning. The Houthi checkpoints are on every road. The economy has fractured into two currencies in two territories. You are surviving inside all of this.'
+      : 'The city changed hands. Then changed back. Then was divided. You learned which checkpoints to avoid and which routes were safer than others. That knowledge has a cost.',
+  ])
+  if (F.has('yemeni_crisis_generation') && Math.random() < 0.22) return pick([
+    'The largest cholera outbreak in recorded history. The worst humanitarian crisis in the world. These are not abstractions — they are the water that runs from the tap and whether it is safe.',
+    'The doctors have not been paid in months. The hospital is still functioning. That is Yemen — the state has dissolved and the people are doing what they can anyway.',
+    'The port of Hodeidah is where eighty percent of Yemen\'s food imports arrive. The blockade is a siege. The siege produces famine conditions. You are in the famine conditions.',
+    phase === 'late_life'
+      ? 'You have been surviving this for years now. Survival has become the structure of the life. You do not know yet what comes after survival.'
+      : 'Children are dying of preventable diseases while the diplomats issue statements. You are alive in this year. That is what the year is.',
+  ])
+  if (F.has('yemeni_war_south') && Math.random() < 0.18) return pick([
+    'Aden changed hands more than once. The STC, the Hadi government, the Saudis, the Emiratis — the south is at the centre of the war within the war.',
+    'The south wanted independence in 1994 and was crushed. In 2015 it found itself a battlefield again. The grievances are the same. The armed factions are different.',
+    phase === 'late_life'
+      ? 'You are in the generation that has now seen the south fight twice for its independence — once crushed, once in a war too complicated to call a liberation.'
+      : 'The port, the airport, the oil terminals — the south has assets that multiple armed groups want to control. You live in between the wanting.',
+  ])
+
   // ─── AFGHANISTAN TEXTURE ─────────────────────────────────────────────────────
   if (F.has('afghan_saur_generation') && Math.random() < 0.16) return pick([
     'The communists who took power in 1978 were trying to change a country faster than the country could be changed. The disappearances were part of the project.',

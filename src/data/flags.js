@@ -3313,4 +3313,70 @@ export const FLAG_REGISTRY = {
     notes: 'Set by afg_taliban_return_2021 (choice 1, got out).',
   },
 
+  // ─── YEMEN ────────────────────────────────────────────────────────────────────
+
+  yemeni_saleh_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up under Ali Abdullah Saleh\'s rule — tribal balancing, qat culture, the mosque as civic institution',
+    intent: 'year_texture',
+    notes: 'Set by yem_saleh_era_childhood.',
+  },
+
+  yemeni_unification_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Alive for Yemeni reunification 1990 — north and south merging two genuinely different societies',
+    intent: 'year_texture',
+    notes: 'Set by yem_unification_1990.',
+  },
+
+  yemeni_1994_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the 1994 civil war — south crushed in 70 days, land redistributed to northern tribes, unresolved grievances',
+    intent: 'year_texture',
+    notes: 'Set by yem_1994_civil_war.',
+  },
+
+  yemeni_revolution_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'In Change Square 2011 — Saleh removed, the brief hope of the Arab Spring transition',
+    intent: 'year_texture',
+    notes: 'Set by yem_arab_spring_2011.',
+  },
+
+  yemeni_war_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived the 2015+ war — Saudi airstrikes, Houthi control, proxy conflict with no clean sides',
+    intent: 'year_texture',
+    notes: 'Set by yem_houthi_war_2015.',
+  },
+
+  yemeni_war_north: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'In Sana\'a or Houthi-controlled north during the war — occupied city, aerial bombardment',
+    intent: 'year_texture',
+    notes: 'Set by yem_houthi_war_2015 (choice 1, north).',
+  },
+
+  yemeni_war_south: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'In Aden or southern Yemen during the war — contested city, STC vs. Hadi government',
+    intent: 'year_texture',
+    notes: 'Set by yem_houthi_war_2015 (choice 2, south).',
+  },
+
+  yemeni_crisis_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the Yemen humanitarian collapse — cholera epidemic, famine conditions, Hodeidah siege',
+    intent: 'year_texture',
+    notes: 'Set by yem_humanitarian_collapse.',
+  },
+
 }
