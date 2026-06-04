@@ -3600,6 +3600,42 @@ function buildYearTexture(state) {
       : 'You are in the generation that had to decide what to do when the army came back in 2021. You made your decision. You live in it.',
   ])
 
+  // ─── JORDAN TEXTURE ──────────────────────────────────────────────────────────
+  if (F.has('jordanian_palestinian_identity') && Math.random() < 0.22) return pick([
+    'You are from Jordan and from somewhere else. Both are true. The somewhere else is specific: it has a village name, a direction from Amman, a story of how it became inaccessible.',
+    'The key in the drawer. The papers from a different address. The map of a country that exists in your family\'s memory in a form that no current government would recognise.',
+    phase === 'late_life'
+      ? 'You are old enough to have grown up hearing the departure described by someone who was there. That account is yours now — not a memory but a story that functions like one.'
+      : 'Palestinian-Jordanian is not a hyphen you chose. It is the description of a history that preceded you.',
+  ])
+  if (F.has('jordan_black_september_generation') && Math.random() < 0.18) return pick([
+    'Black September: ten days of war between the Jordanian army and the PLO in 1970. The outcome reshaped every Palestinian community in Jordan. The silence about what happened has its own weight.',
+    'The PLO was expelled to Lebanon after 1970. What that led to in Beirut a decade later is part of the same chain.',
+  ])
+  if (F.has('jordanian_wasta_used') && Math.random() < 0.15) return pick([
+    'You used the connection. The connection worked. That transaction is in the account you keep of how you got where you are.',
+    'The wasta system is not invisible — everyone knows it operates. The question is which side of it you are on.',
+  ])
+  if (F.has('jordanian_no_wasta') && Math.random() < 0.15) return pick([
+    'You built what you have without the family connections that would have made it easier. That path is longer. You know it well.',
+    'The people who moved faster than you — you know why. The knowing is its own kind of education.',
+  ])
+  if (F.has('jordanian_peace_generation') && Math.random() < 0.17) return pick([
+    'Jordan made peace with Israel in 1994. The treaty is on paper. The street is a different document.',
+    'The West Bank is visible from the Amman hills. The peace treaty does not change what is happening there. You know both of these things.',
+  ])
+  if (F.has('jordanian_syrian_refugee_host') && Math.random() < 0.2) return pick([
+    'Jordan received 1.3 million Syrian refugees. That is ten percent of the country\'s population arriving in three years. Zaatari camp became a city. The schools ran double shifts.',
+    'The water in Amman comes once a week. With 1.3 million more people, it still comes once a week. The arithmetic of hospitality has real costs.',
+    phase === 'late_life'
+      ? 'You watched Jordan absorb Palestinians in 1948 and 1967, Iraqis after 2003, Syrians after 2011. The country is extraordinarily experienced at being a host. The experience does not make it easier.'
+      : 'The Syrians came because Syria became uninhabitable. Jordan hosted them. The world discussed it. You lived inside the discussion.',
+  ])
+  if (F.has('jordanian_hussein_generation') && Math.random() < 0.15) return pick([
+    'King Hussein died of cancer in February 1999 after 47 years on the throne. He outlasted every leader in the region. The mourning in Jordan was genuine.',
+    'The king survived the 1967 war, the 1970 civil war, the assassination attempts. He was the state for a generation. You built your adult life in the country he made.',
+  ])
+
   // ─── ANGOLA TEXTURE ──────────────────────────────────────────────────────────
   if (F.has('angola_civil_war_generation') && Math.random() < 0.22) return pick([
     'The war lasted twenty-seven years. It began the day independence arrived. Those two facts are not unrelated.',

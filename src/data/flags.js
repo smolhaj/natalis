@@ -3015,4 +3015,62 @@ export const FLAG_REGISTRY = {
     notes: 'Set by ang_dos_santos_rule.',
   },
 
+  // ── JORDAN ───────────────────────────────────────────────────────────────────
+
+  jordanian_palestinian_identity: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Palestinian-Jordanian identity — the family displacement story, the village key, the border that created a different country within living memory',
+    intent: 'year_texture',
+    notes: 'Set by jor_palestinian_family. 48% of Jordan\'s population.',
+  },
+
+  jordan_black_september_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Witnessed Black September 1970 — PLO-Jordan civil war, thousands dead, PLO expelled to Lebanon',
+    intent: 'year_texture',
+    notes: 'Set by jor_black_september_1970.',
+  },
+
+  jordanian_wasta_used: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Used family connections (wasta) to open a door — the infrastructure of Jordanian social mobility',
+    intent: 'year_texture',
+    notes: 'Set by jor_wasta_system (first branch).',
+  },
+
+  jordanian_no_wasta: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Navigated Jordan without family wasta — the longer path through the system',
+    intent: 'year_texture',
+    notes: 'Set by jor_wasta_system (second branch).',
+  },
+
+  jordanian_peace_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through Jordan\'s 1994 Wadi Araba peace treaty with Israel — the pragmatic case and the Palestinian-Jordanian complication',
+    intent: 'year_texture',
+    notes: 'Set by jor_peace_treaty_1994.',
+  },
+
+  jordanian_syrian_refugee_host: {
+    weight: 'major',
+    category: 'world_event',
+    description: 'Witnessed Jordan absorbing 1.3 million Syrian refugees 2012-15 — 10% of the population, Zaatari, double-shift schools, water stress',
+    intent: 'year_texture',
+    notes: 'Set by jor_syrian_refugees_2012.',
+  },
+
+  jordanian_hussein_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Lived through King Hussein\'s long reign — the survivor king, 47 years of monarchy holding a fragile state together',
+    intent: 'year_texture',
+    notes: 'Set by jor_king_hussein_era.',
+  },
+
 }
