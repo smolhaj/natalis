@@ -2045,6 +2045,53 @@ function buildYearTexture(state) {
     'The habit of counting what is owed is hard to put down even when the answer is fine.',
   ])
 
+  // ─── FINANCIAL STATE TEXTURE ─────────────────────────────────────────────────
+  {
+    const debt = state.debt ?? 0
+    const money = state.money ?? 0
+    const props = state.assets?.properties ?? []
+    const mortgage = state.mortgage ?? 0
+    const ownedHome = props.find(p => !p.renting)
+    const creditScore = state.creditScore ?? 700
+
+    if (debt > 5000 && debt < 50000 && !F.has('debt_spiral_active') && (phase === 'young_adult' || phase === 'midlife') && Math.random() < 0.22) return pick([
+      'The debt is there the way weather is there — in the background of the plans, the reason certain options aren\'t on the table.',
+      `You owe money. The payment schedule is manageable. "Manageable" is doing work in that sentence.`,
+      'The monthly payment is a fixed point the budget is built around.',
+      phase === 'midlife'
+        ? 'You are in the generation that was told to borrow and then had to live inside the borrowing. The math works out eventually. Eventually is not a comfort.'
+        : 'The debt from school, from the start, from the thing that needed paying for — it travels with you. You are paying it down.',
+    ])
+
+    if (debt >= 50000 && !F.has('debt_spiral_active') && (phase === 'midlife' || phase === 'young_adult') && Math.random() < 0.25) return pick([
+      'The number is large enough that you avoid saying it out loud. The avoidance has its own cost.',
+      'The debt is structural — the kind that shapes every financial decision for a decade.',
+      partner
+        ? `You and ${partner.name.split(' ')[0]} know the number. The number is between you in every conversation about the future.`
+        : 'The amount owed determines what is possible. You have built your life around that constraint.',
+    ])
+
+    if (ownedHome && mortgage > 0 && Math.random() < 0.2 && (phase === 'midlife' || phase === 'young_adult')) return pick([
+      'The mortgage payment is the background hum of the month. You barely notice it now.',
+      `You own a home with a mortgage. That sentence would have meant something different to your parents.`,
+      'The equity is building slowly. Slowly is the speed at which houses become yours.',
+      `The ${ownedHome.type ?? 'house'} is yours — and the bank\'s. The proportions are shifting.`,
+    ])
+
+    if (ownedHome && !mortgage && phase === 'late_life' && Math.random() < 0.2) return pick([
+      `The ${ownedHome.type ?? 'house'} is paid off. That is a fact that took decades to become true.`,
+      'You own where you live, outright. The patience that required is the whole story.',
+      partner
+        ? `You and ${partner.name.split(' ')[0]} own the house free and clear. That is what decades of payments accumulate into.`
+        : 'You own it. The papers are in the drawer. That took a long time.',
+    ])
+
+    if (creditScore >= 750 && debt === 0 && money > 10000 && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.18) return pick([
+      'The financial situation is stable in a way that still surprises you. You grew up with a different expected story.',
+      'There is money in the account and no debt and that is a sentence you could not have written at thirty.',
+    ])
+  }
+
   // ─── TRAUMA AND LOSS TEXTURE ─────────────────────────────────────────────────
 
   if (F.has('war_childhood') && Math.random() < 0.35) return pick([
