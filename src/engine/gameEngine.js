@@ -1461,6 +1461,41 @@ function buildYearTexture(state) {
     return 'The war is over, or over here. The sounds stay for a while.'
   }
 
+  // ─── PET TEXTURE ──────────────────────────────────────────────────────────────
+
+  {
+    const pets = state.pets ?? []
+    const livingPet = pets.find(p => p.alive)
+    if (livingPet && Math.random() < 0.18) {
+      const pn = livingPet.name
+      const sp = livingPet.species
+      const pAge = livingPet.age ?? 0
+      if (pAge >= 10) return pick([
+        `${pn} is old now — ${pAge} years. Old ${sp}s are their own kind of companion, requiring things and giving things in a different register than they used to.`,
+        `${pn} moves more slowly than before. You have stopped pretending you don't track this.`,
+        phase === 'late_life'
+          ? `You and ${pn} are both in your later years. That parallel is something you don't examine too closely.`
+          : `You've had ${pn} for ${pAge} years. There is a depth to that which you didn't anticipate when you got a ${sp}.`,
+      ])
+      if (pAge >= 4) return pick([
+        `${pn} is part of the household in the way that is hard to articulate until someone who has never had a ${sp} tries to understand it.`,
+        `The specific companionship of ${pn} is not nothing. In some years it is the whole thing.`,
+        `${pn} meets you at the door. That is a small fact that organises the end of certain days.`,
+      ])
+      return pick([
+        `${pn} the ${sp} is new enough to the household that everyone is still adjusting to the presence.`,
+        `Getting a ${sp} was a decision. You are learning what the decision entails.`,
+      ])
+    }
+    const recentlyDeadPet = pets.find(p => !p.alive && (p.age ?? 0) >= 5)
+    if (recentlyDeadPet && mem?.petDeathYear && (currentYear - mem.petDeathYear) <= 2 && Math.random() < 0.3) {
+      return pick([
+        `${recentlyDeadPet.name} is gone. The grief for a ${recentlyDeadPet.species} is real and slightly embarrassing to claim and real.`,
+        `The house is different without ${recentlyDeadPet.name} in it. You are still finding the spots where the absence is.`,
+      ])
+    }
+  }
+
   // ─── UNEMPLOYMENT TEXTURE ─────────────────────────────────────────────────────
 
   if (!career && !state.retired && !F.has('semi_retired') && !F.has('retired') &&
@@ -3153,6 +3188,26 @@ function buildYearTexture(state) {
 
   // Late life specific
   if (phase === 'late_life') {
+    // Very old (85+)
+    if (age >= 85 && Math.random() < 0.45) return pick([
+      'You have outlived most of the people who knew you at thirty. That is the arithmetic of a long life.',
+      'The world has changed so many times that you have stopped being surprised by the next change.',
+      'Your body is not what you have. It is what you are negotiating with.',
+      'You are one of the last people who remember certain things. You are aware of this.',
+      partner ? `You and ${partner.name.split(' ')[0]} are still here. After all of this, still here.` : 'You have made it this far alone. That required something. You are not entirely sure what.',
+      'The life has been longer than you expected. That is a gift with its own weight.',
+      'Some mornings are better than others. The others are still mornings.',
+    ])
+    // Older (75+)
+    if (age >= 75 && Math.random() < 0.35) return pick([
+      'The body\'s limitations are no longer surprises — they are the conditions of the day.',
+      'You are at the age where doctors describe your results as "good for your age." You have learned to receive this.',
+      'The generation ahead of you is mostly gone. You are now the generation ahead.',
+      'You have been doing most things for fifty or sixty years. The things you have not done are clearly not going to be done.',
+      'Some people your age are sharp and some are not. You are watching which way the wind is blowing for you.',
+      'The phone contains more dead contacts than you realized until you looked.',
+      'You move at the speed you move at now. That is a negotiation with yourself that took some years to complete.',
+    ])
     return pick([
       'The body keeps its own calendar. You have learned to negotiate.',
       'You know more people who have died than you used to. That is how it goes.',
@@ -3173,6 +3228,9 @@ function buildYearTexture(state) {
       'The things you were certain of at thirty look different from here.',
       'A year of more behind than ahead. That is the arithmetic now.',
       'You are learning the grammar of this phase. The sentences are shorter.',
+      'You have done most of the things. The undone ones are either being set aside or being started.',
+      'The expectations are off now — from yourself and from the people around you. That is a form of freedom.',
+      'You have lived long enough to see which of your certainties were correct and which were posture.',
     ])
   }
 
