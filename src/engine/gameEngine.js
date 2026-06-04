@@ -1260,6 +1260,17 @@ function buildYearTexture(state) {
     const moments = state.mem?.partnerMoments ?? []
     const yrs = partner.years ?? 0
 
+    // Engaged — pre-marriage texture
+    if (partner.engaged && Math.random() < 0.45) return pick([
+      `You and ${pn} are engaged. That is the word for what you are now — not married yet, but decided.`,
+      `The future with ${pn} is still mostly imagined. You are in the interesting gap between the decision and the life.`,
+      `You are planning things with ${pn}. Planning a life together is its own phase, different from having one.`,
+      `The engagement is new enough that the word still carries a little surprise when you say it.`,
+      q > 75
+        ? `You and ${pn} are certain about each other. The certainty is a specific feeling you are still getting used to.`
+        : `You are engaged to ${pn}. The engagement is real. The doubts are also real. That is probably normal.`,
+    ])
+
     if (q < 28) return pick([
       `You and ${partner.name} are still in the same house. That is accurate and not quite the whole story.`,
       `There are things you and ${pn} no longer say. The list has grown.`,
@@ -1448,6 +1459,31 @@ function buildYearTexture(state) {
   }
   if (F.has('survived_bombardment')) {
     return 'The war is over, or over here. The sounds stay for a while.'
+  }
+
+  // ─── UNEMPLOYMENT TEXTURE ─────────────────────────────────────────────────────
+
+  if (!career && !state.retired && !F.has('semi_retired') && !F.has('retired') &&
+      (phase === 'young_adult' || phase === 'midlife') &&
+      age >= 22 && age < 62 && Math.random() < 0.28) {
+    if (F.has('automation_displaced') || F.has('career_disrupted')) return pick([
+      'The industry did not need you anymore. You are finding out what you are without the work that defined the last decade.',
+      'The displacement happened to a lot of people at the same time. That doesn\'t make your specific situation easier.',
+      phase === 'midlife'
+        ? 'At this age, without the job title, you are learning what else you are. The answer is in progress.'
+        : 'You are figuring out what the career becomes from this point. That is the whole question.',
+    ])
+    return pick([
+      'You are between jobs. The between is longer than the phrase suggests.',
+      'The structure of a working day is something you took for granted. Its absence has a specific texture.',
+      'Looking for work takes the time of a full-time job with the pay of no job. You are doing this.',
+      phase === 'midlife'
+        ? 'The CV does not adequately represent the person who wrote it. This is always true and feels especially true when you are trying to find work.'
+        : 'You have not found the thing yet. You are in the finding-the-thing phase.',
+      partner
+        ? `${partner.name.split(' ')[0]} is working. You are not. You are learning how to hold that without it becoming about something it is not about.`
+        : 'The days have a gap in them that the work used to fill. You are filling it with the search and with other things.',
+    ])
   }
 
   // ─── CRIMINAL RECORD AMBIENT ──────────────────────────────────────────────────
