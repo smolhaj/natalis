@@ -1496,6 +1496,52 @@ function buildYearTexture(state) {
     }
   }
 
+  // ─── FRIEND TEXTURE ───────────────────────────────────────────────────────────
+  {
+    const frs = state.friends ?? []
+    const livingClose = frs.filter(f => f.alive !== false && (f.relationshipQuality ?? 50) >= 72)
+    const livingDistant = frs.filter(f => f.alive !== false && (f.relationshipQuality ?? 50) < 45)
+    const deadFriend = frs.find(f => f.alive === false)
+    if (livingClose.length > 0 && Math.random() < 0.2) {
+      const fr = livingClose[Math.floor(Math.random() * livingClose.length)]
+      const fn = fr.name?.split(' ')[0] ?? 'your friend'
+      const yrs = fr.yearsKnown ?? fr.metAge ?? null
+      return pick([
+        `${fn} is still there. That is a fact that gets more specific with every year.`,
+        yrs && yrs > 10
+          ? `You have known ${fn} for long enough that some of your shared history predates who you both are now.`
+          : `${fn} understands the current version of the problem before you've finished explaining it. That's what this friendship is.`,
+        phase === 'late_life'
+          ? `${fn} is one of the people who knew you before the version of yourself you're most comfortable with. That matters.`
+          : phase === 'midlife'
+            ? `${fn} and you disagree on some things now. The disagreements don't cost the friendship anything.`
+            : `${fn} is the kind of friend you compare others to without quite meaning to.`,
+        `The call with ${fn} took two hours and resolved nothing and was the best part of the week.`,
+      ])
+    }
+    if (livingDistant.length > 0 && Math.random() < 0.15) {
+      const fr = livingDistant[Math.floor(Math.random() * livingDistant.length)]
+      const fn = fr.name?.split(' ')[0] ?? 'someone you used to know'
+      return pick([
+        `You and ${fn} have grown in different directions. You are not sure when the drift became structural.`,
+        `${fn} crosses your mind sometimes. You don't reach out. You're not entirely sure why.`,
+        phase === 'late_life'
+          ? `There are people from earlier in your life — ${fn} is one — who you have lost without a specific ending.`
+          : `The friendship with ${fn} requires more maintenance than it used to. You are providing less of it than you should.`,
+      ])
+    }
+    if (deadFriend && mem?.friendDeathYear && (currentYear - mem.friendDeathYear) <= 3 && Math.random() < 0.25) {
+      const fn = deadFriend.name?.split(' ')[0] ?? 'your friend'
+      return pick([
+        `${fn} is gone. The full meaning of that is still arriving.`,
+        `${fn}. You keep editing thoughts to send them and stopping.`,
+        phase === 'late_life'
+          ? `Losing ${fn} rearranges the late-life map. There are fewer people who knew you from the early versions.`
+          : `The absence of ${fn} has a specific texture that generalised grief doesn't cover.`,
+      ])
+    }
+  }
+
   // ─── UNEMPLOYMENT TEXTURE ─────────────────────────────────────────────────────
 
   if (!career && !state.retired && !F.has('semi_retired') && !F.has('retired') &&
