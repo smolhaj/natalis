@@ -2040,4 +2040,1343 @@ export const FLAG_REGISTRY = {
     notes: 'Set by zim_mugabe_fall_2017 in events_zimbabwe.js.',
   },
 
+  // ── IDENTITY FLAGS (Mode B: never-checked identity flags) ─────────────────────
+
+  lost_home: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lost the place they called home — through conflict, eviction, displacement, or partition',
+    intent: 'both',
+    notes: 'Set by conflict childhood, poverty eviction, gentrification, partition world events. Year texture + ft11_lost_home_return.',
+  },
+
+  independent_thinker: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Habitually reaches their own conclusions; resists conformity to official or social pressure',
+    intent: 'year_texture',
+    notes: 'Set by career_regime events (resigned on principle, refused loyalty declaration), culture events. Tension arc with pragmatic_compliance.',
+  },
+
+  military_service: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Completed military service (non-combat; distinct from deployed_to_conflict)',
+    intent: 'both',
+    notes: 'Set by conscription events, Korea service, gender events. Does NOT gate soldier arc (that requires deployed_to_conflict). Year texture + ft11_military_reunion.',
+  },
+
+  pragmatic_compliance: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Made pragmatic accommodations with an authoritarian system — signed, joined, complied to survive',
+    intent: 'both',
+    notes: 'Set by career_regime (loyalty declaration, collectivization), culture (party membership), Kurdish PKK events. Year texture + ft11_compliance_reckoning.',
+  },
+
+  passed_checkpoint: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Passed through military or police checkpoints as normalized daily life',
+    intent: 'year_texture',
+    notes: 'Set by conflict_childhood, Lebanon, Algeria events. Body-memory hypervigilance reflex that outlasts the context.',
+  },
+
+  gaokao_survivor: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Survived the Chinese university entrance examination — the gaokao',
+    intent: 'year_texture',
+    notes: 'Set by events_culture.js gaokao events. Performance-under-examination reflex; China-specific pressure psychology.',
+  },
+
+  // ── Southeast Europe ──────────────────────────────────────────────────────────
+  romania_decree_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Romanian woman whose reproductive choices were constrained by Decree 770 (1966–89)',
+    intent: 'year_texture',
+    notes: 'Set by eur_rom_decree_770. State-mandated pregnancy risk; knowledge shared between women below official channels.',
+  },
+  romanian_austerity_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Survived the 1981–89 Romanian electricity rationing and food scarcity under Ceaușescu debt repayment',
+    intent: 'year_texture',
+    notes: 'Set by eur_rom_rationing_1980s. Sub-subsistence calories; near-zero meat; scheduled blackouts.',
+  },
+  romanian_transition_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived the post-1989 Romanian transition — Mineriads, factory closings, neither the old nor the promised new',
+    intent: 'year_texture',
+    notes: 'Set by eur_rom_post89_transition. Two branches: stayed or emigrated.',
+  },
+  romania_orphan_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Spent childhood in Romanian state orphanage system (up to 170,000 children, 1:30 staff ratio)',
+    intent: 'year_texture',
+    notes: 'Set by eur_rom_orphanage_generation. Emotional neglect; group-management survival skills.',
+  },
+  stayed_when_others_left: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Chose to remain in a country or city others fled — transition, conflict, or collapse',
+    intent: 'year_texture',
+    notes: 'Set by eur_rom_post89_transition (Romania) and potentially other emigration-choice events.',
+  },
+  tito_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Old enough to remember Tito\'s death (May 4, 1980) and feel the mourning — and the unasked question',
+    intent: 'year_texture',
+    notes: 'Set by eur_ser_tito_death. Marks end of non-aligned Yugoslav prestige era.',
+  },
+  yugoslav_dissolution_lived: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed Yugoslavia dissolve into successor states 1991–93 — identity category replaced by subcategory',
+    intent: 'year_texture',
+    notes: 'Set by eur_ser_yugoslav_identity (two branches: took new identity, or stayed Yugoslav).',
+  },
+  yugoslav_hyperinflation_lived: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the 1993 Yugoslav hyperinflation (116 trillion percent — second worst in recorded history)',
+    intent: 'year_texture',
+    notes: 'Set by eur_ser_hyperinflation_1993. Deutschmark/cigarette parallel economy; salary spent same hour earned.',
+  },
+  nato_bombing_survived: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived the 78-day NATO bombing of Serbia/Belgrade, March–June 1999',
+    intent: 'year_texture',
+    notes: 'Set by eur_ser_nato_bombing_1999. Two branches: stayed in Belgrade, left city.',
+  },
+  serbian_democratic_transition: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed October 5, 2000 — the fall of Milošević and the DOS electoral revolution',
+    intent: 'year_texture',
+    notes: 'Set by eur_ser_milosevic_falls. Specific feeling of sudden absence after long resistance.',
+  },
+
+  // ── PAKISTAN ARC (events_pakistan.js) ────────────────────────────────────
+
+  muhajir_identity: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Muhajir — partition migrant identity, Urdu-speaking Karachi',
+    intent: 'year_texture',
+    notes: 'Pakistan post-partition displacement arc. Year texture in buildYearTexture.',
+  },
+
+  partition_memory_family: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Family memory of the 1947 partition violence',
+    intent: 'year_texture',
+    notes: 'Pakistan/India partition. Year texture in buildYearTexture.',
+  },
+
+  '1971_war_lived': {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the 1971 East Pakistan/Bangladesh war from West Pakistan',
+    intent: 'year_texture',
+    notes: 'Pakistan 1971. Year texture in buildYearTexture.',
+  },
+
+  zia_generation: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Grew up under Zia ul-Haq Islamization, 1977-88',
+    intent: 'year_texture',
+    notes: 'Pakistan Zia era. Year texture in buildYearTexture.',
+  },
+
+  karachi_violence_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through Karachi ethnic violence and targeted killings, 1986-1999',
+    intent: 'year_texture',
+    notes: 'Pakistan Karachi. Year texture in buildYearTexture.',
+  },
+
+  nuclear_pakistan_generation: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Witnessed Pakistan nuclear tests 1998',
+    intent: 'year_texture',
+    notes: 'Pakistan 1998. Year texture in buildYearTexture.',
+  },
+
+  afghan_crisis_neighbor: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Lived with Afghan refugee crisis and Afghan war spillover',
+    intent: 'year_texture',
+    notes: 'Pakistan 1980s. Year texture in buildYearTexture.',
+  },
+
+  womens_rights_restricted: {
+    weight: 'major',
+    category: 'discrimination',
+    description: 'Experienced legal discrimination under gender-unequal legal framework',
+    intent: 'year_texture',
+    notes: 'Pakistan Hudood/Zina; may overlap with other countries. Year texture in buildYearTexture.',
+  },
+
+  media_skeptic: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Learned not to trust state media through lived experience of the gap between broadcast and reality',
+    intent: 'year_texture',
+    notes: 'Year texture in buildYearTexture.',
+  },
+
+  religious_education: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Primary education was religious/madrassah rather than secular state schooling',
+    intent: 'year_texture',
+    notes: 'Year texture in buildYearTexture.',
+  },
+
+  spanish_flu_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the 1918-20 Spanish flu pandemic — the second wave, the lung deaths, the suppressed funerals',
+    intent: 'year_texture',
+    notes: 'Set by spanish_flu_1918 world event. Era-defining mortality experience; precedes any modern public health infrastructure.',
+  },
+
+  independence_disillusionment: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Came of age in a newly independent nation whose post-colonial promise was visibly narrowing by the 1970s',
+    intent: 'year_texture',
+    notes: 'Set by decolonisation_disillusionment_1970s world event. Affects subsaharan/developing_urban/developing_unstable archetypes, ages 15+.',
+  },
+
+  // ── South Korea ───────────────────────────────────────────────────────────────
+  korean_economic_miracle_worker: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Worked in the chaebol factory economy during South Korea\'s 9.2% annual growth miracle, 1960s-80s',
+    intent: 'year_texture',
+    notes: 'Set by korea_factory_1970s. Two branches: stayed/studied, or organized labour.',
+  },
+  gwangju_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through or near the May 18, 1980 Gwangju Uprising — paratroopers, suppressed death count, decade of silence',
+    intent: 'year_texture',
+    notes: 'Set by korea_gwangju_1980. Two branches: in Gwangju, or knew people who were.',
+  },
+  june_struggle_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed the June 1987 democratic struggle — Lee Han-yeol, office workers in streets, direct elections won',
+    intent: 'year_texture',
+    notes: 'Set by korea_democracy_1987.',
+  },
+  korean_imf_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the 1997-98 IMF crisis — won collapse, mass layoffs, gold donation drives, chaebol restructuring',
+    intent: 'year_texture',
+    notes: 'Set by korea_imf_crisis_1997. Two branches: laid off, or survived.',
+  },
+  hallyu_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived to see Korean cultural exports (drama, music) become a global force — hallyu wave 2000s-2010s',
+    intent: 'year_texture',
+    notes: 'Set by korea_hallyu_2000s.',
+  },
+  korean_speed_culture: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Internalized ppalli-ppalli (hurry-hurry) — South Korea\'s cultural tempo as a personal rhythm',
+    intent: 'year_texture',
+    notes: 'Set by korea_ppalli_ppalli.',
+  },
+
+  // ── Egypt ─────────────────────────────────────────────────────────────────────
+  nasser_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up during the Nasser era — Suez nationalization, pan-Arab nationalism, radio speeches that stopped rooms',
+    intent: 'year_texture',
+    notes: 'Set by egy_nasser_dream. Egypt 1956-67.',
+  },
+  naksa_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the June 1967 Six-Day War defeat — the Naksa, the collapse of the Nasser dream',
+    intent: 'year_texture',
+    notes: 'Set by egy_naksa_1967. Two branches: personal belief shattered, or brother at front.',
+  },
+  infitah_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age during Sadat\'s infitah (open door) — foreign goods, class stratification, not everyone on the same side',
+    intent: 'year_texture',
+    notes: 'Set by egy_sadat_infitah.',
+  },
+  mubarak_emergency_generation: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Lived under the 1981-2011 Emergency Law — detention without charge, the shape of what you don\'t say',
+    intent: 'year_texture',
+    notes: 'Set by egy_mubarak_emergency.',
+  },
+  egypt_bread_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed the 1977 bread riots — intifadat al-haita, the government backing down, the fact of it',
+    intent: 'year_texture',
+    notes: 'Set by egy_bread_riots_1977.',
+  },
+  tahrir_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed or participated in the January-February 2011 Tahrir Square revolution — 18 days, Mubarak gone',
+    intent: 'year_texture',
+    notes: 'Set by egy_tahrir_2011. Two branches: in Tahrir, or outside it.',
+  },
+  arab_spring_disillusionment: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived the post-Tahrir counter-revolution — emergency law returns, square holds different meaning',
+    intent: 'year_texture',
+    notes: 'Set by egy_tahrir_aftermath. Gates on tahrir_generation.',
+  },
+
+  // ── India ─────────────────────────────────────────────────────────────────────
+  emergency_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the 1975-77 Emergency — opposition arrests, press censorship, sterilization programmes, the parenthesis in Indian democracy',
+    intent: 'year_texture',
+    notes: 'Set by ind_emergency_1975. Two branches: adapted, or knew someone detained.',
+  },
+  india_1984_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Witnessed the 1984 anti-Sikh violence after Indira Gandhi\'s assassination — organized mobs, absent police, 2,733+ dead',
+    intent: 'year_texture',
+    notes: 'Set by ind_1984_sikh_massacre. Two branches: in Delhi, or at distance.',
+  },
+  babri_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed the December 6, 1992 demolition of the Babri Masjid and subsequent riots — the constitutional fault line exposed',
+    intent: 'year_texture',
+    notes: 'Set by ind_babri_masjid_1992.',
+  },
+  liberalization_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age during the 1991 Indian economic liberalization — licence raj dismantled, IT boom, new class formations',
+    intent: 'year_texture',
+    notes: 'Set by ind_liberalization_1991. Two branches: entered new economy, or left behind.',
+  },
+  gujarat_2002_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the 2002 Gujarat violence — organized communal killing, state government accountability disputed for decades',
+    intent: 'year_texture',
+    notes: 'Set by ind_gujarat_2002.',
+  },
+  bpo_generation: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Worked in India\'s BPO/call centre economy — night shifts on American time, adopted work name, salary above parents\' generation',
+    intent: 'year_texture',
+    notes: 'Set by ind_call_centre_generation.',
+  },
+  demonetization_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the November 2016 demonetization — 86% of currency withdrawn overnight, weeks of queues',
+    intent: 'year_texture',
+    notes: 'Set by ind_demonetization_2016. Two branches: had formal banking, or had cash savings.',
+  },
+
+  // ── Ireland ───────────────────────────────────────────────────────────────────
+  irish_emigrant_generation: {
+    weight: 'major',
+    category: 'experience',
+    description: 'Left Ireland as part of the structural emigration wave — the boat-train, London/Boston/Sydney',
+    intent: 'year_texture',
+    notes: 'Set by ire_emigration_wave (left branch). Irish emigration was a generational condition through most of the 20th century.',
+  },
+  stayed_in_ireland: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Stayed in Ireland while their generation emigrated — watching the town empty',
+    intent: 'year_texture',
+    notes: 'Set by ire_emigration_wave (stayed branch).',
+  },
+  troubles_adjacent: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived in the Republic during the Troubles — not in the conflict, but not outside it either',
+    intent: 'year_texture',
+    notes: 'Set by ire_troubles_border.',
+  },
+  celtic_tiger_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the Celtic Tiger years — cranes, returning emigrants, house prices doubling, the feeling of wealth',
+    intent: 'year_texture',
+    notes: 'Set by ire_celtic_tiger. Two branches: bought in, or held back.',
+  },
+  irish_crash_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the 2008-2013 Irish crash — bank guarantee, IMF, austerity, second emigration wave',
+    intent: 'year_texture',
+    notes: 'Set by ire_crash_2008. Two branches: lost job/house, or adjacent observer.',
+  },
+  irish_church_reckoning: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed the Irish Catholic Church institutional collapse — Ryan Report, Murphy Report, Magdalene laundries, industrial schools',
+    intent: 'year_texture',
+    notes: 'Set by ire_church_collapse.',
+  },
+
+  // ── Turkey ────────────────────────────────────────────────────────────────────
+  turkish_coup_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the September 12, 1980 Turkish military coup — 650,000 detained, systematic torture, constitution rewritten',
+    intent: 'year_texture',
+    notes: 'Set by tur_coup_1980. Two branches: politically active (detained risk), or observer.',
+  },
+  kemalist_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Turkish secular Kemalist — holds the headscarf ban and laicite as correct principles',
+    intent: 'year_texture',
+    notes: 'Set by tur_secularism_tension (secular choice).',
+  },
+  post_kemalist_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Turkish post-Kemalist — sees the headscarf ban as exclusion rather than secularism',
+    intent: 'year_texture',
+    notes: 'Set by tur_secularism_tension (religious freedom choice).',
+  },
+  marmara_earthquake_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived the August 1999 Marmara earthquake — 17,000+ dead, corruption-built buildings, slow government response',
+    intent: 'year_texture',
+    notes: 'Set by tur_earthquake_1999.',
+  },
+  gezi_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was in Gezi Park protests May 2013 — the line before and after which the trajectory of Turkey was clear',
+    intent: 'year_texture',
+    notes: 'Set by tur_erdogan_arc (Gezi branch).',
+  },
+  turkish_conservative_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'AKP supporter — saw the Kemalist establishment as the obstacle and Erdogan\'s decade as legitimate development',
+    intent: 'year_texture',
+    notes: 'Set by tur_erdogan_arc (conservative branch).',
+  },
+  turkish_historical_silence: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Knows the shape of what Turkey\'s state has decided the past is allowed to be — 1915, Article 301, Orhan Pamuk',
+    intent: 'year_texture',
+    notes: 'Set by tur_armenian_silence.',
+  },
+  turkish_growth_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age during Turkey\'s 2002-2012 economic triple — the AKP\'s first decade, inflation down, infrastructure up',
+    intent: 'year_texture',
+    notes: 'Set by tur_economic_miracle_2000s.',
+  },
+
+  // ── West Africa ───────────────────────────────────────────────────────────────
+  nkrumah_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up in Nkrumah\'s Ghana — the first independence, the pan-African project, the idea that was supposed to show what African self-governance could be',
+    intent: 'year_texture',
+    notes: 'Set by gha_nkrumah_dream.',
+  },
+  rawlings_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through Rawlings\' Ghana — coups, structural adjustment, the PNDC years',
+    intent: 'year_texture',
+    notes: 'Set by gha_rawlings_era.',
+  },
+  ghana_democracy_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed Ghana\'s 1992 democratization and the 2000 peaceful transfer of power to opposition',
+    intent: 'year_texture',
+    notes: 'Set by gha_democracy_1992.',
+  },
+  ivorian_miracle_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up during the Ivorian Miracle — 7% growth, the model West African economy, cocoa and coffee abundance',
+    intent: 'year_texture',
+    notes: 'Set by cdi_houphouet_era.',
+  },
+  ivoirite_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the ivoirité crisis — authenticity politics that excluded northerners/migrants and prefigured civil war',
+    intent: 'year_texture',
+    notes: 'Set by cdi_ivoirite_crisis. Two branches: affected, or benefiting.',
+  },
+  ivorian_civil_war_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the 2002-2011 Ivorian civil war — country split north/south, zone of confidence, Abidjan vs Bouaké',
+    intent: 'year_texture',
+    notes: 'Set by cdi_civil_war.',
+  },
+  nigerian_oil_boom_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age during the 1973-81 Nigerian oil boom — naira strength, federal abundance, the before of the SAP',
+    intent: 'year_texture',
+    notes: 'Set by nga_oil_boom.',
+  },
+  sap_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through Nigeria\'s IMF structural adjustment programme — devaluation, cuts, the floor systematically removed',
+    intent: 'year_texture',
+    notes: 'Set by nga_sap_1980s. The word SAP used for decades to describe what was done.',
+  },
+  saro_wiwa_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed the November 1995 execution of Ken Saro-Wiwa — the Ogoni activists, Shell, the delta that continued to burn',
+    intent: 'year_texture',
+    notes: 'Set by nga_saro_wiwa_1995.',
+  },
+  nigerian_diaspora_stigma: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Managed the 419 national stereotype abroad — the assumption that being Nigerian meant fraud association',
+    intent: 'year_texture',
+    notes: 'Set by nga_419_scam_culture.',
+  },
+
+  // ── Uganda ────────────────────────────────────────────────────────────────────
+  amin_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived under Idi Amin\'s Uganda 1971–79 — State Research Bureau terror, arbitrary disappearances, fear as the ambient condition',
+    intent: 'year_texture',
+    notes: 'Set by uga_amin_era.',
+  },
+  amin_asian_expulsion: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Asian-Ugandan expelled in 1972 — 90 days to leave, businesses and properties confiscated, three generations of belonging erased',
+    intent: 'year_texture',
+    notes: 'Set by uga_asian_expulsion_1972. Asian ethnicity guard.',
+  },
+  ugandan_aids_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Grew up in Uganda during the "Slim" epidemic — watched the village lose people before the disease had a name, ABC campaign era',
+    intent: 'year_texture',
+    notes: 'Set by uga_slim_disease.',
+  },
+  museveni_liberation_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Present for the 1986 NRA liberation — the hope of the January 26 moment, the specific quality of believing in a government for the first time',
+    intent: 'year_texture',
+    notes: 'Set by uga_museveni_liberation_1986.',
+  },
+  lra_northern_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the LRA years in northern Uganda — night commuting, child abductions, the geography of fear in Gulu and Kitgum',
+    intent: 'year_texture',
+    notes: 'Set by uga_lra_northern. Two branches: in the north, or in Kampala.',
+  },
+  museveni_consolidation_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Watched Museveni remove term limits and consolidate 30+ year rule — the distance between 1986 and now as the education',
+    intent: 'year_texture',
+    notes: 'Set by uga_museveni_consolidation.',
+  },
+  kampala_informal_generation: {
+    weight: 'minor',
+    category: 'experience',
+    description: 'Lived in the boda-boda city — Kampala organized around motorcycle taxis, the informal economy\'s most visible institution',
+    intent: 'year_texture',
+    notes: 'Set by uga_boda_boda_city.',
+  },
+
+  // ── Somalia ───────────────────────────────────────────────────────────────────
+  somalia_state_collapse: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the 1991 collapse of the Somali state — Barre falls, militia takes the streets, the specific texture of a country without a government',
+    intent: 'year_texture',
+    notes: 'Set by som_state_collapse_1991. Two branches: in Mogadishu, or fled.',
+  },
+  somali_clan_identity: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Navigates identity through clan — the checkpoint question, the 2am phone call, xeer as the safety net when the state is absent',
+    intent: 'year_texture',
+    notes: 'Set by som_clan_calculus.',
+  },
+  mogadishu_1993_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Present for the Battle of Mogadishu / Black Hawk Down — what October 3-4, 1993 means from inside the city vs. the film',
+    intent: 'year_texture',
+    notes: 'Set by som_unosom_black_hawk_down.',
+  },
+  alshabaab_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived under al-Shabaab control or in Mogadishu fighting it — music banned, phone restrictions, the order that comes with terror',
+    intent: 'year_texture',
+    notes: 'Set by som_alshabaab_generation. Two branches: territory, or AMISOM Mogadishu.',
+  },
+  somali_diaspora_connection: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Connected to the diaspora economy — remittances through hawala, the relative in Minnesota/Oslo/London who phones and sends',
+    intent: 'year_texture',
+    notes: 'Set by som_remittance_economy.',
+  },
+  somalia_famine_2011: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the 2011 famine — 260,000 dead, UN famine declaration, drought and conflict overlapping',
+    intent: 'year_texture',
+    notes: 'Set by som_famine_2011.',
+  },
+  somaliland_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up in Somaliland — the unrecognized state that works: elections, currency, police, constitution without international recognition',
+    intent: 'year_texture',
+    notes: 'Set by som_somaliland_stability. Isaaq ethnicity guard.',
+  },
+
+  // ── Thailand ──────────────────────────────────────────────────────────────────
+  thai_uncolonized_identity: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Absorbed the Thai national curriculum narrative of uncolonized pride — the only mainland SE Asian country to survive intact, with what that leaves out',
+    intent: 'year_texture',
+    notes: 'Set by tha_uncolonized_pride.',
+  },
+  thai_lese_majeste_awareness: {
+    weight: 'major',
+    category: 'experience',
+    description: 'Navigates the specific self-censorship of Article 112 — the pause before the opinion, accumulating counts, decades in prison for criticism',
+    intent: 'year_texture',
+    notes: 'Set by tha_lese_majeste.',
+  },
+  thai_1997_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the 1997 baht collapse — the construction cranes stopping, the companies folding, Thailand as the trigger of the Asian contagion',
+    intent: 'year_texture',
+    notes: 'Set by tha_1997_baht_crisis. Two branches: direct cost / survived with difficulty.',
+  },
+  thai_red_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Red Shirt — rural north/northeast, remembers Thaksin\'s policies (universal healthcare, village funds), the coup that undid them',
+    intent: 'year_texture',
+    notes: 'Set by tha_red_yellow_conflict.',
+  },
+  thai_yellow_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Yellow Shirt — urban middle class, royalist establishment, believed democratic form was insufficient to override corruption',
+    intent: 'year_texture',
+    notes: 'Set by tha_red_yellow_conflict.',
+  },
+  thai_coup_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed one of Thailand\'s thirteen coups — the tanks on the streets, the peaceful curfew, the generals explaining necessity on television',
+    intent: 'year_texture',
+    notes: 'Set by tha_coup_generation.',
+  },
+  thai_middle_income_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Part of Thailand\'s working/lower-middle class built by manufacturing and tourism — the thirty-year middle income plateau',
+    intent: 'year_texture',
+    notes: 'Set by tha_economic_middle_income.',
+  },
+
+  // ── NEPAL ────────────────────────────────────────────────────────────────────
+
+  nepal_maoist_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through Nepal\'s Maoist People\'s War 1996–2006 — the rural insurgency, the new authority, the decade of conflict that killed 13,000',
+    intent: 'year_texture',
+    notes: 'Set by nep_maoist_insurgency.',
+  },
+
+  nepal_royal_massacre_generation: {
+    weight: 'moderate',
+    category: 'world_event',
+    description: 'Witnessed the 2001 royal massacre — Crown Prince Dipendra kills the royal family, dies as king, the 240-year Shah dynasty fractures',
+    intent: 'year_texture',
+    notes: 'Set by nep_royal_massacre_2001.',
+  },
+
+  nepal_republic_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed Nepal become a federal republic in 2008 — the end of the world\'s only Hindu kingdom by popular vote',
+    intent: 'year_texture',
+    notes: 'Set by nep_republic_2006.',
+  },
+
+  nepal_gulf_worker: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Part of Nepal\'s Gulf labor migration wave — the kafala system, the remittance economy, the one-way ticket',
+    intent: 'year_texture',
+    notes: 'Set by nep_gulf_migration.',
+  },
+
+  nepal_earthquake_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived the 2015 Gorkha earthquake — 9,000 dead, 600,000 houses destroyed, the silence after the shaking stopped',
+    intent: 'year_texture',
+    notes: 'Set by nep_earthquake_2015.',
+  },
+
+  nepal_youth_exodus_generation: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Part of the generation that left Nepal or watched 1,500 young people a day leave — the village empty of anyone their age',
+    intent: 'year_texture',
+    notes: 'Set by nep_youth_exodus.',
+  },
+
+  // ── MYANMAR ──────────────────────────────────────────────────────────────────
+
+  myanmar_socialist_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Grew up under Ne Win\'s Burmese Way to Socialism — the isolation, the nationalisation, the shortwave radio as the only window',
+    intent: 'year_texture',
+    notes: 'Set by mya_socialist_isolation.',
+  },
+
+  myanmar_1988_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Witnessed or participated in the 8888 Uprising — hundreds of thousands in the streets, 3,000 killed, SLORC coup',
+    intent: 'year_texture',
+    notes: 'Set by mya_1988_uprising.',
+  },
+
+  myanmar_activist: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Was in the streets during the 8888 Uprising — carries the memory of the crowd and what followed',
+    intent: 'year_texture',
+    notes: 'Set by mya_1988_uprising (first branch).',
+  },
+
+  myanmar_junta_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the SLORC/SPDC decades — junta cronies, forced labour, the stolen 1990 election',
+    intent: 'year_texture',
+    notes: 'Set by mya_slorc_years.',
+  },
+
+  myanmar_saffron_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Witnessed the 2007 Saffron Revolution — monks with upturned bowls, the crackdown, Kenji Nagai shot',
+    intent: 'year_texture',
+    notes: 'Set by mya_saffron_revolution_2007.',
+  },
+
+  myanmar_nargis_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived Cyclone Nargis 2008 — 140,000 dead in the Irrawaddy Delta, the junta blocking international aid',
+    intent: 'year_texture',
+    notes: 'Set by mya_cyclone_nargis_2008.',
+  },
+
+  myanmar_civilian_hope_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived the 2011–21 opening — press freedom, Suu Kyi freed and elected, foreign investment, the decade of cautious hope',
+    intent: 'year_texture',
+    notes: 'Set by mya_civilian_opening_2011.',
+  },
+
+  myanmar_coup_2021: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the February 2021 military coup — CDM strikes, crackdown, PDF resistance, the decade of opening reversed',
+    intent: 'year_texture',
+    notes: 'Set by mya_coup_2021.',
+  },
+
+  myanmar_cdm_participant: {
+    weight: 'major',
+    category: 'political',
+    description: 'Participated in the Civil Disobedience Movement after the 2021 coup — left the job, joined the strike, put their name on a list',
+    intent: 'year_texture',
+    notes: 'Set by mya_coup_2021 (first branch).',
+  },
+
+  // ── TUNISIA ──────────────────────────────────────────────────────────────────
+
+  tunisian_womens_rights_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Tunisian woman aware of the 1956 Code of Personal Status — the only Arab country to abolish polygamy and require consent for marriage at independence',
+    intent: 'year_texture',
+    notes: 'Set by tun_code_personal_status.',
+  },
+
+  tunisian_ben_ali_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up or came of age under Ben Ali\'s police state — the controlled bread and silence, the police politique, the art of living in permitted spaces',
+    intent: 'year_texture',
+    notes: 'Set by tun_ben_ali_state.',
+  },
+
+  tunisian_revolution_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Witnessed Tunisia\'s Jasmine Revolution — Bouazizi\'s act, the twenty-eight days, Ben Ali\'s flight, the one Arab Spring that completed its arc',
+    intent: 'year_texture',
+    notes: 'Set by tun_bouazizi_revolution_2011.',
+  },
+
+  tunisian_democratic_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through Tunisia\'s democratic transition 2012–19 — the Nobel-winning constitution, Ennahda negotiating with secularists, the experiment the world watched',
+    intent: 'year_texture',
+    notes: 'Set by tun_democratic_transition.',
+  },
+
+  tunisian_saied_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through Saied\'s 2021 constitutional coup — the purging of the constitution written by the revolution, the democracy dismantled by its own president',
+    intent: 'year_texture',
+    notes: 'Set by tun_saied_coup_2021.',
+  },
+
+  tunisian_interior_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Aware of the coast/interior divide — the economic model that left Sidi Bouzid behind, the structural context of the man who started the revolution',
+    intent: 'year_texture',
+    notes: 'Set by tun_economic_interior.',
+  },
+
+  // ── SUDAN ────────────────────────────────────────────────────────────────────
+
+  sudan_islamist_law_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived under Nimeiry\'s September Laws 1983 — Sharia applied to Sudan, public executions, Mahmoud Taha executed',
+    intent: 'year_texture',
+    notes: 'Set by sdn_nimeiry_sharia_1983.',
+  },
+
+  sudan_bashir_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through Bashir\'s 30-year Islamist military dictatorship — ghost houses, dissolved unions, the Khartoum of the NIF',
+    intent: 'year_texture',
+    notes: 'Set by sdn_bashir_coup_1989.',
+  },
+
+  darfur_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Witnessed or was affected by the Darfur genocide 2003+ — Janjaweed, 300,000-400,000 dead, ICC arrest warrant for Bashir',
+    intent: 'year_texture',
+    notes: 'Set by sdn_darfur_2003.',
+  },
+
+  sudan_south_separation_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed South Sudan\'s independence 2011 — a third of Sudan\'s territory and most of the oil leaving',
+    intent: 'year_texture',
+    notes: 'Set by sdn_south_sudan_independence_2011.',
+  },
+
+  sudan_revolution_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through Sudan\'s 2019 revolution — Bashir falls after bread protests, the sit-in at military HQ, June 3 massacre, transitional agreement',
+    intent: 'year_texture',
+    notes: 'Set by sdn_revolution_2019.',
+  },
+
+  sudanese_activist: {
+    weight: 'major',
+    category: 'political',
+    description: 'Was at the Khartoum sit-in in 2019 — present when the revolution was made and when the RSF fired into it on June 3',
+    intent: 'year_texture',
+    notes: 'Set by sdn_revolution_2019 (first branch).',
+  },
+
+  sudan_coup_2021_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the October 2021 coup that ended the transitional government — the second reversal in three years',
+    intent: 'year_texture',
+    notes: 'Set by sdn_coup_2021.',
+  },
+
+  // ── ANGOLA ───────────────────────────────────────────────────────────────────
+
+  angola_civil_war_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through Angola\'s 27-year civil war (1975–2002) — 500,000 dead, 4 million displaced, Cold War proxy conflict',
+    intent: 'year_texture',
+    notes: 'Set by ang_independence_civil_war_1975.',
+  },
+
+  angola_mpla_supporter: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Supported the MPLA in the civil war — the Marxist movement that held Luanda and won international recognition',
+    intent: 'year_texture',
+    notes: 'Set by ang_independence_civil_war_1975 (first branch).',
+  },
+
+  angola_landmine_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Grew up with landmines as a background fact — 15 million mines in Angolan soil, the paths that exist because other paths are mined',
+    intent: 'year_texture',
+    notes: 'Set by ang_war_years_midlife and ang_landmine_reality.',
+  },
+
+  angola_peace_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Experienced Angola\'s 2002 peace — Savimbi killed, Luena Memorandum signed, end of a war that ran for 27 years',
+    intent: 'year_texture',
+    notes: 'Set by ang_peace_2002.',
+  },
+
+  angola_oil_boom_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the post-war oil boom — Luanda as the world\'s most expensive city for expats, construction cranes, MPLA wealth capture',
+    intent: 'year_texture',
+    notes: 'Set by ang_oil_boom.',
+  },
+
+  angola_mpla_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived under Dos Santos\' 38-year MPLA rule — the party that fought colonialism becoming its own extraction machine',
+    intent: 'year_texture',
+    notes: 'Set by ang_dos_santos_rule.',
+  },
+
+  // ── JORDAN ───────────────────────────────────────────────────────────────────
+
+  jordanian_palestinian_identity: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Palestinian-Jordanian identity — the family displacement story, the village key, the border that created a different country within living memory',
+    intent: 'year_texture',
+    notes: 'Set by jor_palestinian_family. 48% of Jordan\'s population.',
+  },
+
+  jordan_black_september_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Witnessed Black September 1970 — PLO-Jordan civil war, thousands dead, PLO expelled to Lebanon',
+    intent: 'year_texture',
+    notes: 'Set by jor_black_september_1970.',
+  },
+
+  jordanian_wasta_used: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Used family connections (wasta) to open a door — the infrastructure of Jordanian social mobility',
+    intent: 'year_texture',
+    notes: 'Set by jor_wasta_system (first branch).',
+  },
+
+  jordanian_no_wasta: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Navigated Jordan without family wasta — the longer path through the system',
+    intent: 'year_texture',
+    notes: 'Set by jor_wasta_system (second branch).',
+  },
+
+  jordanian_peace_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through Jordan\'s 1994 Wadi Araba peace treaty with Israel — the pragmatic case and the Palestinian-Jordanian complication',
+    intent: 'year_texture',
+    notes: 'Set by jor_peace_treaty_1994.',
+  },
+
+  jordanian_syrian_refugee_host: {
+    weight: 'major',
+    category: 'world_event',
+    description: 'Witnessed Jordan absorbing 1.3 million Syrian refugees 2012-15 — 10% of the population, Zaatari, double-shift schools, water stress',
+    intent: 'year_texture',
+    notes: 'Set by jor_syrian_refugees_2012.',
+  },
+
+  jordanian_hussein_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Lived through King Hussein\'s long reign — the survivor king, 47 years of monarchy holding a fragile state together',
+    intent: 'year_texture',
+    notes: 'Set by jor_king_hussein_era.',
+  },
+
+  // ── LIBYA ────────────────────────────────────────────────────────────────────
+
+  libyan_jamahiriya_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up in Gaddafi\'s Jamahiriya — the Green Book ideology, basic popular congresses, free oil-funded welfare state, Revolutionary Guard surveillance',
+    intent: 'year_texture',
+    notes: 'Set by lby_gaddafi_jamahiriya.',
+  },
+
+  libyan_sanctions_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived under UN sanctions 1992–2003 — Lockerbie, no flights, frozen assets, the thinner shelves of international isolation',
+    intent: 'year_texture',
+    notes: 'Set by lby_lockerbie_sanctions.',
+  },
+
+  libyan_rehabilitation_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Watched Libya\'s 2003 rehabilitation — WMD disclosed, sanctions lifted, Blair shaking Gaddafi\'s hand, Western oil companies returning',
+    intent: 'year_texture',
+    notes: 'Set by lby_rehabilitation_2003.',
+  },
+
+  libyan_revolution_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the 2011 revolution — Benghazi uprising, NATO, Gaddafi killed in a drainage pipe, the 42-year state dissolving overnight',
+    intent: 'year_texture',
+    notes: 'Set by lby_revolution_2011.',
+  },
+
+  libyan_revolutionary: {
+    weight: 'major',
+    category: 'political',
+    description: 'Joined or supported the 2011 uprising against Gaddafi — and has been living with what the revolution produced',
+    intent: 'year_texture',
+    notes: 'Set by lby_revolution_2011 (first branch).',
+  },
+
+  libyan_fragmentation_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lives in post-Gaddafi Libya — two governments, militias, oil fields as bargaining chips, Islamic State in Benghazi',
+    intent: 'year_texture',
+    notes: 'Set by lby_post_gaddafi_chaos.',
+  },
+
+  libyan_oil_state_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age in the Gaddafi oil state — free housing, free university, free healthcare, the Mukhabarat as the price',
+    intent: 'year_texture',
+    notes: 'Set by lby_gaddafi_oil_state.',
+  },
+
+  // ─── ZAMBIA ───────────────────────────────────────────────────────────────────
+
+  zambian_kaunda_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up under Kenneth Kaunda\'s Humanism — the copper-funded welfare state, UNIP, Man at the Centre',
+    intent: 'year_texture',
+    notes: 'Set by zmb_kaunda_humanism.',
+  },
+
+  zambian_copper_belt_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Came of age in the Copper Belt company towns — Kitwe, Ndola, Luanshya, the miner\'s wage, the brief oil-state-of-Africa moment',
+    intent: 'year_texture',
+    notes: 'Set by zmb_copper_belt.',
+  },
+
+  zambian_copper_crash_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the 1975 copper price collapse and the IMF structural adjustment years — the hollowing-out of a welfare state',
+    intent: 'year_texture',
+    notes: 'Set by zmb_copper_crash.',
+  },
+
+  zambian_democracy_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed Zambia\'s 1991 democratic transfer of power — Kaunda loses to Chiluba, the first in southern Africa',
+    intent: 'year_texture',
+    notes: 'Set by zmb_democratic_transition_1991.',
+  },
+
+  zambian_aids_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the Zambian AIDS crisis — life expectancy falls to 40, the generation between 20 and 40 bears most of the dying',
+    intent: 'year_texture',
+    notes: 'Set by zmb_aids_crisis_1990s.',
+  },
+
+  zambian_evangelical_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Part of the Zambian evangelical wave — Zambia declared a Christian nation 1991, Pentecostal churches filling the gap left by the state',
+    intent: 'year_texture',
+    notes: 'Set by zmb_evangelical_wave.',
+  },
+
+  // ─── MOZAMBIQUE ───────────────────────────────────────────────────────────────
+
+  mozambican_frelimo_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Grew up under FRELIMO\'s one-party socialist state — independence, nationalisation, "A luta continua", the infrastructure-sparse inheritance of Portuguese colonialism',
+    intent: 'year_texture',
+    notes: 'Set by moz_frelimo_independence.',
+  },
+
+  mozambican_civil_war_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the RENAMO civil war 1977–1992 — destruction of schools/clinics, 1 million dead, South African destabilisation',
+    intent: 'year_texture',
+    notes: 'Set by moz_renamo_civil_war.',
+  },
+
+  mozambican_machel_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Alive when Samora Machel died in the 1986 plane crash — the only president Mozambique had known, suspicion of South African involvement',
+    intent: 'year_texture',
+    notes: 'Set by moz_machel_death_1986.',
+  },
+
+  mozambican_peace_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed the 1992 Rome Peace Accords and the first Mozambican multi-party elections — the war ending after fifteen years',
+    intent: 'year_texture',
+    notes: 'Set by moz_peace_accords_1992.',
+  },
+
+  mozambican_floods_generation: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Lived through the 2000 Mozambique floods — Cyclone Eline, 800 dead, 500,000 displaced, baby Rosita born in a tree',
+    intent: 'year_texture',
+    notes: 'Set by moz_floods_2000.',
+  },
+
+  mozambican_gas_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Came of age when offshore gas was discovered and the Cabo Delgado insurgency began — the resource and the violence arriving together',
+    intent: 'year_texture',
+    notes: 'Set by moz_gas_cabo_delgado.',
+  },
+
+  // ─── AFGHANISTAN ──────────────────────────────────────────────────────────────
+
+  afghan_saur_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up during the Saur Revolution and Soviet-backed PDPA communist rule — land reform, literacy campaigns, and disappearances',
+    intent: 'year_texture',
+    notes: 'Set by afg_saur_revolution_1978.',
+  },
+
+  afghan_soviet_war_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the Soviet-Afghan War 1979–1989 — 1 million dead, 5 million refugees, mujahideen jihad',
+    intent: 'year_texture',
+    notes: 'Set by afg_soviet_occupation.',
+  },
+
+  afghan_combatant: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Fought in the Afghan wars — as mujahideen, soldier, or resistance; carries the specific knowledge of having been in the war',
+    intent: 'year_texture',
+    notes: 'Set by afg_soviet_occupation (choice 1).',
+  },
+
+  afghan_refugee: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Fled Afghanistan — to Pakistan, Iran, or the diaspora; Afghan in a place that is not Afghanistan',
+    intent: 'year_texture',
+    notes: 'Set by afg_soviet_occupation (choice 2).',
+  },
+
+  afghan_civil_war_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the post-Soviet civil war 1992–1996 — warlords, Kabul destroyed, 70,000 civilian dead',
+    intent: 'year_texture',
+    notes: 'Set by afg_civil_war_kabul.',
+  },
+
+  afghan_taliban_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived under Taliban rule 1996–2001 — schools closed for girls, music/TV/kite-flying banned, religious police',
+    intent: 'year_texture',
+    notes: 'Set by afg_taliban_rule.',
+  },
+
+  afghan_women_under_taliban: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Experienced Taliban rule as a woman — banned from work, school, public life without a male guardian',
+    intent: 'year_texture',
+    notes: 'Set by afg_taliban_rule (choice 1, female experience).',
+  },
+
+  afghan_2001_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the 2001 US invasion and the "Kabul bubble" — girls\' schools reopening, aid economy, reconstruction hope',
+    intent: 'year_texture',
+    notes: 'Set by afg_us_invasion_2001.',
+  },
+
+  afghan_fall_2021: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Alive when Kabul fell in August 2021 — eleven days, airport chaos, Taliban return, everything built in 20 years at risk',
+    intent: 'year_texture',
+    notes: 'Set by afg_taliban_return_2021.',
+  },
+
+  afghan_evacuee: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Evacuated from Afghanistan in August 2021 — through the airport, the border, or some other route; starting over',
+    intent: 'year_texture',
+    notes: 'Set by afg_taliban_return_2021 (choice 1, got out).',
+  },
+
+  // ─── YEMEN ────────────────────────────────────────────────────────────────────
+
+  yemeni_saleh_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up under Ali Abdullah Saleh\'s rule — tribal balancing, qat culture, the mosque as civic institution',
+    intent: 'year_texture',
+    notes: 'Set by yem_saleh_era_childhood.',
+  },
+
+  yemeni_unification_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Alive for Yemeni reunification 1990 — north and south merging two genuinely different societies',
+    intent: 'year_texture',
+    notes: 'Set by yem_unification_1990.',
+  },
+
+  yemeni_1994_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the 1994 civil war — south crushed in 70 days, land redistributed to northern tribes, unresolved grievances',
+    intent: 'year_texture',
+    notes: 'Set by yem_1994_civil_war.',
+  },
+
+  yemeni_revolution_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'In Change Square 2011 — Saleh removed, the brief hope of the Arab Spring transition',
+    intent: 'year_texture',
+    notes: 'Set by yem_arab_spring_2011.',
+  },
+
+  yemeni_war_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived the 2015+ war — Saudi airstrikes, Houthi control, proxy conflict with no clean sides',
+    intent: 'year_texture',
+    notes: 'Set by yem_houthi_war_2015.',
+  },
+
+  yemeni_war_north: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'In Sana\'a or Houthi-controlled north during the war — occupied city, aerial bombardment',
+    intent: 'year_texture',
+    notes: 'Set by yem_houthi_war_2015 (choice 1, north).',
+  },
+
+  yemeni_war_south: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'In Aden or southern Yemen during the war — contested city, STC vs. Hadi government',
+    intent: 'year_texture',
+    notes: 'Set by yem_houthi_war_2015 (choice 2, south).',
+  },
+
+  yemeni_crisis_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the Yemen humanitarian collapse — cholera epidemic, famine conditions, Hodeidah siege',
+    intent: 'year_texture',
+    notes: 'Set by yem_humanitarian_collapse.',
+  },
+
 }
