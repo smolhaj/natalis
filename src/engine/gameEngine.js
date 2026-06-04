@@ -2060,6 +2060,185 @@ function buildYearTexture(state) {
     'You look at yourself in the mirror and know that nobody else in the family looks like this. That knowledge is its own territory, familiar and not particularly troubling most days.',
   ])
 
+  // ─── MAJOR HISTORICAL AND DISPLACEMENT FLAG TEXTURE ──────────────────────────
+
+  if (F.has('rwandan_survivor') && Math.random() < 0.25) return pick([
+    'You survived 1994. That sentence does not get shorter with time. It is the fixed point from which everything else is measured.',
+    'You know what happened in April. You know the names. The names do not go anywhere.',
+    phase === 'late_life'
+      ? 'You have been carrying what you saw in 1994 for decades. The world has classified it and moved on. You move through it carrying what it does not carry.'
+      : 'The year 1994 is not a historical event for you. It is the crease in the middle of your life.',
+    'Rwanda before and Rwanda after are different countries. You are a person who was present in both and who carries the distance between them.',
+    'You look at your identification document and know exactly what it once meant to be asked to show it.',
+  ])
+
+  if (F.has('uyghur_detained') && Math.random() < 0.25) return pick([
+    'The facility was called a vocational training centre in the paperwork. You were inside it. Whatever was done to you there belongs to you to carry in whatever way is possible.',
+    'You said what you were required to say. The saying was the cost of release. You have not finished accounting for what the cost was.',
+    phase === 'late_life'
+      ? 'You were inside and you came out. Many did not. The arithmetic of that is something you have not found a way to resolve.'
+      : 'The things required of you inside — the sessions, the recitations, the particular kind of submission — left a specific mark. You know where the mark is.',
+    'You do not speak about what happened there to people who were not there. The gap between what happened and what is sayable is the territory you live in.',
+  ])
+
+  if (F.has('uyghur_diaspora') && Math.random() < 0.22) return pick([
+    'You cannot call home without thinking about who else is on the call. You have learned to say nothing that matters.',
+    'The relatives have stopped answering. You have learned to interpret the silence and then to stop interpreting it because the interpretation is too heavy.',
+    'You are Uyghur in a country that does not carry the weight of what that means. You carry it for them without being asked.',
+    phase === 'late_life'
+      ? 'You left Xinjiang. The family you left there is the other side of an account that cannot be settled from here.'
+      : 'The culture you are carrying in the diaspora is the culture that is being unmade at home. The carrying has a specific urgency.',
+  ])
+
+  if ((F.has('rohingya_stateless') || F.has('rohingya_displacement')) && Math.random() < 0.25) return pick([
+    'The document says what you are not. You carry it. It does not carry you.',
+    'Stateless is a legal category. You live inside it as a complete person who is recognized by the state as something less than a person.',
+    F.has('rohingya_displacement')
+      ? 'The village is still on the map. You are not in it. What happened to it in August 2017 is documented by people who were not there. You were there.'
+      : 'The 1982 law is what made you this. A citizenship act that decided your community was not from here. The decision was made before you were born.',
+    phase === 'late_life'
+      ? 'You have lived your entire life as someone the state does not recognize. The dignity of a life lived inside that is not nothing.'
+      : 'The camp or the country of asylum is where you are. The place you came from is the place you came from. The distance between them is your daily mathematics.',
+  ])
+
+  if ((F.has('kurd_identity_suppressed') || F.has('kurd_stateless')) && Math.random() < 0.22) return pick([
+    F.has('kurd_identity_suppressed')
+      ? 'The language you think in is the language you are not permitted to speak in public. That division does not disappear. It sits in the center of things.'
+      : 'The state stripped the citizenship of your community and called it a census correction. The document you do not have has shaped every document you do have.',
+    'Your name was changed in the official register. The name your parents gave you is the name used at home. You have been navigating two names for as long as you can remember.',
+    phase === 'late_life'
+      ? 'You have been Kurdish in a country that sometimes prosecuted that fact. The persistence of who you are against that pressure is the record.'
+      : 'To be Kurdish here is to carry the political fact of being Kurdish everywhere — at school, at the checkpoint, in the office where the form asks for national identity.',
+    'The culture is maintained in specific ways: the language at home, the songs at weddings, the names chosen for children. Maintenance is resistance when maintenance is required.',
+  ])
+
+  if (F.has('colonial_category') && Math.random() < 0.2) return pick([
+    'A colonial administrator wrote the categories into a register. You live inside the categories. The administrator is long gone.',
+    'The ethnicity that was fixed by a census has become the ethnicity that determines everything: neighbourhood, school, job, who stops you on the road.',
+    phase === 'late_life'
+      ? 'You have lived your entire life inside a category that was invented before your birth by people who had never met anyone from your community. The invention became fate.'
+      : 'The document says what you are. The category that was invented to manage a colony is now the category that manages you.',
+    'The people who created the distinction between your group and the other group did not understand what they were doing. The distinction has been doing things ever since.',
+  ])
+
+  if (F.has('tonton_macoute_era') && Math.random() < 0.22) return pick([
+    'The Macoutes were not the only power but they were the most visible one. You learned to read the street for the signs of their presence before anything else.',
+    'There were things you did not say and places you did not go. The calculation was automatic enough by the end that it no longer felt like calculation. It felt like weather.',
+    phase === 'late_life'
+      ? 'The Duvalier years are history now. For you they are not history — they are the specific texture of specific afternoons and specific silences your family kept.'
+      : 'Haiti under Duvalier was Haiti. That was the country. The fear was not an exception; it was the atmosphere.',
+    'You learned early the difference between public and private, between what can be said to whom, between the face for the street and the face for the house.',
+  ])
+
+  if (F.has('ofw_worker') && Math.random() < 0.22) return pick([
+    'The remittance is the first fact of every month. Before food, before rent — what goes home. You have organised your life around this arithmetic.',
+    'You are here. Your family is there. The distance is a specific dimension you did not fully understand when you agreed to it.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'You have been doing this for years now — the contract renewals, the phone calls, the balikbayan boxes. You know what you traded. The accounting is not finished.'
+      : 'The job is not the life you imagined. It is the life that funds the life you want for the people at home. That is the contract you signed.',
+    'You are a worker in a country that needs workers and does not want settlers. The visa is for the labour. The visa is not for the rest of you.',
+  ])
+
+  if (F.has('ofw_returned') && Math.random() < 0.2) return pick([
+    'You went. You worked. You sent money. You came back. The country you came back to is not the one you left, and neither are you.',
+    'Your children grew up with your voice on a phone and the contents of boxes. The relationship you have with them now is the relationship built from that distance.',
+    phase === 'late_life'
+      ? 'The years abroad were the years. What they bought back home is built and visible. What they cost is also built into you, less visibly.'
+      : 'The return was supposed to be the end of the sacrifice. The end of the sacrifice is more complicated than the sacrifice.',
+    'People at home think the money solved the problems. Some problems the money solved. Others it could not reach.',
+  ])
+
+  if (F.has('moral_weight_carried') && Math.random() < 0.22) return pick([
+    'The order came down. You carried it out. The circumstances are specific and the weight of what you did in those circumstances is specific. It has not left.',
+    'You know what you did and in what context and whether the context changes it. That is the conversation you have with yourself on the years it surfaces.',
+    phase === 'late_life'
+      ? 'You have been carrying what you did for a long time. The carrying does not end. You have learned to carry it without being destroyed by it. That is something.'
+      : 'There are the things you did in service and the things you did as a person and sometimes those two things sat on opposite sides of the same action.',
+    'The people who gave the orders are not the ones carrying the weight of carrying them out. You know this. The knowing does not lighten anything.',
+  ])
+
+  if (F.has('institutional_complicity') && Math.random() < 0.2) return pick([
+    'You knew. The institution knew. The way it proceeded was that knowing was not acting. The gap between those two things is where something happened to you that has not finished happening.',
+    'There were the public duties and the private knowledge. The gap between them is the place you have been living in.',
+    phase === 'late_life'
+      ? 'The institution has since accounted for some of what it knew and did not do. The accounting does not reach inside where the knowledge has been sitting.'
+      : 'You took vows. The institution also made promises. The promises it did not keep are your private inventory.',
+  ])
+
+  if (F.has('anfal_generation') && Math.random() < 0.22) return pick([
+    'The Anfal campaign was organised extermination — chemical weapons, mass graves, villages razed. You know who did not come back from the places they were taken. The names are specific.',
+    'The mountains held some of the survivors. The valleys held the rest. You know which side of that accounting you were on.',
+    phase === 'late_life'
+      ? 'The Anfal is documented now — by courts, by NGOs, by the word genocide used in the places where that word is not used lightly. You lived it before it had a name.'
+      : 'To be Kurdish and to have been alive in 1988 is to carry the Anfal. You know exactly what you lost and you know that the numbers in the documents are incomplete.',
+    'The gas came and the soldiers came and then they were gone and the village was gone. What remained is what you are made of.',
+  ])
+
+  if (F.has('haitian_diaspora') && Math.random() < 0.2) return pick([
+    'You send what you can. The obligation is not a burden exactly — it is the shape love takes across the distance from Haiti.',
+    'Home is a country you left and a country you carry. The earthquake changed both versions of it.',
+    phase === 'late_life'
+      ? 'You built your life here and sent money back for decades. The question of which life was the real one is the question you have not finished answering.'
+      : 'You are Haitian in the diaspora. You know the history — the revolution, the debt of independence, what was owed and what was paid — in a way that people here do not.',
+  ])
+
+  if (F.has('tamil_diaspora') && Math.random() < 0.2) return pick([
+    'You are Tamil outside Sri Lanka. The language is what you have kept of home. The children\'s Tamil is already different from yours.',
+    'The war ended in 2009. You watched from here. The ending was documented. The ending was not what anyone who wanted something like justice had hoped for.',
+    phase === 'late_life'
+      ? 'You left before or during the war and rebuilt elsewhere. The island you left is the island your grandchildren will visit as tourists. That is the arc of it.'
+      : 'What happened in the last months of the war — Mullivaikkal, the numbers — you carry the account. The official version and the account are different things.',
+  ])
+
+  if ((F.has('stateless_childhood') || F.has('stateless_navigator')) && Math.random() < 0.22) return pick([
+    'There is a document that most people have and you do not. The absence organises a surprising number of things.',
+    'The form asks for a document you cannot produce. The procedure designed for people with documents does not have a path for people without them. You find the path anyway.',
+    phase === 'late_life'
+      ? 'You have navigated a life without the basic document for decades. The skill of navigating without it is so practised it no longer feels like skill — it is just what you do.'
+      : 'Stateless is not a temporary condition waiting to be fixed. It is the condition. You are learning the full dimensions of living inside it.',
+    'The border that cannot be crossed. The school that requires papers. The job that requires papers. The hospital that requires papers. This is the shape of the statelessness.',
+  ])
+
+  if (F.has('years_of_lead_generation') && Math.random() < 0.2) return pick([
+    'The Years of Lead — that is what they are called now. In those years they were simply the years, and the fear was the atmosphere rather than a named thing.',
+    'The people who disappeared in those years disappeared into specific buildings on specific streets that everyone knew about and no one named aloud.',
+    phase === 'late_life'
+      ? 'The Equity and Reconciliation Commission heard testimonies. Yours is one kind of testimony. The testimony is not the same as justice, but it is something.'
+      : 'To have grown up in Morocco in those decades is to carry a specific wariness — about what can be said and to whom and in what space.',
+  ])
+
+  if (F.has('ujamaa_generation') && Math.random() < 0.2) return pick([
+    'The ujamaa village was the policy. The actual village was your life. You lived in the distance between those two things.',
+    'Nyerere\'s Tanzania was a particular thing — the Arusha Declaration, the nationalisation, the Swahili as the language of everyone. The idea was real. The implementation had its own accounting.',
+    phase === 'late_life'
+      ? 'Tanzania changed after the structural adjustment years. The ujamaa project ended. Whether it was right and what it cost and what it built is a question you have been working out your whole life.'
+      : 'You grew up in a country that was trying something — a version of socialism that was distinctly African, specifically Tanzanian. The trying shaped you even when the thing being tried did not work as planned.',
+  ])
+
+  if (F.has('sangha_member') && Math.random() < 0.2) return pick([
+    'The practice is the daily thing. The monastery or the meditation hall or the practice at home before the day begins — the Dhamma is the structure the days hang on.',
+    'You have taken vows or precepts or simply made the commitment. The commitment is tested in ordinary conditions, not only exceptional ones.',
+    phase === 'late_life'
+      ? 'The practice has been the practice for decades. What it has done to you — in attention, in equanimity, in the way suffering sits — is hard to measure and visible in small things.'
+      : 'The sangha is the community. The community is as imperfect as any other community. The practice is what continues regardless of the community\'s imperfections.',
+  ])
+
+  if (F.has('id98_witness_bystander') && Math.random() < 0.2) return pick([
+    'May 1998 in Jakarta is something you were inside. What you did and did not do in those days is something you know.',
+    'The choice — to help, to watch, to turn away — was made in seconds. The weight of it has a longer duration.',
+    phase === 'late_life'
+      ? 'You were a bystander in 1998. The riots. The shops burning. What you did in that moment you have been living with since.'
+      : 'Indonesia after Reformasi was a different country. You were present in the transition — in the specific chaos and specific fear of May 1998.',
+  ])
+
+  if (F.has('algeria_exile') && Math.random() < 0.2) return pick([
+    'You left Algeria during the Black Decade. The country you left is not the country you could have stayed in — the choice was not really a choice.',
+    'You are Algerian in the diaspora. The intellectuals and journalists who stayed had their own accounting to do. Yours was done in exile.',
+    phase === 'late_life'
+      ? 'The Algeria of the 1990s is what the exile was from. The Algeria that exists now is something you watch from a distance and try to understand.'
+      : 'The distance from Algeria is the distance from the violence and also from the place. The two are not the same distance and do not close at the same rate.',
+  ])
+
   // Career and hobbies
   if (career && F.has('career_fulfilled') && Math.random() < 0.6) return pick([
     'The work is good. You don\'t say that to people much, but it\'s true.',
@@ -4493,7 +4672,6 @@ function buildYearTexture(state) {
       'The future is still mostly theoretical.',
       'You have not become who you are going to be yet. That is not a problem.',
       'You are building something — a life, a self, a version of both — and the blueprint keeps changing.',
-      'You are in the city / in the world / in the thing. It is larger than you expected.',
       'The decisions that matter are not always the ones that look like decisions.',
       'You have made some mistakes. The useful ones are teaching you something.',
       'The people who knew you before are seeing you become someone they don\'t entirely recognise. You are learning to let that be.',
@@ -4501,6 +4679,24 @@ function buildYearTexture(state) {
       'There is a gap between the life you imagined and the one you are building. You are learning which parts of that gap to close.',
       'Your opinions are forming and hardening and sometimes cracking. You are letting them.',
       'You are acquiring a self by trial and error, which is the only way.',
+      'The city is bigger than expected and cheaper in some ways and more expensive in others and full of people who are also figuring it out.',
+      'You are accumulating experiences at a rate that will not last. This will not be obvious until it slows.',
+      'The friendships you are making now have a specific intensity — people who are becoming themselves in the same window you are.',
+      'Sleep is abundant or nonexistent. There is no middle. You are not sure which mode you are in this month.',
+      'The job is not the career. Or the job is the career. Either way, you are still learning what the difference is.',
+      'You have opinions about the people who shaped you now that you did not have when you were with them. You are sorting which ones are fair.',
+      'Love at this age is conducted at full volume. You are not sure whether to be embarrassed about that or to let it be.',
+      'You know what you do not want more clearly than what you do want. That is also a form of navigation.',
+      'The body is yours in a way that is new — it goes where you take it, which is everywhere, which will not always be the case.',
+      partner
+        ? `${partner.name.split(' ')[0]} is in this. What you are building, you are building with them. That is specific and good and not without complication.`
+        : 'You are doing this alone, which has its freedoms and its specific loneliness, both of which are clearest at night.',
+      'The things you believed at seventeen are being revised. Some will survive the revision. You are not sure yet which ones.',
+      'You have a life now — rent, a key, a door that closes — and the life is yours. You are still getting used to that.',
+      'The years are passing fast enough to be surprising. You thought you would have more time to work things out before they started passing.',
+      career
+        ? `The ${career.title?.toLowerCase() ?? 'work'} takes up more than you planned. What it is giving you in return is the subject of ongoing calculation.`
+        : 'The work question is not settled. What you are doing and whether it is what you should be doing are the same question from different angles.',
     ])
   }
 
@@ -4518,6 +4714,18 @@ function buildYearTexture(state) {
       'Something in you is building up pressure. You are not sure yet which direction it will go.',
       'You are rehearsing yourself constantly. The audience is everyone and no one.',
       'The adults are less sure of things than they seemed from a distance.',
+      'There is a version of you that is becoming and a version that is leaving. The transition has no official ceremony.',
+      'The music or the book or the person who said the exact right thing at the exact right time — something is opening you up this year.',
+      'You are aware that you are in a before. The after has not arrived yet.',
+      'The school is not where the real education is happening. You are getting both simultaneously.',
+      'You are building the internal architecture that will hold everything else. You do not know this yet.',
+      'Other people your age seem to know something you do not. You have been watching carefully to figure out what it is.',
+      'The family is still the main thing but the pull outward is stronger every year.',
+      'You are learning that people are disappointing and also that they are not. Both at the same time, about the same people.',
+      'You have had a first something recently. The first something is still settling.',
+      'The year had one moment that will stay with you, even if you cannot yet say which one it was.',
+      'You are at the age where you understand the world has problems and you have not yet accepted that the problems will not be solved in your lifetime.',
+      'The question of what you believe — about everything — is open in a way it was not three years ago.',
     ])
   }
 
