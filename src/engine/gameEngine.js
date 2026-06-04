@@ -1401,12 +1401,174 @@ function buildYearTexture(state) {
         'The training is everything it is supposed to be. You are not yet everything you are supposed to be. The gap is closing.',
       ])
     }
+    // Gift realized — the ultimate work, the fullest expression
+    if (F.has('gift_realized')) {
+      return pick([
+        'The work exists. That sentence ends a very long question.',
+        'The thing you were born to make has been made. You know this the way you know your own handwriting.',
+        'Full realization has a texture: not relief, not triumph — something quieter. The work is complete. It is itself.',
+      ])
+    }
+    // Deep immersion — the period of full withdrawal into the work
+    if (F.has('gift_deep_immersion') && !F.has('gift_realized') && Math.random() < 0.5) {
+      return pick([
+        'The immersion period changed the work in ways you are still cataloguing.',
+        'The months of withdrawal paid forward in ways that are still arriving.',
+      ])
+    }
+    // Peer found — the creative equal
+    if (F.has('gift_peer_found') && (phase === 'young_adult' || phase === 'midlife') && Math.random() < 0.4) {
+      return pick([
+        'The encounter with someone at your level set a standard that is now a permanent fixture of your interior landscape.',
+        'You have been the exceptional one in most rooms. That conversation showed you what it means to be extended.',
+      ])
+    }
+    // Crisis through — emerged from the creative crisis
+    if (F.has('gift_crisis_through') && !F.has('gift_realized') && Math.random() < 0.4) {
+      return pick([
+        'The crisis that dismantled the work was the door the work needed.',
+        'You went back to the beginning. That turned out to be the right address.',
+      ])
+    }
+    // Integration synthesis — gift absorbed the life
+    if (F.has('gift_integration_synthesis') && Math.random() < 0.4) {
+      return pick([
+        'The gift and the life have finally become the same thing. The separation you carried for years is gone.',
+        'The losses and the crossings are in the work now. The work is stronger for it.',
+      ])
+    }
+    // Burnout break — took the break
+    if (F.has('gift_burnout_break') && !F.has('gift_burnout_recovered') && Math.random() < 0.5) {
+      return pick([
+        'The break from the work is uncomfortable and necessary in equal measure.',
+        'You have stopped performing the gift long enough to remember what the gift actually is.',
+      ])
+    }
+    // Burnout recovered
+    if (F.has('gift_burnout_recovered') && Math.random() < 0.4) {
+      return pick([
+        'You came back to the work from the break and the performance has been stripped out. What remains is the actual thing.',
+        'The gift and the performance of the gift were two separate things. You know the difference now.',
+      ])
+    }
+    // Late bloomer — came back late
+    if (F.has('gift_late_bloomer') && !F.has('gift_fulfilled') && Math.random() < 0.5) {
+      return pick([
+        'Late to the work, but working. The path is narrower and still a path.',
+        'You came back to it in middle age and the gift was exactly where you left it.',
+      ])
+    }
+    // Prodigy burden — the performance of exceptionalism
+    if (F.has('prodigy_burden') && (phase === 'adolescence' || phase === 'young_adult') && Math.random() < 0.4) {
+      return pick([
+        'The performance of being exceptional has become second nature. The self underneath it is harder to find.',
+        'Everyone wants the gift. Whether they want you along with it is a question they have not considered.',
+      ])
+    }
+    // Gift constrained — state ownership
+    if (F.has('gift_constrained') && Math.random() < 0.4) {
+      return pick([
+        'The work inside the constraints is real work. The constraints are also real.',
+        'You have learned to hide the real work inside the work they want. Whether this is a form of integrity or its opposite is something you think about.',
+      ])
+    }
+    // Never named — the gift that had no word
+    if (F.has('gift_never_named') && phase === 'late_life' && Math.random() < 0.5) {
+      return pick([
+        'You had the thing; you never had the word. They turn out to be very different.',
+        'Late in life the understanding is complete: you were arranged differently from most people and no one ever named it.',
+      ])
+    }
+    // Gould understood — structural understanding
+    if (F.has('gift_gould_understood') && Math.random() < 0.4) {
+      return pick([
+        'The understanding that the barrier was structural and not personal has become a kind of clarity. Not comfortable. Accurate.',
+        'You know now that the gift was never rare. What was rare was the path.',
+      ])
+    }
+    // Cotton field reckoned — late life clarity
+    if (F.has('gift_cotton_field_reckoned') && phase === 'late_life' && Math.random() < 0.5) {
+      return pick([
+        'Late in life the accounting is clear: the life you had and the life you were built for were two different things. You have learned to carry both.',
+        'The gap between what you were and what the world made available has not closed. You have stopped expecting it to.',
+      ])
+    }
+    // Second generation — the path made for the child
+    if (F.has('gift_second_generation') && Math.random() < 0.4) {
+      return pick([
+        'Watching the child go where you couldn\'t go contains grief and completion simultaneously.',
+        'The path you made for them is the path that wasn\'t there for you. That is a real accomplishment.',
+      ])
+    }
+    // Gift credit stolen
+    if (F.has('gift_credit_stolen') && !F.has('gift_fought_exploitation') && Math.random() < 0.35) {
+      return pick([
+        'The work that established the field is yours, in the part of the record that matters. The attribution is a separate question.',
+        'You know exactly who did the work. That knowledge is a quiet and permanent companion.',
+      ])
+    }
+    // Sibling split
+    if (F.has('gift_sibling_split') && (phase === 'young_adult' || phase === 'midlife') && Math.random() < 0.35) {
+      return pick([
+        'Your sibling got the path. You got the life that was available. The gladness and the other thing coexist.',
+        'The comparison is not useful. You make it anyway, occasionally. Then you put it down.',
+      ])
+    }
+    // Parent had it — the discovered inheritance
+    if (F.has('gift_parent_had_it') && Math.random() < 0.4) {
+      return pick([
+        'Your parent had the same thing. They had nowhere to put it. That sentence is older than you thought.',
+        'The notebooks, the recordings, the letters never sent. They had the gift and the world had no path for them.',
+      ])
+    }
+    // Diaspora unlocked
+    if (F.has('gift_diaspora_unlocked') && !F.has('gift_fulfilled') && Math.random() < 0.4) {
+      return pick([
+        'The barrier was never in you. The new country evaluated the ability on merit. That sentence is still settling.',
+        'On merit. That phrase has never applied to you in a formal context before now.',
+      ])
+    }
     // Gift passed on — teaching texture
     if (F.has('gift_passed_on') && age >= 40 && Math.random() < 0.4) {
       return pick([
         'Watching the gift in someone else is its own satisfaction. Different from having it yourself — something more like recognising a relative.',
         'You have given someone what you were given, or what you weren\'t given. Either way, it has passed forward.',
         'The student is making the work their own. That is the right outcome. It is also slightly strange to witness.',
+      ])
+    }
+    // Gift milestone — first public recognition
+    if (F.has('gift_milestone_1') && (phase === 'young_adult' || phase === 'childhood') && Math.random() < 0.4) {
+      return pick([
+        'The first public moment with the gift has a texture that doesn\'t repeat. You remember it specifically.',
+        'What happened in public is still settling. The gift existed before anyone saw it. Now it exists differently.',
+      ])
+    }
+    // HBCU graduate — the network and formation
+    if (F.has('hbcu_graduate') && Math.random() < 0.35) {
+      return pick([
+        'The university gave you the gift and the people who understood it at the same time. That combination is not the same as either one separately.',
+        'The formation that happened there — academic and social and political simultaneously — doesn\'t have a simple name.',
+      ])
+    }
+    // Gift partial — capped below potential
+    if (F.has('gift_partial') && !F.has('gift_fulfilled') && phase === 'midlife' && Math.random() < 0.35) {
+      return pick([
+        'You reached the ceiling. The ceiling was lower than the gift. You know the exact gap between them.',
+        'Competent. Recognised. Not what was possible. The partial accounting is its own kind of life.',
+      ])
+    }
+    // Gift midlife peace — made peace with the arc
+    if (F.has('gift_midlife_peace') && Math.random() < 0.4) {
+      return pick([
+        'The arc of the gift — what it cost, what it produced — sits easier now than it did at thirty.',
+        'You have made peace with the path the gift took. Not reconciliation with what was lost. Peace with what was made.',
+      ])
+    }
+    // Gift midlife doubt — questioning what the gift cost
+    if (F.has('gift_midlife_doubt') && !F.has('gift_midlife_peace') && Math.random() < 0.4) {
+      return pick([
+        'You are still deciding whether the path the gift demanded was worth what it cost.',
+        'The achievement is real. The accounting of what it took to get here is also real. Both are ongoing.',
       ])
     }
   }
@@ -8262,6 +8424,7 @@ export function generateIdentityCard(state) {
     if (F.has('war_childhood')) return 'You grew up during a conflict. The body still knows certain sounds.'
     if (F.has('abusive_relationship') && !partner) return 'You got out of something that was damaging you. That took longer than it should have.'
     // Gifted arc resolution
+    if (F.has('gift_realized')) return 'Your gift found its fullest expression. The work exists and will outlast you. You know this.'
     if (F.has('gift_extraordinary')) return 'You reached the extraordinary ceiling of what you were born to do. The work exists. It outlasts the making of it.'
     if (F.has('gift_fulfilled')) return 'Your gift found a path. You are still deciding what that path cost.'
     if (F.has('gift_wasted') && age >= 40) return 'You know exactly what you were made for. The world had other arrangements.'
@@ -8549,6 +8712,26 @@ export function generateEpitaph(state) {
   }
   if (any('dissident_writer', 'dissident_reader') && !f('journalism_threat')) {
     para3.push(`${He} was someone the state kept a file on.`)
+  }
+
+  // Gifted arc — the work and the path
+  if (f('gift_realized')) {
+    para3.push(`${He} made the work ${he} was born to make. It exists and will outlast ${him}.`)
+  } else if (f('gift_extraordinary') && !f('gift_realized')) {
+    para3.push(`${He} reached the extraordinary ceiling of what ${he} was born to do.`)
+  } else if (f('gift_second_generation') && f('gift_suppressed')) {
+    para3.push(`The path that wasn't there for ${him} — ${he} made it for ${his} child. The gift continued.`)
+  } else if (f('gift_cotton_field_reckoned') || f('gift_gould_understood')) {
+    para3.push(`In later life ${he} understood that the gap between the life ${he} had and the life ${his} gift would have made was structural rather than personal. That understanding became a kind of peace.`)
+  } else if (f('gift_wasted') && !f('gift_extraordinary')) {
+    para3.push(`${He} was made for something the world didn't let ${him} do. The knowledge never left.`)
+  } else if (f('gift_fulfilled') && !f('gift_extraordinary')) {
+    para3.push(`${He} found a way to do the thing ${he} was made to do.`)
+  } else if (f('gift_credit_stolen') && !f('gift_fought_exploitation') && (f('born_gifted_intellectual') || f('born_gifted_linguistic'))) {
+    para3.push(`The work that established the field was ${his}. The attribution belonged to someone else. The work is still there.`)
+  }
+  if (f('gift_passed_on') && !f('gift_realized') && !f('gift_second_generation')) {
+    para3.push(`${He} made sure someone younger didn't face the same closed door.`)
   }
 
   // Education and career

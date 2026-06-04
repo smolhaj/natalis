@@ -1715,4 +1715,46 @@ export const RIBBONS = [
     priority: 72,
     color: 'gray',
   },
+
+  // ── GIFTED ARC ────────────────────────────────────────────────────────────
+  {
+    id: 'the_fullest_version',
+    name: 'The Fullest Version',
+    description: 'You made the work you were born to make. It exists and will outlast you.',
+    condition: (G) => G.flags.includes('gift_realized'),
+    priority: 95,
+    color: 'gold',
+  },
+  {
+    id: 'the_fields_contain',
+    name: 'What the Fields Contain',
+    description: 'Your gift had no path. You knew exactly what you were made for and the world had other arrangements. The knowing never left.',
+    condition: (G) => G.flags.includes('gift_wasted') && G.age >= 65,
+    priority: 82,
+    color: 'gray',
+  },
+  {
+    id: 'the_second_generation',
+    name: 'The Second Generation',
+    description: 'The path that wasn\'t there for you — you made it for someone else. The gift continued.',
+    condition: (G) => G.flags.includes('gift_second_generation'),
+    priority: 78,
+    color: 'gold',
+  },
+  {
+    id: 'the_long_way_back',
+    name: 'The Long Way Back',
+    description: 'You burned out, stopped, and came back to the work. What returned was the actual thing, without the performance.',
+    condition: (G) => G.flags.includes('gift_burnout_recovered'),
+    priority: 72,
+    color: 'blue',
+  },
+  {
+    id: 'the_cotton_field_reckoning',
+    name: 'The Cotton Field',
+    description: 'People of equal talent have lived and died in cotton fields. In late life you understood this as your own story.',
+    condition: (G) => G.flags.includes('gift_cotton_field_reckoned'),
+    priority: 70,
+    color: 'gray',
+  },
 ]

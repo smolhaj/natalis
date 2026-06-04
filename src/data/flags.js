@@ -3498,7 +3498,7 @@ export const FLAG_REGISTRY = {
     weight: 'moderate',
     category: 'identity',
     description: 'Gift developed but capped below potential — systemic ceiling, injury, wrong era. Competent but not what was possible.',
-    intent: 'event',
+    intent: 'year_texture',
     notes: 'Set by favorable fork choices that don\'t fully commit, or by world stage athletic (partial choice).',
   },
 
@@ -3621,6 +3621,250 @@ export const FLAG_REGISTRY = {
     description: 'The twice-as-good tax — performing flawlessly as a survival strategy in hostile institutional environments.',
     intent: 'year_texture',
     notes: 'Set by gift_integration_pioneer. USA/racism-specific. Chronic happiness drain.',
+  },
+
+  gift_realized: {
+    weight: 'major',
+    category: 'achievement',
+    description: 'The gift found its fullest expression — the ultimate work was made, the thing the character was born to produce.',
+    intent: 'both',
+    notes: 'Set by gift_ultimate_work. Requires gift_extraordinary + deep path work (immersion, peer, crisis, or integration). Highest gift state.',
+    timestamped: true,
+  },
+
+  prodigy_burden: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Identified as exceptional so young that the performance of exceptionalism became the whole identity — the person underneath the gift was never fully found.',
+    intent: 'year_texture',
+    notes: 'Set by gift_prodigy_weight (perform it choice) or gift_burnout (push through choice).',
+  },
+
+  gift_identity_found: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Pushed back against the prodigy performance and found the self underneath the gift.',
+    intent: 'none',
+    notes: 'Set by gift_prodigy_weight (push back choice). Counter to prodigy_burden.',
+  },
+
+  gift_burnout_break: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Took a complete break from the gift — stopped performing, stopped producing. Uncomfortable and necessary.',
+    intent: 'year_texture',
+    notes: 'Set by gift_burnout (take a break choice). Gates gift_burnout_recovery event.',
+  },
+
+  gift_burnout_recovered: {
+    weight: 'major',
+    category: 'achievement',
+    description: 'Returned from burnout break to find the gift exactly where it was left — the performance stripped out, the actual thing remaining.',
+    intent: 'both',
+    notes: 'Set by gift_burnout_recovery. Ribbon: "The Long Way Back".',
+  },
+
+  gift_child_has_it: {
+    weight: 'moderate',
+    category: 'relationship',
+    description: 'Recognised the same gift in their own child — the specific stillness, the precocious ease.',
+    intent: 'event',
+    notes: 'Set by gift_child_carries_it. Gates gift_second_generation_path.',
+  },
+
+  gift_parent_had_it: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Discovered after a parent\'s death that the parent carried the same gift — the notebooks, the recordings, the letters never sent.',
+    intent: 'year_texture',
+    notes: 'Set by gift_parent_echo. The gift is older than the character thought.',
+  },
+
+  gift_sibling_split: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'The path was there for one sibling but not both — the character saw a near-equal go where they couldn\'t go.',
+    intent: 'year_texture',
+    notes: 'Set by gift_sibling_split event. The gladness and the other thing coexist.',
+  },
+
+  gift_second_generation: {
+    weight: 'major',
+    category: 'achievement',
+    description: 'The path that was blocked for them — they made it for their child. The gift continued into the next generation.',
+    intent: 'both',
+    notes: 'Set by gift_second_generation_path. Ribbon: "The Second Generation". Requires gift_suppressed + gift_child_has_it.',
+    timestamped: true,
+  },
+
+  gift_deep_immersion: {
+    weight: 'major',
+    category: 'achievement',
+    description: 'Arranged a period of complete withdrawal into the work — the quality of attention that the gift requires, recovered.',
+    intent: 'year_texture',
+    notes: 'Set by gift_deep_immersion event. Gates gift_ultimate_work alongside peer/crisis/integration.',
+  },
+
+  gift_peer_found: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Encountered a genuine creative equal for the first time — the standard set by that encounter became a permanent fixture.',
+    intent: 'year_texture',
+    notes: 'Set by gift_peer_encounter. Gates gift_ultimate_work.',
+  },
+
+  gift_crisis_through: {
+    weight: 'major',
+    category: 'achievement',
+    description: 'Went back to the beginning of the work after a structural crisis rather than patching over it — the crisis was the door.',
+    intent: 'year_texture',
+    notes: 'Set by gift_creative_crisis (go back choice). Gates gift_ultimate_work.',
+  },
+
+  gift_crisis_around: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Managed rather than resolved the creative crisis — adapted, salvaged, moved forward with the doubt underneath.',
+    intent: 'none',
+    notes: 'Set by gift_creative_crisis (find a way around choice). Counter to gift_crisis_through.',
+  },
+
+  gift_integration_synthesis: {
+    weight: 'major',
+    category: 'achievement',
+    description: 'The gift absorbed the full biography — losses, crossings, exclusions — and became something neither the gift nor the life could have produced alone.',
+    intent: 'year_texture',
+    notes: 'Set by gift_integration_synthesis event. Gates gift_ultimate_work.',
+  },
+
+  gift_late_bloomer: {
+    weight: 'moderate',
+    category: 'achievement',
+    description: 'Returned to the gift in middle age — the path narrower, still a path.',
+    intent: 'year_texture',
+    notes: 'Set by gift_late_bloomer_return (go through choice). Often follows gift_deferred.',
+  },
+
+  gift_diaspora_unlocked: {
+    weight: 'major',
+    category: 'achievement',
+    description: 'Migration unlocked the formal path for the gift — the new country evaluated the ability on merit where the origin country had not.',
+    intent: 'year_texture',
+    notes: 'Set by gift_diaspora_unlock. The barrier was geographic/structural, never innate.',
+  },
+
+  gift_constrained: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'The state colonised the gift — the public work performed for the regime, the real work hidden inside it or in a drawer.',
+    intent: 'year_texture',
+    notes: 'Set by gift_state_colonizes (find work inside constraints choice). Authoritarian regimes 1930–1992.',
+  },
+
+  gift_radicalized: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'The structural understanding of what blocked the gift became political consciousness — the barrier analysed and converted to action or resistance.',
+    intent: 'none',
+    notes: 'Set by gift_ceiling_radicalizes. Often sets political_leaning=left. The gift as lens for structural analysis.',
+  },
+
+  gift_exploited: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'The institution that supported the gift extracted its value on unjust terms — the contract that gave away the recordings, the scholarship that was really ownership.',
+    intent: 'none',
+    notes: 'Set by gift_contract_trap (work within it choice). Year ≤1995, musical/athletic.',
+  },
+
+  gift_fought_exploitation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Challenged the exploitative arrangement — legally, professionally, directly. The fight cost something and was morally correct.',
+    intent: 'none',
+    notes: 'Set by gift_contract_trap (challenge it choice) and gift_credit_stolen (confront it choice).',
+  },
+
+  gift_credit_stolen: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Work produced by the character was attributed to someone else — senior authorship, group credit, institutional erasure.',
+    intent: 'year_texture',
+    notes: 'Set by gift_credit_stolen event. Female academics or pre-1975. The work is still there; the attribution isn\'t.',
+  },
+
+  gift_documenting_claim: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Documented everything carefully so that provenance could be traced later.',
+    intent: 'none',
+    notes: 'Set by gift_credit_stolen (document everything choice). Patient long-game response to theft.',
+  },
+
+  gift_exploitation_understood: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'In midlife, understood the exploitation as systemic rather than personal — the mechanism became legible.',
+    intent: 'none',
+    notes: 'Set by gift_exploitation_reckoning. Enables mentoring younger people through the same system.',
+  },
+
+  gift_gould_understood: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Late-life structural understanding: the gift was never rare, what was rare was the path. The failure was not personal. The mathematics were always structural.',
+    intent: 'both',
+    notes: 'Set by gift_gould_understanding. Late-life Gould arc. Names the Stephen Jay Gould insight explicitly.',
+    timestamped: true,
+  },
+
+  gift_cotton_field_reckoned: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Late-life reckoning: the life built was the life the circumstances permitted. The other life, built for by the gift, was the life the circumstances didn\'t permit.',
+    intent: 'both',
+    notes: 'Set by gift_cotton_field_late. Requires gift_wasted + age 65+. Ribbon: "The Cotton Field".',
+    timestamped: true,
+  },
+
+  gift_parallel_understood: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Encountered the work their gift would have made — done by someone else with different circumstances — and held it clearly rather than only painfully.',
+    intent: 'none',
+    notes: 'Set by gift_parallel_unlived (clarifying choice). The talent was real. The path wasn\'t there. Separate facts.',
+  },
+
+  gift_never_named: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'The gift existed but was never named — no teacher, no institution, no word for it. The thing was real; the vocabulary was unavailable.',
+    intent: 'year_texture',
+    notes: 'Set by gift_never_named event. Requires !gift_recognized. Late life. One of the saddest gift states.',
+  },
+
+  gift_deferred_final: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'At the late-bloomer door, chose not to go through — the moment had passed, the decision was allowed, it didn\'t fully settle.',
+    intent: 'none',
+    notes: 'Set by gift_late_bloomer_return (too late choice). The acceptance that is not quite acceptance.',
+  },
+
+  gift_tribute_received: {
+    weight: 'moderate',
+    category: 'achievement',
+    description: 'Late in life, received evidence that the gift passed forward — a student\'s dedication, a citation, a public acknowledgement of lineage.',
+    intent: 'none',
+    notes: 'Set by gift_late_tribute. Age 68+. The correct outcome: the gift continues past you.',
+  },
+
+  gift_anniversary_reckoned: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Twenty years after the door closed, made peace with the gap — no longer standing in front of the door, carrying the distance but no longer measuring it.',
+    intent: 'none',
+    notes: 'Set by gift_anniversary_door. Midlife, 20+ years after gift ceiling. Quiet resolution.',
   },
 
 }
