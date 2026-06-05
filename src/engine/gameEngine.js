@@ -1175,7 +1175,7 @@ export function getNextEvent(state) {
   return pool[pool.length - 1]
 }
 
-function buildG(state) {
+export function buildG(state) {
   const flagSet = new FlagSet(state.flags)
   const currentYear = state.currentYear ?? new Date().getFullYear()
   return {
@@ -10299,7 +10299,7 @@ export function generateEpitaph(state) {
     if (f('sold_business')) return `built a business and sold it`
     if (f('business_failed') && f('business_restart')) return `built a business, watched it fail, and built another — the second time went better`
     if (f('career_defining_work')) return `did the best of ${his} professional work as a ${career.title}`
-    return `spent the working years as a ${career.title}`
+    return `spent the working years as ${/^[AEIOUaeiou]/.test(career.title) ? 'an' : 'a'} ${career.title}`
   })()
 
   if (educationLine && careerLine) {
@@ -10411,8 +10411,8 @@ export function generateEpitaph(state) {
     para5.push(`${name}'s life was shaped by circumstances ${he} did not choose, and decisions ${he} made from within them.`)
   }
 
-  // Fallback
-  if (para1.length + para2.length + para3.length + para4.length < 3) {
+  // Fallback — only if overall content is sparse AND para5 not already filled
+  if (para1.length + para2.length + para3.length + para4.length + para5.length < 3) {
     para5.push(`${name}'s life was shaped by circumstances ${he} did not choose, and decisions ${he} made from within them.`)
   }
 
