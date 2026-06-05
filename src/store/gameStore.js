@@ -72,6 +72,7 @@ import {
   upgradeResidency,
   seekAsylum,
   relocate,
+  buildG,
 } from '../engine/gameEngine'
 import { COUNTRIES } from '../data/countries'
 import { CRIMES } from '../data/crimes'
@@ -484,7 +485,9 @@ export const useGameStore = create((set, get) => ({
     }
 
     const next = resolveChoice(state, choiceIndex)
-    const resolved = { ...next, lastOutcome: choice?.outcome ?? null }
+    const rawOutcome = choice?.outcome ?? null
+    const lastOutcome = typeof rawOutcome === 'function' ? rawOutcome(buildG(next)) : rawOutcome
+    const resolved = { ...next, lastOutcome }
     set(resolved)
     saveToStorage(resolved)
   },

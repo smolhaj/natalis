@@ -8,6 +8,8 @@ const RIBBON_STYLES = {
   blue:   { border: '#2563eb', text: '#1e3a8a', accent: '#60a5fa' },
   purple: { border: '#9333ea', text: '#581c87', accent: '#c084fc' },
   gray:   { border: '#6b7280', text: '#374151', accent: '#9ca3af' },
+  orange: { border: '#ea580c', text: '#7c2d12', accent: '#fb923c' },
+  pink:   { border: '#db2777', text: '#831843', accent: '#f472b6' },
 }
 
 export default function DeathScreen() {
@@ -30,7 +32,7 @@ export default function DeathScreen() {
 
   const birthYear = character.birthYear
   const deathYear = birthYear + age
-  const rs = RIBBON_STYLES[ribbon?.color ?? 'gray']
+  const rs = RIBBON_STYLES[ribbon?.color ?? 'gray'] ?? RIBBON_STYLES.gray
   const lifeNotes = generateLifeNotes(fullState)
   const epitaphParagraphs = epitaph ? epitaph.split('\n\n').filter(Boolean) : []
 
