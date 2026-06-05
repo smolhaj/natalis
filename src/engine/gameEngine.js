@@ -3642,6 +3642,54 @@ function buildYearTexture(state) {
     'You know what your country did to itself. That knowledge sits in a particular place.',
     'The country rebuilt itself. You rebuilt with it. You are not sure the reconstruction is finished.',
   ])
+  if (F.has('maya_language_suppressed') && Math.random() < 0.3) return pick([
+    phase === 'late_life'
+      ? 'The language they punished you for speaking is still in you. The punishment is also still in you. Both things are true at the same time.'
+      : 'You still catch yourself translating — not between languages, but between worlds.',
+    'There was a word in K\'iche\' for the quality of light just before rain. The Spanish word for it doesn\'t land the same.',
+    phase === 'midlife'
+      ? 'The school\'s ruler is still in your memory. You have done things since that were louder than that ruler. The ruler is still louder.'
+      : 'The thing about erasing a language is that you can erase the sound of it without erasing the shape it made in the mind.',
+  ])
+  if (F.has('contra_war_survivor') && Math.random() < 0.3) return pick([
+    phase === 'late_life'
+      ? 'The people who paid for the Contra war are still alive, in other countries, having mostly not been asked about it.'
+      : 'The war in Nicaragua was called different things by different governments. On the ground it was called by the names of the dead.',
+    'You know what a proxy war looks like from inside. It looks like your village.',
+    phase === 'midlife'
+      ? 'The Sandinistas lost the 1990 election and you watched the faces of the people who had believed in them. Some of them never recovered the capacity for that kind of belief.'
+      : 'The American officials who visited the region in the 1980s called it a fight for freedom. You have thought about that word ever since.',
+  ])
+  if (F.has('witnessed_romero_death') && Math.random() < 0.3) return pick([
+    phase === 'late_life'
+      ? 'He named the dead by name, which no one else would do. Then he became one of the names.'
+      : 'The silence on the radio after the announcement was a specific kind of silence. You have not heard that kind since.',
+    'The voice on the Sunday radio that was not afraid of what it was saying. You have measured other voices against it since.',
+    'He was canonized eventually. You are not sure the canonization does what the people who needed him needed.',
+  ])
+  if (F.has('northern_journey_taken') && Math.random() < 0.3) return pick([
+    phase === 'late_life'
+      ? 'You have spent years in a country that does not fully know what to do with you and has opinions about it. You have made a life here anyway. That is the fact of it.'
+      : 'The people in your home country who stayed and the people who left are different communities now. You are trying to stay connected to both.',
+    phase === 'young_adult'
+      ? 'The bus north was the decision that made all other decisions different. You are still inside what it set in motion.'
+      : 'What the journey cost and what it bought are still not settled in the accounting.',
+    'There is a specific knowledge that comes from having crossed that border without papers — of what people will and won\'t do, of how a country treats the people it says it doesn\'t want.',
+  ])
+  if (F.has('ca_truth_told') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) return pick([
+    phase === 'late_life'
+      ? 'You said it into a tape recorder in a school gymnasium and they wrote it down. Whether anything came of that is a different question from whether it needed to be said.'
+      : 'You put your name to it. The record exists. That is not nothing.',
+    'The truth commission closed years ago. The report is on file. The perpetrators are mostly still where they were. You have thought about what that means.',
+  ])
+  if (F.has('gang_territory_lived') && Math.random() < 0.3) return pick([
+    phase === 'young_adult'
+      ? 'The corner is still there. You walk past it differently than you did at sixteen.'
+      : 'You know what it costs to get out of a neighbourhood like that one. You know a few people who paid it and a few who didn\'t.',
+    phase === 'late_life'
+      ? 'You left the neighbourhood eventually. The neighbourhood didn\'t fully leave you — it left you with a particular reading of how power actually works at street level.'
+      : 'The extortion fee the gang charged every small business was called a tax. The people who paid it called it something else.',
+  ])
   if (F.has('lira_collapse_lived') && Math.random() < 0.35) return pick([
     phase === 'late_life'
       ? 'You grew up knowing that savings are a story a government tells you. You stopped believing the story early.'

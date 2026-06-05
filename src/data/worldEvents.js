@@ -2613,7 +2613,119 @@ export const WORLD_EVENTS = [
     context: 'Much of the developing world gained independence from European powers in the 1950s-60s. By the 1970s, many newly independent nations faced coups, single-party states, IMF structural adjustment conditions, and continued economic dependency on former colonial powers. The gap between independence-era promise and lived reality shaped a generation\'s political consciousness.',
     effect: (p) => { p.m -= 6; p.r += 6 },
     addFlags: ['independence_disillusionment'],
-    when: (G) => !G.flags.has('independence_disillusionment'),
+    when: (G) => !G.flags.includes('independence_disillusionment'),
+  },
+
+  // ── Central American arc ──────────────────────────────────────────────────
+
+  {
+    id: 'guatemala_coup_1954',
+    name: 'CIA Coup in Guatemala',
+    years: [1954, 1955],
+    archetypes: 'all',
+    countries: ['Guatemala'],
+    minAge: 0,
+    maxAge: null,
+    narrative: 'The government falls in ten days. The president who tried to give the banana plantation workers land is gone. A colonel takes the presidency. The United Fruit Company keeps its land. The Americans call it the liberation of Guatemala. In your neighborhood, people do not call it that.',
+    context: 'Operation PBSUCCESS, a CIA-organized coup, overthrew the democratically elected Jacobo Árbenz in 1954. Árbenz had enacted a land reform expropriating unused land from the United Fruit Company for redistribution to landless peasants. The coup began thirty-six years of military rule and set the stage for the 1960-1996 civil war.',
+    effect: (p) => { p.m -= 8; p.w -= 5 },
+    addFlags: ['lived_through_coup'],
+    when: null,
+  },
+
+  {
+    id: 'romero_assassination_1980',
+    name: 'Archbishop Romero Assassinated',
+    years: [1980, 1980],
+    archetypes: 'all',
+    countries: ['El Salvador'],
+    minAge: 5,
+    maxAge: null,
+    narrative: 'Archbishop Romero is shot while giving Mass. You hear it on the radio. The voice that named the dead by name is now among them. Whoever gave the order understood what they were doing: no one else speaks with that particular combination of authority and fearlessness, and no one will emerge to replace it for a long time.',
+    context: 'Óscar Romero, Archbishop of San Salvador, was assassinated on 24 March 1980, the day after he publicly called on soldiers to disobey orders to kill their own people. The killing was planned by Roberto D\'Aubuisson, a former army intelligence officer. No one was prosecuted. Romero was beatified in 2015 and canonized in 2018.',
+    effect: (p) => { p.m -= 15; p.r += 8; p.karma += 5 },
+    addFlags: ['witnessed_romero_death'],
+    when: null,
+  },
+
+  {
+    id: 'el_mozote_massacre',
+    name: 'El Mozote Massacre',
+    years: [1981, 1982],
+    archetypes: 'all',
+    countries: ['El Salvador'],
+    minAge: 0,
+    maxAge: null,
+    narrative: 'In December the Atlacatl Battalion passes through El Mozote. Nearly a thousand people — entire village populations — are killed over three days. The American embassy calls the reports unsubstantiated. The mass graves are found decades later. The children who survive do so by hiding under bodies.',
+    context: 'The El Mozote massacre (December 1981) was carried out by the US-trained Atlacatl Battalion during a counter-insurgency sweep. Approximately 978 civilians were killed. The US State Department denied the massacre at the time. Forensic excavations beginning in 1992 confirmed the scale. No one has been prosecuted.',
+    effect: (p) => { p.m -= 18; p.h -= 8; p.r += 10 },
+    addFlags: ['civil_war_lived', 'war_childhood'],
+    when: (G) => !G.flags.includes('war_childhood'),
+  },
+
+  {
+    id: 'guatemala_mayan_genocide',
+    name: 'Guatemalan Maya Genocide',
+    years: [1981, 1984],
+    archetypes: 'all',
+    countries: ['Guatemala'],
+    minAge: 0,
+    maxAge: null,
+    narrative: 'The army calls it pacification. More than four hundred Maya villages in the western highlands are destroyed under General Ríos Montt. The word for what is happening is written in the reports of organizations no one in power is reading. In the highlands, the word for what is happening is the one they are also trying to erase.',
+    context: 'Under General Efraín Ríos Montt (1982-83), Guatemalan military operations systematically destroyed Maya communities in the western highlands. The UN-backed Commission for Historical Clarification later found acts of genocide against the Ixil Maya. 200,000 people were killed or disappeared during the entire 1960-1996 civil war; 83% of the identified victims were Maya. Ríos Montt was convicted of genocide in 2013 and the conviction overturned on procedural grounds.',
+    effect: (p) => { p.m -= 20; p.h -= 10; p.r += 12 },
+    addFlags: ['genocide_survivor', 'war_childhood'],
+    when: (G) =>
+      (['maya_kiche', 'maya_mam', 'maya_kaqchikel', 'maya_qeqchi', 'other_maya'].includes(G.ethnicity) ||
+       G.ruralUrban === 'rural') &&
+      !G.flags.includes('genocide_survivor'),
+  },
+
+  {
+    id: 'nicaragua_sandinista_revolution',
+    name: 'Sandinista Revolution',
+    years: [1979, 1980],
+    archetypes: 'all',
+    countries: ['Nicaragua'],
+    minAge: 0,
+    maxAge: null,
+    narrative: 'The Somozas are gone. Their family ran this country since 1936 and the last of them is in exile. The Sandinistas are distributing land and sending literacy brigades to the villages. Something that felt impossible has happened. Whether it is the beginning of something or a brief window before it closes again is not yet clear.',
+    context: 'The Frente Sandinista de Liberación Nacional (FSLN) overthrew the Somoza dictatorship in July 1979 after years of armed insurgency. The Sandinistas implemented land reform, literacy campaigns (reducing illiteracy from 50% to 12% in five years), and free healthcare. The United States, which had supported the Somozas until their final weeks, immediately began funding the counter-revolutionary Contra forces.',
+    effect: (p) => { p.m += 10; p.e += 5; p.addFlag('lived_through_revolution') },
+    addFlags: ['lived_through_revolution'],
+    when: (G) => !G.flags.includes('lived_through_revolution'),
+  },
+
+  {
+    id: 'central_america_peace_accords',
+    name: 'Central American Peace Accords',
+    years: [1992, 1997],
+    archetypes: 'all',
+    countries: ['El Salvador', 'Guatemala'],
+    minAge: 10,
+    maxAge: null,
+    narrative: 'The war is over, officially. The document is signed in Mexico City or in Oslo, depending on which country. Years of negotiation have produced a ceasefire, a truth commission mandate, and a promise that the things done in the war will be examined. What examined means in practice is left for later.',
+    context: 'El Salvador\'s Chapultepec Peace Accords were signed January 16, 1992, ending twelve years of civil war. Guatemala\'s peace accords were signed December 29, 1996, ending thirty-six years. Both included truth commission provisions. Neither resulted in significant prosecutions. Both countries experienced a gang violence crisis within a decade as demobilized combatants and US deportees filled the security vacuum.',
+    effect: (p) => { p.m += 12; p.r -= 5 },
+    addFlags: ['peace_accords_generation'],
+    when: (G) =>
+      (G.flags.includes('war_childhood') || G.flags.includes('civil_war_lived')) &&
+      !G.flags.includes('peace_accords_generation'),
+  },
+
+  {
+    id: 'central_american_migration_crisis',
+    name: 'Northern Triangle Migration Crisis',
+    years: [2014, 2025],
+    archetypes: 'all',
+    countries: ['El Salvador', 'Honduras', 'Guatemala'],
+    minAge: 5,
+    maxAge: 45,
+    narrative: 'The caravans form in San Pedro Sula, in San Salvador, in Guatemala City — families, mostly, moving north. The images are on every screen. The debate that follows them in other countries is conducted almost entirely without asking what made them leave: the gang extortion that functions as a parallel tax on every small business, the poverty that the remittance economy papers over but doesn\'t fix, the government that cannot protect anyone.',
+    context: 'Unaccompanied child migration from the Northern Triangle (El Salvador, Honduras, Guatemala) surged dramatically from 2014, with over 68,000 apprehensions at the US border that year. Root causes include gang violence, extreme poverty, climate-related crop failures, corruption, and family reunification with parents who emigrated earlier. The Biden administration\'s 2021 border crisis involved 200,000+ monthly encounters.',
+    effect: (p) => { p.m -= 10; p.r += 6 },
+    addFlags: ['northern_triangle_migration'],
+    when: (G) => G.stats.wealth < 45 && !G.flags.includes('northern_triangle_migration'),
   },
 
 ]
