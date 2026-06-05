@@ -19,7 +19,7 @@ export const PARTNER_WANTS_EVENTS = [
         text: 'You want this too.',
         tag: 'decided_to_have_children',
         outcome: 'Something clarifies between you. The trying begins.',
-        effect: (p) => { p.addFlag('trying_for_child'); p.m += 6; p.updatePartnerRel(8) },
+        effect: (p) => { p.addFlag('trying_for_child'); p.m += 6; p.updatePartnerRel(8); p.addPartnerMoment('The conversation where you both said yes.') },
       },
       {
         text: 'You need more time.',
@@ -52,7 +52,7 @@ export const PARTNER_WANTS_EVENTS = [
         text: 'Go. The relationship matters more than the place.',
         tag: 'moved_for_partner',
         outcome: 'You uproot. It costs you things. Some of them you are glad to have lost. Some you will look for in the new place for years.',
-        effect: (p) => { p.m -= 4; p.updatePartnerRel(12); p.addFlag('moved_for_partner') },
+        effect: (p) => { p.m -= 4; p.updatePartnerRel(12); p.addFlag('moved_for_partner'); p.addPartnerMoment('The year you gave something up for them, and didn\'t regret it.') },
       },
       {
         text: 'Propose a compromise — long distance for a year first.',
@@ -117,7 +117,7 @@ export const PARTNER_WANTS_EVENTS = [
         text: 'Tell them something true.',
         tag: 'opened_up_to_partner',
         outcome: 'You find something real and offer it. The evening is different afterward. So is the week.',
-        effect: (p) => { p.m += 4; p.updatePartnerRel(12) },
+        effect: (p) => { p.m += 4; p.updatePartnerRel(12); p.addPartnerMoment('The night you told them something you had never said out loud.') },
       },
       {
         text: 'Suggest a ritual — dinner without phones, a walk.',
@@ -224,7 +224,7 @@ export const PARTNER_WANTS_EVENTS = [
         text: 'Be the one who stays present for this.',
         tag: 'supported_partner_through_crisis',
         outcome: 'You show up for it. This is unglamorous and necessary and they will not forget it.',
-        effect: (p) => { p.updatePartnerRel(10); p.karma += 4; p.m -= 2 },
+        effect: (p) => { p.updatePartnerRel(10); p.karma += 4; p.m -= 2; p.addPartnerMoment('The bad year at work that you helped them through.') },
       },
       {
         text: 'Offer practical help — contacts, ideas, a plan.',

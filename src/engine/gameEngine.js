@@ -7532,8 +7532,19 @@ function tickPartner(state) {
   if (partnerAge >= 75) deathProb = 0.04 + (partnerAge - 75) * 0.012
   else if (partnerAge >= 65) deathProb = 0.015 + (partnerAge - 65) * 0.0025
   if (deathProb > 0 && chance(deathProb)) {
-    const log = [...state.log, { age: state.age, text: `${partner.name.split(' ')[0]} dies. You have been together for years. The house is immediately different.`, isKey: true, isDeath: true }]
-    return { ...state, partner: { ...partner, alive: false }, flags: [...new Set([...state.flags, 'widowed', 'lost_partner'])], log }
+    // Mark dead silently — grief events (grief_partner_death / late_partner_death) fire
+    // in the same tick and provide narrative. Timestamps needed for year-texture arc.
+    const updatedMem = {
+      ...(state.mem ?? {}),
+      widowedYear: state.currentYear,
+      partnerDeathYear: state.currentYear,
+    }
+    return {
+      ...state,
+      partner: { ...partner, alive: false },
+      flags: [...new Set([...state.flags, 'widowed', 'lost_partner'])],
+      mem: updatedMem,
+    }
   }
   // Relationship quality drifts slightly based on engagement
   const drift = chance(0.3) ? (chance(0.5) ? 1 : -1) : 0
