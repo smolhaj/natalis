@@ -7788,7 +7788,7 @@ const BASE_EVENTS = [
     id: 'childhood_parents_fight',
     phase: 'childhood',
     weight: 5,
-    when: (G) => G.age >= 6 && G.age <= 13 && G.parents && G.parents.length >= 2 && !G.mem.parents_fight,
+    when: (G) => G.age >= 6 && G.age <= 13 && Object.values(G.parents ?? {}).length >= 2 && !G.mem.parents_fight,
     text: 'You wake up to voices from downstairs — not angry-loud, but a kind of controlled intensity that is worse. You lie still and listen without meaning to.',
     choices: [
       { text: 'Go downstairs and ask if everything is okay', tag: null, outcome: 'They stop. Your mother says "everything\'s fine." You know it isn\'t but the night gets quieter.', effect: (p) => { p.m -= 5; p.s += 2; p.e += 2; p.setMem('parents_fight', true) } },

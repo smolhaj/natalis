@@ -37,12 +37,12 @@ export const RELATIONSHIP_QUALITY_EVENTS = [
     weight: 1,
     cooldown: 5,
     when: (G) => G.partner && (G.partner.relationshipQuality ?? 60) < 28,
-    text: (G) => `You say something small and unkind. The kind of thing you wouldn't have said three years ago. ${G.partner.name} doesn't respond, which is worse than responding.`,
+    text: (G) => `You say something small and unkind. The kind of thing you wouldn't have said three years ago. ${G.partner.name ?? 'your partner'} doesn't respond, which is worse than responding.`,
     choices: [
       {
         text: `Apologise.`,
         tag: 'apologised_in_marriage',
-        outcome: (G) => `You apologise that night. ${G.partner.name} accepts it. Something small is repaired. The larger thing is still there.`,
+        outcome: (G) => `You apologise that night. ${G.partner.name ?? 'your partner'} accepts it. Something small is repaired. The larger thing is still there.`,
         effect: (p) => { p.m += 3; p.updatePartnerRel(10); p.karma += 2 },
       },
       {
@@ -65,7 +65,7 @@ export const RELATIONSHIP_QUALITY_EVENTS = [
       {
         text: `Suggest something together.`,
         tag: 'reached_toward_partner',
-        outcome: (G) => `You suggest a trip. ${G.partner.name} says yes, which surprises you a little. The trip is ordinary and that's exactly what it needed to be.`,
+        outcome: (G) => `You suggest a trip. ${G.partner.name ?? 'your partner'} says yes, which surprises you a little. The trip is ordinary and that's exactly what it needed to be.`,
         effect: (p) => { p.m += 6; p.updatePartnerRel(12) },
       },
       {
@@ -83,7 +83,7 @@ export const RELATIONSHIP_QUALITY_EVENTS = [
     weight: 2,
     cooldown: 4,
     when: (G) => G.partner && (G.partner.relationshipQuality ?? 60) > 78,
-    text: (G) => `You catch ${G.partner.name} reading and watch them without them knowing — the specific quiet pleasure of being in a room with someone you love and not needing anything from each other.`,
+    text: (G) => `You catch ${G.partner.name ?? 'your partner'} reading and watch them without them knowing — the specific quiet pleasure of being in a room with someone you love and not needing anything from each other.`,
     choices: null,
     effect: (p) => { p.m += 3 },
   },
@@ -105,7 +105,7 @@ export const RELATIONSHIP_QUALITY_EVENTS = [
     weight: 1,
     cooldown: 6,
     when: (G) => G.partner && (G.partner.relationshipQuality ?? 60) < 35 && G.partner.married && G.flags.has('addressed_marriage_silence'),
-    text: (G) => `${G.partner.name} suggests counselling. The word sits between you for a moment.`,
+    text: (G) => `${G.partner.name ?? 'Your partner'} suggests counselling. The word sits between you for a moment.`,
     choices: [
       {
         text: `Agree.`,
@@ -116,7 +116,7 @@ export const RELATIONSHIP_QUALITY_EVENTS = [
       {
         text: `Not yet.`,
         tag: 'refused_couples_therapy',
-        outcome: (G) => `Not yet becomes a while. ${G.partner.name} doesn't bring it up again.`,
+        outcome: (G) => `Not yet becomes a while. ${G.partner.name ?? 'Your partner'} doesn't bring it up again.`,
         effect: (p) => { p.r += 5; p.updatePartnerRel(-6) },
       },
     ],

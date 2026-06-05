@@ -1310,7 +1310,7 @@ export const LATE_LIFE_EVENTS = [
         return 'The people who remain in your life are the ones who turned out to matter. The selection was mostly not deliberate. It is accurate.'
       }
       if (hasPartner) {
-        return `You and ${G.partner.name} have become each other\'s primary company. That turns out to be enough, mostly. Some days it is more than enough.`
+        return `You and ${G.partner.name ?? 'your partner'} have become each other\'s primary company. That turns out to be enough, mostly. Some days it is more than enough.`
       }
       return 'The social world is quieter than it used to be. You have made your peace with that, or you are in the process.'
     },

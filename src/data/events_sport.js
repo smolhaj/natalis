@@ -88,11 +88,11 @@ export const SPORT_EVENTS = [
     cooldown: 0,
     when: (G) =>
       FOOTBALL_COUNTRIES.includes(G.character.country.name) &&
-      G.parents?.some(p => p.alive) &&
+      Object.values(G.parents ?? {}).some(p => p.alive) &&
       G.age >= 8 && G.age <= 15 &&
       !G.mem?.sptWatchingWithParent,
     text: (G) => {
-      const parent = G.parents?.find(p => p.alive)
+      const parent = Object.values(G.parents ?? {}).find(p => p.alive)
       const pName = parent?.name ?? 'your parent'
       const cn = G.character.country.name
       if (['Brazil', 'Argentina', 'Chile', 'Colombia', 'Peru', 'Bolivia', 'Mexico', 'Venezuela', 'Uruguay'].includes(cn)) {

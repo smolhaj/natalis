@@ -28,7 +28,7 @@ export const CHINA_EVENTS = [
       G.currentYear >= 1966 && G.currentYear <= 1974 &&
       !G.mem?.cnClassEnemyFired,
     text: (G) => {
-      const parents = G.parents ?? []
+      const parents = Object.values(G.parents ?? {})
       const fatherAlive = parents.some(p => p.gender === 'male' && p.alive !== false)
       if (fatherAlive) return 'The class enemy label arrives at school before you understand what it means. Your father was an engineer — that is the past tense the designation requires. The teacher pauses before saying your name at roll call. The other children have been told not to sit next to you at lunch. You learn to walk to school a different way every day so you do not have to see the slogans they have painted on your building door.'
       return 'Your mother taught university. Past tense now. She has been sent to study sessions every evening for three weeks. She comes home later each night. She no longer talks at dinner about what she is reading. The books have gone from the shelves. You are not sure where. You have learned not to ask where.'
@@ -89,7 +89,7 @@ export const CHINA_EVENTS = [
       G.currentYear >= 1977 && G.currentYear <= 1985 &&
       !G.mem?.cnRehabFired,
     text: (G) => {
-      const parents = G.parents ?? []
+      const parents = Object.values(G.parents ?? {})
       const deadParent = parents.find(p => p.alive === false)
       if (deadParent) {
         const label = deadParent.gender === 'male' ? 'father' : 'mother'
@@ -271,7 +271,7 @@ export const CHINA_EVENTS = [
       G.ruralUrban === 'rural' &&
       !G.mem?.cnLeftBehindFired,
     text: (G) => {
-      const parents = G.parents ?? []
+      const parents = Object.values(G.parents ?? {})
       const bothGone = parents.filter(p => p.alive !== false).length >= 2
       if (bothGone) return 'Both parents are in Guangdong. Your grandparents raise you and they are good at this and it is not the same as parents. They call when they can — Sundays, if the reception holds. You have the calls and the remittances and the visits at New Year which end in crying at the bus station. You understand, without being told, what this arrangement costs.'
       return 'Your parents are in the city. You are in the village with your grandparents. This is not unusual — most of the children in your class are in the same arrangement. You grow up knowing your parents as voices and photographs. When they come home for Spring Festival they are strangers who love you and you love them and you are all, in that week, trying to compress what the year hasn\'t been.'

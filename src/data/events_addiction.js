@@ -309,7 +309,7 @@ const ADDICTION_FAMILY = [
     when: (G) =>
       !G.flags.has('drug_addiction') &&
       !G.flags.has('alcohol_addiction') &&
-      (G.flags.has('addiction_in_family') || (G.parents ?? []).some(p => p.alive !== false)) &&
+      (G.flags.has('addiction_in_family') || Object.values(G.parents ?? {}).some(p => p.alive !== false)) &&
       !G.mem?.addFamilyFired,
     text: 'Someone close to you is in the using. Not you — them. The watching is its own particular experience: the specific hope and specific disappointment cycling on a schedule, the way the relationship has reorganised itself around the addiction without anyone deciding to reorganise it. You have read the materials. You know the words. The words are less useful than you expected.',
     choices: [

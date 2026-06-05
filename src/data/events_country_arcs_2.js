@@ -277,7 +277,7 @@ export const COUNTRY_ARC_2_EVENTS = [
       G.character.country.name === 'China' &&
       G.flags.includes('little_emperor') &&
       G.age >= 38 && G.age <= 55 &&
-      G.parents && G.parents.filter(p => p.status !== 'dead').length > 0 &&
+      Object.values(G.parents ?? {}).some(p => p.status !== 'dead') &&
       !G.mem?.ocpSoleSupport,
     text: 'Both sets of grandparents, both parents. You are one child. There is no sibling to share this with — no one to divide the hospital visits, the phone calls, the money, the guilt. Your parents saved for your education and did not save for their care, because the expectation was that you would be the savings. You are the savings. You do not resent them. You are also very tired.',
     choices: [

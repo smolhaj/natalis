@@ -184,12 +184,12 @@ const GENERATIONAL_EVENTS = [
     weight: 7,
     when: (G) =>
       isGifted(G) &&
-      (G.parents ?? []).some(p => !p.alive) &&
+      Object.values(G.parents ?? {}).some(p => !p.alive) &&
       G.age >= 38 &&
       !G.mem?.giftParentEchoFired,
     text: (G) => {
       const type = giftType(G)
-      const deadParent = (G.parents ?? []).find(p => !p.alive)
+      const deadParent = Object.values(G.parents ?? {}).find(p => !p.alive)
       const parentLabel = deadParent?.gender === 'male' ? 'father' : 'mother'
       if (type === 'intellectual') return `Going through your ${parentLabel}'s things you find a notebook. The calculations inside are more sophisticated than anything they would have needed for the life they lived. The margins are full of patterns. You sit with this for a long time. You would like to ask them a question you don't have the words for.`
       if (type === 'musical') return `Going through your ${parentLabel}'s things you find recordings — not commercial recordings, but cassette tapes of them playing, alone, in what sounds like a room late at night. The playing is extraordinary. You have never heard this before. They never mentioned it.`
