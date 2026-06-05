@@ -1079,8 +1079,9 @@ function desireWeight(eventId, desire) {
 
 // Stat-based event weight multiplier — high/low stats shift event probability
 // without hard-gating events, preserving randomness while making lives feel coherent.
-function statWeight(eventId, stats) {
-  if (!stats || !eventId) return 1
+function statWeight(eventId, G) {
+  if (!G || !eventId) return 1
+  const stats = G.stats ?? {}
   let m = 1
   const id = eventId
   const { smarts, charisma, happiness, health, wealth, looks } = stats
@@ -1102,6 +1103,16 @@ function statWeight(eventId, stats) {
   if ((wealth ?? 50) > 65 && (id.includes('pov_') || id.includes('evict') || id.includes('bankrupt'))) m *= 0.35
   // Looks
   if ((looks ?? 50) > 72 && (id.includes('romance') || id.includes('social_cap') || id.includes('looks'))) m *= 1.3
+  // Mental health — unmanaged condition suppresses social success; managed boosts recovery events
+  const mh = G.mentalHealth ?? {}
+  if (mh.condition && !mh.therapy && !mh.medicating) {
+    if (id.includes('mh_') || id.includes('grief_drink') || id.includes('depr')) m *= 1.5
+    if (id.includes('career_promot') || id.includes('rq_partner_warmth') || id.includes('rq_partner_long')) m *= 0.6
+  }
+  if (mh.therapy || mh.medicating) {
+    if (id.includes('therapy') || id.includes('recovery') || id.includes('ft_abusive_rel_therapy')) m *= 1.4
+    if (id.includes('mh_crisis') || id.includes('mh_severe')) m *= 0.5
+  }
   return m
 }
 
@@ -1155,10 +1166,10 @@ export function getNextEvent(state) {
 
   const desire = G.desire
   const stats = G.stats
-  const totalWeight = pool.reduce((sum, e) => sum + (e.weight ?? 1) * desireWeight(e.id, desire) * statWeight(e.id, stats), 0)
+  const totalWeight = pool.reduce((sum, e) => sum + (e.weight ?? 1) * desireWeight(e.id, desire) * statWeight(e.id, G), 0)
   let r = Math.random() * totalWeight
   for (const event of pool) {
-    r -= (event.weight ?? 1) * desireWeight(event.id, desire) * statWeight(event.id, stats)
+    r -= (event.weight ?? 1) * desireWeight(event.id, desire) * statWeight(event.id, G)
     if (r <= 0) return event
   }
   return pool[pool.length - 1]
