@@ -3086,6 +3086,133 @@ function buildYearTexture(state) {
     'The work that mattered most is known in certain circles. Those circles are smaller than the work deserved. You have made a kind of peace with this.',
   ])
 
+  // ─── CAREER × COUNTRY TEXTURE (~28% when working in specific contexts) ────────
+  if (career && Math.random() < 0.28) {
+    const field = career.field
+    const cc = state.currentCountry ?? state.character?.country?.name
+    const arch = state.character?.country?.archetype
+    const yr = currentYear
+
+    // Technology in developing world: different constraints, different meaning
+    if (field === 'technology' && (arch === 'subsaharan' || arch === 'developing_urban' || arch === 'developing_unstable')) {
+      return pick([
+        'The connectivity is the constraint. Everything you build is designed for the gaps between the connections, the drop-out, the two-bar signal at the edge of coverage.',
+        'You are building something here that does not assume the infrastructure exists. That requires a different architecture than the solutions the tech companies in the north exported.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'Mobile-first was the slogan. You were building mobile-only because there was no alternative, which turned out to be the better design.'
+          : 'The electricity goes out. The generator runs for a few hours. You have learned to scope the work to what the generator will give you.',
+      ])
+    }
+    if (field === 'technology' && arch === 'post_soviet' && yr >= 1991 && yr <= 2010) {
+      return pick([
+        'The technical skills survived the collapse. The institutions they were embedded in did not. You found ways to offer them to whoever was building the new economy.',
+        'You had a qualification from a Soviet-era institute that meant something inside the Soviet system and required translation for everything after. You made the translation.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'The post-Soviet tech economy was assembled by people who were trained for something that no longer existed and adapted faster than anyone predicted.'
+          : 'The old software ran on systems that were no longer being maintained. The new software was being imported. You were in the gap between them.',
+      ])
+    }
+    if (field === 'technology' && cc === 'China' && yr >= 1995 && yr <= 2015) {
+      return pick([
+        'The Great Firewall is the constraint that shapes the architecture. You build inside it, which means you build differently from the outside.',
+        'The platform economy in China is doing things differently from the American model — not derivative, not inferior, different. You are inside the difference building it.',
+        'The work is fast. The companies scale in months. The government is watching. All three of those facts operate simultaneously.',
+      ])
+    }
+    if (field === 'technology' && (arch === 'wealthy_west' || arch === 'wealthy_east') && yr >= 2010) {
+      return pick([
+        'The platform runs on data. The data is the people who use the platform. You think about this at a level of specificity that doesn\'t transfer easily to dinner conversations.',
+        'The velocity is real — the features shipping, the metrics moving. The questions underneath the velocity surface occasionally and then are submerged again by the velocity.',
+        'You are working on infrastructure that billions of people use without knowing. The invisibility is the point. The invisibility also means the choices are yours without oversight.',
+      ])
+    }
+
+    // Education under pressure: teaching in authoritarian contexts
+    if (field === 'education' && (F.has('regime_self_censorship') || ['military_dictatorship', 'single_party_communist', 'single_party_authoritarian', 'theocracy'].includes(state.character?.country?.regime))) {
+      return pick([
+        'The curriculum is what it is. What you teach inside it is also what it is. The two things coexist in your classroom without being announced.',
+        'You know which questions cannot be answered honestly in front of thirty children whose parents have not chosen to take that risk on their behalf.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'You have taught for years under a syllabus that required you to say some things you knew were false. You also taught everything around those things as carefully as you could. Both are true.'
+          : 'The textbook says one thing. The evidence says another. You have learned to teach both, in the right order, with the right pauses.',
+      ])
+    }
+    // Education in under-resourced contexts
+    if (field === 'education' && (arch === 'subsaharan' || arch === 'developing_unstable' || arch === 'conflict_zone') && Math.random() < 0.5) {
+      return pick([
+        'You share the one textbook between four students. You have done this long enough that the workaround is just the method.',
+        'The class is too large and the supplies are not enough and the children come anyway, which tells you something.',
+        'Your salary is delayed again. You teach anyway. The teaching is the thing you chose and the salary is the thing the government chose, and those are separate facts you manage separately.',
+        phase === 'late_life'
+          ? 'You have taught several generations of this community\'s children. The ones who left and the ones who stayed all passed through this classroom. That is a specific kind of knowing a place.'
+          : 'The school has a roof and children in it, which means you are doing better than the school in the next village.',
+      ])
+    }
+
+    // Healthcare under specific country pressures
+    if (field === 'healthcare' && cc === 'United States' && yr >= 1990) {
+      return pick([
+        'The form is part of the treatment. The insurance determination precedes the clinical decision. You are practising medicine inside an administrative structure that has opinions about the medicine.',
+        'You know what the patient needs. You also know what the system will approve. The gap between those two things is where you spend your energy.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'Medical school taught you medicine. The career taught you billing codes and prior authorisations and how to document in ways that survive appeal. Both are your job.'
+          : 'The debt from the training and the salary from the practice and the hours of both — you are doing the arithmetic that will take a decade to resolve.',
+      ])
+    }
+    if (field === 'healthcare' && (arch === 'subsaharan' || arch === 'developing_unstable') && Math.random() < 0.5) {
+      return pick([
+        'The drugs are out of stock again. You treat with what you have. That sentence covers a range of improvisations that would alarm a hospital in a wealthy country.',
+        'You are the only doctor in this district. You know what that means for the people in the next village and the one after that.',
+        'The WHO protocols assume supply chains that function. You work in the gap between the protocol and the supply chain.',
+        phase === 'late_life'
+          ? 'You have practised medicine here for decades with the materials available here. What you have managed to do with what was available is the record of this career.'
+          : 'The patient walked four hours to get here. You have that in mind when you decide how long the consultation takes.',
+      ])
+    }
+
+    // Finance: archetype-specific
+    if (field === 'finance' && (arch === 'wealthy_gulf' || cc === 'Saudi Arabia' || cc === 'UAE')) {
+      return pick([
+        'The oil wealth needs a destination. Finance is one of the destinations. You are in the part of the economy that manages what the oil economy produces.',
+        'Islamic finance has its own instruments — sukuk, murabaha, the prohibition on riba — and the conventional finance is always alongside it. You know both.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'The Gulf financial centres were built in your working lifetime. You built something inside them. The speed of that construction is something you understand from inside.'
+          : 'The money is here and it wants to move and you are part of the system that moves it.',
+      ])
+    }
+    if (field === 'finance' && arch === 'post_soviet' && yr >= 1991 && yr <= 2008) {
+      return pick([
+        'The 1990s: the privatisation, the vouchers, the men who understood that the vouchers could be aggregated. You were somewhere in that process.',
+        'The new financial system was assembled out of pieces of the old one and pieces imported from outside, and the seams between them are where the fortunes were made.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'The post-Soviet financial sector was built by a small number of people in a short period under conditions that did not exist before or after. You were one of the people.'
+          : 'The rules were being written as you operated inside them. You adapted faster than the rules.',
+      ])
+    }
+
+    // Government/civil service under specific regimes
+    if (field === 'government' && F.has('regime_self_censorship')) {
+      return pick([
+        'You implement the policy. The policy is the government\'s. What you think of the policy is yours and stays yours.',
+        'The institution persists through the administrations. You are part of the persistence. That is both the purpose and the constraint.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'You have served through changes that the institution absorbed without changing. You are one of the things it absorbed.'
+          : 'There is what the regulation says and what the superior says and what the citizen needs, and your day is the negotiation between all three.',
+      ])
+    }
+
+    // Media under press restrictions
+    if (field === 'media' && (F.has('regime_self_censorship') || F.has('learned_silence'))) {
+      return pick([
+        'The story you are writing is not the story you would write without the limits. You know both stories. One of them is publishable.',
+        'Self-censorship is the wrong word for it — it implies a choice made once. It is more like a reflex that operates continuously, editing before the words arrive.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'You have practised journalism in this country for decades. What you have published and what you have not published are two different records of the same career.'
+          : 'The press card gives you access. The access operates inside a set of boundaries that are not written down because writing them down would itself be a problem.',
+      ])
+    }
+  }
+
   // ─── CAREER FIELD TEXTURE (~22% when working) ────────────────────────────────
   if (career && !F.has('career_fulfilled') && Math.random() < 0.22) {
     const field = career.field
