@@ -6208,6 +6208,223 @@ function buildYearTexture(state) {
     ])
   }
 
+  // ─── WORLD THREAD BASELINE (~50% of remaining quiet years) ──────────────────
+  // Country + archetype + era prose for when no specific flags fire.
+  // Ensures quiet years still feel grounded in historical moment and place.
+  if (Math.random() < 0.50) {
+    const arch = state.character?.country?.archetype
+    const cn = state.character?.country?.name
+    const era = Math.floor(currentYear / 10) * 10
+
+    // ── wealthy_west era texture ──
+    if (arch === 'wealthy_west') {
+      if (era === 1940) return pick([
+        'The war is over but its afterimage is everywhere — in the rationing, in the silences, in the things no one wants to explain to people who weren\'t there.',
+        'Reconstruction is visible everywhere. The rubble of last decade is becoming the concrete of this one.',
+        'The welfare state is being assembled out of compromise and exhaustion. People are not sure yet what it will be.',
+      ])
+      if (era === 1950) return pick([
+        'The suburb is new and everything in it is being assembled for the first time.',
+        'The television has arrived in the living room. The world is entering on its own terms.',
+        'The refrigerator. The car. The school with the new gymnasium. A different kind of life is becoming possible.',
+        'Prosperity is the official story. The official story is partly true.',
+      ])
+      if (era === 1960) return pick([
+        'The certainties of the last decade are being questioned with a particular ferocity. Some of what is being questioned deserves it.',
+        'The protest is on the television and also somewhere outside. The world is louder than it was ten years ago.',
+        'Affluence and unease in the same decade. The contradiction is not being resolved.',
+      ])
+      if (era === 1970) return pick([
+        'The oil shock changed the price of everything. The certainty of abundance that characterized the sixties is over.',
+        'Stagflation. The economists have a word for it now. The people living it had words for it already.',
+        'The social contract of the postwar years is under renegotiation. The outcome is not yet clear.',
+      ])
+      if (era === 1980) return pick([
+        'Privatisation is the word in the newspapers. The public sector is being reduced in ways that have not yet shown their full consequences.',
+        'The gap between the people doing well and the people not doing well is measurably wider than it was in 1970.',
+        'The market is the solution now. This is official. The people who disagree are losing the argument.',
+      ])
+      if (era === 1990) return pick([
+        'The Berlin Wall fell. The Cold War is over. The world has a different geometry now and everyone is figuring out what that means.',
+        'Globalisation is the word for what is happening. Jobs are moving. The economy looks different depending on where you are standing.',
+        'The internet is arriving. It is arriving slowly, then all at once.',
+      ])
+      if (era === 2000) return pick([
+        'The security check at the airport takes longer than it used to. The whole architecture of public space has changed.',
+        'The mobile phone is in everyone\'s pocket now. The world is more reachable and less quiet.',
+        'The housing market is doing something that housing markets sometimes do, and no one yet knows which kind.',
+      ])
+      if (era === 2010) return pick([
+        'Austerity is the word now. The public sector is being reduced again, for different reasons than before, with similar consequences.',
+        'The smartphone has reorganized the day. You look at it more than you look at anything else.',
+        'The inequality numbers are back in the newspapers. They were always there. The newspapers are noticing them again.',
+        'The political consensus that held for thirty years has developed serious cracks. People are choosing differently.',
+      ])
+      if (era >= 2020) return pick([
+        'The pandemic changed the relationship between work and place in a way that has not entirely resolved.',
+        'The cost of things — housing, food, energy — is the conversation everyone is having, in different variations.',
+        'The climate is changing in ways that are no longer abstract. This summer was different from last summer.',
+      ])
+    }
+
+    // ── post_soviet era texture ──
+    if (arch === 'post_soviet') {
+      if (era <= 1980) return pick([
+        'Everything is in its correct place according to the plan. The plan is not everything.',
+        'The collective has its logic. The individual has their own. They are not always the same logic.',
+        'The queue is long. This is ordinary. The ordinariness of the queue is information about the system.',
+      ])
+      if (era === 1990) return pick([
+        'The system that organized everything is coming apart. What replaces it is not yet clear.',
+        'The shop shelves look different than they did three years ago. Some of this is better. Some of it is worse.',
+        'The ruble has lost something. What it has lost is not just purchasing power. It is a kind of certainty.',
+        'New things are appearing: privately owned things, dollar stores, people who are suddenly rich. The arithmetic of it is not obvious.',
+        'The factories are quiet. The men who ran them are doing something else now, or trying to.',
+      ])
+      if (era === 2000) return pick([
+        'Stability is back. It is also the word the television uses. Both of these things are true at the same time.',
+        'The oligarchs are visible now in a way they were not before — in the newspapers, in the buildings they own, in the talk at dinner.',
+        'The West is further away than it seemed in the early nineties. Russia is doing something specific with that distance.',
+        'The pension is not what it was supposed to be, and the generation that worked for it knows this.',
+      ])
+      if (era >= 2010) return pick([
+        'The nostalgia is for the certainty, not for the bread lines. Even the people who remember the bread lines sometimes feel it.',
+        'The internet is the thing that has most changed daily life. Even here, even now.',
+        'The young people are leaving for cities. The cities are better than they were.',
+      ])
+    }
+
+    // ── developing_urban era texture ──
+    if (arch === 'developing_urban') {
+      if (era <= 1960) return pick([
+        'The city is being built. The city is always being built. It arrives before the infrastructure that should have come first.',
+        'Independence is recent. The flags and the buildings are new. The question of what independence actually means is being actively worked out.',
+      ])
+      if (era === 1970 || era === 1980) return pick([
+        'The IMF has opinions about how the economy should be run. The people living in the economy have different opinions.',
+        'Structural adjustment is the term. The structure being adjusted is the daily life of ordinary people.',
+        'The city has grown faster than the roads, the water, the electricity. The gap between the plan and the reality is visible from the street.',
+        'The informal sector employs more people than the formal sector. This is not in the official statistics.',
+      ])
+      if (era === 1990) return pick([
+        'The mobile phone is arriving before the landline arrived. This is either a paradox or a bypass. Either way, things work.',
+        'Democracy is the official story now — elections, campaigns, the whole machinery. The substance of it is still being negotiated.',
+        'The middle class is emerging. It is visible in the cars, in the private schools, in the kind of shopping now available.',
+      ])
+      if (era === 2000) return pick([
+        'The mobile phone is in everyone\'s pocket. Mobile money has made banking possible for people who never had an account.',
+        'Chinese investment is visible in the roads, in the buildings, in the machinery at the port. The terms of the investment are less visible.',
+        'The city is the size of a small country. Its problems are the size of a small country\'s.',
+      ])
+      if (era >= 2010) return pick([
+        'The young population bulge is visible everywhere — in the schools, in the unemployment statistics, in the food stalls that appear each year.',
+        'The smartphone has arrived. The politics are faster now and more visible and less controllable by the people who used to control them.',
+        'The diaspora money is a significant part of the economy. The people who send it do not always get credit for what they are sustaining.',
+      ])
+    }
+
+    // ── subsaharan era texture ──
+    if (arch === 'subsaharan') {
+      if (era <= 1960) return pick([
+        'Independence changes the flag. The other structures of the colonial arrangement persist with more tenacity.',
+        'The harvest determines most things. This is not said aloud in the town but it is understood.',
+        'The extended family is the welfare system. It works through obligation rather than taxation. Both have costs.',
+      ])
+      if (era === 1970 || era === 1980) return pick([
+        'The drought years leave marks that last. The body remembers scarcity even when the shelves are full.',
+        'The SAP — structural adjustment programme — has arrived. The health clinic has fewer medications. The school has fewer teachers.',
+        'The extended family absorbs the shock that the state cannot. This is efficient and also exhausting.',
+      ])
+      if (era === 1990 || era === 2000) return pick([
+        'Mobile money has made it possible to send and receive money in ways that did not exist a decade ago. This is not a small thing.',
+        'The Chinese traders have a shop on the main road now. They sell things that were not available before. The prices are different.',
+        'The pastor\'s church has a bigger congregation than last year\'s. The church is the community center, the loan office, the safety net.',
+        'The young people are saving for the journey. The journey is to the city, or to Europe, or to the Gulf. The direction is away.',
+      ])
+      if (era >= 2010) return pick([
+        'The smartphone has arrived before the electricity is reliable. Solar charging is a business now.',
+        'The middle class is real. It is also precarious in a way the word middle doesn\'t quite capture.',
+        'The diaspora is everywhere — in the remittances, in the WhatsApp groups, in the children who have two accents.',
+      ])
+    }
+
+    // ── wealthy_gulf era texture ──
+    if (arch === 'wealthy_gulf') {
+      if (era <= 1970) return pick([
+        'The oil money is new enough that no one has yet agreed on what it is for.',
+        'The bedouin routes that organized this desert for centuries are being replaced by highways.',
+        'Before the wealth, there was the pearl trade, the fishing, the trade routes. The people who remember this are still here.',
+      ])
+      if (era === 1980 || era === 1990) return pick([
+        'The skyline is being built at a speed that has no historical precedent. The labor that builds it comes from somewhere else.',
+        'The kafala system means that the workers who built the building cannot leave the building without asking.',
+        'Air conditioning has changed what is possible in this climate. The old architecture knew how to breathe. The new architecture uses electricity.',
+      ])
+      if (era >= 2000) return pick([
+        'The towers are higher now. The migrant workers are visible in the afternoon heat, on the scaffolding of the next tower.',
+        'The young nationals are being trained for the jobs that are currently held by expatriates. The transition has been slower than planned.',
+        'Vision 2030, or whatever the current plan is called, is the official future. The unofficial future is more complicated.',
+        'The oil wealth has been invested in visible things. The invisible things — the political accountability, the civil society — are elsewhere.',
+      ])
+    }
+
+    // ── conflict_zone era texture ──
+    if (arch === 'conflict_zone') {
+      return pick([
+        'The checkpoint is slower today. No one explains why. The soldiers are different soldiers.',
+        'The NGO has moved its office again. Security considerations. The gap they leave is not filled by anyone.',
+        'The hospital is operating at less than capacity. The doctors who left have not come back.',
+        'The neighborhood that was full last year has fewer people in it. The leaving was not announced.',
+        'The ceasefire is holding, for now. Everyone knows what for now means in this context.',
+        'The question is which generation will get to live somewhere without this overhead.',
+      ])
+    }
+
+    // ── wealthy_east era texture ──
+    if (arch === 'wealthy_east') {
+      if (era <= 1970) return pick([
+        'The economic miracle is real and visible in the new buildings, the new factories, the sheer speed of the reconstruction.',
+        'Work is the social contract. There is a generation being made by this ethos that will not entirely understand the generation that follows.',
+      ])
+      if (era === 1980 || era === 1990) return pick([
+        'The bubble, before it burst, was extraordinary. The city was spending at a speed that felt permanent.',
+        'After the bubble, a different kind of decade. The old certainties about employment and security are being renegotiated.',
+        'The work hours are not discussed as unusual. They are discussed as necessary. This is a distinction with a cost.',
+      ])
+      if (era >= 2000) return pick([
+        'The aging population is the demographic challenge that the economists keep discussing. The people getting older are less interested in being discussed.',
+        'The birth rate is the number that appears in the policy documents. The young people have reasons for it that the policy documents do not fully capture.',
+        'The smartphone is the device through which most things happen now. Including things that used to happen differently.',
+      ])
+    }
+
+    // ── developing_unstable era texture ──
+    if (arch === 'developing_unstable') {
+      return pick([
+        'The election results are announced. The question of whether the result is the result is a question people are careful about where they ask it.',
+        'The currency is not what it was last year. The prices reflect this. The wages have not caught up.',
+        'The general has been replaced by another general, or by a politician who looks like a general in the important ways.',
+        'The debt to the international lenders is a number that appears in budgets and disappears from daily conversation.',
+        'People are managing. Managing is not the same as thriving. It is also not the same as failing. It is its own category.',
+      ])
+    }
+
+    // ── Country-specific historical fragments ──
+    if (cn === 'United States' && era === 1960) return 'The civil rights movement is rewriting who the country is. The rewriting is not easy and is not finished.'
+    if (cn === 'United States' && era === 1970) return 'Vietnam is in everything — in the news, in the arguments, in the men who came back and are not talking about what they came back from.'
+    if (cn === 'United States' && era === 2000) return 'The towers fell and the world reorganized around the fact of it. The reorganization is still ongoing.'
+    if (cn === 'United Kingdom' && era === 1980) return 'The mines are closing. The unions are losing. The country is dividing along a line that runs through the middle of communities that used to be one thing.'
+    if (cn === 'France' && era === 1960) return 'Algeria is still the war that dare not speak its name in certain company.'
+    if (cn === 'Germany' && era === 1990) return 'Reunification is the official word. The actual meeting of two societies that have been developing in parallel for forty years is more complicated.'
+    if (cn === 'South Korea' && era === 1980) return 'The economic growth is real. The political conditions in which it is being achieved are also real and are not discussed in the same newspapers.'
+    if (cn === 'China' && era === 1980) return 'The reform and opening up is visible everywhere — in the new factories, the new permission to be in business, the new and complicated relationship with the West.'
+    if (cn === 'China' && era === 2000) return 'The city looks different than it did five years ago. The speed of the change is difficult to describe to someone who hasn\'t watched it happen.'
+    if (cn === 'Nigeria' && era === 1970) return 'The oil is a promise and a complication. The wealth it generates does not reach the same places the complications do.'
+    if (cn === 'India' && era === 1990) return 'Liberalisation has arrived. The middle class is growing in ways that were not possible before 1991. What is being built is genuinely uncertain.'
+    if (cn === 'Brazil' && era === 1980) return 'The hyperinflation is a fact of daily life. Prices change between morning and afternoon. The adaptation required is exhausting and also, after a while, ordinary.'
+    if (cn === 'Brazil' && era === 2000) return 'The Bolsa Família has pulled people out of a kind of poverty that was considered fixed. The fact of this is underreported outside Brazil.'
+  }
+
   // ─── UNIVERSAL FALLBACK ───────────────────────────────────────────────────────
   return pick([
     'A year without incident. These exist.',
