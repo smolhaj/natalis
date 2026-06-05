@@ -5205,4 +5205,12 @@ export const FLAG_REGISTRY = {
     notes: 'Set by phase_entry_late_life.',
   },
 
+  moved_for_partner: {
+    weight: 'moderate',
+    category: 'relationship',
+    description: 'Relocated to a different city for their partner\'s career or opportunity.',
+    intent: 'year_texture',
+    notes: 'Set by pw_partner_wants_move.',
+  },
+
 }

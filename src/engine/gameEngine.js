@@ -864,6 +864,13 @@ function buildEffectProxy(state) {
     if (!proxy._partnerMomentsToAdd) proxy._partnerMomentsToAdd = []
     proxy._partnerMomentsToAdd.push(text)
   }
+  // Schedule an echo — a guaranteed follow-up event by ID, N years from now.
+  // The event must exist in the EVENTS array or LIFE_SKELETON_EVENTS.
+  proxy.scheduleEcho = (eventId, yearsFromNow) => {
+    const fireAtAge = state.age + Math.max(1, yearsFromNow)
+    if (!proxy._echoQueue) proxy._echoQueue = []
+    proxy._echoQueue.push({ eventId, fireAtAge })
+  }
   proxy.makePartner = (overrides = {}) => {
     const myGender = state.character.gender
     const isLGBTQ = proxy.flags.includes('lgbtq_identity')
@@ -1030,6 +1037,9 @@ function resolveProxyExtras(state, proxy) {
     const existing = next.mem?.partnerMoments ?? []
     next = { ...next, mem: { ...(next.mem ?? {}), partnerMoments: [...existing, ...proxy._partnerMomentsToAdd].slice(-12) } }
   }
+  if (proxy._echoQueue?.length) {
+    next = { ...next, echoQueue: [...(next.echoQueue ?? []), ...proxy._echoQueue] }
+  }
   return next
 }
 
@@ -1065,6 +1075,34 @@ function desireWeight(eventId, desire) {
   const patterns = DESIRE_PATTERNS[desire]
   if (!patterns) return 1
   return patterns.some(p => eventId.includes(p)) ? 1.6 : 1
+}
+
+// Stat-based event weight multiplier — high/low stats shift event probability
+// without hard-gating events, preserving randomness while making lives feel coherent.
+function statWeight(eventId, stats) {
+  if (!stats || !eventId) return 1
+  let m = 1
+  const id = eventId
+  const { smarts, charisma, happiness, health, wealth, looks } = stats
+  // Smarts
+  if ((smarts ?? 50) > 70 && (id.includes('scholar') || id.includes('uni_') || id.includes('gifted') || id.includes('academic'))) m *= 1.5
+  if ((smarts ?? 50) < 32 && (id.includes('scholar') || id.includes('uni_') || id.includes('gifted'))) m *= 0.25
+  // Charisma
+  if ((charisma ?? 50) > 70 && (id.includes('romance') || id.includes('rq_partner') || id.includes('friend') || id.includes('social_cap') || id.includes('small_crush') || id.includes('first_love'))) m *= 1.4
+  if ((charisma ?? 50) < 30 && (id.includes('romance') || id.includes('small_crush') || id.includes('first_love'))) m *= 0.5
+  // Happiness
+  if ((happiness ?? 50) < 32 && (id.includes('mh_') || id.includes('mental') || id.includes('grief') || id.includes('depr') || id.includes('therapy'))) m *= 1.6
+  if ((happiness ?? 50) > 75 && (id.includes('mh_depr') || id.includes('mh_crisis'))) m *= 0.4
+  // Health
+  if ((health ?? 80) < 38 && (id.includes('ill') || id.includes('cancer') || id.includes('heart') || id.includes('chronic') || id.includes('condition'))) m *= 1.5
+  if ((health ?? 80) > 80 && (id.includes('ill_terminal') || id.includes('heart_failure'))) m *= 0.5
+  // Wealth
+  if ((wealth ?? 50) > 72 && (id.includes('business') || id.includes('invest') || id.includes('luxury') || id.includes('property'))) m *= 1.35
+  if ((wealth ?? 50) < 25 && (id.includes('poverty') || id.includes('evict') || id.includes('debt_spiral') || id.includes('pov_'))) m *= 1.5
+  if ((wealth ?? 50) > 65 && (id.includes('pov_') || id.includes('evict') || id.includes('bankrupt'))) m *= 0.35
+  // Looks
+  if ((looks ?? 50) > 72 && (id.includes('romance') || id.includes('social_cap') || id.includes('looks'))) m *= 1.3
+  return m
 }
 
 // Dev mode: set localStorage.setItem('natalis_dev', 'true') to enable pool logging.
@@ -1116,10 +1154,11 @@ export function getNextEvent(state) {
   if (pool.length === 0) return null
 
   const desire = G.desire
-  const totalWeight = pool.reduce((sum, e) => sum + (e.weight ?? 1) * desireWeight(e.id, desire), 0)
+  const stats = G.stats
+  const totalWeight = pool.reduce((sum, e) => sum + (e.weight ?? 1) * desireWeight(e.id, desire) * statWeight(e.id, stats), 0)
   let r = Math.random() * totalWeight
   for (const event of pool) {
-    r -= (event.weight ?? 1) * desireWeight(event.id, desire)
+    r -= (event.weight ?? 1) * desireWeight(event.id, desire) * statWeight(event.id, stats)
     if (r <= 0) return event
   }
   return pool[pool.length - 1]
@@ -4210,6 +4249,9 @@ function buildYearTexture(state) {
     }
     if (F.has('ll_priority_unfinished') && phase === 'late_life' && Math.random() < 0.4) {
       return pick(['The unfinished thing is still there. You have not stopped working on it. You are still not sure it will be done.', 'You told yourself there was one more thing. There is. You are doing it.'])
+    }
+    if (F.has('moved_for_partner') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.35) {
+      return pick(['The city you moved to for them has become yours. The one you left is still in you somewhere.', 'You still remember what it cost to go. You are no longer sure it was the wrong call.'])
     }
   }
 
@@ -8111,6 +8153,21 @@ export function tick(state) {
       const drift = (50 - friend.relationshipQuality) * 0.01
       return { ...friend, relationshipQuality: clamp(friend.relationshipQuality + drift + randomBetween(-1, 1), 0, 100) }
     })
+  }
+
+  // Echo queue processing — check for scheduled follow-up events that should fire this year
+  if (s.echoQueue?.length) {
+    const dueEchoes = s.echoQueue.filter(e => s.age >= e.fireAtAge)
+    if (dueEchoes.length > 0) {
+      s.echoQueue = s.echoQueue.filter(e => s.age < e.fireAtAge)
+      const allEvents = [...EVENTS, ...LIFE_SKELETON_EVENTS]
+      for (const echo of dueEchoes) {
+        const evt = allEvents.find(e => e.id === echo.eventId)
+        if (evt && !s.queue.some(e => e.id === evt.id)) {
+          s.queue = [...s.queue, evt]
+        }
+      }
+    }
   }
 
   // Get next event
