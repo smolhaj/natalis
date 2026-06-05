@@ -3867,4 +3867,1210 @@ export const FLAG_REGISTRY = {
     notes: 'Set by gift_anniversary_door. Midlife, 20+ years after gift ceiling. Quiet resolution.',
   },
 
+  // ── events_gifted_3.js flags ──────────────────────────────────────────
+
+  gift_parent_dismissed: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'The gift went unrecognised by the parent — not from cruelty but from the absence of a framework to evaluate it.',
+    intent: 'year_texture',
+    notes: 'Set by gift_parent_dismissal. Parent had no frame for the gift. Produces specific unacknowledged-gift texture.',
+  },
+
+  gift_public_performer: {
+    weight: 'moderate',
+    category: 'achievement',
+    description: 'The gift was brought into a public arena — competition, concert hall, examination — as a child or adolescent.',
+    intent: 'year_texture',
+    notes: 'Set by gift_public_performance. Gates further performance arc. May coexist with gift_public_discomfort.',
+  },
+
+  gift_public_discomfort: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'The public performance of the gift felt wrong — the gift was private and the arena made it something else.',
+    intent: 'none',
+    notes: 'Set by gift_public_performance (uncomfortable choice).',
+  },
+
+  gift_olympiad_path: {
+    weight: 'moderate',
+    category: 'achievement',
+    description: 'Entered and competed in academic olympiad or international competition — the system that exists for the intellectual gift.',
+    intent: 'year_texture',
+    notes: 'Set by gift_olympiad_path event. Gates gift_olympiad_success.',
+  },
+
+  gift_olympiad_success: {
+    weight: 'major',
+    category: 'achievement',
+    description: 'Won or placed at the top of an international academic competition — result documented, university interest generated.',
+    intent: 'year_texture',
+    notes: 'Set by gift_olympiad_path (win choice). Ribbon: candidate. Opens elite university path.',
+  },
+
+  gift_gender_barrier_named: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Named the gender barrier on the gift path explicitly — pushed through it rather than around it.',
+    intent: 'none',
+    notes: 'Set by gift_gender_barrier (name it choice).',
+  },
+
+  gift_gender_fought: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Fought the structural gender barrier to the gift path — arrived somewhere the framing said was inaccessible.',
+    intent: 'year_texture',
+    notes: 'Set by gift_gender_barrier (name it choice). Gates gift_gender_midlife_reckoning.',
+  },
+
+  gift_gender_navigated: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Found the path around the gender barrier — longer route, same destination, different terrain knowledge.',
+    intent: 'year_texture',
+    notes: 'Set by gift_gender_barrier (find path around choice). Gates gift_gender_midlife_reckoning.',
+  },
+
+  gift_gender_midlife_reckoned: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'In midlife, reckoned with what the gender barrier cost and what it may have moved — watching younger women navigate lighter versions of the same terrain.',
+    intent: 'none',
+    notes: 'Set by gift_gender_midlife_reckoning. Female + gifted + fought or navigated.',
+  },
+
+  gift_disability_intersection: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Gift and disability occupy the same person — the world sees the condition first; the gift requires investment to see.',
+    intent: 'year_texture',
+    notes: 'Set by gift_disability_intersection event. born_with_disability or born_deaf or chronic condition + gifted.',
+  },
+
+  gift_world_stage: {
+    weight: 'major',
+    category: 'achievement',
+    description: 'Reached the world stage of the gift — Carnegie Hall, Olympic selection, Nobel lecture, world championship, field-defining publication.',
+    intent: 'year_texture',
+    notes: 'Set by gift_world_stage event. Requires gift_extraordinary + fame >= 45. Gates gift_major_prize.',
+  },
+
+  gift_major_prize: {
+    weight: 'major',
+    category: 'achievement',
+    description: 'Received a major prize — gold medal, world title, Nobel-level recognition, field-defining award.',
+    intent: 'year_texture',
+    notes: 'Set by gift_major_prize event. Requires gift_world_stage. Ribbon candidate.',
+  },
+
+  gift_after_peak: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'The peak of the gift is behind — not lost but completed. A different, less urgent relationship to the gift.',
+    intent: 'year_texture',
+    notes: 'Set by gift_after_the_peak event. Age 55+. The phase after proving.',
+  },
+
+  // ── events_china.js flags ──────────────────────────────────────────────
+
+  class_enemy_family: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Family classified as class enemy in Maoist China — landlord, capitalist, rightist — with all that entails for opportunity and safety.',
+    intent: 'year_texture',
+    notes: 'Set by cn_class_enemy_childhood. China, 1950–1976.',
+  },
+
+  sent_down_youth: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Sent to the countryside during the Cultural Revolution\'s rustification campaign — years of rural labour instead of education.',
+    intent: 'year_texture',
+    notes: 'Set by cn_sent_down_youth. China, 1968–1977.',
+  },
+
+  sent_down_survived: {
+    weight: 'moderate',
+    category: 'resilience',
+    description: 'Survived the sent-down years with intellectual life intact — continued learning despite the interruption.',
+    intent: 'none',
+    notes: 'Set by cn_sent_down_youth (keep learning choice).',
+  },
+
+  sent_down_intellectual: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Used the sent-down years for intellectual development despite the intended purpose of the programme.',
+    intent: 'none',
+    notes: 'Set by cn_sent_down_youth (keep learning choice). Counter to erasure.',
+  },
+
+  sent_down_returned: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Returned from the countryside after Mao — with a gap where education should have been.',
+    intent: 'year_texture',
+    notes: 'Set by cn_sent_down_return. The decade gap is permanent.',
+  },
+
+  family_rehabilitated: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Family\'s class enemy designation was posthumously rehabilitated under Deng — the apology came, the years didn\'t return.',
+    intent: 'none',
+    notes: 'Set by cn_rehabilitation.',
+  },
+
+  gaokao_succeeded: {
+    weight: 'major',
+    category: 'achievement',
+    description: 'Passed the gaokao with a score enabling elite university entry — the gate reopened after the Cultural Revolution years.',
+    intent: 'year_texture',
+    notes: 'Set by cn_gaokao (top score choice). Post-1977.',
+  },
+
+  gaokao_survived: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Sat the gaokao and scored well enough to continue — not the top tier, but a path.',
+    intent: 'none',
+    notes: 'Set by cn_gaokao (good score choice).',
+  },
+
+  one_child_policy_complied: {
+    weight: 'moderate',
+    category: 'family',
+    description: 'Had one child in compliance with the one-child policy — the single child carries the family expectations of many.',
+    intent: 'year_texture',
+    notes: 'Set by cn_one_child_decision (comply choice). 1980–2015.',
+  },
+
+  one_child_policy_resisted: {
+    weight: 'moderate',
+    category: 'family',
+    description: 'Had a second child despite the one-child policy — fines, job consequences, social pressure.',
+    intent: 'year_texture',
+    notes: 'Set by cn_one_child_decision (have second choice). 1980–2015.',
+  },
+
+  tiananmen_witness: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Was in Beijing in June 1989 — witnessed the movement, the square, and what happened on June 4th.',
+    intent: 'year_texture',
+    notes: 'Set by cn_tiananmen_personal. China, 1989. Produces permanent silence or activism.',
+  },
+
+  tiananmen_silence: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'After Tiananmen, chose survival silence — the events not mentioned, the grief carried privately.',
+    intent: 'none',
+    notes: 'Set by cn_tiananmen_personal (carry it quietly choice).',
+  },
+
+  rural_to_urban: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Moved from rural China to city as part of the largest internal migration in human history.',
+    intent: 'year_texture',
+    notes: 'Set by cn_village_to_city. 1990s–2010s.',
+  },
+
+  migrant_worker_china: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Worked as internal migrant in Chinese cities — without full urban hukou rights, in factory or construction work.',
+    intent: 'year_texture',
+    notes: 'Set by cn_village_to_city.',
+  },
+
+  village_connection_kept: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Maintained connection to village of origin despite city migration — remittances, visits, dual identity.',
+    intent: 'none',
+    notes: 'Set by cn_village_to_city (keep village choice).',
+  },
+
+  china_entrepreneur: {
+    weight: 'moderate',
+    category: 'achievement',
+    description: 'Started a private business during China\'s reform era — part of the generation that built wealth where none was possible before.',
+    intent: 'year_texture',
+    notes: 'Set by cn_first_private_business.',
+  },
+
+  left_behind_child: {
+    weight: 'major',
+    category: 'family',
+    description: 'Was a left-behind child — parents migrated for work, raised by grandparents. One of ~61 million in China.',
+    intent: 'year_texture',
+    notes: 'Set by cn_left_behind_child.',
+  },
+
+  little_emperor: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Only child in one-child China — the singularity of parental investment, the weight of collective family expectation.',
+    intent: 'year_texture',
+    notes: 'Set by cn_only_child_weight.',
+  },
+
+  social_credit_awareness: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Became aware of and adapted behaviour to China\'s social credit system.',
+    intent: 'none',
+    notes: 'Set by cn_social_credit_awareness.',
+  },
+
+  china_tech_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Part of China\'s tech boom generation — WeChat, Alipay, Didi, Alibaba as primary infrastructure of daily life.',
+    intent: 'none',
+    notes: 'Set by cn_tech_generation.',
+  },
+
+  zero_covid_lockdown: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Lived through China\'s zero-COVID lockdowns — weeks or months confined to apartment.',
+    intent: 'year_texture',
+    notes: 'Set by cn_zero_covid_lockdown. 2020–2022.',
+  },
+
+  zero_covid_anger: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Felt — and expressed, at some cost — anger at the zero-COVID system during the lockdowns.',
+    intent: 'none',
+    notes: 'Set by cn_zero_covid_lockdown (express anger choice).',
+  },
+
+  lying_flat_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Adopted the lying flat (tang ping) ethos — rejection of the 996 grind, involuntary simplicity as protest.',
+    intent: 'year_texture',
+    notes: 'Set by cn_lying_flat.',
+  },
+
+  iron_rice_bowl_broken: {
+    weight: 'major',
+    category: 'labor',
+    description: 'State-sector job lost in 1990s SOE reforms — the lifetime employment guarantee of Mao-era China ended.',
+    intent: 'year_texture',
+    notes: 'Set by cn_iron_rice_bowl_broken.',
+  },
+
+  worker_protest: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Participated in worker protest against SOE layoffs or conditions.',
+    intent: 'none',
+    notes: 'Set by cn_iron_rice_bowl_broken (join the protest choice).',
+  },
+
+  // ── events_korea.js flags ──────────────────────────────────────────────
+
+  hagwon_childhood: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'Childhood defined by the hagwon circuit — after-school academies, evening tutors, no unscheduled time.',
+    intent: 'year_texture',
+    notes: 'Set by kr_hagwon_childhood.',
+  },
+
+  night_study_generation: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'Adolescence defined by night study culture — school library until 11pm, five hours of sleep, relentless competition.',
+    intent: 'year_texture',
+    notes: 'Set by kr_night_study.',
+  },
+
+  suneung_year: {
+    weight: 'major',
+    category: 'education',
+    description: 'Sat the suneung — the nine-hour university entrance exam that divides a Korean life into before and after.',
+    intent: 'year_texture',
+    notes: 'Set by kr_suneung_year. Gates kr_suneung_result.',
+  },
+
+  sky_university: {
+    weight: 'major',
+    category: 'achievement',
+    description: 'Entered Seoul National, Korea, or Yonsei university — the name on the door the family said at every dinner.',
+    intent: 'year_texture',
+    notes: 'Set by kr_suneung_result (SKY choice).',
+  },
+
+  suneung_succeeded: {
+    weight: 'moderate',
+    category: 'achievement',
+    description: 'Scored well enough on the suneung to enter the desired university.',
+    intent: 'none',
+    notes: 'Set by kr_suneung_result (SKY choice).',
+  },
+
+  suneung_survived: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Sat the suneung and entered a good but non-SKY university — carrying the weight of the difference.',
+    intent: 'year_texture',
+    notes: 'Set by kr_suneung_result (good university choice).',
+  },
+
+  gwangju_witness: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Witnessed the Gwangju uprising of May 1980 — the paratroopers, the citizens, the ten days, the crushing.',
+    intent: 'year_texture',
+    notes: 'Set by kr_gwangju_1980.',
+  },
+
+  korea_military_served: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Completed mandatory South Korean military service — 21 months, the experience every Korean man of the generation has in common.',
+    intent: 'year_texture',
+    notes: 'Set by kr_military_service_texture.',
+  },
+
+  korea_military_returned: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Returned to civilian life after military service — the disruption absorbed into the expected pattern.',
+    intent: 'none',
+    notes: 'Set by kr_military_return.',
+  },
+
+  chaebol_worker: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Entered the Samsung/Hyundai/LG track — company as family, loyalty as requirement, scale as security.',
+    intent: 'year_texture',
+    notes: 'Set by kr_chaebol_entry.',
+  },
+
+  korea_marriage_pressure: {
+    weight: 'moderate',
+    category: 'family',
+    description: 'Experienced the sustained social pressure toward marriage — Chuseok conversations, matchmaking apps, government birth rate opinions.',
+    intent: 'year_texture',
+    notes: 'Set by kr_marriage_pressure.',
+  },
+
+  hallyu_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Felt the specific pride of Hallyu — BTS at the UN, Parasite at the Oscars, the world memorising Korean choreography.',
+    intent: 'none',
+    notes: 'Set by kr_hallyu_pride.',
+  },
+
+  compressed_generation_korea: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'The compressed generation — farmer grandparents, university-educated self, study-abroad children. Three generations of mobility in one.',
+    intent: 'year_texture',
+    notes: 'Set by kr_compressed_generation.',
+  },
+
+  // ── events_disability.js flags ────────────────────────────────────────
+
+  born_with_disability: {
+    weight: 'major',
+    category: 'health',
+    description: 'Born with a physical disability — the body has always been this way. All planning, opportunity, and texture is shaped by this from the start.',
+    intent: 'year_texture',
+    notes: 'Trigger flag. Set at birth roll or via conflict_childhood events. Gates full disability arc.',
+  },
+
+  disability_world_small: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Experienced the world physically made for non-disabled people — schools, transport, spaces that require workarounds to enter.',
+    intent: 'none',
+    notes: 'Design flag. Actual events use disability_inaccessibility_experienced (set by dis_inaccessible_world).',
+  },
+
+  disability_advocate: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Became an advocate for accessibility — the personal experience converted to structural demand.',
+    intent: 'none',
+    notes: 'Set by dis_world_built_wrong (fight for access choice).',
+  },
+
+  disability_adapted: {
+    weight: 'minor',
+    category: 'resilience',
+    description: 'Found the workarounds — adapted to the inaccessible world rather than fighting the structure directly.',
+    intent: 'none',
+    notes: 'Set by dis_world_built_wrong (find workarounds choice).',
+  },
+
+  born_deaf: {
+    weight: 'major',
+    category: 'health',
+    description: 'Born Deaf — hearing is not available; Deaf identity and community may or may not be.',
+    intent: 'year_texture',
+    notes: 'Trigger flag. Gates full Deaf arc including cochlear implant debate.',
+  },
+
+  deaf_family: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Born into a Deaf family — sign language is the first language, Deaf culture is native rather than arrived-at.',
+    intent: 'year_texture',
+    notes: 'Set upstream or by dis_deaf_identity. Branches cochlear implant event significantly.',
+  },
+
+  deaf_identity_claimed: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Claimed Deaf identity explicitly — the capital D, the culture, the community, the language.',
+    intent: 'year_texture',
+    notes: 'Set by dis_deaf_identity.',
+  },
+
+  cochlear_implant: {
+    weight: 'major',
+    category: 'health',
+    description: 'Received a cochlear implant — a contested technology within Deaf culture: access vs. cure framing.',
+    intent: 'year_texture',
+    notes: 'Set by dis_cochlear_implant (accept choice). Produces specific Deaf community tension.',
+  },
+
+  cochlear_implant_refused: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Refused cochlear implant — Deafness not framed as condition to be fixed but as identity to be lived.',
+    intent: 'year_texture',
+    notes: 'Set by dis_cochlear_implant (refuse choice).',
+  },
+
+  disability_acquired: {
+    weight: 'major',
+    category: 'health',
+    description: 'Disability acquired mid-life through accident, illness, or injury — the body changed and the self must reorganise around the change.',
+    intent: 'year_texture',
+    notes: 'Trigger flag. Set by accident events or specific illness events. Gates acquired disability arc.',
+  },
+
+  disability_before_after: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Life divides into before and after the acquisition — the former body remembered, the current body lived.',
+    intent: 'year_texture',
+    notes: 'Set by dis_acquired_adjustment.',
+  },
+
+  disability_new_normal: {
+    weight: 'moderate',
+    category: 'resilience',
+    description: 'Arrived at a new normal — the disability is the condition of the life now, not a departure from it.',
+    intent: 'none',
+    notes: 'Set by dis_acquired_adjustment (find new normal choice).',
+  },
+
+  disabled_worker: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Navigated workplace as a disabled person — accommodations, limitations, the gap between reasonable adjustment and actual adjustment.',
+    intent: 'none',
+    notes: 'Design flag. Actual events use disability_employment_found / disability_fought_barrier (set by dis_employment_barrier).',
+  },
+
+  disability_workplace_changed: {
+    weight: 'minor',
+    category: 'achievement',
+    description: 'Changed the workplace\'s accommodations through advocacy — the fight produced something structural.',
+    intent: 'none',
+    notes: 'Set by dis_workplace_navigation (fight for accommodations choice).',
+  },
+
+  disability_partner_found: {
+    weight: 'moderate',
+    category: 'relationship',
+    description: 'Found a partner who sees past the disability to the person — the love that doesn\'t require the disability to be overcome or invisible.',
+    intent: 'none',
+    notes: 'Set by dis_love_and_disability.',
+  },
+
+  disability_love_costs: {
+    weight: 'moderate',
+    category: 'relationship',
+    description: 'The disability shaped the love — the partner who stayed, the ones who didn\'t, the specific texture of being loved in this body.',
+    intent: 'none',
+    notes: 'Design flag. No current event sets this — future arc expansion.',
+  },
+
+  disability_late_peace: {
+    weight: 'major',
+    category: 'identity',
+    description: 'In late life, arrived at peace with the body — not overcoming it, not despite it, but with it.',
+    intent: 'year_texture',
+    notes: 'Set by dis_late_peace. Age 60+.',
+  },
+
+  // ── events_addiction.js flags ─────────────────────────────────────────
+
+  drug_addiction: {
+    weight: 'major',
+    category: 'health',
+    description: 'Developed drug addiction — the compulsion has crossed from use into dependency.',
+    intent: 'year_texture',
+    notes: 'Set by add_first_use (problem choice) or add_recreational_slide. Gates full addiction arc.',
+  },
+
+  alcohol_addiction: {
+    weight: 'major',
+    category: 'health',
+    description: 'Developed alcohol addiction — the most socially invisible of the substance dependencies.',
+    intent: 'year_texture',
+    notes: 'Set by add_first_use or add_recreational_slide (alcohol branch). Gates addiction arc.',
+  },
+
+  addiction_recreational: {
+    weight: 'minor',
+    category: 'health',
+    description: 'Using recreationally — not yet dependency, but the pattern is forming.',
+    intent: 'none',
+    notes: 'Set by add_first_use (keep it light choice). Gates add_recreational_slide.',
+  },
+
+  addiction_spiral: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'In full spiral — the addiction governing decisions, relationships, work, money.',
+    intent: 'year_texture',
+    notes: 'Set by add_spiral event. Requires drug_addiction or alcohol_addiction.',
+  },
+
+  addiction_overdose_survived: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived an overdose — the specific understanding that this can kill.',
+    intent: 'year_texture',
+    notes: 'Set by add_overdose_survived. Gates both recovery and add_overdose_death.',
+  },
+
+  died_of_overdose: {
+    weight: 'major',
+    category: 'death',
+    description: 'Died of overdose — the second one.',
+    intent: 'none',
+    notes: 'Set by add_overdose_death. Requires addiction_spiral + addiction_overdose_survived + !in_recovery.',
+  },
+
+  in_recovery: {
+    weight: 'major',
+    category: 'resilience',
+    description: 'In recovery — not cured, but the compulsion managed. The ongoing work of not using.',
+    intent: 'year_texture',
+    notes: 'Set by add_the_decision (recovery choice). Blocks overdose death trigger.',
+  },
+
+  recovery_year_one: {
+    weight: 'moderate',
+    category: 'resilience',
+    description: 'Completed the first year of sobriety — the hardest year.',
+    intent: 'none',
+    notes: 'Design flag. Actual events use early_recovery (set by add_early_recovery event).',
+  },
+
+  recovery_long_term: {
+    weight: 'major',
+    category: 'resilience',
+    description: 'Long-term sobriety — years, not months. The compulsion has become background rather than foreground.',
+    intent: 'year_texture',
+    notes: 'Set by add_long_term_recovery.',
+  },
+
+  recovery_relapse: {
+    weight: 'moderate',
+    category: 'health',
+    description: 'Relapsed after a period of recovery — the relapse part of the disease, not the end of recovery.',
+    intent: 'year_texture',
+    notes: 'Set by add_relapse.',
+  },
+
+  recovery_sponsor: {
+    weight: 'moderate',
+    category: 'relationship',
+    description: 'Became a sponsor for someone new to recovery — the giving back that is part of staying well.',
+    intent: 'none',
+    notes: 'Set by add_giving_back.',
+  },
+
+  addiction_family_witness: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'A family member developed addiction — the specific helplessness of watching and not being able to stop it.',
+    intent: 'none',
+    notes: 'Design flag. Actual events use addiction_family_supported / addiction_family_isolated (set by add_family_witness).',
+  },
+
+  addiction_in_family: {
+    weight: 'moderate',
+    category: 'family',
+    description: 'Addiction present in the family — sibling, parent, or child with dependency.',
+    intent: 'none',
+    notes: 'Set upstream by family events or birth configuration. Gates add_family_witness.',
+  },
+
+  // ── events_child_soldier.js flags ─────────────────────────────────────
+
+  child_soldier_path: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Trigger flag: character will be taken as a child soldier. Set at birth or early conflict event.',
+    intent: 'none',
+    notes: 'Trigger flag. Set by conflict_zone birth roll or early-childhood conflict event. Gates cs_taken (weight 999).',
+  },
+
+  child_soldier_taken: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Taken from village by an armed group as a child. The life before is the last of the before.',
+    intent: 'year_texture',
+    notes: 'Set by cs_taken.',
+  },
+
+  child_soldier_indoctrinated: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Underwent the indoctrination process — weapon, uniform, ideology, the division of the world into us and enemy.',
+    intent: 'year_texture',
+    notes: 'Set by cs_indoctrination.',
+  },
+
+  child_soldier_order_followed: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Carried out the order. The commanders produced what they intended. The weight of it does not leave.',
+    intent: 'year_texture',
+    notes: 'Set by cs_the_order (carry out choice). Coexists with moral_injury.',
+  },
+
+  child_soldier_order_refused: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Refused the order. The consequences were immediate and physical. The refusal is yours.',
+    intent: 'year_texture',
+    notes: 'Set by cs_the_order (refuse choice). Coexists with moral_injury.',
+  },
+
+  child_soldier_free: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Free from the armed group — escaped or liberated. No longer in the unit; not yet a civilian.',
+    intent: 'year_texture',
+    notes: 'Set by cs_liberation.',
+  },
+
+  child_soldier_ddr: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Went through DDR (Disarmament, Demobilisation, Reintegration) — the programme, the certificate, the partial.',
+    intent: 'year_texture',
+    notes: 'Set by cs_ddr_process.',
+  },
+
+  child_soldier_returned_home: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Returned to village — the complicated welcome, the mother\'s face, the knowledge held by both without being surfaced.',
+    intent: 'year_texture',
+    notes: 'Set by cs_return_to_village.',
+  },
+
+  child_soldier_civilian_hard: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Civilian life doesn\'t fit — the body has military responses civilian contexts don\'t know how to receive.',
+    intent: 'year_texture',
+    notes: 'Set by cs_civilian_difficulty.',
+  },
+
+  trauma_responses: {
+    weight: 'moderate',
+    category: 'health',
+    description: 'Body carries trauma responses — a loud noise, a uniform, the wrong eye contact. Not PTSD as diagnosis, but as lived texture.',
+    intent: 'year_texture',
+    notes: 'Set by cs_civilian_difficulty and other trauma arc events.',
+  },
+
+  child_soldier_community: {
+    weight: 'moderate',
+    category: 'relationship',
+    description: 'Found community with other former child soldiers — the language that exists there, the accompanied carrying.',
+    intent: 'none',
+    notes: 'Set by cs_moral_injury_midlife (seek community choice).',
+  },
+
+  child_soldier_late_reckoning: {
+    weight: 'major',
+    category: 'identity',
+    description: 'In late life, understood the child who was taken — they were not a soldier. The name was false. The things done were real. Both true.',
+    intent: 'year_texture',
+    notes: 'Set by cs_late_reckoning. Age 55+.',
+  },
+
+  // ── events_wwi_depression.js flags ───────────────────────────────────
+
+  ww1_soldier: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Enlisted or conscripted into WWI — the war, when reached, unlike what any belief prepared for.',
+    intent: 'year_texture',
+    notes: 'Set by ww1_conscription_notice. Gates ww1_trenches, ww1_armistice.',
+  },
+
+  ww1_trenches: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived the trenches — ten feet deep, nine months occupied, the permanent mud, the categorized incoming shells.',
+    intent: 'year_texture',
+    notes: 'Set by ww1_trenches event. Gates ww1_shell_shock.',
+  },
+
+  ww1_shell_shock: {
+    weight: 'major',
+    category: 'health',
+    description: 'Diagnosed with shell shock — the hands that shake, the sounds that return in sleep, returned to the line anyway.',
+    intent: 'year_texture',
+    notes: 'Set by ww1_shell_shock event. Adds shell_shock condition moderate.',
+  },
+
+  ww1_survived: {
+    weight: 'major',
+    category: 'resilience',
+    description: 'Survived WWI — part of the generation that carried the specific weight of the ones who came back.',
+    intent: 'year_texture',
+    notes: 'Set by ww1_armistice.',
+  },
+
+  ww1_armistice_witness: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Present when the guns stopped on the eleventh hour of the eleventh day — the silence that had a texture.',
+    intent: 'none',
+    notes: 'Set by ww1_armistice.',
+  },
+
+  ww1_veteran: {
+    weight: 'major',
+    category: 'identity',
+    description: 'WWI veteran — home, different, carrying the specific weight of having come back when fourteen from the village did not.',
+    intent: 'year_texture',
+    notes: 'Set by ww1_return_home.',
+  },
+
+  flu_1918_loss: {
+    weight: 'major',
+    category: 'grief',
+    description: 'Lost someone in the household to the 1918 influenza — grief without ceremony because ceremony would require gathering.',
+    intent: 'year_texture',
+    notes: 'Set by flu_1918_household (household dies choice).',
+  },
+
+  flu_1918_survived: {
+    weight: 'minor',
+    category: 'resilience',
+    description: 'Household survived the 1918 flu — survival in 1918 was its own kind of luck.',
+    intent: 'none',
+    notes: 'Set by flu_1918_household (survive choice).',
+  },
+
+  depression_era: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Living through the Great Depression — the condition that settled over the years after 1929.',
+    intent: 'year_texture',
+    notes: 'Set by dep_crash_1929. Gates dep_job_loss, dep_long_recovery.',
+  },
+
+  depression_unemployed: {
+    weight: 'major',
+    category: 'labor',
+    description: 'Lost job in the Depression — the identity that came with the job, gone along with the job.',
+    intent: 'year_texture',
+    notes: 'Set by dep_job_loss.',
+  },
+
+  depression_breadline: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Stood in the breadline — the shame before the hunger becomes urgent, the photograph from inside.',
+    intent: 'year_texture',
+    notes: 'Set by dep_breadline.',
+  },
+
+  depression_survivor: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Great Depression survivor — the specific way of being in the world it produced: saving everything, distrusting security, kitchen garden long after necessary.',
+    intent: 'year_texture',
+    notes: 'Set by dep_long_recovery.',
+  },
+
+  // ── events_divorce.js flags ───────────────────────────────────────────
+
+  divorce_attempt_repair: {
+    weight: 'minor',
+    category: 'relationship',
+    description: 'Made one more attempt to repair the marriage before the divorce — the most honest conversation in years.',
+    intent: 'none',
+    notes: 'Set by div_the_long_end (try once more choice).',
+  },
+
+  divorce_known_before: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Knew the marriage was over before the formal ending — began thinking practically while the form continued.',
+    intent: 'none',
+    notes: 'Set by div_the_long_end (start thinking practically choice).',
+  },
+
+  divorce_legal_done: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Divorce legally completed — the marriage translated into a ledger, the ledger filed.',
+    intent: 'year_texture',
+    notes: 'Set by div_legal_process. Requires divorced flag.',
+  },
+
+  coparenting_cooperative: {
+    weight: 'moderate',
+    category: 'family',
+    description: 'Co-parenting is cooperative — the schedule made as good as it can be, whatever the cost of cooperation.',
+    intent: 'year_texture',
+    notes: 'Set by div_children_question (prioritise cooperation choice).',
+  },
+
+  coparenting_difficult: {
+    weight: 'moderate',
+    category: 'family',
+    description: 'Co-parenting is difficult — the conflict not contained for the schedule, the children hearing the edges.',
+    intent: 'year_texture',
+    notes: 'Set by div_children_question (conflict continues choice).',
+  },
+
+  divorce_year_one: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'First year after divorce — the structural losses, what was taken for granted, the shared life\'s shape now absent.',
+    intent: 'year_texture',
+    notes: 'Set by div_first_year. Requires divorce_legal_done.',
+  },
+
+  divorce_dating_again: {
+    weight: 'minor',
+    category: 'relationship',
+    description: 'Dating again after divorce — the knowing of what a relationship requires, the procedural quality of early meetings.',
+    intent: 'none',
+    notes: 'Set by div_dating_again.',
+  },
+
+  divorce_solo_choice: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Chose not to date again after divorce — the aloneness has things to teach.',
+    intent: 'none',
+    notes: 'Set by div_dating_again (not yet choice).',
+  },
+
+  divorce_integrated: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Divorce integrated into the landscape of the life — no longer the defining feature, but part of the terrain.',
+    intent: 'year_texture',
+    notes: 'Set by div_long_integration. Midlife, 5-10 years out.',
+  },
+
+  divorce_children_grown: {
+    weight: 'minor',
+    category: 'family',
+    description: 'Children from the marriage are now grown, with their own understanding of what happened.',
+    intent: 'none',
+    notes: 'Set by div_children_grown. Late life.',
+  },
+
+  // ── events_dementia.js flags ──────────────────────────────────────────
+
+  dementia_personal: {
+    weight: 'major',
+    category: 'health',
+    description: 'Developing dementia — the words behind the usual place, the street driven past for eleven years.',
+    intent: 'year_texture',
+    notes: 'Set by dem_first_signs_personal. Age 68+. Adds dementia condition.',
+  },
+
+  dementia_diagnosed_early: {
+    weight: 'moderate',
+    category: 'health',
+    description: 'Dementia diagnosed early — time to make decisions while still able to make them.',
+    intent: 'year_texture',
+    notes: 'Set by dem_first_signs_personal (go to doctor choice).',
+  },
+
+  dementia_family_told: {
+    weight: 'moderate',
+    category: 'family',
+    description: 'Told the family about the diagnosis — the responses dividing into the researcher, the quiet one, the denier, the crier.',
+    intent: 'none',
+    notes: 'Set by dem_telling_family.',
+  },
+
+  dementia_advance_plan: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Made advance care plans while still able — decisions for the future self who cannot decide.',
+    intent: 'none',
+    notes: 'Set by dem_the_plan.',
+  },
+
+  dementia_clear_days: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'The clear days — when the fog lifts and the distance the disease has put is visible from the outside.',
+    intent: 'year_texture',
+    notes: 'Set by dem_clarity_window.',
+  },
+
+  dementia_parent: {
+    weight: 'major',
+    category: 'family',
+    description: 'Parent developing dementia — the twice-told story, the familiar name gone from the familiar face.',
+    intent: 'year_texture',
+    notes: 'Set by dem_parent_first_signs. Gates diagnosis, forgot me, late stage.',
+  },
+
+  dementia_primary_carer: {
+    weight: 'major',
+    category: 'family',
+    description: 'Primary carer for parent with dementia — the own life reorganised around the care.',
+    intent: 'year_texture',
+    notes: 'Set by dem_parent_diagnosis (take on responsibility choice).',
+  },
+
+  dementia_shared_care: {
+    weight: 'moderate',
+    category: 'family',
+    description: 'Shared care of dementia parent with siblings — the uneven share, the family friction, the distributed burden.',
+    intent: 'none',
+    notes: 'Set by dem_parent_diagnosis (share it choice).',
+  },
+
+  dementia_care_facility: {
+    weight: 'moderate',
+    category: 'family',
+    description: 'Parent in professional care facility — the guilt that doesn\'t mean the decision was wrong.',
+    intent: 'year_texture',
+    notes: 'Set by dem_parent_diagnosis (professional care choice).',
+  },
+
+  dementia_parent_forgot_me: {
+    weight: 'major',
+    category: 'grief',
+    description: 'The parent looked at you and didn\'t know you — the polite look, the nod that wasn\'t recognition.',
+    intent: 'year_texture',
+    notes: 'Set by dem_parent_doesnt_know_you.',
+  },
+
+  dementia_parent_late_stage: {
+    weight: 'major',
+    category: 'grief',
+    description: 'Parent in late-stage dementia — the face still familiar, most of what made it specific gone.',
+    intent: 'year_texture',
+    notes: 'Set by dem_parent_late_stage event.',
+  },
+
+  dementia_grief_resolved: {
+    weight: 'moderate',
+    category: 'grief',
+    description: 'Grief after dementia resolved — the staged mourning already done, the final death at the end of a long goodbye.',
+    intent: 'none',
+    notes: 'Set by dem_after_loss.',
+  },
+
+  // ── events_celebrity.js flags ─────────────────────────────────────────
+
+  celebrity_public_self: {
+    weight: 'major',
+    category: 'identity',
+    description: 'The public self exists — made from interviews, photographs, selected moments, searchable, permanent, partial.',
+    intent: 'year_texture',
+    notes: 'Set by cel_the_public_self. Fame >= 40.',
+  },
+
+  celebrity_parasocial: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'The parasocial relationship — people who feel they know you feel genuinely what they feel for a version that isn\'t fully you.',
+    intent: 'year_texture',
+    notes: 'Set by cel_parasocial.',
+  },
+
+  celebrity_media_friction: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Responded to media framing — learned that correcting the record feeds the machinery.',
+    intent: 'none',
+    notes: 'Set by cel_media_scrutiny (respond choice).',
+  },
+
+  celebrity_spiral: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'In the celebrity spiral — fame and unhappiness coexisting, managing the emptiness unsustainably.',
+    intent: 'year_texture',
+    notes: 'Set by cel_the_spiral (fill it choice).',
+  },
+
+  celebrity_sought_help: {
+    weight: 'moderate',
+    category: 'resilience',
+    description: 'Sought help during the celebrity emptiness — the work slow, the recognition that fame is neither problem nor solution arrived at over months.',
+    intent: 'none',
+    notes: 'Set by cel_the_spiral (get help choice).',
+  },
+
+  celebrity_faced_cancellation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Faced the cancellation directly — gave the specific, honest statement the machinery wasn\'t expecting.',
+    intent: 'none',
+    notes: 'Set by cel_cancellation (face it choice).',
+  },
+
+  celebrity_went_quiet: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Went quiet during the cancellation — stopped providing fuel to the machinery.',
+    intent: 'none',
+    notes: 'Set by cel_cancellation (go quiet choice).',
+  },
+
+  celebrity_fought_back: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Fought back against the cancellation — was right, paid for being publicly right.',
+    intent: 'none',
+    notes: 'Set by cel_cancellation (fight it choice).',
+  },
+
+  celebrity_scaled_back: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Scaled back from public life — the opportunities still there, choosing which ones matter.',
+    intent: 'year_texture',
+    notes: 'Set by cel_exit_from_public_life.',
+  },
+
+  celebrity_private_life: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Returned to private life — the ordinary things extraordinary by contrast with the distance fame put in.',
+    intent: 'year_texture',
+    notes: 'Set by cel_private_life_found.',
+  },
+
+  // ── events_teacher_arc.js flags ───────────────────────────────────────
+
+  teacher_career: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Teacher by vocation — the career the events in this arc gate on (alongside career.id === teacher).',
+    intent: 'none',
+    notes: 'Can be set by career events or used as alias for career.id === teacher.',
+  },
+
+  teacher_first_classroom: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'First classroom — twenty-three years old, thirty-two students, the training as preparation for a general case.',
+    intent: 'year_texture',
+    notes: 'Set by tch_first_classroom.',
+  },
+
+  teacher_that_student: {
+    weight: 'major',
+    category: 'relationship',
+    description: 'The student who was different — the hard one, the extra time, the shift that was real without a specific moment.',
+    intent: 'year_texture',
+    notes: 'Set by tch_the_student. Gates tch_the_letter.',
+  },
+
+  teacher_bureaucracy_survived: {
+    weight: 'moderate',
+    category: 'resilience',
+    description: 'Survived the bureaucratic accumulation — found workarounds to protect classroom from system.',
+    intent: 'none',
+    notes: 'Set by tch_bureaucracy (adapt choice).',
+  },
+
+  teacher_advocate: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Became an advocate within the education system — known as someone with opinions, occasionally useful.',
+    intent: 'none',
+    notes: 'Set by tch_bureaucracy (push back choice).',
+  },
+
+  teacher_parent_conflict: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Managed a difficult parent — the specific challenge of the parent who loves too specifically to see clearly.',
+    intent: 'none',
+    notes: 'Set by tch_difficult_parent.',
+  },
+
+  teacher_letter_received: {
+    weight: 'major',
+    category: 'achievement',
+    description: 'Received the letter — fifteen years later, the student found you to say what students rarely say at the time: it mattered.',
+    intent: 'year_texture',
+    notes: 'Set by tch_the_letter.',
+  },
+
+  teacher_resource_poor: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Teaching in a resource-poor environment — own chalk, shared textbooks, roof that leaks, students who still learn.',
+    intent: 'year_texture',
+    notes: 'Set by tch_resource_poor.',
+  },
+
+  teacher_late_career: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Late-career teacher — the subject not a performance but a conversation, the depth that the first version lacked.',
+    intent: 'year_texture',
+    notes: 'Set by tch_late_career.',
+  },
+
+  teacher_retired: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Retired from teaching — the last class, the applause, the hallway on the way out that was the same hallway.',
+    intent: 'year_texture',
+    notes: 'Set by tch_retirement.',
+  },
+
+  teacher_life_accounted: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Accounted the teaching life — not in salary but in names remembered, moments that were the actual work, the faces.',
+    intent: 'year_texture',
+    notes: 'Set by tch_life_accounting.',
+  },
+
 }
