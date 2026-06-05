@@ -5073,4 +5073,136 @@ export const FLAG_REGISTRY = {
     notes: 'Set by tch_life_accounting.',
   },
 
+  // ── LIFE SKELETON ────────────────────────────────────────────────────────────
+
+  first_test_pushed_through: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Faced the first real test of their wound and pushed through rather than withdrawing.',
+    intent: 'year_texture',
+    notes: 'Set by ls_first_test life skeleton event.',
+  },
+
+  first_test_pulled_back: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Pulled back at the first real test of their wound — self-protection over exposure.',
+    intent: 'year_texture',
+    notes: 'Set by ls_first_test life skeleton event.',
+  },
+
+  first_test_confided: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Named the wound to someone at the first real test — found words for it.',
+    intent: 'year_texture',
+    notes: 'Set by ls_first_test life skeleton event.',
+  },
+
+  fork_stayed_course: {
+    weight: 'major',
+    category: 'identity',
+    description: 'At the crossroads in early midlife, committed to the path already chosen.',
+    intent: 'year_texture',
+    notes: 'Set by ls_the_fork. Gates ls_the_cost prose variants.',
+  },
+
+  fork_changed_direction: {
+    weight: 'major',
+    category: 'identity',
+    description: 'At the crossroads in early midlife, changed direction — altered the course of their life.',
+    intent: 'year_texture',
+    notes: 'Set by ls_the_fork. Gates ls_the_cost prose variants.',
+  },
+
+  reckoning_peace: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Made peace with the life lived — stopped arguing with it at the reckoning.',
+    intent: 'year_texture',
+    notes: 'Set by ls_the_reckoning.',
+  },
+
+  reckoning_still_time: {
+    weight: 'major',
+    category: 'identity',
+    description: 'At the reckoning, chose to believe there is still time — refused acceptance.',
+    intent: 'year_texture',
+    notes: 'Set by ls_the_reckoning.',
+  },
+
+  // ── PHASE ENTRY ──────────────────────────────────────────────────────────────
+
+  ya_priority_achievement: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Entering young adulthood, prioritized career and achievement over all else.',
+    intent: 'year_texture',
+    notes: 'Set by phase_entry_young_adult.',
+  },
+
+  ya_priority_connection: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Entering young adulthood, prioritized love and belonging over ambition.',
+    intent: 'year_texture',
+    notes: 'Set by phase_entry_young_adult.',
+  },
+
+  ya_priority_identity: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Entering young adulthood, chose to spend the years figuring out who they actually are.',
+    intent: 'year_texture',
+    notes: 'Set by phase_entry_young_adult.',
+  },
+
+  ml_priority_build: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Entering midlife, chose to consolidate and build what already exists.',
+    intent: 'none',
+    notes: 'Set by phase_entry_midlife.',
+  },
+
+  ml_priority_repair: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Entering midlife, turned toward repair — the relationships and things that needed attention.',
+    intent: 'year_texture',
+    notes: 'Set by phase_entry_midlife.',
+  },
+
+  ml_priority_reconsider: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Entering midlife, chose to reconsider — acknowledged something wasn\'t working.',
+    intent: 'year_texture',
+    notes: 'Set by phase_entry_midlife.',
+  },
+
+  ll_priority_acceptance: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Entering late life, chose acceptance — made peace with what has been built.',
+    intent: 'year_texture',
+    notes: 'Set by phase_entry_late_life.',
+  },
+
+  ll_priority_transmit: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Entering late life, chose transmission — focused on passing things on to those who come after.',
+    intent: 'year_texture',
+    notes: 'Set by phase_entry_late_life.',
+  },
+
+  ll_priority_unfinished: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Entering late life, chose the unfinished — one more thing still to do.',
+    intent: 'year_texture',
+    notes: 'Set by phase_entry_late_life.',
+  },
+
 }

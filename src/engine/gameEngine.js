@@ -12,6 +12,8 @@ import { ILLNESSES } from '../data/illnesses'
 import { PLACES, getPlacesForCountry, pickBirthPlace, pickNeighborhoodTier, pickNamedNeighborhood, getRelocationCost } from '../data/places'
 import { HEADLINES } from '../data/headlines'
 import { randomBetween, pickFrom, rollWeighted, clamp, chance } from '../utils/random'
+import { LIFE_SKELETON_EVENTS } from '../data/events_life_skeleton'
+import { PHASE_ENTRY_EVENTS } from '../data/events_phase_entries'
 
 // ─── FlagSet ──────────────────────────────────────────────────────────────────
 // Extends Set with Array.prototype.includes as an alias for has(), so existing
@@ -22,6 +24,19 @@ class FlagSet extends Set {
   some(predicate) { for (const v of this) { if (predicate(v)) return true } return false }
   filter(predicate) { return [...this].filter(predicate) }
   find(predicate) { for (const v of this) { if (predicate(v)) return v } return undefined }
+}
+
+// ─── Life Skeleton & Phase Entry lookup maps ──────────────────────────────────
+// Populated lazily after module load so circular dependency with events.js resolves.
+let _LIFE_SKELETON_MAP = null
+let _PHASE_ENTRY_MAP = null
+function getLifeSkeletonMap() {
+  if (!_LIFE_SKELETON_MAP) _LIFE_SKELETON_MAP = new Map(LIFE_SKELETON_EVENTS.map(e => [e.id, e]))
+  return _LIFE_SKELETON_MAP
+}
+function getPhaseEntryMap() {
+  if (!_PHASE_ENTRY_MAP) _PHASE_ENTRY_MAP = new Map(PHASE_ENTRY_EVENTS.map(e => [e.id, e]))
+  return _PHASE_ENTRY_MAP
 }
 
 // ─── Weighted random helpers ──────────────────────────────────────────────────
@@ -4043,6 +4058,161 @@ function buildYearTexture(state) {
     if (line) return line
   }
 
+  // ─── WOUND COPING & LIFE SKELETON TEXTURE (~35% of remaining quiet years) ────
+  if (Math.random() < 0.35) {
+    const wc = mem?.woundCoping
+    const phaseKey = phase
+    if (wc && phase !== 'early_childhood' && phase !== 'childhood') {
+      const copingLines = {
+        fight: {
+          adolescence: 'You work when the doubt gets loud. It is not a solution. It is a strategy.',
+          young_adult: 'The habit of overwork is well established by now. Whether it is helping is a different question.',
+          midlife: 'You have been fighting the doubt your whole career. The fight is winning. The doubt is still there.',
+          late_life: 'You have done more than most people do. The question of whether it was enough is still the question.',
+        },
+        withdraw: {
+          adolescence: 'There are things you don\'t try. The wound stays protected. So do the possibilities.',
+          young_adult: 'The habit of not reaching too far is costing you things you cannot fully see yet.',
+          midlife: 'You wonder sometimes what you would have done if you had trusted yourself more at twenty.',
+          late_life: 'The life is smaller than it might have been. It is also intact. Both of those things are true.',
+        },
+        conform: {
+          adolescence: 'You have gotten good at being whatever the room needs. You are not always sure who you are when the room empties.',
+          young_adult: 'The fluency in belonging is useful. The question of what you gave up to acquire it is quieter some years than others.',
+          midlife: 'The versions of yourself you have deployed over the years — you are starting to wonder which one is primary.',
+          late_life: 'You have been many things to many people. The self underneath all of them is still there, patient.',
+        },
+        collect: {
+          adolescence: 'You are gathering your people deliberately. The belonging you are building is real, if constructed.',
+          young_adult: 'Your circle is small and chosen. You hold it tightly. This is both a strength and a limit.',
+          midlife: 'The people you have gathered are still mostly here. This took more effort than it looks.',
+          late_life: 'What you built around yourself — the people, the rituals — it turned out to be enough.',
+        },
+        perform: {
+          adolescence: 'You are learning to take up space. The performance is becoming more natural. The need underneath it hasn\'t changed.',
+          young_adult: 'The visible self and the private self have a relationship that requires management. You are good at the management.',
+          midlife: 'The performance is polished now. The question of what it is hiding is a question you ask late at night.',
+          late_life: 'The audience for the performance has changed. You are performing less. Something underneath is showing.',
+        },
+        provoke: {
+          adolescence: 'You get the attention. It is not always the attention you wanted. You are working this out.',
+          young_adult: 'Some of the trouble you made has followed you. Some of it was worth it.',
+          midlife: 'You have softened the provocation. The need underneath it is still the same.',
+          late_life: 'The provocations of your youth are becoming stories. Not all of them are flattering ones.',
+        },
+        control: {
+          adolescence: 'The routines you keep feel like armor. They are armor. That is fine.',
+          young_adult: 'You are reliable, organized, prepared. The cost of maintaining this is something you pay privately.',
+          midlife: 'The controls are working, mostly. The things you can\'t control feel disproportionately threatening. You know this.',
+          late_life: 'Some of the order has slipped and the world has not ended. This is useful information, arriving late.',
+        },
+        vanish: {
+          adolescence: 'You are good at not being where the trouble is. You are also not where the good things are, sometimes.',
+          young_adult: 'The invisibility is useful and has costs. You are becoming aware of both.',
+          midlife: 'You have spent a life not being seen. You are not sure whether that was a choice or a sentence.',
+          late_life: 'The invisibility protected you. It also meant a certain kind of life. You are still deciding what you think about that.',
+        },
+        pursue: {
+          adolescence: 'You move toward people. Sometimes they move toward you. Sometimes they don\'t. You try anyway.',
+          young_adult: 'The willingness to reach toward people is genuine and occasionally costs you dignity. You keep doing it.',
+          midlife: 'Some of the people you pursued are still here. That is its own kind of answered prayer.',
+          late_life: 'You have never stopped trying to be close to people. That is the thing that has cost the most and given the most.',
+        },
+        caretake: {
+          adolescence: 'You learn to be needed. It is a shape of love. It is not the only shape.',
+          young_adult: 'The role of the one who holds things together has become yours. It has not yet become a burden. That is next.',
+          midlife: 'The caretaking has been constant. The question of who takes care of you is one you have not yet asked seriously.',
+          late_life: 'You gave yourself to people who needed you. The accounts on that are complicated, and yours.',
+        },
+        build: {
+          adolescence: 'You are making things. The urgency of making things is connected to something you don\'t quite examine.',
+          young_adult: 'The work you are making is real. Whether it will outlast you is a question you ask more than you admit.',
+          midlife: 'The body of work is there. The mark question is simpler than it used to be: just keep making.',
+          late_life: 'What you built. What remains of it. What you would do differently. The three questions that show up at night.',
+        },
+        acquire: {
+          adolescence: 'You accumulate. Objects, achievements, the visible evidence of having been here. It helps. For a while.',
+          young_adult: 'The accumulation continues. The gap between what you have and what would be enough is not narrowing.',
+          midlife: 'You have things. The things are not the mark. You know this. The buying still happens.',
+          late_life: 'What you accumulated and what mattered turn out to be different lists. You are looking at both.',
+        },
+        escape: {
+          adolescence: 'You are already planning to go. The specifics are fuzzy. The direction is clear.',
+          young_adult: 'You have gone some of the distances you planned. The cage feeling comes with you sometimes.',
+          midlife: 'You have escaped more than most. The question of what you escaped into is a longer answer.',
+          late_life: 'The running has slowed. Not stopped. You still move when things close in. Old habits.',
+        },
+        resist: {
+          adolescence: 'You say no to the things that are said to be yes. This has a social cost you are mostly willing to pay.',
+          young_adult: 'The resistance is principled. It is also occasionally exhausting. You keep going.',
+          midlife: 'What you chose to resist and what you chose to accept — the map of that is clearer at forty than it was at twenty.',
+          late_life: 'The resistances of a lifetime. Some won, some lost, all worth having made. You believe this.',
+        },
+        atone: {
+          adolescence: 'There is already something you are working off. The work is ongoing.',
+          young_adult: 'The atonement project runs underneath the ordinary life. Some days it is the whole life.',
+          midlife: 'You have made reparations where you could. The question of whether you have made enough is still open.',
+          late_life: 'What you repaired. What you couldn\'t. What you still owe. The accounting of a lifetime.',
+        },
+        deny: {
+          adolescence: 'You move fast enough that the thing doesn\'t catch you. This is a temporary arrangement.',
+          young_adult: 'The thing you are not examining is there. You are very good at not examining it.',
+          midlife: 'The thing surfaces anyway. It has been surfaces all along. You are getting less good at not seeing it.',
+          late_life: 'The denial has thinned. What was underneath is what you will spend this decade with, finally.',
+        },
+      }
+      const copingLine = copingLines[wc]?.[phaseKey]
+      if (copingLine) return copingLine
+    }
+
+    // Life skeleton flag texture — quiet reflections in years after each beat
+    if (F.has('first_test_pushed_through') && phase === 'midlife' && Math.random() < 0.4) {
+      return pick(['You have been pushing through things your whole life. The question is whether pushing is the only mode available to you.', 'The habit of pushing through was formed early. It has served you. It has also cost you things that required a different response.'])
+    }
+    if (F.has('first_test_pulled_back') && phase === 'midlife' && Math.random() < 0.4) {
+      return 'There are still things you pulled back from at fifteen. You carry the shape of them.'
+    }
+    if (F.has('first_test_confided') && (phase === 'young_adult' || phase === 'midlife') && Math.random() < 0.35) {
+      return pick(['You have had people you could tell things to. This started early, with one conversation you still remember.', 'The habit of finding words for the hard things — it goes back further than most of your habits do.'])
+    }
+    if (F.has('fork_stayed_course') && phase === 'late_life' && Math.random() < 0.4) {
+      return pick(['You stayed the course at thirty. The consistency of that has a shape now — visible from here.', 'You committed at the fork and did not look back much. The life that resulted is legible.'])
+    }
+    if (F.has('fork_changed_direction') && phase === 'late_life' && Math.random() < 0.4) {
+      return pick(['You changed the course at thirty. You are still finding out what that means.', 'The road not taken is less interesting to you than it used to be. The road taken is more interesting.'])
+    }
+    if (F.has('reckoning_peace') && phase === 'late_life' && Math.random() < 0.5) {
+      return pick(['The peace you made with your life — it holds, mostly. Some days better than others.', 'You stopped arguing with the life you lived. Something settled when you did that.'])
+    }
+    if (F.has('reckoning_still_time') && phase === 'late_life' && Math.random() < 0.5) {
+      return pick(['There is still time. You keep saying this. You believe it. Some of the time.', 'The unfinished thing is still there. You have not stopped looking for the way to finish it.'])
+    }
+    if (F.has('ya_priority_achievement') && phase === 'midlife' && Math.random() < 0.3) {
+      return 'The career was the priority. The other things waited. Some of them are still waiting.'
+    }
+    if (F.has('ya_priority_connection') && phase === 'midlife' && Math.random() < 0.3) {
+      return 'You chose people over advancement, at least in the years when it was a choice. The accounts on that are complicated and mostly positive.'
+    }
+    if (F.has('ya_priority_identity') && phase === 'midlife' && Math.random() < 0.3) {
+      return pick(['You spent your twenties figuring out who you were. The late start on everything else was the cost of that. You do not entirely regret it.', 'The self-knowledge you built in your twenties is something. Not everything. Something.'])
+    }
+    if (F.has('ml_priority_repair') && phase === 'late_life' && Math.random() < 0.4) {
+      return pick(['The repair work of your thirties and forties — some of it took. Some of it didn\'t. You tried.', 'You turned toward the relationships in your midlife. The turning was the thing. The outcomes were their own.'])
+    }
+    if (F.has('ml_priority_reconsider') && phase === 'late_life' && Math.random() < 0.4) {
+      return pick(['You changed things at thirty. The life that resulted — it is yours in a way the first one wasn\'t entirely.', 'The reconsideration at thirty cost things. What it opened was not guaranteed. You know what you think of the trade now.'])
+    }
+    if (F.has('ll_priority_acceptance') && phase === 'late_life' && Math.random() < 0.4) {
+      return pick(['The peace with the life — it is holding. Some days better than others.', 'You stopped arguing with what happened. Something settled when you did. It\'s still settled.'])
+    }
+    if (F.has('ll_priority_transmit') && phase === 'late_life' && Math.random() < 0.4) {
+      return pick(['The passing-on work — what you know, what you have made, what you have learned at cost — it is the work now.', 'There is something that happens when what you\'re doing is for the next ones. It is a different kind of urgent.'])
+    }
+    if (F.has('ll_priority_unfinished') && phase === 'late_life' && Math.random() < 0.4) {
+      return pick(['The unfinished thing is still there. You have not stopped working on it. You are still not sure it will be done.', 'You told yourself there was one more thing. There is. You are doing it.'])
+    }
+  }
+
   // ─── MEMORY LAYER (~30% of remaining quiet years) ────────────────────────────
   // Surfaces specific past flags by name, using elapsed years for texture.
   // Only fires when the flag was set and enough time has passed to feel like memory.
@@ -7281,19 +7451,92 @@ export function tick(state) {
     yearsAbroad: isAbroad ? (state.yearsAbroad ?? 0) + 1 : (state.yearsAbroad ?? 0),
   }
 
-  // Phase transition marker — one quiet sentence when crossing a life phase boundary
+  // Phase transition — desire-aware prose + guaranteed phase entry events
   const prevPhase = getPhase(state.age)
   const newPhase = getPhase(s.age)
   if (prevPhase !== newPhase) {
-    const _phaseLines = {
-      childhood:   'The early years end. You begin to know where you are.',
-      adolescence: 'The body is changing. The world is starting to require something from you.',
-      young_adult: 'You are eighteen. The life begins in earnest.',
-      midlife:     'You are thirty. The life you have been building has become recognizable as a life.',
-      late_life:   'You are fifty. What you carry into this half is mostly set.',
+    const desire = s.desire ?? null
+    const _desireAdolescence = {
+      prove_worth: 'The body is changing. The world is starting to require something from you — and you, more than most, feel the pressure to answer.',
+      belong: 'The body is changing. The circles that matter are forming. You can feel yourself on the edge of them.',
+      be_seen: 'The body is changing. Everything about adolescence is about being seen, which is terrifying and exactly what you wanted.',
+      safety: 'The body is changing. The world is starting to feel more dangerous. The old habits of vigilance intensify.',
+      connection: 'The body is changing. You are becoming aware of how much you want people, and how complicated that is.',
+      leave_mark: 'The body is changing. Something in you is restless, looking for a way to matter.',
+      freedom: 'The body is changing. The constraints that felt manageable in childhood feel unbearable now.',
+      redemption: 'The body is changing. The weight you carry is starting to have a shape.',
     }
-    const _t = _phaseLines[newPhase]
-    if (_t) s.log = [...s.log, { age: s.age, text: _t, isKey: true, isPhaseTransition: true }]
+    const _desireYoungAdult = {
+      prove_worth: 'You are eighteen. The proof-of-worth project has a new arena now. The life begins in earnest.',
+      belong: 'You are eighteen. The search for where you belong has new geography now. The life begins in earnest.',
+      be_seen: 'You are eighteen. The world is large and you are ready to be seen in it. The life begins in earnest.',
+      safety: 'You are eighteen. The structures of childhood fall away. You will need to build your own. The life begins in earnest.',
+      connection: 'You are eighteen. The connections you build now will shape everything that follows. The life begins in earnest.',
+      leave_mark: 'You are eighteen. The mark you want to make has its first real opportunity now. The life begins in earnest.',
+      freedom: 'You are eighteen. The life you were handed is behind you. The one you choose begins now.',
+      redemption: 'You are eighteen. Whatever needs to be set right, you can begin to set it right now. The life begins in earnest.',
+    }
+    const _desireMidlife = {
+      prove_worth: 'You are thirty. The proving has been ongoing. You are beginning to notice whether it is working.',
+      belong: 'You are thirty. The life you have built around belonging is recognizable now. The question of whether it fits is a different question.',
+      be_seen: 'You are thirty. The visibility you have built is real. What it hides is also becoming real.',
+      safety: 'You are thirty. The structures hold. The cost of building them is becoming visible.',
+      connection: 'You are thirty. The people in your life are the people in your life. You are beginning to understand what that means.',
+      leave_mark: 'You are thirty. What you are building is starting to have a shape. Whether it is the right shape is a new question.',
+      freedom: 'You are thirty. The life you built for yourself — away from what was given — is your life now. You can see it.',
+      redemption: 'You are thirty. The work of making things right has been ongoing. The ledger is complex.',
+    }
+    const _desireLateLife = {
+      prove_worth: 'You are fifty. The proof-of-worth is what it is. The question of what it was for is not going away.',
+      belong: 'You are fifty. The belonging — what you found, what you made, what you couldn\'t quite reach — is visible now from a height.',
+      be_seen: 'You are fifty. You have been seen, and not seen, in the ways available to you. This is the half where you live with that.',
+      safety: 'You are fifty. The structures you built are what they are. Some held. Some were unnecessary. You carry both.',
+      connection: 'You are fifty. The people. Always the people. What you built with them. What remains.',
+      leave_mark: 'You are fifty. The mark question simplifies now. Not history. What you leave in the people who knew you.',
+      freedom: 'You are fifty. The escapes and resistances of a lifetime. What they opened. What they cost.',
+      redemption: 'You are fifty. The reckoning is closer than it was. The debt question has a new urgency.',
+    }
+    const phaseLine = {
+      childhood: 'The early years end. You begin to know where you are.',
+      adolescence: (desire && _desireAdolescence[desire]) ?? 'The body is changing. The world is starting to require something from you.',
+      young_adult: (desire && _desireYoungAdult[desire]) ?? 'You are eighteen. The life begins in earnest.',
+      midlife:     (desire && _desireMidlife[desire]) ?? 'You are thirty. The life you have been building has become recognizable as a life.',
+      late_life:   (desire && _desireLateLife[desire]) ?? 'You are fifty. What you carry into this half is mostly set.',
+    }[newPhase]
+    if (phaseLine) s.log = [...s.log, { age: s.age, text: phaseLine, isKey: true, isPhaseTransition: true }]
+
+    // Inject guaranteed phase entry decision events at key phase boundaries
+    const phaseEntryMap = getPhaseEntryMap()
+    const usedMap = s.usedEventMap ?? new Map()
+    if (newPhase === 'young_adult' && !usedMap.has('phase_entry_young_adult') && !s.queue.some(e => e.id === 'phase_entry_young_adult')) {
+      const evt = phaseEntryMap.get('phase_entry_young_adult')
+      if (evt) s.queue = [evt, ...s.queue]
+    }
+    if (newPhase === 'midlife' && !usedMap.has('phase_entry_midlife') && !s.queue.some(e => e.id === 'phase_entry_midlife')) {
+      const evt = phaseEntryMap.get('phase_entry_midlife')
+      if (evt) s.queue = [evt, ...s.queue]
+    }
+    if (newPhase === 'late_life' && !usedMap.has('phase_entry_late_life') && !s.queue.some(e => e.id === 'phase_entry_late_life')) {
+      const evt = phaseEntryMap.get('phase_entry_late_life')
+      if (evt) s.queue = [evt, ...s.queue]
+    }
+  }
+
+  // Life skeleton beat scheduling — guaranteed narrative beats at key ages
+  // Only scheduled if desire is set (wound events must have fired first)
+  {
+    const lifeSkelMap = getLifeSkeletonMap()
+    const usedMap = s.usedEventMap ?? new Map()
+    const scheduleLifeBeat = (id, age) => {
+      if (s.age === age && s.desire && !usedMap.has(id) && !s.queue.some(e => e.id === id)) {
+        const evt = lifeSkelMap.get(id)
+        if (evt) s.queue = [evt, ...s.queue]
+      }
+    }
+    scheduleLifeBeat('ls_first_test', 15)
+    scheduleLifeBeat('ls_the_fork', 30)
+    scheduleLifeBeat('ls_the_cost', 40)
+    scheduleLifeBeat('ls_the_reckoning', 55)
   }
 
   // Prison year
