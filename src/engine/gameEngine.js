@@ -3642,6 +3642,54 @@ function buildYearTexture(state) {
     'You know what your country did to itself. That knowledge sits in a particular place.',
     'The country rebuilt itself. You rebuilt with it. You are not sure the reconstruction is finished.',
   ])
+  if (F.has('maya_language_suppressed') && Math.random() < 0.3) return pick([
+    phase === 'late_life'
+      ? 'The language they punished you for speaking is still in you. The punishment is also still in you. Both things are true at the same time.'
+      : 'You still catch yourself translating — not between languages, but between worlds.',
+    'There was a word in K\'iche\' for the quality of light just before rain. The Spanish word for it doesn\'t land the same.',
+    phase === 'midlife'
+      ? 'The school\'s ruler is still in your memory. You have done things since that were louder than that ruler. The ruler is still louder.'
+      : 'The thing about erasing a language is that you can erase the sound of it without erasing the shape it made in the mind.',
+  ])
+  if (F.has('contra_war_survivor') && Math.random() < 0.3) return pick([
+    phase === 'late_life'
+      ? 'The people who paid for the Contra war are still alive, in other countries, having mostly not been asked about it.'
+      : 'The war in Nicaragua was called different things by different governments. On the ground it was called by the names of the dead.',
+    'You know what a proxy war looks like from inside. It looks like your village.',
+    phase === 'midlife'
+      ? 'The Sandinistas lost the 1990 election and you watched the faces of the people who had believed in them. Some of them never recovered the capacity for that kind of belief.'
+      : 'The American officials who visited the region in the 1980s called it a fight for freedom. You have thought about that word ever since.',
+  ])
+  if (F.has('witnessed_romero_death') && Math.random() < 0.3) return pick([
+    phase === 'late_life'
+      ? 'He named the dead by name, which no one else would do. Then he became one of the names.'
+      : 'The silence on the radio after the announcement was a specific kind of silence. You have not heard that kind since.',
+    'The voice on the Sunday radio that was not afraid of what it was saying. You have measured other voices against it since.',
+    'He was canonized eventually. You are not sure the canonization does what the people who needed him needed.',
+  ])
+  if (F.has('northern_journey_taken') && Math.random() < 0.3) return pick([
+    phase === 'late_life'
+      ? 'You have spent years in a country that does not fully know what to do with you and has opinions about it. You have made a life here anyway. That is the fact of it.'
+      : 'The people in your home country who stayed and the people who left are different communities now. You are trying to stay connected to both.',
+    phase === 'young_adult'
+      ? 'The bus north was the decision that made all other decisions different. You are still inside what it set in motion.'
+      : 'What the journey cost and what it bought are still not settled in the accounting.',
+    'There is a specific knowledge that comes from having crossed that border without papers — of what people will and won\'t do, of how a country treats the people it says it doesn\'t want.',
+  ])
+  if (F.has('ca_truth_told') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) return pick([
+    phase === 'late_life'
+      ? 'You said it into a tape recorder in a school gymnasium and they wrote it down. Whether anything came of that is a different question from whether it needed to be said.'
+      : 'You put your name to it. The record exists. That is not nothing.',
+    'The truth commission closed years ago. The report is on file. The perpetrators are mostly still where they were. You have thought about what that means.',
+  ])
+  if (F.has('gang_territory_lived') && Math.random() < 0.3) return pick([
+    phase === 'young_adult'
+      ? 'The corner is still there. You walk past it differently than you did at sixteen.'
+      : 'You know what it costs to get out of a neighbourhood like that one. You know a few people who paid it and a few who didn\'t.',
+    phase === 'late_life'
+      ? 'You left the neighbourhood eventually. The neighbourhood didn\'t fully leave you — it left you with a particular reading of how power actually works at street level.'
+      : 'The extortion fee the gang charged every small business was called a tax. The people who paid it called it something else.',
+  ])
   if (F.has('lira_collapse_lived') && Math.random() < 0.35) return pick([
     phase === 'late_life'
       ? 'You grew up knowing that savings are a story a government tells you. You stopped believing the story early.'
@@ -6330,16 +6378,78 @@ function buildYearTexture(state) {
   }
 
   if (phase === 'early_childhood') {
-    return pick([
-      'The world is very close. Adults are very tall.',
-      'A year of firsts, most of which you will not remember.',
-      'You are learning the names of things. The names feel large.',
-      'The people around you are the entire world. You sense this.',
-      'You are discovering that you are a separate person from everyone else. This takes time.',
-      'The texture of the blanket. The sound of a particular song. The smell of the kitchen. These are what you are storing.',
-      'You can count on your fingers. You are learning to trust that what goes away comes back.',
-      'Someone is always watching. You have not learned to mind this yet.',
-    ])
+    const character = state.character
+    const arch = character?.country?.archetype ?? 'developing_urban'
+    const ruralUrban = character?.ruralUrban ?? 'urban'
+    const wealth = state.stats?.wealth ?? 50
+    const cr = character?.country?.conflictRisk ?? 0
+
+    if (age <= 1) {
+      const pool = [
+        'The world is not yet separate from the people who hold it. This is enough.',
+        'You sleep most of the day. The waking hours are large and bright and very close.',
+        'The smell of a shirt. The sound of a particular voice. This is all the world is.',
+        'Someone carries you. Someone is always there when you need them. You have no reason to think otherwise.',
+        'You do not know where you end and the people around you begin. This will take years to sort out.',
+      ]
+      if (cr > 0.1) pool.push(
+        'There are sounds at night that make the adults still. You do not know yet what they are.',
+        'The house is where the safety is. You know this without knowing you know it.',
+      )
+      if (['subsaharan', 'developing_unstable', 'developing_urban'].includes(arch)) pool.push(
+        'The heat is a fact of life you were born into. So are the sounds of the compound, the street, the neighbors.',
+      )
+      if (['wealthy_west', 'wealthy_east'].includes(arch)) pool.push(
+        'The house is quiet and warm. You will not remember it. It is making you anyway.',
+      )
+      return pick(pool)
+    }
+
+    if (age <= 3) {
+      const pool = [
+        'You have words — a dozen of them, then more. They are working hard.',
+        'The world has edges. You are learning which ones hurt.',
+        'Your feet know every room of your home. Each room is its own country.',
+        'You follow a parent wherever they go. This is your whole occupation.',
+        'Something is yours. You know exactly which things. You guard them.',
+        'You are discovering that other people have separate minds. This is disturbing and interesting.',
+      ]
+      if (ruralUrban === 'rural') pool.push(
+        'The animals near the house are enormous and familiar. You have feelings about each of them.',
+        'The well or the water source is far away. You know this because you have been there.',
+      )
+      if (['wealthy_west', 'wealthy_east'].includes(arch)) pool.push(
+        'There are more things to play with than you can count. Some of them are for you. You are not sure which.',
+      )
+      if (cr > 0.1) pool.push(
+        'The adults speak in a particular voice when they are not speaking to you. You have learned to listen anyway.',
+      )
+      if (wealth < 35) pool.push(
+        'The room is small and full of people you know. You do not know yet that small is a judgment.',
+      )
+      return pick(pool)
+    }
+
+    // Ages 4–5: the world is extending beyond the household
+    const pool = [
+      'You have opinions. They are strong and inconsistent.',
+      'The question you ask most often is why. The adults answer when they can.',
+      'School is approaching. You sense it in the way the adults talk about what is coming.',
+      'You know the names of things now. The names feel like a kind of ownership.',
+      'You have a friend, or you want one badly. At this age the two things are almost the same.',
+      'The world extends now to the street, to neighbors\' houses, to the edge of what you\'re allowed.',
+    ]
+    if (wealth < 35) pool.push(
+      'The adults worry about something. You know this from how they are at meals.',
+      'There is not always enough of what you want. There is usually enough of what you need.',
+    )
+    if (ruralUrban === 'rural' && ['subsaharan', 'developing_urban', 'developing_unstable'].includes(arch)) pool.push(
+      'Your world is small and complete: the compound, the neighbors, the water source, the day of the market.',
+    )
+    if (['wealthy_west', 'wealthy_east'].includes(arch)) pool.push(
+      'The world seems large and mostly arranged for your benefit. This is not quite right, but it is close.',
+    )
+    return pick(pool)
   }
 
   // ─── WORLD THREAD BASELINE (~50% of remaining quiet years) ──────────────────
@@ -6722,15 +6832,43 @@ function determineCause({ age, stats, flags, character }) {
   const deathYear = (character.birthYear ?? 1960) + age
   const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
+  if (age < 2) {
+    // Neonatal and infant — causes vary by era and context
+    if (arch === 'conflict_zone' || (flags.includes('refugee') && hc === 'very_poor')) {
+      return pick(['neonatal complications during displacement', 'illness in infancy during conflict', 'complications at birth'])
+    }
+    if (hc === 'very_poor' || hc === 'poor') {
+      if (arch === 'subsaharan') return pick(['neonatal sepsis', 'malaria in infancy', 'complications at birth', 'diarrheal illness in infancy', 'pneumonia in infancy'])
+      if (arch === 'developing_unstable') return pick(['complications at birth', 'diarrheal illness in infancy', 'pneumonia in infancy', 'neonatal infection'])
+      return pick(['complications at birth', 'illness in infancy', 'neonatal infection'])
+    }
+    if (deathYear < 1950) return pick(['complications at birth', 'neonatal tetanus', 'diarrheal disease in infancy', 'pneumonia in infancy'])
+    if (deathYear < 1990) return pick(['complications at birth', 'illness in infancy', 'pneumonia in infancy'])
+    return pick(['complications at birth', 'illness in early infancy', 'sudden illness in infancy'])
+  }
+
   if (age < 5) {
     if (hc === 'very_poor' || hc === 'poor') {
-      if (arch === 'subsaharan' || arch === 'developing_unstable') {
-        return pick(['malaria', 'malnutrition in infancy', 'cholera', 'complications at birth'])
-      }
-      if (arch === 'conflict_zone') return 'complications during conflict'
-      return pick(['malnutrition', 'preventable illness in infancy', 'complications at birth'])
+      if (arch === 'subsaharan') return pick(['malaria', 'malnutrition in early childhood', 'cholera', 'diarrheal disease', 'pneumonia', 'measles'])
+      if (arch === 'developing_unstable') return pick(['malnutrition', 'diarrheal disease', 'pneumonia', 'preventable illness in early childhood'])
+      if (arch === 'conflict_zone') return pick(['illness during displacement', 'malnutrition during conflict', 'complications during conflict'])
+      return pick(['malnutrition', 'preventable illness in early childhood', 'diarrheal disease'])
     }
+    if (deathYear < 1960) return pick(['measles', 'scarlet fever', 'whooping cough', 'diphtheria', 'illness in early childhood'])
+    if (deathYear < 1980) return pick(['illness in early childhood', 'pneumonia', 'measles'])
     return 'illness in early childhood'
+  }
+
+  if (age < 12) {
+    // Childhood — accidents and era-specific diseases
+    if (hc === 'very_poor' || hc === 'poor') {
+      if (arch === 'subsaharan' || arch === 'developing_unstable') {
+        return pick(['malaria', 'malnutrition in childhood', 'pneumonia', 'cholera', 'preventable illness in childhood'])
+      }
+    }
+    if (deathYear < 1950) return pick(['tuberculosis in childhood', 'measles', 'scarlet fever', 'typhoid', 'illness in childhood'])
+    if (deathYear < 1975) return pick(['illness in childhood', 'pneumonia', 'road accident', 'drowning'])
+    return pick(['illness in childhood', 'road accident in childhood', 'drowning', 'accident in childhood'])
   }
 
   if (flags.includes('child_soldier') && age < 18) {

@@ -5213,4 +5213,86 @@ export const FLAG_REGISTRY = {
     notes: 'Set by pw_partner_wants_move.',
   },
 
+  // ── Central American arc ──────────────────────────────────────────────────
+
+  maya_language_suppressed: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Had their indigenous Maya language banned or punished at school — the specific suppression of a language as identity.',
+    intent: 'both',
+    notes: 'Set by ca_maya_school. Distinct from general indigenous suppression; specific to Guatemala\'s school-language policy 1960-1994.',
+  },
+
+  liberation_theology_influenced: {
+    weight: 'moderate',
+    category: 'formative',
+    description: 'Shaped in youth by a liberation theology priest — the scripture-meets-social-justice tradition of Latin American Catholicism.',
+    intent: 'year_texture',
+    notes: 'Set by ca_liberation_theology and ca_archbishop_radio. Gates liberation_theology_cost follow-through events if character later faces regime pressure.',
+  },
+
+  contra_war_survivor: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the US-backed Contra war against the Sandinista government in Nicaragua 1981-1990.',
+    intent: 'both',
+    notes: 'Set by ca_contra_witness. Distinct from civil_war_lived — this was a proxy war with a specific Cold War ideological structure.',
+  },
+
+  gang_territory_lived: {
+    weight: 'moderate',
+    category: 'environment',
+    description: 'Grew up or lived in territory controlled by MS-13 or Barrio 18 in the Northern Triangle.',
+    intent: 'year_texture',
+    notes: 'Set by ca_gang_corner (errand branch). Distinct from criminal_life — this is an environmental condition, not necessarily personal criminality.',
+  },
+
+  northern_journey_taken: {
+    weight: 'major',
+    category: 'formative',
+    description: 'Made the decision to migrate north — the Central American journey toward the US border, undocumented.',
+    intent: 'both',
+    notes: 'Set by ca_north_or_stay. Interfaces with residencyStatus (undocumented) and existing immigration events.',
+  },
+
+  peace_accords_generation: {
+    weight: 'moderate',
+    category: 'formative',
+    description: 'Old enough to understand what the peace accords meant — came of age during or just after the signing of Central American civil war settlements.',
+    intent: 'year_texture',
+    notes: 'Set by ca_peace_accords_day and the central_america_peace_accords world event.',
+  },
+
+  ca_truth_told: {
+    weight: 'moderate',
+    category: 'formative',
+    description: 'Gave full testimony to a truth commission — chose to put everything on the record despite the risks of naming names.',
+    intent: 'year_texture',
+    notes: 'Set by ca_truth_commission (full testimony branch).',
+  },
+
+  witnessed_romero_death: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Old enough to understand the assassination of Archbishop Romero in El Salvador, 1980 — the killing of the voice that named the dead.',
+    intent: 'year_texture',
+    notes: 'Set by the romero_assassination_1980 world event.',
+  },
+
+  northern_triangle_migration: {
+    weight: 'moderate',
+    category: 'environment',
+    description: 'Lived through the post-2014 Northern Triangle migration crisis as a direct witness — watched neighbors and families leave.',
+    intent: 'year_texture',
+    notes: 'Set by the central_american_migration_crisis world event.',
+  },
+
+  lived_through_coup: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through a military coup — the specific experience of a government falling violently and the silence that follows.',
+    intent: 'year_texture',
+    notes: 'Set by guatemala_coup_1954 world event.',
+  },
+
 }
