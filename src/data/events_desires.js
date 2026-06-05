@@ -136,7 +136,7 @@ export const DESIRES_EVENTS = [
       else parts.push('You are finding your way into the world.')
 
       if (F.has('rural_to_urban')) parts.push('The city is still mostly unfamiliar.')
-      if (G.partner) parts.push(`There is ${G.partner.name.split(' ')[0]}.`)
+      if (G.partner) parts.push(`There is ${(G.partner.name ?? 'someone').split(' ')[0]}.`)
 
       const desireLines = {
         prove_worth: 'There is something you are still trying to earn from someone who probably isn\'t watching anymore. You haven\'t worked out yet that this is the situation.',
@@ -168,7 +168,7 @@ export const DESIRES_EVENTS = [
       const F = G.flags
       const parts = []
 
-      if (G.partner?.married) parts.push(`You married ${G.partner.name.split(' ')[0]}.`)
+      if (G.partner?.married) parts.push(`You married ${(G.partner.name ?? 'your partner').split(' ')[0]}.`)
       else if (G.partner) parts.push('You are with someone.')
       else parts.push('You are alone, which is a different thing from lonely.')
 
@@ -211,8 +211,8 @@ export const DESIRES_EVENTS = [
       if (G.partner?.married) {
         const q = G.partner.relationshipQuality ?? 60
         parts.push(q > 70
-          ? `${G.partner.name.split(' ')[0]} has been beside you for years. You still find things to say.`
-          : `${G.partner.name.split(' ')[0]} has been beside you for years. The distance between people is not always distance.`)
+          ? `${(G.partner.name ?? 'Your partner').split(' ')[0]} has been beside you for years. You still find things to say.`
+          : `${(G.partner.name ?? 'Your partner').split(' ')[0]} has been beside you for years. The distance between people is not always distance.`)
       } else if (F.has('widowed')) {
         parts.push('You have lost a partner. You are still figuring out what alone means at this age.')
       } else if (F.has('divorced')) {
@@ -257,8 +257,8 @@ export const DESIRES_EVENTS = [
 
       if (G.partner?.married) {
         const q = G.partner.relationshipQuality ?? 60
-        if (q > 70) parts.push(`You and ${G.partner.name.split(' ')[0]} are still finding things to say to each other. That is not nothing.`)
-        else parts.push(`You and ${G.partner.name.split(' ')[0]} have settled into something. Comfortable and complicated at once.`)
+        if (q > 70) parts.push(`You and ${(G.partner.name ?? 'your partner').split(' ')[0]} are still finding things to say to each other. That is not nothing.`)
+        else parts.push(`You and ${(G.partner.name ?? 'your partner').split(' ')[0]} have settled into something. Comfortable and complicated at once.`)
       } else if (F.has('widowed')) {
         parts.push('You are managing alone, which you did not expect to be doing at this point.')
       } else if (!G.partner && !F.has('widowed')) {
@@ -301,7 +301,7 @@ export const DESIRES_EVENTS = [
       const parts = []
 
       if (G.partner?.married) {
-        parts.push(`${G.partner.name.split(' ')[0]} is still here.`)
+        parts.push(`${(G.partner.name ?? 'Your partner').split(' ')[0]} is still here.`)
       } else if (F.has('widowed')) {
         parts.push('You are alone now, in the way you did not choose.')
       }
@@ -342,7 +342,7 @@ export const DESIRES_EVENTS = [
       const parts = []
 
       if (G.partner?.married) {
-        parts.push(`${G.partner.name.split(' ')[0]} is still here. After all of it.`)
+        parts.push(`${(G.partner.name ?? 'Your partner').split(' ')[0]} is still here. After all of it.`)
       } else if (F.has('widowed') || F.has('partner_died')) {
         parts.push('You are alone now. You have learned what alone means at this age.')
       }

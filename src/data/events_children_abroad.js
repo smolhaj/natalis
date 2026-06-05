@@ -22,7 +22,7 @@ export const CHILDREN_ABROAD_EVENTS = [
       return (
         isOFWSource &&
         G.age >= 6 && G.age <= 12 &&
-        G.parents?.length > 0 &&
+        Object.keys(G.parents ?? {}).length > 0 &&
         !G.flags.includes('parent_works_abroad') &&
         !G.mem?.caParentDeparts
       )

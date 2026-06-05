@@ -91,7 +91,7 @@ export const FOLLOWTHROUGH_EVENTS = [
     weight: 2,
     cooldown: 0,
     when: (G) => G.flags.has('abusive_relationship') && G.partner && !G.flags.has('abusive_rel_new_partner_ack'),
-    text: (G) => `Something ${G.partner.name} says — a tone, not even a word — and you are somewhere else for a second. You come back. ${G.partner.name} doesn't know where you went.`,
+    text: (G) => { const pn = G.partner.name ?? 'your partner'; return `Something ${pn} says — a tone, not even a word — and you are somewhere else for a second. You come back. ${pn} doesn't know where you went.` },
     choices: null,
     effect: (p) => { p.m -= 4; p.addFlag('abusive_rel_new_partner_ack') },
   },

@@ -169,7 +169,7 @@ const DEAF_ARC_EVENTS = [
       G.flags.has('born_deaf') &&
       !G.mem?.disDeafWorldFired,
     text: (G) => {
-      const parents = G.parents ?? []
+      const parents = Object.values(G.parents ?? {})
       const deafParents = G.flags.has('deaf_family')
       if (deafParents) return 'Your parents are Deaf. The language of your house is sign language. The world outside the house requires translation, which your parents do without comment, because they have always done it. You grow up knowing that there is the Deaf world and the hearing world, and you live in both, and the Deaf world is the one that feels like home.'
       return 'Your parents are hearing. They love you correctly and are also frightened, because the world they know is built entirely for hearing people and they are not sure how to prepare you for it. You are growing up in a house where you are the only person who experiences the world the way you do. You learn to read faces very early. You learn to be patient with people who don\'t know how to talk to you.'
