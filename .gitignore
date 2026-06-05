@@ -3,3 +3,7 @@ dist/
 .DS_Store
 *.local
 .claude/
+
+# Playtest scripts
+playtest*.mjs
+debug_run.mjs
