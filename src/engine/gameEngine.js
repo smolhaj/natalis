@@ -4052,81 +4052,183 @@ function buildYearTexture(state) {
   }
 
   // ─── DESIRE-AWARE TEXTURE (fires ~40% of remaining quiet years) ───────────────
+  // Tiered: first fire = full, second = brief, third+ = oblique (transformed in late life)
   if (desire && Math.random() < 0.4) {
-    const desireLines = {
-      prove_worth: {
-        early_childhood: 'You are already trying to be the best at something. You are not sure who you are trying to show.',
-        childhood: 'You work hard at the things that get noticed. It matters to you that they get noticed.',
-        adolescence: 'There is still the question of whether you are enough. You are trying to answer it with evidence.',
-        young_adult: 'You are building the evidence that you matter. The accumulation is slow.',
-        midlife: 'The accumulation of proof has not settled the question. You wonder sometimes if it ever will.',
-        late_life: 'You have stopped trying to prove it. That is either peace or the thing that comes before peace.',
-      },
-      belong: {
-        early_childhood: 'The world has rooms in it. You are learning which ones are yours.',
-        childhood: 'You watch how the other children are with each other. You are learning the rules.',
-        adolescence: 'The need to be included is almost physical. You would not admit that to anyone.',
-        young_adult: 'The search for a room where you don\'t feel like a guest continues.',
-        midlife: 'You have found, maybe, a few people who don\'t require you to perform. You hold onto them.',
-        late_life: 'You know now who loves you. The list is smaller than you thought and enough.',
-      },
-      be_seen: {
-        early_childhood: 'You do things hoping someone will notice. Sometimes they do.',
-        childhood: 'You have a sense that there is more of you than people are seeing. You don\'t know how to show it.',
-        adolescence: 'Visibility is everything. It is also terrifying. You want both at once.',
-        young_adult: 'The need to be recognized is still the engine of a lot of your decisions. You are becoming aware of this.',
-        midlife: 'You have made your mark, small or not. The question of whether it was enough is still there.',
-        late_life: 'You are seen by the people who matter. That took longer to understand than it should have.',
-      },
-      safety: {
-        early_childhood: 'You are always reading the room. You have been doing it for as long as you can remember.',
-        childhood: 'You are good at knowing when things are about to change. You watch for it.',
-        adolescence: 'The ground feels solid today. You are aware it can shift.',
-        young_adult: 'You build routines. Routines feel like shelter. You are aware this is a strategy.',
-        midlife: 'You have built something stable. You check it constantly, the way you check a lock.',
-        late_life: 'The fear of instability has dulled. Not gone. Dulled. That is progress.',
-      },
-      connection: {
-        early_childhood: 'You notice which children have friends and which don\'t. You watch this carefully.',
-        childhood: 'A good friend is the most important thing. You know this without being able to say it.',
-        adolescence: 'A close friendship is the whole world. You know this but cannot say it without it sounding small.',
-        young_adult: 'What you want most is someone who knows what you mean before you\'ve finished.',
-        midlife: 'The people who matter are fewer than they were. They are also more real.',
-        late_life: 'The longevity of some relationships is its own kind of proof of something you couldn\'t have named at twenty.',
-      },
-      leave_mark: {
-        early_childhood: 'You are already thinking about what you want to be. This seems important.',
-        childhood: 'You have an idea of the future you. The future you is larger than the current one.',
-        adolescence: 'The future you is more real to you than the present one. You are impatient.',
-        young_adult: 'You are trying to build something that will outlast the year.',
-        midlife: 'The work is there. Whether it matters is a separate question you try not to ask too often.',
-        late_life: 'Whatever you have made is mostly made. You are learning to let that be enough.',
-      },
-      freedom: {
-        early_childhood: 'The rules chafe. You don\'t have words for this yet.',
-        childhood: 'You test the edges of things. You want to know where they are.',
-        adolescence: 'What you want is out. You don\'t know what\'s on the other side of out. You want it anyway.',
-        young_adult: 'You resist the things that would bind you. You are aware this has costs. You are paying some of them.',
-        midlife: 'You are freer than you have been in some ways. Constrained in others you didn\'t anticipate.',
-        late_life: 'You have lived on your own terms, mostly. You are still deciding whether mostly is enough.',
-      },
-      redemption: {
-        early_childhood: 'There is already something you feel you owe. You couldn\'t name it if you tried.',
-        childhood: 'There is something you carry. You are not sure yet if it is yours to carry.',
-        adolescence: 'The weight of something is there. You move around it more than you face it.',
-        young_adult: 'The desire to make something right is still there, below the ordinary days.',
-        midlife: 'Some accounts have been settled. Others you are still working on. You don\'t know how many are left.',
-        late_life: 'What remains to be made right has become clearer. You are doing what you can with the time.',
-      },
-    }
+    if (!state.mem) state.mem = {}
+    const fireCount = state.mem.desireTextureFires ?? 0
     const phaseKey = (phase === 'early_childhood') ? 'early_childhood'
       : (phase === 'childhood') ? 'childhood'
       : (phase === 'adolescence') ? 'adolescence'
       : (phase === 'young_adult') ? 'young_adult'
       : (phase === 'midlife') ? 'midlife'
       : 'late_life'
-    const line = desireLines[desire]?.[phaseKey]
-    if (line) return line
+    let desireLine = null
+
+    if (fireCount === 0) {
+      const desireLines = {
+        prove_worth: {
+          early_childhood: 'You are already trying to be the best at something. You are not sure who you are trying to show.',
+          childhood: 'You work hard at the things that get noticed. It matters to you that they get noticed.',
+          adolescence: 'There is still the question of whether you are enough. You are trying to answer it with evidence.',
+          young_adult: 'You are building the evidence that you matter. The accumulation is slow.',
+          midlife: 'The accumulation of proof has not settled the question. You wonder sometimes if it ever will.',
+          late_life: 'You have stopped trying to prove it. That is either peace or the thing that comes before peace.',
+        },
+        belong: {
+          early_childhood: 'The world has rooms in it. You are learning which ones are yours.',
+          childhood: 'You watch how the other children are with each other. You are learning the rules.',
+          adolescence: 'The need to be included is almost physical. You would not admit that to anyone.',
+          young_adult: 'The search for a room where you don\'t feel like a guest continues.',
+          midlife: 'You have found, maybe, a few people who don\'t require you to perform. You hold onto them.',
+          late_life: 'You know now who loves you. The list is smaller than you thought and enough.',
+        },
+        be_seen: {
+          early_childhood: 'You do things hoping someone will notice. Sometimes they do.',
+          childhood: 'You have a sense that there is more of you than people are seeing. You don\'t know how to show it.',
+          adolescence: 'Visibility is everything. It is also terrifying. You want both at once.',
+          young_adult: 'The need to be recognized is still the engine of a lot of your decisions. You are becoming aware of this.',
+          midlife: 'You have made your mark, small or not. The question of whether it was enough is still there.',
+          late_life: 'You are seen by the people who matter. That took longer to understand than it should have.',
+        },
+        safety: {
+          early_childhood: 'You are always reading the room. You have been doing it for as long as you can remember.',
+          childhood: 'You are good at knowing when things are about to change. You watch for it.',
+          adolescence: 'The ground feels solid today. You are aware it can shift.',
+          young_adult: 'You build routines. Routines feel like shelter. You are aware this is a strategy.',
+          midlife: 'You have built something stable. You check it constantly, the way you check a lock.',
+          late_life: 'The fear of instability has dulled. Not gone. Dulled. That is progress.',
+        },
+        connection: {
+          early_childhood: 'You notice which children have friends and which don\'t. You watch this carefully.',
+          childhood: 'A good friend is the most important thing. You know this without being able to say it.',
+          adolescence: 'A close friendship is the whole world. You know this but cannot say it without it sounding small.',
+          young_adult: 'What you want most is someone who knows what you mean before you\'ve finished.',
+          midlife: 'The people who matter are fewer than they were. They are also more real.',
+          late_life: 'The longevity of some relationships is its own kind of proof of something you couldn\'t have named at twenty.',
+        },
+        leave_mark: {
+          early_childhood: 'You are already thinking about what you want to be. This seems important.',
+          childhood: 'You have an idea of the future you. The future you is larger than the current one.',
+          adolescence: 'The future you is more real to you than the present one. You are impatient.',
+          young_adult: 'You are trying to build something that will outlast the year.',
+          midlife: 'The work is there. Whether it matters is a separate question you try not to ask too often.',
+          late_life: 'Whatever you have made is mostly made. You are learning to let that be enough.',
+        },
+        freedom: {
+          early_childhood: 'The rules chafe. You don\'t have words for this yet.',
+          childhood: 'You test the edges of things. You want to know where they are.',
+          adolescence: 'What you want is out. You don\'t know what\'s on the other side of out. You want it anyway.',
+          young_adult: 'You resist the things that would bind you. You are aware this has costs. You are paying some of them.',
+          midlife: 'You are freer than you have been in some ways. Constrained in others you didn\'t anticipate.',
+          late_life: 'You have lived on your own terms, mostly. You are still deciding whether mostly is enough.',
+        },
+        redemption: {
+          early_childhood: 'There is already something you feel you owe. You couldn\'t name it if you tried.',
+          childhood: 'There is something you carry. You are not sure yet if it is yours to carry.',
+          adolescence: 'The weight of something is there. You move around it more than you face it.',
+          young_adult: 'The desire to make something right is still there, below the ordinary days.',
+          midlife: 'Some accounts have been settled. Others you are still working on. You don\'t know how many are left.',
+          late_life: 'What remains to be made right has become clearer. You are doing what you can with the time.',
+        },
+      }
+      desireLine = desireLines[desire]?.[phaseKey] ?? null
+    } else if (fireCount === 1) {
+      const desireBrief = {
+        prove_worth: {
+          early_childhood: 'Already competing with something. You\'re not sure what.',
+          childhood: 'Being the best at something still feels like the answer to a question you haven\'t named.',
+          adolescence: 'You keep score. You are not sure who else is playing.',
+          young_adult: 'The work is the argument you keep making.',
+          midlife: 'The score doesn\'t settle. You had thought it would.',
+          late_life: 'The need to prove it has grown quieter. That is something.',
+        },
+        belong: {
+          early_childhood: 'You are still learning whose table this is.',
+          childhood: 'The rules are becoming clearer. You don\'t always like them.',
+          adolescence: 'Being on the outside of something feels like a verdict.',
+          young_adult: 'You are still looking for the room where you can drop the performance.',
+          midlife: 'A few people have made it through the years. They feel like proof of something.',
+          late_life: 'The search has mostly ended. What you found is enough.',
+        },
+        be_seen: {
+          early_childhood: 'You do your best work when someone is watching.',
+          childhood: 'There is more to you than is visible. This frustrates you.',
+          adolescence: 'Being invisible and being exposed both feel like dangers.',
+          young_adult: 'You want to be known and you don\'t know how to ask for it.',
+          midlife: 'What you have done exists. Whether it is seen is a separate question.',
+          late_life: 'The people who matter can see you. That is what it was always about.',
+        },
+        safety: {
+          early_childhood: 'You read the room before you enter it.',
+          childhood: 'Something in you is always listening for the change in tone.',
+          adolescence: 'Stability feels like something you have to maintain.',
+          young_adult: 'Routines are load-bearing. You built them carefully.',
+          midlife: 'You have built something solid. The checking has become habit.',
+          late_life: 'The vigilance has softened. Not gone, but softer.',
+        },
+        connection: {
+          early_childhood: 'You want to be known, specifically, by someone.',
+          childhood: 'Having one real friend seems more important than having many.',
+          adolescence: 'A deep friendship is the whole thing. This embarrasses you.',
+          young_adult: 'You are still waiting to be fully understood by someone.',
+          midlife: 'The people who remain are the ones who stayed. You have noticed this.',
+          late_life: 'Some of the connections held. They are the answer you were looking for.',
+        },
+        leave_mark: {
+          early_childhood: 'You want the future you to be proud of the current one.',
+          childhood: 'Something in you keeps reaching for a larger version.',
+          adolescence: 'You are impatient with the distance between now and what you\'ll become.',
+          young_adult: 'The work has to mean something beyond this year.',
+          midlife: 'What you have built is real. Whether it matters is still unanswered.',
+          late_life: 'The making is mostly done. The accounting is underway.',
+        },
+        freedom: {
+          early_childhood: 'You pull against limits that others seem not to notice.',
+          childhood: 'You want to know exactly where the walls are.',
+          adolescence: 'You want out, without being certain what you\'re escaping.',
+          young_adult: 'The independence has costs you pay without complaint, mostly.',
+          midlife: 'Some freedoms won, some traded away. The math is complicated.',
+          late_life: 'The life has been yours, mostly. Mostly is the honest word.',
+        },
+        redemption: {
+          early_childhood: 'Something from before you have words for it sits with you.',
+          childhood: 'You carry it. You don\'t know yet if it belongs to you.',
+          adolescence: 'You work around something instead of through it.',
+          young_adult: 'The need to make something right runs under the ordinary days.',
+          midlife: 'Some things have been settled. The count isn\'t finished.',
+          late_life: 'What is left to make right has become legible. You are working on it.',
+        },
+      }
+      desireLine = desireBrief[desire]?.[phaseKey] ?? null
+    } else {
+      // Tier 3+: one compressed line per desire; late life gets a retrospective transform
+      const desireOblique = {
+        prove_worth:  'The question underneath the work is still there.',
+        belong:       'You are still calibrating the distance between yourself and others.',
+        be_seen:      'The gap between what you contain and what is visible has not closed.',
+        safety:       'You are still checking the locks.',
+        connection:   'You are still in the middle of the sentence, looking for the person who can finish it.',
+        leave_mark:   'The work is its own answer to a question you stopped asking aloud.',
+        freedom:      'You live at the edge of the acceptable. This is a considered position.',
+        redemption:   'Something still needs to be made right. You are not done.',
+      }
+      const desireTransformed = {
+        prove_worth:  'The drive to be enough has been the engine of the life. You can see that now.',
+        belong:       'You spent years looking for the room. You found it in a few places. That is what you have.',
+        be_seen:      'You have been seen by some people, truly. The ones who didn\'t see you don\'t matter the way they once did.',
+        safety:       'The vigilance built a stable life. You are not sure whether to call that a victory.',
+        connection:   'The connections that lasted are the architecture of the life you actually had.',
+        leave_mark:   'What you made is there. It exists outside you. That was what you wanted.',
+        freedom:      'The life was yours, on your own terms, at some cost. That is the record.',
+        redemption:   'You have made right what you could. The rest you have had to forgive yourself for.',
+      }
+      desireLine = (phase === 'late_life' ? desireTransformed[desire] : desireOblique[desire]) ?? null
+    }
+
+    if (desireLine) {
+      state.mem.desireTextureFires = fireCount + 1
+      return desireLine
+    }
   }
 
   // ─── WOUND COPING & LIFE SKELETON TEXTURE (~35% of remaining quiet years) ────
@@ -6527,21 +6629,59 @@ function applyHeadlines(state) {
 
 // ─── Death ────────────────────────────────────────────────────────────────────
 
+// Historical infant mortality rates (deaths per 1000 live births) by archetype and decade.
+// Sources: UN IGME, Gapminder, World Bank historical series.
+const HISTORICAL_IMR = {
+  wealthy_west:        { 1900: 150, 1920: 100, 1940: 58,  1960: 28,  1980: 12,  2000: 6,   2020: 4   },
+  wealthy_east:        { 1900: 180, 1920: 140, 1940: 90,  1960: 40,  1980: 10,  2000: 4,   2020: 2   },
+  wealthy_gulf:        { 1900: 260, 1920: 240, 1940: 200, 1960: 140, 1980: 60,  2000: 15,  2020: 7   },
+  post_soviet:         { 1900: 230, 1920: 190, 1940: 140, 1960: 75,  1980: 28,  2000: 18,  2020: 8   },
+  developing_urban:    { 1900: 200, 1920: 170, 1940: 150, 1960: 110, 1980: 70,  2000: 35,  2020: 20  },
+  developing_unstable: { 1900: 240, 1920: 210, 1940: 180, 1960: 130, 1980: 90,  2000: 55,  2020: 40  },
+  subsaharan:          { 1900: 300, 1920: 275, 1940: 250, 1960: 190, 1980: 130, 2000: 95,  2020: 55  },
+  conflict_zone:       { 1900: 340, 1920: 310, 1940: 280, 1960: 210, 1980: 160, 2000: 120, 2020: 80  },
+}
+
+function lerpIMR(archetype, year) {
+  const table = HISTORICAL_IMR[archetype] ?? HISTORICAL_IMR.developing_urban
+  const decades = Object.keys(table).map(Number).sort((a, b) => a - b)
+  if (year <= decades[0]) return table[decades[0]] / 1000
+  if (year >= decades[decades.length - 1]) return table[decades[decades.length - 1]] / 1000
+  for (let i = 0; i < decades.length - 1; i++) {
+    if (year >= decades[i] && year <= decades[i + 1]) {
+      const t = (year - decades[i]) / (decades[i + 1] - decades[i])
+      return (table[decades[i]] * (1 - t) + table[decades[i + 1]] * t) / 1000
+    }
+  }
+  return 0.05
+}
+
 function checkDeath(state) {
   const { age, stats, character, flags } = state
+  const cr = character.country.conflictRisk ?? 0
+  const currentYear = (character.birthYear ?? 1960) + age
+  const arch = character.country.archetype ?? 'developing_urban'
   let prob = 0
-  if (age < 2) {
-    const neonatal = { very_poor: 0.06, poor: 0.03, fair: 0.015, good: 0.005, excellent: 0.002 }
-    prob = neonatal[character.country.healthcare] ?? 0.015
-  } else if (age < 6) {
-    const infant = { very_poor: 0.03, poor: 0.015, fair: 0.006, good: 0.002, excellent: 0.001 }
-    prob = infant[character.country.healthcare] ?? 0.006
-    prob += character.country.conflictRisk * 0.05
-  } else if (age < 18) {
-    prob = 0.001 + character.country.conflictRisk * 0.08
-    if (flags.includes('child_soldier')) prob += 0.05
+  let skipHcMod = false
+
+  if (age < 18) {
+    // Historical archetype-keyed rates — hcMod excluded because archetype already encodes era healthcare
+    skipHcMod = true
+    const imr = lerpIMR(arch, currentYear)
+    if (age < 2) {
+      prob = imr + cr * 0.04
+    } else if (age < 6) {
+      // Under-5 mortality beyond infancy, roughly 12% of IMR per year
+      prob = imr * 0.12 + cr * 0.04
+    } else if (age < 12) {
+      prob = imr * 0.02 + cr * 0.025
+      if (flags.includes('child_soldier')) prob += 0.04
+    } else {
+      prob = imr * 0.015 + cr * 0.05
+      if (flags.includes('child_soldier')) prob += 0.05
+    }
   } else if (age < 35) {
-    prob = 0.002 + character.country.conflictRisk * 0.04
+    prob = 0.002 + cr * 0.04
     if (flags.includes('criminal_life')) prob += 0.015
     if (stats.happiness < 15) prob += 0.02
   } else if (age < 50) {
@@ -6562,8 +6702,11 @@ function checkDeath(state) {
   } else {
     prob = 0.30 + (age - 95) * 0.06
   }
-  const hcMod = { excellent: 0.65, good: 0.8, fair: 1.0, poor: 1.25, very_poor: 1.5 }
-  prob *= hcMod[character.country.healthcare] ?? 1.0
+
+  if (!skipHcMod) {
+    const hcMod = { excellent: 0.65, good: 0.8, fair: 1.0, poor: 1.25, very_poor: 1.5 }
+    prob *= hcMod[character.country.healthcare] ?? 1.0
+  }
   if (stats.health < 10) prob += 0.15
   // Karma very slightly modifies survival odds
   const karma = state.karma ?? 50
@@ -10395,7 +10538,14 @@ export function generateEpitaph(state) {
   }
 
   // ── PARAGRAPH 5: Closing ──────────────────────────────────────────────────────
-  if (any('found_meaning', 'acceptance', 'peace')) {
+  // Age-bracket guards first — different language for different life lengths
+  if (age < 5) {
+    para5.push(`${name} was too young for a story. ${He} had a name, and people who held it.`)
+  } else if (age < 12) {
+    para5.push(`${He} had a childhood — not all of it, but enough that the people who knew ${him} carry something specific.`)
+  } else if (age < 18) {
+    para5.push(`${He} was still becoming something. What it would have been, no one will know.`)
+  } else if (any('found_meaning', 'acceptance', 'peace')) {
     para5.push(`Near the end, ${name} seemed at peace with the shape of the life.`)
   } else if (f('life_reviewed') || f('legacy_thought')) {
     para5.push(`${He} reviewed the life honestly before the end.`)
