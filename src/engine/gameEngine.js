@@ -6378,16 +6378,78 @@ function buildYearTexture(state) {
   }
 
   if (phase === 'early_childhood') {
-    return pick([
-      'The world is very close. Adults are very tall.',
-      'A year of firsts, most of which you will not remember.',
-      'You are learning the names of things. The names feel large.',
-      'The people around you are the entire world. You sense this.',
-      'You are discovering that you are a separate person from everyone else. This takes time.',
-      'The texture of the blanket. The sound of a particular song. The smell of the kitchen. These are what you are storing.',
-      'You can count on your fingers. You are learning to trust that what goes away comes back.',
-      'Someone is always watching. You have not learned to mind this yet.',
-    ])
+    const character = state.character
+    const arch = character?.country?.archetype ?? 'developing_urban'
+    const ruralUrban = character?.ruralUrban ?? 'urban'
+    const wealth = state.stats?.wealth ?? 50
+    const cr = character?.country?.conflictRisk ?? 0
+
+    if (age <= 1) {
+      const pool = [
+        'The world is not yet separate from the people who hold it. This is enough.',
+        'You sleep most of the day. The waking hours are large and bright and very close.',
+        'The smell of a shirt. The sound of a particular voice. This is all the world is.',
+        'Someone carries you. Someone is always there when you need them. You have no reason to think otherwise.',
+        'You do not know where you end and the people around you begin. This will take years to sort out.',
+      ]
+      if (cr > 0.1) pool.push(
+        'There are sounds at night that make the adults still. You do not know yet what they are.',
+        'The house is where the safety is. You know this without knowing you know it.',
+      )
+      if (['subsaharan', 'developing_unstable', 'developing_urban'].includes(arch)) pool.push(
+        'The heat is a fact of life you were born into. So are the sounds of the compound, the street, the neighbors.',
+      )
+      if (['wealthy_west', 'wealthy_east'].includes(arch)) pool.push(
+        'The house is quiet and warm. You will not remember it. It is making you anyway.',
+      )
+      return pick(pool)
+    }
+
+    if (age <= 3) {
+      const pool = [
+        'You have words — a dozen of them, then more. They are working hard.',
+        'The world has edges. You are learning which ones hurt.',
+        'Your feet know every room of your home. Each room is its own country.',
+        'You follow a parent wherever they go. This is your whole occupation.',
+        'Something is yours. You know exactly which things. You guard them.',
+        'You are discovering that other people have separate minds. This is disturbing and interesting.',
+      ]
+      if (ruralUrban === 'rural') pool.push(
+        'The animals near the house are enormous and familiar. You have feelings about each of them.',
+        'The well or the water source is far away. You know this because you have been there.',
+      )
+      if (['wealthy_west', 'wealthy_east'].includes(arch)) pool.push(
+        'There are more things to play with than you can count. Some of them are for you. You are not sure which.',
+      )
+      if (cr > 0.1) pool.push(
+        'The adults speak in a particular voice when they are not speaking to you. You have learned to listen anyway.',
+      )
+      if (wealth < 35) pool.push(
+        'The room is small and full of people you know. You do not know yet that small is a judgment.',
+      )
+      return pick(pool)
+    }
+
+    // Ages 4–5: the world is extending beyond the household
+    const pool = [
+      'You have opinions. They are strong and inconsistent.',
+      'The question you ask most often is why. The adults answer when they can.',
+      'School is approaching. You sense it in the way the adults talk about what is coming.',
+      'You know the names of things now. The names feel like a kind of ownership.',
+      'You have a friend, or you want one badly. At this age the two things are almost the same.',
+      'The world extends now to the street, to neighbors\' houses, to the edge of what you\'re allowed.',
+    ]
+    if (wealth < 35) pool.push(
+      'The adults worry about something. You know this from how they are at meals.',
+      'There is not always enough of what you want. There is usually enough of what you need.',
+    )
+    if (ruralUrban === 'rural' && ['subsaharan', 'developing_urban', 'developing_unstable'].includes(arch)) pool.push(
+      'Your world is small and complete: the compound, the neighbors, the water source, the day of the market.',
+    )
+    if (['wealthy_west', 'wealthy_east'].includes(arch)) pool.push(
+      'The world seems large and mostly arranged for your benefit. This is not quite right, but it is close.',
+    )
+    return pick(pool)
   }
 
   // ─── WORLD THREAD BASELINE (~50% of remaining quiet years) ──────────────────
@@ -6770,15 +6832,43 @@ function determineCause({ age, stats, flags, character }) {
   const deathYear = (character.birthYear ?? 1960) + age
   const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
+  if (age < 2) {
+    // Neonatal and infant — causes vary by era and context
+    if (arch === 'conflict_zone' || (flags.includes('refugee') && hc === 'very_poor')) {
+      return pick(['neonatal complications during displacement', 'illness in infancy during conflict', 'complications at birth'])
+    }
+    if (hc === 'very_poor' || hc === 'poor') {
+      if (arch === 'subsaharan') return pick(['neonatal sepsis', 'malaria in infancy', 'complications at birth', 'diarrheal illness in infancy', 'pneumonia in infancy'])
+      if (arch === 'developing_unstable') return pick(['complications at birth', 'diarrheal illness in infancy', 'pneumonia in infancy', 'neonatal infection'])
+      return pick(['complications at birth', 'illness in infancy', 'neonatal infection'])
+    }
+    if (deathYear < 1950) return pick(['complications at birth', 'neonatal tetanus', 'diarrheal disease in infancy', 'pneumonia in infancy'])
+    if (deathYear < 1990) return pick(['complications at birth', 'illness in infancy', 'pneumonia in infancy'])
+    return pick(['complications at birth', 'illness in early infancy', 'sudden illness in infancy'])
+  }
+
   if (age < 5) {
     if (hc === 'very_poor' || hc === 'poor') {
-      if (arch === 'subsaharan' || arch === 'developing_unstable') {
-        return pick(['malaria', 'malnutrition in infancy', 'cholera', 'complications at birth'])
-      }
-      if (arch === 'conflict_zone') return 'complications during conflict'
-      return pick(['malnutrition', 'preventable illness in infancy', 'complications at birth'])
+      if (arch === 'subsaharan') return pick(['malaria', 'malnutrition in early childhood', 'cholera', 'diarrheal disease', 'pneumonia', 'measles'])
+      if (arch === 'developing_unstable') return pick(['malnutrition', 'diarrheal disease', 'pneumonia', 'preventable illness in early childhood'])
+      if (arch === 'conflict_zone') return pick(['illness during displacement', 'malnutrition during conflict', 'complications during conflict'])
+      return pick(['malnutrition', 'preventable illness in early childhood', 'diarrheal disease'])
     }
+    if (deathYear < 1960) return pick(['measles', 'scarlet fever', 'whooping cough', 'diphtheria', 'illness in early childhood'])
+    if (deathYear < 1980) return pick(['illness in early childhood', 'pneumonia', 'measles'])
     return 'illness in early childhood'
+  }
+
+  if (age < 12) {
+    // Childhood — accidents and era-specific diseases
+    if (hc === 'very_poor' || hc === 'poor') {
+      if (arch === 'subsaharan' || arch === 'developing_unstable') {
+        return pick(['malaria', 'malnutrition in childhood', 'pneumonia', 'cholera', 'preventable illness in childhood'])
+      }
+    }
+    if (deathYear < 1950) return pick(['tuberculosis in childhood', 'measles', 'scarlet fever', 'typhoid', 'illness in childhood'])
+    if (deathYear < 1975) return pick(['illness in childhood', 'pneumonia', 'road accident', 'drowning'])
+    return pick(['illness in childhood', 'road accident in childhood', 'drowning', 'accident in childhood'])
   }
 
   if (flags.includes('child_soldier') && age < 18) {
