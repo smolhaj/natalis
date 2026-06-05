@@ -5225,6 +5225,197 @@ function buildYearTexture(state) {
     'The church provides what the contracting state no longer provides: the social network, the crisis fund, the Sunday. The prosperity gospel has a particular appeal in a country where the copper promises didn\'t all arrive.',
   ])
 
+  // ─── LATIN AMERICA TEXTURE ───────────────────────────────────────────────────
+  if (F.has('favela_community_generation') && Math.random() < 0.22) return pick([
+    'The favela has its own geography: the alleys, the baile funk on Saturday, the view over the city that the formal city cannot see. You navigate all of it without thinking about navigating it.',
+    'The church at the top. The bar at the corner. The name the community uses for itself and the name the newspapers use. You know the difference.',
+    phase === 'late_life'
+      ? 'You have lived here long enough to see what stays and what changes. The things that stay are the people. The things that change are who holds what, which is the same conversation in a different register.'
+      : 'When people say where you\'re from they hear something in the answer. You know what they\'re hearing. You\'ve learned to manage it and you\'ve learned to be tired of managing it.',
+  ])
+  if (F.has('bolsa_familia_generation') && Math.random() < 0.2) return pick([
+    'The card came. The conditional: the children had to be in school. They went to school. That is the sentence that explains both what the programme was and what it required.',
+    'People called it a handout. The people who called it a handout ate every day. The distinction between a handout and a floor is visible from below.',
+    phase === 'late_life'
+      ? 'The programme changed. The values of the transfer changed. The question of what a country owes its poorest citizens is still being argued over the children who grew up on those transfers.'
+      : 'The monthly transfer was the margin — the thing that meant the school shoes could be replaced when they wore through. You know what margin means from the inside.',
+  ])
+  if (F.has('lula_generation') && Math.random() < 0.18) return pick([
+    'The metalworker from the ABC region, the union leader who went to prison, the man who won on the third try. He was from where you were from. That had a particular weight in a country where that had never happened.',
+    phase === 'late_life'
+      ? 'You watched the rise, the arrest, the prison, the election again. The arc of it tells you something about the country — what it will do and what it will correct and how long the correction takes.'
+      : 'The election in 2002 felt like a door opening. You know now what was on the other side. At the time it was mostly the door.',
+  ])
+  if (F.has('venezuela_exodus') && Math.random() < 0.25) return pick([
+    '7 million Venezuelans abroad. If you are one of them, you are one item in that number. The number does not capture the specific airport, the specific amount you had, the specific moment you decided.',
+    'The shelves are empty again. That sentence needs a again because it was not always this way. The memory of before is still legible to anyone over thirty-five.',
+    phase === 'late_life'
+      ? 'You left or you stayed. Both choices had their full cost and you know it. The ones who stayed and the ones who left call each other less than they used to.'
+      : 'The bolivar converts to nothing by the time you calculate it. You stopped calculating in bolivars and started calculating in dollars and then stopped calculating altogether because the variable isn\'t the currency, it\'s whether there is food.',
+  ])
+  if (F.has('bolivarian_generation') && Math.random() < 0.18) return pick([
+    'The oil was supposed to be the revolution\'s engine. The price fell. The management failed. Those two facts explain most of what followed, but not all of it.',
+    'You believed, or you did not believe, and both of those positions have been tested in the years since.',
+    phase === 'late_life'
+      ? 'You have lived in the country the revolution promised and in the country it produced. The gap between them is the education.'
+      : 'The social missions were real — the literacy programme, the barrio clinics, the subsidised food. What they rested on was also real. When it shifted, everything above it shifted.',
+  ])
+  if (F.has('sendero_generation') && Math.random() < 0.22) return pick([
+    'The Shining Path did not distinguish between the state and the people who depended on it. That meant the teacher was a target, the village water committee was a target, the person who accepted a government project was a target.',
+    'The army and the Shining Path were both in the highlands. Both used the civilian population as a resource. You were the population.',
+    phase === 'late_life'
+      ? 'The Truth and Reconciliation Commission counted 69,000 dead. Three-quarters were Quechua-speaking. The distance between that fact and the national memory of the conflict is the thing that has not been fully resolved.'
+      : 'Living through it made you fluent in a kind of risk calculation that people in Lima did not have to know. The distance between the coasts and the highlands was not only kilometres.',
+  ])
+  if (F.has('hyperinflation_generation') && Math.random() < 0.22) return pick([
+    'You learned to spend on the day you were paid. Waiting meant losing. The calendar of money became a skill — which goods hold value, which devalue by evening, what you buy first.',
+    'The price was different in the morning than it was at noon. You know what that experience does to your sense of what money is.',
+    phase === 'late_life'
+      ? 'Inflation ended, eventually, through a shock that hurt everyone and especially the people who had nothing to lose before the shock. You lived through both the spiral and the cure.'
+      : 'The zeros added to the currency. The new peso. The new austral. The new real. Each new name was a reset that meant the old savings were gone. You learned the calculus of currency collapse through lived experience.',
+  ])
+  if (F.has('maquiladora_worker') && Math.random() < 0.2) return pick([
+    'The assembly line moves at the speed the quota sets. You know the quota and the quota knows you. The American company across the border has a parking lot larger than your factory.',
+    'They come for the low wages and they stay — the concept, the factories, the American brands assembled from Mexican hands. You are part of the supply chain that does not appear in the brand\'s story about itself.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'The maquiladora was the entry into the formal economy. The wages were fixed. The hours were long. The alternative was the informal market or nothing, which is how the wage negotiation worked.'
+      : 'The bus from the colonia at 5am. The line at the gate. The badge that says you belong here but only during your shift hours.',
+  ])
+  if (F.has('chavista_generation') && Math.random() < 0.17) return pick([
+    'Chávez died in Havana in 2013, after fourteen years. The movement he named after himself outlasted him in a direction he may not have planned.',
+    'The revolution was supposed to be irreversible. That word — irreversible — is doing a specific kind of work. You watched what happened to the things that were declared irreversible.',
+  ])
+  if (F.has('special_period_generation') && Math.random() < 0.22) return pick([
+    'The Special Period: no Soviet oil, no Soviet subsidies, the blackouts, the food rationing that was already rationing rationed further. You learned what the minimum was.',
+    'The bicycle boom of the 1990s was not optional. The government imported a million bicycles from China because there was no fuel. The city became a cycling city by necessity. You were in it.',
+    phase === 'late_life'
+      ? 'You have lived through the Special Period and the partial opening and the tightening again. The version of Cuba you are old in is not the version you were young in. Both have been called socialist.'
+      : 'The dollar became real in 1993. Before that it was illegal. After that it was not, and the inequality it produced was the kind that comes from some families having relatives abroad and some not.',
+  ])
+  if (F.has('proceso_lived') && Math.random() < 0.22) return pick([
+    'Thirty thousand. The number is not exact and is not disputed. The method was established: the flights, the camps, the specific vocabulary of disappearance.',
+    'The Proceso lasted until 1983. The courts came later. The repentance came even later. The grandmothers were in the Plaza de Mayo every Thursday from 1977 onward. You saw them.',
+    phase === 'late_life'
+      ? 'You were alive during the Proceso and after. The trials happened. Videla died in prison. Some of the men who did what was done to people you knew died in prison. This is not the same as resolution.'
+      : 'Argentina lost a generation — the specific people who had been about to change it. The country that emerged from 1983 had a particular vacancy at a particular age cohort. You noticed it.',
+  ])
+  if (F.has('tlatelolco_generation') && Math.random() < 0.2) return pick([
+    'October 2, 1968. Two days before the Olympic Games began in the same city. The Plaza de las Tres Culturas. The army fired into the crowd. The Olympic Games went ahead.',
+    phase === 'late_life'
+      ? 'You were young in 1968 and you are old now in a Mexico that eventually acknowledged what happened and didn\'t fully account for it. The accounting is still partial. You know what partial means from the inside.'
+      : 'The PRI governed Mexico for seventy years. Tlatelolco was in the middle of those seventy years. The thing that ends a regime and the thing that documents it are different timescales.',
+  ])
+  if (F.has('femicidio_generation') && Math.random() < 0.2) return pick([
+    'The count changes because someone is counting. The someone counting is usually not the state. You know people who count.',
+    phase === 'late_life'
+      ? 'You have lived through the years when it had no name and the years when it was named and the years when the naming changed something and didn\'t change enough. You are still in the didn\'t change enough years.'
+      : 'A woman is murdered here every day. In that country every day. In this region every hour. The passive construction — is murdered — obscures a subject. There is a subject.',
+  ])
+  if (F.has('brazil_dictatorship_lived') && Math.random() < 0.2) return pick([
+    'The AI-5 closed Congress, censored the press, authorised torture. It lasted until 1979. The years between 1968 and 1979 are what the word "regime" meant in practice.',
+    'The economic miracle and the dictatorship occupied the same years. The miracle required the dictatorship to suppress the people arguing about who the miracle was for.',
+    phase === 'late_life'
+      ? 'You have lived through the military years and the abertura and the democracy. Each transition carried the previous era\'s people and structures into the next one. The democracy you are old in is built on foundations you watched being laid.'
+      : 'The years of lead: the students, the guerrillas, the unions — the spaces where resistance was possible were systematically closed. What remained was the miracle, which was growing for everyone except the people who asked questions about the growing.',
+  ])
+
+  // ─── INFORMAL ECONOMY & RURAL-TO-URBAN TEXTURE ───────────────────────────────
+  if (F.has('rural_to_urban') && !F.has('emigrated') && Math.random() < 0.22) return pick([
+    'You know what the village smells like at harvest. You know what the city smells like at rush hour. The distance between those two things is the distance you crossed, and it is not only physical.',
+    'The people from home who visit can see that you are different. The people in the city can hear that you are from somewhere else. You live between those two recognitions.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'You have been in the city long enough that the village is mostly memory and occasional visits. The version of home you carry and the place that exists are not identical anymore.'
+      : 'The first years: learning which streets are which, which market has what, which route gets you there fastest. The knowledge feels earned. The people who were born here have it without having earned it.',
+  ])
+  if (F.has('subsistence_childhood') && Math.random() < 0.2) return pick([
+    'You grew up knowing which part of the season was the hungry season and which part was not. That knowledge settled into you early enough that it became instinct rather than information.',
+    'The mathematics of the household was food first, everything else afterward. The everything else was often not reached.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'The hunger you had as a child is not the hunger you have now. The memory of having had it changes how you eat, how you think about food, what you cannot throw away.'
+      : 'You were not always hungry. You were sometimes hungry in a way that taught you what hunger is, which is different from always having food and knowing hunger as an idea.',
+  ])
+  if (F.has('seasonal_migrant') && Math.random() < 0.2) return pick([
+    'The harvest circuit: this crop first, then that one further north, then the return. The route is known. The uncertainty is the weather and the landowner\'s decision about this year\'s price.',
+    'You are from somewhere and you work somewhere else and neither of those places is quite home in the way home is supposed to be.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'The seasonal migration was supposed to be temporary. The temporary has now been the shape of your working life. You understand now that temporary is a position you can stay in for a long time.'
+      : 'The money from the season pays the school fees. That is the transaction. You know exactly what you are working for.',
+  ])
+  if (F.has('stayed_in_village') && !F.has('emigrated') && Math.random() < 0.18) return pick([
+    'Everyone who was going to leave has left. The village is the people who remained, which includes you. You have learned what staying means in a place defined by who left.',
+    phase === 'late_life'
+      ? 'The village is quieter than it was. The children of the people who left come back for funerals and festivals. They have city voices now. You recognise the village in them and know they can\'t quite see it in themselves.'
+      : 'The people who left send money back. The money is real. Their absence is also real. The village runs on both.',
+  ])
+  if ((F.has('mobile_money') || F.has('mobile_money_user')) && Math.random() < 0.18) return pick([
+    'The phone does the banking now. You skipped the bank entirely — went directly from cash under the mattress to M-Pesa or Airtel Money. The phone is the financial infrastructure.',
+    'The money arrives on the phone. You know the numbers to send to the agent at the kiosk. The technology is not magic — it is a SIM card and a trust network and a menu of options — but what it enables is close to magic.',
+    phase === 'late_life'
+      ? 'You were an adult when the mobile phone changed what money meant in this part of the world. You adopted it faster than your children expected you to, because you understood immediately what problem it solved.'
+      : 'The USSD codes. The agent kiosks. The transaction fee. The confirmation SMS. You run your financial life through the phone in ways that people in countries with banks don\'t understand.',
+  ])
+  if (F.has('water_walk_childhood') && Math.random() < 0.17) return pick([
+    'The jerry cans. The route to the standpipe, the hand pump, the stream. The weight on the return. Your mother knew the weight. You learned the weight. Your children do not know the weight, which was always the point.',
+    phase === 'late_life'
+      ? 'The pipe eventually came. Before it came there was the walk, twice a day, and all the time that walk took from everything else. You understand what a pipe is in a way that requires having not had one.'
+      : 'You learn the schedule of the water — which days, which times, which queue position gets you through before it runs out.',
+  ])
+  if (F.has('remittance_family') && Math.random() < 0.2) return pick([
+    'The envelope from abroad. The Western Union queue. The month that the transfer did not come and the week of waiting to find out why.',
+    'The remittance is the margin that makes the other things possible — the school fees, the hospital bill, the roof repair. You have learned to manage around a money supply that comes from somewhere you cannot control.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'You have watched what the remittances built — the houses with the foreign-funded second floor, the children who got through school, the funerals that were dignified. The money from elsewhere is the architecture of this place.'
+      : 'The person who left is visible in the house through what their money built. The room addition. The better roof. The satellite dish. They are here in the way money is here.',
+  ])
+  if (F.has('food_insecurity') && Math.random() < 0.18) return pick([
+    'There are years when the question of dinner is a question and years when it is not. You know which years are which and you have made arrangements accordingly.',
+    'You have managed hunger, which is different from experiencing hunger. Managing it requires information: where the food is, who has it, what it takes to get it. You have the information.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'The food insecurity of certain years is not something you have fully metabolised. There is a way you eat when you are not hungry that comes from the years when you were.'
+      : 'The meal skipped is not the same as the day you don\'t eat. The day you don\'t eat is not the same as the week. You know the specific texture of each of these, in the way that people with consistent access to food do not.',
+  ])
+  if (F.has('informal_saver') && Math.random() < 0.17) return pick([
+    'The susu, the tontine, the chama, the paluwagan — the savings circle has many names and one function: money that doesn\'t exist until the group makes it exist. You are in one.',
+    'You contribute every month. The payout rotates. When your turn comes, the amount is real in a way that the saved-monthly would not be, because the saved-monthly would have been spent on twenty separate small things before it accumulated.',
+    phase === 'late_life'
+      ? 'The savings circle has been the most consistent financial institution in your life. Banks opened and closed and changed their fees. The circle met every month for twenty years.'
+      : 'The circle is also a trust network. You know who pays reliably and who has to be reminded. The financial information and the social information are the same information.',
+  ])
+  if (F.has('formalized_worker') && Math.random() < 0.15) return pick([
+    'The transition from informal to formal: the contract, the tax number, the payslip. The payslip is smaller than what you made before but it comes with a hospital card and a pension contribution. The arithmetic of that took time to understand.',
+    phase === 'late_life'
+      ? 'The pension exists because of the years you were formal, which were not all the years you worked. The pension is partial. It is also real, which is more than most people you know from those years have.'
+      : 'The formal economy and the informal economy are not separate for most people — you move between them by season, by opportunity, by what the month requires.',
+  ])
+  if (mem?.informalWorkType === 'hawker' && Math.random() < 0.2) return pick([
+    'The route is yours by custom — you have walked it long enough that the other hawkers know your corner. The corner is not on paper. It is real because you show up every day.',
+    'You know the customers by face and by rhythm — who buys daily, who haggles, who will take the last of something if you mention it is the last. That knowledge is the business.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'The years of the barrow and the route and the margin that was always thin — you understand now what they cost and what they gave. The flexibility was real. The precarity was also real.'
+      : 'The cold drink, the newspaper, the small item the city runs on — you are in the chain between the thing and the person who needs it. The chain is longer than anyone in it is paid to understand.',
+  ])
+  if (mem?.informalWorkType === 'moto_taxi' && Math.random() < 0.2) return pick([
+    'The city from the back of a motorcycle: every traffic pattern, every shortcut, every road that floods, every police checkpoint that costs you money. You know this city in a way the people you carry do not.',
+    'The maintenance is part of the calculation. A broken chain is a lost day. You know which parts wear and how fast and where to get them cheapest.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'The years of riding — the accidents avoided, the close calls, the one that wasn\'t close enough. Your body has a record of them. The money is spent. The record remains.'
+      : 'The competition is managed by the associations, which manage it through territory and timing. You know whose route is whose and what happens when someone doesn\'t know.',
+  ])
+  if (mem?.informalWorkType === 'market_stall' && Math.random() < 0.2) return pick([
+    'The stall is a neighbourhood of its own — the stall next door, the one across, the argument about space, the help during the rain, the credit extended because you have been here long enough to be trusted.',
+    'Your stock management is entirely in your head. What sold, what sat, what to reorder, what to drop. You have never written any of this down and you have never been wrong about it by more than the acceptable margin.',
+    phase === 'late_life'
+      ? 'You have been in the same section of the market for most of your adult life. The market has changed around you — new stalls, lost stalls, the big supermarket that opened nearby. You are still here.'
+      : 'The market is also a meeting place, a credit network, a place where information travels faster than anywhere else. You are inside all of those things every day.',
+  ])
+  if (mem?.informalWorkType === 'day_labor' && Math.random() < 0.18) return pick([
+    'The gathering point in the morning: you know which corner to stand at for which type of work. The employers know which corner to drive to. The transaction is wordless and entirely understood.',
+    'The work is body work — the lifting, the digging, the carrying. You know what your body costs and what it earns and the ratio that makes the day worth having.',
+    phase === 'late_life'
+      ? 'The body that did the work has a record of the work. You manage it. You have always managed it. The management has become more complex.'
+      : 'Rain means no work. Holiday means no work. The landowner\'s decision means no work. You have learned to manage the gap between the days that pay and the days that don\'t.',
+  ])
+
   // ─── NEIGHBORHOOD TIER TEXTURE ───────────────────────────────────────────────
   {
     const nbhTier = state.currentNeighborhoodTier
