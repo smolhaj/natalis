@@ -6112,17 +6112,84 @@ function checkDeath(state) {
 }
 
 function determineCause({ age, stats, flags, character }) {
-  if (age < 5) return 'complications in early childhood'
-  if (flags.includes('child_soldier') && age < 18) return 'caught in armed conflict'
-  if (character.country.conflictRisk > 0.15 && age < 30 && chance(0.3)) return 'killed in conflict'
-  if (flags.includes('criminal_life') && age < 40 && chance(0.3)) return 'violence related to criminal activity'
-  if (stats.happiness < 15 && age < 45 && chance(0.4)) return 'suicide'
-  if (flags.includes('cancer') && chance(0.6)) return 'cancer'
-  if (flags.includes('smoker') && age > 50 && chance(0.3)) return 'lung cancer'
-  if (stats.health < 25 && age > 40) return 'organ failure'
-  if (age > 80) return 'old age'
-  if (age > 65) return chance(0.5) ? 'heart disease' : 'stroke'
-  if (age > 50) return chance(0.4) ? 'heart attack' : 'cancer'
+  const arch = character.country.archetype
+  const cn = character.country.name
+  const hc = character.country.healthcare
+  const deathYear = (character.birthYear ?? 1960) + age
+  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
+
+  if (age < 5) {
+    if (hc === 'very_poor' || hc === 'poor') {
+      if (arch === 'subsaharan' || arch === 'developing_unstable') {
+        return pick(['malaria', 'malnutrition in infancy', 'cholera', 'complications at birth'])
+      }
+      if (arch === 'conflict_zone') return 'complications during conflict'
+      return pick(['malnutrition', 'preventable illness in infancy', 'complications at birth'])
+    }
+    return 'illness in early childhood'
+  }
+
+  if (flags.includes('child_soldier') && age < 18) {
+    return pick(['killed in combat as a child soldier', 'died in armed conflict', 'shot during military service as a minor'])
+  }
+
+  if (character.country.conflictRisk > 0.15 && age < 30 && chance(0.3)) {
+    if (arch === 'conflict_zone') return pick(['killed in the conflict', 'caught in crossfire', 'died in the war'])
+    if (cn === 'Afghanistan') return pick(['died in the conflict', 'killed in fighting'])
+    if (cn === 'Syria') return pick(['killed in the civil war', 'died in the conflict'])
+    if (flags.includes('war_childhood') || flags.includes('refugee')) return 'caught in armed conflict'
+    return 'died in conflict'
+  }
+
+  if (flags.includes('criminal_life') && age < 40 && chance(0.3)) {
+    return pick(['killed in a dispute', 'violence', 'shot'])
+  }
+
+  if (stats.happiness < 15 && age < 45 && chance(0.4)) {
+    return 'suicide'
+  }
+
+  if (flags.includes('cancer') && chance(0.6)) {
+    if (age < 50) return 'cancer, young'
+    return pick(['cancer', 'cancer'])
+  }
+  if (flags.includes('smoker') && age > 50 && chance(0.3)) {
+    return pick(['lung cancer', 'lung disease'])
+  }
+
+  if (stats.health < 25 && age > 40) {
+    if (hc === 'very_poor' || hc === 'poor') {
+      return pick(['organ failure', 'untreated illness', 'complications from a treatable condition'])
+    }
+    return 'organ failure'
+  }
+
+  if (age > 80) {
+    if (arch === 'wealthy_west' || arch === 'wealthy_east') {
+      return pick(['old age', 'heart failure in old age', 'peacefully, in old age'])
+    }
+    return pick(['old age', 'old age'])
+  }
+
+  if (age > 65) {
+    if (arch === 'subsaharan' || arch === 'developing_unstable') {
+      return pick(['heart disease', 'stroke', 'complications from a chronic condition', 'malaria'])
+    }
+    return chance(0.5) ? 'heart disease' : 'stroke'
+  }
+
+  if (age > 50) {
+    return chance(0.4) ? 'heart attack' : 'cancer'
+  }
+
+  // Young adult / midlife non-conflict deaths
+  if (arch === 'subsaharan' || arch === 'developing_unstable') {
+    if (deathYear < 2000) return pick(['malaria', 'tuberculosis', 'typhoid', 'illness'])
+    return pick(['malaria', 'HIV/AIDS complications', 'illness', 'accident'])
+  }
+  if (arch === 'conflict_zone') return pick(['illness', 'complications from injury', 'died in the conflict'])
+  if (flags.includes('drug_addiction') || flags.includes('alcohol_addiction')) return pick(['overdose', 'complications from addiction'])
+
   return 'illness'
 }
 
