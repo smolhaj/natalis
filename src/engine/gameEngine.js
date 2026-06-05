@@ -1356,6 +1356,27 @@ function buildYearTexture(state) {
   if (mh.condition && !mh.therapy && !mh.medicating) {
     return 'Something is off. You are managing, which is not the same as being fine.'
   }
+  // Managed mental health — the texture of living with it, not through it
+  if (mh.condition && mh.therapy && !mh.medicating && career && Math.random() < 0.35) {
+    return pick([
+      'The sessions have given you a way to look at certain things. The things are still there. The looking is different.',
+      'You go to the sessions. The work continues. You are learning to hold both.',
+      'The therapist asks a question that follows you into the week. Some weeks that is the most useful thing that happens.',
+    ])
+  }
+  if (mh.condition && mh.medicating && Math.random() < 0.3) {
+    return pick([
+      'The medication does what it is supposed to do. You still have to do the rest.',
+      'Some things are quieter than they were. You do not take this for granted.',
+      'The baseline has shifted. You are still learning what that means for everything else.',
+    ])
+  }
+  if (mh.therapy && !mh.condition && Math.random() < 0.25) {
+    return pick([
+      'The sessions are useful in ways that are hard to summarise. You keep going.',
+      'Therapy has a way of making things that were background become foreground. This is inconvenient and necessary.',
+    ])
+  }
 
   // ─── GIFTED ARC TEXTURE ──────────────────────────────────────────────────────
 
