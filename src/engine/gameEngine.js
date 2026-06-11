@@ -1353,6 +1353,54 @@ function buildYearTexture(state) {
       'The worry is always there. You have gotten better at not showing it.',
     ])
   }
+  if (mh.condition === 'bipolar' && !mh.therapy && !mh.medicating) {
+    return pick([
+      'The high and the low. You know the vocabulary of your own cycles now. Knowing the vocabulary does not prevent the cycle.',
+      'The energy that arrives and the crash that follows. That rhythm is the climate you live in.',
+    ])
+  }
+  if (mh.condition === 'bipolar' && (mh.therapy || mh.medicating) && Math.random() < 0.4) {
+    return pick([
+      'The mood stabiliser has narrowed the range. The range used to be wider than a life could hold. Narrower is survivable.',
+      'You know the early signs now. You have a plan for when they appear. The plan is not foolproof. It is better than having no plan.',
+    ])
+  }
+  if (mh.condition === 'ptsd' && !mh.therapy) {
+    return pick([
+      'The trigger is ordinary and the response is not ordinary. That gap is the condition.',
+      'The body keeps a version of the record that the mind is trying to close. They are not on the same schedule.',
+    ])
+  }
+  if (mh.condition === 'ptsd' && mh.therapy && Math.random() < 0.4) {
+    return pick([
+      'The work of revisiting what happened from inside a safe space. Slowly. That is what the therapy is asking of you.',
+      'Trauma therapy is not forgetting. It is building a different relationship to what happened. The work is precise and slow and ongoing.',
+    ])
+  }
+  if (mh.condition === 'ocd' && !mh.therapy && !mh.medicating) {
+    return pick([
+      'The intrusive thought, the compulsion, the temporary relief, the return. You have become an expert in a cycle you did not choose to study.',
+      'The ritual takes longer now than it did. You have learned the direction the condition moves if left alone.',
+    ])
+  }
+  if (mh.condition === 'ocd' && (mh.therapy || mh.medicating) && Math.random() < 0.4) {
+    return pick([
+      'Sitting with the discomfort until it subsides without the ritual. The therapy is uncomfortable and effective in a ratio you are learning to work with.',
+      'The compulsions are less frequent than they were. Less frequent is not gone. You have learned to accept less frequent as genuine progress.',
+    ])
+  }
+  if (mh.condition === 'adhd' && !mh.medicating && Math.random() < 0.45) {
+    return pick([
+      'The four things you were supposed to do today. You did two of them in the wrong order and one of them twice.',
+      'The attention moves to what is interesting rather than what is necessary. You have built systems to compensate. The systems also need maintenance.',
+    ])
+  }
+  if (mh.condition === 'adhd' && mh.medicating && Math.random() < 0.35) {
+    return pick([
+      'The medication narrows the field in the useful way. The things that need doing are what you are doing. This is the difference.',
+      'The clarity that the medication produces is a reminder of how much the fog costs. Both are data.',
+    ])
+  }
   if (mh.condition && !mh.therapy && !mh.medicating) {
     return 'Something is off. You are managing, which is not the same as being fine.'
   }
@@ -1828,6 +1876,13 @@ function buildYearTexture(state) {
       'Thirty and unmarried. Chuseok. The conversation circles and then lands directly. You have the answer prepared. It is not the answer they want.',
       'The matchmaking app. The blind date your aunt arranged. The government\'s opinions on the birth rate, delivered through relatives.',
     ])
+    if (F.has('korea_military_served') && (phase === 'young_adult' || phase === 'midlife') && Math.random() < 0.35) return pick([
+      'Twenty months in uniform. The shape it left is still apparent in specific ways — the early rising, the particular attention to exits, the calibration of when to follow and when not to.',
+      'You served. For the men of your generation that sentence means a particular twenty months and what they did to your relationship with authority and with your own body under discipline.',
+      phase === 'young_adult'
+        ? 'The service is done. The classmates who deferred entered the workforce ahead of you. You are doing the arithmetic on what was lost and what was kept.'
+        : 'You did the time the country required. You have opinions about the requirement that you keep to appropriate contexts.',
+    ])
   }
 
   // ─── DISABILITY ARC TEXTURE ──────────────────────────────────────────────────
@@ -1855,6 +1910,12 @@ function buildYearTexture(state) {
     ])
     if (F.has('teacher_letter_received') && F.has('born_with_disability') && Math.random() < 0.35) return pick([
       'The letter came fifteen years later. The student found you to say what mattered. The disability was in the room; the teaching was what lasted.',
+    ])
+    if (F.has('deaf_family') && Math.random() < 0.3) return pick([
+      'Your family member is Deaf. You are the bridge — the phone calls, the appointments, the bureaucratic crossings that require a hearing voice. You have been doing this since you were old enough to use a telephone.',
+      phase === 'late_life'
+        ? 'You grew up the hearing bridge for your family. That role shaped a specific attentiveness, a specific competence at reading what language doesn\'t say. You carry that into every room.'
+        : 'The interpreter role children of Deaf adults carry is not a burden in the way that word is usually meant. It is a particular kind of being-in-the-world, two cultures fully present simultaneously.',
     ])
   }
 
@@ -1919,6 +1980,13 @@ function buildYearTexture(state) {
       phase === 'late_life'
         ? 'You refused the order when you were a child with a weapon and no real choice. You have thought about that refusal your entire adult life. It is still yours.'
         : 'The refusal was not heroic in the moment. It was terrifying. The heroic reading came later, from people who were not there.',
+    ])
+    if (F.has('child_soldier_ddr') && (phase === 'young_adult' || phase === 'midlife') && Math.random() < 0.35) return pick([
+      'DDR: disarmament, demobilisation, reintegration. The formal programme ended. The reintegration is the part that takes the rest of your life.',
+      'The six months gave you language for what happened. The language is still not enough, but it is more than you had.',
+      phase === 'midlife'
+        ? 'You have been out of it longer than you were in it now. That arithmetic crossed somewhere in the last few years and you marked it quietly.'
+        : 'The civilian skills the programme taught are real. The skills the unit put into you are also real and do not simply leave when you are handed new skills.',
     ])
     if (F.has('child_soldier_indoctrinated') && Math.random() < 0.35) return pick([
       'The ideology they gave you was designed for a child. It filled the space that normal childhood fills with different things. You have been working out what to do with it since.',
@@ -1988,11 +2056,23 @@ function buildYearTexture(state) {
       'The divorce is part of the landscape now rather than the defining feature. You think of your former partner rarely and specifically.',
       'Five years out. The regret is no longer about the decision. It is about the years and the version of the life that was possible in them.',
     ])
+    if (F.has('divorce_legal_done') && !F.has('divorce_integrated') && Math.random() < 0.4) return pick([
+      'The papers are signed. The legal fact is established. The legal fact is only one of the facts. The others are still being processed.',
+      'Done in the formal sense. What it is informally — that is less clear. You are learning what it is informally.',
+      'The decree arrived in the post. You read it. You put it in a drawer. The drawer is not where the weight of it lives.',
+    ])
   }
 
   // ─── DEMENTIA ARC TEXTURE ────────────────────────────────────────────────────
 
-  if (F.has('dementia_personal') || F.has('dementia_parent')) {
+  if (F.has('dementia_personal') || F.has('dementia_parent') || F.has('dementia_diagnosed_early')) {
+    if (F.has('dementia_diagnosed_early') && !F.has('dementia_personal') && Math.random() < 0.45) return pick([
+      'The diagnosis is early — the word they use is early as if this is an advantage. You know what is coming. That is what early means.',
+      'The tasks that will need to be taken care of before you cannot take care of them are clear to you. You are doing them in order.',
+      phase === 'midlife'
+        ? 'Fifty-something with the diagnosis of something that belongs to seventy. The recalibration of everything is ongoing.'
+        : 'The appointment where they said the word. The drive home. You are still working out what to do with the information.',
+    ])
     if (F.has('dementia_personal') && !F.has('dementia_clear_days') && Math.random() < 0.4) return pick([
       'The words are behind the usual place words are. The search is longer. You notice the length of the search.',
       'The diagnosis has become the condition of planning. You make decisions for the future self who will not be able to make them.',
@@ -2045,11 +2125,23 @@ function buildYearTexture(state) {
       'The afternoon where no one knows what you achieved. The meal where no one is watching. These are ordinary things made extraordinary by contrast.',
       'Private life, returned to. The ordinary is new again after the distance.',
     ])
+    if (F.has('celebrity_parasocial') && Math.random() < 0.35) return pick([
+      'There are people who feel they know you who do not know you. The version they know is the version that appeared in public. The gap between that version and you is the private life you still have.',
+      'Someone described their relationship with your work in terms that felt too close to a relationship with you. The flattery and the unease occupied the same moment.',
+      phase === 'late_life'
+        ? 'You have been in public long enough to understand the parasocial relationship from the inside. The people feel the connection genuinely. The connection is real in one direction.'
+        : 'The fans have constructed a person from the appearances. The person they constructed is not you and is not entirely wrong about you. That is the strange part.',
+    ])
   }
 
   // ─── TEACHER ARC TEXTURE ─────────────────────────────────────────────────────
 
   if (career?.id === 'teacher' || F.has('teacher_career')) {
+    if (F.has('teacher_first_classroom') && (phase === 'young_adult' || (phase === 'midlife' && age <= 32)) && Math.random() < 0.4) return pick([
+      'Your first classroom. The thirty faces. The lesson plan that was the wrong shape for the room it met.',
+      'You knew the subject before you started. You did not know how to transmit the subject. That is what the first year is for.',
+      'The afternoon you understood what teaching actually is: not performance of the subject, but engineering of the encounter with it.',
+    ])
     if (F.has('teacher_that_student') && !F.has('teacher_letter_received') && Math.random() < 0.4) return pick([
       'There is a student. The difficult one. The extra time. Something is shifting.',
       'The student who was different has been in the room long enough that you\'ve started adjusting the approach.',
@@ -2884,6 +2976,228 @@ function buildYearTexture(state) {
     'You look at yourself in the mirror and know that nobody else in the family looks like this. That knowledge is its own territory, familiar and not particularly troubling most days.',
   ])
 
+  // ─── PARTIAL FLAG TEXTURE ADDITIONS ──────────────────────────────────────────
+  // Year texture for flags that previously had event guards but no buildYearTexture coverage.
+
+  if (F.has('lived_through_coup') && Math.random() < 0.2) return pick([
+    'There is the country before the coup and the country after. You lived in both. The gap between them is part of how you measure everything else.',
+    'You learned something permanent about political certainty. The learning was specific and unwelcome and does not leave.',
+    phase === 'late_life'
+      ? 'You have watched this happen more than once now. The pattern is recognisable. The exhaustion at recognising it is also recognisable.'
+      : 'The radio announcement. The curfew. The specific recalibration of ordinary life that follows a change of government by force.',
+    'The coup was the education in how quickly a settled order can be unsettled. You did not ask for that education. You carry it regardless.',
+  ])
+
+  if (F.has('northern_triangle_migration') && Math.random() < 0.22) return pick([
+    'You crossed from a country that was trying to kill you to a country that does not want you. The arithmetic of that does not resolve.',
+    'The journey north was the defining crossing. Everything after is from the other side of it.',
+    phase === 'late_life'
+      ? 'The country you crossed into has been home for decades now. The country you crossed from is still the country in certain dreams.'
+      : 'You are here. That sentence contains the whole journey.',
+    'The coyote, the heat, the specific crossing point. Years later these are still the details that surface without invitation.',
+  ])
+
+  if (F.has('liberation_theology_influenced') && Math.random() < 0.2) return pick([
+    'The preferential option for the poor. That phrase sits in your thinking the way a foundation sits under a building — load-bearing and mostly invisible.',
+    'The archbishop said: a sin against the poor is a sin against God. That was not how the religion had been taught to you before. You have been thinking about the difference ever since.',
+    phase === 'late_life'
+      ? 'The theology shaped the politics shaped the life. You can see the whole arc now. It held.'
+      : 'The church and the regime occupied the same country and reached opposite conclusions. You chose which theology to carry.',
+  ])
+
+  if (F.has('peace_accords_generation') && Math.random() < 0.2) return pick([
+    'The accords were signed. That fact does not undo what came before. But it is not nothing. You witnessed it.',
+    'What came after the accords was not peace exactly. It was not the war either. You live in the space between those two things.',
+    phase === 'late_life'
+      ? 'You watched them sign the papers. The war is something the young people study now. You remember what you studied was why the war happened.'
+      : 'The generation that grew up after the accords does not carry the same things you carry. You are glad of this and slightly at sea when you try to explain what you carry.',
+  ])
+
+  if (F.has('stayed_when_others_left') && Math.random() < 0.22) return pick([
+    'Another one gone. You have counted so many. The country empties around you. You are still here. The decision was made at a particular moment and you are still living it.',
+    'The ones who left send money and WhatsApp messages and visit at Christmas. You are here in the in-between. The country has your year.',
+    phase === 'late_life'
+      ? 'You are one of the ones who stayed. The decision accumulated over years into a fact. The people who shaped this place with you are mostly somewhere else now.'
+      : 'The houses that have gone quiet on your street. The names at school your children don\'t know. You are still here.',
+  ])
+
+  if (F.has('institutional_power') && Math.random() < 0.22) return pick([
+    'You have held the institutional authority long enough that you sometimes cannot tell where the institution ends and you begin. That confusion is worth attending to.',
+    'The collar and the desk and the authority that comes with both. You carry it carefully. Some days you carry it less carefully than you should.',
+    phase === 'late_life'
+      ? 'Decades of institutional power. You know what the institution is and what it says it is. The gap between those two things has been your private knowledge for years.'
+      : 'The community defers to the role. You are learning which parts of the deference belong to you and which parts belong to the position.',
+  ])
+
+  if (F.has('clergy_adapted') && Math.random() < 0.22) return pick([
+    'You learned to say what was required in public and mean something different in the same words. This is a skill you are not proud of and would exercise again.',
+    'The adaptation was a form of survival. The institution survived. The question of what the institution preserved and what it surrendered is one you have not stopped asking.',
+    phase === 'late_life'
+      ? 'The regime that required the adaptation is gone or weakened or transformed. What the adaptation cost is still in the account.'
+      : 'Serving faithfully inside an unfaithful state requires a specific theology of the possible. You have been developing it.',
+  ])
+
+  if (F.has('yeshiva_trained') && Math.random() < 0.2) return pick([
+    'The years of study gave you a way of reading that you carry everywhere — the commentary, the counter-commentary, the question behind the question. The secular world does not have a name for this.',
+    'Talmud study trains a specific kind of attention: to hold a contradiction and examine it rather than resolve it prematurely. You have taken that method into places the rabbis did not anticipate. It works there too.',
+    phase === 'late_life'
+      ? 'The formation was deep. The world you have lived in since is not the world the formation expected. You have been translating between them your whole adult life.'
+      : 'The text always has another layer. That habit of looking for the next layer is not limited to the text.',
+  ])
+
+  if (F.has('amazigh_identity') && Math.random() < 0.22) return pick([
+    'Tifinagh: the letters that were not permitted on signs when you were a child. The language that official policy preferred not to exist. Yours, maintained in spite of that preference.',
+    'Amazigh before it was permitted to be Amazigh officially. The name and the language and the culture — yours, kept going under pressure.',
+    phase === 'late_life'
+      ? 'You have been Amazigh in a country that spent decades deciding whether to acknowledge what that meant. The country has changed its position. Your identity did not require the acknowledgement.'
+      : 'The language is being revived. You are one of the people doing the reviving. The revival is also the continuation of what never stopped.',
+  ])
+
+  if (F.has('multilingual_identity') && Math.random() < 0.2) return pick([
+    'You switch between them without thinking now. The switching is automatic. What is not automatic is knowing which self is at home in which language.',
+    'The parent-language and the school-language and the street-language are three separate instruments you play. The music you make when all three are present simultaneously is something you could not explain to someone with one language.',
+    phase === 'late_life'
+      ? 'Late in life the languages have braided together in a way that earlier felt like confusion. It is not confusion. It is a specific compound way of being in the world.'
+      : 'Each language you speak has a version of you inside it. The versions are related but not identical.',
+  ])
+
+  if (F.has('minority_language_speaker') && Math.random() < 0.2) return pick([
+    'The language you speak at home is not the language the school taught in. Not the language the government uses. Yours, spoken by fewer mouths each generation.',
+    'Minority language: the word minority is a political classification, not a cultural one. The culture is complete. It is contained in fewer mouths than a generation ago.',
+    phase === 'late_life'
+      ? 'You are one of the people keeping this language from being forgotten. The weight of that is real and is also simply what you do on a Thursday.'
+      : 'The language holds things that the national language cannot say in the same way. You know which things.',
+  ])
+
+  if (F.has('kurd_europe_diaspora') && Math.random() < 0.22) return pick([
+    'You are Kurdish in a city that mispronounces the region your village was in. The community here speaks Kurmanji at the community centre and German or Dutch or Swedish on the street. You live in both registers.',
+    'The diaspora community carries the question of home in a specific and persistent way. You have stopped expecting it to resolve.',
+    phase === 'late_life'
+      ? 'You have been in Europe longer than you were in the village. The village is still the place the dreams return to.'
+      : 'Being Kurdish here means carrying the political fact of being Kurdish in a context that requires explanation. The explanation is ongoing.',
+  ])
+
+  if (F.has('moroccan_diaspora') && Math.random() < 0.22) return pick([
+    'Bled and here. The country you came from and the country you are in. You carry both. The weight shifts by season — heavier in Ramadan, heavier when the call says someone has died.',
+    'You crossed the Strait. That crossing has a before and an after the way all significant crossings do.',
+    phase === 'late_life'
+      ? 'You have been here longer than you were there. The arithmetic crossed some years ago and you marked it quietly. The house in Morocco is someone else\'s now, or close to it.'
+      : 'The papers are in order or they are being processed or they have always been the source of a low specific anxiety. The crossing determined everything downstream.',
+  ])
+
+  if (F.has('mouride_member') && Math.random() < 0.22) return pick([
+    'Cheikh Amadou Bamba. The brotherhood. The teaching that work itself is the prayer. You carry this into the places you go and the work you do.',
+    'The dahira here is smaller than the one at home. It is real. You found it. You have not been without the community.',
+    phase === 'late_life'
+      ? 'The brotherhood has been the frame of your spiritual life for decades. The work, the community, the devotion. It has held.'
+      : 'Murid — the one who wants, who seeks. The wanting has been the engine. The community has been the structure.',
+  ])
+
+  if (F.has('debt_recovered') && Math.random() < 0.22) return pick([
+    'You are debt-free. That sentence is recent enough that it still surprises you. The years it took to be able to say it are still present in how you count things.',
+    'The debt is gone. The habits the debt produced are still partly there — the checking, the careful relationship with money, the architecture built under pressure. It takes time to redesign.',
+    phase === 'late_life'
+      ? 'The debt was the shadow over a portion of your adult life. It is gone. The portion it shadowed is still in the record. The rest of the record is unencumbered.'
+      : 'Zero. You checked it three times. The zero is real.',
+  ])
+
+  if (F.has('gift_gender_navigated') && Math.random() < 0.25) return pick([
+    'You found the path around the wall they put in front of the gift. The wall is still there. You are on the other side of it.',
+    'The parallel path — less recognition, less institutional support, but the work. You chose the work.',
+    phase === 'midlife'
+      ? 'The path you found by going around was longer than the direct one would have been. It also taught you things the direct one would not have. That is a real exchange, not a consolation.'
+      : 'You navigated the gender barrier and found a route. The route is narrower than what was available to others. The gift does not care about the width of the route.',
+  ])
+
+  // ─── FOLLOW-THROUGH COMPLETION FLAG TEXTURE ──────────────────────────────────
+  // Second-layer echoes for flags set by events_followthrough_13.js
+
+  if (F.has('spoke_institutional_truth') && Math.random() < 0.22) return pick([
+    'You told someone what actually happened. The telling did not undo it. It is still the right thing to have done.',
+    phase === 'late_life'
+      ? 'Late in life you chose to say the thing the institution preferred unsaid. The choice has a quality to it that the silence did not.'
+      : 'The account is out of you now. Someone knows the full version. That is a form of completion.',
+  ])
+
+  if (F.has('inst_power_accounted') && Math.random() < 0.2) return pick([
+    'The reckoning with what the authority was and what you did with it is behind you. The carrying continues, differently.',
+    phase === 'late_life'
+      ? 'The accounting has been done — privately, or in a conversation you did not expect to have. You know what you held honestly and what you did not.'
+      : 'You know what the institutional power asked of you. The honest version of that knowledge is in you now.',
+  ])
+
+  if (F.has('clergy_adapted_reckoned') && Math.random() < 0.2) return pick([
+    'The reckoning with the adaptation is done. The carrying of it is not done. The reckoning and the carrying are different tasks.',
+    phase === 'late_life'
+      ? 'You have looked at the full shape of the thing. What was preserved and what was surrendered and what it all cost. The looking is over. The living inside it continues.'
+      : 'The adaptation served the institution and the congregation and God in a theology of the possible. That theology has been examined. You stand by parts of it.',
+  ])
+
+  if (F.has('yeshiva_secular_bridge') && Math.random() < 0.22) return pick([
+    'The method they taught you has moved well beyond the texts it was designed for. You have built things with it they did not anticipate.',
+    phase === 'late_life'
+      ? 'The formation and the life have been in conversation for decades. The formation won certain arguments. The life won others. Both are in you.'
+      : 'The question behind the question. You have been using that tool in contexts that would have been unrecognisable to the rabbis who taught you. It works.',
+  ])
+
+  if (F.has('amazigh_recognized_late') && Math.random() < 0.22) return pick([
+    'Official recognition arrived. Late, and real. The identity did not require the recognition to be real. The recognition is still something.',
+    phase === 'late_life'
+      ? 'The language is on the signs now. You remember when it was not permitted to be. Both things are true and both belong to your life.'
+      : 'Tamazight — in the constitution, on the signs. You have been Amazigh through the era of suppression and into the era of acknowledgement.',
+  ])
+
+  if (F.has('multilingual_inheritance_passed') && Math.random() < 0.22) return pick([
+    'The languages passed. The child has all of them — imperfectly, completely. The inheritance is real.',
+    phase === 'late_life'
+      ? 'You carried the languages out of the place that made them necessary and into a life that had no space for them except the space you made. The child has the space now.'
+      : 'The code-switching that cost you something to learn, the child does automatically. That ease is what you were building toward.',
+  ])
+
+  if (F.has('language_spoken_to_grandchild') && Math.random() < 0.22) return pick([
+    'The language goes on. That is the whole account of what you did on those Tuesday afternoons.',
+    phase === 'late_life'
+      ? 'You spoke the language to your grandchild. Whether they carry it fully or partially or at all is not entirely yours to control. The speaking was yours and you did it.'
+      : 'The grandchild knows the words your grandparents used. The chain is intact through you.',
+  ])
+
+  if (F.has('kurd_europe_question_faced') && Math.random() < 0.22) return pick([
+    'You faced the return question. The answer you gave — or the way you held it open — is a decision you have been living since.',
+    F.has('kurd_return_planning')
+      ? 'The planning is underway. What the village is now, you will see. The anticipation contains grief and recognition simultaneously.'
+      : 'The question has been put down, for now or permanently. The life here is the life you chose.',
+    phase === 'late_life'
+      ? 'The return question and how you answered it is one of the defining decisions of the second half of your life.'
+      : 'You know where you stand with the question now.',
+  ])
+
+  if (F.has('kurd_return_planning') && Math.random() < 0.2) return pick([
+    'The papers, the logistics, the question of what will be there. You are doing the work of return.',
+    'You are planning to go back. The planning has its own texture — part anticipation, part grief, part something with no name.',
+  ])
+
+  if (F.has('moroccan_diaspora_looking_back') && Math.random() < 0.22) return pick([
+    'More years here than there. The here is home in the way that a place you chose can be home — fully, and not exactly the way the first home was.',
+    phase === 'late_life'
+      ? 'From here, the crossing of the Strait is a long time ago. The person who crossed it is still in you but is not the surface of you anymore.'
+      : 'The arithmetic crossed. You live in the here. The there is where you came from, which is a specific kind of still present.',
+  ])
+
+  if (F.has('mouride_diaspora_dahira') && Math.random() < 0.22) return pick([
+    'The dahira met again. The khassaïds. The faces of people who understand without explanation. The brotherhood is real wherever it gathers.',
+    phase === 'late_life'
+      ? 'Decades of the brotherhood in a country that does not know what the brotherhood is. The work itself as prayer. That has been your theology and your practice throughout.'
+      : 'Murid — the one who wants. The wanting has not diminished in the crossing. The community has found you here.',
+  ])
+
+  if (F.has('debt_free_milestone') && Math.random() < 0.22) return pick([
+    'The number is still zero. You check it less often now. That is the measure of how long it has been.',
+    'The weight you carried for years is the shape of the absence now — where the weight was, there is a different kind of space.',
+    phase === 'late_life'
+      ? 'Debt-free for years now. The portion of your adult life that was shaped by what you owed is visible from here as a specific era. It is over.'
+      : 'The financial life after the debt is being built. The habits the debt made are still present in how careful you are. That carefulness will serve you.',
+  ])
+
   // ─── MAJOR HISTORICAL AND DISPLACEMENT FLAG TEXTURE ──────────────────────────
 
   if (F.has('rwandan_survivor') && Math.random() < 0.25) return pick([
@@ -3417,6 +3731,150 @@ function buildYearTexture(state) {
         phase === 'midlife' || phase === 'late_life'
           ? 'You have been doing science long enough that some of your early work has been built on by people you taught. That is the continuity of it.'
           : 'The question is more precisely formed than it was last year. That is progress, even when no answer has arrived.',
+      ],
+      engineering: [
+        'The structure has to hold. That constraint is the whole job.',
+        'You design something that has to work before it is built. The discipline is in the not-guessing.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'You have been an engineer long enough to have seen your early projects still standing. Some of them you would change now. That is the correct relationship to early work.'
+          : 'The gap between what you calculated and what the field produces is how you know the thinking was right or wrong.',
+        'There is a satisfaction in this work that is hard to explain: something was not possible; now it is; you are the reason.',
+      ],
+      entertainment: [
+        'The audience is always new even when the performance is not. That is what keeps it alive.',
+        'The gap between the performance and the rest of the day is significant. You have learned to make the crossing.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'You have been doing this long enough to know which performances were real and which were technically correct. The distinction matters to no one but you.'
+          : 'The applause ends. The dressing room is the honest part of the night.',
+        'The work requires you to be available to be seen in a specific way. You have learned what you are willing to be seen as.',
+      ],
+      sports: [
+        'The body is the instrument and the instrument requires constant maintenance.',
+        'There is a window in this career that is closing from the first day you enter it. You know this.',
+        phase === 'midlife'
+          ? 'The career is behind you. The body carries the record of everything it was asked to do.'
+          : 'The competition requires everything. You give everything. Tomorrow you find everything again.',
+        'You are measured every time you play. Most professions do not have this. You have stopped seeing it as pressure and started seeing it as information.',
+      ],
+      hospitality: [
+        'The guest is always right, in the specific way of any institutional fiction that works.',
+        'You are there for the best day of some people\'s lives and the difficult day of others\'. Both require full presence.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'You have been in this industry long enough to know which properties run well and which run on people working too hard to compensate for broken systems.'
+          : 'The work is in the details no one notices when they go right. You notice. That is the job.',
+      ],
+      politics: [
+        'The constituent brought a problem. You listened for longer than was strictly necessary and shorter than they needed.',
+        'The compromise required to move anything is the part of this work that idealism does not prepare you for.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'You know which fights are worth the political cost and which are worth fighting regardless of it. These are different lists.'
+          : 'The thing you were elected to do and the thing the system allows you to do are not the same shape. You are learning to occupy the gap.',
+      ],
+      construction: [
+        'The building is going up. The schedule is what it is. Your job is to make the schedule and the structure arrive at the same point.',
+        'Physical problem. Physical solution. Something was not there, now it is.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'You can drive past the things you built. That record doesn\'t fade with the market or the politics. It stands until it doesn\'t.'
+          : 'The site teaches things they do not teach in training. Mostly about who shows up when the project is behind.',
+      ],
+      architecture: [
+        'The building began as a question about what this space should be for. That question is the whole job.',
+        'The budget has a relationship to the design that is not harmonious. Navigating that relationship is the actual work.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'The buildings you designed are standing. Some you would do differently now. That is the correct late-career relationship to early work.'
+          : 'The drawings are the thinking made visible. The building is the drawings made solid. The distance between those two states is where you live.',
+      ],
+      real_estate: [
+        'You are moving people from one life configuration to another. The transaction is the mechanism. The human context is what it operates on.',
+        'The house is the largest purchase most people make. You have learned to be steady in that weight.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'You have handled hundreds of transactions. The ones you remember are the difficult ones — the estate sale, the divorce, the family that stretched too far.'
+          : 'The market does what the market does. Your job is to operate in it while being useful to the specific person in front of you.',
+      ],
+      aviation: [
+        'The pre-flight check is the same check every time. That repetition is not tedium — it is the architecture of safety.',
+        'You are in the air again. The logbook records the hours. The hours are the job compressed into numbers.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'Many hours aloft. There are few professions where the error cost is this specific. You have been precise about that for your entire career.'
+          : 'The altitude becomes ordinary — not the view, but the routine of it. You still notice the light from up here. Just differently from before.',
+      ],
+      religion: [
+        'The calling and the administrative reality of the calling occupy the same work week. You hold both.',
+        'People bring you their hardest questions and sometimes their most ordinary ones. You try to receive both with the same attention.',
+        phase === 'late_life'
+          ? 'The faith that brought you here has changed in ways the version of you who was ordained could not have predicted. You still believe. You believe differently.'
+          : 'The sacred and the human exist in the same conversation here. You are the one who has to hold them both.',
+        'Serving this community over years has given you a specific knowledge of what people need and what they will not ask for directly.',
+      ],
+      veterinary: [
+        'The patient can tell you where it hurts only through what the body shows. You have learned to read what the body shows.',
+        'The bond between this animal and this person is the context of every consultation. You work inside it.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'The euthanasia conversations are the ones that stay. The technical part is straightforward. The human part is not technical.'
+          : 'No language, no history beyond what the records hold. The examination is everything.',
+      ],
+      dentistry: [
+        'The patient is afraid before they have sat down. You have learned to receive that fear without taking it on.',
+        'The precision required in a space this small, on tissue this sensitive, with a patient who is awake.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'You have been looking in the same mouths for decades. You know things about your patients\' health that they have not consciously disclosed.'
+          : 'The mouth is a window into health in ways most of the body is not. You have learned to read it.',
+      ],
+      pharmacy: [
+        'The medication is correct or it is not. The margin is narrow. The attention is constant.',
+        'You are the last person between the prescription and the patient. You know the weight of that position.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'You know the regulars. You know what they are managing. The counter is its own kind of consultation, parallel to the one that produced the prescription.'
+          : 'The interaction is brief and the responsibility is complete. You have learned to hold both simultaneously.',
+      ],
+      mental_health: [
+        'You hold what people bring to the sessions. You have learned to do this without making it yours to carry out of the work.',
+        'The therapeutic relationship is its own technology. It took years to understand what it was for.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'Decades of sessions. The ones you carry are specific — not because they failed, because they arrived at something real.'
+          : 'The training is behind you. The education has just started. Each client teaches what the training could not.',
+      ],
+      academia: [
+        'The research is moving in the direction it was supposed to. The writing of it is harder than the doing of it.',
+        'The tenure clock has its own logic, separate from the logic of the work. You are learning to operate in both.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'You have been building this body of work for a long time. The early papers are archaeology to you now.'
+          : 'The lecture hall is one register. The seminar is another. The research office is the third. You move between them in a single morning.',
+        'A student\'s question derailed the lecture in a direction you had not prepared. The direction was better. You took it.',
+      ],
+      IT: [
+        'The systems are working. That state is temporary. You are the person whose job is to extend the temporary state.',
+        'The ticket was closed. Twelve others opened. That is the rhythm.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'The infrastructure has changed beneath your feet every five years. The skill is in adapting faster than the change arrives.'
+          : 'The problem has a solution. Finding it is the job. The finding is sometimes elegant and sometimes not.',
+      ],
+      trade: [
+        'The skill is in the hands. The problem-solving is in the hands. This is not different from any other technical work — just more honest about where the thinking lives.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'You have been doing this for decades. Your hands know things that took years to put into them. The apprentice beside you does not know them yet.'
+          : 'Something breaks and you fix it. The thing works again. That is the whole measure.',
+        'You came to the trade through someone teaching you by being beside you. You carry that method.',
+      ],
+      electrician: [
+        'The current is always there. You work inside that fact. The training is there to make you competent in that proximity.',
+        'Diagnosis in real space with real stakes. That is what separates the competent from the excellent.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'You have been in this trade for a long time. The code has changed. The practice has changed. The fundamentals have not.'
+          : 'Leave the system working and leave the site correctly. That is the whole measure.',
+      ],
+      plumber: [
+        'The problem is specific and physical and usually urgent. You make it stop being urgent.',
+        'You are called when something is wrong in a way that cannot wait. You arrive. You solve it.',
+        phase === 'midlife' || phase === 'late_life'
+          ? 'Decades of this and you have been in every kind of house and every kind of crisis. The work is mostly the same. The people vary enormously.'
+          : 'The trade teaches you how things are actually put together, not how they were designed. That knowledge has a particular quality.',
+      ],
+      casual: [
+        phase === 'adolescence' || phase === 'young_adult'
+          ? 'You are working to fund the rest of the life you are trying to build. This is the scaffolding, not the building yet.'
+          : 'The job is not what you would choose but it is available and it pays. That is the arithmetic right now.',
+        'The work pays some of the bills. That is what it is supposed to do.',
       ],
     }
     const lines = fieldLines[field]

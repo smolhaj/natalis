@@ -5295,4 +5295,100 @@ export const FLAG_REGISTRY = {
     notes: 'Set by guatemala_coup_1954 world event.',
   },
 
+  inst_power_accounted: {
+    weight: 'moderate',
+    category: 'faith',
+    description: 'Clergy character who faced a reckoning with their institutional power — spoke truth or kept silence.',
+    intent: 'year_texture',
+    notes: 'Set by inst_power_accounting. Follow-through for institutional_power.',
+  },
+
+  spoke_institutional_truth: {
+    weight: 'moderate',
+    category: 'faith',
+    description: 'Chose to speak honestly about institutional failures despite personal cost.',
+    intent: 'year_texture',
+    notes: 'Set by inst_power_accounting or clergy_adapted_late_reckoning.',
+  },
+
+  clergy_adapted_reckoned: {
+    weight: 'moderate',
+    category: 'faith',
+    description: 'Clergy who adapted to authoritarian rule has faced a late-life reckoning with what that cost.',
+    intent: 'year_texture',
+    notes: 'Set by clergy_adapted_late_reckoning.',
+  },
+
+  yeshiva_secular_bridge: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'Yeshiva-trained character who found their method of Talmudic reasoning valued in the secular world.',
+    intent: 'year_texture',
+    notes: 'Set by yeshiva_secular_translation.',
+  },
+
+  amazigh_recognized_late: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Amazigh character who witnessed official recognition of their language and identity post-2011.',
+    intent: 'year_texture',
+    notes: 'Set by amazigh_official_recognition.',
+  },
+
+  multilingual_inheritance_passed: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Multilingual character who watched their multilingual identity pass to the next generation.',
+    intent: 'year_texture',
+    notes: 'Set by multilingual_inheritance.',
+  },
+
+  language_spoken_to_grandchild: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Minority language speaker who actively passed the language to the next generation.',
+    intent: 'year_texture',
+    notes: 'Set by minority_language_grandchild.',
+  },
+
+  kurd_europe_question_faced: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Kurdish European diaspora character who directly faced the question of return.',
+    intent: 'year_texture',
+    notes: 'Set by kurd_europe_return_question.',
+  },
+
+  kurd_return_planning: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Kurdish diaspora character actively planning a return to their homeland.',
+    intent: 'year_texture',
+    notes: 'Set by kurd_europe_return_question (return choice).',
+  },
+
+  moroccan_diaspora_looking_back: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Moroccan diaspora character who has lived longer in Europe than in Morocco.',
+    intent: 'year_texture',
+    notes: 'Set by moroccan_diaspora_counting.',
+  },
+
+  mouride_diaspora_dahira: {
+    weight: 'moderate',
+    category: 'faith',
+    description: 'Mouride member who found or built a dahira community in the diaspora.',
+    intent: 'year_texture',
+    notes: 'Set by mouride_diaspora_dahira event.',
+  },
+
+  debt_free_milestone: {
+    weight: 'moderate',
+    category: 'financial',
+    description: 'Character who has paid off their last significant debt — the zero-balance moment.',
+    intent: 'year_texture',
+    notes: 'Set by debt_zero_moment.',
+  },
+
 }
