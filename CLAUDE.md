@@ -210,7 +210,7 @@ Generic events are a last resort. Specific events — ones that could only fire 
 
 ## Current State
 
-86 countries, 198 world events, 165+ event modules (~4,000+ events), 641 registered flags, 219 ribbons. Last major work: PRs #73–89 (geographic expansion — Afghanistan, Angola, Central America, China depth, Egypt, Ethiopia, India, Ireland/Turkey, Jordan, Kenya, Korea, Libya, Mozambique, Myanmar, Nepal, Pakistan, Somalia, Southeast Europe/Balkans, Sudan, Thailand, Tunisia, Uganda, West Africa, Yemen, Zambia; new life arc modules — gifted child arc (3 modules), disability, addiction, divorce, dementia, celebrity, teacher arc, child soldier, WWI/Depression, wound coping, partner wants, relationship crossover, life skeleton, phase entries; major `buildYearTexture()` expansion — career × country/archetype, financial state, karma, fame/fitness, emigrant/residency, faith/religion, political leaning, named friend, pet, hobby, sibling, criminal record, retirement, young-children). Run `npm run check-flags` to audit flag coverage.
+87 countries, 200 world events, 170+ event modules (~4,200+ events), 714 registered flags, 237 ribbons. Last major work: PRs #73–89 (geographic expansion); Mode C polish pass (PR #91) — mental health specific buildYearTexture, Syria arc, child death arc. Current session: China depth expansion (events_china.js +10 events: Great Leap famine, Cultural Revolution struggle sessions, hukou system, reform euphoria, 996 burnout, leftover woman pressure, Hui Muslim identity, Xi-era tightening, sent-down intellectual echo), Israel arc — new country + events_israel.js (13 events: founding memory, Mizrahi ma'abara, IDF service, Yom Kippur War 1973, Soviet aliyah, Ethiopian aliyah, Rabin assassination 1995, second intifada civilian experience, settlement choice, Arab citizen divided identity, Oct 7 2023, post-Oslo despair), Palestine depth — events_palestine.js +6 events (refugee camp generations, olive harvest, administrative detention, water rationing, Gaza bombardment, late return question). 36 new flags registered, 11 new ribbons, full year texture for all. Flag audit: 714 covered, 0 partial, 0 orphaned. Run `npm run check-flags` to audit flag coverage.
 
 - Full event system descriptions and coverage history: `docs/codebase-state.md`
 - Full BUILD-by-BUILD roadmap and MICRO-EVENT DESIGN PRINCIPLE: `docs/roadmap.md`
@@ -222,14 +222,14 @@ Generic events are a last resort. Specific events — ones that could only fire 
 ```
 src/
   data/
-    countries.js              — 86 countries with full demographic data (added Afghanistan, Angola,
+    countries.js              — 87 countries with full demographic data (added Israel this session; previously added Afghanistan, Angola,
                                 Central America republics, Kazakhstan, Uzbekistan, Kyrgyzstan,
                                 Indonesia, Haiti, Cambodia, Myanmar, Senegal, Morocco, Sri Lanka,
                                 Tanzania, Algeria, Libya, Jordan, Nepal, Zambia, Mozambique, Tunisia,
                                 Sudan, Yemen, Somalia, Uganda and more across PRs #69–89)
     places.js                 — 250+ named places across all countries (scale, region, type, population)
     headlines.js              — ~110 major historical headlines for life log injection
-    events.js                 — root event file, imports 165+ modules, exports EVENTS array (~4,000+ total character events)
+    events.js                 — root event file, imports 167+ modules, exports EVENTS array (~4,000+ total character events)
     events_culture.js         — regime/ethnicity/education/LGBTQ events
     events_gender.js          — gender-specific events
     events_historical.js      — historical period events
@@ -299,7 +299,7 @@ src/
     events_career_arcs.js     — 19 deep career arc events: athlete, academic, chef/hospitality
     events_social_media.js    — 9 social media arc events: country-specific platforms, excitement→damage arc
     events_scandinavia.js     — 8 Nordic events: welfare state, Norway oil, Finland Winter War, Janteloven
-    events_palestine.js       — 8 Palestine character events: Nakba memory, checkpoint, demolition, intifadas
+    events_palestine.js       — 14 Palestine character events: Nakba memory, checkpoint, demolition, intifadas, Oslo hope/collapse, education resistance; +6 added: refugee camp generations, olive harvest, administrative detention, water rationing, Gaza bombardment, late return question
     events_gang.js            — 10 gang/organised crime arc events: post-Soviet bratva, Lagos Area Boys, cartel
     events_social_capital.js  — 8 social capital events: charisma/looks as era-dependent resources
     events_world_response.js  — 6 world event response events: character choices in year of major world events
@@ -364,7 +364,7 @@ src/
     events_zambia.js          — 6 events: Kenneth Kaunda independence + UNIP, copper economy volatility, Rhodesian Bush War, structural adjustment 1990s, multiparty politics, rural/urban divide
     events_mozambique.js      — 6 events: FRELIMO independence, Machel era, RENAMO civil war (South African destabilisation), Machel crash 1986, Rome Accords 1992, Cyclone Eline 2000
     events_yemen.js           — 6 events: Yemen War 1962–70, Saudi-Houthi conflict 2004+, 2015 Saudi-UAE intervention, humanitarian collapse (cholera/famine), refugee flows, Aden fragmentation
-    events_china.js           — 16 events: Cultural Revolution sent-down youth, gaokao exam, one-child policy expansion, Tiananmen 1989, rural-urban migration, private business, social credit, zero-COVID lockdown, lying flat
+    events_china.js           — 26 events: Cultural Revolution sent-down youth, gaokao, one-child policy, Tiananmen 1989, rural-urban migration, private business, social credit, zero-COVID, lying flat; +10: Great Leap famine, struggle sessions (target/witness), hukou barrier, reform euphoria, 996 burnout, leftover woman pressure, Hui Muslim identity, Xi-era tightening, sent-down intellectual echo
     events_korea.js (see above)
     events_gifted.js          — gifted arc (35+ events): manifestation (5 types), recognition + structural ceiling, door opens/closes/underground, young adult divergence (civil rights channel, community mentor, first public moment), extraordinary talent peaks, midlife reckoning, late-life accounting
     events_gifted_2.js        — gifted arc depth: Gould arc (gift never named, parallel unlived life, cotton field accounting), generational transmission, prodigy cost, exploitation (contract trap, stolen credit), diaspora unlock, late-bloomer return, full realization path
@@ -384,9 +384,13 @@ src/
     events_phase_entries.js   — 3 life phase transition events: adolescence arrival (13–15), young adulthood (20–22), midlife (38–42) — thematic reflections on what each phase asks
     events_partner_wants.js   — 8 relationship desire tension events: wanting children, unwilling to commit, wanting escape, unfulfilled intimacy, conflict, compromise at midlife
     events_relationship_crossover.js — 8 partnership arc events: first meeting, intimacy deepening, conflict emergence, commitment test (stay/leave), repair, long partnership texture (5–10yr), marriage milestone (25yr+), post-divorce/widowhood path
-    worldEvents.js            — 198 world history events (year+country/archetype gated); 20+ events have `context` fields
+    events_followthrough_13.js — 10 follow-through events (Mode C): institutional_power reckoning, clergy_adapted late witness, yeshiva secular bridge, amazigh recognition post-2011, multilingual inheritance, minority language grandchild, Kurdish Europe return question, Moroccan diaspora arithmetic, Mouride diaspora dahira, debt-zero milestone
+    events_syria.js           — 8 events for Arab Syrian arc (excludes Kurdish Syria): Ba'ath childhood, Hama 1982, Damascus Spring 2000–01 (2 choices), March 2011 uprising (3 choices), checkpoint daily life 2012–19, displacement decision (leave/stay), Europe arrival, late-life reckoning for those who stayed
+    events_child_death_arc.js — 11 events for the child death arc: infant death trigger (archetype×era probability), first weeks (objects/room), telling new people, room decision (keep/change), try again (3-choice), surviving siblings, anniversary, cohort flash (seeing them in others), marriage reflection, late-life reckoning "who they would have been", the unsaid thing
+    events_israel.js          — 13 events for Israeli arc (Jewish and Arab citizen): founding memory, Mizrahi ma'abara (1949-72), IDF mandatory service (combat/support), Yom Kippur War 1973, Soviet Jewish aliyah 1990s, Ethiopian aliyah (Operations Moses/Solomon), Rabin assassination 1995, second intifada civilian experience 2001-05, settlement choice, Arab citizen divided identity, Oct 7 2023, post-Oslo despair
+    worldEvents.js            — 200 world history events (year+country/archetype gated); 20+ events have `context` fields; includes Syrian civil war (2013–20, neighboring countries) and Syrian refugee crisis (2015–17, wealthy_west perspective)
     headlines.js              — ~110 major historical headline entries (year-matched, injected as log entries)
-    flags.js                  — FLAG_REGISTRY: master design document for the flag system. 641 registered
+    flags.js                  — FLAG_REGISTRY: master design document for the flag system. 670 registered
                                 flags with weight/category/description/intent/notes per entry. Pure data,
                                 no imports. Run `npm run check-flags` to derive coverage dynamically.
     careers.js                — all career definitions with career-specific events
@@ -395,7 +399,7 @@ src/
     assets.js                 — property/vehicle data
     destinations.js           — travel destinations
     illnesses.js              — illness/disease system
-    ribbons.js                — end-of-life achievement ribbons (219+ defined)
+    ribbons.js                — end-of-life achievement ribbons (223 defined)
   engine/
     gameEngine.js             — core simulation: buildG, advanceYear, emigrate,
                                 generateEpitaph, generateIdentityCard, buildYearTexture,

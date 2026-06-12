@@ -427,4 +427,272 @@ export const CHINA_EVENTS = [
     effect: null,
   },
 
+  // ═══════════════════════════════════════════════════════════════════════
+  // GREAT LEAP / CULTURAL REVOLUTION DEPTH
+  // ═══════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'cn_great_leap_hunger',
+    phase: 'childhood',
+    weight: 8,
+    when: (G) =>
+      isChina(G) &&
+      G.currentYear >= 1959 && G.currentYear <= 1962 &&
+      G.age >= 4 && G.age <= 18 &&
+      !G.mem?.cnGreatLeapFired,
+    text: 'The harvest reports went up each month. The grain quotas were met on paper. The state granaries were filled for export. What the villages kept was the remainder after the quota, which was not much. What you remember of these years is not the dramatic kind of hunger but the permanent kind — the kind that shapes the first thought at waking and the last thought before sleep. Your mother taught you which wild plants were edible in which season. She taught you quickly, and that urgency was its own lesson.',
+    choices: null,
+    effect: (p) => { p.h -= 15; p.m -= 12; p.addFlag('great_leap_hunger'); p.setMem('cnGreatLeapFired', true) },
+  },
+
+  {
+    id: 'cn_struggle_session_target',
+    phase: 'adolescence',
+    weight: 7,
+    when: (G) =>
+      isChina(G) &&
+      G.currentYear >= 1966 && G.currentYear <= 1972 &&
+      G.flags.has('class_enemy_family') &&
+      G.age >= 12 && G.age <= 20 &&
+      !G.mem?.cnStruggleTargetFired,
+    text: (G) => {
+      const parents = Object.values(G.parents ?? {})
+      const livingParent = parents.find(p => p.alive !== false)
+      const label = livingParent?.gender === 'male' ? 'father' : 'mother'
+      return `The session is in the school courtyard. You are made to stand in the centre while your classmates and the teacher read the charges against your ${label}. The Red Guard leader asks if you confirm them. You understand what the expected answer is. You also understand what the other answer costs. The session lasts two hours. You walk home through streets you have walked every day of your life. They look different now.`
+    },
+    choices: [
+      {
+        text: 'Confirm the charges — it is the only way through',
+        tag: null,
+        outcome: 'You confirm them. The session ends. You go home. Neither of you speaks about what was said. You will not speak about it for many years.',
+        effect: (p) => { p.m -= 20; p.r += 15; p.addFlag('struggle_session_survived'); p.addFlag('denounced_family_cr'); p.setMem('cnStruggleTargetFired', true) },
+      },
+      {
+        text: 'Refuse — silence is what you can give',
+        tag: null,
+        outcome: 'You say nothing. The session continues past you. The consequences of this will be specific and ongoing. You have them.',
+        effect: (p) => { p.m -= 15; p.h -= 5; p.addFlag('struggle_session_survived'); p.addFlag('refused_denounce_cr'); p.setMem('cnStruggleTargetFired', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'cn_struggle_session_witness',
+    phase: 'adolescence',
+    weight: 6,
+    when: (G) =>
+      isChina(G) &&
+      G.currentYear >= 1966 && G.currentYear <= 1972 &&
+      !G.flags.has('class_enemy_family') &&
+      G.age >= 12 && G.age <= 20 &&
+      !G.mem?.cnStruggleWitnessFired,
+    text: 'The criticism session happens in the school courtyard. A classmate whose father was a doctor is made to stand in the centre for two hours. The other students and the teacher read charges from a prepared list. The session is called "helping." You watch it happen. You have never seen something make a person smaller in real time. You understand, with the clarity that comes at this age, that this place has just shown you exactly what it is capable of doing.',
+    choices: [
+      {
+        text: 'Join in — silence has its own costs here',
+        tag: null,
+        outcome: 'You add your voice to what everyone is saying. The calculation is correct. The calculation does not dissolve.',
+        effect: (p) => { p.m -= 12; p.r += 8; p.addFlag('struggle_session_witnessed'); p.setMem('cnStruggleWitnessFired', true) },
+      },
+      {
+        text: 'Stay silent — find the minimum that gets you through',
+        tag: null,
+        outcome: 'You say nothing. The session ends. You are neither protected nor punished today. The silence is its own kind of record.',
+        effect: (p) => { p.m -= 8; p.addFlag('struggle_session_witnessed'); p.setMem('cnStruggleWitnessFired', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // CONTEMPORARY DEPTH
+  // ═══════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'cn_hukou_barrier',
+    phase: 'young_adult',
+    weight: 7,
+    when: (G) =>
+      isChina(G) &&
+      G.currentYear >= 1985 &&
+      G.flags.has('migrant_worker_china') &&
+      G.age >= 20 && G.age <= 40 &&
+      !G.mem?.cnHukoFired,
+    text: 'The household registration — the hukou — defines you as a rural resident even though you have lived in this city for four years and paid taxes here for four years. The school enrollment for a child requires urban hukou. The public housing list requires urban hukou. The subsidized healthcare requires urban hukou. You work here. You live here. In the administrative system, you are not here.',
+    choices: [
+      {
+        text: 'Begin the conversion process — it takes years but is possible',
+        tag: null,
+        outcome: 'You begin the paperwork. The process will take longer than stated and cost more than estimated. You continue anyway.',
+        effect: (p) => { p.m -= 5; p.e += 3; p.addFlag('hukou_barrier_lived'); p.setMem('cnHukoFired', true) },
+      },
+      {
+        text: 'Work within the system as it is — most migrants do',
+        tag: null,
+        outcome: 'You navigate the exclusions with the money it costs to work around them. This is the arrangement.',
+        effect: (p) => { p.m -= 8; p.mo -= 500; p.addFlag('hukou_barrier_lived'); p.setMem('cnHukoFired', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'cn_reform_euphoria',
+    phase: 'midlife',
+    weight: 6,
+    when: (G) =>
+      isChina(G) &&
+      G.currentYear >= 1992 && G.currentYear <= 2001 &&
+      G.age >= 25 && G.age <= 55 &&
+      G.stats.wealth >= 35 &&
+      !G.mem?.cnReformEuphoriaFired,
+    text: 'After Deng Xiaoping\'s southern tour, the phrase is everywhere: 致富光荣 — "to get rich is glorious." This is not subversive; this is policy. The coastal factories are expanding at a pace you can watch in real time. Friends who had identical salaries three years ago have cars and apartments in newer buildings. The speed is difficult to receive with the mental equipment you were built with — a country reorganising from scarcity to surplus faster than any generation is calibrated to understand.',
+    choices: [
+      {
+        text: 'Get in — this window will not stay open',
+        tag: null,
+        outcome: 'You move inside the opportunity. Whether it yields what you hoped is a separate question from the decision to move.',
+        effect: (p) => { p.m += 8; p.mo += 2000; p.addFlag('reform_era_participant'); p.setMem('cnReformEuphoriaFired', true) },
+      },
+      {
+        text: 'Watch carefully — you have seen what speed produces here',
+        tag: null,
+        outcome: 'You hold back. The caution is not wrong. The wealth builds around you in the ways it builds.',
+        effect: (p) => { p.m += 3; p.setMem('cnReformEuphoriaFired', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'cn_996_burnout',
+    phase: 'young_adult',
+    weight: 7,
+    when: (G) =>
+      isChina(G) &&
+      G.currentYear >= 2010 &&
+      G.ruralUrban === 'urban' &&
+      G.career != null &&
+      G.age >= 22 && G.age <= 42 &&
+      !G.mem?.cn996BurnoutFired,
+    text: 'The schedule is nine in the morning to nine at night, six days a week. This is not in the contract. It is understood. The company provides dinner for people who stay past eight, which is how staying past eight becomes normal. You have not seen your apartment in daylight in two weeks. You are producing good work. The hourly rate, were you calculating it, would be considerably below what the salary suggests. You have started calculating it.',
+    choices: [
+      {
+        text: 'Absorb it — this is the entry price and it will not always be like this',
+        tag: null,
+        outcome: 'You absorb it. The body keeps its own ledger. You do not examine the ledger.',
+        effect: (p) => { p.h -= 12; p.mo += 2000; p.addFlag('996_burnout_lived'); p.setMem('cn996BurnoutFired', true) },
+      },
+      {
+        text: 'Recalibrate — something needs to change and you will change it',
+        tag: null,
+        outcome: 'You pull back. The income adjusts. The body begins to recover what was owed to it.',
+        effect: (p) => { p.m += 8; p.h += 5; p.mo -= 1000; p.addFlag('996_burnout_lived'); p.setMem('cn996BurnoutFired', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'cn_leftover_woman',
+    phase: 'young_adult',
+    weight: 7,
+    when: (G) =>
+      isChina(G) &&
+      G.currentYear >= 2005 &&
+      G.character?.gender === 'female' &&
+      G.age >= 27 && G.age <= 38 &&
+      !G.partner &&
+      !G.mem?.cnLeftoverFired,
+    text: 'The state media term is 剩女 — "leftover women": educated, employed, unmarried over twenty-five. There is a campaign. There are marriage markets in People\'s Park on Sunday mornings where parents display their children\'s profiles on laminated cards. Your mother has considered attending one on your behalf without telling you first. The pressure is not abstract — it is a specific conversation at every family gathering, a specific look when you arrive alone. You have a salary and an apartment and the particular loneliness of being told the loneliness is your deficiency.',
+    choices: [
+      {
+        text: 'Refuse the label — you will not be sorted by a government campaign',
+        tag: null,
+        outcome: 'You continue on your own terms. The pressure does not stop. You become practiced at not receiving it.',
+        effect: (p) => { p.m += 5; p.addFlag('leftover_woman_label'); p.setMem('cnLeftoverFired', true) },
+      },
+      {
+        text: 'The pressure has real social costs — manage them as best you can',
+        tag: null,
+        outcome: 'You navigate the pressure with the energy it requires. The energy has a price you have decided to pay for now.',
+        effect: (p) => { p.m -= 5; p.r += 5; p.addFlag('leftover_woman_label'); p.setMem('cnLeftoverFired', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'cn_hui_experience',
+    phase: 'childhood',
+    weight: 6,
+    when: (G) =>
+      isChina(G) &&
+      G.ethnicity === 'hui_chinese' &&
+      G.age >= 8 && G.age <= 20 &&
+      !G.mem?.cnHuiFired,
+    text: 'You are Hui Muslim in a country where Islam is practiced but never unremarked. The halal question at the school cafeteria introduces you early to the work of being the person who asks for something different. Your grandparents pray five times a day; inside the family this is as unremarkable as weather. Outside the family it is a marker that requires management. The degree of management depends on the decade and the province and the political weather, which changes. You learn to read the political weather before you learn most other things.',
+    choices: [
+      {
+        text: 'The faith is private — you do not explain yourself',
+        tag: null,
+        outcome: 'You practice what you practice without commentary. The identity goes inward. It does not diminish.',
+        effect: (p) => { p.addFlag('hui_identity_marked'); p.setMem('cnHuiFired', true) },
+      },
+      {
+        text: 'The identity is worth defending openly',
+        tag: null,
+        outcome: 'You are visible about who you are. The visibility has costs and the costs are yours. The identity remains.',
+        effect: (p) => { p.karma += 5; p.m -= 3; p.addFlag('hui_identity_marked'); p.setMem('cnHuiFired', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'cn_xi_tightening',
+    phase: 'midlife',
+    weight: 6,
+    when: (G) =>
+      isChina(G) &&
+      G.currentYear >= 2013 &&
+      G.ruralUrban === 'urban' &&
+      G.stats.smarts >= 55 &&
+      G.career != null &&
+      G.age >= 25 && G.age <= 55 &&
+      !G.mem?.cnXiFired,
+    text: 'The VPN that worked reliably stops working reliably. A colleague returns from an informal conversation with the relevant ministry changed in ways that are not discussed. An NGO you know has been closed for foreign connections. A lawyer who worked on land rights cases has not been seen for several weeks. This is not a sudden change — it is the direction of a trend you have been watching and deciding how much weight to give it. The weight question has now resolved itself.',
+    choices: [
+      {
+        text: 'Become more careful — the space has closed and you work inside it',
+        tag: null,
+        outcome: 'You adjust. The work continues inside smaller boundaries. The smaller boundaries become the work.',
+        effect: (p) => { p.m -= 8; p.addFlag('china_intellectual_silenced'); p.setMem('cnXiFired', true) },
+      },
+      {
+        text: 'Leave — before the option closes',
+        tag: null,
+        outcome: 'You begin the process of departure. The process has its own calendar and costs. You begin it.',
+        effect: (p) => { p.m -= 5; p.addFlag('china_left_for_silence'); p.addFlag('emigrated'); p.setMem('cnXiFired', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'cn_sent_down_intellectual_echo',
+    phase: 'midlife',
+    weight: 6,
+    when: (G) =>
+      isChina(G) &&
+      G.flags.has('sent_down_intellectual') &&
+      G.age >= 35 && G.age <= 58 &&
+      !G.mem?.cnSentDownEchoFired,
+    text: 'What the countryside gave you that the professors didn\'t: you know what a harvest failure looks like from inside it. You know what it costs a family when the state quota cannot be met. You know what cold is when the walls are not insulated. These are not metaphors or research — they are texture. When you write or argue or teach now, this specific quality is present. Some of your contemporaries who were not sent down have noticed it. It cannot be taught and cannot be bought back.',
+    choices: null,
+    effect: (p) => { p.e += 5; p.m += 4; p.addFlag('sent_down_intellectual_echo'); p.setMem('cnSentDownEchoFired', true) },
+  },
+
 ]

@@ -215,4 +215,144 @@ export const PALESTINE_EVENTS = [
     effect: null,
   },
 
+  // ── REFUGEE CAMP AS HOME ──────────────────────────────────────────────────
+
+  {
+    id: 'pal_refugee_camp_generations',
+    phase: 'childhood',
+    weight: 7,
+    when: (G) =>
+      isPalestinian(G) &&
+      (G.flags.has('in_refugee_camp') || G.character?.country?.name === 'Lebanon' || G.character?.country?.name === 'Jordan') &&
+      G.age >= 6 && G.age <= 20 &&
+      (G.currentYear ?? 0) >= 1950 &&
+      !G.mem?.palCampGenFired,
+    text: 'The camp was established in 1948 as temporary shelter. Three generations later it has streets with names, schools, a bakery, a mosque, a place where the old men sit and argue about what was lost — in a village that none of the current population has ever seen. You are the second or third generation born here. The country your identity is named for is a bus ride away if the bus were permitted to cross. You have never been. The key on the hook by the door is for a lock that no longer exists.',
+    choices: null,
+    effect: (p) => { p.m -= 8; p.r += 10; p.addFlag('camp_is_home'); p.setMem('palCampGenFired', true) },
+  },
+
+  // ── OLIVE HARVEST ─────────────────────────────────────────────────────────
+
+  {
+    id: 'pal_olive_harvest',
+    phase: 'young_adult',
+    weight: 6,
+    when: (G) =>
+      G.character?.country?.name === 'Palestine' &&
+      G.age >= 16 && G.age <= 60 &&
+      (G.currentYear ?? 0) >= 1980 &&
+      !G.mem?.palOliveHarvestFired,
+    text: 'The olive harvest is in October. The trees your grandfather planted take forty years to mature. This year the harvest requires coordination with the army for access to fields adjacent to a settlement. The settlers sometimes arrive during the harvest. Last year a neighbouring family\'s trees were uprooted by settlers the week before harvest — sixty trees, some of them fifty years old. The army did not arrive for two hours. You harvest what you can, faster than usual, before anything else can happen.',
+    choices: [
+      {
+        text: 'Document what is happening — the record matters',
+        tag: null,
+        outcome: 'You photograph, note names and times. The record goes to the human rights organisation. Nothing changes immediately. The record exists.',
+        effect: (p) => { p.e += 3; p.addFlag('olive_trees_burned'); p.setMem('palOliveHarvestFired', true) },
+      },
+      {
+        text: 'Harvest fast and get out — safety over record',
+        tag: null,
+        outcome: 'You get what you came for and leave before anything escalates. The olive oil this year will taste like what it cost to make it.',
+        effect: (p) => { p.m -= 6; p.addFlag('olive_trees_burned'); p.setMem('palOliveHarvestFired', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── ADMINISTRATIVE DETENTION ──────────────────────────────────────────────
+
+  {
+    id: 'pal_administrative_detention',
+    phase: 'young_adult',
+    weight: 5,
+    when: (G) =>
+      G.character?.country?.name === 'Palestine' &&
+      G.age >= 18 && G.age <= 60 &&
+      (G.currentYear ?? 0) >= 1967 &&
+      !G.mem?.palDetentionFired,
+    text: 'Your brother was taken at 3 AM. The detention order is "administrative" — six months, renewable, without charges, without trial, without a specific accusation that can be challenged in court. The military courts have a conviction rate above 99 percent for cases that do reach trial; administrative detention requires no trial at all. You have hired a lawyer. The lawyer explains that there is very little a lawyer can do here. You continue paying the lawyer.',
+    choices: [
+      {
+        text: 'Fight through every legal channel available',
+        tag: null,
+        outcome: 'The legal channels are narrow and slow. You use them all. Your brother is eventually released. The order is renewed once before it ends.',
+        effect: (p) => { p.m -= 12; p.mo -= 1500; p.addFlag('family_detained_israel'); p.setMem('palDetentionFired', true) },
+      },
+      {
+        text: 'Wait — the system operates on its own calendar',
+        tag: null,
+        outcome: 'You wait. The administrative order expires. Your brother comes home thinner and quieter. The order is not renewed this time.',
+        effect: (p) => { p.m -= 15; p.r += 8; p.addFlag('family_detained_israel'); p.setMem('palDetentionFired', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── DIFFERENTIAL WATER ACCESS ─────────────────────────────────────────────
+
+  {
+    id: 'pal_water_access',
+    phase: 'childhood',
+    weight: 6,
+    when: (G) =>
+      G.character?.country?.name === 'Palestine' &&
+      G.age >= 8 && G.age <= 25 &&
+      (G.currentYear ?? 0) >= 1967 &&
+      !G.mem?.palWaterFired,
+    text: 'The settlement above the valley has a swimming pool. You can see it from the road. Your family gets water three days a week when supply holds. This is not coincidence — the agreements that divided water access allocate Palestinian communities a fixed amount that has not kept pace with population growth. The settler families use four times more water per person from the same aquifer. You do not need to read a report to know this ratio. You live the ratio.',
+    choices: null,
+    effect: (p) => { p.m -= 8; p.addFlag('water_ration_life'); p.setMem('palWaterFired', true) },
+  },
+
+  // ── INSIDE A MILITARY OPERATION ───────────────────────────────────────────
+
+  {
+    id: 'pal_gaza_bombardment',
+    phase: 'midlife',
+    weight: 6,
+    when: (G) =>
+      G.character?.country?.name === 'Palestine' &&
+      G.age >= 16 && G.age <= 65 &&
+      (G.currentYear ?? 0) >= 2008 &&
+      !G.mem?.palGazaBombFired,
+    text: (G) => {
+      const yr = G.currentYear ?? 2014
+      const operation = yr <= 2009 ? 'Operation Cast Lead' : yr <= 2013 ? 'Operation Pillar of Defense' : yr <= 2015 ? 'Operation Protective Edge' : 'the most recent Israeli military operation'
+      return `The F-16s begin at night. The targets are announced after the fact. You are in your apartment with your children when the nearest strike hits a building two streets away. The building was residential. Your children do not stop hearing the sound for several days after the sound stops. You have memorised the location of the basement. You do not know if a basement is useful against a 2,000-pound bomb. ${operation} will leave the neighbourhood you are in changed in ways that take months to understand.`
+    },
+    choices: [
+      {
+        text: 'Stay in the apartment — moving draws attention and the shelters are full',
+        tag: null,
+        outcome: 'You stay. The operation ends. The building two streets away is not rebuilt for two years. You pass the rubble every day.',
+        effect: (p) => { p.m -= 18; p.h -= 5; p.addFlag('inside_gaza_bombardment'); p.setMem('palGazaBombFired', true) },
+      },
+      {
+        text: 'Move to a relative\'s house — anywhere but here',
+        tag: null,
+        outcome: 'You move. The relative\'s house is also in Gaza. There is no truly safe place here, only less exposed ones.',
+        effect: (p) => { p.m -= 15; p.addFlag('inside_gaza_bombardment'); p.setMem('palGazaBombFired', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── THE QUESTION OF RETURN ────────────────────────────────────────────────
+
+  {
+    id: 'pal_late_return_question',
+    phase: 'late_life',
+    weight: 5,
+    when: (G) =>
+      isPalestinian(G) &&
+      G.flags.has('nakba_family_memory') &&
+      G.age >= 55 &&
+      !G.mem?.palLateReturnFired,
+    text: 'You are the generation that will not return. You have understood this for years — not as acceptance, not as abandonment, but as arithmetic. The village your grandparents described is a suburb now. The house was demolished in 1950. The land is registered under a different name under a different state. The key on the hook is for a lock that was replaced before your parents were born. You give it to your grandchild anyway. The act of giving it says what the words cannot.',
+    choices: null,
+    effect: (p) => { p.r += 8; p.m += 5; p.addFlag('nakba_day_keeper'); p.setMem('palLateReturnFired', true) },
+  },
+
 ]
