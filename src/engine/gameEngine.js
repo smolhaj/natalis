@@ -6065,6 +6065,12 @@ function buildYearTexture(state) {
     'Engineering or medicine: the choice between these two was presented as the extent of your options. The thing you actually wanted — the drawing, the writing — became something done privately, and then less privately, and then barely at all.',
     'The entrance exam structured your adolescence in a specific way. Everything else waited until after. Some of the things that waited are still waiting.',
   ])
+  if (F.has('suppressed_ambition') && Math.random() < 0.22) return pick([
+    'The career you chose is real and you are competent at it. You pass the bookshop, the gallery, the recording studio — whatever the thing was that you put away. The arithmetic of what was traded and what was gained has not stopped running.',
+    phase === 'late_life'
+      ? 'You put the thing away when you were young because the family had decided. From here you can see both what you built and the outline of what you didn\'t build. The outline is specific and has not faded.'
+      : 'Every few years someone asks what you would have done if you could do it over. The answer is in the drawer. The drawer has been there since you were eighteen.',
+  ])
   if (F.has('invisible_labour_known') && Math.random() < 0.22) return pick([
     'The school pickup. The in-law\'s medication schedule. The homework. The social calendar of the entire family, held in your head. Your husband says he helps. He does help. The arithmetic of help versus primary responsibility is not quite discussable.',
     phase === 'late_life'

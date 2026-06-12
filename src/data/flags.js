@@ -6036,7 +6036,7 @@ export const FLAG_REGISTRY = {
     weight: 'moderate',
     category: 'relationship',
     description: 'Began saving separately in a joint household — prudence or the beginning of something else.',
-    intent: 'followthrough',
+    intent: 'event',
     notes: 'Set by ind_joint_family_entry. Checked by ind_joint_family_nuclear_transition.',
   },
 
@@ -6116,8 +6116,8 @@ export const FLAG_REGISTRY = {
     weight: 'moderate',
     category: 'identity',
     description: 'Said what they actually wanted to a family that had already decided — the silence that followed had a shape.',
-    intent: 'followthrough',
-    notes: 'Set by ind_first_gen_pressure (say-it branch).',
+    intent: 'event',
+    notes: 'Set by ind_first_gen_pressure (say-it branch). Follow-through: ind_first_gen_defied_echo.',
   },
 
   invisible_labour_known: {
@@ -6148,8 +6148,8 @@ export const FLAG_REGISTRY = {
     weight: 'moderate',
     category: 'displacement',
     description: 'Opened the tab on emigration and never quite closed it — visa categories, salary comparisons, the NRI return.',
-    intent: 'followthrough',
-    notes: 'Set by ind_nri_return_question and other emigration events.',
+    intent: 'event',
+    notes: 'Set by ind_nri_return_question and other emigration events. Follow-through: ind_considered_emigration_echo.',
   },
 
   academic_pressure: {
