@@ -1895,4 +1895,90 @@ export const RIBBONS = [
     priority: 70,
     color: 'gray',
   },
+
+  // ── ISRAEL ARC RIBBONS ──────────────────────────────────────────────────────
+  {
+    id: 'the_seventh',
+    name: 'The Seventh',
+    description: 'The alert at 6:29 on a Saturday morning. The scale arriving in pieces. You are in the after now.',
+    condition: (G) => G.flags.includes('oct7_survived'),
+    priority: 93,
+    color: 'gray',
+  },
+  {
+    id: 'the_square_without_him',
+    name: 'The Square Without Him',
+    description: 'The rally for peace. The shots from behind. The specific content of the shock — who killed him and why — that you kept returning to.',
+    condition: (G) => G.flags.includes('rabin_killed_witness'),
+    priority: 82,
+    color: 'blue',
+  },
+  {
+    id: 'the_bus_the_cafe',
+    name: 'The Bus, the Café',
+    description: 'The routes you changed. The entrances you assessed. The daily arithmetic of the intifada that does not appear in casualty statistics.',
+    condition: (G) => G.flags.includes('second_intifada_terror_lived'),
+    priority: 80,
+    color: 'gray',
+  },
+  {
+    id: 'the_maabara',
+    name: 'The Ma\'abara',
+    description: 'Corrugated metal in a field at the edge of the desert. They said it was temporary. The path from there to the coastal cities was longer than the map showed.',
+    condition: (G) => G.flags.includes('mizrahi_maabara'),
+    priority: 78,
+    color: 'orange',
+  },
+  {
+    id: 'the_ascent',
+    name: 'The Ascent',
+    description: 'The degree that did not transfer. The language that took eighteen months. The word oleh means one who ascends.',
+    condition: (G) => G.flags.includes('soviet_oleh_israel') || G.flags.includes('ethiopian_oleh_israel'),
+    priority: 74,
+    color: 'blue',
+  },
+  {
+    id: 'the_october_war',
+    name: 'The October War',
+    description: 'October 6, 1973. The sirens on Yom Kippur. The first two days that were not being described honestly on the radio. You were on the front.',
+    condition: (G) => G.flags.includes('yom_kippur_front_survived'),
+    priority: 85,
+    color: 'gray',
+  },
+
+  // ── CHINA DEPTH RIBBONS ──────────────────────────────────────────────────────
+  {
+    id: 'the_courtyard',
+    name: 'The Courtyard',
+    description: 'You stood in the centre for two hours. What you said or refused to say. The walk home through streets that looked different after.',
+    condition: (G) => G.flags.includes('struggle_session_survived'),
+    priority: 85,
+    color: 'gray',
+  },
+  {
+    id: 'the_hunger_years',
+    name: 'The Hunger Years',
+    description: 'The kind of hunger that is not dramatic but permanent — the first thought at waking, the last thought before sleep. Your mother taught you which plants were edible.',
+    condition: (G) => G.flags.includes('great_leap_hunger'),
+    priority: 78,
+    color: 'gray',
+  },
+
+  // ── PALESTINE ADDITIONAL RIBBONS ─────────────────────────────────────────────
+  {
+    id: 'the_keys_on_the_wall',
+    name: 'The Keys on the Wall',
+    description: 'Born in the camp, raised in the camp. The key on the hook is for a lock that no longer exists. You gave it to your grandchild anyway.',
+    condition: (G) => G.flags.includes('camp_is_home') && G.flags.includes('nakba_family_memory'),
+    priority: 88,
+    color: 'gray',
+  },
+  {
+    id: 'the_olive_trees',
+    name: 'The Olive Trees',
+    description: 'Forty years to grow. Uprooted in an afternoon, the week before harvest. You harvested what you could, faster than usual.',
+    condition: (G) => G.flags.includes('olive_trees_burned'),
+    priority: 72,
+    color: 'green',
+  },
 ]

@@ -5602,4 +5602,300 @@ export const FLAG_REGISTRY = {
     notes: 'Set by child_death_late_reckoning. Branches buildYearTexture for late_life.',
   },
 
+  // ── CHINA DEPTH FLAGS ────────────────────────────────────────────────────
+
+  great_leap_hunger: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived the famine years of the Great Leap Forward (1959-62) — the specific texture of permanent hunger as a child.',
+    intent: 'year_texture',
+    notes: 'Set by cn_great_leap_hunger.',
+  },
+
+  struggle_session_survived: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Was the target of a Cultural Revolution struggle session — stood in the centre while classmates and teachers read charges aloud.',
+    intent: 'year_texture',
+    notes: 'Set by cn_struggle_session_target.',
+  },
+
+  denounced_family_cr: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'During a Cultural Revolution struggle session, confirmed the charges against a parent — the impossible calculus of survival.',
+    intent: 'year_texture',
+    notes: 'Set by cn_struggle_session_target (confirm choice). Branch of struggle_session_survived.',
+  },
+
+  refused_denounce_cr: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'During a Cultural Revolution struggle session, refused to confirm the charges against a parent — accepted the consequences.',
+    intent: 'year_texture',
+    notes: 'Set by cn_struggle_session_target (refuse choice). Branch of struggle_session_survived.',
+  },
+
+  struggle_session_witnessed: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Witnessed a Cultural Revolution struggle session — saw a classmate or colleague publicly humiliated, made smaller in real time.',
+    intent: 'year_texture',
+    notes: 'Set by cn_struggle_session_witness.',
+  },
+
+  hukou_barrier_lived: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Experienced the hukou household registration system as a personal exclusion — living in a city while officially not existing in it.',
+    intent: 'year_texture',
+    notes: 'Set by cn_hukou_barrier.',
+  },
+
+  reform_era_participant: {
+    weight: 'minor',
+    category: 'opportunity',
+    description: 'Participated in China\'s 1990s reform era — caught the wave of the country reorganising from scarcity to surplus.',
+    intent: 'year_texture',
+    notes: 'Set by cn_reform_euphoria (get in choice).',
+  },
+
+  '996_burnout_lived': {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Lived the 996 work culture (9am-9pm, 6 days) — the hourly rate calculation, the apartment unseen in daylight.',
+    intent: 'year_texture',
+    notes: 'Set by cn_996_burnout.',
+  },
+
+  leftover_woman_label: {
+    weight: 'moderate',
+    category: 'gender',
+    description: 'Received the 剩女 ("leftover woman") label from state media and social pressure — educated, employed, unmarried over 25.',
+    intent: 'year_texture',
+    notes: 'Set by cn_leftover_woman.',
+  },
+
+  hui_identity_marked: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Hui Muslim in China — learned early to manage a Muslim identity inside a country where Islam is practiced but never unremarked.',
+    intent: 'year_texture',
+    notes: 'Set by cn_hui_experience.',
+  },
+
+  china_intellectual_silenced: {
+    weight: 'major',
+    category: 'political',
+    description: 'Chinese intellectual or professional who narrowed their work under the post-2012 Xi-era tightening — the smaller boundary becoming the boundary.',
+    intent: 'year_texture',
+    notes: 'Set by cn_xi_tightening (careful choice).',
+  },
+
+  china_left_for_silence: {
+    weight: 'major',
+    category: 'political',
+    description: 'Left China because of the intellectual and political tightening under Xi — the departure as a response to the closing of space.',
+    intent: 'year_texture',
+    notes: 'Set by cn_xi_tightening (leave choice).',
+  },
+
+  sent_down_intellectual_echo: {
+    weight: 'moderate',
+    category: 'history',
+    description: 'Sent-down youth who kept reading in the countryside — the decade gave texture that cannot be acquired from books.',
+    intent: 'year_texture',
+    notes: 'Set by cn_sent_down_intellectual_echo. Follow-through for sent_down_intellectual.',
+  },
+
+  // ── ISRAEL ARC FLAGS ────────────────────────────────────────────────────
+
+  built_state_generation: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Israeli founding generation — grew up knowing the state was built for them, with the weight that comes with that knowledge.',
+    intent: 'year_texture',
+    notes: 'Set by il_founding_memory.',
+  },
+
+  mizrahi_maabara: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Grew up in or shaped by the Mizrahi ma\'abara transit camp era — the development town at the desert edge, the path that was longer than the map showed.',
+    intent: 'year_texture',
+    notes: 'Set by il_mizrahi_maabara.',
+  },
+
+  mizrahi_culture_kept: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Mizrahi Jew who consciously carried the culture — music, food, language of the house — through the Ashkenazi-dominated integration process.',
+    intent: 'year_texture',
+    notes: 'Set by il_mizrahi_maabara (culture choice).',
+  },
+
+  idf_served: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Completed Israeli mandatory military service — the institution that shapes Israeli adult identity more than any other.',
+    intent: 'year_texture',
+    notes: 'Set by il_idf_service.',
+  },
+
+  idf_combat_veteran: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Served in a combat unit during IDF service — the specific closeness and weight of the platoon experience.',
+    intent: 'year_texture',
+    notes: 'Set by il_idf_service (combat choice).',
+  },
+
+  yom_kippur_front_survived: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Was deployed to the front during the Yom Kippur War 1973 — the first two days, the near-catastrophe, what the army was capable of.',
+    intent: 'year_texture',
+    notes: 'Set by il_yom_kippur_personal (deployed choice).',
+  },
+
+  yom_kippur_witness: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Witnessed the Yom Kippur War from the rear — the bulletins, the men returning, the close calls that were other people\'s close calls.',
+    intent: 'year_texture',
+    notes: 'Set by il_yom_kippur_personal (rear choice).',
+  },
+
+  soviet_oleh_israel: {
+    weight: 'moderate',
+    category: 'immigration',
+    description: 'Soviet/Russian Jewish immigrant (oleh) in Israel — the degree that does not transfer, the language that takes eighteen months, the ascent.',
+    intent: 'year_texture',
+    notes: 'Set by il_soviet_aliyah_arrival.',
+  },
+
+  ethiopian_oleh_israel: {
+    weight: 'moderate',
+    category: 'immigration',
+    description: 'Ethiopian Jewish oleh — arrived in the airlift operations (Moses/Solomon), navigating a faith questioned and a Judaism two thousand years old.',
+    intent: 'year_texture',
+    notes: 'Set by il_ethiopian_aliyah_arrival.',
+  },
+
+  rabin_killed_witness: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Israeli who lived through the Rabin assassination 1995 — the rally for peace, the specific content of the shock (who killed him and why).',
+    intent: 'year_texture',
+    notes: 'Set by il_rabin_killed.',
+  },
+
+  second_intifada_terror_lived: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Israeli civilian during the second intifada (2001-05) — buses as calculations, the changed routes, the daily arithmetic that does not appear in casualty statistics.',
+    intent: 'year_texture',
+    notes: 'Set by il_second_intifada_fear.',
+  },
+
+  settlement_moved: {
+    weight: 'major',
+    category: 'political',
+    description: 'Israeli who chose to move to a settlement in the occupied territories — building inside contested land, living inside the legal and ethical debate.',
+    intent: 'year_texture',
+    notes: 'Set by il_settlement_question (move choice).',
+  },
+
+  arab_citizen_divided_self: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Arab citizen of Israel navigating two identities — the passport and the Arabic name, the Hebrew at work and Arabic at home, Independence Day and its other.',
+    intent: 'year_texture',
+    notes: 'Set by il_arab_citizen_identity.',
+  },
+
+  oct7_survived: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Israeli who lived through October 7 2023 — the alert at 6:29am, the scale arriving in pieces, the after.',
+    intent: 'year_texture',
+    timestamped: true,
+    notes: 'Set by il_oct7_reckoning.',
+  },
+
+  oct7_lost_someone: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lost a specific person — friend, family member, neighbour — on October 7 2023.',
+    intent: 'year_texture',
+    notes: 'Set by il_oct7_reckoning (lost someone choice). Branch of oct7_survived.',
+  },
+
+  post_oslo_israeli_despair: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Israeli who believed in Oslo and watched it unravel — the handshake, the assassination, Camp David, the intifada, the settlements continuing.',
+    intent: 'year_texture',
+    notes: 'Set by il_post_oslo_despair.',
+  },
+
+  discrimination_named: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Named discrimination they experienced rather than absorbing it silently — the act of naming as record.',
+    intent: 'none',
+    notes: 'Set by il_ethiopian_aliyah_arrival (named discrimination choice).',
+  },
+
+  // ── PALESTINE ADDITIONAL FLAGS ────────────────────────────────────────────
+
+  camp_is_home: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Palestinian refugee camp as the only home ever known — second or third generation, the temporary that became permanent, the key for a lock that no longer exists.',
+    intent: 'year_texture',
+    notes: 'Set by pal_refugee_camp_generations.',
+  },
+
+  olive_trees_burned: {
+    weight: 'moderate',
+    category: 'occupation',
+    description: 'Witnessed or experienced the destruction of olive trees — the trees planted by grandparents, uprooted before harvest, the season compressed by fear.',
+    intent: 'year_texture',
+    notes: 'Set by pal_olive_harvest.',
+  },
+
+  family_detained_israel: {
+    weight: 'major',
+    category: 'occupation',
+    description: 'Had a family member held under Israeli administrative detention — six months, renewable, no charges, no trial.',
+    intent: 'year_texture',
+    notes: 'Set by pal_administrative_detention.',
+  },
+
+  water_ration_life: {
+    weight: 'moderate',
+    category: 'occupation',
+    description: 'Grew up with rationed water supply while a settlement with a swimming pool was visible on the nearby hill.',
+    intent: 'year_texture',
+    notes: 'Set by pal_water_access.',
+  },
+
+  inside_gaza_bombardment: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Was inside Gaza during a major Israeli military operation — the F-16s at night, the children not sleeping, the memorised basement location.',
+    intent: 'year_texture',
+    timestamped: true,
+    notes: 'Set by pal_gaza_bombardment.',
+  },
+
+  nakba_day_keeper: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Passed the key on to the next generation — the act that says what words cannot about return and memory.',
+    intent: 'none',
+    notes: 'Set by pal_late_return_question.',
+  },
+
 }
