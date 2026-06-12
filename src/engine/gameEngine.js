@@ -6318,6 +6318,56 @@ function buildYearTexture(state) {
     'The 2002 election was a realignment. The people who voted for it were not voting against democracy. They were voting against the version of Turkey that had excluded them from its benefits.',
   ])
 
+  // ─── BRAZIL TEXTURE ──────────────────────────────────────────────────────────
+  if (F.has('plano_real_generation') && Math.random() < 0.22) return pick([
+    'The price tags used to change between when you picked something up and when you got to the checkout. Then the Real arrived in July 1994 and the price of a litre of milk was the same at the checkout as on the shelf. That is what economic stability means when you have lived without it.',
+    phase === 'late_life'
+      ? 'You lived through hyperinflation — the daily arithmetic of what your salary was worth before and after the shops changed their labels. The Plano Real ended it overnight. That fact still has weight.'
+      : 'The generation born into the Real doesn\'t know the indexation, the cruzeiro, the daily recalculation. You know. The knowing is a specific kind of wealth.',
+  ])
+  if (F.has('lava_jato_era') && Math.random() < 0.2) return pick([
+    'The investigation started in a car wash in Paraná. It expanded to include the architecture of who owed whom what percentage. It ended with the president impeached and the man who could have won again in prison. Whether what happened was law or politics is a question that split the country.',
+    phase === 'late_life'
+      ? 'Lava Jato produced findings and convictions and then had its convictions annulled. The country that came out of it elected someone who said everything was corrupt anyway. You have been watching the accounting ever since.'
+      : 'The question of whether the investigation was justice or a coup by legal means depends on what you thought of what was being investigated, and that is the specific geometry of the split.',
+  ])
+  if (F.has('june_days_2013') && Math.random() < 0.18) return pick([
+    'Twenty centavos on the bus fare. The riot police were sent and that was the error: the images of batons in São Paulo produced two weeks of something the country hadn\'t seen. A million people who could not agree on what they wanted, except that something was wrong.',
+    'The Jornadas de Junho were a beginning. It is not fully clear what they were the beginning of. The political landscape five years later looked like an answer to a question that 2013 asked without knowing what it was asking.',
+  ])
+  if (F.has('bolsonaro_era') && Math.random() < 0.18) return pick([
+    'The election was decided substantially on WhatsApp. Half the country relieved and half the country with a specific dread. Four years to understand what was chosen and what that choice costs.',
+    phase === 'late_life'
+      ? 'You watched Brazil elect Bolsonaro and four years later elect Lula again. The pendulum completed a specific arc. What the arc says about the country is still being argued.'
+      : 'The evangelical alignment, the Amazon acceleration, the institutional friction — you were inside all of it. The account is still being settled.',
+  ])
+
+  // ─── WORLD EVENTS 2016–2021 TEXTURE ──────────────────────────────────────────
+  if (F.has('polarization_era') && Math.random() < 0.18) return pick([
+    'The 2016 result rewrote the assumption about what was stable. The country you thought you understood had an interior that the polling couldn\'t reach. That interior voted, and the result has been present in every subsequent year.',
+    phase === 'late_life'
+      ? 'The American political polarisation you watched accelerate from 2016 — the specific speed of it, the inability of either side to hear the other, the fractures in ordinary friendships — will be studied for a long time. You were inside it.'
+      : 'The polling assumption and the actual result: a gap. What lives in the gap is a country that was already there, that the assumption had decided not to look at.',
+  ])
+  if (F.has('blm_era') && Math.random() < 0.18) return pick([
+    'The summer of 2020: the video, the protests in all fifty states and then in other countries, the specific conversation about what had been assumed and what had been ignored. Something shifted, or was rearranged, or was named, depending on what you thought needed to happen.',
+    phase === 'late_life'
+      ? 'You watched several reckonings attempt to happen: the legal one after Floyd, the political one after the marches, the institutional one in certain organisations. The accountings produced different results.'
+      : 'Eight minutes and forty-six seconds. Then the marches. Then the conversation that did not fully resolve. These are three different things, related.',
+  ])
+  if (F.has('jan6_witnessed') && Math.random() < 0.2) return pick([
+    'You watched the certification of the electoral vote interrupted by a crowd that moved from a rally to the building. The republic passed the test, technically. Whether that statement is reassuring depends on what you expected democracy to require.',
+    phase === 'late_life'
+      ? 'January 6, 2021: you watched it in real time and have been watching what was said about it since. The gap between what happened and what was subsequently claimed about it is a specific piece of information.'
+      : 'The certification was completed the same night. The republic held, technically. You have been thinking about the word technically ever since.',
+  ])
+  if (F.has('black_summer_witnessed') && Math.random() < 0.25) return pick([
+    'The smoke reached the city in November and didn\'t leave. The sky turned orange. Eighteen million hectares. The images of koalas and the orange harbour went everywhere. You lived inside the smoke, every day, for months.',
+    phase === 'late_life'
+      ? 'You watched Australia burn in 2019–20 and you watched the political conversation about why it was burning. Both the burning and the conversation were extraordinary. The conversation changed something in Australian politics about what could and couldn\'t be said.'
+      : 'The normal was the smoke. The air quality index became something you checked every morning. A specific recalibration of what Australian summer means.',
+  ])
+
   // ─── WEST AFRICA TEXTURE ─────────────────────────────────────────────────────
   if (F.has('nkrumah_generation') && Math.random() < 0.2) return pick([
     'Ghana, free forever. The idea was large enough for the whole continent to borrow from. You grew up in the country that was supposed to show what African self-governance could be.',

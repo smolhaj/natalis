@@ -6299,6 +6299,80 @@ export const FLAG_REGISTRY = {
     notes: 'Set by pt_eu_accession.',
   },
 
+  // ─── WORLD EVENT FLAGS (2013–2021) ───────────────────────────────────────────
+
+  polarization_era: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Lived through the 2016 US election — the result that confounded the polls and launched a prolonged national reckoning.',
+    intent: 'none',
+    notes: 'Set by we_us_election_2016.',
+  },
+
+  metoo_era: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Lived through the 2017–19 #MeToo reckoning — the public naming of what had been privately understood.',
+    intent: 'none',
+    notes: 'Set by we_metoo_2017.',
+  },
+
+  blm_era: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Lived through the George Floyd protests of 2020 — the largest protest movement in US history.',
+    intent: 'none',
+    notes: 'Set by we_george_floyd_2020.',
+  },
+
+  lava_jato_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through Brazil\'s Operation Car Wash (2014–18) — the corruption investigation that ended in Dilma\'s impeachment and Lula\'s imprisonment.',
+    intent: 'none',
+    notes: 'Set by we_brazil_lava_jato.',
+  },
+
+  bolsonaro_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through Bolsonaro\'s election and presidency (2018–22) — the polarisation, WhatsApp, evangelical alignment, Amazon acceleration.',
+    intent: 'none',
+    notes: 'Set by we_bolsonaro_2018.',
+  },
+
+  black_summer_witnessed: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Lived through Australia\'s 2019–20 Black Summer — the months of smoke, orange sky, and 18 million hectares of fire.',
+    intent: 'none',
+    notes: 'Set by we_australian_bushfires_2019.',
+  },
+
+  jan6_witnessed: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Watched the January 6, 2021 Capitol attack — the first violent interruption of the US peaceful transfer of power.',
+    intent: 'none',
+    notes: 'Set by we_jan6_2021.',
+  },
+
+  plano_real_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Experienced the Plano Real (1994) — the day Brazilian hyperinflation ended and prices stopped changing faster than you could track them.',
+    intent: 'year_texture',
+    notes: 'Set by we_brazil_plano_real.',
+  },
+
+  june_days_2013: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Lived through Brazil\'s 2013 Jornadas de Junho — the bus fare protest that became a million-person movement.',
+    intent: 'none',
+    notes: 'Set by we_brazil_june_days_2013.',
+  },
+
   // ─── SPAIN FLAGS ─────────────────────────────────────────────────────────────
 
   franco_generation: {

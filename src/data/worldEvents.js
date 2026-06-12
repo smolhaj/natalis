@@ -2754,4 +2754,140 @@ export const WORLD_EVENTS = [
     when: (G) => G.stats.wealth < 45 && !G.flags.includes('northern_triangle_migration'),
   },
 
+  {
+    id: 'we_us_election_2016',
+    name: '2016 US Presidential Election',
+    years: [2016, 2016],
+    archetypes: ['wealthy_west'],
+    countries: ['United States'],
+    narrative: 'Election night. The maps start filling in and the results are not what the polling suggested. By midnight it is clear, and the clarity takes a specific shape: something that was assumed to be stable has turned out to be otherwise. Whatever you voted — or didn\'t — the country you are looking at on television is asking something about itself that it will spend the next several years trying to answer.',
+    context: 'Donald Trump\'s 2016 presidential victory over Hillary Clinton confounded pre-election polling. Trump won the Electoral College 306–232, while losing the popular vote by 2.9 million. The result was attributed to a combination of factors including white working-class economic anxiety, rural-urban polarisation, and structural failures in Democratic coalition management. The result accelerated trends of political polarisation that had been building since at least the 1990s.',
+    effect: (p) => { p.m -= 4; p.addFlag('polarization_era') },
+    addFlags: ['polarization_era'],
+    minAge: 15,
+    when: (G) => !G.flags.includes('polarization_era'),
+  },
+
+  {
+    id: 'we_metoo_2017',
+    name: '#MeToo',
+    years: [2017, 2019],
+    archetypes: ['wealthy_west', 'developing_urban', 'wealthy_east'],
+    countries: null,
+    narrative: (G) => {
+      if (G.character.gender === 'female') {
+        return 'Tarana Burke started the phrase in 2006. It goes everywhere in October 2017 when the Harvey Weinstein stories are published. Something that was understood privately becomes public in a specific week — not the experience, which is not new, but the naming, the scale, the sudden permission to describe what everyone already knew. You have your own version of the accounting that is happening.'
+      }
+      return 'The stories begin with Weinstein and don\'t stop. The naming of something that was understood but not spoken produces a specific discomfort in some rooms and a specific relief in others. You register both, and what you do with them.'
+    },
+    context: '#MeToo as a phrase was coined by activist Tarana Burke in 2006 to support survivors of sexual violence. It became a viral social movement in October 2017 after investigations into Harvey Weinstein were published by The New York Times and The New Yorker. Within a year, hundreds of prominent men in entertainment, media, and politics had been publicly accused. The movement forced a significant cultural reckoning with workplace harassment and sexual violence, though critics noted that consequences were unevenly applied.',
+    effect: (p) => { p.r += 3; p.addFlag('metoo_era') },
+    addFlags: ['metoo_era'],
+    minAge: 16,
+    when: (G) => !G.flags.includes('metoo_era'),
+  },
+
+  {
+    id: 'we_george_floyd_2020',
+    name: 'George Floyd and Black Lives Matter',
+    years: [2020, 2021],
+    archetypes: ['wealthy_west'],
+    countries: ['United States'],
+    narrative: (G) => {
+      if (G.ethnicity === 'black_american') {
+        return 'Eight minutes and forty-six seconds. Then a longer number as the counting gets more precise. You watched the same video that everyone else watched and what you felt watching it is related to but not identical to what other people felt watching it. What you felt is something you have felt before in less documented forms. This time there were cameras, and the cameras were not enough by themselves, but they changed something about what could be claimed.'
+      }
+      return 'Eight minutes and forty-six seconds. The video circulates before the protests start. The protests start in Minneapolis and then in every major American city and then in cities in other countries. For several weeks in the summer of 2020 — between the pandemic\'s first wave and the second — the country is in a specific conversation about itself that it has never fully resolved before and will not fully resolve now.'
+    },
+    context: 'George Floyd died on May 25, 2020, during arrest in Minneapolis, after officer Derek Chauvin knelt on his neck for more than nine minutes. The death, filmed by a bystander, triggered the largest protest movement in US history. An estimated 15–26 million people participated in demonstrations across all 50 states and 60 countries. Derek Chauvin was convicted of murder in April 2021. The Movement for Black Lives, founded after Trayvon Martin\'s 2013 death, entered mainstream discourse through the 2020 events.',
+    effect: (p) => { p.r += 4; p.addFlag('blm_era') },
+    addFlags: ['blm_era'],
+    minAge: 10,
+    when: (G) => !G.flags.includes('blm_era'),
+  },
+
+  {
+    id: 'we_brazil_lava_jato',
+    name: 'Operation Car Wash and Political Crisis',
+    years: [2014, 2018],
+    archetypes: 'all',
+    countries: ['Brazil'],
+    narrative: 'The investigation begins with a currency exchange in a car wash in Paraná and expands to include Petrobras, the construction companies, the politicians — the architecture of how contracts were awarded and what percentage returned to whom. By 2016 Dilma Rousseff is impeached. Lula, who built the social programs that reduced the poverty rate by half, is eventually imprisoned. Whether what happened was a legal reckoning or a political one is a question that splits the country in ways that are still splitting.',
+    context: 'Operation Lava Jato (Car Wash), launched in 2014, became the largest corruption investigation in Brazilian history. It exposed a systemic scheme in which construction companies overcharged Petrobras for contracts, with a percentage returned as bribes to company executives and politicians across party lines. President Dilma Rousseff was impeached in 2016 on charges of creative accounting — widely seen as politically motivated. Former president Lula was convicted of corruption in 2017 and imprisoned in 2018. The investigation\'s lead judge, Sérgio Moro, subsequently became Bolsonaro\'s justice minister, raising due-process questions that were later affirmed by the Supreme Court.',
+    effect: (p) => { p.m -= 6; p.r += 5; p.addFlag('lava_jato_era') },
+    addFlags: ['lava_jato_era'],
+    minAge: 14,
+    when: (G) => !G.flags.includes('lava_jato_era'),
+  },
+
+  {
+    id: 'we_bolsonaro_2018',
+    name: 'Bolsonaro Election',
+    years: [2018, 2018],
+    archetypes: 'all',
+    countries: ['Brazil'],
+    narrative: 'The election is decided substantially on WhatsApp, where fake news travels faster than fact-checking. The candidate who wins ran on military nostalgia, evangelical alignment, and explicit contempt for the institutions that Lava Jato has discredited. The margin is fifty-five to forty-five. For half the country this is a relief. For the other half it is a specific dread. The country will spend the next four years understanding what was chosen and what it costs.',
+    context: 'Jair Bolsonaro won Brazil\'s 2018 presidential election with 55.1% of the vote, defeating Workers\' Party candidate Fernando Haddad. Bolsonaro\'s campaign was characterized by anti-corruption messaging, military nostalgia, evangelical Christian alignment, and anti-LGBTQ+ rhetoric. The campaign\'s weaponisation of WhatsApp messaging — including coordinated disinformation — was widely documented. His presidency (2019–2022) was marked by Amazon deforestation acceleration, COVID-19 denialism, attacks on democratic institutions, and eventual defeat to Lula in 2022.',
+    effect: (p) => { p.r += 5; p.addFlag('bolsonaro_era') },
+    addFlags: ['bolsonaro_era'],
+    minAge: 15,
+    when: (G) => !G.flags.includes('bolsonaro_era'),
+  },
+
+  {
+    id: 'we_australian_bushfires_2019',
+    name: 'Australian Black Summer Bushfires',
+    years: [2019, 2020],
+    archetypes: ['wealthy_west'],
+    countries: ['Australia'],
+    narrative: 'The smoke reaches Sydney in November and doesn\'t leave. The sky turns orange. Eighteen million hectares burn — an area larger than England. A billion animals. Thirty-three people die in the fires; smoke-related deaths will be counted later in the hundreds. The images of kangaroos and koalas and the orange light over the harbour become what the world sees. What the country sees is the smoke, every day, for months.',
+    context: 'The 2019–20 Australian bushfire season, known as the Black Summer, was catastrophically larger than any previously recorded. Climate scientists had warned for years that rising temperatures would lengthen and intensify fire seasons. Prime Minister Scott Morrison\'s government initially resisted calls to link the fires to climate change. The fires destroyed over 5,900 buildings, killed 33 people directly, and caused smoke-related deaths estimated at 417. The country\'s political conversation about climate policy changed significantly in the aftermath.',
+    effect: (p) => { p.m -= 6; p.r += 4; p.addFlag('black_summer_witnessed') },
+    addFlags: ['black_summer_witnessed'],
+    minAge: 5,
+    when: (G) => !G.flags.includes('black_summer_witnessed'),
+  },
+
+  {
+    id: 'we_jan6_2021',
+    name: 'January 6 Capitol Attack',
+    years: [2021, 2021],
+    archetypes: ['wealthy_west'],
+    countries: ['United States'],
+    narrative: 'January 6, 2021. The certification of the Electoral College vote is underway when the crowd moves from the rally to the building. You watch it on television: the broken windows, the zip ties, the offices occupied, the Rotunda. The certification resumes that night and is completed. The republic passed the test, technically. Whether that is a satisfying statement about the robustness of a democracy depends on what you expected democracy to require.',
+    context: 'The January 6, 2021 storming of the United States Capitol occurred as Congress was certifying Joe Biden\'s 2020 electoral victory. The crowd, incited by President Trump\'s rally speech, breached the Capitol and interrupted the certification for several hours. Five people died in connection with the events; over 1,200 were subsequently charged. The certification was completed that night. The House of Representatives impeached Trump a second time; the Senate acquitted him. The event was the first violent interruption of the peaceful transfer of presidential power in US history.',
+    effect: (p) => { p.m -= 8; p.r += 5; p.addFlag('jan6_witnessed') },
+    addFlags: ['jan6_witnessed'],
+    minAge: 10,
+    when: (G) => !G.flags.includes('jan6_witnessed'),
+  },
+
+  {
+    id: 'we_brazil_plano_real',
+    name: 'Plano Real — End of Hyperinflation',
+    years: [1994, 1995],
+    archetypes: 'all',
+    countries: ['Brazil'],
+    narrative: 'The price tags have been changing daily. Monthly. The supermarkets have had people following the shelf-stackers to change the labels before the customers can get to the goods. Then, on July 1, 1994, the Real. The new currency. The inflation that has been as high as two thousand percent a year comes down. Prices stabilise. People can plan. The specific feeling of a litre of milk costing what it cost last week — this is not trivial. This is what economic stability means when you have not had it.',
+    context: 'Brazil\'s Plano Real, implemented by finance minister Fernando Henrique Cardoso in 1994, ended one of the world\'s most severe and prolonged hyperinflation episodes. Inflation peaked at 2,477% in 1993. The plan used a complex two-step currency transition to break inflationary expectations. The Real remained stable. Cardoso won the presidency in 1994 on the plan\'s success. By dramatically increasing the purchasing power of the poor — who have no assets to hedge inflation — the plan arguably did more for Brazilian poverty than any other single policy until Bolsa Família.',
+    effect: (p) => { p.m += 8; p.w += 3; p.addFlag('plano_real_generation') },
+    addFlags: ['plano_real_generation'],
+    minAge: 8,
+    when: (G) => !G.flags.includes('plano_real_generation'),
+  },
+
+  {
+    id: 'we_brazil_june_days_2013',
+    name: 'Brazilian June Days Protests',
+    years: [2013, 2013],
+    archetypes: 'all',
+    countries: ['Brazil'],
+    narrative: 'It begins with bus fares in São Paulo — twenty centavos, the Movimento Passe Livre says. The government sends in the riot police. The images go viral. The next weekend it is not twenty centavos: it is corruption, and healthcare, and the cost of the World Cup stadiums while the hospitals are underfunded. A million people in the streets. The Confederations Cup is happening. Brazil is about to host the World Cup. Something is happening that the country is not sure how to name yet.',
+    context: 'The June 2013 protests in Brazil (Jornadas de Junho) began as demonstrations against a R$0.20 bus fare increase in São Paulo. Police crackdowns on the initial protests generated sympathy and massively expanded participation. The movement peaked with an estimated 1–2 million people in over 100 cities. The agenda rapidly broadened to encompass corruption, public services, spending on the 2014 FIFA World Cup and 2016 Olympics, and political reform. The protests were largely leaderless and reflected a new generation of digitally-organised civic engagement. They also foreshadowed the political polarisation that produced Bolsonaro five years later.',
+    effect: (p) => { p.r += 4; p.addFlag('june_days_2013') },
+    addFlags: ['june_days_2013'],
+    minAge: 14,
+    when: (G) => !G.flags.includes('june_days_2013'),
+  },
+
 ]
