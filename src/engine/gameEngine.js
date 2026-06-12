@@ -6318,6 +6318,62 @@ function buildYearTexture(state) {
     'The 2002 election was a realignment. The people who voted for it were not voting against democracy. They were voting against the version of Turkey that had excluded them from its benefits.',
   ])
 
+  // ─── PHILIPPINES TEXTURE ─────────────────────────────────────────────────────
+  if (F.has('marcos_generation') && Math.random() < 0.22) return pick([
+    'Martial law was declared with a proclamation number and a threat that had been fabricated. The infrastructure came. The curfew came. The arrests came. All of these were true simultaneously and you learned to hold them simultaneously.',
+    phase === 'late_life'
+      ? 'You lived your adult years in Ferdinand Marcos\'s Philippines. The specific skill that time taught you — calibrating what could be said and where — is yours permanently.'
+      : 'The First Lady\'s shoes were counted in the thousands after the fall. You had already calibrated your sentences by then and the calibration had become habit.',
+  ])
+  if (F.has('aquino_assassination_generation') && Math.random() < 0.22) return pick([
+    '"I have decided to come home, come what may." He was shot on the tarmac. The yellow ribbons appeared within days. The eight-hour funeral procession. Something in the country had become undeniable, and what happens after undeniable is not obvious.',
+    phase === 'late_life'
+      ? 'Ninoy Aquino said he was willing to die before he got on the plane. He was right to believe it. You watched what happened after the undeniable — the EDSA revolution, the dynasty returns, the son of the dictator eventually elected. The undeniable and what follows it are two different things.'
+      : 'The airport has been renamed after him. The name is on the arrivals hall of every international flight into Manila. His assassinated face, looking patient and specific, watches departures and arrivals.',
+  ])
+  if (F.has('edsa_generation') && Math.random() < 0.3) return pick([
+    'People Power: the nuns and the rosaries and the tanks that stopped. Marcos boarded a US aircraft at midnight and flew to Hawaii. Something that was supposed to be impossible happened, without a war, in four days.',
+    phase === 'late_life'
+      ? 'You were alive for EDSA 1986. The memory of the tanks stopping in front of the crowd has not changed. What happened after it — the brownouts, the coup attempts, the dynasties that survived, the son of the dictator eventually elected by the largest plurality in history — is the longer accounting.'
+      : 'The tanks stopped. You understood what you were watching. The specific quality of those four days — February 22 to 25, 1986 — is the baseline against which everything in Philippine politics since has been measured.',
+  ])
+  if (F.has('people_power_witness') && Math.random() < 0.3) return pick([
+    'You were on EDSA. You were in the crowd when the tanks came and when the tanks stopped. You have described that moment many times since and the description has never been adequate to what it was.',
+    phase === 'late_life'
+      ? 'Every time you have explained EDSA to someone who wasn\'t there, you have watched their face do the thing where they understand intellectually but not physically. The physical understanding is what you have and they don\'t. That gap is something you\'ve learned to live with.'
+      : 'The crowd between you and the tanks. The nuns in front. The moment when the tanks stopped. You will carry that specific image as long as you carry anything.',
+  ])
+  if (F.has('typhoon_upbringing') && Math.random() < 0.2) return pick([
+    'Twenty typhoons a year. You grew up knowing Signal 1, Signal 2, Signal 3. The metal roof in heavy rain has a specific sound. The floods come and leave. This is the normal.',
+    'The typhoon preparation is in your body — the sandbags, the full bathtub, the rice and sardines. Anywhere you live now, you find yourself noting where the high ground is.',
+  ])
+  if (F.has('haiyan_survivor') && Math.random() < 0.3) return pick([
+    'Yolanda. Six-metre storm surge. The debris field that used to be your street. You remember the specific sound of it and the specific silence after. The rebuilding took years and what was there before is not entirely what is there now.',
+    phase === 'late_life'
+      ? 'November 8, 2013 is before and after. The typhoon country you grew up in and the typhoon country that produced Yolanda are related but not the same. You know both.'
+      : 'Tacloban was a city of 220,000 before Yolanda. You know what the images showed. If you were there, you know what the images didn\'t show.',
+  ])
+  if (F.has('haiyan_witness') && Math.random() < 0.2) return pick([
+    'The images from Tacloban: debris fields, bodies, children. You have been through typhoon seasons your whole life and Yolanda was a different category of what that means.',
+    'Six thousand three hundred dead in the official count. The ground count was higher. You watched the international aid arrive and get organised and the rebuilding begin. You sent what you could.',
+  ])
+  if (F.has('duterte_era') && Math.random() < 0.22) return pick([
+    'Oplan Tokhang. The police reports that said nanlaban. The thirty thousand. The sixty percent approval ratings. Both of these were true simultaneously in the same country and you were inside the country.',
+    phase === 'late_life'
+      ? 'You lived through Duterte\'s presidency and watched the specific logic of it: the shabu problem was real, the methods were what they were. History will account for what was done and what it cost. You\'re still inside the accounting.'
+      : 'The barangay operations at night. The reports that said fought back. Something was being done in your name whether or not you agreed with it.',
+  ])
+  if (F.has('duterte_dissent') && Math.random() < 0.2) return pick([
+    'You said what you thought in the spaces where it was possible to say it. The spaces were specific. The saying was a form of accounting even when it changed nothing.',
+    'Thirty thousand. You held that number against the sixty percent approval and felt the gap between the two. The gap is where you lived during those years.',
+  ])
+  if (F.has('marcos_jr_era') && Math.random() < 0.2) return pick([
+    'Bongbong Marcos won by thirty-one million votes. The largest plurality in Philippine electoral history. The son of the man who declared martial law. The history of what that meant was not taught in most schools. The election revealed who had learned it and who hadn\'t.',
+    phase === 'late_life'
+      ? 'You watched the country elect Marcos\'s son. The generation that went to EDSA to stop his father is the same generation that produced the generation that voted for him. The transmission of memory is not automatic.'
+      : 'The historical rehabilitation took thirty years and a social media campaign. The result was thirty-one million votes. You are still deciding what to do with that number.',
+  ])
+
   // ─── BRAZIL TEXTURE ──────────────────────────────────────────────────────────
   if (F.has('plano_real_generation') && Math.random() < 0.22) return pick([
     'The price tags used to change between when you picked something up and when you got to the checkout. Then the Real arrived in July 1994 and the price of a litre of milk was the same at the checkout as on the shelf. That is what economic stability means when you have lived without it.',

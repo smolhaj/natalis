@@ -6299,6 +6299,122 @@ export const FLAG_REGISTRY = {
     notes: 'Set by pt_eu_accession.',
   },
 
+  // ─── PHILIPPINES FLAGS ───────────────────────────────────────────────────────
+
+  marcos_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up under Ferdinand Marcos\'s martial law (1972–86) — the curfew, the arrests, the infrastructure projects, the calibrated public speech.',
+    intent: 'year_texture',
+    notes: 'Set by ph_martial_law_1972.',
+  },
+
+  aquino_assassination_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Was alive for Ninoy Aquino\'s assassination August 21, 1983 — the yellow ribbons, the eight-hour funeral procession.',
+    intent: 'year_texture',
+    notes: 'Set by ph_aquino_assassination_1983.',
+  },
+
+  edsa_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the 1986 EDSA People Power Revolution — the nuns in front of tanks, Marcos boarding the helicopter to Hawaii.',
+    intent: 'year_texture',
+    notes: 'Set by ph_edsa_1986.',
+    timestamped: true,
+  },
+
+  people_power_witness: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Was personally on EDSA — in the crowd when the tanks came and stopped.',
+    intent: 'year_texture',
+    notes: 'Set by ph_edsa_1986 (crowd branch).',
+  },
+
+  post_edsa_engaged: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Stayed politically engaged after the EDSA revolution despite post-democratisation disillusionment.',
+    intent: 'none',
+    notes: 'Set by ph_post_edsa_disillusionment.',
+  },
+
+  post_edsa_private: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Redirected from politics to private life after post-EDSA disillusionment — brownouts, failed promises, surviving dynasties.',
+    intent: 'none',
+    notes: 'Set by ph_post_edsa_disillusionment.',
+  },
+
+  typhoon_upbringing: {
+    weight: 'minor',
+    category: 'formative',
+    description: 'Grew up with typhoon season as a recurring structure of childhood — Signal 1/2/3, suspended classes, floods that come and leave.',
+    intent: 'year_texture',
+    notes: 'Set by ph_typhoon_season.',
+  },
+
+  haiyan_survivor: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Was in the Visayas during Typhoon Haiyan (Yolanda) November 2013 — 6,300 dead, 6-metre storm surge, debris fields where streets had been.',
+    intent: 'year_texture',
+    timestamped: true,
+    notes: 'Set by ph_haiyan_2013 (affected-area branch).',
+  },
+
+  haiyan_witness: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Watched Typhoon Haiyan from a distance — the images from Tacloban, the international aid, the new scale of what a Philippine typhoon could mean.',
+    intent: 'year_texture',
+    notes: 'Set by ph_haiyan_2013 (watching branch).',
+  },
+
+  philippine_voter: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Navigated the Philippine political dynasty system as a voter — the recurring surnames, the turncoats, the specific calculus of lesser evils.',
+    intent: 'none',
+    notes: 'Set by ph_dynasty_texture.',
+  },
+
+  duterte_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived under Rodrigo Duterte\'s presidency (2016–22) — the Oplan Tokhang, nanlaban reports, thirty-thousand dead, sixty-percent approval.',
+    intent: 'year_texture',
+    notes: 'Set by ph_duterte_drug_war.',
+  },
+
+  duterte_dissent: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Publicly or privately opposed the Duterte drug war — the extrajudicial killings, the barangay operations at night.',
+    intent: 'year_texture',
+    notes: 'Set by ph_duterte_drug_war (dissent branch).',
+  },
+
+  marcos_jr_era: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through Bongbong Marcos\'s 2022 election — the son of the dictator winning by the largest plurality in Philippine history.',
+    intent: 'year_texture',
+    notes: 'Set by ph_marcos_jr_return_2022.',
+  },
+
+  marcos_jr_dissent: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Felt the specific historical dread of Marcos Jr.\'s election — the memory of martial law, the history that wasn\'t taught.',
+    intent: 'none',
+    notes: 'Set by ph_marcos_jr_return_2022 (dread branch).',
+  },
+
   // ─── WORLD EVENT FLAGS (2013–2021) ───────────────────────────────────────────
 
   polarization_era: {
