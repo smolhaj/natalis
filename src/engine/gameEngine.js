@@ -765,7 +765,7 @@ function buildEffectProxy(state) {
   const TIMESTAMPED_FLAGS = new Set([
     'knows_failure', 'lab_crossed_line', 'solidarity_proven', 'compromised',
     'art_in_drawer', 'runner_habit', 'music_private', 'writing_in_drawer',
-    'lost_parent_father', 'lost_parent_mother', 'lost_friend', 'widowed',
+    'lost_parent_father', 'lost_parent_mother', 'lost_friend', 'widowed', 'lost_child',
     'famine_memory', 'experienced_racism', 'lgbtq_family_rejection',
     'boarding_school', 'first_love_over', 'cancer_survivor',
     'affair_brief_secret', 'affair_not_taken', 'emigrated',
@@ -1324,12 +1324,79 @@ function buildYearTexture(state) {
   }
 
   if (F.has('lost_child')) {
+    const yearsSinceLoss = state.currentYear - (mem?.lost_childYear ?? state.currentYear)
+    const isInfant = F.has('lost_child_infant')
+    if (yearsSinceLoss <= 1) {
+      return pick([
+        'There is a before and an after. You are in the first year of the after.',
+        'The grief has no architecture yet. You are inside it without a map.',
+        isInfant
+          ? 'The objects in the house were purchased for someone who will not use them. You have not moved any of them.'
+          : 'Their room is still the room it was. You have not decided what to do with it yet.',
+        'People ask how you are and you say fine, which is a complete lie, and also the only possible answer.',
+      ])
+    }
+    if (yearsSinceLoss <= 4) {
+      return pick([
+        'The acute phase is over. The structural phase is permanent. This is not the same as better.',
+        isInfant
+          ? 'You see children their age now. Walking. Talking. You know what the developmental stage looks like. You know what you missed.'
+          : 'You are learning to carry it alongside the rest of the life. The carrying requires a specific kind of attention that has become automatic.',
+        'You do not talk about it constantly. You also never stop thinking about it.',
+        F.has('child_death_room_kept')
+          ? 'The room is still the room it was. You go in sometimes. The going in is something.'
+          : 'You changed the room slowly. They are not less present. They are present differently.',
+      ])
+    }
+    if (phase === 'midlife') {
+      return pick([
+        F.has('bereaved_parent_marriage_survived') && F.has('lost_child')
+          ? 'You and your partner have been through the hardest thing you will go through. You are still here together.'
+          : 'Years of carrying this. The grief has not ended. It has changed shape.',
+        isInfant
+          ? 'They would be in school now. Or in adolescence. You have been constructing the person from what you had, which was weeks.'
+          : 'The person they were becoming is fixed in memory at the age they were. Everyone else\'s children have grown past that age. You know exactly where yours would be in the sequence.',
+        'The grief sits in the architecture of the year the way a load-bearing thing sits — invisible, essential.',
+        F.has('child_death_told_others')
+          ? 'You have told enough people now that it does not ambush you in every new acquaintance. It is part of the account of your life that you give to people.'
+          : 'There are still people who do not know. New acquaintances who ask about your family. You decide each time what to say.',
+      ])
+    }
+    // late_life
     return pick([
-      'The year moves. You move with it, or something like you does.',
-      'There is a before and an after. You live in the after.',
-      'People say time helps. Time passes. That is what time does.',
+      F.has('child_death_late_reckoned')
+        ? 'The late reckoning has been done. You carry what remains, which is not the same as carrying all of it.'
+        : 'Late in life the grief for a child has a different quality — no longer acute, never absent. It is part of the long account.',
+      isInfant
+        ? 'They would be a middle-aged adult now. You have a complete imaginary person you constructed from weeks of actual knowing. That person is yours.'
+        : 'They would be in their forties now. You have watched their cohort — people their age — move through all the stages you did not watch them move through. You know the shape of what was taken.',
+      'You have outlived a child. The sentence is the fact. The fact has shaped everything downstream.',
+      F.has('child_death_room_kept')
+        ? 'The room is still the room it was. After all these years.'
+        : 'The room became something else. They are in other places now — in the account of your life, in the things you notice, in the shapes that still catch you.',
     ])
   }
+
+  if (F.has('child_death_room_repurposed') && Math.random() < 0.2) return pick([
+    'The room is something else now. The becoming-something-else was a decision you made slowly, over months. They are not less present. They are present differently.',
+    phase === 'late_life'
+      ? 'You changed the room years ago. It holds other things now. They are still in the house — in what you notice, in what you keep.'
+      : 'You did not erase the room. You changed what it holds. The change was also a form of grief, done deliberately.',
+  ])
+
+  if (F.has('child_death_tried_again') && Math.random() < 0.22) return pick([
+    'You tried again. The next pregnancy was a different experience — every week a form of held breath. The birth, when it came, was not a replacement. Nothing was replaced. Something new arrived.',
+    phase === 'late_life'
+      ? 'The child born after the loss is grown now. They do not erase the one before them. Both are real. Both are yours.'
+      : 'You carry both. The one who died and the one who came after. They are separate people in your account. The grief for the first does not diminish with the second.',
+  ])
+
+  if (F.has('child_death_decided_not_again') && Math.random() < 0.2) return pick([
+    'You decided not to try again. The decision has a quality of finality that becomes a different kind of structure over time — not a wound, but a shape.',
+    phase === 'late_life'
+      ? 'You chose not to try again after the loss. That decision has been with you a long time. You do not revisit it. It was the right decision for who you were at that moment.'
+      : 'The choice was yours to make and you made it. The grief has a different shape because of it — more bounded, more specific.',
+  ])
 
   // ─── ACTIVE HEALTH CRISIS ────────────────────────────────────────────────────
 

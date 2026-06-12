@@ -5535,4 +5535,71 @@ export const FLAG_REGISTRY = {
     notes: 'Set by syrian_refugee_crisis_europe world event.',
   },
 
+  // ── CHILD DEATH ARC ──────────────────────────────────────────────────────────
+
+  lost_child_infant: {
+    weight: 'major',
+    category: 'loss',
+    description: 'A child died in infancy (under 2 years old) — the specific grief of a person measured in weeks, and all that was going to happen and did not.',
+    intent: 'year_texture',
+    timestamped: true,
+    notes: 'Set by child_death_infant. Branches the year texture and late-life reckoning from lost_child.',
+  },
+
+  child_death_told_others: {
+    weight: 'moderate',
+    category: 'loss',
+    description: 'Bereaved parent who has told new people in their life about the loss — learned to carry it in conversation.',
+    intent: 'year_texture',
+    notes: 'Set by child_death_telling_people.',
+  },
+
+  child_death_room_kept: {
+    weight: 'moderate',
+    category: 'loss',
+    description: 'Bereaved parent who kept the child\'s room as it was — a held space.',
+    intent: 'year_texture',
+    notes: 'Set by child_death_room_decision (kept choice).',
+  },
+
+  child_death_room_repurposed: {
+    weight: 'moderate',
+    category: 'loss',
+    description: 'Bereaved parent who slowly changed the child\'s room — the room becomes something else without erasing what it was.',
+    intent: 'year_texture',
+    notes: 'Set by child_death_room_decision (changed choice).',
+  },
+
+  child_death_tried_again: {
+    weight: 'moderate',
+    category: 'loss',
+    description: 'Bereaved parent who chose to try for another child after the loss.',
+    intent: 'year_texture',
+    notes: 'Set by child_death_try_again (try choice).',
+  },
+
+  child_death_decided_not_again: {
+    weight: 'moderate',
+    category: 'loss',
+    description: 'Bereaved parent who decided not to try again after losing a child.',
+    intent: 'year_texture',
+    notes: 'Set by child_death_try_again (not choice).',
+  },
+
+  bereaved_parent_marriage_survived: {
+    weight: 'major',
+    category: 'loss',
+    description: 'A bereaved parent\'s marriage survived the death of a child — statistically improbable, personally hard-won.',
+    intent: 'year_texture',
+    notes: 'Set by child_death_marriage_reflection. Branches the late year texture.',
+  },
+
+  child_death_late_reckoned: {
+    weight: 'major',
+    category: 'loss',
+    description: 'Bereaved parent who has done the late-life reckoning about who their child would have been — the person they constructed from what they knew.',
+    intent: 'year_texture',
+    notes: 'Set by child_death_late_reckoning. Branches buildYearTexture for late_life.',
+  },
+
 }

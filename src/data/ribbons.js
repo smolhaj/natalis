@@ -419,6 +419,22 @@ export const RIBBONS = [
     color: 'red',
   },
   {
+    id: 'the_person_they_would_have_been',
+    name: 'The Person They Would Have Been',
+    description: 'You knew enough of who they were to have a real guess. Not a fantasy — an extrapolation. You carried that person your whole adult life.',
+    condition: (G) => G.flags.includes('child_death_late_reckoned'),
+    priority: 90,
+    color: 'gray',
+  },
+  {
+    id: 'the_marriage_that_survived',
+    name: 'What Did Not Break',
+    description: 'Most bereaved parent couples do not make it. Yours did. You do not know, exactly, why.',
+    condition: (G) => G.flags.includes('bereaved_parent_marriage_survived'),
+    priority: 82,
+    color: 'gold',
+  },
+  {
     id: 'the_conflict_child',
     name: 'The War Child',
     description: 'You grew up in the middle of it. The adults called it history. You called it Tuesday.',
