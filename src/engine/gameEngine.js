@@ -6170,6 +6170,78 @@ function buildYearTexture(state) {
       : 'The structural funds arrived and built things that were used by people who did not know they had been built with structural funds. That is how material change works. You watched it happen.',
   ])
 
+  // ─── SPAIN TEXTURE ───────────────────────────────────────────────────────────
+  if (F.has('franco_generation') && Math.random() < 0.22) return pick([
+    'You grew up with the portrait on the classroom wall and the slogan above the blackboard: Una, Grande y Libre. The teacher was not cruel, but there was a boundary around what could be said, and you learned where the boundary was before anyone told you.',
+    phase === 'late_life'
+      ? 'You lived your entire childhood in Franco\'s Spain. What that means is not simply historical — it is calibration. The habit of measuring the room before you speak. The habit is yours and will probably remain.'
+      : 'The official narrative and the family narrative were two different things, held in two different registers. Managing the registers was something you learned early and did not stop doing.',
+  ])
+  if (F.has('inner_dissent') && F.has('franco_generation') && Math.random() < 0.2) return pick([
+    'The gap between what was said in the classroom and what was felt at home — you filed it. You have been filing versions of the same gap ever since.',
+    'Franco\'s Spain taught you something specific: official language and interior language are not the same language. The lesson generalised.',
+  ])
+  if (F.has('basque_suppressed') && Math.random() < 0.25) return pick([
+    'Euskara is what you think in. Euskara is what your grandparents named the mountains in. The regime could ban it from the official spaces; it could not reach the interior ones.',
+    phase === 'late_life'
+      ? 'You watched Euskara go from banned to official — regional language status 1979, official co-language of the Basque Country. The journey from infraction to official took forty years. You were there for all of it.'
+      : 'Speaking a language in public that was recently an infraction has a specific weight. The weight is yours. You carry it into rooms.',
+  ])
+  if (F.has('catalan_suppressed') && Math.random() < 0.25) return pick([
+    '"Habla la lengua del Imperio." The teacher\'s tone was half-joke. You filed the half that wasn\'t.',
+    phase === 'late_life'
+      ? 'Català went from classroom infraction to co-official language. The 2017 referendum opened a question that has not fully closed. You have opinions about both transitions that require time to explain.'
+      : 'The language you speak at home and the language the state requires are different languages. Managing the switch is automatic now. The fact that it is automatic is the interesting part.',
+  ])
+  if (F.has('galician_suppressed') && Math.random() < 0.2) return pick([
+    'Galego is what your grandfather speaks. In the city it became something rural, something old — not illegal but inconvenient. The inconvenience was a form of pressure.',
+    'Franco came from Galicia and Galego was suppressed anyway. The ironies of nationalism are numerous.',
+  ])
+  if (F.has('transicion_generation') && Math.random() < 0.22) return pick([
+    'The transition was not inevitable. The pacts that made it possible required specific people making specific compromises. You were alive when it was still being decided. Spain became something it had not been, and did so without a war to make it happen.',
+    phase === 'late_life'
+      ? 'You lived through the transition from dictatorship to parliamentary monarchy — the amnesty law, the constitution, the first elections. Historians call it a model. From inside it looked like an enormous series of bets that happened to pay out.'
+      : 'The pacto del olvido — the pact of forgetting — was a specific political choice about how to manage the transition. You have opinions about whether it was the right choice that are still in formation.',
+  ])
+  if (F.has('23F_remembered') && Math.random() < 0.3) return pick([
+    'February 23, 1981: Tejero in the Cortes with a pistol, the deputies on the floor of the parliament, seventeen hours when nobody knew what kind of country they were going to wake up in. The king\'s televised address at 1am. You remember where you were.',
+    phase === 'late_life'
+      ? 'You have had forty years to process 23-F. What it was was a test of whether the transition was real, and the transition passed the test. That conclusion still relieves you slightly, which means the seventeen hours have not entirely left you.'
+      : 'The deputies lying on the floor of the parliament is one of those images that holds. You know how close it was. That knowledge is a specific piece of information about what democracy costs and what it requires.',
+  ])
+  if (F.has('movida_generation') && Math.random() < 0.2) return pick([
+    'The Movida happened in the years right after Franco and it knew what it was a reaction against. Almodóvar. Mecano. The specific speed of Madrid at four in the morning. A decade that understood its own historical position.',
+    phase === 'late_life'
+      ? 'You came of age during the Movida. The cultural explosion after forty years of cultural regulation. The excess was the point. You are slightly surprised, from here, by how much of it has lasted.'
+      : 'You lived in that decade and knew you were living in it — that specific sense that something was being built that hadn\'t existed before. Those years don\'t usually come twice.',
+  ])
+  if (F.has('spain_1992_generation') && Math.random() < 0.18) return pick([
+    'Barcelona 1992: Fermín Cacho, the closing ceremony, the Olympic city that is still there. Expo Sevilla. The AVE. Spain doing 1992 very specifically. The country that built that year was not the country of 1975.',
+    'The distance between Franco\'s Spain and Olympic Spain was seventeen years. Measured in built things: the metro extensions, the terminal at Barajas, the high-speed rail. Measured in other things: more difficult to count.',
+  ])
+  if (F.has('spanish_housing_crash') && Math.random() < 0.25) return pick([
+    'The mortgage is underwater and has been underwater for years. You are one of several million people in this position. The number does not help.',
+    phase === 'late_life'
+      ? 'The property crash of 2008 cost you in specific and calculable ways. The recovery recovered something; it did not recover all of it. That arithmetic is still running.'
+      : 'The crisis was visible in the unfinished apartment blocks on the outskirts of cities — all that concrete, no windows. The concrete for a country that bet on one thing and lost.',
+  ])
+  if (F.has('spain_crisis_emigrant') && Math.random() < 0.22) return pick([
+    'You are the fuga de cerebros — the brain drain. University degree, EU passport, London or Berlin because Madrid offered nothing in those years. A generation adding themselves to statistics.',
+    phase === 'late_life'
+      ? 'You left during the crisis. You have watched Spain from abroad since — the recovery, the Catalan conflict, the new parties, the slow change. You are still deciding whether to go back. Or you have decided and the deciding cost something.'
+      : 'The Spanish diaspora in London and Berlin and Amsterdam from the 2010s has a specific texture: too educated for the situation, angry in a specific way, keeping up with home through the phone.',
+  ])
+  if (F.has('spain_crisis_stayed') && Math.random() < 0.2) return pick([
+    'You stayed. The mileurista generation — €1,000 a month, the parents\' apartment for another year, the job that didn\'t use the degree. You stayed and you built something inside the constraint.',
+    phase === 'late_life'
+      ? 'You watched the doctors and engineers leave for Germany and London. You watched the empty apartment blocks on the outskirts. You stayed. What staying cost and what it preserved is still being counted.'
+      : 'The crisis reorganised who you thought you were going to be. The reorganisation was not welcome and produced something. That something took years to identify.',
+  ])
+  if (F.has('spain_catalan_conflict_lived') && Math.random() < 0.2) return pick([
+    'The 2017 referendum fractured things that had been quiet — friendships, families, the assumption that a political disagreement was manageable. The fracture did not close when the immediate crisis ended.',
+    'Spain in October 2017: simultaneously a constitutional democracy defending its constitution and a country using riot gear on people at ballot boxes. Both descriptions are accurate. Holding both is the specific work.',
+  ])
+
   // ─── IRELAND TEXTURE ─────────────────────────────────────────────────────────
   if (F.has('irish_emigrant_generation') && Math.random() < 0.3) return pick([
     'You are Irish at one remove. The remove is maintained by the specific labour of keeping up with what is happening in a place you are not.',

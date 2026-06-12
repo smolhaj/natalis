@@ -6299,6 +6299,120 @@ export const FLAG_REGISTRY = {
     notes: 'Set by pt_eu_accession.',
   },
 
+  // ─── SPAIN FLAGS ─────────────────────────────────────────────────────────────
+
+  franco_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up in school under Franco — the portrait, Una Grande y Libre, the calibrated classroom where the boundary between sayable and unsayable was learned early.',
+    intent: 'year_texture',
+    notes: 'Set by es_franco_school.',
+  },
+
+  inner_dissent: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Filed the gap between official narrative and felt experience — a quiet interior resistance that preceded any capacity to name it.',
+    intent: 'year_texture',
+    notes: 'Set by es_franco_school (filing-the-gap branch) and other events.',
+  },
+
+  basque_suppressed: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up with Euskara as a private language — banned or discouraged from official spaces under Franco; the language held as a form of resistance.',
+    intent: 'year_texture',
+    notes: 'Set by es_basque_language_suppressed.',
+  },
+
+  catalan_suppressed: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up with Català suppressed in official spaces — "Habla la lengua del Imperio." The language held at home while Castilian was required at school.',
+    intent: 'year_texture',
+    notes: 'Set by es_catalan_language_suppressed.',
+  },
+
+  galician_suppressed: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Grew up with Galego treated as rural/old — the irony that Galicia was Franco\'s origin region and Galego was still marginalised.',
+    intent: 'year_texture',
+    notes: 'Set by es_galician_language_texture.',
+  },
+
+  transicion_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through La Transición — Franco\'s death 1975, the constitutional process, first democratic elections 1977, the 1978 constitution.',
+    intent: 'year_texture',
+    notes: 'Set by es_franco_death_1975.',
+  },
+
+  '23F_remembered': {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Was alive and aware for February 23, 1981 — Tejero in the Cortes, the 17-hour wait, the moment when nobody knew what kind of country it would be tomorrow.',
+    intent: 'year_texture',
+    notes: 'Set by es_23F_coup_attempt.',
+  },
+
+  movida_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age during La Movida Madrileña — the cultural explosion of 1978–85, the reaction against forty years of Francoism, Almodóvar, the city at 4am.',
+    intent: 'year_texture',
+    notes: 'Set by es_la_movida.',
+  },
+
+  spain_1992_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Experienced 1992 as Spain\'s arrival moment — Barcelona Olympics, Expo Sevilla, AVE rail, the measurable distance from 1975.',
+    intent: 'year_texture',
+    notes: 'Set by es_1992.',
+  },
+
+  spanish_housing_crash: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Bought property during Spain\'s housing bubble and was caught in the 2008 crash — mortgage underwater, flat worth less than paid.',
+    intent: 'year_texture',
+    notes: 'Set by es_housing_boom_bust (bought branch).',
+  },
+
+  spain_crisis_texture: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Experienced the 2008–14 Spanish crisis without direct property loss — rising rents, stagnant wages, fifty percent youth unemployment as backdrop.',
+    intent: 'none',
+    notes: 'Set by es_housing_boom_bust (didn\'t buy branch).',
+  },
+
+  spain_crisis_emigrant: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Left Spain during the 2010s brain drain — the fuga de cerebros, EU passport, London or Berlin because the degree and the job market were not speaking.',
+    intent: 'year_texture',
+    notes: 'Set by es_brain_drain (leave branch).',
+  },
+
+  spain_crisis_stayed: {
+    weight: 'moderate',
+    category: 'resilience',
+    description: 'Stayed in Spain through the 2010s crisis — the mileurista generation, the job that didn\'t use the degree, the parents\' apartment another year.',
+    intent: 'year_texture',
+    notes: 'Set by es_brain_drain (stay branch).',
+  },
+
+  spain_catalan_conflict_lived: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through the 2017 Catalan independence referendum and its aftermath — the fractured WhatsApp groups, the riot gear at ballot boxes, the constitutional position and its contradictions.',
+    intent: 'year_texture',
+    notes: 'Set by es_catalan_independence_2017.',
+  },
+
   emigration_reconsidered: {
     weight: 'moderate',
     category: 'displacement',
