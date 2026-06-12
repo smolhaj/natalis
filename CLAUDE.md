@@ -210,7 +210,7 @@ Generic events are a last resort. Specific events — ones that could only fire 
 
 ## Current State
 
-86 countries, 198 world events, 165+ event modules (~4,000+ events), 641 registered flags, 219 ribbons. Last major work: PRs #73–89 (geographic expansion — Afghanistan, Angola, Central America, China depth, Egypt, Ethiopia, India, Ireland/Turkey, Jordan, Kenya, Korea, Libya, Mozambique, Myanmar, Nepal, Pakistan, Somalia, Southeast Europe/Balkans, Sudan, Thailand, Tunisia, Uganda, West Africa, Yemen, Zambia; new life arc modules — gifted child arc (3 modules), disability, addiction, divorce, dementia, celebrity, teacher arc, child soldier, WWI/Depression, wound coping, partner wants, relationship crossover, life skeleton, phase entries; major `buildYearTexture()` expansion — career × country/archetype, financial state, karma, fame/fitness, emigrant/residency, faith/religion, political leaning, named friend, pet, hobby, sibling, criminal record, retirement, young-children). Run `npm run check-flags` to audit flag coverage.
+86 countries, 200 world events, 167+ event modules (~4,000+ events), 670 registered flags, 223 ribbons. Last major work: PRs #73–89 (geographic expansion); Mode C polish pass (PR #91) — mental health specific buildYearTexture (bipolar/ptsd/ocd/adhd), 20 missing career field lines, partial flag year texture for 16 flags, events_followthrough_13.js (10 follow-throughs), Syria arc — events_syria.js (8 events: Ba'ath childhood → Hama 1982 → Damascus Spring → 2011 uprising → civil war → displacement/staying → Europe arrival → late-life reckoning), 2 new world events (Syrian civil war 2013–20, Syrian refugee crisis 2015–17), 4 Syria ribbons. Flag audit: 670 covered, 0 partial, 0 orphaned. Run `npm run check-flags` to audit flag coverage.
 
 - Full event system descriptions and coverage history: `docs/codebase-state.md`
 - Full BUILD-by-BUILD roadmap and MICRO-EVENT DESIGN PRINCIPLE: `docs/roadmap.md`
@@ -229,7 +229,7 @@ src/
                                 Sudan, Yemen, Somalia, Uganda and more across PRs #69–89)
     places.js                 — 250+ named places across all countries (scale, region, type, population)
     headlines.js              — ~110 major historical headlines for life log injection
-    events.js                 — root event file, imports 165+ modules, exports EVENTS array (~4,000+ total character events)
+    events.js                 — root event file, imports 167+ modules, exports EVENTS array (~4,000+ total character events)
     events_culture.js         — regime/ethnicity/education/LGBTQ events
     events_gender.js          — gender-specific events
     events_historical.js      — historical period events
@@ -384,9 +384,11 @@ src/
     events_phase_entries.js   — 3 life phase transition events: adolescence arrival (13–15), young adulthood (20–22), midlife (38–42) — thematic reflections on what each phase asks
     events_partner_wants.js   — 8 relationship desire tension events: wanting children, unwilling to commit, wanting escape, unfulfilled intimacy, conflict, compromise at midlife
     events_relationship_crossover.js — 8 partnership arc events: first meeting, intimacy deepening, conflict emergence, commitment test (stay/leave), repair, long partnership texture (5–10yr), marriage milestone (25yr+), post-divorce/widowhood path
-    worldEvents.js            — 198 world history events (year+country/archetype gated); 20+ events have `context` fields
+    events_followthrough_13.js — 10 follow-through events (Mode C): institutional_power reckoning, clergy_adapted late witness, yeshiva secular bridge, amazigh recognition post-2011, multilingual inheritance, minority language grandchild, Kurdish Europe return question, Moroccan diaspora arithmetic, Mouride diaspora dahira, debt-zero milestone
+    events_syria.js           — 8 events for Arab Syrian arc (excludes Kurdish Syria): Ba'ath childhood, Hama 1982, Damascus Spring 2000–01 (2 choices), March 2011 uprising (3 choices), checkpoint daily life 2012–19, displacement decision (leave/stay), Europe arrival, late-life reckoning for those who stayed
+    worldEvents.js            — 200 world history events (year+country/archetype gated); 20+ events have `context` fields; includes Syrian civil war (2013–20, neighboring countries) and Syrian refugee crisis (2015–17, wealthy_west perspective)
     headlines.js              — ~110 major historical headline entries (year-matched, injected as log entries)
-    flags.js                  — FLAG_REGISTRY: master design document for the flag system. 641 registered
+    flags.js                  — FLAG_REGISTRY: master design document for the flag system. 670 registered
                                 flags with weight/category/description/intent/notes per entry. Pure data,
                                 no imports. Run `npm run check-flags` to derive coverage dynamically.
     careers.js                — all career definitions with career-specific events
@@ -395,7 +397,7 @@ src/
     assets.js                 — property/vehicle data
     destinations.js           — travel destinations
     illnesses.js              — illness/disease system
-    ribbons.js                — end-of-life achievement ribbons (219+ defined)
+    ribbons.js                — end-of-life achievement ribbons (223 defined)
   engine/
     gameEngine.js             — core simulation: buildG, advanceYear, emigrate,
                                 generateEpitaph, generateIdentityCard, buildYearTexture,

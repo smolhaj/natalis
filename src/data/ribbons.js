@@ -1845,4 +1845,38 @@ export const RIBBONS = [
     priority: 74,
     color: 'gold',
   },
+
+  // ── SYRIA ─────────────────────────────────────────────────────────────────
+  {
+    id: 'the_crossing',
+    name: 'The Crossing',
+    description: 'You left Syria in a rubber inflatable carrying three times the passengers it was designed for. You did not look at the water. You arrived.',
+    condition: (G) => G.flags.includes('left_syria') && G.flags.includes('syria_europe_arrived'),
+    priority: 88,
+    color: 'gray',
+  },
+  {
+    id: 'the_damascus_spring',
+    name: 'The Damascus Spring',
+    description: 'Nine months when things were said in rooms that could not have been said before. Then the arrests. You were there.',
+    condition: (G) => G.flags.includes('damascus_spring_witness') && G.flags.includes('briefly_believed'),
+    priority: 72,
+    color: 'blue',
+  },
+  {
+    id: 'the_ones_still_here',
+    name: 'The Ones Still Here',
+    description: 'Most of the people you grew up with are in Germany, in Turkey, in Lebanon, in a camp somewhere. You are still here.',
+    condition: (G) => G.flags.includes('stayed_syria') && G.flags.includes('syria_stayed_accounted'),
+    priority: 76,
+    color: 'gray',
+  },
+  {
+    id: 'hama_generation',
+    name: 'Hama Generation',
+    description: 'You knew what the state did to those who challenged it. The lesson was learned in 1982 and has not been forgotten.',
+    condition: (G) => G.flags.includes('hama_silence'),
+    priority: 70,
+    color: 'gray',
+  },
 ]

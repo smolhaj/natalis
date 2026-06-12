@@ -5391,4 +5391,148 @@ export const FLAG_REGISTRY = {
     notes: 'Set by debt_zero_moment.',
   },
 
+  // ── SYRIA ARC ────────────────────────────────────────────────────────────────
+
+  baath_state_learned: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Syrian character who grew up under Ba\'ath party rule and learned the grammar of authoritarian surveillance — portraits, silence, the unsaid.',
+    intent: 'year_texture',
+    notes: 'Set by sy_baath_childhood. Gates deeper Syria events.',
+  },
+
+  hama_silence: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Syrian character who knew or witnessed the 1982 Hama massacre — the defining silence of a generation.',
+    intent: 'year_texture',
+    timestamped: true,
+    notes: 'Set by sy_hama_1982. Up to 40,000 dead. The event that taught the lesson of this state.',
+  },
+
+  damascus_spring_witness: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Syrian intellectual/professional who witnessed the brief Damascus Spring of 2000–2001 — discussion forums, open letters, and the shutdown that followed.',
+    intent: 'year_texture',
+    notes: 'Set by sy_damascus_spring.',
+  },
+
+  briefly_believed: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Character who briefly believed a political opening was real before it was shut down.',
+    intent: 'year_texture',
+    notes: 'Set by sy_damascus_spring (participate choice). Also applicable to Arab Spring optimism.',
+  },
+
+  left_syria_early: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Syrian character who left before the worst of the civil war — reading the situation early.',
+    intent: 'year_texture',
+    notes: 'Set by sy_march_2011 (leave_early choice).',
+  },
+
+  syria_uprising_witness: {
+    weight: 'major',
+    category: 'political',
+    description: 'Syrian character who witnessed the 2011 uprising from inside Syria — street, balcony, or early flight.',
+    intent: 'year_texture',
+    timestamped: true,
+    notes: 'Set by sy_march_2011. Required for downstream civil war events.',
+  },
+
+  civil_war_checkpoint_daily: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Syrian character who lived through the daily reality of a divided city — checkpoints, barrel bombs, knowing which roads are safe this week.',
+    intent: 'year_texture',
+    timestamped: true,
+    notes: 'Set by sy_checkpoint_life.',
+  },
+
+  civil_war_survived: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Character who survived the Syrian civil war from inside the country.',
+    intent: 'year_texture',
+    notes: 'Set by sy_checkpoint_life. Broad survival flag.',
+  },
+
+  left_syria: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Syrian character who fled during the civil war — the boat crossing, the Turkish route, the rubber inflatable.',
+    intent: 'both',
+    timestamped: true,
+    notes: 'Set by sy_displacement_choice (leave choice). Gates sy_europe_arrival.',
+  },
+
+  civil_war_displaced: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Syrian character displaced by the civil war — departed rather than survived in place.',
+    intent: 'year_texture',
+    notes: 'Set by sy_displacement_choice (leave choice). Sister flag to left_syria.',
+  },
+
+  stayed_syria: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Syrian character who chose (or was unable) to leave during the civil war — stayed with the house, the city, the life built.',
+    intent: 'both',
+    timestamped: true,
+    notes: 'Set by sy_displacement_choice (stay choice). Gates sy_stayed_through.',
+  },
+
+  syria_europe_arrived: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Syrian refugee who arrived in Europe — the camp, the caseworker, the file that doesn\'t know who they are.',
+    intent: 'year_texture',
+    timestamped: true,
+    notes: 'Set by sy_europe_arrival. Follow-through for left_syria in European context.',
+  },
+
+  refugee_experience: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Character who lived through the asylum seeker / refugee process — camp, caseworker, legal limbo, the compression of a specific life into a policy category.',
+    intent: 'year_texture',
+    notes: 'Set by sy_europe_arrival. Applicable beyond Syria but introduced here.',
+  },
+
+  syria_stayed_accounted: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Syrian character who has reckoned with the decision to stay — whether it was a choice or a circumstance.',
+    intent: 'year_texture',
+    notes: 'Set by sy_stayed_through.',
+  },
+
+  chose_to_stay: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Character who explicitly owned the decision to stay when others left — not trapped, but choosing.',
+    intent: 'year_texture',
+    notes: 'Set by sy_stayed_through (chosen branch).',
+  },
+
+  syrian_crisis_witnessed: {
+    weight: 'minor',
+    category: 'world_event',
+    description: 'Non-Syrian character living in a neighboring country who witnessed the Syrian civil war\'s impact on their region.',
+    intent: 'none',
+    notes: 'Set by syrian_civil_war world event. Fires for Lebanon/Jordan/Turkey/Iraq characters.',
+  },
+
+  refugee_crisis_witness: {
+    weight: 'minor',
+    category: 'world_event',
+    description: 'Wealthy West character who witnessed the 2015 Syrian refugee crisis — the photograph, the debate, the political fracture.',
+    intent: 'none',
+    notes: 'Set by syrian_refugee_crisis_europe world event.',
+  },
+
 }

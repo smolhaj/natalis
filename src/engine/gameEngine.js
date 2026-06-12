@@ -3281,6 +3281,95 @@ function buildYearTexture(state) {
       : 'The ideology says: organize from below, make decisions together, do not wait for the state to permit the life you are building. You are learning what this means in practice.',
   ])
 
+  // ─── SYRIA ARC YEAR TEXTURE ──────────────────────────────────────────────────
+  if (F.has('hama_silence') && Math.random() < 0.25) return pick([
+    'You carry the silence of Hama the way you carry all the silences you were taught — as a form of knowledge, not a gap.',
+    'The lesson of 1982 is not something you articulate. It is something you apply, continuously, to every calculation about what can be said and to whom.',
+    phase === 'late_life'
+      ? 'Decades later the silence of Hama is still the calibration point. Every political moment gets measured against what you understood in the years after 1982.'
+      : 'The silence around Hama is architectural. It shapes what can be built near it and what cannot.',
+    'You know what the state does to those who challenge it. The knowledge was acquired once and has not faded.',
+  ])
+
+  if ((F.has('civil_war_checkpoint_daily') || F.has('civil_war_survived')) && Math.random() < 0.28) return pick([
+    'You know which roads. You know which hours. You know which faction controls which street this week. The knowledge updates and you update with it.',
+    'The checkpoint life: papers in the right pocket, the specific stillness required, the face that shows nothing while showing everything necessary. The body remembers this even now.',
+    phase === 'late_life'
+      ? 'The city you lived in during those years exists in your memory with extraordinary precision. The streets have different meanings attached to them than the ones on any map.'
+      : 'You have learned to live inside a city that has been divided into someone\'s territory and someone else\'s territory, and to navigate those divisions as a form of daily competence.',
+    'The barrel bomb sound — which direction, which neighbourhood, whether to move or stay. You knew this. The knowledge is still in the body.',
+  ])
+
+  if ((F.has('left_syria') || F.has('civil_war_displaced')) && F.has('syria_europe_arrived') && Math.random() < 0.28) return pick([
+    'The file in the caseworker\'s cabinet contains a name that has a city behind it, a neighbourhood, a street you knew at a specific hour. The file does not know this.',
+    'Someone asks where you are from and you give the name of the city. They know it from the news. The city in the news is not the city you are from.',
+    phase === 'late_life'
+      ? 'You have been building a life in this country for years. The building is real. The city you came from is also real. Both are yours, in different ways.'
+      : 'The camp was temporary, which means you were there for eight months. The new country is coming into focus. What you brought with you fits in the specific weight of what you carried.',
+    'You crossed the sea in a boat designed for a third of the people it was carrying. You did not look at the water. You are here.',
+  ])
+
+  if ((F.has('left_syria') || F.has('civil_war_displaced')) && !F.has('syria_europe_arrived') && Math.random() < 0.22) return pick([
+    'Turkey first, then the calculation about what comes next. The route was the route everyone was taking. You were one of the million.',
+    'You left with what you could carry. What you could not carry is in a city that has been divided and bombed and partially rebuilt. Some of it may still be there.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'Years of displacement — or years of building something in the country of arrival. Both are true simultaneously. The life is real. The departure is also real.'
+      : 'The crossing is done. What comes next is the work of being someone who has crossed.',
+  ])
+
+  if (F.has('stayed_syria') && !F.has('syria_stayed_accounted') && Math.random() < 0.25) return pick([
+    'The people who left send messages from Germany, from Turkey, from Canada. You are in the city. The city has a different shape than it had before the war.',
+    'The souk is partially rebuilt. The part that burned for three weeks is the part that isn\'t. The reconstruction is a frame around an absence.',
+    phase === 'late_life'
+      ? 'You stayed when others left. The decision accumulated into a fact. The city you stayed in is not the city you chose to stay in — it changed around the staying. Both things are true.'
+      : 'Most of the people you grew up with are somewhere else now. You are here. The staying was a decision at a specific moment and then it was simply what happened.',
+    'The city is yours in the way that cities belong to the people who remain in them. The belonging has a cost you can enumerate.',
+  ])
+
+  if (F.has('syria_stayed_accounted') && Math.random() < 0.22) return pick([
+    F.has('chose_to_stay')
+      ? 'You chose this. The choice was made with full knowledge of what the war was and what staying would cost. The city is still yours. You are still here.'
+      : 'The parents, the property, the moment when the window closed. You have made your accounting. The circumstances were what they were.',
+    phase === 'late_life'
+      ? 'The reckoning about staying or being unable to leave is behind you. The living inside that fact continues.'
+      : 'You have faced the question of whether you chose or were chosen by circumstances. The answer you arrived at is yours to carry.',
+  ])
+
+  if (F.has('left_syria_early') && Math.random() < 0.22) return pick([
+    'You read the situation correctly and early. You left before the siege, before the barrel bombs, before the crossing became necessary in a rubber inflatable at three in the morning. You were right. The city got much worse.',
+    'Leaving early meant leaving with more than most people left with. It also meant leaving before the scale of what was coming was visible to anyone who hadn\'t already decided to look.',
+    phase === 'late_life'
+      ? 'You got out before it became what it became. The people who stayed — the ones who couldn\'t leave, or wouldn\'t — are part of what you carry from that decision.'
+      : 'The early departure gave you a head start on the life that came after. The head start has a cost that doesn\'t appear in any accounting.',
+  ])
+
+  if (F.has('baath_state_learned') && !F.has('hama_silence') && !F.has('syria_uprising_witness') && Math.random() < 0.2) return pick([
+    'The portraits are so deeply woven into your mental geography that you notice their absence now as much as their presence.',
+    'You learned early what can be said, to whom, in what context. The calculation is automatic. You did not decide to make it automatic — the education was thorough.',
+    phase === 'late_life'
+      ? 'The grammar of the Ba\'ath state is something you were taught so thoroughly that unlearning it has been the work of decades. Some parts of it are still in you.'
+      : 'Assad in the classroom, Assad in the bakery, Assad at every checkpoint. The landscape of your childhood was a permanent instruction in who held the power and what that meant.',
+  ])
+
+  if (F.has('damascus_spring_witness') && Math.random() < 0.22) return pick([
+    'The Damascus Spring lasted nine months. You knew it would be shut down. You also believed in it while it was happening. Both things were true simultaneously.',
+    'You were there when things were said in a room that could not have been said six months earlier. The memory of those rooms is specific.',
+    F.has('briefly_believed')
+      ? 'You attended the forums. You heard what was said. You were in the room when people believed a different Syria was possible. The belief was real. So was the shutdown.'
+      : 'You watched the forums from a careful distance. You kept your name off the lists. The shutdown came regardless. The care was not protective — it was just careful.',
+    phase === 'late_life'
+      ? 'The Damascus Spring was the window between one era and the next. What was said in those nine months, and what was then silenced, is part of what you carry about what Syria could have been.'
+      : 'Nine months of a country that appeared to be loosening. Then the arrests. You learned something specific about the relationship between appearing to change and actually changing.',
+  ])
+
+  if (F.has('refugee_experience') && !F.has('syria_europe_arrived') && Math.random() < 0.22) return pick([
+    'The file has a number. Behind the number is a life. The system processes the number.',
+    'You have a file and a caseworker and a language you are learning and a category — refugee, asylum seeker, displaced person — that is doing a lot of work compressing a specific life.',
+    phase === 'late_life'
+      ? 'The years of legal limbo are behind you. The status that was finally granted is a fact. The years before the fact are also a fact.'
+      : 'The process has a timeline that is longer than the process seems to know. You are inside the timeline.',
+  ])
+
   if (F.has('colonial_category') && Math.random() < 0.2) return pick([
     'A colonial administrator wrote the categories into a register. You live inside the categories. The administrator is long gone.',
     'The ethnicity that was fixed by a census has become the ethnicity that determines everything: neighbourhood, school, job, who stops you on the road.',
