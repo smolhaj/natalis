@@ -195,4 +195,60 @@ export const FOLLOWTHROUGH_13_EVENTS = [
     },
   },
 
+  // ─── INDIA DEPTH FOLLOW-THROUGHS ─────────────────────────────────────────────
+
+  {
+    id: 'ind_considered_emigration_echo',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('considered_emigration') &&
+      G.character.country.name === 'India' &&
+      G.age >= 35 && G.age <= 50 &&
+      !G.mem?.indEmigrationEcho,
+    text: 'The tab is still in your browser history. You have not looked at it in three years. Someone you were at school with has sent a WhatsApp from a city you researched once — their salary, in passing, their school, the one their daughter gets into. You do the arithmetic again, the same arithmetic as before, and it produces the same result as before, and you close the tab again.',
+    choices: [
+      {
+        text: 'The arithmetic tips the other way this time.',
+        tag: null,
+        outcome: 'You open a new tab. You send an email. The next step is not commitment — it is information-gathering. You tell yourself this.',
+        effect: (p) => { p.m -= 3; p.r += 5; p.addFlag('emigration_reconsidered'); p.setMem('indEmigrationEcho', true); },
+      },
+      {
+        text: 'You close the tab. You are building here.',
+        tag: null,
+        outcome: 'The decision costs something and gives something back. You make it again, which means it was a decision. Every few years, the test returns. So far, this is the answer.',
+        effect: (p) => { p.karma += 3; p.m += 4; p.addFlag('chose_to_stay'); p.setMem('indEmigrationEcho', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ind_first_gen_defied_echo',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('first_gen_defied') &&
+      G.character.country.name === 'India' &&
+      G.age >= 35 && G.age <= 52 &&
+      !G.mem?.indFirstGenEcho,
+    text: 'Your father is getting older. The three weeks of silence had a shape and you still remember the shape of it. You are doing the thing you said you wanted to do, or a version of it — perhaps an approximated version, the one that was achievable rather than the one that was dreamed. You do not know if he is proud. He has not used that word. He has watched, and come to events, and not used the word.',
+    choices: [
+      {
+        text: 'You have this conversation directly.',
+        tag: null,
+        outcome: 'He does not quite say it, but the conversation is different from the silences that followed the original one. Something is released.',
+        effect: (p) => { p.m += 8; p.r -= 5; p.karma += 4; p.addFlag('first_gen_reconciled'); p.setMem('indFirstGenEcho', true); },
+      },
+      {
+        text: 'You leave the conversation unfinished, as it has always been.',
+        tag: null,
+        outcome: 'The silence continues at a different pitch than the original — not cold, just careful. You have learned to read what he means through what he does not say.',
+        effect: (p) => { p.m -= 3; p.r += 4; p.addFlag('first_gen_distance_kept'); p.setMem('indFirstGenEcho', true); },
+      },
+    ],
+    effect: null,
+  },
+
 ]

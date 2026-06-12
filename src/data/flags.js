@@ -5898,4 +5898,429 @@ export const FLAG_REGISTRY = {
     notes: 'Set by pal_late_return_question.',
   },
 
+  // ── PANDEMIC ────────────────────────────────────────────────────────────────
+
+  pandemic_healthcare_worker: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Was a healthcare worker on the front line during COVID-19 — the PPE shortages, the ward deaths in a specific order, the tablet held up to a dying patient\'s face.',
+    intent: 'year_texture',
+    timestamped: true,
+    notes: 'Set by pan_healthcare_worker / pan_healthcare_worker_midlife.',
+  },
+
+  pandemic_burned_out: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Took burnout leave during the pandemic — the ward felt like abandonment even as the body needed rest.',
+    intent: 'year_texture',
+    notes: 'Set alongside pandemic_healthcare_worker when burnout leave is chosen.',
+  },
+
+  pandemic_informal_kept_working: {
+    weight: 'moderate',
+    category: 'world_event',
+    description: 'Kept working through lockdown in an informal economy — the risk of the virus was less than the risk of not eating.',
+    intent: 'year_texture',
+    notes: 'Set by pan_informal_lockdown / pan_informal_lockdown_midlife.',
+  },
+
+  pandemic_locked_down: {
+    weight: 'moderate',
+    category: 'world_event',
+    description: 'Stayed home through lockdown and borrowed money to survive — the debt came after the compliance.',
+    intent: 'year_texture',
+    notes: 'Set by pan_informal_lockdown when stay_home is chosen.',
+  },
+
+  pandemic_small_children_lockdown: {
+    weight: 'minor',
+    category: 'world_event',
+    description: 'Navigated lockdown with small children at home — school closure and work-from-home instructions arriving on the same day.',
+    intent: 'none',
+    notes: 'Set by pan_small_children_lockdown / pan_small_children_lockdown_midlife.',
+  },
+
+  pandemic_elderly_isolated: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Spent the pandemic years isolated at 70+ — the window waves, the more frequent calls that were also a kind of loneliness.',
+    intent: 'year_texture',
+    notes: 'Set by pan_elderly_isolation.',
+  },
+
+  pandemic_death_without_goodbye: {
+    weight: 'major',
+    category: 'loss',
+    description: 'Lost a parent during COVID-19 without being allowed in the room — the specific rule the specific shape of the loss.',
+    intent: 'year_texture',
+    timestamped: true,
+    notes: 'Set by pan_death_without_goodbye / pan_death_without_goodbye_late.',
+  },
+
+  broke_the_rules_for_this: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Broke pandemic regulations to be present at a dying parent\'s bedside — a choice carried without regret.',
+    intent: 'none',
+    notes: 'Set by pan_death_without_goodbye when break_the_rules is chosen.',
+  },
+
+  pandemic_vaccinated: {
+    weight: 'minor',
+    category: 'world_event',
+    description: 'Got vaccinated against COVID-19 — the sore arm, the thing that felt like relief.',
+    intent: 'none',
+    notes: 'Set by pan_vaccine_choice variants.',
+  },
+
+  pandemic_vaccine_hesitant: {
+    weight: 'minor',
+    category: 'world_event',
+    description: 'Waited before deciding on the COVID-19 vaccine — kept tracking the numbers.',
+    intent: 'none',
+    notes: 'Set by pan_vaccine_choice when wait is chosen.',
+  },
+
+  pandemic_unvaccinated: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Declined the COVID-19 vaccine — this became a position held and asked about.',
+    intent: 'year_texture',
+    notes: 'Set by pan_vaccine_choice when decline is chosen.',
+  },
+
+  pandemic_long_covid: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Developed long COVID — the stairs, the Thursday afternoon concentration, the thing that is simultaneously true and not quite accepted.',
+    intent: 'both',
+    notes: 'Set by pan_long_covid / pan_long_covid_midlife. Also calls p.addCondition(\'long_covid\', \'mild\').',
+  },
+
+  pandemic_community_response: {
+    weight: 'minor',
+    category: 'achievement',
+    description: 'Volunteered during the pandemic — deliveries, calls to the elderly, the specific usefulness of helping.',
+    intent: 'none',
+    notes: 'Set by pan_wealthy_west_specific when volunteer is chosen.',
+  },
+
+  pandemic_survived_intact: {
+    weight: 'minor',
+    category: 'world_event',
+    description: 'Got through the pandemic lockdown without major disruption — finished two books, started six more.',
+    intent: 'none',
+    notes: 'Set by pan_wealthy_west_specific when cope_quietly is chosen.',
+  },
+
+  // India depth flags (events_india_depth.js)
+
+  arranged_meeting_accepted: {
+    weight: 'minor',
+    category: 'relationship',
+    description: 'Agreed to an arranged marriage introduction — the structure moved forward.',
+    intent: 'none',
+    notes: 'Set by ind_arranged_marriage_meetings (accept branch).',
+  },
+
+  arranged_meeting_declined: {
+    weight: 'minor',
+    category: 'relationship',
+    description: 'Said no to an arranged introduction — exercised a veto within a system that contains the veto.',
+    intent: 'none',
+    notes: 'Set by ind_arranged_marriage_meetings (decline branch).',
+  },
+
+  joint_family_tension: {
+    weight: 'moderate',
+    category: 'relationship',
+    description: 'Began saving separately in a joint household — prudence or the beginning of something else.',
+    intent: 'followthrough',
+    notes: 'Set by ind_joint_family_entry. Checked by ind_joint_family_nuclear_transition.',
+  },
+
+  english_medium_identity: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Claimed English as the primary vehicle — the door opened, and the gap to the village grew at the same pace.',
+    intent: 'year_texture',
+    notes: 'Set by ind_english_medium_identity.',
+  },
+
+  bilingual_identity: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Held two languages and the uncomfortable position between them — fluent in the discomfort.',
+    intent: 'year_texture',
+    notes: 'Set by ind_english_medium_identity (hold-both branch).',
+  },
+
+  regional_identity_pride: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Led with a regional Indian identity rather than performing national neutrality.',
+    intent: 'year_texture',
+    notes: 'Set by ind_regional_language_pride.',
+  },
+
+  national_identity_neutral: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Learned to perform the national neutrality — the performance became habit.',
+    intent: 'none',
+    notes: 'Set by ind_regional_language_pride (neutrality branch).',
+  },
+
+  dowry_negotiated: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Family managed the full dowry demand — the figure settled, the cost not spoken.',
+    intent: 'year_texture',
+    notes: 'Set by ind_dowry_negotiation.',
+  },
+
+  dowry_contested: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Tried to reduce the dowry demand — partially succeeded; something in the other family\'s warmth was also partially reduced.',
+    intent: 'year_texture',
+    notes: 'Set by ind_dowry_negotiation (contest branch).',
+  },
+
+  nuclear_family_choice: {
+    weight: 'moderate',
+    category: 'relationship',
+    description: 'Moved into a nuclear household — Sunday visits began, the relationship adjusting through deliberate distance.',
+    intent: 'year_texture',
+    notes: 'Set by ind_joint_family_nuclear_transition.',
+  },
+
+  stayed_joint_family: {
+    weight: 'minor',
+    category: 'relationship',
+    description: 'Stayed in the joint household — not sure whether it was loyalty or inertia.',
+    intent: 'none',
+    notes: 'Set by ind_joint_family_nuclear_transition (stay branch).',
+  },
+
+  suppressed_ambition: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Accepted a path that was not the thing wanted — the other thing went into a drawer and stayed there.',
+    intent: 'both',
+    notes: 'Set by ind_first_gen_pressure (want-something-else or say-it branch).',
+  },
+
+  first_gen_defied: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Said what they actually wanted to a family that had already decided — the silence that followed had a shape.',
+    intent: 'followthrough',
+    notes: 'Set by ind_first_gen_pressure (say-it branch).',
+  },
+
+  invisible_labour_known: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Named the arithmetic of primary domestic responsibility that is not quite discussable.',
+    intent: 'year_texture',
+    notes: 'Set by ind_mothers_labour.',
+  },
+
+  urban_rural_connected: {
+    weight: 'minor',
+    category: 'relationship',
+    description: 'Maintained ties to the village through remittances — not large enough, but arriving.',
+    intent: 'none',
+    notes: 'Set by ind_village_visit_midlife.',
+  },
+
+  urban_rural_disconnected: {
+    weight: 'moderate',
+    category: 'relationship',
+    description: 'Lost touch with the village gradually — the distance too specific to bridge.',
+    intent: 'year_texture',
+    notes: 'Set by ind_village_visit_midlife (lose-touch branch).',
+  },
+
+  considered_emigration: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Opened the tab on emigration and never quite closed it — visa categories, salary comparisons, the NRI return.',
+    intent: 'followthrough',
+    notes: 'Set by ind_nri_return_question and other emigration events.',
+  },
+
+  academic_pressure: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Entered the narrow path — engineering or medicine, the entrance exam, everything else waiting until after.',
+    intent: 'year_texture',
+    notes: 'Set by ind_first_gen_pressure.',
+  },
+
+  suppressed_ambition_revived: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Found a way to hold the suppressed thing — a class, an evening practice. Not what it would have been; also not nothing.',
+    intent: 'none',
+    notes: 'Set by ind_suppressed_ambition_midlife (revive branch).',
+  },
+
+  suppressed_ambition_buried: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Kept walking past the bookshop — the arithmetic of the trade continues, the career remains very good.',
+    intent: 'none',
+    notes: 'Set by ind_suppressed_ambition_midlife (bury branch).',
+  },
+
+  // ── GREECE ──────────────────────────────────────────────────────────────────
+
+  junta_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Came of age under the Greek Colonels\' junta (1967–74) — learned to calibrate speech, endured the silence the regime required.',
+    intent: 'year_texture',
+    timestamped: true,
+    notes: 'Set by gr_junta_announcement.',
+  },
+
+  junta_youth: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Adolescent years fell under the junta\'s cultural restrictions — banned music, banned hair, banned Sophocles.',
+    intent: 'year_texture',
+    notes: 'Set by gr_junta_culture.',
+  },
+
+  polytechnic_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was present for or near the Athens Polytechnic uprising of November 1973 — the broadcast that said "this is the Polytechnic," the tank through the gate.',
+    intent: 'year_texture',
+    timestamped: true,
+    notes: 'Set by gr_polytechnic_1973.',
+  },
+
+  revolution_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was old enough to hear Theodorakis on the radio the day the Greek junta fell — songs known when they were illegal, played openly at last.',
+    intent: 'year_texture',
+    timestamped: true,
+    notes: 'Set by gr_junta_fall_1974.',
+  },
+
+  metapolitefsi_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Voted in the first meaningful Greek elections after the junta — the specific feeling of an election that counts after years when it did not.',
+    intent: 'year_texture',
+    notes: 'Set by gr_metapolitefsi.',
+  },
+
+  greece_crisis_stayed: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Stayed in Greece through the debt crisis — ATM limits, pension cuts, the troika conditions, the long endurance.',
+    intent: 'year_texture',
+    notes: 'Set by gr_debt_crisis_2010.',
+  },
+
+  greece_crisis_emigrant: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Left Greece during the debt crisis — part of the new Greek emigration of educated people with EU passports and diminished options at home.',
+    intent: 'year_texture',
+    timestamped: true,
+    notes: 'Set by gr_debt_crisis_2010.',
+  },
+
+  // ── PORTUGAL ────────────────────────────────────────────────────────────────
+
+  estado_novo_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Came of age under Salazar\'s Estado Novo — learned the PIDE, the calibrated sentence, the shape of forty-eight years of permitted life.',
+    intent: 'year_texture',
+    timestamped: true,
+    notes: 'Set by pt_estado_novo_texture.',
+  },
+
+  colonial_war_served: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Served in the Portuguese colonial wars in Africa (Angola, Guinea-Bissau, Mozambique, 1961–74) — came back changed in ways that take years to name.',
+    intent: 'year_texture',
+    timestamped: true,
+    notes: 'Set by pt_colonial_war.',
+  },
+
+  colonial_war_evaded: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Evaded Portuguese conscription by emigrating — most often to France — rather than serve in a colonial war the rest of the world had already ended.',
+    intent: 'year_texture',
+    notes: 'Set by pt_colonial_war.',
+  },
+
+  carnation_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was present on April 25, 1974 — the Carnation Revolution, the day forty-eight years of dictatorship ended with flowers in rifle barrels.',
+    intent: 'year_texture',
+    timestamped: true,
+    notes: 'Set by pt_carnation_revolution.',
+  },
+
+  retornado_family: {
+    weight: 'moderate',
+    category: 'family',
+    description: 'Family member was among the 700,000 retornados who returned from Angola and Mozambique after independence — arriving with what could be carried.',
+    intent: 'year_texture',
+    notes: 'Set by pt_retornados.',
+  },
+
+  witnessed_displacement: {
+    weight: 'minor',
+    category: 'formative',
+    description: 'Witnessed mass displacement or return migration as a bystander — the particular weight of watching people arrive with everything they own.',
+    intent: 'none',
+    notes: 'Set by pt_retornados and similar displacement events.',
+  },
+
+  eu_accession_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through Portugal\'s 1986 EC accession as an adult — the structural funds, the new roads, the specific relief of a generation that remembered dictatorship.',
+    intent: 'year_texture',
+    notes: 'Set by pt_eu_accession.',
+  },
+
+  emigration_reconsidered: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Re-opened the emigration question in midlife — the tab, the salary comparison, the decision to gather information rather than commit.',
+    intent: 'none',
+    notes: 'Set by ind_considered_emigration_echo (chose to re-explore).',
+  },
+
+  first_gen_reconciled: {
+    weight: 'moderate',
+    category: 'family',
+    description: 'Had the direct conversation with the father who went silent when the path was defied — something released, without the exact word being said.',
+    intent: 'none',
+    notes: 'Set by ind_first_gen_defied_echo.',
+  },
+
+  first_gen_distance_kept: {
+    weight: 'minor',
+    category: 'family',
+    description: 'Left the first-generation defiance conversation unfinished — the silence continuing at a different pitch, careful rather than cold.',
+    intent: 'none',
+    notes: 'Set by ind_first_gen_defied_echo.',
+  },
+
 }

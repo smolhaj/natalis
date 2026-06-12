@@ -3323,6 +3323,71 @@ function buildYearTexture(state) {
       : 'The financial life after the debt is being built. The habits the debt made are still present in how careful you are. That carefulness will serve you.',
   ])
 
+  // ─── PANDEMIC FLAG TEXTURE ───────────────────────────────────────────────────
+
+  if (F.has('pandemic_unvaccinated') && Math.random() < 0.25) return pick([
+    'The position you hold on the vaccine is still a position you are asked about. The question has not gone away.',
+    'You made the choice and have been living with it as a social fact as much as a medical one. The conversations it generates have a consistent shape.',
+    phase === 'late_life'
+      ? 'Looking back at the choice from here. What it cost, what it protected, whether the accounting is what you expected. You have done that accounting.'
+      : 'The position requires a kind of consistency. You have been consistent with it.',
+  ])
+
+  if (F.has('pandemic_elderly_isolated') && Math.random() < 0.3) return pick([
+    'The window wave is still in you. Waving in a way that does not show what the window costs.',
+    'The pandemic years when they did not come on Sundays. The phone calls that were more frequent and also their own kind of loneliness.',
+    phase === 'late_life'
+      ? 'You were 70 and alone during those years. The solitude had a specific texture because it was imposed rather than chosen. You remember the difference.'
+      : 'Those years have settled into the record. The isolation was real. You moved through it.',
+  ])
+
+  if (F.has('pandemic_informal_kept_working') && Math.random() < 0.25) return pick([
+    'You kept moving when the city was told not to move. The arithmetic was simple: no movement, no money, no food. You chose movement.',
+    'The lockdown that was designed for people with salaries. You lived in the gap between the policy and the life the policy did not account for.',
+    phase === 'late_life'
+      ? 'You made it through the pandemic by doing what you have always done: finding the way to keep working when the way was unclear. That is a skill with a cost.'
+      : 'Most people in the neighbourhood were doing the same thing. The rule was written for a different kind of economy.',
+  ])
+
+  if (F.has('pandemic_locked_down') && Math.random() < 0.25) return pick([
+    'You borrowed to survive the lockdown. The debt came after the compliance. The compliance was a choice between two different risks.',
+    'The months of the locked-down debt are in the financial record and also in how you think about what the state owes the people it governs.',
+    phase === 'late_life'
+      ? 'You were careful and you were poor and you took the debt on and cleared it eventually. That sequence is part of the permanent account.'
+      : 'The debt cleared. What the debt produced in you — the specific carefulness about what you owe and who holds the note — is still there.',
+  ])
+
+  if (F.has('pandemic_healthcare_worker') && Math.random() < 0.3) return pick([
+    'You were on the ward when the wards were the place everyone was looking at. The looking has stopped. The years on the ward have not.',
+    'The PPE shortages and the tablet held up to the face and the specific order of who died first. You carry this without a framework because there is no framework — the event exceeded the available ones.',
+    phase === 'late_life'
+      ? 'When you add up the years, the pandemic wards are a chapter that still has weight disproportionate to its length. What you saw there is still present in the way you read faces in hospitals.'
+      : 'You went back after the leave. That decision was not simple. You are still here.',
+    F.has('pandemic_burned_out')
+      ? 'The burnout leave felt like abandonment. You came back anyway. Both of those things are true and are still part of how you think about what the work is.'
+      : 'You did not take the leave that was offered. The work held you upright and cost you something. The accounting is still ongoing.',
+  ])
+
+  if (F.has('pandemic_death_without_goodbye') && Math.random() < 0.3) return pick([
+    'You were not in the room. The rule was the rule. The specific shape of that absence is something you carry permanently.',
+    'The tablet, the voice from a device, the last thing they heard was not you standing next to them. That knowledge has a particular texture in certain quiet moments.',
+    phase === 'late_life'
+      ? 'You think about the room you were not allowed into. Years later the thinking is less frequent. It does not stop.'
+      : 'The loss was shaped by the year it happened in. Other losses have their own shapes. This one was cut by the specific rule of that time.',
+    F.has('broke_the_rules_for_this')
+      ? 'You broke the rule to be there. You are still glad of it. The gladness does not require the rule to have been wrong.'
+      : 'You spoke to them on the phone until the end. That is what was possible. You did what was possible.',
+  ])
+
+  if (F.has('pandemic_long_covid') && Math.random() < 0.3) return pick([
+    'The stairs. The concentration on Thursday afternoons. The test is negative but the body has not returned to what it was before January.',
+    'Long COVID: a phrase that describes your life in a way that is simultaneously accepted by medicine and treated as insufficiently real by the world.',
+    phase === 'late_life'
+      ? 'The body adapted. Not fully, not cleanly, but it found a new account of what it could do. The winter that changed it is still in the record.'
+      : 'You have stopped expecting to be exactly as you were before. That adjustment is its own kind of grief and also its own kind of peace.',
+    'The GP said there are a lot of people in this situation. The number of people in the situation does not reduce how the situation is to be in.',
+  ])
+
   // ─── MAJOR HISTORICAL AND DISPLACEMENT FLAG TEXTURE ──────────────────────────
 
   if (F.has('rwandan_survivor') && Math.random() < 0.25) return pick([
@@ -5979,6 +6044,130 @@ function buildYearTexture(state) {
   if (F.has('demonetization_generation') && Math.random() < 0.2) return pick([
     'November 8, 2016, 8pm: 86 percent of the currency in circulation, gone by midnight. The informal economy runs on cash. It was not given four hours to prepare.',
     'The queue lasted weeks. The government\'s assumption was that cash savings meant black money. Your savings were in cash because the bank was two hours away. The assumption did not include you.',
+  ])
+  if (F.has('english_medium_identity') && Math.random() < 0.2) return pick([
+    'The English-medium school opened one door and slowly closed another — the village visits where you speak haltingly in your mother tongue, and the children\'s laughter, which was not unkind.',
+    phase === 'late_life'
+      ? 'You spent your life fluent in a language that was not the language of your childhood. What that cost is specific and not fully calculable.'
+      : 'The accent settled into something that is neither village nor city. You notice when you are performing and when you are not. The distinction matters less than it used to.',
+  ])
+  if (F.has('bilingual_identity') && Math.random() < 0.18) return pick([
+    'You held two languages and the uncomfortable position between them. The discomfort did not resolve. You became fluent in the discomfort itself, which is its own kind of fluency.',
+    'In English you are one person; in your mother tongue, another. The gap between them has narrowed over the years. It has not closed.',
+  ])
+  if (F.has('regional_identity_pride') && Math.random() < 0.18) return pick([
+    '"But you speak such good Hindi" — you filed the implication. Leading with regional identity is a choice that requires repetition.',
+    phase === 'late_life'
+      ? 'You have spent decades being the person who insists on their regional identity in rooms that prefer the national neutral. The insistence has cost you certain things and preserved others.'
+      : 'The regional language is what you think in. The national language is what the office requires. These are two different selves operating in parallel, and the maintenance is constant.',
+  ])
+  if (F.has('academic_pressure') && Math.random() < 0.2) return pick([
+    'Engineering or medicine: the choice between these two was presented as the extent of your options. The thing you actually wanted — the drawing, the writing — became something done privately, and then less privately, and then barely at all.',
+    'The entrance exam structured your adolescence in a specific way. Everything else waited until after. Some of the things that waited are still waiting.',
+  ])
+  if (F.has('invisible_labour_known') && Math.random() < 0.22) return pick([
+    'The school pickup. The in-law\'s medication schedule. The homework. The social calendar of the entire family, held in your head. Your husband says he helps. He does help. The arithmetic of help versus primary responsibility is not quite discussable.',
+    phase === 'late_life'
+      ? 'You have been tracking the things you did that no one counted for forty years. The tracking stopped when the children left. You are still not entirely sure what to do with the running total.'
+      : 'The care work is unscheduled and invisible and does not stop when other work starts. This is a fact that has not changed with the generation.',
+  ])
+  if (F.has('nuclear_family_choice') && Math.random() < 0.18) return pick([
+    'You moved out of the joint family. The Sunday visits began — more deliberate, slightly formal, warmer for it. The move changed something between you and your parents-in-law that was easier to be in from a distance.',
+    'The nuclear household gives you a kitchen of your own and a schedule of your own and the specific quiet of a house where only your family lives. You did not know you wanted the quiet until you had it.',
+  ])
+  if (F.has('urban_rural_disconnected') && Math.random() < 0.18) return pick([
+    'The cousins\' names became harder to recall. You do not call this a choice, exactly. The distance that opened was specific and gradual and has an exact date you cannot name.',
+    phase === 'late_life'
+      ? 'You have not been back to the village for years. The people who stayed there know things about land and water and seasonal rhythm that you have entirely lost. The accounting on what that exchange cost runs in both directions.'
+      : 'The village your parents came from still exists. You have not been there. The not-going has become a habit, and the habit has become a kind of answer.',
+  ])
+  if (F.has('dowry_negotiated') && Math.random() < 0.15) return pick([
+    'The figure was settled in a room you were not in. Your father does not speak about what it cost him. You have not asked.',
+    phase === 'late_life'
+      ? 'The dowry was paid and the marriage happened and your father\'s silence about the cost became one of the permanent silences between you. That particular silence has been there a long time now.'
+      : 'You know the number. You know what it meant for your family. What it meant was not abstract. The silence around it is also not abstract.',
+  ])
+  if (F.has('dowry_contested') && Math.random() < 0.15) return pick([
+    'The demand was partially reduced. Something in the other family\'s warmth was also partially reduced. The two reductions tracked each other in ways that were not discussed.',
+    'You tried to reduce the demand. The attempt was heard and partially successful. You are still deciding whether the something that left the room when the number dropped was worth the money.',
+  ])
+
+  // ─── GREECE TEXTURE ──────────────────────────────────────────────────────────
+  if (F.has('junta_generation') && Math.random() < 0.22) return pick([
+    'The colonels\' junta came to power in a single morning. What it left behind — the calibrated sentence, the habit of registering who is in the room before you speak — took years to unlearn, and was perhaps not entirely unlearned.',
+    phase === 'late_life'
+      ? 'Seven years of it. You came out of the junta\'s Greece knowing how to navigate a state that is watching. That knowledge has a different value in a democracy. You are still deciding what to do with it.'
+      : 'The State Radio playing military marches at five in the morning is one of those sounds that does not leave you. You know what it means. You did not have to be told.',
+  ])
+  if (F.has('junta_youth') && Math.random() < 0.2) return pick([
+    'You came of age in a country that had opinions about your hair. About your music. About Sophocles. Coming of age inside aesthetic regulation is a specific education in what regimes are afraid of.',
+    'Theodorakis illegal. Sophocles requiring approval. The banned thing tells you what the banning is for.',
+  ])
+  if (F.has('polytechnic_generation') && Math.random() < 0.25) return pick([
+    '"This is the Polytechnic." The broadcast on a homemade transmitter, November 1973. The broadcast stopped when the tank moved through the gate. What was on the other side of the stopping is something you have been living in ever since.',
+    phase === 'late_life'
+      ? 'You were young when the tank went through the gate at Athens Polytechnic. You remember the specific quality of the sound. Some things that happened early stay more clearly than things that happened later.'
+      : 'The November 17 uprising was crushed in the night. The crushing also clarified something about the junta\'s position. The students understood. The generals understood the students understood. The tank was the answer.',
+  ])
+  if (F.has('revolution_generation') && Math.random() < 0.22) return pick([
+    'The radio played Theodorakis the morning after the junta fell. You knew every word. You had known every word for seven years, when knowing them was a small crime. The songs sounding legal did not make them sound different. They sounded exactly the same.',
+    phase === 'late_life'
+      ? 'July 1974: the junta collapsed and Karamanlis came back from Paris at 2am. You have watched Greek democracy since then. The distance between the marches on the radio and what came after is a measurement you carry.'
+      : 'What the country chose to do after the junta — the trials, the metapolitefsi, the 1981 election — was not inevitable. You were there when it was still being decided.',
+  ])
+  if (F.has('metapolitefsi_generation') && Math.random() < 0.18) return pick([
+    'PASOK won in 1981 and it was the first time a socialist government had governed Greece. You voted. The act of voting, the act of the vote meaning something, still has a specific weight when you try to describe it.',
+    'The metapolitefsi had its disappointments. The accounting for the junta went only so far. Papandreou\'s Greece was not the dream exactly. It was also not the junta. The distance between those two facts contained your political formation.',
+  ])
+  if (F.has('greece_crisis_stayed') && Math.random() < 0.25) return pick([
+    'Sixty euros. That was the ATM limit. The pharmacies ran short of insulin. The pension your father worked forty years for was cut by thirty percent and then negotiated again. You are still here.',
+    phase === 'late_life'
+      ? 'You watched the young doctors and engineers leave. You watched the pensioners queue outside banks. You stayed. You are still deciding whether staying was the right choice or the available one.'
+      : 'The troika arrived with conditions and the conditions had consequences for specific people in specific ways that the word "austerity" does not capture. You are one of the specific people.',
+    'The word "memorandum" entered daily speech and stayed there for years. Each time a new one was signed, you learned what else could be cut.',
+  ])
+  if (F.has('greece_crisis_emigrant') && Math.random() < 0.22) return pick([
+    'You are the fourth or fifth wave of Greek emigration, depending on how you count. The first waves went for poverty. This one is different: university degree, EU passport, nothing worth staying for. That is also a kind of poverty.',
+    phase === 'late_life'
+      ? 'You left during the crisis. You have watched Greece from abroad since then — the further austerity, the recovery, the question of what the recovery recovered. You are still calculating whether to go back.'
+      : 'The Greek diaspora has layers. You are in the layer that left during the memorandum years. You recognise each other in specific ways that do not require explanation.',
+  ])
+
+  // ─── PORTUGAL TEXTURE ────────────────────────────────────────────────────────
+  if (F.has('estado_novo_generation') && Math.random() < 0.22) return pick([
+    'Forty-eight years of Salazar and then Caetano — you did not know a Portugal without it. The PIDE were not everywhere but they might have been. That uncertainty is the technology.',
+    phase === 'late_life'
+      ? 'You are old enough to have lived before and after April 25. The before and after are two different countries with the same name. You have been a citizen of both.'
+      : 'The Estado Novo calibrated you. The specific sentences you did not finish. The colleagues you evaluated before you spoke. That calibration is yours even now, even here.',
+  ])
+  if (F.has('colonial_war_served') && Math.random() < 0.25) return pick([
+    'Angola or Guinea-Bissau or Mozambique — the war to hold what the world had already decided could not be held. You were twenty and the conscription letter arrived and you went.',
+    phase === 'late_life'
+      ? 'You served in Africa in a colonial war that ended in 1974 and has been ending in you since. The things you do not discuss with your family are specific and have been specific for fifty years.'
+      : 'The official newsreels and the thing inside the newsreels were two different wars. The official one ended when Caetano fell. The other one is still being settled.',
+  ])
+  if (F.has('colonial_war_evaded') && Math.random() < 0.18) return pick([
+    'France, most likely. Hundreds of thousands of Portuguese workers in Lyon, Paris, the construction sites. You were one of them, for different reasons than most, though you did not always explain the different reasons.',
+    'You went to France to evade a conscription for a war you could not explain to yourself. The war ended while you were there. The explanation arrived later, in stages.',
+  ])
+  if (F.has('carnation_generation') && Math.random() < 0.28) return pick([
+    'April 25, 1974. *Grândola, Vila Morena* on the national radio at 00:20. You were awake. You heard it. You knew what it meant, which is the same as saying you knew what was happening.',
+    phase === 'late_life'
+      ? 'You were there for the Carnation Revolution. That sentence still lands. You do not say it casually because there is nothing casual in it. The flowers in the rifle barrels. The forty-eight years ending without significant bloodshed. You were there.'
+      : 'The soldiers had carnations. Someone had to put them there. That is the detail that holds for you: someone had carnations in their hands when the soldiers came out, and the soldiers accepted them.',
+    'The Estado Novo ended in a day. That is not how things usually end. You watched it end and understood, from the speed of it, how thin the thing had become.',
+  ])
+  if (F.has('retornado_family') && Math.random() < 0.2) return pick([
+    'Someone you love arrived from Angola or Mozambique with suitcases and the particular look of people who have recently learned what can and cannot be packed in a night. Portugal was supposed to be home. The learning that it was home took years.',
+    phase === 'late_life'
+      ? 'The retornados remade the country in small ways: accents, businesses, ways of cooking, a specific relationship to Africa that was not tourism. Your family is part of that remaking.'
+      : 'Seven hundred thousand people. You know one family. Knowing one family makes the number legible in a different way.',
+  ])
+  if (F.has('eu_accession_generation') && Math.random() < 0.2) return pick([
+    'Portugal joined the EC in 1986 and the motorway from Lisbon to Porto was built and the university in every district capital was built and the pharmacist in Beja applied for European funding and received it. For a generation that remembered dictatorship, this was not a technicality.',
+    phase === 'late_life'
+      ? 'You lived through the Estado Novo and the revolution and the EC accession and the austerity and the recovery. The arc of it, seen from here, is extraordinary. You are not sure extraordinary is the right word but it is the closest word available.'
+      : 'The structural funds arrived and built things that were used by people who did not know they had been built with structural funds. That is how material change works. You watched it happen.',
   ])
 
   // ─── IRELAND TEXTURE ─────────────────────────────────────────────────────────
