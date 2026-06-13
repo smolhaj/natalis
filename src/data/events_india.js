@@ -170,4 +170,61 @@ export const INDIA_EVENTS = [
     effect: null,
   },
 
+  {
+    id: 'ind_caa_protests_2019',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'India' &&
+      G.currentYear >= 2019 && G.currentYear <= 2021 &&
+      G.age >= 16 &&
+      !G.mem?.indCAA,
+    text: (G) => {
+      if (G.religion === 'muslim') return 'December 2019. The Citizenship Amendment Act makes religion an explicit criterion for citizenship for the first time in Indian law — offering fast-track status to Hindus, Sikhs, Buddhists, and Christians from neighbouring countries, not Muslims. The National Register of Citizens in Assam already left out nearly two million people, most of them poor and unable to produce papers proving they were Indian. The logical extension of NRC + CAA is visible. Shaheen Bagh begins: women sitting on a road in Delhi, day after day, through January and February. You understand what they are sitting against.'
+      return 'December 2019. The Citizenship Amendment Act, the National Register of Citizens, Shaheen Bagh — women sitting on a road in Delhi for a hundred days through winter. The Delhi riots in February 2020 come after the police are visibly absent from Muslim neighbourhoods. How you understand the sequence depends partly on which India you live in.'
+    },
+    choices: [
+      {
+        text: 'The CAA represents something you cannot accept about the direction the country is taking.',
+        tag: null,
+        outcome: 'You say what you think in the spaces where it is possible to say it. The spaces have been narrowing.',
+        effect: (p) => { p.m -= 8; p.karma += 6; p.r += 5; p.addFlag('caa_protest_generation'); p.addFlag('political_active'); p.setMem('indCAA', true); },
+      },
+      {
+        text: 'The law is defensible and the protests are being mischaracterized.',
+        tag: null,
+        outcome: 'Your reading of the law is your reading. The question of what it produces over time is the longer account.',
+        effect: (p) => { p.m -= 4; p.r += 4; p.addFlag('caa_protest_generation'); p.setMem('indCAA', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ind_farmers_protest_2020',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'India' &&
+      G.currentYear >= 2020 && G.currentYear <= 2022 &&
+      G.age >= 18 &&
+      !G.mem?.indFarmers,
+    text: 'November 2020. Hundreds of thousands of farmers from Punjab and Haryana march to the borders of Delhi and stay. They camp on the highways — at Singhu, Tikri, Ghazipur — for thirteen months. The three farm laws the government has passed will, in the farmers\' reading, dismantle the minimum support price system that is their floor. The government says the laws modernise the market. The sit-in is among the largest sustained protests in modern history. In November 2021 Modi repeals all three laws. The farmers go home.',
+    choices: [
+      {
+        text: 'You support the farmers — this is the rural economy defending itself.',
+        tag: null,
+        outcome: 'The thirteen-month duration is itself a fact. The repeal is also a fact. Whether one caused the other is an argument the government and the movement have different answers to.',
+        effect: (p) => { p.m += 4; p.karma += 5; p.addFlag('farmers_protest_generation'); p.setMem('indFarmers', true); },
+      },
+      {
+        text: 'The protest blocked roads and affected ordinary people for over a year.',
+        tag: null,
+        outcome: 'You are not wrong about the disruption. The disruption was the point. What a disruption is worth depends on what it was blocking.',
+        effect: (p) => { p.m -= 3; p.r += 3; p.addFlag('farmers_protest_generation'); p.setMem('indFarmers', true); },
+      },
+    ],
+    effect: null,
+  },
+
 ]

@@ -173,4 +173,78 @@ export const PAKISTAN_EVENTS = [
     effect: null,
   },
 
+  {
+    id: 'pak_benazir_assassination_2007',
+    phase: 'midlife',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'Pakistan' &&
+      G.currentYear === 2007 &&
+      G.age >= 14 &&
+      !G.mem?.pakBenazir,
+    text: 'December 27, 2007. Benazir Bhutto is killed at a rally in Rawalpindi, seventeen days after surviving a suicide bombing in Karachi that killed one hundred and forty-nine others. She had returned from exile in October. The assassin is identified as a sixteen-year-old boy. The investigation produces multiple accounts. Pervez Musharraf\'s government produces one. The UN commission produces another. Bhutto had been the first female prime minister of a Muslim-majority country — twice, with an eight-year exile between the terms. She was fifty-four.',
+    choices: [
+      {
+        text: 'You grieve for what she represented — whatever her compromises.',
+        tag: null,
+        outcome: 'The compromises were real and the killing was also real. The killing ended the conversation about the compromises, which may have been the point.',
+        effect: (p) => { p.m -= 10; p.r += 5; p.addFlag('benazir_generation'); p.setMem('pakBenazir', true); },
+      },
+      {
+        text: 'You understand the rage that produces a sixteen-year-old assassin.',
+        tag: null,
+        outcome: 'Understanding the production is not endorsing the product. You hold both parts of that sentence at the same time.',
+        effect: (p) => { p.m -= 8; p.e += 4; p.r += 4; p.addFlag('benazir_generation'); p.setMem('pakBenazir', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'pak_aps_peshawar_2014',
+    phase: 'midlife',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'Pakistan' &&
+      G.currentYear === 2014 &&
+      G.age >= 10 &&
+      !G.mem?.pakAPS,
+    text: 'December 16, 2014. Seven Pakistani Taliban gunmen enter the Army Public School in Peshawar at ten in the morning. A hundred and forty-one people are killed; a hundred and thirty-two are children. The specific horror of the timeline — the school hall, the children under desks, the teachers, the eight hours — is reported in specific detail by the survivors. December 16 was also the day Bangladesh was created in 1971, but that is not the date that will be named when Pakistanis say December 16. The country goes quiet in a way that is different from other attacks.',
+    choices: null,
+    effect: (p) => {
+      p.m -= 15
+      p.h -= 5
+      p.r += 8
+      p.addFlag('aps_generation')
+      p.setMem('pakAPS', true)
+    },
+  },
+
+  {
+    id: 'pak_blasphemy_fear',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Pakistan' &&
+      G.currentYear >= 2000 && G.currentYear <= 2024 &&
+      G.age >= 18 &&
+      !G.mem?.pakBlasphemy,
+    text: 'Someone from your neighbourhood has been accused of blasphemy. The charge does not require evidence in the way that other charges do. The accusation is enough for a crowd to assemble. The court is the secondary question; the primary question is whether the person survives to reach the court. Asia Bibi spent ten years on death row; the Supreme Court acquitted her in 2018 and the verdict triggered nationwide protests. She could not go home. She could not stay in Pakistan. The architecture of the law and what the law produces are two different things.',
+    choices: [
+      {
+        text: 'You say something. You know this person and you say what you know.',
+        tag: null,
+        outcome: 'Speaking makes you adjacent to the accusation in the eyes of the crowd, which is precisely the mechanism that makes the accusation so effective.',
+        effect: (p) => { p.m -= 10; p.karma += 8; p.r += 5; p.addFlag('blasphemy_law_era'); p.setMem('pakBlasphemy', true); },
+      },
+      {
+        text: 'You say nothing. This is not cowardice. This is how the system preserves itself.',
+        tag: null,
+        outcome: 'You do not speak and you live with not speaking. The two things are connected in a way that becomes part of the interior furniture of your life.',
+        effect: (p) => { p.m -= 8; p.r += 8; p.addFlag('blasphemy_law_era'); p.setMem('pakBlasphemy', true); },
+      },
+    ],
+    effect: null,
+  },
+
 ]

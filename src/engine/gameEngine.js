@@ -6253,6 +6253,44 @@ function buildYearTexture(state) {
     'You tried to reduce the demand. The attempt was heard and partially successful. You are still deciding whether the something that left the room when the number dropped was worth the money.',
   ])
 
+  if (F.has('caa_protest_generation') && Math.random() < 0.22) return pick([
+    'The Citizenship Amendment Act: the first time in India\'s secular constitutional history that religion was made an explicit criterion for citizenship. Shaheen Bagh: women on a road in Delhi, in winter, for a hundred days. Both facts belong to the same year.',
+    'The Delhi riots of February 2020 came during the CAA protests, in Muslim-majority neighbourhoods, with a police absence that has been documented. The sequence is a sequence and the sequence is information.',
+    phase === 'late_life'
+      ? 'You watched India have a specific argument about what kind of country it was going to be. The argument did not resolve in the way that arguments in democracies are supposed to resolve.'
+      : 'The position you took in 2019 — about the law, about Shaheen Bagh, about the riots — is still the position you hold. The temperature around it has changed.',
+  ])
+  if (F.has('farmers_protest_generation') && Math.random() < 0.2) return pick([
+    'Thirteen months. The highway camps at Singhu, Tikri, Ghazipur. The langar kitchens that fed people for over a year. Then the repeal, and then the farmers went home.',
+    'The protest was called anti-national. Then it won. The government repealed all three laws without a formal debate. Both things happened and the gap between them is the thing to think about.',
+    phase === 'late_life'
+      ? 'The farmers\' protest produced the repeal and then the country moved on. Whether the structural problems were addressed is a longer-term question that is still being answered.'
+      : 'You watched the largest sustained protest in Indian democratic history happen at the borders of the capital city. The duration is itself a fact about what it took.',
+  ])
+
+  // ─── PAKISTAN ADDITIONAL TEXTURE ───────────────────────────────────────────
+  if (F.has('benazir_generation') && Math.random() < 0.22) return pick([
+    'She was the first female prime minister of a Muslim-majority country. Twice, with an exile between the terms. She was killed at a rally in Rawalpindi on December 27, 2007. The investigation produced multiple accounts. The UN commission\'s account and the government\'s account are different documents.',
+    'The plasticity of the official explanation for who killed her and how tells you something about the environment in which the killing happened. You remember what she said in the weeks before she came back.',
+    phase === 'late_life'
+      ? 'You have watched Pakistan produce leaders and then destroy them by various means. Bhutto was destroyed by a bullet. The method is specific and so is the period of hope between her return from exile in October and her death in December.'
+      : 'The image of the white dupatta and the crowd and then the explosion: this is in your memory with a clarity that images from traumatic news events sometimes have.',
+  ])
+  if (F.has('aps_generation') && Math.random() < 0.25) return pick([
+    'December 16, 2014. A hundred and thirty-two children. The school uniform. The timeline from ten in the morning.',
+    'The Army Public School, Peshawar. You know the geography of it from the news coverage. You have never been there. The coverage was specific enough that geography was not required.',
+    phase === 'late_life'
+      ? 'Pakistan has had many attacks. APS had a specific quality: children, school, eight hours. The country went quiet in a way that is its own category. The quiet lasted longer than the quiet after other attacks.'
+      : 'The teachers who locked classroom doors. The teacher who stepped in front of students. The students who survived by playing dead. These are the accounts that surfaced in the weeks after. You read them all.',
+  ])
+  if (F.has('blasphemy_law_era') && Math.random() < 0.2) return pick([
+    'The accusation does not require evidence. The crowd assembles while the legal process is still forming. Asia Bibi: ten years on death row, acquitted by the Supreme Court, unable to go home, unable to stay.',
+    'The law produces a specific environment: the things you do not say, the care you take with words in public, the knowledge of what an accusation costs even when it is eventually disproved. You live in this environment.',
+    phase === 'late_life'
+      ? 'You have watched the blasphemy law be used against Christians, against Ahmadis, against Muslims accused by other Muslims. The law\'s flexibility is part of its function. It is a tool as much as it is a law.'
+      : 'The person from your neighbourhood who was accused: the question of what they actually did or said is not separable from the question of who accused them and why. Both questions are about the same law.',
+  ])
+
   // ─── GREECE TEXTURE ──────────────────────────────────────────────────────────
   if (F.has('junta_generation') && Math.random() < 0.22) return pick([
     'The colonels\' junta came to power in a single morning. What it left behind — the calibrated sentence, the habit of registering who is in the room before you speak — took years to unlearn, and was perhaps not entirely unlearned.',

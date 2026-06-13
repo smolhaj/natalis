@@ -2372,6 +2372,30 @@ export const FLAG_REGISTRY = {
     notes: 'Pakistan 1998. Year texture in buildYearTexture.',
   },
 
+  benazir_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Pakistani shaped by Benazir Bhutto\'s assassination on December 27, 2007 — the first female prime minister of a Muslim-majority country, killed at a Rawalpindi rally.',
+    intent: 'year_texture',
+    notes: 'Set by pak_benazir_assassination_2007.',
+  },
+
+  aps_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Pakistani shaped by the December 16, 2014 APS Peshawar massacre — 132 children killed by Pakistani Taliban; the school hall, the silence that followed.',
+    intent: 'year_texture',
+    notes: 'Set by pak_aps_peshawar_2014. Auto-resolve event.',
+  },
+
+  blasphemy_law_era: {
+    weight: 'major',
+    category: 'political',
+    description: 'Pakistani shaped by the blasphemy accusation architecture — the crowd that assembles before the court, Asia Bibi, the teacher who cannot go home.',
+    intent: 'year_texture',
+    notes: 'Set by pak_blasphemy_fear.',
+  },
+
   afghan_crisis_neighbor: {
     weight: 'moderate',
     category: 'experience',
@@ -2670,6 +2694,22 @@ export const FLAG_REGISTRY = {
     description: 'Lived through the November 2016 demonetization — 86% of currency withdrawn overnight, weeks of queues',
     intent: 'year_texture',
     notes: 'Set by ind_demonetization_2016. Two branches: had formal banking, or had cash savings.',
+  },
+
+  caa_protest_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Shaped by the 2019-20 CAA protests — the Citizenship Amendment Act, Shaheen Bagh, the hundred-day sit-in, the Delhi riots of February 2020.',
+    intent: 'year_texture',
+    notes: 'Set by ind_caa_protests_2019.',
+  },
+
+  farmers_protest_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Witnessed the 2020-21 farmers\' protests at Delhi borders — thirteen months on the highways at Singhu, Tikri, Ghazipur, then the repeal of all three farm laws.',
+    intent: 'year_texture',
+    notes: 'Set by ind_farmers_protest_2020.',
   },
 
   // ── Ireland ───────────────────────────────────────────────────────────────────
