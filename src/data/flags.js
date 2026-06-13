@@ -2508,6 +2508,56 @@ export const FLAG_REGISTRY = {
     notes: 'Set by cze_velvet_revolution. Follow-through: ft19_velvet_late.',
   },
 
+  // ── BALTIC STATES ARC (events_baltic.js) ─────────────────────────────────────
+
+  deportation_family_memory: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Family member deported to Siberia in 1941 or 1949 — the Baltic Soviet deportations; absent relative who shapes identity',
+    intent: 'year_texture',
+    notes: 'Set by balt_deportation_family. Year texture in buildYearTexture. Follow-through: ft20_deportation_late.',
+  },
+
+  baltic_russification_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Educated under Soviet Russification in Baltic states — Russian as language of advancement, native language as kitchen culture',
+    intent: 'year_texture',
+    notes: 'Set by balt_soviet_school.',
+  },
+
+  baltic_song_resistance: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Attended Baltic song festivals as national identity resistance — the space where the occupation could not fully reach',
+    intent: 'year_texture',
+    notes: 'Set by balt_song_festival.',
+  },
+
+  baltic_january_1991: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed or participated in the January 1991 events — Soviet troops at the Vilnius TV Tower or Riga barricades, 14+ killed',
+    intent: 'year_texture',
+    notes: 'Set by balt_january_1991. Follow-through: ft20_january_1991_late.',
+  },
+
+  russian_minority_baltic: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Russian-speaking minority in Baltic states post-independence — Soviet-era arrivals navigating citizenship laws, non-citizen passports, language requirements',
+    intent: 'year_texture',
+    notes: 'Set by balt_russian_non_citizen. Follow-through: ft20_russian_minority_late.',
+  },
+
+  eu_emigrant_baltic: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Left a Baltic state after EU accession 2004 — part of the mass emigration that drained 10–15% of population',
+    intent: 'year_texture',
+    notes: 'Set by balt_eu_emigration. Follow-through: ft20_eu_emigrant_return.',
+  },
+
   tito_generation: {
     weight: 'moderate',
     category: 'historical',

@@ -6184,6 +6184,44 @@ function buildYearTexture(state) {
       : 'November 17 to December 29: forty-two days from the first student march to Havel elected president by the parliament that used to imprison him. The revolution earned its name.',
   ])
 
+  // ─── BALTIC STATES TEXTURE ────────────────────────────────────────────────────
+  if (F.has('deportation_family_memory') && Math.random() < 0.3) return pick([
+    'The family members who are not present: June 14, 1941 or March 1949. Cattle cars east. You know the names. The names are also history but the history does not account for the specific absence at the family table.',
+    phase === 'late_life'
+      ? 'The deportation is now memorialized officially — June 14 is Mourning and Hope Day. The name is listed. The listing is acknowledgment. Acknowledgment does not restore. Both of these things are true simultaneously.'
+      : 'The adults lowered their voices when they spoke about it, without being aware of lowering their voices. You heard it anyway. You have been carrying it ever since.',
+  ])
+  if (F.has('baltic_russification_generation') && Math.random() < 0.22) return pick([
+    'The language of school and the language of home: two different systems producing two different selves. You learned to move between them without being asked to choose — which was itself a form of being asked to choose.',
+    phase === 'late_life'
+      ? 'Independence restored the language of home to public life. The restoration was real. The years when it was not public were also real and they are in you in a way the restoration cannot undo.'
+      : 'Russian is the language of advancement. The native language is the kitchen. You know what this arrangement means about which language the state considers yours.',
+  ])
+  if (F.has('baltic_song_resistance') && Math.random() < 0.22) return pick([
+    'The song festival: the specific space where the occupation could not fully reach. Folk culture, officially harmless. The hundred thousand voices that knew what the singing meant.',
+    phase === 'late_life'
+      ? 'The Singing Revolution — the world event name for what you experienced as years of song festivals that were doing something the official permission had not intended to permit. The world learned the name after. You knew the thing itself.'
+      : 'The songs were in the national language and the national language was also a political position, which was also why a hundred thousand people showed up.',
+  ])
+  if (F.has('baltic_january_1991') && Math.random() < 0.28) return pick([
+    'January 13, 1991: Soviet troops at the Vilnius TV Tower. The barricades in Riga. The unarmed crowds. Fourteen killed. The troops did not continue.',
+    phase === 'late_life'
+      ? 'The country is in the EU and NATO now. The January 1991 events belong to the founding story and the founding story is taught to people who were not born yet. You were there. The founding required bodies at the barricades. Your body was one of them.'
+      : 'The specific night — the cold, the noise, the uncertainty — is the measurement against which subsequent freedoms are measured. You have been measuring ever since.',
+  ])
+  if (F.has('russian_minority_baltic') && Math.random() < 0.25) return pick([
+    'Your language is the language of the occupation, from the perspective of the country you live in. Your family did not occupy anyone. The historical position and the personal position are in permanent tension.',
+    phase === 'late_life'
+      ? 'After February 2022, the Russian-speaking community in the Baltic states was asked to declare a position. The position had been declared, quietly, in thousands of small decisions over thirty years. 2022 required a louder version.'
+      : 'The non-citizen passport, or the naturalization test, or the daily navigation of a history in which your community is the difficult chapter. You know which side of that line you are on.',
+  ])
+  if (F.has('eu_emigrant_baltic') && Math.random() < 0.22) return pick([
+    'The salary in Ireland or the UK or Germany is four times what it is at home. The calculation was not complicated. What was complicated was that everyone else was also doing the calculation.',
+    phase === 'late_life'
+      ? 'The village you came from has fewer people than it had when you left. The school may have closed. The gap between Western Europe and Baltic salaries has narrowed, but some of the people who left took root somewhere else. You are one of the people deciding whether you are a person who came back or a person who stayed.'
+      : 'The country you left is in the EU and NATO and the memory of Soviet occupation is receding. The country you are in is where your life is. Both are true.',
+  ])
+
   // ─── JAPAN TEXTURE ───────────────────────────────────────────────────────────
   if (F.has('hibakusha_stigma_lived') && Math.random() < 0.28) return pick([
     'The word hibakusha is official. It carries the official weight of official categories — and the unofficial weight of what it means when the person at the marriage agency sees it on the family register.',
