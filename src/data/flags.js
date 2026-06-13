@@ -6489,6 +6489,72 @@ export const FLAG_REGISTRY = {
     notes: 'Set by we_brazil_june_days_2013.',
   },
 
+  // ─── ARGENTINA 2001 FLAGS ─────────────────────────────────────────────────────
+
+  corralito_survivor: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the 2001 Argentine corralito — bank accounts frozen, withdrawals limited to $250/week, dollar savings eventually converted to devalued pesos.',
+    intent: 'year_texture',
+    notes: 'Set by la_arg_corralito_2001.',
+  },
+
+  arg_cacerolazos_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed the December 19–20 2001 cacerolazos — pot-banging protests that drove President de la Rúa to flee by helicopter from the Casa Rosada.',
+    intent: 'year_texture',
+    notes: 'Set by la_arg_cacerolazos.',
+  },
+
+  cinco_presidentes_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through five Argentine presidents in twelve days (Dec 20, 2001 – Jan 1, 2002) — the governing collapse that followed the corralito.',
+    intent: 'year_texture',
+    notes: 'Set by la_arg_cacerolazos.',
+  },
+
+  arg_savings_destroyed: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Had savings wiped by the pesificación — Argentine government conversion of dollar deposits to pesos at 1:1, then peso devalued 3:1; effectively lost two-thirds of savings.',
+    intent: 'year_texture',
+    notes: 'Set by la_arg_pesificacion.',
+  },
+
+  arg_2001_emigrant: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Left Argentina during or after the 2001–02 collapse — part of the 100,000+ who emigrated to Spain, Italy, and elsewhere in the exodus year.',
+    intent: 'year_texture',
+    notes: 'Set by la_arg_pesificacion (emigrate choice).',
+  },
+
+  arg_2001_stayed: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Stayed in Argentina through the 2001–02 collapse, navigating the pesificación and rebuilding within the country while others left.',
+    intent: 'year_texture',
+    notes: 'Set by la_arg_pesificacion (stay choice).',
+  },
+
+  piquetero_era: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Navigated Argentina\'s 2001–04 piquetero movement — unemployed workers blocking roads with burning tires when unemployment hit 25%.',
+    intent: 'year_texture',
+    notes: 'Set by la_arg_piqueteros.',
+  },
+
+  kirchner_recovery_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Witnessed the Kirchner-era economic recovery 2003–11 after the 2001 collapse — debt restructuring, soy boom, unemployment halved.',
+    intent: 'year_texture',
+    notes: 'Set by la_arg_kirchner_recovery.',
+  },
+
   // ─── SPAIN FLAGS ─────────────────────────────────────────────────────────────
 
   franco_generation: {

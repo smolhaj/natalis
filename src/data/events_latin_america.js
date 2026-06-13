@@ -1547,6 +1547,139 @@ export const LATIN_AMERICA_EVENTS = [
   },
 
   // ═══════════════════════════════════════════════════════════════════════
+  // ARGENTINA — 2001 COLLAPSE ARC
+  // ═══════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'la_arg_corralito_2001',
+    phase: 'midlife',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'Argentina' &&
+      G.currentYear === 2001 &&
+      G.age >= 16 &&
+      !G.mem?.argCorralito,
+    text: 'December 1, 2001. The economy minister announces the corralito: bank withdrawals are limited to 250 pesos — 250 dollars — per week. Your savings are in the account. You can see the number in the passbook. You cannot take the money out. The queue outside the bank on Monday wraps around the block. The tellers are behind glass. Some people are crying. Some are calm in the way that means they are not calm.',
+    choices: [
+      {
+        text: 'You join the queue and wait for the weekly allowance.',
+        tag: null,
+        outcome: 'You get the 250. The passbook still shows the larger number. You do not know yet if you will ever see it.',
+        effect: (p) => { p.m -= 10; p.w -= 8; p.addFlag('corralito_survivor'); p.setMem('argCorralito', true); },
+      },
+      {
+        text: 'You go to the hardware store and buy supplies. Whatever is physical is real.',
+        tag: null,
+        outcome: 'The materials are real. The savings will, over the coming months, be converted to something else at a rate the government decides.',
+        effect: (p) => { p.m -= 8; p.e += 3; p.addFlag('corralito_survivor'); p.setMem('argCorralito', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'la_arg_cacerolazos',
+    phase: 'young_adult',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'Argentina' &&
+      G.currentYear === 2001 &&
+      G.age >= 10 &&
+      !G.mem?.argCacerolazos,
+    text: 'December 19. The president declares a state of siege. Within hours, the pots come out — from apartment windows, from balconies, from the street. The cacerolazos: the sound of the middle class turning whatever is in the kitchen into a political statement. The chant becomes "¡Que se vayan todos! ¡Que no quede ni uno solo!" By morning the president has fled the Casa Rosada by helicopter. Five presidents will occupy the office in the next twelve days.',
+    choices: null,
+    effect: (p) => {
+      p.m -= 6
+      p.r += 3
+      p.addFlag('cinco_presidentes_generation')
+      p.addFlag('arg_cacerolazos_generation')
+      p.setMem('argCacerolazos', true)
+    },
+  },
+
+  {
+    id: 'la_arg_pesificacion',
+    phase: 'midlife',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'Argentina' &&
+      G.currentYear >= 2002 && G.currentYear <= 2003 &&
+      G.flags.includes('corralito_survivor') &&
+      !G.mem?.argPesificacion,
+    text: 'The government converts dollar savings to pesos at one-to-one. Then the peso floats. By the end of the month the exchange rate is three pesos to the dollar. What was in your account — the number you could see but not withdraw — is now worth a third of what it was. The economists call this pesificación. The word does not capture what it is like to have thirty years of savings repriced in an administrative announcement.',
+    choices: [
+      {
+        text: 'You leave. You have family in Spain, Italy, wherever the Argentine diaspora has people.',
+        tag: null,
+        outcome: 'You are one of the hundred thousand who leave Argentina in 2002. The country you grew up in is behind you. The one you are going to does not yet have a shape.',
+        effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('arg_2001_emigrant'); p.addFlag('arg_savings_destroyed'); p.setMem('argPesificacion', true); },
+      },
+      {
+        text: 'You stay. You convert what is left into whatever holds value.',
+        tag: null,
+        outcome: 'Dollars under the mattress. Gold. Land, if you have it. The trust in the banking system has a specific texture now — the texture of knowing it can disappear.',
+        effect: (p) => { p.m -= 10; p.r += 4; p.e += 3; p.addFlag('arg_savings_destroyed'); p.addFlag('arg_2001_stayed'); p.setMem('argPesificacion', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'la_arg_piqueteros',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Argentina' &&
+      G.currentYear >= 2001 && G.currentYear <= 2004 &&
+      G.age >= 18 && G.age <= 45 &&
+      !G.mem?.argPiqueteros,
+    text: 'The piqueteros block the road with burning tires. The unemployment rate is twenty-five percent — one in four. The people on the road are not blocking it from ideology. They are blocking it because blocking a road is the one thing that makes you visible when you have nothing else. You are trying to get somewhere. They are trying to be seen.',
+    choices: [
+      {
+        text: 'You wait. You understand why they are there.',
+        tag: null,
+        outcome: 'The road eventually opens. You arrive late. The people who blocked it will be there again tomorrow.',
+        effect: (p) => { p.m -= 4; p.karma += 4; p.addFlag('piquetero_era'); p.setMem('argPiqueteros', true); },
+      },
+      {
+        text: 'You are angry. You have somewhere to be and this country is drowning in its own failure.',
+        tag: null,
+        outcome: 'The anger is real. So is the unemployment rate. Both things occupy the same road at the same time.',
+        effect: (p) => { p.m -= 6; p.r += 4; p.addFlag('piquetero_era'); p.setMem('argPiqueteros', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'la_arg_kirchner_recovery',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Argentina' &&
+      G.currentYear >= 2005 && G.currentYear <= 2011 &&
+      G.flags.includes('arg_cacerolazos_generation') &&
+      G.age >= 20 &&
+      !G.mem?.argKirchner,
+    text: 'The economy is growing again. Néstor Kirchner renegotiated the debt, the soy price is high, and unemployment has fallen from twenty-five to ten percent. The country that felt like it was ending in 2001 has a momentum in the opposite direction. You remember what the banks looked like when they were closed. You also remember that the country was growing before 2001 and then suddenly was not.',
+    choices: [
+      {
+        text: 'You allow yourself to be relieved. The recovery is real and you needed it.',
+        tag: null,
+        outcome: 'The relief is earned. The question of whether the structural problems have been resolved you put to the side for now.',
+        effect: (p) => { p.m += 8; p.addFlag('kirchner_recovery_generation'); p.setMem('argKirchner', true); },
+      },
+      {
+        text: 'You remain wary. You have watched this country turn around before.',
+        tag: null,
+        outcome: 'The wariness is also earned. The economy continues to grow whether or not you trust it.',
+        effect: (p) => { p.m += 4; p.e += 3; p.r += 2; p.addFlag('kirchner_recovery_generation'); p.setMem('argKirchner', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════
   // COLOMBIA — additional events
   // ═══════════════════════════════════════════════════════════════════════
 

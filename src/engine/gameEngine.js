@@ -6398,6 +6398,63 @@ function buildYearTexture(state) {
       : 'The evangelical alignment, the Amazon acceleration, the institutional friction — you were inside all of it. The account is still being settled.',
   ])
 
+  // ─── ARGENTINA 2001 TEXTURE ──────────────────────────────────────────────────
+  if (F.has('corralito_survivor') && Math.random() < 0.28) return pick([
+    'The bank queue in December 2001 — the one that wrapped around the block before the branch opened — is physical in memory. The passbook number that was yours and then was converted into something worth a third as much.',
+    'You do not keep savings in Argentine banks. This is not a preference. It is a policy formed in the weeks after the pesificación.',
+    phase === 'late_life'
+      ? 'You lived through Argentina defaulting on 132 billion dollars of debt and through what that default meant at the level of the passbook. The economists have theories. You have the passbook.'
+      : 'Dollars in cash, not in accounts. The distrust is specific and calibrated: not paranoia but memory.',
+  ])
+  if (F.has('arg_cacerolazos_generation') && Math.random() < 0.22) return pick([
+    'You remember the sound of the pots from the apartment windows on December 19. It had a specific register — not music, not noise. Something between them.',
+    'Five presidents in twelve days. You can name them in order if someone asks. No one asks, which is its own kind of answer about how the country has processed it.',
+    phase === 'late_life'
+      ? 'The phrase "¡Que se vayan todos!" was meant literally. None of them went. Some went briefly and came back. The political class reconstituted itself and the phrase became historical rather than operational.'
+      : 'The helicopter leaving the Casa Rosada roof is an image that will be in every retrospective of the era. You watched the live coverage. The helicopter was very small against the sky.',
+  ])
+  if (F.has('arg_savings_destroyed') && Math.random() < 0.25) return pick([
+    'You have done the arithmetic of what was in the account in November 2001 and what it became by March 2002. You have done it more than once. The number does not improve with repetition.',
+    'The word pesificación entered the vocabulary and then became technical and then became historical. For the people it happened to it remains a specific amount of money that became a different specific amount.',
+    phase === 'late_life'
+      ? 'The savings took how long to accumulate and how long to be repriced. That ratio is something you carry without deciding to carry it.'
+      : 'You rebuilt from after 2001. The rebuilding happened. The knowledge of how the previous accumulation ended is the context in which all subsequent accumulation takes place.',
+  ])
+  if (F.has('arg_2001_emigrant') && Math.random() < 0.22) return pick([
+    'The Argentina you left in 2002 is not the same country that exists now. You are aware of the gap. Some of it has closed; some of it is permanent.',
+    'The diaspora has its own geography: Madrid, Barcelona, Rome, Miami. The Argentine accent in those cities is a specific accent — not foreign, not at home.',
+    phase === 'late_life'
+      ? 'You left when leaving was the only arithmetic that made sense. The people who stayed have a different accounting of the period. You have compared notes enough to know the gap between them.'
+      : 'You go back for visits and the country has the specific texture of somewhere you almost stayed. The almost is audible in conversations with the people who did.',
+  ])
+  if (F.has('arg_2001_stayed') && Math.random() < 0.2) return pick([
+    'You watched the ones who left from the ones who stayed side. They send photos from Madrid and Rome. You have rebuilt here. Both things are legitimate.',
+    'The trust in institutions that the 2001 collapse broke required a specific kind of reconstruction — not forgetting, but working alongside the memory of what failed.',
+    phase === 'late_life'
+      ? 'Staying was a decision with consequences you did not fully understand when you made it. The consequences have clarified themselves over the years.'
+      : 'The corralito was not the end. Neither was it something you forget. It is the baseline against which all subsequent economic news is measured.',
+  ])
+  if (F.has('cinco_presidentes_generation') && Math.random() < 0.2) return pick([
+    'Five presidents in twelve days. Fernando de la Rúa, Ramón Puerta, Adolfo Rodríguez Saá, Eduardo Camaño, Eduardo Duhalde. You know them in order. Most people can only remember that there were five.',
+    'The helicopter leaving the Casa Rosada on December 20 is the image that anchors the period. After it there was a country still running on something — inertia, the people who showed up to work regardless, the texture of ordinary life continuing inside the collapse.',
+    phase === 'late_life'
+      ? 'A country replaced five presidents in twelve days and did not end. That fact is both reassuring and the specific kind of reassurance that also contains a warning.'
+      : 'You watched the succession of names and faces and wondered at what point there would be no more names, and then there was Duhalde and some kind of floor was reached.',
+  ])
+  if (F.has('piquetero_era') && Math.random() < 0.18) return pick([
+    'The burning tire in the middle of a Buenos Aires road in summer has a specific smell. You know it from the years after 2001, when the road was a political instrument for the people who had nothing else.',
+    'They called them piqueteros and they called them unemployed and they called them a problem and they called them a movement. All of these were accurate. The accuracy did not produce a solution.',
+    phase === 'late_life'
+      ? 'The piquetero movements of 2001 to 2004 produced organisations that lasted, and produced leaders who became politicians, and produced a vocabulary about what it means to demand visibility when you have been made invisible.'
+      : 'You had to get somewhere and the road was closed. That is the complete geometry of the piquetero experience from the side of the car. From the side of the burning tire the geometry is different.',
+  ])
+  if (F.has('kirchner_recovery_generation') && Math.random() < 0.18) return pick([
+    'The recovery was real. You know the 2001 benchmark against which it is measured because you were at the benchmark. The growth rates in 2003 to 2007 were real growth rates.',
+    phase === 'late_life'
+      ? 'Argentina grew, restructured, inflated, defaulted again, restructured again. Each episode rhymes with a previous one. You have been alive for enough of the rhymes to hear the pattern.'
+      : 'Kirchner renegotiated the debt and the commodity prices cooperated and for a decade the country moved in a direction that felt sustainable. Whether it was is still being argued.',
+  ])
+
   // ─── WORLD EVENTS 2016–2021 TEXTURE ──────────────────────────────────────────
   if (F.has('polarization_era') && Math.random() < 0.18) return pick([
     'The 2016 result rewrote the assumption about what was stable. The country you thought you understood had an interior that the polling couldn\'t reach. That interior voted, and the result has been present in every subsequent year.',

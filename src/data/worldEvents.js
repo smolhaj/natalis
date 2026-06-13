@@ -925,6 +925,7 @@ export const WORLD_EVENTS = [
     archetypes: 'all',
     countries: ['Argentina'],
     narrative: 'The banks close on a Friday. When they reopen, the accounts are frozen — the government has converted dollar deposits to pesos at a rate decided overnight. People line up outside banks that will not open. Some bang on the shutters. The sound is the country\'s savings disappearing.',
+    context: 'Argentina\'s 2001 crisis ended a decade of convertibility — the peso pegged 1:1 to the dollar — combined with unsustainable debt of $132 billion. The corralito (December 1) froze bank accounts. December 19–20: the cacerolazos — middle-class Argentines banging pots in the streets, chanting "¡Que se vayan todos!" Five presidents occupied the Casa Rosada in twelve days. The pesificación (February 2002) converted all dollar deposits to pesos at 1:1, then the peso devalued to 3:1 — effectively destroying two-thirds of dollar savings overnight. Unemployment hit 25%; over 100,000 Argentines emigrated in 2002 alone.',
     effect: (p) => { p.w -= 18; p.mo -= p.mo * 0.30; p.m -= 12; p.addFlag('economic_collapse_survivor'); },
     addFlags: ['economic_collapse_survivor'],
     minAge: 10,
