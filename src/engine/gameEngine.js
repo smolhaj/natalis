@@ -6441,6 +6441,71 @@ function buildYearTexture(state) {
     'Spain in October 2017: simultaneously a constitutional democracy defending its constitution and a country using riot gear on people at ballot boxes. Both descriptions are accurate. Holding both is the specific work.',
   ])
 
+  // ─── AUSTRALIA TEXTURE ───────────────────────────────────────────────────────
+  if (F.has('white_australia_generation') && Math.random() < 0.3) return pick([
+    'The White Australia Policy ended gradually between 1966 and 1973. Before it ended, belonging here was a conditional permission. The conditionality didn\'t end with the policy.',
+    phase === 'late_life'
+      ? 'You grew up in a country that had a legal architecture for deciding your kind was unwelcome. The architecture came down. The attitude that built it did not come down at the same pace.'
+      : 'The dictation test: the officer can choose any European language. You would fail a test in Albanian or Welsh or Basque. That is the point of it. You know this.',
+  ])
+  if (F.has('hyphenated_australian') && Math.random() < 0.2) return pick([
+    'The hyphen is invisible to people who do not have one. To the people who have one it is the description of a daily navigation that does not come up in conversation.',
+    'Australian in some rooms, something else in others. The rooms switch without announcement. You learn to switch with them.',
+  ])
+  if (F.has('aus_vietnam_vet') && Math.random() < 0.25) return pick([
+    'The Welcome Home Parade was in 1987. The war ended in 1973. Fourteen years. You did the arithmetic when the parade happened. You were not sure what the parade was supposed to cover in fourteen years.',
+    phase === 'late_life'
+      ? 'Phuoc Tuy. Long Tan. The names don\'t mean anything to most Australians under fifty. They are specific places in a country that exists differently now from how it existed then. You have the specific knowledge of those places.'
+      : 'The ballot was random. The marble with your birthday came out of the barrel. The randomness is the official story. The deferments were not random.',
+  ])
+  if (F.has('aus_vietnam_evaded') && Math.random() < 0.2) return pick([
+    'You found the exit that was available to you. The men without the same exit went. The specific form of the knowledge — that you stayed when others went — is the weight you carry from a war you did not go to.',
+    'The deferment was legal. The deferment was not equally available. Both are true.',
+  ])
+  if (F.has('aus_vietnam_generation') && Math.random() < 0.15) return pick([
+    'The marble that didn\'t come out. Your birthday in the barrel, not drawn. The randomness of it — that someone else went and you didn\'t — is something you think about when you think about the ones who went.',
+  ])
+  if (F.has('dismissal_generation') && Math.random() < 0.25) return pick([
+    '"Well may we say God save the Queen, because nothing will save the Governor-General." The steps of Parliament House. The reserve powers that had never been used and were used that once.',
+    phase === 'late_life'
+      ? 'Kerr\'s papers are sealed until 2027. What the Palace knew is still not public. The constitutional crisis that was supposed to be impossible happened, and the country absorbed it and moved on, which is a different kind of information about constitutional systems.'
+      : 'The Dismissal is the argument that doesn\'t end. Whether what Kerr did was constitutional, whether the Queen was informed, whether Whitlam\'s government had other options — the argument is still happening in the same terms.',
+  ])
+  if (F.has('port_arthur_generation') && Math.random() < 0.25) return pick([
+    'Thirty-five people in a tourist site on a Sunday afternoon. Howard announced the gun laws twelve days later. The buyback destroyed 650,000 weapons. Australia does not have another mass shooting of that scale. This is the thing other countries mention when they mention Australia and guns.',
+    phase === 'late_life'
+      ? 'You watch other countries have their Port Arthurs and not do what Australia did after Port Arthur. The thing Australia did is not complicated. The reason other countries do not do it is also not complicated.'
+      : 'The debate about the gun laws lasted exactly as long as Howard\'s willingness to be argued with, which was not very long. He wore the bullet-proof vest to the pro-gun rally and made the announcement anyway.',
+  ])
+  if (F.has('pacific_solution_era') && Math.random() < 0.2) return pick([
+    '"We will decide who comes to this country and the circumstances in which they come." The phrase entered the language in August 2001 and stayed. The indefinite offshore detention. The reports from Nauru. The years.',
+    phase === 'late_life'
+      ? 'The offshore detention centres continued through multiple governments and multiple parties. The bipartisanship on this issue is the specific Australian contribution to the debate about migration policy. The people detained are still in the data somewhere.'
+      : 'The Tampa rescued 438 people from drowning in the Indian Ocean. The Australian government boarded the ship with special forces. This is the sequence of events.',
+  ])
+  if (F.has('mining_boom_generation') && Math.random() < 0.2) return pick([
+    'The lucky country. Donald Horne meant it ironically when he wrote it in 1964 — a country that succeeds despite its leadership, not because of it. The mining boom made it feel like the non-ironic version.',
+    phase === 'late_life'
+      ? 'The boom years, 2005 to 2013. The commodity prices that lasted until they didn\'t. The FIFO rosters, the Western Australia budget surplus during the GFC. The luck was real. The luck was also concentrated.'
+      : 'Two weeks on, one week home. The money was real. What it cost to earn it was also real but less visible in the account balance.',
+  ])
+  if (F.has('ssm_australia_generation') && Math.random() < 0.2) return pick([
+    '61.6 percent. The result came in on November 15 at the National Statistician\'s briefing. The postal survey was a mechanism for not making a parliamentary decision. The mechanism produced the decision anyway.',
+    'The months of the campaign, the No billboards in the suburb, the Yes rally in the city. The result and then the law. The cost of the process and the result of the process are separate accountings.',
+  ])
+  if (F.has('aus_housing_generation') && Math.random() < 0.25) return pick([
+    'Twelve times median income for the median house. The eighty applicants for the rental. The parents who say to save harder and mean it, not understanding that the arithmetic has changed.',
+    phase === 'late_life'
+      ? 'You spent your working years in the market that produced those numbers. If you bought early you are now the one with the asset. If you did not buy early you watched the window close and the asset accumulate elsewhere.'
+      : 'The deposit: two years of saving everything. In the time it takes to save the deposit, the house price moves by more than you saved.',
+  ])
+  if (F.has('permanent_renter') && Math.random() < 0.2) return pick([
+    'The permanence of renting becomes its own kind of home. You know the landlord\'s schedule. You know which floorboard creaks. You know this is not your building to change.',
+    phase === 'late_life'
+      ? 'Renting at seventy. The security of tenure at seventy in the private rental market is what it is, which is to say it is not security.'
+      : 'You have moved three times in four years because the lease ended and the landlord wanted to sell or increase the rent to what the market supported. Each move was legal. Each move cost something.',
+  ])
+
   // ─── UNITED STATES TEXTURE ───────────────────────────────────────────────────
   if (F.has('jim_crow_childhood') && Math.random() < 0.3) return pick([
     'You learned the rules of survival before you learned to read. The rules are still there, twenty or forty years later, in the way you move through certain rooms — the reflex of the second calculation that white people in those rooms do not make.',

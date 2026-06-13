@@ -2712,6 +2712,104 @@ export const FLAG_REGISTRY = {
     notes: 'Set by ind_farmers_protest_2020.',
   },
 
+  // ── Australia ─────────────────────────────────────────────────────────────────
+
+  white_australia_generation: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Grew up under the White Australia Policy — the dictation test, the conditional belonging, the performance of proving membership.',
+    intent: 'both',
+    notes: 'Set by aus_white_australia_policy.',
+  },
+
+  hyphenated_australian: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Navigated being Australian and something else simultaneously — the double fluency, the rooms where one identity is more legible than the other.',
+    intent: 'year_texture',
+    notes: 'Set by aus_white_australia_policy.',
+  },
+
+  aus_vietnam_vet: {
+    weight: 'major',
+    category: 'experience',
+    description: 'Australian Vietnam veteran — served after the birthday ballot, came back to no Welcome Home Parade until 1987.',
+    intent: 'both',
+    notes: 'Set by aus_vietnam_conscription (went choice). The parade was fifteen years late.',
+  },
+
+  aus_vietnam_evaded: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Evaded the Australian Vietnam conscription ballot — student deferment, medical, objection.',
+    intent: 'year_texture',
+    notes: 'Set by aus_vietnam_conscription (evaded choice).',
+  },
+
+  aus_vietnam_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age during Australian Vietnam conscription — watched men the same age go or not go by random draw.',
+    intent: 'year_texture',
+    notes: 'Set by aus_vietnam_conscription (marble-not-drawn choice).',
+  },
+
+  dismissal_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through The Dismissal — the Governor-General\'s termination of Whitlam on Remembrance Day 1975, reserve powers never used before or since.',
+    intent: 'both',
+    notes: 'Set by aus_dismissal_1975.',
+  },
+
+  port_arthur_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through Port Arthur 1996 and the subsequent gun buyback — Australia\'s defining moment on gun control, 650,000 weapons destroyed.',
+    intent: 'both',
+    notes: 'Set by aus_port_arthur_1996.',
+  },
+
+  pacific_solution_era: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through the Tampa affair and Pacific Solution — offshore detention, the phrase "we will decide who comes," the human rights record it produced.',
+    intent: 'both',
+    notes: 'Set by aus_tampa_2001.',
+  },
+
+  mining_boom_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived through the Australian mining boom 2005–2015 — the lucky country working again, FIFO rosters, the commodity prices that didn\'t last.',
+    intent: 'year_texture',
+    notes: 'Set by aus_mining_boom.',
+  },
+
+  ssm_australia_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through the same-sex marriage postal survey 2017 — the months of being debated, the 61.6% result, the law that followed.',
+    intent: 'year_texture',
+    notes: 'Set by aus_ssm_postal_survey_2017.',
+  },
+
+  aus_housing_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Came of age in Australian housing crisis — median price twelve times income, eighty applicants for every rental, the gap between parental advice and arithmetic.',
+    intent: 'year_texture',
+    notes: 'Set by aus_housing_crisis.',
+  },
+
+  permanent_renter: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'The permanent renter — renting is not the temporary condition before ownership but the condition itself.',
+    intent: 'year_texture',
+    notes: 'Set by aus_housing_crisis (renting choice) and similar.',
+  },
+
   // ── United States ──────────────────────────────────────────────────────────────
 
   jim_crow_childhood: {
