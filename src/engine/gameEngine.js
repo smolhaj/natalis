@@ -6503,6 +6503,94 @@ function buildYearTexture(state) {
       : 'The rhetoric of hard choices and living within our means produced specific outcomes in specific places. You are from one of those places or you know people from one of those places.',
   ])
 
+  // ─── GERMANY TEXTURE ─────────────────────────────────────────────────────────
+  if (F.has('gastarbeiter_generation') && Math.random() < 0.3) return pick([
+    'The contract was for two years. The two years are still running, thirty years later. The word for what you are has changed several times in the official documents. The word does not quite cover what you are.',
+    phase === 'late_life'
+      ? 'You have outlived the Anwerbestopp, the debate about integration, the moment when the country started saying "Einwanderer" rather than "Gastarbeiter." You have outlived the contract by decades. The contract never specified what came after.'
+      : 'Gastarbeiter: guest worker. The word is obsolete and the category was always temporary. The life you built in it was not temporary. These two facts coexist without resolving.',
+  ])
+  if (F.has('remittance_sender') && Math.random() < 0.2) return pick([
+    'The money goes home at the end of every month. The money is the link between here and there. The link is practical and also maintains the fiction that there is somewhere to return to.',
+    'Your parents are in the money. Your children are in the money. The calculation of what each month sends is the calculation of what each month means.',
+  ])
+  if (F.has('settled_migrant') && Math.random() < 0.2) return pick([
+    'You made the decision before Germany was ready for you to make it. The decision was right. The documentation to confirm the decision took longer than the decision itself.',
+    phase === 'late_life'
+      ? 'You decided this was your country when the country was still debating whether you were allowed to stay. You won the debate. It took decades.'
+      : 'The papers came through. The papers are the confirmation of a decision that was made years before the papers.',
+  ])
+  if (F.has('hyphenated_german') && Math.random() < 0.3) return pick([
+    'In Germany you are Turkish. In Turkey you are German. The categories are consistent in only one way: neither has space for what you actually are. You built the space yourself.',
+    phase === 'late_life'
+      ? 'You have been hyphenated for sixty years. The hyphen has softened. It is still there. The categories have not quite caught up with the people who lived between them.'
+      : 'The question of where you are from depends on who is asking and what they want the answer to do.',
+  ])
+  if (F.has('diaspora_identity') && Math.random() < 0.2) return pick([
+    'The identity is a response to a rejection, and it is also real. The two things are not contradictory. The reaction becomes the thing, which is how many identities are made.',
+    'Being between two places makes you an expert on both in a way that neither place requires or rewards.',
+  ])
+  if (F.has('ddr_generation') && Math.random() < 0.3) return pick([
+    'The country you grew up in does not appear on maps anymore. The street names changed. The faces in the photographs in the school hall changed. The Trabant became an ironic object. You are not ironic about it.',
+    phase === 'late_life'
+      ? 'You have been a citizen of a country that no longer exists for longer than you were a citizen of it when it existed. The mathematics of this is strange to consider.'
+      : 'There is a word for it: Ostalgie. The nostalgia for the east. What you feel is more complicated than nostalgia. It includes the things that were wrong as well as the things that were yours.',
+  ])
+  if (F.has('reunification_generation') && Math.random() < 0.25) return pick([
+    'October 3, 1990 is a national holiday you remember making. The making felt different from the holiday. The holiday comes back every year and the making does not.',
+    phase === 'late_life'
+      ? 'Thirty years after reunification, the statistical differences between east and west are still visible in the data. The wall came down in a night. The wall in the data is coming down over a generation.'
+      : 'The cost of reunification was priced in the currency conversion rate: two-to-one for the savings above 2,000 marks. The economy of the east was priced at half of what the west expected.',
+  ])
+  if (F.has('willkommenskultur_generation') && Math.random() < 0.2) return pick([
+    'You were at the station with the welcome sign. The welcome was real. The political situation in the years that followed required you to defend something that felt, at the time, like common decency.',
+    phase === 'late_life'
+      ? '"Wir schaffen das." You believed it. Some of it was accomplished and some of it was not. The phrase became contested property but the people who arrived are still here, and some of them are German now.'
+      : 'The Willkommenskultur lasted a season before the backlash became the governing political fact. What you did in that season is still what you did.',
+  ])
+  if (F.has('german_migration_debate') && Math.random() < 0.2) return pick([
+    'Your concern was about pace and scale. Your concern has been used since by people whose concerns are different from yours. The difference matters and is difficult to hold onto in the current political climate.',
+    'The debate became about identity rather than logistics. You are not sure when that happened or how to get back to the original question.',
+  ])
+
+  // ─── FRANCE TEXTURE ──────────────────────────────────────────────────────────
+  if (F.has('algerian_war_veteran') && Math.random() < 0.3) return pick([
+    'France called it "les événements" for forty years. You were in the événements. The word "war" arrived in 1999. You already knew.',
+    phase === 'late_life'
+      ? 'You do not talk about it. The not-talking has been going on for fifty years. France does not ask. The country that sent you there eventually acknowledged what it sent you to do, but not in your presence, not in a way that felt like acknowledgement.'
+      : 'The mechta. The village sweeps. The order. These are the words that exist in the place where other words do not.',
+  ])
+  if (F.has('carries_something_unsaid') && Math.random() < 0.25) return pick([
+    'You do not talk about it. The not-talking takes effort. Effort is invisible. People see the result — a person who does not talk about certain things — and call it composure.',
+    phase === 'late_life'
+      ? 'There are things you will not say before you die. You have decided this. The decision is the last piece of the thing, the final act of what happened.'
+      : 'The thing you carry does not get lighter. It gets familiar. You stop noticing the weight because the weight is part of how you move.',
+  ])
+  if (F.has('algerian_war_conscientious') && Math.random() < 0.25) return pick([
+    'You refused what the army asked. The refusal had a category: insubordination, desertion, the brig, the discharge. You know what you refused and what the refusal cost.',
+    phase === 'late_life'
+      ? 'History has caught up to the position you held in 1960. The alignment is correct. The cost was paid in real time.'
+      : 'The knowledge of what you refused is something you carry differently from the people who did not refuse. They carry what they did. You carry what you did not do, which is also a kind of weight.',
+  ])
+  if (F.has('banlieue_generation') && Math.random() < 0.3) return pick([
+    'You are fluent in two Frances. The double fluency is invisible and exhausting and is also the thing that lets you function in both. Neither France thanks you for the translation.',
+    phase === 'late_life'
+      ? 'Liberté, égalité, fraternité. You have been measuring the distance between the words and the experience for fifty years. The measurement has not closed.'
+      : 'The job application. The police stop. The interview. The system of small signals that says: you are French on the papers and something else in the room.',
+  ])
+  if (F.has('paris_attacks_generation') && Math.random() < 0.25) return pick([
+    'The terraces filled again. The filling-again was a form of answer to the attacks. You watched it happen slowly over the following months. The answer is incomplete and it is the best answer available.',
+    phase === 'late_life'
+      ? 'January and November 2015 produced two kinds of grief — the first, immediate and collective; the second, slow and individual. You lived through both calendars.'
+      : 'Charlie and the Bataclan. The target was the ordinary evening. You have been back to ordinary evenings since. The ordinariness required something extra for a while.',
+  ])
+  if (F.has('gilets_jaunes_generation') && Math.random() < 0.2) return pick([
+    'The roundabout became the centre. The weeks stretched to months. Some demands were met. Others were not. What the movement named — the metropolitan/peripheral divide — is still the correct diagnosis.',
+    phase === 'late_life'
+      ? 'The high-visibility vest is still in your car. It is required by law. It means something different now than it did before November 2018.'
+      : 'Macron cancelled the fuel tax. The movement continued. It was not only about petrol. The continuing was the clarification.',
+  ])
+
   // ─── IRELAND TEXTURE ─────────────────────────────────────────────────────────
   if (F.has('irish_emigrant_generation') && Math.random() < 0.3) return pick([
     'You are Irish at one remove. The remove is maintained by the specific labour of keeping up with what is happening in a place you are not.',

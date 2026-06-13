@@ -2802,6 +2802,128 @@ export const FLAG_REGISTRY = {
     notes: 'Set by uk_miners_strike_1984 (community choice) and similar events.',
   },
 
+  // ── Germany ───────────────────────────────────────────────────────────────────
+  gastarbeiter_generation: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Part of the Gastarbeiter cohort — migrant workers who came to West Germany on two-year contracts that became permanent lives.',
+    intent: 'both',
+    notes: 'Set by ger_gastarbeiter_arrival. The "two years" that stretched into a lifetime.',
+  },
+
+  remittance_sender: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Sent money home to family while living abroad — the economy of the diaspora.',
+    intent: 'year_texture',
+    notes: 'Set by ger_gastarbeiter_arrival (plan-to-return choice). Also applicable in OFW arcs.',
+  },
+
+  settled_migrant: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Made a conscious decision early that the country of migration is now home — before systems or institutions were ready for that decision.',
+    intent: 'year_texture',
+    notes: 'Set by ger_gastarbeiter_arrival (stayed choice).',
+  },
+
+  hyphenated_german: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Born in Germany or came young — German is the first language, but Germany does not fully claim the character. Built an identity the categories do not have a slot for.',
+    intent: 'both',
+    notes: 'Set by ger_turkish_german_identity.',
+  },
+
+  diaspora_identity: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Identity shaped by being between two cultures — the country of origin\'s expectations and the country of settlement\'s limits.',
+    intent: 'year_texture',
+    notes: 'Set by ger_turkish_german_identity (emphasis-Turkish choice). Relevant across multiple diasporas.',
+  },
+
+  ddr_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Grew up in East Germany — the FDJ blue shirt, the Trabant queue, the portraits in the school hall. 1989 arrived without preparation.',
+    intent: 'both',
+    notes: 'Set by ger_ddr_daily_life. ger_reunification_1990 has dynamic text for this flag.',
+  },
+
+  reunification_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through German reunification 1990 — whether as liberation or as the end of the only country they knew.',
+    intent: 'both',
+    notes: 'Set by ger_reunification_1990.',
+  },
+
+  willkommenskultur_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Participated in the Willkommenskultur — the welcome of the 2015 refugee arrivals. The position later required defending.',
+    intent: 'year_texture',
+    notes: 'Set by ger_refugee_crisis_2015 (volunteer choice).',
+  },
+
+  german_migration_debate: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Uncertain or resistant about the 2015 refugee crisis — concern shared with people whose concerns were different in kind.',
+    intent: 'year_texture',
+    notes: 'Set by ger_refugee_crisis_2015 (resistant choice).',
+  },
+
+  // ── France ───────────────────────────────────────────────────────────────────
+  algerian_war_veteran: {
+    weight: 'major',
+    category: 'experience',
+    description: 'Served in Algeria 1954–62 — in a war that France did not call a war until 1999. Carries something unsaid.',
+    intent: 'both',
+    notes: 'Set by fr_algerian_war_soldier (followed orders choice). Deeply buried in French social memory.',
+  },
+
+  carries_something_unsaid: {
+    weight: 'major',
+    category: 'psychological',
+    description: 'A thing was done or witnessed that was never spoken about. The not-talking outlasted the event by decades.',
+    intent: 'year_texture',
+    notes: 'Set by fr_algerian_war_soldier (followed orders). Applicable to other trauma arcs.',
+  },
+
+  algerian_war_conscientious: {
+    weight: 'major',
+    category: 'political',
+    description: 'Refused or resisted orders in Algeria — conscientious objection with consequences. Carries both the cost and the knowledge of what was refused.',
+    intent: 'both',
+    notes: 'Set by fr_algerian_war_soldier (refused choice).',
+  },
+
+  banlieue_generation: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Grew up in the French banlieues — between the France of the papers and the France of the police stop. Double fluency in two Frances.',
+    intent: 'both',
+    notes: 'Set by fr_banlieue_second_gen.',
+  },
+
+  paris_attacks_generation: {
+    weight: 'major',
+    category: 'experience',
+    description: 'Lived through the 2015 Paris attacks — Charlie Hebdo in January, the Bataclan in November. The ordinary evening as target.',
+    intent: 'both',
+    notes: 'Set by fr_charlie_hebdo_bataclan_2015.',
+  },
+
+  gilets_jaunes_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through or participated in the gilets jaunes movement 2018–20 — the roundabout as political centre, the metropolitan/peripheral divide.',
+    intent: 'year_texture',
+    notes: 'Set by fr_yellow_vests_2018.',
+  },
+
   // ── Ireland ───────────────────────────────────────────────────────────────────
   irish_emigrant_generation: {
     weight: 'major',
