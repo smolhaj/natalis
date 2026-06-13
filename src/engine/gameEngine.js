@@ -6441,6 +6441,62 @@ function buildYearTexture(state) {
     'Spain in October 2017: simultaneously a constitutional democracy defending its constitution and a country using riot gear on people at ballot boxes. Both descriptions are accurate. Holding both is the specific work.',
   ])
 
+  // ─── CANADA TEXTURE ──────────────────────────────────────────────────────────
+  if (F.has('october_crisis_generation') && Math.random() < 0.2) return pick([
+    '"Just watch me." Trudeau\'s answer to how far he would go. The War Measures Act. The five hundred people arrested without charge. The FLQ broken. The question of Quebec not broken.',
+    phase === 'late_life'
+      ? 'October 1970 is the event that teaches you what the Canadian state is capable of when it decides something is an emergency. The lesson is one you carry alongside the other lessons the country has given you.'
+      : 'The peacetime suspension of civil liberties: the only time Canada has done it. The conditions that make it possible are not gone. The conditions are just waiting.',
+  ])
+  if (F.has('charter_generation') && Math.random() < 0.2) return pick([
+    'The Charter is the document that makes certain arguments possible — section 15, equality rights, the court challenges that would not have been possible without it.',
+    'Quebec never signed. The constitution is Canada\'s constitution and Quebec exists under it without having ratified it. The sentence describes something that is true and is also the unresolved thing.',
+  ])
+  if (F.has('quebec_question_generation') && Math.random() < 0.2) return pick([
+    'Meech Lake, Charlottetown, the 1995 referendum. The question of whether Quebec is in Canada on terms Quebec can live with has produced three major constitutional failures in fifteen years.',
+    phase === 'late_life'
+      ? 'The question is quieter now. The sovereigntist parties are lower in the polls. The question is not gone. It is the question that Canada generates when conditions are right. The conditions change.'
+      : 'The Clarity Act: the federal government\'s answer to the 1995 near-miss. The terms under which separation could be negotiated. The act is contested in Quebec. The contest is the condition.',
+  ])
+  if (F.has('meech_lake_generation') && Math.random() < 0.15) return pick([
+    'Elijah Harper. The eagle feather. Manitoba. The Accord that failed because Indigenous peoples had not been consulted about it, which is the correct reason for a constitutional accord to fail.',
+    'The Bloc Québécois was founded because Meech failed. The Bloc is the political consequence of a failed constitutional negotiation. The negotiation failed for reasons that had nothing to do with the Bloc\'s subsequent project.',
+  ])
+  if (F.has('referendum_night_generation') && Math.random() < 0.25) return pick([
+    '50.58 percent. Fifty-four thousand votes out of five million. The night the country almost became two countries, and did not, by the smallest margin that counts as not.',
+    phase === 'late_life'
+      ? 'The unity rally in Montreal five days before the vote — the hundred thousand Canadians who came from other provinces to say they wanted Quebec to stay. Whether it changed any votes is not known. The country stayed one country by fifty-four thousand votes.'
+      : 'Parizeau on television after the result: "money and the ethnic vote." The phrase tells you something about whose Quebec the project was for.',
+  ])
+  if (F.has('canadian_healthcare_generation') && Math.random() < 0.2) return pick([
+    'The health card. You show it and the treatment happens. The absence of the billing is what you explain to Americans. The absence of the billing is also not the whole system — the wait times, the doctors not accepting new patients, the dental not covered.',
+    phase === 'late_life'
+      ? 'You have used the system enough to know what it does well and what it doesn\'t. The thing it does well — the heart attack, the cancer diagnosis, the emergency — it does without the billing question. The billing question at the worst moment is the thing the system removes.'
+      : 'The argument about two-tier healthcare, about privatization, about wait times — it\'s the argument about what public means. The card works while the argument continues.',
+  ])
+  if (F.has('trc_witness_generation') && Math.random() < 0.2) return pick([
+    'The Calls to Action are numbered because they need to be tracked. Call 62: education. Call 65: the National Centre. The numbering implies that progress will be measured. The measuring is slow.',
+    phase === 'late_life'
+      ? 'The graves at Kamloops, then the other schools. The Ground Penetrating Radar producing numbers that were added to the known numbers. The known numbers grew. The 2008 apology was in the record. The record was more complicated than the apology.'
+      : 'The residential school history is the country\'s history. Understanding it is not the same as being responsible for it, and being responsible for it is not the same as having done it. The distinctions matter and do not remove the relationship.',
+  ])
+  if (F.has('head_tax_generation') && Math.random() < 0.25) return pick([
+    '$500. Two years\' wages. The railroad is built. The builders are taxed to stay in the country their labor built. This is the sequence.',
+    phase === 'late_life'
+      ? 'The apology came in 2006. Prime Minister Harper, in Parliament, reading the words. You were alive or your family was alive in the years when the head tax was law. The apology is administrative. The administrative apology is the best the state offers.'
+      : 'The exclusion and the community built despite it: the Chinatowns, the family associations, the paper sons. What was built in the space the exclusion created is the response to the exclusion.',
+  ])
+  if (F.has('hyphenated_canadian') && Math.random() < 0.2) return pick([
+    'Canada\'s official multiculturalism is real and is also the context in which you navigate. The navigation is the daily version of the official policy.',
+    'You are Canadian in all the ways that count and also something else in all the ways that count. The country calls this multiculturalism. You call it your life.',
+  ])
+  if (F.has('canadian_housing_generation') && Math.random() < 0.2) return pick([
+    'Your parents bought for $180,000. The house is worth $1.3 million. The $1.3 million is not available to you. The advice your parents give you about saving is advice for the market they entered, not the market you are in.',
+    phase === 'late_life'
+      ? 'The housing affordability crisis: the thing that reorganizes who can stay in the city and who cannot. You stayed in the city, renting, or you left for a smaller city that then became expensive. The problem moved with you.'
+      : 'Twelve years on the social housing waitlist in Toronto. The stress test. The first-time buyer incentive. The policy instruments for a problem that is structural.',
+  ])
+
   // ─── AUSTRALIA TEXTURE ───────────────────────────────────────────────────────
   if (F.has('white_australia_generation') && Math.random() < 0.3) return pick([
     'The White Australia Policy ended gradually between 1966 and 1973. Before it ended, belonging here was a conditional permission. The conditionality didn\'t end with the policy.',

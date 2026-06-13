@@ -2712,6 +2712,88 @@ export const FLAG_REGISTRY = {
     notes: 'Set by ind_farmers_protest_2020.',
   },
 
+  // ── Canada ────────────────────────────────────────────────────────────────────
+
+  october_crisis_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through the October Crisis 1970 — FLQ kidnappings, War Measures Act, nearly 500 detained without charge. Canada\'s only peacetime suspension of civil liberties.',
+    intent: 'both',
+    notes: 'Set by can_october_crisis_1970.',
+  },
+
+  charter_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Came of age after the Charter of Rights and Freedoms 1982 — rights constitutionalized, Quebec absent from the signing, section 15 equality provisions.',
+    intent: 'year_texture',
+    notes: 'Set by can_charter_1982.',
+  },
+
+  quebec_question_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through the ongoing Quebec constitutional question — Meech Lake, the 1995 referendum, the 54,000-vote margin.',
+    intent: 'year_texture',
+    notes: 'Set by can_charter_1982 and can_quebec_referendum_1995.',
+  },
+
+  meech_lake_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Watched the Meech Lake Accord fail in 1990 — Elijah Harper\'s eagle feather, the Bloc Québécois forming in the aftermath.',
+    intent: 'year_texture',
+    notes: 'Set by can_meech_lake_1990 (auto-resolve).',
+  },
+
+  referendum_night_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Watched the 1995 Quebec referendum — the night of 50.58% No, the 54,000-vote margin, Canada almost becoming two countries.',
+    intent: 'both',
+    notes: 'Set by can_quebec_referendum_1995.',
+  },
+
+  canadian_healthcare_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'The health card — the treatment that happens, the billing that does not follow. Healthcare as part of what Canada means.',
+    intent: 'year_texture',
+    notes: 'Set by can_healthcare_experience (auto-resolve).',
+  },
+
+  trc_witness_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Non-Indigenous Canadian who engaged with the Truth and Reconciliation Commission\'s 94 Calls to Action — the graves, the apology, the ongoing accounting.',
+    intent: 'both',
+    notes: 'Set by can_trc_calls_to_action_2015.',
+  },
+
+  head_tax_generation: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Chinese Canadian whose family paid the head tax — $500 in 1903, two years of wages, the exclusion and the community built despite it.',
+    intent: 'both',
+    notes: 'Set by can_chinese_head_tax.',
+  },
+
+  hyphenated_canadian: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Canadian and something else — the hyphen navigated in both directions, the country that calls itself multicultural and the rooms where that claim is tested.',
+    intent: 'year_texture',
+    notes: 'Set by can_chinese_head_tax.',
+  },
+
+  canadian_housing_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Came of age in the Canadian housing crisis — million-dollar averages in Toronto, twelve-year social housing waitlists, the gap between parents\' $180K and today\'s $1.3M.',
+    intent: 'year_texture',
+    notes: 'Set by can_housing_affordability.',
+  },
+
   // ── Australia ─────────────────────────────────────────────────────────────────
 
   white_australia_generation: {
