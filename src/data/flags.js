@@ -925,6 +925,30 @@ export const FLAG_REGISTRY = {
     notes: 'Set by ru_mobilization_2022 (answered call choice).',
   },
 
+  soviet_afghan_veteran: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Served in the Soviet-Afghan War (1979-1989) — the zinc coffins, the altitude sickness, the mujahideen, the country that greeted you with silence when you came home.',
+    intent: 'both',
+    notes: 'Set by ru_afghan_war_served event. Needs year texture and a late-life follow-through event.',
+  },
+
+  beslan_generation: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Shaped by the Beslan school siege (September 1-3, 2004) — 334 dead, 186 of them children, the three days of television, the numbers that were official and the numbers that were not.',
+    intent: 'year_texture',
+    notes: 'Set by ru_beslan_2004. Texture only.',
+  },
+
+  bolotnaya_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Part of Russia\'s 2011-12 protest movement — Bolotnaya Square, the white ribbons, the first mass political mobilisation since the 1990s, and the systematic suppression that followed.',
+    intent: 'both',
+    notes: 'Set by ru_bolotnaya_2011. Needs year texture and a follow-through for Navalny\'s death 2024.',
+  },
+
   veteran_unthanked: {
     weight: 'moderate',
     category: 'identity',

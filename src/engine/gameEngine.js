@@ -4861,6 +4861,24 @@ function buildYearTexture(state) {
       ? 'You went when they called you. You came back. The question of what you participated in is one you will spend the rest of your life working out the answer to.'
       : 'You know the smell of the place and the weight of the equipment and the specific texture of the months you were there. The television\'s version and your version are in a specific relationship.',
   ])
+  if (F.has('soviet_afghan_veteran') && Math.random() < 0.22) return pick([
+    'Afghanistan. The altitude, the rock, the sound that comes before the impact. The things your body learned there are still in your body. The war that was not official was very official to the people inside it.',
+    'The afgantsy — the Afghan veterans\' association — formed because the country did not form anything for you when you came back. The association is the acknowledgment the state did not provide.',
+    phase === 'late_life'
+      ? 'Fifteen thousand dead. The official figure. The sealed coffins. The mothers\' organisations. You came back. Some of the men from your unit did not come back. The mathematics of that is not finished.'
+      : 'You were sent to a country you could not find on a map when the orders came. The order was the map. The mountains were the country.',
+  ])
+  if (F.has('beslan_generation') && Math.random() < 0.18) return pick([
+    'September 1, 2004. School Number One, Beslan. The gymnasium. Three days. The number 334. You watched it on the television for three days and then you sent your children to school and you watched them walk through the door.',
+    'The children who ran across the field on September 3 were still running from something in the years after. Some of the therapists who worked with them were still working with them a decade later.',
+  ])
+  if (F.has('bolotnaya_generation') && Math.random() < 0.2) return pick([
+    'December 2011. The white ribbons. Bolotnaya Square. The largest protests in twenty years. You were there or you watched the people who were there. What the system learned from Bolotnaya was how to prevent the next one.',
+    'The Bolotnaya prisoners were tried in 2014. The sentences ranged from two to four years. The message was correctly understood.',
+    phase === 'late_life'
+      ? 'You were in Bolotnaya Square or you watched from the edge. What happened to the people who were in the square is the political history of the decade that followed. You watched it happen in real time.'
+      : 'The white ribbon was a symbol for a specific number of months in 2011 and 2012. After those months, wearing it meant something different.',
+  ])
   if (F.has('veteran_unthanked') && Math.random() < 0.2) return pick([
     'You came back from a war the state had decided to forget. The people who don\'t know the war happened cannot thank you for it. The people who do know tend to look away.',
     'The wound is specific. The official record says you were in a peacekeeping operation. The medical record says something more specific.',
