@@ -3160,6 +3160,104 @@ export const FLAG_REGISTRY = {
     notes: 'Set by uk_miners_strike_1984 (community choice) and similar events.',
   },
 
+  // ── Poland ────────────────────────────────────────────────────────────────────
+
+  communist_poland_childhood: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Grew up in communist Poland — the queue at the state butcher, the official history and the real history learned in parallel.',
+    intent: 'both',
+    notes: 'Set by pol_communist_childhood.',
+  },
+
+  church_formed_identity: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Identity shaped by the church as parallel institution — the space outside the party\'s reach, the formation in a different register from the official.',
+    intent: 'year_texture',
+    notes: 'Set by pol_communist_childhood (church choice) and pol_pope_john_paul_1978.',
+  },
+
+  pope_visit_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through John Paul II\'s 1979 visit to Poland — the two million in Kraków, the thing the state did not know how to answer.',
+    intent: 'both',
+    notes: 'Set by pol_pope_john_paul_1978.',
+  },
+
+  solidarity_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through Solidarity 1980-89 — the legalization, the ten million members, the hope, the martial law, the underground, and the Round Table.',
+    intent: 'both',
+    notes: 'Set by pol_solidarity_1980.',
+  },
+
+  solidarity_member: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Actually joined Solidarity — was in the meeting, in the church, when the window opened and the air was extraordinary.',
+    intent: 'year_texture',
+    notes: 'Set by pol_solidarity_1980 (joined choice).',
+  },
+
+  martial_law_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through martial law Dec 1981 — the tanks, the phones cut, the internments, Solidarity declared illegal, Jaruzelski on television in his uniform.',
+    intent: 'both',
+    notes: 'Set by pol_martial_law_1981.',
+  },
+
+  underground_poland: {
+    weight: 'major',
+    category: 'political',
+    description: 'Participated in the Polish underground during martial law — the bibuła, the samizdat, the church basements, the printing and distributing.',
+    intent: 'both',
+    notes: 'Set by pol_martial_law_1981 (underground choice).',
+  },
+
+  '1989_poland_generation': {
+    weight: 'major',
+    category: 'historical',
+    description: 'Voted in the June 4, 1989 Polish elections — the first non-Communist PM in the Eastern Bloc, the same day as Tiananmen.',
+    intent: 'both',
+    notes: 'Set by pol_round_table_1989.',
+  },
+
+  shock_therapy_generation: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Lived through the Balcerowicz Plan — prices up 250%, state enterprises shut, unemployment at 16% by 1994, the bazaar economy that carried people through.',
+    intent: 'both',
+    notes: 'Set by pol_shock_therapy.',
+  },
+
+  transition_economy_cost: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Directly lost to the transition economy — factory closure, skills made obsolete, the smaller world after the known world ended.',
+    intent: 'year_texture',
+    notes: 'Set by pol_shock_therapy (destroyed choice).',
+  },
+
+  poland_eu_emigrant: {
+    weight: 'major',
+    category: 'experience',
+    description: 'Left Poland after EU accession — the UK, Ireland, Germany. The double life of remittances home and a career abroad.',
+    intent: 'both',
+    notes: 'Set by pol_eu_accession_2004 (went west choice).',
+  },
+
+  eu_freedom_movement: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Benefited from EU freedom of movement — the work permit that appeared, the border that opened, the Europe that became navigable.',
+    intent: 'year_texture',
+    notes: 'Set by pol_eu_accession_2004.',
+  },
+
   // ── Italy ─────────────────────────────────────────────────────────────────────
 
   miracolo_generation: {

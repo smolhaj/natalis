@@ -6746,6 +6746,78 @@ function buildYearTexture(state) {
       : 'The rhetoric of hard choices and living within our means produced specific outcomes in specific places. You are from one of those places or you know people from one of those places.',
   ])
 
+  // ─── POLAND TEXTURE ──────────────────────────────────────────────────────────
+  if (F.has('communist_poland_childhood') && Math.random() < 0.25) return pick([
+    'The queue at the mięsny. The sprzedawczyni who keeps something under the counter for people she knows. The official economy and the real economy as two different systems. You learned both.',
+    phase === 'late_life'
+      ? 'You lived under it for forty years. The habits it built — the gap between the official version and the real version, the informal arrangement, the knowing whom to know — some of them are still running. They are useful in different ways now.'
+      : 'The empty shelf, the substitute product, the knowing look. The informal economy that exists alongside and beneath the official one. These are the conditions you think in.',
+  ])
+  if (F.has('church_formed_identity') && Math.random() < 0.2) return pick([
+    'The parish was the space the party couldn\'t fully reach. What was formed there was different from what was formed in the school. Both formations are yours.',
+    phase === 'late_life'
+      ? 'The church and the party: two institutions that claimed Poland simultaneously. You navigated between them. The navigation produced something in you that is neither and both.'
+      : 'The priest says things in the confessional that could not be said on the street. The confessional is also information infrastructure. This is what the church was in communist Poland.',
+  ])
+  if (F.has('pope_visit_generation') && Math.random() < 0.25) return pick([
+    'Two million in Kraków. The state stood at the edge of the crowd and watched two million Poles tell it something about what it does not own. The state did not know how to answer. The answering took eleven years.',
+    phase === 'late_life'
+      ? 'He came back four more times. Each visit landed differently. The 1979 visit was the one that opened the door. The ten million who joined Solidarity the following year walked through the door he opened.'
+      : 'The radio announcement. People coming into the street. The Polish Pope: the sentence that did not exist until it did, and then reorganized the following decade.',
+  ])
+  if (F.has('solidarity_generation') && Math.random() < 0.3) return pick([
+    'Ten million members in fourteen months. A third of the country in a trade union. The demands were twenty-one points. The government signed. The government later declared it illegal. The signing and the declaring are both in the record.',
+    phase === 'late_life'
+      ? 'Wałęsa became president. The movement became a party. The party divided. The history of Solidarity from 1980 to the present is the history of what a mass movement becomes when it succeeds and then has to govern. The success is real. The becoming is complicated.'
+      : 'August 31, 1980: the Gdańsk Accords. Lech Wałęsa signing with a pen that had a picture of John Paul II on it. The photograph is in the history books. You were in the country the photograph was taken in.',
+  ])
+  if (F.has('solidarity_member') && Math.random() < 0.2) return pick([
+    'You were in the meeting. The priest said things that would have been impossible to say eighteen months before. The window was open. The air was extraordinary.',
+    phase === 'late_life'
+      ? 'You had a Solidarność card. The card was illegal after December 1981. You kept it or you didn\'t keep it, depending on the risk calculation of the moment. Whether you kept it is the kind of specific detail that tells a story about a whole year.'
+      : 'The union meeting in the factory. The discussions that were new — not because the opinions were new but because they were being expressed in the factory, in daylight, with people\'s names attached to them.',
+  ])
+  if (F.has('martial_law_generation') && Math.random() < 0.3) return pick([
+    'December 13, 1981. 6am. Jaruzelski in uniform on television. Stan wojenny. The tanks, the phones cut, the curfew. Ten thousand interned in the first forty-eight hours. Solidarity illegal. The underground press in church basements.',
+    phase === 'late_life'
+      ? 'The argument about Jaruzelski continues: did he impose martial law to save Poland from Soviet invasion, or to save the party? The KGB files that emerged after 1989 are inconclusive. What is conclusive: it happened. The tanks were in the street. You saw them.'
+      : 'Stan wojenny lasted until July 1983. The internments, the curfew, the censorship, the passport controls. Then it ended officially. The unofficial version of it continued until 1989.',
+  ])
+  if (F.has('underground_poland') && Math.random() < 0.25) return pick([
+    'Tygodnik Mazowsze. CDN. The samizdat in the envelope. The church basement. The person you passed it to without writing their name anywhere. The chain of distribution that has no center.',
+    phase === 'late_life'
+      ? 'What the underground maintained was not only information. It was the existence of a civil society that the state had declared illegal. The maintenance of that existence — through eight years of martial law and semi-martial law — is what made 1989 possible. You were part of what made it possible.'
+      : 'You knew which church. You knew which envelope. You knew not to know which envelope after you passed it. The practice of not-knowing is a skill that takes careful work to develop.',
+  ])
+  if (F.has('1989_poland_generation') && Math.random() < 0.3) return pick([
+    'June 4, 1989. The same day as Tiananmen, the other side of the iron curtain. Poland voted. Solidarity won every contested seat. By August, Mazowiecki was Prime Minister. By November, the wall was down in Berlin.',
+    phase === 'late_life'
+      ? 'The decade between 1979 and 1989: the Pope\'s visit, Solidarity, martial law, the underground, the Round Table, the election. The decade compressed into ten years what other countries take a generation to do. You were inside it. The inside view is never the historical view but it is yours.'
+      : 'The ordinary and extraordinary morning of June 4. The vote that counted. The result that counted. The first morning of something different: ordinary and extraordinary simultaneously.',
+  ])
+  if (F.has('shock_therapy_generation') && Math.random() < 0.25) return pick([
+    'January 1, 1990. The Balcerowicz Plan. Price liberalization, privatization, currency convertibility. In six months prices up 250 percent. Unemployment from zero to sixteen percent in four years. The bazaar economy: the folding table, the dollar, the anything-that-can-be-traded.',
+    phase === 'late_life'
+      ? 'Poland did not enter recession in 2009. The only major European economy that didn\'t. The price was paid in the early nineties and you were there when it was paid. The 2009 newspaper was easier to read because of what you survived in 1990.'
+      : 'The transition: the known world ending and the new world arriving faster than the institutions can keep up. You adapted or you didn\'t adapt or you adapted partially, which is the majority condition.',
+  ])
+  if (F.has('transition_economy_cost') && Math.random() < 0.2) return pick([
+    'The factory closed. The severance was in złoty that lost value every month. The new economy had specific requirements and your skills were not among them.',
+    phase === 'late_life'
+      ? 'You found something. What you found was smaller than what you had. The smaller thing sustained you. The generation that came after you thinks of the nineties as the beginning of Poland\'s prosperity. From inside the beginning, it looked different.'
+      : 'The retraining program. The new trade. The skills that are in demand in a market economy that did not exist eighteen months ago. The learning is real. The learning is also a reminder of what was lost.',
+  ])
+  if (F.has('poland_eu_emigrant') && Math.random() < 0.25) return pick([
+    'The Polish plumber. The joke across western Europe about the Poles coming for the jobs. You came for the wages that were five times what you could earn in Warsaw. The joke cost nothing. The wages were real.',
+    phase === 'late_life'
+      ? 'You built two lives. The career in London or Dublin. The house in the village in Poland. The children who grew up speaking English and Polish. The Europe of free movement: you used it completely.'
+      : 'The remittance arrives every month. Your parents live better than they would have if you had stayed. The Sunday call. The Christmas visit. The distance measured in airmiles and guilt and love.',
+  ])
+  if (F.has('eu_freedom_movement') && Math.random() < 0.15) return pick([
+    'The border that opened on May 1, 2004. The work permit that was not required. The Europe that became navigable. The Schengen zone that meant the passport stayed in the bag.',
+    'You are European in a legal and practical sense that did not exist before 2004. The legal and practical sense makes other things possible. You use them.',
+  ])
+
   // ─── ITALY TEXTURE ───────────────────────────────────────────────────────────
   if (F.has('miracolo_generation') && Math.random() < 0.25) return pick([
     'The Fiat 500 in 1957. The refrigerator. The television. The GDP growth rate. The thing Italy did between 1950 and 1968 was one of the most rapid economic transformations in the twentieth century. You were inside it.',
