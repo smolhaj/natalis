@@ -429,6 +429,38 @@ export const FLAG_REGISTRY = {
     notes: 'Set by world events. No dedicated year texture. Gap.',
   },
 
+  soweto_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'In Soweto or the wider Black South African community on June 16, 1976 — Hector Pieterson, the march against Afrikaans-medium instruction, the bullets, the image that circled the world.',
+    intent: 'both',
+    notes: 'Set by sa_soweto_1976. Needs year texture and a late-life follow-through.',
+  },
+
+  mandela_release_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Watched Nelson Mandela walk out of Victor Verster Prison on February 11, 1990 — the twenty-seven years ending in that walk, the crowd on the road, the raised fist.',
+    intent: 'year_texture',
+    notes: 'Set by sa_mandela_release_1990.',
+  },
+
+  zuma_state_capture_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through the Zuma years (2009-2018) — state capture, Nkandla, the Gupta family, the systematic looting of state-owned enterprises.',
+    intent: 'year_texture',
+    notes: 'Set by sa_state_capture. Texture only.',
+  },
+
+  white_emigrant_sa: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'White South African who emigrated post-1994 — the "chicken run" to Australia, the UK, New Zealand, Canada — carrying a country that became too complicated to name simply.',
+    intent: 'year_texture',
+    notes: 'Set by sa_white_emigration.',
+  },
+
   post_apartheid_generation: {
     weight: 'major',
     category: 'historical',
@@ -955,6 +987,64 @@ export const FLAG_REGISTRY = {
     description: 'Returned from a war the state preferred not to acknowledge — Chechnya, Afghanistan, other conflicts where the official narrative erased the soldiers\' experience.',
     intent: 'year_texture',
     notes: 'Set by ru_chechnya_war (served choice) and soldier_arc events.',
+  },
+
+  // ── Ukraine ──────────────────────────────────────────────────────────────────
+
+  holodomor_family_memory: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Ukrainian character who grew up with family memory of the Holodomor (1932-33 famine) — what the grandparents did not speak about, and what they did.',
+    intent: 'year_texture',
+    notes: 'Set by ukr_holodomor_family. Texture only.',
+  },
+
+  ukrainian_language_identity: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Chose Ukrainian over Russian as a daily language after independence — the political act embedded in the language choice in an officially bilingual country.',
+    intent: 'none',
+    notes: 'Set by ukr_language_question. Texture only; identity signal.',
+  },
+
+  orange_revolution_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Part of Ukraine\'s 2004 Orange Revolution — the tent city on Maidan, Yushchenko\'s poisoned face, the Supreme Court annulment, the second election. The precedent.',
+    intent: 'year_texture',
+    notes: 'Set by ukr_orange_revolution_2004.',
+  },
+
+  euromaidan_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Part of the Euromaidan (2013-14) — the tent city, the Berkut crackdown, the Heavenly Hundred (Небесна Сотня), the revolution that led directly to Crimea, Donbas, and 2022.',
+    intent: 'both',
+    notes: 'Set by ukr_euromaidan_2013. Needs year texture and a late-life follow-through about what Maidan led to.',
+  },
+
+  donbas_displaced: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Internally displaced from the Donbas conflict (2014-2022) — left Donetsk or Luhansk when the "people\'s republics" were declared, carrying what you could, moving west.',
+    intent: 'year_texture',
+    notes: 'Set by ukr_donbas_2014 (leave choice).',
+  },
+
+  ukraine_2022_survivor: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Ukrainian civilian who lived through the February 2022 full-scale invasion — the sirens, the shelters, the specific choice of where to go, what the city looked like in the weeks after.',
+    intent: 'year_texture',
+    notes: 'Set by ukr_invasion_2022 (stayed choice).',
+  },
+
+  ukraine_refugee_2022: {
+    weight: 'major',
+    category: 'migration',
+    description: 'One of 8 million Ukrainians who became refugees after February 24, 2022 — the border, the children, the suitcase, the language that is suddenly your introduction in every room.',
+    intent: 'year_texture',
+    notes: 'Set by ukr_invasion_2022 (fled choice).',
   },
 
   regime_compliance: {

@@ -4826,6 +4826,76 @@ function buildYearTexture(state) {
       ? 'You watched Eskom fail in slow motion over thirty years — the political appointments, the deferred maintenance, the coal contracts, the final collapse into managed rolling blackouts. The management is an achievement, in a way.'
       : 'The productive hours of the economy are cut by a schedule posted online by the government because it does not have enough electricity. This sentence has been true for fifteen years now. You have stopped waiting for it to stop being true.',
   ])
+  if (F.has('soweto_generation') && Math.random() < 0.22) return pick([
+    'June 16, 1976. Hector Pieterson. Thirteen years old. You know the photograph. You were in the world it was taken in.',
+    'The Afrikaans instruction decree was quietly dropped the following year. Six hundred dead before the instruction decree was dropped. You know the ratio.',
+    phase === 'late_life'
+      ? 'June 16 is now Youth Day — a public holiday. The students who marched are grandparents or they are not here. The day is in the calendar. The things that were in the streets are in the calendar.'
+      : 'What the uprising produced in the long term was a generation of young South Africans who understood that the state would fire on them and they had to decide what to do with that knowledge.',
+  ])
+  if (F.has('mandela_release_generation') && Math.random() < 0.2) return pick([
+    'February 11, 1990. The gates opened and twenty-seven years ended. You were watching when it happened.',
+    'He raised his fist coming out of Victor Verster. Seventy-one years old. Twenty-seven years. You know what that fist cost and what it meant and you know you watched it live.',
+    phase === 'late_life'
+      ? 'Mandela died in December 2013. The flags at half-mast. The queues outside the Union Buildings. You watched his release. You watched his death. The country between those two events is what you have lived in.'
+      : 'The country that released Mandela in 1990 was not yet finished with apartheid. The country that existed after 1994 was not yet finished with what apartheid built. Both of these things remain true.',
+  ])
+  if (F.has('zuma_state_capture_era') && Math.random() < 0.2) return pick([
+    'The fire pool. The chicken run. The Nkandla report. The constitutional court finding. The nine wasted years — that is the phrase that was used. You counted them.',
+    'The Zondo Commission hearings ran for three years and produced a 5,700-page report. The accounting happened. The accountability has been slower.',
+    phase === 'late_life'
+      ? 'The state-owned enterprises are still being reconstructed from what was done to them between 2009 and 2018. Eskom, Transnet, SAA. The rebuilding takes longer than the looting because building is harder than breaking.'
+      : 'You watched people you voted for in 1994 defend the man who was hollowing out what you voted for. This is a specific experience with a specific emotional texture that is still difficult to describe simply.',
+  ])
+  if (F.has('white_emigrant_sa') && Math.random() < 0.2) return pick([
+    'You left South Africa and you carry it — the light in November, the specific smell of the highveld after rain, the biltong that costs three times what it should in the supermarket here.',
+    'The South African accent softens over years. Not enough to disappear. People still ask where you\'re from.',
+    phase === 'late_life'
+      ? 'You left in the nineties or the two-thousands. The country you left is not the country that exists now — neither better nor worse in a simple direction, just different and ongoing.'
+      : 'The question of whether you should have stayed is not a question with a clean answer. The people who stayed ask it sometimes. You ask it more.',
+  ])
+  if (F.has('holodomor_family_memory') && Math.random() < 0.18) return pick([
+    'Your grandmother does not throw bread away. You know why.',
+    'The Holodomor — 1932-33. Six million. The Soviets denied it internationally while it was happening. The bread your grandmother saves is the shape of that denial.',
+    phase === 'late_life'
+      ? 'Ukraine officially recognised the Holodomor as genocide in 2006. The recognition came seventy years after the famine. You were alive for both. What lives in your family is older than the recognition.'
+      : 'The specific silence around the famine — what your grandparents would and would not say — is part of how you understand official silence as a tool. You learned it from bread.',
+  ])
+  if (F.has('orange_revolution_generation') && Math.random() < 0.2) return pick([
+    'The tent city on Maidan in November 2004. The orange scarves. The Supreme Court annulment. The revote. The precedent was set: the country could change its mind about an election result.',
+    'Yushchenko\'s face after the poisoning. Dioxin. He survived. His face carried the evidence for years.',
+    phase === 'late_life'
+      ? 'The Orange Revolution produced Yushchenko, who was followed by Yanukovych in 2010. The cycle completed. The second time there was no Supreme Court to annul the result — there was Maidan.'
+      : 'You were in the Maidan or you watched the Maidan. The template it set was the template used in 2013. History cited the citation.',
+  ])
+  if (F.has('euromaidan_generation') && Math.random() < 0.25) return pick([
+    'The Heavenly Hundred — Небесна Сотня. A hundred and four dead between November 2013 and February 2014. You were there or you watched. The names are on the memorial.',
+    'The piano on Hrushevsky Street. The burning tyres. The Berkut in the smoke. The specific texture of those weeks is something the photographs approach but do not fully contain.',
+    phase === 'late_life'
+      ? 'What Maidan led to: Crimea, Donbas, eight years of war that was not officially a war, and then February 24, 2022. You were at the beginning of the chain. You are still in the chain.'
+      : 'Yanukovych fled to Russia on February 21, 2014. Russia annexed Crimea on March 18. The distance between those two dates is the distance between what you fought for and what came next.',
+  ])
+  if (F.has('ukraine_2022_survivor') && Math.random() < 0.25) return pick([
+    'The sirens at 5am on February 24. You know what you did in the first hour. You will know it for the rest of your life.',
+    'The city changed. The streets changed. The people on the streets changed. What did not change is that you are still in your city.',
+    phase === 'late_life'
+      ? 'You stayed through 2022 and what followed. The country is still fighting. You are part of the country that is still fighting.'
+      : 'The shelter, the phone, the specific problem of what to do with the children, the specific problem of what to do with the animals. You solved these problems in real time in February.',
+  ])
+  if (F.has('ukraine_refugee_2022') && Math.random() < 0.25) return pick([
+    'The border queue. The suitcase. The language that became your introduction in every room you entered for the next months.',
+    'Eight million Ukrainians became refugees in 2022. You are part of that number. The number does not quite describe your specific suitcase and your specific crossing.',
+    phase === 'late_life'
+      ? 'You left Ukraine in 2022 and you have carried Ukraine with you in the way that you carry a country when you cannot be in it. The weight of it changes shape over time but does not reduce.'
+      : 'The country you are in is not your country. The country you are from is being fought over. You follow the war from outside it, which is its own specific way of being in the war.',
+  ])
+  if (F.has('donbas_displaced') && Math.random() < 0.2) return pick([
+    'You left Donetsk or Luhansk in 2014 and you have been internally displaced in your own country since. Internally displaced: you are still Ukrainian. The place you came from is on the other side of a line.',
+    'The contact line ran through the steppe for eight years. You watched the maps. The maps did not show what the contact line felt like from inside it.',
+    phase === 'late_life'
+      ? 'February 24, 2022: the contact line became the whole country. What you experienced in 2014 — the displacement, the line, the loss of the place — happened to eight million more people.'
+      : 'You rebuilt in the west of Ukraine or in Kyiv or in Lviv. The city you came from is still the city you came from. You have not been back.',
+  ])
   if (F.has('survived_soviet_collapse') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) return pick([
     'You watched the world you were born into dissolve in under two years. Some of it you didn\'t miss.',
     phase === 'late_life'
