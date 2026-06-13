@@ -4833,6 +4833,41 @@ function buildYearTexture(state) {
       : 'The certainties of the Soviet years have the quality of a dream now. You remember believing them.',
     'What came after was not what anyone had promised either. You know this in a way the history books don\'t quite capture.',
   ])
+  if (F.has('chechnya_generation') && Math.random() < 0.22) return pick([
+    'The first Chechen war ended in humiliation. The second was called a counter-terrorism operation. The word war was not used officially. The zinc coffins used no official word.',
+    'The mothers\' organisations counted what the military statistics did not include. Their arithmetic and the government\'s arithmetic produced different numbers.',
+    phase === 'late_life'
+      ? 'Two wars. The official total of Russian military casualties is still not confirmed. You knew people who went. You know which answer their families received.'
+      : 'Grozny was bombed to the level of Stalingrad, which is a sentence you know the weight of. The television called it a special operation. The before-and-after photographs called it something else.',
+  ])
+  if (F.has('russia_2022_generation') && Math.random() < 0.25) return pick([
+    'The law banning the word "war" came within days. Fifteen years for saying it. You know which word is not used and you know what it means and you navigate the space between those two facts every day.',
+    'The borders to Georgia and Kazakhstan and Finland and Armenia filled with cars in the first week. You were in one of those cars, or you watched the cars from the side of the road, or you watched them on a phone.',
+    phase === 'late_life'
+      ? 'You have lived long enough in Russia to know the official account and the private account are separate documents on every major subject. 2022 made the gap larger than it has ever been.'
+      : 'The friends you have lost over this — to distance, to different conclusions, to the word that is banned and everything the ban implies — are a specific accounting of the year.',
+  ])
+  if (F.has('russia_ukraine_exile') && Math.random() < 0.25) return pick([
+    'Tbilisi, Riga, Yerevan, Istanbul, Tashkent. The Russian diaspora of 2022 has its own geography. The cities have Russian bookstores now and Russian cafés and the specific conversations that happen when people who left for the same reason are in the same room.',
+    'You are from a country whose name you have had to explain since February 2022. The explanation has different components depending on who is asking.',
+    phase === 'late_life'
+      ? 'You left Russia and you carried Russia with you, which is the thing that everyone who has ever left a country knows and which does not get simpler with distance or time.'
+      : 'The question of going back depends on a condition whose resolution is not in your hands. You wait, or you stop waiting, or you build something in the place you ended up that makes the question of going back less urgent, which is not the same as no longer wanting to.',
+  ])
+  if (F.has('russia_ukraine_veteran') && Math.random() < 0.25) return pick([
+    'What the briefing said and what you found there. The gap between those two is what you carry now. The word for that gap in Russian is not in the official vocabulary.',
+    'The people who sent you and the people who are going to receive you when you come back have different stories about what you did and why. You were there. You know which story is which.',
+    phase === 'late_life'
+      ? 'You went when they called you. You came back. The question of what you participated in is one you will spend the rest of your life working out the answer to.'
+      : 'You know the smell of the place and the weight of the equipment and the specific texture of the months you were there. The television\'s version and your version are in a specific relationship.',
+  ])
+  if (F.has('veteran_unthanked') && Math.random() < 0.2) return pick([
+    'You came back from a war the state had decided to forget. The people who don\'t know the war happened cannot thank you for it. The people who do know tend to look away.',
+    'The wound is specific. The official record says you were in a peacekeeping operation. The medical record says something more specific.',
+    phase === 'late_life'
+      ? 'The recognition you were never given takes the form now of simply knowing that it happened and that you were there. You don\'t need the state to confirm it. You were present.'
+      : 'You learned to manage the distance between what you did and what it is called. It is a kind of translation.',
+  ])
   if (F.has('oil_delta_witness') && Math.random() < 0.3) return pick([
     'You grew up watching what the oil did to the delta. The damage was not incidental — it was the arrangement.',
     'The river was wrong when you were a child and it is still wrong. You still know what it was like before.',

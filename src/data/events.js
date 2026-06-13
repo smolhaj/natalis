@@ -6569,6 +6569,106 @@ const BASE_EVENTS = [
     effect: null,
   },
 
+  // ── RUSSIA-SPECIFIC EVENTS ──────────────────────────────────────────────────
+
+  {
+    id: 'ru_chechnya_war',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Russia' &&
+      G.currentYear >= 1994 && G.currentYear <= 2009 &&
+      G.age >= 18 && G.age <= 35 &&
+      !G.mem?.ruChechnya,
+    text: (G) => {
+      if (G.character.gender === 'male' && G.currentYear <= 2000) return 'The conscription notice arrives. Chechnya. The first war ends in humiliation in 1996; the second begins in 1999 and is described officially as a counter-terrorism operation. The casualty figures for Russian conscripts are not published. The bodies come back in zinc coffins with sealed lids. The mothers\' organisations count them.'
+      return 'Someone from your building went to Chechnya. He came back from the first war or he didn\'t come back. In Grozny the apartment buildings that were shelled look like the bombed cities in the Second World War photographs your grandfather kept. The television does not use the word war.'
+    },
+    choices: [
+      {
+        text: 'Find a way out of conscription — medical, educational, money.',
+        tag: null,
+        outcome: 'You do not go. The way out costs what it costs and you have paid it. The boys who went are in the zinc coffins or they are not.',
+        effect: (p) => { p.mo -= 2000; p.m -= 6; p.r += 5; p.addFlag('chechnya_generation'); p.setMem('ruChechnya', true); },
+      },
+      {
+        text: 'You went, or you knew people who went.',
+        tag: null,
+        outcome: 'Chechnya. The official account and the things that happened there exist in a specific relationship that you understand from the inside.',
+        effect: (p) => { p.m -= 12; p.h -= 6; p.r += 6; p.addFlag('chechnya_generation'); p.addFlag('veteran_unthanked'); p.setMem('ruChechnya', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ru_ukraine_invasion_2022',
+    phase: 'midlife',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'Russia' &&
+      G.currentYear >= 2022 && G.currentYear <= 2025 &&
+      G.age >= 16 &&
+      !G.mem?.ruUkraineInvasion,
+    text: 'February 24, 2022. You wake to the news that Russia has launched a full-scale invasion of Ukraine. The television uses the word "операция" — operation. The word war is legally banned within days. In your phone, in private chats, in careful conversations with people you trust, the word that is not permitted is used. The anti-war protests in Moscow and Petersburg are broken up within hours; three thousand arrested in the first week. The borders to Georgia, Finland, Kazakhstan are at capacity with Russians leaving.',
+    choices: [
+      {
+        text: 'You leave. You are not going to live in a country doing this.',
+        tag: null,
+        outcome: 'You pack what you can carry. Tbilisi, Yerevan, Riga, Istanbul. You are one of the 700,000 who left in 2022. You call what you left behind home, though the word is now complicated.',
+        effect: (p) => { p.m -= 10; p.r += 8; p.addFlag('russia_ukraine_exile'); p.addFlag('russia_2022_generation'); p.setMem('ruUkraineInvasion', true); },
+      },
+      {
+        text: 'You stay. Speaking carefully, living carefully.',
+        tag: null,
+        outcome: 'You stay and you manage what is sayable in which room to which person. You have been in this country your whole life and you are not leaving it.',
+        effect: (p) => { p.m -= 8; p.r += 5; p.addFlag('russia_2022_generation'); p.addFlag('learned_silence'); p.setMem('ruUkraineInvasion', true); },
+      },
+      {
+        text: 'You accept the government\'s framing. This is necessary.',
+        tag: null,
+        outcome: 'The television is consistent and the media environment is controlled and the information you receive is the information the state provides. You believe it.',
+        effect: (p) => { p.m -= 4; p.addFlag('russia_2022_generation'); p.addFlag('regime_compliance'); p.setMem('ruUkraineInvasion', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ru_mobilization_2022',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Russia' &&
+      G.character.gender === 'male' &&
+      G.currentYear >= 2022 && G.currentYear <= 2024 &&
+      G.age >= 18 && G.age <= 55 &&
+      !G.flags.includes('russia_ukraine_exile') &&
+      !G.mem?.ruMobilization,
+    text: 'September 21, 2022. Putin announces partial mobilization. Three hundred thousand. The mobilization offices open. The queues at the border crossings to Georgia and Kazakhstan and Finland stretch for kilometers — cars abandoned when the fuel runs out, people walking the last stretch. The flight prices to non-extradition countries triple in four hours. You are in the age range. You are male. The piece of paper has your name on it or it is about to.',
+    choices: [
+      {
+        text: 'Leave. Whatever it takes.',
+        tag: null,
+        outcome: 'You cross a border, by car, by plane, on foot. You do not know when you will come back or whether that country will still be the country you left when you do.',
+        effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('russia_ukraine_exile'); p.setMem('ruMobilization', true); },
+      },
+      {
+        text: 'Find another way out of the call-up — medical, paperwork, connections.',
+        tag: null,
+        outcome: 'The way through the system exists for those who know it or can pay for it. You find it. The men who couldn\'t find it are in Ukraine.',
+        effect: (p) => { p.mo -= 3000; p.m -= 8; p.r += 4; p.setMem('ruMobilization', true); },
+      },
+      {
+        text: 'Answer the call. You go.',
+        tag: null,
+        outcome: 'You answer. What you find in Ukraine is not what the operation briefing described.',
+        effect: (p) => { p.m -= 15; p.h -= 10; p.r += 8; p.addFlag('russia_ukraine_veteran'); p.setMem('ruMobilization', true); },
+      },
+    ],
+    effect: null,
+  },
+
   // ── SUB-SAHARAN HEALTH & SOCIETY EVENTS ────────────────────────────────────
   {
     id: 'ss_malaria_childhood',

@@ -893,6 +893,54 @@ export const FLAG_REGISTRY = {
     notes: 'Post-Soviet arc events exist. Year texture path should reference this specifically.',
   },
 
+  chechnya_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Russian character shaped by the Chechen wars (1994-96, 1999-2009) — the zinc coffins, the mothers\' organisations, the war the television didn\'t call a war.',
+    intent: 'year_texture',
+    notes: 'Set by ru_chechnya_war.',
+  },
+
+  russia_2022_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Russian shaped by the February 2022 full-scale invasion of Ukraine — the banned word "war", the arrests, the borders at capacity, the private chat register.',
+    intent: 'year_texture',
+    notes: 'Set by ru_ukraine_invasion_2022.',
+  },
+
+  russia_ukraine_exile: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Left Russia after 2022 — one of 700,000+ who went to Tbilisi, Yerevan, Riga, Istanbul — carrying the name of a country that has become complicated to say you are from.',
+    intent: 'year_texture',
+    notes: 'Set by ru_ukraine_invasion_2022 (leave choice) and ru_mobilization_2022.',
+  },
+
+  russia_ukraine_veteran: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Served in Russia\'s Ukraine war — answered the mobilization call, carrying what was found there versus what the briefing described.',
+    intent: 'year_texture',
+    notes: 'Set by ru_mobilization_2022 (answered call choice).',
+  },
+
+  veteran_unthanked: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Returned from a war the state preferred not to acknowledge — Chechnya, Afghanistan, other conflicts where the official narrative erased the soldiers\' experience.',
+    intent: 'year_texture',
+    notes: 'Set by ru_chechnya_war (served choice) and soldier_arc events.',
+  },
+
+  regime_compliance: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Accepted an authoritarian government\'s framing of an event — not out of conviction but because the information environment made the alternative harder to reach.',
+    intent: 'none',
+    notes: 'Set by ru_ukraine_invasion_2022 (accepted framing choice). No downstream event needed.',
+  },
+
   dotcom_survivor: {
     weight: 'minor',
     category: 'world_event',
