@@ -5883,6 +5883,20 @@ function buildYearTexture(state) {
     'A name appears. Another name. The news gives an age and a city. You read it and move on because the alternative — stopping to feel the weight of each one — is not something you can afford to do every day.',
     'You know the route home at night the way you know your own face. By the parts that require attention.',
   ])
+  if (F.has('ayotzinapa_generation') && Math.random() < 0.22) return pick([
+    '"Fue el estado." You know what the phrase means and you know it is accurate. It is still being proved in the details of each new investigation that supersedes the last investigation.',
+    'The forty-three chairs. The families of Ayotzinapa have been meeting since September 2014 and they have not yet met to say they found them. You have been watching that meeting that does not end.',
+    phase === 'late_life'
+      ? 'The Ayotzinapa case produced multiple versions of the official account and the contradictions between them are documented. The families produced a counter-investigation. Both are in the record. The forty-three are still not in the record.'
+      : 'The disappearance was 2014. Each year that passes is a year the accountability has not arrived. You count the years.',
+  ])
+  if (F.has('mex_2017_earthquake_generation') && Math.random() < 0.2) return pick([
+    'The bucket chain: a person at the rubble passed a piece of debris back, and behind them another person, and behind them another, back to where there was space. The city organized itself in an hour.',
+    'September 19. The same date as 1985. When the alarm sounded at 1:14 in the afternoon the drill memory fired before the real event registered. Then the real event registered.',
+    phase === 'late_life'
+      ? 'Mexico City has had two September 19th earthquakes in recorded memory. The date has a specific weight now. The city has been practising for one of them for thirty-two years. The practice was real practice.'
+      : 'After the shaking stopped, people went to the rubble before anyone organised them to go. The impulse preceded the coordination. That sequence tells you something about the city.',
+  ])
 
   // ─── SOUTHEAST EUROPE TEXTURE ────────────────────────────────────────────────
   if (F.has('romania_decree_generation') && Math.random() < 0.3) return pick([
@@ -5925,6 +5939,77 @@ function buildYearTexture(state) {
   if (F.has('serbian_democratic_transition') && Math.random() < 0.2) return pick([
     'October 5, 2000: the specific feeling of something you\'d been pressing against for eleven years suddenly not being there. You didn\'t expect it to feel like that.',
     'The thing that was true about Serbia for eleven years stopped being true in an afternoon. The adjustment took longer.',
+  ])
+
+  // ─── JAPAN TEXTURE ───────────────────────────────────────────────────────────
+  if (F.has('hibakusha_stigma_lived') && Math.random() < 0.28) return pick([
+    'The word hibakusha is official. It carries the official weight of official categories — and the unofficial weight of what it means when the person at the marriage agency sees it on the family register.',
+    'You learned not to say certain things in certain rooms. The things you do not say are still there, which is a different kind of saying them.',
+    phase === 'late_life'
+      ? 'You have lived the full length of the postwar settlement — the silence, the partial acknowledgment, the compensation that arrived decades later, the American nuclear umbrella that made the silence politically useful. You know all the layers.'
+      : 'Your parents did not talk about it. The not-talking is the conversation that runs under every other one.',
+  ])
+  if (F.has('anpo_generation') && Math.random() < 0.2) return pick([
+    'The treaty passed at midnight while the opposition was locked out. You were outside. That specific sequence — the legal mechanism used against the people it was supposed to represent — is the thing you have never fully reconciled with.',
+    phase === 'late_life'
+      ? 'The 1960 Anpo generation entered the workforce, joined companies, raised children, stopped marching. That arc is the Japanese postwar left\'s arc. You were part of the arc.'
+      : 'The security treaty is still in force. It has been renewed automatically. The building you stood outside is still there.',
+  ])
+  if (F.has('minamata_disease') && Math.random() < 0.25) return pick([
+    'The company knew. That is the sentence that underpins the rest — Chisso knew about the mercury before the government investigation confirmed it, and continued to discharge.',
+    'The photographs by W. Eugene Smith were published in Life magazine in 1972 and the outside world learned what Minamata had known for fifteen years. The outside world is not where you lived.',
+    phase === 'late_life'
+      ? 'The compensation finally came. The admission came. The Minamata Convention on Mercury was signed in 2013 and named for your village. The naming is not the same as the restoration.'
+      : 'The fishing community has a body count that the compensation assessments dispute. You know the names the assessments do not have.',
+  ])
+  if (F.has('salaryman_life') && Math.random() < 0.22) return pick([
+    'The last train home after midnight. The desk light on in a building where you are not the only person at a desk at midnight. This was not extraordinary — it was the structure of the day.',
+    'The company transferred you to Nagoya when your children were in school and you went, because that is what the company required and the company was the structure of your life. Your children remember Nagoya.',
+    phase === 'late_life'
+      ? 'The company gave you a watch at thirty years and a retirement ceremony. You do not know what your life would have looked like if you had chosen differently at twenty-two. The choosing-differently was not really available at twenty-two.'
+      : 'The identity is: which company. Not what you do, or what you think, or what you want. Which company you are, and how many years.',
+  ])
+  if (F.has('karoshi_adjacent') && Math.random() < 0.22) return pick([
+    'He had been at the office for eighty-one hours when they found him. The company\'s formal response was appropriate and efficient. The informal response was to continue.',
+    'The cause of death on the certificate is cardiac arrest. The language for the real cause is karoshi. The language for why karoshi happens is a longer conversation that the company has not wanted to have.',
+    phase === 'late_life'
+      ? 'You watched the karoshi cases across your career: the colleague, the newspaper stories, the government\'s eventual statistics. The number reached 2,000 per year. The number required a name because the phenomenon required acknowledgment that it was happening.'
+      : 'You left the office at a reasonable hour that night and on many other nights. You do not fully know why you were different, or whether you were.',
+  ])
+  if (F.has('lost_decade_generation') && Math.random() < 0.22) return pick([
+    'The Nikkei hit 38,957 in December 1989. It will not return to that level within your lifetime. That number is the boundary between the Japan you were told you were entering and the Japan you have been in.',
+    'The Lost Decade became the Lost Two Decades and then the Lost Three. Each extension required a renaming. The renaming is a form of delayed recognition.',
+    phase === 'late_life'
+      ? 'You watched Japan go from fastest-growing to stagnant within a decade. The economists have theories about structural reform and demographic headwinds. You have what it looked like from inside a company that stopped hiring.'
+      : 'The asset prices came down. The permanent employment came down. The assumption that Japan would overtake America — that came down too, which was perhaps the most foundational.',
+  ])
+  if (F.has('lost_generation_japan') && Math.random() < 0.25) return pick([
+    'The generation that graduated into the hiring freeze. Sōgōshoku — the management track — was not available to you. What was available was haken, dispatch work, month to month. The term "employment ice age" was coined to describe the years you entered the workforce.',
+    'They say the Japanese employment system rewards loyalty to the company. The company has to hire you first.',
+    phase === 'late_life'
+      ? 'You worked irregular positions for a decade before something more permanent arrived, or it didn\'t. The pension calculation for irregular work over twenty years is a specific number that becomes visible only much later.'
+      : 'You are not lazy, and your parents are not sure you are not lazy, and the economic data eventually confirmed that you were not — that an entire cohort was placed in this position — but the confirmation came long after the damage.',
+  ])
+  if (F.has('freeter_track') && Math.random() < 0.2) return pick([
+    'The freeter identity: part-time, flexible, outside the company structure. This was a choice for some people and a default for others. You know which it was for you.',
+    'The tax bracket, the pension contribution, the lack of company housing, the lack of company health insurance: these are not abstract. They are the specific arithmetic of the irregular track.',
+    phase === 'late_life'
+      ? 'The pension calculation for a career of irregular work is lower than the calculation for a career of regular employment. You have been doing the arithmetic for a long time. The arithmetic has been confirmed.'
+      : 'Some years were fine. Some were not. The variation itself is part of what irregular work means — the permanent employment generation does not have the variation.',
+  ])
+  if (F.has('tohoku_survivor') && Math.random() < 0.28) return pick([
+    'The earthquake lasted six minutes. The longest six minutes. Then forty minutes of waiting for a wave that the radio said was coming.',
+    'The line where the tsunami stopped is visible for years afterward — everything on one side of it unchanged, everything on the other side rebuilt from nothing. You know which side you were on.',
+    phase === 'late_life'
+      ? 'March 11 recurs annually: the ceremony, the minute of silence at 2:46, the list of names read aloud in the towns. You have been to the ceremony. The list is long enough that reading it takes hours.'
+      : 'The rebuilding took years. Some things that were there before are not there after. You know which ones. The official reconstruction number is a different thing from the specific things that are gone.',
+  ])
+  if (F.has('fukushima_generation') && Math.random() < 0.22) return pick([
+    'The exclusion zone around Fukushima Daiichi was drawn at twenty kilometres. The towns inside it are still abandoned — the convenience stores still have goods on the shelves behind the locked doors.',
+    'TEPCO\'s initial statement was that the situation was under control. This was the first of several statements about control that required revision.',
+    phase === 'late_life'
+      ? 'Japan restarted some of its reactors after 2015. The debate about nuclear power — which was one thing before Fukushima and a different thing after — continues. You have been in it long enough to watch the positions shift.'
+      : 'The three reactors, the hydrogen explosions on live television, the wind direction. You know which way the wind was blowing on March 12 because a lot of people learned to track the wind direction that week.',
   ])
 
   // ─── SOUTH KOREA TEXTURE ─────────────────────────────────────────────────────

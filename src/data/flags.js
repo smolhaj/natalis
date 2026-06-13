@@ -1468,6 +1468,30 @@ export const FLAG_REGISTRY = {
     notes: 'Set by la_mex_femicidio. Year texture for Mexican women; can surface as persistent background anxiety.',
   },
 
+  ayotzinapa_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Shaped by the September 2014 disappearance of 43 Ayotzinapa student teachers — "fue el estado" — and the structural impunity it revealed.',
+    intent: 'year_texture',
+    notes: 'Set by la_mex_ayotzinapa_2014.',
+  },
+
+  mex_2017_earthquake_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Lived through the September 19, 2017 Mexico City earthquake — the same date as 1985 — and the civilian solidarity response: bucket chains, silence for the dogs.',
+    intent: 'year_texture',
+    notes: 'Set by la_mex_2017_earthquake.',
+  },
+
+  solidarity_citizen: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Responded directly to a disaster with physical presence — bucket chains, rescue support, immediate civilian solidarity.',
+    intent: 'none',
+    notes: 'Set by la_mex_2017_earthquake and similar civilian-response events.',
+  },
+
   paramilitary_era_lived: {
     weight: 'moderate',
     category: 'historical',
@@ -2258,6 +2282,112 @@ export const FLAG_REGISTRY = {
     description: 'Came of age in a newly independent nation whose post-colonial promise was visibly narrowing by the 1970s',
     intent: 'year_texture',
     notes: 'Set by decolonisation_disillusionment_1970s world event. Affects subsaharan/developing_urban/developing_unstable archetypes, ages 15+.',
+  },
+
+  // ── Japan ─────────────────────────────────────────────────────────────────────
+
+  hibakusha_stigma_lived: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Atomic bomb survivor or survivor\'s child carrying the hibakusha stigma — marriage discrimination, employment barriers, the generation that could not speak openly about what happened to them.',
+    intent: 'year_texture',
+    notes: 'Set by ca2_japan_hibakusha_stigma / ca2_japan_hibakusha_hidden.',
+  },
+
+  anpo_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Participated in the 1960 Anpo protests against the US-Japan security treaty — the largest protest in postwar Japanese history, and its aftermath of disillusionment.',
+    intent: 'year_texture',
+    notes: 'Set by ca2_japan_anpo_protests.',
+  },
+
+  minamata_disease: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Affected by Minamata disease — mercury poisoning from Chisso factory effluent, the fishing community, the government\'s decades-long denial, the Smithsonian photographs.',
+    intent: 'year_texture',
+    notes: 'Set by ca2_japan_minamata_village.',
+  },
+
+  salaryman_life: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Lived the salaryman track — company man, company housing, company transfers, the identity built around an employer rather than a self.',
+    intent: 'year_texture',
+    notes: 'Set by ca2_japan_salaryman_transfer.',
+  },
+
+  karoshi_adjacent: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Lost someone to karoshi (overwork death) or came close to it — the culture of the last train, the desk at midnight, the collapse that has a name.',
+    intent: 'year_texture',
+    notes: 'Set by ca2_japan_karoshi_pressure.',
+  },
+
+  lost_decade_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through Japan\'s Lost Decade (1991-2001) — the Nikkei at 16,000, the permanent employment that became temporary, the asset values that never returned.',
+    intent: 'year_texture',
+    notes: 'Set by ca2_japan_bubble_collapse.',
+  },
+
+  earthquake_country: {
+    weight: 'minor',
+    category: 'experience',
+    description: 'Grew up in Japan with earthquake drills as ordinary life — the bag by the door, the chart of safe buildings, the alarm that is never a surprise.',
+    intent: 'none',
+    notes: 'Set by ca2_japan_earthquake_preparedness. Texture only; no downstream event needed.',
+  },
+
+  lost_generation_japan: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Part of Japan\'s employment ice age generation — graduated into a hiring freeze, stuck in irregular freeter work when permanent employment was the social contract.',
+    intent: 'year_texture',
+    notes: 'Set by ca2_japan_lost_generation. The "ushinawareta sedai" — the generation that fell through the floor of the postwar promise.',
+  },
+
+  freeter_track: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Settled into the freeter track — irregular, part-time, dispatch work — as the default rather than a stepping-stone, due to Japan\'s employment ice age.',
+    intent: 'year_texture',
+    notes: 'Set by ca2_japan_lost_generation (irregular work choice).',
+  },
+
+  hikikomori_adjacent: {
+    weight: 'minor',
+    category: 'relationship',
+    description: 'Knew someone who withdrew into hikikomori — the closed door, the television, the family that didn\'t know what to do.',
+    intent: 'none',
+    notes: 'Set by ca2_japan_hikikomori. No downstream event needed; texture flag.',
+  },
+
+  tohoku_survivor: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'In Tōhoku on March 11, 2011 — the 9.0 earthquake, the tsunami that came forty minutes later, the line where the wave stopped and everything on one side was gone.',
+    intent: 'year_texture',
+    notes: 'Set by ca2_japan_tohoku_2011 (affected area choice).',
+  },
+
+  fukushima_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Shaped by the Fukushima Daiichi nuclear disaster — the hydrogen explosions, the exclusion zone, the reckoning about who bore the risk of an energy decision made decades earlier.',
+    intent: 'year_texture',
+    notes: 'Set by ca2_japan_tohoku_2011 and ca2_japan_nuclear_reckoning.',
+  },
+
+  anti_nuclear_generation: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Changed perspective on nuclear energy after Fukushima — not to fear but to the specific understanding that risk is never distributed the same as benefit.',
+    intent: 'none',
+    notes: 'Set by ca2_japan_nuclear_reckoning (changed-perspective choice). No downstream event needed.',
   },
 
   // ── South Korea ───────────────────────────────────────────────────────────────

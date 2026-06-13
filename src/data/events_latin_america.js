@@ -1414,6 +1414,60 @@ export const LATIN_AMERICA_EVENTS = [
     effect: null,
   },
 
+  {
+    id: 'la_mex_ayotzinapa_2014',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Mexico' &&
+      G.currentYear >= 2014 && G.currentYear <= 2016 &&
+      G.age >= 16 &&
+      !G.mem?.mexAyotzinapa,
+    text: 'September 26, 2014. Forty-three student teachers from the Ayotzinapa Normal School in Guerrero are taken from their buses by local police and handed to the Guerreros Unidos cartel. The government\'s official story changes several times. "Fue el estado" — it was the state — becomes the phrase on the signs at the marches in Mexico City, in Guerrero, in dozens of other cities. The forty-three are not found. The families of the forty-three keep meeting in a room that holds forty-three chairs.',
+    choices: [
+      {
+        text: 'You go to the marches. The phrase "fue el estado" is accurate and must be said.',
+        tag: null,
+        outcome: 'The marches are large and then they are smaller. The families are still meeting. The forty-three are still not found.',
+        effect: (p) => { p.m -= 8; p.karma += 6; p.addFlag('ayotzinapa_generation'); p.addFlag('political_active'); p.setMem('mexAyotzinapa', true); },
+      },
+      {
+        text: 'You are not surprised. This is what the narco-state has always been.',
+        tag: null,
+        outcome: 'The absence of surprise is its own diagnosis. You have been living in a country where this was possible long enough to have stopped expecting otherwise.',
+        effect: (p) => { p.m -= 10; p.r += 6; p.addFlag('ayotzinapa_generation'); p.addFlag('narco_era_generation'); p.setMem('mexAyotzinapa', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'la_mex_2017_earthquake',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Mexico' &&
+      G.currentYear === 2017 &&
+      G.age >= 10 &&
+      !G.mem?.mex2017Quake,
+    text: 'September 19, 2017. The date that the 1985 earthquake drills commemorated. At 1:14 in the afternoon the alarm sounds — but this is not a drill. 7.1 magnitude, epicenter near Puebla. In Mexico City, buildings come down. The rescuers with their trained dogs arrive. The civilians arrive before them with their bare hands. The city passes buckets in a chain. Silence, when they demand it: hands up, silence, the dog is listening. 369 dead. The same date as 1985. The city has practised this for thirty-two years.',
+    choices: [
+      {
+        text: 'You go to the rubble and join a bucket chain.',
+        tag: null,
+        outcome: 'You carry debris and you wait for the signal for silence. There is a person in the rubble, or there was. You do not know.',
+        effect: (p) => { p.m -= 8; p.karma += 8; p.h -= 4; p.addFlag('mex_2017_earthquake_generation'); p.addFlag('solidarity_citizen'); p.setMem('mex2017Quake', true); },
+      },
+      {
+        text: 'You watch the coverage and send money to the rescue organisations.',
+        tag: null,
+        outcome: 'The bucket chain on the television is the city doing something that cannot be organised quickly enough to matter from anywhere but inside it.',
+        effect: (p) => { p.m -= 6; p.karma += 4; p.addFlag('mex_2017_earthquake_generation'); p.setMem('mex2017Quake', true); },
+      },
+    ],
+    effect: null,
+  },
+
   // ═══════════════════════════════════════════════════════════════════════
   // VENEZUELA — additional events
   // ═══════════════════════════════════════════════════════════════════════
