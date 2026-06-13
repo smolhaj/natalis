@@ -2712,6 +2712,96 @@ export const FLAG_REGISTRY = {
     notes: 'Set by ind_farmers_protest_2020.',
   },
 
+  // ── United Kingdom ─────────────────────────────────────────────────────────────
+
+  miners_strike_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the 1984-85 miners\' strike — the picket lines, Orgreave, the communities that were asking whether the pit would close and therefore whether the community would survive.',
+    intent: 'year_texture',
+    notes: 'Set by uk_miners_strike_1984 and the miners_strike world event.',
+  },
+
+  poll_tax_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through the 1989-90 Community Charge (poll tax) — the flat levy, the non-payment campaign, Trafalgar Square, Thatcher\'s fall.',
+    intent: 'year_texture',
+    notes: 'Set by uk_poll_tax_1990.',
+  },
+
+  iraq_war_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'UK character shaped by the 2003 Iraq War — the million-person march, the dossier, the weapons that were not found, the inquiries that produced more questions.',
+    intent: 'year_texture',
+    notes: 'Set by uk_iraq_war_2003.',
+  },
+
+  brexit_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'UK character shaped by the June 2016 Brexit vote — 52/48, Cameron\'s resignation, the pound\'s fall, the years of negotiations.',
+    intent: 'year_texture',
+    notes: 'Set by uk_brexit_2016. Supplements the brexit_era world event flag.',
+  },
+
+  remain_voter: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Voted Remain in the 2016 Brexit referendum.',
+    intent: 'none',
+    notes: 'Set by uk_brexit_2016 (remain choice). No downstream event; texture only.',
+  },
+
+  leave_voter: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Voted Leave in the 2016 Brexit referendum.',
+    intent: 'none',
+    notes: 'Set by uk_brexit_2016 (leave choice). No downstream event; texture only.',
+  },
+
+  grenfell_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Shaped by the Grenfell Tower fire of June 14, 2017 — 72 dead in a social housing block, the cheaper cladding, the residents who had warned for years.',
+    intent: 'year_texture',
+    notes: 'Set by uk_grenfell_2017.',
+  },
+
+  windrush_generation: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Shaped by or directly affected by the Windrush scandal — Caribbean-born British residents threatened with deportation after decades of legal residence under the Hostile Environment policy.',
+    intent: 'year_texture',
+    notes: 'Set by uk_windrush_scandal_2018.',
+  },
+
+  citizenship_threatened: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Directly faced the threat of having their legal right to remain in a country questioned or revoked — the Windrush experience: employment lost, NHS denied, deportation notice.',
+    intent: 'year_texture',
+    notes: 'Set by uk_windrush_scandal_2018 (directly affected choice).',
+  },
+
+  austerity_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'UK character who experienced the 2010s austerity programme — food banks, NHS waiting lists, bedroom tax, Universal Credit, the cuts to public services.',
+    intent: 'year_texture',
+    notes: 'Set by uk_austerity_2010s.',
+  },
+
+  class_politics_formed: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Had political consciousness formed by class experience — the miners\' strike, the deindustrialisation of communities, the gap between official economic discourse and lived experience.',
+    intent: 'year_texture',
+    notes: 'Set by uk_miners_strike_1984 (community choice) and similar events.',
+  },
+
   // ── Ireland ───────────────────────────────────────────────────────────────────
   irish_emigrant_generation: {
     weight: 'major',

@@ -6441,6 +6441,68 @@ function buildYearTexture(state) {
     'Spain in October 2017: simultaneously a constitutional democracy defending its constitution and a country using riot gear on people at ballot boxes. Both descriptions are accurate. Holding both is the specific work.',
   ])
 
+  // ─── UNITED KINGDOM TEXTURE ──────────────────────────────────────────────────
+  if (F.has('miners_strike_generation') && Math.random() < 0.25) return pick([
+    'The picket line in winter, the police buses from elsewhere, the year-long strike, the return to work on the same terms they refused. Then the pit closes anyway. Both things happen.',
+    'Orgreave: the baton charges, the mounted police. The footage was shown in a sequence that made the miners appear to have started it. The sequence was reversed. The charges were dropped. The inquiry was refused.',
+    phase === 'late_life'
+      ? 'You watched the mining communities survive the strike and then watch the pits close in the years after. The strike was over the pit closures. The pits closed regardless. The community that remained is not the community that existed before.'
+      : 'The generation that came after the miners does not have the specific vocabulary of what those communities were before the pits closed. You have it. You notice when it is absent.',
+  ])
+  if (F.has('class_politics_formed') && Math.random() < 0.2) return pick([
+    'Your politics were formed in a specific place, at a specific time, by a specific experience of the gap between official economic language and what happened in the place where you lived.',
+    'Class is a word that the British political vocabulary officially disavows and operationally requires. You understand both of those things from the inside.',
+    phase === 'late_life'
+      ? 'The consciousness was formed early and has been tested against many subsequent events. The formation holds. The events have provided more evidence than revision.'
+      : 'The analysis you arrived at young has been confirmed and complicated by subsequent decades. The confirmation is more frequent than the complication.',
+  ])
+  if (F.has('poll_tax_generation') && Math.random() < 0.2) return pick([
+    'The Duke pays the same as the dustman. The logic of the flat-rate levy was made explicit and the country decided it didn\'t accept it. Non-compliance at scale produced the administrative impossibility that political organisation alone had not.',
+    'Trafalgar Square, March 31, 1990. 200,000 people. By November Thatcher was gone. The sequence is the argument about whether the riot worked or the numbers worked or both.',
+  ])
+  if (F.has('iraq_war_generation') && Math.random() < 0.22) return pick([
+    'One million people on February 15, 2003. The largest march in British history. The war happened two weeks later. The weapons were not found. The inquiry took seven years. The conclusion was that the intelligence was wrong and the case was made anyway.',
+    'The dossier: "45 minutes from use of WMD." The phrase that justified something that didn\'t exist. David Kelly. Andrew Gilligan. Hutton. Butler. Each one producing a different answer to the same question.',
+    phase === 'late_life'
+      ? 'The Iraq war reshaped British political trust in a way that hasn\'t fully resolved. The generation that marched and was ignored developed a specific theory of what their marching is for and what it is not for.'
+      : 'You were right about the weapons or you were wrong about the weapons. Either way you have been watching what follows from being right or being wrong about it.',
+  ])
+  if (F.has('brexit_generation') && Math.random() < 0.25) return pick([
+    '52-48. Cameron went before breakfast. The pound fell to its lowest in thirty-one years. The bus with the figure that was not accurate is still in the visual record of 2016.',
+    'The negotiations took three and a half years. The withdrawal agreement was rejected three times before it passed. The country that voted Leave and the country that voted Remain have been in the same room since June 24, 2016.',
+    phase === 'late_life'
+      ? 'The full economic accounting of Brexit is still being written. You have lived through enough of it to see the shape of the argument, if not its conclusion.'
+      : 'The political settlement that produced Brexit has produced subsequent configurations. The underlying division — which was not only about Europe — is still the country\'s main argument with itself.',
+  ])
+  if (F.has('grenfell_generation') && Math.random() < 0.25) return pick([
+    'The cladding that was £2 cheaper per panel. The residents who wrote the blog post predicting it. The inquiry that took years. The prosecutions that have not yet happened.',
+    'Grenfell is in Kensington — the wealthiest borough in England. The tower was social housing in the borough. That proximity is not incidental to the story of what the cladding decision was based on.',
+    phase === 'late_life'
+      ? 'The inquiry concluded. The cladding companies continue to exist. The bereaved families have been waiting for a prosecution since June 2017. You know the timeline because you have been following it.'
+      : 'The tower is still there, wrapped in white sheeting. You can see it from certain places in west London. The wrapping is a kind of answer about what the city does with things it has not resolved.',
+  ])
+  if (F.has('windrush_generation') && Math.random() < 0.25) return pick([
+    'They arrived legally, worked here for decades, raised children here, and were told they could not prove their right to remain because the government destroyed the landing cards in 2010.',
+    'The Hostile Environment policy: if you make life difficult enough for people without documentation, they will leave. The policy was designed for undocumented migrants. It had no mechanism for the documented whose documents were destroyed.',
+    phase === 'late_life'
+      ? 'You have been in this country long enough to have been welcomed and then to have had the welcome questioned. The questioning is official. The welcome was also official, and came first. Both things were official. That is the specific thing.'
+      : 'The Caribbean-born residents who were threatened with deportation had paid National Insurance and taxes for decades. The state that collected those payments is the same state that issued the deportation notices.',
+  ])
+  if (F.has('citizenship_threatened') && Math.random() < 0.25) return pick([
+    'The letter saying you had to prove you were legally here. You have been here for forty years. Your documentation was destroyed by the government. You have to prove what the government erased.',
+    'The employment terminated. The NHS appointment denied. The deportation notice. You had to hire a solicitor to prove you are British. The cost of that solicitation is not reimbursable.',
+    phase === 'late_life'
+      ? 'You won your case, or you are still in it, or you were deported and came back, or someone you know was deported. The settlement the government offered — the Windrush compensation scheme — has paid out to a fraction of the eligible claimants.'
+      : 'The specific experience of having the country where you have lived for decades question your right to be here produces a particular reorganisation of what you thought was settled.',
+  ])
+  if (F.has('austerity_generation') && Math.random() < 0.22) return pick([
+    'The food bank was not there in 2008. It is there in 2015. The food bank is the infrastructure that fills the gap between what the state provides and what people need. The gap has been measured by the number of food banks.',
+    'Universal Credit: the seven-week wait, the managed migration, the debt deductions. The policy is described as simplifying the benefit system. The simplification produces the specific experiences that are documented in the tribunal records.',
+    phase === 'late_life'
+      ? 'You watched a decade of public services contracted and then watch them again during a pandemic. The contraction and the pandemic were in sequence and the sequence is information about what the contraction left behind.'
+      : 'The rhetoric of hard choices and living within our means produced specific outcomes in specific places. You are from one of those places or you know people from one of those places.',
+  ])
+
   // ─── IRELAND TEXTURE ─────────────────────────────────────────────────────────
   if (F.has('irish_emigrant_generation') && Math.random() < 0.3) return pick([
     'You are Irish at one remove. The remove is maintained by the specific labour of keeping up with what is happening in a place you are not.',
