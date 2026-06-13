@@ -2432,6 +2432,82 @@ export const FLAG_REGISTRY = {
     intent: 'year_texture',
     notes: 'Set by eur_rom_post89_transition (Romania) and potentially other emigration-choice events.',
   },
+  // ── HUNGARY ARC (events_central_europe.js) ───────────────────────────────────
+
+  hungarian_1956_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed or survived the 1956 Hungarian uprising and the Soviet re-occupation — the twelve days and what followed',
+    intent: 'year_texture',
+    notes: 'Set by hun_1956_uprising_child, hun_1956_uprising_adult, and worldEvent hungarian_uprising_1956.',
+  },
+
+  hungarian_diaspora_1956: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Left Hungary after the 1956 uprising — one of 200,000 who crossed the Austrian border before it closed',
+    intent: 'year_texture',
+    notes: 'Set by hun_1956_uprising_adult (left choice).',
+  },
+
+  kadar_compromise_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived under Kádár\'s goulash communism — relative prosperity in exchange for political silence, 1963–88',
+    intent: 'year_texture',
+    notes: 'Set by hun_kadar_goulash.',
+  },
+
+  hungary_1989_border_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed Hungary cutting the Austrian border wire in May 1989 — the act that triggered the Eastern Bloc dominoes',
+    intent: 'year_texture',
+    notes: 'Set by hun_border_1989.',
+  },
+
+  orban_era_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Living through Orbán\'s democratic backsliding from 2010 — media capture, constitutional rewrite, illiberal democracy',
+    intent: 'year_texture',
+    notes: 'Set by hun_orban_era.',
+  },
+
+  // ── CZECH REPUBLIC ARC (events_central_europe.js) ────────────────────────────
+
+  prague_spring_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the 1968 Prague Spring and Soviet invasion — the eight months and the specific silence that followed',
+    intent: 'year_texture',
+    notes: 'Set by worldEvent prague_spring_1968. Year texture in buildYearTexture.',
+  },
+
+  normalization_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through Czechoslovak normalization 1969–89 — 20 years of enforced conformity, kitchen opinions, signed self-criticisms',
+    intent: 'both',
+    notes: 'Set by cze_normalization. Follow-through: ft19_normalization_late.',
+  },
+
+  charter_77_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Signed Charter 77, passed it along, or was directly shaped by its existence and the risk attached to it',
+    intent: 'both',
+    notes: 'Set by cze_charter_77. Follow-through: ft19_charter_late for signatories.',
+  },
+
+  velvet_revolution_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed the Velvet Revolution November 1989 — the key-jingling, the twenty-one days, the speed of it',
+    intent: 'year_texture',
+    notes: 'Set by cze_velvet_revolution. Follow-through: ft19_velvet_late.',
+  },
+
   tito_generation: {
     weight: 'moderate',
     category: 'historical',

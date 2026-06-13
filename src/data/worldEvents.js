@@ -1003,6 +1003,18 @@ export const WORLD_EVENTS = [
     minAge: 5,
   },
   {
+    id: 'hungarian_uprising_1956',
+    name: 'Hungarian Revolution, 1956',
+    years: [1956, 1957],
+    archetypes: 'all',
+    countries: ['Hungary'],
+    narrative: 'October 23: the statue of Stalin comes down in Budapest. For twelve days — the political prisoners released, the radio saying things never said before. Then November 4th: Soviet tanks return in greater numbers. Two thousand five hundred Hungarians die. Two hundred thousand cross the Austrian border before it closes. The world watches. The world does not intervene.',
+    context: 'The Hungarian Revolution was the most serious challenge to Soviet authority in the Eastern Bloc until 1989. Prime Minister Imre Nagy announced withdrawal from the Warsaw Pact on November 1; Soviet troops entered on November 4. Nagy was later executed in secret in 1958. The 200,000 refugees were welcomed across Western Europe and North America — the first major Cold War refugee movement.',
+    effect: (p) => { p.m -= 12; p.r += 6; p.addFlag('hungarian_1956_generation'); },
+    addFlags: ['hungarian_1956_generation'],
+    minAge: 5,
+  },
+  {
     id: 'poland_solidarity',
     name: 'Polish Solidarity Movement',
     years: [1980, 1984],

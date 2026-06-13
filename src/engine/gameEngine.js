@@ -6127,6 +6127,63 @@ function buildYearTexture(state) {
     'The thing that was true about Serbia for eleven years stopped being true in an afternoon. The adjustment took longer.',
   ])
 
+  // ─── HUNGARY + CZECH TEXTURE ─────────────────────────────────────────────────
+  if (F.has('hungarian_1956_generation') && Math.random() < 0.3) return pick([
+    'October 23, 1956: the statue falling, the radio saying things it had never said, the twelve days. Then November 4th. You still know the sequence in the specific way that people know the things they lived through.',
+    phase === 'late_life'
+      ? 'Sixty years later the uprising is taught in schools as national heritage. The gap between the official account and what you remember is not large — but it has a texture that the textbook does not have.'
+      : 'Two hundred thousand people left through the Austrian border before it closed. You were on one side of that number.',
+  ])
+  if (F.has('hungarian_diaspora_1956') && Math.random() < 0.25) return pick([
+    'The community in your adopted country is the community of the people who left in 1956. The community is defined by what it fled from as much as by where it arrived.',
+    phase === 'late_life'
+      ? 'After 1989 the border opened and going back became possible. Going back to a place that became something else while you were gone is a different thing from returning.'
+      : 'The receiving countries called you refugees before that word acquired its current administrative weight. You were welcomed. The welcome was real.',
+  ])
+  if (F.has('kadar_compromise_generation') && Math.random() < 0.25) return pick([
+    'Goulash communism: the relative availability of Western goods, the weekend house, the tolerated small enterprise. The deal was real on both sides. You took the deal.',
+    phase === 'late_life'
+      ? 'Kádár died in 1989, having lived to see what he built come apart. The compromise produced Hungary\'s peaceful transition. It also produced habits of silence that outlasted the regime.'
+      : 'The neighbor with the better Party connections got the apartment. You understood the system from the inside. Understanding it from the inside is not the same as approving it.',
+  ])
+  if (F.has('hungary_1989_border_generation') && Math.random() < 0.22) return pick([
+    'May 1989: wire cutters on the Austrian border fence. An ordinary tool doing an extraordinary thing. The East Germans camping in the Budapest embassy compound through August.',
+    phase === 'late_life'
+      ? 'Hungary is credited as the country that started the 1989 chain. The credit belongs to a specific bureaucratic decision by specific officials who did not know what it would trigger. You lived in that country while that decision was made.'
+      : 'The transition went at a speed that historical transitions rarely go. By December, when you understood what had happened, you were already somewhere different.',
+  ])
+  if (F.has('orban_era_generation') && Math.random() < 0.22) return pick([
+    'Hungary is a member of the EU that fines Hungary for its media laws. The fines come from EU funds. The structural contradiction has been running for over a decade.',
+    phase === 'late_life'
+      ? 'You watched Hungary go from a post-communist optimism story to what its own leader calls an illiberal democracy. The trajectory was visible from inside. Visibility is not the same as prevention.'
+      : 'The newspapers changed, one by one. Not through confiscation — through ownership. The owner changed. The editorial line followed.',
+  ])
+  if (F.has('prague_spring_generation') && Math.random() < 0.28) return pick([
+    'For eight months the newspapers said things they had never said. Then the tanks came from the east and what follows is called Normalization: the name given to removing everything that happened.',
+    phase === 'late_life'
+      ? 'The brief interval is still measurable against everything that came before and after. Eight months when the word freedom was used in public. The brevity is what the measurement measures.'
+      : 'Alexander Dubček disappeared from public life and reappeared in 1989 at a train station in Bratislava. The crowd recognized him. He was not expecting the recognition.',
+  ])
+  if (F.has('normalization_generation') && Math.random() < 0.28) return pick([
+    'Normalizace: the policy of returning things to normal after 1968. A philosopher becomes a window cleaner. An economist drives a tram. Czech intellectual life moves into the kitchen, the pub, the hiking trail. It keeps working.',
+    'The kitchen is where the real conversation happened. Anywhere the microphone could not easily go. You know the specific language of speaking in two registers — one for work, one for the kitchen.',
+    phase === 'late_life'
+      ? 'The StB files are open. Some of what is in them surprises you. Some does not. The people whose names appear as informers lived in the same conditions as the people whose names appear as dissidents. The line between them was drawn differently by different people.'
+      : 'You signed things. You did not sign things. The difference matters and is not always visible from outside the specific moment when you made the choice.',
+  ])
+  if (F.has('charter_77_generation') && Math.random() < 0.25) return pick([
+    'Charter 77 was three pages long. It said: you signed the Helsinki Accords and you are not observing them. Not a revolution. Just a statement of facts. The government treated it as a revolution.',
+    phase === 'late_life'
+      ? 'After 1989 the Charter generation was recognized. The moral clarity of the dissident years did not automatically translate into the practical complexity of building a new state — but it was the right place to start.'
+      : '1,800 people eventually signed before 1989. Millions read it and did not. Both relationships to the document were real relationships to what was happening.',
+  ])
+  if (F.has('velvet_revolution_generation') && Math.random() < 0.28) return pick([
+    'The specific sound of keychains being shaken in Wenceslas Square — hundreds of thousands of them. It meant: your time is over. The sound worked.',
+    phase === 'late_life'
+      ? 'The generation that made the Velvet Revolution is now old enough to see what followed: the privatization, the oligarchs, the new politics that looks different from what was imagined in the square. The square was right to do what it did. The square was not a governing program.'
+      : 'November 17 to December 29: forty-two days from the first student march to Havel elected president by the parliament that used to imprison him. The revolution earned its name.',
+  ])
+
   // ─── JAPAN TEXTURE ───────────────────────────────────────────────────────────
   if (F.has('hibakusha_stigma_lived') && Math.random() < 0.28) return pick([
     'The word hibakusha is official. It carries the official weight of official categories — and the unofficial weight of what it means when the person at the marriage agency sees it on the family register.',
