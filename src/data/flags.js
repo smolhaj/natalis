@@ -2712,6 +2712,184 @@ export const FLAG_REGISTRY = {
     notes: 'Set by ind_farmers_protest_2020.',
   },
 
+  // ── United States ──────────────────────────────────────────────────────────────
+
+  jim_crow_childhood: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Grew up under Jim Crow — the water fountains, the schools, the signs. The survival rules taught before reading.',
+    intent: 'both',
+    notes: 'Set by usa_jim_crow_childhood. Foundational to Black American experience pre-1965.',
+  },
+
+  great_migration_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Moved North as part of the Great Migration — the factories, the de facto segregation, the city built in a country that was different from the South and not different enough.',
+    intent: 'both',
+    notes: 'Set by usa_great_migration (moved choice).',
+  },
+
+  stayed_in_the_south: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Stayed in the South during the Great Migration years — the civil rights movement would come to the South first, where the laws were explicit.',
+    intent: 'year_texture',
+    notes: 'Set by usa_great_migration (stayed choice).',
+  },
+
+  civil_rights_movement_participant: {
+    weight: 'major',
+    category: 'political',
+    description: 'Participated in the civil rights movement — the marches, the sit-ins, the boycotts, the registrations. Knew what the participation cost.',
+    intent: 'both',
+    notes: 'Set by usa_civil_rights_movement (participant choice).',
+  },
+
+  king_assassination_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the assassination of Martin Luther King Jr. on April 4, 1968 — the grief, the fires, the end of one phase.',
+    intent: 'both',
+    notes: 'Set by usa_king_assassination_1968.',
+  },
+
+  vietnam_went: {
+    weight: 'major',
+    category: 'experience',
+    description: 'Went to Vietnam when called — thirteen months in-country. The country needed to be fine when you returned.',
+    intent: 'both',
+    notes: 'Set by usa_vietnam_draft_decision (go choice). Gates usa_vietnam_return.',
+  },
+
+  vietnam_deferred: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Deferred from the Vietnam draft — college, medical, family hardship. Carries the knowledge that the number was drawn and was arranged not to go.',
+    intent: 'year_texture',
+    notes: 'Set by usa_vietnam_draft_decision (deferred choice).',
+  },
+
+  vietnam_refused: {
+    weight: 'major',
+    category: 'political',
+    description: 'Refused the Vietnam draft — Canada, conscientious objection, underground. Pardoned in 1977. The weight is not administrative.',
+    intent: 'both',
+    notes: 'Set by usa_vietnam_draft_decision (refused choice).',
+  },
+
+  vietnam_veteran: {
+    weight: 'major',
+    category: 'experience',
+    description: 'Vietnam veteran — came back to a country that needed you to be fine and had no structure for when you were not.',
+    intent: 'both',
+    notes: 'Set by usa_vietnam_return.',
+  },
+
+  rustbelt_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through Rust Belt deindustrialisation — the plant closing notice, the severance you needed a lawyer to read, the town that was different after.',
+    intent: 'both',
+    notes: 'Set by usa_rustbelt_factory.',
+  },
+
+  deindustrialisation_hit: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Directly hit by deindustrialisation — the retraining programs, the jobs that paid half of what the plant paid, the decade-long accounting.',
+    intent: 'year_texture',
+    notes: 'Set by usa_rustbelt_factory (retrained choice).',
+  },
+
+  stayed_in_the_town: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Stayed in the deindustrialised town while others left — the empty downtown, the schools tied to a tax base that was gone.',
+    intent: 'year_texture',
+    notes: 'Set by usa_rustbelt_factory (stayed choice).',
+  },
+
+  war_on_drugs_era: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through the War on Drugs as a Black or Hispanic man — the stops, the mandatory minimums, the hundred-to-one sentencing disparity.',
+    intent: 'both',
+    notes: 'Set by usa_war_on_drugs.',
+  },
+
+  overpoliced_community: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'From a community subjected to stop-and-frisk, aggressive policing, and the daily expenditure of navigating that.',
+    intent: 'year_texture',
+    notes: 'Set by usa_war_on_drugs (survived choice).',
+  },
+
+  witnessed_incarceration: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Watched someone close get caught in the mass incarceration system — the trial, the mandatory minimum, the years.',
+    intent: 'year_texture',
+    notes: 'Set by usa_war_on_drugs (witnessed choice).',
+  },
+
+  sept11_generation_us: {
+    weight: 'major',
+    category: 'historical',
+    description: 'American who lived through 9/11 — the country that existed on September 10 did not return. The security lines arrived and did not leave.',
+    intent: 'both',
+    notes: 'Set by usa_9_11_experience. US-specific; post_9_11_world is the global version.',
+  },
+
+  post_9_11_world: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the post-9/11 global transformation — the airport security, the surveillance law, the wars, the changed public experience of civil liberties.',
+    intent: 'year_texture',
+    notes: 'Set by nine_eleven world event (global). All living adults post-2001.',
+  },
+
+  foreclosure_generation: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Received the foreclosure notice — the adjustable rate that adjusted, the house sold from underneath, the credit score that takes seven years to recover.',
+    intent: 'both',
+    notes: 'Set by usa_foreclosure_2008.',
+  },
+
+  housing_lost: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Lost their home — to foreclosure, to eviction, to fire or disaster. The equity, the neighborhood, the street with four other empty houses.',
+    intent: 'year_texture',
+    notes: 'Set by usa_foreclosure_2008 (lost choice) and poverty arc events.',
+  },
+
+  opioid_crisis_touched: {
+    weight: 'major',
+    category: 'experience',
+    description: 'Touched by the opioid crisis — lost someone, watched the community absorb the losses, understood the obituary language.',
+    intent: 'both',
+    notes: 'Set by usa_opioid_crisis.',
+  },
+
+  lost_someone_opioids: {
+    weight: 'major',
+    category: 'grief',
+    description: 'Lost someone to an opioid overdose — the phone call, the grief with the texture of prevention that was not available.',
+    intent: 'year_texture',
+    notes: 'Set by usa_opioid_crisis (lost-someone choice).',
+  },
+
+  school_shooting_era: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Grew up in post-Columbine America — the lockdown drills, ALICE protocol, the exits memorised, the question of what the backpack stops.',
+    intent: 'both',
+    notes: 'Set by usa_school_shooting_era. Auto-resolve event.',
+  },
+
   // ── United Kingdom ─────────────────────────────────────────────────────────────
 
   miners_strike_generation: {

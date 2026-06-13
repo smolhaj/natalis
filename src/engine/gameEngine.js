@@ -6441,6 +6441,128 @@ function buildYearTexture(state) {
     'Spain in October 2017: simultaneously a constitutional democracy defending its constitution and a country using riot gear on people at ballot boxes. Both descriptions are accurate. Holding both is the specific work.',
   ])
 
+  // ─── UNITED STATES TEXTURE ───────────────────────────────────────────────────
+  if (F.has('jim_crow_childhood') && Math.random() < 0.3) return pick([
+    'You learned the rules of survival before you learned to read. The rules are still there, twenty or forty years later, in the way you move through certain rooms — the reflex of the second calculation that white people in those rooms do not make.',
+    phase === 'late_life'
+      ? 'The water fountains are gone. The signs are gone. The second calculation that the signs taught you — that reflex is still running. You have had it for sixty years. It is part of how you are in the world.'
+      : 'What the signs taught was not only where to go and where not to go. They taught a certain knowledge of who you were in the country where you were born. You built something on the other side of that knowledge.',
+  ])
+  if (F.has('great_migration_generation') && Math.random() < 0.25) return pick([
+    'You went north looking for the promised country and found a different country — the redlined neighborhoods, the factories that hired you and paid you less, the city where you were concentrated into specific blocks. You built a life in those blocks.',
+    phase === 'late_life'
+      ? 'The South you left and the North you arrived in: two different versions of the same problem, and you spent your life measuring the distance. The distance narrowed, and the measuring was part of what narrowed it.'
+      : 'You came north on the train. The city is the city you made of it, which is different from the city they made for you.',
+  ])
+  if (F.has('stayed_in_the_south') && Math.random() < 0.2) return pick([
+    'The movement came to the South because the South was where the laws were explicit. Explicit laws are a target. You were already here.',
+    'The people who left went north looking for something better. You stayed and waited for something better to come here. The wait was long and the arrival partial.',
+  ])
+  if (F.has('civil_rights_movement_participant') && Math.random() < 0.3) return pick([
+    'You sat at the counter that refused to serve you and waited for them to serve you or arrest you. The waiting was the tactic. The tactic worked and cost something.',
+    phase === 'late_life'
+      ? 'You marched. You were counted in the two hundred and fifty thousand or you were counted at a smaller march in a smaller city, which was the same principle at a different scale. You are still here. The work is still here. The work and you are both different from what you were in 1963.'
+      : 'The Civil Rights Act passed in 1964. The Voting Rights Act in 1965. The enforcement of the laws was the next generation\'s struggle. You handed it to them.',
+  ])
+  if (F.has('king_assassination_generation') && Math.random() < 0.25) return pick([
+    'He was thirty-nine. The night of April 4th, 1968: the fires, the grief that was also rage, the radio. You carry the specific quality of that absence.',
+    phase === 'late_life'
+      ? 'Fifty years. What he said in Memphis the night before he died was that he had been to the mountaintop. You have lived in the country on the other side of that statement for fifty years. The mountain is still there. The top is further than he said it was or was not what he described.'
+      : 'The country argued about whether he was going too far, too fast, in the months before he was shot. The people who said that do not remember now that they said it.',
+  ])
+  if (F.has('vietnam_went') && Math.random() < 0.3) return pick([
+    'Thirteen months. The specific smell of the jungle is still accessible when something triggers it — a plant, a particular heat, diesel exhaust from a certain angle. The body keeps records that the mind tries to file elsewhere.',
+    phase === 'late_life'
+      ? 'You went when called. The country you came back to needed you to be fine and moved on when you were not. The Veterans Administration exists. The Veterans Administration\'s waiting list exists. Both are true simultaneously.'
+      : 'You went and you came back. The men who did not come back had the simpler version of the story.',
+  ])
+  if (F.has('vietnam_deferred') && Math.random() < 0.2) return pick([
+    'The number was drawn and you arranged not to go. The arrangement was legal and available and you used it. The arrangement is something you carry differently depending on the room you are in.',
+    'College deferment. You were the right class to get the deferment. The men who were not the right class went. You know this.',
+  ])
+  if (F.has('vietnam_refused') && Math.random() < 0.25) return pick([
+    'You refused. Canada, or the application for conscientious objector status, or something else that cost you things in specific rooms for years. Carter pardoned you in 1977. The pardon was not the thing you needed.',
+    phase === 'late_life'
+      ? 'The history has caught up to the position you held in 1969. The catching-up arrived forty years late. You were already living in the position for forty years.'
+      : 'The decision was made in a time when it was unpopular and prosecuted. It is easier to have made it now, looking back, than it was to make it then.',
+  ])
+  if (F.has('vietnam_veteran') && Math.random() < 0.25) return pick([
+    'You came back and the country looked past you at the political argument. You were evidence in the argument. You were also a person. The argument did not have room for both.',
+    phase === 'late_life'
+      ? 'The Wall was dedicated in 1982. Black granite, fifty-eight thousand names. You found the names you were looking for. The Wall does not ask you to be fine.'
+      : 'The PTSD diagnosis was codified in the DSM in 1980, five years after the war ended. Before 1980 it was "shell shock" or "combat fatigue" or it was not named at all. You had it before it had a name.',
+  ])
+  if (F.has('rustbelt_generation') && Math.random() < 0.3) return pick([
+    'The plant closed and the notice said sixty days and the severance required a lawyer to understand and you did not have a lawyer. The retraining program paid for six months of classes for a job that paid half of what the plant paid.',
+    phase === 'late_life'
+      ? 'You watched the downtown empty over a decade. The storefronts, the diner, the hardware store. The school budget was tied to the tax base and the tax base was tied to the plant. The children left for somewhere the plant hadn\'t closed.'
+      : 'NAFTA passed in 1994. The economists said on net it was beneficial. On net across a million workers is a different calculation from the specific plant in the specific town.',
+  ])
+  if (F.has('deindustrialisation_hit') && Math.random() < 0.2) return pick([
+    'The retraining was for a job in healthcare or coding or something adjacent to the new economy. The job paid $14 an hour. The plant had paid $28. The arithmetic of the decade was the arithmetic of that gap.',
+    'The program existed. The program was underfunded. The program ended before you finished it. You found something anyway.',
+  ])
+  if (F.has('stayed_in_the_town') && Math.random() < 0.2) return pick([
+    'The people who left have opinions about the town now. They say it should have diversified earlier, should have seen it coming. You stayed. You saw it coming. Seeing it coming did not stop it coming.',
+    phase === 'late_life'
+      ? 'The town is still there. Some of the storefronts have come back under different names. The school has fewer students than in 1985. You are from here, which means something different than it meant when the plant was open.'
+      : 'Four empty houses on your street. You know which family lived in each one.',
+  ])
+  if (F.has('war_on_drugs_era') && Math.random() < 0.3) return pick([
+    'The stop-and-frisk was legal until it wasn\'t. Before it wasn\'t, it happened to you multiple times. The legal status changed; the reflex the encounters built in your body did not change with it.',
+    phase === 'late_life'
+      ? 'The sentencing disparity between crack and powder cocaine was a hundred to one from 1986 to 2010. It became eighteen to one in 2010. It became one to one in 2023. The people who did the time under the hundred-to-one did not have their sentences retroactively adjusted. You know some of them.'
+      : 'The war was declared on drugs. The war was fought in specific neighborhoods on specific people. The neighborhoods and people are identifiable by demographic data.',
+  ])
+  if (F.has('overpoliced_community') && Math.random() < 0.2) return pick([
+    'The second calculation: before you go somewhere, you run the calculation. You have been running it since you were fifteen. The calculation is not theoretical.',
+    'You know how to hold your hands where they can be seen. You know how to make your voice do a specific thing. The knowledge is a tax on every encounter.',
+  ])
+  if (F.has('witnessed_incarceration') && Math.random() < 0.2) return pick([
+    'The mandatory minimum took someone you knew for five years for something that a lawyer could have had dismissed. The lawyer costs money the family did not have. The five years is the cost of not having the money.',
+    'You visited. The visiting line, the glass, the phone. Five years is what they say at sentencing. Five years is what it is.',
+  ])
+  if (F.has('sept11_generation_us') && Math.random() < 0.25) return pick([
+    'The airport is the permanent evidence. Every security line since 2001 is the event still happening. The shoes-off is the event still happening. The country decided to make the evidence permanent.',
+    phase === 'late_life'
+      ? 'The country that existed on September 10, 2001 did not return. You have lived in the country that came after for longer than you lived in the country before. The before is still the reference point.'
+      : 'You remember where you were. You remember what the sky looked like. You remember the television running the footage on a loop. The specific details do not fade the way other memories fade.',
+  ])
+  if (F.has('post_9_11_world') && Math.random() < 0.15) return pick([
+    'The security lines, the body scanners, the databases, the color-coded threat level system that no one could explain. The world after 2001 was a world organised around a specific event.',
+    'Something changed in 2001 and the change was sold as temporary emergency measures and the measures are still there twenty years later.',
+  ])
+  if (F.has('foreclosure_generation') && Math.random() < 0.25) return pick([
+    'The adjustable rate adjusted. The payment doubled. You had been told the rate would adjust but not when or how much. The letter from the bank arrived and used words designed to require a lawyer to understand.',
+    phase === 'late_life'
+      ? 'Eight million foreclosures between 2008 and 2012. You were one of the eight million. The house was gone. The credit score took seven years to recover. The neighborhood recovered differently; some of it never did.'
+      : 'The bank that held the mortgage was not the bank that gave you the mortgage. The mortgage had been sold twice. The people who sold you the original mortgage had a bonus structure that rewarded them for the sale regardless of what happened after.',
+  ])
+  if (F.has('housing_lost') && Math.random() < 0.2) return pick([
+    'You rebuilt from somewhere smaller, somewhere temporary, somewhere borrowed. The equity was gone. The equity was the accumulated wealth of twelve years of payments. It was gone in a document.',
+    phase === 'late_life'
+      ? 'You rent now. You have rented since the foreclosure. The property that went up in value after 2012 went up for the people who owned it. You had owned it in 2007.'
+      : 'The credit score recovery: seven years. The emotional recovery: longer. The two numbers are not the same recovery.',
+  ])
+  if (F.has('opioid_crisis_touched') && Math.random() < 0.3) return pick([
+    'The obituary said "passed away unexpectedly." You understand the language. The language was chosen by the family to protect the person who was already gone and could not be protected anymore.',
+    phase === 'late_life'
+      ? 'Purdue Pharma paid $8.3 billion in 2020 and the Sackler family kept most of their money. The people who took the pills and died did not have a settlement. The settlement was between the company and the government.'
+      : 'OxyContin was approved in 1996. The sales representative told the doctors that addiction risk was less than one percent. The one percent figure came from a letter to the New England Journal of Medicine that was about something else.',
+  ])
+  if (F.has('lost_someone_opioids') && Math.random() < 0.25) return pick([
+    'The phone call. You get better at describing how they were before — the specific laugh, the thing they did with their hands when they were explaining something. The before is the only part you have left to give them.',
+    phase === 'late_life'
+      ? 'The death could have been prevented at multiple points. At the point of the prescription, at the point of the dependency diagnosis, at the point of the cheaper alternative becoming available. Each point had a system that was not designed for prevention.'
+      : 'The grief has a specific shape because the death had a specific path and the path had available exits that were not available. Someone made it not available. Someone made money making it not available.',
+  ])
+  if (F.has('school_shooting_era') && Math.random() < 0.25) return pick([
+    'You know the exits of every classroom you have ever been in. You know where the doors lock from the inside. This knowledge is not something you decided to acquire. It arrived through repetition.',
+    phase === 'late_life'
+      ? 'You went to school in a country where going to school included practicing what to do if someone came to kill you. The practice was called a drill. The drill was compulsory.'
+      : 'ALICE. Alert, Lockdown, Inform, Counter, Evacuate. You practiced it twice a year. The practice included the question of whether to run or to shelter and what to do with your hands.',
+  ])
+
   // ─── UNITED KINGDOM TEXTURE ──────────────────────────────────────────────────
   if (F.has('miners_strike_generation') && Math.random() < 0.25) return pick([
     'The picket line in winter, the police buses from elsewhere, the year-long strike, the return to work on the same terms they refused. Then the pit closes anyway. Both things happen.',
