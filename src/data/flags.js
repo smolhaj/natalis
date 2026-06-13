@@ -3160,6 +3160,112 @@ export const FLAG_REGISTRY = {
     notes: 'Set by uk_miners_strike_1984 (community choice) and similar events.',
   },
 
+  // ── Italy ─────────────────────────────────────────────────────────────────────
+
+  miracolo_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Grew up during Italy\'s economic miracle 1955-68 — the Fiat 500, the refrigerator, the television, the GDP growth rate of five percent a year.',
+    intent: 'year_texture',
+    notes: 'Set by it_miracolo_economico.',
+  },
+
+  mezzogiorno_born: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'From the Italian south — the Mezzogiorno, where the miracle\'s geography ended and the emigration north began.',
+    intent: 'year_texture',
+    notes: 'Set by it_miracolo_economico and it_southern_emigration.',
+  },
+
+  southern_migrant_italy: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Moved north from the Italian south — called terroni in Turin or Milan, built a life in the factories and the northern city.',
+    intent: 'both',
+    notes: 'Set by it_southern_emigration (north choice).',
+  },
+
+  italian_emigrant: {
+    weight: 'major',
+    category: 'experience',
+    description: 'Left Italy — for Switzerland, Germany, or elsewhere. The guest worker arrangement or the brain drain of the precariato generation.',
+    intent: 'both',
+    notes: 'Set by it_southern_emigration (abroad choice) and it_precariato (leave choice).',
+  },
+
+  stayed_in_the_south_italy: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Stayed in the Italian south while the generation emigrated — building something in a diminishing place.',
+    intent: 'year_texture',
+    notes: 'Set by it_southern_emigration (stayed choice).',
+  },
+
+  sessantotto_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through the Italian 1968 and the Hot Autumn of 1969 — the factory occupations, the 150 million hours of strikes, the Statuto dei lavoratori.',
+    intent: 'both',
+    notes: 'Set by it_sessantotto_hot_autumn.',
+  },
+
+  anni_di_piombo_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the Years of Lead — Piazza Fontana, the Red Brigades, Aldo Moro, Bologna station. Political violence from right and left and state.',
+    intent: 'both',
+    notes: 'Set by it_anni_di_piombo.',
+  },
+
+  political_violence_witnessed: {
+    weight: 'major',
+    category: 'experience',
+    description: 'Knew someone who was present at or affected by political violence — the abstract becomes specific and personal.',
+    intent: 'year_texture',
+    notes: 'Set by it_anni_di_piombo (proximity choice) and similar events.',
+  },
+
+  mani_pulite_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through Mani Pulite 1992-94 — the end of the First Republic, the entire political class on trial, Craxi in Tunis, the DC disbanded.',
+    intent: 'both',
+    notes: 'Set by it_mani_pulite.',
+  },
+
+  berlusconi_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through the Berlusconi era 1994-2011 — media empire plus political power, seventeen trials, three governments.',
+    intent: 'both',
+    notes: 'Set by it_berlusconi_era.',
+  },
+
+  media_democracy_concern: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Concerned by the concentration of media power in the hands of politicians — the overlap that lasted twenty years in Italy.',
+    intent: 'year_texture',
+    notes: 'Set by it_berlusconi_era (concerned choice).',
+  },
+
+  precariato_generation: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Italian precariato generation — short-term contracts, Partite IVA, the flexible labour market where flexibility belonged to the employer.',
+    intent: 'both',
+    notes: 'Set by it_precariato.',
+  },
+
+  mediterranean_crossing_survived: {
+    weight: 'major',
+    category: 'experience',
+    description: 'Crossed the Mediterranean on a migrant route — the rubber boat or wooden boat, Lampedusa, the calculation of what it cost.',
+    intent: 'both',
+    notes: 'Set by it_mediterranean_crossing.',
+  },
+
   // ── Germany ───────────────────────────────────────────────────────────────────
   gastarbeiter_generation: {
     weight: 'major',

@@ -6746,6 +6746,84 @@ function buildYearTexture(state) {
       : 'The rhetoric of hard choices and living within our means produced specific outcomes in specific places. You are from one of those places or you know people from one of those places.',
   ])
 
+  // ─── ITALY TEXTURE ───────────────────────────────────────────────────────────
+  if (F.has('miracolo_generation') && Math.random() < 0.25) return pick([
+    'The Fiat 500 in 1957. The refrigerator. The television. The GDP growth rate. The thing Italy did between 1950 and 1968 was one of the most rapid economic transformations in the twentieth century. You were inside it.',
+    phase === 'late_life'
+      ? 'You were young in the miracolo years. The country that exists now is a country built on that foundation. The foundation was built in fifteen years by people who were making it up as they went.'
+      : 'Carosello: the advertisements at the end of the evening news, before bed. The product and then the blessing for the night. The economy and the culture made together.',
+  ])
+  if (F.has('mezzogiorno_born') && Math.random() < 0.2) return pick([
+    'The north-south divide is spoken about openly in Italy. A Milanese and a Calabrian have the same passport. They do not have the same country.',
+    phase === 'late_life'
+      ? 'The miracle had a border. You were south of it. What was built in the north in the 1960s was built partly with the labor that came from the south. The labor came and was called terroni. The name is still in use.'
+      : 'The GDP figures for Italy. Then the GDP figures for Campania. Then the unemployment figures for Calabria. The national figure and the regional figure produce different descriptions of the same country.',
+  ])
+  if (F.has('southern_migrant_italy') && Math.random() < 0.25) return pick([
+    'You arrived in Turin or Milan and the word for you was terroni — earth person, southerner. The word was not kind. You found the street where the other Calabrians lived and you were there until you weren\'t and then the city was yours in a different way.',
+    phase === 'late_life'
+      ? 'The city absorbed the southerners and the southerners changed the city. The second generation calls itself Milanese. The Milanese food has caponata in it now. Both things happened.'
+      : 'The factory. The contract. The neighborhood. The church where mass is in the dialect. The construction of a life in the city that did not want you became the construction of a city that partly is you.',
+  ])
+  if (F.has('italian_emigrant') && Math.random() < 0.25) return pick([
+    'You are Italian in Switzerland or in Germany or in London or in New York. The form that takes — the things you keep, the things you adapt, the Sunday phone call — is the Italian emigrant condition.',
+    phase === 'late_life'
+      ? 'The fuga dei cervelli: first the workers went north, then the educated went wherever the educated went. Italy has been exporting its young people since the unification in 1861. The export continues. You are part of the long sequence.'
+      : 'The passport still says Italian. The taxes go to Italy or they don\'t, depending on how long you\'ve been away. The identity doesn\'t have an equivalent simplification.',
+  ])
+  if (F.has('stayed_in_the_south_italy') && Math.random() < 0.15) return pick([
+    'You stayed in the town that got quieter every year. There is something here that is not available in the north. The something is hard to name. The not-naming is part of what keeps you.',
+    phase === 'late_life'
+      ? 'The church still stands. The piazza still fills on Sunday evening. The bar is the same bar. The people in the bar are older. The young people are somewhere else. You know where each one went.'
+      : 'The refusal to go is not just stubbornness. It is also the knowledge that what will be lost if everyone goes is not recoverable once lost.',
+  ])
+  if (F.has('sessantotto_generation') && Math.random() < 0.25) return pick([
+    'The Hot Autumn: 150 million hours of strikes. The factory floor occupied. The line stopped. The demands about time, about the pace of the work. The workers\' statute that passed in 1970 came from the floor, not from the parties.',
+    phase === 'late_life'
+      ? 'You were in the assemblies and the occupations. The generation that came after asks what you were fighting for. The Statuto dei lavoratori is the answer. The precariato is the answer to the Statuto.'
+      : '1968 in Italy was not only the universities. It was the factories. The overlap between the students and the workers in 1968-1970 is the specific Italian version of a European-wide moment.',
+  ])
+  if (F.has('anni_di_piombo_generation') && Math.random() < 0.3) return pick([
+    'Piazza Fontana. Aldo Moro. Bologna Centrale. The Years of Lead: the violence from the right and from the left and from the state and the secret services and the distinctions were sometimes clear and sometimes not at all.',
+    phase === 'late_life'
+      ? 'The trials ran for twenty years and reached verdicts that were appealed and overturned and revised. The people who made the bombs are dead or old. The files are still classified. Italy carries the decade without having fully accounted for it.'
+      : 'You learned to live in a country where the news contains this. The normalization of political violence: you read the headline and continue with the day, which is what you learned to do, which is its own kind of trauma.',
+  ])
+  if (F.has('political_violence_witnessed') && Math.random() < 0.2) return pick([
+    'You knew the specific person. Or you were near the specific place. The abstract political violence has a face and a name and the face and name sit differently from the political analysis.',
+    phase === 'late_life'
+      ? 'The face and the name are still there, forty years later. The political analysis has been revised many times. The face and the name are not revised.'
+      : 'The abstract and the specific exist on different registers. The specific is heavier.',
+  ])
+  if (F.has('mani_pulite_generation') && Math.random() < 0.25) return pick([
+    'Mario Chiesa trying to flush the bribe down the toilet. This is where the First Republic ended. In a toilet in Milan. The systematized corruption — the tangenti, the percentages, the parties that required them — was known and tolerated and then suddenly was not.',
+    phase === 'late_life'
+      ? 'The DC disbanded. Craxi is in Hammamet. Andreotti got the statute of limitations. What replaced them — Berlusconi, Forza Italia, the recycled parties — was also information. The Clean Hands investigation cleaned the hands and then Berlusconi was elected.'
+      : 'Four thousand people investigated in two years. The entire Italian political class. The magistrates who ran the investigations became famous. Some of them were later investigated themselves. This is also Italian.',
+  ])
+  if (F.has('berlusconi_generation') && Math.random() < 0.25) return pick([
+    'He owned the channels. He ran for office. The conflict of interest was total and explicit and he changed the laws while governing and was elected three times. Something about Italy was exactly the right shape to receive him.',
+    phase === 'late_life'
+      ? 'Seventeen trials. Acquitted or amnestied or statute of limitations. He survived the bunga bunga, the trials, the political defeats. He died in 2023 still in the Senate. The country that produced him and elected him three times and still counts him as former PM is the country you have lived in.'
+      : 'The three channels. TG4 and Canale 5 and Italia 1 all said the same things about Fininvest and Mediaset and eventually about Berlusconi himself. The RAI said different things at different times. The information environment was constructed.',
+  ])
+  if (F.has('media_democracy_concern') && Math.random() < 0.15) return pick([
+    'The European Parliament resolutions. The Economist cover: "Why Berlusconi is unfit to govern Italy." The concern was shared internationally and largely irrelevant to Italian elections for two decades.',
+    'Media ownership and political power in the same hands: the Italian experiment ran for twenty years. The experiment produced results. The results are documented.',
+  ])
+  if (F.has('precariato_generation') && Math.random() < 0.3) return pick([
+    'The Partita IVA: self-employment that is not self-employment. The flexibility that belongs to the employer. The pension system you contribute to that will not exist when you reach it. Your degree and their contract.',
+    phase === 'late_life'
+      ? 'The precariato generation is now middle-aged. The permanent contract arrived eventually, for some of them, or it didn\'t. The pension calculations are worse than expected. The political anger of the generation that was promised something and received something else is still looking for an address.'
+      : 'Italy is exporting its graduates. London, Berlin, Brussels. The brain drain: the people who leave are the people Italy spent the most educating. The raccomandazione ensures the others get the positions. The cycle is self-reinforcing.',
+  ])
+  if (F.has('mediterranean_crossing_survived') && Math.random() < 0.25) return pick([
+    'The sea at night. The rubber boat or the wooden boat. Lampedusa is the closest point. The Italian coast guard or the NGO ships or nothing. You are in the water in the dark. You paid for this.',
+    phase === 'late_life'
+      ? 'You crossed and you arrived and you built something on the Italian side of the crossing. The crossing is in the past and it is always in the past and it is always there. These are both true.'
+      : 'The Italian side of the crossing: the papers, the permit, the renewal, the precariousness of status in a country that needed you to pick the tomatoes and did not want you to stay.',
+  ])
+
   // ─── GERMANY TEXTURE ─────────────────────────────────────────────────────────
   if (F.has('gastarbeiter_generation') && Math.random() < 0.3) return pick([
     'The contract was for two years. The two years are still running, thirty years later. The word for what you are has changed several times in the official documents. The word does not quite cover what you are.',
