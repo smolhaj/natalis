@@ -4791,6 +4791,41 @@ function buildYearTexture(state) {
       ? 'You have lived on both sides of a historical divide. Not everyone understands what that costs.'
       : 'The new South Africa was real. So were its limits. You hold both.',
   ])
+  if (F.has('post_apartheid_generation') && Math.random() < 0.25) return pick([
+    'April 27, 1994: the queue, the ink-stamped thumb, the first time. That specific morning is the one you carry.',
+    'You voted in the first free election of the country where you were born. The word for that — for doing something that should have always been possible and wasn\'t — is still something you look for.',
+    phase === 'late_life'
+      ? 'You have voted in every election since 1994. The gap between what 1994 promised and what the subsequent elections delivered is the measurement you have been taking for thirty years.'
+      : 'The 62 percent is Mandela\'s margin. You know how it felt to be part of that number before anyone told you the number.',
+  ])
+  if (F.has('rainbow_nation_generation') && Math.random() < 0.2) return pick([
+    'The phrase was Tutu\'s. The country\'s colors were his: not a melting pot but a rainbow, distinct and together. The phrase has aged into something more complicated than when he said it.',
+    'Mandela in the Springbok jersey at Ellis Park. You know the image and what it was asking. Whether the country answered the ask is a different account.',
+    phase === 'late_life'
+      ? 'The rainbow was real as an aspiration and partial as a fact and it is what it is. The aspiration did something. The fact is what the fact is.'
+      : 'You believed it, or you believed in it, which is different. The belief was not irrational. The world has seen what came after and is still working out what the rainbow meant.',
+  ])
+  if (F.has('marikana_generation') && Math.random() < 0.25) return pick([
+    'August 16, 2012. Thirty-four. The ANC government\'s police. The platinum mine. The sentence keeps the same shape no matter how many times you run it.',
+    'Marikana was the point where the liberation movement and the liberation it was supposed to enable became visible as two different things.',
+    phase === 'late_life'
+      ? 'The Farlam Commission reported in 2015. No police officer was prosecuted. You know both of those facts. They sit together without resolving.'
+      : 'The miners were asking for a wage increase of 12,500 rand — $1,350 per month. The mine\'s annual revenue was in the billions. That arithmetic was in the room when the shooting started.',
+  ])
+  if (F.has('post_apartheid_disillusionment') && Math.random() < 0.22) return pick([
+    'The structure of your disappointment is specific: not in democracy as a form, not in the Constitution, not in the idea of what South Africa could be — but in what the ANC did with the thing it was given.',
+    'The gap between the ANC of Mandela and the ANC of Zuma is not a gap you invented. You watched it open. You know when it opened.',
+    phase === 'late_life'
+      ? 'You have been a South African long enough to have believed in something and seen it be used in ways that required revising the belief. The revising happened. The country continues.'
+      : 'The constitutional order survived Zuma. That is not a low bar. It is a higher bar than it should have had to be.',
+  ])
+  if (F.has('loadshedding_generation') && Math.random() < 0.22) return pick([
+    'Stage 4: four hours on, four hours off. You have the schedule on your phone. You have planned your day around the schedule. This is not a crisis anymore. It is the texture of ordinary life.',
+    'The inverter paid for itself in the first year. The generator smell on Sunday evenings is the smell of a state-owned utility that ran out of maintenance budget in 2007.',
+    phase === 'late_life'
+      ? 'You watched Eskom fail in slow motion over thirty years — the political appointments, the deferred maintenance, the coal contracts, the final collapse into managed rolling blackouts. The management is an achievement, in a way.'
+      : 'The productive hours of the economy are cut by a schedule posted online by the government because it does not have enough electricity. This sentence has been true for fifteen years now. You have stopped waiting for it to stop being true.',
+  ])
   if (F.has('survived_soviet_collapse') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) return pick([
     'You watched the world you were born into dissolve in under two years. Some of it you didn\'t miss.',
     phase === 'late_life'
@@ -6616,6 +6651,29 @@ function buildYearTexture(state) {
   if (F.has('nigerian_diaspora_stigma') && Math.random() < 0.2) return pick([
     'The 419 stereotype: 120 million people held responsible for the reputation established by a smaller number. You have managed the assumption in rooms where it was already made. You will manage it again.',
     'Being Nigerian abroad in the 1990s and 2000s: the email opens and the person across the desk has already decided something. You have learned the specific labour of undeciding it.',
+  ])
+  if (F.has('endsars_generation') && Math.random() < 0.25) return pick([
+    '#EndSARS: October 2020. The hashtag, the highway blockades, the toll gate. The footage from Lekki. The things on the footage that the army disputed and the phone cameras did not.',
+    'The protesters were young Nigerians with phones and Twitter accounts. They shut down Lagos. Then the soldiers came to the toll gate. Both of those things happened in the same country in the same week.',
+    phase === 'late_life'
+      ? 'The Judicial Panel found that the military opened fire at Lekki. The panel\'s report was released in 2021. No prosecution followed. The sequence has become familiar enough that it no longer surprises, which is its own kind of despair.'
+      : 'You were at the protest or you watched it on a screen. Either way the footage from the toll gate is in your memory. The government\'s response to the footage is also in your memory.',
+  ])
+
+  // ─── IRAN CONTEMPORARY TEXTURE ───────────────────────────────────────────────
+  if (F.has('green_movement_generation') && Math.random() < 0.25) return pick([
+    '"Where is my vote?" The question was asked in the streets of Tehran in June 2009 and the answer was four thousand arrests and the execution of eight protesters. The question has not gone away.',
+    'Neda Agha-Soltan\'s death was filmed on a phone and distributed worldwide in under an hour. The government said it was staged. The footage said otherwise.',
+    phase === 'late_life'
+      ? 'The Green Movement was suppressed. Its leaders were put under house arrest — Mousavi, Karroubi — for years. The generation it created did not disappear. It became the generation that stood in the street in 2022.'
+      : 'The chant "Allahu Akbar" from the rooftops was the sound of the revolution being used against itself. That reversal — the phrase, the rooftops, the same gesture with a different meaning — is something you carry.',
+  ])
+  if (F.has('zan_zendegi_azadi') && Math.random() < 0.25) return pick([
+    'Zan, Zendegi, Azadi. The three words. The girls taking their headscarves off in front of their schools, waving them in the air. The speed at which it spread to 164 cities.',
+    'Mahsa Amini died on September 16, 2022. The morality police. The custody. The question of what she died of that the government could not answer in a way anyone believed.',
+    phase === 'late_life'
+      ? 'The Islamic Republic has survived every challenge since 1979 through a combination of repression and the inability of its opponents to sustain coordination. Whether 2022 was different or the same is not yet clear. You were inside it.'
+      : 'The cost was 500 dead and 20,000 arrested. The movement did not achieve what it asked for. What it changed is a question that will be answered by what comes next.',
   ])
 
   // ─── UGANDA TEXTURE ──────────────────────────────────────────────────────────

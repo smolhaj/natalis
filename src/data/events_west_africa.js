@@ -170,4 +170,58 @@ export const WEST_AFRICA_EVENTS = [
     effect: (p) => { p.m -= 5; p.r += 4; p.addFlag('nigerian_diaspora_stigma'); p.setMem('nga419', true) },
   },
 
+  {
+    id: 'nga_endsars_2020',
+    phase: 'young_adult',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'Nigeria' &&
+      G.currentYear === 2020 &&
+      G.age >= 16 && G.age <= 40 &&
+      !G.mem?.ngaEndSARS,
+    text: 'October 2020. SARS — the Special Anti-Robbery Squad — has been extrajudicially killing, extorting, and brutalising young Nigerians for thirty years. The evidence circulates online. The hashtag becomes the movement: #EndSARS. Young Nigerians shut down major highways. Lagos, Abuja, Port Harcourt, Enugu. The protests are organised entirely through Twitter and WhatsApp. On October 20, at the Lekki toll gate in Lagos, soldiers open fire on protesters waving Nigerian flags. The army disputes the numbers. The Twitter videos do not dispute.',
+    choices: [
+      {
+        text: 'You are at the toll gate or at another protest that week.',
+        tag: null,
+        outcome: 'You were there before the soldiers came or you were there when they came. What happened at Lekki is a fact that occurred while you were in the country being a citizen of it.',
+        effect: (p) => { p.m -= 10; p.karma += 8; p.r += 5; p.addFlag('endsars_generation'); p.addFlag('political_active'); p.setMem('ngaEndSARS', true); },
+      },
+      {
+        text: 'You watch it on Twitter from inside, or from the diaspora.',
+        tag: null,
+        outcome: 'The footage from Lekki circulates on every platform before the platforms are pressured to remove it. You have seen it. It cannot be unseen.',
+        effect: (p) => { p.m -= 8; p.r += 4; p.addFlag('endsars_generation'); p.setMem('ngaEndSARS', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'nga_tech_generation',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Nigeria' &&
+      G.currentYear >= 2010 && G.currentYear <= 2022 &&
+      G.age >= 18 && G.age <= 35 &&
+      !G.mem?.ngaTech,
+    text: 'Lagos is becoming a tech hub: Andela, Flutterwave, Paystack, the co-working spaces in Victoria Island and Yaba. The "Silicon Lagoon" is real and it isn\'t: a cohort of young Nigerians building companies against infrastructure failure, power cuts, and a government that is neither enabler nor antagonist but simply absent. The Paystack acquisition by Stripe in 2020 for $200 million is the moment the outside world notices. The people inside it have been working within the infrastructure for years before that.',
+    choices: [
+      {
+        text: 'You are building here — this is where the opportunity is.',
+        tag: null,
+        outcome: 'The infrastructure costs are real and you build around them. The market is 200 million people and growing. The calculus favours staying.',
+        effect: (p) => { p.m += 5; p.e += 5; p.w += 4; p.addFlag('lagos_tech_generation'); p.setMem('ngaTech', true); },
+      },
+      {
+        text: 'The infrastructure is a ceiling. You build where the foundation is more solid.',
+        tag: null,
+        outcome: 'You leave or you have already left. You build faster, with fewer stops. The question of what you owe the place you left is specific and does not resolve.',
+        effect: (p) => { p.m += 3; p.r += 5; p.addFlag('lagos_tech_generation'); p.addFlag('brain_drain_gone'); p.setMem('ngaTech', true); },
+      },
+    ],
+    effect: null,
+  },
+
 ]

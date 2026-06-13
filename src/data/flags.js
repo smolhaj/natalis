@@ -429,6 +429,94 @@ export const FLAG_REGISTRY = {
     notes: 'Set by world events. No dedicated year texture. Gap.',
   },
 
+  post_apartheid_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Voted in or witnessed South Africa\'s first democratic election, April 27, 1994 — the queue at the polling station, the ink-stamped thumb, the first vote.',
+    intent: 'year_texture',
+    notes: 'Set by sa_first_vote_1994.',
+  },
+
+  rainbow_nation_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Embraced the post-1994 South African hope — the Rainbow Nation, the TRC, Mandela\'s moral authority — and the subsequent calibration of that hope against structural reality.',
+    intent: 'year_texture',
+    notes: 'Set by sa_mandela_era_hope (hope choice).',
+  },
+
+  post_apartheid_realist: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Held the 1994 hope at arm\'s length — watching the gap between democratic symbolism and the actual arithmetic of land and inequality.',
+    intent: 'none',
+    notes: 'Set by sa_mandela_era_hope (realist choice). No downstream event needed.',
+  },
+
+  marikana_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the Marikana massacre of August 16, 2012 — 34 striking miners shot by the ANC government\'s police; the event that restructured post-apartheid disillusionment.',
+    intent: 'year_texture',
+    notes: 'Set by sa_marikana_2012.',
+  },
+
+  post_apartheid_disillusionment: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'The specific disillusionment of someone who believed in the post-1994 promise and watched it break — not at the ANC\'s ideology but at its governance.',
+    intent: 'year_texture',
+    notes: 'Set by sa_marikana_2012 (betrayal choice).',
+  },
+
+  loadshedding_generation: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'South African character shaped by Eskom load-shedding — the schedule on the phone, Stage 4, Stage 6, the inverter, the generator, the productive hours of the country cut by managed state failure.',
+    intent: 'year_texture',
+    notes: 'Set by sa_loadshedding.',
+  },
+
+  endsars_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Nigerian youth shaped by the October 2020 #EndSARS protests — the hashtag, the highway blockades, the Lekki toll gate shooting, the footage that circulated before it was removed.',
+    intent: 'year_texture',
+    notes: 'Set by nga_endsars_2020.',
+  },
+
+  lagos_tech_generation: {
+    weight: 'minor',
+    category: 'experience',
+    description: 'Part of the Lagos tech ecosystem (2010s–2020s) — Andela, Paystack, Flutterwave, the Silicon Lagoon; building around infrastructure failure rather than waiting for it to be resolved.',
+    intent: 'none',
+    notes: 'Set by nga_tech_generation. No downstream event needed.',
+  },
+
+  brain_drain_gone: {
+    weight: 'minor',
+    category: 'migration',
+    description: 'Left home country to pursue professional opportunities abroad, contributing to brain drain — aware of the specific question of what is owed to the place left.',
+    intent: 'none',
+    notes: 'Set by nga_tech_generation (leave choice) and similar career-emigration events.',
+  },
+
+  green_movement_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Iranian shaped by the 2009 Green Movement — the fraudulent election, the "Where is my vote?" chant, Neda Agha-Soltan, the crackdown of 4,000 arrested.',
+    intent: 'year_texture',
+    notes: 'Set by iran_green_movement_2009.',
+  },
+
+  zan_zendegi_azadi: {
+    weight: 'major',
+    category: 'political',
+    description: 'Iranian shaped by the 2022–23 Mahsa Amini protests — "Woman, Life, Freedom" — the most significant challenge to the Islamic Republic since 1979.',
+    intent: 'year_texture',
+    notes: 'Set by iran_mahsa_amini_2022.',
+  },
+
   chernobyl_generation: {
     weight: 'moderate',
     category: 'identity',
