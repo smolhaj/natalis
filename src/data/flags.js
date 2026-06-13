@@ -2393,6 +2393,38 @@ export const FLAG_REGISTRY = {
     intent: 'year_texture',
     notes: 'Set by eur_rom_orphanage_generation. Emotional neglect; group-management survival skills.',
   },
+
+  securitate_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Grew up under Securitate surveillance in communist Romania — the careful conversations, the neighbour who might be an informer, the gap between what was said and what was meant.',
+    intent: 'both',
+    notes: 'Set by rom_securitate_childhood. Needs year texture + follow-through for when Securitate files were opened.',
+  },
+
+  decree_779_generation: {
+    weight: 'major',
+    category: 'gender',
+    description: 'Romanian woman who lived under Decree 779 (1966-1989) — abortion and contraception banned, menstrual inspections, forced natalism, illegal procedures in unsafe conditions.',
+    intent: 'both',
+    notes: 'Set by rom_decree_779. Needs year texture + late-life reckoning.',
+  },
+
+  romania_1989_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was in Romania for the December 1989 revolution — Timișoara, Ceaușescu\'s last speech, the helicopter, the execution on Christmas Day.',
+    intent: 'year_texture',
+    notes: 'Set by rom_revolution_1989.',
+  },
+
+  eu_emigrant_romania: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Romanian who emigrated to Western Europe post-EU accession (2007) — one of the 3-4 million who left for Spain, Italy, the UK, Germany.',
+    intent: 'year_texture',
+    notes: 'Set by rom_eu_emigration.',
+  },
   stayed_when_others_left: {
     weight: 'moderate',
     category: 'identity',

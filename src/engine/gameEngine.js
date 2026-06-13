@@ -6089,6 +6089,34 @@ function buildYearTexture(state) {
     'The jubilation in December 1989 was real. The Mineriads in 1990 were also real. You were there for both.',
     'What foreign correspondents filmed was the jubilation. What they didn\'t film was the next decade, which is what you actually lived.',
   ])
+  if (F.has('securitate_generation') && Math.random() < 0.22) return pick([
+    'The door closed and the television went up. Not because the programme was interesting. You understood what this meant before you knew the word for it.',
+    'You developed the skill of saying two things — the correct version for the room you were in. The skill outlasted the state that required it. You use it in places where it is not required.',
+    phase === 'late_life'
+      ? 'The CNSAS files are available. The neighbour who was an informer may be in your file. Some people request their files and find names. Some people do not request their files. You have decided which kind of person you are.'
+      : 'The careful pause before answering. The assessment of who is in the room and what can be said in this room. You learned it from watching adults do it before you were old enough to know why.',
+  ])
+  if (F.has('decree_779_generation') && Math.random() < 0.22) return pick([
+    'The gynecological examination was not for your health. The factory doctor came quarterly. You learned what it was for before you were told.',
+    'Twelve thousand women died from illegal procedures in twenty-three years. You knew the name of someone who knew what to do. Most women did. The knowledge moved in a network that the state did not see.',
+    phase === 'late_life'
+      ? 'Decree 779 ran from 1966 to December 1989. You lived inside it. The children born under it — the decreţei — are in their forties and fifties now. Some of them are your children.'
+      : 'The counting of weeks. The specific arithmetic of December and January. The careful friendship that made the arithmetic less dangerous. The knowledge that you carry from that time is a specific knowledge.',
+  ])
+  if (F.has('romania_1989_generation') && Math.random() < 0.22) return pick([
+    'December 25, 1989. The ninety-minute trial. The body shown on television. Something that defined your entire life ended in ninety minutes on a Tuesday afternoon.',
+    'Timișoara on December 16. The helicopter on December 22. The television occupied by people who were not the television people. The specific sequence: four days between the first protest and the end of forty years.',
+    phase === 'late_life'
+      ? 'Thirty years on, the question of who fired in December 1989 is still in court. The revolution that felt complete on Christmas Day has a legal case with an open docket. You were there. You are watching the accounting.'
+      : 'The revolution was the only violent one in Eastern Europe in 1989. The violence was real and the revolution was real and what came after the revolution has a specific name too: transition.',
+  ])
+  if (F.has('eu_emigrant_romania') && Math.random() < 0.2) return pick([
+    'Three million Romanians in Western Europe by 2015. The village is a phone call now. The school closed. The satellite dish went up before the water pressure improved.',
+    'You are in Spain or Italy or England or Germany. You send money home. The remittances do something for the house. The village is still emptying.',
+    phase === 'late_life'
+      ? 'You left Romania when the border opened in 2007. You have been sending money since 2007. The calculation you made was the right calculation for you. The calculation has a cost that does not show in the calculation.'
+      : 'The Romanian accent in the supermarket or on the construction site or in the care home. You recognise it. Sometimes you acknowledge it. Sometimes you do not.',
+  ])
   if (F.has('romania_orphan_generation') && Math.random() < 0.25) return pick([
     'You learned early that institutions do not have space for the individual child. The lesson generalized.',
     'The orphanage taught you to manage in large groups with limited resources. You notice that this is not a skill that gets named as such, but it is a skill.',
