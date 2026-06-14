@@ -6597,6 +6597,102 @@ function buildYearTexture(state) {
       : 'Staying required its own kind of learning. The new calculations. The things you do not say where you work. The version of yourself that goes to work and the version that comes home. You learned to keep them separate.',
   ])
 
+  // ─── URUGUAY TEXTURE ─────────────────────────────────────────────────────────
+  if (F.has('uru_democracy_restored') && Math.random() < 0.2) return pick([
+    'March 1, 1985. The political prisoners walked out. Mujica walked out. The parliament reopened. The exiles came back to a city that had changed while they were gone. The country tried to reconstitute itself.',
+    phase === 'late_life'
+      ? 'The amnesty law of 1986 protected most of the torturers from prosecution. Uruguay processed its transition to democracy and moved forward without fully accounting for what had happened inside its prisons. This unfinished reckoning has been a background hum in Uruguayan politics ever since.'
+      : 'The people who returned from Buenos Aires or Stockholm came back to a city that had not waited for them. The people who had stayed had built a version of life without them. The reunion was not simple. It is what reunions after twelve years are like.',
+  ])
+  if (F.has('uru_tupamaro_adjacent') && Math.random() < 0.22) return pick([
+    'The distributing of materials: where to pick them up, where to take them. Two contacts, no names used. The theory that the edges were safer than the center.',
+    phase === 'late_life'
+      ? 'The distinction between involvement and sympathy mattered less to the military after 1973 than you had thought it would when you made your calculation. You made the calculation at a specific moment. The moment was before you had enough information to make it well.'
+      : 'What you were doing and what you told yourself you were doing were not exactly the same thing. The gap between them was small. The gap between the edges of a movement and its center is also small when the security forces draw the perimeter.',
+  ])
+  if (F.has('pry_colorado_refused') && Math.random() < 0.2) return pick([
+    'Outside the Colorado Party system in Stroessner\'s Paraguay meant: no government job, no import licence, no land concession, no official anything. The narrowness of outside was precise and specific.',
+    phase === 'late_life'
+      ? 'The dictatorship ended in 1989. The Colorado Party continued to govern, with the same patronage networks in place. The people who had refused the card were outside for thirty-five years of Stroessner and continued to be navigating the same structures after. The card is gone. The structures are slower to go.'
+      : 'You chose the narrowness. The people who took the card lived inside the system and paid the price of what living inside that system required. You watched what that required. You do not know which price was higher.',
+  ])
+  if (F.has('uru_tupamaro_era') && Math.random() < 0.25) return pick([
+    'The Tupamaros robbed a bank and distributed the money in poor neighborhoods. They published the secret accounts of corrupt officials. They had a reputation for theater and for avoiding civilian casualties. You knew people on the edges.',
+    phase === 'late_life'
+      ? 'The Tupamaro leaders spent over a decade in prison, much of it in conditions designed to destroy people psychologically. Mujica: two years in a hole in the ground. The man who came out of that hole became president in 2010. The Volkswagen Beetle. The farmhouse. The 90 percent salary donated. This trajectory exists in your country\'s story.'
+      : 'The question of what you thought about them was something you answered differently depending on who was asking. The distinction between involvement and sympathy mattered less to the military after 1973 than people had assumed it would.',
+  ])
+  if (F.has('uru_coup_1973') && Math.random() < 0.25) return pick([
+    'June 27, 1973. The parliament doors closed. No tanks in the plaza, no gunfire — the coup was a quiet administrative act. Uruguay, the Switzerland of South America, stopped being that for twelve years.',
+    phase === 'late_life'
+      ? 'One in fifty Uruguayans in political detention at the peak of the dictatorship — the highest rate in the world at the time. The exile generation in Buenos Aires and Stockholm. The ones who stayed and learned what staying required. The parliament reopened in 1985 and the country spent years trying to reconstitute itself.'
+      : 'The specific political education of living in a country that was a democracy and then one day was not, and where the institutions that should have protected democracy had either failed or cooperated. You were young when the doors closed. You were older when they reopened.',
+  ])
+  if (F.has('uru_mujica_era') && Math.random() < 0.22) return pick([
+    'The president drives a 1987 Volkswagen Beetle. He lives in a farmhouse outside Montevideo. He donates 90 percent of his salary. He spent fourteen years in prison. Under his government: marijuana, abortion, same-sex marriage — all legal and state-regulated.',
+    phase === 'late_life'
+      ? 'Pepe Mujica was 74 when he became president and 79 when he left office. He spent his presidency explaining what he thought poverty actually meant. He said: I am not poor. Poor are those who work only to maintain an expensive lifestyle. You have been thinking about this for years.'
+      : 'The world wrote about Uruguay as if it was eccentric. To you it made a specific kind of sense — the welfare state, the secular tradition, the country that had to rebuild something after the dictatorship and chose what it wanted to rebuild.',
+  ])
+  if (F.has('uru_dictatorship_lived') && Math.random() < 0.22) return pick([
+    'The years when the parliament was closed. The highest per-capita political prisoner rate in the world. The people you knew who were inside. The people you knew who went to Buenos Aires and did not come back until 1985.',
+    phase === 'late_life'
+      ? 'The 1985 reopening. The exiles returning to a city that had changed while they were gone. The political prisoners walking out of Libertad Prison. The country trying to reassemble what it had been, finding that the people had also changed. The amnesty that protected the torturers. This was not finished. It has not finished.'
+      : 'You lived through it. The internal calculation of what you said to whom, in what register, in what room. The habit of self-editing that is the specific legacy of twelve years of that kind of government.',
+  ])
+
+  // ─── PARAGUAY TEXTURE ────────────────────────────────────────────────────────
+  if (F.has('pry_guarani_speaker') && Math.random() < 0.25) return pick([
+    'Two languages without deciding to have two languages. Spanish at school. Guaraní at home, in the market, when something needs to be said quickly and in the right register. Paraguay is the only country in South America where this is true — the indigenous language is not preserved in ceremonies but spoken at the bus stop.',
+    phase === 'late_life'
+      ? 'Your grandchildren code-switch without thinking about it. This is what it means for a language to be alive — it is what people use when they are not thinking about language. You remember when people said Guaraní would die. It has not died.'
+      : 'The words Guaraní has for things Spanish does not have words for. The syllables sitting differently in the mouth. Growing up with two grammars, two rhythms — not as an achievement but as the air of the place.',
+  ])
+  if (F.has('pry_stroessner_era') && Math.random() < 0.25) return pick([
+    'Thirty-five years. 1954 to 1989. The Colorado Party membership card that got you the job or denied you the job. The import licence that required the correct connection. The patronage structure that organized everything.',
+    phase === 'late_life'
+      ? 'Stroessner left and the structures he built did not leave with him. The land distribution — 1 percent of landowners, 77 percent of the land — is the same distribution as when he arrived. The Colorado Party governed for sixty-one years without interruption. The archive of what the dictatorship did was found in a police station in 1992 and it was four tonnes of documents.'
+      : 'The calculation of what you chose to do with the party card: join and navigate, or stay outside and accept what outside meant. The people who refused the card paid a specific price. The people who took the card paid a different price. You remember both.',
+  ])
+  if (F.has('pry_triple_alliance_memory') && Math.random() < 0.22) return pick([
+    'Sixty to seventy percent of the population, dead in five years of war against three countries at once. After: four women for every man. After: the surviving women reorganized the country. You learned this in school and it was not presented as a tragedy only — also as evidence of something.',
+    phase === 'late_life'
+      ? 'The war ended in 1870. You did not live it. Your grandparents\' grandparents lived it. It is not history in the sense of something over — it is in the culture in the way that wars that kill most of a population stay in the culture. The pride and the grief are the same feeling and you have felt both your whole life.'
+      : 'We were nearly annihilated. We are still here. This is what the school teaches, and it is also what the culture teaches without anyone having to teach it. You speak Guaraní, which survived the war. The language alone is evidence.',
+  ])
+  if (F.has('pry_archive_terror') && Math.random() < 0.22) return pick([
+    'The filing cabinet in the police station. Four tonnes of documents. The names. The coordination across six countries to find people who thought distance was protection. The Stroessner regime kept meticulous records.',
+    phase === 'late_life'
+      ? 'The Archive of Terror is now a UNESCO Memory of the World. The documents showed what Operation Condor was and who authorized it. The lawyers who found the filing cabinet found something they had not been looking for and understood what they had found. The cold specific feeling of reading the newspaper account that day in 1992 has not left.'
+      : 'The documentation was complete and organized. Whatever else you think about the people who ran that system, they were not careless. They kept records. The records are now in the archive. The archive is now public.',
+  ])
+
+  // ─── ECUADOR TEXTURE ─────────────────────────────────────────────────────────
+  if (F.has('ecu_oil_generation') && Math.random() < 0.22) return pick([
+    'The oil under the Amazon was discovered in the 1960s. The road into the Oriente came first, then the oil company, then the settlers, then the contamination in the river. The Texaco case. What the company left when the field ran dry.',
+    phase === 'late_life'
+      ? 'The Chevron-Texaco lawsuit ran for decades. The contamination is still in the soil and water of communities in the Amazon basin. The oil extracted is long since burned. The residue remains. You have watched this case through most of your adult life.'
+      : 'Ecuador pumped its first oil in 1972. By the 1980s, petroleum was 40 percent of export revenue. What that money built and what it did not build, and what it destroyed in the building, is the story of Ecuador in the late twentieth century.',
+  ])
+  if (F.has('ecu_dollarization_generation') && Math.random() < 0.22) return pick([
+    'January 2000. The sucre is gone. You wake up in a country with the US dollar as its currency. The conversion rate: 25,000 sucres per dollar, which made everything you had worth less than it had been the day before.',
+    phase === 'late_life'
+      ? 'The dollarization stabilized the economy in ways that benefited people who still had savings. The people who had lost their savings in the bank freeze of 1999 had nothing to stabilize. You remember the bank lines. You remember the accounts that were frozen. The dollar eventually made things cheaper to import, but that took years, and not everyone survived the years.'
+      : 'The banking crisis, then the currency gone, then the 2001 crisis in Argentina next door. The Pacific coast countries in 2000 felt like the world was coming apart at the seams. For many families it was.',
+  ])
+  if (F.has('ecu_yasuni_generation') && Math.random() < 0.2) return pick([
+    'Ecuador proposed to leave the oil in the ground under Yasuní if the world paid half of what Ecuador would earn from drilling. The world raised $336 million of $3.6 billion. Correa said: we cannot ask Ecuador to carry this forever. The drilling began.',
+    phase === 'late_life'
+      ? 'The Yasuní-ITT Initiative is now a case study in international climate negotiations. Ecuador made the offer. The world declined to pay. The oil was drilled. The proposal is held up both as evidence that southern countries were willing to lead on climate and as evidence that the international community would not pay what was asked. You watched both parts of this happen.'
+      : 'The question the Yasuní proposal asked was: who pays for leaving fossil fuels in the ground? The answer was: not enough people to make it work. Ecuador was not the last country to learn this.',
+  ])
+  if (F.has('ecu_conaie_2019') && Math.random() < 0.2) return pick([
+    'October 2019. The highways into Quito were blocked. Indigenous people marched from the Amazon and the Andes to the capital. The government moved to Guayaquil. Two weeks of tear gas and negotiation. The fuel subsidies were partially restored.',
+    phase === 'late_life'
+      ? 'CONAIE has shut down Ecuador multiple times in your adult life — 1990, 2000, 2019, 2022. Each time, the government eventually negotiated. Each time, the movement demonstrated that indigenous Ecuador has veto power over certain decisions, whether or not the constitution says so. You have watched this exercise of power across decades.'
+      : 'A national movement that brought the government to the table — not through the ballot box but through the road, the highway, the physical blockage of the country\'s logistics. You watched it work. You are still thinking about what it means.',
+  ])
+
   // ─── ERA TEXTURE ─────────────────────────────────────────────────────────────
   if (F.has('spanish_flu_generation') && Math.random() < 0.25) return pick([
     'The disease moved through the city in 1918 faster than any official account could follow. You remember the funerals, or the absence of funerals — the bodies moved quietly.',
@@ -12842,6 +12938,8 @@ export function generateEpitaph(state) {
     'arm_genocide_memory_bearer', 'arm_karabakh_veteran_1', 'arm_war_2020_loss',
     'arm_dark_winter_survivor', 'azr_karabakh_idp', 'azr_black_january_generation',
     'bel_2020_generation', 'bel_crackdown_survived', 'bel_chernobyl_generation', 'bel_exile',
+    'uru_coup_1973', 'uru_dictatorship_lived', 'pry_stroessner_era', 'pry_triple_alliance_memory',
+    'ecu_dollarization_generation',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -12922,6 +13020,16 @@ export function generateEpitaph(state) {
     para2.push(`${He} stayed in Belarus after 2020, when others left, and learned what staying required. The version of ${himself} that went to work and the version that came home — ${he} kept them separate for a long time.`)
   } else if (f('bel_chernobyl_generation')) {
     para2.push(`${He} was in Belarus in April 1986, when the cloud from Chernobyl moved north. Seventy percent of the fallout. The May Day parade went ahead on schedule. ${He} was not told about the cloud in time. ${He} was told it was safe.`)
+  } else if (f('uru_dictatorship_lived') && f('uru_mujica_era')) {
+    para2.push(`${He} lived Uruguay's twelve years under military rule and long enough after to watch a former political prisoner — a man who had spent two years in a hole in the ground — become president of the country. The arc from one thing to the other was most of an adult life.`)
+  } else if (f('uru_coup_1973') && f('uru_tupamaro_adjacent')) {
+    para2.push(`${He} was on the edges of the Tupamaro movement before the 1973 coup closed parliament. The distinction between involvement and sympathy mattered less to the military than ${he} had assumed it would.`)
+  } else if (f('pry_triple_alliance_memory') && f('pry_archive_terror')) {
+    para2.push(`${He} grew up knowing what the Triple Alliance War had cost Paraguay in 1864-70, and lived to see the 1992 discovery of what Operation Condor had done in the decades after Stroessner. Paraguay\'s twentieth century had a specific weight that ${he} carried.`)
+  } else if (f('pry_stroessner_era')) {
+    para2.push(`${He} navigated thirty-five years of Stroessner\'s dictatorship in Paraguay — the Colorado Party membership card, the patronage structure, the calculation of inside or outside the system.`)
+  } else if (f('ecu_yasuni_generation') && f('ecu_oil_generation')) {
+    para2.push(`${He} watched Ecuador pump its first oil from the Amazon in the 1970s and watched Ecuador propose, in 2013, to leave the remaining oil in the ground if the world would pay half its value. The world declined. Both things happened in ${his} adult life.`)
   }
 
   // Displacement / migration

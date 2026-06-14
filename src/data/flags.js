@@ -2636,6 +2636,132 @@ export const FLAG_REGISTRY = {
     notes: 'Set by geo_eu_dream.',
   },
 
+  // ── URUGUAY ARC (events_uy_py_ec.js) ─────────────────────────────────────────
+
+  uru_tupamaro_era: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the Tupamaro urban guerrilla era in Uruguay 1965-72 — bank robberies distributed to poor, political kidnappings of corrupt officials',
+    intent: 'year_texture',
+    notes: 'Set by uru_tupamaro.',
+  },
+
+  uru_tupamaro_adjacent: {
+    weight: 'major',
+    category: 'political',
+    description: 'Was on the edges of the Tupamaro movement — distributing materials, the distinction between involvement and sympathy mattering less after 1973',
+    intent: 'year_texture',
+    notes: 'Set by uru_tupamaro choice involved.',
+  },
+
+  uru_coup_1973: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived the Bordaberry coup June 27, 1973 — parliament doors closed, Uruguay\'s welfare state dictatorship begins',
+    intent: 'year_texture',
+    notes: 'Set by uru_bordaberry_coup. Follow-through: uru_dictatorship_lived.',
+  },
+
+  uru_dictatorship_lived: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived Uruguay\'s 1973-85 military dictatorship — highest per-capita political prisoner rate in world, Tupamaro leaders in sensory deprivation',
+    intent: 'year_texture',
+    notes: 'Set by uru_dictatorship_life.',
+  },
+
+  uru_democracy_restored: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed the 1985 Uruguayan return to democracy — Mujica walking out of prison, parliament reopening, exiles returning',
+    intent: 'year_texture',
+    notes: 'Set by uru_return_democracy.',
+  },
+
+  uru_mujica_era: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived Mujica\'s presidency 2010-15 — the farmhouse, the Beetle, 90% salary donated, marijuana + abortion + same-sex marriage legalized',
+    intent: 'year_texture',
+    notes: 'Set by uru_mujica_presidency.',
+  },
+
+  // ── PARAGUAY ARC (events_uy_py_ec.js) ────────────────────────────────────────
+
+  pry_guarani_speaker: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up bilingual in Spanish and Guaraní — the only country in Latin America where an indigenous language is genuinely majority-spoken',
+    intent: 'year_texture',
+    notes: 'Set by pry_guarani_identity.',
+  },
+
+  pry_stroessner_era: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Navigated Stroessner\'s 35-year dictatorship in Paraguay 1954-1989 — the Colorado Party membership card, the choice of inside or outside the system',
+    intent: 'year_texture',
+    notes: 'Set by pry_stroessner.',
+  },
+
+  pry_colorado_refused: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Refused to join the Colorado Party under Stroessner — chose the narrowness of outside the patronage system',
+    intent: 'year_texture',
+    notes: 'Set by pry_stroessner choice outside.',
+  },
+
+  pry_triple_alliance_memory: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Grew up with the Triple Alliance War in living cultural memory — 60-70% of population killed 1864-70, the grief and pride that share the same feeling',
+    intent: 'year_texture',
+    notes: 'Set by pry_triple_alliance_memory.',
+  },
+
+  pry_archive_terror: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Alive for the 1992 discovery of the Archive of Terror in Asunción — four tonnes of Operation Condor documents, six countries coordinated',
+    intent: 'year_texture',
+    notes: 'Set by pry_archive_1992.',
+  },
+
+  // ── ECUADOR ARC (events_uy_py_ec.js) ─────────────────────────────────────────
+
+  ecu_oil_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived Ecuador\'s oil era from the 1970s — the Oriente as a petroleum zone, Texaco contamination, what the Amazon is for',
+    intent: 'year_texture',
+    notes: 'Set by ecu_oil_oriente.',
+  },
+
+  ecu_dollarization_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived Ecuador\'s 2000 dollarization — the sucre losing 75% of value, banks closed, savings wiped out, waking up in a dollar economy',
+    intent: 'year_texture',
+    notes: 'Set by ecu_dollarization.',
+  },
+
+  ecu_yasuni_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Watched the Yasuní-ITT Initiative from proposal to failure — Ecuador offered to leave oil in the ground; the world declined',
+    intent: 'year_texture',
+    notes: 'Set by ecu_yasuni.',
+  },
+
+  ecu_conaie_2019: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed the 2019 CONAIE uprising — indigenous movement shutting down Quito for two weeks over fuel subsidies, government forced to negotiate',
+    intent: 'year_texture',
+    notes: 'Set by ecu_conaie_uprising.',
+  },
+
   // ── BELARUS ARC (events_belarus.js) ──────────────────────────────────────────
 
   bel_partisan_memory: {
