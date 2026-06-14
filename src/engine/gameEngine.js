@@ -12696,6 +12696,24 @@ export function generateEpitaph(state) {
     }
   } else if (any('ghana_independence_generation', 'nairobi_independence_generation', 'independence_generation_self')) {
     para2.push(`${He} was alive when independence came — heard it announced and believed, in that moment, that the world had changed.`)
+  } else if (f('hungarian_1956_generation') && f('hungarian_diaspora_1956')) {
+    para2.push(`${He} left Hungary in 1956, through the Austrian border, after the Soviet tanks came back. Two hundred thousand took the same calculation in the same weeks. ${He} was among them.`)
+  } else if (f('hungarian_1956_generation')) {
+    para2.push(`${He} was in Hungary for the 1956 uprising — the twelve days, then November 4th and the Soviet tanks. ${He} carried the twelve days as a measurement for the rest of ${his} life.`)
+  } else if (f('taiwan_228_generation')) {
+    para2.push(`${He} was in Taiwan for the February 28 Massacre of 1947. The event was forbidden in public memory for forty years. ${He} carried it privately in the years when no other carrying was possible.`)
+  } else if (f('april_9_generation')) {
+    para2.push(`${He} was on Rustaveli Avenue on April 9, 1989, when Soviet troops turned on the crowd. The event became the founding memory of Georgian independence.`)
+  } else if (f('normalization_generation') && f('charter_77_generation') && f('political_dissident')) {
+    para2.push(`${He} signed Charter 77 in Czechoslovakia and paid for it through the normalization years. What ${he} kept was a sense of what it cost to refuse.`)
+  } else if (f('velvet_revolution_generation')) {
+    para2.push(`${He} was in Wenceslas Square in November 1989, keys jingling. Twenty-one days from the first march to the end of forty years of communist rule.`)
+  } else if (f('baltic_january_1991')) {
+    para2.push(`${He} was at the barricades in January 1991, when Soviet troops moved on the television tower. Baltic independence held, partly because people like ${him} were there.`)
+  } else if (f('deportation_family_memory')) {
+    para2.push(`The family members who did not come back from Siberia — deported in 1941 or 1949 — were part of ${his} life as an absence with a known shape. ${He} carried them.`)
+  } else if (f('georgia_rose_revolution') && f('georgian_war_2008')) {
+    para2.push(`${He} was in Parliament Square in 2003 when Shevardnadze left without violence, and in Tbilisi in 2008 when the Russian tanks came within forty kilometres. Both things were real.`)
   }
 
   // Displacement / migration
