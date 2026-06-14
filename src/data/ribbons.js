@@ -2188,6 +2188,40 @@ export const RIBBONS = [
     color: 'red',
   },
 
+  // ── BANGLADESH RIBBONS ───────────────────────────────────────────────────────
+  {
+    id: 'joy_bangla',
+    name: 'Joy Bangla',
+    description: 'You were there for the nine months — the battle cry that became a free country on December 16, 1971.',
+    condition: (G) => G.flags.includes('bng_liberation_generation') && G.flags.includes('bng_mukti_bahini'),
+    priority: 90,
+    color: 'green',
+  },
+  {
+    id: 'victory_day',
+    name: 'Victory Day',
+    description: 'Ninety-three thousand Pakistani soldiers surrendered. The country you fought for existed now. You were alive in it.',
+    condition: (G) => G.flags.includes('bng_liberation_generation'),
+    priority: 82,
+    color: 'red',
+  },
+  {
+    id: 'the_seventh_floor',
+    name: 'The Seventh Floor',
+    description: 'The factory ran on a deadline. You knew which building. You knew which floor. The label said a different name.',
+    condition: (G) => G.flags.includes('bng_garment_generation'),
+    priority: 68,
+    color: 'orange',
+  },
+  {
+    id: 'the_cyclone_shelter',
+    name: 'The Cyclone Shelter',
+    description: 'You went in when the warning came. You waited. You counted who came back when it was over.',
+    condition: (G) => G.flags.includes('bng_cyclone_survivor') && G.flags.includes('bng_cyclone_generation'),
+    priority: 72,
+    color: 'blue',
+  },
+
   // ── BRAZIL RIBBONS ───────────────────────────────────────────────────────────
   {
     id: 'the_hill',

@@ -5147,6 +5147,88 @@ export const FLAG_REGISTRY = {
     notes: 'Set by tha_economic_middle_income.',
   },
 
+  // ── BANGLADESH ───────────────────────────────────────────────────────────────
+
+  bng_cyclone_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Born in Bangladesh in the shadow of the 1970 Bhola cyclone — the deadliest tropical cyclone in history (up to 500,000 dead), and Pakistan\'s inadequate response that accelerated independence.',
+    intent: 'year_texture',
+    notes: 'Set by bng_bhola_shadow.',
+  },
+
+  bng_liberation_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the 1971 Liberation War — 9 months of Pakistani army atrocities, Mukti Bahini resistance, Indian intervention, and Victory Day December 16.',
+    intent: 'year_texture',
+    notes: 'Set by bng_liberation_war_1971.',
+  },
+
+  bng_mukti_bahini: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Joined or actively supported the Mukti Bahini during the 1971 Liberation War.',
+    intent: 'year_texture',
+    notes: 'Set by bng_liberation_war_1971 (choice 1).',
+  },
+
+  bng_famine_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the 1974 Bangladesh famine — 1–1.5 million dead of starvation three years after independence, under Mujibur Rahman\'s government.',
+    intent: 'year_texture',
+    notes: 'Set by bng_1974_famine.',
+  },
+
+  bng_coup_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Witnessed the August 15, 1975 military coup — the assassination of Sheikh Mujibur Rahman and most of his family, four years after the Liberation War.',
+    intent: 'year_texture',
+    notes: 'Set by bng_mujib_1975.',
+  },
+
+  bng_cyclone_survivor: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Lived through a major cyclone as an adult in Bangladesh — the 1991 cyclone (138,000 dead), Sidr 2007, or later storms.',
+    intent: 'year_texture',
+    notes: 'Set by bng_cyclone_life.',
+  },
+
+  bng_garment_generation: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Worked in Bangladesh\'s garment sector — the factory floor, the building specification, the label that says a European name.',
+    intent: 'year_texture',
+    notes: 'Set by bng_garment_worker.',
+  },
+
+  bng_microloan_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Engaged with the Grameen Bank microloan system — the group accountability, the weekly meeting, the sewing machine or the mobile money.',
+    intent: 'year_texture',
+    notes: 'Set by bng_grameen_loan.',
+  },
+
+  bng_dhaka_generation: {
+    weight: 'minor',
+    category: 'urban',
+    description: 'Navigated Dhaka as one of the world\'s densest megacities — the rickshaws, the July floods, the city that expanded faster than its infrastructure.',
+    intent: 'year_texture',
+    notes: 'Set by bng_dhaka_city.',
+  },
+
+  bng_uprising_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Witnessed the 2024 student uprising — the quota protests, the 300 dead, Sheikh Hasina\'s helicopter departure, and the morning after.',
+    intent: 'year_texture',
+    notes: 'Set by bng_student_uprising_2024.',
+  },
+
   // ── NEPAL ────────────────────────────────────────────────────────────────────
 
   nepal_maoist_generation: {

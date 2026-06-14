@@ -7071,6 +7071,64 @@ function buildYearTexture(state) {
       : 'The person from your neighbourhood who was accused: the question of what they actually did or said is not separable from the question of who accused them and why. Both questions are about the same law.',
   ])
 
+  // ─── BANGLADESH TEXTURE ──────────────────────────────────────────────────────
+  if (F.has('bng_liberation_generation') && Math.random() < 0.3) return pick([
+    'Nine months. March 25 to December 16, 1971. Operation Searchlight at midnight, then the Mukti Bahini, then the Indian army crossing the border, then the surrender of ninety-three thousand Pakistani soldiers. Joy Bangla. The country born out of those nine months is the country you live in.',
+    phase === 'late_life'
+      ? 'The Liberation War is the founding event. Everything after — the famine, the coups, the floods, the garment factories, the Grameen Bank, the student uprising — is a country trying to become what the war said it would be. The distance between the promise and the present is the measure of the work.'
+      : 'You were in it or close to it. The sounds and movements and silences of those nine months are specific in your memory in a way that other years are not. December 16 is Victory Day. You know what you were doing when you heard.',
+  ])
+  if (F.has('bng_mukti_bahini') && Math.random() < 0.25) return pick([
+    'You were in the Mukti Bahini, or on its edges, or providing support from inside the country while the fighters moved at night. What you did in 1971 is not fully describable in the categories that came after. The country called you a freedom fighter. The country has been deciding what that means ever since.',
+    phase === 'late_life'
+      ? 'The liberation fighters are old now. The quota that the 2024 students were protesting — thirty percent of civil service jobs for descendants of freedom fighters — was named for you, or people like you. You have thoughts about that protest that are not simple.'
+      : 'Joy Bangla was a battle cry and then a political greeting and then a contested symbol. The word traveled through more history than you had when you first used it.',
+  ])
+  if (F.has('bng_famine_generation') && Math.random() < 0.25) return pick([
+    'Three years after independence. The free country could not feed its people. The government did not move fast enough. One to 1.5 million dead of starvation. Bangabandhu in the palace, people in the countryside, the gap between them as political weather.',
+    phase === 'late_life'
+      ? 'The 1974 famine is not what Bangladesh is remembered for outside. Inside, it is the wound that the liberation did not heal — the question of whether independence was enough, or whether independence was only the beginning of a harder question.'
+      : 'You were young in a country that had just won its freedom and was starving. The two facts in the same year: this is the first education in what a country is, and what it is not yet.',
+  ])
+  if (F.has('bng_coup_generation') && Math.random() < 0.25) return pick([
+    'August 15, 1975. Before dawn. The Bangabandhu assassinated with most of his family. The country that had fought nine months for its freedom was under military rule four years later. The gap between what the war was for and what it produced is still the defining political terrain.',
+    phase === 'late_life'
+      ? 'You have watched Bangladesh try to become what its founding said it would be, through coups and famines and floods and elections and one-party rule and student uprisings. The founder was killed in 1975. His daughter governed for fifteen consecutive years. The country is still the country.'
+      : 'The coup was not the last coup. Bangladesh has had several military governments in the years since. The democracy that the war was supposed to produce has arrived and departed and partially returned. You have navigated all of this.',
+  ])
+  if (F.has('bng_cyclone_generation') && Math.random() < 0.22) return pick([
+    'The Bhola cyclone killed up to 500,000 people and the government in Islamabad said the death toll was lower and did not move quickly. That gap — between the dying and the governing — is one of the things that made Bangladesh.',
+    'The cyclone warning system is good now. The shelters are built. The evacuation routes trained. The death toll from Sidr in 2007 was 3,500 — a tragedy, and also a fraction of what 1970 produced. The fraction required forty years of building.',
+  ])
+  if (F.has('bng_cyclone_survivor') && Math.random() < 0.2) return pick([
+    'The storm surge arrives before the wind is loudest. The coastal islands are inundated in minutes. The concrete cyclone shelter is where you went and where you waited and where you counted who came back when it was over.',
+    phase === 'late_life'
+      ? 'You have survived more than one cyclone. The knowledge of what to take and where to go is in the body. The knowledge of what the sea can do to a low island is also in the body, from the times it did it.'
+      : 'The sea level is rising. Bangladesh loses land every year to the Bay of Bengal. The cyclone season is longer. The storms are stronger. The country that has been managing water since before you were born is managing more water now.',
+  ])
+  if (F.has('bng_garment_generation') && Math.random() < 0.22) return pick([
+    'The factory runs on a deadline that comes from a brand that comes from a consumer that comes from a country that does not know which building the shirt was sewn in. You know which building. You know which floor.',
+    phase === 'late_life'
+      ? 'Four million people work in garments. Eighty percent of them women. The wage brought women from the village to the city and gave them income and changed the country more than any single policy. The building specification is a different kind of policy.'
+      : 'Rana Plaza: April 24, 2013. Cracks appeared the day before. Workers were sent home. Workers were ordered back the next morning. 1,134 people died. The order had a deadline. The building had eight floors and a compliance certificate.',
+  ])
+  if (F.has('bng_microloan_generation') && Math.random() < 0.18) return pick([
+    'The Grameen Bank loan comes with a group. The group meets weekly. The group collectively guarantees each other\'s repayment. The repayment rate is ninety-eight percent because the weight of not failing in front of the women who vouched for you is specific and effective.',
+    phase === 'late_life'
+      ? 'Muhammad Yunus won the Nobel Peace Prize in 2006. He was later charged with fraud by the Bangladeshi government. The microloan idea spread to 100 countries. The group that vouched for you repaid.'
+      : 'The loan was for the sewing machine or the phone or the stock. The sewing machine was real and the income it generated was real. Whether it was enough is a different question from whether it was real.',
+  ])
+  if (F.has('bng_uprising_generation') && Math.random() < 0.22) return pick([
+    'The students marched against the quota. The government called them Razakars — the worst word in Bangladesh. The students kept marching. Three hundred died. On August 5, 2024, Sheikh Hasina boarded a military helicopter and left. The country woke up the next morning to a question.',
+    phase === 'late_life'
+      ? 'You have lived through independence and famine and coups and democracy and fifteen years of Sheikh Hasina and the 2024 uprising that ended in a morning. The country is the country. What it becomes next is the question your grandchildren are living inside.'
+      : 'The protest was about quotas and then it was about everything. The "everything" that emerges when a generation that grew up under one authority decides that authority is finished — this is what the morning of August 6 looked like.',
+  ])
+  if (F.has('bng_dhaka_generation') && Math.random() < 0.18) return pick([
+    'Dhaka: twenty-two million people in a metropolitan area that was two million in 1975. Four hundred thousand rickshaws. The July flood water mid-thigh in the streets of Dhanmondi. The city that the garment economy built faster than the infrastructure could follow.',
+    'The rickshaw driver knows fourteen routes to the same destination depending on the time of day and the water level. You know four. The knowledge gap is the city.',
+  ])
+
   // ─── GREECE TEXTURE ──────────────────────────────────────────────────────────
   if (F.has('junta_generation') && Math.random() < 0.22) return pick([
     'The colonels\' junta came to power in a single morning. What it left behind — the calibrated sentence, the habit of registering who is in the room before you speak — took years to unlearn, and was perhaps not entirely unlearned.',
@@ -13377,6 +13435,7 @@ export function generateEpitaph(state) {
     'sg_founding_generation', 'sg_kampung_generation', 'sg_dialect_lost', 'sg_lky_generation',
     'nl_hunger_winter_generation', 'nl_srebrenica_generation', 'nl_fortuyn_witness',
     'bra_dictatorship_generation', 'bra_resistance_generation', 'bra_favela_survived',
+    'bng_liberation_generation', 'bng_mukti_bahini', 'bng_famine_generation', 'bng_coup_generation',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -13517,6 +13576,14 @@ export function generateEpitaph(state) {
     para2.push(`${He} came of age in Brazil during the AI-5 years — habeas corpus suspended, Congress closed, the DOPS at work. The economy grew 10% per year. The torture happened in the same years as the miracle. ${He} navigated the silence that this required.`)
   } else if (f('bra_favela_survived') && f('bra_favela_generation')) {
     para2.push(`${He} grew up on the hill and survived its arithmetic — the bala perdida, the faction boundaries, the decision to stay or leave. The city below the hill experienced none of this and had opinions about it. ${He} had the count.`)
+  } else if (f('bng_mukti_bahini') && f('bng_liberation_generation')) {
+    para2.push(`${He} was in the Mukti Bahini during the 1971 Liberation War — nine months of guerrilla resistance while the Pakistani army conducted systematic atrocities across Bangladesh. December 16, 1971: ninety-three thousand Pakistani soldiers surrendered. ${He} had been there from March.`)
+  } else if (f('bng_liberation_generation') && f('bng_famine_generation')) {
+    para2.push(`${He} survived the 1971 Liberation War and watched the free country starve in 1974. Both things happened in the same decade. The gap between what independence was supposed to mean and what it produced in practice was the political education of ${his} adult life.`)
+  } else if (f('bng_liberation_generation')) {
+    para2.push(`${He} was alive in Bangladesh for the Liberation War of 1971 — the nine months of Operation Searchlight and Mukti Bahini resistance and Indian intervention that killed between one and three million people and produced a free country on December 16.`)
+  } else if (f('bng_coup_generation') && f('bng_famine_generation')) {
+    para2.push(`${He} watched the Bangabandhu's free Bangladesh starve in 1974 and assassinate its founder in 1975. Both events happened inside the first four years of independence. ${He} navigated everything that came after.`)
   }
 
   // Displacement / migration
