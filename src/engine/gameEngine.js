@@ -6448,6 +6448,36 @@ function buildYearTexture(state) {
       : 'Pashinyan signed the ceasefire. He said he had no choice. Perhaps he did not. The map on the phone screen losing its names one by one through the night.',
   ])
 
+  if (F.has('arm_baku_refugee_host') && Math.random() < 0.2) return pick([
+    'A family arrived from Baku in 1988 or 1989 or 1990 with two suitcases and slept on your floor for months. Their hands shook when they drank tea. They did not go back.',
+    phase === 'late_life'
+      ? 'The family you hosted in those years — they are Yerevan people now, their children born here, some of them abroad. The two suitcases are in a cupboard somewhere or were thrown out decades ago. What they carried out of Baku fitted in two suitcases.'
+      : 'The wife\'s hands shook when she held the teacup. You noticed this and did not say anything. She did not explain what the other neighbors had done. You understood that she was not going to explain it.',
+  ])
+  if (F.has('arm_diaspora_encounter') && Math.random() < 0.18) return pick([
+    'The diaspora Armenian speaks Western Armenian — the dialect of the people who left in 1915, the Genocide language. Your Armenian is Eastern. The same people, separated by a catastrophe a century ago, with different vowel sounds as the evidence.',
+    phase === 'late_life'
+      ? 'The diaspora and the republic: always pulling toward each other and always slightly unable to recognize what the other is. You have felt this from both sides by now. The connection is real. The gap is also real.'
+      : 'He photographed everything with a large camera and called you brother and gave your cousin money. He did not know how to use the marshrutka. His Armenian was older than yours. You did not know what to do with any of this.',
+  ])
+  if (F.has('azr_baku_pogrom_witness') && Math.random() < 0.22) return pick([
+    'The door on the fourth floor that was unlocked for months. The Hakobyan family had been there for twenty years. Their things were still inside. Nobody touched their things for a long time.',
+    phase === 'late_life'
+      ? 'You have not talked about what you did or did not do in January 1990 when the Armenian families in your building were found by the lists. You know what you did. You know what it means that you did not prevent it. You have carried this quietly.'
+      : 'The different explanations of what happened in Baku in January 1990 — the Azerbaijani version and the Armenian version — do not agree on the cause. You were there. You know what you saw. You know this does not settle it.',
+  ])
+  if (F.has('azr_baku_boom') && Math.random() < 0.2) return pick([
+    'The Flame Towers at night, visible from everywhere. The promenade along the waterfront. The foreigners at the conferences. Baku was being rebuilt as something that would be photographed.',
+    phase === 'late_life'
+      ? 'The towers were built with oil money and the IDP camps were thirty minutes from the towers and both things were true at the same time. A country can contain these contradictions, Azerbaijanis learned. What you learn from having contained them is another question.'
+      : 'The city being rebuilt around you. Formula 1 on the streets where workers used to march. Eurovision. The foreigners who said: I didn\'t expect this. Thirty minutes away: the railway carriages where the Karabakh families lived.',
+  ])
+  if (F.has('azr_press_silence') && Math.random() < 0.18) return pick([
+    'The journalist whose name you do not say online. The website that is blocked. The things you have learned not to search for on a work computer. This is not fear, exactly. It is a learned adjustment to the shape of the available space.',
+    phase === 'late_life'
+      ? 'You have spent decades knowing what not to say in certain taxis, what not to search at certain terminals. This knowledge has become invisible to you, which may be the point of it. You cannot always remember learning it.'
+      : 'The opposition newspaper closed and the next one opened and closed. The activist arrested on the hooliganism charge. You understood what the charge meant and you knew that understanding it was the intention.',
+  ])
   if (F.has('azr_black_january_generation') && Math.random() < 0.28) return pick([
     'January 19-20, 1990. The Soviet army entering Baku after midnight, the government having already cut the television. 131 dead. The coffins in Azadliq Square. The Soviet party cards torn in half at the funerals.',
     phase === 'late_life'
