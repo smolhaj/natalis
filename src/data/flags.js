@@ -1880,6 +1880,72 @@ export const FLAG_REGISTRY = {
     notes: 'Set by cub_july11_protests. Year texture (witness without participant; the arithmetic of staying inside).',
   },
 
+  // ── LAOS ARC FLAGS ───────────────────────────────────────────────────────
+
+  laos_revolution_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was in Laos for the Pathet Lao victory December 1975 — the monarchy abolished, the Secret War ended, the Hmong who fought for the CIA now enemies of the new state.',
+    intent: 'year_texture',
+    notes: 'Set by laos_pathet_lao_1975 world event. Year texture (what the revolution meant depends on which side your family was on).',
+  },
+
+  laos_uxo_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Grew up in Laos with the daily reality of UXO (unexploded ordnance) from the 1964-73 Secret War — the rule about not touching metal in the field, the boy who didn\'t follow it.',
+    intent: 'year_texture',
+    notes: 'Set by laos_uxo_childhood. Year texture (the war that ended before you were born and its problem that hasn\'t ended).',
+  },
+
+  laos_alms_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Grew up with the Buddhist morning alms round as daily texture — kneeling at dawn, giving sticky rice, the social fabric of merit maintained through the gesture.',
+    intent: 'year_texture',
+    notes: 'Set by laos_alms_round. Year texture (what you give out of the house at dawn comes back).',
+  },
+
+  laos_hmong_era: {
+    weight: 'major',
+    category: 'political',
+    description: 'Hmong character shaped by post-1975 persecution — the CIA Secret Army legacy, the family members who fled to Minnesota, the knowledge of which topics not to raise in school.',
+    intent: 'year_texture',
+    notes: 'Set by laos_hmong_highland. Year texture (old family knowledge passed before you had words for it).',
+  },
+
+  laos_party_generation: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Navigated the LPRP single-party structure — the mandatory meetings, the formula, the calibration between public and private speech.',
+    intent: 'year_texture',
+    notes: 'Set by laos_party_discipline. Year texture (the register you use at the meeting vs. at home).',
+  },
+
+  laos_mekong_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Grew up with the Mekong as both boundary and commute — Thailand visible from the bank, the kip and baht savings, the porous border economy.',
+    intent: 'year_texture',
+    notes: 'Set by laos_mekong_economy. Year texture (the river that makes the country feel bounded and open simultaneously).',
+  },
+
+  laos_china_era: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived the Chinese investment wave — rail line, SEZs, debt concessions, signs in Chinese, the ratio of benefit to obligation that nobody shares.',
+    intent: 'year_texture',
+    notes: 'Set by laos_china_investment. Year texture (Battery of Southeast Asia / what the battery costs).',
+  },
+
+  laos_dam_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed the Mekong dam reckoning — eleven upstream dams in China, fish stocks declining, the 2018 collapse that killed 49, electricity sold to Thailand.',
+    intent: 'year_texture',
+    notes: 'Set by laos_mekong_dams. Year texture (the river the fishermen were born on is changing).',
+  },
+
   // ── NAMIBIA ARC FLAGS ────────────────────────────────────────────────────
 
   nam_herero_memory_bearer: {

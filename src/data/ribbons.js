@@ -2094,6 +2094,32 @@ export const RIBBONS = [
     color: 'purple',
   },
 
+  // ── LAOS RIBBONS ─────────────────────────────────────────────────────────────
+  {
+    id: 'the_thirty_percent',
+    name: 'The Thirty Percent',
+    description: 'More bombs than all of WWII, and thirty percent didn\'t explode. You grew up with the rule every Lao child learns. The war that no one officially fought is still being fought by the ground.',
+    condition: (G) => G.flags.includes('laos_uxo_generation') && G.flags.includes('laos_revolution_generation'),
+    priority: 80,
+    color: 'gray',
+  },
+  {
+    id: 'the_secret_army',
+    name: 'The Secret Army',
+    description: 'Hmong in Laos, after 1975. The CIA\'s soldiers became enemies of the state that won. You stayed. You carried the old family knowledge — which side, which silence — before you had words for the calculation.',
+    condition: (G) => G.flags.includes('laos_hmong_era'),
+    priority: 82,
+    color: 'red',
+  },
+  {
+    id: 'the_battery',
+    name: 'The Battery of Southeast Asia',
+    description: 'The dams that sell electricity to Thailand while the fish get fewer and the river runs lower. The debt that goes north while the current goes south. You watched both directions.',
+    condition: (G) => G.flags.includes('laos_dam_generation') && G.flags.includes('laos_china_era'),
+    priority: 67,
+    color: 'blue',
+  },
+
   // ── NAMIBIA RIBBONS ──────────────────────────────────────────────────────────
   {
     id: 'the_vernichtungsbefehl',

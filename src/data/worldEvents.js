@@ -1416,6 +1416,20 @@ export const WORLD_EVENTS = [
     when: (G) => G.flags.includes('south_vietnamese') || G.flags.includes('saigon_fell'),
   },
 
+  {
+    id: 'laos_pathet_lao_1975',
+    name: 'Pathet Lao Victory',
+    years: [1975, 1975],
+    archetypes: null,
+    countries: ['Laos'],
+    narrative: 'December 2, 1975. The Pathet Lao formally abolishes the monarchy and proclaims the Lao People\'s Democratic Republic. The king abdicates. He and the royal family are sent to a re-education camp in the north, where they die. The Secret War — three hundred tons of bombs for every man, woman, and child — is over. The Hmong who fought for the CIA are now enemies of the state. Some will flee to Thailand and then to Minnesota. Some will stay in the highlands and calculate the distance between survival and loyalty for the rest of their lives.',
+    context: 'Laos was secretly bombed by the US from 1964-73 — more bomb tonnage than all of WWII combined — while being officially neutral. The CIA funded and organized the Royal Lao Army and the Hmong Secret Army under General Vang Pao. When the Pathet Lao took power in 1975, it sent former royal government officials and military officers to re-education camps (seminar camps) in the north. King Savang Vatthana died in a camp in 1978 or 1981 (unclear). Between 130,000 and 200,000 Hmong fled to Thailand.',
+    effect: (p) => { p.m -= 10; p.addFlag('laos_revolution_generation'); p.addFlag('decolonization_generation'); },
+    addFlags: ['laos_revolution_generation', 'decolonization_generation'],
+    minAge: 0,
+    when: (G) => !G.flags.has('laos_revolution_generation'),
+  },
+
   // ── BUILD 1: POST-SOVIET ARC ──────────────────────────────────────────────────
 
   {

@@ -8207,6 +8207,51 @@ function buildYearTexture(state) {
       : 'You are in the generation that had to decide what to do when the army came back in 2021. You made your decision. You live in it.',
   ])
 
+  // ── LAOS ARC ─────────────────────────────────────────────────────────────────
+  if (F.has('laos_uxo_generation') && Math.random() < 0.2) return pick([
+    'The rule every child learns: do not touch metal in the field. Do not pick up a ball-shaped object. The war ended before you were born. The problem it left has not ended.',
+    'The US dropped more bombs on Laos between 1964 and 1973 than on all of Europe in the Second World War. Thirty percent did not explode. This is the landscape you were born into.',
+    phase === 'late_life'
+      ? 'The MAG teams have been clearing ordnance from Lao fields for thirty years. The math of what remains is still significant. The war that no one officially fought is still being fought by the ground.'
+      : 'You know which parts of the district have been cleared and which haven\'t. The knowledge is passed down from parents to children the way knowledge about local terrain usually is.',
+  ])
+  if (F.has('laos_alms_generation') && Math.random() < 0.17) return pick([
+    'The monks at dawn, the alms bowl, the sticky rice your mother prepared before the sun came up. Not giving when the monks pass is noticed. The social fabric maintains itself through the morning gesture.',
+    'What you give out of the house at dawn comes back in ways that are not always visible. You grew up with this arithmetic. It is still the arithmetic you use.',
+  ])
+  if (F.has('laos_hmong_era') && Math.random() < 0.2) return pick([
+    'The Hmong who fought for the CIA in the Secret War became enemies of the state that won. Your family stayed. You know which topics you do not raise in school. The knowledge is older than you.',
+    phase === 'late_life'
+      ? 'The Hmong in Minnesota are a diaspora carrying a war that the United States classified until decades later. You stayed in Laos. The ones who left carry a different version of the same history. Both versions are real.'
+      : 'Your family carried the calculation — which side, which risk, which silence — before you were old enough to understand the calculation. You learned it before you had words for it.',
+  ])
+  if (F.has('laos_party_generation') && Math.random() < 0.17) return pick([
+    'The party meeting: say what is expected, in the expected register. At home afterward, say what you actually think. You know the distance between the two. You calibrate it without thinking now.',
+    'Single-party doesn\'t mean the same thing everywhere. This version means managed openness and maintained silence — not prison for disagreement, usually, but specific doors that stay closed.',
+  ])
+  if (F.has('laos_mekong_generation') && Math.random() < 0.17) return pick([
+    'Thailand is on the other bank. On a clear day you can see the buildings. The ferry takes twenty minutes. The kip and the baht are both in your wallet. The border is what it is.',
+    'The Mekong is the country\'s axis — the commute route, the trade route, the thing that makes Laos feel bounded and open at the same time.',
+  ])
+  if (F.has('laos_china_era') && Math.random() < 0.18) return pick([
+    'The high-speed rail from Boten to Vientiane. The signs in Chinese and Lao. The debt structured as concessions. The "Battery of Southeast Asia" — the electricity sold south while the loan papers go north.',
+    phase === 'late_life'
+      ? 'The Chinese investment arrived in your working years. You watched the landscape change — the rails, the SEZs, the workers who came with the project and did not hire locally. You have thoughts about the long run that you do not share at the party meeting.'
+      : 'The ratio of benefit to obligation in the Chinese investment deals is in numbers that the government has not shared. You have heard estimates. The estimates are not reassuring.',
+  ])
+  if (F.has('laos_dam_generation') && Math.random() < 0.18) return pick([
+    'The fishermen who have worked the Mekong for three generations have noticed: the fish are fewer. The river runs lower in the dry season. The dams that make Laos the Battery of Southeast Asia are also doing something to what the river was.',
+    phase === 'late_life'
+      ? 'The Mekong you were young beside is not the Mekong you are old beside. The change is real and slow and the people responsible for it are not the people the change is happening to.'
+      : 'The 2018 dam collapse killed forty-nine people and displaced thousands. The company was Korean. The investigation was done by the government that approved the dam. Both of these facts are in the public record.',
+  ])
+  if (F.has('laos_revolution_generation') && Math.random() < 0.17) return pick([
+    'December 1975: the monarchy abolished, the king sent north to a camp where he died, the country renamed. The Secret War is over. The question of what comes next has been the only question since.',
+    phase === 'late_life'
+      ? 'You have been a citizen of the Lao PDR since it was proclaimed. The country that was the Kingdom of Laos exists now as a name in history books. Both countries are the country you were born in.'
+      : 'The war was secret. The revolution was public. The things done in the name of the revolution, to the people who chose the wrong side, are less documented than the revolution itself.',
+  ])
+
   // ─── LIBYA TEXTURE ───────────────────────────────────────────────────────────
   if (F.has('libyan_jamahiriya_generation') && Math.random() < 0.18) return pick([
     'The Green Book was the theory. The Revolutionary Guards were the practice. Both were real.',
@@ -13146,6 +13191,7 @@ export function generateEpitaph(state) {
     'dprk_arduous_march', 'dprk_defected', 'dprk_hostile_class', 'dprk_chosen_stay',
     'cuba_balsero', 'cub_mariel_gone', 'cub_july11_marcher', 'special_period_generation',
     'nam_herero_memory_bearer', 'nam_san_displaced',
+    'laos_hmong_era', 'laos_uxo_generation',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -13258,6 +13304,10 @@ export function generateEpitaph(state) {
     para2.push(`${He} carried what no document yet acknowledged — the oral history of the Herero genocide, passed from grandmother to grandchild before any government called it by name.`)
   } else if (f('nam_san_displaced')) {
     para2.push(`${He} was San — the people who had been in the land the longest — growing up in a resettlement area thirty-two speakers away from a language that named every plant that fed a family. ${He} held both the language and the knowledge of what holding it cost.`)
+  } else if (f('laos_hmong_era') && f('laos_uxo_generation')) {
+    para2.push(`${He} was Hmong in Laos — the people who fought for the CIA in the Secret War and became enemies of the state that won. ${He} grew up knowing which topics not to raise in school, and knew which fields not to enter because the war left metal in the ground that hadn\'t been cleared.`)
+  } else if (f('laos_uxo_generation')) {
+    para2.push(`${He} grew up in the most-bombed country per capita in history. The US dropped more ordnance on Laos than on all of Europe in the Second World War; thirty percent of it didn\'t explode. The rule every Lao child learns — don\'t touch metal in the field — was the landscape ${he} was born into.`)
   }
 
   // Displacement / migration
