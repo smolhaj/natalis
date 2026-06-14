@@ -2188,6 +2188,40 @@ export const RIBBONS = [
     color: 'red',
   },
 
+  // ── NETHERLANDS RIBBONS ──────────────────────────────────────────────────────
+  {
+    id: 'the_cleaned_plate',
+    name: 'The Cleaned Plate',
+    description: 'Your parents ate tulip bulbs in the winter of 1944–45. They never explained the rule about wasting food. They didn\'t need to. You understood by watching their hands.',
+    condition: (G) => G.flags.includes('nl_hunger_winter_generation'),
+    priority: 82,
+    color: 'gray',
+  },
+  {
+    id: 'the_pillar',
+    name: 'The Pillar',
+    description: 'You went to the right school, read the right newspaper, played sport in the right club. Verzuiling organized everything and then dissolved within a generation. You lived both sides of that.',
+    condition: (G) => G.flags.includes('nl_pillarization_generation'),
+    priority: 68,
+    color: 'blue',
+  },
+  {
+    id: 'the_car_park_in_hilversum',
+    name: 'The Car Park in Hilversum',
+    description: 'The Netherlands had no frame for what happened on May 6, 2002. It still doesn\'t.',
+    condition: (G) => G.flags.includes('nl_fortuyn_witness'),
+    priority: 74,
+    color: 'gray',
+  },
+  {
+    id: 'the_safe_area',
+    name: 'The Safe Area',
+    description: 'Srebrenica was designated a UN safe area. Eight thousand men and boys. The Netherlands spent thirty years trying to locate responsibility and discovering that responsibility is not a single address.',
+    condition: (G) => G.flags.includes('nl_srebrenica_generation'),
+    priority: 86,
+    color: 'black',
+  },
+
   // ── PALESTINE ADDITIONAL RIBBONS ─────────────────────────────────────────────
   {
     id: 'the_keys_on_the_wall',

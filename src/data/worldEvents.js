@@ -2186,6 +2186,34 @@ export const WORLD_EVENTS = [
     when: (G) => !G.flags.has('sg_lky_mourning_witness'),
   },
 
+  // ── NETHERLANDS WORLD EVENTS ─────────────────────────────────────────────
+  {
+    id: 'srebrenica_1995_nl',
+    name: 'Srebrenica Massacre',
+    years: [1995, 1995],
+    archetypes: null,
+    countries: ['Netherlands'],
+    narrative: 'July 1995. Dutch UN peacekeepers — Dutchbat — are in Srebrenica, designated a "safe area" under UN protection. When Mladic\'s forces arrive, the lightly armed Dutch soldiers cannot prevent what follows. Eight thousand Bosnian Muslim men and boys are executed in the coming days. The Netherlands spends the coming decades trying to assign responsibility and discovering that responsibility, in this case, is not a single address.',
+    context: 'Dutchbat had had their heavy weapons removed and were told not to use force. Their rules of engagement made resistance impossible. Some soldiers later attended a party with Mladic — a fact that entered the collective memory and has never left. Dutch courts later found the state partially liable for the deaths of 350 men handed over by Dutch soldiers.',
+    effect: (p) => { p.m -= 10; p.r += 6; p.addFlag('nl_srebrenica_generation'); },
+    addFlags: ['nl_srebrenica_generation'],
+    minAge: 12,
+    when: (G) => !G.flags.has('nl_srebrenica_generation'),
+  },
+  {
+    id: 'fortuyn_assassination_2002',
+    name: 'Pim Fortuyn Assassinated',
+    years: [2002, 2002],
+    archetypes: null,
+    countries: ['Netherlands'],
+    narrative: 'May 6, 2002. Pim Fortuyn — LPF party leader, sociology professor, openly gay — is shot dead in the car park of a Hilversum radio station. His killer is an animal rights activist. Nine days before an election Fortuyn was projected to win. Political violence in the Netherlands, which had not had this in living memory, and did not have a category for it.',
+    context: 'Fortuyn was not far-right in the European tradition. He cited Dutch gay rights as evidence that Islam was incompatible with Dutch liberalism, and attacked pillarization as paternalistic. His party won 26 seats nine days after his death — the second-largest party in parliament — then imploded within 87 days in government. What he named in Dutch politics was not erased by his death.',
+    effect: (p) => { p.m -= 6; p.addFlag('nl_fortuyn_witness'); },
+    addFlags: ['nl_fortuyn_witness'],
+    minAge: 14,
+    when: (G) => !G.flags.has('nl_fortuyn_witness'),
+  },
+
   // ── FIRST CONGO WAR 1996-97 ───────────────────────────────────────────────
   {
     id: 'congo_war_1996',

@@ -7764,6 +7764,56 @@ function buildYearTexture(state) {
       : 'Macron cancelled the fuel tax. The movement continued. It was not only about petrol. The continuing was the clarification.',
   ])
 
+  // ─── NETHERLANDS TEXTURE ─────────────────────────────────────────────────────
+  if (F.has('nl_hunger_winter_generation') && Math.random() < 0.25) return pick([
+    'Your mother doesn\'t waste food. This is not a personality trait. It is the Hunger Winter, transferred. Twenty-two thousand Dutch civilians died in the winter of 1944–45. Your parents ate tulip bulbs. The waste-not carries forward without requiring explanation.',
+    phase === 'late_life'
+      ? 'The people who actually went hungry in 1944–45 are almost all gone now. What remains is what they passed to their children by behavior rather than narration: the cleaned plate, the fridge checked before the shop, the discomfort at waste that was never fully explained.'
+      : 'The body remembers what the person doesn\'t say. Your parents\' generation had the Hunger Winter in their bodies — in the height charts, in the heart disease rates, in how they stood at supermarket queues. You are the generation that received the consequence without the event.',
+  ])
+  if (F.has('nl_pillarization_generation') && Math.random() < 0.22) return pick([
+    'You went to the school of your pillar. Your father read the newspaper of your pillar. Your family\'s doctor was from your pillar. This is called verzuiling. It is the Netherlands organizing itself by religious and ideological community, and it organized everything, and it is now almost gone.',
+    phase === 'late_life'
+      ? 'The pillar system collapsed in your lifetime. The Catholic broadcaster merged. The Protestant trade union dissolved into the general one. The kids of your generation who married across pillars were remarked upon; the kids of the next generation didn\'t know what a pillar was. The speed of that change is underreported.'
+      : 'The Dutch consensus that made verzuiling possible — that everyone needed their own world and nobody had to negotiate with the others — was a specific solution to a specific problem. The solution worked. The problem changed.',
+  ])
+  if (F.has('nl_srebrenica_generation') && Math.random() < 0.28) return pick([
+    'Srebrenica: 8,000 men and boys. Dutchbat: lightly armed, massively outnumbered, ordered not to use force, and eventually — photographs — at a party with Mladic. The Netherlands has been accounting for what happened for thirty years. The accounting is not complete.',
+    phase === 'late_life'
+      ? 'The Dutch courts have found the state partially liable. The UN has claimed immunity. The families of the dead are still in litigation. The Dutchbat veterans have their own association and their own damage. The country that sent them has never agreed on who is responsible for what.'
+      : 'The word "Dutchbat" is the word the Netherlands uses when it needs to say the thing that contradicts the Dutch self-image of pragmatic tolerance and functional decency. The contradiction exists. The image also exists. Neither replaces the other.',
+  ])
+  if (F.has('nl_fortuyn_witness') && Math.random() < 0.25) return pick([
+    'Pim Fortuyn was an openly gay anti-immigration politician who quoted gay rights as evidence that Islam was incompatible with Dutch liberalism. He was murdered by an animal rights activist nine days before an election he would have won. The Netherlands had no category for any of this and still doesn\'t.',
+    phase === 'late_life'
+      ? 'Everything that happened in Dutch politics after 2002 — Geert Wilders, the Islam debate, the PVV, the identity-liberalism contradiction — is downstream of Fortuyn in some way. He found the frequency and the frequency is still there.'
+      : 'What Fortuyn was doing was using Dutch liberal values — gay rights, women\'s rights, secularism — as arguments against Muslim immigration. The argument was difficult to address from within Dutch liberalism, which did not have a ready response to being the argument.',
+  ])
+  if (F.has('nl_multicultural_generation') && Math.random() < 0.2) return pick([
+    '150,000 Surinamese in the months around November 1975. Then the Antilleans, then the Turkish and Moroccan guest workers who stayed. Then the question of what Dutch is, which is still the question.',
+    phase === 'late_life'
+      ? 'The Netherlands describes itself as a tolerant country and has done since at least the 17th century. The self-description is partly accurate and partly a management of contradiction. You have lived in both versions.'
+      : 'The word "allochtoon" — migrant, non-native — was used for decades and then retired in official language. The thing the word was trying to name did not retire with it.',
+  ])
+  if (F.has('nl_water_generation') && Math.random() < 0.18) return pick([
+    'A quarter of the country is below sea level. You have always known this. The Delta Works are a civil engineering project and also a philosophical position: that a country can exist by saying yes to the water on the right terms.',
+    phase === 'late_life'
+      ? 'The climate projections are not abstract here. The sea level rise is the conversation that the Netherlands has been having since long before it became the conversation. The engineering is already adapted. The adaptation has a name: room for the river.'
+      : 'You learned about the 1953 flood in school. 1,836 people dead when the dykes broke. The Delta Works built in response. The pump stations still running. The deal with the sea still active and still requiring maintenance.',
+  ])
+  if (F.has('nl_provo_generation') && Math.random() < 0.2) return pick([
+    'The Provos in the 1960s, then the kraakbeweging — squatters taking empty Amsterdam buildings while people had nowhere to live. The math was visible and someone decided to make it physical. That is a specifically Dutch way of making a political argument.',
+    phase === 'late_life'
+      ? 'The white bicycle program failed. The squatters movement produced the housing movement that reshaped Dutch cities for decades. The substance was in the gesture, which is also a specifically Dutch outcome.'
+      : 'Amsterdam in the late 60s and 70s producing a politics of creative disruption that couldn\'t be imported elsewhere — it required a specific Dutch tolerance for its own contradiction, including the contradiction of refusing to take the police entirely seriously.',
+  ])
+  if (F.has('nl_colonial_reckoning_generation') && Math.random() < 0.18) return pick([
+    'The VOC: first multinational corporation, 350 years of colonial rule, 600,000 enslaved people in Suriname and the Caribbean. The Dutch apology came 150 years after abolition. The question of reparations remains in the statement without being answered.',
+    phase === 'late_life'
+      ? 'The Dutch king apologized in Jakarta. The prime minister apologized for slavery in 2022. You watched both. The words arrived. The process of deciding what the words oblige is still ongoing.'
+      : 'The Dutch East Indies, the plantation economy, the Bersiap period. The history is in the language — in street names, in the products in the supermarket, in which families came from where and why. Acknowledgment is arriving slowly.',
+  ])
+
   // ─── IRELAND TEXTURE ─────────────────────────────────────────────────────────
   if (F.has('irish_emigrant_generation') && Math.random() < 0.3) return pick([
     'You are Irish at one remove. The remove is maintained by the specific labour of keeping up with what is happening in a place you are not.',
@@ -13265,6 +13315,7 @@ export function generateEpitaph(state) {
     'nam_herero_memory_bearer', 'nam_san_displaced',
     'laos_hmong_era', 'laos_uxo_generation',
     'sg_founding_generation', 'sg_kampung_generation', 'sg_dialect_lost', 'sg_lky_generation',
+    'nl_hunger_winter_generation', 'nl_srebrenica_generation', 'nl_fortuyn_witness',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -13389,6 +13440,16 @@ export function generateEpitaph(state) {
     para2.push(`${He} grew up Singaporean during Lee Kuan Yew's long dominion. ${He} lost ${his} grandmother's dialect to the Speak Mandarin Campaign and watched Lee die in 2015 in a country that ran, efficiently, on his decisions. ${He} had mixed feelings that ${he} rarely expressed. This was also part of the formation.`)
   } else if (f('sg_founding_generation')) {
     para2.push(`${He} was there in August 1965 when Lee Kuan Yew appeared on television with wet eyes and said that Singapore would have to make it alone. It made it.`)
+  } else if (f('nl_srebrenica_generation') && f('nl_hunger_winter_generation')) {
+    para2.push(`${He} grew up in the generation that inherited the Hunger Winter from ${his} parents and lived to watch Dutch peacekeepers hand 8,000 men and boys to Mladic in Srebrenica. Both things were part of the Dutch self-understanding, from different directions.`)
+  } else if (f('nl_srebrenica_generation')) {
+    para2.push(`${He} was Dutch and alive in July 1995, which meant ${he} was alive for Srebrenica — for Dutchbat, for the eight thousand men and boys, for the long accounting afterward that never fully reached a single responsible address.`)
+  } else if (f('nl_hunger_winter_generation') && f('nl_fortuyn_witness')) {
+    para2.push(`${He} grew up in the shadow of the Hunger Winter and was Dutch when Pim Fortuyn was shot in a radio station car park in 2002. Both events required a kind of national reckoning that the Netherlands is still conducting.`)
+  } else if (f('nl_hunger_winter_generation')) {
+    para2.push(`${He} was the child of people who ate tulip bulbs in the winter of 1944–45. The waste-not was in everything — in how ${his} parents stood at a supermarket, in the plate always cleaned. ${He} received the consequence without the event.`)
+  } else if (f('nl_fortuyn_witness')) {
+    para2.push(`${He} was Dutch on May 6, 2002, when Pim Fortuyn was shot in Hilversum nine days before an election. The Netherlands had no frame for this. ${He} watched the country try to find one for years afterward.`)
   }
 
   // Displacement / migration

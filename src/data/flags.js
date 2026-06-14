@@ -4526,6 +4526,72 @@ export const FLAG_REGISTRY = {
     notes: 'Set by pol_eu_accession_2004.',
   },
 
+  // ── Netherlands ───────────────────────────────────────────────────────────────
+
+  nl_hunger_winter_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Grew up with parents who survived the Hunger Winter of 1944–45 — 22,000 Dutch civilians starved; tulip bulbs eaten; food never wasted',
+    intent: 'year_texture',
+    notes: 'Set by nl_hunger_winter_memory. Generational trauma passed through parental behavior.',
+  },
+
+  nl_pillarization_generation: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Grew up in the verzuiling system — organized into Catholic, Protestant, or Socialist pillar determining school, hospital, broadcaster, sports club',
+    intent: 'year_texture',
+    notes: 'Set by nl_verzuiling. Pillarization collapsed in 1960s–80s.',
+  },
+
+  nl_provo_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Participated in or was shaped by the Dutch Provo movement and squatters movement — Amsterdam\'s creative-disruptive radical tradition',
+    intent: 'year_texture',
+    notes: 'Set by nl_provo_youth (choice 1).',
+  },
+
+  nl_multicultural_generation: {
+    weight: 'moderate',
+    category: 'social',
+    description: 'Lived through the Surinamese immigration wave of 1975 and the subsequent transformation of Dutch cities — the Dutch multiculturalism experiment',
+    intent: 'year_texture',
+    notes: 'Set by nl_surinamese_wave (both choices).',
+  },
+
+  nl_srebrenica_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Dutch citizen when Srebrenica happened in 1995 — Dutchbat standing by while 8,000 Muslim men and boys were executed; national shame',
+    intent: 'year_texture',
+    notes: 'Set by nl_srebrenica_1995.',
+  },
+
+  nl_fortuyn_witness: {
+    weight: 'major',
+    category: 'political',
+    description: 'Was adult in the Netherlands in 2002 when Pim Fortuyn was assassinated — the cognitive dissonance of the country\'s first modern populist murder',
+    intent: 'year_texture',
+    notes: 'Set by nl_fortuyn_2002 (both choices). Fortuyn was gay, anti-Islam immigration, shot by an animal rights activist.',
+  },
+
+  nl_colonial_reckoning_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Dutch citizen during the reckoning with Dutch colonial history — the slavery apology (2022), the Indonesian colonial war acknowledgment',
+    intent: 'event',
+    notes: 'Set by nl_colonial_reckoning.',
+  },
+
+  nl_water_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Grew up understanding that the Netherlands exists below sea level by constant collective effort — the Delta Works, the polders, the deal with the North Sea',
+    intent: 'year_texture',
+    notes: 'Set by nl_water_country.',
+  },
+
   // ── Italy ─────────────────────────────────────────────────────────────────────
 
   miracolo_generation: {
