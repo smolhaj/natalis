@@ -2188,6 +2188,40 @@ export const RIBBONS = [
     color: 'red',
   },
 
+  // ── BRAZIL RIBBONS ───────────────────────────────────────────────────────────
+  {
+    id: 'the_hill',
+    name: 'The Hill',
+    description: 'You knew every path on the hill, every shortcut, every face. The city below had its rules. You knew both sets.',
+    condition: (G) => G.flags.includes('bra_favela_generation') && G.flags.includes('bra_favela_survived'),
+    priority: 75,
+    color: 'orange',
+  },
+  {
+    id: 'the_same_paperwork',
+    name: 'The Same Paperwork',
+    description: 'The Amnesty Law freed the tortured and the torturers with identical paperwork. You watched both walk out into the same country.',
+    condition: (G) => G.flags.includes('bra_dictatorship_generation') && G.flags.includes('bra_abertura_generation'),
+    priority: 80,
+    color: 'gray',
+  },
+  {
+    id: 'as_diretas_ja',
+    name: 'Diretas Já',
+    description: '1.7 million in Rio. 1 million in São Paulo. The amendment fell twenty-two votes short. Democracy arrived anyway, sideways.',
+    condition: (G) => G.flags.includes('bra_diretas_generation'),
+    priority: 68,
+    color: 'green',
+  },
+  {
+    id: 'copa_para_quem',
+    name: 'Copa Para Quem?',
+    description: '"The World Cup is for whom?" The bus fare was the entry point to everything else. The answer came back 1–7 at home.',
+    condition: (G) => G.flags.includes('bra_copa_generation') && G.flags.includes('june_days_2013'),
+    priority: 62,
+    color: 'yellow',
+  },
+
   // ── NETHERLANDS RIBBONS ──────────────────────────────────────────────────────
   {
     id: 'the_cleaned_plate',

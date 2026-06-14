@@ -8903,6 +8903,96 @@ export const FLAG_REGISTRY = {
     notes: 'Set by we_brazil_june_days_2013.',
   },
 
+  // ── Brazil ───────────────────────────────────────────────────────────────────
+
+  brazil_dictatorship_lived: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived under Brazil\'s military dictatorship (1964–85) — AI-5, the DOPS, the DOI-CODI torture centers, and the "economic miracle" happening simultaneously.',
+    intent: 'year_texture',
+    notes: 'Set by brazil_1964_coup world event.',
+  },
+
+  bra_favela_generation: {
+    weight: 'moderate',
+    category: 'social',
+    description: 'Grew up in a Brazilian favela — the hill, the self-built house, the water hose, the community, the bala perdida arithmetic.',
+    intent: 'year_texture',
+    notes: 'Set by bra_favela_childhood.',
+  },
+
+  bra_dictatorship_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Came of age during Brazil\'s AI-5 years (1968–79) — living inside the systematic silence of the torture state.',
+    intent: 'year_texture',
+    notes: 'Set by bra_ai5_dictatorship.',
+  },
+
+  bra_resistance_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Was on the edges of resistance during Brazil\'s dictatorship years — meetings, pamphlets, university networks.',
+    intent: 'year_texture',
+    notes: 'Set by bra_ai5_dictatorship (choice 2).',
+  },
+
+  bra_abertura_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through Brazil\'s abertura — the Amnesty Law of 1979 that freed the tortured and their torturers with identical paperwork.',
+    intent: 'year_texture',
+    notes: 'Set by bra_amnesty_1979.',
+  },
+
+  bra_diretas_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Was alive for Diretas Já 1984 — the million-person marches for direct elections, and the amendment that fell twenty-two votes short.',
+    intent: 'year_texture',
+    notes: 'Set by bra_diretas_ja_1984.',
+  },
+
+  bra_favela_survived: {
+    weight: 'major',
+    category: 'social',
+    description: 'Navigated the specific violence arithmetic of favela life — bala perdida, faction control, the decision to stay or leave the hill.',
+    intent: 'year_texture',
+    notes: 'Set by bra_bala_perdida.',
+  },
+
+  bra_racial_reckoning: {
+    weight: 'moderate',
+    category: 'social',
+    description: 'Named the racial democracy myth — understood the gap between Brazil\'s founding story about race and who occupies which rooms.',
+    intent: 'year_texture',
+    notes: 'Set by bra_racial_democracy (choice 1).',
+  },
+
+  bra_amazon_generation: {
+    weight: 'moderate',
+    category: 'environmental',
+    description: 'Was alive when Chico Mendes was shot in 1988 — lived in the era when the Amazon became a political economy with named stakes.',
+    intent: 'year_texture',
+    notes: 'Set by bra_chico_mendes.',
+  },
+
+  bra_copa_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Lived through the 2013–14 Copa protests — "Copa para quem?" and the 7–1 and the stadium in Brasília repurposed for cricket.',
+    intent: 'year_texture',
+    notes: 'Set by bra_copa_protests.',
+  },
+
+  bra_pandemic_witness: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived Brazil\'s 700,000 COVID deaths under Bolsonaro\'s pandemic denialism — the second-highest toll in the world.',
+    intent: 'year_texture',
+    notes: 'Set by bra_bolsonaro_covid.',
+  },
+
   // ─── ARGENTINA 2001 FLAGS ─────────────────────────────────────────────────────
 
   corralito_survivor: {

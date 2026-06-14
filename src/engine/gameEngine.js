@@ -7963,6 +7963,66 @@ function buildYearTexture(state) {
       ? 'You watched Brazil elect Bolsonaro and four years later elect Lula again. The pendulum completed a specific arc. What the arc says about the country is still being argued.'
       : 'The evangelical alignment, the Amazon acceleration, the institutional friction — you were inside all of it. The account is still being settled.',
   ])
+  if (F.has('bra_favela_generation') && Math.random() < 0.25) return pick([
+    'The hill had its own physics. Every path was a shortcut you knew and a risk you had calculated. The water came from where it could be tapped. The community was real and self-organized. The city below had different rules.',
+    phase === 'late_life'
+      ? 'The favela you grew up in has changed — UPP, or development, or gentrification, or simply different factions. The hill is still there. The people you grew up with scattered or stayed or were taken. You carry the hill the way you carry the first language.'
+      : 'The traficantes, the helicopter overhead, the specific sound of the baile funk stopping at 2am. The city below the hill experienced none of this and had opinions about it.',
+  ])
+  if (F.has('bra_favela_survived') && Math.random() < 0.22) return pick([
+    'Bala perdida is the specific term: stray bullet. The community named the arithmetic before the state had a database for it. You know people who absorbed it and people who didn\'t.',
+    phase === 'late_life'
+      ? 'You left or you stayed. Either way you are carrying the count — who got out, who didn\'t, who stayed and is fine, who stayed and isn\'t. The count is specific and yours.'
+      : 'The routes you knew: when to move, where not to stand, which wall was on the wrong side. The knowledge kept you safer than not having it would have. Safer is not the same as safe.',
+  ])
+  if (F.has('bra_dictatorship_generation') && Math.random() < 0.25) return pick([
+    'AI-5 in December 1968: habeas corpus suspended, Congress closed, indefinite detention authorized. The DOI-CODI centers ran. The television said "Brasil, ame-o ou deixe-o." The economy grew 10% per year. These facts were simultaneous.',
+    phase === 'late_life'
+      ? 'You lived through the years of lead and the abertura and the democracy and the reversal and the return. Each era carried the previous era\'s people and structures forward. The democracy you are old in is built on foundations you watched being laid, imperfectly.'
+      : 'The specific silences of those years: what you said in public and what you did not say, the calculation you made every time, the self-censorship that outlasted the censors by a decade.',
+  ])
+  if (F.has('bra_resistance_generation') && Math.random() < 0.2) return pick([
+    'The pamphlet run at 3am. The meeting in someone\'s apartment with the curtains closed. The university network that the DOPS was already watching. The edges of the resistance were more visible to the state than they looked from inside them.',
+    phase === 'late_life'
+      ? 'Several people you knew were arrested. Some came out changed. Some did not come out. What you did and did not do in those years is the specific accounting that late life tends to return to.'
+      : 'The resistance was real and produced something: it kept a kind of political culture alive through twenty-one years of military rule. Whether what you did was enough is the question that doesn\'t have a clean answer.',
+  ])
+  if (F.has('bra_abertura_generation') && Math.random() < 0.2) return pick([
+    'The Amnesty Law of 1979 freed the political prisoners. It also freed the people who tortured them. The same paperwork. The same signature. The torturers were promoted. This is what the abertura cost.',
+    phase === 'late_life'
+      ? 'The exiles came back to a country that had changed while they were gone. The torturers had careers. The deal that made all of this possible is still the deal the democracy is built on.'
+      : 'Abertura means opening. The opening was managed and partial and the door was held by the people who had held it closed. This is what the transition looked like from inside it.',
+  ])
+  if (F.has('bra_diretas_generation') && Math.random() < 0.22) return pick([
+    'One million in São Paulo. 1.7 million in Rio. The largest democratic demonstration in Brazilian history. The amendment fell twenty-two votes short. Democracy arrived anyway, sideways, through the electoral college, through a man who died before taking office.',
+    phase === 'late_life'
+      ? 'You were in the crowd or you watched it on television. Either way the Dante de Oliveira vote was the moment the country learned that the size of a crowd does not determine the vote in the chamber. The lesson has been relearned several times since.'
+      : 'Diretas Já: the demand was specific and legible. The result was not what the marchers demanded and also not nothing. Tancredo Neves, and then Sarney, and then the 1988 constitution — the Constituição Cidadã — the citizens\' constitution. The marches are in the DNA of it.',
+  ])
+  if (F.has('bra_racial_reckoning') && Math.random() < 0.2) return pick([
+    'Brazil has more people of African descent than any country outside Africa. Who cleans whose house. Who is in the newspaper photographs of inaugurations. The racial democracy was a story the country told about itself; the structure underneath it is visible to anyone who counts.',
+    phase === 'late_life'
+      ? 'The cotas have been in universities for twenty years. The census question asks for your color. The conversation that Gilberto Freyre\'s racial democracy was designed to close is now open. You are not sure it was ever closed, only that the closing was enforced.'
+      : 'Pardo, preto, branco — the census categories have a history inside them. What you marked and what it cost to mark it and what it changed.',
+  ])
+  if (F.has('bra_amazon_generation') && Math.random() < 0.18) return pick([
+    'Chico Mendes was shot on the back porch of his house in Acre on December 22, 1988. Twenty-two death threats. Denied police protection. What he named — that the forest is an economy for the people who live in it — is still the correct description.',
+    phase === 'late_life'
+      ? 'The deforestation Mendes was trying to stop is still happening and has been stopped and has restarted several times since 1988. The ranchers who ordered his killing were convicted nine years later. The forest is still the argument it was when he died.'
+      : 'The Amazon debates in your lifetime: the garimpeiros and the rubber tappers and the Indigenous territories and the agribusiness maps and the international pressure. The forest is not a metaphor. It is a place where people live and a political economy with named stakes.',
+  ])
+  if (F.has('bra_copa_generation') && Math.random() < 0.18) return pick([
+    '"Copa para quem?" The bus fare was the entry point to everything else. R$900 million for Maracanã while the hospital runs short of nurses. The World Cup came anyway. Brazil 1–7 Germany in the semi-final at home.',
+    phase === 'late_life'
+      ? 'The stadium in Brasília hosts international cricket now. The movement of 2013 returned in 2015–16 in a different shape and with a different target. What the twenty centavos started is something the country is still running the accounting on.'
+      : 'The protest was too large to have a single agenda and too genuine to be dismissed. Something was named in June 2013 that the subsequent years were trying to answer, in different directions simultaneously.',
+  ])
+  if (F.has('bra_pandemic_witness') && Math.random() < 0.2) return pick([
+    '700,000. The second-highest COVID death toll in the world. The president called it a little flu. The hospitals in Manaus ran out of oxygen. The senate investigation said crimes against humanity. He was not prosecuted. He lost the 2022 election by less than two points.',
+    phase === 'late_life'
+      ? 'The 700,000 are in the record whether or not the politics around them can be agreed on. You were alive through all of it — the denial, the Manaus oxygen crisis, the election loss by two points. The record is what it is.'
+      : 'You watched Brazil run an experiment: what happens when a government actively resists its own public health response. The number came back as the answer.',
+  ])
 
   // ─── ARGENTINA 2001 TEXTURE ──────────────────────────────────────────────────
   if (F.has('corralito_survivor') && Math.random() < 0.28) return pick([
@@ -13316,6 +13376,7 @@ export function generateEpitaph(state) {
     'laos_hmong_era', 'laos_uxo_generation',
     'sg_founding_generation', 'sg_kampung_generation', 'sg_dialect_lost', 'sg_lky_generation',
     'nl_hunger_winter_generation', 'nl_srebrenica_generation', 'nl_fortuyn_witness',
+    'bra_dictatorship_generation', 'bra_resistance_generation', 'bra_favela_survived',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -13450,6 +13511,12 @@ export function generateEpitaph(state) {
     para2.push(`${He} was the child of people who ate tulip bulbs in the winter of 1944–45. The waste-not was in everything — in how ${his} parents stood at a supermarket, in the plate always cleaned. ${He} received the consequence without the event.`)
   } else if (f('nl_fortuyn_witness')) {
     para2.push(`${He} was Dutch on May 6, 2002, when Pim Fortuyn was shot in Hilversum nine days before an election. The Netherlands had no frame for this. ${He} watched the country try to find one for years afterward.`)
+  } else if (f('bra_resistance_generation') && f('bra_abertura_generation')) {
+    para2.push(`${He} was on the edges of the resistance during Brazil's years of lead, running pamphlets while the DOI-CODI ran its interrogations. Then the Amnesty Law freed the tortured and the torturers with identical paperwork. ${He} watched both walk out into the same country.`)
+  } else if (f('bra_dictatorship_generation') && f('brazil_dictatorship_lived')) {
+    para2.push(`${He} came of age in Brazil during the AI-5 years — habeas corpus suspended, Congress closed, the DOPS at work. The economy grew 10% per year. The torture happened in the same years as the miracle. ${He} navigated the silence that this required.`)
+  } else if (f('bra_favela_survived') && f('bra_favela_generation')) {
+    para2.push(`${He} grew up on the hill and survived its arithmetic — the bala perdida, the faction boundaries, the decision to stay or leave. The city below the hill experienced none of this and had opinions about it. ${He} had the count.`)
   }
 
   // Displacement / migration
