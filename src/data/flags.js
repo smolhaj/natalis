@@ -2636,6 +2636,82 @@ export const FLAG_REGISTRY = {
     notes: 'Set by geo_eu_dream.',
   },
 
+  // ── TAIWAN ARC (events_taiwan_malaysia.js) ───────────────────────────────────
+
+  taiwan_228_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Survived or was shaped by the February 28 Massacre 1947 — KMT troops killing 18,000-30,000 Taiwanese civilians',
+    intent: 'year_texture',
+    notes: 'Set by twn_228_massacre. Follow-through in buildYearTexture.',
+  },
+
+  martial_law_taiwan: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived under Taiwan\'s martial law 1949-87 — 38 years, the longest in modern history; white terror, political prisoners',
+    intent: 'year_texture',
+    notes: 'Set by twn_white_terror.',
+  },
+
+  waishengren_generation: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Mainlander (Waishengren) — came to Taiwan with the KMT in 1949 or child of those who did; the temporary that became permanent',
+    intent: 'year_texture',
+    notes: 'Set by twn_waishengren.',
+  },
+
+  taiwan_democratic_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed Taiwan\'s democratization — the end of martial law 1987, first direct presidential election 1996',
+    intent: 'year_texture',
+    notes: 'Set by twn_democratization.',
+  },
+
+  taiwan_cross_strait_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Living with the cross-strait tension as permanent background — the missile drills, TSMC strategy, Ukraine-as-Taiwan analogy',
+    intent: 'year_texture',
+    notes: 'Set by twn_cross_strait_tension.',
+  },
+
+  // ── MALAYSIA ARC (events_taiwan_malaysia.js) ─────────────────────────────────
+
+  may13_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed or was shaped by the May 13, 1969 ethnic riots in Malaysia — hundreds killed, 61-year UMNO era shaped by the trauma',
+    intent: 'year_texture',
+    notes: 'Set by mys_may13_1969.',
+  },
+
+  nep_generation_malaysia: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived under Malaysia\'s New Economic Policy — Bumiputera quotas, affirmative action, the racial structuring of opportunity',
+    intent: 'year_texture',
+    notes: 'Set by mys_nep_experience. Affects Malay, Chinese, and Indian characters differently.',
+  },
+
+  reformasi_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Shaped by the 1998 reformasi movement — Anwar Ibrahim\'s arrest, the first sustained democracy movement against UMNO',
+    intent: 'year_texture',
+    notes: 'Set by mys_reformasi.',
+  },
+
+  ge14_generation_malaysia: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed Malaysia\'s GE14 2018 — the first opposition victory in 61 years; UMNO\'s fall, Pakatan Harapan\'s collapse',
+    intent: 'year_texture',
+    notes: 'Set by mys_ge14_2018.',
+  },
+
   // ── PAKISTAN ARC (events_pakistan.js) ────────────────────────────────────
 
   muhajir_identity: {

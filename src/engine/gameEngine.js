@@ -6356,6 +6356,62 @@ function buildYearTexture(state) {
     'The Saemaul Undong posters said diligence, self-help, cooperation. The posters were correct about what was required. They were less clear about who it was required for.',
   ])
 
+  // ─── TAIWAN + MALAYSIA TEXTURE ───────────────────────────────────────────────
+  if (F.has('taiwan_228_generation') && Math.random() < 0.3) return pick([
+    'February 28, 1947: two weeks of uprising, then the KMT troops arrived from the mainland. Between 18,000 and 30,000 Taiwanese civilians killed. The date was not spoken of for forty years. The silence was itself a form of the event\'s continuing presence.',
+    phase === 'late_life'
+      ? 'The 228 Memorial Park is in Taipei now. The government formally apologized in 1995. The apology came forty-eight years after the event. The families of those killed were alive for the apology. Some of them.'
+      : 'The educated class was particularly targeted — lawyers, doctors, local leaders. The absence of those people is in the society that produced the Taiwan you grew up in, though it is not visible as an absence except to those who know what to look for.',
+  ])
+  if (F.has('martial_law_taiwan') && Math.random() < 0.25) return pick([
+    'Thirty-eight years under martial law — the longest in modern history. The Garrison Command monitoring letters, associations, spoken opinions. The correct answer to certain questions, delivered without hesitation.',
+    phase === 'late_life'
+      ? 'Martial law ended July 15, 1987. The democracy that came after is real and is now mature — two presidential elections that changed party. The people who lived through the martial law and the people born after it have different relationships to the word freedom.'
+      : 'The topic that cannot be raised in the classroom. The book that does not exist in the school library. You learn what cannot be said by noticing the shape of its absence.',
+  ])
+  if (F.has('waishengren_generation') && Math.random() < 0.22) return pick([
+    'The temporary that became permanent. Military housing. The retaking of the mainland that was always about to happen. Your parents\' mainland — Shandong or Hunan or Zhejiang — is a place you know from their stories.',
+    phase === 'late_life'
+      ? 'The mainlander generation is aging now, and the Taiwan they are aging in is democratic and specifically Taiwanese in its identity. The identity their children carry is not the identity they arrived with. This is a reconciliation of sorts, though no one called it that.'
+      : 'Waishengren and Benshengren: the mainlanders and the people whose families were here before. The difference was political in the 1950s and became cultural by the 1980s and became complicated after that.',
+  ])
+  if (F.has('taiwan_democratic_generation') && Math.random() < 0.22) return pick([
+    '1996: missiles in the Taiwan Strait, two US carrier groups, and Taiwan\'s first direct presidential election on the scheduled day. The ballot was yours. The missiles did not stop the vote.',
+    phase === 'late_life'
+      ? 'Taiwan has now had multiple peaceful transfers of power between parties. The democratic institutions are real. The cross-strait question has not been resolved and the democratic institutions operate in its permanent shadow.'
+      : 'The year the newspapers could say things they could not say the year before. The year the party opposition became legal. The years plural — the transition happened across a decade, not a day.',
+  ])
+  if (F.has('taiwan_cross_strait_generation') && Math.random() < 0.22) return pick([
+    'TSMC makes the chips the world depends on. The chip factory is Taiwan\'s strategic deterrent, people say. You live on the island that makes the chips and that China considers its sovereign territory. Both of these facts are true at the same time.',
+    phase === 'late_life'
+      ? 'The cross-strait question has been permanent background your entire adult life. Other countries\' crises have come and gone; this one has remained constant. The Taiwan you will leave behind is still living under it.'
+      : 'The 56 aircraft across the median line in one day. The record count. You have gotten used to monitoring this number and you know that getting used to it is what living here requires.',
+  ])
+  if (F.has('may13_generation') && Math.random() < 0.28) return pick([
+    'May 13, 1969: post-election violence between Malay and Chinese communities in Kuala Lumpur. The emergency. The New Economic Policy that emerged from it. The explicit racial structuring of Malaysian opportunity.',
+    phase === 'late_life'
+      ? 'Sixty years later, the NEP continues under various names. The racial structuring it created is the background of every university application, every business licence, every government contract. The 1969 riots produced the system you have navigated your entire adult life.'
+      : 'The different explanations of May 13 depend on who is giving them. You have heard the Malay version and the Chinese version and the Indian version. They do not agree on the cause. They agree on the number.',
+  ])
+  if (F.has('nep_generation_malaysia') && Math.random() < 0.22) return pick([
+    'The university quota system. The business licence preferences. The 30 percent Bumiputera ownership target. The NEP has been in effect since 1971 and its shape is in every professional interaction you have had.',
+    phase === 'late_life'
+      ? 'The NEP produced a Malay middle class and a Chinese diaspora that went to Singapore and Australia and abroad. It produced both. Whether that was the intention is a question that has been debated for fifty years.'
+      : 'The mamak restaurant: the one institution that does not care which community you are from. A round table, a teh tarik, someone\'s rice and curry. The food is the truce that the politics never fully managed.',
+  ])
+  if (F.has('reformasi_generation') && Math.random() < 0.2) return pick([
+    'Anwar Ibrahim arrested, beaten while handcuffed, charged with crimes widely believed to be fabricated. The word reformasi. The people in the street who believed something could change.',
+    phase === 'late_life'
+      ? 'Anwar Ibrahim became Prime Minister in 2022 — twenty-four years after his first arrest. The arc is very long. You were at the beginning of it and have watched its entire length.'
+      : 'The 1998 protests were suppressed. The political landscape took two decades to shift. The shift, when it came, was real.',
+  ])
+  if (F.has('ge14_generation_malaysia') && Math.random() < 0.2) return pick([
+    'May 9, 2018: the morning after UMNO\'s first defeat in sixty-one years. The specific quality of that morning.',
+    phase === 'late_life'
+      ? 'The Pakatan Harapan government fell in 2020 after 22 months. UMNO returned to power in coalition. The structures outlasted the election result. The election result was still real. You were there for both.'
+      : 'The transfer of power was peaceful. Sixty-one years of one-party rule ended without violence. That is not something you expected to see in your lifetime and you saw it.',
+  ])
+
   // ─── ERA TEXTURE ─────────────────────────────────────────────────────────────
   if (F.has('spanish_flu_generation') && Math.random() < 0.25) return pick([
     'The disease moved through the city in 1918 faster than any official account could follow. You remember the funerals, or the absence of funerals — the bodies moved quietly.',
