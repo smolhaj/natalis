@@ -6412,6 +6412,95 @@ function buildYearTexture(state) {
       : 'The transfer of power was peaceful. Sixty-one years of one-party rule ended without violence. That is not something you expected to see in your lifetime and you saw it.',
   ])
 
+  // ─── ARMENIA + AZERBAIJAN TEXTURE ────────────────────────────────────────────
+  if (F.has('arm_genocide_memory_bearer') && Math.random() < 0.3) return pick([
+    'April 24. The lesson stops. The teacher folds her hands. The mountain of flowers and candles on the hill in Yerevan. You understand the weight of it before you have words for what happened.',
+    phase === 'late_life'
+      ? 'Your grandmother\'s generation knew someone who survived. Your parents\' generation knew someone who knew someone. You are the last generation that will carry the Genocide as personal memory and not as history. You feel the difference between these two things and cannot explain it to those who will come after.'
+      : 'The family name your great-grandmother had before 1915 — the name from Van, from Mush, from Harput. The name she set aside at the border. The name that survives in one document in a church archive. You know the name.',
+  ])
+  if (F.has('arm_earthquake_survivor') && Math.random() < 0.28) return pick([
+    'December 7, 1988. 11:41am. You know the moment the way you know a scar — by the shape of it, by what preceded it, by the change it made.',
+    phase === 'late_life'
+      ? 'Spitak was rebuilt. You have been there since. The new buildings are better engineered. The streets are the same grid. You stood at the place where a specific building used to be and counted what you remembered and what you could not locate.'
+      : 'Twenty-five thousand dead in forty-three seconds. The Soviet government sent rescue teams from Russia and accepted help from American teams. This was 1988, and accepting American help was notable. You were grateful for the help and noticed the notability simultaneously.',
+  ])
+  if (F.has('arm_dark_winter_survivor') && Math.random() < 0.28) return pick([
+    'One hour of electricity per day, sometimes less. You boiled water when it came on and filled every container. The apartment in January: eight degrees. You burned what you could burn.',
+    phase === 'late_life'
+      ? 'The blockade winters ended by 1998 — three hours a day, then more, then near-normal. Armenia did not collapse, though a third of the population left during those years. The ones who stayed know something the ones who left do not know about what staying requires.'
+      : 'The neighbor who cut down his orchard for firewood. The candles in every window — not decorative. The specific quality of darkness when it is not scheduled darkness but the ordinary darkness of a country being squeezed.',
+  ])
+  if (F.has('arm_karabakh_veteran_1') && Math.random() < 0.25) return pick([
+    'The mountains in Karabakh. The road through Lachin, the only road, shelled twice while you were on it. The town of Shushi on the cliffs at the top of the gorge.',
+    phase === 'late_life'
+      ? 'The first war ended in 1994 with Armenia holding the enclave and the seven districts around it. The second war ended in 2020 with Azerbaijan taking it all back. The mathematics of what you fought for and what it eventually became is something you have calculated many times.'
+      : 'The men you went with who did not come back. The victory that felt impossible to celebrate in front of their families. The Lachin corridor held open for twenty-six years, and then it did not.',
+  ])
+  if (F.has('arm_velvet_revolution') && !F.has('arm_war_2020_loss') && Math.random() < 0.22) return pick([
+    'April 2018. Pashinyan walking from Gyumri in the same clothes every day. The crowds getting larger. Republic Square full, and people laughing — a specific quality of laughter you had not heard in that square before.',
+    'The prime minister resigned. The corrupt system that had been in place for twenty years — the system that was the only system anyone under forty had ever known — resigned. For a moment you did not know what came next.',
+  ])
+  if (F.has('arm_war_2020_loss') && Math.random() < 0.3) return pick([
+    'September 27 to November 10, 2020. The drones were precise and the Armenian positions were not built for them. Shushi fell on November 8. The ceasefire was signed at 3am. By 7am everyone knew.',
+    phase === 'late_life'
+      ? 'You have spent years trying to understand how something that happened in forty-four days could undo twenty-six years. The answer involves drones, and politics, and the thirty-year gap between the armies, and corruption, and the ceasefire terms, and things that cannot be reduced to a cause.'
+      : 'Pashinyan signed the ceasefire. He said he had no choice. Perhaps he did not. The map on the phone screen losing its names one by one through the night.',
+  ])
+
+  if (F.has('azr_black_january_generation') && Math.random() < 0.28) return pick([
+    'January 19-20, 1990. The Soviet army entering Baku after midnight, the government having already cut the television. 131 dead. The coffins in Azadliq Square. The Soviet party cards torn in half at the funerals.',
+    phase === 'late_life'
+      ? 'Black January is now a national day of mourning in Azerbaijan. The street where the armored column drove is an ordinary street. You drive on it. The ordinary-ness of it is strange every time.'
+      : 'The people who tore their party cards at the coffins — some of them had believed in the party for thirty years before that night. The card tearing was not symbolic. It was the end of something in the body, not just in the mind.',
+  ])
+  if (F.has('azr_karabakh_idp') && !F.has('azr_karabakh_return_2023') && Math.random() < 0.3) return pick([
+    'The railway carriage. The unfinished Soviet apartment block. The deed you carried with you. The photograph of the house. Thirty years in Baku waiting to go back to a place that, in the meantime, became a ruin.',
+    'Your children grew up in the temporary that became permanent. They know where their family is from. They say: but we are from here. You say: no. You mean it. They mean it too, in their way.',
+  ])
+  if (F.has('azr_karabakh_return_2023') && Math.random() < 0.25) return pick([
+    'You went back on the bus in 2023. The mulberry tree was there. The house was a ruin — repainted, used, abandoned. You stood in the yard for a long time. You did not know what you thought you would feel.',
+    phase === 'late_life'
+      ? 'The Armenians of Karabakh are gone now — 120,000 people who left in September 2023 in a column of cars. The villages are empty of them. You have returned to your village and the other villages are emptied of their people. There are several feelings for this and they do not resolve into one feeling.'
+      : 'The title deed was good. The rebuilding can begin. You planted something in the yard. You are not sure yet if you will stay. You are not sure what staying means now.',
+  ])
+  if (F.has('arm_earthquake_zone') && Math.random() < 0.22) return pick([
+    'You were in the earthquake zone on December 7, 1988 — Spitak, or Leninakan, or one of the villages in the north. A building held. The building next to it did not. This is not something that fully resolves.',
+    phase === 'late_life'
+      ? 'You have lived in other buildings since. You know which ones are old Soviet construction and which were built after. The knowledge is not rational but it is precise.'
+      : 'The specific silence after: no generators, no traffic, no dogs. The whole sound environment changed at once. You remember the silence more clearly than the sound of the quake.',
+  ])
+  if (F.has('arm_stayed_dark_years') && Math.random() < 0.2) return pick([
+    'You could have left. Many did — a third of the country left in those years. You stayed, though you do not always know now whether that was courage or stubbornness or simply the weight of what you would have had to leave.',
+    phase === 'late_life'
+      ? 'The ones who left came back for visits, later, with hard currency and clean coats. The ones who stayed built something, though it is not always clear exactly what. You stayed. That is the fact you carry.'
+      : 'The candles, the water containers, the one hour of electricity. You learned what a life could be reduced to and still continue. That is an education you did not ask for and cannot give back.',
+  ])
+  if (F.has('arm_velvet_participant') && Math.random() < 0.2) return pick([
+    'You took three days off work and marched. Your mother called and said be careful. The police waved at the crowd and the crowd waved back. This was April 2018 and it had not happened before in Armenia in this way.',
+    phase === 'late_life'
+      ? 'The revolution was real. The war of 2020 was also real. Both things happened in the same country in two years. You were in the square for the first and you watched the second on your phone at 7am. The distance between those two experiences is one of the things you think about.'
+      : 'Republic Square full of people not afraid. That afternoon, Sargsyan resigned. You heard it in the square and the sound the square made when it heard was different from any sound you had heard there before.',
+  ])
+  if (F.has('arm_combat_survivor') && Math.random() < 0.22) return pick([
+    'The mountains in Karabakh were very cold. The cold and the altitude and the specific sound of artillery in enclosed valleys — these stayed in the body long after everything else faded.',
+    phase === 'late_life'
+      ? 'You fought in those mountains and won. Then 2020 happened. You have spent time thinking about what "winning" meant in 1994 and what it cost to find out.'
+      : 'The men who did not come back had families you still know. You do not know how to celebrate in front of those families. You do not try.',
+  ])
+  if (F.has('azr_black_january_witness') && Math.random() < 0.25) return pick([
+    'The armored column on Neftchilar Avenue at 2am. The sound before you understood what it was. You pressed yourself into a doorway. The column passed within three metres.',
+    phase === 'late_life'
+      ? 'You were in the street that night. One hundred and thirty-one people were killed. You were not among them. You have never been entirely sure what that number means in relation to where you were standing.'
+      : 'The coffins in Azadliq Square in the morning. The flowers. The Soviet party cards being torn in half at the graveside. Something ended in the city that night and something else began.',
+  ])
+  if (F.has('azr_war_victory_2020') && Math.random() < 0.22) return pick([
+    'November 2020: the flag over Shusha. The map, finally corrected. People weeping in the streets of Baku. Thirty years of waiting arriving in forty-four days.',
+    phase === 'late_life'
+      ? 'What does it mean to win something back that cost thirty years? The IDPs who waited in containers and unfinished buildings and came home to ruins. The joy and the ruins existed simultaneously. You are still working out how to hold both.'
+      : 'The victory was real. The price was also real — the dead, the destroyed, the century of mutual wound between two peoples. You felt the joy and also, once it passed, the question of what comes after the joy.',
+  ])
+
   // ─── ERA TEXTURE ─────────────────────────────────────────────────────────────
   if (F.has('spanish_flu_generation') && Math.random() < 0.25) return pick([
     'The disease moved through the city in 1918 faster than any official account could follow. You remember the funerals, or the absence of funerals — the bodies moved quietly.',
@@ -12654,6 +12743,8 @@ export function generateEpitaph(state) {
     'maidan_generation', 'euromaidan_lived',
     'independence_generation_self', 'beirut_blast_survived',
     'refugee', 'displaced', 'emigrated', 'diaspora',
+    'arm_genocide_memory_bearer', 'arm_karabakh_veteran_1', 'arm_war_2020_loss',
+    'arm_dark_winter_survivor', 'azr_karabakh_idp', 'azr_black_january_generation',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -12714,6 +12805,20 @@ export function generateEpitaph(state) {
     para2.push(`The family members who did not come back from Siberia — deported in 1941 or 1949 — were part of ${his} life as an absence with a known shape. ${He} carried them.`)
   } else if (f('georgia_rose_revolution') && f('georgian_war_2008')) {
     para2.push(`${He} was in Parliament Square in 2003 when Shevardnadze left without violence, and in Tbilisi in 2008 when the Russian tanks came within forty kilometres. Both things were real.`)
+  } else if (f('arm_genocide_memory_bearer') && f('arm_war_2020_loss')) {
+    para2.push(`${He} carried family memory of 1915 and lived to see Karabakh fall in 2020. The thread of what Armenia survived and what it could not survive was something ${he} turned over many times.`)
+  } else if (f('arm_karabakh_veteran_1') && f('arm_war_2020_loss')) {
+    para2.push(`${He} fought in Karabakh in 1991 and watched the war of 2020 take it back in forty-four days. What the first war had cost, and what it turned out to cost in the end.`)
+  } else if (f('arm_war_2020_loss')) {
+    para2.push(`${He} was alive for November 2020 — Shushi falling, the ceasefire signed at 3am, the map on the phone screen losing its names one by one. The country lived through it, and so did ${he}.`)
+  } else if (f('arm_dark_winter_survivor') && f('arm_velvet_revolution')) {
+    para2.push(`${He} survived the blockade winters of the 1990s and was in Republic Square in April 2018 when people laughed in a way they had not laughed there before. Between those two things was an entire education.`)
+  } else if (f('azr_karabakh_idp') && f('azr_karabakh_return_2023')) {
+    para2.push(`${He} spent thirty years as an IDP — the deed in the drawer, the photograph on the wall, the temporary that became permanent. In 2023 ${he} went back on the government bus. The mulberry tree was there. The house was a ruin.`)
+  } else if (f('azr_black_january_generation') && f('azr_war_victory_2020')) {
+    para2.push(`${He} was in Baku on Black January 1990, when the Soviet army killed 131 people in the streets. Thirty years later ${he} watched the Karabakh map change. Both dates are in the same life.`)
+  } else if (f('azr_karabakh_idp')) {
+    para2.push(`${He} was displaced from Karabakh in 1993 or 1994 and carried a land deed for thirty years, waiting to use it. The waiting was most of an adult life.`)
   }
 
   // Displacement / migration

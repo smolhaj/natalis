@@ -2636,6 +2636,178 @@ export const FLAG_REGISTRY = {
     notes: 'Set by geo_eu_dream.',
   },
 
+  // ── ARMENIA ARC (events_armenia_azerbaijan.js) ───────────────────────────────
+
+  arm_genocide_memory_bearer: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Carries direct family memory of the Armenian Genocide 1915 — grandparent who survived, the branch that didn\'t',
+    intent: 'year_texture',
+    notes: 'Set by arm_genocide_memory. Follow-through: ft22_arm_genocide_bearer_late.',
+  },
+
+  arm_earthquake_survivor: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived the 1988 Spitak earthquake or volunteered in the rescue — 25,000 dead in forty-three seconds',
+    intent: 'year_texture',
+    notes: 'Set by arm_earthquake_1988 and spitak_earthquake_1988 world event.',
+  },
+
+  arm_earthquake_zone: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Was physically in the earthquake zone (Spitak, Leninakan) on December 7, 1988',
+    intent: 'year_texture',
+    notes: 'Set by arm_earthquake_1988 choice survivor.',
+  },
+
+  arm_baku_refugee_host: {
+    weight: 'moderate',
+    category: 'social',
+    description: 'Hosted Armenian refugees from Azerbaijan (1988-1991) fleeing the Baku pogroms',
+    intent: 'year_texture',
+    notes: 'Set by arm_baku_refugees event.',
+  },
+
+  arm_dark_winter_survivor: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Survived the Armenian blockade winters 1992-1997 — one hour of electricity per day, unheated apartments',
+    intent: 'year_texture',
+    notes: 'Set by arm_dark_winter. Follow-through: ft22_arm_dark_winter_echo.',
+  },
+
+  arm_stayed_dark_years: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Chose to stay in Armenia through the dark blockade years when hundreds of thousands left',
+    intent: 'year_texture',
+    notes: 'Set by arm_dark_winter choice stayed.',
+  },
+
+  arm_left_briefly: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Left Armenia temporarily during the blockade years and returned',
+    intent: 'none',
+    notes: 'Set by arm_dark_winter choice left.',
+  },
+
+  arm_karabakh_veteran_1: {
+    weight: 'major',
+    category: 'military',
+    description: 'Served in the First Karabakh War 1991-1994 — the victory that became the wound of 2020',
+    intent: 'both',
+    notes: 'Set by arm_karabakh_veteran. Follow-through: ft22_arm_karabakh_veteran_late.',
+  },
+
+  arm_combat_survivor: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Saw direct combat in Karabakh 1991-1994; carried the mountain war in the body afterward',
+    intent: 'year_texture',
+    notes: 'Set by arm_karabakh_veteran choice fighter.',
+  },
+
+  arm_diaspora_encounter: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Met diaspora Armenians and felt the strange gap — the same people, the different language, the different knowing',
+    intent: 'year_texture',
+    notes: 'Set by arm_diaspora_encounter.',
+  },
+
+  arm_velvet_revolution: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed or participated in the 2018 Armenian Velvet Revolution — Pashinyan walking from Gyumri to Yerevan',
+    intent: 'year_texture',
+    notes: 'Set by arm_velvet_2018. Follow-through: ft22_arm_velvet_reckoning.',
+  },
+
+  arm_velvet_participant: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Marched in the 2018 Armenian Velvet Revolution; stood in Republic Square',
+    intent: 'year_texture',
+    notes: 'Set by arm_velvet_2018 choice marched.',
+  },
+
+  arm_war_2020_loss: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the November 2020 defeat — Shushi fallen, ceasefire signed at 3am, Karabakh lost',
+    intent: 'year_texture',
+    notes: 'Set by arm_war_2020. Follow-through: ft22_arm_karabakh_veteran_late (with veteran flag).',
+  },
+
+  // ── AZERBAIJAN ARC (events_armenia_azerbaijan.js) ────────────────────────────
+
+  azr_black_january_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed or survived Black January 1990 — Soviet army killing 131 Baku civilians in pro-independence crackdown',
+    intent: 'year_texture',
+    notes: 'Set by azr_black_january. World event possible.',
+  },
+
+  azr_black_january_witness: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Was in the street during the January 19-20 1990 Soviet military operation in Baku',
+    intent: 'year_texture',
+    notes: 'Set by azr_black_january choice witness.',
+  },
+
+  azr_baku_pogrom_witness: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Witnessed or was adjacent to the 1988-1990 anti-Armenian pogroms in Baku — the empty apartments, the guilt',
+    intent: 'year_texture',
+    notes: 'Set by azr_baku_pogrom. Follow-through: ft22_azr_baku_pogrom_late.',
+  },
+
+  azr_karabakh_idp: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Internally displaced from Nagorno-Karabakh or surrounding districts 1993-2020 — railway carriage, unfinished building, the deed',
+    intent: 'both',
+    notes: 'Set by azr_karabakh_idp event. Follow-through: azr_karabakh_return_2023, ft22_azr_idp_return.',
+  },
+
+  azr_baku_boom: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through Baku\'s oil-funded transformation 2005-2015 — glass towers, Formula 1, Eurovision, IDPs still in containers',
+    intent: 'year_texture',
+    notes: 'Set by azr_baku_boom.',
+  },
+
+  azr_press_silence: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Internalized the habits of self-censorship under Aliyev\'s media crackdowns — the names you don\'t search, the texts you don\'t send',
+    intent: 'year_texture',
+    notes: 'Set by azr_press_freedom.',
+  },
+
+  azr_war_victory_2020: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through Azerbaijan\'s 2020 44-day war victory — the joy complicated by thirty years of grief and the price of winning',
+    intent: 'year_texture',
+    notes: 'Set by azr_war_2020.',
+  },
+
+  azr_karabakh_return_2023: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Returned to Karabakh after the 2023 Azerbaijani offensive — the house, the mulberry tree, what was there and what was not',
+    intent: 'year_texture',
+    notes: 'Set by azr_karabakh_return_2023. Follow-through: ft22_azr_idp_return.',
+  },
+
   // ── TAIWAN ARC (events_taiwan_malaysia.js) ───────────────────────────────────
 
   taiwan_228_generation: {

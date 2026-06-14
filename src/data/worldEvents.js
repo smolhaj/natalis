@@ -1026,6 +1026,43 @@ export const WORLD_EVENTS = [
     minAge: 10,
   },
 
+  {
+    id: 'spitak_earthquake_1988',
+    name: 'Spitak Earthquake, Armenia',
+    years: [1988, 1989],
+    archetypes: 'all',
+    countries: ['Armenia'],
+    narrative: 'December 7, 1988. At 11:41am, a 6.8 magnitude earthquake destroys the city of Spitak and heavily damages Leninakan. Twenty-five thousand people die. Hundreds of thousands are left homeless in winter. Soviet and international rescue teams dig for survivors for weeks. The earthquake strikes six days before Gorbachev is to speak at the UN about the new Soviet openness — he cuts his speech short and returns home.',
+    context: 'The 1988 Spitak earthquake was one of the deadliest in Soviet history. It occurred during the first stirrings of the Karabakh conflict, compounding humanitarian strain on the Armenian SSR. The earthquake exposed Soviet construction failures — pancake collapses of prefabricated buildings that should have withstood larger quakes — and the inadequacy of state emergency response.',
+    effect: (p) => { p.h -= 12; p.m -= 18; p.addFlag('arm_earthquake_survivor'); },
+    addFlags: ['arm_earthquake_survivor'],
+    minAge: 0,
+  },
+  {
+    id: 'karabakh_war_first',
+    name: 'First Nagorno-Karabakh War',
+    years: [1991, 1994],
+    archetypes: 'all',
+    countries: ['Armenia', 'Azerbaijan'],
+    narrative: 'The Armenian-majority enclave of Nagorno-Karabakh declares independence from Azerbaijan. A war for control of the territory and surrounding districts kills twenty to thirty thousand people and displaces over a million. Armenia and Armenian forces take the enclave and seven surrounding districts. Azerbaijan\'s government and army collapse and reorganize. A ceasefire holds in 1994 but no peace treaty is ever signed.',
+    context: 'The Nagorno-Karabakh conflict began as a Soviet-era territorial dispute and became a full war after 1991 independence. Armenia backed Karabakh Armenians militarily; Azerbaijan suffered major military reverses and internal political turmoil, including two coups. The Lachin corridor remained the only road between Armenia and Karabakh. The frozen conflict lasted until 2020.',
+    effect: (p) => { p.m -= 15; p.h -= 5; p.r += 8; },
+    addFlags: [],
+    minAge: 5,
+  },
+  {
+    id: 'karabakh_war_2020',
+    name: '44-Day War: Nagorno-Karabakh',
+    years: [2020, 2020],
+    archetypes: 'all',
+    countries: ['Armenia', 'Azerbaijan'],
+    narrative: 'September 27 to November 10, 2020. Azerbaijan launches a large-scale offensive using Turkish-supplied Bayraktar drones. Armenian positions that held for twenty-six years collapse in days. The strategic city of Shusha (Shushi) falls on November 8. On November 10, Prime Minister Pashinyan signs a Russian-brokered ceasefire. Armenia cedes seven surrounding districts and parts of Karabakh. Azerbaijan returns no displaced Armenians; Armenian IDPs from Karabakh now find their return impossible.',
+    context: 'The 2020 war lasted 44 days and fundamentally changed the regional status quo frozen since 1994. Azerbaijan deployed Israeli and Turkish drones that neutralized Armenian air defense. Russia mediated the ceasefire and deployed peacekeepers. The 2023 Azerbaijani offensive on the remaining enclave took 24 hours; nearly all 120,000 ethnic Armenians of Karabakh fled to Armenia.',
+    effect: (p) => { p.m -= 14; p.r += 8; },
+    addFlags: [],
+    minAge: 8,
+  },
+
   // ── NATIONAL TRAUMAS ─────────────────────────────────────────────────────────
   {
     id: 'holodomor',
