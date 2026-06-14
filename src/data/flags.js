@@ -2636,6 +2636,96 @@ export const FLAG_REGISTRY = {
     notes: 'Set by geo_eu_dream.',
   },
 
+  // ── BELARUS ARC (events_belarus.js) ──────────────────────────────────────────
+
+  bel_partisan_memory: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Grew up with living memory of WWII partisan war in Belarus — a third of the population dead, every family with a grave',
+    intent: 'year_texture',
+    notes: 'Set by bel_partisan_memory.',
+  },
+
+  bel_chernobyl_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Alive in Belarus during the 1986 Chernobyl explosion — 70% of fallout landed in Belarus; May Day parade in contaminated Minsk',
+    intent: 'year_texture',
+    notes: 'Set by bel_chernobyl. Follow-through in buildYearTexture.',
+  },
+
+  bel_chernobyl_zone: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Was in the contaminated Gomel or Mogilev region in April-May 1986 — the cloud, the official silence, the two contradictory statements',
+    intent: 'year_texture',
+    notes: 'Set by bel_chernobyl choice affected_zone.',
+  },
+
+  bel_independence_1991: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived Belarus\'s sudden independence — the Belavezha Accords hunting lodge, the country emotionally unprepared for it',
+    intent: 'year_texture',
+    notes: 'Set by bel_independence_1991.',
+  },
+
+  bel_lukashenko_era: {
+    weight: 'major',
+    category: 'political',
+    description: 'Voted for or lived through Lukashenko\'s 1994 election — the collective farm director who came to stay',
+    intent: 'year_texture',
+    notes: 'Set by bel_lukashenko_1994.',
+  },
+
+  bel_state_discipline: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Learned the internal calibration of what not to say in a Lukashenko-era state enterprise — not fear, information',
+    intent: 'year_texture',
+    notes: 'Set by bel_state_discipline.',
+  },
+
+  bel_2020_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Alive for the 2020 Belarusian protests — Tsikhanouskaya, the Sunday marches, the women human chains, the tractor factory strike',
+    intent: 'year_texture',
+    notes: 'Set by bel_2020_protests. Follow-through: bel_crackdown.',
+  },
+
+  bel_2020_marcher: {
+    weight: 'major',
+    category: 'political',
+    description: 'Marched every Sunday in Minsk August-November 2020 — 200,000 people, that silent, then that loud',
+    intent: 'year_texture',
+    notes: 'Set by bel_2020_protests choice marched.',
+  },
+
+  bel_crackdown_survived: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived the post-2020 crackdown — Raman Bandarenka, the Okrestina detention centre, Ryanair flight forced down',
+    intent: 'year_texture',
+    notes: 'Set by bel_crackdown. Splits into bel_exile or bel_stayed_2020.',
+  },
+
+  bel_exile: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Left Belarus after 2020 — Warsaw, Vilnius; the Belarusian expat community large enough to have its own cafes and funerals',
+    intent: 'both',
+    notes: 'Set by bel_crackdown choice left. Follow-through: bel_exile_life.',
+  },
+
+  bel_stayed_2020: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Stayed in Belarus after 2020 — learned what staying required, the changed calculations, the new language of the situation',
+    intent: 'year_texture',
+    notes: 'Set by bel_crackdown choice stayed.',
+  },
+
   // ── ARMENIA ARC (events_armenia_azerbaijan.js) ───────────────────────────────
 
   arm_genocide_memory_bearer: {

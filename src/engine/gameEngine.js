@@ -6531,6 +6531,72 @@ function buildYearTexture(state) {
       : 'The victory was real. The price was also real — the dead, the destroyed, the century of mutual wound between two peoples. You felt the joy and also, once it passed, the question of what comes after the joy.',
   ])
 
+  // ─── BELARUS TEXTURE ─────────────────────────────────────────────────────────
+  if (F.has('bel_independence_1991') && Math.random() < 0.2) return pick([
+    'The Belavezha Accords: three men in a hunting lodge in the Białowieża Forest in December 1991. They signed and the Soviet Union was over. Belarus had voted in March to stay in it. Independence had not been the plan.',
+    phase === 'late_life'
+      ? 'You remember the months after 1991 when nobody knew what came next. The factories still ran on Soviet supply chains. The question of what Belarus was, without the Soviet Union, was not something anyone had thought to answer.'
+      : 'The country went from Soviet Republic to independent state in weeks, without a revolution, without a war, almost without deciding. The currency was still Soviet, the supply chains were still Soviet, the identity was uncertain.',
+  ])
+  if (F.has('bel_state_discipline') && Math.random() < 0.2) return pick([
+    'The professor who said something at a lecture and was no longer at the university the following semester. The things you do not say at the state enterprise, not because someone told you not to, but because you have watched long enough.',
+    phase === 'late_life'
+      ? 'The discipline became invisible to you. You can no longer always remember learning it. It is now simply part of how you move through a working day, a habit of self-editing so ingrained you do not experience it as editing.'
+      : 'This is not fear. It is information. You processed the information and adjusted. The adjustment is now automatic and you notice it only when you are with people who have not adjusted the same way.',
+  ])
+  if (F.has('bel_partisan_memory') && Math.random() < 0.28) return pick([
+    'Every May 9. The grandfather with the medals coming to the school. The photograph of the forest, the men younger than your father. Every family in Belarus has a grave. Every family knows where it is.',
+    phase === 'late_life'
+      ? 'A third of the population — some 2.2 million people — did not survive the war. You know the names on your village monument. You have known them since you were eight. You have outlived everyone who knew them from life.'
+      : 'The partisan republic identity is not rhetoric. You have met people for whom it is personal memory, not history. The line between the two generations runs through families you know.',
+  ])
+  if (F.has('bel_chernobyl_generation') && Math.random() < 0.3) return pick([
+    'April 26, 1986. The cloud moved north. Seventy percent of the Chernobyl fallout landed in Belarus. The May Day parade in Minsk went ahead on schedule four days after the explosion — children marching in the contaminated air, the officials watching from the tribune.',
+    phase === 'late_life'
+      ? 'The exclusion zone across the border in Ukraine. The 131 cities and villages in Belarus still on the contamination maps. The thyroid cancer rates. You were there when the cloud came and you were told it was safe. Both of those things are in your body.'
+      : 'They told people to stay indoors for a day and then said it was safe. You understand now that both statements could not both be true. You understood this for the first time years after the event, not at the time.',
+  ])
+  if (F.has('bel_chernobyl_zone') && Math.random() < 0.25) return pick([
+    'You were in the affected zone — Gomel, Mogilev, one of the contaminated oblasts. The two days when nobody told you anything. The official assurance that followed. The silence that came after the assurance.',
+    phase === 'late_life'
+      ? 'The dosimeter readings nobody showed you at the time. The cancer rates in the villages downwind. You are still here. Others from your school in Gomel are not, though it is difficult to prove causation, which is precisely the difficulty.'
+      : 'What you knew, and when you knew it, and what you were told in the interim: these three things do not line up.',
+  ])
+  if (F.has('bel_lukashenko_era') && Math.random() < 0.25) return pick([
+    'The collective farm director who said he would clean up corruption. 1994. He was the only candidate who spoke Belarusian in the debate. He got 80% of the vote. What came after took longer to understand.',
+    phase === 'late_life'
+      ? 'Thirty years. The collective farm director who promised to fight corruption and who is still there, still at the same desk, still being photographed in the same military-style uniform. You have aged. The man at the desk has aged. The desk has not changed.'
+      : 'You voted for him, or you understood why people voted for him. The factories stayed running. The collective farms stayed open. The price for this came later, in a form that was harder to calculate.',
+  ])
+  if (F.has('bel_2020_generation') && !F.has('bel_crackdown_survived') && Math.random() < 0.28) return pick([
+    'August 2020. The ballot boxes photographed by observers, the counts that did not match the announced results. Tsikhanouskaya — a language teacher\'s wife, nobody\'s candidate — whose count showed she had won.',
+    'The Sunday marches. 200,000 people in Minsk. The women in white forming human chains. The workers at the Minsk Tractor Factory striking. The country discovering, over several weeks, how many people it contains.',
+  ])
+  if (F.has('bel_2020_marcher') && Math.random() < 0.25) return pick([
+    'You were in the crowd every Sunday. The specific feeling of standing in 200,000 people, that silent, then that loud. You were there for the weeks when it seemed possible that something would change.',
+    phase === 'late_life'
+      ? 'The Sundays of August and September 2020. You marched and you watched it end. The crackdown came. The country emptied. You stayed or you left, but either way you marched when it was possible to march.'
+      : 'You took the risk of being there. You decided that was the right calculation. The calculation changed later but the decision was made at a specific moment in a specific square and you made it.',
+  ])
+  if (F.has('bel_crackdown_survived') && Math.random() < 0.28) return pick([
+    'Raman Bandarenka beaten to death in a Minsk courtyard in November 2020 for objecting to the removal of protest ribbons from a lamppost. The journalist taken off the Ryanair flight. Thirty-five thousand detained.',
+    phase === 'late_life'
+      ? 'The country emptied from 2020 onward — Warsaw, Vilnius, Warsaw, Kyiv, then not Kyiv after February 2022. The people you knew distributed across Europe. Occasional phone calls. The question of when coming up and nobody knowing the answer.'
+      : 'The ones who were in the Okrestina detention centre came out and described it. The ones who are still inside cannot describe it. You know people in both categories.',
+  ])
+  if (F.has('bel_exile') && Math.random() < 0.22) return pick([
+    'Warsaw or Vilnius: the Belarusian expat community large enough now to have its own cafes, newspapers, funerals. The conversation at every gathering reaches the same point: when can we go back. Nobody says never.',
+    phase === 'late_life'
+      ? 'You left Belarus in 2020 or 2021. You have been renewing work permits and residency registrations since. The Minsk you left and the Minsk that exists now are not the same city. You are not the same person. When you imagine returning, you imagine returning to something that no longer exists.'
+      : 'The language of the gathering: Belarusian, which in Warsaw becomes a political act rather than a daily language. You speak it more here than you did at home. Something about exile made the language important in a way it was not when you lived there.',
+  ])
+  if (F.has('bel_stayed_2020') && Math.random() < 0.25) return pick([
+    'You stayed. The calculation: the children, the job at the state enterprise, the elderly parent who could not be moved. Other calculations also. You watched the country empty and you learned what staying required.',
+    phase === 'late_life'
+      ? 'The friends who are in Warsaw now, or Vilnius. The occasional call. The conversation around what you can say over the phone and what you cannot. You stayed for reasons that seemed right at the time. You have not finished deciding if they were right.'
+      : 'Staying required its own kind of learning. The new calculations. The things you do not say where you work. The version of yourself that goes to work and the version that comes home. You learned to keep them separate.',
+  ])
+
   // ─── ERA TEXTURE ─────────────────────────────────────────────────────────────
   if (F.has('spanish_flu_generation') && Math.random() < 0.25) return pick([
     'The disease moved through the city in 1918 faster than any official account could follow. You remember the funerals, or the absence of funerals — the bodies moved quietly.',
@@ -12775,6 +12841,7 @@ export function generateEpitaph(state) {
     'refugee', 'displaced', 'emigrated', 'diaspora',
     'arm_genocide_memory_bearer', 'arm_karabakh_veteran_1', 'arm_war_2020_loss',
     'arm_dark_winter_survivor', 'azr_karabakh_idp', 'azr_black_january_generation',
+    'bel_2020_generation', 'bel_crackdown_survived', 'bel_chernobyl_generation', 'bel_exile',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -12849,6 +12916,12 @@ export function generateEpitaph(state) {
     para2.push(`${He} was in Baku on Black January 1990, when the Soviet army killed 131 people in the streets. Thirty years later ${he} watched the Karabakh map change. Both dates are in the same life.`)
   } else if (f('azr_karabakh_idp')) {
     para2.push(`${He} was displaced from Karabakh in 1993 or 1994 and carried a land deed for thirty years, waiting to use it. The waiting was most of an adult life.`)
+  } else if (f('bel_exile') && f('bel_2020_marcher')) {
+    para2.push(`${He} marched every Sunday in Minsk in August 2020, when it seemed possible that something would change. Then ${he} left. The crowd ${he} had stood in, and the country ${he} left, and the years of renewing work permits in Warsaw — these are the arc of a specific political life.`)
+  } else if (f('bel_crackdown_survived') && f('bel_stayed_2020')) {
+    para2.push(`${He} stayed in Belarus after 2020, when others left, and learned what staying required. The version of ${himself} that went to work and the version that came home — ${he} kept them separate for a long time.`)
+  } else if (f('bel_chernobyl_generation')) {
+    para2.push(`${He} was in Belarus in April 1986, when the cloud from Chernobyl moved north. Seventy percent of the fallout. The May Day parade went ahead on schedule. ${He} was not told about the cloud in time. ${He} was told it was safe.`)
   }
 
   // Displacement / migration
