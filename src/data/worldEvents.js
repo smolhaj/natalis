@@ -2926,6 +2926,73 @@ export const WORLD_EVENTS = [
     when: (G) => !G.flags.includes('plano_real_generation'),
   },
 
+  // ── NEW COUNTRY WORLD EVENTS ─────────────────────────────────────────────────
+
+  {
+    id: 'bordaberry_coup_uruguay_1973',
+    name: 'Uruguayan Military Coup',
+    years: [1973, 1973],
+    archetypes: 'all',
+    countries: ['Uruguay'],
+    narrative: 'June 27, 1973. President Bordaberry dissolves parliament and transfers power to the military. There are no tanks in the main plaza. The parliament doors close and stay closed. Uruguay — South America\'s most stable democracy, universal suffrage since 1918, a welfare state since the early 1900s — enters twelve years of military rule with less spectacle than most coups.',
+    context: 'The 1973 Uruguayan coup followed a period of Tupamaro guerrilla activity and economic crisis. Under military rule, Uruguay had the highest per-capita political prisoner rate in the world. An estimated 10,000 Uruguayans were detained; 200 were killed or disappeared. The Tupamaros leadership — including José Mujica — was held in isolation as "hostages" for years. Democracy was restored in 1985; the 1986 Ley de Caducidad gave amnesty to most military and police.',
+    effect: (p) => { p.m -= 14; p.addFlag('uru_coup_1973'); },
+    addFlags: ['uru_coup_1973'],
+    minAge: 8,
+  },
+
+  {
+    id: 'baku_black_january_1990',
+    name: 'Black January, Baku',
+    years: [1990, 1990],
+    archetypes: 'all',
+    countries: ['Azerbaijan'],
+    narrative: 'January 19-20, 1990. Soviet troops enter Baku after midnight and suppress pro-independence demonstrations. 131 civilians are killed in the streets. The government had cut the city\'s television signal before the operation began. At the funerals, people tear their Soviet Communist Party membership cards in half and put them in the coffins.',
+    context: 'Black January (Qara Yanvar) was the Soviet military\'s crackdown on pro-independence and nationalist demonstrations in Baku, capital of the Azerbaijan SSR. The operation came after anti-Armenian pogroms in January 1990 gave Moscow a pretext for intervention. The deaths — witnessed by hundreds of thousands who came to the funerals — accelerated Azerbaijani nationalism and weakened Soviet legitimacy. January 20 is now a national day of mourning in Azerbaijan.',
+    effect: (p) => { p.m -= 14; p.r += 6; p.addFlag('azr_black_january_generation'); },
+    addFlags: ['azr_black_january_generation'],
+    minAge: 8,
+  },
+
+  {
+    id: 'stroessner_fall_1989',
+    name: 'Fall of Stroessner, Paraguay',
+    years: [1989, 1989],
+    archetypes: 'all',
+    countries: ['Paraguay'],
+    narrative: 'February 3, 1989. General Andrés Rodríguez launches a coup against Alfredo Stroessner, who has governed Paraguay since 1954. Stroessner is sent into exile in Brazil. After thirty-five years — the longest personal dictatorship in Latin American history — it ends in a single night. The Colorado Party that administered the regime remains in power.',
+    context: 'The February 1989 coup was initiated by Rodríguez, Stroessner\'s son-in-law and commander of the First Army Corps. Stroessner had governed since 1954 through a combination of state patronage, the Colorado Party machine, and systematic repression. The coup was not a democratic transition — Rodríguez won the immediate election and the Colorado Party would continue to govern for another two decades. The Archive of Terror, discovered in 1992, documented the scope of Condor-era repression with four tonnes of documents found in a police station.',
+    effect: (p) => { p.m += 8; p.addFlag('pry_stroessner_era'); },
+    addFlags: ['pry_stroessner_era'],
+    minAge: 8,
+  },
+
+  {
+    id: 'ecuador_dollarization_2000',
+    name: 'Ecuador Adopts the US Dollar',
+    years: [2000, 2000],
+    archetypes: 'all',
+    countries: ['Ecuador'],
+    narrative: 'January 2000. After the sucre loses 75 percent of its value in a year and banks freeze accounts, Ecuador announces it will replace its national currency with the US dollar. The conversion rate: 25,000 sucres per dollar. Savings are converted at rates that make most Ecuadorians poorer by the act of conversion. The dollar is stable. Ecuador is not.',
+    context: 'Ecuador\'s 1999-2000 banking crisis saw the sucre collapse under a combination of the El Niño weather disaster, low oil prices, and systemic bank failures. President Jamil Mahuad announced dollarization in January 2000; he was overthrown in a coup within days. His successor implemented the policy. Dollarization ended inflation but also removed monetary policy as a tool; Ecuador\'s economy became permanently tied to US Federal Reserve decisions. The abandoned sucre had been Ecuador\'s currency since 1884.',
+    effect: (p) => { p.m -= 10; p.w -= 8; p.addFlag('ecu_dollarization_generation'); },
+    addFlags: ['ecu_dollarization_generation'],
+    minAge: 8,
+  },
+
+  {
+    id: 'belarus_protests_2020',
+    name: 'Belarus 2020 Election Protests',
+    years: [2020, 2021],
+    archetypes: 'all',
+    countries: ['Belarus'],
+    narrative: 'August 2020. The election results show Lukashenko with 80 percent. Parallel counts by observers show Sviatlana Tsikhanouskaya won. Sunday after Sunday: 200,000 people in Minsk, the largest protests in Belarusian history. Workers at the Minsk Tractor Factory strike. Women form human chains. The government\'s response: 35,000 detained, a journalist removed from a commercial flight over Minsk, Raman Bandarenka beaten to death in a courtyard.',
+    context: 'The 2020 Belarusian presidential election crisis followed the disputed August 9 election, widely seen as fraudulent. Tsikhanouskaya — a housewife whose husband was jailed — ran against Lukashenko and parallel vote counts suggested she won. The protests that followed were the largest in Belarusian history. The crackdown included mass detentions, credible reports of torture in the Okrestina detention center, and political trials. In May 2021, Belarus forced a Ryanair flight to land in Minsk to arrest journalist Raman Pratasevich. Russia\'s support secured Lukashenko\'s position.',
+    effect: (p) => { p.m -= 10; p.addFlag('bel_2020_generation'); },
+    addFlags: ['bel_2020_generation'],
+    minAge: 12,
+  },
+
   {
     id: 'we_brazil_june_days_2013',
     name: 'Brazilian June Days Protests',

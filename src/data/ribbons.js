@@ -1964,6 +1964,102 @@ export const RIBBONS = [
     color: 'gray',
   },
 
+  // ── ARMENIA + AZERBAIJAN RIBBONS ─────────────────────────────────────────────
+  {
+    id: 'the_mountain_and_the_map',
+    name: 'The Mountain and the Map',
+    description: 'You fought in the mountains for Karabakh in 1991. In 2020 you watched the map change on your phone, name by name, through the night.',
+    condition: (G) => G.flags.includes('arm_karabakh_veteran_1') && G.flags.includes('arm_war_2020_loss'),
+    priority: 88,
+    color: 'gray',
+  },
+  {
+    id: 'one_hour_per_day',
+    name: 'One Hour Per Day',
+    description: 'You stayed through the blockade winters. One hour of electricity, sometimes less. Eight degrees in January in your own apartment. You filled every container when the electricity came on.',
+    condition: (G) => G.flags.includes('arm_dark_winter_survivor') && G.flags.includes('arm_stayed_dark_years'),
+    priority: 78,
+    color: 'gray',
+  },
+  {
+    id: 'the_name_before',
+    name: 'The Name Before',
+    description: 'Your grandmother had a different name before 1915. The name she set aside at the border survives in one document in a church archive. You know the name.',
+    condition: (G) => G.flags.includes('arm_genocide_memory_bearer'),
+    priority: 72,
+    color: 'gray',
+  },
+  {
+    id: 'the_deed_in_the_drawer',
+    name: 'The Deed in the Drawer',
+    description: 'You carried the land deed for thirty years. The house was a ruin when you returned. The mulberry tree was still there.',
+    condition: (G) => G.flags.includes('azr_karabakh_idp') && G.flags.includes('azr_karabakh_return_2023'),
+    priority: 82,
+    color: 'gray',
+  },
+  {
+    id: 'january_19',
+    name: 'January 19',
+    description: 'You pressed yourself into a doorway when the armored column passed on Neftchilar Avenue. The sound of it stayed in your body.',
+    condition: (G) => G.flags.includes('azr_black_january_witness'),
+    priority: 76,
+    color: 'gray',
+  },
+
+  // ── BELARUS RIBBONS ──────────────────────────────────────────────────────────
+  {
+    id: 'the_sunday_crowd',
+    name: 'The Sunday Crowd',
+    description: 'You marched every Sunday in 2020. Two hundred thousand people, that silent, then that loud. Then you packed a bag and left.',
+    condition: (G) => G.flags.includes('bel_2020_marcher') && G.flags.includes('bel_exile'),
+    priority: 80,
+    color: 'gray',
+  },
+  {
+    id: 'the_other_version',
+    name: 'The Other Version',
+    description: 'You stayed. The version of yourself that went to work and the version that came home — you learned to keep them separate. You are still keeping them separate.',
+    condition: (G) => G.flags.includes('bel_stayed_2020'),
+    priority: 72,
+    color: 'gray',
+  },
+
+  // ── URUGUAY + PARAGUAY RIBBONS ───────────────────────────────────────────────
+  {
+    id: 'fourteen_years_in_a_hole',
+    name: 'Fourteen Years in a Hole',
+    description: 'You lived Uruguay\'s dictatorship and watched a man who spent two years in a hole in the ground become president. The arc from one thing to the other was most of a life.',
+    condition: (G) => G.flags.includes('uru_dictatorship_lived') && G.flags.includes('uru_mujica_era'),
+    priority: 82,
+    color: 'yellow',
+  },
+  {
+    id: 'the_language_that_survived',
+    name: 'The Language That Survived',
+    description: 'You grew up with two languages without deciding to. Paraguay was nearly destroyed. The language is still spoken at the bus stop. We are still here.',
+    condition: (G) => G.flags.includes('pry_triple_alliance_memory') && G.flags.includes('pry_guarani_speaker'),
+    priority: 76,
+    color: 'green',
+  },
+  {
+    id: 'the_cabinet_in_the_police_station',
+    name: 'The Cabinet in the Police Station',
+    description: 'A lawyer looking for a client\'s file found four tonnes of documents. The cold specific feeling of reading the newspaper account that day in 1992.',
+    condition: (G) => G.flags.includes('pry_archive_terror'),
+    priority: 74,
+    color: 'gray',
+  },
+
+  // ── ECUADOR RIBBON ───────────────────────────────────────────────────────────
+  {
+    id: 'the_offer_to_the_world',
+    name: 'The Offer to the World',
+    description: 'Ecuador offered to leave the oil in the ground if the world paid half of what Ecuador would earn from drilling. The world raised 9% of the target. You watched both halves of this happen.',
+    condition: (G) => G.flags.includes('ecu_yasuni_generation') && G.flags.includes('ecu_oil_generation'),
+    priority: 74,
+    color: 'green',
+  },
+
   // ── PALESTINE ADDITIONAL RIBBONS ─────────────────────────────────────────────
   {
     id: 'the_keys_on_the_wall',
