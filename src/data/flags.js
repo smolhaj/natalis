@@ -1880,6 +1880,72 @@ export const FLAG_REGISTRY = {
     notes: 'Set by cub_july11_protests. Year texture (witness without participant; the arithmetic of staying inside).',
   },
 
+  // ── NAMIBIA ARC FLAGS ────────────────────────────────────────────────────
+
+  nam_herero_memory_bearer: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Herero or Nama character who carries the oral memory of the 1904-08 genocide — the Extermination Order, the bones sent to Germany, the generational transmission of loss.',
+    intent: 'year_texture',
+    notes: 'Set by nam_herero_oral_history and nam_german_apology_herero_nama. Year texture (the bone of history passed through telling).',
+  },
+
+  nam_communal_land_lived: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Grew up with the communal vs. commercial farm divide in post-independence Namibia — the fence between ancestral land and white-owned title.',
+    intent: 'year_texture',
+    notes: 'Set by nam_communal_land_divide. Year texture (the fence still there after independence).',
+  },
+
+  nam_aids_generation_nam: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Namibian character who grew up during the country\'s HIV/AIDS epidemic (late 1990s-2010s) — one in five adults infected at peak; the funerals as rhythm of the year.',
+    intent: 'year_texture',
+    notes: 'Set by nam_aids_generation. Year texture (knowledge that a specific decision can determine the rest of your life).',
+  },
+
+  nam_swapo_generation: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Shaped by SWAPO\'s dual nature as liberation movement and entrenched ruling party — liberation legitimacy that became patronage infrastructure.',
+    intent: 'year_texture',
+    notes: 'Set by nam_swapo_ruling_party. Year texture (keeping separate the loyalty to the idea and the use of the structure).',
+  },
+
+  nam_german_apology_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Alive for Germany\'s 2021 acknowledgment of the Herero/Nama genocide — the first formal use of the word "genocide," the 1.1bn euros, the Herero Council\'s rejection.',
+    intent: 'year_texture',
+    notes: 'Set by nam_german_apology_2021 and nam_german_apology_herero_nama. Year texture (the word vs. the number vs. the question).',
+  },
+
+  nam_diamond_country: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Aware of the Sperrgebiet diamond contradiction — top-value diamond producer, understaffed hospitals; the resource curse as personal geography.',
+    intent: 'year_texture',
+    notes: 'Set by nam_diamond_wealth. Year texture (two facts in the same country).',
+  },
+
+  nam_san_displaced: {
+    weight: 'major',
+    category: 'identity',
+    description: 'San character evicted from ancestral land into resettlement — losing veldkos knowledge, ancestral waterholes, language; thirty-two speakers of your age.',
+    intent: 'year_texture',
+    notes: 'Set by nam_san_ancestral_land. Year texture (what the resettlement area came with and didn\'t come with).',
+  },
+
+  nam_independence_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Was in Namibia for independence on March 21, 1990 — the last African country to achieve independence from colonial/apartheid rule.',
+    intent: 'year_texture',
+    notes: 'Set by nam_independence_1990 world event. Year texture (the flag that was not there before and is there now).',
+  },
+
   // ── SRI LANKA FLAGS ───────────────────────────────────────────────────────
 
   black_july_survived: {

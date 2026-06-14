@@ -4854,6 +4854,54 @@ function buildYearTexture(state) {
       ? 'You left in the nineties or the two-thousands. The country you left is not the country that exists now — neither better nor worse in a simple direction, just different and ongoing.'
       : 'The question of whether you should have stayed is not a question with a clean answer. The people who stayed ask it sometimes. You ask it more.',
   ])
+  // ── NAMIBIA ARC ─────────────────────────────────────────────────────────────
+  if (F.has('nam_herero_memory_bearer') && Math.random() < 0.2) return pick([
+    'The Extermination Order was 1904. The bones came back from the German universities in 2018. Not all of them. The oral history is older than the acknowledgment and outlasts it.',
+    phase === 'late_life'
+      ? 'Germany said the word — genocide — in 2021. One hundred and thirteen years after the order was given. You have been carrying what that word names for your whole life. The word arriving does not change the weight.'
+      : 'Your grandmother knows the story in the way she knows her hands — without having to look. The story is what she gives you before she gives you anything else.',
+  ])
+  if (F.has('nam_communal_land_lived') && Math.random() < 0.18) return pick([
+    'The fence is the line between the communal area and the commercial farm. Independence changed the government. The fence did not change.',
+    phase === 'late_life'
+      ? 'The land redistribution program has been slow and contested for thirty years. The commercial farms are largely still what they were. The communal areas are largely still what they were. Both things have been true your whole adult life.'
+      : 'The title deed for the communal land does not exist in your family\'s name. The land itself has been your family\'s since before the concept of a title deed arrived in this country.',
+  ])
+  if (F.has('nam_aids_generation_nam') && Math.random() < 0.2) return pick([
+    'One in five adults. That was the number in the late 1990s. You grew up knowing the number in your body — the funerals that punctuated the year, the names you counted.',
+    'The knowledge that a specific decision at a specific moment can determine what the rest of your life looks like: you learned this young. The learning is heavy. It is also clarifying.',
+    phase === 'late_life'
+      ? 'The antiretrovirals came. The death rate fell. You watched the arc — the worst years and then the beginning of the other side. You are the generation that watched it in both directions.'
+      : 'The clinics distribute condoms and the churches say not to use them. These two instructions occupy the same space. You grew up negotiating between them.',
+  ])
+  if (F.has('nam_swapo_generation') && Math.random() < 0.17) return pick([
+    'The liberation movement is now the party that has governed for thirty years. The membership card is also the social infrastructure. Both of those things are true at once.',
+    phase === 'late_life'
+      ? 'SWAPO freed the country and then governed it. The governing has been a different thing from the freeing. You supported the first and have complicated feelings about the second.'
+      : 'You keep separate the loyalty to the idea and the use of the structure. Whether those can be kept separate indefinitely is a question you have not answered.',
+  ])
+  if (F.has('nam_german_apology_generation') && Math.random() < 0.18) return pick([
+    '1.1 billion euros over thirty years. Not reparations — the word choice is deliberate. The Herero Council of Chiefs was not consulted. The word genocide is in the document.',
+    phase === 'late_life'
+      ? 'The acknowledgment arrived in 2021. The events it acknowledges were 1904. The number of years between them is not a gap that the acknowledgment closes. What it does is smaller and also real.'
+      : 'Germany said genocide. The Namibian government accepted the offer. The Herero Council rejected it. Three different positions on what the word means and what it\'s worth.',
+  ])
+  if (F.has('nam_diamond_country') && Math.random() < 0.15) return pick([
+    'Top producer by value. Understaffed hospitals. Both in the same country, which is what the economics textbooks call a resource curse and what everyone else calls their life.',
+    'The Sperrgebiet: the Forbidden Zone. You cannot enter without a permit. The diamonds are in the sand, in the ocean floor. The wealth is visible and inaccessible in a way that is specific to this part of the world.',
+  ])
+  if (F.has('nam_san_displaced') && Math.random() < 0.2) return pick([
+    'Thirty-two speakers of your language who are your age. The resettlement area came with boreholes and rations. It did not come with the waterholes your grandmother named or the veldkos she identifies by sight.',
+    phase === 'late_life'
+      ? 'The San have been in this land longer than any other people. Longer than any of the words that now apply to it. The resettlement area is a footnote to that duration that has lasted a generation.'
+      : 'You are learning English in school. You are also carrying a language with thirty-two living speakers your age. What those two facts mean for each other is not yet resolved.',
+  ])
+  if (F.has('nam_independence_generation') && Math.random() < 0.18) return pick([
+    'March 21, 1990. The last African territory. The flag that was not there before and is there now. The schoolbooks that were rewritten.',
+    phase === 'late_life'
+      ? 'You have been a Namibian citizen your whole life — which is the same length of time that Namibian citizenship has existed. The country and your adulthood are the same age.'
+      : 'Sam Nujoma was in exile for thirty years before he came home as the first president. The country that existed when he left was not the country he came back to. Both of those things are still inside the word "independence."',
+  ])
   if (F.has('holodomor_family_memory') && Math.random() < 0.18) return pick([
     'Your grandmother does not throw bread away. You know why.',
     'The Holodomor — 1932-33. Six million. The Soviets denied it internationally while it was happening. The bread your grandmother saves is the shape of that denial.',
@@ -13097,6 +13145,7 @@ export function generateEpitaph(state) {
     'ecu_dollarization_generation',
     'dprk_arduous_march', 'dprk_defected', 'dprk_hostile_class', 'dprk_chosen_stay',
     'cuba_balsero', 'cub_mariel_gone', 'cub_july11_marcher', 'special_period_generation',
+    'nam_herero_memory_bearer', 'nam_san_displaced',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -13203,6 +13252,12 @@ export function generateEpitaph(state) {
     para2.push(`${He} was in the street on July 11, 2021 — the largest protests in Cuba since 1959. The neighbor who stood beside ${him} is still serving eight years. ${He} carries the day without putting it in sentences.`)
   } else if (f('special_period_generation') && f('cub_revolution_generation')) {
     para2.push(`${He} was born into the revolution and survived the collapse of everything the revolution had promised — the Soviet subsidies, the food rations, the certainty. Both the faith and the famine were part of ${his} formation.`)
+  } else if (f('nam_herero_memory_bearer') && f('nam_german_apology_generation')) {
+    para2.push(`${He} carried the oral history of what Germany did to the Herero people in 1904–1908, and was alive in 2021 when Germany said the word genocide for the first time. The word arriving one hundred and seventeen years later: ${he} had something to say about what that was worth.`)
+  } else if (f('nam_herero_memory_bearer')) {
+    para2.push(`${He} carried what no document yet acknowledged — the oral history of the Herero genocide, passed from grandmother to grandchild before any government called it by name.`)
+  } else if (f('nam_san_displaced')) {
+    para2.push(`${He} was San — the people who had been in the land the longest — growing up in a resettlement area thirty-two speakers away from a language that named every plant that fed a family. ${He} held both the language and the knowledge of what holding it cost.`)
   }
 
   // Displacement / migration

@@ -2094,6 +2094,32 @@ export const RIBBONS = [
     color: 'purple',
   },
 
+  // ── NAMIBIA RIBBONS ──────────────────────────────────────────────────────────
+  {
+    id: 'the_vernichtungsbefehl',
+    name: 'The Vernichtungsbefehl',
+    description: 'You carried the oral memory of the Extermination Order — passed from grandmother to grandchild before any government called it by its name. In 2021, one hundred and seventeen years later, the word arrived.',
+    condition: (G) => G.flags.includes('nam_herero_memory_bearer') && G.flags.includes('nam_german_apology_generation'),
+    priority: 89,
+    color: 'gray',
+  },
+  {
+    id: 'the_thirty_two_speakers',
+    name: 'The Thirty-Two Speakers',
+    description: 'Your language had thirty-two living speakers your age. You were one of them. What you held was older than any of the words used to describe what you had been displaced from.',
+    condition: (G) => G.flags.includes('nam_san_displaced'),
+    priority: 83,
+    color: 'green',
+  },
+  {
+    id: 'the_fence',
+    name: 'The Fence',
+    description: 'Independence changed the government. The fence between the communal area and the commercial farm did not change. You grew up on one side of both.',
+    condition: (G) => G.flags.includes('nam_communal_land_lived') && G.flags.includes('nam_independence_generation'),
+    priority: 70,
+    color: 'red',
+  },
+
   // ── PALESTINE ADDITIONAL RIBBONS ─────────────────────────────────────────────
   {
     id: 'the_keys_on_the_wall',
