@@ -2146,6 +2146,48 @@ export const RIBBONS = [
     color: 'red',
   },
 
+  // ── SINGAPORE RIBBONS ────────────────────────────────────────────────────────
+  {
+    id: 'the_banyan_tree',
+    name: 'The Banyan Tree',
+    description: 'You grew up in a kampung that was cleared for HDB blocks. The banyan tree at the entrance is now under a car park, or isn\'t there, or you can\'t find the spot where it stood because the grid of the new estate is oriented differently.',
+    condition: (G) => G.flags.includes('sg_kampung_generation') && G.flags.includes('sg_hdb_generation'),
+    priority: 74,
+    color: 'green',
+  },
+  {
+    id: 'the_grandmother_language',
+    name: 'The Grandmother\'s Language',
+    description: 'Hokkien, Teochew, Cantonese — the language they said was holding Singapore back. It went from the radio within a decade. Now your grandmother talks to her friends and you understand about forty percent of what she\'s saying.',
+    condition: (G) => G.flags.includes('sg_dialect_lost'),
+    priority: 77,
+    color: 'amber',
+  },
+  {
+    id: 'the_fine_city',
+    name: 'The Fine City',
+    description: 'The gum, the jaywalking, the toilet, the queue. The country that works because it has decided to make not-working expensive. You lived inside the rules long enough to stop noticing them, which is also a kind of result.',
+    condition: (G) => G.flags.includes('sg_conformist') && G.flags.includes('sg_ns_served'),
+    priority: 63,
+    color: 'blue',
+  },
+  {
+    id: 'the_meritocracy',
+    name: 'The Meritocracy',
+    description: 'The PSLE at twelve. The result that tracks you. Singapore says this is meritocracy — the best rise. You rose. You spent the rest of your working life inside a question: rose to what, and at whose expense.',
+    condition: (G) => G.flags.includes('sg_exam_success') && G.flags.includes('sg_hdb_generation'),
+    priority: 61,
+    color: 'blue',
+  },
+  {
+    id: 'moment_of_anguish',
+    name: 'A Moment of Anguish',
+    description: 'August 9, 1965. He appeared on television with wet eyes and couldn\'t finish the sentence. You were there. The country that emerged from that anguish is the one you spent your life in.',
+    condition: (G) => G.flags.includes('sg_founding_generation') && G.flags.includes('sg_lky_generation'),
+    priority: 80,
+    color: 'red',
+  },
+
   // ── PALESTINE ADDITIONAL RIBBONS ─────────────────────────────────────────────
   {
     id: 'the_keys_on_the_wall',

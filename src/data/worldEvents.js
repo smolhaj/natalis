@@ -2156,6 +2156,36 @@ export const WORLD_EVENTS = [
     when: (G) => !G.flags.has('cub_july11_watched') && !G.flags.has('cub_july11_marcher'),
   },
 
+  // ── SINGAPORE INDEPENDENCE 1965 ──────────────────────────────────────────
+  {
+    id: 'singapore_independence_1965',
+    name: 'Singapore Expelled from Malaysia',
+    years: [1965, 1965],
+    archetypes: null,
+    countries: ['Singapore'],
+    narrative: 'August 9, 1965. Lee Kuan Yew appears on television with tears on his face — the only time the public ever sees him like this. He says Singapore has been expelled from the Malaysian Federation. The separation is a shock: no Singaporean voted for it, no independence movement built toward it. The island has no hinterland, no natural resources, no reliable water supply. The British bases are still here but will not be here forever. The question is whether a city-state of two million people can survive as a nation.',
+    context: 'Singapore was separated from Malaysia on August 9, 1965, a decision driven by racial and political tensions between the Malay-dominated federal government and Singapore\'s Chinese-majority PAP. Lee Kuan Yew, who had campaigned for merger, wept on television at the announcement. The PAP government then pursued an extraordinary economic development strategy: export-led manufacturing, strict labour discipline, housing through the HDB, education in English, and the transformation of a colonial trading port into a financial and technological hub. By 1990 Singapore had one of the highest per-capita incomes in Asia.',
+    effect: (p) => { p.m -= 5; p.addFlag('sg_independence_witness'); },
+    addFlags: ['sg_independence_witness'],
+    minAge: 5,
+    when: (G) => !G.flags.has('sg_independence_witness'),
+  },
+
+  // ── LEE KUAN YEW DEATH 2015 ──────────────────────────────────────────────
+  {
+    id: 'lee_kuan_yew_death_2015',
+    name: 'Lee Kuan Yew Dies',
+    years: [2015, 2015],
+    archetypes: null,
+    countries: ['Singapore'],
+    narrative: 'March 23, 2015. Lee Kuan Yew dies at ninety-one. He has governed Singapore — first as prime minister, then as Senior Minister, then as Minister Mentor — since before it was a country. The queue to pay respects stretches for hours; people stand through the night in the heat. Singapore doesn\'t often display collective emotion in public. This week it does.',
+    context: 'Lee Kuan Yew was Prime Minister of Singapore from 1959 to 1990, then Senior Minister and Minister Mentor until 2011. Under his leadership Singapore transformed from a trading port with high unemployment and racial tension into one of the wealthiest countries in Asia. His governance combined economic liberalism with social control: strict laws, controlled press, the Internal Security Act that allowed detention without trial. The "Singapore Model" — development through benevolent authoritarianism — has been studied and debated by governments worldwide. Lee Kuan Yew died on March 23, 2015, and was given a state funeral attended by 27 heads of state.',
+    effect: (p) => { p.m -= 6; p.addFlag('sg_lky_mourning_witness'); },
+    addFlags: ['sg_lky_mourning_witness'],
+    minAge: 10,
+    when: (G) => !G.flags.has('sg_lky_mourning_witness'),
+  },
+
   // ── FIRST CONGO WAR 1996-97 ───────────────────────────────────────────────
   {
     id: 'congo_war_1996',

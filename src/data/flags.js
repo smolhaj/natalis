@@ -3476,6 +3476,120 @@ export const FLAG_REGISTRY = {
     notes: 'Set by mys_ge14_2018.',
   },
 
+  // ── SINGAPORE ARC (events_singapore.js) ──────────────────────────────────
+
+  sg_founding_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Was a young adult when Singapore was expelled from Malaysia in 1965 — became a citizen of a country nobody planned',
+    intent: 'year_texture',
+    notes: 'Set by sg_separation_1965.',
+  },
+
+  sg_kampung_generation: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Childhood home was a kampung (village) cleared for HDB blocks — the pre-urbanization way of life replaced by high-rise public housing',
+    intent: 'year_texture',
+    notes: 'Set by sg_kampung_clearing.',
+  },
+
+  sg_dialect_lost: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Chinese Singaporean whose Hokkien, Teochew, or Cantonese dialect was suppressed by the Speak Mandarin Campaign — grandmother\'s language became inaccessible',
+    intent: 'year_texture',
+    notes: 'Set by sg_speak_mandarin (choice 1). The cultural loss of dialects within a generation.',
+  },
+
+  sg_dialect_keeper: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Chinese Singaporean who maintained their ancestral dialect despite the Speak Mandarin Campaign',
+    intent: 'event',
+    notes: 'Set by sg_speak_mandarin (choice 2).',
+  },
+
+  sg_ns_served: {
+    weight: 'moderate',
+    category: 'military',
+    description: 'Completed Singapore National Service — the 2-year rite of passage for all male citizens',
+    intent: 'year_texture',
+    notes: 'Set by sg_national_service. Universal male experience in Singapore.',
+  },
+
+  sg_hdb_generation: {
+    weight: 'minor',
+    category: 'social',
+    description: 'Grew up in HDB public housing — the Singapore social engineering project that housed 80% of the population',
+    intent: 'event',
+    notes: 'Set by sg_psle_exam (both choices).',
+  },
+
+  sg_exam_success: {
+    weight: 'minor',
+    category: 'education',
+    description: 'Performed well in the PSLE — tracked into an elite secondary school stream',
+    intent: 'event',
+    notes: 'Set by sg_psle_exam (choice 1).',
+  },
+
+  sg_exam_failure: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'Underperformed in the PSLE — tracked into a lower stream, which shaped subsequent opportunities',
+    intent: 'year_texture',
+    notes: 'Set by sg_psle_exam (choice 2). The Singapore tracking system makes PSLE results deterministic.',
+  },
+
+  sg_conformist: {
+    weight: 'minor',
+    category: 'values',
+    description: 'Accepted Singapore\'s social contract — prosperity in exchange for compliance',
+    intent: 'event',
+    notes: 'Set by sg_fine_city (choice 1).',
+  },
+
+  sg_restless: {
+    weight: 'minor',
+    category: 'values',
+    description: 'Felt the stifling quality of Singapore\'s managed society — the prosperity real but the breathing room constrained',
+    intent: 'year_texture',
+    notes: 'Set by sg_fine_city (choice 2).',
+  },
+
+  sg_eip_generation: {
+    weight: 'minor',
+    category: 'social',
+    description: 'Encountered Singapore\'s Ethnic Integration Policy in housing — where you can live partially determined by your ethnicity',
+    intent: 'event',
+    notes: 'Set by sg_ethnic_quota.',
+  },
+
+  sg_lky_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Was alive and adult when Lee Kuan Yew died in 2015 — the man who built Singapore is gone',
+    intent: 'year_texture',
+    notes: 'Set by sg_lky_death_2015.',
+  },
+
+  sg_independence_witness: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed Singapore\'s expulsion from Malaysia in August 1965 — became part of an unplanned nation',
+    intent: 'event',
+    notes: 'Set by singapore_independence_1965 world event.',
+  },
+
+  sg_lky_mourning_witness: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Was in Singapore when Lee Kuan Yew died in 2015 — witnessed the national mourning',
+    intent: 'event',
+    notes: 'Set by lee_kuan_yew_death_2015 world event.',
+  },
+
   // ── PAKISTAN ARC (events_pakistan.js) ────────────────────────────────────
 
   muhajir_identity: {

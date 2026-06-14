@@ -1078,6 +1078,22 @@ function desireWeight(eventId, desire) {
   return patterns.some(p => eventId.includes(p)) ? 1.6 : 1
 }
 
+// Political leaning weight multiplier — characters who've formed political views
+// encounter related events more often, creating coherent ideological arcs.
+const LEANING_PATTERNS = {
+  left:        ['lab_', 'pov_', 'strike', 'union_', 'socialist', 'informal_', 'welfare', 'workers'],
+  right:       ['career_promot', 'business_ex', 'faith_deep', 'relig_conver', 'invest_', 'property_buy'],
+  nationalist: ['ethnic_', 'cultural_', 'lang_ban', 'language_ban', 'national_', 'diaspora_return', 'indigenous_'],
+  dissident:   ['dissident', 'samizdat', 'censor', 'political_prisoner', 'protest_', 'resist_', 'charter_'],
+  centre:      [],
+  apolitical:  [],
+}
+function leaningWeight(eventId, politicalLeaning) {
+  if (!politicalLeaning || !eventId) return 1
+  const patterns = LEANING_PATTERNS[politicalLeaning] ?? []
+  return patterns.some(p => eventId.includes(p)) ? 1.35 : 1
+}
+
 // Stat-based event weight multiplier — high/low stats shift event probability
 // without hard-gating events, preserving randomness while making lives feel coherent.
 function statWeight(eventId, G) {
@@ -1166,11 +1182,11 @@ export function getNextEvent(state) {
   if (pool.length === 0) return null
 
   const desire = G.desire
-  const stats = G.stats
-  const totalWeight = pool.reduce((sum, e) => sum + (e.weight ?? 1) * desireWeight(e.id, desire) * statWeight(e.id, G), 0)
+  const leaning = G.political_leaning
+  const totalWeight = pool.reduce((sum, e) => sum + (e.weight ?? 1) * desireWeight(e.id, desire) * statWeight(e.id, G) * leaningWeight(e.id, leaning), 0)
   let r = Math.random() * totalWeight
   for (const event of pool) {
-    r -= (event.weight ?? 1) * desireWeight(event.id, desire) * statWeight(event.id, G)
+    r -= (event.weight ?? 1) * desireWeight(event.id, desire) * statWeight(event.id, G) * leaningWeight(event.id, leaning)
     if (r <= 0) return event
   }
   return pool[pool.length - 1]
@@ -6458,6 +6474,62 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'The Pakatan Harapan government fell in 2020 after 22 months. UMNO returned to power in coalition. The structures outlasted the election result. The election result was still real. You were there for both.'
       : 'The transfer of power was peaceful. Sixty-one years of one-party rule ended without violence. That is not something you expected to see in your lifetime and you saw it.',
+  ])
+
+  // ─── SINGAPORE TEXTURE ───────────────────────────────────────────────────────
+  if (F.has('sg_kampung_generation') && Math.random() < 0.25) return pick([
+    'The kampung had a banyan tree at the entrance. You have not been able to check whether it survived the clearance because the HDB block that replaced it is oriented differently and you cannot find the spot where it stood.',
+    phase === 'late_life'
+      ? 'People talk about kampung spirit — the neighbourly interdependence that disappeared when everyone moved into flats and stopped needing each other for water or light. You lived in it. The word for what replaced it is community and the word is not wrong but it is not the same.'
+      : 'The resettlement was presented as progress, which in material terms it was. You grew up in the flat and the flat had running water and electricity and you never had to walk anywhere for either. The word for what you lost is harder to make material.',
+  ])
+  if (F.has('sg_dialect_lost') && Math.random() < 0.25) return pick([
+    'Your grandmother is talking to her friends and you understand perhaps forty percent of what she is saying. Hokkien. The language the government decided was holding Singapore back. You did not decide this.',
+    phase === 'late_life'
+      ? 'The dialects are mostly gone from the generation after yours. Your children\'s Mandarin is fluent; their Hokkien is a few phrases and a warmth they cannot explain. The Speak Mandarin Campaign worked. The thing it replaced is also gone.'
+      : 'When your grandmother is emotional, she slips into Teochew or Hokkien automatically. The emotion comes out in the language that holds it. You can hear the emotion without fully hearing the words. This is its own kind of distance.',
+  ])
+  if (F.has('sg_ns_served') && Math.random() < 0.22) return pick([
+    'BMT. The sergeant who knew your name and intended to make the knowing unpleasant. The field camp. The specific boredom of a guard post at 3am. Every Singapore man of your generation has a version of this story.',
+    phase === 'late_life'
+      ? 'The reservist cycle runs until your fifties. You have been going back every year for thirty years. Your son will go when he is old enough. The obligation transfers and you find you mind this less than you expected.'
+      : 'ICT: In-Camp Training. One or two weeks a year, every year, back into uniform, back into the roles assigned at enlistment. Singapore\'s defence depends on this. You know this and it does not make the weeks pass faster.',
+  ])
+  if (F.has('sg_lky_generation') && Math.random() < 0.22) return pick([
+    'The queue stretched for hours. People waited through the night. You did not expect the grief to be this large, or this public, or this genuine. The man built something real and the real thing is standing and that is why people are in the queue.',
+    phase === 'late_life'
+      ? 'Lee Kuan Yew died in 2015. You have now lived longer in a Singapore without him than some of your children lived with him. The country keeps working. The PAP keeps winning. The shape of things is unchanged. This is either a tribute to the durability of the system or a sign of its rigidity. Probably both.'
+      : 'Singapore is now governed by people who were born after independence and who have known only the prosperous version of the country, not the frightened version. They are capable. You find yourself wondering what they carry that you carry and what they do not.',
+  ])
+  if (F.has('sg_exam_failure') && Math.random() < 0.2) return pick([
+    'The PSLE result changed the shape of your schooling, which changed the shape of your working life. Singapore says streaming is about fit, not fate. The fit has felt quite permanent.',
+    phase === 'late_life'
+      ? 'Your grandchildren are doing tuition in four subjects. You recognize the Saturdays being spent. You know what the exam will decide and what it will not and you cannot tell them which is which.'
+      : 'The school you ended up in was not the school you were aimed at. The teachers there worked hard. The ceiling was different. You have spent considerable energy understanding whether the ceiling was the school or the examination or you.',
+  ])
+  if (F.has('sg_dialect_keeper') && Math.random() < 0.18) return pick([
+    'Your grandmother\'s Hokkien: imperfect now, but there. You know the tones for the words that matter. Most of your generation does not.',
+    phase === 'late_life'
+      ? 'The dialect is in you and not in your children except for a few words and the warmth that surrounds them. You held it one generation further than most.'
+      : 'Code-switching: Mandarin at work, English at the HDB counter, the old tongue at the kitchen table. Three registers for one life. This is also a kind of skill.',
+  ])
+  if (F.has('sg_eip_generation') && Math.random() < 0.15) return pick([
+    'The Ethnic Integration Policy: where you live is partly decided by how many people of your ethnicity already live in the block you want. Singapore\'s engineered multiculturalism is detailed. The detail is in your address.',
+    phase === 'late_life'
+      ? 'The policy has been in place for thirty years. You ended up in a block that is not the one you aimed for. The neighbours turned out to be fine. The distance to the people you knew turned out to be a bus ride. This is not nothing but it is also the policy working on your preferences.'
+      : 'The HDB officer\'s explanation was polite. The policy is published. The quota is a number. The number decided something about your life that you did not decide.',
+  ])
+  if (F.has('sg_restless') && Math.random() < 0.18) return pick([
+    'The word for it in Singapore is stifling. Some people who feel it leave for London or Melbourne and come back after five years saying they missed the food. Some don\'t come back. You are still working out which kind of person you are.',
+    phase === 'late_life'
+      ? 'You stayed. The country worked and you stayed and the staying was not wrong, except for the years when something in you wanted to know what the other option felt like. That question does not get answered now. The answer is: you stayed.'
+      : 'The question is live. Not urgent — the job is fine, the flat is fine, Singapore is fine. But live. London, Melbourne, Hong Kong. You have run the arithmetic without quite admitting you have run the arithmetic.',
+  ])
+  if (F.has('sg_founding_generation') && Math.random() < 0.2) return pick([
+    'Lee Kuan Yew cried on television and then got to work. You were old enough to understand both things — the grief at separation and the pivot to survival. The pivot worked.',
+    phase === 'late_life'
+      ? 'You have watched Singapore go from survival anxiety to embarrassment of economic riches inside one lifetime. The country you were born into and the country you will die in share a geography and a name and almost nothing else. This is either a miracle or a very interesting experiment in social engineering. Probably it is both.'
+      : 'The neighbours who said Singapore would not last six months. You know their names. The country has lasted sixty years. The neighbours have not apologised but they have also not been asked.',
   ])
 
   // ─── ARMENIA + AZERBAIJAN TEXTURE ────────────────────────────────────────────
@@ -13192,6 +13264,7 @@ export function generateEpitaph(state) {
     'cuba_balsero', 'cub_mariel_gone', 'cub_july11_marcher', 'special_period_generation',
     'nam_herero_memory_bearer', 'nam_san_displaced',
     'laos_hmong_era', 'laos_uxo_generation',
+    'sg_founding_generation', 'sg_kampung_generation', 'sg_dialect_lost', 'sg_lky_generation',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -13308,6 +13381,14 @@ export function generateEpitaph(state) {
     para2.push(`${He} was Hmong in Laos — the people who fought for the CIA in the Secret War and became enemies of the state that won. ${He} grew up knowing which topics not to raise in school, and knew which fields not to enter because the war left metal in the ground that hadn\'t been cleared.`)
   } else if (f('laos_uxo_generation')) {
     para2.push(`${He} grew up in the most-bombed country per capita in history. The US dropped more ordnance on Laos than on all of Europe in the Second World War; thirty percent of it didn\'t explode. The rule every Lao child learns — don\'t touch metal in the field — was the landscape ${he} was born into.`)
+  } else if (f('sg_kampung_generation') && f('sg_dialect_lost')) {
+    para2.push(`${He} grew up in a kampung that was cleared for HDB blocks and lost ${his} grandmother\'s dialect to the Speak Mandarin Campaign in the same decade. The village and the language went at the same pace, which is to say quickly.`)
+  } else if (f('sg_kampung_generation')) {
+    para2.push(`${He} was part of the generation that moved from kampung to HDB flat — the entire architecture of childhood, the banyan tree, the wells, the neighbours' chickens, replaced within a few years by the high-rise that now holds the same street address.`)
+  } else if (f('sg_dialect_lost') && f('sg_lky_generation')) {
+    para2.push(`${He} grew up Singaporean during Lee Kuan Yew's long dominion. ${He} lost ${his} grandmother's dialect to the Speak Mandarin Campaign and watched Lee die in 2015 in a country that ran, efficiently, on his decisions. ${He} had mixed feelings that ${he} rarely expressed. This was also part of the formation.`)
+  } else if (f('sg_founding_generation')) {
+    para2.push(`${He} was there in August 1965 when Lee Kuan Yew appeared on television with wet eyes and said that Singapore would have to make it alone. It made it.`)
   }
 
   // Displacement / migration
