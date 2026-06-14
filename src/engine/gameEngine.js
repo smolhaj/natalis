@@ -6127,6 +6127,38 @@ function buildYearTexture(state) {
     'The thing that was true about Serbia for eleven years stopped being true in an afternoon. The adjustment took longer.',
   ])
 
+  // ─── GEORGIA TEXTURE ─────────────────────────────────────────────────────────
+  if (F.has('april_9_generation') && Math.random() < 0.3) return pick([
+    'April 9, 1989: Soviet troops on Rustaveli Avenue before dawn, sapper shovels, nerve agent. Twenty-one dead, many of them women. In Georgia, April 9 means one specific thing.',
+    phase === 'late_life'
+      ? 'The April 9 Memorial is on Rustaveli. The names are there. You have stood in front of it and read the names and the names are people you may have seen there. The memorial is the official acknowledgment. The night itself does not require acknowledgment to be what it was.'
+      : 'After April 9, the Soviet claim that Georgia was simply a Soviet republic had been answered in a way that could not be unsaid. Independence was still two years away. But the answer had been given.',
+  ])
+  if (F.has('abkhazia_displaced_connection') && Math.random() < 0.25) return pick([
+    'The quarter million Georgians from Abkhazia: some in hotels, some with relatives, some in empty school buildings. The IDP status becomes a long-term category, not a temporary condition.',
+    phase === 'late_life'
+      ? 'Thirty years later some of the displaced have returned and most have not. The apartment in Sukhumi — the specific apartment — exists in the family story as a place that cannot be visited. The children grew up hearing about it. The children of the children are hearing about it now.'
+      : 'The specific geography of loss: the Black Sea coast, the smell of the buxus hedges, the way the light fell in a particular direction in late afternoon. These details are carried by people who cannot go back to where they came from.',
+  ])
+  if (F.has('rose_revolution_georgia') && Math.random() < 0.22) return pick([
+    'The roses in Parliament: the specific image. The peaceable removal. For a few years after, the Rose Revolution suggested that the post-Soviet space could produce something new without violence.',
+    phase === 'late_life'
+      ? 'The Rose Revolution put Saakashvili in power, then the 2008 war happened, then Saakashvili was charged with abuse of power and left the country. What the Rose Revolution began is not the same story as what it promised. Both are the story.'
+      : 'The transfer of power was peaceful. You were there or you watched it and either way you felt the specific Georgian capacity for this particular kind of moment.',
+  ])
+  if (F.has('georgian_war_2008') && Math.random() < 0.28) return pick([
+    'August 2008: five days. Russian armored columns from the Roki Tunnel. Air strikes on Georgian territory. Tanks within forty kilometres of Tbilisi. The ceasefire. The forty kilometres is a number that has not left you.',
+    phase === 'late_life'
+      ? 'Russia recognized South Ossetia and Abkhazia as independent states. No one else did. The territories remain outside Georgian control and inside Russian influence. The status quo produced by five days in August 2008 has been the status quo for fifteen years.'
+      : 'The EU observers arrived after the ceasefire. The Tagliavini Report eventually concluded that Georgia triggered the military confrontation. The report also concluded that Russia\'s response was disproportionate and illegal under international law. Both sentences are in the same report.',
+  ])
+  if (F.has('eu_dream_georgia') && Math.random() < 0.22) return pick([
+    'The EU flag alongside the Georgian flag is not a recent development — it has been the consistent expression of a political position held by a majority of Georgians for fifteen years.',
+    phase === 'late_life'
+      ? 'The 2024 protesters on Rustaveli Avenue carrying EU flags, returning night after night to a government that had just turned away from EU accession: you have been on Rustaveli Avenue before. The avenue has seen several different kinds of history.'
+      : 'I choose Europe: the phrase on the signs. The choosing is real and the choosing does not automatically produce the thing chosen. You know this. The people in the street know this. They are there anyway.',
+  ])
+
   // ─── HUNGARY + CZECH TEXTURE ─────────────────────────────────────────────────
   if (F.has('hungarian_1956_generation') && Math.random() < 0.3) return pick([
     'October 23, 1956: the statue falling, the radio saying things it had never said, the twelve days. Then November 4th. You still know the sequence in the specific way that people know the things they lived through.',

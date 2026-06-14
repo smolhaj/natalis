@@ -2594,6 +2594,48 @@ export const FLAG_REGISTRY = {
     notes: 'Set by eur_ser_milosevic_falls. Specific feeling of sudden absence after long resistance.',
   },
 
+  // ── GEORGIA ARC (events_georgia.js) ──────────────────────────────────────────
+
+  april_9_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed or survived the April 9, 1989 Tbilisi massacre — Soviet troops killing 21 at the peaceful Rustaveli vigil',
+    intent: 'year_texture',
+    notes: 'Set by geo_april9_1989. Follow-through: ft21_april9_late.',
+  },
+
+  abkhazia_displaced_connection: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Has family or close connection to the 250,000 Georgians displaced from Abkhazia in the 1992–93 war',
+    intent: 'year_texture',
+    notes: 'Set by geo_abkhazia_war.',
+  },
+
+  rose_revolution_georgia: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Participated in or witnessed the Georgian Rose Revolution, November 2003 — Shevardnadze\'s peaceful removal',
+    intent: 'year_texture',
+    notes: 'Set by geo_rose_revolution.',
+  },
+
+  georgian_war_2008: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived the 2008 Russia-Georgia war — Russian tanks within 40km of Tbilisi, South Ossetia and Abkhazia occupation',
+    intent: 'year_texture',
+    notes: 'Set by geo_war_2008. Follow-through: ft21_war_2008_late.',
+  },
+
+  eu_dream_georgia: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Shaped by Georgia\'s EU integration aspiration — the dream, the protests, the Georgian Dream backslide 2024',
+    intent: 'year_texture',
+    notes: 'Set by geo_eu_dream.',
+  },
+
   // ── PAKISTAN ARC (events_pakistan.js) ────────────────────────────────────
 
   muhajir_identity: {
