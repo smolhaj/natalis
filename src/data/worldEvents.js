@@ -2099,6 +2099,34 @@ export const WORLD_EVENTS = [
     when: (G) => !G.flags.includes('special_period_generation'),
   },
 
+  {
+    id: 'cuba_us_normalization_2014',
+    name: 'Cuba–US Diplomatic Normalization',
+    years: [2014, 2015],
+    archetypes: null,
+    countries: ['Cuba'],
+    narrative: 'December 17, 2014. Obama and Raúl Castro give simultaneous televised addresses. Fifty-three years of official hostility are being walked back. The pope mediated. The streets of Havana are quiet with the weight of something large. You do not know yet what it means — whether the cruises and the investment will come, whether the embargo will lift, whether this is the beginning of something or just the beginning of a negotiation that will last another fifty years.',
+    context: 'On December 17, 2014, the United States and Cuba announced the restoration of full diplomatic relations after 53 years, following secret negotiations mediated by the Vatican and Canada. Full diplomatic relations were restored in July 2015, the US embassy in Havana reopened, and travel restrictions were eased. President Trump reversed many of these measures from 2017 onward; the Biden administration partially restored them. The US Congress never repealed the embargo.',
+    effect: (p) => { p.m += 5; p.e += 3; p.addFlag('cub_obama_generation'); },
+    addFlags: ['cub_obama_generation'],
+    minAge: 10,
+    when: (G) => !G.flags.has('cub_obama_generation'),
+  },
+
+  {
+    id: 'cuba_11j_protests_2021',
+    name: 'Cuba: July 11 Protests',
+    years: [2021, 2021],
+    archetypes: null,
+    countries: ['Cuba'],
+    narrative: '"Patria y Vida" — Homeland and Life — not "Patria o Muerte" — Homeland or Death. The chant is one syllable different and sixty years different. The protests begin in San Antonio de los Baños and spread to Havana, Santiago, twenty cities in a single afternoon. Food shortages, power cuts, the COVID collapse of the peso — the accumulated weight of all of it has become something that people are saying in the street. Security forces arrive. The images are being filmed and uploaded from phones that didn\'t exist twenty years ago.',
+    context: 'The July 11, 2021 protests (11J) were the largest anti-government demonstrations in Cuba since 1959. They were triggered by power outages, food shortages, and the economic impact of COVID-19, amplified by the song "Patria y Vida" released earlier that year. The government responded with arrests; more than 700 people were prosecuted, with sentences of up to 25 years. The protests marked a generational shift — organized partly through social media — in Cuban civil expression.',
+    effect: (p) => { p.m -= 5; p.r += 6; p.addFlag('cub_july11_watched'); },
+    addFlags: ['cub_july11_watched'],
+    minAge: 12,
+    when: (G) => !G.flags.has('cub_july11_watched') && !G.flags.has('cub_july11_marcher'),
+  },
+
   // ── FIRST CONGO WAR 1996-97 ───────────────────────────────────────────────
   {
     id: 'congo_war_1996',

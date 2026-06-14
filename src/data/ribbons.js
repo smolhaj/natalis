@@ -2060,6 +2060,40 @@ export const RIBBONS = [
     color: 'green',
   },
 
+  // ── CUBA RIBBONS ─────────────────────────────────────────────────────────────
+  {
+    id: 'noventa_millas',
+    name: 'Noventa Millas',
+    description: 'Ninety miles. You were in the middle of them. The Florida Strait is not ninety miles when you are on a raft or an inner tube in the middle of it.',
+    condition: (G) => G.flags.includes('cuba_balsero') || G.flags.includes('cub_mariel_gone'),
+    priority: 86,
+    color: 'blue',
+  },
+  {
+    id: 'patria_y_vida',
+    name: 'Patria y Vida',
+    description: 'You were in the street on July 11, 2021. Homeland and Life, not Homeland or Death. One syllable and sixty years.',
+    condition: (G) => G.flags.includes('cub_july11_marcher'),
+    priority: 78,
+    color: 'gold',
+  },
+  {
+    id: 'playa_giron',
+    name: 'Playa Girón',
+    description: 'April 1961. You picked up the rifle or stood at the post. The victory came before you found out what you would have done if it hadn\'t.',
+    condition: (G) => G.flags.includes('cub_mobilized_1961') && G.flags.includes('cub_bay_of_pigs_generation'),
+    priority: 73,
+    color: 'red',
+  },
+  {
+    id: 'the_back_room',
+    name: 'The Back Room',
+    description: 'The orishas in the back room, the babalawo who doesn\'t advertise. Two registers simultaneously: revolutionary in the street, Yoruba-inflected at home.',
+    condition: (G) => G.flags.includes('cub_santeria_generation') && G.flags.includes('special_period_generation'),
+    priority: 68,
+    color: 'purple',
+  },
+
   // ── PALESTINE ADDITIONAL RIBBONS ─────────────────────────────────────────────
   {
     id: 'the_keys_on_the_wall',

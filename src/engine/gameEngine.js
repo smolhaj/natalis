@@ -8609,6 +8609,81 @@ function buildYearTexture(state) {
       ? 'You have lived through the Special Period and the partial opening and the tightening again. The version of Cuba you are old in is not the version you were young in. Both have been called socialist.'
       : 'The dollar became real in 1993. Before that it was illegal. After that it was not, and the inequality it produced was the kind that comes from some families having relatives abroad and some not.',
   ])
+  // ── CUBA ARC ─────────────────────────────────────────────────────────────
+  if (F.has('cuba_cdr_attendee') && Math.random() < 0.18) return pick([
+    'The CDR meeting on your block: the hygiene report, the revolutionary calendar, the open-ended category of counterrevolutionary activity, the noting of who is not there.',
+    'Attendance is voluntary in the way many things in Cuba are voluntary. You went. You went again. The going is its own kind of statement.',
+  ])
+  if (F.has('cuba_balsero') && Math.random() < 0.22) return pick([
+    'The crossing: the raft, the current, the ninety miles that is not ninety miles when you are in the middle of it. The other side. Everything that came after the other side.',
+    phase === 'late_life'
+      ? 'You have been on this side longer than you were ever on the other side. The island is still the reference point. The island is a place you left on a raft and have not gone back to.'
+      : 'The Cubans in Miami know you crossed. The way they know is the year and the silence about the method. You do not need to say it for it to be known.',
+  ])
+  if (F.has('cuba_double_economy') && Math.random() < 0.18) return pick([
+    'The taxi driver earning in a week what the surgeon earns in a month. The convertible peso and the regular peso. The arithmetic of which economy you are living in.',
+    'The relatives in Miami who send dollars change everything: the food in the refrigerator, the neighborhood, the school your children attend. The relatives with no one abroad live differently in the same city.',
+  ])
+  if (F.has('cub_revolution_generation') && Math.random() < 0.18) return pick([
+    'The primer with the revolution\'s face. The Young Pioneer neckerchief. The things you learned to say before you had words for why you were saying them.',
+    phase === 'late_life'
+      ? 'The revolution is older than most of the people who live inside it. You are one of the ones who was young when it was young. You have watched what sixty years does to a country and to a certainty.'
+      : 'You were taught that the revolution was the answer to a question the Batista years had posed. You knew both parts of the sentence before you understood either one.',
+  ])
+  if (F.has('cub_bay_of_pigs_generation') && Math.random() < 0.15) return pick([
+    'Three days in April 1961. The radio, the militia mobilization, the announcement of victory. The external enemy had confirmed everything the revolution said about itself. You were there for that confirmation.',
+    phase === 'late_life'
+      ? 'Playa Girón is what they call it here; the Bay of Pigs is what they call it there. You were on one side of that naming. The naming tells you where someone stood.'
+      : 'The revolution needed an enemy to survive and the CIA provided one at exactly the moment it was needed. You noticed this even then.',
+  ])
+  if (F.has('cub_mobilized_1961') && Math.random() < 0.15) return pick([
+    'You picked up the rifle or you stood at the post or you drove the truck. The victory came before you found out what you would have done if it hadn\'t.',
+    'The version of yourself at the militia post in April 1961. The cigarettes with men you did not know. The specific kind of readiness that includes not knowing.',
+  ])
+  if (F.has('cub_mariel_gone') && Math.random() < 0.2) return pick([
+    '"Marielito" — before you were anything else to them, you were that. The word carried what Castro wanted it to carry and they were ready to receive it.',
+    phase === 'late_life'
+      ? 'You have been in the United States longer than you lived in Cuba. The Cuba you left in 1980 is not the Cuba that exists now. You carry a version of a country that is partly memory and partly invention.'
+      : 'The three days on the boat. The tent city. The processing. Learning that leaving is not the end of anything — only the beginning of a different set of calculations.',
+  ])
+  if (F.has('cub_mariel_stayed') && Math.random() < 0.15) return pick([
+    'You watched 125,000 people leave in five months and you stayed. The ones who left are called names on the radio. Some of them were people you ate with.',
+    phase === 'late_life'
+      ? 'You have spent forty years in the country that 125,000 people left when they could. Whether that makes you loyal or immobile or simply unlucky is a question you have answered differently at different ages.'
+      : 'The port was open for five months in 1980. You did not go through it. You have spent years since not always knowing why.',
+  ])
+  if (F.has('cub_santeria_generation') && Math.random() < 0.17) return pick([
+    'The orishas in the back room. The babalawo who doesn\'t advertise. The two registers — revolutionary in the street, Yoruba-inflected at home.',
+    'Changó, Yemayá, Oshún. The state said these were backward. The ceremonies continued. Both things were true simultaneously, which is something Cuba teaches early.',
+  ])
+  if (F.has('cub_libreta_generation') && Math.random() < 0.17) return pick([
+    'The bodega that knows you by family unit. The ration that covers half of what a family needs. The network of cousins and neighbors and the prices on the other market.',
+    'You became expert at the arithmetic of what you have and what you can stretch and what you can trade. That arithmetic settled into you early enough to become instinct.',
+  ])
+  if (F.has('cub_raul_opener') && Math.random() < 0.15) return pick([
+    'The paladare with the expanded license. The cell phone that is now legal. The house sale that now has paperwork. Each reform is a small space you learned to move carefully inside.',
+    'The door opening is not the same as the door open. You know this. You moved through it anyway, with the knowledge of the difference.',
+  ])
+  if (F.has('cub_raul_skeptic') && Math.random() < 0.15) return pick([
+    'The reforms are real and narrow and supervised and reversible. You have lived long enough in Cuba to know the difference between a door opening and a door open.',
+    'The private restaurant. The legal phone. The house sale. All real. All controlled at a speed and scale that tells you exactly how much trust is on offer.',
+  ])
+  if (F.has('cub_obama_generation') && Math.random() < 0.18) return pick([
+    'December 17, 2014. The simultaneous addresses. The quiet streets after. The question of whether you should be glad that had no single answer.',
+    phase === 'late_life'
+      ? 'The Obama thaw lasted three years before it was reversed. You watched the window open and then watched it close from the same chair you were sitting in when it opened.'
+      : 'The Americans came. The cruise ships came. The prices changed. And then the policy changed back, and you watched the conversation on the street change again.',
+  ])
+  if (F.has('cub_july11_marcher') && Math.random() < 0.2) return pick([
+    '"Patria y Vida." You were in the street saying it. The neighbor who is not there now — eight years, the sentence said. You carry the day without putting it in sentences.',
+    phase === 'late_life'
+      ? 'July 11, 2021. You went outside. The day you went into the street was the first time it felt like the street again in sixty years.'
+      : 'The photographs exist. You are possibly in them. You do not know whether the people who would recognize you in them have seen them.',
+  ])
+  if (F.has('cub_july11_watched') && Math.random() < 0.15) return pick([
+    'You watched from the window. The sound of the chants. The neighbor going out and the neighbor not coming back. The arithmetic of staying inside.',
+    'The risk calculation on July 11 came out a certain way for you. You have thought about it since — whether you calculated correctly or whether "correctly" is the wrong frame.',
+  ])
   if (F.has('proceso_lived') && Math.random() < 0.22) return pick([
     'Thirty thousand. The number is not exact and is not disputed. The method was established: the flights, the camps, the specific vocabulary of disappearance.',
     'The Proceso lasted until 1983. The courts came later. The repentance came even later. The grandmothers were in the Plaza de Mayo every Thursday from 1977 onward. You saw them.',
@@ -13021,6 +13096,7 @@ export function generateEpitaph(state) {
     'uru_coup_1973', 'uru_dictatorship_lived', 'pry_stroessner_era', 'pry_triple_alliance_memory',
     'ecu_dollarization_generation',
     'dprk_arduous_march', 'dprk_defected', 'dprk_hostile_class', 'dprk_chosen_stay',
+    'cuba_balsero', 'cub_mariel_gone', 'cub_july11_marcher', 'special_period_generation',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -13119,6 +13195,14 @@ export function generateEpitaph(state) {
     para2.push(`${He} ran the calculation: the Tumen river at night, the family, the risk of being returned. ${He} chose to stay. ${He} stayed. The people who left are in Seoul. ${He} is still in the country that taught ${him} its version of the world before ${he} could evaluate it.`)
   } else if (f('dprk_hostile_class')) {
     para2.push(`${He} was born into the hostile Songbun class — a grandfather who fled south in 1950, or a great-uncle with a Bible, or some other fact recorded in a file. The ceiling was not visible. ${He} learned to read it from what was never offered.`)
+  } else if (f('cuba_balsero')) {
+    para2.push(`${He} crossed the Florida Strait on a raft during the 1994 balsero crisis — one of the 35,000 who made the crossing that summer. The ninety miles was not ninety miles while ${he} was in the middle of it.`)
+  } else if (f('cub_mariel_gone')) {
+    para2.push(`${He} left Cuba during the Mariel boatlift of 1980, one of 125,000 who crossed when Castro opened the port. The word "Marielito" followed ${him} to the other side before ${he} had time to be anything else.`)
+  } else if (f('cub_july11_marcher')) {
+    para2.push(`${He} was in the street on July 11, 2021 — the largest protests in Cuba since 1959. The neighbor who stood beside ${him} is still serving eight years. ${He} carries the day without putting it in sentences.`)
+  } else if (f('special_period_generation') && f('cub_revolution_generation')) {
+    para2.push(`${He} was born into the revolution and survived the collapse of everything the revolution had promised — the Soviet subsidies, the food rations, the certainty. Both the faith and the famine were part of ${his} formation.`)
   }
 
   // Displacement / migration

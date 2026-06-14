@@ -1750,6 +1750,136 @@ export const FLAG_REGISTRY = {
     notes: 'Set by la_col_auc_paramilitares. Year texture (state/non-state violence); follow-through for Colombia peace process events.',
   },
 
+  // ── CUBA ARC FLAGS ────────────────────────────────────────────────────────
+
+  special_period_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through Cuba\'s Special Period 1991–2000 — Soviet subsidies gone, blackouts, rations halved, the bicycle as primary transport.',
+    intent: 'year_texture',
+    notes: 'Set by la_cub_special_period. Year texture (shortage economy, dual-currency inequity). Already has buildYearTexture block.',
+  },
+
+  cuba_cdr_attendee: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Attended CDR (Committee for the Defense of the Revolution) block meetings — the voluntary-but-noticed civic surveillance.',
+    intent: 'year_texture',
+    notes: 'Set by la_cub_cdr. Year texture (dual compliance, local surveillance culture).',
+  },
+
+  cuba_balsero: {
+    weight: 'major',
+    category: 'arc',
+    description: 'Crossed the Florida Strait on a raft or inner tube during the 1994 balsero crisis — 35,000 Cubans in three months.',
+    intent: 'year_texture',
+    notes: 'Set by la_cub_balsero. Year texture (the crossing as permanent reference point). Ribbon gated on this flag.',
+  },
+
+  cuba_double_economy: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Navigated Cuba\'s dual peso/dollar economy — taxi driver earning in a week what a doctor earns in a month.',
+    intent: 'year_texture',
+    notes: 'Set by la_cub_double_economy. Year texture (inequity as infrastructure).',
+  },
+
+  cub_revolution_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up as a child during the Cuban Revolution\'s first years — the literacy campaign, the Young Pioneers, the primer with the revolution\'s face.',
+    intent: 'year_texture',
+    notes: 'Set by cub_revolution_childhood. Year texture (revolutionary childhood vs. present disillusionment).',
+  },
+
+  cub_bay_of_pigs_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Was in Cuba during the Bay of Pigs invasion April 1961 — the three days of mobilization and the nationalist aftermath.',
+    intent: 'year_texture',
+    notes: 'Set by cub_bay_of_pigs_1961 (both choices). Year texture (the moment the revolution confirmed itself).',
+  },
+
+  cub_mobilized_1961: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Joined the militia or took a support role during the Bay of Pigs emergency.',
+    intent: 'year_texture',
+    notes: 'Set by cub_bay_of_pigs_1961 mobilized choice. Year texture (the version of yourself who picked up the rifle).',
+  },
+
+  cub_mariel_gone: {
+    weight: 'major',
+    category: 'arc',
+    description: 'Left Cuba during the 1980 Mariel boatlift — one of the 125,000 who crossed when Castro opened the port.',
+    intent: 'year_texture',
+    notes: 'Set by cub_mariel_1980. Year texture (being "Marielito" before anything else; the Cuba held in memory).',
+  },
+
+  cub_mariel_stayed: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Chose to stay in Cuba while 125,000 others left via the Mariel boatlift in 1980.',
+    intent: 'year_texture',
+    notes: 'Set by cub_mariel_1980. Year texture (watching the departure, calibrating what staying meant).',
+  },
+
+  cub_santeria_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Grew up practicing Santería under Cuba\'s atheist state — the orishas in the back room, the babalawo who doesn\'t advertise.',
+    intent: 'year_texture',
+    notes: 'Set by cub_santeria_underground for folk_religion Cubans. Year texture (two registers: revolutionary and Yoruba-inflected).',
+  },
+
+  cub_libreta_generation: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Grew up managing life through the libreta ration book — the bodega arithmetic, the black market supplement, the network of cousins.',
+    intent: 'year_texture',
+    notes: 'Set by cub_libreta_texture. Year texture (shortage as financial education).',
+  },
+
+  cub_raul_opener: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Cautiously moved to take advantage of Raúl Castro\'s small private-sector reforms — the paladare license, the legal phone, the house sale.',
+    intent: 'year_texture',
+    notes: 'Set by cub_raul_opening. Year texture (navigating the gap between the permitted and the still-forbidden).',
+  },
+
+  cub_raul_skeptic: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Skeptical of Raúl\'s reforms — the door opening is not the same as the door open; reforms are narrow, supervised, reversible.',
+    intent: 'year_texture',
+    notes: 'Set by cub_raul_opening. Year texture (calibrated distrust of partial liberalizations).',
+  },
+
+  cub_obama_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Was in Cuba for the December 17, 2014 normalization announcement — the simultaneous television addresses, the quiet streets after.',
+    intent: 'year_texture',
+    notes: 'Set by cub_obama_thaw_2014. Year texture (the brief window that opened and didn\'t stay open).',
+  },
+
+  cub_july11_marcher: {
+    weight: 'major',
+    category: 'political',
+    description: 'Went into the street on July 11, 2021 — the largest protests in Cuba since 1959, "Patria y Vida" replacing "Patria o Muerte".',
+    intent: 'year_texture',
+    notes: 'Set by cub_july11_protests. Year texture (the neighbor who went to prison, carrying the day without talking about it).',
+  },
+
+  cub_july11_watched: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Watched the July 11 2021 protests from a window — the risk calculation, the sound of the day carried without speaking.',
+    intent: 'year_texture',
+    notes: 'Set by cub_july11_protests. Year texture (witness without participant; the arithmetic of staying inside).',
+  },
+
   // ── SRI LANKA FLAGS ───────────────────────────────────────────────────────
 
   black_july_survived: {
