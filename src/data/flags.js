@@ -2636,6 +2636,120 @@ export const FLAG_REGISTRY = {
     notes: 'Set by geo_eu_dream.',
   },
 
+  // ── NORTH KOREA ARC (events_north_korea.js) ──────────────────────────────────
+
+  dprk_juche_childhood: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Grew up in North Korea with Juche indoctrination from before literacy — the portrait above the blackboard, the political primer before the reading primer',
+    intent: 'year_texture',
+    notes: 'Set by dprk_juche_childhood.',
+  },
+
+  dprk_songbun_revealed: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Understood their Songbun class — the family political loyalty class that determines every ceiling, set by grandparents\' choices going back three generations',
+    intent: 'year_texture',
+    notes: 'Set by dprk_songbun.',
+  },
+
+  dprk_loyal_class: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Songbun loyal class — access to Pyongyang, university, better work units',
+    intent: 'year_texture',
+    notes: 'Set by dprk_songbun choice loyal.',
+  },
+
+  dprk_hostile_class: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Songbun hostile or wavering class — ceiling on education, work, location; the architecture of closed doors',
+    intent: 'year_texture',
+    notes: 'Set by dprk_songbun choice hostile.',
+  },
+
+  dprk_criticism_session: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived the weekly saenghwal chonghwa self-criticism sessions — the calibration of how harshly to criticize, neither too lenient nor too harsh',
+    intent: 'year_texture',
+    notes: 'Set by dprk_criticism_session.',
+  },
+
+  dprk_arduous_march: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived the Arduous March famine 1994-98 — Public Distribution System collapsed, 300K-1M dead, the official name requiring you to be a soldier marching toward victory',
+    intent: 'year_texture',
+    notes: 'Set by dprk_arduous_march.',
+  },
+
+  dprk_jangmadang_trader: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Became a jangmadang market trader after the PDS collapse — technically illegal, practically necessary, women\'s economic space',
+    intent: 'year_texture',
+    notes: 'Set by dprk_arduous_march choice traded.',
+  },
+
+  dprk_jangmadang: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Participated in the jangmadang informal market — Chinese goods, information, the market that is both illegal and the only working economy',
+    intent: 'year_texture',
+    notes: 'Set by dprk_jangmadang.',
+  },
+
+  dprk_foreign_media: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Watched forbidden South Korean dramas or foreign films on USB drives — 2am, curtain closed, volume low, the gap between that world and this one',
+    intent: 'year_texture',
+    notes: 'Set by dprk_usb_drives.',
+  },
+
+  dprk_execution_witness: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Was mandated to attend a public execution in North Korea — the field, the crowd, the not-looking-away that is also noted',
+    intent: 'year_texture',
+    notes: 'Set by dprk_public_execution.',
+  },
+
+  dprk_defection_considered: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Did the defection calculation — the Tumen river at knee-depth, China deportation risk, Mongolia or Thailand routes, the family left behind',
+    intent: 'year_texture',
+    notes: 'Set by dprk_defection_calculation.',
+  },
+
+  dprk_defected: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Defected from North Korea — the river at 3am, the months of dangerous transit, arriving in a country that is technically yours',
+    intent: 'both',
+    notes: 'Set by dprk_defection_calculation choice cross. Follow-through: dprk_hanawon_complete.',
+  },
+
+  dprk_chose_stay: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Ran the defection calculation and chose to stay — the family, the curtain, the 2am dramas, the folded calculation',
+    intent: 'year_texture',
+    notes: 'Set by dprk_defection_calculation choice stayed.',
+  },
+
+  dprk_hanawon_complete: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Completed the Hanawon resettlement facility in South Korea — the cashcard, the pronunciation gap, the constitution that says you\'re already Korean',
+    intent: 'year_texture',
+    notes: 'Set by dprk_hanawon.',
+  },
+
   // ── URUGUAY ARC (events_uy_py_ec.js) ─────────────────────────────────────────
 
   uru_tupamaro_era: {

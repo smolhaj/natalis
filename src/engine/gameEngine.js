@@ -6693,6 +6693,86 @@ function buildYearTexture(state) {
       : 'A national movement that brought the government to the table — not through the ballot box but through the road, the highway, the physical blockage of the country\'s logistics. You watched it work. You are still thinking about what it means.',
   ])
 
+  // ─── NORTH KOREA TEXTURE ─────────────────────────────────────────────────────
+  if (F.has('dprk_songbun_revealed') && Math.random() < 0.25) return pick([
+    'The Songbun: set by what your grandparents did and who they were. Not a secret exactly — everyone knows their class — but also not a fact that is said aloud, because saying it aloud would require explaining the system, and the system does not explain itself.',
+    phase === 'late_life'
+      ? 'You have lived inside your Songbun class for your entire adult life. Every door that opened and every door that didn\'t. The system has been in place since the 1950s. You were born into a position in it before you were born.'
+      : 'Three generations back: a relative who went south in 1950, a great-uncle who had a Bible, a father who said something wrong in a meeting in 1963. These are the facts that set the ceiling. The ceiling is not marked but it is there.',
+  ])
+  if (F.has('dprk_loyal_class') && Math.random() < 0.2) return pick([
+    'The loyal Songbun class: the doors that are open. The Pyongyang posting considered. The university application considered. The better work unit. The rations that are marginally better. The ceiling is high, though the country defines high differently from the world.',
+    phase === 'late_life'
+      ? 'You lived inside the privilege of the loyal class: not comfortable by any outside standard, but the available version of what comfort means in that system. The people in the wavering and hostile classes — you have seen what the ceiling looks like from below. You have tried to use what the loyal class gives you to make your children\'s ceilings a little higher.'
+      : 'Inside a system with no mobility, loyal class means: fewer walls. Not an open field — walls. But fewer of them, and at more distance.',
+  ])
+  if (F.has('dprk_jangmadang') && Math.random() < 0.2) return pick([
+    'The market. Technically illegal. Practically the only working economy. Chinese goods, cigarettes, information that comes packaged with the goods. Women\'s work — the men still report to their official work units where no actual work happens and no actual pay arrives.',
+    phase === 'late_life'
+      ? 'The jangmadang outlasted the attempt to suppress it because the state could not feed the country without it. The women who built the market economy of North Korea in the 1990s rebuilt the country after the famine, without credit, without official recognition, without the system acknowledging what it now depended on.'
+      : 'The market is where information travels as well as goods. What is available, what costs what, who has what, what is happening: the market is the news system of a country without a free press.',
+  ])
+  if (F.has('dprk_jangmadang_trader') && Math.random() < 0.22) return pick([
+    'You sold what you had and bought what you could. Cigarettes, candy, whatever came from the Chinese side of the Tumen. The market that was illegal kept you alive and kept others alive. You learned what prices are, which is a thing the state system had not taught.',
+    phase === 'late_life'
+      ? 'The jangmadang trading you learned in the 1990s as survival became economic literacy that the official system had never provided. You understand supply and demand in a way the political textbooks never addressed. The knowledge lives in you alongside the portrait and the criticism session calibration.'
+      : 'The things a trader learns: who is reliable, what the actual price is versus the claimed price, how to read a customer, how to disappear before the inspection arrives. These are skills. You built them from nothing during the Arduous March and you still use them.',
+  ])
+  if (F.has('dprk_defection_considered') && !F.has('dprk_defected') && !F.has('dprk_chose_stay') && Math.random() < 0.2) return pick([
+    'The Tumen River. The calculation. The family on one side of it, the rest of the world on the other. People have been crossing since the famine years. Some are caught and sent back. Some are not. You have run the numbers.',
+    phase === 'late_life'
+      ? 'You have run the calculation many times. The variables change: the family ages, the border enforcement shifts, the USB drives make the other side more legible and therefore the gap more measurable. The calculation is ongoing.'
+      : 'The calculation is: if you go, the family you leave is in danger because you went. If you don\'t go, the family stays in the country that is. The math is not math.',
+  ])
+  if (F.has('dprk_juche_childhood') && Math.random() < 0.3) return pick([
+    'The portrait above the blackboard, larger than the blackboard itself. The political primer before the reading primer. The dates you memorized without error. The things you believed the way you believed the air — not as a choice, because there was no gap where another choice would sit.',
+    phase === 'late_life'
+      ? 'You were taught certain things before you were taught to read. The things you were taught before you could read have a different relationship to your body than the things learned after. You have spent years understanding what was put in before you could evaluate it.'
+      : 'Every classroom in the country has the same portrait in the same position. Every workplace. Every home. The portrait is not decorative — it is a fact about the shape of the world, like the existence of the sky.',
+  ])
+  if (F.has('dprk_hostile_class') && Math.random() < 0.28) return pick([
+    'The Songbun: determined by your grandparents\' choices, your great-uncle\'s religion, the grandfather who went south in 1950. The ceiling is not visible. It shows itself in what is not offered: the assignment to the farm instead of the university application considered.',
+    phase === 'late_life'
+      ? 'You have spent your life reading the architecture of closed doors. The doors that were never mentioned because mentioning them would require explaining why they were not open. You learned to see what was not offered and to understand that what was not offered was a message.'
+      : 'The class that follows a family for three generations — loyal, wavering, hostile. You inherited it the way you inherited your face. The system requires this. The system has required it for seventy years.',
+  ])
+  if (F.has('dprk_arduous_march') && Math.random() < 0.3) return pick([
+    'The Arduous March. The Public Distribution System stopped and the rations that were already thin became nothing. The official metaphor: a guerrilla army marching through a Manchurian winter toward victory. You were a person who could not buy grain. Some people around you did not find a way.',
+    phase === 'late_life'
+      ? 'Three hundred thousand or a million — the number of dead in the famine of the 1990s is not known because the state that created the famine did not count the dead. You know people who did not survive it. The official history calls it the Arduous March overcome through revolutionary spirit. The bodies disagree.'
+      : 'You survived the years when the food did not come. The people who did not survive are not in the official count. The jangmadang market opened because the alternative was to die in a country that still formally had a distribution system.',
+  ])
+  if (F.has('dprk_criticism_session') && Math.random() < 0.22) return pick([
+    'The weekly self-criticism session. You stand and confess your failures. Your peers criticize you. The calibration: neither too lenient (which looks like protection) nor too harsh (which looks like factional attack). A skill you learned before you knew you were learning it.',
+    phase === 'late_life'
+      ? 'You taught your children to calibrate the criticism session before they were old enough to need it. The calibration is now somewhere in their bodies, at the same depth as the portrait above the blackboard. They will not always know it is there.'
+      : 'The art of the criticism session is the art of performing vulnerability precisely — enough to satisfy the form, not so much that it becomes an actual vulnerability. You have been performing this for years. You are very good at it.',
+  ])
+  if (F.has('dprk_foreign_media') && Math.random() < 0.25) return pick([
+    'The USB drive. 2am. The curtain closed. Volume low. South Korean apartments with refrigerators full of food. People arguing about love with phones in their hands. The phones are different. The food is different. Three people who have never seen it watching something they will never have seen.',
+    phase === 'late_life'
+      ? 'The information that came through the USB drives in the 2000s and 2010s — the gap between what the state said the world was and what the dramas showed the world was — is one of the things that changed North Korea most, quietly and incrementally and in ways that cannot be measured. You were part of that change. You watched it happen in a dark room at 2am.'
+      : 'The drama running at low volume tells you things: what apartments in Seoul look like, what a supermarket contains, what people argue about when food is not the primary argument. You are learning about the world through contraband at 2am and this is the best education currently available.',
+  ])
+  if (F.has('dprk_defected') && F.has('dprk_hanawon_complete') && Math.random() < 0.28) return pick([
+    'The river at 3am. The Chinese side. The months in transit. Hanawon: the cashcard that works when you tap it. The Korean you speak and the Korean they speak, separated by sixty years and a thousand English words. The constitution says you are already a citizen. The cashcard confirms it.',
+    phase === 'late_life'
+      ? 'You have been a South Korean for decades now. The North is behind you in ways that are not fully calculable — the family you left, the person you were, the things you believed before you believed other things. You think about the people on the other side of the river more often than you think about almost anything else.'
+      : 'The adjustment. Every door is theoretically open and you do not know how to walk through any of them. The Hanawon counselor said: it takes years. She was not overstating it.',
+  ])
+  if (F.has('dprk_chose_stay') && Math.random() < 0.25) return pick([
+    'You ran the calculation and stayed. The river. The family. The curtain at 2am. The jangmadang. The criticism sessions. The folded calculation you put somewhere and do not take out.',
+    phase === 'late_life'
+      ? 'You are still here. The people who left are in Seoul or somewhere else in the world, with phones that have access to everything, living in the future you calculated your way out of entering. You made the calculation. You chose the family. You wonder sometimes if the family, had they known the choice, would have made the same calculation.'
+      : 'You fold the calculation. You go back to the work unit. You go back to the curtain at 2am. The people who left are somewhere else. The people who stayed are still calculating.',
+  ])
+  if (F.has('dprk_execution_witness') && Math.random() < 0.22) return pick([
+    'The mandatory attendance. The field. The crowd. The crime read aloud. The thing that follows. You have been taught that the witnessing is a service. You do not look away. Looking away is also noted.',
+    phase === 'late_life'
+      ? 'You attended mandatory public executions across your working life. The calibration of how to watch — present, witnessing, not displaying grief or approval — is something you learned and taught to your children. The calibration sits in the body alongside the criticism session calibration and the portrait calibration.'
+      : 'What the state requires you to watch is part of the contract. The contract was set before you could have declined it. You were part of the crowd. You watched. The watching is in you now, the way the portrait is in you, at the same depth.',
+  ])
+
   // ─── ERA TEXTURE ─────────────────────────────────────────────────────────────
   if (F.has('spanish_flu_generation') && Math.random() < 0.25) return pick([
     'The disease moved through the city in 1918 faster than any official account could follow. You remember the funerals, or the absence of funerals — the bodies moved quietly.',
@@ -12940,6 +13020,7 @@ export function generateEpitaph(state) {
     'bel_2020_generation', 'bel_crackdown_survived', 'bel_chernobyl_generation', 'bel_exile',
     'uru_coup_1973', 'uru_dictatorship_lived', 'pry_stroessner_era', 'pry_triple_alliance_memory',
     'ecu_dollarization_generation',
+    'dprk_arduous_march', 'dprk_defected', 'dprk_hostile_class', 'dprk_chosen_stay',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -13030,6 +13111,14 @@ export function generateEpitaph(state) {
     para2.push(`${He} navigated thirty-five years of Stroessner\'s dictatorship in Paraguay — the Colorado Party membership card, the patronage structure, the calculation of inside or outside the system.`)
   } else if (f('ecu_yasuni_generation') && f('ecu_oil_generation')) {
     para2.push(`${He} watched Ecuador pump its first oil from the Amazon in the 1970s and watched Ecuador propose, in 2013, to leave the remaining oil in the ground if the world would pay half its value. The world declined. Both things happened in ${his} adult life.`)
+  } else if (f('dprk_defected') && f('dprk_hanawon_complete')) {
+    para2.push(`${He} crossed the Tumen River at 3am and spent months in dangerous transit before arriving in South Korea. The constitution said ${he} was already a citizen. The adjustment took years. The people on the other side of the river were never not in ${his} mind.`)
+  } else if (f('dprk_arduous_march') && f('dprk_foreign_media')) {
+    para2.push(`${He} survived the Arduous March — the North Korean famine of the 1990s — and later watched South Korean dramas at 2am on a USB drive smuggled from China. The gap between what the state said the world was and what the dramas showed the world was: this was ${his} education.`)
+  } else if (f('dprk_chose_stay')) {
+    para2.push(`${He} ran the calculation: the Tumen river at night, the family, the risk of being returned. ${He} chose to stay. ${He} stayed. The people who left are in Seoul. ${He} is still in the country that taught ${him} its version of the world before ${he} could evaluate it.`)
+  } else if (f('dprk_hostile_class')) {
+    para2.push(`${He} was born into the hostile Songbun class — a grandfather who fled south in 1950, or a great-uncle with a Bible, or some other fact recorded in a file. The ceiling was not visible. ${He} learned to read it from what was never offered.`)
   }
 
   // Displacement / migration
