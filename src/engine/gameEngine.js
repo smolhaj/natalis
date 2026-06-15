@@ -8368,6 +8368,50 @@ function buildYearTexture(state) {
     'You grew up in a place the world decided did not officially exist. The place exists. You exist in it. The decision is the world\'s problem.',
   ])
 
+  // ─── RWANDA TEXTURE ──────────────────────────────────────────────────────────
+  if (F.has('rwa_habyarimana_generation') && Math.random() < 0.2) return pick([
+    'The ID card the Belgians introduced in 1933 made Hutu and Tutsi permanent categories. Before that, they were porous — occupational labels that moved. The card stopped the movement. You grew up inside the categories the card created.',
+    phase === 'late_life'
+      ? 'The quota was nine percent. Nine percent of everything official was reserved for Tutsi. You built your adult life inside that arithmetic — either finding the nine percent or working around it — and then April 1994 made the arithmetic into something else entirely.'
+      : 'The Habyarimana years: the single party, the ethnic registers, the regional balance policy, the president for life. You knew what country you were in before you knew how to evaluate it.',
+  ])
+  if (F.has('rwa_rtlm_generation') && Math.random() < 0.28) return pick([
+    'Radio Mille Collines was on the air from July 1993. It played music you liked and it called Tutsi cockroaches. Both things were true of the same station. You calibrated to this the way you calibrate to anything that has become ordinary.',
+    'RTLM coordinated the roadblocks. It broadcast names and addresses and descriptions. The radio was the infrastructure. The technology preceded the event and made the event possible at its scale.',
+    phase === 'late_life'
+      ? 'The radio station ran for 413 days. You remember the exact sound of its frequency. The specific jingle. The voice that began reading lists. That sound is the sound the hundred days makes in your memory.'
+      : 'The word inyenzi — cockroach — was ordinary in the room by the time the roadblocks went up. The ordinary-ness of the language before the event is something you have thought about many times since.',
+  ])
+  if (F.has('rwa_genocide_witness') && Math.random() < 0.3) return pick([
+    'One hundred days. You have calculated this many times since — the arithmetic of the specific period. The calendar makes it look bounded. From inside it was not bounded.',
+    'The churches were not safe. The schools were not safe. The places you were taught to go when afraid were not safe. That is the specific education April 1994 administered. You have carried it as a fact about where safety lives.',
+    phase === 'late_life'
+      ? 'The people who were not there have learned about it from the memorial and from school and from the international tribunal. The gap between what they have learned and what you carry is the entire distance of living through something versus receiving its account.'
+      : 'The roadblocks stayed up for one hundred days. You knew which roads, which times, which people. You navigated by that knowledge. The knowledge lives in the body differently from the knowledge you carry in words.',
+  ])
+  if (F.has('rwa_goma_generation') && Math.random() < 0.22) return pick([
+    'The Goma camps were on volcanic rock. Latrines could not be dug. Cholera killed 50,000 people in one month — the fastest death rate the UN had recorded in any refugee crisis. You were in the number.',
+    'The génocidaires controlled the camp committees and received the international aid. The humanitarian organizations knew this and continued anyway because two million people needed food. You lived inside that calculation for two years.',
+  ])
+  if (F.has('rwa_gacaca_generation') && Math.random() < 0.22) return pick([
+    'The gacaca met in the field. One point five million cases. The design: the community knows what happened, the community listens in public, the record is made in the open. Justice as a shared witnessing rather than a private verdict.',
+    'You sat in the field across from someone whose actions during the hundred days were being described out loud. The design of the gacaca is that sitting in that field together is how the country moves forward. You have been moving forward since 2001.',
+    phase === 'late_life'
+      ? 'The gacaca closed in 2012. The cases are adjudicated. The records exist. You are in the record — as witness, as survivor, as community member. The field still has the same look. The community is still the same community.'
+      : 'What the gacaca courts produced was not exactly justice and not exactly reconciliation. It was an accounting. The accounting was public. The public character of it is what the country decided was necessary.',
+  ])
+  if (F.has('rwa_kagame_generation') && Math.random() < 0.22) return pick([
+    'Kigali is clean. The statistics are real: infant mortality down seventy percent, GDP growing eight percent a year. The press restrictions are also real. The journalists who have disappeared are real. The country holds both things.',
+    'Ethnicity does not appear on identity documents. It is not spoken in official settings. This is the law and the policy and the social norm simultaneously. The country where you do not say the word for what everyone knows you are.',
+    phase === 'late_life'
+      ? 'You have lived in Rwanda both before and after April 1994 and inside the reconstruction. The before and the after are in the same body. The reconstruction happened around you while you were still processing what it was rebuilding from.'
+      : 'The last Saturday of the month: umuganda. Everyone works. The city gets cleaner. You have swept the same street segment thirty times. The communal labour produces something real. Whether it is also a form of mandatory civic performance is a question you keep to yourself.',
+  ])
+  if (F.has('rwa_reconciliation_generation') && Math.random() < 0.2) return pick([
+    'Thirty years. The country that exists now and the country before April 6, 1994 share a name and a map. You are in both simultaneously — the one you live in, and the one you carry.',
+    'The children who grew up after 1994 have no ethnic category on their documents. They learned about April 1994 from the memorial and the school curriculum. You learned about it differently. The difference is the whole distance of what you carry.',
+  ])
+
   // ─── THAILAND TEXTURE ────────────────────────────────────────────────────────
   if (F.has('thai_uncolonized_identity') && Math.random() < 0.15) return pick([
     'The curriculum taught that Thailand survived by playing the colonial powers against each other. The curriculum was right about the survival and incomplete about the cost of it.',
@@ -13545,6 +13589,7 @@ export function generateEpitaph(state) {
     'bra_dictatorship_generation', 'bra_resistance_generation', 'bra_favela_survived',
     'bng_liberation_generation', 'bng_mukti_bahini', 'bng_famine_generation', 'bng_coup_generation',
     'irq_iran_iraq_veteran', 'irq_sanctions_generation', 'irq_displacement_generation', 'irq_isis_generation',
+    'rwa_rtlm_generation', 'rwa_genocide_witness', 'rwa_goma_generation',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -13705,6 +13750,14 @@ export function generateEpitaph(state) {
     para2.push(`${He} came of age in the sanctions decade — the dinar collapsing, the hospitals running short, the middle-class Iraq of ${his} parents dismantled at the speed of policy. ${He} navigated it and kept going.`)
   } else if (f('irq_isis_generation')) {
     para2.push(`${He} was Iraqi during the ISIS years — Mosul, the caliphate, nine months of block-by-block liberation, the ruined mosque. The country has survived worse. The surviving changes what the word means.`)
+  } else if (f('rwa_genocide_witness') && f('rwa_gacaca_generation')) {
+    para2.push(`${He} survived the Rwandan genocide's hundred days and sat in the gacaca courts a decade later, in the same fields, facing what had happened. The accounting was public. The community was the same community. ${He} lived in both.`)
+  } else if (f('rwa_genocide_witness') && f('rwa_kagame_generation')) {
+    para2.push(`${He} was in Rwanda for April 1994 and for the reconstruction that followed — the clean city, the no-ethnicity policy, the GDP growth, the press restrictions. The before and the after are in the same body.`)
+  } else if (f('rwa_rtlm_generation') && f('rwa_genocide_witness')) {
+    para2.push(`${He} heard Radio Mille Collines fill the room with the word inyenzi until it was ordinary, and then lived through the hundred days that followed. The radio and the hundred days are the same event in ${his} memory. They are the sound of it.`)
+  } else if (f('rwa_goma_generation')) {
+    para2.push(`${He} crossed into Zaire with two million others after July 1994 — the cholera, the volcanic rock, the génocidaires controlling the aid committees. What ${he} navigated in those camps is its own chapter in a life already full of chapters.`)
   }
 
   // Displacement / migration

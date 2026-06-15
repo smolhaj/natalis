@@ -2258,6 +2258,64 @@ export const FLAG_REGISTRY = {
     notes: 'Set by doc_rwandan_id_1994. High-weight flag; should dominate the epitaph.',
   },
 
+  // ── RWANDA ────────────────────────────────────────────────────────────────────
+
+  rwa_habyarimana_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up in Habyarimana\'s Rwanda 1973-1994 — ethnic quotas, single-party state, the ID card that categorized you before you understood what the category meant.',
+    intent: 'year_texture',
+    notes: 'Set by rwa_habyarimana_childhood. Both Hutu and Tutsi perspectives (branched text).',
+  },
+
+  rwa_rtlm_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Heard Radio Mille Collines (RTLM) in 1993-94 — the music, then the names, then the word inyenzi becoming ordinary. The sound that preceded everything.',
+    intent: 'year_texture',
+    notes: 'Set by rwa_radio_mille_collines. High-weight — RTLM coordinated the genocide.',
+  },
+
+  rwa_genocide_witness: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Alive in Rwanda during the 100 days of April-July 1994 — the roadblocks, the churches, the hundred-day arithmetic. Witness or survivor or perpetrator\'s neighbor — all categories.',
+    intent: 'both',
+    notes: 'Set by rwa_hundred_days_adolescent and rwa_hundred_days_adult. Connects to genocide_survivor.',
+  },
+
+  rwa_goma_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'In the Goma camps after July 1994 — the volcanic rock, the cholera, the génocidaires running the camp committees, the aid system unable to separate perpetrators from refugees.',
+    intent: 'year_texture',
+    notes: 'Set by rwa_goma_camps. Hutu-gated. Camps destroyed 1996.',
+  },
+
+  rwa_gacaca_generation: {
+    weight: 'major',
+    category: 'cultural',
+    description: 'Sat in the gacaca courts 2001-2012 — community justice in open fields; testified or was testified about; the accounting that the country built its forward motion on.',
+    intent: 'year_texture',
+    notes: 'Set by rwa_gacaca_courts. 1.5 million cases processed.',
+  },
+
+  rwa_kagame_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived in post-genocide Rwanda under Kagame — the clean streets, the economic miracle, the no-ethnicity rule, the press restrictions. Both things simultaneously.',
+    intent: 'year_texture',
+    notes: 'Set by rwa_kagame_era (both choices).',
+  },
+
+  rwa_reconciliation_generation: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Lived long enough in post-genocide Rwanda to watch the gap between the official account and what happened in specific fields, on specific hills.',
+    intent: 'year_texture',
+    notes: 'Set by rwa_late_reckoning. Late-life reflection flag.',
+  },
+
   // ── CENTRAL ASIA FLAGS ────────────────────────────────────────────────────
 
   asharshylyk_survivor: {

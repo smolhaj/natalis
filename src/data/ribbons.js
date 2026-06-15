@@ -2290,6 +2290,40 @@ export const RIBBONS = [
     color: 'black',
   },
 
+  // ── RWANDA RIBBONS ───────────────────────────────────────────────────────────
+  {
+    id: 'the_blue_roof',
+    name: 'The Blue Roof',
+    description: 'You were told to go to the church. The church at Nyamata has a blue roof. Eight thousand people went to the church at Nyamata. You went to the church. The churches were not safe.',
+    condition: (G) => G.flags.includes('rwa_genocide_witness') && G.flags.includes('genocide_survivor'),
+    priority: 94,
+    color: 'black',
+  },
+  {
+    id: 'the_hundred_days',
+    name: 'The Hundred Days',
+    description: 'April 7 to July 18, 1994. You count it as one hundred days now. From inside it was not bounded. The arithmetic of survival does not produce round numbers.',
+    condition: (G) => G.flags.includes('rwa_genocide_witness') && G.flags.includes('rwandan_survivor'),
+    priority: 90,
+    color: 'black',
+  },
+  {
+    id: 'the_field_court',
+    name: 'The Field Court',
+    description: 'The gacaca met in the field outside the sector office. 1.5 million cases. The design: the community witnesses everything, together, in public. You sat in that field.',
+    condition: (G) => G.flags.includes('rwa_gacaca_generation'),
+    priority: 76,
+    color: 'green',
+  },
+  {
+    id: 'the_clean_city',
+    name: 'The Clean City',
+    description: 'Plastic bags banned and enforced. Umuganda every last Saturday. GDP at eight percent. The genocide memorial open and visited by school children. The journalist who disappeared. All of it simultaneously.',
+    condition: (G) => G.flags.includes('rwa_kagame_generation'),
+    priority: 68,
+    color: 'gray',
+  },
+
   // ── IRAQ RIBBONS ─────────────────────────────────────────────────────────────
   {
     id: 'the_eight_years',
