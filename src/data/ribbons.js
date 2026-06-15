@@ -2374,6 +2374,40 @@ export const RIBBONS = [
     color: 'green',
   },
 
+  // ── VENEZUELA RIBBONS ────────────────────────────────────────────────────────
+  {
+    id: 'por_ahora',
+    name: 'Por Ahora',
+    description: '"For now." The surrender speech that became a legend and then won the election in 1998. You were in the country for all of it.',
+    condition: (G) => G.flags.includes('ven_chavez_1998_generation') && G.flags.includes('chavista_generation'),
+    priority: 78,
+    color: 'green',
+  },
+  {
+    id: 'the_clap_bag',
+    name: 'The CLAP Bag',
+    description: 'The monthly government food box. Two kilos of rice, some pasta, cooking oil if they had it. The infrastructure of survival when the supermarket couldn\'t be relied on.',
+    condition: (G) => G.flags.includes('bolivarian_collapse_lived'),
+    priority: 84,
+    color: 'orange',
+  },
+  {
+    id: 'the_guarimba',
+    name: 'The Guarimba',
+    description: 'The neighborhood barricade. The garbage fire at the intersection. Four months, daily. A hundred and twenty dead. Maduro survived. You were there.',
+    condition: (G) => G.flags.includes('ven_2017_generation'),
+    priority: 80,
+    color: 'black',
+  },
+  {
+    id: 'seven_million',
+    name: 'Seven Million',
+    description: 'You watched seven million Venezuelans leave from the same city you stayed in. The WhatsApp group spans five countries now. You are the one who didn\'t go.',
+    condition: (G) => G.flags.includes('ven_stayer') && !G.flags.includes('emigrated'),
+    priority: 76,
+    color: 'gray',
+  },
+
   // ── COLOMBIA RIBBONS ─────────────────────────────────────────────────────────
   {
     id: 'plata_o_plomo',

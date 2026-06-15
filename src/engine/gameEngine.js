@@ -9249,9 +9249,64 @@ function buildYearTexture(state) {
       ? 'The maquiladora was the entry into the formal economy. The wages were fixed. The hours were long. The alternative was the informal market or nothing, which is how the wage negotiation worked.'
       : 'The bus from the colonia at 5am. The line at the gate. The badge that says you belong here but only during your shift hours.',
   ])
-  if (F.has('chavista_generation') && Math.random() < 0.17) return pick([
+  if (F.has('chavista_generation') && Math.random() < 0.2) return pick([
     'Chávez died in Havana in 2013, after fourteen years. The movement he named after himself outlasted him in a direction he may not have planned.',
     'The revolution was supposed to be irreversible. That word — irreversible — is doing a specific kind of work. You watched what happened to the things that were declared irreversible.',
+    phase === 'late_life'
+      ? 'You believed in the project. The missions were real. The poverty reduction was real. The collapse was also real. You hold all three without requiring them to reconcile into a single verdict.'
+      : 'The comandante called the poor of Venezuela into political existence for the first time. That is not nothing. What came after is also not nothing.',
+  ])
+  if (F.has('ven_chavez_1998_generation') && Math.random() < 0.22) return pick([
+    'The paratrooper from Barinas said "por ahora" in 1992 and won the election in 1998. The poor voted for him in numbers that constituted a message. You were in the country that received the message.',
+    'The polarization between chavistas and escuálidos divided dinner tables, workplaces, families. You were on one side and you know people on the other side and the distance between you has a specific date.',
+    phase === 'late_life'
+      ? 'Venezuela has had its third and fourth generation of leadership since 1998. The argument that started with Chávez\'s election is still the same argument, just with different faces on the posters.'
+      : 'The election of 1998 was a before-and-after for everyone in the country. The before and the after are permanent categories now.',
+  ])
+  if (F.has('ven_2002_coup_lived') && Math.random() < 0.22) return pick([
+    'Forty-seven hours. That is how long the coup lasted. The generals announced it, a businessman signed himself in as president, then the crowd came down from the cerros and the loyal officers moved and it reversed. You watched all of it.',
+    'The coup taught a specific lesson about where power actually lives — not in the television announcement, not in the signature on the decree, but in the streets and in which units of the army move and in which direction.',
+  ])
+  if (F.has('ven_oil_boom_lived') && Math.random() < 0.2) return pick([
+    'Oil at a hundred dollars. The misiones. The Cuban doctors in the barrio. Mercal food at subsidized prices. The poverty statistics falling. You were inside the decade when the project delivered — before the price fell.',
+    'The boom years produced a real redistribution and a real oil dependency. Both of those facts are true. The second one explains what happened to the first one.',
+    phase === 'late_life'
+      ? 'The mother who learned to read in Misión Robinson. The neighbor\'s child who got the free university place. The barrio clinic. The decade of the misiones produced real people with real changed lives. What happened to the system that produced them does not undo the specific changed lives.'
+      : 'The supermarket was full. The doctor came to the barrio. The exchange rate made imports cheap. You know what the country looked like when the price of oil held.',
+  ])
+  if (F.has('ven_chavez_death_generation') && Math.random() < 0.22) return pick([
+    'March 5, 2013. Maduro on the state channel. "Our commander" — in the past tense. The coffin touring the country for two days. A generation that had built its political life around a single person was told to continue without him.',
+    'Chávez was 58 when he died. He had won four elections. The country had been in permanent campaign mode for fourteen years. The silence after his death had a specific quality that his presence had made impossible to imagine.',
+    phase === 'late_life'
+      ? 'You have lived longer than Chávez lived. He built a country-sized project and then was gone. What he left — the missions, the constitution, the Maduro inheritance, the collapse — has been part of your daily life ever since.'
+      : 'The grief in the street was not performed. You saw it. People who had built their lives around the misiones, around the belief that the project was going somewhere — they wept for a father, which is not a metaphor.',
+  ])
+  if (F.has('bolivarian_collapse_lived') && Math.random() < 0.28) return pick([
+    'The queue at the supermarket before four in the morning. The CLAP bag with its specific contents. The medicines that arrived and didn\'t arrive. The money that required six zeros removed and then required six more. You navigated this in your body.',
+    'Inflation at a million percent: the number sounds like abstraction. It isn\'t. It is what happened to the price of rice between morning and afternoon. It is the arithmetic of deciding what to buy first.',
+    phase === 'late_life'
+      ? 'You have lived through the collapse of a country\'s economy while the country\'s government said it was still working. You know what it looks like from inside, which is different from what it looks like from outside, which is different from what it looks like in the statistics.'
+      : 'The bolivar lost six zeros. Then six more. The government issued new notes. The new notes lost value before they could be circulated. You learned to think in dollars in a country where the dollar was the enemy.',
+  ])
+  if (F.has('ven_2017_generation') && Math.random() < 0.22) return pick([
+    'Four months of daily protests. The tear gas from the GNB. The colectivos on motorcycles arriving into the march. The guarimba: the neighborhood barricade, the garbage fire at the intersection, the calculation of which streets were safe.',
+    'A hundred and twenty people died in 2017 and Maduro created the Constituent Assembly and survived. The street could not produce what the street was demanding. You were in the street or you were watching from the window.',
+    phase === 'late_life'
+      ? 'The 2017 protests were the most sustained popular mobilization in Venezuelan democratic history. They did not produce the result they demanded. You were alive for both facts.'
+      : 'You went out or you didn\'t. Either way the decision had weight. The calculation — of risk, of consequence, of what the street could actually produce — is still present.',
+  ])
+  if (F.has('ven_stayer') && Math.random() < 0.2) return pick([
+    'Seven million left. You watched them go. The city has a specific quality when the population has been reduced by a quarter — quieter in ways that are not peace, emptier in ways that are not space.',
+    'The diaspora WhatsApp group sends photos from Bogotá, Lima, Miami. They ask how things are. The honest answer changes week to week. You send the version that won\'t make them feel guilty for leaving.',
+    phase === 'late_life'
+      ? 'You stayed. The country they left and the country you stayed in have diverged. You can talk to them about the one they remember; they can talk to you about the one you\'re in; neither conversation quite covers the same country.'
+      : 'The decision to stay is renewed every month. It is not a single decision — it is a recurring calculation that keeps coming out the same way, so far.',
+  ])
+  if (F.has('ven_testigo_generation') && Math.random() < 0.18) return pick([
+    'Hope, oil, missions, collapse, exodus. You have the complete arc. The generation that lived from the 1998 election to here carries the whole thing: what was promised, what was delivered, what happened to the delivery.',
+    phase === 'late_life'
+      ? 'You are the testimony. The memorial will have statistics. You have the specific supermarket, the specific route through the city, the specific faces of the people who are gone. The archive lives in this generation.'
+      : 'Venezuela\'s story is not finished. You are in the middle of it. The reckoning — what the Bolivarian project actually was, what it actually built, what it actually cost — is still being written.',
   ])
   if (F.has('special_period_generation') && Math.random() < 0.22) return pick([
     'The Special Period: no Soviet oil, no Soviet subsidies, the blackouts, the food rationing that was already rationing rationed further. You learned what the minimum was.',
@@ -13796,7 +13851,7 @@ export function generateEpitaph(state) {
     'harare_hyperinflation_lived', 'solidarity_era_lived',
     'post_apartheid_generation', 'witnessed_wall_fall',
     'ghana_independence_generation', 'nairobi_independence_generation',
-    'bolivarian_collapse_lived', 'left_junta_chile',
+    'bolivarian_collapse_lived', 'ven_2017_generation', 'ven_chavez_death_generation', 'left_junta_chile',
     'maidan_generation', 'euromaidan_lived',
     'independence_generation_self', 'beirut_blast_survived',
     'refugee', 'displaced', 'emigrated', 'diaspora',
@@ -13832,6 +13887,10 @@ export function generateEpitaph(state) {
     para2.push(`${He} survived the Derg years in Ethiopia — the Red Terror, the famine, and the long years after both.`)
   } else if (f('harare_hyperinflation_lived')) {
     para2.push(`Zimbabwe's hyperinflation turned daily arithmetic into survival. ${He} had that education, and kept it.`)
+  } else if (f('ven_testigo_generation') && f('bolivarian_collapse_lived')) {
+    para2.push(`${He} lived the whole arc of Bolivarian Venezuela — the 1998 hope, the missions, the oil decade, the collapse, the exodus of seven million. ${He} contains the complete account of a project that delivered something real and then destroyed it.`)
+  } else if (f('ven_2017_generation') && f('bolivarian_collapse_lived')) {
+    para2.push(`${He} was in the streets of Venezuela in 2017 — four months of daily protest, 120 dead — and then lived through the years when the street didn't produce what the street was demanding. ${He} kept going.`)
   } else if (f('bolivarian_collapse_lived')) {
     para2.push(`${He} watched Venezuela collapse — the pharmacy shelves, the currency, the people crossing the border on foot.`)
   } else if (any('buenos_aires_junta_era', 'witnessed_madres')) {

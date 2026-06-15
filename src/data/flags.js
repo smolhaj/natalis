@@ -1718,6 +1718,72 @@ export const FLAG_REGISTRY = {
     notes: 'Set by la_ven_caracazo character event and venezuela_caracazo_1989 world event. Year texture (state violence memory) + Venezuela political arc follow-through.',
   },
 
+  // ── VENEZUELA ─────────────────────────────────────────────────────────────────
+
+  ven_chavez_1998_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Was in Venezuela for Chávez\'s 1998 election — the paratrooper who said "por ahora" in 1992 becoming president, and the specific split it produced in Venezuelan society.',
+    intent: 'year_texture',
+    notes: 'Set by ven_chavez_election_1998.',
+  },
+
+  ven_2002_coup_lived: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the 47-hour April 2002 coup against Chávez — the generals\' TV announcement, the businessmen\'s government, the crowd coming down from the cerros, the return.',
+    intent: 'year_texture',
+    notes: 'Set by ven_2002_coup.',
+  },
+
+  ven_oil_boom_lived: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived inside the petrodollar boom years — oil at $100/barrel, the misiones, Cuban doctors in the barrio, Mercal food, the imports flooding in at the official rate.',
+    intent: 'year_texture',
+    notes: 'Set by ven_oil_misiones.',
+  },
+
+  ven_chavez_death_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'In Venezuela when Chávez died March 5 2013 — the announcement from Maduro on state television, the two-day coffin procession, the grief of a generation whose political imagination he had built.',
+    intent: 'year_texture',
+    notes: 'Set by ven_chavez_death.',
+  },
+
+  bolivarian_collapse_lived: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the collapse of the Bolivarian project — the supermarket queues at 4am, the CLAP food bags, the medicines that couldn\'t be found, the currency that lost six zeros.',
+    intent: 'year_texture',
+    notes: 'Set by ven_escasez.',
+  },
+
+  ven_2017_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Was in Venezuela during the 2017 protests — four months of daily street actions, 120 dead, the guarimba, the birdshot, the motorcycles, and Maduro surviving everything.',
+    intent: 'year_texture',
+    notes: 'Set by ven_2017_protests.',
+  },
+
+  ven_stayer: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Stayed in Venezuela when seven million left — the specific identity of the ones who remained while the country emptied, watching the departures from the same street.',
+    intent: 'year_texture',
+    notes: 'Set by ven_emigrar (stayed choice) and ven_emigrar (left choice, co-set).',
+  },
+
+  ven_testigo_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed the full arc of Bolivarian Venezuela — the hope, the oil, the missions, the collapse, the exodus. The complete account.',
+    intent: 'year_texture',
+    notes: 'Set by ven_late_reckoning.',
+  },
+
   la_violencia_generation: {
     weight: 'major',
     category: 'historical',
