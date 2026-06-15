@@ -2290,6 +2290,56 @@ export const RIBBONS = [
     color: 'black',
   },
 
+  // ── IRAQ RIBBONS ─────────────────────────────────────────────────────────────
+  {
+    id: 'the_eight_years',
+    name: 'The Eight Years',
+    description: 'The war was supposed to last weeks. It lasted eight years. You were in it for eight years. The border at the end is where it was at the beginning.',
+    condition: (G) => G.flags.includes('irq_iran_iraq_veteran') && G.flags.includes('irq_war_generation'),
+    priority: 88,
+    color: 'gray',
+  },
+  {
+    id: 'the_ration_card',
+    name: 'The Ration Card',
+    description: 'The dinar was worth a dollar. Then fractions of a cent. Then the oil-for-food program, which is food, distributed by the government, at prices set by the government, in a country under comprehensive sanctions.',
+    condition: (G) => G.flags.includes('irq_sanctions_generation'),
+    priority: 80,
+    color: 'orange',
+  },
+  {
+    id: 'the_statue',
+    name: 'The Statue',
+    description: 'April 9, 2003. The statue in Firdos Square. What the cameras wanted. What followed the statue was not what came after the statue in the cameras.',
+    condition: (G) => G.flags.includes('irq_postwar_generation'),
+    priority: 74,
+    color: 'gray',
+  },
+  {
+    id: 'the_wall_between_the_streets',
+    name: 'The Wall Between the Streets',
+    description: 'The mixed street — Sunni and Shia families on the same block — separating. The mechanism was efficient. The walls that went up were sometimes called peace walls.',
+    condition: (G) => G.flags.includes('irq_displacement_generation') && G.flags.includes('irq_postwar_generation'),
+    priority: 82,
+    color: 'black',
+  },
+  {
+    id: 'the_mosul_reckoning',
+    name: 'The Mosul Reckoning',
+    description: 'Two thousand fighters against 30,000 soldiers. The soldiers left. Nine months to take it back, block by block. The al-Nuri mosque was demolished before they retreated.',
+    condition: (G) => G.flags.includes('irq_isis_generation'),
+    priority: 78,
+    color: 'black',
+  },
+  {
+    id: 'thawra',
+    name: 'Thawra',
+    description: 'October 2019. The word they chose: revolution. Six hundred dead. The electoral law passed. The government changed. The system remained. They said: we will be back.',
+    condition: (G) => G.flags.includes('irq_tishreen_generation'),
+    priority: 68,
+    color: 'green',
+  },
+
   // ── PALESTINE ADDITIONAL RIBBONS ─────────────────────────────────────────────
   {
     id: 'the_keys_on_the_wall',

@@ -5617,6 +5617,80 @@ export const FLAG_REGISTRY = {
     notes: 'Set by jor_king_hussein_era.',
   },
 
+  // ── IRAQ ─────────────────────────────────────────────────────────────────────
+
+  irq_baath_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up inside the Ba\'ath state — the party card as admission ticket, the portrait in every room, the mukhabarat in the neighbourhood, the double grammar of what you said and what you meant.',
+    intent: 'year_texture',
+    notes: 'Set by irq_baath_childhood. Iraq 1970–2003.',
+  },
+
+  irq_iran_iraq_veteran: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Served in the Iran-Iraq War 1980–88 — eight years on the front, poison gas, stalemate, 250,000–500,000 Iraqi dead, a border that didn\'t move.',
+    intent: 'year_texture',
+    notes: 'Set by irq_iran_iraq_war (first choice). Major trauma flag.',
+  },
+
+  irq_war_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Shaped by the Iran-Iraq War — no outside, only distance from the front that determines which costs arrive first.',
+    intent: 'year_texture',
+    notes: 'Set by irq_iran_iraq_war (both choices).',
+  },
+
+  irq_sanctions_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the 1991–2003 UN sanctions — the dinar collapsing, infant mortality doubling, the middle class dismantled, the oil-for-food ration card.',
+    intent: 'year_texture',
+    notes: 'Set by irq_sanctions_1990s (both choices). One of the most comprehensive sanctions regimes in history.',
+  },
+
+  irq_postwar_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived the 2003 invasion and immediate aftermath — army disbanded, de-Baathification, museum looting, the question of who has the gun.',
+    intent: 'year_texture',
+    notes: 'Set by irq_2003_invasion (both choices).',
+  },
+
+  irq_displacement_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived the 2006–08 sectarian civil war — Baghdad sorted by neighbourhood, two million displaced, the walls that went up.',
+    intent: 'year_texture',
+    notes: 'Set by irq_sectarian_war (both choices). 2M internally displaced in 2006–08.',
+  },
+
+  irq_isis_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Alive during the ISIS years 2014–17 — Mosul fell in 48 hours, the caliphate, the Yazidi genocide on Sinjar, nine months of liberation, the ruined mosque.',
+    intent: 'year_texture',
+    notes: 'Set by irq_isis_mosul (auto-effect).',
+  },
+
+  irq_diaspora_generation: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'In the Iraqi diaspora — one of the highest professional emigration rates in history, living in the gap between the Iraq you miss and the Iraq that exists.',
+    intent: 'year_texture',
+    notes: 'Set by irq_diaspora_professional (both choices).',
+  },
+
+  irq_tishreen_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Witnessed or joined the October 2019 Tishreen uprising — 600 dead, electoral reform partially met, the system absorbing and surviving.',
+    intent: 'year_texture',
+    notes: 'Set by irq_tishreen_2019 (both choices).',
+  },
+
   // ── LIBYA ────────────────────────────────────────────────────────────────────
 
   libyan_jamahiriya_generation: {

@@ -8617,6 +8617,65 @@ function buildYearTexture(state) {
     'The king survived the 1967 war, the 1970 civil war, the assassination attempts. He was the state for a generation. You built your adult life in the country he made.',
   ])
 
+  // ─── IRAQ TEXTURE ────────────────────────────────────────────────────────────
+  if (F.has('irq_baath_generation') && Math.random() < 0.22) return pick([
+    'The portrait was everywhere. The knowing of the words — of the chant, of the name, of which picture goes in which room — was not optional. You learned it before you learned to question what you were learning.',
+    'The party card was the admission ticket. To the hospital, to the good school, to the promotion. The card was also the surveillance system. You understood this later. You carried the card first.',
+    phase === 'late_life'
+      ? 'You outlived the portrait. The man in it, the state that put it up, the years that required you to keep it. What you are left with is the knowledge of how completely a system can colonize a childhood.'
+      : 'You grew up inside the double grammar — what you said and what you meant. The gap between them was the education the party did not intend to give you.',
+  ])
+  if (F.has('irq_iran_iraq_veteran') && Math.random() < 0.28) return pick([
+    'Eight years. The war that was supposed to last weeks. You know what eight years of a front feels like from the inside. The border is where it was when the war started.',
+    'Half a million Iraqi dead. The statistics are what you read later. The accounting you carry is different from the statistics.',
+    phase === 'late_life'
+      ? 'The war generation is aging. The men who survived Basra and Halabja and the marshes — some of them are gone now. The war that made you who you are is becoming history. It was not history when you were in it.'
+      : 'You came back. The border that was changed and then unchanged does not fully account for what the years took. The mathematics of survival does not justify or explain.',
+  ])
+  if (F.has('irq_war_generation') && Math.random() < 0.2) return pick([
+    'There is no outside a war that lasts eight years. There is only the distance from the front that determines which costs arrive first.',
+    'The funerals were private. The official broadcasts described victories. You learned to hear the difference between the frequency of funerals and the frequency of victories, and you never confused them again.',
+  ])
+  if (F.has('irq_sanctions_generation') && Math.random() < 0.25) return pick([
+    'The dinar: worth a dollar in 1990. Worth fractions of a cent by 1995. You watched the unit of value that organized your family\'s arithmetic simply stop working.',
+    'The middle-class Iraq your parents grew up in was being dismantled at the same speed as the dinar. The ration card replaced the salary. The profession continued to carry its title while earning almost nothing.',
+    phase === 'late_life'
+      ? 'Twelve years of comprehensive sanctions. The infant mortality that doubled. The professionals who left. The hospitals that ran short. You were inside the statistics that were later used to argue whether the policy was worth it.'
+      : 'The oil-for-food program: food and medicine, at prices the government set, distributed through the government. You ate what it provided. Your body is made partly of its calculation.',
+  ])
+  if (F.has('irq_postwar_generation') && Math.random() < 0.22) return pick([
+    'April 9, 2003. The statue in Firdos Square. What followed the statue: no army, no administration, no police, the museum stripped. The planning did not extend to this.',
+    'The Coalition Provisional Authority dissolved the army — 400,000 men, armed and unpaid. De-Baathification removed the people who knew how to make the water and electricity run. These decisions were made in a period of weeks. You were living inside them.',
+    phase === 'late_life'
+      ? 'The Iraq that existed before March 2003 and the Iraq that exists now are connected by a line of decisions made in six weeks. You were alive in both versions. The line between them is not a wound exactly. It is more like a before and an after that share a name.'
+      : 'The question of who has the gun is the first question of the new Iraq. You learned to answer it before you had time to think of better questions.',
+  ])
+  if (F.has('irq_displacement_generation') && Math.random() < 0.25) return pick([
+    'Baghdad was being sorted. The mixed streets — Sunni and Shia neighbours — separating by car bomb and death squad and 24-hour eviction notice. You were in it.',
+    'Two million Iraqis displaced in 2006-08. The walls that went up between the neighbourhoods were sometimes called peace walls. You know which side of which wall you ended up on.',
+    phase === 'late_life'
+      ? 'The city you grew up in sorted itself while you were an adult. The neighbourhood that held families you knew has a different profile now. You know which direction to map over what you remember.'
+      : 'The displacement was not an event. It was a process that lasted two years and reshaped every relationship that crossed a neighbourhood line.',
+  ])
+  if (F.has('irq_isis_generation') && Math.random() < 0.25) return pick([
+    'June 10, 2014. Two thousand fighters against 30,000 soldiers. The soldiers left. What they left behind was the knowledge that the state would not protect you.',
+    'The caliphate at its height: eight million people. Mosul fell in 48 hours. The al-Nuri mosque demolished before they retreated. Nine months of liberation, block by block. The city that came out the other side is rubble and question.',
+    phase === 'late_life'
+      ? 'You have lived enough of Iraq\'s history to know that each period gets contained and then followed by the next thing. The ISIS period is in the chain now. The chain is the thing you carry.'
+      : 'The Yazidis on Sinjar Mountain. The women taken. The men killed on the hill. The knowledge of what happened there is part of what it means to be Iraqi in the years since.',
+  ])
+  if (F.has('irq_diaspora_generation') && Math.random() < 0.2) return pick([
+    'The Iraqi diaspora is a specific phenomenon: one of the highest literacy rates in the Arab world in 1980, dismantled by two wars and twelve years of sanctions and an invasion and a civil war.',
+    'You are in the diaspora of a place that used to be something and is trying to become something again. The version you miss is not the version that exists. The distinction is the geography of your grief.',
+    phase === 'late_life'
+      ? 'The Iraq in your memory and the Iraq that exists now share a geography and a name. The version you held has been revised by events you experienced from a distance. The distance is what you chose, or what chose you.'
+      : 'The professionals who left — doctors in Amman, engineers in Detroit, architects in Toronto. You are in that company. The country that trained you needed something else from you than your presence.',
+  ])
+  if (F.has('irq_tishreen_generation') && Math.random() < 0.2) return pick([
+    'October 2019. The young Iraqis in Baghdad and the Shia south — the generation that did not start the wars but received them. Six hundred dead in six months. The system absorbed the pressure and survived.',
+    'Thawra — revolution. The word the protesters chose. The demands: a new electoral law, an end to the sectarian quota system, accountability. Some of this happened. Some of it reversed. Six hundred dead is not a partial victory.',
+  ])
+
   // ─── ANGOLA TEXTURE ──────────────────────────────────────────────────────────
   if (F.has('angola_civil_war_generation') && Math.random() < 0.22) return pick([
     'The war lasted twenty-seven years. It began the day independence arrived. Those two facts are not unrelated.',
@@ -13485,6 +13544,7 @@ export function generateEpitaph(state) {
     'nl_hunger_winter_generation', 'nl_srebrenica_generation', 'nl_fortuyn_witness',
     'bra_dictatorship_generation', 'bra_resistance_generation', 'bra_favela_survived',
     'bng_liberation_generation', 'bng_mukti_bahini', 'bng_famine_generation', 'bng_coup_generation',
+    'irq_iran_iraq_veteran', 'irq_sanctions_generation', 'irq_displacement_generation', 'irq_isis_generation',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -13633,6 +13693,18 @@ export function generateEpitaph(state) {
     para2.push(`${He} was alive in Bangladesh for the Liberation War of 1971 — the nine months of Operation Searchlight and Mukti Bahini resistance and Indian intervention that killed between one and three million people and produced a free country on December 16.`)
   } else if (f('bng_coup_generation') && f('bng_famine_generation')) {
     para2.push(`${He} watched the Bangabandhu's free Bangladesh starve in 1974 and assassinate its founder in 1975. Both events happened inside the first four years of independence. ${He} navigated everything that came after.`)
+  } else if (f('irq_iran_iraq_veteran') && f('irq_sanctions_generation')) {
+    para2.push(`${He} served in the Iran-Iraq War and came back to a country that then spent twelve years under UN sanctions. Eight years of war for a border that didn't move, then twelve years of sanctions that destroyed what the war hadn't finished. Both were the life.`)
+  } else if (f('irq_iran_iraq_veteran') && f('irq_war_generation')) {
+    para2.push(`${He} served in the Iran-Iraq War — eight years on the front in the marshes and plains near Basra, poison gas in the mountains near Halabja — and came back to a country that had spent 250,000 to 500,000 people for a border that didn't move. ${He} carried the arithmetic of that for the rest of ${his} life.`)
+  } else if (f('irq_sanctions_generation') && f('irq_postwar_generation')) {
+    para2.push(`${He} lived through twelve years of UN sanctions and then the 2003 invasion and then the civil war. Each arrived before the last one was finished. The country that existed at the start of that sequence is not the country at the end.`)
+  } else if (f('irq_displacement_generation') && f('irq_postwar_generation')) {
+    para2.push(`${He} survived the 2006–08 sectarian violence in Baghdad — the walls, the sorted neighbourhoods, two million displaced. The city ${he} returned to did not have the same map as the city ${he} left.`)
+  } else if (f('irq_sanctions_generation')) {
+    para2.push(`${He} came of age in the sanctions decade — the dinar collapsing, the hospitals running short, the middle-class Iraq of ${his} parents dismantled at the speed of policy. ${He} navigated it and kept going.`)
+  } else if (f('irq_isis_generation')) {
+    para2.push(`${He} was Iraqi during the ISIS years — Mosul, the caliphate, nine months of block-by-block liberation, the ruined mosque. The country has survived worse. The surviving changes what the word means.`)
   }
 
   // Displacement / migration
