@@ -1874,6 +1874,104 @@ export const FLAG_REGISTRY = {
     notes: 'Set by col_late_reckoning.',
   },
 
+  // ── JAPAN ─────────────────────────────────────────────────────────────────────
+
+  japan_postwar_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Grew up in occupied Japan (1946–52) or the immediate postwar years — chocolate from American soldiers, rubble becoming concrete, trains running through the ruins, the emperor\'s voice on the radio.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_postwar_childhood.',
+  },
+
+  anpo_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Was in Japan during the 1960 Anpo protests — hundreds of thousands around the Diet building opposing the US security treaty, the Zengakuren students, the democracy testing its limits.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_anpo_protests (both choices).',
+  },
+
+  showa_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Shaped by the Showa economic miracle — 10%/year growth, bullet trains, transistor radios, the 1964 Olympics, the country\'s transformation from rubble to manufacturer in two decades.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_economic_miracle, jpn_salaryman_life (distant choice).',
+  },
+
+  showa_salaryman: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Lived the salaryman compact — lifetime employment at one company, the 6am train and midnight return, the section chief\'s karaoke, the hanami, the karoshi that is always somewhere nearby.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_salaryman_life (accept choice).',
+  },
+
+  ol_ceiling_lived: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Navigated Japan\'s OL (Office Lady) structure — the tea poured at meetings where men decided things, the education that exceeded the role, the ceiling encoded in the employment contract.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_office_lady (both choices).',
+  },
+
+  burakumin_identity: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Descended from Japan\'s feudal outcast caste — legally emancipated 1871, discrimination persisting in marriage vetoes, residential patterns, the things said behind you and not to your face.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_burakumin. Requires ethnicity burakumin.',
+  },
+
+  bubble_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age during Japan\'s asset bubble (1985–90) — Imperial Palace land worth more than California, golf memberships traded as securities, the Nikkei at 38,915.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_bubble_years. Gates jpn_bubble_collapse.',
+  },
+
+  lost_decade_generation: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Young adult during Japan\'s Lost Decade (1991–2000) — the Nikkei down 60%, land values halved while loans remained full, the deflation, the restaurants gone, the promotions suspended.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_bubble_collapse (both choices). Gated on bubble_generation.',
+  },
+
+  hikikomori_experience: {
+    weight: 'major',
+    category: 'psychological',
+    description: 'Withdrew from society — months or years in a room, the delivery slot, the screen, the outside\'s specific hardness. One of an estimated million by 2010.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_hikikomori (both choices). Gated on low happiness or charisma.',
+  },
+
+  fukushima_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Was in Japan on March 11, 2011 — the 9.0 earthquake, the tsunami, the Fukushima meltdowns, 19,000 dead, the word "anzen" no longer fitting the sentence it was placed in.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_fukushima. Text branches for Tohoku (rural) vs. Tokyo (urban).',
+  },
+
+  jpn_caregiver_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Took on elder care in Japan\'s aging society — the waiting list for facilities, the kaigo arithmetic of one working-age person per dependent, the gendered distribution of who provides it.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_aging_parent (both choices).',
+  },
+
+  jpn_testigo_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'A witness to Japan\'s long arc — the postwar miracle, the bubble, the collapse, Fukushima — and to the national silence around the war that produced the recovery.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_war_silence (both choices).',
+  },
+
   // ── PERU ──────────────────────────────────────────────────────────────────────
 
   per_sendero_generation: {

@@ -2442,6 +2442,40 @@ export const RIBBONS = [
     color: 'black',
   },
 
+  // ── JAPAN RIBBONS ────────────────────────────────────────────────────────────
+  {
+    id: 'the_lost_decades',
+    name: 'The Lost Decades',
+    description: 'You were there when the Nikkei peaked at 38,957 and then were not there for the thirty years of recovery that still hasn\'t fully arrived. The decade became two. Then three.',
+    condition: (G) => G.flags.includes('bubble_generation') && G.flags.includes('lost_decade_generation'),
+    priority: 82,
+    color: 'gray',
+  },
+  {
+    id: 'the_room',
+    name: 'The Room',
+    description: 'The screen, the slot under the door, the specific hardness of outside. You were in the room. One of an estimated million. The government counted you. The counting did not open the door.',
+    condition: (G) => G.flags.includes('hikikomori_experience'),
+    priority: 78,
+    color: 'gray',
+  },
+  {
+    id: 'anzen',
+    name: 'Anzen',
+    description: 'Safe. The word the government used. Then March 11, the three reactors, the twenty-kilometre exclusion zone, the convenience stores still stocked behind locked doors. The word doesn\'t fit the sentence anymore.',
+    condition: (G) => G.flags.includes('fukushima_generation') && G.flags.includes('japan_postwar_generation'),
+    priority: 84,
+    color: 'black',
+  },
+  {
+    id: 'the_family_register',
+    name: 'The Family Register',
+    description: 'The investigator your prospective partner\'s family hired found the address. The address was sufficient. Legally emancipated 1871. The register is still checked.',
+    condition: (G) => G.flags.includes('burakumin_identity'),
+    priority: 86,
+    color: 'black',
+  },
+
   // ── PERU RIBBONS ─────────────────────────────────────────────────────────────
   {
     id: 'the_shining_path',

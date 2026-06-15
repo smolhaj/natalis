@@ -6468,6 +6468,66 @@ function buildYearTexture(state) {
       : 'The three reactors, the hydrogen explosions on live television, the wind direction. You know which way the wind was blowing on March 12 because a lot of people learned to track the wind direction that week.',
   ])
 
+  if (F.has('japan_postwar_generation') && Math.random() < 0.22) return pick([
+    'You grew up in occupied Japan — the American soldiers at the gate, the SCAP directives, the new constitution written in nine days. The country that emerged from that process is the country you grew up in.',
+    'The rubble became concrete became bullet train. The pace of the transformation was fast enough that the people inside it could not always see its shape.',
+    phase === 'late_life'
+      ? 'You have lived the full arc of postwar Japan: the devastation, the occupation, the miracle, the bubble, the stagnation, the aging. No generation before yours had seen this particular sequence.'
+      : 'Your parents remember the firebombing. You remember the Hershey bar. Your children remember the bullet train. The distance between those three memories is one family.',
+  ])
+  if (F.has('showa_generation') && Math.random() < 0.2) return pick([
+    'The economy grew at ten percent a year and the growth was so consistent that it began to feel like a law of nature. You are old enough to know it wasn\'t.',
+    'The transistor radio. The Sony television. The Honda motorcycle. These objects entered your household at specific ages and each entry marked a new floor below which you would not return.',
+    phase === 'late_life'
+      ? 'You were the generation that rebuilt the country, and you were also shaped by a growth rate that couldn\'t continue, and the years after the growth have been the longer portion of your life.'
+      : 'The miracle was real. The miracle was also a specific set of policy choices and labor conditions and suppressed consumption that made it possible. You lived inside it without seeing its structure.',
+  ])
+  if (F.has('showa_salaryman') && Math.random() < 0.2) return pick([
+    'The section chief drinks before you drink. The section chief leaves before you leave. This is not a rule — it is a fact of the room that everyone in the room understands without the rule being stated.',
+    'Forty years at one company. The watch at the retirement ceremony. The pension. The specific kind of man the company required and produced. You are that man, which is true, and you chose to be, which is also true, and the choice was not quite free.',
+    phase === 'late_life'
+      ? 'The company is still there. Some of the companies are not still there. The men who gave their lives to the ones that are not still there have the specific reckoning of having bet their lives on something that did not last.'
+      : 'Karoshi entered the dictionary in 1978 to describe what happens when the compact extracts more than the body can give. You know someone for whom the extraction was total.',
+  ])
+  if (F.has('ol_ceiling_lived') && Math.random() < 0.22) return pick([
+    'The Equal Employment Opportunity Law passed in 1986 and what passed in a law and what changed in a room are still two different timelines.',
+    'You poured the tea at meetings where you were the most educated person at the table. The table knew this. The structure of the meeting did not change based on the table knowing it.',
+    phase === 'late_life'
+      ? 'The generation of women who came after you navigate a different set of obstacles. The obstacles are smaller. You contributed to making them smaller, in the way that people who did not quit contributed to a pressure that eventually moved something.'
+      : 'The marriage expectation was also present — that you would leave when you found the right match. The match and the career were presented as incompatible. This was a policy, not a fact, but it operated with the force of fact.',
+  ])
+  if (F.has('burakumin_identity') && Math.random() < 0.25) return pick([
+    'The word is not said to your face. The way it operates does not require being said to your face.',
+    'The investigators your prospective partner\'s family hired found the family register. The register listed the address. The address was the information. This is still legal.',
+    phase === 'late_life'
+      ? 'The Dōwa policies brought infrastructure to the communities and resources to the schools. What the policies could not bring was the change in what people checked before agreeing to the marriage. That change moves at a different speed.'
+      : 'You learn, young, the difference between the legal status and the lived one. Emancipation on paper and emancipation in a room are different documents with different timelines.',
+  ])
+  if (F.has('bubble_generation') && !F.has('lost_decade_generation') && Math.random() < 0.2) return pick([
+    'The golf club membership was trading at eighty million yen. People bought them as investments. You know someone who bought one. The someone has a different relationship to the word "investment" now.',
+    'At the peak you could not have known it was the peak. The peak looked like a new plateau, which is what peaks look like from the inside.',
+  ])
+  if (F.has('hikikomori_experience') && Math.random() < 0.22) return pick([
+    'The room was the right size. The room had everything and the outside had a specific kind of demand you were not meeting. You know what months in a room feel like.',
+    'There were a million of you by 2010. The government counted. The count meant the room was not an individual failure — it was a phenomenon. The phenomenon and the room are both real.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'What you found on the other side of the room — if you found the other side — required a longer path than the path other people took. The longer path is the path you have.'
+      : 'The screen in the room was also a window. Not the same window as the one that looked out at the street. But it connected you to something.',
+  ])
+  if (F.has('jpn_caregiver_generation') && Math.random() < 0.2) return pick([
+    'Japan is the oldest society on earth and the arithmetic of that is a specific person — usually a woman — who has reorganised her life around the care of an elderly parent.',
+    'The waiting list for the nursing home was eighteen months. You did eighteen months of kaigo while the name moved up the list. The eighteen months changed what you know about the limit of your own endurance.',
+    phase === 'late_life'
+      ? 'You cared for your parents and wonder now who will care for you. The wonder is statistical as well as personal: the people who would provide the care are the people who were not born because of the demographic shift you watched happen.'
+      : 'The care is total in the way that the thing it is caring for is total. You learn things about your parent that a child is not supposed to learn about a parent.',
+  ])
+  if (F.has('jpn_testigo_generation') && Math.random() < 0.2) return pick([
+    'The war is present in every political season without being named. The Yasukuni debate. The textbook controversy. The comfort women negotiations. You have watched the same argument recur for fifty years with the same positions.',
+    phase === 'late_life'
+      ? 'The things that happened in the years before you were born shaped the country you grew up in and the country that shaped you shaped the things you did not talk about at the table. The silence is inherited. You are deciding what to do with it.'
+      : 'You know the version your family told and the version the government curriculum tells and the version the neighbors who grew up in Korea or China or the Philippines tell, and you know these are not the same version.',
+  ])
+
   // ─── SOUTH KOREA TEXTURE ─────────────────────────────────────────────────────
   if (F.has('gwangju_generation') && Math.random() < 0.3) return pick([
     'Gwangju was suppressed from the national record for almost a decade. You knew before the record admitted it. That gap is a specific kind of knowledge.',
@@ -13916,6 +13976,7 @@ export function generateEpitaph(state) {
     'rwa_rtlm_generation', 'rwa_genocide_witness', 'rwa_goma_generation',
     'col_violencia_generation', 'col_cartel_era', 'col_desplazado', 'col_paramilitary_era',
     'per_sendero_generation', 'per_sterilization_survivor',
+    'japan_postwar_generation', 'lost_decade_generation', 'fukushima_generation', 'burakumin_identity',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -14104,6 +14165,14 @@ export function generateEpitaph(state) {
     para2.push(`${He} was in the Peruvian highlands during the Sendero years — the school closures, the rondas, the army, the bodies. ${He} lived to give testimony to the CVR. The report found 69,000 dead, 75% Quechua-speaking. ${He} was in the 75%.`)
   } else if (f('per_sendero_generation')) {
     para2.push(`${He} was a child in the decade when the Shining Path and the Peruvian army were both in the same valleys. The Truth Commission counted 69,000 dead. The count didn't reach Lima as urgently as it reached the highlands.`)
+  } else if (f('burakumin_identity') && f('lost_decade_generation')) {
+    para2.push(`${He} navigated Japan's feudal outcast legacy — the family register check, the marriage veto, the things said behind and not to ${his} face — and then navigated the Lost Decade. Two systems of exclusion, one life.`)
+  } else if (f('burakumin_identity')) {
+    para2.push(`${He} was descended from Japan's feudal outcast caste. Legally emancipated 1871. The discrimination that could not be legislated away operated through the marriage register, the address, the things that identified without being said.`)
+  } else if (f('japan_postwar_generation') && f('fukushima_generation')) {
+    para2.push(`${He} was born into occupied Japan — the rubble, the chocolate from soldiers, the new constitution — and lived to March 11, 2011, when the word "anzen" stopped fitting the sentence. The arc of postwar Japan is ${his} arc.`)
+  } else if (f('japan_postwar_generation') && f('lost_decade_generation')) {
+    para2.push(`${He} grew up in the postwar miracle — ten percent growth, bullet trains, the 1964 Olympics — and then watched it stop. The Japan ${he} was raised to expect and the Japan ${he} lived in became different countries.`)
   }
 
   // Displacement / migration
