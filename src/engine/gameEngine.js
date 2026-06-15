@@ -4918,6 +4918,13 @@ function buildYearTexture(state) {
       ? 'You have been a Namibian citizen your whole life — which is the same length of time that Namibian citizenship has existed. The country and your adulthood are the same age.'
       : 'Sam Nujoma was in exile for thirty years before he came home as the first president. The country that existed when he left was not the country he came back to. Both of those things are still inside the word "independence."',
   ])
+  if (F.has('holodomor_generation') && Math.random() < 0.25) return pick([
+    'The famine of 1932-33. The bread that was taken from the village. The body at the side of the road. The knowledge that asking the wrong question — or saying the word famine — could bring consequences. You learned what official reality requires of you.',
+    'Six million in Ukraine. The Soviet census of 1937 returned lower population figures than 1926. The statisticians were arrested. The category "starvation" was removed from death certificates.',
+    phase === 'late_life'
+      ? 'You have outlived the USSR that caused it and the silence that maintained it. Ukraine called it genocide in 2006. You were alive in 1932 and alive in 2006. What you carry between those two years is the specific weight of a truth that could not be spoken for seventy years.'
+      : 'The enforced silence left particular shapes: the way certain years were not discussed, the absence of people who were not talked about, the grandmother who ate bark and did not eat bark in the official record. The silence had texture.',
+  ])
   if (F.has('holodomor_family_memory') && Math.random() < 0.18) return pick([
     'Your grandmother does not throw bread away. You know why.',
     'The Holodomor — 1932-33. Six million. The Soviets denied it internationally while it was happening. The bread your grandmother saves is the shape of that denial.',
@@ -7783,6 +7790,41 @@ function buildYearTexture(state) {
     'Your concern was about pace and scale. Your concern has been used since by people whose concerns are different from yours. The difference matters and is difficult to hold onto in the current political climate.',
     'The debate became about identity rather than logistics. You are not sure when that happened or how to get back to the original question.',
   ])
+  if (F.has('oil_shock_generation') && Math.random() < 0.22) return pick([
+    '1973. The petrol queue stretches from the garage to the main road. The odd/even number plate rule applies every other day. The German government bans driving on Sundays. The Dutch see Amsterdam with no cars. Everyone learns what the price of oil is.',
+    'The first oil shock produced the second car in one move: the small car, the fuel-efficient car, the car that was not the American car. The shock changed the design of things.',
+    phase === 'late_life'
+      ? 'The oil shock of 1973 was the first time you understood that the energy that kept the lights on came from somewhere specific, run by someone specific, for reasons that included but were not limited to your convenience. The education stuck.'
+      : 'The price of petrol doubled in three months. The queue was the daily fact. The shortage was the first shortage you had experienced in a wealthy country and it had the specific effect of making the wealth feel conditional.',
+  ])
+  if (F.has('syrian_crisis_witnessed') && Math.random() < 0.2) return pick([
+    'The photograph of Alan Kurdi on the Turkish beach — September 2, 2015 — was the image that the European debate could not look away from for one news cycle. Then it found ways to look away.',
+    phase === 'late_life'
+      ? 'You watched the largest refugee crisis in Europe since 1945 from the news and from the border volunteers and from the politics that followed. The crisis produced its own politics. The politics outlasted the crisis by years.'
+      : 'The Balkan route. The Hungarian border fence. Keleti station. The column of people walking the motorway in Hungary. The welcome at Munich Central. The German chancellor\'s "Wir schaffen das." These are the images of one autumn.',
+  ])
+  if (F.has('refugee_crisis_witness') && Math.random() < 0.18) return pick([
+    'You watched the boats or you watched the boats from a distance, via the news, via the photographs that someone had to take of people in water. The distance shaped what the watching cost you.',
+    phase === 'late_life'
+      ? 'The number that was used in the debate — one million arrivals in Germany in 2015 — was the number. The people attached to the number became an abstraction and then became the neighbors of some of the people who had been using the number.'
+      : 'The politics that followed the crisis remade the political map of Europe. The parties that rose on what the crisis named were still rising years later. The boats had not stopped.',
+  ])
+  if (F.has('stasi_generation') && Math.random() < 0.28) return pick([
+    'The Stasi had 100,000 full-time employees and 200,000 informers for 16 million people. One in 63. After 1989 you could apply to see your file. Some people found out it was their neighbor. Some found out it was their spouse.',
+    phase === 'late_life'
+      ? 'You applied to see the file eventually. The file was specific in ways that surprised you — the details only someone close to you could have known. The name in the file was someone you still sometimes see.'
+      : 'The thing about the informer network was not the surveillance itself but the ambiguity: you never knew who was in it and the not-knowing shaped how you spoke, how you trusted, what you said in which rooms.',
+  ])
+  if (F.has('trabant_owner') && Math.random() < 0.2) return pick([
+    'The Trabant took thirteen years to arrive from the order date. You drove it until reunification. After reunification it became a joke. You do not find it entirely funny.',
+    'The Trabant 601 produced more pollution per kilometer than a modern car produces in ten. You knew this and drove it anyway because it was what there was.',
+  ])
+  if (F.has('ration_book_generation') && Math.random() < 0.2) return pick([
+    'The ration book told you what was available and what was not. The queue told you the same thing more slowly. You learned to plan around what could be got rather than what was needed.',
+    phase === 'late_life'
+      ? 'Supermarkets still produce a specific kind of disorientation: you know it is possible to choose between six kinds of yoghurt but part of you still calculates which one you have the coupons for.'
+      : 'The queue at the HO store. The Intershop for hard currency. The parallel economy that everyone navigated and nobody admitted to. The economy of actually existing socialism.',
+  ])
 
   // ─── FRANCE TEXTURE ──────────────────────────────────────────────────────────
   if (F.has('algerian_war_veteran') && Math.random() < 0.3) return pick([
@@ -7902,6 +7944,13 @@ function buildYearTexture(state) {
   if (F.has('troubles_adjacent') && Math.random() < 0.2) return pick([
     'In the Republic, technically not in the conflict. The bombs in Dublin in 1974 clarified the word technically.',
     'The Troubles were on the other side of the border in the way that a fire in a shared building is on the other side of a wall.',
+  ])
+  if (F.has('troubles_generation') && Math.random() < 0.28) return pick([
+    'The checkpoint on the road to school. The soldier with the rifle asking where you are going. The answer you give depends on which road you are on and which checkpoint this is. You know the difference.',
+    'The bomb in the town center, or the bomb somewhere nearby, or the news on the radio about the bomb. The normalization of the particular risk. You learned to read the situation from small signals — a crowd moving wrong, a parked car that should not be there.',
+    phase === 'late_life'
+      ? 'Good Friday 1998. The ceasefire held. The murals are still there. The peace walls are still there — taller in some places than they were during the conflict. The peace is real and it has a specific texture that is not the same as the absence of conflict.'
+      : 'You grew up in a place where your religion was a political category before it was a theological one. The community you were from and the community across the street were not communities in the neutral sense.',
   ])
 
   // ─── TURKEY TEXTURE ──────────────────────────────────────────────────────────

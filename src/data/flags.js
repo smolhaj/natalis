@@ -4771,6 +4771,54 @@ export const FLAG_REGISTRY = {
     notes: 'Set by ger_refugee_crisis_2015 (resistant choice).',
   },
 
+  stasi_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived under the East German Stasi — 100,000 employees and 200,000 informers for 16 million people; after 1989 you could request your file and learn who reported on you.',
+    intent: 'year_texture',
+    notes: 'Set by gdr_stasi_apparatus world event.',
+  },
+
+  trabant_owner: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Owned or waited 13 years for a Trabant — the East German car that became an ironic object after reunification.',
+    intent: 'year_texture',
+    notes: 'Set by we_trabant world event.',
+  },
+
+  ration_book_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived under a ration book economy — planned scarcity, the HO queue, the Intershop for hard currency, the parallel economy everyone navigated.',
+    intent: 'year_texture',
+    notes: 'Set by communist_economy world event.',
+  },
+
+  troubles_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Grew up during the Troubles in Northern Ireland — the checkpoint, the bomb, the community as political category, the peace walls.',
+    intent: 'year_texture',
+    notes: 'Set by the_troubles world event.',
+  },
+
+  oil_shock_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived through the 1973 oil shock — the petrol queue, odd/even plates, car-free Sundays, the first lesson about where energy comes from.',
+    intent: 'year_texture',
+    notes: 'Set by oil_crisis_1973 world event.',
+  },
+
+  holodomor_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the 1932-33 Holodomor in Ukraine or USSR — the enforced silence, the doctored census, the bread that could not be spoken of.',
+    intent: 'year_texture',
+    notes: 'Set by holodomor_1932 world event.',
+  },
+
   // ── France ───────────────────────────────────────────────────────────────────
   algerian_war_veteran: {
     weight: 'major',
@@ -8019,7 +8067,7 @@ export const FLAG_REGISTRY = {
     weight: 'minor',
     category: 'world_event',
     description: 'Non-Syrian character living in a neighboring country who witnessed the Syrian civil war\'s impact on their region.',
-    intent: 'none',
+    intent: 'year_texture',
     notes: 'Set by syrian_civil_war world event. Fires for Lebanon/Jordan/Turkey/Iraq characters.',
   },
 
@@ -8027,7 +8075,7 @@ export const FLAG_REGISTRY = {
     weight: 'minor',
     category: 'world_event',
     description: 'Wealthy West character who witnessed the 2015 Syrian refugee crisis — the photograph, the debate, the political fracture.',
-    intent: 'none',
+    intent: 'year_texture',
     notes: 'Set by syrian_refugee_crisis_europe world event.',
   },
 
