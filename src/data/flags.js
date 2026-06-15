@@ -1874,6 +1874,72 @@ export const FLAG_REGISTRY = {
     notes: 'Set by col_late_reckoning.',
   },
 
+  // ── PERU ──────────────────────────────────────────────────────────────────────
+
+  per_sendero_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Grew up in Peru during the Sendero Luminoso years (1981–92) — the school closures, the ronda campesina patrols, the bodies on the road in the morning. 69,000 dead.',
+    intent: 'year_texture',
+    notes: 'Set by per_sendero_childhood. Text branches for Quechua vs. coastal. Gates per_cvr event.',
+  },
+
+  per_fujimori_era: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the Fujimori decade (1990–2000) — the autogolpe, the anti-inflation shock, the sterilization campaign, the vladivideos.',
+    intent: 'year_texture',
+    notes: 'Set by per_autogolpe_1992, per_sterilization (refused choice), per_keiko_generation.',
+  },
+
+  per_sterilization_survivor: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived the forced sterilization campaign (1996–2000) — one of the 270,000 Quechua-speaking women sterilized under a program officially called voluntary family planning.',
+    intent: 'year_texture',
+    notes: 'Set by per_sterilization (signed choice). Gates per_cvr alternate text. Surfaced in late-life reckoning.',
+  },
+
+  per_lima_migrant: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'An internal migrant navigating Lima — the serrano/cholo distinction, the city that received you and the city that sees you, the gap between those two things.',
+    intent: 'year_texture',
+    notes: 'Set by per_lima_racism (both choices).',
+  },
+
+  per_postfujimori_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age in the vladivideo era and its aftermath — watching Fujimori fax his resignation from Tokyo after the tapes revealed the full bribery infrastructure of the decade.',
+    intent: 'year_texture',
+    notes: 'Set by per_vladivideo.',
+  },
+
+  per_cvr_witness: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Engaged with the CVR — the Comisión de la Verdad y Reconciliación — either by testifying or by living through the accounting of 69,000 dead that Lima had avoided for twenty years.',
+    intent: 'year_texture',
+    notes: 'Set by per_cvr (both choices). Gated on per_sendero_generation or per_sterilization_survivor.',
+  },
+
+  per_keiko_era: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Lived through the Keiko Fujimori electoral cycles (2011, 2016, 2021) — the country splitting three times on what the 1990s were, the small margins, the fraud allegations.',
+    intent: 'year_texture',
+    notes: 'Set by per_keiko_generation.',
+  },
+
+  per_testigo_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'A witness to Peru\'s full late-20th-century arc — Sendero, the autogolpe, the sterilizations, the vladivideos, the CVR, the Keiko cycles. The complete map in one body.',
+    intent: 'year_texture',
+    notes: 'Set by per_late_reckoning.',
+  },
+
   femicidio_generation: {
     weight: 'moderate',
     category: 'identity',

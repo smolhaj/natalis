@@ -2442,6 +2442,40 @@ export const RIBBONS = [
     color: 'black',
   },
 
+  // ── PERU RIBBONS ─────────────────────────────────────────────────────────────
+  {
+    id: 'the_shining_path',
+    name: 'The Shining Path',
+    description: 'You were in the Peruvian highlands when Sendero Luminoso and the army were both in the same valleys. 69,000 dead, 75% Quechua-speaking. You were among the 75%.',
+    condition: (G) => G.flags.includes('per_sendero_generation'),
+    priority: 86,
+    color: 'black',
+  },
+  {
+    id: 'the_form',
+    name: 'The Form',
+    description: 'The word "voluntary" in the form. You signed. You are one of the 270,000. The case files are still open. The CVR named it. You carry what it ended.',
+    condition: (G) => G.flags.includes('per_sterilization_survivor'),
+    priority: 90,
+    color: 'black',
+  },
+  {
+    id: 'the_vladivideo',
+    name: 'The Vladivideo',
+    description: 'Montesinos on tape, handing cash, while they discussed the price. Then thousands more tapes. The bribery infrastructure of a decade made visible. Fujimori faxed his resignation from Tokyo.',
+    condition: (G) => G.flags.includes('per_postfujimori_generation'),
+    priority: 76,
+    color: 'gray',
+  },
+  {
+    id: 'the_cvr',
+    name: 'The CVR',
+    description: 'The Comisión de la Verdad y Reconciliación. You were there when they took testimony. 69,000 names. The document exists, which is more than the people who gave the orders planned for.',
+    condition: (G) => G.flags.includes('per_cvr_witness'),
+    priority: 78,
+    color: 'orange',
+  },
+
   // ── PALESTINE ADDITIONAL RIBBONS ─────────────────────────────────────────────
   {
     id: 'the_keys_on_the_wall',

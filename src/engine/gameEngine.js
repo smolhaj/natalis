@@ -9476,6 +9476,50 @@ function buildYearTexture(state) {
     'The paro nacional produced the biggest protests in Colombian history and eighty-three deaths and the withdrawal of the tax reform. What it produced after the withdrawal is still being sorted.',
   ])
 
+  // ─── PERU TEXTURE ─────────────────────────────────────────────────────────────
+  if (F.has('per_sendero_generation') && Math.random() < 0.27) return pick([
+    'The years when the Shining Path was in the valleys and the army was in the valleys and the bodies appeared on roads that led nowhere the newspapers covered. You know what that decade sounds like from the inside.',
+    'Your family\'s way of not talking about those years is specific: a change of subject when certain towns are named, a particular silence when someone asks how many years ago it was.',
+    phase === 'late_life'
+      ? 'Sixty-nine thousand. The CVR gave the decade a number. The number doesn\'t arrive as an abstraction for people who were in it. It arrives as names and roads and school years that ended abruptly.'
+      : 'What the Sendero years taught: that the people who came to liberate the poor were killing the poor, and that the army that came to stop them was also killing the poor. Both halves of this lesson arrived early.',
+  ])
+  if (F.has('per_sterilization_survivor') && Math.random() < 0.25) return pick([
+    'The health post. The form. The word "voluntary" in the form. What "voluntary" meant in the room where the promotora had the list and the alternatives were not explained. You signed. You know what you signed.',
+    'Two hundred and seventy thousand. The number is in the CVR report. You are one of the number. The number is how it gets counted. What it ended in your body is not a number.',
+    phase === 'late_life'
+      ? 'The case files are still open. The people who designed the campaign have not been convicted. The Fujimori name is still on the ballot. You are still here. These are the specific facts of the accounting so far.'
+      : 'You signed or you refused, and both paths had a cost, and the cost was not distributed by the person who designed the program — it was distributed to the women in the highlands with the forms in front of them.',
+  ])
+  if (F.has('per_lima_migrant') && Math.random() < 0.22) return pick([
+    '"Serrano." "Cholo." In certain mouths both words are geography. In certain offices neither word is geography. You learn to read the mouth before the word lands.',
+    'Lima received nine million migrants from the sierra over fifty years and built a city of cones and mototaxis and evangelical churches on the hills. The city that received you is not the city that sees you. You navigate the distance.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'You have been in Lima long enough that the highland village is memory and occasional Quechua on the phone with your mother or grandmother. The language you think in has been shifting in a direction you didn\'t vote for.'
+      : 'The navigation costs energy that the people you are navigating among do not spend. They were born into the grammar of this city. You learned it.',
+  ])
+  if (F.has('per_postfujimori_generation') && Math.random() < 0.2) return pick([
+    'The vladivideos: Montesinos on tape, handing cash, while they discussed the price. Then another tape. Then thousands of tapes. The entire bribery infrastructure of a decade, visible, because Montesinos taped everything.',
+    'Fujimori faxed his resignation from Tokyo. His minister accepted it by fax. That is how it ended: a document, a machine, a transmission, a decade over.',
+    phase === 'late_life'
+      ? 'Peru\'s catalogue in your lifetime: Velasco, Belaúnde, García, Fujimori, Toledo, García, Humala, Kuczynski, Vizcarra, Merino, Sagasti, Castillo. Eight presidents in eight years. The pattern under the names is the same crisis.'
+      : 'The post-Fujimori decade had a specific texture: each new president promising the Highland inclusion that Lima had avoided, and implementation being slower than the promise, in the same ratio every time.',
+  ])
+  if (F.has('per_cvr_witness') && Math.random() < 0.2) return pick([
+    'The CVR found 69,000 dead, 75% Quechua-speaking. The Lima press reported it with less interest than the international press. The people for whom the numbers were names had been waiting for the document for twenty years.',
+    'The Truth Commission existed. The report existed. The case files existed. The convictions were partial. The accounting was partial. What is not partial is that the document exists — which is more than the people who gave the orders planned for.',
+  ])
+  if (F.has('per_keiko_era') && Math.random() < 0.18) return pick([
+    'The Fujimori name on the ballot three times: 2011, 2016, 2021. Each time by a margin of less than two points. Each time she cried fraud. Each time the fraud was not found. The country learned to hold two things simultaneously.',
+    'The highland-coast split has an electoral expression: it runs through the Keiko vote and the anti-Keiko vote and through what people believe the 1990s were, which depends on whether they were in Lima or in Ayacucho for them.',
+  ])
+  if (F.has('per_testigo_generation') && Math.random() < 0.2) return pick([
+    'Sendero, the autogolpe, the sterilizations, the vladivideos, the CVR, Keiko three times. Peru had a specific set of crises in the last quarter of the twentieth century, and you have the complete account from the inside.',
+    phase === 'late_life'
+      ? 'The generation that holds this history is your generation. The generation after will have the official account — the reports and the trials and the museum exhibitions. You have what it actually felt like in the highlands, in Lima, in the post-office queue with the CLAE scandal on the news.'
+      : 'You contain the archive of a country that had to reckon with what it had done to its highland majority, slowly, partially, incompletely. The reckoning is still in progress.',
+  ])
+
   // ─── INFORMAL ECONOMY & RURAL-TO-URBAN TEXTURE ───────────────────────────────
   if (F.has('rural_to_urban') && !F.has('emigrated') && Math.random() < 0.22) return pick([
     'You know what the village smells like at harvest. You know what the city smells like at rush hour. The distance between those two things is the distance you crossed, and it is not only physical.',
@@ -13871,6 +13915,7 @@ export function generateEpitaph(state) {
     'irq_iran_iraq_veteran', 'irq_sanctions_generation', 'irq_displacement_generation', 'irq_isis_generation',
     'rwa_rtlm_generation', 'rwa_genocide_witness', 'rwa_goma_generation',
     'col_violencia_generation', 'col_cartel_era', 'col_desplazado', 'col_paramilitary_era',
+    'per_sendero_generation', 'per_sterilization_survivor',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -14051,6 +14096,14 @@ export function generateEpitaph(state) {
     para2.push(`${He} was among the seven million Colombians displaced by the conflict. ${He} rebuilt somewhere else and lived to see the war end and the territories where the state still hasn't arrived.`)
   } else if (f('col_violencia_generation')) {
     para2.push(`${He} grew up in the Colombia of La Violencia — the partisan civil war that didn't call itself a war because it happened between neighbors. The country that came after was the same country with a new set of armed actors.`)
+  } else if (f('per_sterilization_survivor') && f('per_cvr_witness')) {
+    para2.push(`${He} was among the 270,000 Quechua-speaking women sterilized under Fujimori's "voluntary" family planning campaign. ${He} gave testimony to the CVR. The report exists. The convictions are still partial.`)
+  } else if (f('per_sterilization_survivor')) {
+    para2.push(`${He} was among the 270,000. The CVR counted it and named it. The justice was partial. ${He} carried what the form had decided for ${him} for the rest of ${his} life.`)
+  } else if (f('per_sendero_generation') && f('per_cvr_witness')) {
+    para2.push(`${He} was in the Peruvian highlands during the Sendero years — the school closures, the rondas, the army, the bodies. ${He} lived to give testimony to the CVR. The report found 69,000 dead, 75% Quechua-speaking. ${He} was in the 75%.`)
+  } else if (f('per_sendero_generation')) {
+    para2.push(`${He} was a child in the decade when the Shining Path and the Peruvian army were both in the same valleys. The Truth Commission counted 69,000 dead. The count didn't reach Lima as urgently as it reached the highlands.`)
   }
 
   // Displacement / migration
