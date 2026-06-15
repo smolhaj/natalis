@@ -1874,6 +1874,80 @@ export const FLAG_REGISTRY = {
     notes: 'Set by col_late_reckoning.',
   },
 
+  // ── SAUDI ARABIA ──────────────────────────────────────────────────────────────
+
+  sau_aramco_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up in Saudi Arabia shaped by Aramco — the oil company that built the kingdom\'s infrastructure, funded the state, and employs the grammar of every sentence in Saudi life.',
+    intent: 'year_texture',
+    notes: 'Set by sau_aramco_generation.',
+  },
+
+  sau_siege_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Was in Saudi Arabia during the 1979 Grand Mosque siege — Juhayman\'s two-week occupation of the Haram in Mecca, 450+ dead, the state\'s response being intensified religious conservatism.',
+    intent: 'year_texture',
+    notes: 'Set by sau_grand_mosque_1979.',
+  },
+
+  sau_mutaween_era: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Lived under the mutaween (CPVPV) — the religious police who enforced gender segregation, dress codes, prayer times, and the geography of public space until they lost arrest powers in 2016.',
+    intent: 'year_texture',
+    notes: 'Set by sau_mutaween (both choices).',
+  },
+
+  sau_gulf_war_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the Gulf War and the presence of 500,000 US troops on Saudi soil — the founding grievance of modern jihadism, Bin Laden\'s break with the royal family, the American bases that stayed.',
+    intent: 'year_texture',
+    notes: 'Set by sau_gulf_war_1990 (both choices).',
+  },
+
+  sau_wasta_system: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Navigated the wasta system — connections, influence, the phone call that does in two days what the official channel takes six months — and understands what it builds and what it prevents.',
+    intent: 'year_texture',
+    notes: 'Set by sau_wasta (both choices).',
+  },
+
+  sau_scholarship_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Part of the King Abdullah Scholarship Program — 200,000 Saudis sent abroad with full funding, returning with the comparative knowledge of what other countries look like.',
+    intent: 'year_texture',
+    notes: 'Set by sau_scholarship_abroad (both choices).',
+  },
+
+  sau_khashoggi_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Was in Saudi Arabia when Jamal Khashoggi was killed inside the Istanbul consulate (October 2018) — the WhatsApp silence, the columns not written, the category of critic made visibly unsafe.',
+    intent: 'year_texture',
+    notes: 'Set by sau_khashoggi_2018 (both choices).',
+  },
+
+  sau_vision_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age during Vision 2030 — the MBS-era opening: women driving, cinemas, concerts, mutaween stripped of arrest powers, but also the Ritz detention and the Khashoggi killing.',
+    intent: 'year_texture',
+    notes: 'Set by sau_vision_2030.',
+  },
+
+  sau_testigo_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'A late-life witness to Saudi Arabia\'s full arc — the oil boom, the siege, the American troops, the mutaween years, Vision 2030, and the country that is not yet what it is becoming.',
+    intent: 'year_texture',
+    notes: 'Set by sau_late_reckoning.',
+  },
+
   // ── JAPAN ─────────────────────────────────────────────────────────────────────
 
   japan_postwar_generation: {

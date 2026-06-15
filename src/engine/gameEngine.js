@@ -8349,6 +8349,67 @@ function buildYearTexture(state) {
       : 'The country that oil built has a specific texture — the subsidy, the service-sector economy, the relationship to work that does not fully resemble any other country\'s.',
   ])
 
+  // ─── SAUDI ARABIA TEXTURE ────────────────────────────────────────────────────
+  if (F.has('sau_aramco_generation') && Math.random() < 0.2) return pick([
+    'Saudi Aramco is not a company. It is the reason the country exists in its current form — the revenue, the infrastructure, the foreign workers, the compound, the future that depends on the oil lasting long enough to diversify away from the oil.',
+    'You grew up in the country that the oil built. The infrastructure was fast and the spending was real and the question of what happens when the Aramco revenue curves downward has been present since before you were born.',
+    phase === 'late_life'
+      ? 'The kingdom was built in decades and oil will last decades more but the math of the remaining decades is tighter than the math of the decades you grew up in. You know what the country looked like before it was all there. You know it mostly from your parents\' descriptions.'
+      : 'What is not an oil economy, in Saudi Arabia, is a question the government is now trying to answer. You are the generation being asked to live inside the answer.',
+  ])
+  if (F.has('sau_siege_generation') && Math.random() < 0.22) return pick([
+    'Juhayman al-Otaybi and his men were in the Haram for two weeks. The state that emerged from the retaking was different from the state that entered: more religious, more conservative, the mutaween expanded, the entertainment sector restricted for decades.',
+    'The 1979 siege\'s logic: the government appeased the religious establishment rather than challenged it, because the siege had shown that the challenge could come from that direction. The appeasement cost was paid by everyone who lived inside it.',
+    phase === 'late_life'
+      ? 'The generation that lived through 1979 and the generation that lived through Vision 2030 are in some cases the same people. The distance between those two Novembers is the measure of the kingdom\'s capacity for reinvention from above.'
+      : 'You learned about the siege from parents who lived it and a school curriculum that treated it as a moment of divine protection. The French commandos who entered the Haram were not in the school curriculum.',
+  ])
+  if (F.has('sau_mutaween_era') && Math.random() < 0.22) return pick([
+    'The mutaween lost their arrest powers in 2016. You lived with the arrest powers for years before that. The years with and the years without are not the same country to live inside, but the change came from above and can go back from above.',
+    'The specific geography of the rules: which mall, which entrance, which time of day, which neighbourhood. You navigated it so completely that the navigation became invisible to you. Then 2016 happened and some of what you\'d been navigating was removed.',
+    phase === 'late_life'
+      ? 'The 2002 girls\' school fire in Mecca. The mutaween reportedly blocked exits because the girls weren\'t covered. Fifteen dead. The image is the image that is in the Saudi memory of that era — the cost of the system stated in the most specific possible terms.'
+      : 'The man in the white Toyota Land Cruiser. The Commission. You know the schedule, the geography, the categories of infraction. The knowledge is so complete it no longer registers as knowledge — it is just the texture of moving through your day.',
+  ])
+  if (F.has('sau_gulf_war_generation') && Math.random() < 0.2) return pick([
+    'Five hundred thousand American soldiers on Saudi soil. The bases were supposed to be temporary. "Temporary" lasted years. The presence that was supposed to protect the holy places was the presence that became the founding grievance of the people who wanted to destroy them.',
+    'Bin Laden\'s offer was rejected: he had Afghan veterans, he said, they could defend the kingdom without the Americans. The rejection was the break. The break produced September 11. You have spent years thinking about the sequence.',
+    phase === 'late_life'
+      ? 'The Gulf War ended in a hundred hours. The strategic consequences lasted for decades. You have been inside the consequences — the blowback, the regional war, the terrorism, the two American invasions. None of this was the plan in August 1990.'
+      : 'You grew up after the Gulf War in a country where American military presence was a fact and a controversy simultaneously, a country where the argument about what had been given away had no public venue to resolve itself.',
+  ])
+  if (F.has('sau_khashoggi_generation') && Math.random() < 0.2) return pick([
+    'October 2018. The explanation changed five times. What did not change: Khashoggi entered the consulate and did not come out. The WhatsApp groups went quiet. The columns were not written.',
+    'The CIA conclusion was that MBS ordered it. The diplomatic consequence was a period of discomfort and then a return to business as before. The message was received.',
+    phase === 'late_life'
+      ? 'The Khashoggi killing sits inside Vision 2030 and Vision 2030 sits inside the Khashoggi killing. The liberalization and the killing are not contradictions — they are the same theory of how power works.'
+      : 'The silence after October 2018 is a specific silence. You know what it means to be a person who writes things and to have learned that the category of person who writes things has a ceiling that October 2018 made visible.',
+  ])
+  if (F.has('sau_scholarship_generation') && Math.random() < 0.2) return pick([
+    'The King Abdullah Scholarship Program sent 200,000 Saudis abroad. The program created the very problem it was trying to solve: people who had been outside came back with a comparison, and the comparison is a difficult thing to unlearn.',
+    'You studied somewhere else and returned — or didn\'t return. Either way, the comparison is permanent. The country you came back to is measured against the countries you were in, in a way that makes the measurement impossible to stop.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'The scholarship generation is now mid-career — in the government, in Aramco, in the ministries implementing Vision 2030. The question of what they brought back and what they were able to do with it is a generational question whose answer is still unresolved.'
+      : 'You arrived in the other country and learned two curricula simultaneously: the official one and the comparative one. The comparative one was more expensive to acquire.',
+  ])
+  if (F.has('sau_vision_generation') && Math.random() < 0.2) return pick([
+    'Cinemas, concerts, women driving, the Ritz Carlton as a detention facility for two hundred princes and businessmen, NEOM under construction in the desert. The pace is so fast that the country cannot process it as fast as it arrives.',
+    'Mohammed bin Salman is the youngest crown prince in Saudi history and the changes he is making are real and the consolidation of power underneath the changes is also real. You live inside both of those facts.',
+    phase === 'late_life'
+      ? 'You watched four kings and the crown prince your grandchildren will likely see become king. The arc from the 1979 siege to Vision 2030 is the arc of your country rewriting what it is without calling it a rewrite.'
+      : 'The Vision 2030 document is an economic plan and a social statement and a political project. You are the generation it was written for — the young Saudi who is supposed to build the diversified economy. The expectations are specific and large.',
+  ])
+  if (F.has('sau_wasta_system') && Math.random() < 0.18) return pick([
+    'Wasta: the call that moves the file, the cousin of the deputy director, the thing that takes six months in the official channel and two days in the network. You have learned which side of the wasta you are on.',
+    'In a country where connections are infrastructure, the people without connections are building on sand. You know your network and your network knows you. The relationship between who you know and what you can do is explicit here in ways other societies pretend it isn\'t.',
+  ])
+  if (F.has('sau_testigo_generation') && Math.random() < 0.18) return pick([
+    'The oil boom, the siege, the Gulf War, the mutaween years, Vision 2030, the Khashoggi killing. You have been inside a country that reinvented itself twice from above and is attempting a third reinvention while keeping the power structure that makes reinvention possible.',
+    phase === 'late_life'
+      ? 'What Saudi Arabia becomes in the decades after you — whether the reforms hold or contract, whether the oil revenue lasts long enough for the diversification to work, whether MBS is remembered as the reformer or the consolidator — you will not see the answer. You have seen the question form.'
+      : 'The version of Saudi Arabia your grandchildren inherit is being decided now, which means it is being decided by a very small number of people at the top of a very concentrated power structure. This is not new. The pace of decision is new.',
+  ])
+
   // ─── WORLD EVENTS 2016–2021 TEXTURE ──────────────────────────────────────────
   if (F.has('polarization_era') && Math.random() < 0.18) return pick([
     'The 2016 result rewrote the assumption about what was stable. The country you thought you understood had an interior that the polling couldn\'t reach. That interior voted, and the result has been present in every subsequent year.',
@@ -13977,6 +14038,7 @@ export function generateEpitaph(state) {
     'col_violencia_generation', 'col_cartel_era', 'col_desplazado', 'col_paramilitary_era',
     'per_sendero_generation', 'per_sterilization_survivor',
     'japan_postwar_generation', 'lost_decade_generation', 'fukushima_generation', 'burakumin_identity',
+    'sau_siege_generation', 'sau_khashoggi_generation',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -14173,6 +14235,10 @@ export function generateEpitaph(state) {
     para2.push(`${He} was born into occupied Japan — the rubble, the chocolate from soldiers, the new constitution — and lived to March 11, 2011, when the word "anzen" stopped fitting the sentence. The arc of postwar Japan is ${his} arc.`)
   } else if (f('japan_postwar_generation') && f('lost_decade_generation')) {
     para2.push(`${He} grew up in the postwar miracle — ten percent growth, bullet trains, the 1964 Olympics — and then watched it stop. The Japan ${he} was raised to expect and the Japan ${he} lived in became different countries.`)
+  } else if (f('sau_khashoggi_generation') && f('sau_vision_generation')) {
+    para2.push(`${He} was in Saudi Arabia for Vision 2030 and for October 2018 — the cinemas and the concerts and the women driving, and Khashoggi entering the Istanbul consulate and not coming out. The liberalization and the killing are the same project.`)
+  } else if (f('sau_siege_generation') && f('sau_mutaween_era')) {
+    para2.push(`${He} was in Saudi Arabia in 1979 when Juhayman seized the Grand Mosque, and lived through the three decades of intensified religious conservatism that followed. The siege and the mutaween are the same answer.`)
   }
 
   // Displacement / migration

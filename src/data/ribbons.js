@@ -2442,6 +2442,40 @@ export const RIBBONS = [
     color: 'black',
   },
 
+  // ── SAUDI ARABIA RIBBONS ─────────────────────────────────────────────────────
+  {
+    id: 'the_grand_mosque',
+    name: 'The Grand Mosque',
+    description: 'November 1979. The Haram seized. Two weeks, 450 dead, French commandos converted to Islam for the operation. The kingdom\'s response was more religion, not less. You were there for the response.',
+    condition: (G) => G.flags.includes('sau_siege_generation'),
+    priority: 86,
+    color: 'black',
+  },
+  {
+    id: 'the_consulate',
+    name: 'The Consulate',
+    description: 'He entered and did not come out. The WhatsApp group went quiet. The explanation changed five times. You were in Saudi Arabia for October 2, 2018, and you understood what the silence meant.',
+    condition: (G) => G.flags.includes('sau_khashoggi_generation'),
+    priority: 84,
+    color: 'black',
+  },
+  {
+    id: 'the_scholarship',
+    name: 'The Scholarship',
+    description: 'The King Abdullah Scholarship Program sent you abroad. You came back with a comparison. The comparison does not turn off. This was the problem the program was supposed to solve.',
+    condition: (G) => G.flags.includes('sau_scholarship_generation'),
+    priority: 76,
+    color: 'orange',
+  },
+  {
+    id: 'the_mutawi',
+    name: 'The Mutawi',
+    description: 'The white Land Cruiser. The Commission. You learned the geography of enforcement so well the navigation became invisible — until 2016, when they lost the power to arrest, and you noticed what you\'d been doing.',
+    condition: (G) => G.flags.includes('sau_mutaween_era'),
+    priority: 78,
+    color: 'gray',
+  },
+
   // ── JAPAN RIBBONS ────────────────────────────────────────────────────────────
   {
     id: 'the_lost_decades',
