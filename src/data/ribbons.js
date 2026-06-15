@@ -2374,6 +2374,40 @@ export const RIBBONS = [
     color: 'green',
   },
 
+  // ── COLOMBIA RIBBONS ─────────────────────────────────────────────────────────
+  {
+    id: 'plata_o_plomo',
+    name: 'Plata o Plomo',
+    description: 'You lived in the country when the offer was silver or lead and the state was not in a position to refuse. Escobar died on a rooftop. The route didn\'t.',
+    condition: (G) => G.flags.includes('col_cartel_era'),
+    priority: 84,
+    color: 'black',
+  },
+  {
+    id: 'the_fifty_two_years',
+    name: 'The Fifty-Two Years',
+    description: 'The FARC road tax. The paramilitary checkpoint. The peace accord. You lived inside the whole arc of it — the war that was too long to name and the peace that came too late for some.',
+    condition: (G) => G.flags.includes('col_farc_era') && G.flags.includes('col_paz_generation'),
+    priority: 80,
+    color: 'green',
+  },
+  {
+    id: 'estrato_uno',
+    name: 'Estrato Uno',
+    description: 'The number on the utility bill. The address that announced itself in how people received you. You lived in a city that printed its class system on the gas bill.',
+    condition: (G) => G.flags.includes('col_desplazado') && G.flags.includes('col_estrato_known'),
+    priority: 74,
+    color: 'orange',
+  },
+  {
+    id: 'the_bogotazo',
+    name: 'The Bogotazo',
+    description: 'April 9, 1948. Gaitán. The burning city. The decade that followed with a name that described what it was in only one word: La Violencia.',
+    condition: (G) => G.flags.includes('col_bogotazo_generation') || G.flags.includes('col_violencia_generation'),
+    priority: 86,
+    color: 'black',
+  },
+
   // ── PALESTINE ADDITIONAL RIBBONS ─────────────────────────────────────────────
   {
     id: 'the_keys_on_the_wall',

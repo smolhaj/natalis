@@ -1976,6 +1976,21 @@ function buildYearTexture(state) {
       'Hui Muslim in China — the halal question at the cafeteria, the management of an identity that requires management. The faith that went inward or stayed visible, depending on the year.',
       'The prayer five times a day, inside the family as unremarkable as weather. Outside it, a marker. The degree of marking depends on the decade.',
     ])
+    if (F.has('cultural_revolution_generation') && Math.random() < 0.3) return pick([
+      'The Cultural Revolution generation: the decade when the schools closed and the country turned on its teachers and the educated became targets. You learned what was officially unsayable from that decade.',
+      'Grown up inside the Cultural Revolution — the poster campaigns, the red armbands, the categories of enemy applied to people you knew. The infrastructure of accusation that a ten-year-old absorbs without being able to name it.',
+      phase === 'late_life'
+        ? 'The revolution that made your generation. Whatever you became afterward, you became it knowing what a country could do to its own people when the correct target had been identified.'
+        : 'The decade your parents were educated by the revolution and un-educated by it simultaneously. You learned the gap between what the state said and what the courtyard showed.',
+    ])
+    if (F.has('reform_era_china') && Math.random() < 0.28) return pick([
+      'The reform era. The country reorganised itself around opportunity and you moved inside that reorganisation. Whether this produced what it was supposed to produce depends on the year you ask.',
+      'Opening up: the phrase meant the window was there to go through. You went through it or watched others go through it. Either way the window changed what was possible.',
+    ])
+    if (F.has('handover_generation') && Math.random() < 0.25) return pick([
+      '1997. One country, two systems, fifty years. You were there for the handover and have been watching the fifty years unfold from the inside.',
+      'The handover generation: you know what Hong Kong was before and have watched what it is becoming. The comparison is available at any time. You make it constantly.',
+    ])
   }
 
   // ─── KOREA ARC TEXTURE ───────────────────────────────────────────────────────
@@ -2023,6 +2038,13 @@ function buildYearTexture(state) {
       phase === 'young_adult'
         ? 'The service is done. The classmates who deferred entered the workforce ahead of you. You are doing the arithmetic on what was lost and what was kept.'
         : 'You did the time the country required. You have opinions about the requirement that you keep to appropriate contexts.',
+    ])
+    if (F.has('korean_miracle_generation') && Math.random() < 0.3) return pick([
+      'The miracle: your parents remembered subsistence and you grew up in a country inventing semiconductors. The speed of the transformation is the central fact of being Korean in your era.',
+      'Exportled growth, compressed into twenty years. You lived inside the compression — the factories, the education arms race, the country becoming something it had not been.',
+      phase === 'midlife' || phase === 'late_life'
+        ? 'The Han River miracle, from inside it. Your parents\' generation built the infrastructure. You built the technology. The children are asking what the building cost.'
+        : 'You are the first generation for whom the poverty your grandparents knew is history rather than memory. That gap — between memory and history — is the whole distance of the miracle.',
     ])
   }
 
@@ -7040,6 +7062,13 @@ function buildYearTexture(state) {
     'You tried to reduce the demand. The attempt was heard and partially successful. You are still deciding whether the something that left the room when the number dropped was worth the money.',
   ])
 
+  if (F.has('india_tech_generation') && Math.random() < 0.25) return pick([
+    'Bangalore in the nineties: the MNC campuses, the call center buildings going up, the salary that was four times what your father earned in government service. The transformation had a specific postal code.',
+    'The IT generation: the generation that made India legible to the world as a place of engineers and English and overnight shifts. You were inside this. Whether you are proud of it depends on what else it produced.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'You were the first person in your family to work for a foreign company, the first to live in a suburb built specifically for people like you, the first to have a salary denominated in rupees that translated cleanly into dollars. The firsts have accumulated. Their meaning is still being settled.'
+      : 'The software corridor, the outsourcing economy, the generation of Indians who rewired global capital flows through their labour — you are one of them. The rewiring was real. The beneficiaries were not evenly distributed.',
+  ])
   if (F.has('caa_protest_generation') && Math.random() < 0.22) return pick([
     'The Citizenship Amendment Act: the first time in India\'s secular constitutional history that religion was made an explicit criterion for citizenship. Shaheen Bagh: women on a road in Delhi, in winter, for a hundred days. Both facts belong to the same year.',
     'The Delhi riots of February 2020 came during the CAA protests, in Muslim-majority neighbourhoods, with a police absence that has been documented. The sequence is a sequence and the sequence is information.',
@@ -8188,6 +8217,28 @@ function buildYearTexture(state) {
       : 'Kirchner renegotiated the debt and the commodity prices cooperated and for a decade the country moved in a direction that felt sustainable. Whether it was is still being argued.',
   ])
 
+  if (F.has('economic_collapse_survivor') && Math.random() < 0.25) return pick([
+    'The savings that became worthless in the conversion. The queue at the bank before it closed. The number on the passbook denominated in a currency that was officially one thing and functionally another. You know what a financial collapse means at the level of the family.',
+    'The state debt default: a number in the news that translates, at the household level, into specific concrete decisions about which bill to pay and which to defer. You made those decisions. The weight of them is permanent.',
+    phase === 'late_life'
+      ? 'You have rebuilt from economic collapse once. The rebuilding was possible. The knowledge of how quickly a currency can become theoretical is now the baseline from which all subsequent financial decisions proceed.'
+      : 'The hyperinflation, the devaluation, the restructuring — the words are technical but the experience is specific: the gap between what you saved and what it was worth when you needed it.',
+  ])
+  if (F.has('decolonization_generation') && Math.random() < 0.25) return pick([
+    'Independence: the flag and the speech and the crowd and then the morning after, when the infrastructure left behind was the infrastructure that had been designed for extraction rather than for the people who now ran it.',
+    'The generation that saw the handover — from colonial administration to the first national government — carries both the elation and the arithmetic of what was left behind. The elation was real. So is the arithmetic.',
+    phase === 'late_life'
+      ? 'You were there for independence and have been there for all the decades since. The question of whether independence delivered what the generation that wanted it believed it would deliver is a question you answer differently depending on which decade you\'re accounting for.'
+      : 'Your parents\' generation fought for independence. Your generation grew up inside the result. The result is more complicated than the fight, which is usually how it goes.',
+  ])
+  if (F.has('oil_boom_generation') && Math.random() < 0.22) return pick([
+    'The oil decade: the infrastructure arriving suddenly — roads, hospitals, buildings — in a country that the week before had had almost none. The speed of the arrival is the defining texture of the era.',
+    'Growing up in a petro-state boom: the money made the country into something it had not been and would not have been without the resource. The resource changed the calculus of what work was and who did what.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'The boom did not last at the same pitch. What the boom left behind — the infrastructure, the dependence, the revenue structure — is what you are still living inside.'
+      : 'The country that oil built has a specific texture — the subsidy, the service-sector economy, the relationship to work that does not fully resemble any other country\'s.',
+  ])
+
   // ─── WORLD EVENTS 2016–2021 TEXTURE ──────────────────────────────────────────
   if (F.has('polarization_era') && Math.random() < 0.18) return pick([
     'The 2016 result rewrote the assumption about what was stable. The country you thought you understood had an interior that the polling couldn\'t reach. That interior voted, and the result has been present in every subsequent year.',
@@ -8410,6 +8461,71 @@ function buildYearTexture(state) {
   if (F.has('rwa_reconciliation_generation') && Math.random() < 0.2) return pick([
     'Thirty years. The country that exists now and the country before April 6, 1994 share a name and a map. You are in both simultaneously — the one you live in, and the one you carry.',
     'The children who grew up after 1994 have no ethnic category on their documents. They learned about April 1994 from the memorial and the school curriculum. You learned about it differently. The difference is the whole distance of what you carry.',
+  ])
+
+  // ─── VIETNAM TEXTURE ─────────────────────────────────────────────────────────
+  if (F.has('south_vietnamese_diaspora') && Math.random() < 0.28) return pick([
+    'April 30, 1975. The helicopter on the roof of the embassy. What it meant to be on the wrong side of that — or the right side, depending on which America you had trusted and which Saigon you had lived in.',
+    'You left with what could be carried. The things left behind are catalogued differently at different ages: at thirty, the specific; at fifty, the general; at seventy, the people.',
+    phase === 'late_life'
+      ? 'South Vietnam ended when you were in the middle of your life. The country that existed when you were born no longer exists. You have carried its flag in your memory for longer than it existed on a map.'
+      : 'The diaspora has a specific grammar — Vietnamese spoken with the accent of 1975 Saigon, recipes without the ingredients that would arrive in the markets later, children who know the country only from what you describe.',
+  ])
+  if (F.has('boat_person') && Math.random() < 0.3) return pick([
+    'The South China Sea. The calculation before: the chance of death at sea versus the certainty of what came next on land. You made the calculation. The water was not the smaller risk.',
+    'The pirates came twice or once or not at all, and in each case you arrived somewhere and began again from nothing, which is a specific kind of beginning.',
+    phase === 'late_life'
+      ? 'You crossed the South China Sea on a boat not designed for the crossing and you arrived in a camp and you started again. That arc — from the boat to wherever you ended up — is the founding story. You have told it as little as possible and it has not gone away.'
+      : 'The camp: the waiting that became its own life. The resettlement interview. The plane to the city that had agreed to take you. The beginning that was not a beginning of anything you recognized yet.',
+  ])
+  if (F.has('reeducation_family') && Math.random() < 0.25) return pick([
+    'Re-education camp: the word sounds administrative. What it was was a prison of indefinite length for the crime of having served the wrong government. Your father or brother or husband went in after 1975. You waited.',
+    'The family split: some south of the 17th parallel, some north of it, some gone by sea. The reunification that happened was a political fact. The family that reunified — or didn\'t — is a different accounting.',
+    phase === 'late_life'
+      ? 'The men who came back from the camps came back changed in specific ways — quieter, more careful with words, attentive to doors. The years in the camp are not fully discussable even now.'
+      : 'You visited when visiting was permitted. The ration of rice you carried in. The conversation conducted under observation. The things said and the things not said and the difference between them.',
+  ])
+  if (F.has('doi_moi_generation') && Math.random() < 0.25) return pick([
+    '1986: Doi Moi. The renovation. Market economics, foreign investment, private enterprise — all newly permitted in a country that had spent a decade in communist austerity. The speed of the opening was its own shock.',
+    'The economy that was supposed to work on socialist principles pivoted. The pivot worked, in the specific way that "worked" is measured — GDP growth, a middle class, motorbikes everywhere. The principles were not changed, only supplemented.',
+    phase === 'late_life'
+      ? 'You have watched Vietnam go from one of the poorest countries in Asia to one of the fastest-growing. The government that managed the transition is the same government that ran the camps. Both are true of the same country you live in.'
+      : 'The foreign brands in the city, the coffee shops, the factories, the generation that grew up knowing only the opened economy — you remember when none of this existed. The contrast is the texture of being old enough to have a before.',
+  ])
+  if (F.has('doi_moi_entrepreneur') && Math.random() < 0.22) return pick([
+    'You started the business in the years when starting a business became legal. The window was narrow and you were in it. What you built in those years is still running.',
+    'The reform era was a specific moment of possibility — when the state retreated just enough to let private enterprise exist, before the regulations thickened again. You caught the window. Not everyone did.',
+  ])
+  if (F.has('north_south_awareness') && Math.random() < 0.2) return pick([
+    'The north-south divide: the food, the accent, the speed of things, the relationship to the market, the way strangers are greeted on the street. You have been in enough of both to know the gradient.',
+    'The reunification was political in 1975. The actual convergence — of culture, of money, of what people think the country is — is still in process. You can feel the gap between where the process started and where it is.',
+    phase === 'late_life'
+      ? 'You are old enough to remember when there were two countries with the same name. The single country that has existed since 1975 is real. The difference between the two halves is also real. Both are facts that will outlast the people who knew the time before.'
+      : 'North Vietnamese is how they describe the people from Hanoi, and South Vietnamese is how they describe the people from Saigon, and the distinction is partly economic and partly temperamental and entirely real.',
+  ])
+  if (F.has('viet_kieu_investor') && Math.random() < 0.2) return pick([
+    'You came back with money and found a country that had changed faster than your memory of it. The version of Vietnam you carried in the diaspora and the version that was actually running the motorbike economy were related but not the same.',
+    'The Viet Kieu who return are seen two ways: as money and as people who left. You are both and you navigate both in the same conversation.',
+  ])
+  if (F.has('stayed_south_vietnam') && Math.random() < 0.2) return pick([
+    'You stayed in 1975 and navigated the new order — the re-registration, the class reclassification, the business nationalization. You stayed because leaving was not available or because it was not chosen. Both are true of different people.',
+    'The ones who left by boat and the ones who stayed built different versions of the same life. You have compared notes across decades. The comparison is not a competition. It is information about what staying and leaving each cost.',
+  ])
+  if ((F.has('bourgeois_classification') || F.has('hidden_class_background')) && Math.random() < 0.22) return pick([
+    'The classification was applied to what your father was before 1975. The classification was then applied to you. You navigated the decade that followed as someone the state had decided was a problem before you did anything.',
+    'Bourgeois: the word in the new system that made the forms difficult and the university placement harder and the job not available. You managed around it. The management took a specific kind of energy.',
+  ])
+  if (F.has('new_economic_zone') && Math.random() < 0.2) return pick([
+    'The New Economic Zone: the policy that emptied Saigon of people deemed politically unreliable by resettling them in jungle and highland land they did not know how to farm. Your family was on the list or next to the list.',
+    'The "voluntary" resettlement: you know the word in its specific application. The zone was new and economic only in the sense that the government said so.',
+  ])
+  if (F.has('evaded_relocation') && Math.random() < 0.18) return pick([
+    'You were on the list for the New Economic Zone. You did not go. What that required — money, connections, knowing which office to approach with which gift — became a skill you carried into the following decades.',
+    'The ones who went to the zones and the ones who stayed in the city: you ended up on the same street eventually. The difference in what those years cost never fully evened out.',
+  ])
+  if (F.has('vietnam_generation') && Math.random() < 0.18) return pick([
+    'The war ended in 1975. The country that ended it exists and is called Vietnam. The world that was organized around the war — the alliances, the proxies, the domino theory — recalibrated without ever fully accounting for what the war had been.',
+    'You are from the country that the war was about and that the war happened in. The war has a different shape from here than from the countries that were in it by choice rather than by geography.',
   ])
 
   // ─── THAILAND TEXTURE ────────────────────────────────────────────────────────
@@ -9194,6 +9310,65 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'You have lived through the military years and the abertura and the democracy. Each transition carried the previous era\'s people and structures into the next one. The democracy you are old in is built on foundations you watched being laid.'
       : 'The years of lead: the students, the guerrillas, the unions — the spaces where resistance was possible were systematically closed. What remained was the miracle, which was growing for everyone except the people who asked questions about the growing.',
+  ])
+
+  // ─── COLOMBIA TEXTURE ────────────────────────────────────────────────────────
+  if (F.has('col_bogotazo_generation') && Math.random() < 0.25) return pick([
+    'April 9, 1948. Your parents say the year the way other people say the name of a war. Gaitán. El Bogotazo. La Violencia. The words that mean the specific day the country decided it was Liberal or Conservative and that the other side was an enemy.',
+    'The thing your family was never finished talking about, even when they had stopped talking about it: which side the other valley was on. The geography of Liberal and Conservative was carved into the landscape of childhood before you understood what the words meant.',
+  ])
+  if (F.has('col_violencia_generation') && Math.random() < 0.25) return pick([
+    'Two hundred thousand dead. The civil war that wasn\'t called a civil war because it was between neighbors, between valleys, between villages that shared a market. La Violencia: the violence, as though naming it generally explains it. It doesn\'t.',
+    'You carry the weight of a generation that was permanently recalibrated by partisan killing — the Liberal family who could not go to the Conservative village, the grandmother who would not say certain names.',
+    phase === 'late_life'
+      ? 'You were born during La Violencia or shortly after. The country you were born in and the country you lived your life in are technically the same country. The texture of them is very different.'
+      : 'The teacher who didn\'t come back. The family from the neighboring hill who arrived with everything in a cart. La Violencia was the name the radio used. In your valley it had the names of specific people.',
+  ])
+  if (F.has('col_farc_era') && Math.random() < 0.22) return pick([
+    'The guerrillas in the mountains are not abstract. They tax your uncle\'s cattle. They appear at the road at night. The question of whether they are a liberation army or a criminal organisation depends on where you are standing and in which decade.',
+    'The FARC controlled the road from midnight until four. This is how you learned to think about time: not as hours but as windows.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'Fifty-two years of guerrilla war. The generation that came of age during it, navigated it, lost things to it — you are the testimony. The peace accord is real. The territories where the state still hasn\'t arrived are also real.'
+      : 'Which route, which hour, which headlights. The navigation of a territory where armed actors control the infrastructure is a skill set that doesn\'t transfer cleanly to other contexts.',
+  ])
+  if (F.has('col_cartel_era') && Math.random() < 0.25) return pick([
+    'The car bomb outside the newspaper. The presidential candidate shot at a rally. The word plata o plomo: silver or lead, the offer made to judges and journalists and officials. You lived in a country where the state was being narco-terrorised from above.',
+    'Escobar died on a Medellín rooftop on December 2, 1993. The city celebrated. The routes and the laboratories and the capital didn\'t die with him. You knew this and celebrated anyway.',
+    phase === 'late_life'
+      ? 'You lived through the Medellín that was the most dangerous city in the world and through the Medellín that became an urban success story. The distance between those two sentences is the distance of a generation.'
+      : 'The specific sound of a car in a street that shouldn\'t have a car. The shape of parked vehicles you looked at twice. The cartel years produced a calibration of ordinary things that has not fully dissolved.',
+  ])
+  if (F.has('col_desplazado') && Math.random() < 0.28) return pick([
+    'Seven million Colombians displaced. You are in that number. The number doesn\'t carry what the number was: the hour, the route, the specific threat that turned your home into somewhere you left.',
+    'The barrio on the periphery of the city was built by people who came from somewhere else under pressure. You arrived and you learned from the people already there how to be here. They had learned the same way.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'The land you left still exists. The question of whether you can return is legal, financial, and something else — the knowledge of who remains and what they know about why you left.'
+      : 'The city received you in the way cities receive displaced people: with limited interest in the story of how you arrived and complete interest in whether you will work.',
+  ])
+  if (F.has('col_paramilitary_era') && Math.random() < 0.22) return pick([
+    'AUC. The letters that appear on the list of who controls this road, this village, this market. The paramilitaries and the guerrillas divided the territory and called it order from opposite directions.',
+    'The massacre happened in the next valley. The army arrived three days later. The investigation report was published two years later. The men who gave the orders became politicians. Each sentence is accurate.',
+  ])
+  if (F.has('col_estrato_known') && Math.random() < 0.2) return pick([
+    'Estrato uno. Estrato cinco. The number is on the utility bill and in the address and in the way a barrio name lands in a conversation. Everyone knows what it means. No one says it directly.',
+    'In Colombia, where you live is a number. The number is printed on your gas bill. When you give your address, the number is audible to the person receiving it.',
+  ])
+  if (F.has('col_paz_generation') && Math.random() < 0.22) return pick([
+    'The accord was signed in Cartagena. The referendum failed by forty thousand votes. Congress ratified it anyway. The FARC is now a political party with seats in parliament. You are still processing these sentences in the order they happened.',
+    'Fifty-two years. The number sounds like enough to build a life inside. You know people who built entire lives inside it. The peace is real and the disarmament happened and the territories where the state hasn\'t arrived are still contested. Both.',
+    phase === 'late_life'
+      ? 'You were alive for the whole arc or most of it: the guerrilla formation, the cartel interlude, the paramilitary years, the peace negotiations, the accord, the implementation that is slower than the signing. You have the full map.'
+      : 'The peace is newer than you are. The war was older. Living in the aftermath of a fifty-two-year conflict has a specific texture: the demobilized soldiers in the supermarket, the FARC candidates on the ballot.',
+  ])
+  if (F.has('col_testigo_generation') && Math.random() < 0.2) return pick([
+    'La Violencia, the cartels, the paramilitary years, the peace. Colombia has had four distinct chapters of organised violence in your lifetime, with different names and different armed actors and the same quality of permanence.',
+    phase === 'late_life'
+      ? 'You contain the archive. Everything that happened in those valleys and those cities and on those roads — the people who know it from the inside are your generation. The generation after will have the official account.'
+      : 'You are the testimony for what it was actually like. The memorial will have statistics. The survivors have the specific road, the specific headlights, the specific threat that had a face.',
+  ])
+  if (F.has('col_paro_generation') && Math.random() < 0.2) return pick([
+    'April 2021. The ESMAD in Cali. The internet going dark in the neighborhoods where the protests were largest. Forty-six days of blockades. The reform withdrawn. Eighty-three people dead. The country goes back to something like ordinary.',
+    'The paro nacional produced the biggest protests in Colombian history and eighty-three deaths and the withdrawal of the tax reform. What it produced after the withdrawal is still being sorted.',
   ])
 
   // ─── INFORMAL ECONOMY & RURAL-TO-URBAN TEXTURE ───────────────────────────────
@@ -13590,6 +13765,7 @@ export function generateEpitaph(state) {
     'bng_liberation_generation', 'bng_mukti_bahini', 'bng_famine_generation', 'bng_coup_generation',
     'irq_iran_iraq_veteran', 'irq_sanctions_generation', 'irq_displacement_generation', 'irq_isis_generation',
     'rwa_rtlm_generation', 'rwa_genocide_witness', 'rwa_goma_generation',
+    'col_violencia_generation', 'col_cartel_era', 'col_desplazado', 'col_paramilitary_era',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -13758,6 +13934,14 @@ export function generateEpitaph(state) {
     para2.push(`${He} heard Radio Mille Collines fill the room with the word inyenzi until it was ordinary, and then lived through the hundred days that followed. The radio and the hundred days are the same event in ${his} memory. They are the sound of it.`)
   } else if (f('rwa_goma_generation')) {
     para2.push(`${He} crossed into Zaire with two million others after July 1994 — the cholera, the volcanic rock, the génocidaires controlling the aid committees. What ${he} navigated in those camps is its own chapter in a life already full of chapters.`)
+  } else if (f('col_violencia_generation') && f('col_testigo_generation')) {
+    para2.push(`${He} was Colombian across four chapters of organised violence: La Violencia, the cartel years, the paramilitary era, the peace accord. ${He} contained the whole arc. The archive of it lives in this life.`)
+  } else if (f('col_cartel_era') && f('col_paz_generation')) {
+    para2.push(`${He} lived through the Medellín cartel at its height and through the peace accord that ended a fifty-two-year war. The distance between those two facts is the measure of a country's capacity for both catastrophe and reinvention.`)
+  } else if (f('col_desplazado') && f('col_paz_generation')) {
+    para2.push(`${He} was among the seven million Colombians displaced by the conflict. ${He} rebuilt somewhere else and lived to see the war end and the territories where the state still hasn't arrived.`)
+  } else if (f('col_violencia_generation')) {
+    para2.push(`${He} grew up in the Colombia of La Violencia — the partisan civil war that didn't call itself a war because it happened between neighbors. The country that came after was the same country with a new set of armed actors.`)
   }
 
   // Displacement / migration

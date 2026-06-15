@@ -1710,6 +1710,88 @@ export const FLAG_REGISTRY = {
     notes: 'Set by la_col_la_violencia character event and colombia_bogotazo_1948 world event. Year texture for older Colombian characters; gates generational memory follow-through.',
   },
 
+  // ── COLOMBIA ──────────────────────────────────────────────────────────────────
+
+  col_bogotazo_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Grew up in the shadow of El Bogotazo — Gaitán\'s assassination April 9 1948, the burning of the capital, the beginning of the decade of Liberal/Conservative violence.',
+    intent: 'year_texture',
+    notes: 'Set by col_bogotazo.',
+  },
+
+  col_violencia_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through La Violencia (1948–58) — the rural partisan massacres, the families divided by Liberal/Conservative allegiance, the displacement from countryside to city.',
+    intent: 'year_texture',
+    notes: 'Set by col_la_violencia_rural.',
+  },
+
+  col_farc_era: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived in guerrilla-contested territory — the FARC tax on coca and cattle, the road after dark, the choice between visibility and neutrality that was also no choice.',
+    intent: 'year_texture',
+    notes: 'Set by col_farc_question.',
+  },
+
+  col_cartel_era: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the Medellín cartel years (1984–93) — car bombs, plata o plomo, the president and the justice minister and the editor and the candidates killed.',
+    intent: 'year_texture',
+    notes: 'Set by col_cartel_medellin.',
+  },
+
+  col_desplazado: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Internally displaced by the Colombian conflict — arrived in a city periphery from a contested rural territory, part of the 7 million who were moved by armed actors.',
+    intent: 'year_texture',
+    notes: 'Set by col_la_violencia_rural (left choice), col_farc_question (moved choice), col_paramilitares (leave choice).',
+  },
+
+  col_paramilitary_era: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived under AUC paramilitary control (1997–2003) — the massacres, the informant economy, the army that sometimes arrived after.',
+    intent: 'year_texture',
+    notes: 'Set by col_paramilitares.',
+  },
+
+  col_estrato_known: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Carries the estratificación number — the 1–6 official class designation printed on every Colombian utility bill, present in every social introduction\'s subtext.',
+    intent: 'year_texture',
+    notes: 'Set by col_estratificacion.',
+  },
+
+  col_paz_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the 2016 Santos peace accord — the Nobel Prize, the referendum that failed, the Congress ratification, the FARC becoming a political party.',
+    intent: 'year_texture',
+    notes: 'Set by col_paz_santos.',
+  },
+
+  col_paro_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through the 2021 Paro Nacional — 46 days of blockades, 83 dead, ESMAD firing live rounds in Cali, the internet going down.',
+    intent: 'year_texture',
+    notes: 'Set by col_paro_2021.',
+  },
+
+  col_testigo_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'A witness to Colombia\'s long arc of violence — from La Violencia through the cartel years through the paramilitaries through the peace accord. The map of it all.',
+    intent: 'year_texture',
+    notes: 'Set by col_late_reckoning.',
+  },
+
   femicidio_generation: {
     weight: 'moderate',
     category: 'identity',
@@ -5383,6 +5465,112 @@ export const FLAG_REGISTRY = {
     description: 'Part of the generation that left Nepal or watched 1,500 young people a day leave — the village empty of anyone their age',
     intent: 'year_texture',
     notes: 'Set by nep_youth_exodus.',
+  },
+
+  // ── VIETNAM ──────────────────────────────────────────────────────────────────
+
+  south_vietnamese_diaspora: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Left South Vietnam after the fall of Saigon — by boat, by camp, by resettlement. Carries both the country you left and the country that did not exist anymore when you left.',
+    intent: 'year_texture',
+    notes: 'Set by vn_the_boat_decision (boat choice).',
+  },
+
+  boat_person: {
+    weight: 'major',
+    category: 'persecution',
+    description: 'Left Vietnam by boat after 1975 — the South China Sea, the camps, the piracy risk, the resettlement country that was not home.',
+    intent: 'year_texture',
+    notes: 'Set by vn_the_boat_decision (boat choice). Often co-set with south_vietnamese_diaspora.',
+  },
+
+  reeducation_family: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Had a family member sent to re-education camp after 1975 — months became years, the official letters, the father or uncle who came back different or did not come back.',
+    intent: 'year_texture',
+    notes: 'Set by vn_reeducation_camp.',
+  },
+
+  bourgeois_classification: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Classified as bourgeois by the re-registration committees after 1975 — the family background that determined school, work, and what the future was allowed to contain.',
+    intent: 'year_texture',
+    notes: 'Set by vn_class_reclassification (labelled choice).',
+  },
+
+  hidden_class_background: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Concealed a family\'s class background after 1975 reclassification — the grandfather not mentioned, the house before not described, the thing known and not said.',
+    intent: 'year_texture',
+    notes: 'Set by vn_class_reclassification (conceal choice).',
+  },
+
+  new_economic_zone: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Sent to a New Economic Zone — cleared jungle with hand tools, grew food on land that did not want to grow it, the city you were removed from still existing without you.',
+    intent: 'year_texture',
+    notes: 'Set by vn_new_economic_zone (stayed choice).',
+  },
+
+  evaded_relocation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Evaded relocation to a New Economic Zone — networks, bribes, the calculation of what risk was acceptable to stay in a city you had always lived in.',
+    intent: 'year_texture',
+    notes: 'Set by vn_new_economic_zone (evaded choice).',
+  },
+
+  stayed_south_vietnam: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Stayed in South Vietnam after 1975 and chose not to leave when leaving was possible — the people who left and the people who stayed carry the division differently.',
+    intent: 'year_texture',
+    notes: 'Set by vn_the_boat_decision (stayed choice).',
+  },
+
+  doi_moi_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age during Đổi Mới reform — the market opening, the motorcycles appearing, the private business that was suddenly legal after being illegal.',
+    intent: 'year_texture',
+    notes: 'Set by vn_doi_moi_awakening (two branches) and vn_communist_capitalist.',
+  },
+
+  doi_moi_entrepreneur: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Started a business during Đổi Mới — navigated the Party paperwork, the guanxi, the question of which official needed to know which thing.',
+    intent: 'year_texture',
+    notes: 'Set by vn_doi_moi_awakening (first branch).',
+  },
+
+  north_south_awareness: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Carries the north-south distinction inside Vietnam — the accent, the food, the way a family\'s history maps onto a geography that is officially unified.',
+    intent: 'year_texture',
+    notes: 'Set by vn_north_south_divide.',
+  },
+
+  viet_kieu_investor: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Returned to Vietnam as Việt kiều — diaspora money, a passport from somewhere else, the country that changed while you were gone and recognizes you as useful now.',
+    intent: 'year_texture',
+    notes: 'Set by vn_viet_kieu_return (invest choice).',
+  },
+
+  vietnam_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Marked by the American War — grew up in a country at war, or came of age in the years immediately after the war ended.',
+    intent: 'year_texture',
+    notes: 'Set by world event american_war_in_vietnam. Covers all Vietnamese regardless of side.',
   },
 
   // ── MYANMAR ──────────────────────────────────────────────────────────────────
@@ -9457,6 +9645,72 @@ export const FLAG_REGISTRY = {
     description: 'Left the first-generation defiance conversation unfinished — the silence continuing at a different pitch, careful rather than cold.',
     intent: 'none',
     notes: 'Set by ind_first_gen_defied_echo.',
+  },
+
+  // ─── WORLD EVENT FLAGS (HISTORIC) ────────────────────────────────────────────
+
+  cultural_revolution_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the Chinese Cultural Revolution (1966–76) — the school closures, the struggle sessions, the decade that organized itself around the destruction of the educated.',
+    intent: 'year_texture',
+    notes: 'Set by world event we_china_cultural_revolution.',
+  },
+
+  reform_era_china: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age during China\'s reform and opening up (Deng era, post-1978) — the transition from planned scarcity to market possibility that reorganised the country within a decade.',
+    intent: 'year_texture',
+    notes: 'Set by world event we_china_reform_era.',
+  },
+
+  handover_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed the 1997 Hong Kong handover — one country, two systems, fifty years; the flags changing over the harbour at midnight.',
+    intent: 'year_texture',
+    notes: 'Set by world event we_hong_kong_handover_1997.',
+  },
+
+  korean_miracle_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up inside South Korea\'s compressed economic miracle — the jump from post-war subsistence to semiconductor exporter inside a generation.',
+    intent: 'year_texture',
+    notes: 'Set by world event we_korea_economic_miracle and events_country_arcs.js.',
+  },
+
+  india_tech_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Part of India\'s IT and outsourcing generation — the Bangalore campuses, the night shifts, the salary that rewrote what an Indian middle-class life could look like.',
+    intent: 'year_texture',
+    notes: 'Set by world event we_india_tech_boom.',
+  },
+
+  oil_boom_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up in a country transformed by oil wealth — the infrastructure arriving suddenly, the state subsidies, the specific relationship to work that petro-wealth creates.',
+    intent: 'year_texture',
+    notes: 'Set by multiple Gulf/Nigeria world events including we_gulf_oil_boom, we_nigeria_oil_boom, we_kuwait_oil_boom.',
+  },
+
+  decolonization_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed independence — the flag change, the first national government, and the decades-long work of building a country from the infrastructure colonialism left behind.',
+    intent: 'year_texture',
+    notes: 'Set by multiple independence world events (African, Asian, Southeast Asian) across worldEvents.js.',
+  },
+
+  economic_collapse_survivor: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through national economic collapse — the currency devaluation, the bank freeze, the savings repriced into something worth a fraction of what they had been.',
+    intent: 'year_texture',
+    notes: 'Set by we_venezuela_collapse and similar catastrophic economic world events.',
   },
 
 }
