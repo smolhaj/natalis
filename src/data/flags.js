@@ -509,6 +509,14 @@ export const FLAG_REGISTRY = {
     notes: 'Set by sa_loadshedding.',
   },
 
+  apartheid_pass_book: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Carried the apartheid-era passbook (dompas) — the internal document that said where a Black South African was permitted to be, at what hours, subject to police check at any time.',
+    intent: 'year_texture',
+    notes: 'Set by cities_extended.js Johannesburg pass laws event and world event. South Africa Black/Coloured characters pre-1986.',
+  },
+
   endsars_generation: {
     weight: 'major',
     category: 'political',
@@ -1181,6 +1189,14 @@ export const FLAG_REGISTRY = {
     description: 'Lived through systemic infrastructure failure — state electricity measured in hours, generator subscriptions, diesel queues.',
     intent: 'year_texture',
     notes: 'Set by events_lebanon.js (lbn_generator_economy). Texture label; cooldown prevents overfire.',
+  },
+
+  beirut_blast_survived: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived the August 4 2020 Beirut port explosion — 2,750 tonnes of ammonium nitrate, 218 dead, 300,000 homeless, windows shattered 240km away.',
+    intent: 'year_texture',
+    notes: 'Set by events_lebanon.js (lbn_port_explosion) and world event we_beirut_blast_2020.',
   },
 
   collectivization_witness: {
@@ -9645,6 +9661,48 @@ export const FLAG_REGISTRY = {
     description: 'Left the first-generation defiance conversation unfinished — the silence continuing at a different pitch, careful rather than cold.',
     intent: 'none',
     notes: 'Set by ind_first_gen_defied_echo.',
+  },
+
+  // ─── CROSS-CUTTING EXPERIENCE FLAGS ──────────────────────────────────────────
+
+  hajj_complete: {
+    weight: 'major',
+    category: 'spiritual',
+    description: 'Completed the Hajj pilgrimage — the tawaf at the Ka\'aba, Mina, Arafat, the millions of bodies moving in the same direction. Returned changed in ways that take years to name.',
+    intent: 'year_texture',
+    notes: 'Set by events_religion_arc.js (Hajj choice) and events_religion.js (Hajj choice). Checks for religion beginning with "muslim".',
+  },
+
+  surveillance_paranoia: {
+    weight: 'moderate',
+    category: 'psychological',
+    description: 'Carries the learned reflex of self-censorship from living under state surveillance — the habit of managing what is said in which rooms, faster than conscious thought.',
+    intent: 'year_texture',
+    notes: 'Set by events_culture.js (information_surveillance event) and events_career_regime.js (journalist_source_arrested event).',
+  },
+
+  quiet_resistance: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Practiced quiet resistance under an authoritarian system — the small refusal, the lesson that didn\'t include the required paragraph, the form filled incorrectly, the question asked that wasn\'t on the list.',
+    intent: 'year_texture',
+    notes: 'Set by events_career_regime.js (teacher, nurse, collective worker), events_gulf_east.js (gulf_female_navigation choice).',
+  },
+
+  sends_remittances: {
+    weight: 'moderate',
+    category: 'family',
+    description: 'Sends remittances home — the monthly transfer that structures the relationship with family in the country of origin, the version of your life they receive being the money rather than the life.',
+    intent: 'year_texture',
+    notes: 'Set by events_vietnam.js (vn_viet_kieu_return or remittance choice) and events_romania.js (eu_emigrant_romania choice).',
+  },
+
+  survived_hyperinflation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived hyperinflation — savings account numbers that stayed the same as the numbers became worth fractions; learning to spend the day you were paid; the literacy of what a currency actually is.',
+    intent: 'year_texture',
+    notes: 'Set by events_culture.js (hyperinflation event) and events_world_response.js (world event response).',
   },
 
   // ─── WORLD EVENT FLAGS (HISTORIC) ────────────────────────────────────────────

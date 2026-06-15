@@ -2898,8 +2898,44 @@ function buildYearTexture(state) {
     ])
   }
 
+  if (F.has('hajj_complete') && Math.random() < 0.3) return pick([
+    'The tawaf at the Ka\'aba before dawn — seven circuits, the Black Stone at the corner, millions of shoulders moving in the same direction. You were in that. The word you keep reaching for is not religious. It is something older.',
+    'You made the Hajj. The fifth pillar — you completed it. What the pilgrimage did to you is still working itself out, years later. Something changed in the ordering of things.',
+    phase === 'late_life'
+      ? 'You went to Mecca. That is a sentence you can say. What happened there is harder to put in a sentence — not because it was secret but because the language for it arrives slowly.'
+      : 'The man next to you at the tawaf was from somewhere you had never been. You spoke no language in common. You understood each other completely. That understanding is still in you.',
+  ])
+
   // ─── FLAG-AWARE TEXTURE ──────────────────────────────────────────────────────
 
+  if (F.has('surveillance_paranoia') && Math.random() < 0.25) return pick([
+    'The habit of self-censorship is faster than the thought. You notice what you don\'t say in certain rooms before you notice that you\'re not saying it.',
+    'You know things about how to speak in a surveilled environment that you cannot fully teach to someone who didn\'t learn them young. The awareness lives below the level of calculation.',
+    phase === 'late_life'
+      ? 'You learned early that certain words required certain rooms, and that not all rooms were safe for the same words. You carry that calibration. It is sometimes useful. It is sometimes a residue.'
+      : 'The habit of looking for the listener in the room. The reflex of managing what you say before you say it. This is not paranoia. This is pattern recognition from a system that rewarded it.',
+  ])
+  if (F.has('quiet_resistance') && Math.random() < 0.22) return pick([
+    'The small refusal: the lesson that didn\'t include the required paragraph, the form filled out incorrectly, the question asked that wasn\'t on the approved list. The space the small refusal carved out was real.',
+    'Not all resistance is visible. Some of it is the private plot at the edge of the collective field, the samizdat copy passed hand to hand, the question that shouldn\'t be asked but was. You did what you could do.',
+    phase === 'late_life'
+      ? 'The sum of the small refusals across a life is something you can only assess from here. It was not nothing. It was not everything. It was what was possible.'
+      : 'The large gesture would have had large consequences. You chose the small gesture. The small gesture had consequences too, but survivable ones.',
+  ])
+  if (F.has('sends_remittances') && Math.random() < 0.22) return pick([
+    'The transfer goes out on the first of the month. The family calibrates around it. The family doesn\'t know what you do to make it possible. You haven\'t told them. The money is the message.',
+    'The amount you send is fixed but the need at home is not fixed. The gap between them is something you navigate without explaining to anyone here or there.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'You have been sending money home for a long time. The parents are older now. The siblings have their own lives. The amount changes but the habit is now who you are in the family\'s economy. You are the one who sends.'
+      : 'What you keep and what you send: the calculation runs every month. The family at home has a version of your life that is calibrated to the amount. The actual version of your life is harder to send.',
+  ])
+  if (F.has('survived_hyperinflation') && Math.random() < 0.25) return pick([
+    'You know what it is to watch a price change between morning and afternoon. The calculation of what to buy immediately and what to defer was not theoretical. You did it daily.',
+    'The savings account: the number stayed the same while the number became worth less and less and then almost nothing. The lesson from that is not something you forget.',
+    phase === 'late_life'
+      ? 'You rebuilt from hyperinflation once. The distrust of certain financial instruments, of certain official numbers, of certain government assurances — this is not irrationality. It is an archive.'
+      : 'Hyperinflation teaches a specific literacy: the relationship between what a number says and what it is worth is not fixed. You learned that in your body, through the grocery list.',
+  ])
   if (F.has('famine_memory') && Math.random() < 0.3) return pick([
     'The pantry is full. You check it anyway.',
     'You do not leave food on the plate. Your children don\'t understand why.',
@@ -4599,6 +4635,13 @@ function buildYearTexture(state) {
     'You lived through the rebuilding. You thought it had worked. You were wrong about the foundation.',
     'The downtown they built in the nineties was beautiful and is now rubble again. You watched both.',
   ])
+  if (F.has('beirut_blast_survived') && Math.random() < 0.32) return pick([
+    'August 4, 2020. 2,750 tonnes of ammonium nitrate in Port Warehouse 12. The shock wave traveled 240 kilometres. You were in Beirut. You are aware that you are still here.',
+    'The blast shattered windows six kilometres away. You know the distance because you know where you were. The ringing lasted three days. The question of who knew what was in the warehouse and for how long is still not answered.',
+    phase === 'late_life'
+      ? 'You survived the civil war, the reconstruction, the bank freeze, the blast. Lebanon has survived worse than you thought was survivable. So have you. The difference between those two sentences is the whole distance of this life.'
+      : 'You are one of the people who was in the city when the port exploded. The city\'s capacity to absorb another catastrophe was not a fact you wanted to learn.',
+  ])
   if (F.has('decennie_noire_memory') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.35) return pick([
     'The decade is not one you discuss in full. There are people still in positions of authority who were on the other side of it. You know which rooms they are in.',
     'The Black Decade. Ten years that your country has not agreed on how to call. The amnesty provisions mean everyone goes on living in the same places. You have learned where not to look.',
@@ -4814,6 +4857,13 @@ function buildYearTexture(state) {
       ? 'You watched the wall come down on television. There was a year before that when it could not have happened, and then it did.'
       : 'The border was real in a way that maps don\'t fully convey. People were shot crossing it.',
     'The cold certainty of that era had something in it. It also had something monstrous.',
+  ])
+  if (F.has('apartheid_pass_book') && Math.random() < 0.3) return pick([
+    'The dompas: the passbook that said where you were allowed to be, at what hours, for what purpose. If you didn\'t have it or it wasn\'t stamped correctly, the police could take you. You knew what it looked like because you had one.',
+    'The passbook lived in your inside pocket. You checked for it before you left the house the way you checked for keys. It was the document that established, on paper, that you were a problem to be administered.',
+    phase === 'late_life'
+      ? 'The pass laws were abolished in 1986. You had been carrying the book for over a decade by then. The abolition was real. The particular relationship to documents and to permission that the book instilled is harder to abolish.'
+      : 'You had to produce the book on demand. You produced it. You understand from the inside what it means to move through a city as an administrative category rather than as a person.',
   ])
   if (F.has('apartheid_era') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) return pick([
     'You grew up inside a system that required you to act as if certain things were normal. They weren\'t.',
