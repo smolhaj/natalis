@@ -5946,6 +5946,126 @@ function buildYearTexture(state) {
               'Some things remain closed. You have stopped waiting for them to open.'],
         },
       },
+      long_covid: {
+        mild: {
+          y: ['The fatigue is not what fatigue used to mean. You have learned to pace differently.',
+              'The brain fog lifts for hours at a time now. You have learned which hours are reliable.'],
+          n: ['You still don\'t know what a good day is going to feel like until it is ending.',
+              'The crash after exertion is its own education. You have learned what the crash costs.'],
+        },
+        moderate: {
+          y: ['Post-exertional malaise: the name for the thing that sets you back when you do too much. You live around the name.',
+              'You have a pacing system. On the days it works, it works. On the days it doesn\'t, you recalibrate.'],
+          n: ['People say you look fine. You have stopped correcting this.',
+              'The symptoms that were supposed to resolve are not resolving. You are revising your timeline.'],
+        },
+        severe: {
+          y: ['The medical system is beginning to understand what happened to you. The understanding came after the damage.',
+              'You have built a life inside significant constraint. That is not nothing.'],
+          n: ['The isolation of an illness that looks like health from the outside is its own condition.',
+              'You are managing the management: doctors, protocols, the calculation of what today can hold.'],
+        },
+      },
+      dementia: {
+        mild: {
+          y: ['The word retrieval takes longer than it used to. You have strategies for the gaps.',
+              'You write more down now. That is the adaptation. The adaptation is working, mostly.'],
+          n: ['The same story told to the same person. You notice it sometimes. Sometimes you don\'t.',
+              'The keys. The appointment. The name. You are cataloguing what the forgetting takes.'],
+        },
+        moderate: {
+          y: ['The structure of the day is managed now — the calendar on the wall, the routines, the family who help.',
+              'You know who you are. The disease takes pieces. The core is still there, or mostly.'],
+          n: ['Some days are clear and some are very confused. You cannot always tell which it will be.',
+              'The familiar places sometimes require relearning. That is the shape of it now.'],
+        },
+        severe: {
+          y: ['The care is total and the people giving it are doing it with love. That is the fact to hold.',
+              'There are still moments of recognition. They are shorter than they were. They are still moments.'],
+          n: ['The care is total and the people giving it are doing their best. That is also a fact.',
+              'The person you were is still present in ways that are hard to describe and real.'],
+        },
+      },
+      shell_shock: {
+        mild: {
+          y: ['You do not sleep without preparation. The preparation has become a ritual you do not think about.',
+              'The loud noise problem has a name now. Knowing the name has changed something.'],
+          n: ['The trenches visit at night. You are not there — you know you are not there — and you are still there.',
+              'The war ended in 1918. The war did not end in 1918.'],
+        },
+        moderate: {
+          y: ['The therapy has given you a language for it. The language helps, most of the time.',
+              'You know your triggers. Knowing them is not the same as being free of them, but it is something.'],
+          n: ['You keep to yourself because the people who weren\'t there do not have the frame for what you carry.',
+              'The shaking. You have given people reasons for the shaking that are not the real reason.'],
+        },
+        severe: {
+          y: ['You have found people who understand from the inside. That community exists and you are in it.',
+              'The treatment has taken years. You are a different person than you were before the treatment, in ways that are mostly better.'],
+          n: ['The nights are very long and the days are managed. You call this surviving. It is surviving.',
+              'What you saw and what it cost you is not a thing that has a clean resolution. You are still working with that.'],
+        },
+      },
+      radiation_exposure: {
+        mild: {
+          y: ['The monitoring is annual now. The numbers have been within range. You track them.',
+              'You are in the category of people who received dose. The registry has your name. You check in.'],
+          n: ['The uncertainty of exposure effects is its own chronic condition. Not knowing is an ongoing state.',
+              'The thyroid has been the thing the doctors watch. Watching is what they can do.'],
+        },
+        moderate: {
+          y: ['The treatment protocol for what the exposure produced has worked, so far. "So far" is where you live.',
+              'You know the statistics about your exposure class. You are one of the survivors of those statistics, provisionally.'],
+          n: ['The health consequences of the exposure are arriving on a timeline the doctors described at the beginning.',
+              'The connection between the exposure and the symptoms is documented but not compensated.'],
+        },
+        severe: {
+          y: ['You have outlived the projected outcomes for your dose level. That is unlikely and real.',
+              'The medical care is specialised and you have learned to navigate it. Navigation is its own expertise.'],
+          n: ['The body records what happened at the reactor, at the test site, at the ward.',
+              'The official acknowledgment of what the exposure caused is still moving through channels. You are moving through your life.'],
+        },
+      },
+      chronic_pain: {
+        mild: {
+          y: ['The pain is a low frequency now. It is there. You have learned to work alongside it.',
+              'You know what days will be harder before the day begins. That knowledge is its own accommodation.'],
+          n: ['The cause has not been identified. "Idiopathic" is the word. It means the pain is real and unexplained.',
+              'Some practitioners have suggested the pain is psychological. Some have not. You know the difference in the room.'],
+        },
+        moderate: {
+          y: ['The management protocol takes time. You have decided the time is worth it. Most days that is accurate.',
+              'The good day is measured against what good means now. The goalposts have moved. You have moved with them.'],
+          n: ['Pain management has not produced pain relief. The distinction is subtle and important.',
+              'You are still searching for the intervention that changes things. That search is its own exhaustion.'],
+        },
+        severe: {
+          y: ['Life at high pain is a different life, organised around different priorities. You know what yours are.',
+              'You have learned a discipline that healthy people do not have: living in the present tense, because the future is too uncertain to plan.'],
+          n: ['The pain takes a percentage of everything — concentration, patience, energy, the capacity for joy.',
+              'The thing the pain takes most reliably is the ability to imagine that things will be different.'],
+        },
+      },
+      chronic_lung_exposure: {
+        mild: {
+          y: ['The spirometry still shows function. You take the result seriously. You know what the baseline was before the years in the pit.',
+              'The inhaler is precautionary. You use it correctly. You are careful.'],
+          n: ['The cough the mine produces is different from the cough you were born with. You know the difference.',
+              'The doctor says: exposure effects sometimes take decades. You have been waiting.'],
+        },
+        moderate: {
+          y: ['The black lung registry has your name. The compensation is partial and ongoing. You attend the appointments.',
+              'Breathing is a project now rather than a background function. You have learned the work of it.'],
+          n: ['The company\'s medical team assessed you differently than the independent assessor. The gap between assessments is years of your life.',
+              'The years in the mine are in your chest now. That is not a figure of speech.'],
+        },
+        severe: {
+          y: ['The oxygen concentrator is the last thing you turn off at night. The technology exists because the industry caused the damage.',
+              'You have lived with this long enough to have opinions about it. The opinions are well-founded.'],
+          n: ['The exposure happened. The outcome was predictable at the time and was predicted. The prediction was not communicated to you.',
+              'The legal process is slower than the progression.'],
+        },
+      },
     }
     const _pool = _CP[_c.id]?.[_s]?.[_m]
     if (_pool?.length) return pick(_pool)
