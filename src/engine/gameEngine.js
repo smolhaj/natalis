@@ -8631,6 +8631,62 @@ function buildYearTexture(state) {
       : 'The cost was 500 dead and 20,000 arrested. The movement did not achieve what it asked for. What it changed is a question that will be answered by what comes next.',
   ])
 
+  if (F.has('irn_khatami_generation') && Math.random() < 0.22) return pick([
+    'Khatami won with seventy percent. Three hundred newspapers. The word "civil society" in print. And then the Guardian Council. The disqualifications. The newspapers closed. The arc from hope to answer was five years.',
+    'You watched Iran attempt reform through the system that exists to prevent reform. The lesson of 2001-2004 is precise: which part of the system has the final authority.',
+    phase === 'late_life'
+      ? 'You have now watched Khatami, Ahmadinejad, Rouhani, Raisi. The reform period was real. The ceiling was also real. You understand both better than you did at the beginning.'
+      : 'The reformist parliament was elected and then had most of its candidates disqualified before the next election. The procedural mechanism for this is clear in the constitution. The constitution was not written by the reformists.',
+  ])
+  if (F.has('irn_sanctions_generation') && Math.random() < 0.22) return pick([
+    'The rial: you track the exchange rate the way a ship captain tracks the weather. The official rate is a government claim. The street rate is the real rate. The gap between them is the arithmetic of daily life.',
+    'Prices change weekly in certain categories. You have learned to buy the medicine when you see it, buy the cooking oil in quantity, book the flight in rials and pay in dollars where you can. This is the knowledge sanctions produce.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'The JCPOA was supposed to change this. Boeing signed deals. European companies sent delegations. Trump withdrew in 2018. The delegations left. The deals were cancelled. The rial lost sixty percent in three months. You have now watched a hope arrive and leave twice.'
+      : 'The infrastructure of daily life runs on knowledge of what is available, where, at what price today — not last week. The inflation is the condition. You have lived inside it long enough to be expert.',
+  ])
+  if (F.has('irn_double_life') && Math.random() < 0.2) return pick([
+    'The satellite dish is on the roof. It is on every building in Tehran. The party is in the apartment. The hijab is different on the street from what it is at the door. You have been navigating this distinction for so long that the navigation is not conscious anymore.',
+    'Two codes. Two versions of you. The version for the street and the version for the room. Most Iranians do this. The performance is so universal that the public/private distinction has become its own Iranian social form.',
+    phase === 'late_life'
+      ? 'You have spent a life in a country that requires its citizens to maintain two versions of themselves. The version that survived is the one that learned early which code was required in which context. You learned early.'
+      : 'The gap between what you can say in the apartment and what you can say in the street contains most of what you actually think. That gap is the country.',
+  ])
+  if (F.has('irn_hijab_generation') && Math.random() < 0.22) return pick([
+    'The morning calculation: which coat, which route, which neighbourhood, which time. The knowledge of where the patrols are is as automatic as the knowledge of where the market is.',
+    'The gasht-e ershad car is white and recognisable and you learned to notice it before you learned to articulate why you were noticing it. The noticing is knowledge now, not reflex.',
+    phase === 'late_life'
+      ? 'You wore the covering for forty years, in the way and to the extent required by the specific enforcement of specific years. The 2022 generation took it off in front of schools and waved it in the air. You understand both the cost of taking it off and the cost of wearing it.'
+      : 'After September 2022 the enforcement map changed. Some streets are different now. Some are the same. You update the map continuously. The updating is the citizenship.',
+  ])
+  if (F.has('irn_jcpoa_generation') && Math.random() < 0.2) return pick([
+    'The deal was signed. International companies came to Tehran. Boeing, Airbus, Shell, Total. The hotels were full of delegations. The rial strengthened. Something that looked like integration into the global economy was becoming visible.',
+    'Trump withdrew. The secondary sanctions came back. The Europeans wanted to stay but their banks were afraid. Iran was cut from SWIFT again. The hotels emptied. The rial fell sixty percent. The double loss is precise: the hope and the loss of the hope.',
+    phase === 'late_life'
+      ? 'The JCPOA is the specific document that contains forty years of Iranian foreign policy in concentrated form: the capacity for hope and the structural conditions that prevent it from resolving.'
+      : 'You made plans around the JCPOA. The plans were reasonable. The plans required the deal to hold. You understand now what "depending on a deal holding" means in the Middle East.',
+  ])
+  if (F.has('irn_diaspora_generation') && Math.random() < 0.2) return pick([
+    'The WhatsApp group: the university friends, and the flags next to their names. Canadian flag, German flag, Turkish flag, British flag, Swedish flag. The group covers five continents.',
+    'You left when the window was open. The window is not always open. You carry Iran in the way people carry a country that they did not leave lightly — with the specific weight of something chosen and grieved simultaneously.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'The diaspora generation is now the Iranian-Canadian or Iranian-German or Iranian-American generation. Your children grow up in a country that is theirs in a different way. They inherit your Persian but not your Tehran.'
+      : 'The first years: the particular loneliness of being Iranian abroad, where what you know and what you can talk about and what people ask you do not overlap easily.',
+  ])
+  if (F.has('irn_stayer_generation') && Math.random() < 0.2) return pick([
+    'You watched the group empty. The WhatsApp group updates with country flags: Canadian, German, Turkish. You are still in Tehran. This is a position now, not just a fact.',
+    'The people who left say they miss Iran. The people who stayed say they cannot leave, or chose not to, or are waiting for the conditions to change. These are three different relationships to the same country.',
+    phase === 'late_life'
+      ? 'What the stayers built while the leavers were gone is a question neither side has a clean answer to. The country changed. You stayed inside the changes. The people who left watched from outside. Both positions have their losses.'
+      : 'The word for someone who leaves Iran is mohajer — emigrant, but also refugee, it depends on the Arabic root you hear. You are the one who did not become that word.',
+  ])
+  if (F.has('irn_testigo_generation') && Math.random() < 0.18) return pick([
+    'The revolution was in 1979 and you have been living inside the result ever since. Khatami, Ahmadinejad, Rouhani, Raisi. Reform, suppression, deal, withdrawal, protest. The cycle is the country.',
+    phase === 'late_life'
+      ? 'The Islamic Republic has survived every challenge it has faced since 1979 — the war, the economic disasters, the Green Movement, the sanctions, the 2022 protests — through the same combination: force and the failure of alternatives to sustain themselves. You have watched all of it. You do not know what comes next. Neither does anyone else.'
+      : 'Your parents\' generation remembers before the revolution. You remember the revolution as the background condition. Your children will remember whatever comes after whatever comes next.',
+  ])
+
   // ─── UGANDA TEXTURE ──────────────────────────────────────────────────────────
   if (F.has('amin_generation') && Math.random() < 0.22) return pick([
     'The Amin years: the ambient fear of a government that killed without accounting. You learned to read the environment for signals that people elsewhere did not have to read.',
@@ -14159,6 +14215,7 @@ export function generateEpitaph(state) {
     'per_sendero_generation', 'per_sterilization_survivor',
     'japan_postwar_generation', 'lost_decade_generation', 'fukushima_generation', 'burakumin_identity',
     'sau_siege_generation', 'sau_khashoggi_generation',
+    'irn_sanctions_generation', 'irn_jcpoa_generation',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -14359,6 +14416,10 @@ export function generateEpitaph(state) {
     para2.push(`${He} was in Saudi Arabia for Vision 2030 and for October 2018 — the cinemas and the concerts and the women driving, and Khashoggi entering the Istanbul consulate and not coming out. The liberalization and the killing are the same project.`)
   } else if (f('sau_siege_generation') && f('sau_mutaween_era')) {
     para2.push(`${He} was in Saudi Arabia in 1979 when Juhayman seized the Grand Mosque, and lived through the three decades of intensified religious conservatism that followed. The siege and the mutaween are the same answer.`)
+  } else if (f('irn_jcpoa_generation') && f('irn_sanctions_generation')) {
+    para2.push(`${He} lived both the JCPOA and its collapse — the delegations, the Boeing deal, the rial improving, and then May 2018, and the rial falling sixty percent in three months. The hope and the answer to the hope are the same story.`)
+  } else if (f('irn_sanctions_generation') && f('irn_double_life')) {
+    para2.push(`${He} navigated the sanctions economy and the Republic's private geography simultaneously — dollar prices and official rates, rooftop parties and street-facing silences. The arithmetic of both became second nature.`)
   }
 
   // Displacement / migration

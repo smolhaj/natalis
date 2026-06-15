@@ -1874,6 +1874,72 @@ export const FLAG_REGISTRY = {
     notes: 'Set by col_late_reckoning.',
   },
 
+  // ── IRAN ──────────────────────────────────────────────────────────────────────
+
+  irn_khatami_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through the Khatami reform era (1997–2005) — 300 newspapers, civil society, student uprising 1999, Shirin Ebadi Nobel Prize — and its systematic dismantling by the Guardian Council.',
+    intent: 'year_texture',
+    notes: 'Set by irn_khatami_era (both choices).',
+  },
+
+  irn_sanctions_generation: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Lived inside the sanctions economy — the rial\'s 95% value loss since 1979, the gap between official and street dollar rates, the JCPOA collapse in 2018 and 60% rial crash in three months.',
+    intent: 'year_texture',
+    notes: 'Set by irn_sanctions_economy.',
+  },
+
+  irn_double_life: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Navigated Iran\'s public/private split — the satellite dish on the roof, the party behind closed curtains, the hijab folded in the bag, the relationship not acknowledged on the street.',
+    intent: 'year_texture',
+    notes: 'Set by irn_private_public (both choices).',
+  },
+
+  irn_hijab_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Female: lived under mandatory hijab enforcement — the gasht-e ershad car, the map of which streets patrol which days, the morning calculation of coat and route.',
+    intent: 'year_texture',
+    notes: 'Set by irn_hijab_daily (both choices). Female characters only.',
+  },
+
+  irn_diaspora_generation: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Left Iran — Turkey first, then Canada/Germany/UK — part of the 150,000/year brain drain that the IMF calls the highest in the world.',
+    intent: 'year_texture',
+    notes: 'Set by irn_brain_drain (leave choice). Also sets emigrated.',
+  },
+
+  irn_stayer_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Stayed in Iran when the WhatsApp group filled with foreign-country flags — the decision to remain made against the background of the people who left.',
+    intent: 'year_texture',
+    notes: 'Set by irn_brain_drain (stay choice).',
+  },
+
+  irn_jcpoa_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the JCPOA arc — the 2015 signing, international delegations, the Boeing deal, Trump\'s 2018 withdrawal, the rial collapse, the double loss of hope and answer.',
+    intent: 'year_texture',
+    notes: 'Set by irn_jcpoa.',
+  },
+
+  irn_testigo_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Late-life witness to the Islamic Republic\'s full arc — Khatami, Ahmadinejad, Rouhani, Raisi, the reforms and crackdowns, the deals and withdrawals, the protests.',
+    intent: 'year_texture',
+    notes: 'Set by irn_late_reckoning.',
+  },
+
   // ── SAUDI ARABIA ──────────────────────────────────────────────────────────────
 
   sau_aramco_generation: {

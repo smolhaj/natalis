@@ -2544,6 +2544,40 @@ export const RIBBONS = [
     color: 'orange',
   },
 
+  // ── IRAN RIBBONS ─────────────────────────────────────────────────────────────
+  {
+    id: 'the_rial',
+    name: 'The Rial',
+    description: 'The official rate and the street rate. The dollar price and the toman price. You learned to navigate the gap between what the government said things cost and what things cost. That gap was a livelihood for some and a disaster for everyone else.',
+    condition: (G) => G.flags.includes('irn_sanctions_generation'),
+    priority: 80,
+    color: 'orange',
+  },
+  {
+    id: 'the_jcpoa',
+    name: 'The JCPOA',
+    description: 'You waited for the deal. The deal came. Boeing signed for 100 aircraft. International delegations arrived. Then May 2018, and the rial fell sixty percent in three months. You carry the hope and the answer to the hope as the same object.',
+    condition: (G) => G.flags.includes('irn_jcpoa_generation'),
+    priority: 82,
+    color: 'blue',
+  },
+  {
+    id: 'the_two_faces',
+    name: 'The Two Faces',
+    description: 'The hijab for the street, folded inside your bag for the party. The satellite dish illegal on every roof. You learned the geometry of the Republic — what the public self performs and what the private self is — before you had a name for the navigation.',
+    condition: (G) => G.flags.includes('irn_double_life'),
+    priority: 75,
+    color: 'gray',
+  },
+  {
+    id: 'the_whatsapp_flags',
+    name: 'The WhatsApp Flags',
+    description: 'Your university cohort. The group that still has everyone in it, and the country flags that have appeared next to the names. Canadian flag. German flag. Turkish flag. You are one of the flags, or you are the name without one.',
+    condition: (G) => G.flags.includes('irn_diaspora_generation') || G.flags.includes('irn_stayer_generation'),
+    priority: 70,
+    color: 'teal',
+  },
+
   // ── PALESTINE ADDITIONAL RIBBONS ─────────────────────────────────────────────
   {
     id: 'the_keys_on_the_wall',
