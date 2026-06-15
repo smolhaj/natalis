@@ -6421,6 +6421,40 @@ function buildYearTexture(state) {
       ? 'The 2024 protesters on Rustaveli Avenue carrying EU flags, returning night after night to a government that had just turned away from EU accession: you have been on Rustaveli Avenue before. The avenue has seen several different kinds of history.'
       : 'I choose Europe: the phrase on the signs. The choosing is real and the choosing does not automatically produce the thing chosen. You know this. The people in the street know this. They are there anyway.',
   ])
+  if (F.has('geo_1990s_generation') && Math.random() < 0.25) return pick([
+    'The 1990s in Georgia: four hours of power in winter. The wood you burned when the coal ran out. The candles. The specific cold of an apartment building with no central heating and no wood left. You learned what the Soviet infrastructure actually was by watching it stop.',
+    'The Mkhedrioni with Kalashnikovs on Rustaveli Avenue. The lari replacing the coupon, which had replaced the ruble. The shelves in the shops and then the absence of shelves. The 1990s in Georgia was not a decade — it was a curriculum.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'One million Georgians left in the 1990s. The ones who stayed know something the ones who left only know at a distance. Both groups carry it, differently.'
+      : 'Your parents learned to manage in the 1990s. The competence they developed — the wood, the solar water heater on the roof, the network of people who had things to exchange — passed into you as a kind of knowledge that does not have a classroom name.',
+  ])
+  if (F.has('geo_supra_keeper') && Math.random() < 0.2) return pick([
+    'The supra. The tamada with the horn or the wine horn. The toasts that go for three hours: to Georgia, to the dead, to the living, to friendship, to the mothers. The obligation to be fully present. You know how to be at a Georgian table, which means you know what presence requires.',
+    'Gaumarjos: "may you win," which is also the Georgian word for victory and the Georgian word for hospitality. The toast to victory is also the toast to welcome. The language holds both ideas in the same word.',
+    phase === 'late_life'
+      ? 'You have given toasts at tables that no longer exist — people who have died, houses that were sold, the apartment in Sukhumi you cannot go back to. The supra is also a way of holding the people who are no longer at the table.'
+      : 'The toast you give that makes people go quiet and then agree — that is the moment the form has entered you. Before that you were a guest. After that you are a tamada in training.',
+  ])
+  if (F.has('geo_orthodox_backbone') && Math.random() < 0.18) return pick([
+    'The cross of Saint Nino: braided grapevines, woven with her own hair. A woman from Cappadocia who brought Christianity to Georgia in the fourth century. This is the origin story the church keeps returning to. The vine is Georgia. The woman is the transmission.',
+    'Patriarch Ilia II has been Catholicos-Patriarch since 1977. He was ordained in Soviet Georgia. He gave the baptisms that were illegal. He is still there. The continuity is the argument.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'The church is the oldest continuous Georgian institution. The Soviet period, the wars, the 1990s — the church was there through all of it. What it asks in return is a question you have been answering differently at different ages.'
+      : 'You are Georgian. The church is Georgian. Whether you go or do not go to the church, you have been formed by the fact of its presence in the national grammar.',
+  ])
+  if (F.has('geo_saakashvili_generation') && Math.random() < 0.2) return pick([
+    'The Saturday they dismissed the traffic police and the Monday they arrived in new uniforms: the speed was the point. Corruption that had seemed permanent was a policy that could be reversed in a weekend. You watched the weekend.',
+    'November 2007: the opposition demonstration, the water cannon, the state of emergency. The same administration that ended the bribe-taking used the state of emergency. You hold both facts about the same era.',
+    phase === 'late_life'
+      ? 'The Saakashvili legacy is contested in ways you did not expect when you watched the customs checkpoints close. The anti-corruption and the November 2007 dispersal are both in the record. So is Batumi. So is the 2008 war happening on his watch. The record is not simple.'
+      : 'The World Bank ranked Georgia 8th for ease of doing business. You noticed the ranking, because what it described was an actual change that had happened in a country that had seemed unable to change.',
+  ])
+  if (F.has('geo_testigo_generation') && Math.random() < 0.18) return pick([
+    'April 9, Rose Revolution, 2008, 2024 — these are not separate events. They are the same argument about what Georgia is and what it refuses to be. You are in possession of the full argument.',
+    phase === 'late_life'
+      ? 'The EU flag on Rustaveli in 2024 among people who were not born when April 9 happened: they are continuing something you were part of beginning. The insistence is the constant. The form it takes changes with the decade.'
+      : 'To have lived the Georgia arc is to know that the country\'s answer to each crisis has been to return to Rustaveli Avenue. The avenue keeps receiving it.',
+  ])
 
   // ─── HUNGARY + CZECH TEXTURE ─────────────────────────────────────────────────
   if (F.has('hungarian_1956_generation') && Math.random() < 0.3) return pick([
@@ -9794,6 +9828,13 @@ function buildYearTexture(state) {
     phase === 'midlife' || phase === 'late_life'
       ? 'You have been in Lima long enough that the highland village is memory and occasional Quechua on the phone with your mother or grandmother. The language you think in has been shifting in a direction you didn\'t vote for.'
       : 'The navigation costs energy that the people you are navigating among do not spend. They were born into the grammar of this city. You learned it.',
+  ])
+  if (F.has('per_fujimori_era') && Math.random() < 0.22) return pick([
+    'The decade of Fujimori: the autogolpe in April 1992, the new constitution with the rubber-stamp Congress, the counter-terrorism courts with masked judges, the sterilization campaigns in the highlands. Each piece was presented as a solution to something. The solutions accumulated into a system.',
+    'Fujimori\'s approval ratings went up after he dissolved Congress. The polls showed it. What the polls showed was that people were so exhausted by Sendero and García\'s inflation that a man who ended both of those things had credit he could spend on other things. He spent it.',
+    phase === 'late_life'
+      ? 'You watched the entire decade and then watched him extradited from Chile, tried, convicted, pardoned, the pardon contested. The accounting has taken longer than the decade itself.'
+      : 'To have lived the Fujimori years is to hold a complicated record: Sendero defeated, hyperinflation ended, and 270,000 women sterilized without consent, and the vladivideos, and the masked judges. The record is not simple.',
   ])
   if (F.has('per_postfujimori_generation') && Math.random() < 0.2) return pick([
     'The vladivideos: Montesinos on tape, handing cash, while they discussed the price. Then another tape. Then thousands of tapes. The entire bribery infrastructure of a decade, visible, because Montesinos taped everything.',
@@ -14216,6 +14257,7 @@ export function generateEpitaph(state) {
     'japan_postwar_generation', 'lost_decade_generation', 'fukushima_generation', 'burakumin_identity',
     'sau_siege_generation', 'sau_khashoggi_generation',
     'irn_sanctions_generation', 'irn_jcpoa_generation',
+    'april_9_generation', 'georgian_war_2008', 'geo_1990s_generation', 'geo_testigo_generation',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -14420,6 +14462,14 @@ export function generateEpitaph(state) {
     para2.push(`${He} lived both the JCPOA and its collapse — the delegations, the Boeing deal, the rial improving, and then May 2018, and the rial falling sixty percent in three months. The hope and the answer to the hope are the same story.`)
   } else if (f('irn_sanctions_generation') && f('irn_double_life')) {
     para2.push(`${He} navigated the sanctions economy and the Republic's private geography simultaneously — dollar prices and official rates, rooftop parties and street-facing silences. The arithmetic of both became second nature.`)
+  } else if (f('geo_testigo_generation') && f('april_9_generation')) {
+    para2.push(`${He} was on Rustaveli Avenue on April 9, 1989 and on Rustaveli Avenue again in 2024 with a different kind of crowd carrying the EU flag. The avenue had seen everything in between. So had ${he}.`)
+  } else if (f('geo_1990s_generation') && f('georgian_war_2008')) {
+    para2.push(`${He} survived the Georgian 1990s — the seventy-percent collapse, the four-hour power, the warlords — and then August 2008, five days, Russian tanks forty kilometres out. What survived the decade and survived the week is the country ${he} still lives in.`)
+  } else if (f('geo_1990s_generation')) {
+    para2.push(`${He} was Georgian in the 1990s — one million left, most of the economy dissolved, the candles and the wood and the Mkhedrioni in the street. ${He} was among the people who stayed and found out what staying through that decade produces.`)
+  } else if (f('geo_testigo_generation')) {
+    para2.push(`${He} watched the Georgia arc from the inside: the independence, the collapse, the warlords, the Rose Revolution, the war, and the return to the same avenue with a different flag and the same insistence. Georgia did not stop insisting. Neither did ${he}.`)
   }
 
   // Displacement / migration

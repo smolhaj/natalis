@@ -2544,6 +2544,40 @@ export const RIBBONS = [
     color: 'orange',
   },
 
+  // ── GEORGIA RIBBONS ─────────────────────────────────────────────────────────
+  {
+    id: 'the_rustaveli_avenue',
+    name: 'The Rustaveli Avenue',
+    description: 'You have been on Rustaveli Avenue at more than one moment in history — April 9 with the sapper shovels, the roses in November 2003, the EU flags in 2024. The avenue keeps receiving it. So do you.',
+    condition: (G) => G.flags.includes('april_9_generation') && (G.flags.includes('rose_revolution_georgia') || G.flags.includes('eu_dream_georgia')),
+    priority: 87,
+    color: 'red',
+  },
+  {
+    id: 'the_four_hour_power',
+    name: 'The Four-Hour Power',
+    description: 'Independence and then the collapse that came with it. Four hours of electricity in winter. The furniture you burned when the wood ran out. You stayed.',
+    condition: (G) => G.flags.includes('geo_1990s_generation'),
+    priority: 74,
+    color: 'gray',
+  },
+  {
+    id: 'the_supra',
+    name: 'The Supra',
+    description: 'The tamada. The horn. The toast to the dead, to the living, to Georgia, to the future. You know how to be at a Georgian table, which means you know what it requires to be fully present to the people in front of you.',
+    condition: (G) => G.flags.includes('geo_supra_keeper'),
+    priority: 60,
+    color: 'amber',
+  },
+  {
+    id: 'the_forty_kilometres',
+    name: 'The Forty Kilometres',
+    description: 'August 2008. Five days. Russian tanks within forty kilometres of Tbilisi. Then the ceasefire. You do not know exactly why they stopped. The stopping is what happened. The forty kilometres is a number that has not left you.',
+    condition: (G) => G.flags.includes('georgian_war_2008'),
+    priority: 83,
+    color: 'blue',
+  },
+
   // ── IRAN RIBBONS ─────────────────────────────────────────────────────────────
   {
     id: 'the_rial',

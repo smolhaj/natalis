@@ -3424,6 +3424,46 @@ export const FLAG_REGISTRY = {
     notes: 'Set by geo_eu_dream.',
   },
 
+  geo_1990s_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Survived the catastrophic Georgian 1990s — 70% economic collapse, 4-hour power days, warlords, mass emigration',
+    intent: 'year_texture',
+    notes: 'Set by geo_1990s_collapse.',
+  },
+
+  geo_supra_keeper: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Formed by the Georgian supra tradition — the feast, the tamada, the toast as the language of true things',
+    intent: 'year_texture',
+    notes: 'Set by geo_supra_identity.',
+  },
+
+  geo_orthodox_backbone: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Shaped by Georgian Orthodox identity as national spine — the church that survived Soviet rule as the form of Georgian continuity',
+    intent: 'year_texture',
+    notes: 'Set by geo_orthodox_identity.',
+  },
+
+  geo_saakashvili_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed the Saakashvili reform era 2004–2012 — overnight police reform, anti-corruption, but also the 2007 crackdown',
+    intent: 'year_texture',
+    notes: 'Set by geo_saakashvili_era.',
+  },
+
+  geo_testigo_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Late-life witness to the full Georgia arc — April 9 to Rose Revolution to 2008 war to the EU protests',
+    intent: 'both',
+    notes: 'Set by geo_late_reckoning.',
+  },
+
   // ── NORTH KOREA ARC (events_north_korea.js) ──────────────────────────────────
 
   dprk_juche_childhood: {
