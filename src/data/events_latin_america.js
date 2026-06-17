@@ -1414,6 +1414,60 @@ export const LATIN_AMERICA_EVENTS = [
     effect: null,
   },
 
+  {
+    id: 'la_mex_ayotzinapa_2014',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Mexico' &&
+      G.currentYear >= 2014 && G.currentYear <= 2016 &&
+      G.age >= 16 &&
+      !G.mem?.mexAyotzinapa,
+    text: 'September 26, 2014. Forty-three student teachers from the Ayotzinapa Normal School in Guerrero are taken from their buses by local police and handed to the Guerreros Unidos cartel. The government\'s official story changes several times. "Fue el estado" — it was the state — becomes the phrase on the signs at the marches in Mexico City, in Guerrero, in dozens of other cities. The forty-three are not found. The families of the forty-three keep meeting in a room that holds forty-three chairs.',
+    choices: [
+      {
+        text: 'You go to the marches. The phrase "fue el estado" is accurate and must be said.',
+        tag: null,
+        outcome: 'The marches are large and then they are smaller. The families are still meeting. The forty-three are still not found.',
+        effect: (p) => { p.m -= 8; p.karma += 6; p.addFlag('ayotzinapa_generation'); p.addFlag('political_active'); p.setMem('mexAyotzinapa', true); },
+      },
+      {
+        text: 'You are not surprised. This is what the narco-state has always been.',
+        tag: null,
+        outcome: 'The absence of surprise is its own diagnosis. You have been living in a country where this was possible long enough to have stopped expecting otherwise.',
+        effect: (p) => { p.m -= 10; p.r += 6; p.addFlag('ayotzinapa_generation'); p.addFlag('narco_era_generation'); p.setMem('mexAyotzinapa', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'la_mex_2017_earthquake',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Mexico' &&
+      G.currentYear === 2017 &&
+      G.age >= 10 &&
+      !G.mem?.mex2017Quake,
+    text: 'September 19, 2017. The date that the 1985 earthquake drills commemorated. At 1:14 in the afternoon the alarm sounds — but this is not a drill. 7.1 magnitude, epicenter near Puebla. In Mexico City, buildings come down. The rescuers with their trained dogs arrive. The civilians arrive before them with their bare hands. The city passes buckets in a chain. Silence, when they demand it: hands up, silence, the dog is listening. 369 dead. The same date as 1985. The city has practised this for thirty-two years.',
+    choices: [
+      {
+        text: 'You go to the rubble and join a bucket chain.',
+        tag: null,
+        outcome: 'You carry debris and you wait for the signal for silence. There is a person in the rubble, or there was. You do not know.',
+        effect: (p) => { p.m -= 8; p.karma += 8; p.h -= 4; p.addFlag('mex_2017_earthquake_generation'); p.addFlag('solidarity_citizen'); p.setMem('mex2017Quake', true); },
+      },
+      {
+        text: 'You watch the coverage and send money to the rescue organisations.',
+        tag: null,
+        outcome: 'The bucket chain on the television is the city doing something that cannot be organised quickly enough to matter from anywhere but inside it.',
+        effect: (p) => { p.m -= 6; p.karma += 4; p.addFlag('mex_2017_earthquake_generation'); p.setMem('mex2017Quake', true); },
+      },
+    ],
+    effect: null,
+  },
+
   // ═══════════════════════════════════════════════════════════════════════
   // VENEZUELA — additional events
   // ═══════════════════════════════════════════════════════════════════════
@@ -1544,6 +1598,139 @@ export const LATIN_AMERICA_EVENTS = [
     text: 'The Bolsa Família arrives: conditional cash transfer, one hundred and fifty reais per month, contingent on keeping children in school and vaccination records current. The requirement to show up at the health post, to produce documentation, to prove the children are going — some people resent the conditions. Most just use it. The poverty rate in Brazil will fall by half in the next decade. That number is made of millions of individual calculations, and this is yours.',
     choices: null,
     effect: (p) => { p.mo += 600; p.m += 5; p.h += 3; p.addFlag('bolsa_familia_generation'); p.setMem('bra_bolsa', true); },
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // ARGENTINA — 2001 COLLAPSE ARC
+  // ═══════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'la_arg_corralito_2001',
+    phase: 'midlife',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'Argentina' &&
+      G.currentYear === 2001 &&
+      G.age >= 16 &&
+      !G.mem?.argCorralito,
+    text: 'December 1, 2001. The economy minister announces the corralito: bank withdrawals are limited to 250 pesos — 250 dollars — per week. Your savings are in the account. You can see the number in the passbook. You cannot take the money out. The queue outside the bank on Monday wraps around the block. The tellers are behind glass. Some people are crying. Some are calm in the way that means they are not calm.',
+    choices: [
+      {
+        text: 'You join the queue and wait for the weekly allowance.',
+        tag: null,
+        outcome: 'You get the 250. The passbook still shows the larger number. You do not know yet if you will ever see it.',
+        effect: (p) => { p.m -= 10; p.w -= 8; p.addFlag('corralito_survivor'); p.setMem('argCorralito', true); },
+      },
+      {
+        text: 'You go to the hardware store and buy supplies. Whatever is physical is real.',
+        tag: null,
+        outcome: 'The materials are real. The savings will, over the coming months, be converted to something else at a rate the government decides.',
+        effect: (p) => { p.m -= 8; p.e += 3; p.addFlag('corralito_survivor'); p.setMem('argCorralito', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'la_arg_cacerolazos',
+    phase: 'young_adult',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'Argentina' &&
+      G.currentYear === 2001 &&
+      G.age >= 10 &&
+      !G.mem?.argCacerolazos,
+    text: 'December 19. The president declares a state of siege. Within hours, the pots come out — from apartment windows, from balconies, from the street. The cacerolazos: the sound of the middle class turning whatever is in the kitchen into a political statement. The chant becomes "¡Que se vayan todos! ¡Que no quede ni uno solo!" By morning the president has fled the Casa Rosada by helicopter. Five presidents will occupy the office in the next twelve days.',
+    choices: null,
+    effect: (p) => {
+      p.m -= 6
+      p.r += 3
+      p.addFlag('cinco_presidentes_generation')
+      p.addFlag('arg_cacerolazos_generation')
+      p.setMem('argCacerolazos', true)
+    },
+  },
+
+  {
+    id: 'la_arg_pesificacion',
+    phase: 'midlife',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'Argentina' &&
+      G.currentYear >= 2002 && G.currentYear <= 2003 &&
+      G.flags.includes('corralito_survivor') &&
+      !G.mem?.argPesificacion,
+    text: 'The government converts dollar savings to pesos at one-to-one. Then the peso floats. By the end of the month the exchange rate is three pesos to the dollar. What was in your account — the number you could see but not withdraw — is now worth a third of what it was. The economists call this pesificación. The word does not capture what it is like to have thirty years of savings repriced in an administrative announcement.',
+    choices: [
+      {
+        text: 'You leave. You have family in Spain, Italy, wherever the Argentine diaspora has people.',
+        tag: null,
+        outcome: 'You are one of the hundred thousand who leave Argentina in 2002. The country you grew up in is behind you. The one you are going to does not yet have a shape.',
+        effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('arg_2001_emigrant'); p.addFlag('arg_savings_destroyed'); p.setMem('argPesificacion', true); },
+      },
+      {
+        text: 'You stay. You convert what is left into whatever holds value.',
+        tag: null,
+        outcome: 'Dollars under the mattress. Gold. Land, if you have it. The trust in the banking system has a specific texture now — the texture of knowing it can disappear.',
+        effect: (p) => { p.m -= 10; p.r += 4; p.e += 3; p.addFlag('arg_savings_destroyed'); p.addFlag('arg_2001_stayed'); p.setMem('argPesificacion', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'la_arg_piqueteros',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Argentina' &&
+      G.currentYear >= 2001 && G.currentYear <= 2004 &&
+      G.age >= 18 && G.age <= 45 &&
+      !G.mem?.argPiqueteros,
+    text: 'The piqueteros block the road with burning tires. The unemployment rate is twenty-five percent — one in four. The people on the road are not blocking it from ideology. They are blocking it because blocking a road is the one thing that makes you visible when you have nothing else. You are trying to get somewhere. They are trying to be seen.',
+    choices: [
+      {
+        text: 'You wait. You understand why they are there.',
+        tag: null,
+        outcome: 'The road eventually opens. You arrive late. The people who blocked it will be there again tomorrow.',
+        effect: (p) => { p.m -= 4; p.karma += 4; p.addFlag('piquetero_era'); p.setMem('argPiqueteros', true); },
+      },
+      {
+        text: 'You are angry. You have somewhere to be and this country is drowning in its own failure.',
+        tag: null,
+        outcome: 'The anger is real. So is the unemployment rate. Both things occupy the same road at the same time.',
+        effect: (p) => { p.m -= 6; p.r += 4; p.addFlag('piquetero_era'); p.setMem('argPiqueteros', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'la_arg_kirchner_recovery',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Argentina' &&
+      G.currentYear >= 2005 && G.currentYear <= 2011 &&
+      G.flags.includes('arg_cacerolazos_generation') &&
+      G.age >= 20 &&
+      !G.mem?.argKirchner,
+    text: 'The economy is growing again. Néstor Kirchner renegotiated the debt, the soy price is high, and unemployment has fallen from twenty-five to ten percent. The country that felt like it was ending in 2001 has a momentum in the opposite direction. You remember what the banks looked like when they were closed. You also remember that the country was growing before 2001 and then suddenly was not.',
+    choices: [
+      {
+        text: 'You allow yourself to be relieved. The recovery is real and you needed it.',
+        tag: null,
+        outcome: 'The relief is earned. The question of whether the structural problems have been resolved you put to the side for now.',
+        effect: (p) => { p.m += 8; p.addFlag('kirchner_recovery_generation'); p.setMem('argKirchner', true); },
+      },
+      {
+        text: 'You remain wary. You have watched this country turn around before.',
+        tag: null,
+        outcome: 'The wariness is also earned. The economy continues to grow whether or not you trust it.',
+        effect: (p) => { p.m += 4; p.e += 3; p.r += 2; p.addFlag('kirchner_recovery_generation'); p.setMem('argKirchner', true); },
+      },
+    ],
+    effect: null,
   },
 
   // ═══════════════════════════════════════════════════════════════════════

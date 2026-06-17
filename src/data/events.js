@@ -131,6 +131,7 @@ import { SOUTHEAST_EUROPE_EVENTS } from './events_southeast_europe.js'
 import { PAKISTAN_EVENTS } from './events_pakistan.js'
 import { EGYPT_EVENTS } from './events_egypt.js'
 import { INDIA_EVENTS } from './events_india.js'
+import { INDIA_DEPTH_EVENTS } from './events_india_depth.js'
 import { IRELAND_TURKEY_EVENTS } from './events_ireland_turkey.js'
 import { WEST_AFRICA_EVENTS } from './events_west_africa.js'
 import { UGANDA_EVENTS } from './events_uganda.js'
@@ -166,6 +167,54 @@ import { RELATIONSHIP_CROSSOVER_EVENTS } from './events_relationship_crossover.j
 import { SYRIA_EVENTS } from './events_syria.js'
 import { CHILD_DEATH_ARC_EVENTS } from './events_child_death_arc.js'
 import { ISRAEL_EVENTS } from './events_israel.js'
+import { PANDEMIC_EVENTS } from './events_pandemic.js'
+import { GREECE_PORTUGAL_EVENTS } from './events_greece_portugal.js'
+import { SPAIN_EVENTS } from './events_spain.js'
+import { PHILIPPINES_EVENTS } from './events_philippines.js'
+import { UK_EVENTS } from './events_uk.js'
+import { GERMANY_FRANCE_EVENTS } from './events_germany_france.js'
+import { USA_EVENTS } from './events_usa.js'
+import { AUSTRALIA_EVENTS } from './events_australia.js'
+import { CANADA_EVENTS } from './events_canada.js'
+import { ITALY_EVENTS } from './events_italy.js'
+import { POLAND_EVENTS } from './events_poland.js'
+import { FOLLOWTHROUGH_14_EVENTS } from './events_followthrough_14.js'
+import { FOLLOWTHROUGH_15_EVENTS } from './events_followthrough_15.js'
+import { RUSSIA_EVENTS } from './events_russia.js'
+import { FOLLOWTHROUGH_16_EVENTS } from './events_followthrough_16.js'
+import { UKRAINE_EVENTS } from './events_ukraine.js'
+import { SOUTH_AFRICA_EVENTS } from './events_south_africa.js'
+import { FOLLOWTHROUGH_17_EVENTS } from './events_followthrough_17.js'
+import { ROMANIA_EVENTS } from './events_romania.js'
+import { FOLLOWTHROUGH_18_EVENTS } from './events_followthrough_18.js'
+import { DESIRE_RESOLUTION_EVENTS } from './events_desire_resolution.js'
+import { CENTRAL_EUROPE_EVENTS } from './events_central_europe.js'
+import { FOLLOWTHROUGH_19_EVENTS } from './events_followthrough_19.js'
+import { BALTIC_EVENTS } from './events_baltic.js'
+import { FOLLOWTHROUGH_20_EVENTS } from './events_followthrough_20.js'
+import { GEORGIA_EVENTS } from './events_georgia.js'
+import { FOLLOWTHROUGH_21_EVENTS } from './events_followthrough_21.js'
+import { TAIWAN_MALAYSIA_EVENTS } from './events_taiwan_malaysia.js'
+import ARMENIA_AZ_EVENTS from './events_armenia_azerbaijan.js'
+import FOLLOWTHROUGH_22_EVENTS from './events_followthrough_22.js'
+import BELARUS_EVENTS from './events_belarus.js'
+import UY_PY_EC_EVENTS from './events_uy_py_ec.js'
+import NORTH_KOREA_EVENTS from './events_north_korea.js'
+import CUBA_EVENTS from './events_cuba.js'
+import NAMIBIA_EVENTS from './events_namibia.js'
+import LAOS_EVENTS from './events_laos.js'
+import SINGAPORE_EVENTS from './events_singapore.js'
+import NETHERLANDS_EVENTS from './events_netherlands.js'
+import BRAZIL_EVENTS from './events_brazil.js'
+import BANGLADESH_EVENTS from './events_bangladesh.js'
+import IRAQ_EVENTS from './events_iraq.js'
+import RWANDA_EVENTS from './events_rwanda.js'
+import COLOMBIA_EVENTS from './events_colombia.js'
+import VENEZUELA_EVENTS from './events_venezuela.js'
+import PERU_EVENTS from './events_peru.js'
+import JAPAN_EVENTS from './events_japan.js'
+import SAUDI_EVENTS from './events_saudi.js'
+import IRAN_EVENTS from './events_iran.js'
 
 const BASE_EVENTS = [
   // ── EARLY CHILDHOOD ─────────────────────────────────────────────────────────
@@ -6564,6 +6613,106 @@ const BASE_EVENTS = [
     effect: null,
   },
 
+  // ── RUSSIA-SPECIFIC EVENTS ──────────────────────────────────────────────────
+
+  {
+    id: 'ru_chechnya_war',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Russia' &&
+      G.currentYear >= 1994 && G.currentYear <= 2009 &&
+      G.age >= 18 && G.age <= 35 &&
+      !G.mem?.ruChechnya,
+    text: (G) => {
+      if (G.character.gender === 'male' && G.currentYear <= 2000) return 'The conscription notice arrives. Chechnya. The first war ends in humiliation in 1996; the second begins in 1999 and is described officially as a counter-terrorism operation. The casualty figures for Russian conscripts are not published. The bodies come back in zinc coffins with sealed lids. The mothers\' organisations count them.'
+      return 'Someone from your building went to Chechnya. He came back from the first war or he didn\'t come back. In Grozny the apartment buildings that were shelled look like the bombed cities in the Second World War photographs your grandfather kept. The television does not use the word war.'
+    },
+    choices: [
+      {
+        text: 'Find a way out of conscription — medical, educational, money.',
+        tag: null,
+        outcome: 'You do not go. The way out costs what it costs and you have paid it. The boys who went are in the zinc coffins or they are not.',
+        effect: (p) => { p.mo -= 2000; p.m -= 6; p.r += 5; p.addFlag('chechnya_generation'); p.setMem('ruChechnya', true); },
+      },
+      {
+        text: 'You went, or you knew people who went.',
+        tag: null,
+        outcome: 'Chechnya. The official account and the things that happened there exist in a specific relationship that you understand from the inside.',
+        effect: (p) => { p.m -= 12; p.h -= 6; p.r += 6; p.addFlag('chechnya_generation'); p.addFlag('veteran_unthanked'); p.setMem('ruChechnya', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ru_ukraine_invasion_2022',
+    phase: 'midlife',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'Russia' &&
+      G.currentYear >= 2022 && G.currentYear <= 2025 &&
+      G.age >= 16 &&
+      !G.mem?.ruUkraineInvasion,
+    text: 'February 24, 2022. You wake to the news that Russia has launched a full-scale invasion of Ukraine. The television uses the word "операция" — operation. The word war is legally banned within days. In your phone, in private chats, in careful conversations with people you trust, the word that is not permitted is used. The anti-war protests in Moscow and Petersburg are broken up within hours; three thousand arrested in the first week. The borders to Georgia, Finland, Kazakhstan are at capacity with Russians leaving.',
+    choices: [
+      {
+        text: 'You leave. You are not going to live in a country doing this.',
+        tag: null,
+        outcome: 'You pack what you can carry. Tbilisi, Yerevan, Riga, Istanbul. You are one of the 700,000 who left in 2022. You call what you left behind home, though the word is now complicated.',
+        effect: (p) => { p.m -= 10; p.r += 8; p.addFlag('russia_ukraine_exile'); p.addFlag('russia_2022_generation'); p.setMem('ruUkraineInvasion', true); },
+      },
+      {
+        text: 'You stay. Speaking carefully, living carefully.',
+        tag: null,
+        outcome: 'You stay and you manage what is sayable in which room to which person. You have been in this country your whole life and you are not leaving it.',
+        effect: (p) => { p.m -= 8; p.r += 5; p.addFlag('russia_2022_generation'); p.addFlag('learned_silence'); p.setMem('ruUkraineInvasion', true); },
+      },
+      {
+        text: 'You accept the government\'s framing. This is necessary.',
+        tag: null,
+        outcome: 'The television is consistent and the media environment is controlled and the information you receive is the information the state provides. You believe it.',
+        effect: (p) => { p.m -= 4; p.addFlag('russia_2022_generation'); p.addFlag('regime_compliance'); p.setMem('ruUkraineInvasion', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ru_mobilization_2022',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Russia' &&
+      G.character.gender === 'male' &&
+      G.currentYear >= 2022 && G.currentYear <= 2024 &&
+      G.age >= 18 && G.age <= 55 &&
+      !G.flags.includes('russia_ukraine_exile') &&
+      !G.mem?.ruMobilization,
+    text: 'September 21, 2022. Putin announces partial mobilization. Three hundred thousand. The mobilization offices open. The queues at the border crossings to Georgia and Kazakhstan and Finland stretch for kilometers — cars abandoned when the fuel runs out, people walking the last stretch. The flight prices to non-extradition countries triple in four hours. You are in the age range. You are male. The piece of paper has your name on it or it is about to.',
+    choices: [
+      {
+        text: 'Leave. Whatever it takes.',
+        tag: null,
+        outcome: 'You cross a border, by car, by plane, on foot. You do not know when you will come back or whether that country will still be the country you left when you do.',
+        effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('russia_ukraine_exile'); p.setMem('ruMobilization', true); },
+      },
+      {
+        text: 'Find another way out of the call-up — medical, paperwork, connections.',
+        tag: null,
+        outcome: 'The way through the system exists for those who know it or can pay for it. You find it. The men who couldn\'t find it are in Ukraine.',
+        effect: (p) => { p.mo -= 3000; p.m -= 8; p.r += 4; p.setMem('ruMobilization', true); },
+      },
+      {
+        text: 'Answer the call. You go.',
+        tag: null,
+        outcome: 'You answer. What you find in Ukraine is not what the operation briefing described.',
+        effect: (p) => { p.m -= 15; p.h -= 10; p.r += 8; p.addFlag('russia_ukraine_veteran'); p.setMem('ruMobilization', true); },
+      },
+    ],
+    effect: null,
+  },
+
   // ── SUB-SAHARAN HEALTH & SOCIETY EVENTS ────────────────────────────────────
   {
     id: 'ss_malaria_childhood',
@@ -8535,7 +8684,7 @@ const BASE_EVENTS = [
   },
 ]
 
-export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS, ...TECHNOLOGY_EVENTS, ...IMMIGRATION_EVENTS, ...CAREER_REGIME_EVENTS, ...CONFLICT_CHILDHOOD_EVENTS, ...LGBTQ_EVENTS, ...MENTAL_HEALTH_EVENTS, ...GRIEF_EVENTS, ...GRIEF_MENTAL_EVENTS, ...RELIGION_ARC_EVENTS, ...LATE_LIFE_EVENTS, ...CHILDREN_ARC_EVENTS, ...FAME_KARMA_EVENTS, ...TEXTURE_EVENTS, ...SOCIETY_EVENTS, ...CONSEQUENCE_EVENTS, ...ROMANCE_ARC_EVENTS, ...ACTIVITY_PAYOFF_EVENTS, ...FRIEND_EVENTS, ...BUSINESS_EVENTS, ...SIBLING_EVENTS, ...EDUCATION_ARC_EVENTS, ...ADOLESCENCE_EVENTS, ...ADOLESCENCE_2_EVENTS, ...FERTILITY_EVENTS, ...CAREER_WEALTH_EVENTS, ...GULF_EAST_EVENTS, ...RELATIONSHIP_QUALITY_EVENTS, ...FOLLOWTHROUGH_EVENTS, ...DESIRES_EVENTS, ...SMALL_LIFE_EVENTS, ...FOLLOWTHROUGH_2_EVENTS, ...PLACES_EVENTS, ...INFRASTRUCTURE_EVENTS, ...CITY_EVENTS, ...DYING_CITY_EVENTS, ...CITIES_EXTENDED_EVENTS, ...RURAL_TEXTURE_EVENTS, ...POST_SOVIET_EVENTS, ...VIETNAM_EVENTS, ...ILLNESS_EVENTS, ...PARENT_CARE_EVENTS, ...WEALTH_SYSTEM_EVENTS, ...MONEY_EVENTS, ...FOLLOWTHROUGH_3_EVENTS, ...LATIN_AMERICA_EVENTS, ...COUNTRY_ARC_EVENTS, ...COUNTRY_ARC_2_EVENTS, ...EARLY_LIFE_EVENTS, ...EARLY_CHILDHOOD_2_EVENTS, ...DECOLONISATION_EVENTS, ...LABOR_EVENTS, ...ASIA_ARC_EVENTS, ...CROSSCUTTING_EVENTS, ...DRC_EVENTS, ...INTERNET_ERA_EVENTS, ...ZIMBABWE_EVENTS, ...CLIMATE_EVENTS, ...INDIGENOUS_EVENTS, ...AUTOMATION_EVENTS, ...COUNTRY_ARC_3_EVENTS, ...ARTS_EVENTS, ...FOLLOWTHROUGH_4_EVENTS, ...FOLLOWTHROUGH_5_EVENTS, ...INFORMAL_EVENTS, ...NEIGHBORHOOD_EVENTS, ...POSTRELEASE_EVENTS, ...MENTOR_EVENTS, ...FAMILY_SILENCE_EVENTS, ...SOLO_LIFE_EVENTS, ...DYING_ARC_EVENTS, ...COHERENCE_EVENTS, ...POVERTY_EVENTS, ...PREGNANCY_EVENTS, ...MENOPAUSE_EVENTS, ...CAREER_ARC_EVENTS, ...SOCIAL_MEDIA_EVENTS, ...SCANDINAVIA_EVENTS, ...PALESTINE_EVENTS, ...GANG_EVENTS, ...WORLD_RESPONSE_EVENTS, ...SOCIAL_CAPITAL_EVENTS, ...CHILDHOOD_TEXTURE_EVENTS, ...EMIGRANT_INTEGRATION_EVENTS, ...INTIMACY_EVENTS, ...SCHOOL_EVENTS, ...FOLLOWTHROUGH_6_EVENTS, ...CHILDREN_ABROAD_EVENTS, ...STAYED_EVENTS, ...SPORT_EVENTS, ...DISASTER_EVENTS, ...FOLLOWTHROUGH_7_EVENTS, ...FOLLOWTHROUGH_8_EVENTS, ...FOLLOWTHROUGH_9_EVENTS, ...ACTIVITY_CHOICE_EVENTS, ...PROJECT_ARC_EVENTS, ...INDUSTRIAL_EVENTS, ...LEBANON_EVENTS, ...CENTRAL_AMERICA_EVENTS, ...CENTRAL_ASIA_EVENTS, ...OFW_EVENTS, ...ALGERIA_EVENTS, ...FOLLOWTHROUGH_10_EVENTS, ...INDONESIA_EVENTS, ...KURDISH_EVENTS, ...DEBT_EVENTS, ...HAITI_EVENTS, ...SRI_LANKA_EVENTS, ...MOROCCO_EVENTS, ...ROHINGYA_EVENTS, ...TANZANIA_EVENTS, ...MULTILINGUAL_EVENTS, ...SENEGAL_EVENTS, ...ADOPTEE_EVENTS, ...UYGHUR_EVENTS, ...PUERTO_RICO_EVENTS, ...SOLDIER_ARC_EVENTS, ...DOCUMENT_EVENTS, ...CLERGY_EVENTS, ...FOLLOWTHROUGH_11_EVENTS, ...KENYA_EVENTS, ...ETHIOPIA_EVENTS, ...CONDITION_ARC_EVENTS, ...SOUTHEAST_EUROPE_EVENTS, ...PAKISTAN_EVENTS, ...EGYPT_EVENTS, ...INDIA_EVENTS, ...IRELAND_TURKEY_EVENTS, ...FOLLOWTHROUGH_12_EVENTS, ...WEST_AFRICA_EVENTS, ...UGANDA_EVENTS, ...SOMALIA_EVENTS, ...THAILAND_EVENTS, ...NEPAL_EVENTS, ...MYANMAR_EVENTS, ...TUNISIA_EVENTS, ...SUDAN_EVENTS, ...ANGOLA_EVENTS, ...JORDAN_EVENTS, ...LIBYA_EVENTS, ...ZAMBIA_EVENTS, ...MOZAMBIQUE_EVENTS, ...AFGHANISTAN_EVENTS, ...YEMEN_EVENTS, ...GIFTED_EVENTS, ...GIFTED_2_EVENTS, ...GIFTED_3_EVENTS, ...CHINA_EVENTS, ...KOREA_EVENTS, ...DISABILITY_EVENTS, ...ADDICTION_EVENTS, ...CHILD_SOLDIER_EVENTS, ...WWI_DEPRESSION_EVENTS, ...DIVORCE_EVENTS, ...DEMENTIA_EVENTS, ...CELEBRITY_EVENTS, ...TEACHER_ARC_EVENTS, ...WOUND_COPING_EVENTS, ...PARTNER_WANTS_EVENTS, ...RELATIONSHIP_CROSSOVER_EVENTS, ...FOLLOWTHROUGH_13_EVENTS, ...SYRIA_EVENTS, ...CHILD_DEATH_ARC_EVENTS, ...ISRAEL_EVENTS]
+export const EVENTS = [...BASE_EVENTS, ...GENDER_EVENTS, ...RELIGION_EVENTS, ...HISTORICAL_EVENTS, ...CULTURE_EVENTS, ...TECHNOLOGY_EVENTS, ...IMMIGRATION_EVENTS, ...CAREER_REGIME_EVENTS, ...CONFLICT_CHILDHOOD_EVENTS, ...LGBTQ_EVENTS, ...MENTAL_HEALTH_EVENTS, ...GRIEF_EVENTS, ...GRIEF_MENTAL_EVENTS, ...RELIGION_ARC_EVENTS, ...LATE_LIFE_EVENTS, ...CHILDREN_ARC_EVENTS, ...FAME_KARMA_EVENTS, ...TEXTURE_EVENTS, ...SOCIETY_EVENTS, ...CONSEQUENCE_EVENTS, ...ROMANCE_ARC_EVENTS, ...ACTIVITY_PAYOFF_EVENTS, ...FRIEND_EVENTS, ...BUSINESS_EVENTS, ...SIBLING_EVENTS, ...EDUCATION_ARC_EVENTS, ...ADOLESCENCE_EVENTS, ...ADOLESCENCE_2_EVENTS, ...FERTILITY_EVENTS, ...CAREER_WEALTH_EVENTS, ...GULF_EAST_EVENTS, ...RELATIONSHIP_QUALITY_EVENTS, ...FOLLOWTHROUGH_EVENTS, ...DESIRES_EVENTS, ...SMALL_LIFE_EVENTS, ...FOLLOWTHROUGH_2_EVENTS, ...PLACES_EVENTS, ...INFRASTRUCTURE_EVENTS, ...CITY_EVENTS, ...DYING_CITY_EVENTS, ...CITIES_EXTENDED_EVENTS, ...RURAL_TEXTURE_EVENTS, ...POST_SOVIET_EVENTS, ...VIETNAM_EVENTS, ...ILLNESS_EVENTS, ...PARENT_CARE_EVENTS, ...WEALTH_SYSTEM_EVENTS, ...MONEY_EVENTS, ...FOLLOWTHROUGH_3_EVENTS, ...LATIN_AMERICA_EVENTS, ...COUNTRY_ARC_EVENTS, ...COUNTRY_ARC_2_EVENTS, ...EARLY_LIFE_EVENTS, ...EARLY_CHILDHOOD_2_EVENTS, ...DECOLONISATION_EVENTS, ...LABOR_EVENTS, ...ASIA_ARC_EVENTS, ...CROSSCUTTING_EVENTS, ...DRC_EVENTS, ...INTERNET_ERA_EVENTS, ...ZIMBABWE_EVENTS, ...CLIMATE_EVENTS, ...INDIGENOUS_EVENTS, ...AUTOMATION_EVENTS, ...COUNTRY_ARC_3_EVENTS, ...ARTS_EVENTS, ...FOLLOWTHROUGH_4_EVENTS, ...FOLLOWTHROUGH_5_EVENTS, ...INFORMAL_EVENTS, ...NEIGHBORHOOD_EVENTS, ...POSTRELEASE_EVENTS, ...MENTOR_EVENTS, ...FAMILY_SILENCE_EVENTS, ...SOLO_LIFE_EVENTS, ...DYING_ARC_EVENTS, ...COHERENCE_EVENTS, ...POVERTY_EVENTS, ...PREGNANCY_EVENTS, ...MENOPAUSE_EVENTS, ...CAREER_ARC_EVENTS, ...SOCIAL_MEDIA_EVENTS, ...SCANDINAVIA_EVENTS, ...PALESTINE_EVENTS, ...GANG_EVENTS, ...WORLD_RESPONSE_EVENTS, ...SOCIAL_CAPITAL_EVENTS, ...CHILDHOOD_TEXTURE_EVENTS, ...EMIGRANT_INTEGRATION_EVENTS, ...INTIMACY_EVENTS, ...SCHOOL_EVENTS, ...FOLLOWTHROUGH_6_EVENTS, ...CHILDREN_ABROAD_EVENTS, ...STAYED_EVENTS, ...SPORT_EVENTS, ...DISASTER_EVENTS, ...FOLLOWTHROUGH_7_EVENTS, ...FOLLOWTHROUGH_8_EVENTS, ...FOLLOWTHROUGH_9_EVENTS, ...ACTIVITY_CHOICE_EVENTS, ...PROJECT_ARC_EVENTS, ...INDUSTRIAL_EVENTS, ...LEBANON_EVENTS, ...CENTRAL_AMERICA_EVENTS, ...CENTRAL_ASIA_EVENTS, ...OFW_EVENTS, ...ALGERIA_EVENTS, ...FOLLOWTHROUGH_10_EVENTS, ...INDONESIA_EVENTS, ...KURDISH_EVENTS, ...DEBT_EVENTS, ...HAITI_EVENTS, ...SRI_LANKA_EVENTS, ...MOROCCO_EVENTS, ...ROHINGYA_EVENTS, ...TANZANIA_EVENTS, ...MULTILINGUAL_EVENTS, ...SENEGAL_EVENTS, ...ADOPTEE_EVENTS, ...UYGHUR_EVENTS, ...PUERTO_RICO_EVENTS, ...SOLDIER_ARC_EVENTS, ...DOCUMENT_EVENTS, ...CLERGY_EVENTS, ...FOLLOWTHROUGH_11_EVENTS, ...KENYA_EVENTS, ...ETHIOPIA_EVENTS, ...CONDITION_ARC_EVENTS, ...SOUTHEAST_EUROPE_EVENTS, ...PAKISTAN_EVENTS, ...EGYPT_EVENTS, ...INDIA_EVENTS, ...INDIA_DEPTH_EVENTS, ...IRELAND_TURKEY_EVENTS, ...FOLLOWTHROUGH_12_EVENTS, ...WEST_AFRICA_EVENTS, ...UGANDA_EVENTS, ...SOMALIA_EVENTS, ...THAILAND_EVENTS, ...NEPAL_EVENTS, ...MYANMAR_EVENTS, ...TUNISIA_EVENTS, ...SUDAN_EVENTS, ...ANGOLA_EVENTS, ...JORDAN_EVENTS, ...LIBYA_EVENTS, ...ZAMBIA_EVENTS, ...MOZAMBIQUE_EVENTS, ...AFGHANISTAN_EVENTS, ...YEMEN_EVENTS, ...GIFTED_EVENTS, ...GIFTED_2_EVENTS, ...GIFTED_3_EVENTS, ...CHINA_EVENTS, ...KOREA_EVENTS, ...DISABILITY_EVENTS, ...ADDICTION_EVENTS, ...CHILD_SOLDIER_EVENTS, ...WWI_DEPRESSION_EVENTS, ...DIVORCE_EVENTS, ...DEMENTIA_EVENTS, ...CELEBRITY_EVENTS, ...TEACHER_ARC_EVENTS, ...WOUND_COPING_EVENTS, ...PARTNER_WANTS_EVENTS, ...RELATIONSHIP_CROSSOVER_EVENTS, ...FOLLOWTHROUGH_13_EVENTS, ...SYRIA_EVENTS, ...CHILD_DEATH_ARC_EVENTS, ...ISRAEL_EVENTS, ...PANDEMIC_EVENTS, ...GREECE_PORTUGAL_EVENTS, ...SPAIN_EVENTS, ...PHILIPPINES_EVENTS, ...UK_EVENTS, ...GERMANY_FRANCE_EVENTS, ...USA_EVENTS, ...AUSTRALIA_EVENTS, ...CANADA_EVENTS, ...ITALY_EVENTS, ...POLAND_EVENTS, ...FOLLOWTHROUGH_14_EVENTS, ...FOLLOWTHROUGH_15_EVENTS, ...RUSSIA_EVENTS, ...FOLLOWTHROUGH_16_EVENTS, ...UKRAINE_EVENTS, ...SOUTH_AFRICA_EVENTS, ...FOLLOWTHROUGH_17_EVENTS, ...ROMANIA_EVENTS, ...FOLLOWTHROUGH_18_EVENTS, ...DESIRE_RESOLUTION_EVENTS, ...CENTRAL_EUROPE_EVENTS, ...FOLLOWTHROUGH_19_EVENTS, ...BALTIC_EVENTS, ...FOLLOWTHROUGH_20_EVENTS, ...GEORGIA_EVENTS, ...FOLLOWTHROUGH_21_EVENTS, ...TAIWAN_MALAYSIA_EVENTS, ...ARMENIA_AZ_EVENTS, ...FOLLOWTHROUGH_22_EVENTS, ...BELARUS_EVENTS, ...UY_PY_EC_EVENTS, ...NORTH_KOREA_EVENTS, ...CUBA_EVENTS, ...NAMIBIA_EVENTS, ...LAOS_EVENTS, ...SINGAPORE_EVENTS, ...NETHERLANDS_EVENTS, ...BRAZIL_EVENTS, ...BANGLADESH_EVENTS, ...IRAQ_EVENTS, ...RWANDA_EVENTS, ...COLOMBIA_EVENTS, ...VENEZUELA_EVENTS, ...PERU_EVENTS, ...JAPAN_EVENTS, ...SAUDI_EVENTS, ...IRAN_EVENTS]
 
 // Phase index: pre-computed at module load so getNextEvent() only evaluates
 // guards for events in the current phase rather than scanning the entire array.

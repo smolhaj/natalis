@@ -741,4 +741,113 @@ export const COUNTRY_ARC_2_EVENTS = [
     effect: (p) => { p.m -= 2; p.e += 4; p.setMem('japanEarthquakeDrill', true); p.addFlag('earthquake_country'); },
   },
 
+  {
+    id: 'ca2_japan_lost_generation',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Japan' &&
+      G.currentYear >= 1993 && G.currentYear <= 2005 &&
+      G.age >= 18 && G.age <= 30 &&
+      !G.mem?.japanLostGen,
+    text: 'The year you graduate, the companies announce they are not hiring. Not fewer: not hiring. The generation before yours entered sōgōshoku — management track, permanent employment, company housing, forty years of certainty. What you have is haken, dispatch work. No benefits. No seniority. No guarantee of next month. Calling it a gap between expectation and reality misses the specificity: the expectation was built into the society and then the floor was removed and you were standing on it.',
+    choices: [
+      {
+        text: 'Take the irregular work and keep trying for permanent employment.',
+        tag: null,
+        outcome: 'The permanent position does not arrive in the years when it would have mattered most. The irregular work becomes the life, not the gap before the life.',
+        effect: (p) => { p.m -= 8; p.w -= 6; p.r += 5; p.addFlag('lost_generation_japan'); p.addFlag('freeter_track'); p.setMem('japanLostGen', true); },
+      },
+      {
+        text: 'Redirect. The track you were promised does not exist; build a different one.',
+        tag: null,
+        outcome: 'The redirection is harder than the original path would have been, and produces something that is yours in a way the original path would not have been. The trade is real.',
+        effect: (p) => { p.m -= 5; p.e += 4; p.r += 3; p.addFlag('lost_generation_japan'); p.setMem('japanLostGen', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ca2_japan_hikikomori',
+    phase: 'adolescence',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'Japan' &&
+      G.currentYear >= 1995 && G.currentYear <= 2015 &&
+      G.age >= 14 && G.age <= 20 &&
+      !G.mem?.japanHikikomori,
+    text: 'Your classmate stopped coming to school at the end of the second year. His mother says he is tired. The door to his room is closed when you visit — you can hear the television. The word for it is hikikomori: social withdrawal. The Ministry of Health will eventually count over a million people in rooms like his. The explanation is always partial: the pressure, the exam system, the gap between what is required and what a person can produce. The door stays closed.',
+    choices: [
+      {
+        text: 'You knock on his door and talk through it — you keep trying.',
+        tag: null,
+        outcome: 'He does not answer for a long time. Then, once, he does. You do not know whether this is a beginning or an anomaly.',
+        effect: (p) => { p.karma += 5; p.m -= 4; p.addFlag('hikikomori_adjacent'); p.setMem('japanHikikomori', true); },
+      },
+      {
+        text: 'You do not push. The space he has made is the space he needs.',
+        tag: null,
+        outcome: 'You respect the boundary. You have always wondered whether there was a different word for respect in that situation and whether you chose the right one.',
+        effect: (p) => { p.m -= 5; p.r += 4; p.addFlag('hikikomori_adjacent'); p.setMem('japanHikikomori', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ca2_japan_tohoku_2011',
+    phase: 'midlife',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'Japan' &&
+      G.currentYear === 2011 &&
+      G.age >= 10 &&
+      !G.mem?.japanTohoku,
+    text: 'March 11, 2:46 in the afternoon. The shaking goes on longer than any shaking should go on. Magnitude 9.0 — the strongest recorded in Japan. Forty minutes later the tsunami comes ashore. In Tōhoku the water is fifteen meters high in some places. In Ishinomaki, in Rikuzentakata, in Kesennuma. The wave takes everything to a line and leaves rubble on one side of the line. Twenty thousand dead, most by drowning, in under an hour. Then: Fukushima Daiichi, reactors one through three, the hydrogen explosions you watch on television.',
+    choices: [
+      {
+        text: 'You were in Tōhoku, in the affected area.',
+        tag: null,
+        outcome: 'The rebuilding takes years. The specific things that were there before and are not there after — you know them by name.',
+        effect: (p) => { p.m -= 15; p.h -= 8; p.r += 8; p.addFlag('tohoku_survivor'); p.addFlag('fukushima_generation'); p.setMem('japanTohoku', true); },
+      },
+      {
+        text: 'You were elsewhere — you watched it arrive on every screen.',
+        tag: null,
+        outcome: 'The footage of the wave reaching the airport at Sendai: the cars moving ahead of it, then not moving. You watched it and understood something about the scale that the number 20,000 does not convey.',
+        effect: (p) => { p.m -= 8; p.r += 4; p.addFlag('fukushima_generation'); p.setMem('japanTohoku', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ca2_japan_nuclear_reckoning',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Japan' &&
+      G.currentYear >= 2012 && G.currentYear <= 2016 &&
+      G.flags.includes('fukushima_generation') &&
+      G.age >= 18 &&
+      !G.mem?.japanNuclearReckoning,
+    text: 'Japan had fifty-four nuclear reactors before March 11. By May 2012 they have all been taken offline — the first time since 1970 the country has operated without nuclear power. The debate is not about technology. It is about who bears the risk, who was told the risk was acceptable, who made that decision, and what the distance is between those categories. Fukushima Daiichi is in Fukushima. The people who made the TEPCO decisions were not in Fukushima.',
+    choices: [
+      {
+        text: 'Nuclear energy as a category has changed for you after Fukushima.',
+        tag: null,
+        outcome: 'The change is specific: not to fear but to the understanding that the risk is never distributed the same as the benefit.',
+        effect: (p) => { p.e += 5; p.m -= 3; p.addFlag('anti_nuclear_generation'); p.setMem('japanNuclearReckoning', true); },
+      },
+      {
+        text: 'The country needs energy and the alternatives have their own costs.',
+        tag: null,
+        outcome: 'You hold the engineering argument and the human cost in the same place. The tension between them is real and has no clean resolution.',
+        effect: (p) => { p.e += 4; p.r += 3; p.setMem('japanNuclearReckoning', true); },
+      },
+    ],
+    effect: null,
+  },
+
 ]

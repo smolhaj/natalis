@@ -227,6 +227,171 @@ export const COUNTRY_ARC_3_EVENTS = [
     effect: null,
   },
 
+  // ── IRAN CONTEMPORARY ─────────────────────────────────────────────────────────
+
+  {
+    id: 'iran_green_movement_2009',
+    phase: 'young_adult',
+    weight: 5,
+    when: (G) =>
+      G.character.country?.name === 'Iran' &&
+      G.currentYear === 2009 &&
+      G.age >= 16 &&
+      !G.mem?.iranGreenMovement,
+    text: 'June 2009. Mahmoud Ahmadinejad is declared the winner of the presidential election before the polling stations have closed. Mir-Hossein Mousavi and millions of others say the result is fraudulent. "Mousavi returned my vote" becomes a sentence. Green becomes a colour with a political meaning. On June 20 Neda Agha-Soltan is shot on Kargar Street, and the video of her dying reaches every phone on earth within hours. The Basij are on the rooftops. The Basij are in the streets. The chant is "Allahu Akbar" at night from the rooftops — the same chant as 1979, the same phrase, used against the government the phrase was used to create.',
+    choices: [
+      {
+        text: 'You are in the street, in the green.',
+        tag: null,
+        outcome: 'The crackdown comes. The numbers arrested reach 4,000. The movement is suppressed. What happened in the street has a date and you were part of it.',
+        effect: (p) => { p.m -= 12; p.karma += 8; p.r += 6; p.addFlag('green_movement_generation'); p.addFlag('political_active'); p.setMem('iranGreenMovement', true); },
+      },
+      {
+        text: 'You watch from a window. The risk is too clear.',
+        tag: null,
+        outcome: 'You watch the green from the window. The crackdown happens whether or not you were in it. Your absence from the street does not mean absence from the consequence of living in the country where it happened.',
+        effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('green_movement_generation'); p.setMem('iranGreenMovement', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'iran_mahsa_amini_2022',
+    phase: 'midlife',
+    weight: 5,
+    when: (G) =>
+      G.character.country?.name === 'Iran' &&
+      G.currentYear >= 2022 && G.currentYear <= 2024 &&
+      G.age >= 14 &&
+      !G.mem?.iranMahsa,
+    text: 'September 16, 2022. Mahsa Amini, 22, dies in police custody three days after being arrested by the morality police for improper hijab. The hashtag is Zan, Zendegi, Azadi — Woman, Life, Freedom. High-school girls take off their headscarves and burn them. Students at universities join. The protests spread to 164 cities. The security forces kill more than 500. For the first time since 1979, the Islamic Republic is challenged not by a political faction but by a generation that does not believe in what the Republic believes about them.',
+    choices: [
+      {
+        text: 'You cut your hair. You burn your hijab. You are in the street.',
+        tag: null,
+        outcome: 'The repression is severe. You know this going in. You go in.',
+        effect: (p) => { p.m -= 10; p.karma += 10; p.r += 5; p.addFlag('zan_zendegi_azadi'); p.addFlag('political_active'); p.setMem('iranMahsa', true); },
+      },
+      {
+        text: 'You support from inside — the small signals, the words in the right spaces.',
+        tag: null,
+        outcome: 'The small signals are not nothing. The women who are visible need the ones who are adjacent. You are adjacent.',
+        effect: (p) => { p.m -= 7; p.karma += 5; p.r += 4; p.addFlag('zan_zendegi_azadi'); p.setMem('iranMahsa', true); },
+      },
+      {
+        text: 'You fear what comes after — the crackdown will be worse than what is being protested.',
+        tag: null,
+        outcome: 'The crackdown comes regardless of what you do. The women who stood in the street know this. The fear is accurate and does not predict the outcome.',
+        effect: (p) => { p.m -= 6; p.r += 8; p.setMem('iranMahsa', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── SOUTH AFRICA POST-1994 ────────────────────────────────────────────────────
+
+  {
+    id: 'sa_first_vote_1994',
+    phase: 'young_adult',
+    weight: 5,
+    when: (G) =>
+      G.character.country?.name === 'South Africa' &&
+      G.currentYear === 1994 &&
+      G.age >= 16 &&
+      !G.mem?.saFirstVote,
+    text: (G) => {
+      if (G.ethnicity === 'black_south_african') {
+        return 'April 27, 1994. You are in a queue that began forming at four in the morning. It does not move fast. It does not need to. People have brought food and umbrellas. Some are elderly — they have been waiting for this vote for seventy years, or their whole lives. When you reach the booth and make your mark and fold the paper and put it in the box, the ballot officer stamps your thumb with ink. You walk out with your thumb raised. You have voted. This is the first time you have voted in the country where you were born.'
+      }
+      if (G.ethnicity === 'white_south_african') {
+        return 'April 27, 1994. You have voted before. This is different: the country in which you are voting has changed its definition of who belongs to it. The queue at the polling station includes people who have never been in this queue. You voted for de Klerk or you voted for the National Party or you voted for the ANC or you spoiled your ballot from uncertainty about what kind of country is being made. Whatever you voted, you voted in the first election of the new country.'
+      }
+      return 'April 27, 1994. The queue stretches in both directions. You have your ID book. You have come early, or you have come late and joined the tail end. Mandela will win with 62 percent. The official vote count will take two days. What happens in the booth is between you and the paper.'
+    },
+    choices: null,
+    effect: (p) => {
+      p.m += 10
+      p.karma += 5
+      p.addFlag('post_apartheid_generation')
+      p.setMem('saFirstVote', true)
+    },
+  },
+
+  {
+    id: 'sa_mandela_era_hope',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country?.name === 'South Africa' &&
+      G.currentYear >= 1994 && G.currentYear <= 2000 &&
+      G.flags.includes('post_apartheid_generation') &&
+      G.age >= 20 &&
+      !G.mem?.saMandela,
+    text: 'The phrase is "Rainbow Nation." The country has a constitution that is cited internationally as a model. Mandela appears everywhere — in the jersey at the Rugby World Cup final, at the state banquet, on the television in his characteristic floral shirts. There is an extraordinary amount of goodwill being generated and extended in this period. You know the structural problems have not been resolved: the land, the housing, the inequality metric that is still the worst in the world. Both of these things are true and you hold them at the same time.',
+    choices: [
+      {
+        text: 'Allow the hope to be what it is.',
+        tag: null,
+        outcome: 'The hope is a real phenomenon. The structural problems are also real. Holding both does not cancel either.',
+        effect: (p) => { p.m += 8; p.addFlag('rainbow_nation_generation'); p.setMem('saMandela', true); },
+      },
+      {
+        text: 'The hope concerns you — it is absorbing attention the structural problems need.',
+        tag: null,
+        outcome: 'You are right that the problems remain. You are watching from a position that allows you to see the gap between the symbolism and the arithmetic of land ownership.',
+        effect: (p) => { p.m += 3; p.e += 4; p.r += 3; p.addFlag('post_apartheid_realist'); p.setMem('saMandela', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'sa_marikana_2012',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country?.name === 'South Africa' &&
+      G.currentYear === 2012 &&
+      G.age >= 18 &&
+      !G.mem?.saMarikana,
+    text: 'August 16, 2012. Striking platinum miners at the Lonmin mine in Marikana have been in a wildcat strike for ten days. The police encircle a group of around 3,000 miners at a koppie. Thirty-four are shot dead. The police is the South African Police Service. The government is the ANC government — the liberation movement. The mine is owned by Lonmin; the ANC Youth League has a financial relationship with one of its principals. The sentence "the ANC government shot striking miners" is the sentence that restructures the next decade of South African politics.',
+    choices: [
+      {
+        text: 'This is the point where the promise of 1994 definitively breaks.',
+        tag: null,
+        outcome: 'You were not naive in 1994 but the specific image of a democratic police force shooting workers is a different thing from the abstractions of inequality.',
+        effect: (p) => { p.m -= 12; p.r += 8; p.addFlag('marikana_generation'); p.addFlag('post_apartheid_disillusionment'); p.setMem('saMarikana', true); },
+      },
+      {
+        text: 'The situation was complicated — the violence came from multiple directions.',
+        tag: null,
+        outcome: 'The complication is real. The 34 dead are also real. The complications and the dead do not cancel each other.',
+        effect: (p) => { p.m -= 8; p.r += 5; p.addFlag('marikana_generation'); p.setMem('saMarikana', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'sa_loadshedding',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country?.name === 'South Africa' &&
+      G.currentYear >= 2008 && G.currentYear <= 2024 &&
+      G.age >= 18 &&
+      !G.mem?.saLoadshedding,
+    text: 'The schedules are on your phone now: Stage 2, Stage 4, Stage 6. Eskom, the state electricity utility, has been running its coal fleet past maintenance cycles for decades and not building replacement capacity. The load-shedding is planned, announced in advance, and then the power goes off for two, four, six hours depending on the stage. You buy a generator or an inverter or candles. The productive hours of the economy are being cut. The specific experience is learning to cook, to work, to sleep around a schedule that the state has imposed on ordinary life.',
+    choices: null,
+    effect: (p) => {
+      p.m -= 6
+      p.w -= 4
+      p.addFlag('loadshedding_generation')
+      p.setMem('saLoadshedding', true)
+    },
+  },
+
   // ── FRANCE WWII ───────────────────────────────────────────────────────────────
 
   {
