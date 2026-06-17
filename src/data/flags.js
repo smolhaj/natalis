@@ -5116,6 +5116,30 @@ export const FLAG_REGISTRY = {
     notes: 'Set by pol_eu_accession_2004.',
   },
 
+  smolensk_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Polish adult who lived through the April 2010 Smolensk crash — 96 officials killed including the President, the grief, and the political polarisation that followed.',
+    intent: 'year_texture',
+    notes: 'Set by pol_smolensk_2010. Both branches set this flag.',
+  },
+
+  smolensk_doubted: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Polish person who held private doubt about the official account of the Smolensk crash — the sequence (Katyń commemoration, Russian territory, Russian investigation) that didn\'t sit easily.',
+    intent: 'none',
+    notes: 'Set by pol_smolensk_2010 (doubt branch).',
+  },
+
+  strajk_kobiet_generation: {
+    weight: 'moderate',
+    category: 'gender',
+    description: 'Polish woman who lived through the October 2020 Constitutional Tribunal abortion ruling and the Ogólnopolski Strajk Kobiet (All-Poland Women\'s Strike) — the lightning bolt symbol, the streets.',
+    intent: 'year_texture',
+    notes: 'Set by pol_womens_strike_2020.',
+  },
+
   // ── Netherlands ───────────────────────────────────────────────────────────────
 
   nl_hunger_winter_generation: {

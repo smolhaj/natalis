@@ -194,4 +194,59 @@ export const POLAND_EVENTS = [
     effect: null,
   },
 
+  {
+    id: 'pol_smolensk_2010',
+    phase: 'midlife',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'Poland' &&
+      G.currentYear >= 2010 && G.currentYear <= 2012 &&
+      G.age >= 20 &&
+      !G.mem?.polSmolensk,
+    text: 'April 10, 2010. The Tu-154 carrying President Lech Kaczyński and ninety-five other Polish officials — the military chief of staff, the national bank president, army commanders, members of parliament, bishops, the families of Katyń victims — crashes in fog near Smolensk, Russia. They were traveling for the seventieth anniversary of the Katyń massacre. All ninety-six are killed. Poland has not lost this many senior officials simultaneously since the war. The grief is not contested. What happened next becomes something else entirely.',
+    choices: [
+      {
+        text: 'A terrible accident in difficult conditions. The grief is enough.',
+        tag: null,
+        outcome: 'The grief is enough and also not the end of it. The official Russian investigation finds pilot error. The PiS party will eventually name this an assassination. The political use of the grief is something you watch develop over the following years and try to hold separately from the grief itself.',
+        effect: (p) => { p.m -= 10; p.r += 4; p.addFlag('smolensk_generation'); p.setMem('polSmolensk', true); },
+      },
+      {
+        text: 'The sequence — Katyń, then Smolensk, then a Russian investigation — does not sit easily.',
+        tag: null,
+        outcome: 'You hold the discomfort privately. The sequence is what it is: Poland flying to commemorate a Soviet massacre, crashing in Russian territory, the investigation conducted by Russia. The conclusions may be correct. The discomfort is also correct.',
+        effect: (p) => { p.m -= 12; p.r += 6; p.addFlag('smolensk_generation'); p.addFlag('smolensk_doubted'); p.setMem('polSmolensk', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'pol_womens_strike_2020',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Poland' &&
+      G.character.gender === 'female' &&
+      G.currentYear >= 2020 && G.currentYear <= 2022 &&
+      G.age >= 18 &&
+      !G.mem?.polWomensStrike,
+    text: 'October 22, 2020. The Constitutional Tribunal rules that abortions for severe fetal abnormalities are unconstitutional. Ninety-eight percent of the legal abortions performed in Poland were for this reason. Effective immediately. Within hours, a lightning bolt symbol is on phones and walls everywhere. By the weekend, hundreds of thousands of people are in the streets — in Warsaw, in Kraków, in small towns with no previous history of protest. The signs say things that were not said in public in Poland before. The lightning bolt is everywhere. You are somewhere.',
+    choices: [
+      {
+        text: 'You are in the street with the lightning bolt.',
+        tag: null,
+        outcome: 'The strikes run for weeks. The government does not reverse the ruling. What the weeks produce is not the reversal but the knowledge of what is possible — the number of people willing to be in the street, which is a number that matters regardless of the immediate outcome.',
+        effect: (p) => { p.m -= 5; p.karma += 6; p.s += 3; p.addFlag('strajk_kobiet_generation'); p.addFlag('political_active'); p.setMem('polWomensStrike', true); },
+      },
+      {
+        text: 'You agree with the ruling. Life is life.',
+        tag: null,
+        outcome: 'You hold the position. The country is divided on the question in ways the street numbers do not fully represent. The ruling stands. The political consequences continue past the immediate moment.',
+        effect: (p) => { p.m -= 3; p.r += 5; p.addFlag('strajk_kobiet_generation'); p.setMem('polWomensStrike', true); },
+      },
+    ],
+    effect: null,
+  },
+
 ]

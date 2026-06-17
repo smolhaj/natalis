@@ -8157,6 +8157,18 @@ function buildYearTexture(state) {
       ? 'You built two lives. The career in London or Dublin. The house in the village in Poland. The children who grew up speaking English and Polish. The Europe of free movement: you used it completely.'
       : 'The remittance arrives every month. Your parents live better than they would have if you had stayed. The Sunday call. The Christmas visit. The distance measured in airmiles and guilt and love.',
   ])
+  if (F.has('smolensk_generation') && Math.random() < 0.22) return pick([
+    'April 10, 2010: ninety-six people, the President included, on a plane to Katyń. The fog at Smolensk. Poland grieving in a way that had not happened since the war. And then the grief becoming something else — a political fact, a dividing line, a test of what kind of country this is.',
+    phase === 'late_life'
+      ? 'The Smolensk disaster and its political aftermath are the same event. The grief was shared. What the grief was used for divided the country for a decade and did not stop dividing it. You carry both: the grief and the division, and the knowledge that they are not the same thing.'
+      : 'You were in Poland on April 10, 2010. The plane, the president, the fog. The collective grief of that week was real and not contested. The political meaning assigned to the disaster in the years after: that is contested, and that contestation became the shape of Polish politics for years.',
+  ])
+  if (F.has('strajk_kobiet_generation') && Math.random() < 0.22) return pick([
+    'The lightning bolt. October 2020. The Constitutional Tribunal ruling and the women in the streets with the lightning bolt. In Warsaw. In Kraków. In towns with no history of protest. Weeks of it. The ruling stood. The women knew something about what it costs to stand in the street and what it produces regardless of the immediate result.',
+    phase === 'late_life'
+      ? 'You were Polish and female and alive in October 2020. The Constitutional Tribunal effectively banned abortion. The streets filled. You were in them or you were watching. Both are positions you will have held for the rest of your life.'
+      : 'The Strajk Kobiet generation: the women who came out in a country where this had not been done before, in the numbers that it was done, with the lightning bolt that meant something specific about what they were refusing to accept. The ruling held. The refusing also held.',
+  ])
   if (F.has('eu_freedom_movement') && Math.random() < 0.15) return pick([
     'The border that opened on May 1, 2004. The work permit that was not required. The Europe that became navigable. The Schengen zone that meant the passport stayed in the bag.',
     'You are European in a legal and practical sense that did not exist before 2004. The legal and practical sense makes other things possible. You use them.',
@@ -14467,6 +14479,7 @@ export function generateEpitaph(state) {
     'polytechnic_generation', 'gr_civil_war_memory', 'gr_oxi_generation', 'gr_testigo_generation',
     'black_summer_generation',
     'madrid_11m_lived',
+    'smolensk_generation', 'strajk_kobiet_generation',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -14499,6 +14512,10 @@ export function generateEpitaph(state) {
     para2.push(`${He} left Chile after the coup. The leaving was its own kind of loss alongside everything else the coup took.`)
   } else if (f('solidarity_era_lived')) {
     para2.push(`${He} lived the Solidarity years in Poland — the underground presses, the church halls, the specific risk of visible hope.`)
+  } else if (f('solidarity_generation') && f('smolensk_generation')) {
+    para2.push(`${He} was in Poland for Solidarity in 1980 and for Smolensk in 2010. The first event produced unity across ten million people. The second event produced a grief that was real and a political use of the grief that divided the country for the decade after. ${He} lived the before and the after.`)
+  } else if (f('strajk_kobiet_generation') && f('communist_poland_childhood')) {
+    para2.push(`${He} grew up in communist Poland learning the gap between what is said officially and what is true. She carried that skill into October 2020, when the Constitutional Tribunal banned abortion and the lightning bolt went up in the streets. Both events required the same knowledge: what a state is willing to do and what can be done about it.`)
   } else if (any('maidan_generation', 'euromaidan_lived')) {
     para2.push(`${He} stood in the Maidan. What followed was harder than the night on the square.`)
   } else if (f('witnessed_wall_fall')) {
