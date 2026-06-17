@@ -2791,6 +2791,59 @@ function buildYearTexture(state) {
       'Some years are quieter than others. The quiet is not peace — it is the absence of events that would require you to choose.',
     ])
   }
+  // ─── GENERATIONAL MEMORY / FAMILY SILENCE ────────────────────────────────────
+  if (F.has('carries_family_silence') && Math.random() < 0.3) return pick([
+    'There is a box, or a photograph, or a name — something your family carries without explaining. You grew up learning the shape of it before you learned what was inside.',
+    'Your family has a silence and the silence has a shape. You know the shape. You learned it early.',
+    phase === 'late_life'
+      ? 'You are old enough now to know what the silence cost — not just what was in it, but what it took to maintain it across decades of dinners and questions and ordinary evenings. The cost was real. The silence protected something. Both are true.'
+      : 'The thing that was not said at your parents\' table is somewhere in the way you move through the world. You feel it most when you try to explain yourself to someone who didn\'t grow up with it.',
+    'The photographs in the box that no one opens: faces you do not recognise from a time you were not part of, holding whatever came before.',
+  ])
+  if (F.has('food_insecurity_inherited') && Math.random() < 0.22) return pick([
+    'You finish everything on your plate. You cannot watch food be wasted. You know, in the abstract, where this comes from. It does not make the response less automatic.',
+    phase === 'late_life'
+      ? 'Your grandparent could not watch anyone leave food on a plate. You understood why, eventually. The body remembers what the mind cannot say.'
+      : 'The specific discomfort of watching food thrown away is inherited. You know what it is an echo of. The echo is accurate.',
+  ])
+  if (F.has('partition_family_lived') && Math.random() < 0.22) return pick([
+    'Your family is from somewhere that is now the wrong country. There is an address that exists in memory and on no map you can travel to. The address has its own grammar — repeated like a claim, not a location.',
+    phase === 'late_life'
+      ? 'What was left behind: the furniture, the papers, the neighbors\' names. What came across: the body and the knowledge of the address. You have been to neither country and you are from both.'
+      : 'The partition happened before you were born and it is in the furniture of your life anyway. The loss is inherited — not diminished by being inherited, just differently shaped.',
+  ])
+  if (F.has('disappeared_family_known') && Math.random() < 0.25) return pick([
+    'You know a name that belongs to someone who does not exist in the official record. You have known it since childhood. The knowing has been a kind of intimacy with an absence.',
+    phase === 'late_life'
+      ? 'Disappeared: the specific word for what the state does when it decides someone should not exist and then acts on that decision. You grew up with the space where that person would have been. You still carry the name.'
+      : 'The disappeared are not found. This is not a figure of speech; it is a legal status and a political fact. You have a family member who has this status. The status does not resolve with time.',
+  ])
+  if (F.has('post_genocide_generation') && Math.random() < 0.25) return pick([
+    'You grew up in the aftermath of something the language was not large enough to hold. The word, when it came, was correct and still not enough.',
+    phase === 'late_life'
+      ? 'The children of survivors know a specific kind of mathematics: the count of who is missing from the family photograph, the neighbours who are not spoken of, the number that is not in doubt even when the politics around it is. You learned this arithmetic before you learned the reason for it.'
+      : 'The generation before yours survived something and made a family and did not fully explain it. You are the explanation of something they did not complete.',
+  ])
+  if (F.has('family_history_known') && Math.random() < 0.2) return pick([
+    'You asked and they told you. The story was shorter and longer than you expected. It has been with you since.',
+    phase === 'late_life'
+      ? 'You carry the story now — the one your family did not know how to tell until you asked. The silence is over but the story is not simpler than the silence was.'
+      : 'The family silence ended in a single conversation. The conversation did not end the weight of what was in it. You are still processing what you heard at a kitchen table on an ordinary evening.',
+  ])
+  if (F.has('family_history_partial') && Math.random() < 0.18) return pick([
+    'You asked and stopped before the end. You know more than you did and not everything. The partial version of the story has its own shape.',
+    'You were not ready for the whole thing. You have been deciding whether you are ready, in the years since.',
+    phase === 'late_life'
+      ? 'The story is still there, incomplete. The person who could have finished it may no longer be here. You live with the partial version and have been learning what partial is enough for.'
+      : 'The question you stopped partway through is still the question. You will know when you are ready to finish asking.',
+  ])
+  if (F.has('generational_weight_felt') && Math.random() < 0.22) return pick([
+    'You are the age your parent was when you first noticed the silence. The noticing is different from this side.',
+    phase === 'late_life'
+      ? 'Generational weight: the specific mass of what is carried forward without being named. You felt it as a child. You have your own version now. The question is what your children will feel around you, and whether you can close the distance your parents couldn\'t.'
+      : 'You have your own version of the silence now. Different content, recognisable shape. You catch yourself going quiet in the same way.',
+  ])
+
   if (F.has('dissident_writer') || F.has('dissident_reader')) {
     return pick([
       'You continue. That is its own form of argument.',

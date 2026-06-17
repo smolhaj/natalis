@@ -1183,6 +1183,70 @@ export const FLAG_REGISTRY = {
     notes: 'events_family_silence.js covers this.',
   },
 
+  carries_family_silence: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Grew up with the shape of an unspeakable family history — the box in the wardrobe, the sentence that stops, the name said once and never again.',
+    intent: 'year_texture',
+    notes: 'Set by all family silence childhood events. The unifying flag for inherited generational trauma across all origins.',
+  },
+
+  food_insecurity_inherited: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Raised in a family marked by famine memory — grandparent who cannot watch food wasted, the specific hunger that outlasts the event.',
+    intent: 'year_texture',
+    notes: 'Set by fs_great_leap (Great Leap famine family memory). The texture of inherited food anxiety.',
+  },
+
+  partition_family_lived: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Family was displaced by the India-Pakistan Partition — the ancestral address recited like a prayer, the furniture left behind, the city that is now the wrong country.',
+    intent: 'year_texture',
+    notes: 'Set by fs_partition. Partition-specific variant of carries_family_silence.',
+  },
+
+  disappeared_family_known: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Has a disappeared family member — a name without a story, the absence that was not explained until adulthood.',
+    intent: 'year_texture',
+    notes: 'Set by fs_disappeared (Argentina junta family memory).',
+  },
+
+  post_genocide_generation: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Grew up in the aftermath of genocide — counting on fingers, the neighbours watched differently, the word inadequate when it finally arrived.',
+    intent: 'year_texture',
+    notes: 'Set by fs_genocide (Rwanda/Burundi family memory).',
+  },
+
+  family_history_known: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Asked the question and received the answer — the family silence broken in adulthood, the story now carried instead of the absence.',
+    intent: 'year_texture',
+    notes: 'Set by fs_adult_asks (choice: listened to everything). Follow-through for carries_family_silence.',
+  },
+
+  family_history_partial: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Asked and stopped partway — not yet ready for the full story, carrying a partial version of the family silence.',
+    intent: 'year_texture',
+    notes: 'Set by fs_adult_asks (choice: stopped partway).',
+  },
+
+  generational_weight_felt: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'At midlife understood the specific work of a parent\'s silence — now carrying one\'s own version of the same shape.',
+    intent: 'year_texture',
+    notes: 'Set by fs_midlife_weight. The recognition that silence transfers across generations.',
+  },
+
   reconstruction_generation: {
     weight: 'moderate',
     category: 'identity',
