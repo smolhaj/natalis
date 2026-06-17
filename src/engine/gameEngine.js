@@ -5179,6 +5179,12 @@ function buildYearTexture(state) {
       ? 'You were in Bolotnaya Square or you watched from the edge. What happened to the people who were in the square is the political history of the decade that followed. You watched it happen in real time.'
       : 'The white ribbon was a symbol for a specific number of months in 2011 and 2012. After those months, wearing it meant something different.',
   ])
+  if (F.has('bolotnaya_generation') && F.has('russia_ukraine_exile') && Math.random() < 0.2) return pick([
+    'You were in Bolotnaya Square with the white ribbon in 2011 and then in 2022 the country went to war and you left. The white ribbon was the rehearsal for leaving. What Bolotnaya taught you was the state\'s answer to that kind of question.',
+    phase === 'late_life'
+      ? 'December 2011: white ribbon, Bolotnaya Square, the briefly possible. February 2022: the border, Tbilisi or Riga or Istanbul, the unthinkable ordinary. You are one of the people who participated in both events. The first event did not prevent the second. You have been thinking about what that means.'
+      : 'You stood in Bolotnaya Square. You stood at a border crossing in 2022. The space between those two facts is a decade of Russian political history summarised as personal experience.',
+  ])
   if (F.has('russia_1991_generation') && Math.random() < 0.22) return pick([
     'August 19, 1991: the coup announcement at six in the morning. The GKCHP with shaking hands at the press conference. Yeltsin on the tank. The three days when nobody knew what kind of country this would be next week. You were alive inside those three days.',
     phase === 'late_life'
@@ -7961,6 +7967,12 @@ function buildYearTexture(state) {
       ? 'The South you left and the North you arrived in: two different versions of the same problem, and you spent your life measuring the distance. The distance narrowed, and the measuring was part of what narrowed it.'
       : 'You came north on the train. The city is the city you made of it, which is different from the city they made for you.',
   ])
+  if (F.has('great_migration_generation') && F.has('civil_rights_movement_participant') && Math.random() < 0.18) return pick([
+    'You came north on the train and were in the movement when the movement arrived. Both moves took something — the train and the picket line — and both built something that the South couldn\'t have given you in either direction.',
+    phase === 'late_life'
+      ? 'The migration and the movement are the same story, which is the story of Black Americans making a country that the country itself kept refusing to be. You did both. The connection between them was never incidental.'
+      : 'You moved north for the work and stayed for the movement. The movement found you here, which is part of why you came.',
+  ])
   if (F.has('stayed_in_the_south') && Math.random() < 0.2) return pick([
     'The movement came to the South because the South was where the laws were explicit. Explicit laws are a target. You were already here.',
     'The people who left went north looking for something better. You stayed and waited for something better to come here. The wait was long and the arrival partial.',
@@ -7983,6 +7995,17 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'You have been carrying November 22, 1963 for sixty years. The question about what happened and who decided it has not resolved. The not-resolving has become the answer: that this is what this country sometimes is, and the fact that it is not officially acknowledged is also what this country sometimes is.'
       : 'The Warren Commission closed the official case. The House Select Committee on Assassinations in 1979 found "probable conspiracy." The files remain partially classified. The official account and the classified files are in the same government.',
+  ])
+  if (F.has('jfk_assassination_generation') && F.has('king_assassination_generation') && Math.random() < 0.2) {
+    return phase === 'late_life'
+      ? 'You have carried 1963 and 1968 for sixty years — both men shot, both forty-something, both the specific version of something that was not yet finished. The unfinishedness is what stays. What they were each about to become is not knowable, which is different from not mattering.'
+      : 'November 22, 1963 and April 4, 1968: the same decade, the same kind of shooting, the same structure of a promise interrupted. You were alive for both. The accumulation is its own political education.'
+  }
+  if (F.has('vietnam_went') && F.has('civil_rights_generation') && Math.random() < 0.18) return pick([
+    'You went to Vietnam — called when called — and came back to a country that was arguing about whether the men who looked like you should have full rights in it. The draft and the movement were happening simultaneously. You were in both.',
+    phase === 'late_life'
+      ? 'The specific burden of fighting for a country while being denied by that country: you have been carrying this arithmetic for fifty years. The arithmetic has not simplified.'
+      : 'Martin Luther King spoke against the Vietnam War in 1967 and the connection he made — between the war overseas and the war at home — was the connection you were living.',
   ])
   if (F.has('vietnam_went') && Math.random() < 0.3) return pick([
     'Thirteen months. The specific smell of the jungle is still accessible when something triggers it — a plant, a particular heat, diesel exhaust from a certain angle. The body keeps records that the mind tries to file elsewhere.',
@@ -8123,6 +8146,12 @@ function buildYearTexture(state) {
       ? 'The Iraq war reshaped British political trust in a way that hasn\'t fully resolved. The generation that marched and was ignored developed a specific theory of what their marching is for and what it is not for.'
       : 'You were right about the weapons or you were wrong about the weapons. Either way you have been watching what follows from being right or being wrong about it.',
   ])
+  if (F.has('iraq_war_generation') && F.has('miners_strike_generation') && Math.random() < 0.18) return pick([
+    'You were on the picket line in 1984 and on the march in 2003. Both times the state went ahead anyway. The political education of being right and being overridden is specific to a generation of British people who were right about things twice.',
+    phase === 'late_life'
+      ? 'The 1984–85 strike and the February 2003 march: two of the largest mobilisations in British history, both unsuccessful. The success was not in the immediate outcome. The success was in the knowing, which is a different kind of success and you have had to keep telling yourself that.'
+      : 'The miners\' strike taught you that the state will do what the state decides to do. The Iraq march confirmed it. The confirmation was not a surprise. It was still something.',
+  ])
   if (F.has('brexit_generation') && Math.random() < 0.25) return pick([
     '52-48. Cameron went before breakfast. The pound fell to its lowest in thirty-one years. The bus with the figure that was not accurate is still in the visual record of 2016.',
     'The negotiations took three and a half years. The withdrawal agreement was rejected three times before it passed. The country that voted Leave and the country that voted Remain have been in the same room since June 24, 2016.',
@@ -8210,6 +8239,12 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'You had a Solidarność card. The card was illegal after December 1981. You kept it or you didn\'t keep it, depending on the risk calculation of the moment. Whether you kept it is the kind of specific detail that tells a story about a whole year.'
       : 'The union meeting in the factory. The discussions that were new — not because the opinions were new but because they were being expressed in the factory, in daylight, with people\'s names attached to them.',
+  ])
+  if (F.has('solidarity_member') && F.has('martial_law_generation') && Math.random() < 0.2) return pick([
+    'You joined in August 1980 and by December 1981 the card was illegal. The distance between those two dates is the distance between what was briefly possible and what was done to stop it. You remember both ends of that distance.',
+    phase === 'late_life'
+      ? 'The open meeting and the 6am announcement. The window was open for fourteen months. You were in the meeting. You were also in the December. Both of these happened and neither cancels the other.'
+      : 'The movement that ten million people joined in fourteen months was destroyed overnight by a general on television at six in the morning. The creation took longer than the destruction. This is usually how it goes.',
   ])
   if (F.has('martial_law_generation') && Math.random() < 0.3) return pick([
     'December 13, 1981. 6am. Jaruzelski in uniform on television. Stan wojenny. The tanks, the phones cut, the curfew. Ten thousand interned in the first forty-eight hours. Solidarity illegal. The underground press in church basements.',
@@ -8447,6 +8482,12 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'You do not talk about it. The not-talking has been going on for fifty years. France does not ask. The country that sent you there eventually acknowledged what it sent you to do, but not in your presence, not in a way that felt like acknowledgement.'
       : 'The mechta. The village sweeps. The order. These are the words that exist in the place where other words do not.',
+  ])
+  if (F.has('algerian_war_veteran') && F.has('paris_attacks_generation') && Math.random() < 0.2) return pick([
+    'You were in Algeria in a war France would not name for forty years, and you were in France for January and November 2015. The thread between the two — the French state\'s relationship with North African Muslims across sixty years — is the thread you have been holding for a long time.',
+    phase === 'late_life'
+      ? 'You did things in Algeria. You watched things happen in France in 2015. You are not the only connection between those two events, but you are a connection. You do not talk about the first one. You cannot stop thinking about what the second one is made of.'
+      : 'Algeria, 1954-1962. The Bataclan, 2015. You have been inside both ends of a very long story about France, North Africa, and what was done and what was not reckoned with.',
   ])
   if (F.has('carries_something_unsaid') && Math.random() < 0.25) return pick([
     'You do not talk about it. The not-talking takes effort. Effort is invisible. People see the result — a person who does not talk about certain things — and call it composure.',
