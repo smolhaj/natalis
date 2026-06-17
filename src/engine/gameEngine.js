@@ -7574,6 +7574,24 @@ function buildYearTexture(state) {
       ? 'You lived through the Estado Novo and the revolution and the EC accession and the austerity and the recovery. The arc of it, seen from here, is extraordinary. You are not sure extraordinary is the right word but it is the closest word available.'
       : 'The structural funds arrived and built things that were used by people who did not know they had been built with structural funds. That is how material change works. You watched it happen.',
   ])
+  if (F.has('geracao_rasca_generation') && Math.random() < 0.22) return pick([
+    '"Parva que Sou" — Fool That I Am. The José Afonso line that was the second codeword for the Carnation Revolution became the sign at the March 12, 2011 protest. Three hundred thousand in Lisbon. The largest since 1974. Six weeks later, the bailout.',
+    phase === 'late_life'
+      ? 'The desperate generation: the memorandum, the cuts, the forty percent youth unemployment, and then the doctors emigrating to Angola. You were in your twenties when all of this happened. The anger was specific and documented and produced exactly what it produced.'
+      : 'You were "à rasca" — struggling, scraping — when they named the protest after the condition. The name was correct. The protest was correct. What followed was also, in its way, information.',
+  ])
+  if (F.has('portuguese_troika_generation') && Math.random() < 0.2) return pick([
+    'The troika memorandum: €78 billion in exchange for specific conditions. The TSU raised for workers, reduced for employers. The thirteenth month suspended. The Constitutional Court striking things down; the government introducing equivalent measures with different names. Portugal has been through more structured hardship per generation than the word "southern Europe" usually conveys.',
+    phase === 'late_life'
+      ? 'Portugal went into the bailout in 2011 and exited it in 2014 without an extension — the first country in the south to do so. The exit was real. What it cost to get there is also real. You have the arithmetic of both.'
+      : 'Portuguese doctors were going to Angola to work. The colonies were hiring the professionals the austerity had made unaffordable at home. Five hundred years of history and this specific reversal was the result.',
+  ])
+  if (F.has('portuguese_emigrant_2011') && Math.random() < 0.2) return pick([
+    'You left for Angola or Brazil or London because Portugal was not hiring in the years of the memorandum. The irony of the destination — Angola, which Portugal left in 1975 with the retornados — was not irony you had time for.',
+    phase === 'late_life'
+      ? 'You were the emigrant wave nobody put on the brochure: the 2010s wave, the doctors and engineers and nurses going to Angola and the UK and Brazil because the structural adjustment had made Portugal unable to pay them. You have a relationship with that irony that is still developing.'
+      : 'The Portuguese community in Angola in the 2010s had a specific texture: qualified, professional, temporary, trying to decide whether temporary was the right word.',
+  ])
 
   // ─── SPAIN TEXTURE ───────────────────────────────────────────────────────────
   if (F.has('franco_generation') && Math.random() < 0.22) return pick([
@@ -14592,6 +14610,10 @@ export function generateEpitaph(state) {
     para2.push(`${He} was in the streets in 2004 with "¿Quién ha sido?" and in Sol in 2011 with "No nos representan." Twelve years apart, same impulse: something about how this is being managed is wrong. The second time produced Podemos. Both times ${he} was there.`)
   } else if (f('madrid_11m_lived')) {
     para2.push(`${He} was in Spain on March 11, 2004 — the four trains, the hundred and ninety-one dead, the government's three days of managed information before the election. ${He} voted on March 14 knowing what ${he} knew.`)
+  } else if (f('carnation_generation') && f('portuguese_troika_generation')) {
+    para2.push(`${He} was in Portugal for the Carnation Revolution — the flowers in the rifle barrels, the forty-eight years ending without significant bloodshed — and for the troika austerity forty years later. What the revolution built, and what the memorandum asked of it: both things happened in one life and ${he} carried them without cancelling either.`)
+  } else if (f('geracao_rasca_generation') && f('portuguese_emigrant_2011')) {
+    para2.push(`${He} was in the street on March 12, 2011, with the three hundred thousand, and then left for Angola or Brazil because Portugal was not hiring. The protest and the emigration are not contradictions. They are the same sentence about a country and a generation and what the memorandum required of both.`)
   }
 
   // Displacement / migration

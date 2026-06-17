@@ -393,4 +393,58 @@ export const GREECE_PORTUGAL_EVENTS = [
     effect: (p) => { p.m += 8; p.w += 5; p.e += 4; p.addFlag('eu_accession_generation'); p.setMem('ptEU', true) },
   },
 
+  {
+    id: 'pt_geracao_rasca_2011',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Portugal' &&
+      G.currentYear >= 2011 && G.currentYear <= 2013 &&
+      G.age >= 18 && G.age <= 35 &&
+      !G.mem?.ptRasca,
+    text: 'March 12, 2011. The protest is called "Geração à Rasca" — the desperate generation. It was organized not by unions or parties but by four precarious workers in their twenties who wrote a manifesto on the internet. They chose the name at two in the morning. Three hundred thousand people come to Lisbon; one hundred thousand to Porto; hundreds of thousands to every city in the country. They carry signs that say "Parva que Sou" — Fool That I Am — a line from a José Afonso song that was the second codeword for the Carnation Revolution. The largest protest since 1974. Three weeks later, Sócrates resigns. Six weeks after that, Portugal applies for the EU/IMF bailout.',
+    choices: [
+      {
+        text: 'You are in the Rossio, or the Praça do Município, or the streets of Porto.',
+        tag: null,
+        outcome: 'The number who came was the thing that mattered — not the sign, not the manifesto, but the number. You added yourself to the number.',
+        effect: (p) => { p.m -= 3; p.karma += 5; p.addFlag('geracao_rasca_generation'); p.addFlag('political_active'); p.setMem('ptRasca', true); },
+      },
+      {
+        text: 'You watch it on television and on your phone. It is also your generation and your problem.',
+        tag: null,
+        outcome: 'The three hundred thousand go home and the bailout is announced anyway. The protest and the bailout are not in contradiction: the protest is the record that the people understood what was happening. You were watching when the record was made.',
+        effect: (p) => { p.m -= 5; p.r += 4; p.addFlag('geracao_rasca_generation'); p.setMem('ptRasca', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'pt_troika_lived',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Portugal' &&
+      G.currentYear >= 2011 && G.currentYear <= 2015 &&
+      G.age >= 30 && G.age <= 60 &&
+      !G.mem?.ptTroika,
+    text: 'The troika memorandum runs to several hundred pages of specific conditions attached to the €78 billion bailout. You do not read all of it. You feel what it contains. The social security contribution is raised for workers and reduced for employers. The thirteenth-month and fourteenth-month salaries are suspended. The Constitutional Court strikes some measures down. The government introduces equivalent measures under different names. Doctors who trained here are emigrating to Angola and Mozambique — Portugal is exporting medical professionals to its former colonies, which is a sentence that requires some time to process. Youth unemployment reaches forty percent. The word "austeridade" is in every conversation.',
+    choices: [
+      {
+        text: 'You adapt, without calling it adaptation.',
+        tag: null,
+        outcome: 'You adapt. The adjustment is specific and personal and you do not discuss it with people who do not have to discuss it. What you keep and what you cut is a long and continuing set of small decisions.',
+        effect: (p) => { p.m -= 8; p.w -= 6; p.r += 4; p.addFlag('portuguese_troika_generation'); p.setMem('ptTroika', true); },
+      },
+      {
+        text: 'You leave. The irony of going to Angola or Brazil is not lost on you.',
+        tag: null,
+        outcome: 'Angola is hiring. Brazil is growing. The colonies that Portugal extracted from for five hundred years are now the destination for the Portuguese who cannot find work. You go. The irony is not theoretical.',
+        effect: (p) => { p.m -= 4; p.w += 3; p.r += 6; p.addFlag('portuguese_troika_generation'); p.addFlag('portuguese_emigrant_2011'); p.setMem('ptTroika', true); },
+      },
+    ],
+    effect: null,
+  },
+
 ]

@@ -10113,6 +10113,30 @@ export const FLAG_REGISTRY = {
     notes: 'Set by es_15m_2011.',
   },
 
+  geracao_rasca_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Portuguese "desperate generation" — lived the 2011 crisis and the March 12 Geração à Rasca protests (300K in Lisbon, largest since 1974). Signs read "Parva que Sou." Bailout followed six weeks later.',
+    intent: 'year_texture',
+    notes: 'Set by pt_geracao_rasca_2011.',
+  },
+
+  portuguese_troika_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived the Portuguese troika austerity 2011-2014: €78bn bailout, wage cuts, TSU rises, Constitutional Court battles, and the specific irony of Portuguese professionals emigrating to Angola and Brazil.',
+    intent: 'year_texture',
+    notes: 'Set by pt_troika_lived. Leave branch also sets portuguese_emigrant_2011.',
+  },
+
+  portuguese_emigrant_2011: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Emigrated from Portugal after the 2011 bailout — to Angola, Brazil, France, or the UK. One of the 400,000+ who left in the troika years.',
+    intent: 'year_texture',
+    notes: 'Set by pt_troika_lived (leave branch).',
+  },
+
   emigration_reconsidered: {
     weight: 'moderate',
     category: 'displacement',
