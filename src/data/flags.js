@@ -4726,6 +4726,30 @@ export const FLAG_REGISTRY = {
     notes: 'Set by aus_housing_crisis (renting choice) and similar.',
   },
 
+  aus_mabo_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'An adult Australian during the Mabo decision 1992 — terra nullius overturned, the culture war that followed, the black armband history debate',
+    intent: 'year_texture',
+    notes: 'Set by aus_mabo_1992.',
+  },
+
+  aus_sorry_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Alive for the Rudd apology of February 2008 — "We apologise" to the Stolen Generations, said in Parliament after eleven years of refusal',
+    intent: 'year_texture',
+    notes: 'Set by aus_rudd_apology_2008.',
+  },
+
+  black_summer_generation: {
+    weight: 'major',
+    category: 'climate',
+    description: 'Lived through the 2019-20 Australian Black Summer megafires — 18.6 million hectares, red sky over Sydney, the abstract becoming undeniable',
+    intent: 'year_texture',
+    notes: 'Set by aus_black_summer_2020.',
+  },
+
   // ── United States ──────────────────────────────────────────────────────────────
 
   jim_crow_childhood: {

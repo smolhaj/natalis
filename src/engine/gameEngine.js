@@ -7767,6 +7767,27 @@ function buildYearTexture(state) {
       ? 'Renting at seventy. The security of tenure at seventy in the private rental market is what it is, which is to say it is not security.'
       : 'You have moved three times in four years because the lease ended and the landlord wanted to sell or increase the rent to what the market supported. Each move was legal. Each move cost something.',
   ])
+  if (F.has('aus_mabo_generation') && Math.random() < 0.2) return pick([
+    'Terra nullius was the legal fiction that Australia was legally unoccupied before 1788. Mabo overturned it in 1992. Two hundred and four years of it — and then a court said: that was never true.',
+    'The "black armband view of history" — Howard\'s phrase for taking the invasion seriously in the national account. You have been following the argument about what an honest national history would require. The argument is not over.',
+    phase === 'late_life'
+      ? 'Mabo was 1992. The native title legislation, the apology, the debates about a treaty — you have watched the reckoning move slowly and partially for thirty years. Slowly and partially is still movement. You measure from where it started.'
+      : 'The school version of Australian history and the post-Mabo understanding of Australian history are different enough that they have produced different Australians, depending on when you went to school.',
+  ])
+  if (F.has('aus_sorry_generation') && Math.random() < 0.2) return pick([
+    '"We apologise." Kevin Rudd on February 13, 2008. The people watching on screens outside Parliament in the rain. The word that eleven years of Howard government would not say.',
+    'The apology was a word. What came after the word is a different accounting, and the accounting has gaps. You hold both the word and the gaps.',
+    phase === 'late_life'
+      ? 'You were alive for the apology and for the years after it. What the word produced and what it failed to produce are both in the record. The word still mattered. The matter of the word was not sufficient. Both sentences are true.'
+      : 'The difference between the apology and the policy change that should have followed it is something you have been tracking since 2008. The tracking produces a complicated result.',
+  ])
+  if (F.has('black_summer_generation') && Math.random() < 0.25) return pick([
+    'Eighteen-point-six million hectares. Three billion animals. The sky over Sydney red-orange at noon. You watched a summer revise what you thought the country could absorb.',
+    'The smoke reached cities a thousand kilometres from the fires. The AQI in Melbourne: worst on Earth on certain days. The air quality was the argument visible from every window.',
+    phase === 'late_life'
+      ? 'You were old enough to remember Australian summers that were different from this. That memory is now the baseline for comparison. You carry what the country was before the Black Summer as well as what it has been since.'
+      : 'The fires are the event your generation will be measured by — not Port Arthur or Tampa or the Dismissal but this. The red sky is the image. You were inside it.',
+  ])
 
   // ─── UNITED STATES TEXTURE ───────────────────────────────────────────────────
   if (F.has('jim_crow_childhood') && Math.random() < 0.3) return pick([
@@ -14327,6 +14348,7 @@ export function generateEpitaph(state) {
     'irn_sanctions_generation', 'irn_jcpoa_generation',
     'april_9_generation', 'georgian_war_2008', 'geo_1990s_generation', 'geo_testigo_generation',
     'polytechnic_generation', 'gr_civil_war_memory', 'gr_oxi_generation', 'gr_testigo_generation',
+    'black_summer_generation',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -14547,6 +14569,10 @@ export function generateEpitaph(state) {
     para2.push(`${He} lived the full Greek arc: the Civil War's long aftermath, the junta, the Polytechnic, the Metapolitefsi, the EU, the crisis, the OXI that was not a no. Greece has more catastrophe per generation than most countries. ${He} was present for its share.`)
   } else if (f('polytechnic_generation') && f('greece_crisis_stayed')) {
     para2.push(`${He} heard "this is the Polytechnic" on a homemade transmitter in November 1973 and stayed in Greece through the ATM limits of 2015. The country ${he} was young in and the country ${he} aged in are the same country, which is also to say they are different countries.`)
+  } else if (f('black_summer_generation') && f('aus_mabo_generation')) {
+    para2.push(`${He} was Australian for the Mabo decision and for the Black Summer — terra nullius overturned and then eighteen-point-six million hectares burning. Both asked what kind of country Australia would choose to be. Both produced partial answers.`)
+  } else if (f('black_summer_generation')) {
+    para2.push(`${He} watched the Black Summer of 2019-20 from inside Australia. Red sky at noon in Sydney. The smoke visible from space. Three billion animals. The summer that revised what the word "unprecedented" was going to mean for the rest of ${his} life.`)
   }
 
   // Displacement / migration

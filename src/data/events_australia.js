@@ -1,7 +1,7 @@
 // Australia character events
 // White Australia Policy, Vietnam conscription ballot, The Dismissal 1975,
 // Port Arthur 1996, Tampa 2001, mining boom, SSM postal survey 2017,
-// housing crisis
+// housing crisis; added: Mabo 1992, Rudd apology 2008, Black Summer 2019-20
 
 export const AUSTRALIA_EVENTS = [
 
@@ -236,6 +236,98 @@ export const AUSTRALIA_EVENTS = [
         tag: null,
         outcome: 'You get in. The entry point is further from the city or smaller than planned or required family money. You are in. The privilege of being in, relative to the eighty other applicants, is not lost on you.',
         effect: (p) => { p.m -= 3; p.w += 4; p.r += 3; p.addFlag('aus_housing_generation'); p.setMem('ausHousing', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── MABO DECISION 1992 ────────────────────────────────────────────────────────
+
+  {
+    id: 'aus_mabo_1992',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Australia' &&
+      G.currentYear >= 1992 && G.currentYear <= 1998 &&
+      G.age >= 22 &&
+      !G.mem?.ausMabo,
+    text: 'June 3, 1992. The High Court hands down its decision in Mabo v Queensland. The doctrine of terra nullius — the legal fiction that Australia was legally unoccupied before 1788 — is overturned after two hundred and four years. The decision recognises that Eddie Mabo and the Meriam people of the Murray Islands had continuous connection to their land before and after British sovereignty was asserted. The government responds with the Native Title Act 1993 to codify the decision. John Howard, then in opposition, will later describe the recasting of Australian history as "the black armband view." The phrase becomes a shorthand for a culture war that will run for decades. You are an Australian adult in the years when the country is deciding what it means that the foundation of its land law was a fiction.',
+    choices: [
+      {
+        text: 'Mabo clarified something that was always true. The country needs to reckon with it.',
+        tag: null,
+        outcome: 'The reckoning, as it turns out, is slower and more contested than the decision. You have watched it since.',
+        effect: (p) => { p.e += 5; p.karma += 5; p.r += 4; p.addFlag('aus_mabo_generation'); p.setMem('ausMabo', true); },
+      },
+      {
+        text: 'You find the implications uncomfortable. The country is more complicated than you thought.',
+        tag: null,
+        outcome: 'The discomfort is information. What you do with it takes years to determine.',
+        effect: (p) => { p.e += 4; p.r += 5; p.addFlag('aus_mabo_generation'); p.setMem('ausMabo', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── RUDD APOLOGY 2008 ─────────────────────────────────────────────────────────
+
+  {
+    id: 'aus_rudd_apology_2008',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Australia' &&
+      G.currentYear >= 2008 && G.currentYear <= 2009 &&
+      G.age >= 20 &&
+      !G.mem?.ausApology,
+    text: 'February 13, 2008. Kevin Rudd stands in Parliament and says the words that eleven years of Howard government would not say: "We apologise." The apology is to the Stolen Generations — the Aboriginal and Torres Strait Islander children removed from their families under government policy, generation after generation, in the name of assimilation. The chamber and the screens outside, where people have gathered in public squares across the country, go quiet at the word. You are Australian and watching a country say something that it has been refusing to say for years. What the word costs and what it produces are not the same question.',
+    choices: [
+      {
+        text: 'You watched or listened. The word mattered. Something shifted.',
+        tag: null,
+        outcome: 'Something shifting is not the same as something changing. The gap between the apology and what came after is something you have been measuring ever since.',
+        effect: (p) => { p.m += 8; p.karma += 6; p.r += 4; p.addFlag('aus_sorry_generation'); p.setMem('ausApology', true); },
+      },
+      {
+        text: 'The word was right. The policy changes that should have followed it came slowly, if at all.',
+        tag: null,
+        outcome: 'The apology and the accounting are not the same thing. You know the difference and carry both positions simultaneously.',
+        effect: (p) => { p.e += 5; p.karma += 4; p.r += 5; p.addFlag('aus_sorry_generation'); p.setMem('ausApology', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── THE BLACK SUMMER ──────────────────────────────────────────────────────────
+
+  {
+    id: 'aus_black_summer_2020',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Australia' &&
+      G.currentYear >= 2019 && G.currentYear <= 2021 &&
+      G.age >= 16 &&
+      !G.mem?.ausFireSummer,
+    text: (G) => {
+      const isAffected = G.age >= 20 && G.age <= 55
+      return isAffected
+        ? 'Summer 2019-20. Eighteen-point-six million hectares burn. Thirty-three people die directly; smoke-related mortality will be counted for years. Three billion animals. The sky over Sydney turns red-orange at noon. Melbourne: worst air quality of any city on Earth on certain days. The fires burn through the fire season, through January, into February. The Prime Minister was in Hawaii when the fires started and will be photographed trying to shake hands with people who do not want to shake his hand. You watch it from a city, from a rural property, from a holiday that has become impossible to leave. The country that you thought would be yours to pass on has been revised.'
+        : 'You are younger and the Black Summer of 2019-20 is one of the first large events you are old enough to carry. Eighteen-point-six million hectares. The red sky. The number of animals. You will be asked about climate change at school in a way that is different from how the generation before you was asked. The answer is visible.'
+    },
+    choices: [
+      {
+        text: 'The fires made something undeniable. The climate argument is over, for you.',
+        tag: null,
+        outcome: 'Over for you. Not over in the parliament, not over in the politics. You live with the gap between what is obvious to you and what is still contested.',
+        effect: (p) => { p.m -= 12; p.r += 7; p.e += 5; p.addFlag('black_summer_generation'); p.setMem('ausFireSummer', true); },
+      },
+      {
+        text: 'Someone you know lost a property or was evacuated. The abstract became specific.',
+        tag: null,
+        outcome: 'The specific loss of specific people is a different kind of knowledge from the statistics. Both are true. The specific is harder to set aside.',
+        effect: (p) => { p.m -= 10; p.r += 6; p.karma += 4; p.addFlag('black_summer_generation'); p.setMem('ausFireSummer', true); },
       },
     ],
     effect: null,

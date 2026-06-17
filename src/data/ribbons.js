@@ -2510,6 +2510,32 @@ export const RIBBONS = [
     color: 'black',
   },
 
+  // ── AUSTRALIA RIBBONS ────────────────────────────────────────────────────────
+  {
+    id: 'the_red_sky',
+    name: 'The Red Sky',
+    description: 'Black Summer 2019-20. Eighteen-point-six million hectares. Sydney at noon, sky red-orange. The abstract made so large it was visible from space. You were inside it.',
+    condition: (G) => G.flags.includes('black_summer_generation'),
+    priority: 82,
+    color: 'orange',
+  },
+  {
+    id: 'the_terra_nullius',
+    name: 'The Terra Nullius',
+    description: 'Mabo, 1992. Two hundred and four years of a legal fiction, then a court said: that was never true. You were an adult Australian for the overturning and for the culture war that followed it.',
+    condition: (G) => G.flags.includes('aus_mabo_generation'),
+    priority: 72,
+    color: 'amber',
+  },
+  {
+    id: 'the_sorry',
+    name: 'The Sorry',
+    description: '"We apologise." February 13, 2008. The word that eleven years of government would not say, said at last. You were there for the word and for what came after it, which was not enough and was still the word.',
+    condition: (G) => G.flags.includes('aus_sorry_generation'),
+    priority: 70,
+    color: 'teal',
+  },
+
   // ── GREECE RIBBONS ───────────────────────────────────────────────────────────
   {
     id: 'the_polytechnic_gate',
