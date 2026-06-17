@@ -5179,6 +5179,18 @@ function buildYearTexture(state) {
       ? 'You were in Bolotnaya Square or you watched from the edge. What happened to the people who were in the square is the political history of the decade that followed. You watched it happen in real time.'
       : 'The white ribbon was a symbol for a specific number of months in 2011 and 2012. After those months, wearing it meant something different.',
   ])
+  if (F.has('russia_1991_generation') && Math.random() < 0.22) return pick([
+    'August 19, 1991: the coup announcement at six in the morning. The GKCHP with shaking hands at the press conference. Yeltsin on the tank. The three days when nobody knew what kind of country this would be next week. You were alive inside those three days.',
+    phase === 'late_life'
+      ? 'The tank stopped because of people like you who stood at the White House. The flag over the Kremlin changed in December. The country that existed on August 18 did not exist by Christmas. You watched that happen from the inside, which is the only view of a country ending that matters.'
+      : 'The Soviet Union ended and Russia began and what Russia meant was not yet decided when it began. You grew up in that undecided country. Some of the deciding is still happening.',
+  ])
+  if (F.has('putin_stability_generation') && Math.random() < 0.2) return pick([
+    'The oil decade: wages that arrived, streets that were not what the 1990s streets were, a kind of order. The word for the exchange was "stability" and the stability was real. What was given up for it was also real. Both things were true simultaneously.',
+    phase === 'late_life'
+      ? 'You lived the 1990s and then you lived the 2000s and you know what the difference felt like from inside. The difference was real. The price of the difference also eventually became real, in 2022 or earlier, depending on when you started looking at what the price was.'
+      : 'Managed democracy: the elections, the outcomes, the television. The GDP growing. The question you hold is whether the management was the cost of the stability or the stability was the cost of the management. The sequence matters.',
+  ])
   if (F.has('veteran_unthanked') && Math.random() < 0.2) return pick([
     'You came back from a war the state had decided to forget. The people who don\'t know the war happened cannot thank you for it. The people who do know tend to look away.',
     'The wound is specific. The official record says you were in a peacekeeping operation. The medical record says something more specific.',
@@ -14480,6 +14492,7 @@ export function generateEpitaph(state) {
     'black_summer_generation',
     'madrid_11m_lived',
     'smolensk_generation', 'strajk_kobiet_generation',
+    'russia_1991_generation',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -14516,6 +14529,12 @@ export function generateEpitaph(state) {
     para2.push(`${He} was in Poland for Solidarity in 1980 and for Smolensk in 2010. The first event produced unity across ten million people. The second event produced a grief that was real and a political use of the grief that divided the country for the decade after. ${He} lived the before and the after.`)
   } else if (f('strajk_kobiet_generation') && f('communist_poland_childhood')) {
     para2.push(`${He} grew up in communist Poland learning the gap between what is said officially and what is true. She carried that skill into October 2020, when the Constitutional Tribunal banned abortion and the lightning bolt went up in the streets. Both events required the same knowledge: what a state is willing to do and what can be done about it.`)
+  } else if (f('russia_ukraine_exile') && f('russia_1991_generation')) {
+    para2.push(`${He} was at the White House in August 1991 when Yeltsin climbed on the tank, or somewhere in Russia watching the three days when a country ended and another began. And then in February 2022, ${he} left — Tbilisi, Riga, Istanbul. The country ${he} was born into and the country ${he} left are not the same country. ${He} saw both transitions from inside.`)
+  } else if (f('russia_2022_generation') && f('bolotnaya_generation')) {
+    para2.push(`${He} was in Bolotnaya Square in 2011-12 with the white ribbons, and was in Russia on February 24, 2022, navigating the gap between the word that was banned and what was happening. Both events are the same lesson about what the system will do when it decides something is a threat. ${He} was present for both teachings.`)
+  } else if (f('russia_ukraine_exile')) {
+    para2.push(`${He} left Russia in 2022 — one of 700,000. Tbilisi or Riga or Istanbul or Tashkent, carrying the name of a country whose name became complicated to say. ${He} is still working out the relationship between the country ${he} left and the person ${he} is without it.`)
   } else if (any('maidan_generation', 'euromaidan_lived')) {
     para2.push(`${He} stood in the Maidan. What followed was harder than the night on the square.`)
   } else if (f('witnessed_wall_fall')) {

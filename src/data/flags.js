@@ -997,6 +997,22 @@ export const FLAG_REGISTRY = {
     notes: 'Set by ru_chechnya_war (served choice) and soldier_arc events.',
   },
 
+  russia_1991_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Russian adult who lived through the August 1991 coup attempt and its collapse — Yeltsin on the tank, the three days of uncertainty, the country that ceased to exist by December.',
+    intent: 'year_texture',
+    notes: 'Set by ru_1991_coup_collapse.',
+  },
+
+  putin_stability_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Russian shaped by the Putin stability bargain of the 2000s — rising oil wages and order exchanged for political passivity and managed democracy.',
+    intent: 'year_texture',
+    notes: 'Set by ru_putin_stability_bargain.',
+  },
+
   // ── Ukraine ──────────────────────────────────────────────────────────────────
 
   holodomor_family_memory: {

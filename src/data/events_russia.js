@@ -87,6 +87,66 @@ export const RUSSIA_EVENTS = [
   },
 
   {
+    id: 'ru_1991_coup_collapse',
+    phase: 'young_adult',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'Russia' &&
+      G.currentYear >= 1991 && G.currentYear <= 1992 &&
+      G.age >= 14 &&
+      !G.mem?.ru1991Coup,
+    text: 'August 19, 1991. The announcement comes on the radio at six in the morning: Gorbachev is ill, the State Committee on the State of Emergency has assumed power. The eight men at the televised press conference look shaken — hands trembling at the podium, eyes not focused. On August 21, Yeltsin climbs on a tank at the White House and reads a decree declaring the coup illegal. The coup collapses. By December 25, the flag over the Kremlin is replaced. The country that existed on August 18 does not exist anymore. You watched this from where you were standing and you know that a country can simply end.',
+    choices: [
+      {
+        text: 'You are at the barricades, or at the White House, or in the crowd that makes the difference.',
+        tag: null,
+        outcome: 'The tanks stop. The coup fails. People like you standing where you stood — that is part of why they stop. You know this.',
+        effect: (p) => { p.m += 8; p.karma += 8; p.r += 5; p.addFlag('russia_1991_generation'); p.addFlag('political_active'); p.setMem('ru1991Coup', true); },
+      },
+      {
+        text: 'You watch the three days unfold on television and from wherever you are.',
+        tag: null,
+        outcome: 'Three days when it was not clear what kind of country this was going to be. On the fourth day, it became clear that the country was going to be a different kind. You were watching when this happened.',
+        effect: (p) => { p.m += 4; p.r += 4; p.addFlag('russia_1991_generation'); p.setMem('ru1991Coup', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ru_putin_stability_bargain',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Russia' &&
+      G.currentYear >= 2000 && G.currentYear <= 2012 &&
+      G.age >= 25 &&
+      !G.mem?.ruPutinStability,
+    text: (G) => {
+      const sawChaos = G.flags.includes('ps_savings_wiped') || G.flags.includes('ps_sudden_poverty') || G.flags.includes('shock_therapy_generation')
+      if (sawChaos) {
+        return 'After the nineties, Putin. The oil price is rising. The wages are actually arriving. The streets are not what they were in 1993 or 1998. The television is managed and the opposition is managed and the outcomes are managed, but the word for what the 1990s were was also a word with no good translation. The exchange the new arrangement offers — stability for political passivity — is an exchange you are positioned to evaluate from the inside.'
+      }
+      return 'The early 2000s in Russia: oil revenue, rising wages, the end of the acute crisis of the nineties. Putin\'s approval rating is consistently above seventy percent and the reason is legible — the previous decade was the decade of factory closures and ruble collapses and oligarchs, and this decade is not that decade. The managed democracy: elections happen, outcomes are managed, television is managed. For many people, the management is not the important part.'
+    },
+    choices: [
+      {
+        text: 'The stability is real and the price is acceptable.',
+        tag: null,
+        outcome: 'The oil decade: you build something in it. The building is real. The price of the stability — what is not sayable, what is not possible, what is managed — you notice but it does not dominate what you are building.',
+        effect: (p) => { p.m += 6; p.w += 5; p.addFlag('putin_stability_generation'); p.setMem('ruPutinStability', true); },
+      },
+      {
+        text: 'The managed part of "managed democracy" is what matters.',
+        tag: null,
+        outcome: 'You take note of what is managed and what the management costs and what it is for. The note stays in you for the subsequent years, which provide additional evidence.',
+        effect: (p) => { p.m += 2; p.r += 5; p.addFlag('putin_stability_generation'); p.addFlag('inner_dissent'); p.setMem('ruPutinStability', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
     id: 'ru_navalny_2024',
     phase: 'late_life',
     weight: 3,
