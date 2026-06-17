@@ -175,11 +175,7 @@ Remaining from original spec: game timeline only extends to ~2090 by current cha
 
 **War from the soldier's perspective** ✅ DONE (`events_soldier_arc.js`, 12 events): Characters with military careers during active conflicts get specific deployment events — deployment orders (choice: ready / has doubts), first week (the specific sensory recalibration), the friend who is gone by Thursday, the order that was legal (carried separately from its legality), return home (the airport sign, the ceiling too low), not sleeping two years later (choice: seek help / manage it), the question civilians ask, veteran recognition midlife, the anniversary the body doesn't forget, physical cost at 40+, telling children the fuller version, late reckoning on moral weight. `DEPLOYMENT_CONTEXT` helper maps country + year ranges to active conflict. Country coverage: USA (Korea/Vietnam/Gulf/Afghanistan), UK, Russia, Australia, France, Argentina, South Korea, Nigeria, Ethiopia, DRC, Somalia, Sudan, Angola, Mozambique, Algeria.
 
-**Parent of a seriously ill child** (character events, midlife):
-- The diagnosis, the reorganisation of your life around their care
-- The specific grief of a different future than you imagined for them
-- The relationship with your partner under that pressure (some marriages survive it; some don't; gated on existing romance arc flags)
-- The long arc: the child who grows up differently from what you expected, and what your relationship becomes
+**Parent of a seriously ill child** ✅ DONE (PR #93, events_sick_child.js): 9 events — diagnosis (archetype-branched prose: wealthy_west specialist system vs. developing access gap vs. conflict zone overwhelm), hospital texture reorganization, partner under pressure (choice: unit or fractured), ward community (the other parent who knows everything you need to know), career eclipse, recovery path (cautiously optimistic → relief that doesn't erase the waiting), chronic path (word "managed" = permanent), late follow-through: who they became as an adult (recovery), late follow-through: still needed in changed form (chronic). disabilityType initialization fix also shipped: born_with_disability characters now get cerebral_palsy/limb_difference/down_syndrome assigned in initial mem.
 
 ---
 

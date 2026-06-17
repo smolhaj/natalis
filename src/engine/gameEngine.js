@@ -1415,6 +1415,41 @@ function buildYearTexture(state) {
       : 'The choice was yours to make and you made it. The grief has a different shape because of it — more bounded, more specific.',
   ])
 
+  // ─── SICK CHILD ARC ──────────────────────────────────────────────────────────
+
+  if (F.has('child_seriously_ill') && !F.has('child_illness_recovery') && !F.has('child_illness_chronic') && Math.random() < 0.5) return pick([
+    'The appointments are the week\'s architecture. Everything else is a parallel life you continue out of habit.',
+    'You measure time differently now — in results, in percentages, in what the specialist\'s expression tells you before the words arrive.',
+  ])
+
+  if (F.has('child_illness_recovery') && Math.random() < 0.3) return pick([
+    phase === 'late_life'
+      ? 'Your child recovered. They are grown and well and leading the life they assembled after. The illness is part of what made them who they are. You can see this now from far enough away.'
+      : 'The relief did not erase what you went through to get here. You carry both — the difficulty and the outcome. They do not cancel each other.',
+    'You do not take the ordinary days lightly. Not anymore. The stint in the waiting rooms gave you something no one would choose and you cannot un-have it.',
+  ])
+
+  if (F.has('child_illness_chronic') && Math.random() < 0.3) return pick([
+    'The condition is managed. Permanent management is its own education — what the body requires, what the days require, what you require of yourself.',
+    phase === 'late_life'
+      ? 'Your child is an adult now and manages most of it themselves. You are still reachable. Being reachable is the role that replaced the earlier roles.'
+      : 'You have learned the difference between supporting someone and doing it for them. The line shifts as they grow into their own understanding of what they need.',
+  ])
+
+  if (F.has('ill_child_partner_rebuilt') && Math.random() < 0.2) return pick([
+    'The crisis that should have broken something between you didn\'t. You came out of it knowing each other differently — the specific weight the other can carry.',
+  ])
+
+  if (F.has('ill_child_ward_community') && Math.random() < 0.2) return pick([
+    'You still think about the other parent on the ward. You swapped a year\'s worth of knowledge in a few weeks. You never saw them again after your child was discharged.',
+  ])
+
+  if (F.has('ill_child_late_witness') && Math.random() < 0.25) return pick([
+    F.has('child_illness_recovery')
+      ? 'The illness became part of what they are, not what they are. You can see this now from far enough away.'
+      : 'Your child manages their condition with a competence that still moves you — the specific expertise in their own body that had to be built from the outside in.',
+  ])
+
   // ─── ACTIVE HEALTH CRISIS ────────────────────────────────────────────────────
 
   if (F.has('cancer_treatment')) {
@@ -14031,6 +14066,8 @@ export function generateIdentityCard(state) {
     if (F.has('holocaust_survived') || F.has('genocide_survived') || F.has('survived_khmer_rouge')) return 'You have survived things that most people only read about in the past tense.'
     if (F.has('gulag_survived')) return 'You survived the camps. That knowledge lives in your body.'
     if (F.has('lost_child')) return 'You lost a child. That does not become a past thing.'
+    if (F.has('child_illness_chronic')) return age >= 55 ? 'Your child has lived with a serious condition their whole life. You have been alongside it — not in front of it, not behind it. Alongside.' : 'Your child is seriously ill. Life reorganizes itself around that. Everything else continues from somewhere else inside you.'
+    if (F.has('child_seriously_ill') && !F.has('child_illness_recovery') && !F.has('child_illness_chronic')) return 'Your child is seriously ill. You are managing an impossible equation of care, cost, presence, and fear. You are doing it anyway.'
     if (F.has('partition_survivor') || F.has('partition_refugee')) return 'You crossed the border during the Partition, carrying what you could.'
     // Heavy personal facts
     if (F.has('cancer_survivor')) return 'You are a cancer survivor. The word still sits differently than you expected.'

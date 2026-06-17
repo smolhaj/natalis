@@ -10181,4 +10181,62 @@ export const FLAG_REGISTRY = {
     notes: 'Set by we_venezuela_collapse and similar catastrophic economic world events.',
   },
 
+  // ── events_sick_child.js flags ────────────────────────────────────────
+
+  child_seriously_ill: {
+    weight: 'major',
+    category: 'family',
+    description: 'A child was diagnosed with a serious illness during the character\'s midlife — reorganizing daily life around medical need for an extended period.',
+    intent: 'year_texture',
+    notes: 'Trigger flag. Set by sick_child_diagnosis. Gates the full sick child arc.',
+  },
+
+  child_illness_recovery: {
+    weight: 'moderate',
+    category: 'family',
+    description: 'The seriously ill child recovered — the numbers improved and the crisis resolved, though the experience changed everyone who went through it.',
+    intent: 'year_texture',
+    notes: 'Set by sick_child_recovery. Gates late follow-through sick_child_who_they_became.',
+  },
+
+  child_illness_chronic: {
+    weight: 'moderate',
+    category: 'family',
+    description: 'The child\'s illness became a chronic condition — permanently managed but never resolved, shaping the family\'s life indefinitely.',
+    intent: 'year_texture',
+    notes: 'Set by sick_child_becomes_chronic. Gates late follow-through sick_child_chronic_late.',
+  },
+
+  ill_child_partner_rebuilt: {
+    weight: 'minor',
+    category: 'relationship',
+    description: 'The crisis of a child\'s serious illness drew the couple closer — sustained pressure became a form of shared intimacy.',
+    intent: 'none',
+    notes: 'Set by sick_child_partner_pressure (unit choice).',
+  },
+
+  ill_child_partner_fractured: {
+    weight: 'moderate',
+    category: 'relationship',
+    description: 'The child\'s illness fractured the partnership — each parent carried the grief alone, and the distance grew.',
+    intent: 'none',
+    notes: 'Set by sick_child_partner_pressure (separated choice). Persists as relationship quality cost.',
+  },
+
+  ill_child_ward_community: {
+    weight: 'minor',
+    category: 'resilience',
+    description: 'Found an unexpected community in the hospital ward — other parents who knew the specific knowledge the situation required.',
+    intent: 'none',
+    notes: 'Set by sick_child_ward_community.',
+  },
+
+  ill_child_late_witness: {
+    weight: 'moderate',
+    category: 'family',
+    description: 'Witnessed who the formerly ill child became as an adult — either recovered and whole, or living well with a chronic condition.',
+    intent: 'year_texture',
+    notes: 'Set by sick_child_who_they_became or sick_child_chronic_late.',
+  },
+
 }
