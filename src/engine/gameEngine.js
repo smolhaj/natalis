@@ -8457,6 +8457,42 @@ function buildYearTexture(state) {
     'The identity is a response to a rejection, and it is also real. The two things are not contradictory. The reaction becomes the thing, which is how many identities are made.',
     'Being between two places makes you an expert on both in a way that neither place requires or rewards.',
   ])
+  if (F.has('dual_identity') && Math.random() < 0.22) return pick([
+    'Within your community there is a different world: the food, the language, the understanding that does not need translation. Outside it you carry both registers — the one that is home and the one that is required.',
+    phase === 'late_life'
+      ? 'You have been carrying two worlds for your whole adult life. The carrying has become so automatic that you no longer feel the weight. What you feel instead is the specific fluency of having lived in both.'
+      : 'The code-switching is not performance — it is competence. You know things about the inside and the outside of this society that people who grew up only on one side cannot access.',
+  ])
+  if (F.has('class_awareness') && Math.random() < 0.18) return pick([
+    'You learned their names — the domestic workers, the driver, the person who cleaned. You did this before you understood what you were noticing. What you noticed has stayed with you.',
+    phase === 'late_life'
+      ? 'The arrangement was taken for granted until you understood what it meant. Understanding arrived early, which is a particular kind of education — the one that cannot be untaken.'
+      : 'There is a political education available in who does whose work. You received it young, in a house where it was visible.',
+  ])
+  if (F.has('democracy_movement') && Math.random() < 0.22) return pick([
+    'You decided this could not keep happening and acted on the decision. The acting had a cost and also a form — the meetings, the risk, the specific work of trying to change what the state has decided.',
+    phase === 'late_life'
+      ? 'The movement succeeded or it did not, or it succeeded differently and later than it seemed to at the time. You are old enough now to see the full arc. The decision you made was still the right one.'
+      : 'Being part of a democracy movement means being willing to hold a position when the state disagrees with it — which is not abstract but involves specific days of specific choices.',
+  ])
+  if (F.has('earthquake_survivor') && Math.random() < 0.25) return pick([
+    'The ground moved. The sound and the movement arrived simultaneously, before the meaning of either. The seconds were very long. Then the silence, which was also very long.',
+    phase === 'late_life'
+      ? 'You know what thirty seconds feels like when the ground is moving. The knowledge reorganised what you thought was solid. Everything after it has been built on ground you now know is not still.'
+      : 'The city changed that day — in the count of the dead, in the buildings still standing, in what you know now about what is permanent and what is not.',
+  ])
+  if (F.has('radio_childhood') && Math.random() < 0.18) return pick([
+    'The world came through the wooden box in the corner. News, music, the drama at nine, the static between stations. The family gathered around sound, which is a different gathering than around a screen.',
+    phase === 'late_life'
+      ? 'You grew up with the radio as the household window into events. The voices were real and the events were far away and the combination taught you a specific relationship between distance and proximity that later technologies changed.'
+      : 'There is a texture to a broadcast — the hiss, the fade, the operator\'s voice at sign-off — that people who came of age with different technologies cannot hear in the way you hear it.',
+  ])
+  if (F.has('failure_integrated') && Math.random() < 0.2) return pick([
+    'You failed at something that mattered and found that the failing did not end the thing you were building. That is information you carry.',
+    phase === 'late_life'
+      ? 'The failure was the turning point, in retrospect — not because it produced insight automatically, but because you chose to treat it as information rather than verdict. That choice, made at the time, is a choice you are still glad you made.'
+      : 'You have learned to distinguish between failure as evidence of inadequacy and failure as evidence of attempting something difficult. The distinction is not comfortable. It is useful.',
+  ])
   if (F.has('ddr_generation') && Math.random() < 0.3) return pick([
     'The country you grew up in does not appear on maps anymore. The street names changed. The faces in the photographs in the school hall changed. The Trabant became an ironic object. You are not ironic about it.',
     phase === 'late_life'

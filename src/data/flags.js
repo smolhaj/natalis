@@ -1772,6 +1772,54 @@ export const FLAG_REGISTRY = {
     notes: 'Set by hai_baby_doc_falls. The euphoria and its subsequent failure are both part of this.',
   },
 
+  earthquake_survivor: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Survived a major earthquake — the thirty-five seconds that reorganised the city and the memory.',
+    intent: 'year_texture',
+    notes: 'Set by Haiti earthquake events and worldEvents Tangshan/Nepal/Mexico/Japan earthquake world events.',
+  },
+
+  dual_identity: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Carries two cultural identities simultaneously — the community inside the community, the code-switching that is not a choice but a lived competence.',
+    intent: 'year_texture',
+    notes: 'Set by events_culture.js (minority community finding) and events_society.js (dual name/identity). Rich year texture potential.',
+  },
+
+  democracy_movement: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Participated in a democracy movement — the decision that this cannot keep happening, and what that decision costs.',
+    intent: 'year_texture',
+    notes: 'Set by Gwangju world event (South Korea) and Turkey coup events. Cross-national political engagement flag.',
+  },
+
+  class_awareness: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Developed early class consciousness — noticing the domestic workers\' names, the arrangement others find unusual, the thing that was taken for granted.',
+    intent: 'year_texture',
+    notes: 'Set by events_culture.js (wealthy Gulf/developing) and events_texture.js (domestic service observation).',
+  },
+
+  radio_childhood: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Grew up with radio as the primary household medium — the voices from the wooden box, the family gathered, the world arriving as sound.',
+    intent: 'year_texture',
+    notes: 'Set by events_texture.js (era radio family) and events_technology.js (radio era). Period texture flag.',
+  },
+
+  failure_integrated: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Metabolised a major failure and carried it forward as information rather than shame — the specific work of making a failure useful.',
+    intent: 'year_texture',
+    notes: 'Set by events_coherence.js and events_early_life.js (first real failure choice).',
+  },
+
   // ── LATIN AMERICA HISTORICAL FLAGS ───────────────────────────────────────
 
   tlatelolco_generation: {
