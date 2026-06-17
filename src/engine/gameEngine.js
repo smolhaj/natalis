@@ -7646,6 +7646,18 @@ function buildYearTexture(state) {
     'The 2017 referendum fractured things that had been quiet — friendships, families, the assumption that a political disagreement was manageable. The fracture did not close when the immediate crisis ended.',
     'Spain in October 2017: simultaneously a constitutional democracy defending its constitution and a country using riot gear on people at ballot boxes. Both descriptions are accurate. Holding both is the specific work.',
   ])
+  if (F.has('madrid_11m_lived') && Math.random() < 0.22) return pick([
+    'March 11, 2004: one hundred and ninety-one dead on four commuter trains before eight in the morning. What followed was three days of a government managing information before an election. The sequence is something you have not entirely set down.',
+    phase === 'late_life'
+      ? 'The question "¿Quién ha sido?" was never only about the perpetrators. It was about what a government does with information and three days before an election. You voted on March 14 knowing what you knew by then.'
+      : 'Spain elected a government nobody predicted on March 14, 2004. The vote was a response to the three days as much as to the bombing. You were part of that response.',
+  ])
+  if (F.has('indignados_generation') && Math.random() < 0.2) return pick([
+    '"No nos representan." Puerta del Sol, May 2011. The camp stayed for weeks. The youth unemployment rate was forty-six percent and the banks had been saved. What started in Sol took years to become Podemos and the end of the two-party system.',
+    phase === 'late_life'
+      ? 'You were in your twenties in Sol in 2011 — the working groups, the assemblies, the slow patience of consensus. What it produced took a decade to arrive. You were part of what began there.'
+      : 'The indignados said it precisely: "No somos antisistema, el sistema es antinosotros." Forty-six percent youth unemployment while the banks were rescued. The arithmetic that put people in the square.',
+  ])
 
   // ─── CANADA TEXTURE ──────────────────────────────────────────────────────────
   if (F.has('october_crisis_generation') && Math.random() < 0.2) return pick([
@@ -14349,6 +14361,7 @@ export function generateEpitaph(state) {
     'april_9_generation', 'georgian_war_2008', 'geo_1990s_generation', 'geo_testigo_generation',
     'polytechnic_generation', 'gr_civil_war_memory', 'gr_oxi_generation', 'gr_testigo_generation',
     'black_summer_generation',
+    'madrid_11m_lived',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -14573,6 +14586,12 @@ export function generateEpitaph(state) {
     para2.push(`${He} was Australian for the Mabo decision and for the Black Summer — terra nullius overturned and then eighteen-point-six million hectares burning. Both asked what kind of country Australia would choose to be. Both produced partial answers.`)
   } else if (f('black_summer_generation')) {
     para2.push(`${He} watched the Black Summer of 2019-20 from inside Australia. Red sky at noon in Sydney. The smoke visible from space. Three billion animals. The summer that revised what the word "unprecedented" was going to mean for the rest of ${his} life.`)
+  } else if (f('madrid_11m_lived') && f('transicion_generation')) {
+    para2.push(`${He} was present for the Spanish transition from dictatorship to parliamentary democracy, and in Spain on March 11, 2004, for the three days that tested what kind of democracy it was. The pact that built the transition and the government that managed information before an election: both things in one life.`)
+  } else if (f('madrid_11m_lived') && f('indignados_generation')) {
+    para2.push(`${He} was in the streets in 2004 with "¿Quién ha sido?" and in Sol in 2011 with "No nos representan." Twelve years apart, same impulse: something about how this is being managed is wrong. The second time produced Podemos. Both times ${he} was there.`)
+  } else if (f('madrid_11m_lived')) {
+    para2.push(`${He} was in Spain on March 11, 2004 — the four trains, the hundred and ninety-one dead, the government's three days of managed information before the election. ${He} voted on March 14 knowing what ${he} knew.`)
   }
 
   // Displacement / migration

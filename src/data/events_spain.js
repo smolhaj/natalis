@@ -207,6 +207,64 @@ export const SPAIN_EVENTS = [
   },
 
   // ═══════════════════════════════════════════════════════════════════════
+  // 11-M AND 15-M
+  // ═══════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'es_11m_2004',
+    phase: 'midlife',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'Spain' &&
+      G.currentYear >= 2004 && G.currentYear <= 2006 &&
+      G.age >= 18 &&
+      !G.mem?.es11M,
+    text: 'March 11, 2004. Four commuter trains at rush hour. Atocha, El Pozo del Tío Raimundo, Santa Eugenia. One hundred and ninety-one dead before eight in the morning. The government says ETA — immediately, insistently, with phone calls to every major newspaper. The evidence that accumulates through the day points somewhere else. Three days before the general election. You know the information is being managed. You go to Cibeles, or the Puerta del Sol, or wherever people in your city are gathering. The sign you carry or pass in the street says "¿Quién ha sido?" — but the question is already larger than the dead.',
+    choices: [
+      {
+        text: 'You believe the official line at first, then revise when the evidence accumulates.',
+        tag: null,
+        outcome: 'The revision produces something in you about what a government can do with information and three days before an election. The election result surprises everyone. You were part of producing it.',
+        effect: (p) => { p.m -= 6; p.addFlag('madrid_11m_lived'); p.setMem('es11M', true); },
+      },
+      {
+        text: 'You do not believe it from the first hour.',
+        tag: null,
+        outcome: 'The anger is not only about the dead. The anger is about the management. On March 14 you vote knowing what you know. The result nobody predicted is partly built from that knowledge.',
+        effect: (p) => { p.m -= 5; p.karma += 3; p.addFlag('madrid_11m_lived'); p.setMem('es11M', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'es_15m_2011',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Spain' &&
+      G.currentYear >= 2011 && G.currentYear <= 2013 &&
+      G.age >= 18 &&
+      !G.mem?.es15M,
+    text: 'May 15, 2011. Puerta del Sol. The camp appears overnight and does not leave for weeks. "Democracia Real YA." "No nos representan." "No somos antisistema, el sistema es antinosotros." The signs are handmade; the arguments extend across cardboard and sticky notes pinned to tent sides. You are in your twenties, the youth unemployment rate is forty-six percent, and the banks have been rescued. You know these numbers in your body rather than your head. The assemblies are slow and serious and something forms inside the slowness.',
+    choices: [
+      {
+        text: 'You join the camp — seriously, staying through the assemblies.',
+        tag: null,
+        outcome: 'What the camp becomes — Podemos, the end of bipartidismo, the new coalition math — takes years to clarify. You were part of what began in Sol.',
+        effect: (p) => { p.m += 3; p.s += 3; p.karma += 4; p.addFlag('indignados_generation'); p.setMem('es15M', true); },
+      },
+      {
+        text: 'You follow from a distance, sympathetic but not present.',
+        tag: null,
+        outcome: 'The camp continues without you. The energy is real. What it produces takes another three years to arrive. The edge is also a position.',
+        effect: (p) => { p.m += 1; p.r += 3; p.addFlag('indignados_generation'); p.setMem('es15M', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════
   // ECONOMIC CRISIS AND CATALAN CRISIS
   // ═══════════════════════════════════════════════════════════════════════
 

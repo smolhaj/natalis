@@ -10097,6 +10097,22 @@ export const FLAG_REGISTRY = {
     notes: 'Set by es_catalan_independence_2017.',
   },
 
+  madrid_11m_lived: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Present in Spain during 11-M, March 11, 2004: 191 dead on four commuter trains at rush hour. Aznar\'s government managed information about the perpetrators for three days before the general election.',
+    intent: 'year_texture',
+    notes: 'Set by es_11m_2004. Both branches set this flag.',
+  },
+
+  indignados_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Came of age in Spain during the 15-M movement (May 2011): Puerta del Sol occupied for weeks, "No nos representan," youth unemployment at 46%. Eventual precursor to Podemos and end of bipartidismo.',
+    intent: 'year_texture',
+    notes: 'Set by es_15m_2011.',
+  },
+
   emigration_reconsidered: {
     weight: 'moderate',
     category: 'displacement',
