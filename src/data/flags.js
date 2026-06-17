@@ -4944,6 +4944,38 @@ export const FLAG_REGISTRY = {
     notes: 'Set by usa_school_shooting_era. Auto-resolve event.',
   },
 
+  jfk_assassination_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Shaped by the November 22, 1963 Kennedy assassination — Walter Cronkite removing his glasses, the oath on Air Force One, the stained dress, the question that remained open for sixty years.',
+    intent: 'year_texture',
+    notes: 'Set by usa_jfk_assassination_1963.',
+  },
+
+  watergate_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Shaped by Watergate — the Saturday Night Massacre, the eighteen and a half minutes, Nixon\'s resignation wave from the South Lawn, the specific accident by which the system worked.',
+    intent: 'year_texture',
+    notes: 'Set by usa_watergate_resignation_1974.',
+  },
+
+  katrina_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Shaped by Hurricane Katrina — the levees failing, the Superdome, the rooftops, 67% of the dead Black, 80% of the city underwater, the neighborhoods that did not come back.',
+    intent: 'year_texture',
+    notes: 'Set by usa_hurricane_katrina_2005.',
+  },
+
+  gulf_coast_displaced: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Directly displaced by Hurricane Katrina — in New Orleans, with people there, the specific waiting to know whether those you love survived.',
+    intent: 'year_texture',
+    notes: 'Set by usa_hurricane_katrina_2005 (directly affected choice).',
+  },
+
   // ── United Kingdom ─────────────────────────────────────────────────────────────
 
   miners_strike_generation: {

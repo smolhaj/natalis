@@ -140,6 +140,37 @@ export const USA_EVENTS = [
   },
 
   // ═══════════════════════════════════════════════════════════════════════
+  // JFK ASSASSINATION 1963
+  // ═══════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'usa_jfk_assassination_1963',
+    phase: 'young_adult',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'United States' &&
+      G.currentYear >= 1963 && G.currentYear <= 1964 &&
+      G.age >= 14 &&
+      !G.mem?.usaJFK,
+    text: 'November 22, 1963. Dallas. The motorcade passes the Texas School Book Depository at 12:30pm. Three shots. Walter Cronkite removes his glasses on CBS and tells America that President Kennedy died at Parkland Memorial Hospital at 1:00pm Central Standard Time. He was forty-six years old and had taken office a thousand days before with the words: "ask not what your country can do for you." The flight back: Lyndon Johnson takes the oath on Air Force One with Jacqueline Kennedy standing beside him in her stained dress. Oswald is arrested ninety minutes after the shooting. On Sunday he is shot in the Dallas Police basement, live on television. The question about what happened and why will be open for sixty years.',
+    choices: [
+      {
+        text: 'The grief is like losing someone you knew. Something promised has been taken.',
+        tag: null,
+        outcome: 'The grief is collective in a way that does not feel political at first — it is the loss of something that had not yet arrived. The country goes to the funeral in black and white.',
+        effect: (p) => { p.m -= 12; p.r += 6; p.addFlag('jfk_assassination_generation'); p.setMem('usaJFK', true); },
+      },
+      {
+        text: 'The grief and the political questions arrive together and do not separate.',
+        tag: null,
+        outcome: 'The Oswald murder on live television. The Warren Commission. The gap between the official account and what seems possible: these questions do not resolve, and the not-resolving is itself information about what kind of country this is.',
+        effect: (p) => { p.m -= 10; p.r += 8; p.karma += 3; p.addFlag('jfk_assassination_generation'); p.addFlag('political_active'); p.setMem('usaJFK', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════
   // VIETNAM DRAFT
   // ═══════════════════════════════════════════════════════════════════════
 
@@ -206,6 +237,37 @@ export const USA_EVENTS = [
         tag: null,
         outcome: 'The conversation happens. It does not fix what needs fixing, but it confirms that what you carry is real and not invented and shared by people you trust.',
         effect: (p) => { p.m -= 8; p.r += 5; p.karma += 4; p.addFlag('vietnam_veteran'); p.addFlag('veteran_solidarity'); p.setMem('usaVietnamReturn', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // WATERGATE 1972–1974
+  // ═══════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'usa_watergate_resignation_1974',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'United States' &&
+      G.currentYear >= 1972 && G.currentYear <= 1975 &&
+      G.age >= 16 &&
+      !G.mem?.usaWatergate,
+    text: 'June 17, 1972. Five men are arrested inside the Democratic National Committee headquarters at the Watergate complex in Washington. The connection to the Committee to Re-Elect the President: the evidence accumulates over two years. "I am not a crook": Nixon at a press conference, November 1973. The Saturday Night Massacre: Nixon orders the special prosecutor fired; the Attorney General and the Deputy Attorney General resign rather than comply. The tapes. Eighteen and a half minutes of silence in a crucial recording. August 9, 1974: Richard Nixon becomes the first president in American history to resign. He boards Marine One from the South Lawn and waves. The gesture becomes its own image of the decade.',
+    choices: [
+      {
+        text: 'The system worked. The corruption was exposed and the man who ran it left office.',
+        tag: null,
+        outcome: 'The system worked with help from specific reporters, a specific source in a parking garage, specific judges, and officials who resigned rather than comply. The system worked. That is different from the system working automatically.',
+        effect: (p) => { p.m -= 4; p.r += 4; p.addFlag('watergate_generation'); p.setMem('usaWatergate', true); },
+      },
+      {
+        text: 'The system almost didn\'t work. The only reason it did is a set of specific accidents.',
+        tag: null,
+        outcome: 'The tapes existed because Nixon kept them. Deep Throat broke because the investigation got close. The Saturday Night Massacre backfired because it was too visible. These are not the same as a system with built-in safeguards.',
+        effect: (p) => { p.m -= 8; p.r += 7; p.addFlag('watergate_generation'); p.addFlag('inner_dissent'); p.setMem('usaWatergate', true); },
       },
     ],
     effect: null,
@@ -309,6 +371,43 @@ export const USA_EVENTS = [
         tag: null,
         outcome: 'The grief was real and clear. The political questions that follow — the surveillance, the wars, the torture memos, the color-coded threat levels — are murkier and stay murky for twenty years.',
         effect: (p) => { p.m -= 10; p.r += 7; p.addFlag('sept11_generation_us'); p.addFlag('post_9_11_world'); p.setMem('usa911Experience', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // HURRICANE KATRINA 2005
+  // ═══════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'usa_hurricane_katrina_2005',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'United States' &&
+      G.currentYear >= 2005 && G.currentYear <= 2007 &&
+      G.age >= 14 &&
+      !G.mem?.usaKatrina,
+    text: (G) => {
+      const isBlack = G.ethnicity === 'black_american'
+      if (isBlack) {
+        return 'August 29, 2005. The levees fail. The water comes up inside the house. You go to the attic and then to the roof. The helicopters fly over. You have family in the Lower Ninth Ward or New Orleans East or Tremé. The Superdome: thirty thousand people in a football stadium without power, without enough food, without enough medicine, for three days. Michael Brown, the FEMA director who had no emergency management experience: "Brownie, you\'re doing a heck of a job." Sixty-seven percent of those who died in New Orleans were Black. Eighty percent of the city was underwater. The neighborhoods that had been there for generations do not come back.'
+      }
+      return 'August 28, 2005. The satellite image shows the eye of the storm: a Category 4 hurricane nearly 200 miles across, aimed at a city built below sea level whose levees were rated for a Category 3. The levees fail 24 hours after landfall. The Superdome. Thirty thousand people on rooftops waiting. "Brownie, you\'re doing a heck of a job." The president\'s flyover at altitude. Two thousand dead. Eighty percent of the city underwater. The Lower Ninth Ward, Tremé, Lakeview — some neighborhoods come back and some do not. The gap between what the response was and what the need was: visible from the air, on the television, in every medium simultaneously.'
+    },
+    choices: [
+      {
+        text: 'You are in New Orleans, or you have people there. The waiting is unbearable.',
+        tag: null,
+        outcome: 'You reach them, or you don\'t reach them until days later, or you don\'t reach them at all. The specific experience of waiting to know whether people you love are alive is not something that generalizes.',
+        effect: (p) => { p.m -= 14; p.h -= 4; p.r += 7; p.addFlag('katrina_generation'); p.addFlag('gulf_coast_displaced'); p.setMem('usaKatrina', true); },
+      },
+      {
+        text: 'You watch from outside and the images do not let you look away.',
+        tag: null,
+        outcome: 'The people on the roofs. The Superdome footage. The helicopter shots. You watch a city drown over three days on live television while the official response takes its time. The images stay.',
+        effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('katrina_generation'); p.setMem('usaKatrina', true); },
       },
     ],
     effect: null,

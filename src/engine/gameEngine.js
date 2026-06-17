@@ -7947,6 +7947,13 @@ function buildYearTexture(state) {
       ? 'Fifty years. What he said in Memphis the night before he died was that he had been to the mountaintop. You have lived in the country on the other side of that statement for fifty years. The mountain is still there. The top is further than he said it was or was not what he described.'
       : 'The country argued about whether he was going too far, too fast, in the months before he was shot. The people who said that do not remember now that they said it.',
   ])
+  if (F.has('jfk_assassination_generation') && Math.random() < 0.25) return pick([
+    'Walter Cronkite removing his glasses. The oath on Air Force One. The stained dress. The Dallas Police basement, live on television. The country went to the funeral in black and white and came back different.',
+    'He was forty-six and a thousand days in office. The promise of the thing was inseparable from the incompleteness of it. What he would have done is not knowable. What was taken is the specific version of him at that specific moment.',
+    phase === 'late_life'
+      ? 'You have been carrying November 22, 1963 for sixty years. The question about what happened and who decided it has not resolved. The not-resolving has become the answer: that this is what this country sometimes is, and the fact that it is not officially acknowledged is also what this country sometimes is.'
+      : 'The Warren Commission closed the official case. The House Select Committee on Assassinations in 1979 found "probable conspiracy." The files remain partially classified. The official account and the classified files are in the same government.',
+  ])
   if (F.has('vietnam_went') && Math.random() < 0.3) return pick([
     'Thirteen months. The specific smell of the jungle is still accessible when something triggers it — a plant, a particular heat, diesel exhaust from a certain angle. The body keeps records that the mind tries to file elsewhere.',
     phase === 'late_life'
@@ -7968,6 +7975,13 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'The Wall was dedicated in 1982. Black granite, fifty-eight thousand names. You found the names you were looking for. The Wall does not ask you to be fine.'
       : 'The PTSD diagnosis was codified in the DSM in 1980, five years after the war ended. Before 1980 it was "shell shock" or "combat fatigue" or it was not named at all. You had it before it had a name.',
+  ])
+  if (F.has('watergate_generation') && Math.random() < 0.2) return pick([
+    'Nixon on the South Lawn, the wave, Marine One. The first resignation in American history. The eighteen and a half minutes of silence. The Saturday Night Massacre. The system worked because of specific accidents and specific people who refused to comply.',
+    '"I am not a crook": November 1973. The sentence that is its own evidence. The system that produced him also produced the mechanisms that removed him. Both things were the same system.',
+    phase === 'late_life'
+      ? 'You watched the president resign on television and you have watched everything since through the knowledge of what that was — a president who ran a criminal operation from the White House and nearly held on. The nearly is the part that stays.'
+      : 'The political disillusionment that Watergate produced in the 1970s is the water you have been swimming in ever since. The swimming is invisible from inside it.',
   ])
   if (F.has('rustbelt_generation') && Math.random() < 0.3) return pick([
     'The plant closed and the notice said sixty days and the severance required a lawyer to understand and you did not have a lawyer. The retraining program paid for six months of classes for a job that paid half of what the plant paid.',
@@ -8008,6 +8022,19 @@ function buildYearTexture(state) {
   if (F.has('post_9_11_world') && Math.random() < 0.15) return pick([
     'The security lines, the body scanners, the databases, the color-coded threat level system that no one could explain. The world after 2001 was a world organised around a specific event.',
     'Something changed in 2001 and the change was sold as temporary emergency measures and the measures are still there twenty years later.',
+  ])
+  if (F.has('katrina_generation') && Math.random() < 0.22) return pick([
+    'The satellite image of the eye. The levees failing the morning of August 29. The Superdome. The people on the rooftops. "Brownie, you\'re doing a heck of a job." The helicopters flying over.',
+    'Eighty percent of the city underwater. Sixty-seven percent of those who died were Black. The Lower Ninth Ward. Tremé. The neighborhoods that had been there for generations and did not come back.',
+    phase === 'late_life'
+      ? 'You watched a city drown over three days on live television while the official response calibrated. The gap between the need and the response was measured in real time. The measuring produced a specific knowledge about what the country is and who it protects.'
+      : 'The post-Katrina question — not the storm, but the response — is still the active question. Which communities get the resources and which communities wait on the roof.',
+  ])
+  if (F.has('gulf_coast_displaced') && Math.random() < 0.2) return pick([
+    'You left or you were displaced or you waited on the roof. The house, the neighborhood, the city: the version you knew before August 29, 2005 is not the version that came back.',
+    phase === 'late_life'
+      ? 'Some people went back and some people never went back and some people went back to find their street still empty fifteen years later. New Orleans came back. The New Orleans that came back is not exactly the one that was there.'
+      : 'The decision about whether to go back, and when, and to what: the decision keeps getting made each year by a different version of the question.',
   ])
   if (F.has('foreclosure_generation') && Math.random() < 0.25) return pick([
     'The adjustable rate adjusted. The payment doubled. You had been told the rate would adjust but not when or how much. The letter from the bank arrived and used words designed to require a lawyer to understand.',
@@ -14515,6 +14542,7 @@ export function generateEpitaph(state) {
     'smolensk_generation', 'strajk_kobiet_generation',
     'russia_1991_generation',
     'falklands_generation', 'london_77_generation',
+    'jfk_assassination_generation', 'katrina_generation', 'gulf_coast_displaced',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -14769,6 +14797,16 @@ export function generateEpitaph(state) {
     para2.push(`${He} came to Britain legally and was told, decades later, that ${he} could not prove ${his} right to be there. The landing card that proved it was destroyed by the government in 2010. ${He} fought the case. The fight cost more than it should have.`)
   } else if (f('falklands_generation') && f('miners_strike_generation')) {
     para2.push(`${He} was in Britain for both the Falklands War and the miners' strike — two events that defined what Thatcherism was and what it was for. The Task Force sailing south and the police buses at Orgreave are the two images of the same political settlement.`)
+  } else if (f('jfk_assassination_generation') && f('king_assassination_generation')) {
+    para2.push(`${He} was American for November 22, 1963 and for April 4, 1968. Both men were shot within five years, and both were forty-six and thirty-nine. The decade took what the decade took, and ${he} carried the taking for the rest of ${his} life.`)
+  } else if (f('jfk_assassination_generation') && f('civil_rights_generation')) {
+    para2.push(`${He} watched Kennedy take office with the words "ask not what your country can do for you" and watched the promise interrupted on a Dallas street a thousand days later. ${He} was also the generation that marched or watched others march. The 1960s were not what they promised. They were also extraordinary.`)
+  } else if (f('gulf_coast_displaced') && f('katrina_generation')) {
+    para2.push(`${He} was in New Orleans when the levees failed on August 29, 2005 — or had people there, which is the same as being there in the ways that count. The city ${he} knew and the city that came back were different cities. ${He} knew both.`)
+  } else if (f('katrina_generation') && f('war_on_drugs_era')) {
+    para2.push(`${He} lived in America for both the War on Drugs — the mandatory minimums, the crack disparity, the specific communities that absorbed the policy — and for Katrina, when sixty-seven percent of those who died were Black and the response took three days. The pattern is the same pattern. ${He} knew it from the inside.`)
+  } else if (f('watergate_generation') && f('vietnam_veteran')) {
+    para2.push(`${He} came back from Vietnam and then watched Nixon resign. The war the government told him was necessary and the government that lied about the break-in were the same government. The generation that came back from Vietnam and watched Watergate developed a specific political education that has not softened with age.`)
   }
 
   // Displacement / migration
