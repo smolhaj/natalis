@@ -4357,6 +4357,93 @@ function buildYearTexture(state) {
     if (lines?.length) return pick(lines)
   }
 
+  // ─── LONG-TENURE CAREER TEXTURE (~18% when 8+ years in current role) ──────────
+  if (career && career.yearsInRole >= 8 && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.18) {
+    const field = career.field
+    const yrs = career.yearsInRole
+    const yrLabel = yrs >= 20 ? 'more than twenty years' : yrs >= 15 ? 'fifteen or more years' : yrs >= 10 ? 'more than a decade' : 'nearly a decade'
+    const tenureLines = {
+      healthcare: [
+        `You know within the first minute of an encounter what you are dealing with. It took years to build that knowledge. It does not feel like knowledge anymore — it feels like seeing.`,
+        `The junior staff ask questions you stopped needing to look up ${yrLabel} ago. The answers arrive in you before the question is finished. This is the specific form of mastery that doesn\'t announce itself.`,
+      ],
+      education: [
+        `${yrLabel} in this role. You can identify by October who will struggle in January and which students will surprise everyone, including themselves. The identifying doesn\'t make it easier. It gives you more time.`,
+        `The curriculum has changed. The assessment has changed. The problem you were hired to solve — how to make something genuinely understood — has not changed at all.`,
+      ],
+      law: [
+        `You know which arguments will work before you have finished making them. You know which judges will respond to which framings. This is pattern recognition that costs years to acquire and cannot be transferred by lecture.`,
+        `The case is familiar. Not this case — this case is specific. But the shape of it: you have worked inside this shape before. That prior work is what you are actually bringing to the client.`,
+      ],
+      technology: [
+        `You have watched several paradigms arrive and be superseded. You are now the person who explains why something cannot be done the way the new engineer suggests — not because it cannot be built, but because you know what happens next.`,
+        `The technical debt you are working in today is partly debt you created ${yrLabel} ago when it was the right decision. You understand this better than you can explain it.`,
+      ],
+      finance: [
+        `${yrLabel} and you have been through at least one cycle that proved the model wrong. The model was rebuilt. The rebuilt model is also wrong in ways you suspect but cannot yet see. You work with it anyway — carefully.`,
+        `The juniors are running analyses you ran a decade ago that produced different results because the market was different. You do not say this. You let them run the analysis and you evaluate the result.`,
+      ],
+      government: [
+        `You have served through multiple administrations now. The priorities change with the administration. The institution absorbs the change and continues. You are the institutional memory, which is a position that carries power no one officially acknowledged.`,
+        `The new policy arrived and you knew immediately how it would interact with the three older policies it was supposed to replace. That knowledge is not in any document. It is in you.`,
+      ],
+      law_enforcement: [
+        `You read a scene faster than you can explain what you read. The explanation comes later, after the decision has been made correctly. The speed comes from the years.`,
+        `${yrLabel} of this and you know which calls go sideways and why. The knowledge does not make the sideways calls easier. It makes them more legible.`,
+      ],
+      media: [
+        `You can tell in the first paragraph whether a story has legs or whether it will vanish by tomorrow. ${yrLabel} of filing and you have learned what information weighs and what information evaporates.`,
+        `The industry has changed around you. The question at the center of it — what is worth knowing and why — has not changed. You are here because you still find the center question interesting.`,
+      ],
+      social_services: [
+        `You see the same family patterns repeating in the next generation. You have the files from the parents. You now have the files from the children. That continuity is not visible from outside this work. It changes how you understand what you are doing.`,
+        `The structural causes of the cases on your desk are unchanged from ${yrLabel} ago. You work with the individual cases anyway, because the individual is what is in front of you.`,
+      ],
+      agriculture: [
+        `You have farmed this ground long enough to know what it will do in a wet spring and what it will do in a dry one. The knowledge is specific to this land. You didn\'t know it when you started. Now you do.`,
+        `${yrLabel} of seasons and you know the year by how the light changed in August and what that will mean in October. The certainty is not complete. It is better than it was.`,
+      ],
+      science: [
+        `The field has moved significantly since you started. You have contributed to its movement. The specific findings you are most known for are already being used as foundations by people who don\'t know your name, which is the correct fate of a finding.`,
+        `You know which lines of inquiry will not pay off. That negative knowledge is as valuable as anything else you carry. You save younger researchers years by knowing where the dead ends are.`,
+      ],
+      academia: [
+        `The dissertation students who came through your supervision are now running their own research groups. The continuity of that — the specific methodological choices that pass from advisor to student — is the thing you think about when you think about legacy.`,
+        `${yrLabel} of teaching the same material and you no longer follow the notes. The notes are inside you. The students can tell.`,
+      ],
+      trade: [
+        `${yrLabel} and the hands know things the mind cannot fully account for. The apprentice beside you is doing it technically correctly. You are doing it in a way that can only be described as correctly and then some more.`,
+        `You arrive at the job site and you know within an hour what the actual problem is beneath the described problem. The described problem is what the customer can see. The actual problem is what you can see.`,
+      ],
+      construction: [
+        `You can look at a structure and know where the stress is going without doing the calculation. The calculation confirms it. That confirmation is the job, but the knowledge came first.`,
+        `${yrLabel} and the younger workers come to you when the plan doesn\'t match the site. The plan never fully matches the site. That gap is where the experience lives.`,
+      ],
+      engineering: [
+        `The thing you didn\'t know ${yrLabel} ago was that the technical solution is rarely the hardest part. The hardest part is persuading the room that the technical solution is the technical solution. You learned this slowly and then all at once.`,
+        `You have designed things that are now in the world. Some of them you would do differently. That relationship to your own work — the past version of yourself doing something you\'d now change — is a specific form of professional maturity.`,
+      ],
+      religion: [
+        `You have buried more people than you can easily count. You have officiated the marriages of children of people whose funerals you conducted. The continuity of a community over years is something you carry in a specific way.`,
+        `The faith that brought you here has deepened and also complicated. The deepening and the complication are the same movement. You did not know that at the beginning.`,
+      ],
+      mental_health: [
+        `You recognize patterns in the first three sessions now. The pattern is not the person — the person always exceeds the pattern — but the pattern tells you where to look. Years of sessions taught you the looking.`,
+        `${yrLabel} of this work and you have learned what you can and cannot carry out of the room. The early years of the learning were harder.`,
+      ],
+      architecture: [
+        `The projects you designed ${yrLabel} ago are aging into the city now. You drive past them. You notice what you would change. You also notice what is working correctly, and that is its own form of satisfaction.`,
+        `The client arrives with a brief and you know within the first conversation what they actually need, which is not always what the brief says. That reading took years.`,
+      ],
+      military: [
+        `The institution is legible to you in a way it wasn\'t for the first years. You know which orders reflect policy and which reflect the specific preferences of the specific person giving them. The distinction matters.`,
+        `${yrLabel} of service and the weight of responsibility for the people under your command has not decreased. It has become more specific. You know what it costs them and what you owe them for it.`,
+      ],
+    }
+    const tl = tenureLines[field]
+    if (tl?.length) return pick(tl)
+  }
+
   if (F.has('serious_musician')) return pick([
     'The practice is something you look forward to. That surprises you sometimes.',
     'The music asks for the part of you the day doesn\'t reach.',
