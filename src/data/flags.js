@@ -5034,6 +5034,38 @@ export const FLAG_REGISTRY = {
     notes: 'Set by uk_miners_strike_1984 (community choice) and similar events.',
   },
 
+  falklands_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Shaped by the 1982 Falklands War — the Task Force sailing 8,000 miles south, the ship names arriving through the news, 255 British and 649 Argentine dead in seventy-four days.',
+    intent: 'year_texture',
+    notes: 'Set by uk_falklands_1982.',
+  },
+
+  london_77_generation: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Shaped by the July 7, 2005 London bombings — four coordinated attacks on Underground and bus, 52 dead, 700 injured, the bombers British citizens from Leeds.',
+    intent: 'year_texture',
+    notes: 'Set by uk_77_bombings_2005.',
+  },
+
+  scottish_independence_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Shaped by the September 2014 Scottish independence referendum — 84.6% turnout, 55.3% No, 44.7% Yes; the question returned after Brexit.',
+    intent: 'year_texture',
+    notes: 'Set by uk_scottish_independence_2014.',
+  },
+
+  scottish_yes_voter: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Voted Yes (or supported Yes) in the 2014 Scottish independence referendum.',
+    intent: 'none',
+    notes: 'Set by uk_scottish_independence_2014 (Yes choice). No downstream event; texture only.',
+  },
+
   // ── Poland ────────────────────────────────────────────────────────────────────
 
   communist_poland_childhood: {

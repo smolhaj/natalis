@@ -8101,6 +8101,27 @@ function buildYearTexture(state) {
       ? 'You watched a decade of public services contracted and then watch them again during a pandemic. The contraction and the pandemic were in sequence and the sequence is information about what the contraction left behind.'
       : 'The rhetoric of hard choices and living within our means produced specific outcomes in specific places. You are from one of those places or you know people from one of those places.',
   ])
+  if (F.has('falklands_generation') && Math.random() < 0.2) return pick([
+    'The Task Force sailed in April 1982. Eight thousand miles. The names came through the news: Sheffield, Coventry, Ardent, Belgrano. Seventy-four days. 255 British dead, 649 Argentine dead, three civilians.',
+    'The Falklands War ended on June 14, 1982. The 144-seat majority followed in June 1983. The seventy-four days remade the decade that followed them.',
+    phase === 'late_life'
+      ? 'You were the generation that watched the Task Force sail south. The principle of sovereignty was real. The men who died were real. The political consequences were also real, and lasted considerably longer than seventy-four days.'
+      : 'The Argentine surrender came at Port Stanley on June 14. The war that felt unlikely in April was over. What it made possible for the government was still in progress long after the flags went up.',
+  ])
+  if (F.has('london_77_generation') && Math.random() < 0.22) return pick([
+    'July 7, 2005: King\'s Cross, Edgware Road, Aldgate, Tavistock Square. Fifty-two dead. Seven hundred injured. The bombers were British — from Leeds, from Huddersfield. That was the sentence that took longest.',
+    'They first said "power surges." Then the bus on Tavistock Square. Then the full picture. The morning after London won the Olympics. The specific sequencing of those two days.',
+    phase === 'late_life'
+      ? 'You remember where you were on the morning of July 7, 2005 — what the ordinary Thursday was before you knew, and what it was after. The before stays in you alongside the after.'
+      : 'The 7th of July is a before-and-after for a generation of Londoners. The morning of the 6th, London winning the Olympics bid. The morning of the 7th, four bombs. The distance between those two mornings.',
+  ])
+  if (F.has('scottish_independence_generation') && Math.random() < 0.2) return pick([
+    '55.3 to 44.7. Turnout 84.6 percent — the highest ever recorded in a UK election. The question had never been formally put before. The result did not end the question.',
+    'The Vow: Cameron, Miliband, Clegg together in the Daily Record, three days before the poll. More powers. The Scotland Act 2016 followed. The Brexit vote, two years later, returned the arithmetic.',
+    phase === 'late_life'
+      ? 'The September 18, 2014 numbers remain the last numbers. The independence question that has not yet been put again produces its own texture — the sense of something unresolved that the result did not resolve.'
+      : 'The 44.7 percent who voted Yes is the highest Yes vote in any independence poll to that date. The margin is 10 points. Brexit produced a different calculation that nobody had written into the Union when the votes were counted.',
+  ])
 
   // ─── POLAND TEXTURE ──────────────────────────────────────────────────────────
   if (F.has('communist_poland_childhood') && Math.random() < 0.25) return pick([
@@ -14493,6 +14514,7 @@ export function generateEpitaph(state) {
     'madrid_11m_lived',
     'smolensk_generation', 'strajk_kobiet_generation',
     'russia_1991_generation',
+    'falklands_generation', 'london_77_generation',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -14737,6 +14759,16 @@ export function generateEpitaph(state) {
     para2.push(`${He} was in Portugal for the Carnation Revolution — the flowers in the rifle barrels, the forty-eight years ending without significant bloodshed — and for the troika austerity forty years later. What the revolution built, and what the memorandum asked of it: both things happened in one life and ${he} carried them without cancelling either.`)
   } else if (f('geracao_rasca_generation') && f('portuguese_emigrant_2011')) {
     para2.push(`${He} was in the street on March 12, 2011, with the three hundred thousand, and then left for Angola or Brazil because Portugal was not hiring. The protest and the emigration are not contradictions. They are the same sentence about a country and a generation and what the memorandum required of both.`)
+  } else if (f('miners_strike_generation') && f('windrush_generation')) {
+    para2.push(`${He} came of age in the years of Orgreave and the pit closures — the class politics that formed in a mining community — and was still in Britain four decades later when the Windrush generation were told they couldn't prove their right to be there. Both events were about the same thing. ${He} understood this without requiring it to be explained.`)
+  } else if (f('london_77_generation') && f('iraq_war_generation')) {
+    para2.push(`${He} was in Britain on July 7, 2005 — the bombs on the Underground, the bombers who were British — and had been on the February 2003 march or had watched it on television. The million people and the four bombs are the two coordinates of the same decade.`)
+  } else if (f('miners_strike_generation') && f('brexit_generation')) {
+    para2.push(`${He} was in a mining community in 1984 and voted in 2016. The connection between the two events — the communities that the pit closures left behind and the referendum result from those same communities — ${he} held without needing to explain it to anyone from outside.`)
+  } else if (f('windrush_generation') && f('citizenship_threatened')) {
+    para2.push(`${He} came to Britain legally and was told, decades later, that ${he} could not prove ${his} right to be there. The landing card that proved it was destroyed by the government in 2010. ${He} fought the case. The fight cost more than it should have.`)
+  } else if (f('falklands_generation') && f('miners_strike_generation')) {
+    para2.push(`${He} was in Britain for both the Falklands War and the miners' strike — two events that defined what Thatcherism was and what it was for. The Task Force sailing south and the police buses at Orgreave are the two images of the same political settlement.`)
   }
 
   // Displacement / migration
