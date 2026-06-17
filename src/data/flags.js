@@ -10053,6 +10053,78 @@ export const FLAG_REGISTRY = {
     notes: 'Set by bra_bolsonaro_covid.',
   },
 
+  bra_hyperinflation_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived Brazil\'s hyperinflation years (1986–1994) — prices changing daily, currencies renamed, the Plano Real shock of overnight stability.',
+    intent: 'year_texture',
+    notes: 'Set by bra_hyperinflation.',
+  },
+
+  bra_plano_real_optimist: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Embraced the 1994 Plano Real as Brazil\'s economic modernisation — stable prices as proof of a new country.',
+    intent: 'year_texture',
+    notes: 'Set by bra_hyperinflation (choice 2).',
+  },
+
+  bra_carandiru_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the 1992 Carandiru massacre — 111 inmates killed by military police, the commander acquitted and elected to the state assembly.',
+    intent: 'year_texture',
+    notes: 'Set by bra_carandiru_1992.',
+  },
+
+  bra_nordestino_migrant: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Migrated from Brazil\'s impoverished Northeast (sertão) to São Paulo or Rio — the pau-de-arara generation who built the southeast on their labor.',
+    intent: 'year_texture',
+    notes: 'Set by bra_nordestino_migration (choice 1).',
+  },
+
+  bra_nordestino_stayed: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Remained in Brazil\'s drought-stricken Northeast while others migrated south — the ones who stayed in the sertão\'s diminishing towns.',
+    intent: 'year_texture',
+    notes: 'Set by bra_nordestino_migration (choice 2).',
+  },
+
+  bra_lula_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived Lula\'s 2002 election — the metalworker-turned-president, Bolsa Familia, and the first Brazilian government that many poor citizens felt acknowledged their existence.',
+    intent: 'year_texture',
+    notes: 'Set by bra_lula_election.',
+  },
+
+  bra_evangelical_convert: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Converted from Catholicism to evangelical Protestantism in Brazil\'s one-generation religious transformation — the Universal Church, the prosperity gospel, the favela congregation.',
+    intent: 'year_texture',
+    notes: 'Set by bra_evangelical_shift (choice 1).',
+  },
+
+  bra_lava_jato_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived Operation Car Wash — the anti-corruption investigation that imprisoned Lula, elected Bolsonaro, and was later ruled to have been politically biased.',
+    intent: 'year_texture',
+    notes: 'Set by bra_lava_jato.',
+  },
+
+  bra_january_8_witness: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed the January 8, 2023 storming of Brazil\'s Congress, Planalto Palace, and Supreme Court by Bolsonaro supporters after Lula\'s inauguration.',
+    intent: 'year_texture',
+    notes: 'Set by bra_january_8_2023.',
+  },
+
   // ─── ARGENTINA 2001 FLAGS ─────────────────────────────────────────────────────
 
   corralito_survivor: {

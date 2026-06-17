@@ -8793,6 +8793,60 @@ function buildYearTexture(state) {
       ? 'The 700,000 are in the record whether or not the politics around them can be agreed on. You were alive through all of it — the denial, the Manaus oxygen crisis, the election loss by two points. The record is what it is.'
       : 'You watched Brazil run an experiment: what happens when a government actively resists its own public health response. The number came back as the answer.',
   ])
+  if (F.has('bra_hyperinflation_generation') && Math.random() < 0.25) return pick([
+    'The price of a coffee changed between when you sat down and when you paid. The Cruzado, the Cruzado Novo, the Cruzeiro — three currencies in eight years. The Plano Real arrived in July 1994 and the price of a coffee became a fixed fact.',
+    phase === 'late_life'
+      ? 'You can price a kilo of flour in every currency Brazil issued between 1986 and 1994. You do not entirely trust that the real will be stable tomorrow. The distrust is not irrational — it is formed from specific data.'
+      : 'The specific skill of knowing the price is wrong before the cashier notices: you developed it young and it never fully left. Inflation at 2,000% per year is an education in impermanence.',
+  ])
+  if (F.has('bra_plano_real_optimist') && Math.random() < 0.18) return pick([
+    'July 1994: the Plano Real arrives and the price on the shelf is the price at the register. You felt the moment as a country becoming possible.',
+    phase === 'late_life'
+      ? 'The Real held. The generation after you has never shopped with an indexing table in their head. The price of something is a fact. You remember when it was a negotiation.'
+      : 'The stability of the real is thirty years old. It is still, to you, a kind of miracle — an event that happened and continued to have happened.',
+  ])
+  if (F.has('bra_carandiru_generation') && Math.random() < 0.22) return pick([
+    'October 2, 1992. One hundred and eleven. None of the dead had firearms. The commander was acquitted and elected to the state assembly. Carandiru is the specific number in Brazilian history for how the state treats the people at the bottom of it.',
+    phase === 'late_life'
+      ? 'The prison was demolished in 2002. A park was built on the site. The question of who the state protects and who the state is deployed against did not change when the building came down.'
+      : 'The 111 dead at Carandiru are in the record. What the record is used for — in politics, in law, in the definition of who a citizen is — is the argument that Carandiru keeps being cited in.',
+  ])
+  if (F.has('bra_nordestino_migrant') && Math.random() < 0.22) return pick([
+    'Pau-de-arara: the wooden platform with the pole to grip. The truck south. Weeks from the sertão to São Paulo. The sertão arrived with you — the forró in Brás on Saturday, the accent the city noticed before it noticed you.',
+    phase === 'late_life'
+      ? 'You built São Paulo. Or someone built it who looks like you and came from where you came from. The city received your labor without fully receiving you. The city is what it is because of the people it did not fully receive.'
+      : 'Nordestino: the city\'s word for you, which was not always neutral. You built the buildings from the inside while the inside of the buildings was being finished. The building is finished. You are still in the city.',
+  ])
+  if (F.has('bra_nordestino_stayed') && Math.random() < 0.2) return pick([
+    'The town got quieter every year of your youth. By the time you were grown, you could name which houses had lost their young men to the south. The church and the reservoir were still there. The reservoir was lower each August.',
+    phase === 'late_life'
+      ? 'You stayed in the sertão. What you stayed for is here: the land, the people who also stayed, the specific knowledge of a place that required staying to accumulate. The people who left are in São Paulo and occasionally the news.'
+      : 'The drought polygon: the geographic fact of where the rain does not reliably arrive. You live in the polygon. You have developed the knowledge that living inside a fact for a long time produces.',
+  ])
+  if (F.has('bra_lula_generation') && Math.random() < 0.22) return pick([
+    'A metalworker who lost a finger in a factory accident became president on his fourth attempt. Bolsa Família reached 14 million families. For many Brazilians this was the first time a government demonstrated that it knew they were there.',
+    phase === 'late_life'
+      ? 'Lula was imprisoned in 2018 and the conviction was annulled in 2021 and he won again in 2022 by less than two points. The arc of his political life is also the arc of a particular argument about what Brazil is. You watched all of it.'
+      : 'The PT and the Mensalão and the economy growing and Bolsa Família: you hold all of these simultaneously because they were simultaneous. The country that got better in those years is also the country where the corruption was happening.',
+  ])
+  if (F.has('bra_evangelical_convert') && Math.random() < 0.2) return pick([
+    'The service on Tuesday and Thursday and Sunday. The pastor who knows your name in a city that did not otherwise know it. The tithe. The community that the Catholic church in your neighborhood held one mass a week for and the evangelical church held three.',
+    phase === 'late_life'
+      ? 'Brazil shifted from 90% Catholic to near-parity with evangelicals in your lifetime. You are part of that shift. The community it gave you was real. What the community became in politics — the bancada evangélica, the alignment with Bolsonaro — is something you are still reckoning with.'
+      : 'The Universal Church, the Assembly of God, the Four-Square: the names for the same structure, which is a community in a city that does not automatically provide one. You found your community here. The theology arrived with the belonging.',
+  ])
+  if (F.has('bra_lava_jato_generation') && Math.random() < 0.2) return pick([
+    'Lava Jato. Car Wash. The gas station in Curitiba that led to Petrobras that led to the construction giants that led to every major party. Lula imprisoned. Moro as Justice Minister. The Supreme Court ruling the judge was biased. The conviction annulled.',
+    phase === 'late_life'
+      ? 'The investigation was real and the political use of the investigation was also real. You watched both simultaneously and could not always tell which was which while it was happening. The record is still being read.'
+      : 'The sequence: corruption investigated, conviction, imprisonment, prevented from running, new government, judge revealed as biased, conviction annulled. You lived all of this in six years. Brazil has been running a political stress test.',
+  ])
+  if (F.has('bra_january_8_witness') && Math.random() < 0.2) return pick([
+    'January 8, 2023. The Congress, the Planalto, the Supreme Court. The Portinari paintings. The furniture. Nine days after the inauguration. More than a thousand arrested. The democracy held in the sense that it did not fall.',
+    phase === 'late_life'
+      ? 'The images from January 8 — the man in the presidential chair, the broken stained glass — went around the world. Brazil had watched Washington in 2021 and then had its own version. The democracy held. The conditions that produced it are still there.'
+      : 'You watched the institutions be occupied and damaged and then you watched the police arrive. The democracy survived January 8. The question of what the people who entered those buildings believe, and what they will try next, is the question the survival leaves open.',
+  ])
 
   // ─── ARGENTINA 2001 TEXTURE ──────────────────────────────────────────────────
   if (F.has('corralito_survivor') && Math.random() < 0.28) return pick([
@@ -14619,6 +14673,7 @@ export function generateEpitaph(state) {
     'sg_founding_generation', 'sg_kampung_generation', 'sg_dialect_lost', 'sg_lky_generation',
     'nl_hunger_winter_generation', 'nl_srebrenica_generation', 'nl_fortuyn_witness',
     'bra_dictatorship_generation', 'bra_resistance_generation', 'bra_favela_survived',
+    'bra_carandiru_generation', 'bra_nordestino_migrant', 'bra_lava_jato_generation', 'bra_january_8_witness',
     'bng_liberation_generation', 'bng_mukti_bahini', 'bng_famine_generation', 'bng_coup_generation',
     'irq_iran_iraq_veteran', 'irq_sanctions_generation', 'irq_displacement_generation', 'irq_isis_generation',
     'rwa_rtlm_generation', 'rwa_genocide_witness', 'rwa_goma_generation',
@@ -14791,6 +14846,12 @@ export function generateEpitaph(state) {
     para2.push(`${He} came of age in Brazil during the AI-5 years — habeas corpus suspended, Congress closed, the DOPS at work. The economy grew 10% per year. The torture happened in the same years as the miracle. ${He} navigated the silence that this required.`)
   } else if (f('bra_favela_survived') && f('bra_favela_generation')) {
     para2.push(`${He} grew up on the hill and survived its arithmetic — the bala perdida, the faction boundaries, the decision to stay or leave. The city below the hill experienced none of this and had opinions about it. ${He} had the count.`)
+  } else if (f('bra_nordestino_migrant') && f('bra_lula_generation')) {
+    para2.push(`${He} came south from the sertão on the pau-de-arara when the drought made staying impossible, and was in São Paulo when a man who also came from the working class became president in 2002. Both journeys were about the same thing: the country that the country was capable of being and kept failing to be. ${He} watched the second journey and recognized it.`)
+  } else if (f('bra_lava_jato_generation') && f('bra_lula_generation')) {
+    para2.push(`${He} voted for Lula in 2002 and watched him imprisoned in 2018 on charges a judge was later found to have pursued with political coordination. The conviction was annulled in 2021. Lula won again in 2022. ${He} lived all four chapters of the same story.`)
+  } else if (f('bra_carandiru_generation') && f('bra_favela_generation')) {
+    para2.push(`${He} grew up on the hill and was old enough to understand Carandiru in 1992 — 111 inmates killed, the commander acquitted and elected to the assembly. The hill and the prison were the same political fact from different angles: the state's relationship with the people it sorted to the bottom.`)
   } else if (f('bng_mukti_bahini') && f('bng_liberation_generation')) {
     para2.push(`${He} was in the Mukti Bahini during the 1971 Liberation War — nine months of guerrilla resistance while the Pakistani army conducted systematic atrocities across Bangladesh. December 16, 1971: ninety-three thousand Pakistani soldiers surrendered. ${He} had been there from March.`)
   } else if (f('bng_liberation_generation') && f('bng_famine_generation')) {
