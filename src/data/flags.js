@@ -5465,6 +5465,30 @@ export const FLAG_REGISTRY = {
     notes: 'Set by ger_refugee_crisis_2015 (resistant choice).',
   },
 
+  wirtschaftswunder_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age in the West German Wirtschaftswunder — the economic miracle of the 1950s, the Beetle, the Fresswelle, the rebuilding that moved fast past the question of what it was rebuilding from.',
+    intent: 'year_texture',
+    notes: 'Set by ger_wirtschaftswunder.',
+  },
+
+  nsu_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Turkish or Greek-German character shaped by the NSU murders 2000–2011 — nine Turkish-German and one Greek-German killed while police investigated the victims\' families. "Dönermorde." Files shredded the week the truth broke.',
+    intent: 'year_texture',
+    notes: 'Set by ger_nsu_murders_2011.',
+  },
+
+  nsu_mourned: {
+    weight: 'moderate',
+    category: 'grief',
+    description: 'Personally connected to one of the NSU murder victims — knew the family, or knew someone who did.',
+    intent: 'none',
+    notes: 'Set by ger_nsu_murders_2011 (direct connection choice). No downstream event.',
+  },
+
   stasi_generation: {
     weight: 'major',
     category: 'political',
@@ -5560,6 +5584,14 @@ export const FLAG_REGISTRY = {
     description: 'Lived through or participated in the gilets jaunes movement 2018–20 — the roundabout as political centre, the metropolitan/peripheral divide.',
     intent: 'year_texture',
     notes: 'Set by fr_yellow_vests_2018.',
+  },
+
+  mai_68_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Shaped by French May 1968 — the barricades in the Latin Quarter, ten million workers on strike, de Gaulle\'s Baden-Baden disappearance and June landslide, the reorganisation of French cultural life that the government\'s victory did not undo.',
+    intent: 'year_texture',
+    notes: 'Set by fr_mai_68.',
   },
 
   // ── Ireland ───────────────────────────────────────────────────────────────────

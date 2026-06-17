@@ -8361,6 +8361,20 @@ function buildYearTexture(state) {
     'Your concern was about pace and scale. Your concern has been used since by people whose concerns are different from yours. The difference matters and is difficult to hold onto in the current political climate.',
     'The debate became about identity rather than logistics. You are not sure when that happened or how to get back to the original question.',
   ])
+  if (F.has('wirtschaftswunder_generation') && Math.random() < 0.2) return pick([
+    'The Fresswelle — the feeding wave. The shop windows filled the day of currency reform and the queues began. The Beetle on the road. The washing machine in the house. Rebuilding at a speed that required moving past the question of what it was rebuilding from.',
+    'West Germany went from rubble to the fifth largest economy in fifteen years. The speed of the rebuilding had a logic: if you build fast enough, the reckoning has to wait. The reckoning waited for the next generation.',
+    phase === 'late_life'
+      ? 'You lived the Wirtschaftswunder from the inside — the new appliances, the car, the feeling that the country was becoming what it had promised to be. What it had been before it promised that: the Vergangenheitsbewältigung started later, and slowly, and it is still going.'
+      : 'The prosperity of the 1950s was real and was built on something that was not spoken about yet. Both things are true. The not-speaking ended in the 1960s with the student movement. You were between the two.',
+  ])
+  if (F.has('nsu_generation') && Math.random() < 0.25) return pick([
+    '"Dönermorde." That was the police nickname. Kebab murders. From 2000 to 2011, while the police investigated the victims\' families for drug connections. The NSU cell was discovered only because two members died in a car crash. The Verfassungsschutz files were shredded the week after.',
+    'Nine Turkish-German and one Greek-German killed between 2000 and 2006. Ten years. The official narrative: organised crime within the immigrant community. The actual narrative: three neo-Nazis from Zwickau who were never found because nobody was looking for them.',
+    phase === 'late_life'
+      ? 'You have spent your life in a country that called your community\'s murdered members drug dealers for a decade. The parliamentary inquiry found failures at every level. The shredded files are in the finding. The finding did not bring back who was taken.'
+      : 'The NSU committee has been running for years. The pattern of Verfassungsschutz involvement is still not fully established. The families of the killed have been waiting for a full accounting since 2011. You are still waiting with them.',
+  ])
   if (F.has('oil_shock_generation') && Math.random() < 0.22) return pick([
     '1973. The petrol queue stretches from the garage to the main road. The odd/even number plate rule applies every other day. The German government bans driving on Sundays. The Dutch see Amsterdam with no cars. Everyone learns what the price of oil is.',
     'The first oil shock produced the second car in one move: the small car, the fuel-efficient car, the car that was not the American car. The shock changed the design of things.',
@@ -8433,6 +8447,13 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'The high-visibility vest is still in your car. It is required by law. It means something different now than it did before November 2018.'
       : 'Macron cancelled the fuel tax. The movement continued. It was not only about petrol. The continuing was the clarification.',
+  ])
+  if (F.has('mai_68_generation') && Math.random() < 0.25) return pick([
+    'The paving stones. The barricades in the Latin Quarter. Ten million workers on strike. De Gaulle gone to Baden-Baden and then back, and then the largest conservative majority in French history in June. Mai 68 won its government and reorganized its culture.',
+    'The thing about Mai 68 is not the outcome. The outcome was de Gaulle winning. The thing is the weeks — what the weeks felt like to be in, what got reorganized in French life and language and possibility without the government changing. You were in the weeks.',
+    phase === 'late_life'
+      ? 'You were there. The people who were not there have a different version of what it was. Your version includes what it smelled like and what the slogans on the walls said and what you thought was possible during that fortnight in May. The government\'s June victory is in the record. Your May is also in the record.'
+      : 'The cultural revolution that Mai 68 accomplished happened without the revolution. The university structure changed. The relationship between student and teacher changed. The relationship between worker and employer changed — slowly, partially, but changed. The government stayed.',
   ])
 
   // ─── NETHERLANDS TEXTURE ─────────────────────────────────────────────────────
@@ -14543,6 +14564,8 @@ export function generateEpitaph(state) {
     'russia_1991_generation',
     'falklands_generation', 'london_77_generation',
     'jfk_assassination_generation', 'katrina_generation', 'gulf_coast_displaced',
+    'nsu_generation', 'nsu_mourned',
+    'mai_68_generation',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -14807,6 +14830,14 @@ export function generateEpitaph(state) {
     para2.push(`${He} lived in America for both the War on Drugs — the mandatory minimums, the crack disparity, the specific communities that absorbed the policy — and for Katrina, when sixty-seven percent of those who died were Black and the response took three days. The pattern is the same pattern. ${He} knew it from the inside.`)
   } else if (f('watergate_generation') && f('vietnam_veteran')) {
     para2.push(`${He} came back from Vietnam and then watched Nixon resign. The war the government told him was necessary and the government that lied about the break-in were the same government. The generation that came back from Vietnam and watched Watergate developed a specific political education that has not softened with age.`)
+  } else if (f('nsu_mourned') && f('nsu_generation')) {
+    para2.push(`${He} buried people from the Turkish-German community in Germany between 2000 and 2011, while the police investigation was focused on the victims' families. Nine of their own killed by a neo-Nazi cell that nobody was looking for. The files that might have explained the failures were shredded the week the story broke. ${He} is still waiting for the full accounting.`)
+  } else if (f('nsu_generation') && f('hyphenated_german')) {
+    para2.push(`${He} built a life as a Turkish German — the hyphenated identity, neither fully claimed — and watched nine members of that community murdered over eleven years while the state blamed the community. The NSU verdict came. The full story of what the Verfassungsschutz knew, and when, is still being established.`)
+  } else if (f('mai_68_generation') && f('algerian_war_veteran')) {
+    para2.push(`${He} carried Algeria and Mai 68 in the same French life — the war that was not a war, and then the weeks when ten million workers went on strike and de Gaulle disappeared to consult the army and came back to win a landslide. The France that produced both events is the France ${he} knows from inside.`)
+  } else if (f('wirtschaftswunder_generation') && f('ddr_generation')) {
+    para2.push(`${He} lived in a divided Germany — the Wirtschaftswunder on one side, the Trabant queue on the other — and lived to see it reunified. Both Germanys were built from the same rubble by the same generation asking different questions about what came before.`)
   }
 
   // Displacement / migration
