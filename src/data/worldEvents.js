@@ -3122,4 +3122,18 @@ export const WORLD_EVENTS = [
     when: (G) => !G.flags.includes('june_days_2013'),
   },
 
+  {
+    id: 'we_cochabamba_water_war_2000',
+    name: 'Cochabamba Water War',
+    years: [2000, 2001],
+    archetypes: 'all',
+    countries: ['Bolivia'],
+    narrative: 'In 1999, Bolivia privatised Cochabamba\'s water supply as a condition of an IMF loan. Aguas del Tunari, a subsidiary of Bechtel, raised prices by an average of 50 percent — in a city where the median worker earned about $100 a month. In January 2000 the city rose: roadblocks, strikes, a general assembly that occupied the city center. In April the government declared a state of siege. Victor Hugo Daza, age 17, was shot dead by security forces. Bechtel left. The water returned to public hands. It was called the first successful uprising against water privatisation in the world.',
+    context: 'The Cochabamba Water War (Guerra del Agua) of 2000 began when Bolivia\'s privatisation of the city\'s water supply, required under an IMF loan agreement, handed a concession to Aguas del Tunari (a Bechtel subsidiary). The concession also granted rights to collect rainwater, making it technically illegal to collect water falling on one\'s own roof. The uprising reversed the privatisation. Bechtel later filed a $50M compensation claim against Bolivia under a bilateral investment treaty; sustained international pressure caused the company to drop the claim in 2006. The events directly influenced Bolivia\'s election of Evo Morales in 2005 and became a landmark case in global debates about the commodification of water.',
+    effect: (p) => { p.m -= 8; p.karma += 5; p.addFlag('cochabamba_witness') },
+    addFlags: ['cochabamba_witness'],
+    minAge: 14,
+    when: (G) => !G.flags.includes('cochabamba_witness'),
+  },
+
 ]

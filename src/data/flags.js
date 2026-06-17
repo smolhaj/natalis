@@ -10239,4 +10239,114 @@ export const FLAG_REGISTRY = {
     notes: 'Set by sick_child_who_they_became or sick_child_chronic_late.',
   },
 
+  // ── CAMBODIA DEPTH ──────────────────────────────────────────────────────────
+
+  khmer_rouge_rural_witness: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Was already living in the Cambodian countryside when the Khmer Rouge arrived in 1975 — witnessed Year Zero from within the cooperative system, not as an evacuee.',
+    intent: 'year_texture',
+    notes: 'Set by cam_rural_year_zero. Supplements khmer_rouge_survivor from events_asia_arcs.js.',
+  },
+
+  family_taken_khmer_rouge: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Had a parent summoned for Khmer Rouge re-education — watched them walk up the road with two cadres, not knowing it was the last time.',
+    intent: 'year_texture',
+    notes: 'Set by cam_family_taken. Calls killParent(). Distinct from genocide_survivor (more personal/specific loss).',
+  },
+
+  phnom_penh_return: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Returned to or arrived in Phnom Penh after liberation in 1979 — found the city half-empty, claimed a house, began rebuilding.',
+    intent: 'year_texture',
+    notes: 'Set by cam_phnom_penh_return. Gates the long-term reconstruction narrative.',
+  },
+
+  perpetrator_neighbor_silence: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Chose to maintain civil relations with a former Khmer Rouge operative living in the same community — the daily cost of the amnesty that made Cambodia function.',
+    intent: 'year_texture',
+    notes: 'Set by cam_living_alongside (civility choice).',
+  },
+
+  refused_complicit_silence: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Refused to maintain civil relations with a former Khmer Rouge operative — chose personal integrity over the practical arrangement, at practical cost.',
+    intent: 'year_texture',
+    notes: 'Set by cam_living_alongside (refusal choice).',
+  },
+
+  khmer_rouge_second_gen_researched: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Second-generation Cambodian who responded to parental silence by researching the Khmer Rouge history independently.',
+    intent: 'none',
+    notes: 'Set by cam_second_generation_silence (research choice).',
+  },
+
+  khmer_rouge_second_gen_silence: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Second-generation Cambodian who chose to respect the parental silence about Khmer Rouge — carries the questions as a specific kind of not-knowing.',
+    intent: 'none',
+    notes: 'Set by cam_second_generation_silence (silence choice).',
+  },
+
+  landmine_country: {
+    weight: 'moderate',
+    category: 'environment',
+    description: 'Grew up in a heavily mined country — learned which paths exist because other paths are mined; lived alongside demining operations and prosthetics clinics.',
+    intent: 'year_texture',
+    notes: 'Set by cam_landmine_awareness (Cambodia). The red markers are permanent furniture of the landscape.',
+  },
+
+  tuol_sleng_witnessed: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Visited Tuol Sleng (S-21) — saw the intake photographs of the 17,000 prisoners, most of whom did not survive; left with unanswerable questions.',
+    intent: 'year_texture',
+    notes: 'Set by cam_tuol_sleng.',
+  },
+
+  khmer_rouge_late_reckoned: {
+    weight: 'moderate',
+    category: 'resilience',
+    description: 'In late life, reached a reckoning with what was passed on — the silence, the building, the question of what was protected and what was lost.',
+    intent: 'year_texture',
+    notes: 'Set by cam_survivor_late_reckoning.',
+  },
+
+  // ── INDIA INFRASTRUCTURE ─────────────────────────────────────────────────────
+
+  swachh_bharat_adopted: {
+    weight: 'minor',
+    category: 'environment',
+    description: 'Rural India: household adopted toilet use under Swachh Bharat Abhiyan — the practice changed, though the change took longer than the structure.',
+    intent: 'none',
+    notes: 'Set by ind_swachh_bharat (adoption choice).',
+  },
+
+  swachh_bharat_ambivalent: {
+    weight: 'minor',
+    category: 'environment',
+    description: 'Rural India: the Swachh Bharat toilet was built; whether it was used is a different question — the structure and the habit are counted separately.',
+    intent: 'none',
+    notes: 'Set by ind_swachh_bharat (ambivalent choice).',
+  },
+
+  // ── BOLIVIA INFRASTRUCTURE ───────────────────────────────────────────────────
+
+  cochabamba_witness: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Was present in Cochabamba during the 2000 Water War — the first successful uprising against water privatisation in the world.',
+    intent: 'none',
+    notes: 'Set by we_cochabamba_water_war_2000 world event.',
+  },
+
 }

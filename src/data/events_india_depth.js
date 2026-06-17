@@ -303,4 +303,34 @@ export const INDIA_DEPTH_EVENTS = [
     effect: null,
   },
 
+  // ─── SWACHH BHARAT — RURAL TOILET TRANSITION ─────────────────────────────────
+
+  {
+    id: 'ind_swachh_bharat',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'India' &&
+      G.ruralUrban === 'rural' &&
+      G.currentYear >= 2014 && G.currentYear <= 2022 &&
+      !G.mem?.indSwachhBharat,
+    text: () =>
+      'Swachh Bharat Abhiyan: the government programme to end open defecation in India. A toilet is now officially under construction behind the house. The health logic is clear — diarrhoea, typhoid, child mortality, all documented — and the programme\'s statistics count structures built. Whether a structure is used is a different count.\n\nFor women the calculation is simpler and more urgent than it is for anyone else. The field requires darkness and distance and both of these create a specific risk that a compound toilet eliminates. The older men of the village will tell you what the field at dawn was. Your mother or your sister or your daughter could tell you what the field at dawn cost.',
+    choices: [
+      {
+        text: 'The toilet is used. The practice changes, slowly.',
+        tag: null,
+        outcome: 'The generation growing up now will not remember the alternative.',
+        effect: (p) => { p.h += 5; p.e += 3; p.addFlag('swachh_bharat_adopted'); p.setMem('indSwachhBharat', true) },
+      },
+      {
+        text: 'The toilet is built. Whether it is used is a different question.',
+        tag: null,
+        outcome: 'The government counts the structure. The habit takes longer than the structure.',
+        effect: (p) => { p.e += 2; p.r += 4; p.addFlag('swachh_bharat_ambivalent'); p.setMem('indSwachhBharat', true) },
+      },
+    ],
+    effect: null,
+  },
+
 ];

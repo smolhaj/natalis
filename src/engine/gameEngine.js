@@ -8944,6 +8944,64 @@ function buildYearTexture(state) {
     'You are from the country that the war was about and that the war happened in. The war has a different shape from here than from the countries that were in it by choice rather than by geography.',
   ])
 
+  // ─── CAMBODIA TEXTURE ────────────────────────────────────────────────────────
+  if (F.has('khmer_rouge_rural_witness') && Math.random() < 0.28) return pick([
+    'You were already in the countryside when the cadres arrived. There was no evacuation for you — only a change in who gave the orders.',
+    'The teenagers with rifles and the new words: angkar, comrade, the Organization. You learned what was safe to say and have never fully unlearned the reflex.',
+    phase === 'late_life'
+      ? 'You were a child during Year Zero and grew up in its aftermath and have spent your adult life inside a country shaped by something that happened before you could understand it. The shape is permanent.'
+      : 'Year Zero meant the erasure of before. You remember before. The cadres did not succeed in erasing what existed inside you — only in making it dangerous to show.',
+  ])
+  if (F.has('family_taken_khmer_rouge') && Math.random() < 0.32) return pick([
+    'The small bag. The two cadres, one on each side. The road. You watched from where you were standing and did not understand that it was the last time until much later.',
+    'The word re-education was said in a specific way that carried its weight. You heard it and did not know yet what that weight would mean for your family.',
+    phase === 'late_life'
+      ? 'Fifty years have not changed the picture: the road, the small bag, the two figures walking smaller until they are not visible. The image does not age. You do.'
+      : 'You spent years not knowing and then you spent years knowing. The knowing is not better. It is only more accurate.',
+  ])
+  if (F.has('phnom_penh_return') && Math.random() < 0.22) return pick([
+    'The city was half-empty when you arrived. Houses with open doors and no owners. A country returning to itself, finding the self it was returning to had changed beyond recognition.',
+    'You chose a house that was not yours and swept the floor. The sweeping was the beginning — not the city\'s rebuilding, yours.',
+    phase === 'late_life'
+      ? 'The Phnom Penh you returned to in 1979 and the Phnom Penh that exists now are cities that share a location. Everything else was rebuilt. You helped build it.'
+      : 'The city filled slowly. People arrived from every direction and each had survived differently and none of them were talking about it yet. The silence was the sound of a country beginning.',
+  ])
+  if (F.has('perpetrator_neighbor_silence') && Math.random() < 0.25) return pick([
+    'The civility costs something each time you pay it. Cambodia made a decision — too many perpetrators to prosecute — and the cost is paid in silences like this one, daily.',
+    'You greet him in the market. Your children go to the same school. The country decided that stability required this arrangement. You live inside the arrangement.',
+    phase === 'late_life'
+      ? 'The ECCC convicted four people. Four. The perpetrator neighbour is not among the four. He is still there. The arrangement has proved permanent.'
+      : 'What he did, what you know, and what is said between you: the distance between those three things is the space Cambodia built its peace inside.',
+  ])
+  if (F.has('refused_complicit_silence') && Math.random() < 0.25) return pick([
+    'You chose not to greet him and it cost you in practical ways. The practical cost is real. You still chose.',
+    'The silence you chose is its own statement. In a country that organized its peace around not-naming, your refusal is legible to everyone who sees it.',
+    phase === 'late_life'
+      ? 'You are old enough to know that what you chose cost you something and changed nothing about what he did. You would make the same choice again. That is not consolation. It is just true.'
+      : 'The choice you made is not the choice Cambodia made collectively. You understand why the country made the choice it made. You could not make it yourself.',
+  ])
+  if (F.has('landmine_country') && Math.random() < 0.2) return pick([
+    'The red markers at the field\'s edge. You learned what they meant before you learned to read — the same category as hot and sharp: do not.',
+    'The demining organizations have been here for decades. The country has the highest rate of landmine injuries per capita in the world. The clearing will take decades more.',
+    phase === 'late_life'
+      ? 'You have walked around the edges of contaminated ground your entire life. The orange-vested deminers along the roads were the texture of your childhood. You know what they were doing and what it cost and how long it takes.'
+      : 'An uncle with one leg below the knee. The path through the forest that exists because someone established which ground is safe. That knowledge was paid for by someone who did not survive the payment.',
+  ])
+  if (F.has('tuol_sleng_witnessed') && Math.random() < 0.22) return pick([
+    'The photographs on the walls. The intake photographs the Khmer Rouge took of every prisoner who arrived. You looked for a face you recognized.',
+    'S-21. An estimated 17,000 people entered. Seven survived. The school building is still there. The rooms are unchanged. The photographs are still on the walls.',
+    phase === 'late_life'
+      ? 'You went to Tuol Sleng once and did not go back. You did not need to go back. What you saw the first time is available to you at any moment without returning.'
+      : 'After two hours you needed to be outside in the light and the noise of the city. The city continues. You were inside something for those two hours that the city outside does not contain.',
+  ])
+  if (F.has('khmer_rouge_late_reckoned') && Math.random() < 0.25) return pick([
+    'Cambodia has a phrase for this generation: the ones who survived and built and did not speak. You built. The speaking was not available to you in the form the younger generation assumes it should be.',
+    'The silence was not suppression. The silence was what allowed the building. You understand this now.',
+    phase === 'late_life'
+      ? 'Your children grew up in a country that is not the country you grew up in. They know the history — taught in schools now, incompletely — but they did not carry it in their bodies. You are not sure whether you succeeded or failed in protecting them from that.'
+      : 'The country survived. You survived. The specific cost of the survival is something you have been recounting to yourself for decades. You have not finished.',
+  ])
+
   // ─── THAILAND TEXTURE ────────────────────────────────────────────────────────
   if (F.has('thai_uncolonized_identity') && Math.random() < 0.15) return pick([
     'The curriculum taught that Thailand survived by playing the colonial powers against each other. The curriculum was right about the survival and incomplete about the cost of it.',
