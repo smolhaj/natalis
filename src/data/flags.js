@@ -9528,6 +9528,30 @@ export const FLAG_REGISTRY = {
     notes: 'Set by gr_debt_crisis_2010.',
   },
 
+  gr_civil_war_memory: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Grew up in the aftermath of the Greek Civil War 1944-49 — the family silences, the lists, the left/right fracture that ran through households and villages',
+    intent: 'year_texture',
+    notes: 'Set by gr_civil_war_memory. The war killed more Greeks than the German occupation; it was not discussed.',
+  },
+
+  gr_oxi_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through the July 2015 OXI referendum — voted no to austerity, watched Tsipras accept terms more severe than what was rejected one week later',
+    intent: 'year_texture',
+    notes: 'Set by gr_oxi_2015.',
+  },
+
+  gr_testigo_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Late-life witness to the full Greek arc — civil war aftermath, junta, Polytechnic, Metapolitefsi, EU accession, debt crisis, OXI',
+    intent: 'both',
+    notes: 'Set by gr_late_reckoning.',
+  },
+
   // ── PORTUGAL ────────────────────────────────────────────────────────────────
 
   estado_novo_generation: {

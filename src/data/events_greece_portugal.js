@@ -144,6 +144,122 @@ export const GREECE_PORTUGAL_EVENTS = [
     effect: null,
   },
 
+  // ── CIVIL WAR FAMILY MEMORY ───────────────────────────────────────────────────
+
+  {
+    id: 'gr_civil_war_memory',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Greece' &&
+      G.currentYear >= 1945 && G.currentYear <= 1965 &&
+      G.age >= 6 && G.age <= 16 &&
+      !G.mem?.grCivilWar,
+    text: 'The Civil War ended in 1949 but it did not end in the family. The division between those who fought for the government and those who fought for the Communists ran through villages, through extended families, sometimes through a single household. You are growing up in its aftermath. A relative who was on the losing side: there are things they cannot say, things they cannot do, lists their names are on. Your father does not speak to his brother. There is a word for this — to be "nationally-minded" or to be "of the left" — but in the family the word is not spoken, only practiced. The Civil War killed more Greeks than the German occupation. The Germans are discussed. The Civil War is not.',
+    choices: [
+      {
+        text: 'Your family was on the winning side. The silence is the silence of what winning required.',
+        tag: null,
+        outcome: 'The things that were done to win are in the family as an absence — as things not discussed rather than as stories. You learn to notice absences.',
+        effect: (p) => { p.r += 6; p.e += 4; p.addFlag('gr_civil_war_memory'); p.setMem('grCivilWar', true); },
+      },
+      {
+        text: 'Your family was on the losing side. There are things you cannot say out loud in this decade.',
+        tag: null,
+        outcome: 'What you cannot say becomes the language of the house — implied, known between family members, inadmissible in the street.',
+        effect: (p) => { p.m -= 8; p.r += 7; p.addFlag('gr_civil_war_memory'); p.addFlag('political_leaning_left'); p.setMem('grCivilWar', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── THE OXI REFERENDUM 2015 ───────────────────────────────────────────────────
+
+  {
+    id: 'gr_oxi_2015',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Greece' &&
+      G.currentYear >= 2015 && G.currentYear <= 2016 &&
+      G.age >= 20 &&
+      !G.mem?.grOxi,
+    text: 'July 5, 2015. The question is: do you accept the creditors\' austerity terms. The ballot says \'OXI\' for no and \'NAI\' for yes. Sixty-one percent vote OXI. Tsipras holds it up as a mandate. One week later he accepts terms significantly more severe than the ones that were rejected. The sequence — the referendum, the week, the capitulation — teaches something specific about the gap between democratic mandate and economic power. The word OXI has meant something specific in Greece since October 1940, when Metaxas said it to Mussolini. It was used again in July 2015, and meant something different, and produced a different result.',
+    choices: [
+      {
+        text: 'You voted OXI. The vote was real. The outcome was not what the vote indicated.',
+        tag: null,
+        outcome: 'The lesson is not about Tsipras. The lesson is about the structure that produced the outcome.',
+        effect: (p) => { p.m -= 10; p.r += 7; p.e += 4; p.addFlag('gr_oxi_generation'); p.setMem('grOxi', true); },
+      },
+      {
+        text: 'You voted NAI, or abstained. You believed the referendum was theater.',
+        tag: null,
+        outcome: 'You were right about the theater. The people who voted OXI were also right about what they were saying. Both can be true.',
+        effect: (p) => { p.m -= 7; p.r += 5; p.e += 3; p.addFlag('gr_oxi_generation'); p.setMem('grOxi', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── BRAIN DRAIN 2010s ─────────────────────────────────────────────────────────
+
+  {
+    id: 'gr_brain_drain_2010s',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Greece' &&
+      G.currentYear >= 2010 && G.currentYear <= 2020 &&
+      G.age >= 22 && G.age <= 38 &&
+      G.stats.smarts > 45 &&
+      !G.mem?.grBrainDrain,
+    text: 'Between 2008 and 2018, four hundred thousand Greeks emigrated — the majority of them with university degrees. You have the degree. You have the EU passport. Germany, the Netherlands, Australia, Canada: the specific geography of where Greeks went. You know people who are already there. The salary offered in Germany is three times what the Greek market offers for the same work, if the Greek market offers it at all. The unemployment rate for your age group has reached fifty percent. The question is whether you are a person who stays or a person who goes, and the question is answered by the same practical arithmetic that is answering it for four hundred thousand other people.',
+    choices: [
+      {
+        text: 'You go. The degree travels. You follow it.',
+        tag: null,
+        outcome: 'You leave carrying the specific double grief of economic emigration: you did not leave because you wanted to, and you do not return because you cannot afford to.',
+        effect: (p) => { p.m -= 8; p.r += 7; p.e += 5; p.addFlag('emigrated'); p.addFlag('greece_crisis_emigrant'); p.setResidency('work_visa'); p.setMem('grBrainDrain', true); },
+      },
+      {
+        text: 'You stay. You will find a way to make it work here.',
+        tag: null,
+        outcome: 'Staying is a choice that the people who left have complicated feelings about. The country needs people who stay. The country is also not making it easy.',
+        effect: (p) => { p.m -= 6; p.r += 6; p.karma += 4; p.addFlag('greece_crisis_stayed'); p.setMem('grBrainDrain', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── LATE RECKONING ────────────────────────────────────────────────────────────
+
+  {
+    id: 'gr_late_reckoning',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Greece' &&
+      G.currentYear >= 1990 &&
+      G.age >= 55 &&
+      (G.flags.has('gr_civil_war_memory') || G.flags.has('polytechnic_generation') ||
+       G.flags.has('greece_crisis_stayed') || G.flags.has('revolution_generation')) &&
+      !G.mem?.grLate,
+    text: (G) => {
+      const seenCivilWar = G.flags.has('gr_civil_war_memory')
+      const seenJunta = G.flags.has('polytechnic_generation') || G.flags.has('revolution_generation')
+      if (seenCivilWar && seenJunta) {
+        return 'You lived the Civil War\'s aftermath — the silences, the lists, the family fractures — and then the junta, and then the Polytechnic, and then the Metapolitefsi, and then the crisis. Greece has had many more opportunities for catastrophe per generation than most countries. You have been in possession of all of them. You have also been alive for the country that kept reconstituting itself on the other side of each one.'
+      }
+      if (seenJunta) {
+        return 'From the junta to the Metapolitefsi to the EU to the crisis to the OXI vote and its aftermath: you have seen what Greece looked like when it had no democracy and what it looked like when democracy produced an outcome that was overridden by economics. The generation that holds both versions is yours.'
+      }
+      return 'The crisis decade taught specific things about what a country can lose and what it can absorb. Pensions cut. ATMs limited. Young people leaving. The country absorbing it — or failing to absorb it cleanly — over years. You watched from the inside. That vantage point is not transferable.'
+    },
+    choices: null,
+    effect: (p) => { p.r += 7; p.karma += 4; p.addFlag('gr_testigo_generation'); p.setMem('grLate', true); },
+  },
+
   // ═══════════════════════════════════════════════════════════════════════
   // PORTUGAL
   // ═══════════════════════════════════════════════════════════════════════

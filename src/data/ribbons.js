@@ -2510,6 +2510,40 @@ export const RIBBONS = [
     color: 'black',
   },
 
+  // ── GREECE RIBBONS ───────────────────────────────────────────────────────────
+  {
+    id: 'the_polytechnic_gate',
+    name: 'The Polytechnic Gate',
+    description: '"This is the Polytechnic." You heard the broadcast on the homemade transmitter in November 1973. Then the tank moved through the gate and the broadcast stopped. What was on the other side of the stopping is something you lived in for the rest of your life.',
+    condition: (G) => G.flags.includes('polytechnic_generation'),
+    priority: 88,
+    color: 'red',
+  },
+  {
+    id: 'the_civil_war_silence',
+    name: 'The Civil War Silence',
+    description: 'The war that killed more Greeks than the German occupation and was not discussed. You grew up inside its particular silence — the family fractures, the relatives on lists, the words no one said.',
+    condition: (G) => G.flags.includes('gr_civil_war_memory'),
+    priority: 84,
+    color: 'gray',
+  },
+  {
+    id: 'the_sixty_euros',
+    name: 'The Sixty Euros',
+    description: 'The ATM limit during the debt crisis. The pharmacies short of insulin. The pension cut by thirty percent. You stayed. The accounting of what staying through that decade produced is still not finished.',
+    condition: (G) => G.flags.includes('greece_crisis_stayed'),
+    priority: 78,
+    color: 'orange',
+  },
+  {
+    id: 'the_oxi',
+    name: 'The OXI',
+    description: 'Sixty-one percent voted no. One week later the government accepted terms more severe than what was rejected. You voted. The gap between the referendum and the outcome it produced is a measurement you carry.',
+    condition: (G) => G.flags.includes('gr_oxi_generation'),
+    priority: 75,
+    color: 'blue',
+  },
+
   // ── PERU RIBBONS ─────────────────────────────────────────────────────────────
   {
     id: 'the_shining_path',

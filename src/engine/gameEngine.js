@@ -5207,6 +5207,59 @@ function buildYearTexture(state) {
 
   // ─── POLITICAL LEANING TEXTURE (~25% when leaning is set) ───────────────────
   if (political_leaning && phase !== 'early_childhood' && Math.random() < 0.25) {
+    const _liveCountry = state.currentCountry ?? state.character?.country
+    const _curRegime = getCountryRegime(_liveCountry, currentYear)
+    const _authRegimes = new Set(['military_dictatorship', 'single_party_communist', 'single_party_authoritarian', 'theocracy', 'absolute_monarchy'])
+    const _isAuth = _authRegimes.has(_curRegime)
+    const phaseKey = (phase === 'childhood' || phase === 'early_childhood') ? 'childhood'
+      : (phase === 'adolescence') ? 'adolescence'
+      : (phase === 'young_adult') ? 'young_adult'
+      : (phase === 'midlife') ? 'midlife'
+      : 'late_life'
+
+    // Regime-conditional branches for high-stakes combinations
+    if (_isAuth && political_leaning === 'dissident') {
+      const authDissidentLines = {
+        childhood:   'You notice the gap between what the textbook says and what your parents say at home, in low voices.',
+        adolescence: 'You have learned which thoughts are allowed to become sentences and which ones are not. The line is clearer than you expected.',
+        young_adult: 'The cost of saying what you think is not theoretical. You calibrate every room before you speak in it.',
+        midlife:     'You have lived long enough under this to know the exact shape of what it costs. You have paid some of it. You will pay more.',
+        late_life:   'The official version and the true version have been running in parallel your whole life. You have been one of the people keeping the true version alive.',
+      }
+      return authDissidentLines[phaseKey]
+    }
+    if (_isAuth && political_leaning === 'left') {
+      const authLeftLines = {
+        childhood:   'The word "solidarity" is understood differently here than where it would be safe to use it.',
+        adolescence: 'The politics you feel pulling at you are the politics that carry risk in this country. You are starting to understand the shape of that risk.',
+        young_adult: 'You hold your analysis in selected rooms. The analysis does not change between rooms. The audience does.',
+        midlife:     'Left of the acceptable line is where you are. What being left of it costs in this system, you know from personal experience.',
+        late_life:   'You were on the wrong side of the acceptable range for most of your life, in a country that made that costly. You held the position. It cost what it cost.',
+      }
+      return authLeftLines[phaseKey]
+    }
+    if (_isAuth && political_leaning === 'nationalist') {
+      const authNationalistLines = {
+        childhood:   'The nation and the state are said to be the same thing here. You have started to notice that they might not be.',
+        adolescence: 'Your nationalism and the regime\'s nationalism are not identical. The distinction is one you are still working out.',
+        young_adult: 'You love the country and have opinions about who is governing it. The distinction between the two is not always safe to articulate.',
+        midlife:     'The nationalism that loves a country and the nationalism that serves a regime have come apart in your mind. They were never the same thing.',
+        late_life:   'You loved what the country was, or could have been. What was done in its name is a different category.',
+      }
+      return authNationalistLines[phaseKey]
+    }
+    if (_isAuth && political_leaning === 'apolitical') {
+      const authApoliticalLines = {
+        childhood:   'You do not think about politics. In a country like this one, not thinking about politics is also a political decision.',
+        adolescence: 'You stay out of it. In a country like this one, staying out of it is a kind of agreement with whatever is in it.',
+        young_adult: 'Apolitical here means living inside the system without endorsing it. You tell yourself this distinction is meaningful.',
+        midlife:     'You have never joined anything, signed anything, said anything publicly. This has kept you safe. What it has cost you is a different accounting.',
+        late_life:   'You navigated a life in this country by staying below the line. That is one way through. It is the way you chose.',
+      }
+      return authApoliticalLines[phaseKey]
+    }
+
+    // Generic lines for democratic contexts
     const leaningLines = {
       left: {
         childhood:   'There is already something in you that registers unfairness before it registers anything else.',
@@ -5251,11 +5304,6 @@ function buildYearTexture(state) {
         late_life:   'You stayed out of it, mostly. The world came to you anyway, as it does.',
       },
     }
-    const phaseKey = (phase === 'childhood' || phase === 'early_childhood') ? 'childhood'
-      : (phase === 'adolescence') ? 'adolescence'
-      : (phase === 'young_adult') ? 'young_adult'
-      : (phase === 'midlife') ? 'midlife'
-      : 'late_life'
     const line = leaningLines[political_leaning]?.[phaseKey]
     if (line) return line
   }
@@ -7468,6 +7516,26 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'You left during the crisis. You have watched Greece from abroad since then — the further austerity, the recovery, the question of what the recovery recovered. You are still calculating whether to go back.'
       : 'The Greek diaspora has layers. You are in the layer that left during the memorandum years. You recognise each other in specific ways that do not require explanation.',
+  ])
+  if (F.has('gr_civil_war_memory') && Math.random() < 0.22) return pick([
+    'The Civil War killed more Greeks than the German occupation. The German occupation is discussed. The Civil War is not. You grew up in the particular silence of the thing that the country could not finish talking about.',
+    'Your family carries it in the structure of relationships — the relative who cannot hold a civil service job, the cousin who emigrated to Australia in 1953, the uncle not spoken of. The specific architecture of a postwar family that was on the losing side.',
+    phase === 'late_life'
+      ? 'The Civil War ended in 1949. You were born into its aftermath. The divisions it created in families ran longer than the war itself. Some of them are still running.'
+      : 'Left and right in Greece are not abstract political categories. They are family categories, village categories, records in government files. You know which side your file is on.',
+  ])
+  if (F.has('gr_oxi_generation') && Math.random() < 0.2) return pick([
+    'The OXI vote: sixty-one percent said no. One week later the government accepted terms more severe than the ones rejected. The gap between the referendum result and the outcome it produced is something you have been measuring ever since.',
+    'Oxi: no, since October 1940. No to Mussolini at the Albanian frontier. The word has weight in Greek. July 5, 2015: the word again. A different frontier, a different kind of no, a different ending.',
+    phase === 'late_life'
+      ? 'You lived long enough to see Greek democracy produce a result that was then overridden by economic structures. The lesson is not about Tsipras. The lesson is about the structure.'
+      : 'The referendum made something visible that was already true. The question was about austerity terms; the answer was about who holds power when a small country says no to large creditors.',
+  ])
+  if (F.has('gr_testigo_generation') && Math.random() < 0.18) return pick([
+    'Civil war aftermath, junta, Polytechnic, Metapolitefsi, EU, crisis, OXI — you have the complete Greek arc from the inside. The country that reconstructed itself after each of these things is the same country. So are you.',
+    phase === 'late_life'
+      ? 'The Greece you were born into and the Greece you grew old in are different countries with the same name and the same capacity to be wounded and to continue. You have watched both capacities operate, repeatedly.'
+      : 'You contain what happened here and what happened next. The arc of it, which most accounts flatten into events, lives in you as texture — specific years, specific rooms, specific sounds.',
   ])
 
   // ─── PORTUGAL TEXTURE ────────────────────────────────────────────────────────
@@ -14258,6 +14326,7 @@ export function generateEpitaph(state) {
     'sau_siege_generation', 'sau_khashoggi_generation',
     'irn_sanctions_generation', 'irn_jcpoa_generation',
     'april_9_generation', 'georgian_war_2008', 'geo_1990s_generation', 'geo_testigo_generation',
+    'polytechnic_generation', 'gr_civil_war_memory', 'gr_oxi_generation', 'gr_testigo_generation',
   )
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
@@ -14470,6 +14539,14 @@ export function generateEpitaph(state) {
     para2.push(`${He} was Georgian in the 1990s — one million left, most of the economy dissolved, the candles and the wood and the Mkhedrioni in the street. ${He} was among the people who stayed and found out what staying through that decade produces.`)
   } else if (f('geo_testigo_generation')) {
     para2.push(`${He} watched the Georgia arc from the inside: the independence, the collapse, the warlords, the Rose Revolution, the war, and the return to the same avenue with a different flag and the same insistence. Georgia did not stop insisting. Neither did ${he}.`)
+  } else if (f('gr_civil_war_memory') && f('polytechnic_generation')) {
+    para2.push(`${He} grew up in the silence of the Greek Civil War's aftermath — the family fractures, the lists, the things not discussed — and was at Athens Polytechnic in November 1973 when the tank moved through the gate. The two events are the same story about what Greeks did to each other.`)
+  } else if (f('gr_civil_war_memory') && f('gr_oxi_generation')) {
+    para2.push(`${He} grew up in the silence the Civil War left behind and was alive in July 2015 for the OXI referendum, and for the week after it. What sixty-one percent voted and what happened next: ${he} understood the gap without requiring explanation.`)
+  } else if (f('gr_testigo_generation')) {
+    para2.push(`${He} lived the full Greek arc: the Civil War's long aftermath, the junta, the Polytechnic, the Metapolitefsi, the EU, the crisis, the OXI that was not a no. Greece has more catastrophe per generation than most countries. ${He} was present for its share.`)
+  } else if (f('polytechnic_generation') && f('greece_crisis_stayed')) {
+    para2.push(`${He} heard "this is the Polytechnic" on a homemade transmitter in November 1973 and stayed in Greece through the ATM limits of 2015. The country ${he} was young in and the country ${he} aged in are the same country, which is also to say they are different countries.`)
   }
 
   // Displacement / migration
