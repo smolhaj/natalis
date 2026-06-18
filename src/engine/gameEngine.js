@@ -5184,6 +5184,20 @@ function buildYearTexture(state) {
       ? 'You were in Bolotnaya Square or you watched from the edge. What happened to the people who were in the square is the political history of the decade that followed. You watched it happen in real time.'
       : 'The white ribbon was a symbol for a specific number of months in 2011 and 2012. After those months, wearing it meant something different.',
   ])
+  if (F.has('gulag_survivor') && Math.random() < 0.25) return pick([
+    'The camp had a social hierarchy that no one explained and everyone understood within days. The blatnye above the politicals. The ration tied to output. The Stakhanovite who beat his quota and died from it.',
+    'The two years, or three years, or seven years are in the body in ways that are now structural. The cold. The weight of wood. The specific way you always know where the exit is.',
+    phase === 'late_life'
+      ? 'Solzhenitsyn published in 1962. Glasnost named the thing. There are memorials now. None of them contain what was inside it. You know what was inside it.'
+      : 'You came back. The man from Leningrad who helped you did not come back. The arithmetic of who survived and who did not is not random but it is not fully explicable either.',
+  ])
+  if (F.has('gulag_released_generation') && Math.random() < 0.2) return pick([
+    'Released without transportation. The camp was four hundred kilometres from the nearest station. You walked part of it. You do not talk about how you ate.',
+    'The apartment was occupied when you got back. The family there had nothing to do with your arrest. The encounter was the most specifically difficult moment of the entire period.',
+    phase === 'late_life'
+      ? 'The rehabilitation document came years later. It named you as a victim of political repression. The phrase \'victim of political repression\' is the state acknowledging the state. You have decided what to do with that.'
+      : 'The city you returned to was the same city and also a different city. You were the same person and also a different person. The specific distance between those pairs is not a gap you close — you live in it.',
+  ])
   if (F.has('veteran_unthanked') && Math.random() < 0.2) return pick([
     'You came back from a war the state had decided to forget. The people who don\'t know the war happened cannot thank you for it. The people who do know tend to look away.',
     'The wound is specific. The official record says you were in a peacekeeping operation. The medical record says something more specific.',

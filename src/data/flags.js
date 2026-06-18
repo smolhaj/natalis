@@ -1148,7 +1148,23 @@ export const FLAG_REGISTRY = {
     category: 'world_event',
     description: 'Family member was sent to the Gulag — the thing that cannot be said outside the apartment.',
     intent: 'event',
-    notes: 'events_family_silence.js covers this.',
+    notes: 'events_family_silence.js covers this. Seeded by deriveGenerationalFlags() for post-Soviet countries born 1930-55.',
+  },
+
+  gulag_survivor: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived the Soviet gulag system — arrested under Article 58, sent to Kolyma/Vorkuta/Karaganda, lived inside the ration-tied-to-output system, survived the social hierarchy of blatnye vs. politicals.',
+    intent: 'both',
+    notes: 'Set by ps_gulag_arrest. Follow-throughs: ps_gulag_camp, ps_gulag_release, ps_gulag_late_reckoning. Year texture in buildYearTexture.',
+  },
+
+  gulag_released_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Released from the gulag after Stalin\'s death (1953–58 amnesty waves) — without transportation, money, or documents; returning to a city that has moved on.',
+    intent: 'year_texture',
+    notes: 'Set by ps_gulag_release. Year texture: the specific texture of being released without means of return.',
   },
 
   cultural_revolution_family: {
