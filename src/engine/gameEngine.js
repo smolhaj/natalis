@@ -9176,6 +9176,12 @@ function buildYearTexture(state) {
   ])
 
   // ─── CARIBBEAN TEXTURE ───────────────────────────────────────────────────────
+  if (F.has('jamaican_garrison_community') && Math.random() < 0.22) return pick([
+    'The garrison is not a place on the map — it is an allegiance declared in wall color. You have known this since before you had words for it. The neighborhood has a name; the party it belongs to is just as much the name.',
+    phase === 'late_life'
+      ? 'The garrison system has lasted longer than any politician who created it. You grew up in it and grew old in it and the arithmetic — who owes what to whom, who voted which way and when — is still running even now. Some things do not resolve. They continue.'
+      : 'The don is not the government. The don provides what the government does not. This is not a defense of the don. It is a description of the structure.',
+  ])
   if (F.has('rasta_encounter') && Math.random() < 0.2) return pick([
     'The reasoning about Babylon and Zion is not a metaphor for the person who gave it to you. It is a structural description of the world. You carry that distinction.',
     phase === 'late_life'
@@ -9217,6 +9223,58 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'You have lived outside the garrison patron system long enough to know what that means in the long run: a harder path, fewer connections, a particular kind of dignity that does not translate into material terms. You do not regret the refusal. You would be lying if you said it cost nothing.'
       : 'The neighborhood has its social architecture. The garrison don is a node in it, not the whole thing. You have found the parts of the architecture that do not require you to move through him. Those parts exist. They are smaller.',
+  ])
+
+  // ─── GUINEA TEXTURE ──────────────────────────────────────────────────────────
+  if (F.has('sekou_toure_era_generation') && Math.random() < 0.22) return pick([
+    'The PDG meeting: you know what to say and in what register. You say it. Afterward you do not repeat any of it at home. The distance between what you said and what you think is a calibration you have been doing long enough that it is no longer uncomfortable. It is just the shape of speech here.',
+    phase === 'late_life'
+      ? 'Twenty-six years of mandatory enthusiasm for a man who died at the end, in a Cleveland hospital, still convinced he was loved. You were not convinced. You were careful. There is a difference, and it cost something to maintain across that many years.'
+      : 'The informer network is not announced. It is understood. You know who was questioned last month and why. You do not know who reported him. This uncertainty is the system\'s actual function — it doesn\'t need to be everywhere if it feels like it could be.',
+  ])
+  if (F.has('camp_boiro_survivor_adjacent') && Math.random() < 0.2) return pick([
+    'What the survivor does not say is a presence in the room. You have learned not to ask about the camp directly. The not-asking is itself a form of knowledge — you know what the question would cost him.',
+    phase === 'late_life'
+      ? 'He is old now. The camp was thirty, forty years ago. He mentions it sometimes in the specific way survivors mention things — sideways, factual, without drama. The body carries it differently than the voice does. You have watched him walk for decades and you know.'
+      : 'The black diet. The deliberate starvation. These are words from a report produced years later. You did not have the words then. You had the person in front of you, who was less than he had been, and who did not explain why.',
+  ])
+  if (F.has('camp_boiro_family_loss') && Math.random() < 0.22) return pick([
+    'The official death certificate says illness. The date they gave you is approximate. There is no body. You stopped asking questions when the questions started making people look at you differently.',
+    phase === 'late_life'
+      ? 'Guinea eventually built a memorial. You went once. His name was not on it — he was not politically prominent enough to have his name on it. He was just one of the thousands who died of "illness" in a political prison. The memorial acknowledges that the thousands existed. That is something. It is not enough but it is something.'
+      : 'The absence becomes the shape of him you carry. Not the person — you are forgetting the person — but the gap where the person was. That gap does not fill.',
+  ])
+  if (F.has('guinea_stadium_2009_witness') && Math.random() < 0.2) return pick([
+    'One hundred fifty-seven people killed in a stadium on September 28, 2009. The soldiers came in and the people could not leave. You know what you saw. The official number for years was lower. You know what the real number is because you were there.',
+    phase === 'late_life'
+      ? 'Dadis Camara is alive in Burkina Faso. He was shot by a bodyguard, transferred to Morocco for treatment, eventually settled in Ouagadougou. The ICC referral has not produced an arrest. You are old now and the men responsible are still living comfortable lives. This is the specific injustice of impunity — it doesn\'t even need to hide.'
+      : 'The investigation was announced. The findings were inconclusive. The soldiers who participated were not tried. Guinea continued. The word for this in political science is impunity. You have a different word for it.',
+  ])
+
+  // ─── MONGOLIA TEXTURE ────────────────────────────────────────────────────────
+  if (F.has('mongolian_nomadic_heritage') && Math.random() < 0.2) return pick([
+    'The terrain knowledge does not transfer to the city. You know which grass keeps its nutrition under snow and which does not; you know the sound of a dzud winter before the snow falls. None of this is useful here. But it does not leave either.',
+    phase === 'late_life'
+      ? 'Your children know the steppe as a place you came from, not a place they remember. The route knowledge, the seasonal calendar, the names your family had for different types of ground — these end with you. This is not grief exactly. It is just what happens to knowledge that is stored in bodies instead of books.'
+      : 'The way you read weather is different from how city people read it. They read forecasts. You read the color of the sky at a specific hour, the behavior of the horses, the smell of the wind from the north. You can\'t explain the translation. It just is.',
+  ])
+  if (F.has('stalinist_purge_family_memory') && Math.random() < 0.2) return pick([
+    'The thangkas were kept in a felt blanket in the bottom of the chest. You knew not to ask about them when other people were in the house. You knew before you were told — you learned it from how your grandmother moved around the chest, what her hands said when she passed it.',
+    phase === 'late_life'
+      ? 'The monasteries that were destroyed in 1937 and 1938 have been rebuilt in some cases — Gandan, Erdene Zuu. The monks who were killed are remembered now by the state that had them killed, which is the successor state to the state that ordered it. This is one of the forms forgiveness takes when the party that did the harm is also the party writing the memorial.'
+      : 'The official story was illness. The actual story was execution: 17,000 monks shot, the rest imprisoned, 700 monasteries demolished and the materials sold or used for construction. Your family learned to carry the real story inside the official one. Two stories, one family, the correct one spoken only in the right company.',
+  ])
+  if (F.has('dzud_survivor') && Math.random() < 0.2) return pick([
+    'You watch winter weather forecasts differently than other people watch them. The number that matters is not the low temperature — it is the snow depth above the grass. You run the arithmetic in your chest without deciding to.',
+    phase === 'late_life'
+      ? 'The climate models say the dzuds are increasing in frequency and severity. You believe this without needing the models. The 2000 dzud was real. The 2010 dzud was real. You measured them in livestock — in the specific animals that did not survive — and that measurement has not left you. Climate change is, for you, not a graph. It is a body count you have already started.'
+      : 'In the bad year you learned the mathematics of acceptable loss — how many animals you could afford to lose and still rebuild, the threshold below which recovery was impossible. You did not want to know this mathematics. You know it now.',
+  ])
+  if (F.has('ger_district_migrant') && Math.random() < 0.18) return pick([
+    'January in Ulaanbaatar: the air quality index goes off scale. The coal stoves in the ger districts burn all night and the smoke settles into the valley and the city breathes it. You came from the steppe air, which was cold enough to hurt but clean. You think about this when you breathe.',
+    phase === 'late_life'
+      ? 'Your children know the city and only the city. When you take them to the countryside they admire the sky — the specific dark of a Mongolian night sky — and call it beautiful and want to leave by the third day. The steppe is a thing they visit; for you it is the ground everything else is built on.'
+      : 'The ger district is not a slum in the way people who have not been here use the word. The gers are warm. The community is dense. The coal smoke is real and the AQI is real and in January the city is the most polluted place on earth. Both things are true simultaneously.',
   ])
 
   // ─── LIBYA TEXTURE ───────────────────────────────────────────────────────────

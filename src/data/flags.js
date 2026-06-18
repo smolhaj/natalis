@@ -10477,7 +10477,7 @@ export const FLAG_REGISTRY = {
     weight: 'moderate',
     category: 'historical',
     description: 'Voted No in Guinea\'s September 1958 independence referendum — the only French colony to refuse the French Community.',
-    intent: 'follow_through',
+    intent: 'event',
     notes: 'Set by gn_no_vote_1958. Gate for post-independence identity events.',
   },
 
@@ -10493,7 +10493,7 @@ export const FLAG_REGISTRY = {
     weight: 'moderate',
     category: 'historical',
     description: 'Came of age in Guinea after France withdrew everything — civil servants, vehicles, medicine, lightbulbs — in retaliation for the No vote.',
-    intent: 'follow_through',
+    intent: 'event',
     notes: 'Set by gn_french_revenge.',
   },
 
@@ -10501,7 +10501,7 @@ export const FLAG_REGISTRY = {
     weight: 'major',
     category: 'historical',
     description: 'Lived through Sékou Touré\'s 1958–84 single-party state — mandatory PDG meetings, the culture of informers, the calibrated silence.',
-    intent: 'follow_through',
+    intent: 'year_texture',
     notes: 'Set by gn_sekou_toure_apparatus. Gates gn_camp_boiro.',
   },
 
@@ -10509,7 +10509,7 @@ export const FLAG_REGISTRY = {
     weight: 'major',
     category: 'trauma',
     description: 'Someone close survived Camp Boiro — the political prison where thousands were killed by deliberate starvation under the "black diet."',
-    intent: 'follow_through',
+    intent: 'year_texture',
     notes: 'Set by gn_camp_boiro (survived branch). Carries the weight of what the survivor does not say.',
   },
 
@@ -10517,15 +10517,15 @@ export const FLAG_REGISTRY = {
     weight: 'major',
     category: 'grief',
     description: 'Someone close disappeared into Camp Boiro and did not return — officially died of "illness," no body, no date.',
-    intent: 'follow_through',
-    notes: 'Set by gn_camp_boiro (lost branch). Deep grief flag; candidate for year-texture prose.',
+    intent: 'year_texture',
+    notes: 'Set by gn_camp_boiro (lost branch). Deep grief flag; year-texture prose.',
   },
 
   guinea_exile: {
     weight: 'moderate',
     category: 'migration',
     description: 'Left Guinea during the Touré era — part of the educated-class exodus to Dakar, Paris, or Montreal.',
-    intent: 'follow_through',
+    intent: 'event',
     notes: 'Set by gn_educated_class_leaves (leave branch). Works alongside emigrated flag.',
   },
 
@@ -10533,7 +10533,7 @@ export const FLAG_REGISTRY = {
     weight: 'moderate',
     category: 'survival',
     description: 'Stayed in Guinea and learned the accommodations staying required — which projects to propose, which knowledge to keep private.',
-    intent: 'follow_through',
+    intent: 'event',
     notes: 'Set by gn_educated_class_leaves (stay branch).',
   },
 
@@ -10549,8 +10549,8 @@ export const FLAG_REGISTRY = {
     weight: 'major',
     category: 'trauma',
     description: 'Witnessed or lived through the September 28, 2009 stadium massacre in Conakry — 157 killed, systematic rape by Presidential Guard soldiers.',
-    intent: 'follow_through',
-    notes: 'Set by gn_stadium_2009. Candidate for late-life reckoning event.',
+    intent: 'year_texture',
+    notes: 'Set by gn_stadium_2009. Late-life reckoning through impunity — Dadis Camara still alive in Burkina Faso.',
   },
 
   // ── MONGOLIA ARC ─────────────────────────────────────────────────────────────
@@ -10559,7 +10559,7 @@ export const FLAG_REGISTRY = {
     weight: 'moderate',
     category: 'identity',
     description: 'Grew up in a nomadic herding family — the seasonal routes, the ger assembly, the terrain knowledge that lives in the body not books.',
-    intent: 'follow_through',
+    intent: 'year_texture',
     notes: 'Set by mn_nomadic_herder_childhood. Gates mn_dzud_winter and mn_ulaanbaatar_migration.',
   },
 
@@ -10567,7 +10567,7 @@ export const FLAG_REGISTRY = {
     weight: 'major',
     category: 'trauma',
     description: 'Family member was killed in the 1937–38 Stalinist purges of Mongolian Buddhism; 22,000 monks killed, 700 monasteries destroyed.',
-    intent: 'follow_through',
+    intent: 'year_texture',
     notes: 'Set by mn_stalinist_purge_family. Hidden thangkas, official story of "illness."',
   },
 
@@ -10575,7 +10575,7 @@ export const FLAG_REGISTRY = {
     weight: 'moderate',
     category: 'historical',
     description: 'Grew up in the negdel livestock collective — factory schedules applied to nomadic herding, security and absurdity coexisting.',
-    intent: 'follow_through',
+    intent: 'event',
     notes: 'Set by mn_negdel_life. Gates mn_negdel_dissolution_shock.',
   },
 
@@ -10583,7 +10583,7 @@ export const FLAG_REGISTRY = {
     weight: 'moderate',
     category: 'historical',
     description: 'Alive during Mongolia\'s 1990 democratic revolution — hunger strikes in Sukhbaatar Square, the MPRP\'s unexpected agreement to multi-party elections.',
-    intent: 'follow_through',
+    intent: 'event',
     notes: 'Set by mn_1990_revolution.',
   },
 
@@ -10591,7 +10591,7 @@ export const FLAG_REGISTRY = {
     weight: 'moderate',
     category: 'economic',
     description: 'Experienced the post-1990 negdel dissolution — animals returned, but veterinary support, guaranteed prices, and collective infrastructure gone.',
-    intent: 'follow_through',
+    intent: 'event',
     notes: 'Set by mn_negdel_dissolution_shock.',
   },
 
@@ -10599,15 +10599,15 @@ export const FLAG_REGISTRY = {
     weight: 'major',
     category: 'survival',
     description: 'Survived a dzud — catastrophic winter when snow seals the grass and livestock die by thousands; the 2000 dzud killed a third of Mongolia\'s national herd.',
-    intent: 'follow_through',
-    notes: 'Set by mn_dzud_winter. Candidate for late-life reckoning year-texture.',
+    intent: 'year_texture',
+    notes: 'Set by mn_dzud_winter. Permanent relationship to winter weather; climate arc texture.',
   },
 
   ger_district_migrant: {
     weight: 'moderate',
     category: 'migration',
     description: 'Left the steppe for Ulaanbaatar\'s ger districts — yurt neighborhoods at the city edge, coal stoves producing some of the world\'s worst winter air quality.',
-    intent: 'follow_through',
+    intent: 'year_texture',
     notes: 'Set by mn_ulaanbaatar_migration.',
   },
 
