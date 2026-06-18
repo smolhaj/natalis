@@ -11012,6 +11012,64 @@ export const FLAG_REGISTRY = {
     notes: 'Set by mn_ulaanbaatar_migration.',
   },
 
+  // ── BURKINA FASO / SANKARA ARC ───────────────────────────────────────────────
+
+  sankara_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Grew up under Thomas Sankara\'s 1983–1987 revolution — cycling president, mass vaccinations, renamed country, cotton clothing replacing imported suits.',
+    intent: 'year_texture',
+    notes: 'Set by bfa_sankara_bicycle. Gates bfa_sankara_killed, bfa_compaore_silence, bfa_sankara_late_reckoning. Also used by sankara_assassination_1987 world event guard.',
+  },
+
+  sankara_mourner: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Carries the specific grief of Sankara\'s assassination — a political death experienced as personal loss, the friend-who-killed-his-friend betrayal.',
+    intent: 'year_texture',
+    notes: 'Set by bfa_sankara_killed (Memorize branch) or sankara_assassination_1987 world event. Annual texture: the unmarked grave, the renamed boulevard.',
+  },
+
+  burkina_vaccinated_child: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Was vaccinated during Sankara\'s 1984 mass vaccination week — 2.5 million children in eight days.',
+    intent: 'none',
+    notes: 'Set by bfa_vaccination_week. Historical marker; no separate follow-through needed.',
+  },
+
+  burkina_renaming_memory: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Was old enough to remember the country being renamed from Upper Volta to Burkina Faso in 1984 — learning to spell their own country again.',
+    intent: 'none',
+    notes: 'Set by bfa_upper_volta_renamed. Identity flavour; surfaces in late-life reckoning if desired.',
+  },
+
+  compaore_27_years: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through Blaise Compaoré\'s 27-year post-coup regime — the silence around Sankara\'s name, the unmarked grave, the pretense of normalcy.',
+    intent: 'year_texture',
+    notes: 'Set by bfa_compaore_silence. Annual texture: the name not spoken, the anniversary without ceremony.',
+  },
+
+  burkina_2014_uprising: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was in Burkina Faso during the October 2014 uprising — crowds burning parliament, Compaoré gone within twenty-four hours.',
+    intent: 'year_texture',
+    notes: 'Set by bfa_uprising_2014 or burkina_uprising_2014 world event. Civic pride marker; the day popular action actually worked.',
+  },
+
+  burkina_sahel_displaced: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Was internally displaced by the Sahel jihadist insurgency (2019–2025) — part of the two million who fled.',
+    intent: 'year_texture',
+    notes: 'Set by bfa_sahel_violence (Flee branch). Year texture: camp life, loss of home, uncertain return.',
+  },
+
   // ── POLITICAL ARC ────────────────────────────────────────────────────────────
 
   pol_left_noted: {

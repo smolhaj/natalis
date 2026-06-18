@@ -9560,6 +9560,40 @@ function buildYearTexture(state) {
       : 'The investigation was announced. The findings were inconclusive. The soldiers who participated were not tried. Guinea continued. The word for this in political science is impunity. You have a different word for it.',
   ])
 
+  // ─── BURKINA FASO / SANKARA TEXTURE ─────────────────────────────────────────
+  if (F.has('sankara_generation') && Math.random() < 0.22) return pick([
+    'The photograph was taped to the wall of the clinic: the president of Burkina Faso on a green bicycle, in his military uniform, on a Ouagadougou street. You have seen this image so many times in your mind that you can no longer be certain you are remembering it accurately. You remember it as very clear. You remember it as proof that something different was possible.',
+    'He made the ministers drive Renault 5s. He sold the presidential fleet. He cut his own salary to a fraction. He banned first-class airplane tickets for government officials. He wore cotton made in Burkina Faso. You were a child and you took notes on all of this, the way children take notes on what a person\'s choices say about what is possible.',
+    phase === 'late_life'
+      ? 'They have named streets and stadiums after him now. A boulevard, for a man who outlawed chauffeured cars. You appreciate the acknowledgment. You know it is not the same as what was taken.'
+      : 'The four years between 1983 and 1987 are present in you in the way formative years are present — not as continuous memory but as a standard. You still measure things against it without meaning to.',
+  ])
+  if (F.has('sankara_mourner') && Math.random() < 0.22) return pick([
+    'October 15, 1987. You know exactly where you were. The specific quality of the afternoon. The radio. The announcement. You have told this story and you have not told it. You know which audiences receive it.',
+    'The grave was not marked. For twenty-eight years the exact location of his body was a matter of rumor. His family had a grave to visit but the body in it was not confirmed until the DNA result came back in 2015. This is the specific insult of the kind of murder that wants to also erase.',
+    phase === 'late_life'
+      ? 'Compaoré was convicted in absentia in 2022. The verdict is real. He is still in Ivory Coast. The gap between conviction and justice is its own lesson, one you have been learning for thirty-five years.'
+      : 'The man who killed him is still alive. He gave interviews in later years. He did not name it as a killing. You know what you know about October 15, 1987, and it does not reconcile with his version. It does not need to.',
+  ])
+  if (F.has('compaore_27_years') && Math.random() < 0.20) return pick([
+    'You learned to navigate the silence around a name. Not to say it in certain rooms. Not to ask where the grave was. To describe 1983–1987 as "the revolution" without elaborating on what came after. This calibration was so practiced it became invisible.',
+    phase === 'late_life'
+      ? 'Twenty-seven years is most of a life. You were young when it started. When it ended — when the parliament burned and Compaoré fled in a day — you were no longer young. The vindication was real but the thirty-seven-year-old who was shot was still thirty-seven years old.'
+      : 'The country produced its own mythology of the period — one version official, one version whispered. You know both. You know which one is true. You know which one was safe to repeat.',
+  ])
+  if (F.has('burkina_2014_uprising') && Math.random() < 0.20) return pick([
+    'You were in Ouagadougou the day the parliament burned. This is not a metaphor. The building actually burned. People built a bonfire out of the constitutional amendment that would have let Compaoré stay. Within twenty-four hours he was gone. You keep this fact for when people say popular action doesn\'t work.',
+    phase === 'late_life'
+      ? 'The 2014 uprising happened and it worked and then the country had to figure out what came next. What came next was complicated. The jihadist violence. The coups. A general is not a revolution. But October 28, 2014 remains what it was: the day you watched the parliament building burn and felt something unclench.'
+      : 'The smoke was visible from where you stood. The chanting was real. By the time you went to sleep that night Compaoré had been president-until-twenty-four-hours-ago for twenty-seven years. This is one of the things you carry: the knowledge of what one afternoon can do.',
+  ])
+  if (F.has('burkina_sahel_displaced') && Math.random() < 0.22) return pick([
+    'You packed quickly. You had calculated before what could be carried and what would have to be left. The calculation is wrong when you actually do it — you keep reaching for things that are already gone.',
+    phase === 'late_life'
+      ? 'The camp was not the worst thing. The worst thing was watching the village from memory become a place you couldn\'t describe to your grandchildren because they had never seen it. The knowledge that it might still exist — that you might be able to return — is also present. You do not know which is harder to live with.'
+      : 'Two million displaced by 2022. You are part of that number, which is a kind of company and a kind of horror simultaneously. The number is too large to hold. You hold your own piece of it.',
+  ])
+
   // ─── MONGOLIA TEXTURE ────────────────────────────────────────────────────────
   if (F.has('mongolian_nomadic_heritage') && Math.random() < 0.2) return pick([
     'The terrain knowledge does not transfer to the city. You know which grass keeps its nutrition under snow and which does not; you know the sound of a dzud winter before the snow falls. None of this is useful here. But it does not leave either.',

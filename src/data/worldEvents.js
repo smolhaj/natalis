@@ -3190,6 +3190,36 @@ export const WORLD_EVENTS = [
     when: (G) => !G.flags.includes('guinea_stadium_2009_witness'),
   },
 
+  // ── BURKINA FASO WORLD EVENTS ─────────────────────────────────────────────
+
+  {
+    id: 'sankara_assassination_1987',
+    name: 'Assassination of Thomas Sankara',
+    years: [1987, 1988],
+    archetypes: 'all',
+    countries: ['Burkina Faso'],
+    narrative: 'October 15, 1987. Gunfire at the National Council of the Revolution headquarters in Ouagadougou. Thomas Sankara and twelve of his colleagues are killed in under a minute. The soldiers responsible work for Blaise Compaoré — Sankara\'s closest comrade since officer training. The new government announces a "rectification of the revolution." Sankara is thirty-seven years old. His body is buried quickly in an unmarked grave. His name disappears from official documents. The boulevard named after him is renamed.',
+    context: "Thomas Sankara led Burkina Faso from 1983 to 1987, renaming it from Upper Volta (a colonial river-border designation) and pursuing an ambitious development program: mass vaccination campaigns (2.5 million children in 8 days), tree-planting against desertification, land reform, anti-corruption measures, and women's rights policies that were radical for the era. He cut his own salary, sold the presidential fleet of Mercedes cars, and refused to accumulate personal wealth. Blaise Compaoré, his close friend and second-in-command, justified the coup as a 'rectification.' Compaoré ruled for twenty-seven years. In 2015, Sankara's body was exhumed for DNA identification — the grave had never been marked. Compaoré was sentenced in absentia by a Burkinabé court in 2022 for complicity in the assassination.",
+    effect: (p) => { p.m -= 18; p.addFlag('sankara_mourner'); },
+    addFlags: ['sankara_mourner'],
+    minAge: 8,
+    when: (G) => G.flags.has('sankara_generation') && !G.flags.has('sankara_mourner'),
+  },
+
+  {
+    id: 'burkina_uprising_2014',
+    name: 'Burkina Faso Popular Uprising',
+    years: [2014, 2015],
+    archetypes: 'all',
+    countries: ['Burkina Faso'],
+    narrative: 'October 28, 2014. Blaise Compaoré has moved to change the constitution and allow himself a fifth term. By noon the streets are full. By three in the afternoon, the parliament building is burning. Compaoré appears on television. He flees to Ivory Coast within twenty-four hours. One of Africa\'s longest-serving leaders has been removed in a single afternoon by people with no army behind them.',
+    context: 'Compaoré had ruled Burkina Faso since his 1987 coup against Sankara. In 2014, with his constitutional two-term limit approaching, he attempted to have parliament modify the constitution to allow additional terms. The announcement triggered mass protests in Ouagadougou and other cities; crowds stormed and burned the National Assembly. The military, facing the scale of the uprising, refused to side with Compaoré. He resigned and fled to Ivory Coast, where he received citizenship. The uprising is considered one of the few cases in recent African history where a popular revolt immediately and fully succeeded. A transitional government led to elections in 2015.',
+    effect: (p) => { p.m += 10; p.addFlag('burkina_2014_uprising'); },
+    addFlags: ['burkina_2014_uprising'],
+    minAge: 14,
+    when: (G) => !G.flags.has('burkina_2014_uprising'),
+  },
+
   {
     id: 'we_mongolia_1990_revolution',
     name: "Mongolia's Democratic Revolution",
