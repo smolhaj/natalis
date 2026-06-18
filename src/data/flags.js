@@ -5760,6 +5760,14 @@ export const FLAG_REGISTRY = {
     notes: 'Set by tur_economic_miracle_2000s.',
   },
 
+  turkey_2016_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Was in Turkey on July 15, 2016 — the coup attempt, the citizens who lay in front of tanks, the 250 dead, and the mass purges that followed in weeks.',
+    intent: 'year_texture',
+    notes: 'Set by turkey_coup_attempt_2016 world event. Year texture in buildYearTexture for the purge experience and the country that emerged.',
+  },
+
   // ── West Africa ───────────────────────────────────────────────────────────────
   nkrumah_generation: {
     weight: 'moderate',

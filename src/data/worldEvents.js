@@ -1817,6 +1817,19 @@ export const WORLD_EVENTS = [
   },
 
   {
+    id: 'turkey_coup_attempt_2016',
+    name: 'Turkish Coup Attempt',
+    years: [2016, 2017],
+    archetypes: 'all',
+    countries: ['Turkey'],
+    narrative: 'July 15, 2016. It begins on a Friday night: soldiers seize the bridges over the Bosphorus, tanks appear at Atatürk Airport, jets fly low over Ankara. President Erdoğan appears on CNN Türk by FaceTime — held up to camera by a presenter — and calls citizens to take to the streets. They come out. People lie in front of tanks. 250 are killed. By morning the coup is finished. The purges begin within days: 150,000 people arrested, suspended, or fired — judges, academics, teachers, officers, journalists. A two-year state of emergency is declared. The government calls it a gift from God.',
+    context: 'The July 2016 coup attempt in Turkey was attributed by the government to the Gülen movement — followers of the Pennsylvania-based cleric Fethullah Gülen, who had previously been allied with Erdoğan. The coup failed in large part because ordinary citizens responded to Erdoğan\'s call and came out to face tanks. 250 people were killed and 2,194 wounded. The aftermath was sweeping: 150,000 people were detained, arrested, or fired from their jobs under emergency decree powers. Universities, courts, media organizations, and the civil service were transformed. Turkey\'s EU accession process effectively ended. Gülen denied involvement; Turkey requested his extradition; the US refused.',
+    effect: (p) => { p.m -= 8; p.addFlag('turkey_2016_generation'); },
+    addFlags: ['turkey_2016_generation'],
+    minAge: 12,
+  },
+
+  {
     id: 'kenya_mau_mau',
     name: 'Mau Mau Uprising',
     years: [1952, 1960],

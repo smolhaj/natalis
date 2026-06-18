@@ -3003,9 +3003,18 @@ function buildYearTexture(state) {
     'The pantry is full. You check it anyway.',
     'You do not leave food on the plate. Your children don\'t understand why.',
   ])
-  if (F.has('civil_rights_generation') && phase === 'late_life') return pick([
-    'You have lived long enough to see some of what you fought for become unremarkable. That is what winning looks like.',
-    'The young people don\'t know what this cost. That is also what winning looks like.',
+  if (F.has('civil_rights_generation') && Math.random() < 0.25) return pick([
+    phase === 'late_life'
+      ? 'You have lived long enough to see some of what you fought for become unremarkable. That is what winning looks like.'
+      : 'You were in the movement when the movement was dangerous to be in. That is a credential that costs something to hold.',
+    phase === 'late_life'
+      ? 'The young people don\'t know what this cost. That is also what winning looks like.'
+      : 'The legislation passed. The legislation is not the same as the condition it was supposed to address. You know both things are true.',
+    phase === 'midlife'
+      ? 'The vocabulary has changed. The word "rights" now covers more categories and the opposition has found new frames for the old arguments. You recognize the arguments.'
+      : phase === 'late_life'
+      ? 'The arc is long and you have been in it long enough to see it bend. You have also seen it spring back. The bending and the springing back are both in the record.'
+      : 'What you did was specific and the specific action had specific consequences — for you and for the people who came after you. You are inside the consequence now.',
   ])
   if (F.has('independence_generation_self') && phase === 'late_life' && Math.random() < 0.5) return pick([
     'You were there when the flag went up. You have lived long enough to know what came after.',
@@ -4723,9 +4732,16 @@ function buildYearTexture(state) {
     'You learned to do the exchange rate conversion without thinking — old reflex, wrong country, still running.',
     'The economist on the radio uses words like \'correction\' and \'stabilisation\'. You have heard these words before.',
   ])
-  if (F.has('reconstruction_generation') && phase === 'late_life' && Math.random() < 0.3) return pick([
-    'You lived through the rebuilding. You thought it had worked. You were wrong about the foundation.',
-    'The downtown they built in the nineties was beautiful and is now rubble again. You watched both.',
+  if (F.has('reconstruction_generation') && Math.random() < 0.28) return pick([
+    phase === 'late_life'
+      ? 'You lived through the rebuilding. You thought it had worked. You were wrong about the foundation.'
+      : 'The reconstruction had a specific optimism — the crane going up was evidence of a future. You believed in the crane.',
+    phase === 'late_life'
+      ? 'The downtown they built in the nineties was beautiful and is now rubble again. You watched both.'
+      : 'What is being built is real. Whether it will hold is a question you have been here long enough to know is always open.',
+    phase === 'midlife'
+      ? 'The generation that rebuilt after the war or the dictatorship or the collapse thought the building would last. The generation that inherited it is arguing about what was built and for whom. You are watching from inside that argument.'
+      : 'You are from the generation that rebuilds. Whether the rebuilt thing holds — that is the question you will spend the rest of your life watching.',
   ])
   if (F.has('beirut_blast_survived') && Math.random() < 0.32) return pick([
     'August 4, 2020. 2,750 tonnes of ammonium nitrate in Port Warehouse 12. The shock wave traveled 240 kilometres. You were in Beirut. You are aware that you are still here.',
@@ -4876,9 +4892,18 @@ function buildYearTexture(state) {
     'Failure is information. You collected more than you wanted and used what you could.',
     'The restart was harder than the start. You know that now.',
   ])
-  if (F.has('end_of_history_generation') && phase === 'late_life' && Math.random() < 0.3) return pick([
-    'You came of age when the answer seemed obvious. The question turned out to be harder than that.',
-    'The 90s confidence looks different from here. You believed it, though. That part was real.',
+  if (F.has('end_of_history_generation') && Math.random() < 0.25) return pick([
+    phase === 'late_life'
+      ? 'You came of age when the answer seemed obvious. The question turned out to be harder than that.'
+      : 'The nineties had a specific confidence: the argument had been settled, the right side had won, the rest was implementation. The decade felt like an ending that was also a beginning.',
+    phase === 'late_life'
+      ? 'The 90s confidence looks different from here. You believed it, though. That part was real.'
+      : 'You were twenty-something when the Wall came down and twenty-something when the towers came down. The bracket those two dates make is the decade in which you became who you are.',
+    phase === 'midlife'
+      ? 'The history that was supposed to have ended did not end. It resumed in 2001 and 2008 and 2016. Each resumption subtracted something from the original confidence. You still have some left. Less than you started with.'
+      : phase === 'late_life'
+      ? 'Fukuyama wrote that history had ended. Then it didn\'t. Then he partly recanted. The generation that lived inside the confidence and then inside the recantation — that arc is a specific education in the instability of certainty.'
+      : 'The globalisation was real and the markets were real and the prosperity was real and the confidence that these things would produce liberal democracy everywhere was a theory that has been tested seriously and found to have conditions.',
   ])
 
   // ─── KARMA TEXTURE (~18% when karma is high or low) ──────────────────────────
@@ -8542,6 +8567,13 @@ function buildYearTexture(state) {
   if (F.has('turkish_conservative_generation') && Math.random() < 0.2) return pick([
     'The AKP spoke to people who had been outside the Kemalist networks — the Anatolian middle class, the practicing Muslim professional, the voter the Republican People\'s Party had not found a way to address. You were one of those people.',
     'The 2002 election was a realignment. The people who voted for it were not voting against democracy. They were voting against the version of Turkey that had excluded them from its benefits.',
+  ])
+  if (F.has('turkey_2016_generation') && Math.random() < 0.22) return pick([
+    'July 15, 2016. The question of where you were is one you will answer for years. The tanks on the bridge. Erdoğan\'s face on a phone held up to a camera. The people who went to the streets and faced the armor. Two hundred and fifty dead.',
+    'The purge lists were published within days. Teachers. Judges. Academics. Officers. 150,000 people suspended or arrested. The speed meant the lists had been prepared. The question of when they were prepared is one with a specific answer that nobody in power answers.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'The Turkey you are living in now is the Turkey July 2016 made. Every institution passed through that filter. The people who came out on the other side are the people who passed. You know what passing looked like.'
+      : 'The state of emergency lasted two years. In two years the institutions of the country were rebuilt on different foundations. You have been inside the rebuilt version ever since.',
   ])
 
   // ─── PHILIPPINES TEXTURE ─────────────────────────────────────────────────────

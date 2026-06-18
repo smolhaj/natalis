@@ -238,7 +238,7 @@ const BRAZIL_EVENTS = [
     when: (G) =>
       G.character.country.name === 'Brazil' &&
       G.currentYear === 1992 &&
-      G.criminalRecord &&
+      G.criminalRecord?.length > 0 &&
       G.age >= 18 && G.age <= 45 &&
       !G.mem?.bra_caranPrx,
     text: 'The São Paulo papers name 111 dead. The news says riot; the survivors say execution. You know people who were in Carandiru, or people who might have been. The number 7,000 people in a facility built for 3,500 — you can do the arithmetic on what happens when the military police enter with that ratio. Colonel Guimarães will face trial. He will be convicted. The conviction will be overturned. The arithmetic is the country you live in.',
