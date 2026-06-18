@@ -9717,6 +9717,29 @@ function buildYearTexture(state) {
     'The 2023 war is what the 2021 coup was pointed at. The transition\'s real arc was always going to end here — or somewhere like here.',
   ])
 
+  // ─── ZIMBABWE DIASPORA TEXTURE ────────────────────────────────────────────────
+  if (F.has('zim_diaspora') && Math.random() < 0.2) return pick([
+    'The Western Union route: money leaves your account in rands, arrives in Harare in US dollars, is collected at the bureau de change on Samora Machel. Your family eats because of the length of that sentence.',
+    'South Africa is not what you expected and not what you feared. It is something more complicated — a country that needs you and periodically turns on you.',
+    phase === 'late_life'
+      ? 'You have been away longer than you were ever in Zimbabwe as an adult. At some point the home you left became historical.'
+      : 'You know the Zimbabwean community in this city the way you know your neighbourhood — which pastor you trust, which shopkeeper knows your order, which WhatsApp group tells you when the Home Affairs queue is short.',
+  ])
+  if (F.has('zim_skilled_displaced') && Math.random() < 0.18) return pick([
+    'You are a qualified person doing unqualified work. The arithmetic works in your favour. That does not resolve the question.',
+    'The gap between what you trained to do and what you are doing is where your working life exists. You calculate it without thinking about it now.',
+    phase === 'late_life'
+      ? 'A Zimbabwean nurse who spent twenty years cleaning houses in Johannesburg and retired with enough to build a home in Mutare: that is one shape the arithmetic takes. You know many shapes.'
+      : 'Your credentials are not recognised here. Your skills are recognised. The gap between those two sentences is not bridgeable through effort.',
+  ])
+  if (F.has('zim_xenophobia_2008') && Math.random() < 0.22) return pick([
+    'May 2008. The violence didn\'t end because it resolved — it burned out. You remain in a country where that happened.',
+    'Makwerekwere. You know the weight of that word from the specific year it was aimed at you.',
+    phase === 'late_life'
+      ? '2008 happened and South Africa kept going and you kept going. There is no clean arc for that. You lived inside it.'
+      : 'The people who came for you in 2008 were also poor, also struggling. That is not the same as them being right. Both things are true. You carry both.',
+  ])
+
   // ─── TUNISIA TEXTURE ─────────────────────────────────────────────────────────
   if (F.has('tunisian_womens_rights_generation') && Math.random() < 0.15) return pick([
     'The Code of Personal Status is sixty years old. It is not everywhere in the Arab world. Tunisia has it. That fact is not abstract when you know what is absent elsewhere.',

@@ -3170,8 +3170,32 @@ export const FLAG_REGISTRY = {
     weight: 'minor',
     category: 'immigration',
     description: 'Left Zimbabwe for the diaspora (South Africa, UK, Botswana) during the economic collapse — part of the three million who left.',
+    intent: 'both',
+    notes: 'Set by zim_exodus_south. Follow-through: zim_johannesburg_arrival, zim_xenophobic_2008, zim_diaspora_decade, zim_diaspora_late. Year texture in gameEngine.',
+  },
+
+  zim_skilled_displaced: {
+    weight: 'moderate',
+    category: 'immigration',
+    description: 'Skilled Zimbabwean (nurse, teacher, engineer) working below qualification in the South African diaspora — credentials not recognised, documentation irregular.',
+    intent: 'year_texture',
+    notes: 'Set by zim_johannesburg_arrival. Year texture: working below qualification, the gap between training and daily work.',
+  },
+
+  zim_xenophobia_2008: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived or witnessed the May 2008 xenophobic violence in South Africa — 62 killed, 100,000 displaced within South Africa. Started in Alexandra, spread to other townships.',
+    intent: 'year_texture',
+    notes: 'Set by zim_xenophobic_2008 event. Year texture: the specific weight of that month, remaining in a country where it happened.',
+  },
+
+  zim_diaspora_return: {
+    weight: 'moderate',
+    category: 'immigration',
+    description: 'Returned to Zimbabwe after years in the diaspora — chose to go back rather than remain in South Africa in late life.',
     intent: 'none',
-    notes: 'Set by zim_exodus_south. Overlaps with emigrated flag which carries the primary diaspora follow-through.',
+    notes: 'Set by zim_diaspora_late (return choice).',
   },
 
   murambatsvina_witness: {

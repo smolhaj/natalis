@@ -160,6 +160,102 @@ export const ZIMBABWE_EVENTS = [
     effect: (p) => { p.m += 10; p.addFlag('zim_mugabe_era_end'); p.setMem('zimMugabeFall', true); },
   },
 
+  // ── ZIMBABWEAN DIASPORA IN SOUTH AFRICA ─────────────────────────────────
+
+  {
+    id: 'zim_johannesburg_arrival',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.flags.has('zim_diaspora') &&
+      G.currentYear >= 2003 && G.currentYear <= 2011 &&
+      G.age >= 18 &&
+      !G.mem?.zimJoburgArrival,
+    text: 'The Zimbabwean church meets Sunday mornings in a rented hall in Hillbrow. You know which stalls on Bree Street sell sadza and kapenta and which ones know which brand of mealie meal is closest to home. Your nursing degree — or your teaching certificate, your accounting qualification, your engineering diploma — is not recognised here. Your documentation is not the right kind, which means the formal economy is not available to you. You work below your qualification. You clean houses or work night security or sell airtime at a street stand. One month\'s pay at South African minimum wage exceeds your annual salary in Harare. Your family eats because of this calculation. You do not stop being a nurse in your head.',
+    choices: null,
+    effect: (p) => { p.m -= 10; p.e += 2; p.addFlag('zim_skilled_displaced'); p.setMem('zimJoburgArrival', true); },
+  },
+
+  {
+    id: 'zim_xenophobic_2008',
+    phase: null,
+    weight: 5,
+    when: (G) =>
+      G.flags.has('zim_diaspora') &&
+      G.currentYear >= 2008 && G.currentYear <= 2009 &&
+      !G.mem?.zimXenophobia,
+    text: 'May 2008. It starts in Alexandra township and spreads. The word they use for foreigners is *makwerekwere*. Sixty-two people are killed. A hundred thousand are displaced within South Africa — people who have already been displaced once. The specific mechanism: people who were also poor, whose situation was also desperate, who had been told that their poverty was caused by you. Your neighbour is Mozambican. She is sixty years old and cannot move quickly.',
+    choices: [
+      {
+        text: 'Get out — a Zimbabwean family in Yeoville has a floor you can sleep on',
+        tag: null,
+        outcome: 'You leave your room. Three days later the violence moves on. You return to find the window broken. Your neighbour got out too, somehow. You don\'t ask how.',
+        effect: (p) => { p.m -= 16; p.h -= 3; p.addFlag('zim_xenophobia_2008'); p.setMem('zimXenophobia', true); },
+      },
+      {
+        text: 'Stay and help your Mozambican neighbour to safety',
+        tag: null,
+        outcome: 'You get her to her daughter\'s place three streets over. You are seen doing this. You know you were seen. Nothing happens to you. You do not understand why nothing happens to you and you don\'t try to understand it.',
+        effect: (p) => { p.m -= 18; p.h -= 5; p.karma += 8; p.addFlag('zim_xenophobia_2008'); p.setMem('zimXenophobia', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'zim_diaspora_decade',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) =>
+      G.flags.has('zim_diaspora') &&
+      G.currentYear >= 2013 &&
+      G.age >= 30 &&
+      !G.mem?.zimDiasporaTen,
+    text: 'It has been ten years, or close enough. If you have children born here, they have South African accents and do not call Zimbabwe home. You have the Western Union route memorised — the fee structure, the exchange rate, which days the rate is better. The country you left has continued without you: Mugabe fell in 2017, the economy stabilised then destabilised again in new configurations, people you grew up with have their own diaspora stories. The question of return has become the kind of question you carry quietly rather than answer.',
+    choices: [
+      {
+        text: 'South Africa is complicated but it\'s where your life is now',
+        tag: null,
+        outcome: 'You are here. Your networks are here, your routines, your knowledge of which offices to avoid and which to approach. Zimbabwe has become the place you explain to your children.',
+        effect: (p) => { p.r += 4; p.setMem('zimDiasporaTen', true); },
+      },
+      {
+        text: 'The idea of going back is starting to feel possible',
+        tag: null,
+        outcome: 'Possible is not the same as likely. You keep sending the money and working the calculation. But you look up prices in Harare now. You didn\'t use to.',
+        effect: (p) => { p.m += 5; p.r += 3; p.setMem('zimDiasporaTen', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'zim_diaspora_late',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) =>
+      G.flags.has('zim_diaspora') &&
+      G.currentYear >= 2015 &&
+      G.age >= 55 &&
+      !G.mem?.zimDiasporaLate,
+    text: 'Your children don\'t call Zimbabwe home. They have never called it home. The country you left in 2004 or 2007 no longer exists in the form you left it — which means the return you imagined is not available. The Harare in your memory is from before the hyperinflation, before Murambatsvina, before the long walk south. What you could return to is a city carrying the same name but different content. You are also different. The return requires two people who no longer exist meeting in a place that no longer exists.',
+    choices: [
+      {
+        text: 'Go back — the country needs people who left to come back',
+        tag: null,
+        outcome: 'You go. It is not the same. You knew it would not be the same. You build something anyway, which is what you always did.',
+        effect: (p) => { p.m += 8; p.r += 5; p.addFlag('zim_diaspora_return'); p.setMem('zimDiasporaLate', true); },
+      },
+      {
+        text: 'Stay — what you built here is real, even without the name you thought it would have',
+        tag: null,
+        outcome: 'You stay. The money keeps moving south to north, lighter now that your children are grown. Zimbabwe exists in you the way all places exist in people who left them.',
+        effect: (p) => { p.m += 5; p.r += 8; p.setMem('zimDiasporaLate', true); },
+      },
+    ],
+    effect: null,
+  },
+
   // ── FOLLOW-THROUGHS ──────────────────────────────────────────────────────
 
   {
