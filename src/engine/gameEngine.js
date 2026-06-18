@@ -3282,6 +3282,13 @@ function buildYearTexture(state) {
       ? 'You are one of the ones who stayed. The decision accumulated over years into a fact. The people who shaped this place with you are mostly somewhere else now.'
       : 'The houses that have gone quiet on your street. The names at school your children don\'t know. You are still here.',
   ])
+  if (F.has('stayed_behind') && Math.random() < 0.2) return pick([
+    'The people who left are somewhere. You know some of their somewhere-s from the calls and the photos. The somewhere you chose is here.',
+    'You said no to the boat or the plane or the road. That was a decision you made with what you knew at the time.',
+    phase === 'late_life'
+      ? 'Some of them came back, in the end. Some didn\'t. The ones who stayed built what is here. You are part of what is here.'
+      : 'The question of whether you made the right choice is not one you ask directly. You make it into smaller questions about specific things.',
+  ])
 
   if (F.has('institutional_power') && Math.random() < 0.22) return pick([
     'You have held the institutional authority long enough that you sometimes cannot tell where the institution ends and you begin. That confusion is worth attending to.',
@@ -4521,6 +4528,14 @@ function buildYearTexture(state) {
   if ((F.has('debt_spiral_experienced') || F.has('debt_collector_known')) && phase === 'midlife' && Math.random() < 0.3) return pick([
     'The numbers are manageable now. You check them more often than you need to.',
     'The habit of counting what is owed is hard to put down even when the answer is fine.',
+  ])
+  if (F.has('poverty_childhood') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.25) return pick([
+    'You check the price before sitting down. That habit is from a long time ago. It has not gone.',
+    'The fridge being full is not something you take for granted. You know what it is to open a fridge that has nothing in it.',
+    phase === 'late_life'
+      ? 'The money you have now is not the money you had then. The calculation runs anyway — what this costs, what that costs, where the margin is. You were made from the margin.'
+      : 'You earn more than you grew up with. The part of you that did the growing up has not fully received this information. It is still watching.',
+    'There is a specific freedom in not needing to count. You count anyway. The counting is how you know you are not back there.',
   ])
 
   // ─── FITNESS SCORE TEXTURE ────────────────────────────────────────────────────

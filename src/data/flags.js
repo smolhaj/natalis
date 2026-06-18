@@ -327,8 +327,8 @@ export const FLAG_REGISTRY = {
     weight: 'moderate',
     category: 'displacement',
     description: 'Character chose to stay when their peer group or generation emigrated.',
-    intent: 'event',
-    notes: 'events_stayed.js covers this arc.',
+    intent: 'both',
+    notes: 'events_stayed.js covers this arc. Year texture in buildYearTexture: the view from staying, the elsewhere of the people who left.',
   },
 
   witness_to_exodus: {
@@ -11256,8 +11256,8 @@ export const FLAG_REGISTRY = {
     weight: 'major',
     category: 'economics',
     description: 'Grew up in poverty — the formative experience of scarcity that reorganises how you think about money, security, and enough.',
-    intent: 'none',
-    notes: 'Cross-cutting. Checked in generateEpitaph and generateIdentityCard. Foundational poverty flag.',
+    intent: 'year_texture',
+    notes: 'Cross-cutting. Checked in generateEpitaph, generateIdentityCard, and buildYearTexture (midlife/late_life: price-checking, full fridge, the counting that never stops).',
   },
 
   left_school_early: {
