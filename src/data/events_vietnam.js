@@ -273,4 +273,115 @@ export const VIETNAM_EVENTS = [
     effect: (p) => { p.e += 5; p.addFlag('doi_moi_generation'); p.setMem('vnCommunistCapitalist', true) },
   },
 
+  // ── MANUFACTURING BOOM 2010s ─────────────────────────────────────────────────
+  // Vietnam becomes the China+1 destination — Samsung, Apple suppliers, textiles.
+
+  {
+    id: 'vn_factory_generation',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      !G.mem.vnFactory &&
+      G.character.country.name === 'Vietnam' &&
+      G.currentYear >= 2010 && G.currentYear <= 2022 &&
+      G.age >= 18 && G.age <= 35,
+    text: "Samsung's factory in Thái Nguyên employs 100,000 people and makes half the world's Samsung phones. Intel has a chip assembly plant in Ho Chi Minh City. The Apple supply chain runs through Bình Dương, Đồng Nai, Bắc Giang. Vietnam has become the assembly floor that global manufacturing moved to when China became too expensive. Your generation is the generation doing the assembling — or the generation running the suppliers, or the generation that left the province for the factory city. The job exists. The life it buys is specific.",
+    choices: [
+      {
+        text: 'You are in the factory economy — it is real work and it has built something real.',
+        tag: null,
+        outcome: 'The wage is higher than the village. The shift is twelve hours. You know both of these things simultaneously.',
+        effect: (p) => { p.mo += 4000; p.h -= 3; p.addFlag('vn_factory_generation'); p.setMem('vnFactory', true) },
+      },
+      {
+        text: 'You are in the tier above — running something that serves the factories, watching the boom reshape the cities.',
+        tag: null,
+        outcome: 'The money moved faster in this decade than any decade before it. You were positioned to move with it.',
+        effect: (p) => { p.mo += 8000; p.w += 5; p.addFlag('vn_factory_generation'); p.setMem('vnFactory', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── SOUTH CHINA SEA 2014 ─────────────────────────────────────────────────────
+  // China's oil rig placement; anti-Chinese riots in Vietnamese factory zones.
+
+  {
+    id: 'vn_south_china_sea_2014',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      !G.mem.vnSCS &&
+      G.character.country.name === 'Vietnam' &&
+      G.currentYear >= 2014 && G.currentYear <= 2016 &&
+      G.age >= 18,
+    text: "May 2014. China places an oil rig in waters Vietnam claims as its exclusive economic zone. In the Hà Tĩnh and Bình Dương industrial zones, protests turn into attacks on factories. Workers burn buildings belonging to companies that look Chinese — some of them Taiwanese, some South Korean, caught in the visual logic of the moment. The Vietnamese Communist Party that fought France and America cannot openly oppose China; the two parties are ideological siblings and economic partners. The nationalism the party has cultivated cannot be fully directed. It runs in the streets for a week and then is suppressed. You are living in a country that has a complicated relationship with its largest neighbour, and always will.",
+    choices: null,
+    effect: (p) => { p.r += 5; p.addFlag('vn_sino_tension_generation'); p.setMem('vnSCS', true) },
+  },
+
+  // ── CYBERSECURITY LAW 2018 ───────────────────────────────────────────────────
+  // Digital economy with digital control: the closed political space after the boom.
+
+  {
+    id: 'vn_cybersecurity_2018',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      !G.mem.vnCyber &&
+      G.character.country.name === 'Vietnam' &&
+      G.currentYear >= 2018 && G.currentYear <= 2023 &&
+      G.age >= 20,
+    text: "The cybersecurity law passes in January 2019. Foreign companies must store data locally and provide it to the government on request. Facebook, Google, and all platforms must remove content the authorities flag within twenty-four hours. Vietnam has 70 million internet users and one of the most active Facebook populations in the world and a criminal code that includes prison terms for posting things the party considers destabilising. Bloggers and activists get sentences of ten to fifteen years. You understand the separation: the economy is open, the conversation is not. The gap between what you do online and what you say online is something you navigate as routine.",
+    choices: [
+      {
+        text: 'You stay inside the line — the economy is enough, the politics is not worth the cost.',
+        tag: null,
+        outcome: 'The line is not always clearly marked. You have learned to feel its position by the cases you hear about.',
+        effect: (p) => { p.e += 3; p.r += 4; p.setMem('vnCyber', true) },
+      },
+      {
+        text: 'You have tested the line — the things you post, the groups you are in.',
+        tag: null,
+        outcome: 'You have been careful, or lucky, or both. The knowledge of the cost is specific: you know the names of the people who got it wrong.',
+        effect: (p) => { p.karma += 5; p.r += 7; p.addFlag('vn_dissident_adjacent'); p.setMem('vnCyber', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── DISSIDENT ADJACENT — LATE RECKONING ─────────────────────────────────────
+
+  {
+    id: 'vn_dissident_adjacent_late',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) =>
+      !G.mem.vnDissidentLate &&
+      G.character.country.name === 'Vietnam' &&
+      G.flags.has('vn_dissident_adjacent') &&
+      G.age >= 50,
+    text: 'You know the names of people who got the timing wrong: the blogger whose post was shared at the wrong moment, the lawyer who took the wrong case, the activist who believed the 2013 reforms meant something new. You have been in the spaces adjacent to that work long enough to understand the exact position of the line. The line is not fixed — it moves depending on the political season, the run-up to a Party Congress, the mood of the Public Security Ministry. You navigate it without thinking about it continuously. You wonder sometimes what would have happened if you had not been careful.',
+    choices: null,
+    effect: (p) => { p.r += 6; p.e += 3; p.setMem('vnDissidentLate', true) },
+  },
+
+  // ── SURVIVOR GENERATION WATCHING PROSPERITY ─────────────────────────────────
+  // Parents who survived re-education/boat people watching their children's lives.
+
+  {
+    id: 'vn_survivor_watching_prosperity',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      !G.mem.vnSurvivorProsperty &&
+      G.character.country.name === 'Vietnam' &&
+      G.currentYear >= 2010 &&
+      G.age >= 58 &&
+      (G.flags.has('reeducation_family') || G.flags.has('south_vietnamese') || G.flags.has('boat_person') || G.flags.has('vn_reeducation_survived')),
+    text: "Your children have apartments in Hồ Chí Minh City. They have cars, or motorcycles that are better than the motorcycles you had. They carry phones that connect to everything. The country they are growing up in is not the country you grew up in — not the country of re-education lists and food rationing and the fishing boat at night. You watched this happen across the decades. You watched Vietnam become a different country from the one that unmade your family's first life. You do not know exactly what to make of the distance between the two.",
+    choices: null,
+    effect: (p) => { p.m += 8; p.r += 6; p.setMem('vnSurvivorProsperty', true) },
+  },
+
 ]

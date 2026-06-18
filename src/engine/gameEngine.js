@@ -9126,6 +9126,20 @@ function buildYearTexture(state) {
     'The war ended in 1975. The country that ended it exists and is called Vietnam. The world that was organized around the war — the alliances, the proxies, the domino theory — recalibrated without ever fully accounting for what the war had been.',
     'You are from the country that the war was about and that the war happened in. The war has a different shape from here than from the countries that were in it by choice rather than by geography.',
   ])
+  if (F.has('vn_factory_generation') && Math.random() < 0.22) return pick([
+    'Vietnam became the factory of the world\'s smartphones. Samsung built its largest plant in Thái Nguyên. Apple moved production to Bình Dương. Your generation is the one that assembled it.',
+    phase === 'late_life'
+      ? 'You watched Vietnam go from one of the poorest countries in Asia to one of the fastest-growing economies in a single working lifetime. The factory floors your generation built are the reason.'
+      : 'The economy grew because the wages were low enough and the workforce disciplined enough and the government stable enough. All three of those conditions are legible when you lay them out. You live inside them without laying them out every day.',
+    'The "China+1" strategy: every company that wanted to diversify out of China found Vietnam. The country benefited. The benefiting looked like twelve-hour shifts and dormitory blocks and wages that were higher than the village but not as high as the growth statistics suggested.',
+  ])
+  if (F.has('vn_sino_tension_generation') && Math.random() < 0.2) return pick([
+    'The South China Sea: Vietnam claims the Spratlys and the Paracels. China claims them more forcefully. The map that hangs in every Vietnamese school has a different shape from the map the Chinese navy operates with. You know both maps.',
+    'The Communist Party of Vietnam and the Communist Party of China are ideological siblings who have also fought a war against each other (1979) and contested the same ocean for decades. The party does not advertise the second part.',
+    phase === 'late_life'
+      ? 'Vietnam has survived every large neighbour that has tried to absorb it. The Americans before China; the Mongols before the Americans; the Chinese dynasties before the Mongols. You learned this history in school as pride. It is also accurate.'
+      : 'Anti-China nationalism is real in Vietnam and the party has both cultivated it and then had to suppress it when it ran too far. The 2014 factory fires were the moment when the two things ran into each other.',
+  ])
 
   // ─── CAMBODIA TEXTURE ────────────────────────────────────────────────────────
   if (F.has('khmer_rouge_rural_witness') && Math.random() < 0.28) return pick([

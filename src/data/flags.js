@@ -6136,6 +6136,30 @@ export const FLAG_REGISTRY = {
     notes: 'Set by world event american_war_in_vietnam. Covers all Vietnamese regardless of side.',
   },
 
+  vn_factory_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Part of Vietnam\'s manufacturing boom generation — Samsung, Apple suppliers, textiles; the China+1 industrial shift that remade the Mekong Delta and northern provinces.',
+    intent: 'year_texture',
+    notes: 'Set by vn_factory_generation (both choices).',
+  },
+
+  vn_sino_tension_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through the 2014 South China Sea crisis — China\'s oil rig in Vietnamese waters, anti-Chinese protests in industrial zones, the contradiction of Communist-party-brother and territorial adversary.',
+    intent: 'year_texture',
+    notes: 'Set by vn_south_china_sea_2014.',
+  },
+
+  vn_dissident_adjacent: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Tested the line between online speech and state censorship — knows the names of bloggers and activists who got the timeline wrong; navigates the closed political space within the open economy.',
+    intent: 'event',
+    notes: 'Set by vn_cybersecurity_2018 (second choice).',
+  },
+
   // ── MYANMAR ──────────────────────────────────────────────────────────────────
 
   myanmar_socialist_generation: {
