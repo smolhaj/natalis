@@ -11418,4 +11418,70 @@ export const FLAG_REGISTRY = {
     notes: 'Set by Haiti earthquake events and worldEvents.js. Checked by ft23_earthquake_survivor_*.',
   },
 
+  // ── CROSS-CUTTING FLAGS (FT-24 coverage) ──────────────────────────────────────
+
+  athlete_became_coach: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Transitioned from performing athlete to coach — finding language for physical knowledge never spoken, watching another body learn what yours already knows.',
+    intent: 'event',
+    notes: 'Set by events_career_arcs.js and events_gifted.js. Checked by ft24_athlete_coach_settled.',
+  },
+
+  failure_integrated: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Has genuinely processed a major failure — looked at it straight, understood what it cost and what it meant, without the nausea.',
+    intent: 'event',
+    notes: 'Set by events_coherence.js. Checked by ft24_failure_integrated_midlife.',
+  },
+
+  manages_chronic_condition: {
+    weight: 'moderate',
+    category: 'health',
+    description: 'Living with a managed chronic condition — not crisis, but permanent infrastructure: the medication, the avoidances, the calendar of check-ups.',
+    intent: 'event',
+    notes: 'Set by events_illness.js and events_condition_arc.js. Checked by ft24_manages_chronic_texture.',
+  },
+
+  party_member: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Joined the ruling party for pragmatic reasons under a single-party system — the ideology performed well enough to be unremarkable, the advancement real.',
+    intent: 'event',
+    notes: 'Set by events_historical.js and events_culture.js. Checked by ft24_party_member_reckoning.',
+  },
+
+  found_community: {
+    weight: 'major',
+    category: 'relationships',
+    description: 'Found a community — people who know things about you that others in your life don\'t, who have watched you change and you them; now includes funerals.',
+    intent: 'event',
+    notes: 'Set by events_culture.js (LGBTQ community finding). Checked by ft24_found_community_deepens.',
+  },
+
+  dual_identity: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Holds two cultural identities — does the translation daily, belongs fully to neither, sees from two places simultaneously.',
+    intent: 'event',
+    notes: 'Set by events_culture.js and events_society.js. Checked by ft24_dual_identity_midlife.',
+  },
+
+  class_awareness: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Has had the moment when the class mechanism became visible — understands how advantage distributes and reads rooms accordingly.',
+    intent: 'event',
+    notes: 'Set by events_texture.js and events_culture.js. Checked by ft24_class_awareness_settled.',
+  },
+
+  vision_impaired: {
+    weight: 'moderate',
+    category: 'health',
+    description: 'Experiencing significant vision loss — living in a smaller perceptual radius, adapting through memory and other senses.',
+    intent: 'event',
+    notes: 'Set by events_late_life.js. Checked by ft24_vision_impaired_adapts.',
+  },
+
 }
