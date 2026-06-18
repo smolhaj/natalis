@@ -3354,6 +3354,20 @@ function buildYearTexture(state) {
       ? 'The brotherhood has been the frame of your spiritual life for decades. The work, the community, the devotion. It has held.'
       : 'Murid — the one who wants, who seeks. The wanting has been the engine. The community has been the structure.',
   ])
+  if (F.has('sen_morocco_transit') && Math.random() < 0.22) return pick([
+    'You learned the route overland: Mali, Algeria, the Moroccan border at Oujda, the forest above Nador. You learned it by doing it.',
+    'The geography of the crossing is still in your body. How long each leg takes. Where the checkpoints are. Which stretch eats the most money.',
+    phase === 'late_life'
+      ? 'People are still coming through Morocco. The route you took is the route they are taking. Some things change; the fence height changed. Most things have not.'
+      : 'You know what the Melilla fence looks like from below and from the forest two kilometres out. That knowledge is not theoretical.',
+  ])
+  if (F.has('sen_fence_pushback') && Math.random() < 0.2) return pick([
+    'The wire opened your hands. You remember the specific sensation — not pain first, just the knowledge of what was happening to you.',
+    'The ECHR ruled on collective expulsion. You know the legal language now. You did not know it on the night it was done to you.',
+    phase === 'late_life'
+      ? 'You tried the fence more than once. The third time, or the fourth, worked. Or did not work. Either way, you carried those nights for a long time.'
+      : 'The people doing it had a procedure. You had a body. The procedure did not distinguish.',
+  ])
 
   if (F.has('debt_recovered') && Math.random() < 0.22) return pick([
     'You are debt-free. That sentence is recent enough that it still surprises you. The years it took to be able to say it are still present in how you count things.',

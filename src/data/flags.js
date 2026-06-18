@@ -2998,6 +2998,38 @@ export const FLAG_REGISTRY = {
     notes: 'Set by sen_gorée_school. Specific to Francophone Africa; relates to Négritude and the colonial education project.',
   },
 
+  sen_morocco_transit: {
+    weight: 'major',
+    category: 'immigration',
+    description: 'Took the overland route north from West Africa to Morocco, transiting through Mali and Algeria, attempting to reach the Melilla or Ceuta fence.',
+    intent: 'event',
+    notes: 'Set by sen_morocco_route. Follow-through: sen_nador_forest → sen_melilla_fence chain.',
+  },
+
+  sen_melilla_attempt: {
+    weight: 'major',
+    category: 'immigration',
+    description: 'Participated in a mass fence-climbing attempt at Melilla — the tactic of using overwhelming numbers to cross the 6-metre steel fence into Spanish territory.',
+    intent: 'event',
+    notes: 'Set by sen_nador_forest. Follow-through: sen_melilla_fence (cross vs. pushed back).',
+  },
+
+  sen_made_europe: {
+    weight: 'major',
+    category: 'immigration',
+    description: 'Made it over the Melilla fence into Spain — arrived in European territory after the fence attempt, claiming asylum rights.',
+    intent: 'none',
+    notes: 'Set by sen_melilla_fence (success choice). Character is now asylum_seeker in Spain.',
+  },
+
+  sen_fence_pushback: {
+    weight: 'major',
+    category: 'immigration',
+    description: 'Was knocked down at the Melilla fence and pushed back by Moroccan guards — the illegal collective expulsion practice that the European Court of Human Rights later ruled violated Article 4 of Protocol 4.',
+    intent: 'event',
+    notes: 'Set by sen_melilla_fence (pushback choice). Follow-through: sen_fence_pushback_echo (ECHR ruling 2020).',
+  },
+
   // ── ADOPTEE FLAGS ─────────────────────────────────────────────────────────
 
   adopted: {
