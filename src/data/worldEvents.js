@@ -3294,4 +3294,48 @@ export const WORLD_EVENTS = [
     when: (G) => !G.flags.includes('bol_evo_generation'),
   },
 
+  // ── RECENT 2022–2023 ──────────────────────────────────────────────────────────
+
+  {
+    id: 'we_iran_mahsa_amini_2022',
+    name: 'Woman, Life, Freedom — Iran',
+    years: [2022, 2023],
+    archetypes: 'all',
+    countries: ['Iran'],
+    narrative: 'On September 16, 2022, Mahsa Amini, a 22-year-old Kurdish-Iranian woman, dies in the custody of the Morality Police three days after being arrested for wearing her hijab incorrectly. Protests begin in her home city of Saqqez, then spread to every province in Iran. Women burn their headscarves in the streets. The slogan jin jiyan azadî — woman, life, freedom — appears on walls across the country. The crackdown is severe: more than 500 people killed in the first months, 18,000 arrested. The movement is the most sustained challenge to the Islamic Republic since the 1979 revolution.',
+    context: 'Mahsa (Jina) Amini was 22 years old when she died. The Morality Police, formally the Gasht-e Ershad, had been enforcing mandatory hijab since 1983. The 2022 uprising was distinct from previous protests in its explicitly feminist character and in the willingness of young Iranian women to lead it visibly, at personal risk. International attention was intense. The movement did not topple the government. Several of the women who had burned their headscarves publicly were sentenced to execution or long prison terms. The slogan jin jiyan azadî originates in Kurdish women\'s liberation movements.',
+    effect: (p) => { p.m -= 6; p.karma += 6; p.addFlag('iran_woman_life_freedom_generation') },
+    addFlags: ['iran_woman_life_freedom_generation'],
+    minAge: 12,
+    when: (G) => !G.flags.includes('iran_woman_life_freedom_generation'),
+  },
+
+  {
+    id: 'we_turkey_syria_earthquake_2023',
+    name: 'Turkey-Syria Earthquake',
+    years: [2023, 2024],
+    archetypes: 'all',
+    countries: ['Turkey', 'Syria'],
+    narrative: 'On February 6, 2023, two earthquakes of magnitude 7.8 and 7.5 strike southern Turkey and northern Syria within nine hours. More than 50,000 people die — the deadliest earthquake in the region in a century. Ten Turkish provinces are affected; cities including Kahramanmaraş, Gaziantep, Hatay, and Antakya are devastated. In Syria, already weakened by civil war, rescue capacity is near-zero and international aid is blocked by sanctions and bureaucratic delays. Survivors wait in rubble through freezing February nights. The Turkish government\'s slow response becomes a political controversy.',
+    context: 'The February 2023 earthquake struck along the East Anatolian Fault, one of the world\'s most seismically active zones. The slow pace of search-and-rescue operations in Turkey drew intense criticism; President Erdoğan acknowledged early delays. In Syria\'s Idlib and Aleppo provinces, already displaced populations suffered a second catastrophe with almost no functioning state infrastructure. International donors pledged $6 billion at a donor conference; the reconstruction timeline was estimated at a decade. The earthquake accelerated internal Turkish political debates ahead of the May 2023 elections.',
+    effect: (p) => { p.h -= 8; p.m -= 12; p.addFlag('turkey_syria_earthquake_2023') },
+    addFlags: ['turkey_syria_earthquake_2023'],
+    minAge: 8,
+    when: (G) => !G.flags.includes('turkey_syria_earthquake_2023'),
+  },
+
+  {
+    id: 'we_sudan_civil_war_2023',
+    name: 'Sudan Civil War',
+    years: [2023, 2025],
+    archetypes: 'all',
+    countries: ['Sudan'],
+    narrative: 'On April 15, 2023, fighting erupts in Khartoum between the Sudanese Armed Forces and the Rapid Support Forces, a paramilitary group that grew out of the Janjaweed militias responsible for Darfur. Within days the capital is a battlefield. By the end of the year, 7 million people have been displaced — the largest displacement crisis in the world. Hospitals are looted, neighbourhoods shelled, markets burned. The RSF moves through Darfur committing atrocities documented by human rights organisations. The civilian transition that had followed the 2019 revolution is over.',
+    context: 'The conflict began as a power struggle between General Abdel Fattah al-Burhan of the SAF and General Mohamed Hamdan Dagalo (Hemedti) of the RSF. Both had participated in the 2019 coup that ousted Omar al-Bashir and the 2021 coup that ended the civilian transition. International mediation efforts repeatedly failed. The scale of displacement — surpassing Syria, Ukraine, and Afghanistan by 2024 — received limited global media attention. Darfur, where the RSF committed what the US State Department formally designated as genocide, was particularly devastated.',
+    effect: (p) => { p.h -= 10; p.m -= 15; p.addFlag('sudan_civil_war_2023') },
+    addFlags: ['sudan_civil_war_2023'],
+    minAge: 8,
+    when: (G) => !G.flags.includes('sudan_civil_war_2023'),
+  },
+
 ]

@@ -11740,4 +11740,28 @@ export const FLAG_REGISTRY = {
     intent: 'none', notes: 'Set by climate tipping point world events.',
   },
 
+  iran_woman_life_freedom_generation: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'Lived through the 2022 Woman, Life, Freedom uprising in Iran — the most sustained challenge to the Islamic Republic since the revolution, sparked by Mahsa Amini\'s death in Morality Police custody.',
+    intent: 'none',
+    notes: 'Set by we_iran_mahsa_amini_2022 world event. Iran only.',
+  },
+
+  turkey_syria_earthquake_2023: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived the February 2023 Turkey-Syria earthquake — 50,000+ dead, cities in rubble, survivors waiting in freezing February nights.',
+    intent: 'none',
+    notes: 'Set by we_turkey_syria_earthquake_2023 world event. Turkey/Syria characters.',
+  },
+
+  sudan_civil_war_2023: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'Living through the 2023 Sudan civil war — SAF vs. RSF, Khartoum as a battlefield, 7 million displaced, the civilian transition destroyed.',
+    intent: 'none',
+    notes: 'Set by we_sudan_civil_war_2023 world event. Sudan only.',
+  },
+
 }
