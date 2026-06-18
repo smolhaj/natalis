@@ -9804,6 +9804,29 @@ function buildYearTexture(state) {
       : 'The people who came for you in 2008 were also poor, also struggling. That is not the same as them being right. Both things are true. You carry both.',
   ])
 
+  // ─── MAASAI TEXTURE ──────────────────────────────────────────────────────────
+  if (F.has('maasai_moran') && Math.random() < 0.22) return pick([
+    'The cattle move the way you trained them to, still, in the part of your mind that is still in the dry season before everything changed.',
+    'The moran age-grade had its own calendar — the ceremonies, the communal herding ranges, the knowledge of which grasses meant what. That knowledge lives somewhere in you whether you use it or not.',
+    phase === 'late_life'
+      ? 'You learned to read land the way other people read text. What the soil colour means. What the birds are doing. Where the water runs in the wet season. That is knowledge you cannot use here, but you have it.'
+      : 'The red ochre and the spear and the specific relationship to a specific piece of land: these are not metaphors. They are a technology for living on a landscape, and they worked.',
+  ])
+  if (F.has('maasai_land_displaced') && Math.random() < 0.2) return pick([
+    'The wire went up around the land your grandfather grazed. The sign says World Heritage Site. The lions are protected. The people who lived alongside the lions are not mentioned on the sign.',
+    'Conservation arrived with a document and a timeline. The wildlife was worth more as a landscape than as a place to live. You understood the logic without accepting it.',
+    phase === 'late_life'
+      ? 'The tourists still come to see what the land looked like when your family was on it. They call it pristine. You do not go back.'
+      : 'The group ranch is all that remains of the grazing range. Twenty acres per family. The land does not know it has been subdivided.',
+  ])
+  if (F.has('maasai_nairobi') && Math.random() < 0.2) return pick([
+    'Nairobi does not know your lineage, your age-grade, your cattle count, your place in the ekiama. The city is a different scoring system entirely, and you learned it.',
+    'In the city you are a Maasai, which is a category. At home you were a specific person in a specific place in a specific set of relationships. The difference is not small.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'You are from somewhere your children have never seen. The language you dreamed in first is not theirs. That is a migration that happens inside a single generation.'
+      : 'The Nairobi Maasai community knows who they are: not farmers, not fully urban, maintaining something. You are part of that maintenance.',
+  ])
+
   // ─── TUNISIA TEXTURE ─────────────────────────────────────────────────────────
   if (F.has('tunisian_womens_rights_generation') && Math.random() < 0.15) return pick([
     'The Code of Personal Status is sixty years old. It is not everywhere in the Arab world. Tunisia has it. That fact is not abstract when you know what is absent elsewhere.',

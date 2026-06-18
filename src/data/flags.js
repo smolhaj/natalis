@@ -3154,6 +3154,38 @@ export const FLAG_REGISTRY = {
     notes: 'Set by ken_post_election_2007 (crossed branch). No follow-through required — the experience is self-contained.',
   },
 
+  maasai_moran: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Completed the moran age-grade initiation — the ceremony, the ochre, the spear, the specific knowledge of cattle and land that comes with the role.',
+    intent: 'year_texture',
+    notes: 'Set by ken_maasai_moran (auto-resolve). Powers ken_maasai_nairobi_choice guard. Year texture in buildYearTexture for pastoral/cattle memory.',
+  },
+
+  maasai_land_displaced: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Displaced from ancestral Maasai grazing land by wildlife conservation boundaries — the experience of the land becoming "protected" from the people who lived on it.',
+    intent: 'year_texture',
+    notes: 'Set by ken_maasai_land_displacement (both branches). Year texture: the animals inside worth more than the people outside.',
+  },
+
+  maasai_nairobi: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Left pastoral Maasai life for Nairobi — the city that does not know your age-grade or lineage, where you start over.',
+    intent: 'year_texture',
+    notes: 'Set by ken_maasai_nairobi_choice (Nairobi branch). Year texture: urban Maasai identity, caught between worlds.',
+  },
+
+  maasai_stayed_pastoral: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Chose to remain in pastoral Maasai life as the land contracted — the droughts, the shrinking group ranches, the ones who left.',
+    intent: 'none',
+    notes: 'Set by ken_maasai_nairobi_choice (stayed branch). No follow-through required — the life is the texture.',
+  },
+
   // ── ETHIOPIA ───────────────────────────────────────────────────────────────
 
   eth_red_terror_survived: {
