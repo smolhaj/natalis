@@ -8851,6 +8851,22 @@ function buildYearTexture(state) {
       : 'You were at the protest or you watched it on a screen. Either way the footage from the toll gate is in your memory. The government\'s response to the footage is also in your memory.',
   ])
 
+  // ─── ETHIOPIA TEXTURE ────────────────────────────────────────────────────────
+  if (F.has('eth_abiy_generation') && Math.random() < 0.22) return pick([
+    'The border with Eritrea opened in 2018. Families separated for twenty years crossed at Zalambessa. The Nobel Peace Prize followed in 2019. That window lasted about two years.',
+    phase === 'late_life'
+      ? 'You were alive for both the peace deal and the war it preceded. Abiy Ahmed got the Nobel for ending the Eritrea conflict and then launched the Tigray war eighteen months later. The Nobel Committee does not take prizes back.'
+      : 'The Addis Ababa you lived in during the Abiy optimism years — the political prisoners released, the exiles returning, the opposition allowed to function — is a specific Addis that lasted a specific number of months.',
+    'Ethiopia, the continent\'s second-largest country, went from Nobel Peace Prize to one of the deadliest wars of the twenty-first century in under two years. You were inside both.',
+  ])
+  if (F.has('eth_tigray_witnessed') && Math.random() < 0.25) return pick([
+    'The communications blackout from Tigray lasted months. What arrived was partial: the satellite photos, the refugee testimonies at the Sudanese border, the aid worker accounts. The full scale came later.',
+    'November 2022: the Pretoria agreement. The war lasted two years. The estimates are 300,000 to 500,000 dead, which is a margin of uncertainty that covers a country. You lived in Ethiopia through both years.',
+    phase === 'late_life'
+      ? 'The man who won the Nobel Peace Prize in 2019 fought a war in the north of Ethiopia that produced 300,000 to 500,000 deaths. The prize was not revoked. The dead are not un-dead. You are the generation that holds both of these facts.'
+      : 'Eritrean troops were fighting in Tigray. The same Eritrea that Abiy made peace with. The same peace that won him the prize. The connections are legible if you lay them out. You have laid them out many times.',
+  ])
+
   // ─── IRAN CONTEMPORARY TEXTURE ───────────────────────────────────────────────
   if (F.has('green_movement_generation') && Math.random() < 0.25) return pick([
     '"Where is my vote?" The question was asked in the streets of Tehran in June 2009 and the answer was four thousand arrests and the execution of eight protesters. The question has not gone away.',
@@ -9677,6 +9693,14 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'You have lived through Nimeiry, Bashir, the revolution, and the coup after the revolution. The patterns are legible. The question is what to do with legible patterns.'
       : 'The people who went into the streets in 2018 and 2019 are still there. The crackdowns are still happening. You are deciding what this requires of you.',
+  ])
+  if (F.has('sdn_khartoum_war_generation') && Math.random() < 0.25) return pick([
+    'April 2023. The two factions that spent four years pretending to govern together fought for Khartoum instead. The capital became the front line.',
+    'You know which bridges were destroyed. You know which neighbourhoods the RSF held and which the SAF bombed from the air. The map of the city you carry is marked by that.',
+    phase === 'late_life'
+      ? 'Khartoum is a different city now than the city you left in 2023. The one in your memory and the one that exists share a name.'
+      : 'Four million people left Khartoum. You were one of them, or you were one of the ones who stayed in the houses and waited for it to pass.',
+    'The 2023 war is what the 2021 coup was pointed at. The transition\'s real arc was always going to end here — or somewhere like here.',
   ])
 
   // ─── TUNISIA TEXTURE ─────────────────────────────────────────────────────────

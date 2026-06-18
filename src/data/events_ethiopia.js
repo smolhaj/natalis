@@ -91,6 +91,53 @@ export const ETHIOPIA_EVENTS = [
     effect: (p) => { p.e += 2; p.m -= 4; p.setMem('ethAddisGrowth', true) },
   },
 
+  // ── ABIY AHMED AND THE PEACE DEAL 2018 ───────────────────────────────────
+
+  {
+    id: 'eth_abiy_peace_2018',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) => IS_ETHIOPIAN(G) && G.currentYear >= 2018 && G.currentYear <= 2020 && G.age >= 18 && !G.mem.ethAbiyPeace,
+    text: 'April 2018. Abiy Ahmed becomes prime minister at forty-one. He is Oromo, which has never happened. He releases political prisoners. He meets Isaias Afwerki of Eritrea in Asmara and ends the no-war-no-peace that has existed since the 1998-2000 border war. The border opens. Eritrean families separated for twenty years cross at Zalambessa and embrace on camera. In October 2019 Abiy wins the Nobel Peace Prize. The Ethiopian diaspora celebrates in Washington and London. In Addis, people argue about whether this is real or performed. It feels real enough.',
+    choices: null,
+    effect: (p) => { p.m += 12; p.addFlag('eth_abiy_generation'); p.setMem('ethAbiyPeace', true) },
+  },
+
+  // ── TIGRAY WAR 2020–2022 ─────────────────────────────────────────────────
+
+  {
+    id: 'eth_tigray_war_2020',
+    phase: 'midlife',
+    weight: 5,
+    when: (G) => IS_ETHIOPIAN(G) && G.currentYear >= 2020 && G.currentYear <= 2022 && G.age >= 16 && !G.mem.ethTigray,
+    text: 'November 4, 2020. Abiy Ahmed orders the federal military into Tigray. The government calls it a law enforcement operation against the TPLF. The TPLF had dominated Ethiopia for twenty-seven years before Abiy — the old guard, the Tigray People\'s Liberation Front — and the conflict between them has been building since 2018. Within weeks the communications blackout is total: no independent journalists, no phone lines, no humanitarian access. What arrives is partial and delayed. By 2022, when the scale becomes legible, the estimates are 300,000 to 500,000 dead — one of the deadliest conflicts anywhere since World War Two. Eritrean troops fought alongside federal forces. Rape was used as a systematic weapon. This is the war fought by the man who won the Nobel Peace Prize.',
+    choices: [
+      {
+        text: 'The TPLF dominated Ethiopia for a generation. The crackdown, whatever it became, started with a real grievance.',
+        tag: null,
+        outcome: 'The political argument existed. It does not cover the scale of what followed. You have both of those things in your understanding now and they do not resolve.',
+        effect: (p) => { p.m -= 14; p.r += 10; p.addFlag('eth_tigray_witnessed'); p.setMem('ethTigray', true) },
+      },
+      {
+        text: 'The Nobel Peace Prize laureate launched a war of this scale. That is the thing you cannot move past.',
+        tag: null,
+        outcome: 'The contradiction is not resolvable. Abiy kept the prize. The families in Tigray are still counting their dead.',
+        effect: (p) => { p.m -= 18; p.r += 12; p.karma += 4; p.addFlag('eth_tigray_witnessed'); p.setMem('ethTigray', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'eth_pretoria_2022',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => IS_ETHIOPIAN(G) && G.currentYear >= 2022 && G.currentYear <= 2025 && G.age >= 18 && G.flags.has('eth_tigray_witnessed') && !G.mem.ethPretoria,
+    text: 'November 2022. The Pretoria peace agreement is signed. The war is over in the technical sense: the guns stop. The accounting is still in progress. 300,000 to 500,000 dead depending on whose methodology. Millions displaced. Starvation in Tigray during the blockade years. The peace does not bring the dead back or explain the full scope of what happened under the blackout. Abiy Ahmed retains the Nobel Peace Prize, which is awarded by the Norwegian Nobel Committee and cannot be revoked. You are living in the country that produced all of this in the span of four years.',
+    choices: null,
+    effect: (p) => { p.m -= 8; p.r += 8; p.setMem('ethPretoria', true) },
+  },
+
   // ── FOLLOW-THROUGH: RED TERROR MEMORY ────────────────────────────────────
 
   {

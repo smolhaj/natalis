@@ -118,4 +118,34 @@ export const SUDAN_EVENTS = [
     effect: (p) => { p.m -= 14; p.r += 9; p.addFlag('sudan_coup_2021_generation'); p.setMem('sdnCoup2021', true) },
   },
 
+  // ── CIVIL WAR 2023 ────────────────────────────────────────────────────────────
+  // April 15, 2023: SAF vs. RSF turn Khartoum into a battlefield.
+
+  {
+    id: 'sdn_civil_war_2023',
+    phase: 'midlife',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'Sudan' &&
+      G.currentYear >= 2023 && G.currentYear <= 2026 &&
+      G.age >= 14 &&
+      !G.mem.sdnCivilWar23,
+    text: 'April 15, 2023. The Rapid Support Forces and the Sudan Armed Forces open fire on each other in Khartoum. Not at a front line — in the streets, the neighbourhoods, the buildings where people live. The RSF comes from the west; the SAF bombs from the air. By morning, the city has a different sound. The fighting does not end in days. Hospitals are occupied or damaged. Power goes. Water goes. The RSF loot shops, pharmacies, houses. By June, four million people have left the city. The transition that began when Bashir fell in 2019 ends here, in the rubble of a capital being fought over by the same two factions that spent the transition pretending to share it. The largest displacement crisis in the world is now in Sudan.',
+    choices: [
+      {
+        text: 'You get out — before the roads close, with what you can carry.',
+        tag: null,
+        outcome: 'The decision is not heroic. The city is no longer a city in the way a city works. You know which route, which crossing. You leave the door unlocked because there is no point.',
+        effect: (p) => { p.m -= 18; p.r += 12; p.h -= 5; p.addFlag('sdn_khartoum_war_generation'); p.addFlag('sdn_khartoum_displaced'); p.setMem('sdnCivilWar23', true) },
+      },
+      {
+        text: 'You cannot leave, or will not. You shelter and wait.',
+        tag: null,
+        outcome: 'The house becomes the world. The fighting passes through the street outside. You count the days by the sound and by what is left in the kitchen. You stay alive.',
+        effect: (p) => { p.m -= 20; p.r += 14; p.h -= 8; p.addFlag('sdn_khartoum_war_generation'); p.setMem('sdnCivilWar23', true) },
+      },
+    ],
+    effect: null,
+  },
+
 ]

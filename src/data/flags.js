@@ -3116,6 +3116,22 @@ export const FLAG_REGISTRY = {
     notes: 'Set by eth_red_terror_1977 (survived branch). Follow-through: eth_red_terror_echo (late_life, when asked about it as history).',
   },
 
+  eth_abiy_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through the Abiy Ahmed 2018 moment — the peace deal with Eritrea, the border opening, the Nobel Peace Prize, the euphoria of a country that seemed to be turning.',
+    intent: 'year_texture',
+    notes: 'Set by eth_abiy_peace_2018. Precedes the Tigray war context.',
+  },
+
+  eth_tigray_witnessed: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Witnessed the 2020-2022 Tigray War — 300,000-500,000 dead, Eritrean troops, systematic rape, the Nobel Peace laureate at war in the north, the communications blackout.',
+    intent: 'year_texture',
+    notes: 'Set by eth_tigray_war_2020 (both choices).',
+  },
+
   // ── ZIMBABWE (registering existing unregistered flags) ────────────────────
 
   gukurahundi_generation: {
@@ -6302,6 +6318,22 @@ export const FLAG_REGISTRY = {
     notes: 'Set by sdn_coup_2021.',
   },
 
+  sdn_khartoum_war_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived the April 2023 SAF vs. RSF civil war in Khartoum — capital city turned battlefield, 4 million displaced from Khartoum alone',
+    intent: 'event',
+    notes: 'Set by sdn_civil_war_2023 (both choices). Follow-through: ft25_khartoum_war_echo.',
+  },
+
+  sdn_khartoum_displaced: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Fled Khartoum during the 2023 civil war — left with what could be carried, city abandoned to the fighting between SAF and RSF',
+    intent: 'event',
+    notes: 'Set by sdn_civil_war_2023 (flee choice). Follow-through: ft25_khartoum_displaced_settled.',
+  },
+
   // ── ANGOLA ───────────────────────────────────────────────────────────────────
 
   angola_civil_war_generation: {
@@ -7934,6 +7966,30 @@ export const FLAG_REGISTRY = {
     description: 'Addiction present in the family — sibling, parent, or child with dependency.',
     intent: 'none',
     notes: 'Set upstream by family events or birth configuration. Gates add_family_witness.',
+  },
+
+  gambler: {
+    weight: 'moderate',
+    category: 'behavior',
+    description: 'Gambling has become a habit — the pull of the table as the one moment in the day when an outcome resolves clearly in minutes. Set via activities panel casino loss path.',
+    intent: 'event',
+    notes: 'Set by activities.js casino/gambling loss outcome. Follow-through: ft25_gambler_midlife.',
+  },
+
+  experienced_displacement: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Was made to leave — not emigration but removal, expelled from a country or city by someone\'s decision. Carries the specific weight of home taken away.',
+    intent: 'event',
+    notes: 'Set by events_uganda.js (Amin Asian expulsion) and events_somalia.js (state collapse). Follow-through: ft25_displacement_midlife/late.',
+  },
+
+  reluctant_parent: {
+    weight: 'moderate',
+    category: 'family',
+    description: 'Became a parent without full willingness — the reluctance was real at the beginning, even if the relationship became real too.',
+    intent: 'event',
+    notes: 'Set by events.js (having child choice, reluctant branch). Follow-through: ft25_reluctant_parent_midlife.',
   },
 
   // ── events_child_soldier.js flags ─────────────────────────────────────
