@@ -11188,4 +11188,102 @@ export const FLAG_REGISTRY = {
     notes: 'Cross-cutting. Set by soldier arc, complicity, and child soldier events.',
   },
 
+  // ── BOLIVIA FLAGS ──────────────────────────────────────────────────────────────
+
+  bol_mining_generation: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Grew up in a Bolivian mining town — Potosí or Oruro — where the smelter and the Cerro Rico defined the landscape and the cough of the fathers.',
+    intent: 'year_texture',
+    notes: 'Set by bol_mining_childhood. Bolivia only.',
+  },
+
+  bol_1952_beneficiary: {
+    weight: 'moderate',
+    category: 'economics',
+    description: 'Family received land through the 1952 MNR agrarian reform — the document is kept in a plastic sleeve.',
+    intent: 'none',
+    notes: 'Set by bol_1952_revolution_echo (beneficiary choice). Bolivia only.',
+  },
+
+  bol_1952_dispossessed: {
+    weight: 'moderate',
+    category: 'economics',
+    description: 'Family lost property in the 1952 agrarian reform — the story is told with a specific bitterness.',
+    intent: 'none',
+    notes: 'Set by bol_1952_revolution_echo (dispossessed choice). Bolivia only.',
+  },
+
+  bol_banzer_era_youth: {
+    weight: 'moderate',
+    category: 'conflict',
+    description: 'Came of age under General Banzer\'s 1971–78 dictatorship — "comunista, subversivo, agitador" as the preferred vocabulary for dissent.',
+    intent: 'none',
+    notes: 'Set by bol_banzer_era. Bolivia only.',
+  },
+
+  bol_hyperinflation_survived: {
+    weight: 'major',
+    category: 'economics',
+    description: 'Lived through the 1984–85 hyperinflation of 24,000% — the year the price of bread changed between entering the market and reaching the front of the queue.',
+    intent: 'year_texture',
+    notes: 'Set by bol_hyperinflation_1985. Bolivia only.',
+  },
+
+  bol_coca_grower: {
+    weight: 'moderate',
+    category: 'economics',
+    description: 'Family grew coca in the Chapare — and had years of cultivation bulldozed by US-funded eradication in an afternoon.',
+    intent: 'year_texture',
+    notes: 'Set by bol_coca_eradication (cocalero choice). Bolivia only.',
+  },
+
+  bol_eradication_victim: {
+    weight: 'moderate',
+    category: 'conflict',
+    description: 'Directly affected by the US-funded coca eradication programme — the army arrived with bulldozers.',
+    intent: 'none',
+    notes: 'Set alongside bol_coca_grower by bol_coca_eradication. Bolivia only.',
+  },
+
+  bol_coca_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Urban Bolivian who watched the Chapare eradication from a distance — understood both arguments.',
+    intent: 'none',
+    notes: 'Set by bol_coca_eradication (observer choice). Bolivia only.',
+  },
+
+  bol_gas_war_generation: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'Lived through or participated in the 2003 Gas War — sixty-seven dead in El Alto, Goni\'s flight to Miami, the gas kept under Bolivian soil.',
+    intent: 'year_texture',
+    notes: 'Set by bol_gas_war_2003. Bolivia only.',
+  },
+
+  bol_evo_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Witnessed the 2005 election of Evo Morales — first indigenous president in a country where 62% of the population is indigenous.',
+    intent: 'none',
+    notes: 'Set by bol_evo_election_2005. Bolivia only.',
+  },
+
+  bol_2019_fraud_believed: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Believes the 2019 Bolivian election was fraudulent and the OAS report was correct — holds the position knowing the evidence will never resolve cleanly.',
+    intent: 'none',
+    notes: 'Set by bol_2019_crisis (fraud choice). Bolivia only.',
+  },
+
+  bol_2019_coup_accepted: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Believes the 2019 military ousting of Morales was a coup — holds the position knowing the evidence will never resolve cleanly.',
+    intent: 'none',
+    notes: 'Set by bol_2019_crisis (coup choice). Bolivia only.',
+  },
+
 }

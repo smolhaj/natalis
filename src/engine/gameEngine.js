@@ -5239,6 +5239,34 @@ function buildYearTexture(state) {
       ? 'You spent a life in an information environment shaped by what was not allowed. The world outside it kept going. You kept going inside it. Both are true simultaneously.'
       : 'You know roughly what is outside the borders. You know this at the level of rumour and approximation, which is how you know most things about the outside.',
   ])
+  if (F.has('bol_mining_generation') && Math.random() < 0.3) return pick([
+    'The Cerro Rico is still there above the city. It has been above the city for five hundred years. You know the mountain the way you know a member of the family you neither like nor can ignore.',
+    'You can identify the cough that is the normal cough and the one that is the beginning of something else. This is not knowledge you asked for.',
+    phase === 'late_life'
+      ? 'The mountain gave the colonial world its silver and gave your family its lungs. That ledger was never going to balance.'
+      : 'The mine employs half the men you know. This is both the answer to the economy and the problem with it.',
+  ])
+  if (F.has('bol_hyperinflation_survived') && Math.random() < 0.3) return pick([
+    'You still check prices twice. Not because you need to. Because in 1985 you learned what prices were capable of.',
+    'The money in the wallet is worth something today. You were alive when that sentence was not true.',
+    phase === 'late_life'
+      ? 'The economists wrote papers about the stabilisation. You remember it as the year you stopped being able to plan more than a week ahead, and the year that habit became permanent.'
+      : 'Twenty-four thousand percent. You know what that number means the way you know a smell — not the definition, the experience.',
+  ])
+  if (F.has('bol_coca_grower') && Math.random() < 0.3) return pick([
+    'The coca leaf is not cocaine. It is what the miners chew to work at altitude. It is what goes in the tea. What happened to it in Miami is a long chain with many hands, and the hand that got cut was yours.',
+    'What took years to cultivate was gone in an afternoon. The restitution offered was not the same as the thing.',
+    phase === 'late_life'
+      ? 'Evo Morales, the cocalero union leader from the Chapare, became president twelve years after the army came with the bulldozers. You watched the inauguration with a feeling you could not quite name.'
+      : 'You grow the leaf. The leaf does not become cocaine in your hands. The policy does not make that distinction.',
+  ])
+  if (F.has('bol_gas_war_generation') && Math.random() < 0.3) return pick([
+    'Sixty-seven people died in El Alto in October 2003. When someone says the gas belongs to Bolivia, you know what that sentence cost.',
+    'Goni flew out to Miami. You walked back down from the altiplano. Something had happened. The word for what it was took time to arrive.',
+    phase === 'late_life'
+      ? 'The Gas War is history now. For you it was four days at four thousand metres, the cold, and then the news. You carry the specific knowledge of what it took to make that stop.'
+      : 'The natural gas is still under the soil. The question of who it is for has not been finally answered.',
+  ])
   if (F.has('interrogated_by_state') && Math.random() < 0.3) return pick([
     'The room where they questioned you is still a room you are in sometimes.',
     'You know now what it feels like when the state turns toward you. The knowledge reorganised certain things.',
