@@ -10611,6 +10611,80 @@ export const FLAG_REGISTRY = {
     notes: 'Set by mn_ulaanbaatar_migration.',
   },
 
+  // ── POLITICAL ARC ────────────────────────────────────────────────────────────
+
+  pol_left_noted: {
+    weight: 'major',
+    category: 'political',
+    description: 'Left-leaning character in an authoritarian state who has been noted — not arrested, just entered into the surveillance apparatus; knows their file exists.',
+    intent: 'year_texture',
+    notes: 'Set by pol_left_authoritarian_noted. Annual awareness of the surveillance; the ongoing calibration of speech.',
+  },
+
+  dissident_file_known: {
+    weight: 'major',
+    category: 'political',
+    description: 'Dissident character who has been told by a trusted contact that there is a state file on them — transcript of conversations, list of associates.',
+    intent: 'event',
+    notes: 'Set by pol_dissident_file_known. Guards pol_dissident_outlasts_regime.',
+  },
+
+  pol_reagan_era_left: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Left-wing character in the wealthy West during 1979–1998 who experienced the rightward shift of their era — the world moving while they stayed.',
+    intent: 'none',
+    notes: 'Set by pol_left_1980s_rightward_shift.',
+  },
+
+  pol_nationalist_new_country: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Nationalist character in a newly independent state — loving a country still deciding what it is, nationalism without a settled object.',
+    intent: 'none',
+    notes: 'Set by pol_nationalist_new_flag.',
+  },
+
+  pol_apolitical_pressured: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Apolitical character who said something that sounded like a position when pushed — surprised themselves.',
+    intent: 'none',
+    notes: 'Set by pol_apolitical_questioned (one branch).',
+  },
+
+  pol_centre_accused: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Centrist character who has been told by both sides that the centre is a form of complicity or naivety.',
+    intent: 'none',
+    notes: 'Set by pol_centre_no_place.',
+  },
+
+  pol_dissident_outlasted_regime: {
+    weight: 'major',
+    category: 'political',
+    description: 'Dissident character who outlasted the authoritarian regime they opposed — stood in the space where it was, chose whether to read their file.',
+    intent: 'none',
+    notes: 'Set by pol_dissident_outlasts_regime (both branches).',
+  },
+
+  pol_right_in_communist_state: {
+    weight: 'major',
+    category: 'political',
+    description: 'Right-leaning character who lived under communist rule — performing public loyalty while holding private conviction, fluent in two political languages.',
+    intent: 'year_texture',
+    notes: 'Set by pol_right_under_communism. Annual texture of the double life: public and private speech.',
+  },
+
+  pol_nationalist_abroad: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Nationalist character in diaspora — became the country in other people\'s eyes, defending positions they didn\'t choose to defend, nationalism lonelier and louder abroad.',
+    intent: 'none',
+    notes: 'Set by pol_nationalist_abroad.',
+  },
+
   // ── ERITREA ──────────────────────────────────────────────────────────────────
 
   eritrean_liberation_generation: {

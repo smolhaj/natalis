@@ -5240,6 +5240,20 @@ function buildYearTexture(state) {
       : 'The damage was real. You have built a life anyway. The two facts coexist.',
   ])
 
+  // ─── POLITICAL CONSEQUENCE TEXTURE ──────────────────────────────────────────
+  if (F.has('pol_left_noted') && Math.random() < 0.2) return pick([
+    'You said the safe thing. You have become very precise about which things are safe.',
+    'The file exists. You are not certain what is in it. You are certain it exists.',
+    'A colleague says something in the corridor and you recalibrate who you are speaking to. This is second nature now.',
+    'You have friends who say things openly that you only think. You wonder, sometimes, whether they know something you don\'t, or whether they simply haven\'t been noted yet.',
+  ])
+  if (F.has('pol_right_in_communist_state') && Math.random() < 0.18) return pick([
+    'In the committee meeting you raised your hand with the others. You have become very good at this.',
+    'There is the version of you that speaks in meetings. There is the version that speaks at home. They have different vocabularies.',
+    'You tell the children the official version at school. You tell them nothing at home. You have not told them there is a difference.',
+    'The party card is in your wallet. Your actual politics are somewhere else — you have kept them so quiet for so long that some days you have to remind yourself what they are.',
+  ])
+
   // ─── POLITICAL LEANING TEXTURE (~25% when leaning is set) ───────────────────
   if (political_leaning && phase !== 'early_childhood' && Math.random() < 0.25) {
     const leaningLines = {
