@@ -167,6 +167,7 @@ export const DYING_ARC_EVENTS = [
       p.m += 10
       p.e += 5
       p.r -= 10
+      p.legacy += 5
     },
   },
 

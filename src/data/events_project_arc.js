@@ -184,7 +184,7 @@ export const PROJECT_ARC_EVENTS = [
       !G.mem?.projWritingShown,
     text: 'The work is out there now. You sent it and it was accepted and now other people have read it. The reaction — the real reaction, not the polite one — is harder to read than you expected. Some of it lands. Some of it lands differently than you meant. All of it is out of your hands now.',
     choices: null,
-    effect: (p) => { p.m += 12; p.s += 4; p.karma += 5; p.setMem('projWritingShown', true) },
+    effect: (p) => { p.m += 12; p.s += 4; p.karma += 5; p.setMem('projWritingShown', true); p.legacy += 6 },
   },
 
 ]

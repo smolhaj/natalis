@@ -86,7 +86,7 @@ export const TEACHER_ARC_EVENTS = [
       !G.mem?.tchLetterFired,
     text: 'The letter arrives, or the message, or the person appears at the back of a room. The student who was difficult, the one you spent the extra time on fifteen years ago — they have located you to say what students rarely say at the time: that it mattered. What you did mattered. The specific thing you said in the specific moment. They have carried it for fifteen years and wanted you to know. You had forgotten the moment. They had not.',
     choices: null,
-    effect: (p) => { p.m += 18; p.r -= 8; p.addFlag('teacher_letter_received'); p.setMem('tchLetterFired', true) },
+    effect: (p) => { p.m += 18; p.r -= 8; p.addFlag('teacher_letter_received'); p.setMem('tchLetterFired', true); p.legacy += 8 },
   },
 
   {
@@ -137,7 +137,7 @@ export const TEACHER_ARC_EVENTS = [
       !G.mem?.tchLifeAccountFired,
     text: 'The accounting of a teaching life is not done in salary — the salary was what it was, and it was not the reason. It is done in the names you still remember, the moments that were the actual work, the student who wrote the letter, the slow dawning on a face when the concept finally arrived. These are not recorded anywhere. They exist in you, and they are not measurable, and they are the measure.',
     choices: null,
-    effect: (p) => { p.m += 10; p.r -= 5; p.karma += 5; p.addFlag('teacher_life_accounted'); p.setMem('tchLifeAccountFired', true) },
+    effect: (p) => { p.m += 10; p.r -= 5; p.karma += 5; p.addFlag('teacher_life_accounted'); p.setMem('tchLifeAccountFired', true); p.legacy += 10 },
   },
 
 ]

@@ -210,6 +210,7 @@ const INITIAL_STATE = {
   workStatus: null, // 'formal' | 'informal' | 'unemployed' | 'subsistence' | null (child)
   currentProject: null, // { type, startYear, phase, name } — slow-burn personal project
   echoQueue: [], // [{ eventId, fireAtAge }] — guaranteed follow-up events scheduled by effects
+  legacy: 0, // 0-100: accumulates from children raised, mentoring, community, creative works
 }
 
 const _savedState = loadFromStorage()

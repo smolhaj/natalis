@@ -10928,4 +10928,264 @@ export const FLAG_REGISTRY = {
     notes: 'Set by eri_late_reckoning.',
   },
 
+  // ── CROSS-CUTTING / GENERAL FLAGS ─────────────────────────────────────────
+  // High-frequency flags set and checked across many modules; registered here
+  // to maintain audit trail. Most are intent:'none' (gates events organically).
+
+  devout: {
+    weight: 'moderate',
+    category: 'faith',
+    description: 'Adherent faith practice — prayer, observance, community — that guides daily decisions rather than being nominal.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by various religion and cultural events. Checked 6x across event guards.',
+  },
+
+  activist: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Engaged in organised civic or political activism — protests, campaigns, labour organising — beyond passive awareness.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by political awakening events across multiple regions.',
+  },
+
+  regime_self_censorship: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Learned to self-censor under authoritarian pressure — the habitual pause before speaking that becomes second nature.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set in authoritarian-context events. The learned silence that outlasts the regime.',
+  },
+
+  acceptance: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Reached a state of genuine acceptance after hardship — not forgetting, but no longer fighting what cannot be changed.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by late-life reflection and grief events.',
+  },
+
+  found_meaning: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Located meaning or purpose — in work, faith, family, or community — that makes the difficult years coherent in retrospect.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by desire-resolution, religion-arc, and community events.',
+  },
+
+  integrity: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Maintained moral integrity under conditions designed to compromise it — the refusal that cost something real.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by corruption, authoritarian, and career events.',
+  },
+
+  principled: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Acted from principle when the easier or safer path was available — known to others as someone who means what they say.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by moral choice events across contexts.',
+  },
+
+  community_leader: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Took on formal or informal community leadership — the person others bring problems to, the one who shows up.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by social capital, religion-arc, and rural texture events.',
+  },
+
+  mentor: {
+    weight: 'moderate',
+    category: 'relationship',
+    description: 'Became a guiding presence for someone younger — the relationship where you handed something across rather than passed it down.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by mentor arc, teacher arc, and career events.',
+  },
+
+  mentored: {
+    weight: 'moderate',
+    category: 'relationship',
+    description: 'Was guided by a mentor — the specific debt of having been taken seriously by someone who didn\'t have to bother.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by mentor arc and education events.',
+  },
+
+  has_close_friend: {
+    weight: 'minor',
+    category: 'relationship',
+    description: 'Has or had a friendship deep enough that the person knows the real version — not a social contact but a witness.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by friendship arc and small life events.',
+  },
+
+  strong_marriage: {
+    weight: 'moderate',
+    category: 'relationship',
+    description: 'Enduring partnership that has weathered years and remains genuinely close — the marriage that worked.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by romance arc and long-marriage events.',
+  },
+
+  estranged_family: {
+    weight: 'moderate',
+    category: 'relationship',
+    description: 'Family bonds broken or strained to the point of sustained absence — the gap at the table that everyone knows not to mention.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by family conflict, honour, and generational tension events.',
+  },
+
+  caretaker: {
+    weight: 'moderate',
+    category: 'relationship',
+    description: 'Took on informal caregiving role for a family member — the person who stayed, who managed the decline, who was there.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by parent-care, sick-child, and dementia arc events.',
+  },
+
+  entrepreneur: {
+    weight: 'moderate',
+    category: 'economics',
+    description: 'Started or currently runs a business — the experience of having something that is yours, with everything that means.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by business arc, informal economy, and career events.',
+  },
+
+  laid_off: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Experienced job loss through redundancy or business failure — the specific education of finding out what you were worth to them.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by automation, Rust Belt, career, and poverty events.',
+  },
+
+  mobile_money_user: {
+    weight: 'minor',
+    category: 'economics',
+    description: 'Accesses financial services through mobile money — the bank in a pocket that skipped the branch-era entirely.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by Kenya M-Pesa, Tajik remittance, and informal economy events.',
+  },
+
+  food_insecurity: {
+    weight: 'major',
+    category: 'economics',
+    description: 'Lived with genuine food insecurity — where the question of whether there will be enough to eat was not rhetorical.',
+    intent: 'year_texture',
+    notes: 'Cross-cutting. Set by famine, poverty, and subsistence events. Already in buildYearTexture.',
+  },
+
+  scholarship_recipient: {
+    weight: 'moderate',
+    category: 'achievement',
+    description: 'Received a scholarship that opened a door — the selection that made a different trajectory possible.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by school and education events. Distinct from first_gen_graduate (cause vs. outcome).',
+  },
+
+  corruption_exposed: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Exposed or bore witness to systematic corruption at close range — the knowledge of how the money actually moves.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by career-regime, Mani Pulite, and political events.',
+  },
+
+  coup_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through a coup — the specific knowledge of the day the radio changes, when the constitutional order ends and something else begins.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by country-specific coup events (Bangladesh, Turkey, Thailand, etc.).',
+  },
+
+  independence_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through national independence — the specific texture of a flag that is new, a name that is different, the feeling that now something is ours.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by decolonisation and independence events across Africa, Asia, Caribbean.',
+  },
+
+  political_aware: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Developed political consciousness — aware of how power works, who holds it, and what it costs to pay attention to that.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by early political awareness events across contexts.',
+  },
+
+  poverty_childhood: {
+    weight: 'major',
+    category: 'economics',
+    description: 'Grew up in poverty — the formative experience of scarcity that reorganises how you think about money, security, and enough.',
+    intent: 'none',
+    notes: 'Cross-cutting. Checked in generateEpitaph and generateIdentityCard. Foundational poverty flag.',
+  },
+
+  left_school_early: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Exited formal education before completion — for work, family obligation, marriage, conflict, or necessity.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by poverty, child labor, family obligation, and conflict events.',
+  },
+
+  education_interrupted: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Education was disrupted — by conflict, displacement, illness, regime change, or economic collapse — and did not fully resume.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by conflict childhood, displacement, and authoritarian events.',
+  },
+
+  grew_up_in_camp: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Spent formative years in a refugee or displaced persons camp — where the temporary became structural.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by Rohingya, Palestine, and Central American events.',
+  },
+
+  internet_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Came of age with the internet — the generation for whom the shift from offline to online happened during childhood or adolescence.',
+    intent: 'year_texture',
+    notes: 'Cross-cutting. Set by internet era events. Already in buildYearTexture.',
+  },
+
+  experienced_loss: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Carries accumulated loss — a grief that is not about one specific death or departure but about the accumulation of them.',
+    intent: 'year_texture',
+    notes: 'Cross-cutting. Set by loss and grief events. Already in buildYearTexture (not captured by specific widowed/orphaned flags).',
+  },
+
+  disaster_survivor: {
+    weight: 'moderate',
+    category: 'disaster',
+    description: 'Survived a significant natural or man-made disaster — the knowledge of what it is like when the ground stops behaving predictably.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by disaster, earthquake, flood, and climate events.',
+  },
+
+  remittance_family: {
+    weight: 'moderate',
+    category: 'economics',
+    description: 'Family income includes remittances from a member working abroad — the arithmetic of absence built into the household budget.',
+    intent: 'year_texture',
+    notes: 'Cross-cutting. Set by OFW, Tajik remittance, migration, and emigrant events. Already in buildYearTexture.',
+  },
+
+  moral_injury: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Carries moral injury — the specific damage done when you acted against your values, or failed to act, and cannot undo it.',
+    intent: 'none',
+    notes: 'Cross-cutting. Set by soldier arc, complicity, and child soldier events.',
+  },
+
 }

@@ -698,7 +698,7 @@ export function formatParentIncome(occupation, gdp) {
 
 function createProxy(state) {
   return {
-    h: 0, m: 0, w: 0, e: 0, s: 0, lo: 0, r: 0, mo: 0, karma: 0, fame: 0,
+    h: 0, m: 0, w: 0, e: 0, s: 0, lo: 0, r: 0, mo: 0, karma: 0, fame: 0, legacy: 0,
     flags: [...state.flags],
     mem: { ...(state.mem ?? {}) },
   }
@@ -713,12 +713,13 @@ function applyProxy(state, proxy) {
     charisma:  clamp(state.stats.charisma  + proxy.s,  0, 100),
     looks:     clamp(state.stats.looks     + proxy.lo, 0, 100),
   }
-  const regret = clamp(state.regret + proxy.r, 0, 100)
-  const money  = Math.max(0, (state.money ?? 0) + (proxy.mo ?? 0))
-  const karma  = clamp((state.karma ?? 50) + (proxy.karma ?? 0), 0, 100)
-  const fame   = clamp((state.fame ?? 0) + (proxy.fame ?? 0), 0, 100)
-  const flags  = [...new Set(proxy.flags)]
-  return { ...state, stats, regret, money, karma, fame, flags, mem: proxy.mem }
+  const regret  = clamp(state.regret + proxy.r, 0, 100)
+  const money   = Math.max(0, (state.money ?? 0) + (proxy.mo ?? 0))
+  const karma   = clamp((state.karma ?? 50) + (proxy.karma ?? 0), 0, 100)
+  const fame    = clamp((state.fame ?? 0) + (proxy.fame ?? 0), 0, 100)
+  const legacy  = clamp((state.legacy ?? 0) + (proxy.legacy ?? 0), 0, 100)
+  const flags   = [...new Set(proxy.flags)]
+  return { ...state, stats, regret, money, karma, fame, legacy, flags, mem: proxy.mem }
 }
 
 function applyNaturalAging(state) {
@@ -1280,6 +1281,7 @@ export function buildG(state) {
     hardCurrencyReserve: state.hardCurrencyReserve ?? 0,
     workStatus: state.workStatus ?? null,
     currentProject: state.currentProject ?? null,
+    legacy: state.legacy ?? 0,
     archetype: state.character?.country?.archetype ?? null,
     // Enriched prose helpers: available in text: (G) => functions
     era: Math.floor(currentYear / 10) * 10,
@@ -15039,6 +15041,16 @@ export function generateEpitaph(state) {
   }
   if (f('heritage_language_preserved') || f('oral_historian')) {
     para4.push(`${He} kept things alive that might otherwise have been lost.`)
+  }
+
+  // ── LEGACY: what outlasted the life ──────────────────────────────────────────
+  const legacy = state.legacy ?? 0
+  if (legacy >= 80) {
+    para4.push(`What ${he} built — the people ${he} mentored, the work ${he} put into the world, the family ${he} kept — outlasted the life in ways ${he} knew and ways ${he} didn't.`)
+  } else if (legacy >= 60) {
+    para4.push(`There are people in the world who carry something ${name} gave them — a skill, a phrase, a particular way of approaching a problem. That is not nothing.`)
+  } else if (legacy >= 40) {
+    para4.push(`${He} left traces, if not monuments: a few people who were better for knowing ${him}.`)
   }
 
   // ── PARAGRAPH 5: Closing ──────────────────────────────────────────────────────
