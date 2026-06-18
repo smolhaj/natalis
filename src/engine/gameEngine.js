@@ -2761,15 +2761,36 @@ function buildYearTexture(state) {
       'Some things the new place has. Some things it will never have. You have made the accounting.',
     ])
   }
-  if (residencyStatus === 'work_visa' && F.has('emigrated') && Math.random() < 0.3) return pick([
+  if (residencyStatus === 'work_visa' && F.has('emigrated') && Math.random() < 0.35) return pick([
     'The visa has an expiry date. Your life here does not feel like it should expire on that date.',
     'The status is temporary by definition. You are building something permanent inside a temporary category.',
     'The paperwork for renewal arrives and you process it the way you process maintenance on the apartment — something that must be done, not something that asks anything of your inner life.',
+    'The visa is tied to the employer. The employer and you are getting along. You are not going to think too directly about what that sentence means.',
+    'The renewal went through. You allowed yourself one week of relief before the next expiry date moved into view.',
+    age >= 35
+      ? 'You are still on a work visa. You did not expect to still be on a work visa at this point in your life. The category has not kept pace with the life.'
+      : 'The visa does not account for what you have built here. The administration does not need it to. That is the gap you live in.',
+  ])
+  if (residencyStatus === 'permanent_resident' && F.has('emigrated') && Math.random() < 0.28) return pick([
+    'You have indefinite leave to remain. The word indefinite is doing a lot of work in that sentence.',
+    'You can stay. You cannot vote. The two things sit together in the paperwork in a way you think about sometimes.',
+    'The permanent residency came through. The feeling was not what you expected. Relief, yes — but relief from something you had been carrying so long you had stopped noticing its weight.',
+    'You have the right to stay but not to be. The distinction sounds philosophical. It is also administrative.',
+    phase === 'late_life'
+      ? 'You have been a permanent resident for most of your adult life here. The category never became citizenship. The life inside the category became everything.'
+      : 'Permanent resident. You say the words sometimes, still, to make them real. They are real. They just do not cover everything.',
+    'The status means you can travel — you just have to come back within a certain window or you lose it. You have arranged your life around that window.',
+    F.has('emigrated') && (yearsAbroad ?? 0) >= 10
+      ? 'You are past the point where you could go back and be the same person. The country you came from has changed. You have changed. The permanent residency paper is a document about a decision made years ago that is now just how things are.'
+      : 'The permanent resident card is a rectangle of plastic with your photo on it. What it represents is harder to fit in a rectangle.',
   ])
   if (residencyStatus === 'asylum_seeker' && Math.random() < 0.4) return pick([
     'The claim is pending. The pending is how you live now.',
     'You wait in the specific suspension of an unresolved status. You have become expert at waiting in this specific way.',
     'The decision is somewhere in a queue. The queue is not visible. You arrange your life around a centre that has not yet said yes.',
+    'You are not supposed to work while the claim is pending. You are working. The contradiction is how you eat.',
+    'The interview is over. The waiting after the interview is a different kind of waiting — it has evidence in it, which the waiting before did not.',
+    'You cannot plan more than one year out. That is not a philosophy. It is the administrative fact of the current situation.',
   ])
   if (residencyStatus === 'refugee_status' && F.has('emigrated') && Math.random() < 0.3) return pick([
     'You have the right to remain. That sentence — the right to remain — took time to fully arrive.',
@@ -2777,6 +2798,11 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'You built a life on refugee status. The protection held. The life it held is real.'
       : 'You are here legally. The legal word on the paper does not cover the whole of what you are.',
+    'The travel document is not a passport. It is a document that lets you travel, which is different. The difference is visible at borders.',
+    'The renewal date approaches. You manage this the way you manage all administrative appointments — with a competence that never quite hides the stakes.',
+    age >= 50
+      ? 'Decades of refugee status. The protection has been continuous. The continuity has its own texture — you have arranged your whole life inside it, and the arrangement works, and you do not say that without knowing what it cost to make it work.'
+      : 'You are building a life inside a legal category that was designed for emergencies. The emergency became permanent. The life adapted.',
   ])
   if (F.has('emigrated') && (yearsAbroad ?? 0) >= 1 && (yearsAbroad ?? 0) <= 2) return pick([
     'You are still learning what normal means here.',
