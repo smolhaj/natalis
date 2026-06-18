@@ -1770,7 +1770,7 @@ export const COUNTRIES = [
     name: 'Saudi Arabia', capital: 'Riyadh', currency: 'Saudi riyal', region: 'Middle East', archetype: 'wealthy_gulf',
     regime: 'absolute_monarchy', regimeHistory: [],
     religionWeights: { muslim_sunni: 0.85, muslim_shia: 0.14, secular: 0.01 },
-    ethnicGroups: [{ id: 'arab_saudi', name: 'Arab Saudi', share: 0.74 }, { id: 'afro_arab', name: 'Afro-Arab', share: 0.10 }, { id: 'south_asian_worker', name: 'South Asian Worker', share: 0.09 }, { id: 'other_saudi', name: 'Other', share: 0.07 }],
+    ethnicGroups: [{ id: 'arab_saudi', name: 'Arab Saudi', share: 0.59 }, { id: 'bedouin_saudi', name: 'Bedouin', share: 0.15 }, { id: 'afro_arab', name: 'Afro-Arab', share: 0.10 }, { id: 'south_asian_worker', name: 'South Asian Worker', share: 0.09 }, { id: 'other_saudi', name: 'Other', share: 0.07 }],
     lgbtqCriminalized: true, lgbtqLegalYear: null, childMarriageRisk: 0.15, casteSystem: false, urbanRate: 0.80, literacyMale: 0.90, literacyFemale: 0.75,
     gdp: 'high', healthcare: 'good', lifeExpectancy: 75,
     conflictRisk: 0.05, genderGap: 0.50, socialMobility: 'medium',
@@ -2094,7 +2094,8 @@ export const COUNTRIES = [
     regimeHistory: [{ year: 1946, to: 'constitutional_monarchy' }],
     religionWeights: { muslim_sunni: 0.92, christian_orthodox: 0.04, christian_catholic: 0.02, secular: 0.02 },
     ethnicGroups: [
-      { id: 'arab_jordanian', name: 'Arab Jordanian (East Bank)', share: 0.45 },
+      { id: 'arab_jordanian', name: 'Arab Jordanian (East Bank)', share: 0.33 },
+      { id: 'bedouin_jordanian', name: 'Bedouin (Jordanian tribes)', share: 0.12 },
       { id: 'palestinian_jordanian', name: 'Palestinian-Jordanian', share: 0.48 },
       { id: 'circassian', name: 'Circassian/Chechen', share: 0.02 },
       { id: 'armenian_jordanian', name: 'Armenian', share: 0.01 },

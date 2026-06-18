@@ -229,6 +229,39 @@ const BRAZIL_EVENTS = [
 
   // ── BOLSONARO AND THE 700,000 ─────────────────────────────────────────────────
 
+  // ── CARANDIRU: PERSONAL PROXIMITY ────────────────────────────────────────────
+
+  {
+    id: 'bra_carandiru_proximity',
+    phase: 'young_adult',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'Brazil' &&
+      G.currentYear === 1992 &&
+      G.criminalRecord &&
+      G.age >= 18 && G.age <= 45 &&
+      !G.mem?.bra_caranPrx,
+    text: 'The São Paulo papers name 111 dead. The news says riot; the survivors say execution. You know people who were in Carandiru, or people who might have been. The number 7,000 people in a facility built for 3,500 — you can do the arithmetic on what happens when the military police enter with that ratio. Colonel Guimarães will face trial. He will be convicted. The conviction will be overturned. The arithmetic is the country you live in.',
+    choices: null,
+    effect: (p) => { p.m -= 12; p.r += 6; p.addFlag('carandiru_personal_proximity'); p.setMem('bra_caranPrx', true); },
+  },
+
+  // ── CARANDIRU: LATE RECKONING ─────────────────────────────────────────────────
+
+  {
+    id: 'bra_carandiru_late',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      G.flags.has('carandiru_witness_generation') &&
+      G.currentYear >= 2015 &&
+      G.age >= 55 &&
+      !G.mem?.bra_caranLate,
+    text: 'The demolition happened in 2002 — they tore down Carandiru on live television. The colonel who commanded the operation was convicted in 2001 and had his conviction overturned. He ran for state office. The documentary, the books, the film, the tribunal — twenty-five years of investigation produced, ultimately, no one in prison for killing 111 people in a prison. You were watching in 1992. You are watching now.',
+    choices: null,
+    effect: (p) => { p.r += 5; p.setMem('bra_caranLate', true); },
+  },
+
   {
     id: 'bra_bolsonaro_covid',
     phase: 'midlife',

@@ -8824,6 +8824,22 @@ function buildYearTexture(state) {
       : 'The version of Saudi Arabia your grandchildren inherit is being decided now, which means it is being decided by a very small number of people at the top of a very concentrated power structure. This is not new. The pace of decision is new.',
   ])
 
+  // ─── BEDOUIN TEXTURE ─────────────────────────────────────────────────────────
+  if (F.has('bedouin_nomad_childhood') && Math.random() < 0.22) return pick([
+    'The route existed in the body before it existed in language. You knew which dune formation meant water two hours ahead, which wind shift meant rain. That knowledge lived in the movement, and the movement is gone.',
+    'The stars had names that were also directions. Al-Thurayya rose in the east at a specific time of year, which told you that the migration north should begin within a week. The stars still rise on schedule. The migration doesn\'t happen.',
+    phase === 'late_life'
+      ? 'Your grandchildren know the map app but cannot orient themselves without it. The navigation went from structural to recreational in one generation. The loss is not sentimental — it is the end of a technology that worked for millennia on the terrain it was built for.'
+      : 'The tent was not a lesser house. It was a house built for movement — portable, oriented to the prevailing wind, calibrated to the number of people inside it. The concrete house is better in every measurable way. This is not the same as being better in every way.',
+  ])
+  if (F.has('bedouin_settled') && Math.random() < 0.2) return pick([
+    'The house is there. The water pipe is there. The children\'s school is walking distance. The gains are real and enumerable. The loss is harder to enumerate, which is why it is called nostalgia by people who didn\'t live the other thing.',
+    'The migration rhythm shaped how time felt — the dry season, the wet season, the specific urgency of breaking camp before the grazing was exhausted. Settled life has a different rhythm. The clock replaced the season.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'The tribal range that your father\'s father grazed seasonally is fenced now, titled, allocated. In one generation the land went from a shared resource navigated by custom to a legal category owned by specific people. The speed of that transition is what is hard to communicate to anyone who wasn\'t in it.'
+      : 'You moved into the house and the movement stopped. The house is solid. The stillness took some getting used to.',
+  ])
+
   // ─── WORLD EVENTS 2016–2021 TEXTURE ──────────────────────────────────────────
   if (F.has('polarization_era') && Math.random() < 0.18) return pick([
     'The 2016 result rewrote the assumption about what was stable. The country you thought you understood had an interior that the polling couldn\'t reach. That interior voted, and the result has been present in every subsequent year.',

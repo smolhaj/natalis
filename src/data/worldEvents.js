@@ -1629,6 +1629,19 @@ export const WORLD_EVENTS = [
   },
 
   {
+    id: 'carandiru_massacre_1992',
+    name: 'Carandiru Massacre',
+    years: [1992, 1993],
+    archetypes: 'all',
+    countries: ['Brazil'],
+    narrative: 'October 2, 1992. Military police enter Carandiru prison in São Paulo after a riot. In thirty minutes, 111 prisoners are dead — shot, many execution-style. No guards die. The prison holds 7,000 people in a facility built for 3,500. It is the single deadliest act of state violence in Brazil since the dictatorship ended. The government calls it a restoration of order.',
+    context: 'The Casa de Detenção de São Paulo, known as Carandiru, was at the time the largest prison in Latin America. The October 1992 massacre occurred when a fight between prison gangs escalated and the Military Police of São Paulo state entered. Human rights investigators found evidence of execution-style killings: prisoners shot in back, no sign of self-defence from the deceased. Of 111 dead, 84 had gunshot wounds only from above or behind. Colonel Ubiratan Guimarães, who commanded the operation, was convicted of 102 counts of homicide in 2001, then had his conviction overturned on grounds of legal self-defence. The prison was demolished in 2002. The investigation and prosecutions continued for decades with limited result. The massacre became a landmark in Brazilian human rights discourse about the prison system, police accountability, and the legal category of "dangerous person."',
+    effect: (p) => { p.m -= 10; p.addFlag('carandiru_witness_generation'); },
+    addFlags: ['carandiru_witness_generation'],
+    minAge: 12,
+  },
+
+  {
     id: 'peru_shining_path',
     name: 'Peruvian Civil War (Shining Path)',
     years: [1984, 1993],

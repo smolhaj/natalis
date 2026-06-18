@@ -2030,6 +2030,38 @@ export const FLAG_REGISTRY = {
     notes: 'Set by sau_late_reckoning.',
   },
 
+  bedouin_nomad_childhood: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Had a nomadic Bedouin childhood — seasonal migration, tent assembly, livestock knowledge, navigation by stars and terrain.',
+    intent: 'year_texture',
+    notes: 'Set by bdo_tent_childhood (auto-resolve). Powers bdo_settlement_government guard.',
+  },
+
+  bedouin_settled: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Underwent the government-incentivised transition from nomadic to settled life — a concrete house, piped water, a registered plot.',
+    intent: 'year_texture',
+    notes: 'Set by bdo_settlement_government (both choices). Powers follow-through events.',
+  },
+
+  bdo_settled_first_gen: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'First generation of Bedouin to settle permanently — the hinge between nomadic ancestry and sedentary descendants.',
+    intent: 'event',
+    notes: 'Set by bdo_settlement_government (both choices). Follow-through: bdo_navigation_lost (midlife), bdo_late_reckoning (late_life).',
+  },
+
+  bedouin_knowledge_keeper: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Documented nomadic navigation knowledge — star names, route markings, water-reading signs — before it disappeared from living memory.',
+    intent: 'none',
+    notes: 'Set by bdo_navigation_lost (write it down branch). Self-contained.',
+  },
+
   // ── JAPAN ─────────────────────────────────────────────────────────────────────
 
   japan_postwar_generation: {
@@ -10196,6 +10228,22 @@ export const FLAG_REGISTRY = {
     description: 'Lived Brazil\'s 700,000 COVID deaths under Bolsonaro\'s pandemic denialism — the second-highest toll in the world.',
     intent: 'year_texture',
     notes: 'Set by bra_bolsonaro_covid.',
+  },
+
+  carandiru_witness_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was in Brazil in 1992 when military police killed 111 prisoners in Carandiru in thirty minutes — the single deadliest act of state violence since the dictatorship.',
+    intent: 'event',
+    notes: 'Set by carandiru_massacre_1992 world event. Follow-through: bra_carandiru_late (late_life, conviction overturned, colonel ran for office).',
+  },
+
+  carandiru_personal_proximity: {
+    weight: 'major',
+    category: 'criminal_justice',
+    description: 'Had personal proximity to Carandiru — knew people who were there, or had been inside the criminal justice system that Carandiru was part of.',
+    intent: 'none',
+    notes: 'Set by bra_carandiru_proximity (criminal record branch). Self-contained — the proximity is the texture.',
   },
 
   // ─── ARGENTINA 2001 FLAGS ─────────────────────────────────────────────────────
