@@ -3233,4 +3233,65 @@ export const WORLD_EVENTS = [
     minAge: 10,
     when: (G) => !G.flags.includes('trinidad_1990_coup_witness'),
   },
+
+  // ── NEW ZEALAND ───────────────────────────────────────────────────────────────
+
+  {
+    id: 'we_nz_rainbow_warrior_1985',
+    name: 'Rainbow Warrior Bombing, Auckland',
+    years: [1985, 1986],
+    archetypes: 'all',
+    countries: ['New Zealand'],
+    narrative: 'On the night of July 10, 1985, French DGSE agents attach limpet mines to the hull of the Greenpeace ship Rainbow Warrior, docked in Auckland harbour. The ship was preparing to sail to Mururoa Atoll to protest French nuclear testing in the Pacific. Two explosions sink the ship; Dutch photographer Fernando Pereira drowns below decks. France initially denies involvement. New Zealand Police arrest two French agents. France pressures New Zealand through trade restrictions. The agents serve minimal sentences, are repatriated, and decorated.',
+    context: 'The Rainbow Warrior was the flagship of Greenpeace and had been used in campaigns against Spanish driftnetting, nuclear testing in the Pacific, and the relocation of Marshallese communities from Bikini Atoll. The French government paid NZ$13 million in compensation to New Zealand and a further $8.16 million to Greenpeace, but never prosecuted the officers responsible. The bombing radicalised a generation of New Zealanders and hardened public support for the nuclear-free legislation passed two years later.',
+    effect: (p) => { p.m -= 5; p.karma += 3; p.addFlag('nz_rainbow_warrior_generation') },
+    addFlags: ['nz_rainbow_warrior_generation'],
+    minAge: 10,
+    when: (G) => !G.flags.includes('nz_rainbow_warrior_generation'),
+  },
+
+  {
+    id: 'we_nz_christchurch_2019',
+    name: 'Christchurch Mosque Attack',
+    years: [2019, 2020],
+    archetypes: 'all',
+    countries: ['New Zealand'],
+    narrative: 'On March 15, 2019, a white supremacist opens fire during Friday prayers at Al Noor Mosque and the Linwood Islamic Centre in Christchurch. Fifty-one people are killed and forty-nine injured. The killer livestreams the attack on Facebook. Prime Minister Jacinda Ardern appears in a black hijab and says "They are us." Within twenty-six days, New Zealand passes sweeping gun law reforms banning semi-automatic weapons and assault rifles. The attack shakes a country whose identity is partly built around being far from the world\'s violence.',
+    context: 'The Christchurch attack was the deadliest shooting in New Zealand\'s history and one of the worst acts of white-supremacist terrorism globally. The manifesto was distributed online in advance; tech platforms\' failure to contain its spread prompted New Zealand and France to launch the "Christchurch Call," a joint initiative to eliminate terrorist and violent extremist content online. The gun buyback collected 56,000 weapons in the first six months.',
+    effect: (p) => { p.m -= 10; p.karma += 5; p.addFlag('nz_christchurch_attack_generation') },
+    addFlags: ['nz_christchurch_attack_generation'],
+    minAge: 10,
+    when: (G) => !G.flags.includes('nz_christchurch_attack_generation'),
+  },
+
+  // ── BOLIVIA ───────────────────────────────────────────────────────────────────
+
+  {
+    id: 'we_bolivia_gas_war_2003',
+    name: 'Bolivian Gas War',
+    years: [2003, 2004],
+    archetypes: 'all',
+    countries: ['Bolivia'],
+    narrative: 'In September–October 2003, protests erupt across Bolivia over a government plan to export natural gas — the second-largest reserves in South America — via a pipeline through Chile to a Pacific port. For Bolivians, routing the pipeline through Chile reopens the wound of the 1884 War of the Pacific, which cost Bolivia its coastal access. Indigenous Aymara communities in El Alto blockade roads. The army opens fire on protestors in the neighbourhood of Warisata. Sixty-seven people die. President Gonzalo Sánchez de Lozada, known as Goni, flees to Miami. The gas stays in Bolivian soil.',
+    context: 'The Gas War was a turning point in Bolivian politics. It ended the political career of Goni — who had enacted the most radical privatisation programme in South America in the 1990s — and created the political conditions for the 2005 election of Evo Morales, the first indigenous president in Bolivian history. The movement also reflected deeper tensions between indigenous majority communities and a mestizo-white political class that had governed since independence. Cocalero union leader Morales had been building a political movement since the coca eradication campaigns of the 1990s.',
+    effect: (p) => { p.m -= 6; p.addFlag('bol_gas_war_generation') },
+    addFlags: ['bol_gas_war_generation'],
+    minAge: 12,
+    when: (G) => !G.flags.includes('bol_gas_war_generation'),
+  },
+
+  {
+    id: 'we_bolivia_evo_morales_2005',
+    name: 'Evo Morales Elected President of Bolivia',
+    years: [2005, 2006],
+    archetypes: 'all',
+    countries: ['Bolivia'],
+    narrative: 'On December 18, 2005, Evo Morales wins the Bolivian presidential election with 54 percent of the vote — the first outright majority in Bolivian electoral history. An Aymara cocalero from the Chapare, Morales becomes the first indigenous person to hold the presidency of a country where more than 60 percent of the population identifies as indigenous. He takes office on January 22, 2006, in a ceremony that incorporates Aymara spiritual rituals at Tiwanaku before the formal inauguration at Palacio de Quemado.',
+    context: 'Morales\'s victory followed decades of indigenous social movements, the Gas War of 2003, and the Cochabamba Water War of 2000. His party, the Movement for Socialism (MAS), pushed through a new constitution in 2009 that officially recognised Bolivia as a "plurinational state" and enshrined the rights of indigenous peoples. During his tenure, extreme poverty fell from 38 to 18 percent and the economy grew significantly. He was forced to resign in November 2019 after disputed elections, in circumstances still debated as either fraud prevention or coup.',
+    effect: (p) => { p.m += 6; p.karma += 4; p.addFlag('bol_evo_generation') },
+    addFlags: ['bol_evo_generation'],
+    minAge: 14,
+    when: (G) => !G.flags.includes('bol_evo_generation'),
+  },
+
 ]

@@ -11484,4 +11484,260 @@ export const FLAG_REGISTRY = {
     notes: 'Set by events_late_life.js. Checked by ft24_vision_impaired_adapts.',
   },
 
+  // ── WORLD-EVENT FLAGS (bulk registration) ─────────────────────────────────────
+  // Set by worldEvents.js addFlags arrays. Registered here so the flag audit
+  // tracks them. Most carry intent: 'none' — set by world event, no dedicated
+  // follow-through event required beyond what the world event itself provides.
+
+  lived_through_occupation: {
+    weight: 'major', category: 'conflict',
+    description: 'Lived through a military occupation — the experience of foreign soldiers, curfews, and daily civilian life under hostile control.',
+    intent: 'none', notes: 'Set by WWII occupation world events.',
+  },
+  lived_through_revolution: {
+    weight: 'major', category: 'conflict',
+    description: 'Lived through a revolution — the specific fear and possibility of a rapid political rupture.',
+    intent: 'none', notes: 'Set by various revolution world events.',
+  },
+  war_generation: {
+    weight: 'major', category: 'conflict',
+    description: 'Grew up or came of age during a major war — the formative compression of wartime.',
+    intent: 'none', notes: 'Set by WWII and major conflict world events.',
+  },
+  hyperinflation_survivor: {
+    weight: 'major', category: 'economics',
+    description: 'Lived through hyperinflation — prices changing faster than earnings, money bundled in newspaper because wallets became impractical.',
+    intent: 'none', notes: 'Set by hyperinflation world events (Weimar, Zimbabwe, etc.).',
+  },
+  veteran: {
+    weight: 'major', category: 'identity',
+    description: 'Military veteran — carries the body knowledge, the specific friends, and the things not spoken of from active service.',
+    intent: 'none', notes: 'Set by war world events.',
+  },
+  drought_survivor: {
+    weight: 'moderate', category: 'trauma',
+    description: 'Survived a major drought — the specific experience of watching a landscape dry and food become scarce.',
+    intent: 'none', notes: 'Set by drought/famine world events.',
+  },
+  economic_stabilization: {
+    weight: 'moderate', category: 'economics',
+    description: 'Lived through economic stabilisation after crisis — the specific relief and residual distrust of a currency that had become worthless.',
+    intent: 'none', notes: 'Set by economic crisis/recovery world events.',
+  },
+  post_soviet_shock: {
+    weight: 'major', category: 'economics',
+    description: 'Experienced the post-Soviet economic shock — savings wiped, factories closed, the state\'s guarantees withdrawn overnight.',
+    intent: 'none', notes: 'Set by Soviet collapse world events.',
+  },
+  apartheid_privileged: {
+    weight: 'major', category: 'moral',
+    description: 'Was privileged under apartheid — white South African who benefited from a system of racial separation.',
+    intent: 'none', notes: 'Set by apartheid world events.',
+  },
+  witnessed_climate_change: {
+    weight: 'moderate', category: 'trauma',
+    description: 'Has witnessed visible climate change effects — weather patterns, species, landscapes changed in a lifetime.',
+    intent: 'none', notes: 'Set by climate world events.',
+  },
+  genocide_witness: {
+    weight: 'major', category: 'trauma',
+    description: 'Witnessed a genocide — carries the specific weight of knowing what human beings did to each other in their time.',
+    intent: 'none', notes: 'Set by genocide world events (Rwanda, Srebrenica, etc.).',
+  },
+  tutsi_hidden: {
+    weight: 'major', category: 'conflict',
+    description: 'Was a Tutsi who survived the 1994 genocide by hiding or being sheltered — the specific debt of being found later.',
+    intent: 'none', notes: 'Set by Rwanda genocide world event.',
+  },
+  systemic_discrimination: {
+    weight: 'major', category: 'conflict',
+    description: 'Has experienced systemic discrimination — not the individual encounter but the structural, legal, or social system built against them.',
+    intent: 'none', notes: 'Set by apartheid and Jim Crow world events.',
+  },
+  yugoslav_war_survivor: {
+    weight: 'major', category: 'conflict',
+    description: 'Survived the Yugoslav wars of the 1990s — the specific grief of a country that ceased to exist.',
+    intent: 'none', notes: 'Set by Yugoslav dissolution world events.',
+  },
+  revolution_disillusionment: {
+    weight: 'moderate', category: 'moral',
+    description: 'Has experienced the disillusionment after a revolution — when the new order fails to deliver what the old order\'s overthrow promised.',
+    intent: 'none', notes: 'Set by post-revolutionary disillusionment world events.',
+  },
+  iran_revolution_lived: {
+    weight: 'major', category: 'conflict',
+    description: 'Lived through the 1979 Iranian revolution — watched a monarchy become a theocracy in under a year.',
+    intent: 'none', notes: 'Set by Iranian revolution world event.',
+  },
+  korean_division_generation: {
+    weight: 'major', category: 'conflict',
+    description: 'Generation of Koreans who lived through or were defined by the division of the peninsula — family on the other side of a border that cannot be crossed.',
+    intent: 'none', notes: 'Set by Korean War/division world events.',
+  },
+  divided_family: {
+    weight: 'major', category: 'relationships',
+    description: 'Family separated by political division — a sibling, parent, or relative on the other side of a border that became permanent.',
+    intent: 'none', notes: 'Set by Korean division world event.',
+  },
+  cultural_revolution_survived: {
+    weight: 'major', category: 'conflict',
+    description: 'Survived the Chinese Cultural Revolution — the struggle sessions, the re-education, the specific terror of neighbours turned informers.',
+    intent: 'none', notes: 'Set by Cultural Revolution world events.',
+  },
+  saigon_fell: {
+    weight: 'major', category: 'conflict',
+    description: 'Was present when Saigon fell in April 1975 — the helicopters on the roof, the embassy, the end of the American war.',
+    intent: 'none', notes: 'Set by Fall of Saigon world event.',
+  },
+  soviet_collapse_lived: {
+    weight: 'major', category: 'conflict',
+    description: 'Witnessed the collapse of the Soviet Union — the end of an empire that had been presented as permanent.',
+    intent: 'none', notes: 'Set by Soviet collapse world events.',
+  },
+  chechen_war_generation: {
+    weight: 'major', category: 'conflict',
+    description: 'Grew up during the Chechen wars — in Russia or Chechnya, the war was the permanent backdrop.',
+    intent: 'none', notes: 'Set by Chechen war world events.',
+  },
+  chechen_civilian: {
+    weight: 'major', category: 'conflict',
+    description: 'Was a Chechen civilian during the wars — the specific experience of Grozny under bombardment.',
+    intent: 'none', notes: 'Set by Chechen war world events.',
+  },
+  eu_generation: {
+    weight: 'moderate', category: 'identity',
+    description: 'Grew up with European Union membership as a given — free movement, the euro, the removal of borders that had defined a continent.',
+    intent: 'none', notes: 'Set by EU formation/expansion world events.',
+  },
+  witnessed_democracy_end: {
+    weight: 'major', category: 'conflict',
+    description: 'Witnessed the end of a democratic government — a coup, an autogolpe, an election that was the last.',
+    intent: 'none', notes: 'Set by various coup/democratic collapse world events.',
+  },
+  brexit_era: {
+    weight: 'moderate', category: 'identity',
+    description: 'Lived through Brexit — the British referendum and exit from the EU, and the years of argument about what it meant.',
+    intent: 'none', notes: 'Set by Brexit world event.',
+  },
+  quebec_referendum_lived: {
+    weight: 'moderate', category: 'identity',
+    description: 'Lived through the 1995 Quebec independence referendum — 49.4% for separation, the night that could have split Canada.',
+    intent: 'none', notes: 'Set by Quebec referendum world event.',
+  },
+  condor_generation: {
+    weight: 'major', category: 'conflict',
+    description: 'Generation defined by Operation Condor — the US-backed network of South American dictatorships that coordinated disappearances across borders.',
+    intent: 'none', notes: 'Set by Operation Condor world events.',
+  },
+  liberation_war_generation: {
+    weight: 'major', category: 'conflict',
+    description: 'Came of age during a liberation war — independence achieved through armed struggle, not negotiation.',
+    intent: 'none', notes: 'Set by various liberation war world events.',
+  },
+  '1967_generation': {
+    weight: 'moderate', category: 'identity',
+    description: 'Defined by the 1967 Arab defeat — the Naksa, the Six-Day War, the moment the pan-Arab project broke.',
+    intent: 'none', notes: 'Set by 1967 war world event.',
+  },
+  independence_ghana: {
+    weight: 'major', category: 'identity',
+    description: 'Witnessed Ghanaian independence 1957 — the night the lights came on at the polo grounds, Nkrumah\'s freedom speech.',
+    intent: 'none', notes: 'Set by Ghana independence world event.',
+  },
+  red_terror_generation: {
+    weight: 'major', category: 'conflict',
+    description: 'Survived the Ethiopian Red Terror 1977–78 — 500,000 dead, the bodies displayed as warnings.',
+    intent: 'none', notes: 'Set by Red Terror world event.',
+  },
+  mau_mau_generation: {
+    weight: 'major', category: 'conflict',
+    description: 'Generation defined by the Mau Mau uprising and British counter-insurgency in Kenya — detention camps, collective punishment.',
+    intent: 'none', notes: 'Set by Mau Mau world event.',
+  },
+  independence_kenya: {
+    weight: 'major', category: 'identity',
+    description: 'Witnessed Kenyan independence 1963 — uhuru, and the specific expectations that came with it.',
+    intent: 'none', notes: 'Set by Kenya independence world event.',
+  },
+  biafra_generation: {
+    weight: 'major', category: 'conflict',
+    description: 'Generation marked by the Biafra war 1967–70 — one million dead from famine, the images of starving children, the silence after.',
+    intent: 'none', notes: 'Set by Biafra world event.',
+  },
+  independence_zimbabwe: {
+    weight: 'major', category: 'identity',
+    description: 'Witnessed Zimbabwean independence 1980 — Robert Mugabe\'s first address, the hope that had specific content.',
+    intent: 'none', notes: 'Set by Zimbabwe independence world event.',
+  },
+  triangle_generation: {
+    weight: 'moderate', category: 'identity',
+    description: 'Northern Triangle generation — grew up amid the gang violence and migration pressures of Guatemala, Honduras, or El Salvador.',
+    intent: 'none', notes: 'Set by Northern Triangle world event.',
+  },
+  civil_war_generation: {
+    weight: 'major', category: 'conflict',
+    description: 'Generation defined by civil war — fought over by factions, the state collapsed into competing armies.',
+    intent: 'none', notes: 'Set by various civil war world events.',
+  },
+  anarchist_barcelona: {
+    weight: 'moderate', category: 'identity',
+    description: 'Lived in anarchist Barcelona 1936–37 — the collectives, the militias, the brief utopia before it was crushed.',
+    intent: 'none', notes: 'Set by Spanish Civil War world event.',
+  },
+  depression_generation: {
+    weight: 'major', category: 'economics',
+    description: 'Grew up during the Great Depression — the bread lines, Hoovervilles, the decade of unemployment that shaped a generation\'s relationship to money.',
+    intent: 'none', notes: 'Set by Great Depression world events.',
+  },
+  flu_pandemic_survivor: {
+    weight: 'major', category: 'trauma',
+    description: 'Survived the 1918 Spanish flu pandemic — 50 million dead globally, the young killed disproportionately, the silence that followed.',
+    intent: 'none', notes: 'Set by Spanish flu world event.',
+  },
+  lumumba_generation: {
+    weight: 'major', category: 'conflict',
+    description: 'Generation that witnessed Patrice Lumumba — his independence speech, his assassination weeks later, the lesson that independence could be reversed.',
+    intent: 'none', notes: 'Set by Lumumba world event.',
+  },
+  bay_of_pigs_generation: {
+    weight: 'moderate', category: 'conflict',
+    description: 'Lived through the Bay of Pigs invasion 1961 — the CIA-backed exile attempt, the Cuban defeat, the specific proof that the revolution would be defended.',
+    intent: 'none', notes: 'Set by Bay of Pigs world event.',
+  },
+  mariel_generation: {
+    weight: 'major', category: 'migration',
+    description: 'Mariel boatlift generation — left Cuba in 1980, the 125,000 who sailed to Florida in five months.',
+    intent: 'none', notes: 'Set by Mariel boatlift world event.',
+  },
+  mobutu_fall_generation: {
+    weight: 'moderate', category: 'conflict',
+    description: 'Generation that witnessed Mobutu\'s fall 1997 — the collapse of Zaire and the chaos that followed.',
+    intent: 'none', notes: 'Set by Mobutu fall world event.',
+  },
+  mabo_generation: {
+    weight: 'major', category: 'identity',
+    description: 'Generation defined by the Mabo decision 1992 — the High Court ruling that recognised Indigenous title to land, ending the legal fiction of terra nullius.',
+    intent: 'none', notes: 'Set by Mabo world event.',
+  },
+  apology_generation: {
+    weight: 'major', category: 'identity',
+    description: 'Witnessed the 2008 National Apology to Indigenous Australians — the parliament, the prime minister, the Stolen Generations in the gallery.',
+    intent: 'none', notes: 'Set by Australian Apology world event.',
+  },
+  reef_loss_generation: {
+    weight: 'moderate', category: 'trauma',
+    description: 'Generation witnessing the bleaching of the Great Barrier Reef — the visible loss of a living system in a single lifetime.',
+    intent: 'none', notes: 'Set by reef bleaching world events.',
+  },
+  heat_stress_generation: {
+    weight: 'moderate', category: 'trauma',
+    description: 'Generation experiencing dangerous heat as a new normal — wet-bulb temperatures that make outdoor work deadly for days at a time.',
+    intent: 'none', notes: 'Set by heat wave world events.',
+  },
+  tipping_point_generation: {
+    weight: 'major', category: 'trauma',
+    description: 'Generation living through climate tipping points — the Arctic ice cap gone, the coral systems bleached, the projections becoming present tense.',
+    intent: 'none', notes: 'Set by climate tipping point world events.',
+  },
+
 }
