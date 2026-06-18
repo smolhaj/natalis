@@ -10349,4 +10349,266 @@ export const FLAG_REGISTRY = {
     notes: 'Set by we_cochabamba_water_war_2000 world event.',
   },
 
+  // ── CARIBBEAN ────────────────────────────────────────────────────────────────
+
+  jamaican_garrison_community: {
+    weight: 'major',
+    category: 'political',
+    description: 'Grew up in a Kingston garrison community — the neighborhood organized around party loyalty, the don as parallel state, JLP or PNP colors as civic identity.',
+    intent: 'both',
+    notes: 'Set by jam_garrison_childhood. Gates jam_area_don and jam_late_reckoning.',
+  },
+
+  rasta_encounter: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Encountered Rastafari as a living theological and political movement — the reasoning about Babylon, Zion, African repatriation, and colonial inheritance from someone inside it.',
+    intent: 'year_texture',
+    notes: 'Set by jam_rasta_as_form. Not about aesthetics — about the worldview.',
+  },
+
+  jamaica_1980_election_witness: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through the 1980 Jamaican election — 800 people killed by garrison-distributed political guns before and after the October vote.',
+    intent: 'event',
+    notes: 'Set by jam_1980_election_violence.',
+  },
+
+  jamaica_emigrated: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Left Jamaica for London, New York, or Toronto during the Windrush era or its aftermath — the specific emigration of the Anglophone Caribbean to Britain and North America.',
+    intent: 'event',
+    notes: 'Set by jam_emigration_decision (leave choice). Gates jam_late_reckoning.',
+  },
+
+  jamaica_stayed: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Chose to stay in Jamaica when emigration was the live option — carried the awareness of what that meant as the people who left sent letters.',
+    intent: 'year_texture',
+    notes: 'Set by jam_emigration_decision (stay choice).',
+  },
+
+  garrison_patron_dependent: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Accepted the garrison patron system — the don\'s loans, his favors, in exchange for votes, silence, and looking away from what his money required.',
+    intent: 'year_texture',
+    notes: 'Set by jam_area_don (accepted choice).',
+  },
+
+  garrison_patron_refused: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Tried to navigate outside the garrison patron system — not punished, but excluded from the network of favors that constitutes survival in a garrison community.',
+    intent: 'year_texture',
+    notes: 'Set by jam_area_don (refused choice).',
+  },
+
+  reggae_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Came of age with reggae and ska as a living political and spiritual consciousness — sound system culture, the specific argument in the bass line.',
+    intent: 'none',
+    notes: 'Set by jam_reggae_generation.',
+  },
+
+  jam_late_reckoned: {
+    weight: 'minor',
+    category: 'resilience',
+    description: 'In late life, reached a reckoning with what Jamaica did to itself — or what leaving meant — the accumulated understanding of a specific political history.',
+    intent: 'none',
+    notes: 'Set by jam_late_reckoning.',
+  },
+
+  carnival_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up with Trinidad Carnival as a total social institution — the mas camp, the steel band, the road march, the calypso as political commentary.',
+    intent: 'year_texture',
+    notes: 'Set by tri_carnival_season.',
+  },
+
+  trinidad_oil_boom_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age during T&T\'s oil boom (1973-1986) — the specific affluence, the imported goods, the Caribbean neighbors arriving for work, before the price collapse.',
+    intent: 'year_texture',
+    notes: 'Set by tri_oil_boom_texture.',
+  },
+
+  indotrinidadian_ethnic_tension: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Indo-Trinidadian who navigated the ethnic politics of T&T — the DLP/UNC as community party, the PNM majority, the accommodation that requires keeping certain conversations from happening.',
+    intent: 'year_texture',
+    notes: 'Set by tri_ethnic_politics_indo.',
+  },
+
+  afrotrinidadian_politics_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Afro-Trinidadian who voted in the ethnic-party structure — PNM majority, the specific accommodation with Indo-Trinidadian neighbors that the cricket ground and Carnival road share.',
+    intent: 'none',
+    notes: 'Set by tri_ethnic_politics_afro.',
+  },
+
+  trinidad_1990_coup_witness: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed the July 27, 1990 Jamaat al Muslimeen coup attempt — Abu Bakr\'s men holding parliament and TTT for six days, the Prime Minister on television at gunpoint.',
+    intent: 'event',
+    notes: 'Set by tri_1990_coup.',
+  },
+
+  steelband_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Grew up with the steel pan as the national instrument — the instrument invented from oil drums after the colonial ban on African drums, now played across ethnic lines.',
+    intent: 'none',
+    notes: 'Set by tri_steelband_solidarity.',
+  },
+
+  // ── GUINEA-CONAKRY ARC ───────────────────────────────────────────────────────
+
+  voted_no_1958: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Voted No in Guinea\'s September 1958 independence referendum — the only French colony to refuse the French Community.',
+    intent: 'follow_through',
+    notes: 'Set by gn_no_vote_1958. Gate for post-independence identity events.',
+  },
+
+  voted_yes_1958: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Voted Yes in Guinea\'s 1958 referendum — the minority position in a country that voted 95% No.',
+    intent: 'none',
+    notes: 'Set by gn_no_vote_1958. Carries private dissent through Touré era.',
+  },
+
+  guinea_french_revenge_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age in Guinea after France withdrew everything — civil servants, vehicles, medicine, lightbulbs — in retaliation for the No vote.',
+    intent: 'follow_through',
+    notes: 'Set by gn_french_revenge.',
+  },
+
+  sekou_toure_era_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through Sékou Touré\'s 1958–84 single-party state — mandatory PDG meetings, the culture of informers, the calibrated silence.',
+    intent: 'follow_through',
+    notes: 'Set by gn_sekou_toure_apparatus. Gates gn_camp_boiro.',
+  },
+
+  camp_boiro_survivor_adjacent: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Someone close survived Camp Boiro — the political prison where thousands were killed by deliberate starvation under the "black diet."',
+    intent: 'follow_through',
+    notes: 'Set by gn_camp_boiro (survived branch). Carries the weight of what the survivor does not say.',
+  },
+
+  camp_boiro_family_loss: {
+    weight: 'major',
+    category: 'grief',
+    description: 'Someone close disappeared into Camp Boiro and did not return — officially died of "illness," no body, no date.',
+    intent: 'follow_through',
+    notes: 'Set by gn_camp_boiro (lost branch). Deep grief flag; candidate for year-texture prose.',
+  },
+
+  guinea_exile: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Left Guinea during the Touré era — part of the educated-class exodus to Dakar, Paris, or Montreal.',
+    intent: 'follow_through',
+    notes: 'Set by gn_educated_class_leaves (leave branch). Works alongside emigrated flag.',
+  },
+
+  guinea_stayed_accommodation: {
+    weight: 'moderate',
+    category: 'survival',
+    description: 'Stayed in Guinea and learned the accommodations staying required — which projects to propose, which knowledge to keep private.',
+    intent: 'follow_through',
+    notes: 'Set by gn_educated_class_leaves (stay branch).',
+  },
+
+  conte_era_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Lived through the two-day interval between Sékou Touré\'s death and Lansana Conté\'s military coup — the closest Guinea came to an open future.',
+    intent: 'none',
+    notes: 'Set by gn_conte_morning.',
+  },
+
+  guinea_stadium_2009_witness: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Witnessed or lived through the September 28, 2009 stadium massacre in Conakry — 157 killed, systematic rape by Presidential Guard soldiers.',
+    intent: 'follow_through',
+    notes: 'Set by gn_stadium_2009. Candidate for late-life reckoning event.',
+  },
+
+  // ── MONGOLIA ARC ─────────────────────────────────────────────────────────────
+
+  mongolian_nomadic_heritage: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up in a nomadic herding family — the seasonal routes, the ger assembly, the terrain knowledge that lives in the body not books.',
+    intent: 'follow_through',
+    notes: 'Set by mn_nomadic_herder_childhood. Gates mn_dzud_winter and mn_ulaanbaatar_migration.',
+  },
+
+  stalinist_purge_family_memory: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Family member was killed in the 1937–38 Stalinist purges of Mongolian Buddhism; 22,000 monks killed, 700 monasteries destroyed.',
+    intent: 'follow_through',
+    notes: 'Set by mn_stalinist_purge_family. Hidden thangkas, official story of "illness."',
+  },
+
+  negdel_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up in the negdel livestock collective — factory schedules applied to nomadic herding, security and absurdity coexisting.',
+    intent: 'follow_through',
+    notes: 'Set by mn_negdel_life. Gates mn_negdel_dissolution_shock.',
+  },
+
+  mn_1990_revolution_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Alive during Mongolia\'s 1990 democratic revolution — hunger strikes in Sukhbaatar Square, the MPRP\'s unexpected agreement to multi-party elections.',
+    intent: 'follow_through',
+    notes: 'Set by mn_1990_revolution.',
+  },
+
+  mn_post_socialist_shock: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Experienced the post-1990 negdel dissolution — animals returned, but veterinary support, guaranteed prices, and collective infrastructure gone.',
+    intent: 'follow_through',
+    notes: 'Set by mn_negdel_dissolution_shock.',
+  },
+
+  dzud_survivor: {
+    weight: 'major',
+    category: 'survival',
+    description: 'Survived a dzud — catastrophic winter when snow seals the grass and livestock die by thousands; the 2000 dzud killed a third of Mongolia\'s national herd.',
+    intent: 'follow_through',
+    notes: 'Set by mn_dzud_winter. Candidate for late-life reckoning year-texture.',
+  },
+
+  ger_district_migrant: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Left the steppe for Ulaanbaatar\'s ger districts — yurt neighborhoods at the city edge, coal stoves producing some of the world\'s worst winter air quality.',
+    intent: 'follow_through',
+    notes: 'Set by mn_ulaanbaatar_migration.',
+  },
+
 }

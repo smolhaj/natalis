@@ -9175,6 +9175,50 @@ function buildYearTexture(state) {
       : 'The war was secret. The revolution was public. The things done in the name of the revolution, to the people who chose the wrong side, are less documented than the revolution itself.',
   ])
 
+  // ─── CARIBBEAN TEXTURE ───────────────────────────────────────────────────────
+  if (F.has('rasta_encounter') && Math.random() < 0.2) return pick([
+    'The reasoning about Babylon and Zion is not a metaphor for the person who gave it to you. It is a structural description of the world. You carry that distinction.',
+    phase === 'late_life'
+      ? 'The thing Rastafari gave you that nothing else did: a framework where being poor and Black in the Caribbean was not a personal failure but the consequence of a specific history. You can argue with the theology. The historical diagnosis is harder to argue with.'
+      : 'The argument in the music is older than the music. Ska, rocksteady, reggae — each one carried the same argument forward in a slightly different key. You know what the argument is.',
+  ])
+  if (F.has('carnival_generation') && Math.random() < 0.2) return pick([
+    'Carnival is not a party. It is the one week in the year when the social order can be temporarily reconfigured — mas as ritual, the road march as procession, the calypsonian as the only one who can say what the politician did.',
+    phase === 'late_life'
+      ? 'The Carnival you knew when you were young had a different energy than the Carnival now. You cannot say exactly what changed. Something about whether the people in the streets are performing for each other or for the cameras.'
+      : 'The mas camp runs on labor — cutting, sewing, gluing rhinestones in the months before. The costume that takes three seconds to describe took three hundred hours to make.',
+  ])
+  if (F.has('trinidad_oil_boom_generation') && Math.random() < 0.2) return pick([
+    'The boom years: imported goods, a generation who went to university, the Caribbean neighbors who came to T&T for work because this was the country that had money. The price collapse in 1986 was not a surprise to everyone. To the people who believed the boom was permanent, it was a different kind of event.',
+    phase === 'late_life'
+      ? 'The oil money funded a specific version of the country — infrastructure, education, the welfare state that Trinidadians still measure everything against. The question of what the country was before the oil and what it will be after is a question your generation lived through without fully answering.'
+      : 'The thing about a resource economy is that the people who benefit most from the price being high are rarely the people who built the infrastructure. You know this in the abstract. The specific version of it is visible in which neighborhoods got built during the boom and which didn\'t.',
+  ])
+  if (F.has('jamaica_stayed') && Math.random() < 0.2) return pick([
+    'The people who left send money, and photographs, and sometimes children for the summer. The letters describe a cold that you have not felt. You are still here. The question of whether staying was a choice or a condition is one you have answered differently across the years.',
+    phase === 'late_life'
+      ? 'Jamaica has been emptying in the specific direction of England, the United States, Canada, since before independence. Every generation some people leave and some people stay. You are among the ones who stayed. The country you stayed in is not the country you would have designed, but it is the one you know from the inside.'
+      : 'The ones who left write back about opportunity. The ones who stayed watch what happens to neighborhoods when the people with the most options leave them.',
+  ])
+  if (F.has('indotrinidadian_ethnic_tension') && Math.random() < 0.2) return pick([
+    'The accommodation is real. Indo-Trinidadians and Afro-Trinidadians live beside each other in ways that require not bringing certain conversations to the surface. This is not peace. It is a managed coexistence that has lasted long enough to be mistaken for peace.',
+    phase === 'late_life'
+      ? 'The cricket ground and the Carnival road are the two places where the ethnic arithmetic temporarily dissolves. You know what makes them temporary. The politics goes back to what it was. But those hours existed. They are in the record.'
+      : 'Voting in T&T is a census with consequences. The DLP, the UNC, the PNM — the party names change but the ethnic geography of who votes for whom has been stable since independence. You vote knowing what you are voting as, not just what you are voting for.',
+  ])
+  if (F.has('garrison_patron_dependent') && Math.random() < 0.22) return pick([
+    'The garrison patron system runs on what cannot be said out loud. The don\'s money arrives before the election. The community understands what it means. You understand what it means. The acknowledgment of mutual understanding is never stated directly.',
+    phase === 'late_life'
+      ? 'What the garrison gave you: security in a place with little of it, access in a place where access was rationed by loyalty, a version of order that the police did not provide. What it cost: an ongoing obligation to notice certain things and not say them. You have been making that calculation for a long time.'
+      : 'The garrison distributes goods that the state does not distribute. This is not a failure of the state — it is the design of the system. The state delegates certain functions to the don; the don delivers votes in return. You are inside this system whether you participate in it directly or not.',
+  ])
+  if (F.has('garrison_patron_refused') && Math.random() < 0.2) return pick([
+    'Refusing the garrison is not punished in the way refusal is punished in other places. It is simply noted. The favor network reroutes around you. The loans you cannot access. The references you are not given. The outside is survivable. It is not comfortable.',
+    phase === 'late_life'
+      ? 'You have lived outside the garrison patron system long enough to know what that means in the long run: a harder path, fewer connections, a particular kind of dignity that does not translate into material terms. You do not regret the refusal. You would be lying if you said it cost nothing.'
+      : 'The neighborhood has its social architecture. The garrison don is a node in it, not the whole thing. You have found the parts of the architecture that do not require you to move through him. Those parts exist. They are smaller.',
+  ])
+
   // ─── LIBYA TEXTURE ───────────────────────────────────────────────────────────
   if (F.has('libyan_jamahiriya_generation') && Math.random() < 0.18) return pick([
     'The Green Book was the theory. The Revolutionary Guards were the practice. Both were real.',
