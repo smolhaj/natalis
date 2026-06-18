@@ -2810,6 +2810,78 @@ export const FLAG_REGISTRY = {
     notes: 'Set by cas_uzbek_cotton and cas_uzbek_harvest_adult.',
   },
 
+  post_soviet_brain_drain: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Character witnessed the departure of Soviet-era technical expertise — engineers, doctors, teachers — who left for Russia or elsewhere after independence.',
+    intent: 'none',
+    notes: 'Set by taj_russian_departure. The absence that remained after the skilled left.',
+  },
+
+  tajik_civil_war_generation: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'Character lived through the Tajik Civil War 1992–97 — the worst post-Soviet conflict, 50,000 dead, fought along regional and factional lines.',
+    intent: 'year_texture',
+    notes: 'Set by taj_civil_war_1992. Follow-through: taj_peace_1997 gated on this flag.',
+  },
+
+  internal_displacement: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Character was displaced within their own country by conflict or disaster — not a refugee, but not at home either.',
+    intent: 'none',
+    notes: 'Set by taj_civil_war_1992 (flee branch). General flag applicable across conflict contexts.',
+  },
+
+  tajik_peace_generation: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Character witnessed the 1997 General Agreement on Peace — watched commanders who gave orders for atrocities receive government uniforms.',
+    intent: 'none',
+    notes: 'Set by taj_peace_1997. The uncomfortable texture of impunity dressed as reconciliation.',
+  },
+
+  tajik_remittance_dependent: {
+    weight: 'moderate',
+    category: 'economics',
+    description: 'Character\'s household depends directly on remittances from a family member working abroad — the arithmetic of absence.',
+    intent: 'year_texture',
+    notes: 'Set by taj_remittance_economy (dependent branch). Tajikistan has highest remittance-to-GDP ratio in the world.',
+  },
+
+  tajik_stayed_home: {
+    weight: 'minor',
+    category: 'migration',
+    description: 'Character stayed when others left for Russia — the village with the demographic gap, the quietness of a particular kind.',
+    intent: 'none',
+    notes: 'Set by taj_remittance_economy (independent branch).',
+  },
+
+  turkmenbashi_generation: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Character grew up under Niyazov\'s personality cult — reciting Ruhnama passages, watching January renamed Turkmenbashi, the rotating golden statue.',
+    intent: 'year_texture',
+    notes: 'Set by tkm_niyazov_cult. The childhood indoctrination that is never entirely shed.',
+  },
+
+  turkmenistan_gas_generation: {
+    weight: 'moderate',
+    category: 'economics',
+    description: 'Character understands the gap between Turkmenistan\'s fourth-largest gas reserves and the state of its hospitals and institutions.',
+    intent: 'year_texture',
+    notes: 'Set by tkm_gas_wealth_invisible. Resource wealth as a fact about someone else\'s palace.',
+  },
+
+  turkmenistan_closed_world: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Character lives in Turkmenistan\'s information environment — filtered internet, banned VPNs, passport controls, the permitted-to-leave register.',
+    intent: 'year_texture',
+    notes: 'Set by tkm_isolation. The normalisation of not knowing what normal is.',
+  },
+
   // ── CLERGY / RELIGIOUS INSTITUTION FLAGS ────────────────────────────────
 
   clergy_ordained: {

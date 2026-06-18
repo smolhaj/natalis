@@ -5202,6 +5202,41 @@ function buildYearTexture(state) {
       ? 'The towers are still there. The people who built them are not all in them. That was always the arrangement.'
       : 'The salary solved problems that had no other solution. The accounting was complex.',
   ])
+  if (F.has('tajik_civil_war_generation') && Math.random() < 0.3) return pick([
+    'The Tajik Civil War ended officially in 1997. The fifty thousand dead have not ended. You carry the arithmetic of it differently depending on the year.',
+    'Regional accents were the identifier then — Kulyabi, Ghari, Leninabadi. The war was about power and faction and the Soviet collapse, and it expressed itself through the sounds of how people spoke.',
+    phase === 'late_life'
+      ? 'You watched the commanders who gave orders come back from the mountains into government offices. This is called the peace. You have learned to use the word.'
+      : 'The checkpoint you knew was a log across a road and a man who recognised your face. You still think about who did not get recognised.',
+  ])
+  if (F.has('tajik_remittance_dependent') && Math.random() < 0.3) return pick([
+    'The money arrives from Moscow. The man it comes from was a schoolteacher before the work ran out. Now he is on a construction site in Mytishchi. The transfer takes two days.',
+    'Tajikistan has the highest remittance-to-GDP ratio in the world. You know what this means in practice: a family accounting that runs through a phone.',
+    phase === 'midlife'
+      ? 'The dependency is total and the word total is not used. You have your own word for it, which is: the transfer is due on Thursday.'
+      : 'A third of the adult men in your region are in Russia. The village has a specific silence where they used to be.',
+  ])
+  if (F.has('turkmenbashi_generation') && Math.random() < 0.3) return pick([
+    'January is named Turkmenbashi. April is named after his mother. The giant golden statue rotates to face the sun. You know the Ruhnama passages by heart. You have never discussed what you think about any of this.',
+    'The state renamed the months. Then it renamed the bread. Then it renamed certain sciences. You carry a body of knowledge that is built partly on renamed things.',
+    phase === 'late_life'
+      ? 'Niyazov died in 2006. The months got their names back eventually. The twenty years of compulsory Ruhnama recitation did not get a name. You have one for it privately.'
+      : 'What you believe and what you say you believe were separated early, in a classroom, with thirty other children who made the same separation at the same time.',
+  ])
+  if (F.has('turkmenistan_gas_generation') && Math.random() < 0.3) return pick([
+    'The fourth largest natural gas reserves in the world. The correlation between that number and the state of the hospital your family uses is something you have learned not to say out loud.',
+    'The energy subsidy means heat is nearly free. The marble capital is genuinely white. The fountains work. The press does not.',
+    phase === 'midlife'
+      ? 'You understand the resource curse not as a theory but as a personal experience of knowing the gap between what is underground and what is on the surface of your daily life.'
+      : 'Someone else is getting very rich from this. You know this in the approximate way you know anything that is not discussable.',
+  ])
+  if (F.has('turkmenistan_closed_world') && Math.random() < 0.3) return pick([
+    'The internet is filtered. The VPNs are banned. The news that arrives is the news the state decided is appropriate. You have an approximate idea of what the gap between that and other news might be.',
+    'To travel, your name must appear on the right list. You believe your name is on the right list. You have not tested this.',
+    phase === 'late_life'
+      ? 'You spent a life in an information environment shaped by what was not allowed. The world outside it kept going. You kept going inside it. Both are true simultaneously.'
+      : 'You know roughly what is outside the borders. You know this at the level of rumour and approximation, which is how you know most things about the outside.',
+  ])
   if (F.has('interrogated_by_state') && Math.random() < 0.3) return pick([
     'The room where they questioned you is still a room you are in sometimes.',
     'You know now what it feels like when the state turns toward you. The knowledge reorganised certain things.',

@@ -3,6 +3,8 @@
 // Kyrgyzstan (1991 collapse, Tulip Revolution), post-Soviet Islam.
 
 const IS_CENTRAL_ASIA = (G) => ['Kazakhstan', 'Uzbekistan', 'Kyrgyzstan', 'Tajikistan', 'Turkmenistan'].includes(G.character.country?.name)
+const IS_TAJIK = (G) => G.character.country?.name === 'Tajikistan'
+const IS_TURKMEN = (G) => G.character.country?.name === 'Turkmenistan'
 const IS_KAZAKH = (G) => G.character.country?.name === 'Kazakhstan'
 const IS_UZBEK = (G) => G.character.country?.name === 'Uzbekistan'
 const IS_KYRGYZ = (G) => G.character.country?.name === 'Kyrgyzstan'
@@ -175,6 +177,104 @@ export const CENTRAL_ASIA_EVENTS = [
     when: (G) => IS_CENTRAL_ASIA(G) && G.age >= 65 && !G.mem.casLate,
     text: 'You have lived under Soviet administration, under the chaos of the transition, under a new authoritarian stability. You have watched the Aral Sea disappear. You have watched a city built in the steppe and named after a president. What you call your country, your people, your language, your faith — all have been contested within your lifetime. You hold all of this more lightly than you expected to.',
     effect: (p) => { p.m += 8; p.karma += 5; p.setMem('casLate', true) },
+  },
+
+  // ── TAJIKISTAN ───────────────────────────────────────────────────────────────
+
+  {
+    id: 'taj_civil_war_1992',
+    phase: 'young_adult',
+    weight: 5,
+    when: (G) => IS_TAJIK(G) && G.currentYear >= 1992 && G.currentYear <= 1997 && G.age >= 16 && !G.mem?.tajCivilWar,
+    text: 'The war is between the government — backed by Russia and Uzbekistan — and the United Tajik Opposition: a coalition of Islamists, democrats, and regionalists that should not work but does, briefly, because the enemy is the same. The road from Dushanbe to your village has become a line that changes hands. The word from cousins in the south is that the Kulyabis are moving. The regional militias are the armies now. The state has dissolved into who has a Kalashnikov and who gave it to them.',
+    choices: [
+      {
+        text: 'Join the local self-defense organization',
+        tag: 'defended',
+        outcome: 'The checkpoint is informal — a log across the road and someone who knows your face. It holds the village, approximately. You do not think about what happens to people who arrive at the checkpoint and have the wrong regional accent.',
+        effect: (p) => { p.h -= 5; p.m -= 10; p.karma -= 5; p.addFlag('tajik_civil_war_generation'); p.setMem('tajCivilWar', true); },
+      },
+      {
+        text: 'Leave — Dushanbe or Russia while it is still possible',
+        tag: 'fled',
+        outcome: 'A hundred thousand people have done the same this month. You are not a statistic to yourself, but the road north is full of people who made the same calculation.',
+        effect: (p) => { p.m -= 8; p.addFlag('tajik_civil_war_generation'); p.addFlag('internal_displacement'); p.setMem('tajCivilWar', true); },
+      },
+    ],
+  },
+
+  {
+    id: 'taj_russian_departure',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => IS_TAJIK(G) && G.currentYear >= 1992 && G.currentYear <= 1996 && G.age >= 16 && !G.mem?.tajRussians,
+    text: 'The Russian and German-Jewish population — engineers, teachers, the doctor who has been at the clinic for twenty years — have been leaving since before the war started. The mathematician from the university who taught topology for three decades catches a flight to Moscow with two suitcases. The clinic is understaffed. The boilers in the factories are attended by people who are learning as they go. The Soviet-era expertise that made this place function at a certain level is on a plane out of Dushanbe, and what replaces it will take a generation to build.',
+    choices: null,
+    effect: (p) => { p.e -= 3; p.m -= 6; p.addFlag('post_soviet_brain_drain'); p.setMem('tajRussians', true); },
+  },
+
+  {
+    id: 'taj_peace_1997',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) => IS_TAJIK(G) && G.currentYear >= 1997 && G.currentYear <= 2000 && G.age >= 25 && G.flags.some(f => f === 'tajik_civil_war_generation') && !G.mem?.tajPeace,
+    text: 'The General Agreement on the Establishment of Peace: the United Tajik Opposition commanders come in from the mountains and the government integrates some of them into the security forces. This is called reconciliation. What it means in practice is that the men who gave orders for certain things are now wearing uniforms and attending functions at the Presidential Palace. Fifty thousand people are dead. You do not say the number out loud.',
+    choices: null,
+    effect: (p) => { p.m += 4; p.r += 8; p.karma += 5; p.addFlag('tajik_peace_generation'); p.setMem('tajPeace', true); },
+  },
+
+  {
+    id: 'taj_remittance_economy',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) => IS_TAJIK(G) && G.currentYear >= 2002 && G.currentYear <= 2020 && G.age >= 25 && !G.mem?.tajRemittance,
+    text: 'Your son is in Moscow. Your brother is in Moscow. A third of the adult men in the region are in Moscow. They build apartment blocks there and the money comes back by phone transfer and Western Union. It is thirty to forty percent of the country\'s GDP, this money that arrives from construction sites and markets in Russia. It is also what keeps the wheat flour on the table. The dependency is total and nobody says total.',
+    choices: [
+      {
+        text: 'Your household depends on the remittance directly',
+        tag: 'dependent',
+        outcome: 'The amount comes every two weeks, usually. When it doesn\'t arrive on time you go through the calculations in your head until it does.',
+        effect: (p) => { p.mo += 500; p.m -= 4; p.r += 5; p.addFlag('tajik_remittance_dependent'); p.setMem('tajRemittance', true); },
+      },
+      {
+        text: 'Your household manages independently; others in the family send',
+        tag: 'independent',
+        outcome: 'You have stayed. Others left. The village is quieter in a specific way — the age distribution has a gap where working men used to be.',
+        effect: (p) => { p.m -= 4; p.r += 4; p.addFlag('tajik_stayed_home'); p.setMem('tajRemittance', true); },
+      },
+    ],
+  },
+
+  // ── TURKMENISTAN ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'tkm_niyazov_cult',
+    phase: 'childhood',
+    weight: 5,
+    when: (G) => IS_TURKMEN(G) && G.currentYear >= 1992 && G.currentYear <= 2006 && G.age >= 6 && G.age <= 18 && !G.mem?.tkmNiyazov,
+    text: 'The school day begins with the Ruhnama: the spiritual book written by Saparmurat Niyazov, the president who renamed himself Turkmenbashi — Father of all Turkmen. The month of January is now Turkmenbashi. The month of April is named after his mother. The giant golden statue of him on top of the Neutrality Arch rotates to always face the sun. You know the Ruhnama passages by heart. You know the penalties for not knowing them. You have never discussed what you actually think about any of this.',
+    choices: null,
+    effect: (p) => { p.e -= 3; p.m -= 8; p.addFlag('turkmenbashi_generation'); p.setMem('tkmNiyazov', true); },
+  },
+
+  {
+    id: 'tkm_gas_wealth_invisible',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) => IS_TURKMEN(G) && G.currentYear >= 1995 && G.currentYear <= 2020 && G.age >= 18 && !G.mem?.tkmGas,
+    text: 'Turkmenistan is the fourth largest natural gas reserves in the world. The gas wealth builds the white marble capital and the president\'s palace and the fountains in the desert. The subsidies mean energy is nearly free. The food subsidies mean the state keeps prices low. What the state does not build is an independent press, an independent judiciary, an independent anything. You know roughly what your country is worth in the ground. The correlation between that number and the state of the hospital your family uses is something you have learned not to say out loud.',
+    choices: null,
+    effect: (p) => { p.m -= 5; p.r += 6; p.e += 3; p.addFlag('turkmenistan_gas_generation'); p.setMem('tkmGas', true); },
+  },
+
+  {
+    id: 'tkm_isolation',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) => IS_TURKMEN(G) && G.currentYear >= 2000 && G.age >= 25 && !G.mem?.tkmIsolation,
+    text: 'To get a passport, you apply, and the application is reviewed. To travel, your travel is reviewed. The state has an electronic register of citizens who are permitted to leave. You are — you believe — on the permitted side of the register. The internet is filtered; the VPNs are banned; the news that arrives is the news the state has decided is appropriate. North Korea is more isolated. Turkmenistan is what second place looks like.',
+    choices: null,
+    effect: (p) => { p.m -= 8; p.e += 3; p.addFlag('turkmenistan_closed_world'); p.setMem('tkmIsolation', true); },
   },
 
 ]
