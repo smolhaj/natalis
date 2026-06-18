@@ -11286,4 +11286,136 @@ export const FLAG_REGISTRY = {
     notes: 'Set by bol_2019_crisis (coup choice). Bolivia only.',
   },
 
+  // ── NEW ZEALAND FLAGS ──────────────────────────────────────────────────────────
+
+  nz_rugby_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Grew up with rugby as a near-civic religion — the All Blacks as national identity, the haka before they learned French.',
+    intent: 'none',
+    notes: 'Set by nz_rugby_childhood. New Zealand only.',
+  },
+
+  nz_springbok_generation: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'Lived through the 1981 Springbok Tour — the moment New Zealand discovered it was not as unified as it had assumed, friends on opposite sides of police lines.',
+    intent: 'year_texture',
+    notes: 'Set by nz_springbok_tour_1981. New Zealand only.',
+  },
+
+  nz_rainbow_warrior_generation: {
+    weight: 'moderate',
+    category: 'conflict',
+    description: 'Witnessed the Rainbow Warrior bombing in Auckland harbour — the specific education of state terrorism conducted by a nominal ally, and the world shrugging.',
+    intent: 'none',
+    notes: 'Set by nz_rainbow_warrior_1985. New Zealand only.',
+  },
+
+  nz_rogernomics_generation: {
+    weight: 'major',
+    category: 'economics',
+    description: 'Lived through Rogernomics 1984–90 — New Zealand as a free-market laboratory, the egalitarianism that turned out to be policy rather than character.',
+    intent: 'year_texture',
+    notes: 'Set by nz_rogernomics. New Zealand only.',
+  },
+
+  nz_nuclear_free_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Remembers New Zealand\'s nuclear-free declaration and the ANZUS fracture — a small country choosing its principles over its alliance.',
+    intent: 'none',
+    notes: 'Set by nz_nuclear_free_declaration. New Zealand only.',
+  },
+
+  nz_left_for_australia: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Left New Zealand for Australia — the Tasman migration logic: same language, easier visa, higher wages, familiar enough it doesn\'t feel like leaving.',
+    intent: 'none',
+    notes: 'Set by nz_brain_drain (left choice). New Zealand only.',
+  },
+
+  nz_stayer: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Stayed in New Zealand while others left for Australia — watched the departures, and remained.',
+    intent: 'none',
+    notes: 'Set by nz_brain_drain (stayed choice). New Zealand only.',
+  },
+
+  nz_christchurch_earthquake: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Experienced the 2011 Christchurch earthquake — 185 dead, lunchtime, the cathedral collapsed, the central city closed for years.',
+    intent: 'none',
+    notes: 'Set by nz_christchurch_earthquake_2011. New Zealand only.',
+  },
+
+  nz_christchurch_attack_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the 2019 Christchurch mosque attack — 51 killed, the prime minister in a black hijab, the gun laws changed in 26 days, the door left unlocked no longer meaning what it meant.',
+    intent: 'year_texture',
+    notes: 'Set by nz_christchurch_attack_2019. New Zealand only.',
+  },
+
+  // ── CROSS-CUTTING FLAGS (FT-23 coverage) ──────────────────────────────────────
+
+  authoritarian_veteran: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Served under or survived an authoritarian regime — carries the habits of compliance, deference, and self-censorship that were survival under that system.',
+    intent: 'event',
+    notes: 'Set by events_culture.js (military service under authoritarian) and events_career_regime.js (survived purge). Checked by ft23_authoritarian_veteran_*.',
+  },
+
+  paid_bribe: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Has participated in the informal corruption economy — the first time was specific; since then it has become a kind of fluency.',
+    intent: 'event',
+    notes: 'Set by events_culture.js and events_career_regime.js. Checked by ft23_paid_bribe_echo.',
+  },
+
+  democracy_movement: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'Was part of a democracy movement — the experience of collective action against authoritarian rule and the long assessment of what it achieved.',
+    intent: 'event',
+    notes: 'Set by Gwangju world event and Turkey coup arc. Checked by ft23_democracy_movement_*.',
+  },
+
+  considering_emigration: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Seriously considered emigrating but has not yet left — carrying the live question of whether to go.',
+    intent: 'event',
+    notes: 'Set by events_scandinavia.js and events_decolonisation.js. Checked by ft23_considering_emigration_returns.',
+  },
+
+  radio_childhood: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Grew up with radio as the primary information medium — learned to read the world through sound before television made it spectacle.',
+    intent: 'event',
+    notes: 'Set by events_texture.js and events_technology.js. Checked by ft23_radio_childhood_memory.',
+  },
+
+  sibling_reconciled: {
+    weight: 'moderate',
+    category: 'relationships',
+    description: 'Reconciled with an estranged sibling — the relationship is present but careful at the edges, which is a kind of love.',
+    intent: 'event',
+    notes: 'Set by events_siblings.js and events_late_life.js. Checked by ft23_sibling_reconciled_settled.',
+  },
+
+  earthquake_survivor: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived a major earthquake — the body retains the memory of the ground moving; certain sounds still produce the response before the mind catches up.',
+    intent: 'event',
+    notes: 'Set by Haiti earthquake events and worldEvents.js. Checked by ft23_earthquake_survivor_*.',
+  },
+
 }

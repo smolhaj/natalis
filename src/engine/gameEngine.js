@@ -5274,6 +5274,27 @@ function buildYearTexture(state) {
       ? 'Decades since, and certain voices, certain silences, still activate something. You have learned to name it.'
       : 'The hypervigilance is not gone. It\'s mostly useful. Sometimes it isn\'t.',
   ])
+  if (F.has('nz_springbok_generation') && Math.random() < 0.3) return pick([
+    'The 1981 tour is the dividing line in a lot of New Zealand histories — before and after, the country knowing itself differently.',
+    'You know people who did not speak to each other for years because of which side of the police cordon they were on in 1981.',
+    phase === 'late_life'
+      ? 'South Africa ended apartheid. New Zealand watched the Springboks play again and had to decide what the 1981 tour now meant. The question does not resolve easily.'
+      : 'Rugby is meant to be above politics in New Zealand. You know, from personal experience, that it isn\'t.',
+  ])
+  if (F.has('nz_rogernomics_generation') && Math.random() < 0.3) return pick([
+    'The New Zealand that existed before 1984 — the egalitarianism, the assumption the state would catch you — was a policy, not a character. The policy changed.',
+    'The economists who came from overseas to study New Zealand\'s reforms called it a success. You were inside the experiment. You have a different measurement.',
+    phase === 'late_life'
+      ? 'You lived through the before and the after. The gap between the two is something you can measure in specific losses and specific gains. Neither side of the ledger closes it.'
+      : 'The jobs that went in the 1980s did not come back as the same jobs. The industry that was sorted by the market stayed sorted.',
+  ])
+  if (F.has('nz_christchurch_attack_generation') && Math.random() < 0.3) return pick([
+    'Before March 2019 New Zealand left its doors unlocked in a specific way — not literally, but as a self-image. That image changed on a Friday morning in Christchurch.',
+    'The prime minister wore a black hijab and said "They are us." New Zealand decided something about itself in the days after that.',
+    phase === 'late_life'
+      ? 'The gun laws changed in twenty-six days. You watched a government decide something and then do it. The speed of it is still remarkable to you.'
+      : 'Fifty-one people in two mosques on a Friday lunchtime. The distance from the world\'s violence that New Zealand had counted on turned out to be geography, not exemption.',
+  ])
   if (F.has('internally_displaced') && Math.random() < 0.3) return pick([
     'You were displaced within your own country — stranger and citizen simultaneously.',
     'The place you came from is still a place that exists. You just cannot go back to it, or what is there has changed.',
@@ -5736,6 +5757,29 @@ function buildYearTexture(state) {
     if (F.has('moved_for_partner') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.35) {
       return pick(['The city you moved to for them has become yours. The one you left is still in you somewhere.', 'You still remember what it cost to go. You are no longer sure it was the wrong call.'])
     }
+  }
+
+  // ─── LEGACY TEXTURE ──────────────────────────────────────────────────────────
+  // Prose for characters who have accumulated significant legacy score.
+  // Only in midlife/late_life; only when legacy is meaningfully high; low probability.
+  const legacyScore = state.legacy ?? 0
+  if (legacyScore >= 60 && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.2) {
+    if (legacyScore >= 80) {
+      return pick([
+        'There are people in the world whose lives went differently because of what you did or said or made available. You know this. Most of the time you do not think about it. Sometimes you do.',
+        'The mentoring, the teaching, the work you put into the world — it is out there doing things you can\'t track. That is what it means to have built something.',
+        phase === 'late_life'
+          ? 'You leave rooms and the rooms remember you. You have made things that outlast the making. That is not nothing. You have begun to let yourself know this.'
+          : 'What you have given — the hours, the attention, the things you know and passed on — is accumulating in people you may not see clearly for years.',
+      ])
+    }
+    return pick([
+      'There are people carrying something you gave them — a skill, a way of approaching things, a word spoken at the right time. You don\'t always know who.',
+      'The investment in other people is not lost. It doesn\'t look like a return. It is one.',
+      phase === 'late_life'
+        ? 'The traces you have left are not monuments. They are in people. That is a better place for them.'
+        : 'You have put things into the world that the world is keeping. You are not always sure you understand the accounting of that.',
+    ])
   }
 
   // ─── MEMORY LAYER (~30% of remaining quiet years) ────────────────────────────
