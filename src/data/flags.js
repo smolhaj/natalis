@@ -10611,4 +10611,102 @@ export const FLAG_REGISTRY = {
     notes: 'Set by mn_ulaanbaatar_migration.',
   },
 
+  // ── ERITREA ──────────────────────────────────────────────────────────────────
+
+  eritrean_liberation_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Grew up during the EPLF liberation struggle — Amharic-language schooling that contradicted Tigrinya identity at home, fighters moving through at night.',
+    intent: 'none',
+    notes: 'Set by eri_liberation_childhood. The whole arc documents this generation; no separate follow-through needed.',
+  },
+
+  eritrean_independence_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Was present in Eritrea for the April 1993 independence referendum and the celebrations that followed — 99.8% yes vote, thirty years of struggle resolved in a day.',
+    intent: 'year_texture',
+    notes: 'Set by eri_independence_1993. The joy is the baseline against which everything since is measured.',
+  },
+
+  eritrean_national_service: {
+    weight: 'major',
+    category: 'political',
+    description: 'Subjected to Eritrea\'s indefinite national service — the Warsay-Yikaalo campaign, 500 nakfa/month, no legal right to leave the country without permission.',
+    intent: 'year_texture',
+    notes: 'Set by eri_border_war_1998 (both choices) and eri_leaving_decision (stayed). Annual texture until emigration or death.',
+  },
+
+  eri_border_war_veteran: {
+    weight: 'moderate',
+    category: 'conflict',
+    description: 'Served in the 1998–2001 Eritrea-Ethiopia border war — the trench at Zalambessa, artillery, seventy thousand dead over a town in Italian-era treaty documents.',
+    intent: 'event',
+    notes: 'Set by eri_border_war_1998 (served choice).',
+  },
+
+  eri_national_service_endured: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Chose to endure Eritrea\'s indefinite national service rather than flee — years of construction, teaching in remote villages, waiting for a release date that never came.',
+    intent: 'event',
+    notes: 'Set by eri_national_service_indefinite (stayed choice) and eri_leaving_decision (stayed choice).',
+  },
+
+  eri_flight_planned: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Made the decision to leave Eritrea — crossing into Sudan at night, the arithmetic of survival routes, the specific knowledge of what the Sinai does.',
+    intent: 'event',
+    notes: 'Set by eri_national_service_indefinite (planning choice). Gates eri_leaving_decision.',
+  },
+
+  eri_g15_witness: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Witnessed the September 2001 G-15 crackdown — eleven senior officials arrested without trial, independent press shut overnight, three journalists known personally.',
+    intent: 'none',
+    notes: 'Set by eri_g15_crackdown_2001. Echoed through the general political arc and late reckoning.',
+  },
+
+  eritrean_refugee: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Crossed out of Eritrea — through Sudan, then north and west; free in the specific way of having no protection from anyone.',
+    intent: 'year_texture',
+    notes: 'Set by eri_leaving_decision (left choice). Gates eri_sinai_trafficking and eri_diaspora_tax.',
+  },
+
+  eri_sinai_witness: {
+    weight: 'moderate',
+    category: 'conflict',
+    description: 'Knows someone who went through the Sinai trafficking network — Bedouin ransom calls made to diaspora relatives, the specific knowledge of what arrival does not mean.',
+    intent: 'event',
+    notes: 'Set by eri_sinai_trafficking.',
+  },
+
+  eri_diaspora_tax_paid: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Paid the PFDJ two-percent diaspora tax — the receipt filed, name on the compliant list, family needs secured at the cost of funding the government you left.',
+    intent: 'none',
+    notes: 'Set by eri_diaspora_tax (paid choice).',
+  },
+
+  eri_diaspora_tax_refused: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Refused to pay the PFDJ diaspora tax — refusal noted, family in Eritrea potentially facing consequences, the collector moving on to the next family.',
+    intent: 'none',
+    notes: 'Set by eri_diaspora_tax (refused choice).',
+  },
+
+  eritrean_late_reckoned: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Measured independent Eritrea against what the independence movement said it would be — the gap between 1993 and now, the generation lost to indefinite service.',
+    intent: 'none',
+    notes: 'Set by eri_late_reckoning.',
+  },
+
 }

@@ -9277,6 +9277,25 @@ function buildYearTexture(state) {
       : 'The ger district is not a slum in the way people who have not been here use the word. The gers are warm. The community is dense. The coal smoke is real and the AQI is real and in January the city is the most polluted place on earth. Both things are true simultaneously.',
   ])
 
+  // ─── ERITREA TEXTURE ─────────────────────────────────────────────────────────
+  if (F.has('eritrean_independence_generation') && Math.random() < 0.22) return pick([
+    'April 27, 1993 was the best day of your life. You still know this. Everything since — the national service, the arrests, the people who left — you still measure against it.',
+    'You were there when it happened. The referendum was 99.8 percent yes and the number has always seemed right to you — the 0.2 percent is the margin of error in human nature.',
+    'The Italian-era buildings in Asmara were beautiful before independence and they are still beautiful. The sky was the same sky. The flag changed. You know exactly what the flag meant.',
+    'There are people who ask: was it worth it, given what came after? You think: you cannot unknow what April 1993 felt like. The question itself seems to come from somewhere that did not experience it.',
+  ])
+  if (F.has('eritrean_national_service') && !F.has('eritrean_refugee') && Math.random() < 0.2) return pick([
+    'The release date has not been announced. It has not been announced for years. You have stopped calculating when it might come.',
+    'Five hundred nakfa a month is roughly thirty dollars. You have learned what thirty dollars means across a month, and what it means about the value the state assigns to your time.',
+    'The Warsay-Yikaalo campaign: development through national service. The roads get built, the dams get built. The people who built them do not own anything they built.',
+    'Your commander assigned you to a town you had never heard of before. You learned the name of every family in it. They are not your family. You are still there.',
+  ])
+  if (F.has('eritrean_refugee') && Math.random() < 0.18) return pick([
+    'You crossed at night. The Sudan border was dark and then it was lighter and then you were on the other side and the law that had controlled everything about your movement was a law for a country you were no longer in.',
+    'Fifty thousand people leave Eritrea every year. You are one of them. The number does not make what you did less particular.',
+    'Free in the specific way of having no protection from anyone. That is the best description you have found for what you are.',
+  ])
+
   // ─── LIBYA TEXTURE ───────────────────────────────────────────────────────────
   if (F.has('libyan_jamahiriya_generation') && Math.random() < 0.18) return pick([
     'The Green Book was the theory. The Revolutionary Guards were the practice. Both were real.',
