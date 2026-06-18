@@ -233,4 +233,67 @@ export const KOREA_EVENTS = [
     effect: (p) => { p.m -= 3; p.addFlag('compressed_generation_korea'); p.setMem('krCompressedFired', true) },
   },
 
+  {
+    id: 'kr_postwar_poverty_childhood',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) =>
+      isSouthKorea(G) &&
+      G.currentYear >= 1950 && G.currentYear <= 1965 &&
+      G.age >= 6 && G.age <= 14 &&
+      !G.mem?.krPostwarPoverty,
+    text: 'In 1953 South Korea\'s GDP per capita was lower than Sudan\'s. The war ended with an armistice, not a peace treaty, and left behind rubble and three million dead. American aid keeps the country from collapsing outright. Your family eats what is available. The concept of what will be available in the future has not yet stabilised. You have grown up knowing scarcity not as an abstract condition but as the specific weight of the bowl at breakfast. The miracle — the thing people will later call the Miracle on the Han River — is not visible from here. You are living inside the before.',
+    choices: null,
+    effect: (p) => {
+      p.m -= 5; p.h -= 3; p.e += 3;
+      p.addFlag('korean_war_generation');
+      p.setMem('krPostwarPoverty', true);
+    },
+  },
+
+  {
+    id: 'kr_park_development_bargain',
+    phase: 'young_adult',
+    weight: 5,
+    when: (G) =>
+      isSouthKorea(G) &&
+      G.currentYear >= 1963 && G.currentYear <= 1979 &&
+      G.age >= 18 && G.age <= 40 &&
+      !G.mem?.krParkBargain,
+    text: 'Park Chung-hee\'s government does not ask for your political approval. It asks for your labour. The Saemaul Undong campaign rebuilds rural villages: cement, tile roofs, community roads, a sense of directed national purpose. The Han River bridge is built. The steel mill at Pohang is built. POSCO in 1968 is the largest single investment project in Korean history. The economy is growing at 9 percent a year. The price is: no independent unions, no free press, the KCIA in the buildings, the emergency decrees. The bargain is implicit and it is being honoured, at cost, by everyone around you.',
+    choices: [
+      {
+        text: 'You take the bargain. The growth is real.',
+        tag: 'accepted',
+        outcome: 'The factory work or the government job or the export-sector job is real and the wages are rising. You separate the politics from the work. Millions do the same.',
+        effect: (p) => { p.m += 4; p.mo += 600; p.addFlag('park_era_generation'); p.setMem('krParkBargain', true); },
+      },
+      {
+        text: 'You are not at peace with the bargain.',
+        tag: 'resisted',
+        outcome: 'The campus movement, the labour movement, the minjung — the people. The opposition is real and the government\'s response to it is also real. You understand what the growth costs because you are inside the cost.',
+        effect: (p) => { p.m -= 8; p.e += 6; p.s += 4; p.addFlag('park_era_generation'); p.addFlag('political_active'); p.setPolitical('left'); p.setMem('krParkBargain', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'kr_dmz_family_separated',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      isSouthKorea(G) &&
+      G.character.birthYear <= 1955 &&
+      G.age >= 35 &&
+      !G.mem?.krDMZFamily,
+    text: 'You have relatives in the North. This is not unusual — the armistice drew the line through families. A grandparent, an uncle, cousins you have never met. The Red Cross family tracing programme began in 1985; the first reunion meetings in 2000 were held in a hotel in Mount Geumgang, two hours allocated per family, orchestrated by cameras and officials. Some families got one meeting. Some got none. The DMZ is ninety kilometres from Seoul and has been there your entire life. The people on the other side of it are there too, and the distance between ninety kilometres and unreachable is the specific geography of this country.',
+    choices: null,
+    effect: (p) => {
+      p.m -= 10; p.r += 10; p.e += 4;
+      p.addFlag('dmz_separated_family');
+      p.setMem('krDMZFamily', true);
+    },
+  },
+
 ]

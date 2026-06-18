@@ -6761,6 +6761,18 @@ function buildYearTexture(state) {
     'You worked in the factory during the miracle years. The country\'s GDP doubled. Your wages rose slightly. The ratio stayed roughly constant. You built the thing that gets called the miracle.',
     'The Saemaul Undong posters said diligence, self-help, cooperation. The posters were correct about what was required. They were less clear about who it was required for.',
   ])
+  if (F.has('park_era_generation') && Math.random() < 0.2) return pick([
+    'The economy is growing and the question of what you are allowed to say in public is a separate question from the economy.',
+    phase === 'late_life'
+      ? 'Park Chung-hee was assassinated on October 26, 1979, by his own intelligence director. The development state ended at a dinner table. Everything it built still exists.'
+      : 'The authoritarian bargain: growth in exchange for politics. Most people take the bargain. You have taken some version of it too.',
+  ])
+  if (F.has('dmz_separated_family') && Math.random() < 0.22) return pick([
+    'There are people ninety kilometres away who share your family name and cannot be contacted. The distance is not a distance. It is a specific kind of cut.',
+    phase === 'late_life'
+      ? 'Some families got one reunion at Mount Geumgang. Two hours. Cameras. Officials overseeing the conversation. Some got none. The wait continues for those still waiting.'
+      : 'The North Korean relatives are a presence in absences: the seat at the table, the name not spoken because speaking it is a kind of grief with no object to carry it to.',
+  ])
 
   // ─── TAIWAN + MALAYSIA TEXTURE ───────────────────────────────────────────────
   if (F.has('taiwan_228_generation') && Math.random() < 0.3) return pick([
@@ -8655,6 +8667,12 @@ function buildYearTexture(state) {
   if (F.has('ghana_democracy_generation') && Math.random() < 0.2) return pick([
     'The 2000 election: Kufuor wins, Rawlings steps down, the army stays in the barracks. Ghana became the thing the continent was promised in 1957 through the long route of several coups and structural adjustments.',
     'Ghana is one of the few African countries with a clean record of peaceful democratic transfers of power now. You were alive for the transitions. You know what it cost to get here.',
+  ])
+  if (F.has('ghana_1966_disillusionment') && Math.random() < 0.2) return pick([
+    'The day Nkrumah was deposed, he was in Hanoi. He never came back. He died in Bucharest in 1972, a guest of Ceaușescu. The ideas outlasted him; the project did not.',
+    phase === 'late_life'
+      ? 'You spent your life knowing that the country that was supposed to show what African independence could be was taken from its creator in a bloodless coup while he was abroad. The lesson is specific.'
+      : 'February 24, 1966. The NLC names the streets after itself. The specific grief of a generation that believed the project would hold is something you carry.',
   ])
   if (F.has('ivorian_miracle_generation') && Math.random() < 0.2) return pick([
     'The Ivorian Miracle: 7 percent growth per year, the cocoa and coffee economy, Abidjan as the model African city. The miracle required four million migrants. The question of who belonged came later.',

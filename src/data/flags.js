@@ -5558,6 +5558,55 @@ export const FLAG_REGISTRY = {
     intent: 'year_texture',
     notes: 'Set by gha_democracy_1992.',
   },
+
+  nkrumah_education_beneficiary: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Attended a school built by Nkrumah\'s government — first-generation secondary or university student, existing only because independence built the institution.',
+    intent: 'none',
+    notes: 'Set by gha_nkrumah_school.',
+  },
+
+  ghana_1966_disillusionment: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Witnessed the February 1966 coup that deposed Nkrumah while he was abroad — the grief of a generation that believed the pan-African project would hold.',
+    intent: 'year_texture',
+    notes: 'Set by gha_1966_coup. Annual texture of the specific grief of post-independence disillusionment.',
+  },
+
+  ghana_stayed_generation: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Stayed in Ghana during the 1980s–2000s brain drain, watching the educated class empty out, holding the fort.',
+    intent: 'none',
+    notes: 'Set by gha_brain_drain_witness (stayed choice).',
+  },
+
+  korean_war_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up in South Korea\'s post-war poverty 1950s — living inside the "before" of the miracle, when the bowl was light.',
+    intent: 'none',
+    notes: 'Set by kr_postwar_poverty_childhood.',
+  },
+
+  park_era_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived under Park Chung-hee\'s development state 1963–1979 — the implicit bargain of rapid growth exchanged for political repression.',
+    intent: 'year_texture',
+    notes: 'Set by kr_park_development_bargain (both choices). Annual texture of the authoritarian growth era.',
+  },
+
+  dmz_separated_family: {
+    weight: 'major',
+    category: 'family',
+    description: 'Has relatives in North Korea, separated by the DMZ since the armistice — the unreachability of people ninety kilometres away.',
+    intent: 'year_texture',
+    notes: 'Set by kr_dmz_family_separated. Annual texture of the unresolvable absence.',
+  },
+
   ivorian_miracle_generation: {
     weight: 'moderate',
     category: 'historical',
