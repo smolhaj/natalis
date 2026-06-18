@@ -6036,6 +6036,30 @@ export const FLAG_REGISTRY = {
     notes: 'Set by bng_student_uprising_2024.',
   },
 
+  bng_malaysia_worker: {
+    weight: 'major',
+    category: 'immigration',
+    description: 'Bangladeshi contract worker in Malaysia — paid a dalal fee 3-5x the official rate, tied work permit, employer-held passport, dormitory of 18, sending 800 ringgit home each month.',
+    intent: 'both',
+    notes: 'Set by bng_malaysia_decision (choice 1). Follow-throughs: bng_malaysia_life, bng_malaysia_return. Year texture: the remittance calendar, the passport situation.',
+  },
+
+  bng_broker_debt: {
+    weight: 'major',
+    category: 'economics',
+    description: 'Borrowed 3-5 lakh taka against family land to pay a labour broker fee — at 3%/month interest, the debt that made the migration possible and made returning impossible until it was cleared.',
+    intent: 'year_texture',
+    notes: 'Set by bng_malaysia_decision. The specific arithmetic: monthly income vs. debt service vs. remittance target.',
+  },
+
+  bng_remittance_generation: {
+    weight: 'moderate',
+    category: 'economics',
+    description: 'Part of Bangladesh\'s remittance economy — sent money home monthly, contributing to the 7-8% of GDP that workers abroad provide. The second floor on the family house.',
+    intent: 'year_texture',
+    notes: 'Set by bng_malaysia_life and bng_malaysia_return. Year texture: the Western Union schedule, what the money built.',
+  },
+
   // ── NEPAL ────────────────────────────────────────────────────────────────────
 
   nepal_maoist_generation: {

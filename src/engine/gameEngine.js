@@ -7653,6 +7653,27 @@ function buildYearTexture(state) {
     'Dhaka: twenty-two million people in a metropolitan area that was two million in 1975. Four hundred thousand rickshaws. The July flood water mid-thigh in the streets of Dhanmondi. The city that the garment economy built faster than the infrastructure could follow.',
     'The rickshaw driver knows fourteen routes to the same destination depending on the time of day and the water level. You know four. The knowledge gap is the city.',
   ])
+  if (F.has('bng_malaysia_worker') && Math.random() < 0.22) return pick([
+    'The passport was in the employer\'s drawer for the first fourteen months. That is not something you forget easily.',
+    'The dormitory held eighteen people in a space meant for six. You know which one of the eighteen snored and which one prayed at four in the morning and which one cried quietly on Sundays.',
+    phase === 'late_life'
+      ? 'You spent years in Malaysia building buildings you will never see again. The remittances built the second floor. The second floor is real. The years in Malaysia are also real. Both.'
+      : 'The work permit was tied to the employer. The employer knew this. You knew this. The negotiation happened in that structure.',
+  ])
+  if (F.has('bng_broker_debt') && Math.random() < 0.2) return pick([
+    'Three percent a month. You knew the number and went anyway because the alternative was worse. You were right and the debt was still three percent a month.',
+    'The dalal charged three lakh taka for a visa that should have cost seventy thousand. You paid it. The land was the collateral. You got the land back. That took three years.',
+    phase === 'late_life'
+      ? 'The debt is cleared. Has been for years. The calculation still runs sometimes — what three percent a month compounds to over a decade. You are glad you don\'t have to finish that sentence.'
+      : 'You understand compound interest the way people understand it who have lived inside it as the borrower.',
+  ])
+  if (F.has('bng_remittance_generation') && Math.random() < 0.2) return pick([
+    'The remittances arrived on the second Tuesday. Your mother knew the schedule. The school fees, the medicine, the second floor: all of it was paid from here.',
+    'Bangladesh receives more in remittances than it earns from garments. You know this number because you are this number.',
+    phase === 'late_life'
+      ? 'The house was built from here, piece by piece, across years of Sunday phone calls and Western Union slips. That is what the house is made of, in addition to brick.'
+      : 'You send the maximum amount and keep what you need to live on and call it a plan.',
+  ])
 
   // ─── GREECE TEXTURE ──────────────────────────────────────────────────────────
   if (F.has('junta_generation') && Math.random() < 0.22) return pick([
