@@ -10400,6 +10400,14 @@ export const FLAG_REGISTRY = {
 
   // ── CARIBBEAN ────────────────────────────────────────────────────────────────
 
+  jamaican_independence_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Was present in Jamaica for the August 6, 1962 independence celebrations — old enough to remember the flag going up and what was believed that night.',
+    intent: 'none',
+    notes: 'Set by we_jamaica_independence_1962. Generational marker; no separate follow-through needed.',
+  },
+
   jamaican_garrison_community: {
     weight: 'major',
     category: 'political',
@@ -10594,6 +10602,14 @@ export const FLAG_REGISTRY = {
     notes: 'Set by gn_conte_morning.',
   },
 
+  guinea_independence_proclaimed: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Was present in Guinea for the September 28, 1958 independence vote — the no that shocked de Gaulle and started Sékou Touré\'s experiment.',
+    intent: 'none',
+    notes: 'Set by we_guinea_independence_1958. Historical generational marker; no separate follow-through needed.',
+  },
+
   guinea_stadium_2009_witness: {
     weight: 'major',
     category: 'trauma',
@@ -10750,6 +10766,14 @@ export const FLAG_REGISTRY = {
     description: 'Was present in Eritrea for the April 1993 independence referendum and the celebrations that followed — 99.8% yes vote, thirty years of struggle resolved in a day.',
     intent: 'year_texture',
     notes: 'Set by eri_independence_1993. The joy is the baseline against which everything since is measured.',
+  },
+
+  eritrean_border_war_era: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the 1998–2000 Eritrea-Ethiopia border war — the trenches, the conscription, the 70,000 dead, and the Badme border ruling that was never implemented.',
+    intent: 'none',
+    notes: 'Set by we_eritrea_border_war_1998. The war that turned independence into permanent emergency; no separate follow-through needed beyond eri arc events.',
   },
 
   eritrean_national_service: {
