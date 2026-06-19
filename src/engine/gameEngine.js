@@ -3,6 +3,7 @@ import { getCountryDisplayName } from '../utils/countryUtils'
 import { DESTINATIONS } from '../data/destinations'
 import { EVENTS, EVENTS_BY_PHASE } from '../data/events'
 import { WORLD_EVENTS } from '../data/worldEvents'
+import { buildMundaneLayer } from './mundaneLayer'
 import { RIBBONS } from '../data/ribbons'
 import { ACTIVITIES } from '../data/activities'
 import { CRIMES } from '../data/crimes'
@@ -13477,6 +13478,12 @@ export function tick(state) {
   // World events
   s = applyWorldEvents(s)
   s = applyHeadlines(s)
+
+  // Mundane layer — daily-life texture alongside main events
+  const mundaneText = buildMundaneLayer(s)
+  if (mundaneText) {
+    s.log = [...s.log, { age: s.age, text: mundaneText, isKey: false, isMundane: true }]
+  }
 
   // Education progression
   s = tickEnrollment(s)
