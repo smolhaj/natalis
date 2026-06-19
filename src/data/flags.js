@@ -12959,4 +12959,168 @@ export const FLAG_REGISTRY = {
     notes: 'Set by events_west_africa.js. Gates ftw26_nkrumah_late.',
   },
 
+  // ── AID WORKER ARC ──────────────────────────────────────────────────────────
+
+  ngo_worker: {
+    weight: 'major',
+    category: 'career',
+    description: 'Works or worked in the humanitarian/NGO sector — the gate flag for the entire aid worker arc.',
+    intent: 'event',
+    notes: 'Set by aw_entry_international or aw_local_entry. Gates all subsequent aid worker events.',
+  },
+
+  aw_international_staff: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Entered the aid sector as international (expatriate) staff, deployed from a wealthy country.',
+    intent: 'texture',
+    notes: 'Set by aw_entry_international. Branches text in aw_salary_gap_intl, aw_evacuation.',
+  },
+
+  ngo_local_staff: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Works as national/local staff within an NGO — the same work, different passport, different pay structure.',
+    intent: 'texture',
+    notes: 'Set by aw_local_entry. Branches text/choices in aw_salary_gap_local, aw_evacuation.',
+  },
+
+  ngo_raised_pay_gap: {
+    weight: 'minor',
+    category: 'career',
+    description: 'Formally raised the national/international salary gap with management — it was noted; nothing changed.',
+    intent: 'none',
+    notes: 'Set by aw_salary_gap_local second choice. Late-life texture: the thing you said that was heard differently than you said it.',
+  },
+
+  aw_evacuated_and_left: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Was evacuated as international staff while national colleagues were left behind to shelter in place.',
+    intent: 'event',
+    notes: 'Set by aw_evacuation (international branch). Moral weight: the vehicle moving, the colleague watching.',
+  },
+
+  aw_left_behind: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Was left behind during an evacuation order — sheltered in place while international colleagues were extracted.',
+    intent: 'event',
+    notes: 'Set by aw_evacuation (local branch). The asymmetry that the job description did not mention.',
+  },
+
+  aw_programme_ended: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Managed the closure of a humanitarian programme — not because the crisis ended but because funding shifted.',
+    intent: 'none',
+    notes: 'Set by aw_funding_cut (both choices). The families heard at approximately the same time as the flight home.',
+  },
+
+  aw_dissented: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Formally flagged internal dissent about an inadequate closure protocol — noted, unchanged.',
+    intent: 'none',
+    notes: 'Set by aw_funding_cut second choice. The thing on the record.',
+  },
+
+  aw_burnout_break: {
+    weight: 'moderate',
+    category: 'health',
+    description: 'Took leave from humanitarian work due to compassion fatigue — the switch that does not turn fully on.',
+    intent: 'none',
+    notes: 'Set by aw_burnout first choice.',
+  },
+
+  aw_left_sector: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Left the humanitarian sector entirely — the guilt and the relief both present and honest.',
+    intent: 'none',
+    notes: 'Set by aw_burnout second choice.',
+  },
+
+  aw_burnout_endured: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Continued aid work through compassion fatigue — the work got done; unclear whether this was commitment.',
+    intent: 'none',
+    notes: 'Set by aw_burnout third choice.',
+  },
+
+  // ── FIJI ARC ─────────────────────────────────────────────────────────────────
+
+  girmitiya_heritage: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Indo-Fijian character who carries the inherited memory of girmitiya indenture — the ships, the girmit paper, the reason for staying.',
+    intent: 'none',
+    notes: 'Set by fj_girmitiya_memory. Contextual identity marker; referenced in fj_late_life prose.',
+  },
+
+  cane_farming_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up in a cane-farming family on leased iTaukei land — the lease countdown as background fact.',
+    intent: 'event',
+    notes: 'Set by fj_cane_season. Gates fj_land_lease_expires.',
+  },
+
+  fiji_1987_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was an adult during the 1987 Rabuka coup — the first time Fiji\'s democratic result was militarily overturned.',
+    intent: 'event',
+    notes: 'Set by fj_1987_coup_indo or fj_1987_coup_itaukei. Gates fj_late_life.',
+  },
+
+  fiji_coup_displaced_politically: {
+    weight: 'major',
+    category: 'political',
+    description: 'Indo-Fijian whose elected government was removed by coup — the result stands in the record; what stands in the present is different.',
+    intent: 'none',
+    notes: 'Set by fj_1987_coup_indo. Contextual political marker; contributes to fj_late_life prose register.',
+  },
+
+  fiji_land_lost: {
+    weight: 'major',
+    category: 'economic',
+    description: 'ALTO lease was not renewed — left the cane land their family had farmed for thirty years.',
+    intent: 'none',
+    notes: 'Set by fj_land_lease_expires first choice. Contextual economic marker.',
+  },
+
+  fiji_lease_renewed: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Successfully petitioned for land lease renewal — thirty more years, the count starts again.',
+    intent: 'none',
+    notes: 'Set by fj_land_lease_expires second choice.',
+  },
+
+  fiji_emigrated: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Left Fiji as part of the Indo-Fijian emigration wave (1987–2010) — Brisbane, Auckland, Toronto, the specific knowledge of being Fijian Indian elsewhere.',
+    intent: 'event',
+    notes: 'Set by fj_emigration first choice. Gates fj_late_life emigrant branch.',
+  },
+
+  fiji_stayed_on: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Chose to remain in Fiji despite the emigration wave — part of what was left; watched others leave for years.',
+    intent: 'none',
+    notes: 'Set by fj_emigration second choice. Referenced in fj_late_life stayed branch prose.',
+  },
+
+  fiji_2000_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was adult during the Speight coup of 2000 — 56 days of George Speight holding parliament and a prime minister hostage.',
+    intent: 'none',
+    notes: 'Set by fj_2000_coup. Contextual historical marker; contributing weight to fj_late_life.',
+  },
+
 }

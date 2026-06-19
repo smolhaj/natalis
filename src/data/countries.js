@@ -2903,6 +2903,38 @@ export const COUNTRIES = [
     literacyMale: 0.43,
     literacyFemale: 0.25,
   },
+
+  {
+    name: 'Fiji',
+    capital: 'Suva',
+    currency: 'Fijian dollar',
+    region: 'Pacific',
+    archetype: 'developing_urban',
+    gdp: 'low_medium',
+    yearRange: [1874, 2100],
+    regime: 'constitutional_monarchy',
+    regimeHistory: [
+      { year: 1970, to: 'parliamentary_republic' },
+      { year: 1987, to: 'military_dictatorship' },
+      { year: 1990, to: 'democracy' },
+      { year: 2006, to: 'military_dictatorship' },
+      { year: 2014, to: 'democracy' },
+    ],
+    religionWeights: { christian_protestant: 0.45, christian_catholic: 0.10, christian_methodist: 0.09, hindu: 0.28, muslim_sunni: 0.06, other: 0.02 },
+    ethnicGroups: [
+      { id: 'itaukei', name: 'iTaukei (Indigenous Fijian)', share: 0.57 },
+      { id: 'indo_fijian', name: 'Indo-Fijian', share: 0.37, disadvantaged: false },
+      { id: 'other_fijian', name: 'Other (Rotuman, Part-European, Pacific Islander)', share: 0.06 },
+    ],
+    casteSystem: false,
+    lgbtqCriminalized: true,
+    lgbtqLegalYear: null,
+    childMarriageRisk: 0.05,
+    urbanRate: 0.56,
+    literacyMale: 0.95,
+    literacyFemale: 0.93,
+    context: 'Fiji is two countries sharing one island group: the iTaukei (Indigenous Fijians), mostly Christian and communally landed, and the Indo-Fijians, descended from indentured laborers brought by the British between 1879 and 1920 to work the sugar cane. Both communities have full citizenship; neither trusts the other completely. In 1987, when an Indo-Fijian coalition won a democratic election, the military removed them. The 1990 constitution made the privileges of Indigenous Fijians explicit in law. Forty percent of Indo-Fijians have left since, to Australia, New Zealand, Canada — a quiet population transfer driven by legal uncertainty about land leases and political exclusion. The land question is total: all iTaukei land is held communally and cannot be sold; Indo-Fijian farmers leased it for thirty years, and when those leases expired, many were not renewed. A family that farmed the same cane field for three generations suddenly could not. The 2006 coup, unusually, was explicitly anti-communal — Bainimarama dissolved the ethnic carve-up — but arrived the same way coups always arrive.',
+  },
 ]
 
 export const COUNTRY_MAP = Object.fromEntries(COUNTRIES.map(c => [c.name, c]))
