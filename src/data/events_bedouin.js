@@ -12,7 +12,7 @@
 // navigation knowledge, animal husbandry at scale, the social structure
 // of the tribal migration unit.
 
-const IS_BEDOUIN = (G) => ['bedouin_saudi', 'bedouin_jordanian'].includes(G.ethnicity)
+const IS_BEDOUIN = (G) => ['bedouin', 'bedouin_jordanian'].includes(G.ethnicity)
 
 export const BEDOUIN_EVENTS = [
 

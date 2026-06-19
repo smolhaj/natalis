@@ -6719,6 +6719,50 @@ function buildYearTexture(state) {
         : 'You hid. You changed your route. Someone helped you who did not have to help you. The list and the help exist in the same memory.',
     ])
   }
+  if (F.has('id_1965_stained') && Math.random() < 0.28) return pick([
+    'The absence is permanent and officially nonexistent. The New Order has determined that the killings were necessary; the determination is final. You carry an undeclared grief for thirty years before it becomes speakable.',
+    phase === 'late_life'
+      ? 'After 1998, the archives began to open slightly. Not enough. The Komnas HAM report. The acknowledgments that were not apologies. You are old and the accounting is still incomplete and you are not sure it will be complete in your lifetime.'
+      : 'The name on the missing person register that was never filled out. The family member who was a teacher, or a union organizer, or just happened to live in the wrong neighborhood in October 1965. The reason, if there was one, has never been stated officially.',
+    'You have learned to manage the grief the way you manage something that cannot be put down. Not resolved. Carried.',
+  ])
+  if (F.has('id_1965_survived') && Math.random() < 0.22) return pick([
+    'You navigated through. That is the accurate word: navigated. Not survived in the sense of under fire — navigated in the sense of knowing which doors not to knock on and which meetings not to attend and which opinions not to have on record.',
+    phase === 'late_life'
+      ? 'The Reformasi opened a small window — some of the 1965 history became speakable. The window was smaller than you expected. The mass graves are mapped now in some places. The perpetrators are old. The victims are mostly dead. The accounting remains partial.'
+      : 'The generation that came after you does not know what you know. The New Order made sure of this through the curriculum and the silence. You sometimes wonder what it means that you know and they don\'t. You have not always found a way to answer the wondering.',
+  ])
+  if (F.has('id_1965_silence_generation') && Math.random() < 0.25) return pick([
+    'Half a million to a million people killed and the textbook says nothing about it that is accurate. You are part of the generation that knows and cannot say — not officially, not publicly, not at school.',
+    phase === 'late_life'
+      ? 'After Suharto fell in 1998, some of the silence began to lift. Truth and Reconciliation was discussed and not implemented. The Komnas HAM investigation was conducted and its findings were not acted on. The silence is lifting at the edges. It has not lifted at the center.'
+      : 'What you know and what you can say are two different territories. You have spent your adult life moving between them.',
+  ])
+  if (F.has('id_bali_bombing_generation') && Math.random() < 0.22) return pick([
+    'October 12, 2002. The Sari Club, Paddy\'s Pub. The wave that had been gathering in the Southeast Asian jihadist networks since the 1990s — Jemaah Islamiyah, the Afghan veterans, the pesantren networks — arrived that night in Bali of all places.',
+    phase === 'late_life'
+      ? 'The trial of Amrozi, Imam Samudra, and Mukhlas. Their execution in 2008. The tourism that returned to Bali. The second bombing in 2005 with twenty dead. The sequence of attack, investigation, and return to normal taught you something about what a country decides to absorb and continue.'
+      : 'The question the bombing opened about Indonesia\'s identity — a Muslim-majority country whose premier tourist destination is a Hindu island — was not new. Bali had always been specific. October 12 made the specificity visible to the world.',
+  ])
+  if (F.has('id_tsunami_2004_survivor') && Math.random() < 0.3) return pick([
+    'The wave was thirty meters in some places. It arrived in seventeen minutes after the earthquake. The seismometers registered the quake at 9.1; the warning infrastructure in the Indian Ocean did not exist yet. The absence of the warning system is counted in the dead.',
+    phase === 'late_life'
+      ? 'The coastline was different after. The town was in a different place, or a different shape. The reconstruction happened in a changed geography. You have spent the years since living in the changed geography and sometimes forgetting what it looked like before, and sometimes not.'
+      : 'The mathematics of who was on which street at what time: you carry this without being able to solve it. The solving is not available. The carrying remains.',
+    'The international aid in January 2005. The white trucks. The tarps. The coordination that arrived from everywhere and the decisions about who got what. It was real and it was incomplete in the way that help from far away is always incomplete.',
+  ])
+  if (F.has('id_transmigration_settler') && Math.random() < 0.2) return pick([
+    'The outer island land offer: cleared jungle, a house, a plot. The brochure showed rice fields. The reality showed you the jungle, the malaria, the other people who had not been consulted about your arrival.',
+    phase === 'late_life'
+      ? 'Transmigration policy is officially over. The land disputes it created are not over. You are in a community that arrived from Java and is still figuring out its relationship to the land and the people who were here before.'
+      : 'Six million Javanese moved to the outer islands under the program. The movement was the policy. The consequences — in Kalimantan, in Papua, in Sulawesi — were not the policy\'s responsibility, which is how policies avoid their consequences.',
+  ])
+  if (F.has('id_papua_identity') && Math.random() < 0.25) return pick([
+    'The Morning Star flag is illegal. The name for what you are — Papuan, West Papuan, Melanesian — is contested by a government that has decided what you are and administers the decision with military presence.',
+    phase === 'late_life'
+      ? 'The Grasberg mine is the largest gold mine in the world. It is in Papua. The royalties go elsewhere. The displacement and the environmental impact remain. You have watched the world not know this for your entire adult life.'
+      : 'Special Autonomy was the 2001 offer. The implementation was partial and contested. The political status of the territory remains unresolved in every way that matters. You are living inside the unresolved question.',
+  ])
   if (F.has('rohingya_resettled') && Math.random() < 0.22) {
     return pick([
       'Resettlement: the word suggests arrival. The arrival is real — the apartment, the documentation, the language class. The arrival and the belonging are not the same thing.',
@@ -7169,6 +7213,81 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'The things that happened in the years before you were born shaped the country you grew up in and the country that shaped you shaped the things you did not talk about at the table. The silence is inherited. You are deciding what to do with it.'
       : 'You know the version your family told and the version the government curriculum tells and the version the neighbors who grew up in Korea or China or the Philippines tell, and you know these are not the same version.',
+  ])
+  if (F.has('hibakusha_survivor') && Math.random() < 0.32) return pick([
+    'The word hibakusha means bomb-affected person. The category arrived after the category existed. You were already the thing before there was a word for it.',
+    phase === 'late_life'
+      ? 'The doctors who came to examine you in the years after treated your body as data. You understood this. The understanding did not make it easier to be data.'
+      : 'The flash, the heat, the silence where the city was. You remember in a specific order. You have never found the order that makes the telling easier.',
+    'You survived. The statistics of survival are not comfort. They are simply the bracket your experience falls inside.',
+  ])
+  if (F.has('hibakusha_silent') && Math.random() < 0.25) return pick([
+    'You chose not to say. The name on the marriage register was clean. The city you came from was a city you had left. Nobody asked the exact question that would have required the exact answer.',
+    phase === 'late_life'
+      ? 'You kept it for sixty years. The keeping is its own kind of carrying. You wonder now whether the silence protected them or only protected the silence.'
+      : 'There are things that can end a marriage arrangement before it begins. You knew the list. You arranged your history around it.',
+  ])
+  if (F.has('zainichi_identity') && Math.random() < 0.28) return pick([
+    'The resident registration card marked you as a foreigner in a country your grandparents were brought to and your parents were born in. The bureaucratic category predates the country that issues it.',
+    phase === 'late_life'
+      ? 'You have lived your entire life in Japan. The category "special permanent resident" is the country\'s official designation for that fact.'
+      : 'Two names: the Japanese name for school, the work, the landlord. The Korean name for home, for the food, for what the family says in the room without strangers.',
+    'The fingerprinting requirement was the visible surface of a system whose depths you had been navigating since childhood. The visible surface was insult enough.',
+  ])
+  if (F.has('zainichi_naturalized') && Math.random() < 0.2) return pick([
+    'Naturalization requires renouncing the previous nationality and passing a character screening and waiting and not saying certain things about why you waited this long and why you are doing this now.',
+    phase === 'late_life'
+      ? 'The Japanese passport travels everywhere the Korean one could not. You notice the difference and notice what it cost to notice it as a difference.'
+      : 'You are Japanese by law now. The law arrived after the life.',
+  ])
+  if (F.has('zainichi_resisted') && Math.random() < 0.22) return pick([
+    'You refused the fingerprint. The refusal was a legal case and a public statement and also just a refusal — the simple unwillingness to submit to a requirement that only applied to you.',
+    phase === 'late_life'
+      ? 'The fingerprinting requirement was abolished in 1993. You refused it before the abolition and after the abolition you had already refused it. Both facts are true at the same time.'
+      : 'The solidarity networks that formed around the fingerprinting refusals connected Zainichi communities across Japan in ways the government had not anticipated as a consequence of its policy.',
+  ])
+  if (F.has('aum_generation') && Math.random() < 0.22) return pick([
+    'The subway sarin was a Tuesday morning in March. Tokyo in rush hour, people in business suits, the ten exits. You remember what the month smelled like before.',
+    phase === 'late_life'
+      ? 'The Aum trial lasted until 2018. Twenty-three years of legal proceedings after eleven dead and six thousand injured on a Tuesday morning. The proceedings lasted longer than some careers.'
+      : 'Before March 20, 1995, the language of religious violence in Japan referred to the nineteenth century. The frame changed in a Tuesday morning.',
+  ])
+  if (F.has('aum_proximate') && Math.random() < 0.3) return pick([
+    'The delayed medical care, the uncertain diagnosis, the specific chemical and what it does to the eye\'s ability to focus. The nerve agent has a pharmacology and you learned it from the inside.',
+    'You were close enough to see what it did to the person beside you. The image is available to recall without your choosing to recall it.',
+    phase === 'late_life'
+      ? 'The city returned to normal with unusual speed. The efficiency of the return was itself a kind of statement. You returned to normal more slowly.'
+      : 'The gas mask images circulated the same day. Tokyo covered its face in photographs for a week. You were in the tunnel before the photographs.',
+  ])
+  if (F.has('ainu_identity') && Math.random() < 0.28) return pick([
+    'The government recognized the Ainu as an indigenous people in 2019. The language had fewer than ten fluent native speakers remaining by then. Official recognition and language death arrived in the same generation.',
+    phase === 'late_life'
+      ? 'Your grandparents remembered the Meiji-era prohibitions on tattooing, salmon fishing, the ceremonial sites. You remember the prohibition being remembered. The difference is exactly one generation.'
+      : 'The Hokkaido Ainu formally became indigenous peoples in law in 2019. The law arrived after the salmon had been forbidden for a century. You are deciding what to do with a recognition that costs the government nothing.',
+    'In the schoolroom you were Japanese. Outside the schoolroom the question of what you were was more complicated. The complication is part of your formation.',
+  ])
+  if (F.has('ainu_revival') && Math.random() < 0.22) return pick([
+    'You learned the language from recordings. The speakers the recordings captured are mostly gone. Learning a language from the voices of the dead is a specific kind of relationship with the dead.',
+    phase === 'late_life'
+      ? 'The Upopoy National Ainu Museum opened in 2020. You have opinions about what it does and does not contain. You have been having these opinions for longer than the museum has existed.'
+      : 'The ceremonies you practice were reconstructed from ethnographic notes and from what the elders remembered of what they had been told. The reconstruction is real. It is also a reconstruction.',
+  ])
+  if (F.has('okinawa_base_opposition') && Math.random() < 0.25) return pick([
+    'Okinawa is 0.6 percent of Japan\'s land and hosts seventy percent of the US military footprint in Japan. The arithmetic is known to everyone on the island and is not regarded as settled arithmetic.',
+    phase === 'late_life'
+      ? 'The reversion was 1972. The bases did not leave with the administration. You have now spent more years under the revised arrangement than under direct occupation. The revision is the fact your life is lived around.'
+      : 'The petition, the referendum, the gubernatorial veto, the national government\'s override of the prefectural veto. The structure of the disagreement is as familiar as the streets that go around the perimeter wire.',
+    'The noise is a frequency you have stopped hearing consciously. The absence of it, when it happens, is the thing you notice.',
+  ])
+  if (F.has('hibakusha_survivor') && F.has('jpn_testigo_generation') && Math.random() < 0.18) return pick([
+    'You survived the bomb and you watched the country rebuild itself over and over in the image of what it wanted to have been. The official relationship between the bomb and the war that produced it was something you witnessed being managed for decades.',
+    phase === 'late_life'
+      ? 'The hibakusha had a complicated relationship to pacifism — some were its loudest advocates, others resisted the category of victim entirely. You were present for the internal argument.'
+      : 'The bomb ended the war. The war that produced the bomb was something the postwar country had a complicated relationship to. You lived inside the complication.',
+  ])
+  if (F.has('zainichi_identity') && F.has('aum_generation') && Math.random() < 0.15) return pick([
+    'The Aum recruitment actively targeted people who felt outside the mainstream — including Zainichi youth searching for identity outside the double-exclusion of Korean-Japanese existence. You watched the recruits and understood the appeal even as you refused it.',
+    'After the sarin attack, the backlash touched communities perceived as foreign or peripheral. The map of public suspicion is not limited to its official targets.',
   ])
 
   // ─── SOUTH KOREA TEXTURE ─────────────────────────────────────────────────────
@@ -9035,6 +9154,64 @@ function buildYearTexture(state) {
       ? 'The Turkey you are living in now is the Turkey July 2016 made. Every institution passed through that filter. The people who came out on the other side are the people who passed. You know what passing looked like.'
       : 'The state of emergency lasted two years. In two years the institutions of the country were rebuilt on different foundations. You have been inside the rebuilt version ever since.',
   ])
+  if (F.has('tur_ataturk_era') && Math.random() < 0.2) return pick([
+    'The new alphabet was mandatory and the old script was wrong overnight. Your grandparents held newspapers they could not read. You were positioned for the new century. What that positioning cost in the severing from what came before is a different account.',
+    'Atatürk\'s republic was built at speed from the top down. The cost of that speed — in what was not asked, in what was erased — has been arriving in stages ever since.',
+  ])
+  if (F.has('tur_kahramanmaras_survivor') && Math.random() < 0.28) return pick([
+    'February 6, 2023, 4am. The buildings that fell were buildings that had been permitted to fail. Fifty thousand dead in Turkey and Syria. You know what you know about it — from inside or from the count.',
+    phase === 'late_life'
+      ? 'The construction amnesty of 2018 licensed structures that should have been demolished. When the earthquake came, the policy and the disaster arrived together. You have not been able to unknow this.'
+      : 'The search feeds ran for days. On the seventh day people were still being pulled out alive. More were not pulled out at all. The number kept rising and you kept following it.',
+  ])
+  if (F.has('tur_refugee_host_generation') && Math.random() < 0.2) return pick([
+    'Three million Syrians: their country was destroyed and Turkey received them. The neighbourhoods changed — the Arabic signs, the schools in Arabic, the parallel economy. The resentment that followed was real and the reason they were there was also real. You lived in both of those facts simultaneously.',
+    'The most Syrian refugees of any country on earth, and no plan for what that meant at the level of a street, a school, a labour market. You watched the adjustment happen. It was not graceful and it was not nothing.',
+  ])
+  if (F.has('tur_lira_crisis_lived') && Math.random() < 0.22) return pick([
+    'Eighty-five percent inflation in October 2022. The lira losing 44 percent in a year. The savings you had in lira became a different amount while you watched. The central bank cut interest rates as inflation rose and the president insisted this was correct. You were the evidence it was not.',
+    'The price of bread followed the dollar, which was following something the government insisted it could control by not following the usual rules. You bought what you needed. It cost more each time.',
+  ])
+  if (F.has('tur_istanbul_convention_generation') && Math.random() < 0.2) return pick([
+    'Turkey signed the Istanbul Convention first and withdrew from it by decree in 2021. The convention is named after the city. The femicide statistics were not improving. The government\'s explanation was family values. You had a response to this that did not match the government\'s explanation.',
+    phase === 'late_life'
+      ? 'You watched the country sign a convention named after itself and then leave it. The women\'s organisations had built their systems around the Convention\'s requirements. The withdrawal left them in a legal vacuum that was also, for specific women, a dangerous vacuum.'
+      : 'The protests in Istanbul. The purple banners. The police cordons. What happened after — what didn\'t change — is the longer sentence.',
+  ])
+
+  // ─── NOMADIC TEXTURE ─────────────────────────────────────────────────────────
+  if (F.has('maasai_pastoralist') && Math.random() < 0.28) return pick([
+    'The cattle were the measure of everything. You learned which cow belonged to which lineage by ear notch and hide pattern. This is a literacy specific to that world and most of the world does not know it exists.',
+    phase === 'late_life'
+      ? 'The age-set system organised your life more precisely than any calendar: who you were circumcised with, who you became a warrior with, who you will age with. The system still works. The land it was built on is now a national park.'
+      : 'The Mara grass in the dry season. The way the herd moves before rain. You carry this knowledge in your body. It has limited usefulness in most of the places the world is trying to send you.',
+  ])
+  if (F.has('maasai_conservation_displaced') && Math.random() < 0.22) return pick([
+    'The Serengeti. The Maasai Mara. The names are the same but the permissions have changed. Your grandfather moved cattle across that land. You move around the edges of where that land is now protected for animals and tourists who pay more per night than your family earns in a month.',
+    'A lion is worth more as a photograph than your cattle are worth as cattle — by the pricing structure the world has decided on. You are aware of this structure. You did not agree to it.',
+  ])
+  if (F.has('bedouin_settled') && Math.random() < 0.22) return pick([
+    'The government\'s settlement programme: concrete rooms instead of tents, a fixed address for the census, the migration routes replaced by roads named by someone else. The patriarch resisted. The young men went first. The goats went last.',
+    phase === 'late_life'
+      ? 'The tribal knowledge of which land was used by which family in which season has no title deed the state recognises. The unwritten record carries weight inside the tribe and none outside it. You have watched what happens when those two accounts meet.'
+      : 'You grew up between the concrete house and the tent. The cousins who went and the cousins who stayed. The seam between those two lives is where you lived your childhood.',
+  ])
+  if (F.has('mongolian_herder') && Math.random() < 0.28) return pick([
+    'The ger goes up in forty minutes if everyone knows what they are doing. The door faces south, always south, to the sun. The stove is in the centre. The right side for women, the left for men, the north wall for the altar. Your home was also a cosmology.',
+    phase === 'late_life'
+      ? 'You moved four times a year for the first decades of your life. The coordinates of home changed with the season. The children you raised or know are growing up in a city with fixed coordinates, burning coal in a ger district where the smoke goes nowhere in winter.'
+      : 'The steppe in autumn: the grass going gold, the horses moving against the horizon. You know what that looks like. The city does not know you know this.',
+  ])
+  if (F.has('mongolian_dzud_survived') && Math.random() < 0.25) return pick([
+    'Dzud: the drought that leaves no stored grass, the ice storm that seals what little remains. In the morning the animals are where you left them and some of them are not moving. You know that specific morning.',
+    'The 2009–10 dzud: 8.5 million animals lost. The arithmetic of rebuilding a herd from what survives is a particular kind of mathematics — patient and slow and dependent on weather that is not predictable. You know the mathematics.',
+  ])
+  if (F.has('nomadic_heritage') && Math.random() < 0.2) return pick([
+    'The way you grew up — the seasonal movement, the knowledge of land and animals and weather that was your first education — does not translate cleanly into the world you are living in now. It is still there. It surfaces in how you read a sky, how you read people, what you notice.',
+    phase === 'late_life'
+      ? 'The grandchildren do not know the names for things you grew up knowing the names for. This is how cultures end — not all at once, but in the specific words that stop being passed on.'
+      : 'You carry a way of knowing the world that the world you are living in does not have a category for. This is both a loss and a resource, depending on the day.',
+  ])
 
   // ─── PHILIPPINES TEXTURE ─────────────────────────────────────────────────────
   if (F.has('marcos_generation') && Math.random() < 0.22) return pick([
@@ -9475,6 +9652,62 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'The Judicial Panel found that the military opened fire at Lekki. The panel\'s report was released in 2021. No prosecution followed. The sequence has become familiar enough that it no longer surprises, which is its own kind of despair.'
       : 'You were at the protest or you watched it on a screen. Either way the footage from the toll gate is in your memory. The government\'s response to the footage is also in your memory.',
+  ])
+  if (F.has('nga_military_era') && Math.random() < 0.22) return pick([
+    'The coup is announced on state radio. Before the announcement, the silence on state radio tells you something has already happened. You learned to read silence before you learned to read the announcement.',
+    phase === 'late_life'
+      ? 'Ironsi, Gowon, Murtala, Obasanjo, Buhari, Babangida, Abacha. You can recite them in order. The recitation is a kind of autobiography — each name marks a period of your life.'
+      : 'The constitution is a document that can be suspended. You have seen it suspended. The suspension teaches you something about the constitution that the constitution does not teach itself.',
+    'The structure of military government: who you know becomes the currency. The favor, the posting, the contract. You learned the grammar of it young.',
+  ])
+  if (F.has('nga_june12_generation') && Math.random() < 0.25) return pick([
+    'June 12, 1993. Abiola won. The result was real and then it was unmade. The unmaking is the political education that the annulment gave every Nigerian who was watching.',
+    phase === 'late_life'
+      ? 'Abiola died in detention in 1998, on the day he was supposed to meet the American ambassador. The way the June 12 story ends is the way many Nigerian political stories end: not with justice but with the removal of the question.'
+      : 'The free and fairest election in Nigerian history was also the one whose result was erased. You carry that conjunction as the central political fact you have been offered by your country.',
+    'The legal holiday Nigeria eventually declared for June 12 — the Day of Democracy — is a national acknowledgment that what happened was wrong. The acknowledgment arrived twenty-five years later.',
+  ])
+  if (F.has('nga_democracy_generation') && Math.random() < 0.2) return pick([
+    'May 29, 1999. For the first time since 1983, there is a civilian government in Nigeria. You have been an adult in this country for years and this is the first time you have seen this particular thing.',
+    phase === 'late_life'
+      ? 'The Fourth Republic has lasted longer than any of the previous attempts. The duration is itself a fact. Democratic consolidation, they call it in the political science textbooks. In the country it looks like the INEC, the governorship elections, the court challenges, the gradual normalization of the argument.'
+      : 'The transfer happened. The specific disorientation: a result being respected. You will spend years figuring out what to do with that fact.',
+  ])
+  if (F.has('nga_boko_haram_generation') && Math.random() < 0.25) return pick([
+    'Maiduguri, Chibok, Gwoza. The geography of the insurgency has its own names now. The names correspond to places where things happened that you know about in the specific way that you know about things that are close.',
+    phase === 'late_life'
+      ? '2.6 million people displaced by 2016. The largest internal displacement in Nigerian history. You were part of the count, or you knew people who were, which is the same thing in a community where everyone knows everyone.'
+      : 'The army checkpoint is both protection and its own hazard. You have learned the difference between the kind of stop that ends in a fee and the kind that ends in something else. The learning required losses.',
+    'The school in Chibok: 276 girls taken on a Tuesday night in April 2014. The hashtag moved the world. The girls did not come back quickly. Some came back years later. Some are not accounted for.',
+  ])
+  if (F.has('nga_sharia_transition') && Math.random() < 0.2) return pick([
+    'Twelve northern states adopted Sharia criminal code between 1999 and 2002. Zamfara was first. For many in the North, this was what democracy looked like — the right to govern according to the faith of the majority. For Christians in the North it looked like something else.',
+    phase === 'late_life'
+      ? 'The hudud penalties were rarely applied — the courts, in practice, mostly handled civil family law. What the sharia adoption settled was the cultural declaration: who this state is for, what values it names. The declaration outlasted the first generation of governors who made it.'
+      : 'The Hisbah — the morality police — have a specific character depending on the state and the governor. You know the character in your state. The character has changed as the governors have changed.',
+  ])
+  if (F.has('nga_delta_community') && Math.random() < 0.25) return pick([
+    'The flares have been burning since before you were born. The gas that should be captured burns off into the air your community breathes. Orange nights. The UNEP said thirty years to remediate what accumulated. The thirty years started in 2011.',
+    phase === 'late_life'
+      ? 'You have lived your whole life within range of the flares. The health effects — the respiratory rates, the contamination in the creeks where you fished as a child — are not disputed in the literature. They are disputed by the companies in the legal filings.'
+      : 'The spills are mapped now — Bodo Creek, Ogoniland, the database of incidents Shell is required to maintain. The map does not clean the water. The map does not replace the fish.',
+    'Ken Saro-Wiwa documented what was happening here and was executed for it. The documentation is still accurate. The execution is the context for every subsequent advocacy decision in this region.',
+  ])
+  if (F.has('nga_naira_crisis_lived') && Math.random() < 0.22) return pick([
+    'The naira redesign: old notes pulled before new ones arrived. The ATM queue at five in the morning for a machine that might be empty. Cash economy forced cashless in a country where cashless infrastructure did not reach most transactions.',
+    phase === 'late_life'
+      ? 'You have now lived through multiple naira collapses. The 1986 SAP, the 2015 oil-price collapse, and now this — 2022 to 2024, from 460 to 1,500 to the dollar. The arithmetic of what that means for savings, for rent, for school fees: you are fluent in that arithmetic.'
+      : 'The fuel subsidy removed in May 2023: petrol price doubled overnight. The generator runs on petrol. Everybody runs a generator. You do the calculation: what this costs per month versus what you earn. The calculation is not good.',
+  ])
+  if (F.has('nga_ethnic_pride') && Math.random() < 0.18) return pick([
+    'The name is the first information. From the name: the ethnicity, the region, the probable religion, the likely political affiliation. You have stopped being surprised that strangers have formed an opinion before you have said anything useful.',
+    'Yoruba, Igbo, Hausa-Fulani — the triangle the colonial boundary contained. The project of being Nigerian is partly the project of holding the triangle together while each corner insists on itself.',
+  ])
+  if (F.has('nga_june12_generation') && F.has('endsars_generation') && Math.random() < 0.18) return pick([
+    'You were there for both: June 12, 1993, and October 2020. Two moments when Nigerians mobilized against what was being done to them and two answers that rhyme — the erasure, the toll gate. The rhyme is the political education Nigeria has been providing its citizens for thirty years.',
+    phase === 'late_life'
+      ? 'Between June 12 and Lekki is thirty years of the same argument about what this country will and will not allow. You have been making the argument for thirty years. The country keeps answering.'
+      : 'The generation at the toll gate was not born when Abiola won. You were. You tried to explain June 12 to them. They did not need to understand June 12 to understand what was happening at the toll gate. The argument is the same argument.',
   ])
 
   // ─── ETHIOPIA TEXTURE ────────────────────────────────────────────────────────
@@ -11037,6 +11270,81 @@ function buildYearTexture(state) {
     phase === 'midlife' || phase === 'late_life'
       ? 'The food insecurity of certain years is not something you have fully metabolised. There is a way you eat when you are not hungry that comes from the years when you were.'
       : 'The meal skipped is not the same as the day you don\'t eat. The day you don\'t eat is not the same as the week. You know the specific texture of each of these, in the way that people with consistent access to food do not.',
+  ])
+  if (F.has('poverty_childhood') && Math.random() < 0.22) return pick([
+    'You know what shortage feels like from inside — the specific knowledge that comes from a childhood in which the arithmetic of meals was visible. Other people know shortage as a concept.',
+    phase === 'late_life'
+      ? 'There is a way you have always related to having enough that people who grew up with enough do not have. The childhood is decades ago. The calibration remains.'
+      : 'The things you did not have gave you a specific education in what things cost and what they are worth and the difference between those two numbers. You do not discuss this as an advantage. It was not one. But you carry it.',
+    'The memory of not having enough is not the same as the experience of not having enough. You have the experience. The people who grew up with you have it too. The people who came after have only your version of it.',
+  ])
+  if (F.has('grew_up_in_camp') && Math.random() < 0.25) return pick([
+    'The camp was a world that was organized as a temporary arrangement and lasted for the duration of your childhood. You learned what you learned in that arrangement.',
+    phase === 'late_life'
+      ? 'The camp is gone or you are gone or both. The formation it provided is not gone. You know things about collective existence, about waiting, about bureaucratic uncertainty as a permanent condition, that people who grew up in houses do not.'
+      : 'The NGO worker who came and went in rotations. The queue for the distribution. The other children who were from everywhere and nowhere. The education in the tent. This is what a childhood is, for some people.',
+    'The address: the camp name, the block number. This was your address for years. The instability it represented felt like stability because it was the only stability you had.',
+  ])
+  if (F.has('coup_generation') && Math.random() < 0.2) return pick([
+    'The coup was announced on state radio. Before it was announced, the silence on state radio told you something had already happened. You learned to read silence.',
+    phase === 'late_life'
+      ? 'You have now lived through more than one restructuring of power — the coup, the counter-coup, or the long aftermath of the first one. Each time, the morning after, ordinary life resumed around the event as if the event were a weather pattern.'
+      : 'The curfew, the tanks at the intersections, the schools closed, the constitution suspended. And then, eventually, the curfew lifted and the schools opened again. You understood from that sequence something about how power works that civics books do not teach.',
+  ])
+  if (F.has('disaster_survivor') && Math.random() < 0.2) return pick([
+    'The disaster had a before and an after. The before is available to memory. The after is where you have spent most of your life.',
+    phase === 'late_life'
+      ? 'You have spent decades recalibrating your relationship to the ordinary — the ordinary that the disaster revealed as contingent, available-to-loss, not guaranteed in the way you had not realized you had assumed it was.'
+      : 'The speed with which an ordinary environment becomes an emergency, and the speed with which an emergency environment becomes the new ordinary: you know both speeds from the inside.',
+    'The body remembers what the mind files. A certain quality of stillness, a certain sound, a certain light — and the body is already responding before the mind catches up.',
+  ])
+  if (F.has('activist') && Math.random() < 0.2) return pick([
+    'The organizing is the work before the work. The meeting, the leaflet, the argument about strategy, the person who burns out and the person who keeps going. You have been in all of those positions at different times.',
+    phase === 'late_life'
+      ? 'What you worked for, and what arrived — they are not the same thing. The distance between them is not wasted distance. But it is distance you have had to make peace with.'
+      : 'The cause required more from you than the movement ever gave you back. That asymmetry is the defining structure of the work. You understood it and kept going anyway.',
+    'The specific cost of caring about something you cannot control: you know the cost precisely because you have been paying it for years.',
+  ])
+  if (F.has('regime_self_censorship') && Math.random() < 0.22) return pick([
+    'There is a version of the sentence you do not say. The version you say instead arrives automatically, before the original is fully formed. You have internalized the edit.',
+    phase === 'late_life'
+      ? 'The regime has changed or you have left or both, and still the reflex persists. The reflex outlasts what produced it. You notice this when you find yourself editing for a threat that no longer exists.'
+      : 'The edit is not cowardice. It is survival mathematics. You know exactly what can be said and to whom and where and what happens when those parameters are violated. The math is correct. The math is also a kind of cage.',
+    'The public self and the private self are separated by a specific channel of editing. You maintain both and are fluent in both and the gap between them has become so familiar it no longer feels like a gap.',
+  ])
+  if (F.has('education_interrupted') && Math.random() < 0.2) return pick([
+    'You left school before you had finished wanting to be there. The interruption was not your decision — the conflict, the cost, the family situation, the country\'s situation made it for you.',
+    phase === 'late_life'
+      ? 'The thing you would have studied is an unlived path now. You have found other ways to learn. The other ways were real and the unlived path is still there, exactly as unlived as it always was.'
+      : 'The year you left is a specific year. The year the school closed or the money ran out or the family needed you or the army came. That specific year has a shape.',
+    'The library card, the adult education class, the borrowed textbook, the thing you taught yourself — the self-education built after the interruption is sometimes better than what it replaced. It is always harder.',
+  ])
+  if (F.has('political_aware') && Math.random() < 0.18) return pick([
+    'You know what produces what you experience as ordinary life. The regime, the economy, the history that arranged things this way. This knowledge is not available to people who grew up where the arrangement felt natural.',
+    phase === 'late_life'
+      ? 'The political awareness came early and cost something. What you saw clearly, others did not want to see. Being ahead of consensus is not always an advantage. Sometimes it is just lonely.'
+      : 'You have the vocabulary for things that most people around you experience but cannot name. The vocabulary does not change the things. It changes what you can do with knowing them.',
+  ])
+  if (F.has('community_leader') && Math.random() < 0.2) return pick([
+    'The work of holding the community together is invisible when it is working. You know this because you do it and no one can name what would be missing if you stopped.',
+    phase === 'late_life'
+      ? 'The community meetings, the disputes mediated, the resources organized, the funerals coordinated — the work accumulated across decades. The accumulated work is not stored anywhere except in the memory of the people who needed it.'
+      : 'People come to you with their problems because you have demonstrated you know what to do with a problem. The demonstration required a problem. The problem is not always something you wanted to deal with.',
+    'The trust is the infrastructure. You built it through repeated presence and repeated follow-through until you became the person the community organizes around. The building took years. You did not announce it was happening.',
+  ])
+  if (F.has('strong_marriage') && Math.random() < 0.2) return pick([
+    'Not every partnership is a resource. Yours has been. You know the difference between that and what other people are describing when they talk about their marriages.',
+    phase === 'late_life'
+      ? 'The specific arguments that got resolved instead of calcifying. The years that could have ended it and didn\'t. What the partnership has built — not the shared property but the shared capacity for difficulty — is something you understand now in a way you couldn\'t at the beginning.'
+      : 'The thing about a good marriage is that it doesn\'t require constant management. The fact that it doesn\'t require constant management is itself the result of sustained earlier management. You know this from the inside.',
+    'You have seen what the alternatives look like. The comparison is not the reason the marriage is good. But the comparison helps you know that it is.',
+  ])
+  if (F.has('found_meaning') && Math.random() < 0.2) return pick([
+    'The thing that gives the life coherence — not happiness exactly, but the sense that what you are doing is what you should be doing, or at least what you have chosen.',
+    phase === 'late_life'
+      ? 'The meaning you found was not the meaning you were looking for when you started looking. The meaning you were looking for was probably not findable. The meaning you found is real. It is also different.'
+      : 'Other people around you are still looking. You recognize the looking because you did it too. You do not know how to give someone what you found because the finding was specific to you and the path was your path.',
+    'Work, or the community, or the faith, or the art — whatever it was, it made the other things make sense in relation to it. The other things are still as difficult as they were. They have context now.',
   ])
   if (F.has('informal_saver') && Math.random() < 0.17) return pick([
     'The susu, the tontine, the chama, the paluwagan — the savings circle has many names and one function: money that doesn\'t exist until the group makes it exist. You are in one.',
@@ -15480,12 +15788,15 @@ export function generateEpitaph(state) {
     'nl_hunger_winter_generation', 'nl_srebrenica_generation', 'nl_fortuyn_witness',
     'bra_dictatorship_generation', 'bra_resistance_generation', 'bra_favela_survived',
     'bra_carandiru_generation', 'bra_nordestino_migrant', 'bra_lava_jato_generation', 'bra_january_8_witness',
+    'nga_june12_generation', 'nga_boko_haram_generation', 'nga_delta_community',
+    'id_1965_stained', 'id_1965_silence_generation', 'id_tsunami_2004_survivor',
     'bng_liberation_generation', 'bng_mukti_bahini', 'bng_famine_generation', 'bng_coup_generation',
     'irq_iran_iraq_veteran', 'irq_sanctions_generation', 'irq_displacement_generation', 'irq_isis_generation',
     'rwa_rtlm_generation', 'rwa_genocide_witness', 'rwa_goma_generation',
     'col_violencia_generation', 'col_cartel_era', 'col_desplazado', 'col_paramilitary_era',
     'per_sendero_generation', 'per_sterilization_survivor',
     'japan_postwar_generation', 'lost_decade_generation', 'fukushima_generation', 'burakumin_identity',
+    'hibakusha_survivor', 'hibakusha_silent', 'zainichi_identity', 'aum_proximate', 'ainu_identity', 'okinawa_base_opposition',
     'sau_siege_generation', 'sau_khashoggi_generation',
     'irn_sanctions_generation', 'irn_jcpoa_generation',
     'april_9_generation', 'georgian_war_2008', 'geo_1990s_generation', 'geo_testigo_generation',
@@ -15502,6 +15813,16 @@ export function generateEpitaph(state) {
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
     para2.push(`${He} survived something that killed many of the people around ${him}. The rest of ${his} life was lived in the long shadow of that fact, and somehow, beyond it.`)
+  } else if (f('id_1965_stained') && f('id_1965_silence_generation')) {
+    para2.push(`${He} lost family in Indonesia's 1965 anti-communist purge — between 500,000 and one million killed in six months — and then spent thirty years under a New Order that determined the killings had been necessary. The grief and the silence were both enforced. ${He} carried both.`)
+  } else if (f('id_1965_stained')) {
+    para2.push(`A family member was taken in Indonesia's 1965 purge. The name of what happened — the organised mass killing, the army lists, the rivers — was not officially nameable for thirty years. ${He} had an undeclared grief for thirty years. It was declared late.`)
+  } else if (f('id_1965_silence_generation')) {
+    para2.push(`${He} was Indonesian in the New Order years — carrying knowledge of 1965 that the textbook did not contain. Between 500,000 and one million dead; the textbook said the communists had been defeated. ${He} navigated the gap between what ${he} knew and what could be said for thirty years.`)
+  } else if (f('id_tsunami_2004_survivor') && f('disaster_survivor')) {
+    para2.push(`${He} survived the December 26, 2004 Indian Ocean tsunami — 170,000 dead in Aceh, the coastline changed, the towns erased or reshaped. The randomness of who was on which street at what time is not a question ${he} ever fully stopped carrying.`)
+  } else if (f('id_papua_identity')) {
+    para2.push(`${He} was Papuan in Indonesia — the Morning Star flag illegal, the customary land contested, the Grasberg mine's gold going elsewhere. A life lived inside the unresolved question of what the territory is and who it belongs to and what that means for who you are.`)
   } else if (f('survived_khmer_rouge')) {
     para2.push(`${He} survived the Khmer Rouge years. That ${he} survived at all placed ${him} in a statistical minority.`)
   } else if (any('partition_survivor', 'partition_refugee')) {
@@ -15658,6 +15979,18 @@ export function generateEpitaph(state) {
     para2.push(`${He} voted for Lula in 2002 and watched him imprisoned in 2018 on charges a judge was later found to have pursued with political coordination. The conviction was annulled in 2021. Lula won again in 2022. ${He} lived all four chapters of the same story.`)
   } else if (f('bra_carandiru_generation') && f('bra_favela_generation')) {
     para2.push(`${He} grew up on the hill and was old enough to understand Carandiru in 1992 — 111 inmates killed, the commander acquitted and elected to the assembly. The hill and the prison were the same political fact from different angles: the state's relationship with the people it sorted to the bottom.`)
+  } else if (f('nga_june12_generation') && f('endsars_generation')) {
+    para2.push(`${He} was there for June 12, 1993, and for October 2020 — the Abiola election annulled and the Lekki toll gate. Two moments separated by twenty-seven years in which Nigerians mobilized and were answered in the same way. ${He} understood the pattern. The pattern did not need explaining by the second time.`)
+  } else if (f('nga_june12_generation') && f('nga_military_era')) {
+    para2.push(`${He} came of age under military government and was watching on June 12, 1993, when the freest and fairest election in Nigerian history was unmade overnight. The military era ended in 1999. The political education it produced did not end.`)
+  } else if (f('nga_boko_haram_generation') && f('nga_delta_community')) {
+    para2.push(`${He} was Nigerian at the extremes — the North-East insurgency and the Niger Delta extraction. Two crises, both ongoing, one country that could not address them simultaneously because the country had limited capacity and unlimited crisis. ${He} lived in the region that got the crisis.`)
+  } else if (f('nga_june12_generation')) {
+    para2.push(`${He} was in Nigeria on June 12, 1993, when MKO Abiola won and then did not win — the result announced and then unmade, the election whose outcome was too threatening to allow to stand. ${He} carried that lesson about Nigerian democracy for the rest of ${his} life.`)
+  } else if (f('nga_boko_haram_generation')) {
+    para2.push(`${He} was in the North during the Boko Haram years — the 2.6 million displaced, the Chibok girls, the checkpoints. ${He} navigated the insurgency and its counterinsurgency simultaneously. That both the insurgents and the army could be dangerous was the arithmetic of those years.`)
+  } else if (f('nga_delta_community')) {
+    para2.push(`${He} grew up in the Niger Delta, where the oil that made Nigeria an OPEC member burned off in the gas flares above ${his} community for decades. The UNEP said thirty years to remediate what Shell and the others left behind. The thirty years started after ${his} childhood was already over.`)
   } else if (f('bng_mukti_bahini') && f('bng_liberation_generation')) {
     para2.push(`${He} was in the Mukti Bahini during the 1971 Liberation War — nine months of guerrilla resistance while the Pakistani army conducted systematic atrocities across Bangladesh. December 16, 1971: ninety-three thousand Pakistani soldiers surrendered. ${He} had been there from March.`)
   } else if (f('bng_liberation_generation') && f('bng_famine_generation')) {
@@ -15706,6 +16039,26 @@ export function generateEpitaph(state) {
     para2.push(`${He} navigated Japan's feudal outcast legacy — the family register check, the marriage veto, the things said behind and not to ${his} face — and then navigated the Lost Decade. Two systems of exclusion, one life.`)
   } else if (f('burakumin_identity')) {
     para2.push(`${He} was descended from Japan's feudal outcast caste. Legally emancipated 1871. The discrimination that could not be legislated away operated through the marriage register, the address, the things that identified without being said.`)
+  } else if (f('hibakusha_survivor') && f('hibakusha_silent')) {
+    para2.push(`${He} survived the atomic bomb and chose silence — the family register clean, the city unnamed, the fact carried without surfacing. The silence lasted as long as ${his} life. Whether it protected anyone was a question ${he} did not fully answer.`)
+  } else if (f('hibakusha_survivor') && f('japan_postwar_generation')) {
+    para2.push(`${He} was a hibakusha in a country that was rebuilding itself in the image of peace. The official narrative of Japan as victim and Japan as economic miracle both ran alongside the specific memory of the flash. ${He} held all three at once for decades.`)
+  } else if (f('hibakusha_survivor')) {
+    para2.push(`${He} was a hibakusha — bomb-affected. The word and the category and the discrimination and the medical registry and the testimony movements: ${he} navigated all of them over the decades after a morning in 1945.`)
+  } else if (f('zainichi_identity') && f('zainichi_resisted')) {
+    para2.push(`${He} was Zainichi — a third-generation resident born in Japan who was formally foreign — and refused the fingerprinting requirement that applied only to people like ${him}. The refusal was a legal case. It was also a statement about what a body owes the state that categorizes it.`)
+  } else if (f('zainichi_identity') && f('zainichi_naturalized')) {
+    para2.push(`${He} was Zainichi Korean — the grandchildren of those brought to Japan before 1945, born in Japan, formally foreign — and eventually naturalized. The naturalization resolved the bureaucratic category. It did not resolve the question of what ${he} was.`)
+  } else if (f('zainichi_identity')) {
+    para2.push(`${He} was Zainichi Korean in Japan — born there, permanent resident there, formally foreign there. Two names: one for the public world, one for home. The double life was so ordinary that ${he} stopped noticing the doubling.`)
+  } else if (f('ainu_identity') && f('ainu_revival')) {
+    para2.push(`${He} was Ainu in a Japan that did not officially recognize Ainu as indigenous people until 2019. By then ${he} had already spent decades in the revival movements, learning the language from recordings of speakers who were gone, reconstructing ceremonies from ethnographic notes.`)
+  } else if (f('ainu_identity')) {
+    para2.push(`${He} was Ainu — indigenous to Hokkaido — in a country that did not recognize that category in law until near the end of ${his} life. The recognition arrived. The language had nearly gone. Both facts arrived in the same generation.`)
+  } else if (f('aum_proximate')) {
+    para2.push(`${He} was on the Tokyo subway on March 20, 1995. The sarin reached the station ${he} was in. ${He} survived. The city returned to its schedule with unusual speed. ${He} returned more slowly.`)
+  } else if (f('okinawa_base_opposition') && f('japan_postwar_generation')) {
+    para2.push(`${He} was Okinawan in postwar Japan — reversion 1972, bases staying regardless, seventy percent of the US footprint on 0.6 percent of the land. The postwar settlement that remade mainland Japan arrived in Okinawa in a specific form. ${He} lived in that form.`)
   } else if (f('japan_postwar_generation') && f('fukushima_generation')) {
     para2.push(`${He} was born into occupied Japan — the rubble, the chocolate from soldiers, the new constitution — and lived to March 11, 2011, when the word "anzen" stopped fitting the sentence. The arc of postwar Japan is ${his} arc.`)
   } else if (f('japan_postwar_generation') && f('lost_decade_generation')) {
