@@ -13397,22 +13397,19 @@ function tickEnrollment(state) {
       s.flags = [...new Set([...s.flags, 'university_graduate', ...(isFirstGen ? ['first_gen_graduate'] : [])])]
       s.mem = { ...s.mem, graduated: 'university', uniField: field, uniGpa: s.gpa ?? 2.5 }
       s.stats = { ...s.stats, smarts: clamp(s.stats.smarts + 5, 0, 100), happiness: clamp(s.stats.happiness + 12, 0, 100) }
-      const gpaStr = s.gpa ? ` Final GPA: ${s.gpa.toFixed(2)}.` : ''
-      s.log = [...s.log, { age: s.age, text: `🎓 You graduate from university with a degree in ${field}.${isFirstGen ? ' The first in your family to do so.' : ''}${gpaStr}`, isKey: true }]
+      const graduationText = isFirstGen
+        ? `You are the first in your family to hold a university degree.`
+        : `You finish university. The years of it are behind you now.`
+      s.log = [...s.log, { age: s.age, text: graduationText, isKey: true }]
     } else {
       s.education = { ...s.education, level: 'secondary', field, enrolled: null }
       s.flags = [...new Set([...s.flags, 'vocational_trained', `trade_${field}`])]
       s.mem = { ...s.mem, graduated: 'vocational', vocField: field }
       s.stats = { ...s.stats, smarts: clamp(s.stats.smarts + 3, 0, 100), happiness: clamp(s.stats.happiness + 8, 0, 100) }
-      s.log = [...s.log, { age: s.age, text: `🔧 You complete your ${field} certification.`, isKey: true }]
+      s.log = [...s.log, { age: s.age, text: `The training finishes. You are qualified now. The work can begin.`, isKey: true }]
     }
   } else {
     s.education = { ...s.education, enrolled: { type, field, year: newYear } }
-    if (type === 'university') {
-      s.log = [...s.log, { age: s.age, text: `University — year ${newYear} of 4 (${field}).`, isKey: false }]
-    } else {
-      s.log = [...s.log, { age: s.age, text: `Trade school — year ${newYear} of 2 (${field}).`, isKey: false }]
-    }
   }
   return s
 }

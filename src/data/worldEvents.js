@@ -207,6 +207,7 @@ export const WORLD_EVENTS = [
     years: [2015, 2017],
     archetypes: ['conflict_zone', 'developing_unstable'],
     countries: null,
+    when: (G) => !['Central America', 'South America', 'Caribbean', 'North America'].includes(G.character.country.region),
     narrative: 'You are among hundreds of thousands crossing the Mediterranean in an inflatable boat. The crossing takes hours. Some boats sink. Whether you reach land, and which land, and what happens when you do — these are decided by wind and coast guards and the politics of countries that are not yours.',
     effect: (p) => { p.m -= 12; p.h -= 6; p.addFlag('refugee'); },
     addFlags: ['refugee', 'displaced', 'emigrated'],
