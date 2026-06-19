@@ -9236,6 +9236,62 @@ function buildYearTexture(state) {
       ? 'The Judicial Panel found that the military opened fire at Lekki. The panel\'s report was released in 2021. No prosecution followed. The sequence has become familiar enough that it no longer surprises, which is its own kind of despair.'
       : 'You were at the protest or you watched it on a screen. Either way the footage from the toll gate is in your memory. The government\'s response to the footage is also in your memory.',
   ])
+  if (F.has('nga_military_era') && Math.random() < 0.22) return pick([
+    'The coup is announced on state radio. Before the announcement, the silence on state radio tells you something has already happened. You learned to read silence before you learned to read the announcement.',
+    phase === 'late_life'
+      ? 'Ironsi, Gowon, Murtala, Obasanjo, Buhari, Babangida, Abacha. You can recite them in order. The recitation is a kind of autobiography — each name marks a period of your life.'
+      : 'The constitution is a document that can be suspended. You have seen it suspended. The suspension teaches you something about the constitution that the constitution does not teach itself.',
+    'The structure of military government: who you know becomes the currency. The favor, the posting, the contract. You learned the grammar of it young.',
+  ])
+  if (F.has('nga_june12_generation') && Math.random() < 0.25) return pick([
+    'June 12, 1993. Abiola won. The result was real and then it was unmade. The unmaking is the political education that the annulment gave every Nigerian who was watching.',
+    phase === 'late_life'
+      ? 'Abiola died in detention in 1998, on the day he was supposed to meet the American ambassador. The way the June 12 story ends is the way many Nigerian political stories end: not with justice but with the removal of the question.'
+      : 'The free and fairest election in Nigerian history was also the one whose result was erased. You carry that conjunction as the central political fact you have been offered by your country.',
+    'The legal holiday Nigeria eventually declared for June 12 — the Day of Democracy — is a national acknowledgment that what happened was wrong. The acknowledgment arrived twenty-five years later.',
+  ])
+  if (F.has('nga_democracy_generation') && Math.random() < 0.2) return pick([
+    'May 29, 1999. For the first time since 1983, there is a civilian government in Nigeria. You have been an adult in this country for years and this is the first time you have seen this particular thing.',
+    phase === 'late_life'
+      ? 'The Fourth Republic has lasted longer than any of the previous attempts. The duration is itself a fact. Democratic consolidation, they call it in the political science textbooks. In the country it looks like the INEC, the governorship elections, the court challenges, the gradual normalization of the argument.'
+      : 'The transfer happened. The specific disorientation: a result being respected. You will spend years figuring out what to do with that fact.',
+  ])
+  if (F.has('nga_boko_haram_generation') && Math.random() < 0.25) return pick([
+    'Maiduguri, Chibok, Gwoza. The geography of the insurgency has its own names now. The names correspond to places where things happened that you know about in the specific way that you know about things that are close.',
+    phase === 'late_life'
+      ? '2.6 million people displaced by 2016. The largest internal displacement in Nigerian history. You were part of the count, or you knew people who were, which is the same thing in a community where everyone knows everyone.'
+      : 'The army checkpoint is both protection and its own hazard. You have learned the difference between the kind of stop that ends in a fee and the kind that ends in something else. The learning required losses.',
+    'The school in Chibok: 276 girls taken on a Tuesday night in April 2014. The hashtag moved the world. The girls did not come back quickly. Some came back years later. Some are not accounted for.',
+  ])
+  if (F.has('nga_sharia_transition') && Math.random() < 0.2) return pick([
+    'Twelve northern states adopted Sharia criminal code between 1999 and 2002. Zamfara was first. For many in the North, this was what democracy looked like — the right to govern according to the faith of the majority. For Christians in the North it looked like something else.',
+    phase === 'late_life'
+      ? 'The hudud penalties were rarely applied — the courts, in practice, mostly handled civil family law. What the sharia adoption settled was the cultural declaration: who this state is for, what values it names. The declaration outlasted the first generation of governors who made it.'
+      : 'The Hisbah — the morality police — have a specific character depending on the state and the governor. You know the character in your state. The character has changed as the governors have changed.',
+  ])
+  if (F.has('nga_delta_community') && Math.random() < 0.25) return pick([
+    'The flares have been burning since before you were born. The gas that should be captured burns off into the air your community breathes. Orange nights. The UNEP said thirty years to remediate what accumulated. The thirty years started in 2011.',
+    phase === 'late_life'
+      ? 'You have lived your whole life within range of the flares. The health effects — the respiratory rates, the contamination in the creeks where you fished as a child — are not disputed in the literature. They are disputed by the companies in the legal filings.'
+      : 'The spills are mapped now — Bodo Creek, Ogoniland, the database of incidents Shell is required to maintain. The map does not clean the water. The map does not replace the fish.',
+    'Ken Saro-Wiwa documented what was happening here and was executed for it. The documentation is still accurate. The execution is the context for every subsequent advocacy decision in this region.',
+  ])
+  if (F.has('nga_naira_crisis_lived') && Math.random() < 0.22) return pick([
+    'The naira redesign: old notes pulled before new ones arrived. The ATM queue at five in the morning for a machine that might be empty. Cash economy forced cashless in a country where cashless infrastructure did not reach most transactions.',
+    phase === 'late_life'
+      ? 'You have now lived through multiple naira collapses. The 1986 SAP, the 2015 oil-price collapse, and now this — 2022 to 2024, from 460 to 1,500 to the dollar. The arithmetic of what that means for savings, for rent, for school fees: you are fluent in that arithmetic.'
+      : 'The fuel subsidy removed in May 2023: petrol price doubled overnight. The generator runs on petrol. Everybody runs a generator. You do the calculation: what this costs per month versus what you earn. The calculation is not good.',
+  ])
+  if (F.has('nga_ethnic_pride') && Math.random() < 0.18) return pick([
+    'The name is the first information. From the name: the ethnicity, the region, the probable religion, the likely political affiliation. You have stopped being surprised that strangers have formed an opinion before you have said anything useful.',
+    'Yoruba, Igbo, Hausa-Fulani — the triangle the colonial boundary contained. The project of being Nigerian is partly the project of holding the triangle together while each corner insists on itself.',
+  ])
+  if (F.has('nga_june12_generation') && F.has('endsars_generation') && Math.random() < 0.18) return pick([
+    'You were there for both: June 12, 1993, and October 2020. Two moments when Nigerians mobilized against what was being done to them and two answers that rhyme — the erasure, the toll gate. The rhyme is the political education Nigeria has been providing its citizens for thirty years.',
+    phase === 'late_life'
+      ? 'Between June 12 and Lekki is thirty years of the same argument about what this country will and will not allow. You have been making the argument for thirty years. The country keeps answering.'
+      : 'The generation at the toll gate was not born when Abiola won. You were. You tried to explain June 12 to them. They did not need to understand June 12 to understand what was happening at the toll gate. The argument is the same argument.',
+  ])
 
   // ─── IRAN CONTEMPORARY TEXTURE ───────────────────────────────────────────────
   if (F.has('green_movement_generation') && Math.random() < 0.25) return pick([
@@ -14913,6 +14969,7 @@ export function generateEpitaph(state) {
     'nl_hunger_winter_generation', 'nl_srebrenica_generation', 'nl_fortuyn_witness',
     'bra_dictatorship_generation', 'bra_resistance_generation', 'bra_favela_survived',
     'bra_carandiru_generation', 'bra_nordestino_migrant', 'bra_lava_jato_generation', 'bra_january_8_witness',
+    'nga_june12_generation', 'nga_boko_haram_generation', 'nga_delta_community',
     'bng_liberation_generation', 'bng_mukti_bahini', 'bng_famine_generation', 'bng_coup_generation',
     'irq_iran_iraq_veteran', 'irq_sanctions_generation', 'irq_displacement_generation', 'irq_isis_generation',
     'rwa_rtlm_generation', 'rwa_genocide_witness', 'rwa_goma_generation',
@@ -15092,6 +15149,18 @@ export function generateEpitaph(state) {
     para2.push(`${He} voted for Lula in 2002 and watched him imprisoned in 2018 on charges a judge was later found to have pursued with political coordination. The conviction was annulled in 2021. Lula won again in 2022. ${He} lived all four chapters of the same story.`)
   } else if (f('bra_carandiru_generation') && f('bra_favela_generation')) {
     para2.push(`${He} grew up on the hill and was old enough to understand Carandiru in 1992 — 111 inmates killed, the commander acquitted and elected to the assembly. The hill and the prison were the same political fact from different angles: the state's relationship with the people it sorted to the bottom.`)
+  } else if (f('nga_june12_generation') && f('endsars_generation')) {
+    para2.push(`${He} was there for June 12, 1993, and for October 2020 — the Abiola election annulled and the Lekki toll gate. Two moments separated by twenty-seven years in which Nigerians mobilized and were answered in the same way. ${He} understood the pattern. The pattern did not need explaining by the second time.`)
+  } else if (f('nga_june12_generation') && f('nga_military_era')) {
+    para2.push(`${He} came of age under military government and was watching on June 12, 1993, when the freest and fairest election in Nigerian history was unmade overnight. The military era ended in 1999. The political education it produced did not end.`)
+  } else if (f('nga_boko_haram_generation') && f('nga_delta_community')) {
+    para2.push(`${He} was Nigerian at the extremes — the North-East insurgency and the Niger Delta extraction. Two crises, both ongoing, one country that could not address them simultaneously because the country had limited capacity and unlimited crisis. ${He} lived in the region that got the crisis.`)
+  } else if (f('nga_june12_generation')) {
+    para2.push(`${He} was in Nigeria on June 12, 1993, when MKO Abiola won and then did not win — the result announced and then unmade, the election whose outcome was too threatening to allow to stand. ${He} carried that lesson about Nigerian democracy for the rest of ${his} life.`)
+  } else if (f('nga_boko_haram_generation')) {
+    para2.push(`${He} was in the North during the Boko Haram years — the 2.6 million displaced, the Chibok girls, the checkpoints. ${He} navigated the insurgency and its counterinsurgency simultaneously. That both the insurgents and the army could be dangerous was the arithmetic of those years.`)
+  } else if (f('nga_delta_community')) {
+    para2.push(`${He} grew up in the Niger Delta, where the oil that made Nigeria an OPEC member burned off in the gas flares above ${his} community for decades. The UNEP said thirty years to remediate what Shell and the others left behind. The thirty years started after ${his} childhood was already over.`)
   } else if (f('bng_mukti_bahini') && f('bng_liberation_generation')) {
     para2.push(`${He} was in the Mukti Bahini during the 1971 Liberation War — nine months of guerrilla resistance while the Pakistani army conducted systematic atrocities across Bangladesh. December 16, 1971: ninety-three thousand Pakistani soldiers surrendered. ${He} had been there from March.`)
   } else if (f('bng_liberation_generation') && f('bng_famine_generation')) {

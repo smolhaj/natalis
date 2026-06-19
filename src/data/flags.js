@@ -5945,6 +5945,70 @@ export const FLAG_REGISTRY = {
     intent: 'year_texture',
     notes: 'Set by nga_sap_1980s. The word SAP used for decades to describe what was done.',
   },
+  nga_military_era: {
+    weight: 'major',
+    category: 'political',
+    description: 'Came of age under Nigerian military rule (1966–1999) — the coup culture, suspended constitutions, and patronage politics of the generals.',
+    intent: 'both',
+    notes: 'Set by nga_coup_culture. Distinct from country-specific Biafra/SAP flags.',
+  },
+
+  nga_june12_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived the June 12 1993 election annulment — Abiola\'s clear victory erased by Babangida, the democratic possibility unmade overnight.',
+    intent: 'both',
+    notes: 'Set by nga_june12_1993. One of Nigeria\'s defining political betrayals.',
+  },
+
+  nga_democracy_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Witnessed Nigeria\'s return to civilian rule in 1999 — the first peaceful democratic transfer after sixteen years of military government.',
+    intent: 'both',
+    notes: 'Set by nga_democracy_1999.',
+  },
+
+  nga_boko_haram_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the Boko Haram insurgency in North-East Nigeria — the displacement, the checkpoints, the Chibok kidnapping, the 2.6 million internally displaced.',
+    intent: 'both',
+    notes: 'Set by nga_boko_haram. Specifically for Northern Nigerian characters (hausa_fulani, kanuri) in the conflict years 2009–2020.',
+  },
+
+  nga_sharia_transition: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through the implementation of Sharia criminal law in 12 northern Nigerian states (1999–2002) — the complex intersection of faith, federalism, and ethnic identity.',
+    intent: 'both',
+    notes: 'Set by nga_sharia_north for Hausa-Fulani characters in the transition period.',
+  },
+
+  nga_delta_community: {
+    weight: 'major',
+    category: 'environmental',
+    description: 'Part of a Niger Delta community living with oil extraction — the gas flares, the spills, the contaminated creeks, the decades-long remediation deficit.',
+    intent: 'both',
+    notes: 'Set by nga_niger_delta for Ijaw and Delta-region characters.',
+  },
+
+  nga_naira_crisis_lived: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived through Nigeria\'s 2022–2024 naira crisis — the redesign-induced cash shortage, the rate collapse from 460 to 1,500+/dollar, the fuel subsidy removal.',
+    intent: 'both',
+    notes: 'Set by nga_naira_crisis.',
+  },
+
+  nga_ethnic_pride: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Carries Yoruba, Igbo, or Hausa-Fulani ethnic identity as a primary marker — the name, the accent, the network that determines political affiliation.',
+    intent: 'both',
+    notes: 'Set by nga_ethnic_navigation (choice: wear identity fully). Checked in year texture.',
+  },
+
   saro_wiwa_generation: {
     weight: 'moderate',
     category: 'historical',
