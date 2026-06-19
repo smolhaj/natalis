@@ -13123,4 +13123,152 @@ export const FLAG_REGISTRY = {
     notes: 'Set by fj_2000_coup. Contextual historical marker; contributing weight to fj_late_life.',
   },
 
+  // ── WATER / INFRASTRUCTURE ARC ───────────────────────────────────────────────
+
+  water_run_childhood: {
+    weight: 'major',
+    category: 'gender',
+    description: 'Grew up making the daily walk for water — the jerry can, the forty-minute path, the morning organized around water collection instead of school.',
+    intent: 'event',
+    notes: 'Set by wi_water_run (female rural low-GDP childhood). Gates wi_water_walk_adult, wi_water_reckoning.',
+  },
+
+  borehole_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'The day an NGO borehole arrived and changed the daily schedule overnight — who controls the pump is the new question.',
+    intent: 'event',
+    notes: 'Set by wi_borehole_arrives. Gates wi_pump_committee.',
+  },
+
+  drought_childhood: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up with annual dry-season water scarcity — the hierarchy of thirst, going to sleep still thirsty.',
+    intent: 'none',
+    notes: 'Set by wi_dry_season. Contextual marker for rural water hardship.',
+  },
+
+  village_electrified: {
+    weight: 'major',
+    category: 'historical',
+    description: 'The village got electricity during childhood or adolescence — one of the largest single quality-of-life changes in a person\'s life.',
+    intent: 'none',
+    notes: 'Set by wi_electrification. Guards against anachronistic re-electrification events.',
+  },
+
+  community_organiser: {
+    weight: 'moderate',
+    category: 'social',
+    description: 'Took on a community leadership role — the pump committee, the neighbourhood meeting, the person who agreed to decide.',
+    intent: 'none',
+    notes: 'Set by wi_pump_committee first choice, and other community organizing events.',
+  },
+
+  water_war_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Experienced the Cochabamba Water War 2000 — the uprising that reversed the privatization of the city\'s water supply.',
+    intent: 'none',
+    notes: 'Set by wi_cochabamba_water_war protest choice.',
+  },
+
+  // ── BONDED LABOR ARC ─────────────────────────────────────────────────────────
+
+  bonded_labor: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Entered bonded labor — a debt taken during crisis at terms that make repayment structurally impossible, servicing interest without touching principal.',
+    intent: 'event',
+    notes: 'Set by bl_initial_loan, bl_carpet_child, bl_sharecrop_ledger. Gates bl_kiln_life, bl_debt_inherited, bl_abolition_gap, bl_late_reckoning.',
+  },
+
+  bonded_kiln: {
+    weight: 'major',
+    category: 'labor',
+    description: 'Works in a brick kiln under bonded labor conditions — the quota of one thousand bricks, the ledger that never resolves.',
+    intent: 'event',
+    notes: 'Set by bl_initial_loan first choice. Gates bl_kiln_life.',
+  },
+
+  bonded_generational: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Inherited a parent\'s bonded debt — the mechanism that makes the trap intergenerational.',
+    intent: 'none',
+    notes: 'Set by bl_debt_inherited first choice. The ledger with the new name.',
+  },
+
+  bonded_debt_disputed: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Formally disputed the inheritance of a bonded debt — the magistrate hearing scheduled eight months away, continuing to work while it is pending.',
+    intent: 'none',
+    notes: 'Set by bl_debt_inherited second choice. bl_abolition_gap fires regardless (gates on bonded_labor).',
+  },
+
+  bonded_release_process: {
+    weight: 'major',
+    category: 'legal',
+    description: 'Engaged with the NGO process for legal release from bonded labor — names given, reports filed, the process beginning.',
+    intent: 'event',
+    notes: 'Set by bl_abolition_gap first choice. Gates bl_liberation.',
+  },
+
+  bonded_labor_freed: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Received a certificate of release from bonded labor — the debt cancelled, the paper real, the daily navigation of the former owner\'s presence ongoing.',
+    intent: 'none',
+    notes: 'Set by bl_liberation (both choices). The freedom that comes with a particular kind of exposure.',
+  },
+
+  refused_bonded_debt: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Refused a bonded debt loan despite crisis — found another way; not bound.',
+    intent: 'none',
+    notes: 'Set by bl_initial_loan second choice.',
+  },
+
+  child_laborer: {
+    weight: 'major',
+    category: 'childhood',
+    description: 'Worked as a child laborer — the carpet loom, the kiln, the debt that was the father\'s but the work that was theirs.',
+    intent: 'none',
+    notes: 'Set by bl_carpet_child. The fingers the right size for the knots.',
+  },
+
+  sharecrop_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Black American sharecropper in the South — the settlement ledger, the debt that goes into next year, the counting that never comes out ahead.',
+    intent: 'event',
+    notes: 'Set by bl_sharecrop_ledger. Gates bl_sharecrop_north.',
+  },
+
+  great_migration: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Left the South for Northern industrial cities during the Great Migration — the check in real money, the different cold.',
+    intent: 'none',
+    notes: 'Set by bl_sharecrop_north first choice. Overlaps with Black American historical arc.',
+  },
+
+  stayed_sharecrop: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Chose to stay in the South while others left — the community, the family, the ongoing ledger.',
+    intent: 'none',
+    notes: 'Set by bl_sharecrop_north second choice.',
+  },
+
+  challenged_power: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Asked to see the ledger — questioned the accounting of someone with power over them.',
+    intent: 'none',
+    notes: 'Set by bl_sharecrop_ledger first choice.',
+  },
+
 }
