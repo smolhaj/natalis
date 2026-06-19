@@ -10501,6 +10501,81 @@ function buildYearTexture(state) {
       ? 'The food insecurity of certain years is not something you have fully metabolised. There is a way you eat when you are not hungry that comes from the years when you were.'
       : 'The meal skipped is not the same as the day you don\'t eat. The day you don\'t eat is not the same as the week. You know the specific texture of each of these, in the way that people with consistent access to food do not.',
   ])
+  if (F.has('poverty_childhood') && Math.random() < 0.22) return pick([
+    'You know what shortage feels like from inside — the specific knowledge that comes from a childhood in which the arithmetic of meals was visible. Other people know shortage as a concept.',
+    phase === 'late_life'
+      ? 'There is a way you have always related to having enough that people who grew up with enough do not have. The childhood is decades ago. The calibration remains.'
+      : 'The things you did not have gave you a specific education in what things cost and what they are worth and the difference between those two numbers. You do not discuss this as an advantage. It was not one. But you carry it.',
+    'The memory of not having enough is not the same as the experience of not having enough. You have the experience. The people who grew up with you have it too. The people who came after have only your version of it.',
+  ])
+  if (F.has('grew_up_in_camp') && Math.random() < 0.25) return pick([
+    'The camp was a world that was organized as a temporary arrangement and lasted for the duration of your childhood. You learned what you learned in that arrangement.',
+    phase === 'late_life'
+      ? 'The camp is gone or you are gone or both. The formation it provided is not gone. You know things about collective existence, about waiting, about bureaucratic uncertainty as a permanent condition, that people who grew up in houses do not.'
+      : 'The NGO worker who came and went in rotations. The queue for the distribution. The other children who were from everywhere and nowhere. The education in the tent. This is what a childhood is, for some people.',
+    'The address: the camp name, the block number. This was your address for years. The instability it represented felt like stability because it was the only stability you had.',
+  ])
+  if (F.has('coup_generation') && Math.random() < 0.2) return pick([
+    'The coup was announced on state radio. Before it was announced, the silence on state radio told you something had already happened. You learned to read silence.',
+    phase === 'late_life'
+      ? 'You have now lived through more than one restructuring of power — the coup, the counter-coup, or the long aftermath of the first one. Each time, the morning after, ordinary life resumed around the event as if the event were a weather pattern.'
+      : 'The curfew, the tanks at the intersections, the schools closed, the constitution suspended. And then, eventually, the curfew lifted and the schools opened again. You understood from that sequence something about how power works that civics books do not teach.',
+  ])
+  if (F.has('disaster_survivor') && Math.random() < 0.2) return pick([
+    'The disaster had a before and an after. The before is available to memory. The after is where you have spent most of your life.',
+    phase === 'late_life'
+      ? 'You have spent decades recalibrating your relationship to the ordinary — the ordinary that the disaster revealed as contingent, available-to-loss, not guaranteed in the way you had not realized you had assumed it was.'
+      : 'The speed with which an ordinary environment becomes an emergency, and the speed with which an emergency environment becomes the new ordinary: you know both speeds from the inside.',
+    'The body remembers what the mind files. A certain quality of stillness, a certain sound, a certain light — and the body is already responding before the mind catches up.',
+  ])
+  if (F.has('activist') && Math.random() < 0.2) return pick([
+    'The organizing is the work before the work. The meeting, the leaflet, the argument about strategy, the person who burns out and the person who keeps going. You have been in all of those positions at different times.',
+    phase === 'late_life'
+      ? 'What you worked for, and what arrived — they are not the same thing. The distance between them is not wasted distance. But it is distance you have had to make peace with.'
+      : 'The cause required more from you than the movement ever gave you back. That asymmetry is the defining structure of the work. You understood it and kept going anyway.',
+    'The specific cost of caring about something you cannot control: you know the cost precisely because you have been paying it for years.',
+  ])
+  if (F.has('regime_self_censorship') && Math.random() < 0.22) return pick([
+    'There is a version of the sentence you do not say. The version you say instead arrives automatically, before the original is fully formed. You have internalized the edit.',
+    phase === 'late_life'
+      ? 'The regime has changed or you have left or both, and still the reflex persists. The reflex outlasts what produced it. You notice this when you find yourself editing for a threat that no longer exists.'
+      : 'The edit is not cowardice. It is survival mathematics. You know exactly what can be said and to whom and where and what happens when those parameters are violated. The math is correct. The math is also a kind of cage.',
+    'The public self and the private self are separated by a specific channel of editing. You maintain both and are fluent in both and the gap between them has become so familiar it no longer feels like a gap.',
+  ])
+  if (F.has('education_interrupted') && Math.random() < 0.2) return pick([
+    'You left school before you had finished wanting to be there. The interruption was not your decision — the conflict, the cost, the family situation, the country\'s situation made it for you.',
+    phase === 'late_life'
+      ? 'The thing you would have studied is an unlived path now. You have found other ways to learn. The other ways were real and the unlived path is still there, exactly as unlived as it always was.'
+      : 'The year you left is a specific year. The year the school closed or the money ran out or the family needed you or the army came. That specific year has a shape.',
+    'The library card, the adult education class, the borrowed textbook, the thing you taught yourself — the self-education built after the interruption is sometimes better than what it replaced. It is always harder.',
+  ])
+  if (F.has('political_aware') && Math.random() < 0.18) return pick([
+    'You know what produces what you experience as ordinary life. The regime, the economy, the history that arranged things this way. This knowledge is not available to people who grew up where the arrangement felt natural.',
+    phase === 'late_life'
+      ? 'The political awareness came early and cost something. What you saw clearly, others did not want to see. Being ahead of consensus is not always an advantage. Sometimes it is just lonely.'
+      : 'You have the vocabulary for things that most people around you experience but cannot name. The vocabulary does not change the things. It changes what you can do with knowing them.',
+  ])
+  if (F.has('community_leader') && Math.random() < 0.2) return pick([
+    'The work of holding the community together is invisible when it is working. You know this because you do it and no one can name what would be missing if you stopped.',
+    phase === 'late_life'
+      ? 'The community meetings, the disputes mediated, the resources organized, the funerals coordinated — the work accumulated across decades. The accumulated work is not stored anywhere except in the memory of the people who needed it.'
+      : 'People come to you with their problems because you have demonstrated you know what to do with a problem. The demonstration required a problem. The problem is not always something you wanted to deal with.',
+    'The trust is the infrastructure. You built it through repeated presence and repeated follow-through until you became the person the community organizes around. The building took years. You did not announce it was happening.',
+  ])
+  if (F.has('strong_marriage') && Math.random() < 0.2) return pick([
+    'Not every partnership is a resource. Yours has been. You know the difference between that and what other people are describing when they talk about their marriages.',
+    phase === 'late_life'
+      ? 'The specific arguments that got resolved instead of calcifying. The years that could have ended it and didn\'t. What the partnership has built — not the shared property but the shared capacity for difficulty — is something you understand now in a way you couldn\'t at the beginning.'
+      : 'The thing about a good marriage is that it doesn\'t require constant management. The fact that it doesn\'t require constant management is itself the result of sustained earlier management. You know this from the inside.',
+    'You have seen what the alternatives look like. The comparison is not the reason the marriage is good. But the comparison helps you know that it is.',
+  ])
+  if (F.has('found_meaning') && Math.random() < 0.2) return pick([
+    'The thing that gives the life coherence — not happiness exactly, but the sense that what you are doing is what you should be doing, or at least what you have chosen.',
+    phase === 'late_life'
+      ? 'The meaning you found was not the meaning you were looking for when you started looking. The meaning you were looking for was probably not findable. The meaning you found is real. It is also different.'
+      : 'Other people around you are still looking. You recognize the looking because you did it too. You do not know how to give someone what you found because the finding was specific to you and the path was your path.',
+    'Work, or the community, or the faith, or the art — whatever it was, it made the other things make sense in relation to it. The other things are still as difficult as they were. They have context now.',
+  ])
   if (F.has('informal_saver') && Math.random() < 0.17) return pick([
     'The susu, the tontine, the chama, the paluwagan — the savings circle has many names and one function: money that doesn\'t exist until the group makes it exist. You are in one.',
     'You contribute every month. The payout rotates. When your turn comes, the amount is real in a way that the saved-monthly would not be, because the saved-monthly would have been spent on twenty separate small things before it accumulated.',

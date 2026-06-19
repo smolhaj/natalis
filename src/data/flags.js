@@ -10669,4 +10669,165 @@ export const FLAG_REGISTRY = {
     notes: 'Set by we_venezuela_collapse and similar catastrophic economic world events.',
   },
 
+  // ── CROSSCUTTING LIFE CONDITION FLAGS ──────────────────────────────────────
+  poverty_childhood: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Grew up in poverty — food insecurity, material deprivation, and the specific knowledge that scarcity produces during formation years.',
+    intent: 'both',
+    notes: 'Set by multiple events across conflict_childhood, poverty, informal, and country-specific arcs. Checked in epitaph (hadHardChildhood) and event guards.',
+  },
+
+  grew_up_in_camp: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Spent childhood or formative years in a refugee or IDP camp — the specific institutional experience of displaced community life.',
+    intent: 'both',
+    notes: 'Set by rohingya, palestine, somalia, and conflict-zone events for characters displaced in early life.',
+  },
+
+  coup_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through a military coup — the overnight restructuring of power, the curfew, the announcements on state radio.',
+    intent: 'both',
+    notes: 'Generic version of country-specific coup flags. Set across West African, Southeast Asian, Latin American arcs.',
+  },
+
+  disaster_survivor: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Survived a major natural disaster — earthquake, flood, cyclone — and carries the specific recalibration of risk that produces.',
+    intent: 'both',
+    notes: 'Set by events_disasters.js, events_nepal.js, events_haiti.js, and others where physical disaster survival is confirmed.',
+  },
+
+  activist: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Became an activist — organized, demonstrated, or dedicated sustained energy to a political or social cause.',
+    intent: 'both',
+    notes: 'Generic flag set across political, social justice, environmental, and rights-based event arcs.',
+  },
+
+  regime_self_censorship: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Learned to self-censor under an authoritarian regime — the automatic editing of thought before speech, the reflex of restraint.',
+    intent: 'both',
+    notes: 'Set across multiple authoritarian country arcs. Also gates career texture in education/government/media fields.',
+  },
+
+  education_interrupted: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'Had education interrupted — by conflict, poverty, family need, displacement, or regime policy — before reaching desired level.',
+    intent: 'both',
+    notes: 'Set across conflict, poverty, and country-specific arcs where formal education is cut short by circumstance.',
+  },
+
+  political_aware: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Developed political consciousness — aware of structural power, regime character, and the conditions that produce what is experienced as ordinary life.',
+    intent: 'both',
+    notes: 'Set by protest, crisis, and injustice events. Checked in epitaph for summary language.',
+  },
+
+  community_leader: {
+    weight: 'moderate',
+    category: 'social',
+    description: 'Became a community leader — organized neighbors, represented the group, took on the unpaid work of holding community together.',
+    intent: 'both',
+    notes: 'Set by neighborhood, religious, and civic events across multiple arcs.',
+  },
+
+  strong_marriage: {
+    weight: 'moderate',
+    category: 'relationship',
+    description: 'A strong, durable partnership — the kind that has survived difficulty and is a genuine resource rather than a background fact.',
+    intent: 'both',
+    notes: 'Set by romance arc, long partnership texture, and relationship quality events when relationship quality is high.',
+  },
+
+  found_meaning: {
+    weight: 'moderate',
+    category: 'psychological',
+    description: 'Found a source of meaning — work, community, faith, art, or relationship — that orients the life beyond survival.',
+    intent: 'both',
+    notes: 'Set by faith arc, project arc, teaching arc, and desire-resolution events.',
+  },
+
+  independence_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age around national independence — the flag change, the new constitution, the particular energy of a country becoming itself.',
+    intent: 'event',
+    notes: 'Set by decolonisation and independence event arcs. Generic version of country-specific independence flags.',
+  },
+
+  liberation_war_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up during or immediately after a liberation war — national independence achieved through armed struggle.',
+    intent: 'event',
+    notes: 'Set by Angola, Zimbabwe, Mozambique, Bangladesh and other liberation war arcs.',
+  },
+
+  mobile_money_user: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Adopted mobile money — M-Pesa, bKash, MTN Mobile Money — as a primary financial infrastructure before having a bank account.',
+    intent: 'event',
+    notes: 'Set alongside mobile_money flag. Both checked in year texture via mobile_money || mobile_money_user.',
+  },
+
+  acceptance: {
+    weight: 'minor',
+    category: 'psychological',
+    description: 'Reached a state of acceptance — of loss, limitation, or circumstance — that is not resignation but a genuine reckoning.',
+    intent: 'event',
+    notes: 'Set by grief, late-life, and disability arc events when character reaches genuine acceptance.',
+  },
+
+  integrity: {
+    weight: 'minor',
+    category: 'psychological',
+    description: 'Acted with integrity under pressure — a specific instance of choosing honesty or principle when the easier path was available.',
+    intent: 'event',
+    notes: 'Set by ethical choice events in career, crisis, and regime arcs.',
+  },
+
+  food_insecurity: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Experienced food insecurity — irregular access to adequate nutrition due to poverty, conflict, drought, or economic collapse.',
+    intent: 'both',
+    notes: 'Set across many poverty, conflict, and country-specific arcs. Has year texture via food_insecurity block in buildYearTexture.',
+  },
+
+  remittance_family: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Part of a remittance economy — depends on money sent from a family member abroad to cover basic costs.',
+    intent: 'both',
+    notes: 'Set by OFW, emigration, and diaspora arcs. Has year texture in buildYearTexture.',
+  },
+
+  experienced_loss: {
+    weight: 'moderate',
+    category: 'psychological',
+    description: 'Experienced significant loss — beyond standard grief, a loss that reshaped the life\'s topology.',
+    intent: 'both',
+    notes: 'Set by grief, conflict, and crisis arcs as a catch-all for non-specific but significant loss. Has year texture in buildYearTexture.',
+  },
+
+  internet_generation: {
+    weight: 'moderate',
+    category: 'technology',
+    description: 'Part of the first generation for whom the internet was formative — shaped by early online culture, social media, and the specific consciousness of living publicly online.',
+    intent: 'year_texture',
+    notes: 'Set by technology arc events. Has year texture in buildYearTexture.',
+  },
+
 }
