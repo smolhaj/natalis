@@ -1842,6 +1842,142 @@ export function buildMundaneLayer(state) {
     'The stability of the current arrangement: understood as stability, understood also as the condition of stability.',
   )
 
+  // ── ADOLESCENCE DEPTH ──────────────────────────────────────────────────────
+  addIf(phase === 'adolescence' && age >= 13 && age <= 15,
+    'The hierarchy at school is not written down but is understood by everyone. You know exactly where you stand in it.',
+    'There is a piece of music this year that means something specific to this year, and will mean only it.',
+    'The person who sits next to you in class is neither friend nor stranger. This category is very crowded at this age.',
+  )
+  addIf(phase === 'adolescence' && age >= 15 && age <= 17,
+    'The end of school is close enough to think about and far enough to keep avoiding.',
+    'You have started to see your teachers as people with lives outside this building. This is not entirely comfortable.',
+    'The version of yourself that existed two years ago is already embarrassing to remember.',
+  )
+
+  // ── LONG PARTNERSHIP TEXTURE ───────────────────────────────────────────────
+  addIf(hasPartner && phase === 'midlife' && age >= 42,
+    'You reach for something and they hand it to you before you ask.',
+    'There are whole conversations now conducted in facial expression. The words have become too slow.',
+    'The argument is about something specific but also about something older. Both of you know this and use the specific thing anyway.',
+  )
+  addIf(hasPartner && phase === 'late_life',
+    'They sleep differently now than when you first knew them. You have observed this change so gradually you did not notice you were observing it.',
+    'The small consideration: the cup placed within reach, the question not asked at the wrong moment. These are the invisible architecture of what you have built.',
+  )
+
+  // ── GRIEF YEAR TEXTURE ────────────────────────────────────────────────────
+  addIf(F('bereaved') || F('widowed') || F('lost_parent_mother') || F('lost_parent_father'),
+    'You start to tell them something and stop. The habit of telling them things outlasts the person.',
+    'The first holiday after: the day is the same day and also not. You understood why people said it would be different.',
+    'Someone says their name in conversation — a different person, same name — and for a fraction of a second your body does not know the difference.',
+    'Their handwriting is still in things. A note inside a book, a label on something at the back of a cupboard.',
+  )
+
+  // ── EARLY RETIREMENT TEXTURE ───────────────────────────────────────────────
+  addIf(phase === 'late_life' && !careerField && age >= 62,
+    'The calendar has lost its architecture. The days are still seven. The weeks are harder to separate.',
+    'You volunteer for the thing you were always too busy for. It turns out to be something to do, which is what it is.',
+    'The book you are finally reading. You have been meaning to read it for twenty years and now you are reading it.',
+  )
+
+  // ── CAREER TEXTURE: JOURNALISM / WRITING ─────────────────────────────────
+  addIf(careerField === 'arts' || careerField === 'media',
+    'The interview: the over-sharing that arrives after the third question. You have more than you can use and less than you needed.',
+    'The piece that did not run. It was finished. It had something the other pieces didn\'t. The decision was made above you.',
+    'The sentence that is not working and will not work until you stop trying to make it work.',
+  )
+
+  // ── CAREER TEXTURE: FACTORY / TRADE ──────────────────────────────────────
+  addIf(careerField === 'manufacturing' || careerField === 'trades',
+    'The machine has a legibility you have earned: the sound that means something is going to go wrong before it goes wrong.',
+    'The longtime workers: the body carries the years in how they hold themselves now.',
+    'The smell of the place follows you home regardless of how you wash.',
+  )
+
+  // ── CAREER TEXTURE: CIVIL SERVICE / ADMINISTRATION ────────────────────────
+  addIf(careerField === 'government' || careerField === 'administration',
+    'The form has seven sections. Six are relevant. You fill all seven.',
+    'The procedure exists for a reason no one currently working here knows.',
+    'The thing that could be resolved in twenty minutes takes six weeks due to an ordering issue that predates everyone in the room.',
+  )
+
+  // ── CAREER TEXTURE: LAW ──────────────────────────────────────────────────
+  addIf(careerField === 'law',
+    'The correct outcome and the legal outcome are sometimes the same.',
+    'The opposing counsel: you do not dislike them. You simply happen to be on opposite sides of this particular question today.',
+    'The client who is guilty of what they are charged with, and also not guilty of the assumptions being made about them.',
+  )
+
+  // ── CAREER TEXTURE: HEALTHCARE ────────────────────────────────────────────
+  addIf(careerField === 'healthcare' && phase !== 'early_childhood',
+    'The shift ends. The shift always ends. What it contains does not always end with it.',
+    'There is a patient from several years ago you still think about. You do not know why it is that one and not others.',
+    'The thing you say to families at the difficult moment: you have said it many times. It does not become easier or harder. It becomes practised.',
+  )
+
+  // ── CAREER TEXTURE: EDUCATION ────────────────────────────────────────────
+  addIf(careerField === 'education' && phase !== 'early_childhood',
+    'The student who gets it this year was not the one you expected to. You have stopped predicting which one it will be.',
+    'The class that was difficult: in retrospect, there was one in particular you might have handled differently.',
+    'You will remember the name of the difficult year long after you have stopped being able to say what made it difficult.',
+  )
+
+  // ── SINGLE PARENTHOOD ────────────────────────────────────────────────────
+  addIf(hasChildren && !hasPartner && (phase === 'young_adult' || phase === 'midlife'),
+    'The logistics: the arrangement that has to be remade whenever one part of it fails.',
+    'The house is loud until it is quiet. The quiet is a different thing than it used to be.',
+    'The thing they needed that you could not give them, not because you wouldn\'t but because there was only one of you.',
+  )
+
+  // ── CHRONIC CONDITION DAILY ────────────────────────────────────────────────
+  addIf(state.conditions?.some(c => c.severity === 'severe'),
+    'The body has its demands this year. You meet them and arrange the rest of the day around the meeting.',
+    'The calibration: what you can do today and what it will cost tomorrow.',
+    'Good days: you half-forget. Bad days: you remember what good days were for.',
+  )
+  addIf(state.conditions?.length > 0 && state.conditions?.some(c => !c.managed),
+    'Some weeks are the management of the condition and other things arranged inside that management.',
+    'The plan that assumes a level of energy that is not always there.',
+  )
+
+  // ── ERA-SPECIFIC: 1940S NON-WESTERN ───────────────────────────────────────
+  addIf(!isWealthyArch && era >= 1940 && era <= 1949,
+    'The war is elsewhere and also here: in the prices, in what is not available, in the letters.',
+    'The radio brings a voice from a distance saying what is happening somewhere you cannot see.',
+  )
+
+  // ── ERA-SPECIFIC: INDEPENDENCE GENERATION ─────────────────────────────────
+  addIf((isSubsaharan || isDeveloping) && era >= 1956 && era <= 1975 && phase !== 'early_childhood',
+    'The country is still deciding what it is. This is not a problem — it is the shared situation, and the situation is shared.',
+    'The new flag at the same buildings. The flag is new.',
+  )
+
+  // ── ERA-SPECIFIC: 1990S POST-COLD WAR ─────────────────────────────────────
+  addIf(era === 1990 && (isPostSoviet || isWealthyArch) && phase !== 'early_childhood',
+    'There is a sense — briefly — that the arrangement of the world has just been renegotiated and the new arrangement might be more favourable.',
+    'The idea that things are going to improve is in the air in a way it wasn\'t. Not everyone holds it. It is in the air anyway.',
+  )
+
+  // ── ERA-SPECIFIC: MOBILE PHONE ARRIVAL ───────────────────────────────────
+  addIf(era === 2000 && isDeveloping && phase !== 'early_childhood',
+    'The phone that arrived without the landline before it. The step that was skipped.',
+    'The way the phone changed who you can reach and who can reach you: both at once.',
+  )
+
+  // ── DIASPORA / IMMIGRANT TEXTURE ─────────────────────────────────────────
+  addIf(F('emigrated') && phase === 'young_adult',
+    'The accent you had not known you had until someone here pointed it out.',
+    'The food you cannot find here that you are slowly substituting for. The substitute is adequate.',
+  )
+  addIf(F('emigrated') && phase === 'midlife',
+    'The country you came from and the country you are in have both changed without waiting for you.',
+    'The calculation — to stay or return — that you have been doing for fifteen years and cannot finish.',
+  )
+  addIf(F('emigrated') && phase === 'late_life',
+    'You are fluent now. You dream in both languages. The dreaming-in does not decide the question.',
+    'The place you came from: changed. The place you remember: no longer quite exists.',
+  )
+
   // ── FINAL CATCH-ALL (always available) ─────────────────────────────────────
   add(
     'The year passed in the way that years pass — faster than the days suggested it would.',

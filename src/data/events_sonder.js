@@ -1061,4 +1061,267 @@ export const SONDER_EVENTS = [
     effect: (p) => { p.e += 2; p.m += 1; p.setMem('sonderGrandchildQuestion', true); },
   },
 
+  // ── SECOND EXPANSION BATCH ────────────────────────────────────────────────
+
+  {
+    id: 'sonder_older_couple_shorthand',
+    phase: 'adolescence',
+    weight: 2,
+    when: (G) => G.age >= 14 && !G.mem?.sonderOlderCoupleShorthand,
+    text: 'Two people at a nearby table communicate in a language built entirely from incomplete sentences. They have been having this conversation for so long that the nouns are no longer necessary. You watch them finish each other\'s thoughts without noticing that they are doing it. You wonder what it costs to get there.',
+    effect: (p) => { p.e += 2; p.setMem('sonderOlderCoupleShorthand', true); },
+  },
+
+  {
+    id: 'sonder_sleeping_commuter',
+    phase: 'adolescence',
+    weight: 2,
+    when: (G) => G.age >= 13 && G.ruralUrban === 'urban' && G.currentYear >= 1950 && !G.mem?.sonderSleepingCommuter,
+    text: 'A man is asleep on the bus, still in his work clothes. His head tips toward the window. He wakes at the right stop without an alarm — the body learning the distance by repetition until the distance becomes the alarm. You wonder how many years it takes to train a body to know when to wake.',
+    effect: (p) => { p.e += 1; p.setMem('sonderSleepingCommuter', true); },
+  },
+
+  {
+    id: 'sonder_parent_old_photo',
+    phase: 'adolescence',
+    weight: 2,
+    when: (G) => G.age >= 13 && !G.mem?.sonderParentOldPhoto,
+    text: 'You find a photograph of your parents before you existed. They are young in it — younger than you are now. They are looking at something outside the frame. You have never met these people. You know only the version of them that already had you in it.',
+    effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderParentOldPhoto', true); },
+  },
+
+  {
+    id: 'sonder_rural_distant_field',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.ruralUrban === 'rural' && !G.mem?.sonderRuralDistantField,
+    text: 'Far across the field, your neighbour is working. They are small at this distance, a figure moving in a methodical way that means the same task has been done many times. You cannot hear anything. The field between you is very large.',
+    effect: (p) => { p.e += 1; p.setMem('sonderRuralDistantField', true); },
+  },
+
+  {
+    id: 'sonder_road_traveller',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.ruralUrban === 'rural' && !G.mem?.sonderRoadTraveller,
+    text: 'Someone passes on the road carrying more than is comfortable. They do not stop. They do not look at you. Where they came from and where they are going with that weight is a complete story. You will not know any of it.',
+    effect: (p) => { p.e += 2; p.setMem('sonderRoadTraveller', true); },
+  },
+
+  {
+    id: 'sonder_village_elder_road',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.ruralUrban === 'rural' && G.age >= 35 && !G.mem?.sonderVillageElderRoad,
+    text: 'The old man sits where he has always sat, facing the road. You ask him once what he watches for. He says he is not watching for anything. He says the road is different from the fields — something comes in from the road. The fields already know what they are.',
+    effect: (p) => { p.e += 2; p.setMem('sonderVillageElderRoad', true); },
+  },
+
+  {
+    id: 'sonder_woman_keys_night',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.character?.gender === 'female' && !G.mem?.sonderWomanKeysNight,
+    text: 'Coming home late, you hold your keys in a particular way — one between two fingers — that you do not remember being taught. Other women you know do the same without any of you having discussed it. It is the kind of knowledge that travels without being written down.',
+    effect: (p) => { p.e += 1; p.setMem('sonderWomanKeysNight', true); },
+  },
+
+  {
+    id: 'sonder_invisible_older_woman',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.character?.gender === 'female' && G.age >= 46 && !G.mem?.sonderInvisibleOlderWoman,
+    text: 'An older woman stands at the edge of the group and no one introduces her. You notice that she has stopped insisting. It is not resignation. She has moved her attention to things that don\'t require introduction.',
+    effect: (p) => { p.e += 2; p.setMem('sonderInvisibleOlderWoman', true); },
+  },
+
+  {
+    id: 'sonder_doorway_watching_child',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.children?.length > 0 && G.age >= 28 && !G.mem?.sonderDoorwayWatchingChild,
+    text: 'You stand in the doorway a moment longer than you meant to. They are asleep. Their breathing is audible from here. Everything about how small they still are is something you know you will forget by the time they are older. You know this and look a little longer.',
+    effect: (p) => { p.m += 3; p.setMem('sonderDoorwayWatchingChild', true); },
+  },
+
+  {
+    id: 'sonder_colleague_desk_photo',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.career && G.age >= 36 && !G.mem?.sonderColleagueDeskPhoto,
+    text: 'After years of sitting near the photograph on his desk, you finally learn who is in it. It is not who you had assumed. The brief explanation rearranges years of assumptions about who he is. You had not known you were making those assumptions.',
+    effect: (p) => { p.e += 2; p.setMem('sonderColleagueDeskPhoto', true); },
+  },
+
+  {
+    id: 'sonder_office_cleaners_dawn',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.career && G.ruralUrban === 'urban' && G.currentYear >= 1950 && !G.mem?.sonderOfficeCleanersDawn,
+    text: 'You arrive early enough to pass the cleaners leaving. They nod. They are finishing a shift. The building you are about to spend your day in was their workplace first. The coffee you will make later is in a mug they already cleaned.',
+    effect: (p) => { p.e += 1; p.setMem('sonderOfficeCleanersDawn', true); },
+  },
+
+  {
+    id: 'sonder_retirement_true_thing',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.career && G.age >= 40 && !G.mem?.sonderRetirementTrueThing,
+    text: 'At the leaving party, the person who is retiring says one true thing in a speech that is otherwise very polite. They say it quietly, almost as an aside. It is the most honest sentence you have heard anyone speak in this building.',
+    effect: (p) => { p.e += 2; p.setMem('sonderRetirementTrueThing', true); },
+  },
+
+  {
+    id: 'sonder_telegram_nearby_house',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) => G.currentYear >= 1939 && G.currentYear <= 1965 && !G.mem?.sonderTelegramNearbyHouse,
+    text: 'The telegram boy stops two houses down. You watch from the window without knowing why watching feels necessary. The door opens. Then the door closes. What you just witnessed from a distance will be someone\'s entire year.',
+    effect: (p) => { p.e += 2; p.setMem('sonderTelegramNearbyHouse', true); },
+  },
+
+  {
+    id: 'sonder_tv_shop_window',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) => G.currentYear >= 1952 && G.currentYear <= 1970 && !G.mem?.sonderTvShopWindow,
+    text: 'A television plays in the shop window and a small crowd has gathered. No one knows each other. They stand together watching something that — in a few years — everyone will have in their own home and watch alone. Right now, though, they are watching it together.',
+    effect: (p) => { p.e += 2; p.m += 1; p.setMem('sonderTvShopWindow', true); },
+  },
+
+  {
+    id: 'sonder_counting_coins_counter',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => !G.mem?.sonderCountingCoinsCounter,
+    text: 'The man at the counter counts his coins slowly. There are not quite enough. He counts them again. He puts one item back. Nobody in the line says anything. He takes his things and goes without looking at anyone.',
+    effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderCountingCoinsCounter', true); },
+  },
+
+  {
+    id: 'sonder_meal_divided_precisely',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) => !G.mem?.sonderMealDividedPrecisely,
+    text: 'At the table nearby, the food is divided with a precision that suggests the calculation has been made many times. The children get more. The parents take less without commenting on it. The children eat without noticing. The parents do not want them to notice.',
+    effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderMealDividedPrecisely', true); },
+  },
+
+  {
+    id: 'sonder_church_between_services',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => !G.mem?.sonderChurchBetweenServices,
+    text: 'A woman sits alone in the church between services. She has not come for the service. The building is available to her in this hour in a way it is not when it is full of purpose. She sits without praying, or with a prayer that has no outward form.',
+    effect: (p) => { p.e += 1; p.setMem('sonderChurchBetweenServices', true); },
+  },
+
+  {
+    id: 'sonder_hospital_ward_night',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.age >= 35 && !G.mem?.sonderHospitalWardNight,
+    text: 'Passing the hospital at night, you look up at the lit windows. They look like any other lit windows except that the people behind them did not choose to be there tonight. The different kind of night that those rooms contain goes on behind glass, visible and separate.',
+    effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderHospitalWardNight', true); },
+  },
+
+  {
+    id: 'sonder_last_village_light',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.ruralUrban === 'rural' && G.age >= 55 && !G.mem?.sonderLastVillageLight,
+    text: 'Without deciding to, you have started tracking which house goes dark last. Not every night, but most nights. A family you do not know well. You know their light, though. Sometime after midnight they turn it off and the village becomes all the same dark.',
+    effect: (p) => { p.e += 1; p.m += 1; p.setMem('sonderLastVillageLight', true); },
+  },
+
+  {
+    id: 'sonder_last_bus_population',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.ruralUrban === 'urban' && G.currentYear >= 1950 && !G.mem?.sonderLastBusPopulation,
+    text: 'The last bus carries its specific population: the shift workers, the people who stayed out too late, the ones who missed everything earlier. No one is going to the same place. The only thread connecting them is the hour and the fact that this is the last one.',
+    effect: (p) => { p.e += 2; p.setMem('sonderLastBusPopulation', true); },
+  },
+
+  {
+    id: 'sonder_own_gesture_stranger',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.age >= 58 && !G.mem?.sonderOwnGestureStranger,
+    text: 'Someone across the room makes a gesture you recognise — a particular way of carrying weight, the slight turn of the head when listening. It takes a moment to understand: it is the gesture you make. This person you have never met moves as you move. You wonder if either of you learned it or arrived at it separately.',
+    effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderOwnGestureStranger', true); },
+  },
+
+  {
+    id: 'sonder_own_street_as_stranger',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.age >= 60 && !G.mem?.sonderOwnStreetStranger,
+    text: 'For a moment, walking down your own street, you see it as someone arriving for the first time would see it — the uneven paving, the angle of the afternoon light, the specific smell of it. You have been seeing past all of this for years. In the instant before familiarity reasserts itself, you see the street, not your street.',
+    effect: (p) => { p.e += 2; p.setMem('sonderOwnStreetStranger', true); },
+  },
+
+  {
+    id: 'sonder_elevator_grief',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.ruralUrban === 'urban' && G.age >= 32 && !G.mem?.sonderElevatorGrief,
+    text: 'In the elevator, a woman holds a box with both hands and is trying not to cry. Whatever is in the box or what the box means: a whole life happening in this small space between floors. She gets out. The doors close.',
+    effect: (p) => { p.e += 2; p.setMem('sonderElevatorGrief', true); },
+  },
+
+  {
+    id: 'sonder_flatmate_phone_wall',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.age >= 18 && G.age <= 26 && !G.mem?.sonderFlatmatePhoneWall,
+    text: 'Through the wall you can hear your flatmate on the phone — not the words but the tone. The particular register of someone having a conversation they have been dreading. There is a whole life on the other side of that wall that you have been living next to without knowing.',
+    effect: (p) => { p.e += 2; p.setMem('sonderFlatmatePhoneWall', true); },
+  },
+
+  {
+    id: 'sonder_train_lips_moving',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.ruralUrban === 'urban' && G.currentYear >= 1940 && !G.mem?.sonderTrainLipsMoving,
+    text: 'A man on the train closes his eyes and his lips move slightly. You cannot tell if he is praying, rehearsing, or remembering. He opens his eyes at his stop and leaves without knowing you saw.',
+    effect: (p) => { p.e += 1; p.setMem('sonderTrainLipsMoving', true); },
+  },
+
+  {
+    id: 'sonder_served_by_younger_self',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.career && G.age >= 38 && !G.mem?.sonderServedByYoungerSelf,
+    text: 'The person serving you is the age you were when you first worked this kind of job. The same slightly-too-attentive posture, the same way of managing a difficult moment with a patience that costs something. You tip more than usual and do not explain why.',
+    effect: (p) => { p.m += 1; p.karma += 1; p.setMem('sonderServedByYoungerSelf', true); },
+  },
+
+  {
+    id: 'sonder_letter_wrong_address',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.currentYear >= 1930 && G.currentYear <= 1990 && !G.mem?.sonderLetterWrongAddress,
+    text: 'A letter arrives addressed to someone who does not live here. You return it to the post box. The name on it is someone you do not know. Their correspondence is continuing without them somewhere, addressed to an address that was once theirs.',
+    effect: (p) => { p.e += 1; p.setMem('sonderLetterWrongAddress', true); },
+  },
+
+  {
+    id: 'sonder_stranger_crying_platform',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.ruralUrban === 'urban' && G.currentYear >= 1940 && !G.mem?.sonderStrangerCryingPlatform,
+    text: 'A woman on the platform is crying in the particular way of someone who hoped they could stop by now. She watches the arrivals board. You do not know if she is waiting for someone or has just said goodbye. Either way it is a complete story you have only seen the middle of.',
+    effect: (p) => { p.e += 2; p.setMem('sonderStrangerCryingPlatform', true); },
+  },
+
+  {
+    id: 'sonder_neighbour_light_same_hour',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.age >= 34 && !G.mem?.sonderNeighbourLightSameHour,
+    text: 'The light in the apartment across from yours comes on at the same time most evenings. You have never met this person. You know their schedule without having asked for it. There is a whole life in that rhythm that has been running parallel to yours for years.',
+    effect: (p) => { p.e += 1; p.setMem('sonderNeighbourLightSameHour', true); },
+  },
+
 ]
