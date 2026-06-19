@@ -3,6 +3,7 @@ export const ILLNESSES = [
     id: 'cancer',
     name: 'Cancer',
     flag: 'cancer',
+    survivorFlag: 'cancer_survivor',
     triggerConditions: {
       minAge: 30,
       maxAge: null,

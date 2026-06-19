@@ -13345,6 +13345,8 @@ function checkIllnessRisk(state) {
             p.m += t.happinessEffect ?? 0
             if (willSucceed) {
               p.h += Math.abs(t.healthEffect ?? 0)
+              // Set survivor flag for illnesses that have one
+              if (illness.survivorFlag) p.addFlag(illness.survivorFlag)
             } else {
               p.h -= Math.abs(t.healthEffect ?? 0)
               p.addFlag(illness.flag)
@@ -13672,9 +13674,10 @@ export function tick(state) {
   // Debt interest accrual
   if (s.debt > 0) {
     const interestRate = (s.mem?.debtType === 'mortgage') ? 0.06 : 0.18
+    const preInterestDebt = s.debt
     const interest = Math.round(s.debt * interestRate)
     s.debt = s.debt + interest
-    s.money = (s.money ?? 0) - Math.round(s.debt * 0.05) // minimum payment
+    s.money = (s.money ?? 0) - Math.round(preInterestDebt * 0.05) // minimum payment (5% of pre-interest balance)
     if (s.money < -8000) {
       s.flags = [...new Set([...s.flags, 'bankrupt', 'declared_bankrupt', 'debt_spiral_survived'])]
       s.debt = 0

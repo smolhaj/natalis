@@ -1709,7 +1709,7 @@ export const WORLD_EVENTS = [
   },
 
   {
-    id: 'asian_financial_crisis_1997',
+    id: 'asian_financial_crisis_1997_initial',
     name: '1997 Asian Financial Crisis',
     years: [1997, 1999],
     archetypes: ['wealthy_east', 'developing_urban'],
@@ -2501,9 +2501,9 @@ export const WORLD_EVENTS = [
     minAge: 5,
   },
 
-  // ── ANGOLA CIVIL WAR 1975–2002 ────────────────────────────────────────────
+  // ── ANGOLA CIVIL WAR 1975–2002 (depth) ───────────────────────────────────
   {
-    id: 'angola_civil_war',
+    id: 'angola_civil_war_depth',
     name: 'Angolan Civil War',
     years: [1975, 1990],
     archetypes: ['subsaharan', 'conflict_zone'],
@@ -2775,21 +2775,6 @@ export const WORLD_EVENTS = [
   },
 
   {
-    id: 'algeria_black_decade_begins',
-    name: 'Algeria: The Cancelled Election',
-    years: [1992, 1993],
-    archetypes: null,
-    countries: ['Algeria'],
-    narrative: 'On 11 January 1992, Algeria\'s military cancels the second round of legislative elections. The Front Islamique du Salut had won 188 seats in the first round and was on course for a parliamentary supermajority. President Chadli Bendjedid resigns. A High State Committee takes power. Within months, a state of emergency is declared and the FIS is banned. What follows will be called the *décennie noire* — the Black Decade. 200,000 dead over ten years, in a country of 26 million. The army, the GIA, and eventually splinter groups will all carry out killings. Some massacres are never officially attributed. The deliberate confusion is part of the architecture.',
-    context: 'The 1991–92 Algerian electoral crisis began after the Islamic Salvation Front (FIS) won 47% of the vote in the first round of legislative elections, pointing toward a two-thirds parliamentary majority. The military stepped in, cancelling the second round and arresting FIS leadership, triggering an armed insurgency. The décennie noire lasted from 1992 to 2002 and killed an estimated 150,000–200,000 people. Both the GIA (Groupe Islamique Armé) and the DRS (military intelligence) were accused of atrocities; several major massacres — including Rais (August 1997, ~300 dead) and Bentalha (September 1997, ~400 dead) — remain without official attribution. President Bouteflika\'s 1999 Civil Concord offered amnesty to surrendering fighters but no accountability process.',
-    effect: (p) => { p.m -= 12; p.addFlag('decennie_noire_generation'); },
-    addFlags: ['decennie_noire_generation'],
-    minAge: 10,
-    maxAge: null,
-    when: null,
-  },
-
-  {
     id: 'beirut_port_explosion_2020',
     name: 'Beirut Port Explosion',
     years: [2020, 2021],
@@ -2805,7 +2790,7 @@ export const WORLD_EVENTS = [
   },
 
   {
-    id: 'spanish_flu_1918',
+    id: 'spanish_flu_1918_b',
     name: 'Spanish Flu',
     years: [1918, 1920],
     archetypes: 'all',
@@ -2816,7 +2801,7 @@ export const WORLD_EVENTS = [
     context: 'The 1918-19 influenza pandemic infected an estimated 500 million people globally — one third of the world\'s population. It killed between 50 and 100 million, disproportionately killing healthy adults aged 20-40 through an immune overresponse. Wartime censorship suppressed accurate reporting in many countries; Spain, which was neutral, reported freely, giving the pandemic its misleading name.',
     effect: (p) => { p.m -= 10; p.h -= 8 },
     addFlags: ['spanish_flu_generation'],
-    when: null,
+    when: (G) => !G.flags.includes('flu_pandemic_survivor'),
   },
 
   {
