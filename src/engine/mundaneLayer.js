@@ -2749,6 +2749,179 @@ export function buildMundaneLayer(state) {
     'The employer\'s family knows your face and your name. Your family knows your voice. The difference between being known by face and being known by voice is the work.',
   )
 
+  // ── CHILD OF IMMIGRANTS ───────────────────────────────────────────────────
+  addIf(F('emigrated') && hasChildren && phase === 'midlife',
+    'Your child moves between the two languages without effort. The effort was yours, at the beginning. The fluency is theirs.',
+    'What you kept from home and what you let go, and which of those choices your children will one day have opinions about.',
+    'The culture that exists inside your house and the culture that exists outside it: your children live in both and belong to a version of each that is neither.',
+  )
+
+  // ── LONG COMMUTE ──────────────────────────────────────────────────────────
+  addIf(isUrban && (phase === 'young_adult' || phase === 'midlife'),
+    'The commute: the same hour and fifteen minutes in each direction, which is two and a half hours of the day that belong to neither work nor home.',
+    'The people on the train or the bus that you have seen every morning for years. You know their routines. You do not know their names.',
+    'The book finished on the commute. The commute provided it. You would not have read it otherwise.',
+  )
+  addIf(isUrban && isDeveloping && (phase === 'young_adult' || phase === 'midlife'),
+    'The danfo or the matatu or the shared taxi: the vehicle that runs when it is full and leaves when the driver decides it is full enough.',
+    'Two hours each way in traffic that has not improved in ten years and will not improve in the next ten.',
+  )
+
+  // ── HOME OWNERSHIP FIRST TIME ─────────────────────────────────────────────
+  addIf((phase === 'young_adult' || phase === 'midlife') && isWealthy && !F('poverty_childhood'),
+    'The mortgage: the number and the term and the number of years the number will be the defining constraint.',
+    'The first home: the wall you are allowed to put a nail in, which is different from every other wall you have lived with.',
+  )
+  addIf(phase === 'midlife' && isWealthy && F('mortgage_paid'),
+    'The house is yours now in the way it was not yours while the mortgage was running. The feeling of this is different from how you anticipated it would feel.',
+  )
+
+  // ── DEBT AND FINANCIAL PRESSURE ───────────────────────────────────────────
+  addIf(F('debt_crisis') || F('in_debt'),
+    'The calculation made before every purchase. Not budgeting — something tighter than budgeting.',
+    'The bill and the date and the other bill and the other date: a calendar made of obligations.',
+    'The month when everything arrived at once and the money was not there to meet everything.',
+  )
+
+  // ── FIRST CHILD — NEW PARENT ──────────────────────────────────────────────
+  addIf(hasChildren && phase === 'young_adult' && children?.length === 1 && children[0]?.age <= 3,
+    'The first months: the sleep debt and the love that is larger than you prepared for and the two of them together.',
+    'You have discovered that there is a kind of worry that does not go away when the thing being worried about resolves. It shifts to the next thing.',
+    'The question of what kind of parent you are becoming: you are finding out in real time.',
+  )
+  addIf(hasChildren && hasPartner && children?.length >= 2,
+    'The differential: what the first child got and what the second child is getting, and what the third child, if there is one, will understand as normal.',
+    'The logistics of more than one: the overlapping schedules, the competing needs, the management of the house as a small organisation.',
+  )
+
+  // ── MIDLIFE BODY ──────────────────────────────────────────────────────────
+  addIf(phase === 'midlife' && age >= 40 && age <= 55,
+    'The body at forty-something: not broken, not the same as thirty-something, learning a new relationship with effort.',
+    'The recovery time is longer. This is information. You adjust accordingly.',
+    'Something that used to work without your attention now requires your attention. This is the negotiation that begins here.',
+  )
+  addIf(phase === 'midlife' && age >= 45 && gender === 'female',
+    'The body signalling changes that your mother signalled at the same age, which your mother did not discuss, which you are now discussing with friends who are the same age.',
+  )
+
+  // ── ADULT SIBLINGS ────────────────────────────────────────────────────────
+  addIf(phase === 'midlife' && F('sibling_close'),
+    'Your sibling: the person who has known you the longest of anyone still alive in your life. The knowing is specific and partial and irreplaceable.',
+    'The sibling call: the obligation and the comfort being the same call.',
+  )
+  addIf(phase === 'late_life' && F('sibling_close'),
+    'The sibling: the last one who was there at the beginning. The shared memory that has no other surviving custodian.',
+  )
+  addIf(F('sibling_estranged'),
+    'The silence with your sibling is old enough now to have its own history. The history is about what the silence replaced.',
+  )
+
+  // ── FOOD AS MEMORY AND CULTURE ─────────────────────────────────────────────
+  addIf(isMuslim && phase === 'midlife',
+    'Eid ul-Adha: the distribution of the meat into three portions. The portion for the poor is not charity in the way that charity is usually conducted. It is obligation, which is different.',
+  )
+  addIf(isHindu && phase !== 'early_childhood',
+    'The festival preparation: the cleaning and the sweets and the lighting and the occasion of doing these things together, which is the festival.',
+    'The thali: the balance of the meal as a philosophy of what a meal should be — this much sweet, this much sour, this much plain.',
+  )
+  addIf(isChristian && isSubsaharan && phase === 'childhood',
+    'The Sunday meal after church: the best meal of the week, eaten after the best clothes of the week, which requires returning home in the best clothes without damaging the best clothes.',
+  )
+  addIf(cn === 'Japan' || cn === 'South Korea' || cn === 'China',
+    'The meal as ritual: who pours for whom, in what order, what serving another person means and what pouring for yourself before someone older means.',
+  )
+
+  // ── SECULAR / ATHEIST IN RELIGIOUS CONTEXT ────────────────────────────────
+  addIf((religion === 'secular' || religion === 'atheist') && (isSubsaharan || isDeveloping || isPostSoviet),
+    'The non-belief in a context where belief is assumed: the social navigation of the assumption.',
+    'The festival you participate in as culture, not faith. The line between the two is not always where you placed it.',
+  )
+  addIf((religion === 'secular' || religion === 'atheist') && phase === 'midlife',
+    'The question that gets harder to dismiss at this age: not God specifically but the shape of things and whether the shape is indifferent.',
+  )
+
+  // ── POLITICAL PRISONER / DISSIDENT AFTER ─────────────────────────────────
+  addIf(F('political_prisoner') || F('dissident'),
+    'After: the years after are not the years before with the prison years subtracted. They are different years.',
+    'The file that exists somewhere with your name on it. You have stopped wondering what is in it.',
+  )
+  addIf(F('dissident') && (isPostSoviet || arch === 'single_party_authoritarian'),
+    'The small adjustments: what you say and to whom and in which room and with how much specificity.',
+  )
+
+  // ── LATE LIFE FRIENDSHIP ─────────────────────────────────────────────────
+  addIf(phase === 'late_life' && age >= 65,
+    'The friends at this age: a shorter list than before. The ones who have died and the ones who have moved away and the ones who are still here.',
+    'Old friendship: the kind where you can say the thing in three words that would take thirty to say to someone you met later.',
+    'The friend who is ill. You visit. The visiting is not comfortable. It is necessary and not comfortable.',
+  )
+
+  // ── CARING FOR PARTNER ────────────────────────────────────────────────────
+  addIf(hasPartner && phase === 'late_life' && age >= 68,
+    'Your partner\'s health: the thing you monitor without making a performance of monitoring.',
+    'The small adjustment you made to the routine to accommodate what has become harder for them. You have not mentioned the adjustment.',
+  )
+
+  // ── CRAFT AND SKILL ───────────────────────────────────────────────────────
+  addIf(F('hobby_cooking') || F('hobby_woodworking') || F('hobby_gardening'),
+    'The thing made by hand from materials. The satisfaction of the thing is in the materials and the time and the particularity of this version of it.',
+    'The skill that took years to arrive at: when it arrived you were not sure when it became the level it is now.',
+  )
+
+  // ── SPORTS AND COLLECTIVE ─────────────────────────────────────────────────
+  addIf(F('sport_active') || careerField === 'sport',
+    'The training on the day when training does not feel like something you want to do. You do it anyway. The doing of it anyway is part of what training is.',
+    'The team and the thing the team produces that none of you produces alone. The thing is not just the result.',
+  )
+  addIf((cn === 'Brazil' || cn === 'Argentina' || cn === 'Nigeria' || cn === 'England' || cn === 'Germany') && phase === 'childhood',
+    'Football: the version played in the street or the back yard with the gate as a goal and the rules adjusted for the space. The rules adjusted for the space are better than the official rules for this space.',
+  )
+
+  // ── TECHNOLOGY ADOPTION — DEVELOPING WORLD ────────────────────────────────
+  addIf(isDeveloping && currentYear >= 2005 && currentYear <= 2015,
+    'The mobile phone arrived before the road did, before the reliable electricity did. The mobile phone has reorganised things that the road and electricity would also have reorganised, but differently.',
+    'M-Pesa or the equivalent: money sent by phone to someone who does not have a bank account. The bank account was never necessary. The phone was.',
+  )
+  addIf(isSubsaharan && currentYear >= 2010,
+    'The smartphone generation: younger people who have never sent a letter and are surprised that sending a letter was ever the thing.',
+  )
+
+  // ── LANGUAGE LOSS IN OLD AGE ───────────────────────────────────────────────
+  addIf(F('emigrated') && phase === 'late_life',
+    'The language of home: still there, but slower to arrive than it used to be. The language of here: faster now, after all these years.',
+    'The dream in the old language. The dream has not emigrated.',
+  )
+  addIf(F('emigrated') && phase === 'late_life' && hasChildren,
+    'Your children speak the language of here. They understand the language of home. These are two different relationships with a language.',
+  )
+
+  // ── SMALL TOWN / VILLAGE KNOWLEDGE ────────────────────────────────────────
+  addIf(isRural && phase === 'midlife',
+    'The knowledge of who is related to whom in this district: the knowledge that took a lifetime to accumulate and that would take a lifetime to explain.',
+    'Everyone who dies here has been known here for most of their life. This is the intimacy of funerals in small places.',
+    'The person you are in this place, which is different from the person you would have been had you left. The leaving is still a road that exists even though you didn\'t take it.',
+  )
+  addIf(isRural && isDeveloping && phase === 'late_life',
+    'The young people leaving. The pattern has been running for twenty years and is not reversing.',
+    'What you know about agriculture or animals or water or land: the knowledge is worth something to someone, but the someone is here and the value is elsewhere.',
+  )
+
+  // ── GRANDPARENT ROLE ──────────────────────────────────────────────────────
+  addIf(phase === 'late_life' && hasChildren && children?.some(c => c?.age >= 18),
+    'The grandchildren, if there are any: watching them from the position of knowing how the stages go.',
+    'Your child as a parent: a different relationship to them now than when they were just your child.',
+  )
+
+  // ── FIRST GENERATION PROFESSIONAL ─────────────────────────────────────────
+  addIf(F('first_gen_educated') || F('poverty_childhood'),
+    'The office and the accent and the clothes and the calibration of how much to explain about where you started.',
+    'The things that your colleagues assume as given that you did not come with. You learned them. The learning is invisible now.',
+  )
+  addIf(F('first_gen_educated') && phase === 'midlife',
+    'The pride your parents have in what you do and the gap between their pride and your understanding of what the doing actually is.',
+    'You have exceeded the map your family had for you. The exceeding is good and is also its own specific loneliness.',
+  )
+
   // ── FINAL CATCH-ALL (always available) ─────────────────────────────────────
   add(
     'The year passed in the way that years pass — faster than the days suggested it would.',
