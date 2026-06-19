@@ -10952,4 +10952,96 @@ export const FLAG_REGISTRY = {
     notes: 'Set by technology arc events. Has year texture in buildYearTexture.',
   },
 
+  // ── TURKEY DEPTH ────────────────────────────────────────────────────────────
+
+  tur_ataturk_era: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through Atatürk\'s top-down modernisation programme — the Latin alphabet, dress code reforms, secularist state — and is positioned by it, for or against.',
+    intent: 'both',
+    notes: 'Set by tur_ataturk_alphabet event. Has year texture in Turkey section of buildYearTexture.',
+  },
+
+  tur_kahramanmaras_survivor: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Experienced the February 2023 Kahramanmaraş earthquakes — either directly in the southeast or as a witnessing Turkish citizen following the count.',
+    intent: 'both',
+    notes: 'Set by tur_kahramanmaras_2023 event. Has year texture in Turkey section of buildYearTexture.',
+  },
+
+  tur_refugee_host_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived in Turkey during the Syrian refugee influx — neighbourhood transformation, economic pressure, and the dual reality of humanitarian obligation and political resentment.',
+    intent: 'both',
+    notes: 'Set by tur_syrian_refugees event. Has year texture in Turkey section of buildYearTexture.',
+  },
+
+  tur_lira_crisis_lived: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Experienced the Turkish lira\'s collapse of 2021–2022 — 80%+ inflation, savings eroded, everyday purchasing power gutted by unorthodox monetary policy.',
+    intent: 'both',
+    notes: 'Set by tur_lira_crisis event. Has year texture in Turkey section of buildYearTexture.',
+  },
+
+  tur_istanbul_convention_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'A Turkish woman who lived through the government\'s 2021 withdrawal from the Istanbul Convention on violence against women — either protesting or watching.',
+    intent: 'both',
+    notes: 'Set by tur_istanbul_convention event (female only). Has year texture in Turkey section.',
+  },
+
+  // ── NOMADIC LIFE ────────────────────────────────────────────────────────────
+
+  maasai_pastoralist: {
+    weight: 'major',
+    category: 'identity',
+    description: 'A Maasai who grew up in the cattle-herding pastoral system — age-set identity, seasonal migration, the cattle as economic and cultural foundation.',
+    intent: 'both',
+    notes: 'Set by nom_maasai_cattle_world event. Has year texture in nomadic section of buildYearTexture.',
+  },
+
+  maasai_conservation_displaced: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'A Maasai whose ancestral grazing land was absorbed into national parks or conservation areas without adequate compensation — experienced the colonial and post-colonial land dispossession.',
+    intent: 'both',
+    notes: 'Set by nom_maasai_national_park event. Has year texture in nomadic section of buildYearTexture.',
+  },
+
+  bedouin_settled: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'A Bedouin who grew up during the government sedentarisation programmes — concrete houses replacing tents, migration routes fenced and formalised, the tribal structure adapting to fixed addresses.',
+    intent: 'both',
+    notes: 'Set by nom_bedouin_settlement event. Has year texture in nomadic section of buildYearTexture.',
+  },
+
+  nomadic_heritage: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Carries nomadic or pastoral heritage — from Maasai, Bedouin, or Mongolian herder backgrounds — in a world that no longer accommodates the original way of life.',
+    intent: 'both',
+    notes: 'Set by multiple nomadic arc events (maasai city question, bedouin land claim, mongol UB). Has year texture in nomadic section of buildYearTexture.',
+  },
+
+  mongolian_herder: {
+    weight: 'major',
+    category: 'identity',
+    description: 'A Mongolian who grew up in a nomadic herder family — ger tent as home, seasonal migration, steppe pastoralism as the organising structure of daily life.',
+    intent: 'both',
+    notes: 'Set by nom_mongol_ger_childhood event. Has year texture in nomadic section of buildYearTexture.',
+  },
+
+  mongolian_dzud_survived: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'A Mongolian herder who survived a dzud winter catastrophe — the combined drought and freeze that kills livestock en masse and can wipe out a family\'s entire herd.',
+    intent: 'both',
+    notes: 'Set by nom_mongol_dzud event. Has year texture in nomadic section of buildYearTexture.',
+  },
+
 }

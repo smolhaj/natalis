@@ -8861,6 +8861,64 @@ function buildYearTexture(state) {
     'The AKP spoke to people who had been outside the Kemalist networks — the Anatolian middle class, the practicing Muslim professional, the voter the Republican People\'s Party had not found a way to address. You were one of those people.',
     'The 2002 election was a realignment. The people who voted for it were not voting against democracy. They were voting against the version of Turkey that had excluded them from its benefits.',
   ])
+  if (F.has('tur_ataturk_era') && Math.random() < 0.2) return pick([
+    'The new alphabet was mandatory and the old script was wrong overnight. Your grandparents held newspapers they could not read. You were positioned for the new century. What that positioning cost in the severing from what came before is a different account.',
+    'Atatürk\'s republic was built at speed from the top down. The cost of that speed — in what was not asked, in what was erased — has been arriving in stages ever since.',
+  ])
+  if (F.has('tur_kahramanmaras_survivor') && Math.random() < 0.28) return pick([
+    'February 6, 2023, 4am. The buildings that fell were buildings that had been permitted to fail. Fifty thousand dead in Turkey and Syria. You know what you know about it — from inside or from the count.',
+    phase === 'late_life'
+      ? 'The construction amnesty of 2018 licensed structures that should have been demolished. When the earthquake came, the policy and the disaster arrived together. You have not been able to unknow this.'
+      : 'The search feeds ran for days. On the seventh day people were still being pulled out alive. More were not pulled out at all. The number kept rising and you kept following it.',
+  ])
+  if (F.has('tur_refugee_host_generation') && Math.random() < 0.2) return pick([
+    'Three million Syrians: their country was destroyed and Turkey received them. The neighbourhoods changed — the Arabic signs, the schools in Arabic, the parallel economy. The resentment that followed was real and the reason they were there was also real. You lived in both of those facts simultaneously.',
+    'The most Syrian refugees of any country on earth, and no plan for what that meant at the level of a street, a school, a labour market. You watched the adjustment happen. It was not graceful and it was not nothing.',
+  ])
+  if (F.has('tur_lira_crisis_lived') && Math.random() < 0.22) return pick([
+    'Eighty-five percent inflation in October 2022. The lira losing 44 percent in a year. The savings you had in lira became a different amount while you watched. The central bank cut interest rates as inflation rose and the president insisted this was correct. You were the evidence it was not.',
+    'The price of bread followed the dollar, which was following something the government insisted it could control by not following the usual rules. You bought what you needed. It cost more each time.',
+  ])
+  if (F.has('tur_istanbul_convention_generation') && Math.random() < 0.2) return pick([
+    'Turkey signed the Istanbul Convention first and withdrew from it by decree in 2021. The convention is named after the city. The femicide statistics were not improving. The government\'s explanation was family values. You had a response to this that did not match the government\'s explanation.',
+    phase === 'late_life'
+      ? 'You watched the country sign a convention named after itself and then leave it. The women\'s organisations had built their systems around the Convention\'s requirements. The withdrawal left them in a legal vacuum that was also, for specific women, a dangerous vacuum.'
+      : 'The protests in Istanbul. The purple banners. The police cordons. What happened after — what didn\'t change — is the longer sentence.',
+  ])
+
+  // ─── NOMADIC TEXTURE ─────────────────────────────────────────────────────────
+  if (F.has('maasai_pastoralist') && Math.random() < 0.28) return pick([
+    'The cattle were the measure of everything. You learned which cow belonged to which lineage by ear notch and hide pattern. This is a literacy specific to that world and most of the world does not know it exists.',
+    phase === 'late_life'
+      ? 'The age-set system organised your life more precisely than any calendar: who you were circumcised with, who you became a warrior with, who you will age with. The system still works. The land it was built on is now a national park.'
+      : 'The Mara grass in the dry season. The way the herd moves before rain. You carry this knowledge in your body. It has limited usefulness in most of the places the world is trying to send you.',
+  ])
+  if (F.has('maasai_conservation_displaced') && Math.random() < 0.22) return pick([
+    'The Serengeti. The Maasai Mara. The names are the same but the permissions have changed. Your grandfather moved cattle across that land. You move around the edges of where that land is now protected for animals and tourists who pay more per night than your family earns in a month.',
+    'A lion is worth more as a photograph than your cattle are worth as cattle — by the pricing structure the world has decided on. You are aware of this structure. You did not agree to it.',
+  ])
+  if (F.has('bedouin_settled') && Math.random() < 0.22) return pick([
+    'The government\'s settlement programme: concrete rooms instead of tents, a fixed address for the census, the migration routes replaced by roads named by someone else. The patriarch resisted. The young men went first. The goats went last.',
+    phase === 'late_life'
+      ? 'The tribal knowledge of which land was used by which family in which season has no title deed the state recognises. The unwritten record carries weight inside the tribe and none outside it. You have watched what happens when those two accounts meet.'
+      : 'You grew up between the concrete house and the tent. The cousins who went and the cousins who stayed. The seam between those two lives is where you lived your childhood.',
+  ])
+  if (F.has('mongolian_herder') && Math.random() < 0.28) return pick([
+    'The ger goes up in forty minutes if everyone knows what they are doing. The door faces south, always south, to the sun. The stove is in the centre. The right side for women, the left for men, the north wall for the altar. Your home was also a cosmology.',
+    phase === 'late_life'
+      ? 'You moved four times a year for the first decades of your life. The coordinates of home changed with the season. The children you raised or know are growing up in a city with fixed coordinates, burning coal in a ger district where the smoke goes nowhere in winter.'
+      : 'The steppe in autumn: the grass going gold, the horses moving against the horizon. You know what that looks like. The city does not know you know this.',
+  ])
+  if (F.has('mongolian_dzud_survived') && Math.random() < 0.25) return pick([
+    'Dzud: the drought that leaves no stored grass, the ice storm that seals what little remains. In the morning the animals are where you left them and some of them are not moving. You know that specific morning.',
+    'The 2009–10 dzud: 8.5 million animals lost. The arithmetic of rebuilding a herd from what survives is a particular kind of mathematics — patient and slow and dependent on weather that is not predictable. You know the mathematics.',
+  ])
+  if (F.has('nomadic_heritage') && Math.random() < 0.2) return pick([
+    'The way you grew up — the seasonal movement, the knowledge of land and animals and weather that was your first education — does not translate cleanly into the world you are living in now. It is still there. It surfaces in how you read a sky, how you read people, what you notice.',
+    phase === 'late_life'
+      ? 'The grandchildren do not know the names for things you grew up knowing the names for. This is how cultures end — not all at once, but in the specific words that stop being passed on.'
+      : 'You carry a way of knowing the world that the world you are living in does not have a category for. This is both a loss and a resource, depending on the day.',
+  ])
 
   // ─── PHILIPPINES TEXTURE ─────────────────────────────────────────────────────
   if (F.has('marcos_generation') && Math.random() < 0.22) return pick([
