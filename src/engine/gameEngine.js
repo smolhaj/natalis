@@ -6466,6 +6466,50 @@ function buildYearTexture(state) {
         : 'You hid. You changed your route. Someone helped you who did not have to help you. The list and the help exist in the same memory.',
     ])
   }
+  if (F.has('id_1965_stained') && Math.random() < 0.28) return pick([
+    'The absence is permanent and officially nonexistent. The New Order has determined that the killings were necessary; the determination is final. You carry an undeclared grief for thirty years before it becomes speakable.',
+    phase === 'late_life'
+      ? 'After 1998, the archives began to open slightly. Not enough. The Komnas HAM report. The acknowledgments that were not apologies. You are old and the accounting is still incomplete and you are not sure it will be complete in your lifetime.'
+      : 'The name on the missing person register that was never filled out. The family member who was a teacher, or a union organizer, or just happened to live in the wrong neighborhood in October 1965. The reason, if there was one, has never been stated officially.',
+    'You have learned to manage the grief the way you manage something that cannot be put down. Not resolved. Carried.',
+  ])
+  if (F.has('id_1965_survived') && Math.random() < 0.22) return pick([
+    'You navigated through. That is the accurate word: navigated. Not survived in the sense of under fire — navigated in the sense of knowing which doors not to knock on and which meetings not to attend and which opinions not to have on record.',
+    phase === 'late_life'
+      ? 'The Reformasi opened a small window — some of the 1965 history became speakable. The window was smaller than you expected. The mass graves are mapped now in some places. The perpetrators are old. The victims are mostly dead. The accounting remains partial.'
+      : 'The generation that came after you does not know what you know. The New Order made sure of this through the curriculum and the silence. You sometimes wonder what it means that you know and they don\'t. You have not always found a way to answer the wondering.',
+  ])
+  if (F.has('id_1965_silence_generation') && Math.random() < 0.25) return pick([
+    'Half a million to a million people killed and the textbook says nothing about it that is accurate. You are part of the generation that knows and cannot say — not officially, not publicly, not at school.',
+    phase === 'late_life'
+      ? 'After Suharto fell in 1998, some of the silence began to lift. Truth and Reconciliation was discussed and not implemented. The Komnas HAM investigation was conducted and its findings were not acted on. The silence is lifting at the edges. It has not lifted at the center.'
+      : 'What you know and what you can say are two different territories. You have spent your adult life moving between them.',
+  ])
+  if (F.has('id_bali_bombing_generation') && Math.random() < 0.22) return pick([
+    'October 12, 2002. The Sari Club, Paddy\'s Pub. The wave that had been gathering in the Southeast Asian jihadist networks since the 1990s — Jemaah Islamiyah, the Afghan veterans, the pesantren networks — arrived that night in Bali of all places.',
+    phase === 'late_life'
+      ? 'The trial of Amrozi, Imam Samudra, and Mukhlas. Their execution in 2008. The tourism that returned to Bali. The second bombing in 2005 with twenty dead. The sequence of attack, investigation, and return to normal taught you something about what a country decides to absorb and continue.'
+      : 'The question the bombing opened about Indonesia\'s identity — a Muslim-majority country whose premier tourist destination is a Hindu island — was not new. Bali had always been specific. October 12 made the specificity visible to the world.',
+  ])
+  if (F.has('id_tsunami_2004_survivor') && Math.random() < 0.3) return pick([
+    'The wave was thirty meters in some places. It arrived in seventeen minutes after the earthquake. The seismometers registered the quake at 9.1; the warning infrastructure in the Indian Ocean did not exist yet. The absence of the warning system is counted in the dead.',
+    phase === 'late_life'
+      ? 'The coastline was different after. The town was in a different place, or a different shape. The reconstruction happened in a changed geography. You have spent the years since living in the changed geography and sometimes forgetting what it looked like before, and sometimes not.'
+      : 'The mathematics of who was on which street at what time: you carry this without being able to solve it. The solving is not available. The carrying remains.',
+    'The international aid in January 2005. The white trucks. The tarps. The coordination that arrived from everywhere and the decisions about who got what. It was real and it was incomplete in the way that help from far away is always incomplete.',
+  ])
+  if (F.has('id_transmigration_settler') && Math.random() < 0.2) return pick([
+    'The outer island land offer: cleared jungle, a house, a plot. The brochure showed rice fields. The reality showed you the jungle, the malaria, the other people who had not been consulted about your arrival.',
+    phase === 'late_life'
+      ? 'Transmigration policy is officially over. The land disputes it created are not over. You are in a community that arrived from Java and is still figuring out its relationship to the land and the people who were here before.'
+      : 'Six million Javanese moved to the outer islands under the program. The movement was the policy. The consequences — in Kalimantan, in Papua, in Sulawesi — were not the policy\'s responsibility, which is how policies avoid their consequences.',
+  ])
+  if (F.has('id_papua_identity') && Math.random() < 0.25) return pick([
+    'The Morning Star flag is illegal. The name for what you are — Papuan, West Papuan, Melanesian — is contested by a government that has decided what you are and administers the decision with military presence.',
+    phase === 'late_life'
+      ? 'The Grasberg mine is the largest gold mine in the world. It is in Papua. The royalties go elsewhere. The displacement and the environmental impact remain. You have watched the world not know this for your entire adult life.'
+      : 'Special Autonomy was the 2001 offer. The implementation was partial and contested. The political status of the territory remains unresolved in every way that matters. You are living inside the unresolved question.',
+  ])
   if (F.has('rohingya_resettled') && Math.random() < 0.22) {
     return pick([
       'Resettlement: the word suggests arrival. The arrival is real — the apartment, the documentation, the language class. The arrival and the belonging are not the same thing.',
@@ -14970,6 +15014,7 @@ export function generateEpitaph(state) {
     'bra_dictatorship_generation', 'bra_resistance_generation', 'bra_favela_survived',
     'bra_carandiru_generation', 'bra_nordestino_migrant', 'bra_lava_jato_generation', 'bra_january_8_witness',
     'nga_june12_generation', 'nga_boko_haram_generation', 'nga_delta_community',
+    'id_1965_stained', 'id_1965_silence_generation', 'id_tsunami_2004_survivor',
     'bng_liberation_generation', 'bng_mukti_bahini', 'bng_famine_generation', 'bng_coup_generation',
     'irq_iran_iraq_veteran', 'irq_sanctions_generation', 'irq_displacement_generation', 'irq_isis_generation',
     'rwa_rtlm_generation', 'rwa_genocide_witness', 'rwa_goma_generation',
@@ -14993,6 +15038,16 @@ export function generateEpitaph(state) {
 
   if (any('genocide_survivor', 'tutsi_hidden')) {
     para2.push(`${He} survived something that killed many of the people around ${him}. The rest of ${his} life was lived in the long shadow of that fact, and somehow, beyond it.`)
+  } else if (f('id_1965_stained') && f('id_1965_silence_generation')) {
+    para2.push(`${He} lost family in Indonesia's 1965 anti-communist purge — between 500,000 and one million killed in six months — and then spent thirty years under a New Order that determined the killings had been necessary. The grief and the silence were both enforced. ${He} carried both.`)
+  } else if (f('id_1965_stained')) {
+    para2.push(`A family member was taken in Indonesia's 1965 purge. The name of what happened — the organised mass killing, the army lists, the rivers — was not officially nameable for thirty years. ${He} had an undeclared grief for thirty years. It was declared late.`)
+  } else if (f('id_1965_silence_generation')) {
+    para2.push(`${He} was Indonesian in the New Order years — carrying knowledge of 1965 that the textbook did not contain. Between 500,000 and one million dead; the textbook said the communists had been defeated. ${He} navigated the gap between what ${he} knew and what could be said for thirty years.`)
+  } else if (f('id_tsunami_2004_survivor') && f('disaster_survivor')) {
+    para2.push(`${He} survived the December 26, 2004 Indian Ocean tsunami — 170,000 dead in Aceh, the coastline changed, the towns erased or reshaped. The randomness of who was on which street at what time is not a question ${he} ever fully stopped carrying.`)
+  } else if (f('id_papua_identity')) {
+    para2.push(`${He} was Papuan in Indonesia — the Morning Star flag illegal, the customary land contested, the Grasberg mine's gold going elsewhere. A life lived inside the unresolved question of what the territory is and who it belongs to and what that means for who you are.`)
   } else if (f('survived_khmer_rouge')) {
     para2.push(`${He} survived the Khmer Rouge years. That ${he} survived at all placed ${him} in a statistical minority.`)
   } else if (any('partition_survivor', 'partition_refugee')) {

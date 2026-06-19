@@ -1550,6 +1550,64 @@ export const FLAG_REGISTRY = {
     notes: 'Set by id98_late_reckoning (late_life, auto-resolve).',
   },
 
+  // ── INDONESIA DEPTH FLAGS ─────────────────────────────────────────────────
+
+  id_1965_stained: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'A family member was taken or killed in the 1965–66 anti-communist purge — carried as an undeclared grief through thirty years of New Order silence.',
+    intent: 'both',
+    notes: 'Set by id_1965_purge (family taken choice). The silence is enforced by the New Order; grief is privatized.',
+  },
+
+  id_1965_survived: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Navigated through the 1965–66 purge without losing immediate family — but carrying the knowledge of what happened under enforced silence.',
+    intent: 'both',
+    notes: 'Set by id_1965_purge (navigated through choice). Gates id_new_order_silence event.',
+  },
+
+  id_1965_silence_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Spent the New Order years in enforced silence about the 1965 purge — a generation that knew and could not say.',
+    intent: 'both',
+    notes: 'Set by id_new_order_silence event.',
+  },
+
+  id_bali_bombing_generation: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Lived through the October 12, 2002 Bali bombings — 202 dead, Indonesia\'s national reckoning with religious extremism.',
+    intent: 'both',
+    notes: 'Set by id_bali_bombing_2002.',
+  },
+
+  id_tsunami_2004_survivor: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived the December 26, 2004 Indian Ocean tsunami — 170,000 dead in Aceh alone, 230,000 total across the Indian Ocean.',
+    intent: 'both',
+    notes: 'Set by id_tsunami_2004. Rural-gated to approximate Acehnese/coastal Sumatran experience.',
+  },
+
+  id_transmigration_settler: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Participated in Suharto\'s transmigration program — Javanese resettled to Kalimantan, Sulawesi, or Papua; 6 million moved 1965–1990.',
+    intent: 'both',
+    notes: 'Set by id_transmigration (Javanese/Sundanese ethnicity gate).',
+  },
+
+  id_papua_identity: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Carries Papuan indigenous identity in Indonesia — the Morning Star flag, customary land, and structural exclusion from what "Indonesian" was designed to contain.',
+    intent: 'both',
+    notes: 'Set by id_papua_identity event. Papuan ethnicity gate.',
+  },
+
   // ── KURDISH IDENTITY FLAGS ────────────────────────────────────────────────
 
   kurd_identity_suppressed: {
