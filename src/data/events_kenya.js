@@ -115,6 +115,84 @@ export const KENYA_EVENTS = [
     effect: (p) => { p.m -= 4; p.e += 3; p.s += 2; p.setMem('kenNairobi', true) },
   },
 
+  // ── MAASAI ARC ────────────────────────────────────────────────────────────
+
+  {
+    id: 'ken_maasai_moran',
+    phase: 'adolescence',
+    weight: 8,
+    when: (G) => G.ethnicity === 'maasai' && ['Kenya', 'Tanzania'].includes(G.character.country.name) && G.age >= 14 && G.age <= 18 && !G.mem.kenMaasaiMoran,
+    text: 'The time has come. You know it by the way your father stops treating you as a child without ever saying so. The ceremony takes days — the songs, the ochre, the cutting that you do not cry through, which is the point. Afterward you are a moran. The spear is yours. The cattle you know individually by gait and voice. The land between the Mara and Loita Hills is yours in a way that does not require papers.',
+    choices: null,
+    effect: (p) => { p.m += 8; p.s += 4; p.h += 3; p.addFlag('maasai_moran'); p.setMem('kenMaasaiMoran', true) },
+  },
+
+  {
+    id: 'ken_maasai_land_displacement',
+    phase: 'young_adult',
+    weight: 6,
+    when: (G) => G.ethnicity === 'maasai' && ['Kenya', 'Tanzania'].includes(G.character.country.name) && G.currentYear >= 1960 && G.age >= 18 && !G.mem.kenMaasaiLand,
+    text: 'The game warden brings the letter. The grazing area that your grandfather knew as Il Purko land — the same land your father\'s cattle wintered on — is now a conservation zone. The word they use is "protected." Protected from what is not said, but you understand it. The animals inside are worth more to the government than the people outside. You have three months.',
+    choices: [
+      {
+        text: 'Contest the boundary. There are lawyers in Narok who take such cases.',
+        tag: null,
+        outcome: 'The lawyer charges. The case moves slowly. The boundary does not. You are poorer and the cattle are still outside the wire.',
+        effect: (p) => { p.mo -= 400; p.m -= 5; p.addFlag('maasai_land_displaced'); p.setMem('kenMaasaiLand', true) },
+      },
+      {
+        text: 'Move the cattle to the remaining group ranch.',
+        tag: null,
+        outcome: 'You move. The group ranch is overgrazed and the people already there know it. You are welcome and you are a problem.',
+        effect: (p) => { p.m -= 8; p.h -= 4; p.addFlag('maasai_land_displaced'); p.setMem('kenMaasaiLand', true) },
+      },
+    ],
+  },
+
+  {
+    id: 'ken_maasai_nairobi_choice',
+    phase: 'young_adult',
+    weight: 5,
+    when: (G) => G.ethnicity === 'maasai' && ['Kenya', 'Tanzania'].includes(G.character.country.name) && G.currentYear >= 1975 && G.age >= 20 && G.age <= 32 && G.flags.has('maasai_moran') && !G.mem.kenMaasaiNairobi,
+    text: 'Three of the young men from your age-grade have gone to Nairobi. One is a security guard at a hotel near the airport; another is studying something. The group ranch is subdivided — twenty acres per family, which is a number that makes no sense to cattle. Your older brother inherited more than you did. The land is there, but it is no longer land in the way land used to mean.',
+    choices: [
+      {
+        text: 'Go to Nairobi. Adapt.',
+        tag: 'maasai_nairobi',
+        outcome: 'You go. The city does not know your age-grade or your lineage. You start over with nothing except the ones who came before you.',
+        effect: (p) => { p.e += 3; p.m -= 5; p.addFlag('maasai_nairobi'); p.setMem('kenMaasaiNairobi', true) },
+      },
+      {
+        text: 'Stay and work what land remains.',
+        tag: 'maasai_stayed_pastoral',
+        outcome: 'You stay. The droughts come as they always have, but now there is less land to move through when they do. You learn what resilience costs when the options narrow.',
+        effect: (p) => { p.m += 3; p.h -= 3; p.addFlag('maasai_stayed_pastoral'); p.setMem('kenMaasaiNairobi', true) },
+      },
+    ],
+  },
+
+  {
+    id: 'ken_maasai_tourist_economy',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) => G.ethnicity === 'maasai' && ['Kenya', 'Tanzania'].includes(G.character.country.name) && G.currentYear >= 1990 && G.age >= 18 && G.age <= 45 && !G.mem.kenMaasaiTourist,
+    text: 'The lodge at the reserve gate is hiring. The job is to stand at the entrance in full regalia and be photographed. The pay is 4,000 shillings a month plus accommodation. The tourists pay $5 to photograph you; the lodge keeps $4.50. Your grandmother\'s beadwork is on sale in the gift shop, labelled "Maasai craftwork — authentically sourced." The source is a factory in Nairobi.',
+    choices: [
+      {
+        text: 'Take the job. The money is real.',
+        tag: null,
+        outcome: 'You take it. The money arrives. Every morning you dress for work and every afternoon you undress. You get good at reading which tourists want a photo and which want a conversation.',
+        effect: (p) => { p.mo += 1200; p.m -= 6; p.setMem('kenMaasaiTourist', true) },
+      },
+      {
+        text: 'Refuse. There are other ways.',
+        tag: null,
+        outcome: 'You refuse. The other ways are not obvious yet. You find some of them. They are harder and worth it in a way you cannot quantify.',
+        effect: (p) => { p.karma += 5; p.m += 3; p.r += 4; p.setMem('kenMaasaiTourist', true) },
+      },
+    ],
+  },
+
   // ── FOLLOW-THROUGH: MOI SILENCE ──────────────────────────────────────────
 
   {

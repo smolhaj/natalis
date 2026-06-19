@@ -119,6 +119,15 @@ function loadFromStorage() {
   } catch { return null }
 }
 
+function deriveInitialMem(flags) {
+  const mem = {}
+  if (flags.includes('born_with_disability')) {
+    const r = Math.random()
+    mem.disabilityType = r < 0.4 ? 'cerebral_palsy' : r < 0.8 ? 'limb_difference' : 'down_syndrome'
+  }
+  return mem
+}
+
 const INITIAL_STATE = {
   screen: 'title',
   birthYearMode: 'random',
@@ -201,6 +210,7 @@ const INITIAL_STATE = {
   workStatus: null, // 'formal' | 'informal' | 'unemployed' | 'subsistence' | null (child)
   currentProject: null, // { type, startYear, phase, name } — slow-burn personal project
   echoQueue: [], // [{ eventId, fireAtAge }] — guaranteed follow-up events scheduled by effects
+  legacy: 0, // 0-100: accumulates from children raised, mentoring, community, creative works
 }
 
 const _savedState = loadFromStorage()
@@ -241,18 +251,19 @@ export const useGameStore = create((set, get) => ({
     const parents = deriveInitialParents(character)
     const siblings = deriveInitialSiblings(character)
     const initialGpa = parseFloat(Math.min(4.0, 1.5 + stats.smarts * 0.02).toFixed(2))
+    const flags = deriveGenerationalFlags(character)
     set({
       screen: 'life',
       character,
       stats,
-      flags: deriveGenerationalFlags(character),
+      flags,
       regret: 0,
       age: 0,
       currentYear: character.birthYear,
       usedEventMap: new Map(),
       queue: [],
       pendingEvent: null,
-      mem: {},
+      mem: deriveInitialMem(flags),
       log: [{ age: 0, text: deriveBirthText(character), isKey: true }],
       career: null,
       education: { level: 'none', field: null, enrolled: null },
@@ -346,17 +357,18 @@ export const useGameStore = create((set, get) => ({
     const parents = deriveInitialParents(character)
     const siblings = deriveInitialSiblings(character)
     const initialGpa = parseFloat(Math.min(4.0, 1.5 + stats.smarts * 0.02).toFixed(2))
+    const flags = deriveGenerationalFlags(character)
     set({
       screen: 'life',
       stats,
-      flags: deriveGenerationalFlags(character),
+      flags,
       regret: 0,
       age: 0,
       currentYear: character.birthYear,
       usedEventMap: new Map(),
       queue: [],
       pendingEvent: null,
-      mem: {},
+      mem: deriveInitialMem(flags),
       log: [
         {
           age: 0,

@@ -932,7 +932,7 @@ export const CHILDREN_ARC_EVENTS = [
       return `${name} has done something significant. A promotion, a publication, a thing they built that is now in the world in a real way. You hear about it and you feel the pride that is, if you are honest, partly about you — the years of driving them places, the cost of things, the faith that was not always easy to maintain. You let yourself have the feeling. They have earned it and so have you.`
     },
     choices: null,
-    effect: (p) => { p.m += 14; p.karma += 4; p.setMem('childProfessionalAchievement', true) },
+    effect: (p) => { p.m += 14; p.karma += 4; p.setMem('childProfessionalAchievement', true); p.legacy += 5 },
   },
 
   {
@@ -960,7 +960,7 @@ export const CHILDREN_ARC_EVENTS = [
         text: 'Feel the pride fully — this is what it was supposed to look like',
         tag: null,
         outcome: 'The other thing is still there. But the pride is louder and you let it be.',
-        effect: (p) => { p.m += 8; p.r -= 5; p.karma += 5; p.setMem('childSurpassesYou', true) },
+        effect: (p) => { p.m += 8; p.r -= 5; p.karma += 5; p.setMem('childSurpassesYou', true); p.legacy += 8 },
       },
       {
         text: 'Sit with the complicated thing — it is honest',

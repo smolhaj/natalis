@@ -84,6 +84,113 @@ export const POST_SOVIET_EVENTS = [
     effect: null,
   },
 
+  // ── LATE STALIN ERA: GULAG ARC (1946–1953) ──────────────────────────────────
+
+  {
+    id: 'ps_gulag_arrest',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.archetype === 'post_soviet' &&
+      G.currentYear >= 1946 && G.currentYear <= 1952 &&
+      G.age >= 18 && G.age <= 50 &&
+      !G.mem.psGulagArrest,
+    text: 'The knock comes before dawn. Two men in long coats. Article 58: counter-revolutionary activity. The specific accusation: something you said in 1944 that someone wrote down; or that your brother-in-law was in the wrong division; or that your name appeared in someone else\'s testimony; or nothing you will ever be told. Your wife stands in the hallway. You are not given time to dress warmly. The paperwork is already signed.',
+    choices: [
+      {
+        text: 'There is nothing to say. You go.',
+        tag: null,
+        outcome: 'The Black Maria takes you east to a transit prison. The cattle car from there takes two weeks. The camp is in Kolyma or Vorkuta or Karaganda. You learn the word *zek* — you are a zek now.',
+        effect: (p) => { p.m -= 24; p.h -= 10; p.addFlag('gulag_survivor'); p.addFlag('gulag_family_memory'); p.setMem('psGulagArrest', true); },
+      },
+      {
+        text: 'You deny everything — for all the good it does',
+        tag: null,
+        outcome: 'The interrogation continues for three weeks. The outcome is the same. The cattle car. The camp.',
+        effect: (p) => { p.m -= 22; p.h -= 12; p.addFlag('gulag_survivor'); p.addFlag('gulag_family_memory'); p.setMem('psGulagArrest', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_gulag_camp',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.flags.has('gulag_survivor') &&
+      G.currentYear >= 1946 && G.currentYear <= 1953 &&
+      !G.mem.psGulagCamp,
+    text: 'The camp has a hierarchy no one explains and everyone obeys. The *blatnye* — criminal prisoners — have the informal authority. The politicals are lower. Your ration is tied to your output: less than the norm, less bread. The norm is calibrated so that a person eating the ration for below-norm production gradually loses the strength to reach the norm. You understand this system within a week. The question is whether you understand it fast enough. The Stakhanovite prisoners who exceed their quota are given extra bread and told they are model workers. They die from the overwork. You understand this too.',
+    choices: [
+      {
+        text: 'Find a way to survive — make yourself useful, learn the social economy',
+        tag: null,
+        outcome: 'A man from Leningrad teaches you how to game the output records. You give him bread when you have extra. The friendship is real and is also a survival arrangement. Both are true simultaneously.',
+        effect: (p) => { p.h -= 8; p.e += 5; p.s += 3; p.setMem('psGulagCamp', true); },
+      },
+      {
+        text: 'Stay apart from the arrangements — keep something of yourself',
+        tag: null,
+        outcome: 'You maintain the interior life that the camp cannot reach. The price is paid in cold and hunger. You pay it.',
+        effect: (p) => { p.h -= 14; p.m -= 6; p.karma += 8; p.setMem('psGulagCamp', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_gulag_release',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.flags.has('gulag_survivor') &&
+      G.currentYear >= 1953 && G.currentYear <= 1958 &&
+      !G.mem.psGulagRelease,
+    text: 'Stalin dies on March 5, 1953. The camp is informed by a guard who does not explain what it means. The amnesty comes in waves. Your paperwork is processed in 1954, or 1955. You are given a document that says you are released. You are not given transportation home. The nearest station is 400 kilometres. You do not have money for the train. The city you left is eight years in the past. The apartment is occupied by a different family. The friends who knew you have gone in various directions. Your wife is somewhere that a letter you sent reached and a letter you sent did not.',
+    choices: [
+      {
+        text: 'Go home, whatever is left of it.',
+        tag: null,
+        outcome: 'The journey takes a month. The city is smaller than you remembered and also exactly the same. The apartment that was yours is occupied by a family who had nothing to do with your arrest. The encounter is a specific kind of ordinary awkwardness that contains enormous weight.',
+        effect: (p) => { p.m -= 10; p.r += 8; p.addFlag('gulag_released_generation'); p.setMem('psGulagRelease', true); },
+      },
+      {
+        text: 'Stay near the camp — you know this place; the city is now more frightening than Siberia',
+        tag: null,
+        outcome: 'You work in the town near the camp for three years. You are not the only one. The geography that held you becomes the only geography you know how to navigate. Eventually you go back.',
+        effect: (p) => { p.m -= 14; p.r += 10; p.addFlag('gulag_released_generation'); p.setMem('psGulagRelease', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ps_gulag_late_reckoning',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) =>
+      G.flags.has('gulag_survivor') &&
+      G.age >= 55 &&
+      !G.mem.psGulagLate,
+    text: 'Khrushchev\'s secret speech was in 1956. Solzhenitsyn published in 1962. Glasnost named the thing in 1988. The archive is partially open now. You could look for your file — the testimony that produced your Article 58 charge, the name of who signed it, the specific sentence in someone\'s statement that sent you east. You have thought about whether you want to know.',
+    choices: [
+      {
+        text: 'You want to know.',
+        tag: null,
+        outcome: 'The file says what you knew it would say. A colleague\'s name, the specific phrase he wrote, the date. The man has been dead for twenty years. The file is yours to keep.',
+        effect: (p) => { p.r += 6; p.karma += 3; p.setMem('psGulagLate', true); },
+      },
+      {
+        text: 'You do not need the file. You know what happened.',
+        tag: null,
+        outcome: 'The knowing is in your body and in the particular way you hold certain things and in the year you lost when you were young. The file adds a name to this. You have decided you do not need the name.',
+        effect: (p) => { p.r += 4; p.karma += 6; p.setMem('psGulagLate', true); },
+      },
+    ],
+    effect: null,
+  },
+
   // ── 1990s PERSONAL COLLAPSE ──────────────────────────────────────────────────
 
   {

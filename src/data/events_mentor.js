@@ -162,7 +162,7 @@ export const MENTOR_EVENTS = [
           const name = `${pool[Math.floor(Math.random() * pool.length)]} ${c.surnames[Math.floor(Math.random() * c.surnames.length)]}`
           p.setMem('protegeName', name)
           p.setMem('hasProtege', true)
-          p.m += 8; p.s += 5; p.karma += 5
+          p.m += 8; p.s += 5; p.karma += 5; p.legacy += 4
           p.addFlag('is_mentor')
         },
       },
@@ -191,7 +191,7 @@ export const MENTOR_EVENTS = [
     choices: null,
     effect: (p) => {
       p.setMem('protegeSurpasses', true)
-      p.m += 15; p.karma += 8
+      p.m += 15; p.karma += 8; p.legacy += 8
       p.addFlag('protege_exceeded')
     },
   },
@@ -246,7 +246,7 @@ export const MENTOR_EVENTS = [
       return `You are ${G.age}. You have been on both sides of this. ${mentor} opened doors for you when doors were what you needed. You opened doors for ${protege}. You do not know what doors ${protege} has opened for others. You will never know. The chain continues past what you can see.`
     },
     choices: null,
-    effect: (p) => { p.setMem('menBothArcs', true); p.m += 12; p.karma += 8 },
+    effect: (p) => { p.setMem('menBothArcs', true); p.m += 12; p.karma += 8; p.legacy += 6 },
   },
 
   // ── ADOLESCENT MENTOR ECHO ─────────────────────────────────────────────────

@@ -224,4 +224,72 @@ export const WEST_AFRICA_EVENTS = [
     effect: null,
   },
 
+  // ═══════════════════════════════════════════════════════════════════════
+  // GHANA — depth events
+  // ═══════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'gha_nkrumah_school',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Ghana' &&
+      G.currentYear >= 1957 && G.currentYear <= 1968 &&
+      G.age >= 8 && G.age <= 16 &&
+      !G.mem?.ghaNkrumahSchool,
+    text: 'The school was built while you were young enough to not remember a time without it. Nkrumah\'s government built secondary schools in regions that had none; it built the University of Ghana at Legon and told a generation that education was not for the colonial elite but for anyone Ghana produced. Your father went as far as class six; you will go further. This is not abstract progress — it has a specific building with specific teachers and specific examination results that determine what you become. The building exists because someone decided that you should exist as a person who goes to school.',
+    choices: null,
+    effect: (p) => {
+      p.e += 8; p.m += 5; p.karma += 3;
+      p.addFlag('nkrumah_education_beneficiary');
+      p.setMem('ghaNkrumahSchool', true);
+    },
+  },
+
+  {
+    id: 'gha_1966_coup',
+    phase: 'young_adult',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'Ghana' &&
+      G.flags.has('nkrumah_generation') &&
+      G.currentYear >= 1966 && G.currentYear <= 1972 &&
+      G.age >= 16 &&
+      !G.mem?.gha1966Coup,
+    text: 'February 24, 1966. Nkrumah is in Hanoi, on a peace mission to Vietnam, when the National Liberation Council announces it has taken power. The police and army. The coup is bloodless. The idea it ended was not bloodless. You grew up with the pan-African project — the speeches, the schools, the sense that Ghana was the place that would show what independence could mean. The NLC dismantles the state farms, privatises what had been built, accepts IMF conditions that reverse the development programme. Nkrumah lives in Guinea until 1972 as a guest of Sékou Touré. You follow his statements from exile. They sound different now — the same ideas in a smaller room.',
+    choices: null,
+    effect: (p) => {
+      p.m -= 14; p.e += 5; p.r += 8; p.karma -= 3;
+      p.addFlag('ghana_1966_disillusionment');
+      p.setMem('gha1966Coup', true);
+    },
+  },
+
+  {
+    id: 'gha_brain_drain_witness',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Ghana' &&
+      G.currentYear >= 1982 && G.currentYear <= 2005 &&
+      G.age >= 28 && G.age <= 55 &&
+      !G.mem?.ghaBrainDrain,
+    text: 'The doctor you have known since university writes to say she is in London now. The engineer who built the Akosombo dam extension went to Canada three years ago. The secondary school where you teach or studied has had three headmasters in four years — each one left before the next was found. Structural adjustment cut public sector wages to the point where a nurse earns less than a market trader. The people Ghana spent a generation educating are in other countries spending those educations. You watch the going, and the going continues, and you count the chairs left empty by people you know.',
+    choices: [
+      {
+        text: 'You stay. Someone has to hold the place together.',
+        tag: 'stayed',
+        outcome: 'The word for this in Ghana is "holding the fort." The fort is less staffed every year. You hold it anyway.',
+        effect: (p) => { p.m -= 10; p.r += 8; p.karma += 5; p.addFlag('ghana_stayed_generation'); p.setMem('ghaBrainDrain', true); },
+      },
+      {
+        text: 'You leave, or you are already planning to.',
+        tag: 'left',
+        outcome: 'The logic is rational at the individual level. The effect at scale is the thing you carry.',
+        effect: (p) => { p.m -= 6; p.r += 6; p.addFlag('brain_drain_gone'); p.addFlag('emigrated'); p.setResidency('work_visa'); p.setMem('ghaBrainDrain', true); },
+      },
+    ],
+    effect: null,
+  },
+
 ]

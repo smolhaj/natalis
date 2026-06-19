@@ -71,6 +71,102 @@ export const SENEGAL_EVENTS = [
     ],
   },
 
+  // ── MOROCCO TRANSIT ROUTE ────────────────────────────────────────────────
+
+  {
+    id: 'sen_morocco_route',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      IS_SENEGAL(G) &&
+      G.currentYear >= 2000 && G.currentYear <= 2020 &&
+      G.age >= 18 && G.age <= 32 &&
+      !G.mem.senBarca &&
+      !G.mem.senMoroccoRoute,
+    text: 'The land route: overland to Mali, then north through Algeria to the Moroccan border at Oujda. The journey takes two to four months — the money for buses and trucks and the men who move you across checkpoints in the dark. The bus is full of people from Senegal, Guinea, Mali, Niger, making the same calculation. The route is not safe. It is also documented, negotiable, survivable, which the Atlantic at night sometimes is not.',
+    choices: [
+      {
+        text: 'Take the overland route north.',
+        tag: null,
+        outcome: 'You reach Morocco. The Moroccan police at Oujda find you on a road at dawn and put you on a bus back to the Algerian border. You cross back. You try again two weeks later. The third time you make it to Nador.',
+        effect: (p) => { p.m -= 14; p.h -= 6; p.mo -= 800; p.addFlag('sen_morocco_transit'); p.setMem('senMoroccoRoute', true); },
+      },
+      {
+        text: 'The Canary Islands route is faster. You know someone with a boat.',
+        tag: null,
+        outcome: 'You take the Atlantic instead. The boat is a pirogue, not built for nine hundred kilometres. Seven days on the water with thirty-eight people.',
+        effect: (p) => { p.m -= 20; p.h -= 12; p.addFlag('emigrated'); p.setResidency('undocumented'); p.setMem('senMoroccoRoute', true); p.setMem('senBarca', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'sen_nador_forest',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.flags.has('sen_morocco_transit') &&
+      G.currentYear >= 2000 && G.currentYear <= 2020 &&
+      !G.mem.senNadorForest,
+    text: 'The camp is in the forest above Nador, two kilometres from the fence at Melilla. A hundred people, sometimes three hundred, from Senegal, Guinea, Cameroon, Niger — sleeping under plastic sheeting and cooking on fires. Moroccan police come periodically; the camp is dismantled and rebuilt. Some people have been here eight months. A man from Conakry has been here fourteen months. The fence is visible from the high ground: six metres of steel mesh, razor wire on top, a second fence inside. Spanish police on the other side, Moroccan police on yours. You wait for a night when enough people are ready to go at once.',
+    choices: [
+      {
+        text: 'Wait. The mass attempt requires enough people.',
+        tag: null,
+        outcome: 'You wait three more months. The attempt is set for a night in November when two hundred people run the fence together. The logic: too many bodies for the guards to stop all of them.',
+        effect: (p) => { p.m -= 16; p.h -= 8; p.addFlag('sen_melilla_attempt'); p.setMem('senNadorForest', true); },
+      },
+      {
+        text: 'Go back. You have been here long enough.',
+        tag: null,
+        outcome: 'You turn south. The journey home costs what the journey here cost. Arriving back is not the same as not having left.',
+        effect: (p) => { p.m -= 20; p.h -= 5; p.r += 6; p.setMem('senNadorForest', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'sen_melilla_fence',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.flags.has('sen_melilla_attempt') &&
+      !G.mem.senMelillaFence,
+    text: 'Two hundred people run out of the forest at three in the morning. The sound is not silence and not chaos — it is the sound of people who have agreed to do something that may not work. You get to the outer fence and start climbing. The razor wire opens your hands and your legs. Above you, people are going over. Below, people are falling. The Spanish civil guard is on the other side with rubber bullets. The Moroccan auxiliaries are behind you with batons. You are at the top of the fence.',
+    choices: [
+      {
+        text: 'Go over.',
+        tag: null,
+        outcome: 'You reach Spanish territory. You are bleeding from both hands and your left leg. Spain is legally required to process you. You know this because someone in the forest camp told you. You hold this information like a key.',
+        effect: (p) => { p.m -= 15; p.h -= 10; p.addFlag('emigrated'); p.addFlag('sen_made_europe'); p.setResidency('asylum_seeker'); p.setMem('senMelillaFence', true); },
+      },
+      {
+        text: 'You are knocked down before you reach the top.',
+        tag: null,
+        outcome: 'A baton catches you at the waist and you fall. You are loaded onto a bus and taken back to Oujda. Six weeks later, you try again.',
+        effect: (p) => { p.m -= 18; p.h -= 12; p.addFlag('sen_fence_pushback'); p.setMem('senMelillaFence', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── FOLLOW-THROUGHS ──────────────────────────────────────────────────────
+
+  {
+    id: 'sen_fence_pushback_echo',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) =>
+      G.flags.has('sen_fence_pushback') &&
+      G.age >= 30 &&
+      !G.mem.senFencePushbackEcho,
+    text: 'The European Court of Human Rights rules in 2020 that Spain\'s policy of "immediate return" at Melilla and Ceuta violates the prohibition on collective expulsion. The ruling comes years after the night you fell from the fence. What happened to you had a name, a legal category, a judgment. The judges in Strasbourg decided it was wrong. You are not sure what to do with that.',
+    choices: null,
+    effect: (p) => { p.r += 4; p.karma += 3; p.setMem('senFencePushbackEcho', true); },
+  },
+
   {
     id: 'sen_gorée_school',
     phase: 'childhood',

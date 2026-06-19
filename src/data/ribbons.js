@@ -2629,4 +2629,30 @@ export const RIBBONS = [
     priority: 72,
     color: 'green',
   },
+
+  // ── SICK CHILD ARC RIBBONS ────────────────────────────────────────────────────
+  {
+    id: 'the_appointment_life',
+    name: 'The Appointment Life',
+    description: 'Your child was seriously ill. You reorganized your life around what they needed and stayed reorganized for as long as they needed it.',
+    condition: (G) => G.flags.includes('child_seriously_ill'),
+    priority: 76,
+    color: 'gray',
+  },
+  {
+    id: 'the_numbers_improved',
+    name: 'The Numbers Improved',
+    description: 'You lived in the space between results for a long time. Then the results changed. The relief did not erase the waiting. Both are real.',
+    condition: (G) => G.flags.includes('child_illness_recovery'),
+    priority: 72,
+    color: 'blue',
+  },
+  {
+    id: 'the_managed_life',
+    name: 'Alongside',
+    description: 'Your child\'s condition was permanent. So was your presence alongside it — not overriding their life with it, but being there for what it required.',
+    condition: (G) => G.flags.includes('child_illness_chronic') && G.flags.includes('ill_child_late_witness'),
+    priority: 78,
+    color: 'purple',
+  },
 ]

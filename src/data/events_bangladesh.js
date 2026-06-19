@@ -204,6 +204,91 @@ const BANGLADESH_EVENTS = [
     effect: (p) => { p.s += 2; p.r += 3; p.addFlag('bng_dhaka_generation'); p.setMem('bng_dhaka', true); },
   },
 
+  // ── MALAYSIA LABOUR MIGRATION ────────────────────────────────────────────────
+
+  {
+    id: 'bng_malaysia_decision',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Bangladesh' &&
+      G.currentYear >= 1993 &&
+      G.character.gender === 'male' &&
+      G.age >= 20 && G.age <= 35 &&
+      G.stats.wealth < 55 &&
+      !G.mem?.bngMalaysia,
+    text: 'The dalal says the fee is three lakh taka for a construction visa to Malaysia. The official rate is seventy thousand. The difference is the dalal\'s margin and the recruiter\'s margin and the employer\'s agent\'s margin, stacked. Your family will borrow against the land to cover it. The loan is from a moneylender at three percent a month. The man three houses down went three years ago and sent enough to rebuild the house. Another man from the village went and the employer changed his visa category when he arrived and the job he\'d been promised didn\'t exist.',
+    choices: [
+      {
+        text: 'You go. The three lakh is borrowed, the ticket is bought.',
+        tag: null,
+        outcome: 'Kuala Lumpur at two in the morning. The agent takes your passport at the airport. You will get it back when the employer says. The dormitory holds eighteen people.',
+        effect: (p) => { p.m -= 10; p.mo -= 3500; p.addFlag('bng_malaysia_worker'); p.addFlag('bng_broker_debt'); p.addFlag('emigrated'); p.setResidency('work_visa'); p.setMem('bngMalaysia', true); },
+      },
+      {
+        text: 'The risk is the debt, not the distance. You stay.',
+        tag: null,
+        outcome: 'The land stays in the family. The earnings from here are smaller. You are still here when some of the men who went come back — some with money, some having sent everything home and returned with nothing.',
+        effect: (p) => { p.m -= 4; p.addFlag('stayed_behind'); p.setMem('bngMalaysia', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'bng_malaysia_life',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.flags.has('bng_malaysia_worker') &&
+      G.currentYear >= 1993 &&
+      G.age >= 21 && G.age <= 40 &&
+      !G.mem?.bngMalaysiaLife,
+    text: 'The construction site is in Johor Bahru or in Selangor or on the Petronas Twin Towers or on one of the new industrial parks in Penang. The hours are ten to twelve. The dormitory is a converted shipping container. The phone plan works for calls home on Sundays. The employer controls the work permit, which means he controls whether you stay. The math: monthly salary 1,100 ringgit, send 800 home, keep 300 for food and the phone and the occasional bus. The family debt from the dalal will be cleared in three years, two years if the overtime continues. You have agreed not to think about the three percent a month.',
+    choices: [
+      {
+        text: 'Send the maximum home. You can live on very little.',
+        tag: null,
+        outcome: 'The remittances arrive on the second Tuesday. Your mother knows the schedule. The debt is coming down. Your son was born while you were here.',
+        effect: (p) => { p.m -= 10; p.mo += 1200; p.addFlag('bng_remittance_generation'); p.karma += 5; p.setMem('bngMalaysiaLife', true); },
+      },
+      {
+        text: 'Document the permit violations. You know what the law says they cannot do.',
+        tag: null,
+        outcome: 'The employer finds out you have been asking questions. You are transferred to a subcontractor in Sabah without notice. The documentation stays with you. You do not know yet whether it will matter.',
+        effect: (p) => { p.m -= 12; p.karma += 8; p.addFlag('bng_malaysia_worker'); p.setMem('bngMalaysiaLife', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'bng_malaysia_return',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.flags.has('bng_malaysia_worker') &&
+      G.currentYear >= 2000 &&
+      G.age >= 28 && G.age <= 50 &&
+      !G.mem?.bngMalaysiaReturn,
+    text: 'You have been gone four years, or six, or ten. The remittances went home and the debt is paid and the house has a second floor. Your children speak to you with the careful formality people use for someone they know from calls. Your wife has managed the household and the parents-in-law and the school decisions for years without you. The country you returned to is the country you left but the person you are is not the person who left it. That gap takes a while to name.',
+    choices: [
+      {
+        text: 'The remittances built something real. The years were worth it.',
+        tag: null,
+        outcome: 'The second floor is real. The fees are paid. The accounting on the years abroad is: it worked, and it cost something you are still calculating.',
+        effect: (p) => { p.m += 8; p.r += 5; p.addFlag('bng_remittance_generation'); p.setMem('bngMalaysiaReturn', true); },
+      },
+      {
+        text: 'You missed the years. No house is worth what you weren\'t here for.',
+        tag: null,
+        outcome: 'This is true and the house is also true and the two truths are both yours. You are here now. That is the part you can still do something about.',
+        effect: (p) => { p.m -= 6; p.r += 10; p.addFlag('bng_remittance_generation'); p.setMem('bngMalaysiaReturn', true); },
+      },
+    ],
+    effect: null,
+  },
+
   // ── STUDENT UPRISING 2024 ─────────────────────────────────────────────────────
 
   {
