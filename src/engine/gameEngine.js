@@ -11172,24 +11172,95 @@ function buildYearTexture(state) {
       : 'The loss travels in the family differently than it appears in books. In books it is statistics. In the family it is what your grandmother said when anyone mentioned a certain city, which she never visited again.',
   ])
 
-  // ─── UNIVERSAL FALLBACK ───────────────────────────────────────────────────────
+  // ─── PHASE-STRATIFIED UNIVERSAL FALLBACK ─────────────────────────────────────
+  // Three-layer prose: universal human texture + life-phase + the unremarkable
+  // fabric of existence. Each phase has its own pool before the generic catchall.
+
+  if (phase === 'early_childhood') return pick([
+    'The world is still making sense. You are inside the process of it.',
+    'You are mostly interested in things that are close to the ground — insects, water, the texture of things.',
+    'You do not understand everything the adults say, but you understand more than they assume.',
+    'The year is a series of sensations. The sensations are everything.',
+    'Time is not a line yet. It is more like weather — something that happens to you.',
+    'You are learning what the world is by touching it.',
+    'The smallest things carry the most weight: the pattern on a favourite cloth, the sound of a particular voice.',
+    'You are entirely present. You do not know yet that this is unusual.',
+  ])
+
+  if (phase === 'childhood') return pick([
+    'School is most of the year. School is a country with its own politics.',
+    'You are developing a theory of the world. The theory keeps being revised.',
+    'Your friendships are the most important thing in your life, even if no one treats them that way.',
+    'You are old enough to be bored now. Boredom is a new feeling and not entirely a bad one.',
+    'The gap between what the adults say and what they do is something you are starting to notice.',
+    'You are waiting for something — for life to begin properly, for the thing that will define you to arrive.',
+    'You have started to have opinions about things. You are partly right and partly wrong, which is what opinions are.',
+    'You are memorising things without meaning to: routes, faces, sequences, the way the light falls at a certain time.',
+    'The world is large and you are starting to understand just how large.',
+  ])
+
+  if (phase === 'adolescence') return pick([
+    'You are more yourself than you were and less certain about it.',
+    'The body is its own project and not always a project you wanted.',
+    'You are developing the person you will be by trying on versions and discarding them.',
+    'You want to be understood more than you want almost anything.',
+    'The people around you are also trying to figure out who they are. This is not always comforting.',
+    'Everything matters too much and also nothing matters enough. Both are true at once.',
+    'You are starting to understand that there will not be a moment when you arrive at yourself. The arriving is the life.',
+    'You feel things at a frequency that the years ahead will not sustain. You do not know this yet.',
+    'You are watching older people for clues about how to be in the world. The clues are incomplete.',
+    'There is a version of yourself you are trying to become. It is not yet clear if you are on the right track.',
+  ])
+
+  if (phase === 'young_adult') return pick([
+    'You are choosing the life, one small decision at a time. The choices are adding up.',
+    'For the first time, the future is not hypothetical. You are inside it.',
+    'You are learning that adulthood is mostly improvisation with a confident face.',
+    'The freedom you wanted turns out to require decisions, which turns out to be its own kind of labour.',
+    'Your ideas about yourself are being tested against the actual conditions.',
+    'You are surrounded by other people doing the same thing — figuring it out, pretending to be more certain than they are.',
+    'The exhaustion of building something from nothing is a particular kind of exhaustion. You are in it.',
+    'The friendships you make in this decade will last, some of them, for the rest of your life. You cannot tell yet which ones.',
+    'You are learning what you are good at. You are also learning what you are not good at, which is equally useful.',
+    'This is the period when the life takes its shape. The shaping is ongoing.',
+  ])
+
+  if (phase === 'midlife') return pick([
+    'You have been here long enough to know what the years look like in retrospect.',
+    'The project of becoming who you are going to be has mostly concluded. This is not a defeat. It is a fact.',
+    'You are carrying more than you were carrying at thirty. You have learned how to carry.',
+    'There are things you have accepted. Some of them took years to get to acceptance. The effort was real.',
+    'The choices that still feel possible are fewer. The ones that remain are the ones that actually matter.',
+    'You understand now what you were doing in your twenties — not knowing, with great confidence.',
+    'The life has a shape now. You can see it from this vantage point in a way you could not from inside it.',
+    'You have outlived some of your certainties. The ones that remain are more carefully held.',
+    'You do not have more time than you thought. You have the same amount. You are more precise about it now.',
+    'The middle of life is not a place. It is a quality of attention — a retrospective sight that was not possible before.',
+  ])
+
+  if (phase === 'late_life') return pick([
+    'The work of this phase is not the same work as before. Different things are asked of you.',
+    'You have a longer view now than you needed before. The longer view changes what matters.',
+    'You are made of more experience than you know what to do with. The not-knowing is fine.',
+    'The body is the project now in a way it was not before. You attend to it differently.',
+    'There is less pretence available in this phase of life. The pretence you still maintain you maintain deliberately.',
+    'You are old enough to have watched things end — whole eras, whole relationships, whole versions of people you knew. You are still here.',
+    'You are more yourself than you have ever been, because the other versions have fallen away.',
+    'There is a pleasure in small things that was not available in the same way before. Not because the things have changed. Because you have.',
+    'The questions you have not answered are not going to be answered by more information. You know that now.',
+    'You have been making your way through it. You are still making your way through it. Everyone is.',
+  ])
+
+  // ─── FINAL GENERIC FALLBACK ───────────────────────────────────────────────────
   return pick([
     'A year without incident. These exist.',
     'The days have a rhythm to them.',
-    'Nothing remarkable. You are grateful for that, mostly.',
+    'Nothing remarkable.',
     'Time passes, as it does.',
-    'A quiet year. Not every year needs to be a story.',
-    'The life continues.',
-    'A year of small decisions that add up to something.',
-    'You are here. That is the year\'s summary.',
-    'The ordinary is underrated.',
-    'Another year done. Not every year needs a name.',
     'The routine holds. Routine is not nothing.',
+    'A year of small decisions that add up to something.',
+    'The ordinary is underrated.',
     'You are making your way through it. Everyone is.',
-    'A year of maintenance — of the life, of yourself, of the people in it.',
-    'Nothing major. The quiet kind of year that is sometimes the one you need.',
-    'The world did its thing. You did yours. Neither of you asked the other\'s permission.',
-    'You got through the year. Some years that is the achievement.',
   ])
 }
 
