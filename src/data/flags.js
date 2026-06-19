@@ -10622,6 +10622,7 @@ export const FLAG_REGISTRY = {
     notes: 'Set by bra_january_8_2023.',
   },
 
+
   // ─── ARGENTINA 2001 FLAGS ─────────────────────────────────────────────────────
 
   corralito_survivor: {
