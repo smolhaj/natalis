@@ -347,6 +347,181 @@ const JAPAN_EVENTS = [
     effect: null,
   },
 
+  // ── HIBAKUSHA — ATOMIC BOMB SURVIVOR ─────────────────────────────────────────
+
+  {
+    id: 'jpn_hibakusha',
+    phase: 'young_adult',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'Japan' &&
+      G.currentYear >= 1945 && G.currentYear <= 1960 &&
+      G.age >= 14 &&
+      !G.mem?.jpn_hibakusha,
+    text: (G) => {
+      const city = G.currentYear <= 1947 && G.age <= 35 ? 'Hiroshima' : 'a city'
+      return `August 1945. The flash. Anyone who could see it was close enough that the seeing was the last clear thing for a long time. The burns. The silence at the hospital — not because people were not in pain but because the pain was past the reach of sound. Hiroshima and Nagasaki: 200,000 dead in the acute phase, more over the years from radiation illness. You survived. The word for what you are is hibakusha — "explosion-affected person." The word carries a stigma that the survivors did not earn: marriage bureaus begin quietly checking A-bomb registries. Employers do the same. The bomb was August 6 and 9; the discrimination begins in the weeks after and continues for decades.`
+    },
+    choices: [
+      {
+        text: 'You tell people. The truth of it is not something you can carry invisibly.',
+        tag: null,
+        outcome: 'Telling costs you in specific ways — the marriage match that falls through, the employment that does not materialise — and gives you in specific ways: the other hibakusha who know without explanation.',
+        effect: (p) => { p.m -= 15; p.h -= 12; p.r += 8; p.karma += 6; p.addFlag('hibakusha'); p.addFlag('hibakusha_survivor'); p.setMem('jpn_hibakusha', true); },
+      },
+      {
+        text: 'You do not tell people. The stigma is real and you cannot survive it twice.',
+        tag: null,
+        outcome: 'Not telling requires constant maintenance. The body keeps the record regardless. The silence is its own weight, carried alongside the one the bomb left.',
+        effect: (p) => { p.m -= 18; p.h -= 10; p.r += 10; p.addFlag('hibakusha'); p.addFlag('hibakusha_survivor'); p.addFlag('hibakusha_silent'); p.setMem('jpn_hibakusha', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── ZAINICHI KOREAN IDENTITY ──────────────────────────────────────────────────
+
+  {
+    id: 'jpn_zainichi',
+    phase: 'adolescence',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'Japan' &&
+      G.ethnicity === 'korean_japanese' &&
+      G.currentYear >= 1950 && G.currentYear <= 2000 &&
+      G.age >= 13 && G.age <= 25 &&
+      !G.mem?.jpn_zainichi,
+    text: (G) => {
+      const yr = G.currentYear
+      if (yr <= 1980) {
+        return 'The alien registration card. You have carried it since you were fourteen — the law requires it, and the police can ask for it at any time, and not having it is a crime. Your grandparents were brought to Japan before 1945 to work in the mines, the factories, the construction sites. When Japan surrendered, they lost their Japanese citizenship and became foreigners in the country they had lived in for decades. You were born here. You are still a foreigner here. The fingerprinting requirement: the Japanese state requires you to press your ink-covered finger to the registration card. Many Zainichi begin refusing in the 1970s. The refusal is an act that carries legal consequences.'
+      }
+      return 'You have a Japanese name you use publicly and a Korean name you use at home. Or you have only the Japanese name. Either way, the choice was made for you or by your parents or by the specific calculation of survival in a country that does not grant citizenship by birth. The fingerprinting requirement for Zainichi Koreans ends in 1999 after decades of resistance. What does not end: the question of naturalization, which requires erasing the Korean name from the register, which not everyone is willing to do.'
+    },
+    choices: [
+      {
+        text: 'You keep both identities — the Japanese public face and the Korean home face',
+        tag: null,
+        outcome: 'The maintenance of two names in two registers has a specific cost and a specific dignity. You know who you are in both languages. The country knows you as one of them.',
+        effect: (p) => { p.m -= 6; p.e += 4; p.s += 2; p.r += 5; p.addFlag('zainichi_identity'); p.setMem('jpn_zainichi', true); },
+      },
+      {
+        text: 'You naturalize. The Korean name leaves the official record.',
+        tag: null,
+        outcome: 'The citizenship makes certain things possible and certain things complicated. The loss of the name from the official register is not the same as the loss of the name.',
+        effect: (p) => { p.m -= 4; p.r += 6; p.addFlag('zainichi_naturalized'); p.setMem('jpn_zainichi', true); },
+      },
+      {
+        text: 'You resist the fingerprinting and the registration. The resistance has costs.',
+        tag: null,
+        outcome: 'You are not alone. The Zainichi civil rights movement builds through the 1970s-90s. The fingerprinting ends in 1999. You were part of the argument that ended it.',
+        effect: (p) => { p.m -= 8; p.karma += 10; p.addFlag('zainichi_identity'); p.addFlag('zainichi_resisted'); p.setMem('jpn_zainichi', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── AUM SHINRIKYO / TOKYO SUBWAY SARIN 1995 ──────────────────────────────────
+
+  {
+    id: 'jpn_aum_sarin_1995',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Japan' &&
+      G.currentYear >= 1995 && G.currentYear <= 1997 &&
+      G.age >= 20 &&
+      !G.mem?.jpn_aum,
+    text: 'March 20, 1995. Aum Shinrikyo punctures plastic bags of sarin on five Tokyo subway lines during the morning rush hour. Thirteen people die. Nearly a thousand suffer permanent vision damage. Thousands more require treatment. The attack opens at a place in the Japanese psyche that was supposed to be sealed: the assumption of safety. Japan is a country where violent crime is extremely rare, where the train is on time to the minute, where the implicit social contract includes the subway being safe. That contract is punctured with the bags.',
+    choices: [
+      {
+        text: 'You were on one of the affected lines that morning, or you know someone who was.',
+        tag: null,
+        outcome: 'The morning that reorganised how you take the subway. The reorganisation is permanent — not as fear exactly, but as a kind of knowledge about what the subway is that you did not have before.',
+        effect: (p) => { p.m -= 10; p.h -= 4; p.r += 6; p.addFlag('aum_generation'); p.addFlag('aum_proximate'); p.setMem('jpn_aum', true); },
+      },
+      {
+        text: 'You follow it on the news, in a country where this was not supposed to happen.',
+        tag: null,
+        outcome: 'Japan\'s relationship with the idea of domestic terrorism before 1995 and after 1995 are two different relationships. You experienced the transition from the outside of the stations.',
+        effect: (p) => { p.m -= 6; p.r += 4; p.addFlag('aum_generation'); p.setMem('jpn_aum', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── AINU IDENTITY ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'jpn_ainu',
+    phase: 'adolescence',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'Japan' &&
+      G.ethnicity === 'ainu' &&
+      G.currentYear >= 1960 && G.currentYear <= 2010 &&
+      G.age >= 13 && G.age <= 25 &&
+      !G.mem?.jpn_ainu,
+    text: (G) => {
+      const yr = G.currentYear
+      if (yr <= 1995) {
+        return 'The Ainu are the indigenous people of Hokkaido — and Sakhalin, and the Kuril Islands — who were colonized by Japan from the late 19th century. The Hokkaido Former Aborigines Protection Act of 1899 took the land, banned the language, banned the traditional hunting and fishing. You were not taught Ainu language in school. You were taught that the Ainu are an interesting historical subject. The historical subject is you. Japan does not officially recognise you as indigenous. The word "indigenous" will not appear in Japanese law until 2019.'
+      }
+      return 'The 2019 law recognises the Ainu as Japan\'s indigenous people. The recognition arrives without land rights, without language funding adequate to the task, without the mechanisms that make recognition real. You have been watching the national narrative about the Ainu for decades. The narrative is more comfortable with the Ainu as historical artifact than as people making present demands.'
+    },
+    choices: [
+      {
+        text: 'You connect with the Ainu cultural revival — the language, the crafts, the community',
+        tag: null,
+        outcome: 'The revival is fragile and real. The language was nearly lost; it is being learned again. The cultural connection is something you build rather than inherit, because the chain of transmission was broken. Building it is its own form of continuity.',
+        effect: (p) => { p.m += 4; p.e += 4; p.r += 4; p.addFlag('ainu_identity'); p.addFlag('ainu_revival'); p.setMem('jpn_ainu', true); },
+      },
+      {
+        text: 'You navigate Japan as Japanese, holding your Ainu origin as private knowledge',
+        tag: null,
+        outcome: 'Passing is possible because Ainu and Japanese are not visually distinct. The private knowledge is still knowledge — it shapes how you read the history being taught around you.',
+        effect: (p) => { p.r += 6; p.addFlag('ainu_identity'); p.setMem('jpn_ainu', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── OKINAWA AND THE BASES ─────────────────────────────────────────────────────
+
+  {
+    id: 'jpn_okinawa_bases',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Japan' &&
+      G.currentYear >= 1972 && G.currentYear <= 2020 &&
+      G.age >= 16 && G.age <= 45 &&
+      G.ruralUrban !== 'urban' &&
+      !G.mem?.jpn_okinawa,
+    text: (G) => {
+      const yr = G.currentYear
+      if (yr <= 1980) {
+        return 'Okinawa reverted to Japanese sovereignty in 1972 after twenty-seven years of American administration. The reversion brought a Japanese passport but the bases did not leave. Seventy percent of US military bases in Japan are in Okinawa, which is less than one percent of Japan\'s land area. The noise of the F-15s. The off-limits district outside Camp Hansen. The accidents. The 1995 rape of a twelve-year-old girl by three US servicemen becomes the trigger for mass protests — 85,000 people in the streets, the largest protest in Okinawan history.'
+      }
+      return 'Okinawa is asked to carry the cost of the US-Japan security alliance while Tokyo and Osaka receive its benefits. The proposed relocation of Marine Corps Air Station Futenma to Henoko — offshore, still in Okinawa — has been opposed by local government for twenty years. Successive Japanese prime ministers promise to resolve it and then, under American pressure, do not resolve it. You live under the flight path. The flight path is the argument, conducted in noise, about who decides what.'
+    },
+    choices: [
+      {
+        text: 'The bases are an occupation with a different name — you oppose them',
+        tag: null,
+        outcome: 'The opposition is the majority position in Okinawa and a minority position in Tokyo. You are in the political geography of a prefecture whose preferences the national government has decided are not the deciding factor.',
+        effect: (p) => { p.r += 6; p.karma += 4; p.addFlag('okinawa_base_opposition'); p.setMem('jpn_okinawa', true); },
+      },
+      {
+        text: 'The bases bring employment and the alliance is security — the argument is more complicated',
+        tag: null,
+        outcome: 'The employment argument is real and the security argument is real and both are used by Tokyo and both arguments land differently in Okinawa than they land in Tokyo. You know the landing from the inside.',
+        effect: (p) => { p.r += 4; p.addFlag('okinawa_base_opposition'); p.setMem('jpn_okinawa', true); },
+      },
+    ],
+    effect: null,
+  },
+
 ]
 
 export default JAPAN_EVENTS

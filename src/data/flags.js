@@ -2240,6 +2240,86 @@ export const FLAG_REGISTRY = {
     notes: 'Set by jpn_war_silence (both choices).',
   },
 
+  hibakusha_survivor: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Atomic bomb survivor — survived Hiroshima or Nagasaki, carrying the flash, the burns, the radiation illness, and the subsequent decades of social discrimination.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_hibakusha. Also sets the hibakusha flag to gate ca2 downstream events (marriage discrimination, stigma).',
+  },
+
+  hibakusha_silent: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Atomic bomb survivor who chose not to disclose — carrying the secret of the bomb alongside its physical effects.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_hibakusha (silence choice). The weight of maintaining the secret over decades.',
+  },
+
+  zainichi_identity: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Zainichi Korean — Korean-Japanese living in Japan across generations, navigating alien registration, fingerprinting, name erasure, and the question of what citizenship is for.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_zainichi (dual identity and resist choices). One of the most historically significant minority identities in East Asia.',
+  },
+
+  zainichi_naturalized: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Zainichi Korean who naturalized Japanese citizenship — the Korean name leaves the official register, the identity does not.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_zainichi (naturalize choice).',
+  },
+
+  zainichi_resisted: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Refused fingerprinting as a Zainichi Korean in the 1970s-90s — part of the civil rights movement that ended the requirement in 1999.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_zainichi (resist choice).',
+  },
+
+  aum_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the 1995 Tokyo subway sarin attack — 13 dead, thousands injured, the assumption of Japanese safety punctured.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_aum_sarin_1995 (both choices).',
+  },
+
+  aum_proximate: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Was on or near an affected subway line on March 20, 1995 — or knew someone who was.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_aum_sarin_1995 (proximate choice).',
+  },
+
+  ainu_identity: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Ainu identity — Japan\'s indigenous Hokkaido people, dispossessed through 1899 colonial legislation, denied indigenous recognition until 2019.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_ainu (both choices). The Ainu are approximately 25,000 people; land and language rights remain contested.',
+  },
+
+  ainu_revival: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Participated in Ainu cultural revival — learning the nearly-lost language, reconnecting to practices whose chain of transmission was broken by colonisation.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_ainu (revival choice).',
+  },
+
+  okinawa_base_opposition: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lives under or opposes the US military base concentration in Okinawa — 70% of US bases on less than 1% of Japan\'s land, the 1995 rape protests, the Henoko relocation fight.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_okinawa_bases (both choices).',
+  },
+
   // ── PERU ──────────────────────────────────────────────────────────────────────
 
   per_sendero_generation: {

@@ -6917,6 +6917,81 @@ function buildYearTexture(state) {
       ? 'The things that happened in the years before you were born shaped the country you grew up in and the country that shaped you shaped the things you did not talk about at the table. The silence is inherited. You are deciding what to do with it.'
       : 'You know the version your family told and the version the government curriculum tells and the version the neighbors who grew up in Korea or China or the Philippines tell, and you know these are not the same version.',
   ])
+  if (F.has('hibakusha_survivor') && Math.random() < 0.32) return pick([
+    'The word hibakusha means bomb-affected person. The category arrived after the category existed. You were already the thing before there was a word for it.',
+    phase === 'late_life'
+      ? 'The doctors who came to examine you in the years after treated your body as data. You understood this. The understanding did not make it easier to be data.'
+      : 'The flash, the heat, the silence where the city was. You remember in a specific order. You have never found the order that makes the telling easier.',
+    'You survived. The statistics of survival are not comfort. They are simply the bracket your experience falls inside.',
+  ])
+  if (F.has('hibakusha_silent') && Math.random() < 0.25) return pick([
+    'You chose not to say. The name on the marriage register was clean. The city you came from was a city you had left. Nobody asked the exact question that would have required the exact answer.',
+    phase === 'late_life'
+      ? 'You kept it for sixty years. The keeping is its own kind of carrying. You wonder now whether the silence protected them or only protected the silence.'
+      : 'There are things that can end a marriage arrangement before it begins. You knew the list. You arranged your history around it.',
+  ])
+  if (F.has('zainichi_identity') && Math.random() < 0.28) return pick([
+    'The resident registration card marked you as a foreigner in a country your grandparents were brought to and your parents were born in. The bureaucratic category predates the country that issues it.',
+    phase === 'late_life'
+      ? 'You have lived your entire life in Japan. The category "special permanent resident" is the country\'s official designation for that fact.'
+      : 'Two names: the Japanese name for school, the work, the landlord. The Korean name for home, for the food, for what the family says in the room without strangers.',
+    'The fingerprinting requirement was the visible surface of a system whose depths you had been navigating since childhood. The visible surface was insult enough.',
+  ])
+  if (F.has('zainichi_naturalized') && Math.random() < 0.2) return pick([
+    'Naturalization requires renouncing the previous nationality and passing a character screening and waiting and not saying certain things about why you waited this long and why you are doing this now.',
+    phase === 'late_life'
+      ? 'The Japanese passport travels everywhere the Korean one could not. You notice the difference and notice what it cost to notice it as a difference.'
+      : 'You are Japanese by law now. The law arrived after the life.',
+  ])
+  if (F.has('zainichi_resisted') && Math.random() < 0.22) return pick([
+    'You refused the fingerprint. The refusal was a legal case and a public statement and also just a refusal — the simple unwillingness to submit to a requirement that only applied to you.',
+    phase === 'late_life'
+      ? 'The fingerprinting requirement was abolished in 1993. You refused it before the abolition and after the abolition you had already refused it. Both facts are true at the same time.'
+      : 'The solidarity networks that formed around the fingerprinting refusals connected Zainichi communities across Japan in ways the government had not anticipated as a consequence of its policy.',
+  ])
+  if (F.has('aum_generation') && Math.random() < 0.22) return pick([
+    'The subway sarin was a Tuesday morning in March. Tokyo in rush hour, people in business suits, the ten exits. You remember what the month smelled like before.',
+    phase === 'late_life'
+      ? 'The Aum trial lasted until 2018. Twenty-three years of legal proceedings after eleven dead and six thousand injured on a Tuesday morning. The proceedings lasted longer than some careers.'
+      : 'Before March 20, 1995, the language of religious violence in Japan referred to the nineteenth century. The frame changed in a Tuesday morning.',
+  ])
+  if (F.has('aum_proximate') && Math.random() < 0.3) return pick([
+    'The delayed medical care, the uncertain diagnosis, the specific chemical and what it does to the eye\'s ability to focus. The nerve agent has a pharmacology and you learned it from the inside.',
+    'You were close enough to see what it did to the person beside you. The image is available to recall without your choosing to recall it.',
+    phase === 'late_life'
+      ? 'The city returned to normal with unusual speed. The efficiency of the return was itself a kind of statement. You returned to normal more slowly.'
+      : 'The gas mask images circulated the same day. Tokyo covered its face in photographs for a week. You were in the tunnel before the photographs.',
+  ])
+  if (F.has('ainu_identity') && Math.random() < 0.28) return pick([
+    'The government recognized the Ainu as an indigenous people in 2019. The language had fewer than ten fluent native speakers remaining by then. Official recognition and language death arrived in the same generation.',
+    phase === 'late_life'
+      ? 'Your grandparents remembered the Meiji-era prohibitions on tattooing, salmon fishing, the ceremonial sites. You remember the prohibition being remembered. The difference is exactly one generation.'
+      : 'The Hokkaido Ainu formally became indigenous peoples in law in 2019. The law arrived after the salmon had been forbidden for a century. You are deciding what to do with a recognition that costs the government nothing.',
+    'In the schoolroom you were Japanese. Outside the schoolroom the question of what you were was more complicated. The complication is part of your formation.',
+  ])
+  if (F.has('ainu_revival') && Math.random() < 0.22) return pick([
+    'You learned the language from recordings. The speakers the recordings captured are mostly gone. Learning a language from the voices of the dead is a specific kind of relationship with the dead.',
+    phase === 'late_life'
+      ? 'The Upopoy National Ainu Museum opened in 2020. You have opinions about what it does and does not contain. You have been having these opinions for longer than the museum has existed.'
+      : 'The ceremonies you practice were reconstructed from ethnographic notes and from what the elders remembered of what they had been told. The reconstruction is real. It is also a reconstruction.',
+  ])
+  if (F.has('okinawa_base_opposition') && Math.random() < 0.25) return pick([
+    'Okinawa is 0.6 percent of Japan\'s land and hosts seventy percent of the US military footprint in Japan. The arithmetic is known to everyone on the island and is not regarded as settled arithmetic.',
+    phase === 'late_life'
+      ? 'The reversion was 1972. The bases did not leave with the administration. You have now spent more years under the revised arrangement than under direct occupation. The revision is the fact your life is lived around.'
+      : 'The petition, the referendum, the gubernatorial veto, the national government\'s override of the prefectural veto. The structure of the disagreement is as familiar as the streets that go around the perimeter wire.',
+    'The noise is a frequency you have stopped hearing consciously. The absence of it, when it happens, is the thing you notice.',
+  ])
+  if (F.has('hibakusha_survivor') && F.has('jpn_testigo_generation') && Math.random() < 0.18) return pick([
+    'You survived the bomb and you watched the country rebuild itself over and over in the image of what it wanted to have been. The official relationship between the bomb and the war that produced it was something you witnessed being managed for decades.',
+    phase === 'late_life'
+      ? 'The hibakusha had a complicated relationship to pacifism — some were its loudest advocates, others resisted the category of victim entirely. You were present for the internal argument.'
+      : 'The bomb ended the war. The war that produced the bomb was something the postwar country had a complicated relationship to. You lived inside the complication.',
+  ])
+  if (F.has('zainichi_identity') && F.has('aum_generation') && Math.random() < 0.15) return pick([
+    'The Aum recruitment actively targeted people who felt outside the mainstream — including Zainichi youth searching for identity outside the double-exclusion of Korean-Japanese existence. You watched the recruits and understood the appeal even as you refused it.',
+    'After the sarin attack, the backlash touched communities perceived as foreign or peripheral. The map of public suspicion is not limited to its official targets.',
+  ])
 
   // ─── SOUTH KOREA TEXTURE ─────────────────────────────────────────────────────
   if (F.has('gwangju_generation') && Math.random() < 0.3) return pick([
@@ -14769,6 +14844,7 @@ export function generateEpitaph(state) {
     'col_violencia_generation', 'col_cartel_era', 'col_desplazado', 'col_paramilitary_era',
     'per_sendero_generation', 'per_sterilization_survivor',
     'japan_postwar_generation', 'lost_decade_generation', 'fukushima_generation', 'burakumin_identity',
+    'hibakusha_survivor', 'hibakusha_silent', 'zainichi_identity', 'aum_proximate', 'ainu_identity', 'okinawa_base_opposition',
     'sau_siege_generation', 'sau_khashoggi_generation',
     'irn_sanctions_generation', 'irn_jcpoa_generation',
     'april_9_generation', 'georgian_war_2008', 'geo_1990s_generation', 'geo_testigo_generation',
@@ -14989,6 +15065,26 @@ export function generateEpitaph(state) {
     para2.push(`${He} navigated Japan's feudal outcast legacy — the family register check, the marriage veto, the things said behind and not to ${his} face — and then navigated the Lost Decade. Two systems of exclusion, one life.`)
   } else if (f('burakumin_identity')) {
     para2.push(`${He} was descended from Japan's feudal outcast caste. Legally emancipated 1871. The discrimination that could not be legislated away operated through the marriage register, the address, the things that identified without being said.`)
+  } else if (f('hibakusha_survivor') && f('hibakusha_silent')) {
+    para2.push(`${He} survived the atomic bomb and chose silence — the family register clean, the city unnamed, the fact carried without surfacing. The silence lasted as long as ${his} life. Whether it protected anyone was a question ${he} did not fully answer.`)
+  } else if (f('hibakusha_survivor') && f('japan_postwar_generation')) {
+    para2.push(`${He} was a hibakusha in a country that was rebuilding itself in the image of peace. The official narrative of Japan as victim and Japan as economic miracle both ran alongside the specific memory of the flash. ${He} held all three at once for decades.`)
+  } else if (f('hibakusha_survivor')) {
+    para2.push(`${He} was a hibakusha — bomb-affected. The word and the category and the discrimination and the medical registry and the testimony movements: ${he} navigated all of them over the decades after a morning in 1945.`)
+  } else if (f('zainichi_identity') && f('zainichi_resisted')) {
+    para2.push(`${He} was Zainichi — a third-generation resident born in Japan who was formally foreign — and refused the fingerprinting requirement that applied only to people like ${him}. The refusal was a legal case. It was also a statement about what a body owes the state that categorizes it.`)
+  } else if (f('zainichi_identity') && f('zainichi_naturalized')) {
+    para2.push(`${He} was Zainichi Korean — the grandchildren of those brought to Japan before 1945, born in Japan, formally foreign — and eventually naturalized. The naturalization resolved the bureaucratic category. It did not resolve the question of what ${he} was.`)
+  } else if (f('zainichi_identity')) {
+    para2.push(`${He} was Zainichi Korean in Japan — born there, permanent resident there, formally foreign there. Two names: one for the public world, one for home. The double life was so ordinary that ${he} stopped noticing the doubling.`)
+  } else if (f('ainu_identity') && f('ainu_revival')) {
+    para2.push(`${He} was Ainu in a Japan that did not officially recognize Ainu as indigenous people until 2019. By then ${he} had already spent decades in the revival movements, learning the language from recordings of speakers who were gone, reconstructing ceremonies from ethnographic notes.`)
+  } else if (f('ainu_identity')) {
+    para2.push(`${He} was Ainu — indigenous to Hokkaido — in a country that did not recognize that category in law until near the end of ${his} life. The recognition arrived. The language had nearly gone. Both facts arrived in the same generation.`)
+  } else if (f('aum_proximate')) {
+    para2.push(`${He} was on the Tokyo subway on March 20, 1995. The sarin reached the station ${he} was in. ${He} survived. The city returned to its schedule with unusual speed. ${He} returned more slowly.`)
+  } else if (f('okinawa_base_opposition') && f('japan_postwar_generation')) {
+    para2.push(`${He} was Okinawan in postwar Japan — reversion 1972, bases staying regardless, seventy percent of the US footprint on 0.6 percent of the land. The postwar settlement that remade mainland Japan arrived in Okinawa in a specific form. ${He} lived in that form.`)
   } else if (f('japan_postwar_generation') && f('fukushima_generation')) {
     para2.push(`${He} was born into occupied Japan — the rubble, the chocolate from soldiers, the new constitution — and lived to March 11, 2011, when the word "anzen" stopped fitting the sentence. The arc of postwar Japan is ${his} arc.`)
   } else if (f('japan_postwar_generation') && f('lost_decade_generation')) {
