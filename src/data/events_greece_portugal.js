@@ -144,6 +144,122 @@ export const GREECE_PORTUGAL_EVENTS = [
     effect: null,
   },
 
+  // ── CIVIL WAR FAMILY MEMORY ───────────────────────────────────────────────────
+
+  {
+    id: 'gr_civil_war_memory',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Greece' &&
+      G.currentYear >= 1945 && G.currentYear <= 1965 &&
+      G.age >= 6 && G.age <= 16 &&
+      !G.mem?.grCivilWar,
+    text: 'The Civil War ended in 1949 but it did not end in the family. The division between those who fought for the government and those who fought for the Communists ran through villages, through extended families, sometimes through a single household. You are growing up in its aftermath. A relative who was on the losing side: there are things they cannot say, things they cannot do, lists their names are on. Your father does not speak to his brother. There is a word for this — to be "nationally-minded" or to be "of the left" — but in the family the word is not spoken, only practiced. The Civil War killed more Greeks than the German occupation. The Germans are discussed. The Civil War is not.',
+    choices: [
+      {
+        text: 'Your family was on the winning side. The silence is the silence of what winning required.',
+        tag: null,
+        outcome: 'The things that were done to win are in the family as an absence — as things not discussed rather than as stories. You learn to notice absences.',
+        effect: (p) => { p.r += 6; p.e += 4; p.addFlag('gr_civil_war_memory'); p.setMem('grCivilWar', true); },
+      },
+      {
+        text: 'Your family was on the losing side. There are things you cannot say out loud in this decade.',
+        tag: null,
+        outcome: 'What you cannot say becomes the language of the house — implied, known between family members, inadmissible in the street.',
+        effect: (p) => { p.m -= 8; p.r += 7; p.addFlag('gr_civil_war_memory'); p.addFlag('political_leaning_left'); p.setMem('grCivilWar', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── THE OXI REFERENDUM 2015 ───────────────────────────────────────────────────
+
+  {
+    id: 'gr_oxi_2015',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Greece' &&
+      G.currentYear >= 2015 && G.currentYear <= 2016 &&
+      G.age >= 20 &&
+      !G.mem?.grOxi,
+    text: 'July 5, 2015. The question is: do you accept the creditors\' austerity terms. The ballot says \'OXI\' for no and \'NAI\' for yes. Sixty-one percent vote OXI. Tsipras holds it up as a mandate. One week later he accepts terms significantly more severe than the ones that were rejected. The sequence — the referendum, the week, the capitulation — teaches something specific about the gap between democratic mandate and economic power. The word OXI has meant something specific in Greece since October 1940, when Metaxas said it to Mussolini. It was used again in July 2015, and meant something different, and produced a different result.',
+    choices: [
+      {
+        text: 'You voted OXI. The vote was real. The outcome was not what the vote indicated.',
+        tag: null,
+        outcome: 'The lesson is not about Tsipras. The lesson is about the structure that produced the outcome.',
+        effect: (p) => { p.m -= 10; p.r += 7; p.e += 4; p.addFlag('gr_oxi_generation'); p.setMem('grOxi', true); },
+      },
+      {
+        text: 'You voted NAI, or abstained. You believed the referendum was theater.',
+        tag: null,
+        outcome: 'You were right about the theater. The people who voted OXI were also right about what they were saying. Both can be true.',
+        effect: (p) => { p.m -= 7; p.r += 5; p.e += 3; p.addFlag('gr_oxi_generation'); p.setMem('grOxi', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── BRAIN DRAIN 2010s ─────────────────────────────────────────────────────────
+
+  {
+    id: 'gr_brain_drain_2010s',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Greece' &&
+      G.currentYear >= 2010 && G.currentYear <= 2020 &&
+      G.age >= 22 && G.age <= 38 &&
+      G.stats.smarts > 45 &&
+      !G.mem?.grBrainDrain,
+    text: 'Between 2008 and 2018, four hundred thousand Greeks emigrated — the majority of them with university degrees. You have the degree. You have the EU passport. Germany, the Netherlands, Australia, Canada: the specific geography of where Greeks went. You know people who are already there. The salary offered in Germany is three times what the Greek market offers for the same work, if the Greek market offers it at all. The unemployment rate for your age group has reached fifty percent. The question is whether you are a person who stays or a person who goes, and the question is answered by the same practical arithmetic that is answering it for four hundred thousand other people.',
+    choices: [
+      {
+        text: 'You go. The degree travels. You follow it.',
+        tag: null,
+        outcome: 'You leave carrying the specific double grief of economic emigration: you did not leave because you wanted to, and you do not return because you cannot afford to.',
+        effect: (p) => { p.m -= 8; p.r += 7; p.e += 5; p.addFlag('emigrated'); p.addFlag('greece_crisis_emigrant'); p.setResidency('work_visa'); p.setMem('grBrainDrain', true); },
+      },
+      {
+        text: 'You stay. You will find a way to make it work here.',
+        tag: null,
+        outcome: 'Staying is a choice that the people who left have complicated feelings about. The country needs people who stay. The country is also not making it easy.',
+        effect: (p) => { p.m -= 6; p.r += 6; p.karma += 4; p.addFlag('greece_crisis_stayed'); p.setMem('grBrainDrain', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── LATE RECKONING ────────────────────────────────────────────────────────────
+
+  {
+    id: 'gr_late_reckoning',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Greece' &&
+      G.currentYear >= 1990 &&
+      G.age >= 55 &&
+      (G.flags.has('gr_civil_war_memory') || G.flags.has('polytechnic_generation') ||
+       G.flags.has('greece_crisis_stayed') || G.flags.has('revolution_generation')) &&
+      !G.mem?.grLate,
+    text: (G) => {
+      const seenCivilWar = G.flags.has('gr_civil_war_memory')
+      const seenJunta = G.flags.has('polytechnic_generation') || G.flags.has('revolution_generation')
+      if (seenCivilWar && seenJunta) {
+        return 'You lived the Civil War\'s aftermath — the silences, the lists, the family fractures — and then the junta, and then the Polytechnic, and then the Metapolitefsi, and then the crisis. Greece has had many more opportunities for catastrophe per generation than most countries. You have been in possession of all of them. You have also been alive for the country that kept reconstituting itself on the other side of each one.'
+      }
+      if (seenJunta) {
+        return 'From the junta to the Metapolitefsi to the EU to the crisis to the OXI vote and its aftermath: you have seen what Greece looked like when it had no democracy and what it looked like when democracy produced an outcome that was overridden by economics. The generation that holds both versions is yours.'
+      }
+      return 'The crisis decade taught specific things about what a country can lose and what it can absorb. Pensions cut. ATMs limited. Young people leaving. The country absorbing it — or failing to absorb it cleanly — over years. You watched from the inside. That vantage point is not transferable.'
+    },
+    choices: null,
+    effect: (p) => { p.r += 7; p.karma += 4; p.addFlag('gr_testigo_generation'); p.setMem('grLate', true); },
+  },
+
   // ═══════════════════════════════════════════════════════════════════════
   // PORTUGAL
   // ═══════════════════════════════════════════════════════════════════════
@@ -275,6 +391,60 @@ export const GREECE_PORTUGAL_EVENTS = [
     text: 'Portugal joins the European Community on January 1, 1986. The structural funds begin to arrive. Roads that did not exist are built. A motorway from Lisbon to Porto. A university in every district capital. A pharmacist in Beja applies for European funding for the first time and receives it. What EC membership means for the generation that remembers the Estado Novo and emigrating to France to work in factories is not something that can be measured in GDP figures. The reference point is not Luxembourg. The reference point is 1974.',
     choices: null,
     effect: (p) => { p.m += 8; p.w += 5; p.e += 4; p.addFlag('eu_accession_generation'); p.setMem('ptEU', true) },
+  },
+
+  {
+    id: 'pt_geracao_rasca_2011',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Portugal' &&
+      G.currentYear >= 2011 && G.currentYear <= 2013 &&
+      G.age >= 18 && G.age <= 35 &&
+      !G.mem?.ptRasca,
+    text: 'March 12, 2011. The protest is called "Geração à Rasca" — the desperate generation. It was organized not by unions or parties but by four precarious workers in their twenties who wrote a manifesto on the internet. They chose the name at two in the morning. Three hundred thousand people come to Lisbon; one hundred thousand to Porto; hundreds of thousands to every city in the country. They carry signs that say "Parva que Sou" — Fool That I Am — a line from a José Afonso song that was the second codeword for the Carnation Revolution. The largest protest since 1974. Three weeks later, Sócrates resigns. Six weeks after that, Portugal applies for the EU/IMF bailout.',
+    choices: [
+      {
+        text: 'You are in the Rossio, or the Praça do Município, or the streets of Porto.',
+        tag: null,
+        outcome: 'The number who came was the thing that mattered — not the sign, not the manifesto, but the number. You added yourself to the number.',
+        effect: (p) => { p.m -= 3; p.karma += 5; p.addFlag('geracao_rasca_generation'); p.addFlag('political_active'); p.setMem('ptRasca', true); },
+      },
+      {
+        text: 'You watch it on television and on your phone. It is also your generation and your problem.',
+        tag: null,
+        outcome: 'The three hundred thousand go home and the bailout is announced anyway. The protest and the bailout are not in contradiction: the protest is the record that the people understood what was happening. You were watching when the record was made.',
+        effect: (p) => { p.m -= 5; p.r += 4; p.addFlag('geracao_rasca_generation'); p.setMem('ptRasca', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'pt_troika_lived',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Portugal' &&
+      G.currentYear >= 2011 && G.currentYear <= 2015 &&
+      G.age >= 30 && G.age <= 60 &&
+      !G.mem?.ptTroika,
+    text: 'The troika memorandum runs to several hundred pages of specific conditions attached to the €78 billion bailout. You do not read all of it. You feel what it contains. The social security contribution is raised for workers and reduced for employers. The thirteenth-month and fourteenth-month salaries are suspended. The Constitutional Court strikes some measures down. The government introduces equivalent measures under different names. Doctors who trained here are emigrating to Angola and Mozambique — Portugal is exporting medical professionals to its former colonies, which is a sentence that requires some time to process. Youth unemployment reaches forty percent. The word "austeridade" is in every conversation.',
+    choices: [
+      {
+        text: 'You adapt, without calling it adaptation.',
+        tag: null,
+        outcome: 'You adapt. The adjustment is specific and personal and you do not discuss it with people who do not have to discuss it. What you keep and what you cut is a long and continuing set of small decisions.',
+        effect: (p) => { p.m -= 8; p.w -= 6; p.r += 4; p.addFlag('portuguese_troika_generation'); p.setMem('ptTroika', true); },
+      },
+      {
+        text: 'You leave. The irony of going to Angola or Brazil is not lost on you.',
+        tag: null,
+        outcome: 'Angola is hiring. Brazil is growing. The colonies that Portugal extracted from for five hundred years are now the destination for the Portuguese who cannot find work. You go. The irony is not theoretical.',
+        effect: (p) => { p.m -= 4; p.w += 3; p.r += 6; p.addFlag('portuguese_troika_generation'); p.addFlag('portuguese_emigrant_2011'); p.setMem('ptTroika', true); },
+      },
+    ],
+    effect: null,
   },
 
 ]

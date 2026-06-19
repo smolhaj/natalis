@@ -196,4 +196,85 @@ export const UK_EVENTS = [
     },
   },
 
+  {
+    id: 'uk_falklands_1982',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'United Kingdom' &&
+      G.currentYear >= 1982 && G.currentYear <= 1983 &&
+      G.age >= 14 &&
+      !G.mem?.ukFalklands,
+    text: 'April 2, 1982. Argentina invades the Falkland Islands. The Task Force is assembled and sails south — eight thousand miles, in April, into the South Atlantic winter. The names come in through the news: HMS Sheffield, HMS Coventry, HMS Ardent. The Belgrano — an Argentine cruiser sailing away from the exclusion zone — is sunk with three hundred and twenty-three men. The campaign lasts seventy-four days. Two hundred and fifty-five British military dead. Six hundred and forty-nine Argentine military dead. Three Falkland Island civilians. The war ends with a 144-seat Conservative majority in June 1983. The seventy-four days reshape the decade.',
+    choices: [
+      {
+        text: 'The islands are British territory. The principle of sovereignty has to mean something.',
+        tag: null,
+        outcome: 'The victory is complete. The Argentine forces surrender on June 14. The political consequences are also complete, and last considerably longer.',
+        effect: (p) => { p.m += 4; p.addFlag('falklands_generation'); p.setMem('ukFalklands', true); },
+      },
+      {
+        text: 'Two hundred and fifty-five lives for islands eight thousand miles away that most people couldn\'t have placed on a map six months before.',
+        tag: null,
+        outcome: 'The question is real and the islands were also real and the men who died were real. The victory doesn\'t answer the question — it defers it. The politics that follow do the rest.',
+        effect: (p) => { p.m -= 5; p.r += 5; p.addFlag('falklands_generation'); p.setMem('ukFalklands', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'uk_77_bombings_2005',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'United Kingdom' &&
+      G.currentYear >= 2005 && G.currentYear <= 2007 &&
+      G.age >= 14 &&
+      !G.mem?.uk77,
+    text: 'July 7, 2005. Four coordinated bombs on London public transport during the morning rush. Three on the Underground — at King\'s Cross, Edgware Road, Aldgate — and one on a bus on Tavistock Square. Fifty-two people killed, seven hundred injured. The morning after London won the right to host the 2012 Olympics. Emergency services initially describe "power surges." Then the bus. Then the full picture. The four bombers were British — from Beeston in Leeds, from Huddersfield. British citizens who had grown up here. That is the sentence that takes longest to resolve: not foreign, not outsiders. From here.',
+    choices: [
+      {
+        text: 'You were in London that morning — on the Underground, nearby, or someone you knew was.',
+        tag: null,
+        outcome: 'The morning was ordinary until it wasn\'t. The specific feeling of an ordinary morning becoming that kind of morning does not fully go away.',
+        effect: (p) => { p.m -= 14; p.h -= 4; p.r += 6; p.addFlag('london_77_generation'); p.setMem('uk77', true); },
+      },
+      {
+        text: 'You watched from outside London. The bombers being British is the part that takes longest.',
+        tag: null,
+        outcome: '"Power surges" gave way to the real picture within the hour. The British passports of the bombers gave way to a different set of questions that took longer than an hour to form.',
+        effect: (p) => { p.m -= 8; p.r += 5; p.addFlag('london_77_generation'); p.setMem('uk77', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'uk_scottish_independence_2014',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'United Kingdom' &&
+      G.currentYear >= 2014 && G.currentYear <= 2016 &&
+      G.age >= 16 &&
+      !G.mem?.ukScottishIndy,
+    text: 'September 18, 2014. The question on the ballot: "Should Scotland be an independent country?" The campaign ran for two years. Yes Scotland and Better Together. The Vow — published in the Daily Record three days before the poll, signed by Cameron, Miliband, and Clegg, promising more devolved powers. Turnout 84.6 percent — the highest recorded in any UK election. Result: 55.3 percent No, 44.7 percent Yes. Scotland remains in the Union. Alex Salmond resigns. Nicola Sturgeon becomes First Minister. The Brexit vote, two years later, will return the question with different arithmetic.',
+    choices: [
+      {
+        text: 'You voted Yes, or you wanted Scotland to vote Yes. The question is about what kind of country Scotland could be.',
+        tag: null,
+        outcome: 'The 44.7 percent is the highest Yes vote recorded in any independence poll to that date. The margin is 10 points. Two years later the UK votes Leave and Scotland votes Remain by 62 percent. The question does not conclude.',
+        effect: (p) => { p.m -= 4; p.r += 5; p.addFlag('scottish_independence_generation'); p.addFlag('scottish_yes_voter'); p.setMem('ukScottishIndy', true); },
+      },
+      {
+        text: 'You voted No, or watched it from outside Scotland. The Union holds.',
+        tag: null,
+        outcome: 'The Union holds. The Scotland Act 2016 delivers more devolution. "For now" is doing a lot of work in the result, and everyone knows it.',
+        effect: (p) => { p.m += 3; p.addFlag('scottish_independence_generation'); p.setMem('ukScottishIndy', true); },
+      },
+    ],
+    effect: null,
+  },
+
 ]

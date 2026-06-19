@@ -997,6 +997,22 @@ export const FLAG_REGISTRY = {
     notes: 'Set by ru_chechnya_war (served choice) and soldier_arc events.',
   },
 
+  russia_1991_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Russian adult who lived through the August 1991 coup attempt and its collapse — Yeltsin on the tank, the three days of uncertainty, the country that ceased to exist by December.',
+    intent: 'year_texture',
+    notes: 'Set by ru_1991_coup_collapse.',
+  },
+
+  putin_stability_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Russian shaped by the Putin stability bargain of the 2000s — rising oil wages and order exchanged for political passivity and managed democracy.',
+    intent: 'year_texture',
+    notes: 'Set by ru_putin_stability_bargain.',
+  },
+
   // ── Ukraine ──────────────────────────────────────────────────────────────────
 
   holodomor_family_memory: {
@@ -1181,6 +1197,70 @@ export const FLAG_REGISTRY = {
     description: 'Family lived through the Biafra war — the hunger, the silence after.',
     intent: 'event',
     notes: 'events_family_silence.js covers this.',
+  },
+
+  carries_family_silence: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Grew up with the shape of an unspeakable family history — the box in the wardrobe, the sentence that stops, the name said once and never again.',
+    intent: 'year_texture',
+    notes: 'Set by all family silence childhood events. The unifying flag for inherited generational trauma across all origins.',
+  },
+
+  food_insecurity_inherited: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Raised in a family marked by famine memory — grandparent who cannot watch food wasted, the specific hunger that outlasts the event.',
+    intent: 'year_texture',
+    notes: 'Set by fs_great_leap (Great Leap famine family memory). The texture of inherited food anxiety.',
+  },
+
+  partition_family_lived: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Family was displaced by the India-Pakistan Partition — the ancestral address recited like a prayer, the furniture left behind, the city that is now the wrong country.',
+    intent: 'year_texture',
+    notes: 'Set by fs_partition. Partition-specific variant of carries_family_silence.',
+  },
+
+  disappeared_family_known: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Has a disappeared family member — a name without a story, the absence that was not explained until adulthood.',
+    intent: 'year_texture',
+    notes: 'Set by fs_disappeared (Argentina junta family memory).',
+  },
+
+  post_genocide_generation: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Grew up in the aftermath of genocide — counting on fingers, the neighbours watched differently, the word inadequate when it finally arrived.',
+    intent: 'year_texture',
+    notes: 'Set by fs_genocide (Rwanda/Burundi family memory).',
+  },
+
+  family_history_known: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Asked the question and received the answer — the family silence broken in adulthood, the story now carried instead of the absence.',
+    intent: 'year_texture',
+    notes: 'Set by fs_adult_asks (choice: listened to everything). Follow-through for carries_family_silence.',
+  },
+
+  family_history_partial: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Asked and stopped partway — not yet ready for the full story, carrying a partial version of the family silence.',
+    intent: 'year_texture',
+    notes: 'Set by fs_adult_asks (choice: stopped partway).',
+  },
+
+  generational_weight_felt: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'At midlife understood the specific work of a parent\'s silence — now carrying one\'s own version of the same shape.',
+    intent: 'year_texture',
+    notes: 'Set by fs_midlife_weight. The recognition that silence transfers across generations.',
   },
 
   reconstruction_generation: {
@@ -1706,6 +1786,54 @@ export const FLAG_REGISTRY = {
     description: 'Character witnessed Baby Doc\'s fall on February 7, 1986 — twenty-nine years of Duvalierism ending in a morning.',
     intent: 'event',
     notes: 'Set by hai_baby_doc_falls. The euphoria and its subsequent failure are both part of this.',
+  },
+
+  earthquake_survivor: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Survived a major earthquake — the thirty-five seconds that reorganised the city and the memory.',
+    intent: 'year_texture',
+    notes: 'Set by Haiti earthquake events and worldEvents Tangshan/Nepal/Mexico/Japan earthquake world events.',
+  },
+
+  dual_identity: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Carries two cultural identities simultaneously — the community inside the community, the code-switching that is not a choice but a lived competence.',
+    intent: 'year_texture',
+    notes: 'Set by events_culture.js (minority community finding) and events_society.js (dual name/identity). Rich year texture potential.',
+  },
+
+  democracy_movement: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Participated in a democracy movement — the decision that this cannot keep happening, and what that decision costs.',
+    intent: 'year_texture',
+    notes: 'Set by Gwangju world event (South Korea) and Turkey coup events. Cross-national political engagement flag.',
+  },
+
+  class_awareness: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Developed early class consciousness — noticing the domestic workers\' names, the arrangement others find unusual, the thing that was taken for granted.',
+    intent: 'year_texture',
+    notes: 'Set by events_culture.js (wealthy Gulf/developing) and events_texture.js (domestic service observation).',
+  },
+
+  radio_childhood: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Grew up with radio as the primary household medium — the voices from the wooden box, the family gathered, the world arriving as sound.',
+    intent: 'year_texture',
+    notes: 'Set by events_texture.js (era radio family) and events_technology.js (radio era). Period texture flag.',
+  },
+
+  failure_integrated: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Metabolised a major failure and carried it forward as information rather than shame — the specific work of making a failure useful.',
+    intent: 'year_texture',
+    notes: 'Set by events_coherence.js and events_early_life.js (first real failure choice).',
   },
 
   // ── LATIN AMERICA HISTORICAL FLAGS ───────────────────────────────────────
@@ -4950,6 +5078,30 @@ export const FLAG_REGISTRY = {
     notes: 'Set by aus_housing_crisis (renting choice) and similar.',
   },
 
+  aus_mabo_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'An adult Australian during the Mabo decision 1992 — terra nullius overturned, the culture war that followed, the black armband history debate',
+    intent: 'year_texture',
+    notes: 'Set by aus_mabo_1992.',
+  },
+
+  aus_sorry_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Alive for the Rudd apology of February 2008 — "We apologise" to the Stolen Generations, said in Parliament after eleven years of refusal',
+    intent: 'year_texture',
+    notes: 'Set by aus_rudd_apology_2008.',
+  },
+
+  black_summer_generation: {
+    weight: 'major',
+    category: 'climate',
+    description: 'Lived through the 2019-20 Australian Black Summer megafires — 18.6 million hectares, red sky over Sydney, the abstract becoming undeniable',
+    intent: 'year_texture',
+    notes: 'Set by aus_black_summer_2020.',
+  },
+
   // ── United States ──────────────────────────────────────────────────────────────
 
   jim_crow_childhood: {
@@ -5128,6 +5280,38 @@ export const FLAG_REGISTRY = {
     notes: 'Set by usa_school_shooting_era. Auto-resolve event.',
   },
 
+  jfk_assassination_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Shaped by the November 22, 1963 Kennedy assassination — Walter Cronkite removing his glasses, the oath on Air Force One, the stained dress, the question that remained open for sixty years.',
+    intent: 'year_texture',
+    notes: 'Set by usa_jfk_assassination_1963.',
+  },
+
+  watergate_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Shaped by Watergate — the Saturday Night Massacre, the eighteen and a half minutes, Nixon\'s resignation wave from the South Lawn, the specific accident by which the system worked.',
+    intent: 'year_texture',
+    notes: 'Set by usa_watergate_resignation_1974.',
+  },
+
+  katrina_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Shaped by Hurricane Katrina — the levees failing, the Superdome, the rooftops, 67% of the dead Black, 80% of the city underwater, the neighborhoods that did not come back.',
+    intent: 'year_texture',
+    notes: 'Set by usa_hurricane_katrina_2005.',
+  },
+
+  gulf_coast_displaced: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Directly displaced by Hurricane Katrina — in New Orleans, with people there, the specific waiting to know whether those you love survived.',
+    intent: 'year_texture',
+    notes: 'Set by usa_hurricane_katrina_2005 (directly affected choice).',
+  },
+
   // ── United Kingdom ─────────────────────────────────────────────────────────────
 
   miners_strike_generation: {
@@ -5216,6 +5400,38 @@ export const FLAG_REGISTRY = {
     description: 'Had political consciousness formed by class experience — the miners\' strike, the deindustrialisation of communities, the gap between official economic discourse and lived experience.',
     intent: 'year_texture',
     notes: 'Set by uk_miners_strike_1984 (community choice) and similar events.',
+  },
+
+  falklands_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Shaped by the 1982 Falklands War — the Task Force sailing 8,000 miles south, the ship names arriving through the news, 255 British and 649 Argentine dead in seventy-four days.',
+    intent: 'year_texture',
+    notes: 'Set by uk_falklands_1982.',
+  },
+
+  london_77_generation: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Shaped by the July 7, 2005 London bombings — four coordinated attacks on Underground and bus, 52 dead, 700 injured, the bombers British citizens from Leeds.',
+    intent: 'year_texture',
+    notes: 'Set by uk_77_bombings_2005.',
+  },
+
+  scottish_independence_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Shaped by the September 2014 Scottish independence referendum — 84.6% turnout, 55.3% No, 44.7% Yes; the question returned after Brexit.',
+    intent: 'year_texture',
+    notes: 'Set by uk_scottish_independence_2014.',
+  },
+
+  scottish_yes_voter: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Voted Yes (or supported Yes) in the 2014 Scottish independence referendum.',
+    intent: 'none',
+    notes: 'Set by uk_scottish_independence_2014 (Yes choice). No downstream event; texture only.',
   },
 
   // ── Poland ────────────────────────────────────────────────────────────────────
@@ -5314,6 +5530,30 @@ export const FLAG_REGISTRY = {
     description: 'Benefited from EU freedom of movement — the work permit that appeared, the border that opened, the Europe that became navigable.',
     intent: 'year_texture',
     notes: 'Set by pol_eu_accession_2004.',
+  },
+
+  smolensk_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Polish adult who lived through the April 2010 Smolensk crash — 96 officials killed including the President, the grief, and the political polarisation that followed.',
+    intent: 'year_texture',
+    notes: 'Set by pol_smolensk_2010. Both branches set this flag.',
+  },
+
+  smolensk_doubted: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Polish person who held private doubt about the official account of the Smolensk crash — the sequence (Katyń commemoration, Russian territory, Russian investigation) that didn\'t sit easily.',
+    intent: 'none',
+    notes: 'Set by pol_smolensk_2010 (doubt branch).',
+  },
+
+  strajk_kobiet_generation: {
+    weight: 'moderate',
+    category: 'gender',
+    description: 'Polish woman who lived through the October 2020 Constitutional Tribunal abortion ruling and the Ogólnopolski Strajk Kobiet (All-Poland Women\'s Strike) — the lightning bolt symbol, the streets.',
+    intent: 'year_texture',
+    notes: 'Set by pol_womens_strike_2020.',
   },
 
   // ── Netherlands ───────────────────────────────────────────────────────────────
@@ -5561,6 +5801,30 @@ export const FLAG_REGISTRY = {
     notes: 'Set by ger_refugee_crisis_2015 (resistant choice).',
   },
 
+  wirtschaftswunder_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age in the West German Wirtschaftswunder — the economic miracle of the 1950s, the Beetle, the Fresswelle, the rebuilding that moved fast past the question of what it was rebuilding from.',
+    intent: 'year_texture',
+    notes: 'Set by ger_wirtschaftswunder.',
+  },
+
+  nsu_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Turkish or Greek-German character shaped by the NSU murders 2000–2011 — nine Turkish-German and one Greek-German killed while police investigated the victims\' families. "Dönermorde." Files shredded the week the truth broke.',
+    intent: 'year_texture',
+    notes: 'Set by ger_nsu_murders_2011.',
+  },
+
+  nsu_mourned: {
+    weight: 'moderate',
+    category: 'grief',
+    description: 'Personally connected to one of the NSU murder victims — knew the family, or knew someone who did.',
+    intent: 'none',
+    notes: 'Set by ger_nsu_murders_2011 (direct connection choice). No downstream event.',
+  },
+
   stasi_generation: {
     weight: 'major',
     category: 'political',
@@ -5656,6 +5920,14 @@ export const FLAG_REGISTRY = {
     description: 'Lived through or participated in the gilets jaunes movement 2018–20 — the roundabout as political centre, the metropolitan/peripheral divide.',
     intent: 'year_texture',
     notes: 'Set by fr_yellow_vests_2018.',
+  },
+
+  mai_68_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Shaped by French May 1968 — the barricades in the Latin Quarter, ten million workers on strike, de Gaulle\'s Baden-Baden disappearance and June landslide, the reorganisation of French cultural life that the government\'s victory did not undo.',
+    intent: 'year_texture',
+    notes: 'Set by fr_mai_68.',
   },
 
   // ── Ireland ───────────────────────────────────────────────────────────────────
@@ -9897,6 +10169,30 @@ export const FLAG_REGISTRY = {
     notes: 'Set by gr_debt_crisis_2010.',
   },
 
+  gr_civil_war_memory: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Grew up in the aftermath of the Greek Civil War 1944-49 — the family silences, the lists, the left/right fracture that ran through households and villages',
+    intent: 'year_texture',
+    notes: 'Set by gr_civil_war_memory. The war killed more Greeks than the German occupation; it was not discussed.',
+  },
+
+  gr_oxi_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through the July 2015 OXI referendum — voted no to austerity, watched Tsipras accept terms more severe than what was rejected one week later',
+    intent: 'year_texture',
+    notes: 'Set by gr_oxi_2015.',
+  },
+
+  gr_testigo_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Late-life witness to the full Greek arc — civil war aftermath, junta, Polytechnic, Metapolitefsi, EU accession, debt crisis, OXI',
+    intent: 'both',
+    notes: 'Set by gr_late_reckoning.',
+  },
+
   // ── PORTUGAL ────────────────────────────────────────────────────────────────
 
   estado_novo_generation: {
@@ -10254,6 +10550,78 @@ export const FLAG_REGISTRY = {
     notes: 'Set by bra_carandiru_proximity (criminal record branch). Self-contained — the proximity is the texture.',
   },
 
+  bra_hyperinflation_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived Brazil\'s hyperinflation years (1986–1994) — prices changing daily, currencies renamed, the Plano Real shock of overnight stability.',
+    intent: 'year_texture',
+    notes: 'Set by bra_hyperinflation.',
+  },
+
+  bra_plano_real_optimist: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Embraced the 1994 Plano Real as Brazil\'s economic modernisation — stable prices as proof of a new country.',
+    intent: 'year_texture',
+    notes: 'Set by bra_hyperinflation (choice 2).',
+  },
+
+  bra_carandiru_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the 1992 Carandiru massacre — 111 inmates killed by military police, the commander acquitted and elected to the state assembly.',
+    intent: 'year_texture',
+    notes: 'Set by bra_carandiru_1992.',
+  },
+
+  bra_nordestino_migrant: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Migrated from Brazil\'s impoverished Northeast (sertão) to São Paulo or Rio — the pau-de-arara generation who built the southeast on their labor.',
+    intent: 'year_texture',
+    notes: 'Set by bra_nordestino_migration (choice 1).',
+  },
+
+  bra_nordestino_stayed: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Remained in Brazil\'s drought-stricken Northeast while others migrated south — the ones who stayed in the sertão\'s diminishing towns.',
+    intent: 'year_texture',
+    notes: 'Set by bra_nordestino_migration (choice 2).',
+  },
+
+  bra_lula_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived Lula\'s 2002 election — the metalworker-turned-president, Bolsa Familia, and the first Brazilian government that many poor citizens felt acknowledged their existence.',
+    intent: 'year_texture',
+    notes: 'Set by bra_lula_election.',
+  },
+
+  bra_evangelical_convert: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Converted from Catholicism to evangelical Protestantism in Brazil\'s one-generation religious transformation — the Universal Church, the prosperity gospel, the favela congregation.',
+    intent: 'year_texture',
+    notes: 'Set by bra_evangelical_shift (choice 1).',
+  },
+
+  bra_lava_jato_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived Operation Car Wash — the anti-corruption investigation that imprisoned Lula, elected Bolsonaro, and was later ruled to have been politically biased.',
+    intent: 'year_texture',
+    notes: 'Set by bra_lava_jato.',
+  },
+
+  bra_january_8_witness: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed the January 8, 2023 storming of Brazil\'s Congress, Planalto Palace, and Supreme Court by Bolsonaro supporters after Lula\'s inauguration.',
+    intent: 'year_texture',
+    notes: 'Set by bra_january_8_2023.',
+  },
+
   // ─── ARGENTINA 2001 FLAGS ─────────────────────────────────────────────────────
 
   corralito_survivor: {
@@ -10432,6 +10800,46 @@ export const FLAG_REGISTRY = {
     description: 'Lived through the 2017 Catalan independence referendum and its aftermath — the fractured WhatsApp groups, the riot gear at ballot boxes, the constitutional position and its contradictions.',
     intent: 'year_texture',
     notes: 'Set by es_catalan_independence_2017.',
+  },
+
+  madrid_11m_lived: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Present in Spain during 11-M, March 11, 2004: 191 dead on four commuter trains at rush hour. Aznar\'s government managed information about the perpetrators for three days before the general election.',
+    intent: 'year_texture',
+    notes: 'Set by es_11m_2004. Both branches set this flag.',
+  },
+
+  indignados_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Came of age in Spain during the 15-M movement (May 2011): Puerta del Sol occupied for weeks, "No nos representan," youth unemployment at 46%. Eventual precursor to Podemos and end of bipartidismo.',
+    intent: 'year_texture',
+    notes: 'Set by es_15m_2011.',
+  },
+
+  geracao_rasca_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Portuguese "desperate generation" — lived the 2011 crisis and the March 12 Geração à Rasca protests (300K in Lisbon, largest since 1974). Signs read "Parva que Sou." Bailout followed six weeks later.',
+    intent: 'year_texture',
+    notes: 'Set by pt_geracao_rasca_2011.',
+  },
+
+  portuguese_troika_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived the Portuguese troika austerity 2011-2014: €78bn bailout, wage cuts, TSU rises, Constitutional Court battles, and the specific irony of Portuguese professionals emigrating to Angola and Brazil.',
+    intent: 'year_texture',
+    notes: 'Set by pt_troika_lived. Leave branch also sets portuguese_emigrant_2011.',
+  },
+
+  portuguese_emigrant_2011: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Emigrated from Portugal after the 2011 bailout — to Angola, Brazil, France, or the UK. One of the 400,000+ who left in the troika years.',
+    intent: 'year_texture',
+    notes: 'Set by pt_troika_lived (leave branch).',
   },
 
   emigration_reconsidered: {

@@ -9,6 +9,34 @@ export const GERMANY_FRANCE_EVENTS = [
   // ═══════════════════════════════════════════════════════════════════════
 
   {
+    id: 'ger_wirtschaftswunder',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Germany' &&
+      G.currentYear >= 1950 && G.currentYear <= 1967 &&
+      G.age >= 18 && G.age <= 45 &&
+      !G.flags.includes('ddr_generation') &&
+      !G.mem?.gerWirtschaftswunder,
+    text: 'The Wirtschaftswunder — the economic miracle. West Germany in the 1950s: from rubble to the fifth largest economy in the world by the end of the decade. The Volkswagen Beetle and the Fresswelle — the feeding wave, people eating well after years of rationing and postwar shortage. Currency reform in 1948: the old Reichsmark exchanged for the Deutsche Mark, 10:1, and the shop windows filling within hours. The Marshall Plan, the Adenauer government, the factory work that continues through the night. The country rebuilds itself at a speed that requires not asking too many questions yet about what it is rebuilding from.',
+    choices: [
+      {
+        text: 'The prosperity is real and the rebuilding feels like a new beginning.',
+        tag: null,
+        outcome: 'The beginning is real. The full Vergangenheitsbewältigung — the coming to terms with the past — will take another two decades to begin in earnest. For now, the Beetle and the washing machine and the television arrive in the house.',
+        effect: (p) => { p.m += 6; p.w += 5; p.addFlag('wirtschaftswunder_generation'); p.setMem('gerWirtschaftswunder', true); },
+      },
+      {
+        text: 'The rebuilding moves very fast and you notice what it is moving past.',
+        tag: null,
+        outcome: 'The moving-past is not accidental. The economy is built by people who were adults during the previous twelve years and who find it easier to build than to reckon. The reckoning does not disappear — it waits for the next generation.',
+        effect: (p) => { p.m += 3; p.r += 5; p.addFlag('wirtschaftswunder_generation'); p.addFlag('inner_dissent'); p.setMem('gerWirtschaftswunder', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
     id: 'ger_gastarbeiter_arrival',
     phase: 'young_adult',
     weight: 4,
@@ -150,9 +178,64 @@ export const GERMANY_FRANCE_EVENTS = [
     effect: null,
   },
 
+  {
+    id: 'ger_nsu_murders_2011',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Germany' &&
+      G.currentYear >= 2011 && G.currentYear <= 2016 &&
+      G.age >= 18 &&
+      (G.ethnicity === 'turkish' || G.ethnicity === 'greek') &&
+      !G.mem?.gerNSU,
+    text: 'November 2011. Two members of the Nationalsozialistischer Untergrund — the NSU — die in Zwickau and a third turns herself in. The files reveal what they did from 2000 to 2011: nine Turkish-German and one Greek-German small business owners murdered across Germany. Two police officers killed. Fourteen bank robberies. In the decade between the first murder and this discovery, the police investigation was focused on the victims\' families — drug connections, protection rackets, "honour killings." The police nickname for the murders was Dönermorde. "Kebab murders." Your community buried nine of their own while the state investigated the bereaved. The Verfassungsschutz files related to the NSU were ordered shredded the week after the story broke.',
+    choices: [
+      {
+        text: 'You knew one of the families. Or you knew someone who knew one.',
+        tag: null,
+        outcome: 'The specific grief and the specific rage arrive together: ten years of murders, ten years of being told it was your community\'s fault, the files being shredded the week the truth came out.',
+        effect: (p) => { p.m -= 14; p.r += 8; p.addFlag('nsu_generation'); p.addFlag('nsu_mourned'); p.setMem('gerNSU', true); },
+      },
+      {
+        text: 'You follow it from inside the Turkish-German community. The pattern was always there.',
+        tag: null,
+        outcome: 'The pattern — right-wing violence, institutional indifference or worse, the community blamed — was not a surprise. The revelation was the scale of what had been kept from the scale of people who had known.',
+        effect: (p) => { p.m -= 10; p.r += 7; p.addFlag('nsu_generation'); p.setMem('gerNSU', true); },
+      },
+    ],
+    effect: null,
+  },
+
   // ═══════════════════════════════════════════════════════════════════════
   // FRANCE
   // ═══════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'fr_mai_68',
+    phase: 'young_adult',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'France' &&
+      G.currentYear === 1968 &&
+      G.age >= 15 && G.age <= 35 &&
+      !G.mem?.frMai68,
+    text: 'May 3, 1968. The students at the University of Paris at Nanterre occupy the administration building. The rector calls the police. By the weekend it is the Sorbonne. The police enter the courtyard and the photographs of the beatings travel. The barricades go up in the Latin Quarter: paving stones, overturned cars, the specific vocabulary of street fighting. Then the workers: ten million people on strike — the largest general strike in French history. De Gaulle disappears briefly to Baden-Baden to consult with the French army in Germany. He returns May 30, dissolves the National Assembly, gives a radio address. In June his party wins its largest parliamentary majority ever. Mai 68 reorganises French culture, sexual norms, university structure, the language of public space, and the left. It does not overthrow the government. Both things happen simultaneously.',
+    choices: [
+      {
+        text: 'You are at the barricades, or in the factories, or in both places across the weeks.',
+        tag: null,
+        outcome: 'The feeling of those weeks is a specific feeling. The combination of grief and possibility and exhaustion and the sense that something could be otherwise. De Gaulle wins in June. You know what you felt in May.',
+        effect: (p) => { p.m += 8; p.karma += 8; p.r += 4; p.addFlag('mai_68_generation'); p.addFlag('political_active'); p.setMem('frMai68', true); },
+      },
+      {
+        text: 'You watch it from a distance — sympathetic or alarmed or both.',
+        tag: null,
+        outcome: 'The country that comes out of 1968 is a different country from the one that went in, even if the government wins. Some of that difference is visible in what you do next.',
+        effect: (p) => { p.m += 4; p.r += 4; p.addFlag('mai_68_generation'); p.setMem('frMai68', true); },
+      },
+    ],
+    effect: null,
+  },
 
   {
     id: 'fr_algerian_war_soldier',

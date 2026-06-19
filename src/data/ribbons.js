@@ -2510,6 +2510,66 @@ export const RIBBONS = [
     color: 'black',
   },
 
+  // ── AUSTRALIA RIBBONS ────────────────────────────────────────────────────────
+  {
+    id: 'the_red_sky',
+    name: 'The Red Sky',
+    description: 'Black Summer 2019-20. Eighteen-point-six million hectares. Sydney at noon, sky red-orange. The abstract made so large it was visible from space. You were inside it.',
+    condition: (G) => G.flags.includes('black_summer_generation'),
+    priority: 82,
+    color: 'orange',
+  },
+  {
+    id: 'the_terra_nullius',
+    name: 'The Terra Nullius',
+    description: 'Mabo, 1992. Two hundred and four years of a legal fiction, then a court said: that was never true. You were an adult Australian for the overturning and for the culture war that followed it.',
+    condition: (G) => G.flags.includes('aus_mabo_generation'),
+    priority: 72,
+    color: 'amber',
+  },
+  {
+    id: 'the_sorry',
+    name: 'The Sorry',
+    description: '"We apologise." February 13, 2008. The word that eleven years of government would not say, said at last. You were there for the word and for what came after it, which was not enough and was still the word.',
+    condition: (G) => G.flags.includes('aus_sorry_generation'),
+    priority: 70,
+    color: 'teal',
+  },
+
+  // ── GREECE RIBBONS ───────────────────────────────────────────────────────────
+  {
+    id: 'the_polytechnic_gate',
+    name: 'The Polytechnic Gate',
+    description: '"This is the Polytechnic." You heard the broadcast on the homemade transmitter in November 1973. Then the tank moved through the gate and the broadcast stopped. What was on the other side of the stopping is something you lived in for the rest of your life.',
+    condition: (G) => G.flags.includes('polytechnic_generation'),
+    priority: 88,
+    color: 'red',
+  },
+  {
+    id: 'the_civil_war_silence',
+    name: 'The Civil War Silence',
+    description: 'The war that killed more Greeks than the German occupation and was not discussed. You grew up inside its particular silence — the family fractures, the relatives on lists, the words no one said.',
+    condition: (G) => G.flags.includes('gr_civil_war_memory'),
+    priority: 84,
+    color: 'gray',
+  },
+  {
+    id: 'the_sixty_euros',
+    name: 'The Sixty Euros',
+    description: 'The ATM limit during the debt crisis. The pharmacies short of insulin. The pension cut by thirty percent. You stayed. The accounting of what staying through that decade produced is still not finished.',
+    condition: (G) => G.flags.includes('greece_crisis_stayed'),
+    priority: 78,
+    color: 'orange',
+  },
+  {
+    id: 'the_oxi',
+    name: 'The OXI',
+    description: 'Sixty-one percent voted no. One week later the government accepted terms more severe than what was rejected. You voted. The gap between the referendum and the outcome it produced is a measurement you carry.',
+    condition: (G) => G.flags.includes('gr_oxi_generation'),
+    priority: 75,
+    color: 'blue',
+  },
+
   // ── PERU RIBBONS ─────────────────────────────────────────────────────────────
   {
     id: 'the_shining_path',
