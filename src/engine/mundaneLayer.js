@@ -48,6 +48,8 @@ export function buildMundaneLayer(state) {
   const isSubsaharan = arch === 'subsaharan'
   const isDeveloping = ['developing_urban', 'developing_unstable', 'subsaharan', 'conflict_zone'].includes(arch)
   const isPostSoviet = arch === 'post_soviet'
+  const desire = state.desire ?? null
+  const currentCn = state.currentCountry ?? cn
 
   const pool = []
   const add = (...items) => pool.push(...items)
@@ -1288,6 +1290,91 @@ export function buildMundaneLayer(state) {
     'The pagoda in the early morning: the monk with the bowl, the offering, the gold catching the first light.',
     'The longyi: the garment worn by everyone, tied differently by men and women, the textile identity of the street.',
   )
+  addIf(cn === 'Cambodia',
+    'Amok: the fish in coconut curry steamed in a banana leaf. The smell of the leaf is part of the taste.',
+    'The tuk-tuk driver waits at the same corner. He knows the regular destinations without being asked.',
+    'The Mekong in the dry season: lower, slower, browner. In the wet season it reverses direction. The country breathes with it.',
+    'The wats: the compound with the stupas, the monks, the bougainvillea, the shade that belongs to everyone.',
+  )
+  addIf(cn === 'Laos',
+    'The monks collecting alms at dawn: the orange robes, the barefoot walk, the silent procession along the street.',
+    'Sticky rice in the bamboo basket: the utensil and the food at the same time. Formed in the palm, dipped in the sauce.',
+    'The Mekong at evening: the light on the water, the boats from Thailand crossing on the far side, the slowness of the crossing.',
+  )
+  addIf(cn === 'Nepal',
+    'The Himalayas on a clear morning: visible above the valley haze, white and enormous. On clear days you look. On hazy days you know they are there.',
+    'Dal bhat twice a day — the lentil soup and rice that is not the meal you decide but the meal the day is built around.',
+    'The prayer flags: strung from house to roof to tree, the colours fading over months. The prayers have already been sent.',
+    'The altitude requires the warm meal at noon, the rest in the afternoon, the particular slowness the body learns.',
+  )
+  addIf(cn === 'Nepal' && phase !== 'early_childhood',
+    'Tongba in winter: the fermented millet in a bamboo container, hot water added when it empties. The drinking is also the warming.',
+  )
+  addIf(cn === 'Iraq',
+    'The generator starts when the power cuts, which is scheduled and also unscheduled. The sound is the gap between the official supply and the actual one.',
+    'Masgouf: the fish from the Tigris, split and grilled over date palm wood. A Thursday meal, a Friday meal, a celebration meal.',
+    'Istikaan: the hourglass tea glass, very hot, held by the rim. The drinking is slow by necessity.',
+    'The date palm: its fruit marks the calendar. Ruthab in August, tamr by September.',
+  )
+  addIf(cn === 'Syria' && era <= 2010,
+    'The Damascus light in late afternoon: a particular gold that the photographs do not entirely capture.',
+    'Meze in the courtyard: the shade, the fountain, the dishes arriving without any single large plate.',
+    'The jasmine: sold in small bunches by street vendors, worn in the hair, carried in the pocket. The smell is a word for Damascus.',
+  )
+  addIf(cn === 'Syria' && era >= 2011,
+    'The neighbourhood has changed. You can name each street by what it was before it was what it is now.',
+    'The generator, the water storage, the flour: the household management that did not exist before and has become the day\'s first work.',
+  )
+  addIf(cn === 'Afghanistan',
+    'Green tea, always: hot in summer because hot tea cools you, or so it is said. The saying is believed and sufficient.',
+    'The bread from the tandoor: the dough slapped against the inside wall, the pull of it when it is ready. The smell enters the street.',
+    'The mulberry tree in the compound produces what it produces in its season. The season is known. The waiting is not anxious.',
+  )
+  addIf(cn === 'Afghanistan' && era >= 1996 && gender === 'female',
+    'The mahram — the male relative who must accompany you — is the condition of leaving the house. The condition is so established it requires no naming.',
+  )
+  addIf(cn === 'Haiti',
+    'The tap-tap: the converted truck decorated in every colour and phrase and biblical reference. The specific noise of it arriving.',
+    'Griot: the fried pork, the pikliz alongside it. The meal of Sunday, the meal of occasion.',
+    'Kreyòl: the language of the house, the street, the market. French is for school and government. Kreyòl is for everything real.',
+    'The heat of Port-au-Prince in July has mass. It requires management from the morning.',
+  )
+  addIf(cn === 'Democratic Republic of Congo' || cn === 'DRC',
+    'Pondu: the cassava leaves cooked down with palm oil. The smell of it in the kitchen makes a claim on the afternoon.',
+    'The humidity of Kinshasa: the air with weight, the clothing that requires changing by noon.',
+    'Rumba from the bar next door: the guitar line, the voice above it, the rhythm underneath that never quite resolves.',
+    'Libanga: the praise shout-outs built into the songs for people who paid to be named. Everyone waits for their name.',
+  )
+  addIf(cn === 'Rwanda',
+    'Kigali is perhaps the cleanest city in Africa. The umuganda — the last Saturday of every month — is when everyone cleans their street. Everyone.',
+    'Isombe: cassava leaves cooked with smoked fish and peanuts. A dish that requires patience. The patience is in the cooking.',
+    'The hills: Rwanda is built on them and every walk is also an ascent or a descent. The legs know this.',
+  )
+  addIf(cn === 'Bolivia',
+    'Coca leaves held in the cheek: the altitude remedy, the ancestral practice. At 3,600 metres it is not optional.',
+    'The cholitas in the market: the bowler hat, the layered skirt, the manner of women who carry substantial weight on their backs and know it.',
+    'Salteña in the morning: the pastry with meat and potato and olive and egg, juice escaping with the first bite if you are not prepared.',
+  )
+  addIf(cn === 'Ecuador',
+    'Locro: the potato soup with cheese and avocado. The altitude requires the warm meal at noon.',
+    'Ceviche, coastal style: the shrimp in citrus, the chulpe corn, the hot sauce. Eaten at noon. Distinct to here.',
+    'The market in Otavalo: the textiles, the precise patterns, the vendors who have been here since before anyone alive remembers.',
+  )
+  addIf(cn === 'Uruguay',
+    'Mate everywhere: in the hand at the bus stop, on the desk, in a thermos on any walk longer than fifteen minutes.',
+    'Chivito: the sandwich with everything in it. The national answer to hunger.',
+    'The quietness of Montevideo compared to Buenos Aires: the same language, the same mate, a different temperature of street.',
+  )
+  addIf(cn === 'Paraguay',
+    'Tereré: the cold mate drunk through a metal straw. The distinction from hot mate is not only temperature but identity.',
+    'Guaraní alongside Spanish — two languages in the same sentence is not mixing, it is Paraguayan.',
+    'Sopa paraguaya: the corn bread that is not bread, made with cheese and onion. The name is technically wrong. The thing is right.',
+  )
+  addIf(['Guatemala', 'El Salvador', 'Honduras', 'Nicaragua'].includes(cn),
+    'The pupusa, the tortilla, the tamale: corn in its forms, the form depending on the occasion and whose grandmother made it.',
+    'The afternoon rain in the rainy season arrives at the same hour every day with the punctuality of a church bell.',
+    'The painted bus: the religious references, the football team, the name of someone\'s loved one — a moving declaration.',
+  )
 
   // ── SCHOOLS AND EDUCATION (STUDENT PERSPECTIVE) ───────────────────────────
 
@@ -1652,6 +1739,49 @@ export function buildMundaneLayer(state) {
     'You paid the clinic fee. The fee was what it was and you paid it. What was left after the fee is what was left.',
   )
 
+  // ── DESIRE-SHAPED TEXTURE ─────────────────────────────────────────────────
+  // What the character notices in ordinary years depends partly on what they have always needed.
+
+  addIf(desire === 'prove_worth',
+    'Something you did this year was done well. No one acknowledged it. The doing of it acknowledged it.',
+    'Someone else received credit for the kind of work you also do. You are still deciding what the correct feeling is.',
+    'You exceeded what was asked of you. You noted this in the way you always note it — privately, without telling anyone.',
+  )
+  addIf(desire === 'belong',
+    'There was a gathering you were fully inside — not watching from its edge but at its centre. You noticed the difference.',
+    'A group you are part of assumed your presence this year without remarking on it. The assumption felt like something.',
+    'A meal with people who knew each other well and knew you and the knowing ran in all directions at the table.',
+  )
+  addIf(desire === 'be_seen',
+    'Someone who does not know you well said something accurate about you. The accuracy was the thing — not the praise but the precision.',
+    'Your work reached someone you did not expect. The reaching happened without you.',
+  )
+  addIf(desire === 'safety',
+    'Nothing catastrophic happened this year. You noticed this in November, or December — the year closing without emergency.',
+    'A day with nothing threatening in it. By evening you noticed: the day passed without anything to manage.',
+    'The thing you have been watching for did not arrive this year. The year ends with it still theoretical.',
+  )
+  addIf(desire === 'connection',
+    'A conversation that outlasted its occasion — the coffee long finished, neither person moving to end it.',
+    'You and another person understood the same thing at the same moment, without saying so. The simultaneity was the thing.',
+    'Someone called to say they had been thinking about you. Nothing more. The call itself was the point.',
+  )
+  addIf(desire === 'leave_mark',
+    'Something you made continues to exist. This year, someone encountered it without knowing it was yours.',
+    'You passed something — a planted tree, a repaired thing, a decision someone made because of what you said once — that persists.',
+    'You thought about what will remain of this year. The thought was less bleak than expected.',
+  )
+  addIf(desire === 'freedom',
+    'A morning with no obligations until late afternoon. You spent the first hour finding out what you actually wanted, not what you had told yourself you would do with free time.',
+    'A choice made this year that was entirely yours — uninfluenced, unconsulted, made and lived with.',
+    'A week in which no one needed you urgently. The week felt different. It took a day to understand why.',
+  )
+  addIf(desire === 'redemption',
+    'Someone you wronged, years ago, is doing well. You know this from a distance. It doesn\'t resolve anything. It is still good.',
+    'You did the thing you once failed to do. The doing of it was quieter than you expected. The quietness was all right.',
+    'A second chance at something arrived. You took it differently from the first time. The difference was the point.',
+  )
+
   // ── ADDITIONAL UNIVERSAL TEXTURE ──────────────────────────────────────────
 
   addIf(phase === 'midlife' && hasPartner,
@@ -1710,6 +1840,534 @@ export function buildMundaneLayer(state) {
   addIf(cn === 'Russia' && era >= 2000,
     'The news is what it is. What it is is known and also not entirely reliable. Both are true.',
     'The stability of the current arrangement: understood as stability, understood also as the condition of stability.',
+  )
+
+  // ── ADOLESCENCE DEPTH ──────────────────────────────────────────────────────
+  addIf(phase === 'adolescence' && age >= 13 && age <= 15,
+    'The hierarchy at school is not written down but is understood by everyone. You know exactly where you stand in it.',
+    'There is a piece of music this year that means something specific to this year, and will mean only it.',
+    'The person who sits next to you in class is neither friend nor stranger. This category is very crowded at this age.',
+  )
+  addIf(phase === 'adolescence' && age >= 15 && age <= 17,
+    'The end of school is close enough to think about and far enough to keep avoiding.',
+    'You have started to see your teachers as people with lives outside this building. This is not entirely comfortable.',
+    'The version of yourself that existed two years ago is already embarrassing to remember.',
+  )
+
+  // ── LONG PARTNERSHIP TEXTURE ───────────────────────────────────────────────
+  addIf(hasPartner && phase === 'midlife' && age >= 42,
+    'You reach for something and they hand it to you before you ask.',
+    'There are whole conversations now conducted in facial expression. The words have become too slow.',
+    'The argument is about something specific but also about something older. Both of you know this and use the specific thing anyway.',
+  )
+  addIf(hasPartner && phase === 'late_life',
+    'They sleep differently now than when you first knew them. You have observed this change so gradually you did not notice you were observing it.',
+    'The small consideration: the cup placed within reach, the question not asked at the wrong moment. These are the invisible architecture of what you have built.',
+  )
+
+  // ── GRIEF YEAR TEXTURE ────────────────────────────────────────────────────
+  addIf(F('bereaved') || F('widowed') || F('lost_parent_mother') || F('lost_parent_father'),
+    'You start to tell them something and stop. The habit of telling them things outlasts the person.',
+    'The first holiday after: the day is the same day and also not. You understood why people said it would be different.',
+    'Someone says their name in conversation — a different person, same name — and for a fraction of a second your body does not know the difference.',
+    'Their handwriting is still in things. A note inside a book, a label on something at the back of a cupboard.',
+  )
+
+  // ── EARLY RETIREMENT TEXTURE ───────────────────────────────────────────────
+  addIf(phase === 'late_life' && !careerField && age >= 62,
+    'The calendar has lost its architecture. The days are still seven. The weeks are harder to separate.',
+    'You volunteer for the thing you were always too busy for. It turns out to be something to do, which is what it is.',
+    'The book you are finally reading. You have been meaning to read it for twenty years and now you are reading it.',
+  )
+
+  // ── CAREER TEXTURE: JOURNALISM / WRITING ─────────────────────────────────
+  addIf(careerField === 'arts' || careerField === 'media',
+    'The interview: the over-sharing that arrives after the third question. You have more than you can use and less than you needed.',
+    'The piece that did not run. It was finished. It had something the other pieces didn\'t. The decision was made above you.',
+    'The sentence that is not working and will not work until you stop trying to make it work.',
+  )
+
+  // ── CAREER TEXTURE: FACTORY / TRADE ──────────────────────────────────────
+  addIf(careerField === 'manufacturing' || careerField === 'trades',
+    'The machine has a legibility you have earned: the sound that means something is going to go wrong before it goes wrong.',
+    'The longtime workers: the body carries the years in how they hold themselves now.',
+    'The smell of the place follows you home regardless of how you wash.',
+  )
+
+  // ── CAREER TEXTURE: CIVIL SERVICE / ADMINISTRATION ────────────────────────
+  addIf(careerField === 'government' || careerField === 'administration',
+    'The form has seven sections. Six are relevant. You fill all seven.',
+    'The procedure exists for a reason no one currently working here knows.',
+    'The thing that could be resolved in twenty minutes takes six weeks due to an ordering issue that predates everyone in the room.',
+  )
+
+  // ── CAREER TEXTURE: LAW ──────────────────────────────────────────────────
+  addIf(careerField === 'law',
+    'The correct outcome and the legal outcome are sometimes the same.',
+    'The opposing counsel: you do not dislike them. You simply happen to be on opposite sides of this particular question today.',
+    'The client who is guilty of what they are charged with, and also not guilty of the assumptions being made about them.',
+  )
+
+  // ── CAREER TEXTURE: HEALTHCARE ────────────────────────────────────────────
+  addIf(careerField === 'healthcare' && phase !== 'early_childhood',
+    'The shift ends. The shift always ends. What it contains does not always end with it.',
+    'There is a patient from several years ago you still think about. You do not know why it is that one and not others.',
+    'The thing you say to families at the difficult moment: you have said it many times. It does not become easier or harder. It becomes practised.',
+  )
+
+  // ── CAREER TEXTURE: EDUCATION ────────────────────────────────────────────
+  addIf(careerField === 'education' && phase !== 'early_childhood',
+    'The student who gets it this year was not the one you expected to. You have stopped predicting which one it will be.',
+    'The class that was difficult: in retrospect, there was one in particular you might have handled differently.',
+    'You will remember the name of the difficult year long after you have stopped being able to say what made it difficult.',
+  )
+
+  // ── SINGLE PARENTHOOD ────────────────────────────────────────────────────
+  addIf(hasChildren && !hasPartner && (phase === 'young_adult' || phase === 'midlife'),
+    'The logistics: the arrangement that has to be remade whenever one part of it fails.',
+    'The house is loud until it is quiet. The quiet is a different thing than it used to be.',
+    'The thing they needed that you could not give them, not because you wouldn\'t but because there was only one of you.',
+  )
+
+  // ── CHRONIC CONDITION DAILY ────────────────────────────────────────────────
+  addIf(state.conditions?.some(c => c.severity === 'severe'),
+    'The body has its demands this year. You meet them and arrange the rest of the day around the meeting.',
+    'The calibration: what you can do today and what it will cost tomorrow.',
+    'Good days: you half-forget. Bad days: you remember what good days were for.',
+  )
+  addIf(state.conditions?.length > 0 && state.conditions?.some(c => !c.managed),
+    'Some weeks are the management of the condition and other things arranged inside that management.',
+    'The plan that assumes a level of energy that is not always there.',
+  )
+
+  // ── ERA-SPECIFIC: 1940S NON-WESTERN ───────────────────────────────────────
+  addIf(!isWealthyArch && era >= 1940 && era <= 1949,
+    'The war is elsewhere and also here: in the prices, in what is not available, in the letters.',
+    'The radio brings a voice from a distance saying what is happening somewhere you cannot see.',
+  )
+
+  // ── ERA-SPECIFIC: INDEPENDENCE GENERATION ─────────────────────────────────
+  addIf((isSubsaharan || isDeveloping) && era >= 1956 && era <= 1975 && phase !== 'early_childhood',
+    'The country is still deciding what it is. This is not a problem — it is the shared situation, and the situation is shared.',
+    'The new flag at the same buildings. The flag is new.',
+  )
+
+  // ── ERA-SPECIFIC: 1990S POST-COLD WAR ─────────────────────────────────────
+  addIf(era === 1990 && (isPostSoviet || isWealthyArch) && phase !== 'early_childhood',
+    'There is a sense — briefly — that the arrangement of the world has just been renegotiated and the new arrangement might be more favourable.',
+    'The idea that things are going to improve is in the air in a way it wasn\'t. Not everyone holds it. It is in the air anyway.',
+  )
+
+  // ── ERA-SPECIFIC: MOBILE PHONE ARRIVAL ───────────────────────────────────
+  addIf(era === 2000 && isDeveloping && phase !== 'early_childhood',
+    'The phone that arrived without the landline before it. The step that was skipped.',
+    'The way the phone changed who you can reach and who can reach you: both at once.',
+  )
+
+  // ── BODY AT DIFFERENT AGES ────────────────────────────────────────────────
+  addIf(phase === 'young_adult' && age >= 18 && age <= 24,
+    'The body is what it is right now, which you will not appreciate until later.',
+    'Sleep: you take it when it comes and it always comes.',
+  )
+  addIf(phase === 'midlife' && age >= 40 && age <= 50,
+    'The body has started requiring more negotiation than it used to.',
+    'You recover from things more slowly than you did and you have adjusted what you attempt.',
+  )
+  addIf(phase === 'late_life' && age >= 65 && age <= 74,
+    'The body has opinions about the weather. It has had these opinions for some years now.',
+    'You have started conserving in ways that are automatic rather than deliberate.',
+  )
+  addIf(phase === 'late_life' && age >= 75,
+    'The day has a structure organised partly by the body\'s requirements. The requirements are not unreasonable.',
+    'You are slower and more accurate, which is not the same as slower and worse.',
+    'The memory that goes first is not the memory you expected. The memory you expected is still there.',
+  )
+
+  // ── EMPTY NEST ────────────────────────────────────────────────────────────
+  addIf(hasChildren && (phase === 'midlife' || phase === 'late_life') && age >= 50,
+    'The house is the size it was before them and also a different kind of size.',
+    'You find yourself cooking too much and have been doing it for a year.',
+    'They call. The call is good. The call is not the same as the presence.',
+  )
+
+  // ── POST-DIVORCE / UNPARTNERED AFTER PARTNERSHIP ─────────────────────────
+  addIf(F('divorced') && !hasPartner && (phase === 'midlife' || phase === 'young_adult'),
+    'The possessive grammar has not caught up: "our" still arrives before "my" corrects it.',
+    'The social calendar used to be managed jointly. Now you decide everything alone, which is freedom and also work.',
+    'You sleep on one side of the bed. You have not moved to the middle.',
+  )
+
+  // ── REFUGEE / ASYLUM STATUS ──────────────────────────────────────────────
+  addIf(state.residencyStatus === 'refugee_status' || state.residencyStatus === 'asylum_seeker',
+    'The waiting is a kind of work. It does not produce anything but it takes time.',
+    'You are learning the rules of a system that was not made for you and may not decide in your favour.',
+    'The documents, the appointments, the letters with decisions in them: this is now part of the year.',
+  )
+  addIf(state.residencyStatus === 'undocumented' || state.residencyStatus === 'tourist_overstay',
+    'There are things you do not do and places you do not go because of what the year contains.',
+    'The calculation is always present: risk and necessity and what you are willing to trade against each other.',
+  )
+
+  // ── WEALTH TEXTURE: VERY HIGH ─────────────────────────────────────────────
+  addIf(gdp === 'very_high' && isWealthyArch && phase !== 'early_childhood',
+    'The money has been invisible for long enough that its presence is harder to see than its absence would be.',
+    'The option you did not choose is still an option. Most choices work out for you at no particular cost.',
+  )
+
+  // ── WEALTH TEXTURE: VERY LOW ──────────────────────────────────────────────
+  addIf(gdp === 'very_low' && phase !== 'early_childhood',
+    'The month is divided into the before-the-money-runs-out and the after.',
+    'You are efficient with things in ways that people with more than you are not required to be.',
+    'The thing that broke: you are deciding whether to repair it or do without. These are the two options.',
+  )
+
+  // ── CITY-SPECIFIC TEXTURE ─────────────────────────────────────────────────
+  addIf((currentCn === 'United Kingdom' || cn === 'United Kingdom') && isUrban && era >= 1950,
+    'The particular British management of the queue: enforced by consensus and without being asked.',
+    'The pub on the corner and what it holds of the neighbourhood: the argument, the anniversary, the ordinary Thursday.',
+  )
+  addIf((currentCn === 'France' || cn === 'France') && isUrban && era >= 1950,
+    'The boulangerie: the same bread at the same hour, the same exchange. The constancy is a kind of contract.',
+    'The argument about the right way to do something is itself a form of attention paid to quality.',
+  )
+  addIf((currentCn === 'India' || cn === 'India') && isUrban && era >= 1970,
+    'The logic of the city: the way it absorbs everyone and moves at a pace that accommodates all paces simultaneously.',
+    'The power cut in the afternoon: the fans stop, the work continues, the generator starts or doesn\'t.',
+  )
+  addIf((currentCn === 'Brazil' || cn === 'Brazil') && isUrban && era >= 1960,
+    'The city exists at three speeds at once. You have found which speed is yours.',
+    'The football: in the year of a defeat or a victory, the city is the same city and also a different place.',
+  )
+  addIf((currentCn === 'Egypt' || cn === 'Egypt') && isUrban && era >= 1960,
+    'Cairo at midday versus Cairo at midnight: the city does not rest, it only changes character.',
+    'The coffee house is an institution that has no fixed programme. Its function is simply being there.',
+  )
+  addIf((currentCn === 'Mexico' || cn === 'Mexico') && isUrban && era >= 1960,
+    'The traffic: accepted as a condition of city life, complained about without expecting change.',
+    'Sunday: the family geography of it, everyone somewhere specific, everyone accounted for.',
+  )
+  addIf((currentCn === 'Japan' || cn === 'Japan') && isUrban && era >= 1960,
+    'The train arrives when it arrives, to the minute. This reliability is both ordinary and remarkable.',
+    'The sound the city makes between 6pm and 8pm: the specific texture of people going home.',
+  )
+  addIf((currentCn === 'Iran' || cn === 'Iran') && isUrban && era >= 1980,
+    'The two versions of conversation: the public one and the private one. You navigate both.',
+    'The city at night is more itself than in the day — the apartments, the rooftops, the sound of music from somewhere.',
+  )
+
+  // ── WORK FROM HOME ERA ────────────────────────────────────────────────────
+  addIf(era >= 2020 && phase !== 'early_childhood' && isWealthyArch,
+    'The commute that used to be a commute is now the walk from one room to another. The walk takes ten seconds.',
+    'The hour at which the working day ends has become uncertain in a way the beginning never was.',
+    'You have learned something about your neighbours you would not have known before. Mostly their schedules.',
+  )
+
+  // ── FIRST-GENERATION PROSPERITY TEXTURE ──────────────────────────────────
+  addIf(F('poverty_childhood') && phase === 'midlife' && (isWealthyArch || gdp === 'medium_high'),
+    'The thing you could buy now that you could not buy then: you buy it without quite deciding to.',
+    'You know the price of things your children do not know the price of. You do not know how to transfer this knowledge.',
+  )
+
+  // ── DIASPORA / IMMIGRANT TEXTURE ─────────────────────────────────────────
+  addIf(F('emigrated') && phase === 'young_adult',
+    'The accent you had not known you had until someone here pointed it out.',
+    'The food you cannot find here that you are slowly substituting for. The substitute is adequate.',
+  )
+  addIf(F('emigrated') && phase === 'midlife',
+    'The country you came from and the country you are in have both changed without waiting for you.',
+    'The calculation — to stay or return — that you have been doing for fifteen years and cannot finish.',
+  )
+  addIf(F('emigrated') && phase === 'late_life',
+    'You are fluent now. You dream in both languages. The dreaming-in does not decide the question.',
+    'The place you came from: changed. The place you remember: no longer quite exists.',
+  )
+
+  // ── RELIGION: SIKH ────────────────────────────────────────────────────────
+  addIf(religion === 'sikh',
+    'The kara on your wrist: you have worn it so long you forget it until it makes a sound.',
+    'Seva at the gurdwara: the principle that service is the practice, not the preparation for a different practice.',
+    'The langar: whoever comes eats the same food from the same kitchen in the same room. The equality is not decorative.',
+  )
+
+  // ── RELIGION: ANIMIST / TRADITIONAL ───────────────────────────────────────
+  addIf(religion === 'animist' || religion === 'folk_religion',
+    'The ancestors are addressed before decisions. This is not metaphor. The consultation is genuine.',
+    'The seasonal ritual: you do it because your mother did it and her mother before her. The reason and the practice are the same thing.',
+    'The offering left at the threshold: not superstition but acknowledgement that things exist beyond what can be measured.',
+  )
+
+  // ── RELIGION: SHIA ────────────────────────────────────────────────────────
+  addIf(religion === 'muslim_shia',
+    'Muharram: the grief is not historical in the way outside observers think. It is present. The mourning is for what is still lost.',
+    'The particular authority of a senior cleric in this tradition: political and theological at once, the two not separated.',
+  )
+
+  // ── RELIGION: ETHIOPIAN ORTHODOX ─────────────────────────────────────────
+  addIf(cn === 'Ethiopia' && isChristian,
+    'The fasting calendar: two hundred days of the year, give or take. The city eats differently during these periods and the difference is visible.',
+    'The timket celebration in January: the water, the procession, the sound of it. The oldest Christian country and its oldest celebration.',
+  )
+
+  // ── RELIGION: EVANGELICAL / PENTECOSTAL ──────────────────────────────────
+  addIf(religion === 'christian_evangelical' || religion === 'christian_pentecostal',
+    'The service can go on for four hours. Time is not the constraint. What is being reached for is the constraint.',
+    'The testimony: someone from the congregation stands and says what happened to them. The congregation responds. This is participatory in a way that other services are not.',
+    'The prosperity gospel has its critics inside the church as well as outside. The congregation holds both positions.',
+  )
+
+  // ── HINDU DAILY RHYTHM ────────────────────────────────────────────────────
+  addIf(isHindu && phase !== 'early_childhood',
+    'The morning puja: the small flame, the specific flowers, the precise sequence. The sequence varies by family. Yours is yours.',
+    'The temple at a festival: the noise, the colour, the logistics of devotion at scale.',
+    'The calendar of auspicious days: certain things happen on certain days. The calendar and the daily calendar coexist.',
+  )
+
+  // ── DALIT / CASTE TEXTURE ─────────────────────────────────────────────────
+  addIf(state.character?.country?.casteSystem && cn === 'India',
+    'The caste operates mostly without being named. It is in the neighbourhood, the school, the job, the marriage list.',
+    'The reservation system: the official remedy, the unofficial resentment, the gap between what is guaranteed and what is given.',
+  )
+
+  // ── KOREAN EXAM CULTURE ───────────────────────────────────────────────────
+  addIf(cn === 'South Korea' && hasChildren && era >= 1990,
+    'The hagwon bills: a second household expense, accepted as the cost of not falling behind.',
+    'The suneung year: the house operates around the exam. The exam is treated as both solvable and unjust, simultaneously.',
+  )
+  addIf(cn === 'South Korea' && phase === 'young_adult' && era >= 1985,
+    'The hierarchy of university attended follows you into the office, which is known and not discussed.',
+    'The standard script: the job, the apartment, the marriage, the children, in the expected sequence. Deviation requires a longer explanation than compliance.',
+  )
+
+  // ── JAPANESE WORK CULTURE ────────────────────────────────────────────────
+  addIf(cn === 'Japan' && careerField !== null && era >= 1960 && era <= 2000,
+    'Leaving before your senior has left: not impossible, but noticed.',
+    'The after-work drinks that are not optional in the way optional implies a genuine choice.',
+    'The company trip: two days of team-building on someone else\'s schedule. You go.',
+  )
+  addIf(cn === 'Japan' && phase === 'midlife' && era >= 2000,
+    'Karoshi is the word for what is admitted when it goes too far. Before it goes too far, it is called dedication.',
+    'The younger generation arriving with different expectations. The gap between what they expect and what exists is the conversation everyone is having.',
+  )
+
+  // ── WORKING MOTHER ────────────────────────────────────────────────────────
+  addIf(gender === 'female' && hasChildren && careerField !== null && phase === 'midlife',
+    'The question that fathers are not asked: how do you manage it? The question contains the assumption.',
+    'The leaving at exactly five because the childcare closes at six. The leaving is logged without a word by everyone who stays.',
+    'You are good at two things and the combination costs you full sleep and you do not mention this.',
+  )
+
+  // ── SINGLE FATHER ─────────────────────────────────────────────────────────
+  addIf(gender === 'male' && hasChildren && !hasPartner,
+    'The things you learned out of necessity that you did not know you would need to know.',
+    'The coordination that used to be distributed between two people and is now only you.',
+    'People are more helpful than they might otherwise be. The help is welcome. The reason it is offered is complicated.',
+  )
+
+  // ── CAREGIVER OF PARENT WITH DEMENTIA ────────────────────────────────────
+  addIf(F('dementia_primary_carer') || F('dementia_shared_care'),
+    'The repetition: the same story, the same question, answered each time as though it is the first. It is the first for them.',
+    'The moment they were themselves today: you hold it. It happened. It was real.',
+    'The strange grief of caring for someone who is still here.',
+  )
+
+  // ── AGRICULTURAL LABORER ──────────────────────────────────────────────────
+  addIf(isRural && (isDeveloping || isSubsaharan) && careerField === null,
+    'The body that knows the season before the calendar does: the knee, the shoulder, what the rain will do.',
+    'The harvest: the days when everything else stops because this cannot wait.',
+    'The land as employer: the negotiation is with weather and soil, which do not negotiate.',
+  )
+
+  // ── COASTAL / FISHING COMMUNITY ──────────────────────────────────────────
+  addIf(isRural && (cn === 'Philippines' || cn === 'Vietnam' || cn === 'Bangladesh' || cn === 'Norway' || cn === 'Indonesia' || cn === 'Sri Lanka'),
+    'The sea is the job and the weather is the supervisor and the supervisor does not explain decisions.',
+    'The boat: maintained because the alternative is not a boat.',
+    'What the tide is doing at any given moment: known without checking.',
+  )
+
+  // ── MINING / EXTRACTION COMMUNITY ────────────────────────────────────────
+  addIf(cn === 'South Africa' || cn === 'Zambia' || cn === 'Bolivia' || cn === 'Chile' || cn === 'Colombia',
+    'The shift pattern divides the week differently from everywhere else. The week is underground and above ground, in rotation.',
+    'The dust: in the lungs, in the house, in the ten-year health projection everyone in this town shares.',
+  )
+
+  // ── 1920S–1930S TEXTURE ───────────────────────────────────────────────────
+  addIf(era >= 1920 && era <= 1939 && phase !== 'early_childhood',
+    'The newspapers are the source. The radio is new. Both are how the world arrives.',
+    'The money that disappeared: not everyone\'s, but enough people\'s that its absence is a fact of the decade.',
+    'The sense that something has changed permanently since the last war. Everyone is still working out what.',
+  )
+
+  // ── 1950S COLD WAR TEXTURE ────────────────────────────────────────────────
+  addIf(era === 1950 && phase !== 'early_childhood',
+    'The bomb is the thing no one discusses directly. It is in the architecture of every conversation about the future.',
+    'The television is new in the house or almost in the house. Everything it changes will take a generation to see.',
+  )
+  addIf(era === 1950 && isPostSoviet && phase !== 'early_childhood',
+    'The official optimism and the private accounting are not the same document.',
+    'The collective is the unit. The unit has benefits and costs that are fixed and not subject to negotiation.',
+  )
+
+  // ── 1970S TEXTURE ────────────────────────────────────────────────────────
+  addIf(era === 1970 && isWealthyArch && phase !== 'early_childhood',
+    'The decade doesn\'t know yet whether the previous decade meant anything. The cities are dirtier. The music is louder.',
+    'The oil price is a daily fact. The queue, the rationing, the reorientation of what prosperity costs.',
+  )
+  addIf(era === 1970 && isDeveloping && phase !== 'early_childhood',
+    'The liberation movements and the new governments and the question of what independence has delivered.',
+    'The price of things is going up and the reason is far away but the price is here.',
+  )
+
+  // ── 1980S TEXTURE ────────────────────────────────────────────────────────
+  addIf(era === 1980 && isWealthyArch && phase !== 'early_childhood',
+    'The illness with no name yet and then with a name and then with a face on the news. The decade folds around it.',
+    'The money decade: someone is making a great deal of money. You know someone who knows someone.',
+  )
+
+  // ── NOMADIC / PASTORALIST ─────────────────────────────────────────────────
+  addIf(isRural && (cn === 'Mongolia' || cn === 'Kazakhstan' || cn === 'Niger' || cn === 'Ethiopia' || cn === 'Somalia') && era <= 2000,
+    'The season determines the direction. The direction determines the next three months.',
+    'The ger or the tent: assembled and disassembled enough times that the hands know the sequence without the eyes.',
+    'Distance is a different category than it is for people who stay in one place.',
+  )
+
+  // ── ARCTIC / EXTREME COLD ────────────────────────────────────────────────
+  addIf(cn === 'Norway' || cn === 'Canada' || cn === 'Russia' && isRural,
+    'The cold at a certain temperature becomes a kind of architecture: the way you move through it, the things you keep close.',
+    'The light that returns after the long dark: this is not a metaphor, it is a physiological event.',
+    'Winter preparations: the checklist runs for weeks. Failing the checklist is not an option.',
+  )
+
+  // ── TROPICAL DAILY ────────────────────────────────────────────────────────
+  addIf((cn === 'Nigeria' || cn === 'Ghana' || cn === 'Kenya' || cn === 'Philippines' || cn === 'Indonesia' || cn === 'Thailand') && era >= 1960,
+    'The heat is a fact of the body all day and the management of the heat is part of every plan.',
+    'The rainy season: everything planned around it. The dry season: everything planned around when it will end.',
+    'The power cut reorganises the evening. The reorganisation has been practised so many times it is fluent.',
+  )
+
+  // ── RELIGION: ZOROASTRIAN ────────────────────────────────────────────────
+  addIf(religion === 'zoroastrian' || (cn === 'India' && F('parsi_community')),
+    'The fire: maintained, tended, not allowed to go out. The continuity is the practice.',
+    'Nowruz and what it contains: spring, renewal, the table with seven things that begin with S.',
+    'Purity in the physical world as a theological position, not just a custom.',
+  )
+
+  // ── RELIGION: SUFI / MYSTICAL ISLAM ──────────────────────────────────────
+  addIf(isMuslim && (cn === 'Turkey' || cn === 'Senegal' || cn === 'Pakistan' || cn === 'Morocco' || cn === 'Egypt' || cn === 'Sudan') && F('mouride_dahira') || (isMuslim && F('spiritual_seeker')),
+    'The saint\'s shrine: the petitions left there, the specific quality of the visit. Different from the mosque.',
+    'The dhikr: the repetition until the repetition changes character. This is the point of the repetition.',
+  )
+
+  // ── RELIGION: RASTAFARIAN ────────────────────────────────────────────────
+  addIf(cn === 'Jamaica' && (religion === 'christian_protestant' || religion === 'folk_religion') && phase !== 'early_childhood',
+    'Babylon is the word for the system that requires what the system requires. The word precedes and survives the specific system.',
+    'Ital food: the preparation as the practice, not the preparation before the practice.',
+    'The reasoning: the conversation that takes as long as the conversation requires.',
+  )
+
+  // ── MISCARRIAGE / FERTILITY GRIEF ────────────────────────────────────────
+  addIf(F('experienced_miscarriage') || F('multiple_miscarriage'),
+    'The absence that has a specific shape and size and a due date.',
+    'You have stopped telling people you are trying. The telling and the asking-how-it\'s-going costs more than the privacy.',
+    'Someone else\'s pregnancy announcement: you handle it correctly. You feel it first and handle it second.',
+  )
+
+  // ── THE PERSON WHO STAYED ─────────────────────────────────────────────────
+  addIf(!F('emigrated') && (isSubsaharan || isDeveloping) && phase === 'late_life',
+    'The ones who left and the ones who stayed: a division made in youth that has compounded for decades.',
+    'What you have here that they don\'t have there. What they have there that doesn\'t exist here.',
+    'You stayed. Some years this was a choice. Some years it was circumstances. The distinction blurs with time.',
+  )
+
+  // ── MILITARY SERVICE / CONSCRIPTION ──────────────────────────────────────
+  addIf(F('military_service') && !F('deployed_to_conflict'),
+    'The two years that were the country\'s before they were yours again.',
+    'The rank and what it taught: a specific structure for how to give and receive instruction.',
+    'The men you served with: the bond that formed in the tedium before anything happened.',
+  )
+
+  // ── DOMESTIC WORKER PERSPECTIVE ───────────────────────────────────────────
+  addIf(careerField === 'domestic' || F('domestic_worker'),
+    'The house you are in is not your house. You know it better than most of its occupants in certain respects.',
+    'The Sunday: the day that is yours. The rest of the week is accounted for in hours.',
+    'What you know about this family that they do not know you know. Not secrets — just what proximity reveals.',
+  )
+
+  // ── COUNTRY: TURKEY ───────────────────────────────────────────────────────
+  addIf(cn === 'Turkey' && phase !== 'early_childhood',
+    'The çay is the medium of everything: the negotiation, the conversation, the waiting, the hospitality.',
+    'The city straddling the question of what it is and what tradition it belongs to: both sides have been decided and undecided repeatedly.',
+  )
+  addIf(cn === 'Turkey' && era >= 1980 && phase !== 'early_childhood',
+    'The political conversation happens in layers: what is said, what is understood from what is said, what is left out.',
+    'The military and the flag and what they mean in this country is different from what they mean in most places.',
+  )
+
+  // ── COUNTRY: SAUDI ARABIA / GULF ─────────────────────────────────────────
+  addIf((cn === 'Saudi Arabia' || arch === 'wealthy_gulf') && gender === 'female' && era >= 1970 && era <= 2010,
+    'The mahram: the permission to travel, to move, to conduct certain affairs. The shape of the day organised around it.',
+    'The parallel women\'s world, which is elaborate and invisible to the men who officially manage things.',
+  )
+  addIf((cn === 'Saudi Arabia' || arch === 'wealthy_gulf') && isMuslim,
+    'The call to prayer structures the day in ways that are practical and also not only practical.',
+    'The gulf between the kingdom\'s official position and the private life: the management of both is a skill.',
+  )
+
+  // ── COUNTRY: POLAND ───────────────────────────────────────────────────────
+  addIf(cn === 'Poland' && phase !== 'early_childhood',
+    'The Catholic calendar and the state calendar: separate for decades, then one, then separate again, then complicated.',
+    'The national memory is precise about suffering and selective about other things. This is common. The precision here is very exact.',
+  )
+  addIf(cn === 'Poland' && era >= 1990,
+    'The transformation that happened faster than anyone expected and cost more than the transformation disclosed.',
+    'The road west: the relatives who took it and the ones who didn\'t and the comparison that runs on indefinitely.',
+  )
+
+  // ── COUNTRY: ARGENTINA ────────────────────────────────────────────────────
+  addIf(cn === 'Argentina' && phase !== 'early_childhood',
+    'The café: the social institution that the house aspires to be.',
+    'The mate: the ritual of preparation and sharing. Passed around without ceremony, which is its own ceremony.',
+    'The crisis that was the worst, and then the next crisis that was the worst, and the calibration of what constitutes a crisis.',
+  )
+
+  // ── ADULT LANGUAGE LEARNING (IMMIGRANT) ──────────────────────────────────
+  addIf(F('emigrated') && phase === 'young_adult' && era >= 1960,
+    'The new language: correct but not natural yet. Natural will take years. Correct is what you have right now.',
+    'The thing you cannot say in the new language that you could say in three words in the old one.',
+    'The class where everyone in the room has left somewhere and is learning the language of where they arrived.',
+  )
+
+  // ── LONG-DISTANCE RELATIONSHIP ────────────────────────────────────────────
+  addIf(hasPartner && F('emigrated') && phase === 'young_adult',
+    'The call at the arranged hour. The hour that is midnight for one of you and morning for the other.',
+    'The visit: two weeks, and the two weeks are not the same as the life you don\'t share.',
+    'The question of when this arrangement ends and what the ending requires.',
+  )
+
+  // ── RETURNED FROM EMIGRATION ──────────────────────────────────────────────
+  addIf(F('ofw_returned') || (F('emigrated') && phase === 'late_life' && currentCn === cn),
+    'Back in the country: the familiar things that are slightly different from the familiar things you remember.',
+    'What you thought you would feel about coming back, and what you actually feel, which is not simpler.',
+    'The people who never left and the person you are now: the gap has to be managed in both directions.',
+  )
+
+  // ── UNIVERSITY / STUDENT LIFE ─────────────────────────────────────────────
+  addIf(phase === 'young_adult' && age >= 18 && age <= 23 && F('university_student'),
+    'The library at midnight: the ones still there at midnight are a different category from the daytime ones.',
+    'The first argument you lost by being wrong. Losing by being wrong is more useful than winning.',
+    'Ideas encountered in the third week that reorganise everything you brought in on the first day.',
+  )
+
+  // ── WESTERN FARMER ────────────────────────────────────────────────────────
+  addIf(isRural && isWealthyArch && careerField === null,
+    'The subsidy: the form, the compliance, the policy that changed and the adjustment to the policy.',
+    'The neighbour\'s farm that was sold. The neighbour before that. The size of the holdings growing around the ones that remain.',
+    'The weather and the price and the yield: three variables that do not coordinate.',
+  )
+
+  // ── POST-PRISON REINTEGRATION ─────────────────────────────────────────────
+  addIf(F('decade_after_prison') || F('family_after_prison'),
+    'The decade since: you count it from one date. Most of what you are now happened after that date.',
+    'The checkbox on the form. The question about prior convictions. The calculation before answering.',
   )
 
   // ── FINAL CATCH-ALL (always available) ─────────────────────────────────────
