@@ -14065,7 +14065,7 @@ export function tick(state) {
     const shuffled = [...s.partner.traits].sort(() => Math.random() - 0.5)
     for (const trait of shuffled.slice(0, 3)) {
       const lines = TRAIT_PROSE[trait]
-      if (lines) moments.push(pick(lines))
+      if (lines) moments.push(pickFrom(lines))
     }
     s.mem = { ...(s.mem ?? {}), partnerMoments: moments, partnerMomentsGenerated: true }
   }
@@ -14074,7 +14074,7 @@ export function tick(state) {
     const existing = s.mem.partnerMoments ?? []
     const trait = pickFrom(s.partner.traits.filter(t => TRAIT_PROSE[t]))
     if (trait) {
-      const newMoment = pick(TRAIT_PROSE[trait])
+      const newMoment = pickFrom(TRAIT_PROSE[trait])
       if (!existing.includes(newMoment)) {
         s.mem = { ...s.mem, partnerMoments: [...existing, newMoment].slice(-12) }
       }

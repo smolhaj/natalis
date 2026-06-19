@@ -2903,38 +2903,6 @@ export const COUNTRIES = [
     literacyMale: 0.43,
     literacyFemale: 0.25,
   },
-
-  {
-    name: 'Mongolia', capital: 'Ulaanbaatar', currency: 'Mongolian tögrög', region: 'Central Asia', archetype: 'developing_urban',
-    gdp: 'medium', healthcare: 'basic', lifeExpectancy: 70,
-    conflictRisk: 0.03, genderGap: 0.17, socialMobility: 'medium',
-    wealthTierWeights: [0.25, 0.28, 0.27, 0.15, 0.05],
-    namePool: {
-      male: ['Battulga', 'Gantulga', 'Enkhjargal', 'Mönkh', 'Gantögs', 'Erdenebat', 'Tuvshinbayar', 'Amgalan', 'Boldbaatar', 'Chinzorig', 'Davaasambuu', 'Enkhtaivan', 'Gansukh', 'Javkhlan', 'Khurelbaatar', 'Luvsandorj', 'Oyunbold', 'Purevdorj', 'Saikhanbileg', 'Tserenpuntsag', 'Ulziibayar', 'Yesugei', 'Ankhbayar', 'Bat', 'Byambasuren', 'Chuluunbaatar', 'Davaadorj', 'Enkh', 'Galbadrakh', 'Jargalsaikhan'],
-      female: ['Oyuntsetseg', 'Narantuya', 'Enkhtuya', 'Bolormaa', 'Munkhjargal', 'Selenge', 'Ariunaa', 'Bayarmaa', 'Delgermaa', 'Enkhjin', 'Gantungalag', 'Khaliun', 'Lkhamsurun', 'Nominchimeg', 'Otgontuya', 'Purevjav', 'Sarantsetseg', 'Tungalag', 'Undarmaa', 'Urangua', 'Battsetseg', 'Chimgee', 'Davaasuren', 'Jargalmaa', 'Khandmaa', 'Luvsandulam', 'Munkhtsetseg', 'Norovnyam', 'Solongoo', 'Zoljargal'],
-    },
-    surnames: ['Bat', 'Gantulga', 'Enkh', 'Bayar', 'Mönkh', 'Bold', 'Tsog', 'Luvsanjamts', 'Nyamaa', 'Buyankhuu', 'Dorj', 'Jargal', 'Khurelbaatar', 'Lhagvasuren', 'Munkhbayar', 'Natsagdorj', 'Oyunbaatar', 'Purev', 'Sodnom', 'Tseren', 'Uran', 'Yansanjav', 'Zayabaatar', 'Amarbayasgalan', 'Batmönkh', 'Chuluunbaatar', 'Davaadulam', 'Erdenebold', 'Gantögs', 'Javkhlanbaatar'],
-    languages: ['Mongolian'],
-    context: 'Mongolia spent most of the 20th century as a Soviet satellite so complete that most Mongolians didn\'t see a foreigner until 1990. The 1937-38 Stalinist purges killed 22,000 Buddhist monks — a significant fraction of the male population — and destroyed 700 monasteries. Nomadic herding was collectivised onto negdels that tried to manage seasonal movement as if it were a factory shift. When the Soviet Union fell, the negdels dissolved overnight; herders received their animals back and were told to manage in a country with no market infrastructure. Half the population now lives in Ulaanbaatar, in ger districts where families from the steppe replicate nomadic life using coal-heated yurts at the city\'s edge. Chinggis Khaan appears on the currency, the airport, and a 40-metre steel equestrian statue visible from the capital. This is not tourism — it is the recovery of a national identity suppressed for seventy years.',
-    yearRange: [1924, 2010],
-    regime: 'single_party_communist',
-    regimeHistory: [
-      { year: 1990, to: 'parliamentary_republic' },
-    ],
-    religionWeights: { buddhist: 0.53, secular: 0.40, muslim: 0.03, shamanist: 0.04 },
-    ethnicGroups: [
-      { id: 'khalkha_mongolian', name: 'Khalkha Mongolian', share: 0.82 },
-      { id: 'kazakh_mongolian', name: 'Kazakh (Mongolia)', share: 0.04 },
-      { id: 'other_mongolian', name: 'Other Mongolian groups', share: 0.14 },
-    ],
-    casteSystem: false,
-    lgbtqCriminalized: false,
-    lgbtqLegalYear: null,
-    childMarriageRisk: 0.05,
-    urbanRate: 0.68,
-    literacyMale: 0.97,
-    literacyFemale: 0.98,
-  },
 ]
 
 export const COUNTRY_MAP = Object.fromEntries(COUNTRIES.map(c => [c.name, c]))
