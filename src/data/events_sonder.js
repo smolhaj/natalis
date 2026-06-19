@@ -2191,4 +2191,556 @@ export const SONDER_EVENTS = [
     effect: (p) => { p.m += 2; p.e += 1; p.setMem('sonderMaternityWardEmergence', true); },
   },
 
+  // ── SIXTH EXPANSION BATCH ─────────────────────────────────────────────────
+
+  // UNIVERSAL MOMENTS
+
+  {
+    id: 'sonder_sudden_rain_doorway',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.ruralUrban === 'urban' && !G.mem?.sonderSuddenRainDoorway,
+    text: 'A sudden downpour and everyone in the street moves to the nearest doorway at the same time. Strangers standing very close together, watching the rain. Nobody speaks but everyone shares the same ten minutes. When the rain stops they scatter again into their separate days and do not look at each other.',
+    effect: (p) => { p.m += 1; p.e += 1; p.setMem('sonderSuddenRainDoorway', true); },
+  },
+
+  {
+    id: 'sonder_first_warm_day_spring',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => (G.character?.country?.archetype === 'wealthy_west' || G.character?.country?.archetype === 'post_soviet') && !G.mem?.sonderFirstWarmDaySpring,
+    text: 'The first genuinely warm day after a long winter: everyone in the city decides simultaneously to go outside. People who have not seen each other all winter are sitting on steps and in parks. The decision was made without coordination. The city is executing it with one mind.',
+    effect: (p) => { p.m += 2; p.setMem('sonderFirstWarmDaySpring', true); },
+  },
+
+  {
+    id: 'sonder_stranger_private_joy',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => !G.mem?.sonderStrangerPrivateJoy,
+    text: 'A stranger on the street is delighted by something that has nothing to do with you — a message, a thought, something remembered. Their face does something private and they do not try to explain it to the street. The joy is entirely self-contained. You catch it briefly, like catching a scent.',
+    effect: (p) => { p.m += 2; p.setMem('sonderStrangerPrivateJoy', true); },
+  },
+
+  {
+    id: 'sonder_old_man_old_dog',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.age >= 60 && !G.mem?.sonderOldManOldDog,
+    text: 'An old man and his old dog, both walking slowly, both taking their time, both evidently fine with this pace. They pause at the same things. The dog is not being walked — they are walking together, at the speed both of them require, which is the same speed.',
+    effect: (p) => { p.m += 2; p.e += 1; p.setMem('sonderOldManOldDog', true); },
+  },
+
+  {
+    id: 'sonder_child_bored_adult_function',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) => G.age >= 6 && !G.mem?.sonderChildBoredAdultFunction,
+    text: 'At an adult gathering, a child of about seven who has found a corner and is conducting a private game with small objects from their pocket. The adults are talking about adult things and the child has built a complete world two feet from the floor, entirely self-sufficient, requiring nothing from the conversation above it.',
+    effect: (p) => { p.m += 1; p.e += 1; p.setMem('sonderChildBoredAdultFunction', true); },
+  },
+
+  {
+    id: 'sonder_house_emptied_after_death',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.age >= 38 && !G.mem?.sonderHouseEmptiedAfterDeath,
+    text: 'The contents of a house being brought out after someone died in it: the furniture, the books, the kitchen things, appearing on the pavement for collection or sale. The objects that accumulated over a lifetime becoming legible now that they are separated from the person who chose them. Someone\'s taste, visible.',
+    effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderHouseEmptiedAfterDeath', true); },
+  },
+
+  {
+    id: 'sonder_recent_arrival_phone_map',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.ruralUrban === 'urban' && G.currentYear >= 2005 && !G.mem?.sonderRecentArrivalPhoneMap,
+    text: 'Someone looking at a map on their phone, turning slowly to align it with the street. The way they look up at the building and back at the screen has a quality of someone for whom this city is still a problem to be solved, not yet a place they move through without thinking. Everything on this street is still information.',
+    effect: (p) => { p.e += 2; p.setMem('sonderRecentArrivalPhoneMap', true); },
+  },
+
+  {
+    id: 'sonder_recovery_meeting_leaving',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.ruralUrban === 'urban' && G.currentYear >= 1960 && !G.mem?.sonderRecoveryMeetingLeaving,
+    text: 'People leaving what is clearly a meeting of some kind of recovery programme — the handshakes, the specific quality of the conversation on the pavement after, the way they go their separate directions. Whatever is held together in that room is visible, briefly, in the quality of the leaving.',
+    effect: (p) => { p.e += 2; p.setMem('sonderRecoveryMeetingLeaving', true); },
+  },
+
+  {
+    id: 'sonder_nurse_long_shift_end',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.currentYear >= 1940 && !G.mem?.sonderNurseLongShiftEnd,
+    text: 'A nurse leaving a hospital at the end of a long shift — not changed out of scrubs, walking to her car. She is carrying the shift with her. You can see this in how she moves: the decision to leave was made but the shift has not entirely ended yet. She is doing the administrative work of returning to herself.',
+    effect: (p) => { p.e += 2; p.setMem('sonderNurseLongShiftEnd', true); },
+  },
+
+  {
+    id: 'sonder_teacher_late_classroom',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.currentYear >= 1950 && !G.mem?.sonderTeacherLateClassroom,
+    text: 'One lit window in an otherwise dark school building at seven in the evening. A teacher still at a desk. Everyone who is supposed to be here has gone home. The job does not end when the building empties. Whatever is still happening in that room is happening after the official end of what the job requires.',
+    effect: (p) => { p.e += 2; p.setMem('sonderTeacherLateClassroom', true); },
+  },
+
+  {
+    id: 'sonder_family_prison_visit',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => !G.mem?.sonderFamilyPrisonVisit,
+    text: 'A family outside a prison before visiting hours: children dressed carefully, a woman holding a bag of things that will be inspected. The waiting is practiced — they have done this before. When the door opens, the children go in and their faces change. They have learned to be whoever they need to be in there.',
+    effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderFamilyPrisonVisit', true); },
+  },
+
+  {
+    id: 'sonder_civil_wedding_no_family',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.currentYear >= 1950 && !G.mem?.sonderCivilWeddingNoFamily,
+    text: 'A small civil wedding — two people and their witnesses, no family, in good clothes on a Tuesday. The joy is real and it is not the kind of joy that requires an audience. They come out of the registry office and one of them photographs the other against the building. The Tuesday continues around them.',
+    effect: (p) => { p.m += 2; p.setMem('sonderCivilWeddingNoFamily', true); },
+  },
+
+  // SPECIFIC CITIES / COUNTRIES
+
+  {
+    id: 'sonder_dhaka_rickshaw_thousands',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.character?.country?.name === 'Bangladesh' && G.ruralUrban === 'urban' && !G.mem?.sonderDhakaCityRickshaw,
+    text: 'The rickshaw driver in traffic so dense that motion is measured in inches: he has a system — a pattern of insertion and withdrawal — that is entirely intuitive and would be impossible to explain. He has been driving this city for years and the city is in him. You are the cargo. He is navigating.',
+    effect: (p) => { p.e += 2; p.setMem('sonderDhakaCityRickshaw', true); },
+  },
+
+  {
+    id: 'sonder_nairobi_matatu_conductor',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.character?.country?.name === 'Kenya' && !G.mem?.sonderNairobiMatatu,
+    text: 'The matatu conductor leaning out the door, calling the route, collecting the fare, keeping the count of who is in and who gets out, managing four conversations at once while the vehicle moves. The speed and the noise are the medium. He is competent in a way that only this particular environment would produce.',
+    effect: (p) => { p.e += 2; p.setMem('sonderNairobiMatatu', true); },
+  },
+
+  {
+    id: 'sonder_lagos_traffic_hawker',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.character?.country?.name === 'Nigeria' && G.ruralUrban === 'urban' && !G.mem?.sonderLagosTrafficHawker,
+    text: 'In standstill traffic, a hawker moving between the cars with phone chargers balanced on his head. He has memorised the speed of the traffic — which lanes move, when a gap will open, when to retreat. He disappears and reappears. The traffic is his shop floor and he has learned its rhythms better than the drivers who made them.',
+    effect: (p) => { p.e += 2; p.setMem('sonderLagosTrafficHawker', true); },
+  },
+
+  {
+    id: 'sonder_nepal_porter_weight',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.character?.country?.name === 'Nepal' && !G.mem?.sonderNepalPorterWeight,
+    text: 'A porter on the trail carrying a load that represents an engineering problem you cannot solve from looking at it — too heavy, too wide, too high. He is above you on the slope and moving. The load is in a basket held by a strap across his forehead. The forehead is doing the work that technology has not yet replaced.',
+    effect: (p) => { p.e += 2; p.setMem('sonderNepalPorterWeight', true); },
+  },
+
+  {
+    id: 'sonder_rwanda_village_alongside',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.character?.country?.name === 'Rwanda' && G.currentYear >= 2000 && !G.mem?.sonderRwandaVillageAlongside,
+    text: 'Two men in the market who are neighbours and who were on opposite sides of what happened. They move around each other without incident. This is something — not reconciliation exactly, not forgiveness exactly, but the practice of continuing to exist in the same place, which is different from, and harder than, either.',
+    effect: (p) => { p.e += 2; p.r += 2; p.setMem('sonderRwandaVillageAlongside', true); },
+  },
+
+  {
+    id: 'sonder_pacific_ocean_reading',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => (G.character?.country?.name === 'Papua New Guinea' || G.character?.country?.archetype === 'developing_unstable' && ['Pacific', 'Oceania'].some(r => G.character?.country?.name?.includes?.(r))) || (G.currentCountry === 'New Zealand' || G.currentCountry === 'Australia' && G.character?.country?.archetype === 'developing_urban') && !G.mem?.sonderPacificOceanReading,
+    text: 'Someone looking at the ocean and reading it — not watching it, reading it. The surface, the colour, the direction of the wind, what the birds are doing. This reading is practical and it is also something more than practical. It is the knowledge that lives in the body and was put there by generations rather than study.',
+    effect: (p) => { p.e += 2; p.setMem('sonderPacificOceanReading', true); },
+  },
+
+  {
+    id: 'sonder_confucian_ancestor_tablet',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => (G.character?.country?.name === 'China' || G.character?.country?.name === 'Vietnam' || G.character?.country?.name === 'South Korea' || G.character?.country?.name === 'Taiwan') && !G.mem?.sonderConfucianAncestorTablet,
+    text: 'The ancestor tablet in the home: the incense, the offering, the specific protocol of how the food is arranged. The dead are present in this room in a way that is institutional and daily rather than exceptional. The man tending the altar is not performing ritual. He is doing what is done on a Thursday.',
+    effect: (p) => { p.e += 2; p.setMem('sonderConfucianAncestorTablet', true); },
+  },
+
+  {
+    id: 'sonder_opposition_newspaper',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => (G.regime === 'military_dictatorship' || G.regime === 'single_party_authoritarian' || G.regime === 'single_party_communist') && !G.mem?.sonderOppositionNewspaper,
+    text: 'Someone selling opposition newspapers at a corner in a city where selling opposition newspapers is a risk. He does not make eye contact. You take one or you don\'t. The exchange is conducted at the speed of something that shouldn\'t take long in case it shouldn\'t be happening. He is there the next day as well.',
+    effect: (p) => { p.e += 2; p.karma += 1; p.setMem('sonderOppositionNewspaper', true); },
+  },
+
+  {
+    id: 'sonder_grave_anniversary_visit',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.age >= 55 && !G.mem?.sonderGraveAnniversaryVisit,
+    text: 'Someone at a grave on what is clearly an anniversary — not a first visit, not a random visit, but the specific visit that comes at this time every year and will come again. They stand there for a while and then they do something small — adjust the flowers, or speak, or just stand. Then they go. They\'ll be back in a year.',
+    effect: (p) => { p.e += 2; p.r += 2; p.setMem('sonderGraveAnniversaryVisit', true); },
+  },
+
+  // GENDER / AGE
+
+  {
+    id: 'sonder_woman_age_addressed_younger',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.character?.gender === 'female' && G.age >= 68 && !G.mem?.sonderWomanAgeAddressedYounger,
+    text: 'A woman of seventy or so who is being addressed as sixty by someone who means it as a compliment. Her face is absolutely still during the compliment. She thanks them. What she thinks about the compliment — the assumption inside it about what the years should be used for — she keeps to herself.',
+    effect: (p) => { p.e += 2; p.setMem('sonderWomanAgeAddressedYounger', true); },
+  },
+
+  {
+    id: 'sonder_teenage_boy_razor',
+    phase: 'adolescence',
+    weight: 2,
+    when: (G) => G.character?.gender === 'male' && G.age >= 14 && G.age <= 17 && !G.mem?.sonderTeenageBoyRazor,
+    text: 'Through a window or a half-open door: a teenage boy shaving for what is clearly one of the first times. The concentration is out of proportion to the task, which is appropriate given that the task is new. He doesn\'t know he\'s being seen. The seriousness of the face is something he would not want witnessed.',
+    effect: (p) => { p.e += 2; p.setMem('sonderTeenageBoyRazor', true); },
+  },
+
+  {
+    id: 'sonder_man_teaching_son_skill',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.character?.gender === 'male' && G.children?.length > 0 && G.age >= 35 && !G.mem?.sonderManTeachingSonSkill,
+    text: 'A man teaching a boy something practical — how to fix the thing, how to hold the tool, how to read what the material requires. The patience in it is different from the patience in other kinds of instruction. He is teaching the boy something his own father taught him, or something his father failed to teach him. Both feel the same from the outside.',
+    effect: (p) => { p.e += 2; p.m += 1; p.setMem('sonderManTeachingSonSkill', true); },
+  },
+
+  // SPECIFIC SITUATIONS
+
+  {
+    id: 'sonder_cleaning_woman_mirror',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.ruralUrban === 'urban' && G.currentYear >= 1960 && !G.mem?.sonderCleaningWomanMirror,
+    text: "In the lobby of a hotel or office building: a cleaning woman's reflection in the large mirror as she works the floor around the people who move through it without seeing her. She passes through a dozen reflections in an hour. The mirror sees her. The people in the mirror do not look.",
+    effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderCleaningWomanMirror', true); },
+  },
+
+  {
+    id: 'sonder_bar_mitzvah_grandfather',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.religion === 'jewish' && G.age >= 45 && !G.mem?.sonderBarMitzvahGrandfather,
+    text: 'At the bar mitzvah, the grandfather watching from the side. He is watching his grandson read from the Torah, which is what the afternoon is for, but he is also watching him at every other level: as a child, as a continuation, as the evidence that something survived that had very specific reasons not to. He applauds when everyone applauds.',
+    effect: (p) => { p.e += 2; p.m += 2; p.setMem('sonderBarMitzvahGrandfather', true); },
+  },
+
+  {
+    id: 'sonder_cambodia_survivor_ordinary',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.character?.country?.name === 'Cambodia' && G.currentYear >= 1990 && G.age >= 45 && !G.mem?.sonderCambodiaSurvivorOrdinary,
+    text: 'An old woman at a market stall doing an ordinary thing. She is old enough to have been an adult in 1975. What that means is in the arithmetic of her age and the year and what happened. She sells the mangoes. The mangoes are priced correctly. She has been here since before the market opened.',
+    effect: (p) => { p.e += 2; p.r += 2; p.setMem('sonderCambodiaSurvivorOrdinary', true); },
+  },
+
+  {
+    id: 'sonder_homeless_woman_invisible',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.ruralUrban === 'urban' && !G.mem?.sonderHomelessWomanInvisible,
+    text: 'A woman sleeping on a bench in a public space in the middle of the afternoon, around whom everyone is navigating without acknowledgement. She is not asleep — her eyes are open, watching the ceiling. She is inside a bubble of invisibility that the city constructs without discussion. The bubble is maintained by everyone\'s compliance.',
+    effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderHomelessWomanInvisible', true); },
+  },
+
+  // ── BATCH 7 ───────────────────────────────────────────────────────────────
+
+  {
+    id: 'sonder_child_translating_parent',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) => G.flags.has('emigrated') && G.age >= 8 && G.age <= 14 && !G.mem?.sonderChildTranslatingParent,
+    text: 'The child at the counter, translating for the parent. The child is ten, or twelve, or nine. The information being translated is not child information — it is a bill, a form, a diagnosis. The child translates it accurately and does not indicate, by face or tone, that they have understood something they were not supposed to need to understand yet.',
+    effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderChildTranslatingParent', true); },
+  },
+
+  {
+    id: 'sonder_first_day_new_city',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.age >= 18 && G.age <= 28 && !G.mem?.sonderFirstDayNewCity,
+    text: 'Someone arrives in the city for the first time. You can tell by the way they stand at the exit of the train station with their bag and look at the street and then look at the phone and then back at the street. The city does not slow for arrival. The city has been here before you and will be here after you and is not interested in your first day.',
+    effect: (p) => { p.m += 1; p.e += 1; p.setMem('sonderFirstDayNewCity', true); },
+  },
+
+  {
+    id: 'sonder_man_crying_alone_car',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.age >= 35 && !G.mem?.sonderManCryingAloneCar,
+    text: 'A man sitting in a parked car outside a building, not going in. His hands are on the wheel. He is not going anywhere. The car is parked and he has been sitting in it for some time. When he finally gets out he gets out the way a person gets out when they have decided that going in is what comes next.',
+    effect: (p) => { p.r += 1; p.e += 1; p.setMem('sonderManCryingAloneCar', true); },
+  },
+
+  {
+    id: 'sonder_widow_first_errand',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.age >= 60 && !G.mem?.sonderWidowFirstErrand,
+    text: 'An older woman doing an errand alone that she probably used to do with someone. She is competent at the errand. She has been doing errands for decades. But there is a pause at the moment of decision — which bread, which line to stand in — that has the quality of a pause that used to contain a consultation.',
+    effect: (p) => { p.r += 1; p.e += 1; p.setMem('sonderWidowFirstErrand', true); },
+  },
+
+  {
+    id: 'sonder_night_shift_worker_morning',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.age >= 18 && G.age <= 40 && !G.mem?.sonderNightShiftWorkerMorning,
+    text: 'The people coming off the night shift at the hour when you are beginning. You pass each other at the shift change hour, going in opposite directions. They are wearing the end of the night. You have not thought about what the night cost them because you have been asleep for it.',
+    effect: (p) => { p.e += 2; p.setMem('sonderNightShiftWorkerMorning', true); },
+  },
+
+  {
+    id: 'sonder_argument_witnessed_restaurant',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.age >= 30 && !G.mem?.sonderArgumentWitnessedRestaurant,
+    text: 'Two people at the next table having an argument in the quiet register of people who have agreed not to make a scene. You can hear the argument without hearing the words. The words are probably not the argument. The argument probably started before dinner and will continue in the car and is inside a longer argument that has been running for some years.',
+    effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderArgumentWitnessedRestaurant', true); },
+  },
+
+  {
+    id: 'sonder_afghan_girl_school_2021',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.currentYear >= 2021 && G.age >= 30 && !G.mem?.sonderAfghanGirlSchool2021,
+    text: 'The photograph from August 2021: a girl at a school desk, and behind her the window, and behind the window the new reality. She is still sitting in the desk. The desk is still in the school. The school is still called a school. None of those facts will remain accurate for much longer and she knows this while the photograph is being taken.',
+    effect: (p) => { p.e += 2; p.r += 2; p.setMem('sonderAfghanGirlSchool2021', true); },
+  },
+
+  {
+    id: 'sonder_market_day_rural_africa',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => (G.character?.country?.archetype === 'subsaharan' || G.character?.country?.archetype === 'developing_unstable') && G.ruralUrban === 'rural' && G.age >= 30 && !G.mem?.sonderMarketDayRuralAfrica,
+    text: 'Market day: the distance people walked to be here. Each person at this market represents a calculation made before dawn about what to carry and how far. The woman with the vegetables walked further than the man with the chickens. The man with the chickens walked further than you assumed when you saw him arrive.',
+    effect: (p) => { p.e += 2; p.setMem('sonderMarketDayRuralAfrica', true); },
+  },
+
+  {
+    id: 'sonder_soviet_apartment_window',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => (G.character?.country?.archetype === 'post_soviet' || G.character?.country?.name === 'Russia') && G.age >= 55 && !G.mem?.sonderSovietApartmentWindow,
+    text: 'The window of the apartment block opposite: lit at eleven at night. Each lit window is someone still awake, which means someone has something they cannot put down yet. You do not know which apartment is which person, which person is which life. You know only that each window is warm and that warm windows at night are evidence of something.',
+    effect: (p) => { p.e += 2; p.m += 1; p.setMem('sonderSovietApartmentWindow', true); },
+  },
+
+  {
+    id: 'sonder_elderly_man_suit_bus',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.age >= 35 && G.ruralUrban === 'urban' && !G.mem?.sonderElderlyManSuitBus,
+    text: 'An old man in a suit on the bus. The suit is old but pressed. The pressing is not nostalgia; it is the standard that was set before you were born and that he has maintained because the standard is still the standard for him. When he gets off the bus he gets off carefully, as if the bus and he have an agreement about the pace of things.',
+    effect: (p) => { p.e += 2; p.setMem('sonderElderlyManSuitBus', true); },
+  },
+
+  {
+    id: 'sonder_woman_returns_to_work',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.character?.gender === 'female' && G.age >= 32 && G.age <= 45 && G.children && G.children.length > 0 && !G.mem?.sonderWomanReturnsToWork,
+    text: 'The first day back at the office after the maternity leave. The desk is the same desk. The coffee machine is the same coffee machine. She is not the same person who sat here before. This is not a complaint. It is an observation about how a person can change category without anyone at the office having witnessed the change.',
+    effect: (p) => { p.e += 2; p.m += 1; p.setMem('sonderWomanReturnsToWork', true); },
+  },
+
+  {
+    id: 'sonder_refugee_learning_alphabet',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => (G.residencyStatus === 'refugee_status' || G.residencyStatus === 'asylum_seeker') && G.age >= 18 && G.age <= 40 && !G.mem?.sonderRefugeeLearningAlphabet,
+    text: 'The adult literacy class: a man who was an engineer, or a teacher, or a surgeon, writing the new alphabet in the slow way that children write it. He writes it with care. He will learn it. But he is thirty-eight and the alphabet requires the same concentration it required when he was six and he was not expecting, at thirty-eight, to need that concentration again.',
+    effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderRefugeeLearningAlphabet', true); },
+  },
+
+  {
+    id: 'sonder_grandmother_phone_call',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.age >= 40 && !G.mem?.sonderGrandmotherPhoneCall,
+    text: 'Your grandmother, or someone else\'s grandmother, on the telephone. She is speaking to someone far away. Her voice on the phone has a quality it does not have in the room — brighter, more deliberate — as if she is performing being fine for the benefit of the distance. When she hangs up she is quiet for a while.',
+    effect: (p) => { p.e += 2; p.m += 1; p.setMem('sonderGrandmotherPhoneCall', true); },
+  },
+
+  {
+    id: 'sonder_south_asian_groom_procession',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => (G.character?.country?.name === 'India' || G.character?.country?.name === 'Pakistan' || G.character?.country?.name === 'Bangladesh' || G.character?.country?.name === 'Nepal') && G.age >= 22 && G.age <= 40 && !G.mem?.sonderSouthAsianGroomProcession,
+    text: 'The baraat: the groom on the horse, or in the decorated car, moving through the street. The relatives dancing around the car. This is not embarrassing for them in the way it would be embarrassing for other people. It is the required public account of something important. The groom looks slightly overwhelmed, which is appropriate.',
+    effect: (p) => { p.m += 2; p.e += 1; p.setMem('sonderSouthAsianGroomProcession', true); },
+  },
+
+  {
+    id: 'sonder_miner_surface_day',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => (G.career?.field === 'manual' || G.career?.title?.toLowerCase().includes('mine') || G.character?.country?.name === 'South Africa' || G.character?.country?.name === 'Zambia') && G.age >= 30 && !G.mem?.sonderMinerSurfaceDay,
+    text: 'The men coming up from underground at the end of the shift. They blink at the light in the way that people blink who have been in the dark for a fixed and known quantity of hours. This is not dramatic. This is Tuesday. This is what Tuesday looks like when your work is below the surface of things.',
+    effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderMinerSurfaceDay', true); },
+  },
+
+  {
+    id: 'sonder_chinese_new_year_train_home',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.character?.country?.name === 'China' && G.age >= 20 && G.age <= 40 && G.currentYear >= 1985 && !G.mem?.sonderChineseNewYearTrainHome,
+    text: 'The Spring Festival train: four hundred million people moving at the same time in the same direction, toward their parents\' homes. You are one of them. The migration is the largest annual human movement on earth and it happens inside the ordinary feeling of going home for the new year, which is just a feeling a person has about a train.',
+    effect: (p) => { p.m += 2; p.e += 1; p.setMem('sonderChineseNewYearTrainHome', true); },
+  },
+
+  {
+    id: 'sonder_mosque_friday_overflow',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.religion?.startsWith('muslim') && G.age >= 30 && !G.mem?.sonderMosqueFridayOverflow,
+    text: 'Friday Jumu\'ah: the overflow on the pavement outside. The latecomers who pray on flattened cardboard on the street because the mosque will not hold this many. The street becomes the mosque at noon on Fridays. Traffic waits. This is the arrangement.',
+    effect: (p) => { p.e += 2; p.m += 1; p.setMem('sonderMosqueFridayOverflow', true); },
+  },
+
+  {
+    id: 'sonder_the_last_farm',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.ruralUrban === 'rural' && G.age >= 60 && !G.mem?.sonderTheLastFarm,
+    text: 'The last farm on a road that used to have several farms. The others became something else over the decades — a subdivision, a storage facility, a field that is now just a field without a purpose. The one that remains is this one. The people who remain in it did not choose to be the last. They chose to stay, which is a different choice.',
+    effect: (p) => { p.r += 2; p.e += 1; p.setMem('sonderTheLastFarm', true); },
+  },
+
+  {
+    id: 'sonder_protest_march_faces',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.age >= 18 && G.age <= 35 && G.currentYear >= 1960 && !G.mem?.sonderProtestMarchFaces,
+    text: 'The faces in a march. Not the march as a political event but the march as a collection of individual reasons: the woman who came because her sister couldn\'t, the man who almost didn\'t come and came anyway, the teenager for whom this is the first time. All of them walking in the same direction for reasons that are each of them different from each other.',
+    effect: (p) => { p.e += 2; p.m += 1; p.setMem('sonderProtestMarchFaces', true); },
+  },
+
+  {
+    id: 'sonder_airport_departure_gate',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.age >= 20 && !G.mem?.sonderAirportDepartureGate,
+    text: 'The departure gate: everyone waiting is going somewhere specific, and the somewhere is specific to each of them in a way the gate cannot accommodate. All the particular arrivals — the house, the hospital, the person who does not know yet that you are coming — held inside the general fact of people waiting for a flight.',
+    effect: (p) => { p.e += 2; p.setMem('sonderAirportDepartureGate', true); },
+  },
+
+  {
+    id: 'sonder_grandparent_wartime_silence',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) => G.age >= 8 && G.age <= 14 && G.currentYear >= 1955 && G.currentYear <= 2000 && !G.mem?.sonderGrandparentWartimeSilence,
+    text: 'Your grandparent has a silence about one decade that they do not have about other decades. You notice it without understanding it. When you ask about those years, they say something general that covers the years without opening them. The general answer is technically true. The silence around it is more informative.',
+    effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderGrandparentWartimeSilence', true); },
+  },
+
+  {
+    id: 'sonder_teacher_student_potential',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.career?.field === 'education' && G.age >= 35 && !G.mem?.sonderTeacherStudentPotential,
+    text: 'A student whose potential is visible to you and not yet visible to them. You have seen this particular quality before, in other students, in other years. You know what it is and what it requires and whether this specific set of circumstances will allow it to develop. You do not say all of this. You give the assignment back with a comment in the margin.',
+    effect: (p) => { p.e += 2; p.m += 2; p.setMem('sonderTeacherStudentPotential', true); },
+  },
+
+  {
+    id: 'sonder_border_guard_both_sides',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.age >= 30 && G.currentYear >= 1950 && !G.mem?.sonderBorderGuardBothSides,
+    text: 'The border guard and the person crossing the border: two people in adjacent positions, one of whom has the papers and one of whom decides what the papers mean today. The guard has done this ten thousand times. The person crossing may have done it once. Both of them know things the other does not.',
+    effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderBorderGuardBothSides', true); },
+  },
+
+  {
+    id: 'sonder_city_at_four_am',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.ruralUrban === 'urban' && G.age >= 20 && G.age <= 35 && !G.mem?.sonderCityAtFourAm,
+    text: 'The city at four in the morning: the people who are awake at four are a subset of the city with its own internal logic. The delivery drivers, the nurses finishing, the insomniacs, the ones who stayed too late at someone else\'s home. You are briefly among them. Four in the morning makes everyone look like they know something the daytime doesn\'t.',
+    effect: (p) => { p.e += 2; p.setMem('sonderCityAtFourAm', true); },
+  },
+
+  {
+    id: 'sonder_soldier_homecoming_stranger',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.age >= 22 && G.age <= 35 && G.currentYear >= 1945 && !G.mem?.sonderSoldierHomecomingStranger,
+    text: 'Someone returning from a deployment, or a war, or a place that changed them in ways not visible in their face. They are at the bus station or the airport. Someone is waiting for them. The reunion is happening. Both of them are performing the reunion correctly. Neither of them is entirely the same person who was here when the deployment started.',
+    effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderSoldierHomecomingStranger', true); },
+  },
+
+  {
+    id: 'sonder_library_late_afternoon',
+    phase: 'adolescence',
+    weight: 2,
+    when: (G) => G.age >= 13 && G.age <= 18 && !G.mem?.sonderLibraryLateAfternoon,
+    text: 'The library in the late afternoon: each person at a different table, in a different internal world, in a different conversation with something that is not the room. The room holds all of them without asking what they are looking for. This is the arrangement: you come in with your question and the room is indifferent to the question and this is precisely what you needed.',
+    effect: (p) => { p.e += 2; p.m += 1; p.setMem('sonderLibraryLateAfternoon', true); },
+  },
+
+  {
+    id: 'sonder_favela_rooftop_view',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => (G.character?.country?.name === 'Brazil' || G.character?.country?.name === 'Venezuela' || G.character?.country?.name === 'Colombia') && G.ruralUrban === 'urban' && G.age >= 20 && !G.mem?.sonderFavelaRooftopView,
+    text: 'From the rooftop of the favela you can see the formal city below. The formal city can see the favela from below. This mutual visibility has been ongoing for a hundred years and has not resolved the question of what each part of the city means to the other.',
+    effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderFavelaRooftopView', true); },
+  },
+
+  {
+    id: 'sonder_pilgrim_walking_days',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => (G.religion?.startsWith('christian') || G.religion?.startsWith('muslim') || G.religion === 'hindu') && G.age >= 30 && !G.mem?.sonderPilgrimWalkingDays,
+    text: 'A pilgrim on the road. Not at the destination — on the road between. They have been walking for some days. The walking has a quality that ordinary walking does not have, which is that it is both the means and the point. When they get to where they are going, the getting there will be less important than the road that produced it.',
+    effect: (p) => { p.e += 2; p.m += 1; p.setMem('sonderPilgrimWalkingDays', true); },
+  },
+
+  {
+    id: 'sonder_someone_reading_letter',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.age >= 30 && !G.mem?.sonderSomeoneReadingLetter,
+    text: 'Someone reading a piece of paper that matters to them. Not a screen. A piece of paper they have opened and are reading for the second or third time. You know it is for the second or third time by the way they hold it — not scanning but returning. The paper has news, or a decision, or something from someone who is far away or no longer alive.',
+    effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderSomeoneReadingLetter', true); },
+  },
+
+  {
+    id: 'sonder_child_watching_funeral',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) => G.age >= 6 && G.age <= 11 && !G.mem?.sonderChildWatchingFuneral,
+    text: 'A child watching a funeral from a distance — from a window, or from the edge of the crowd where the adults have not noticed them yet. The child is watching the adults cry. Adults do not usually cry in public. The child is filing this under: things adults do that they normally do not do, which means: things that are serious in a way that ordinary things are not.',
+    effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderChildWatchingFuneral', true); },
+  },
+
+  {
+    id: 'sonder_woman_small_business_ledger',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.character?.gender === 'female' && G.age >= 30 && (G.character?.country?.archetype === 'subsaharan' || G.character?.country?.archetype === 'developing_urban') && !G.mem?.sonderWomanSmallBusinessLedger,
+    text: 'The woman with the small business and the ledger. The ledger is handwritten. It records what came in and what went out and what the difference is, which is what she lives on and what she is saving from. She has been keeping this ledger for ten years. The ten years are in the handwriting: more confident now, different ink.',
+    effect: (p) => { p.e += 2; p.m += 2; p.setMem('sonderWomanSmallBusinessLedger', true); },
+  },
+
+  {
+    id: 'sonder_inherited_apartment',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.age >= 40 && G.flags.has('lost_parent_mother') || G.flags.has('lost_parent_father') && !G.mem?.sonderInheritedApartment,
+    text: 'The apartment that belonged to your parent, now yours. The furniture they chose. The smell of it still slightly their smell, not yours. You are in it now in the way that tenants are in apartments — with the awareness that someone else was here first, arranged things in this order, and left this arrangement behind as the only inheritance a rented life can pass on.',
+    effect: (p) => { p.r += 2; p.e += 1; p.setMem('sonderInheritedApartment', true); },
+  },
+
 ]
