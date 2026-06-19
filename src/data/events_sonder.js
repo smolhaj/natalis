@@ -872,4 +872,193 @@ export const SONDER_EVENTS = [
     effect: (p) => { p.m += 2; p.setMem('mundaneSameWalk', true); },
   },
 
+  // ── STRANGER GLIMPSES — CULTURAL SPECIFIC ─────────────────────────────────
+  // Sonder moments grounded in specific places, contexts, and ways of moving through a city.
+
+  {
+    id: 'sonder_danfo_bus',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => G.currentCountry === 'Nigeria' && G.age >= 18 && G.age <= 42 && !G.mem?.sonderDanfoBus,
+    text: 'In the danfo, the woman beside you reads a Bible with one thumb while her other hand holds the market bag on her lap. She is completely elsewhere — wherever the reading has taken her. The bus lurches through traffic. The bag shifts. Her thumb does not move from the page.',
+    effect: (p) => { p.e += 1; p.setMem('sonderDanfoBus', true); },
+  },
+
+  {
+    id: 'sonder_chai_stall',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => ['India', 'Pakistan', 'Bangladesh'].includes(G.currentCountry) && G.age >= 18 && G.age <= 45 && !G.mem?.sonderChaiStall,
+    text: 'The chai wallah at the corner is pouring four glasses simultaneously while chatting to a fifth person and collecting coin from a sixth. The motion belongs to someone who has done this ten thousand times. He does not appear to be managing it. He appears to be doing something else while it happens.',
+    effect: (p) => { p.e += 1; p.setMem('sonderChaiStall', true); },
+  },
+
+  {
+    id: 'sonder_night_market_table',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => ['Thailand', 'Vietnam', 'Malaysia', 'Cambodia', 'Laos', 'Myanmar', 'Taiwan', 'South Korea', 'China'].includes(G.currentCountry) && G.age >= 25 && G.age <= 58 && !G.mem?.sonderNightMarketTable,
+    text: 'At the night market, a family occupies a corner table — grandmother, parents, two children, a teenager with a phone. They are entirely ordinary and entirely specific. The grandmother peels a shrimp without looking at it. The father glances at the street and comes back.',
+    effect: (p) => { p.e += 1; p.m += 1; p.setMem('sonderNightMarketTable', true); },
+  },
+
+  {
+    id: 'sonder_coffee_house_game',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => ['Egypt', 'Algeria', 'Tunisia', 'Morocco', 'Jordan', 'Lebanon', 'Syria', 'Turkey'].includes(G.currentCountry) && G.age >= 25 && G.age <= 62 && !G.mem?.sonderCoffeeHouseGame,
+    text: 'In the coffee house, two men have played backgammon for an hour without speaking. The pieces move. The silence between moves belongs to people who have played together so long they no longer need to narrate the game to each other.',
+    effect: (p) => { p.e += 1; p.m += 1; p.setMem('sonderCoffeeHouseGame', true); },
+  },
+
+  {
+    id: 'sonder_apartment_block_cleaner',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.character?.country?.archetype === 'post_soviet' && G.age >= 25 && G.age <= 62 && !G.mem?.sonderApartmentCleaner,
+    text: 'The woman who cleans the stairwell has been doing it every Tuesday morning for as long as you have lived here. You have said perhaps twenty words to each other across six years. She knows your post box number. You do not know her name. Neither of you has required correction.',
+    effect: (p) => { p.e += 1; p.setMem('sonderApartmentCleaner', true); },
+  },
+
+  {
+    id: 'sonder_east_africa_rain',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => ['Kenya', 'Uganda', 'Tanzania', 'Rwanda', 'Zambia', 'Zimbabwe', 'Ethiopia'].includes(G.currentCountry) && G.age >= 18 && G.age <= 40 && !G.mem?.sonderEastAfricaRain,
+    text: 'Through the matatu window, a woman walks fast in the rain holding a flat bag over her head. She is not running. She has calculated how wet she will get and has accepted it. You pass her. She disappears into the back window.',
+    effect: (p) => { p.e += 1; p.setMem('sonderEastAfricaRain', true); },
+  },
+
+  {
+    id: 'sonder_friday_prayer_courtyard',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => G.character?.religion?.startsWith('muslim') && G.age >= 28 && G.age <= 65 && !G.mem?.sonderFridayPrayerCourtyard,
+    text: 'After Friday prayer, men talk in the courtyard in groups sorted by age and neighbourhood and how long they have known each other — an arrangement no one decided. An old man stands at the edge alone, watching. He is not excluded. He is the one who sees.',
+    effect: (p) => { p.e += 1; p.m += 1; p.setMem('sonderFridayPrayerCourtyard', true); },
+  },
+
+  {
+    id: 'sonder_latin_evening_window',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => ['Mexico', 'Colombia', 'Brazil', 'Argentina', 'Chile', 'Peru', 'Venezuela', 'Ecuador', 'Bolivia', 'Uruguay', 'Paraguay', 'Guatemala', 'El Salvador', 'Honduras', 'Nicaragua', 'Costa Rica'].includes(G.currentCountry) && G.age >= 28 && G.age <= 55 && !G.mem?.sonderLatinEveningWindow,
+    text: 'Through an open window on the evening walk, you hear oil in a pan, a radio, a woman responding to something on the screen. The whole of an ordinary evening is in those sounds. You are on the pavement, on your way somewhere, and then you are past it.',
+    effect: (p) => { p.m += 1; p.setMem('sonderLatinEveningWindow', true); },
+  },
+
+  {
+    id: 'sonder_checkpoint_young_soldier',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => ['conflict_zone', 'developing_unstable'].includes(G.character?.country?.archetype) && G.age >= 18 && G.age <= 42 && !G.mem?.sonderCheckpointYoungSoldier,
+    text: 'The soldier at the checkpoint is twenty, possibly twenty-one. He checks your document and returns it without looking at your face. He is doing this the way you do your own work — a task repeated many times a day until it becomes motion without intention. You walk through. He returns to waiting.',
+    effect: (p) => { p.e += 1; p.setMem('sonderCheckpointYoungSoldier', true); },
+  },
+
+  {
+    id: 'sonder_market_head_balance',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => ['subsaharan', 'developing_urban'].includes(G.character?.country?.archetype) && G.age >= 28 && G.age <= 55 && !G.mem?.sonderMarketHeadBalance,
+    text: 'A woman at the market has balanced a tray on her head for so many years that she does it without thought — reaching for a purse, turning to call to a child, all while the tray holds still. The skill is total. You have not learned anything to this degree.',
+    effect: (p) => { p.e += 1; p.setMem('sonderMarketHeadBalance', true); },
+  },
+
+  {
+    id: 'sonder_temple_morning_keeper',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => (G.character?.religion === 'buddhist' || G.character?.religion === 'hindu') && ['Thailand', 'Vietnam', 'Cambodia', 'Myanmar', 'Laos', 'Sri Lanka', 'India', 'Nepal'].includes(G.currentCountry) && G.age >= 25 && G.age <= 60 && !G.mem?.sonderTempleMorningKeeper,
+    text: 'At the temple in the early morning, a man you have seen here before tends a lamp and some flowers with the efficiency of long practice. He does not appear to be praying. He appears to be keeping an arrangement that predates him.',
+    effect: (p) => { p.e += 1; p.m += 1; p.setMem('sonderTempleMorningKeeper', true); },
+  },
+
+  {
+    id: 'sonder_night_market_alone',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => ['Thailand', 'Vietnam', 'Cambodia', 'Laos', 'Myanmar', 'Malaysia', 'Indonesia', 'Philippines'].includes(G.currentCountry) && G.age >= 55 && !G.mem?.sonderNightMarketAlone,
+    text: 'A woman eats alone at a corner table in the night market with a serenity the noise around her cannot touch. She works through her meal with full attention. Around her, the market at its loudest. She does not appear to hear it.',
+    effect: (p) => { p.e += 1; p.m += 1; p.setMem('sonderNightMarketAlone', true); },
+  },
+
+  // ── STRANGER GLIMPSES — CHILDHOOD PERSPECTIVE ─────────────────────────────
+  // Children notice other lives too, in the limited and total way children notice things.
+
+  {
+    id: 'sonder_lit_house_across',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) => G.age >= 6 && G.age <= 11 && !G.mem?.sonderLitHouseAcross,
+    text: 'The neighbour\'s house is lit in the evenings and you can see the shapes of people moving through the rooms. They do not know you are watching. Something about lit-up houses belonging to people you do not know is interesting in a way you do not yet have a word for.',
+    effect: (p) => { p.e += 1; p.setMem('sonderLitHouseAcross', true); },
+  },
+
+  {
+    id: 'sonder_adult_crying_table',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) => G.age >= 7 && G.age <= 12 && !G.mem?.sonderAdultCryingTable,
+    text: 'You see an adult crying — not at a funeral, not in the context that makes it make sense to you. Just at a table, or on the step outside, in the middle of an ordinary day. Adults cry for reasons you do not yet have. The world is larger than the reasons you know the names of.',
+    effect: (p) => { p.e += 2; p.setMem('sonderAdultCryingTable', true); },
+  },
+
+  {
+    id: 'sonder_old_person_world',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) => G.age >= 7 && G.age <= 13 && !G.mem?.sonderOldPersonWorld,
+    text: 'An old person tells you something about what the world was like when they were young. The world they describe does not exist anymore. You understand, without having words for it yet, that you are talking to someone from a different time — and that this is strange and ordinary at once.',
+    effect: (p) => { p.e += 2; p.setMem('sonderOldPersonWorld', true); },
+  },
+
+  // ── CONTEMPLATION — LATE LIFE ─────────────────────────────────────────────
+  // Late-life sonder has a different quality: the accumulation of other lives now visible in aggregate.
+
+  {
+    id: 'sonder_city_palimpsest',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.age >= 60 && !G.mem?.sonderCityPalimpsest,
+    text: 'Walking through the part of the city that was different when you were thirty, you pass a café where a different building was, a wall where a different wall was. The city is conducting its own continuous life around the fixed points of your memory. You are, in certain respects, a tourist in a place that is yours.',
+    effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderCityPalimpsest', true); },
+  },
+
+  {
+    id: 'sonder_obituary_same_age',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.age >= 62 && !G.mem?.sonderObitSameAge,
+    text: 'You read an obituary of someone your age. You did not know them. It lists their work, their family, what they loved. You read it to the end. This has started happening more often — the reading of obituaries of people you have never met, each one to its end.',
+    effect: (p) => { p.e += 1; p.r += 2; p.setMem('sonderObitSameAge', true); },
+  },
+
+  {
+    id: 'sonder_generations_street',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.age >= 65 && !G.mem?.sonderGenerationsStreet,
+    text: 'The children on this street play a game you do not know the rules of. The rules have changed since your children played here. The children before them also played with rules that changed. The street stays. The rules turn over every generation.',
+    effect: (p) => { p.e += 1; p.setMem('sonderGenerationsStreet', true); },
+  },
+
+  {
+    id: 'sonder_bench_thirty_years',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.age >= 68 && !G.mem?.sonderBenchThirtyYears,
+    text: 'You sit at a bench where you have been sitting, at this hour, for thirty years. The bench is not the same bench — it was replaced twice — but the view and the hour are the same. In this arrangement, you are the constant.',
+    effect: (p) => { p.m += 2; p.r += 1; p.setMem('sonderBenchThirtyYears', true); },
+  },
+
+  {
+    id: 'sonder_grandchild_question',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) => G.age >= 65 && G.children?.length > 0 && !G.mem?.sonderGrandchildQuestion,
+    text: 'A child asks you what something was like when you were young. You describe it. The child listens with the particular patience of someone for whom this is not memory but story. The distance between what you remember and what they can imagine is the length of a century.',
+    effect: (p) => { p.e += 2; p.m += 1; p.setMem('sonderGrandchildQuestion', true); },
+  },
+
 ]

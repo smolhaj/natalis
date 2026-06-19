@@ -48,6 +48,8 @@ export function buildMundaneLayer(state) {
   const isSubsaharan = arch === 'subsaharan'
   const isDeveloping = ['developing_urban', 'developing_unstable', 'subsaharan', 'conflict_zone'].includes(arch)
   const isPostSoviet = arch === 'post_soviet'
+  const desire = state.desire ?? null
+  const currentCn = state.currentCountry ?? cn
 
   const pool = []
   const add = (...items) => pool.push(...items)
@@ -1288,6 +1290,91 @@ export function buildMundaneLayer(state) {
     'The pagoda in the early morning: the monk with the bowl, the offering, the gold catching the first light.',
     'The longyi: the garment worn by everyone, tied differently by men and women, the textile identity of the street.',
   )
+  addIf(cn === 'Cambodia',
+    'Amok: the fish in coconut curry steamed in a banana leaf. The smell of the leaf is part of the taste.',
+    'The tuk-tuk driver waits at the same corner. He knows the regular destinations without being asked.',
+    'The Mekong in the dry season: lower, slower, browner. In the wet season it reverses direction. The country breathes with it.',
+    'The wats: the compound with the stupas, the monks, the bougainvillea, the shade that belongs to everyone.',
+  )
+  addIf(cn === 'Laos',
+    'The monks collecting alms at dawn: the orange robes, the barefoot walk, the silent procession along the street.',
+    'Sticky rice in the bamboo basket: the utensil and the food at the same time. Formed in the palm, dipped in the sauce.',
+    'The Mekong at evening: the light on the water, the boats from Thailand crossing on the far side, the slowness of the crossing.',
+  )
+  addIf(cn === 'Nepal',
+    'The Himalayas on a clear morning: visible above the valley haze, white and enormous. On clear days you look. On hazy days you know they are there.',
+    'Dal bhat twice a day — the lentil soup and rice that is not the meal you decide but the meal the day is built around.',
+    'The prayer flags: strung from house to roof to tree, the colours fading over months. The prayers have already been sent.',
+    'The altitude requires the warm meal at noon, the rest in the afternoon, the particular slowness the body learns.',
+  )
+  addIf(cn === 'Nepal' && phase !== 'early_childhood',
+    'Tongba in winter: the fermented millet in a bamboo container, hot water added when it empties. The drinking is also the warming.',
+  )
+  addIf(cn === 'Iraq',
+    'The generator starts when the power cuts, which is scheduled and also unscheduled. The sound is the gap between the official supply and the actual one.',
+    'Masgouf: the fish from the Tigris, split and grilled over date palm wood. A Thursday meal, a Friday meal, a celebration meal.',
+    'Istikaan: the hourglass tea glass, very hot, held by the rim. The drinking is slow by necessity.',
+    'The date palm: its fruit marks the calendar. Ruthab in August, tamr by September.',
+  )
+  addIf(cn === 'Syria' && era <= 2010,
+    'The Damascus light in late afternoon: a particular gold that the photographs do not entirely capture.',
+    'Meze in the courtyard: the shade, the fountain, the dishes arriving without any single large plate.',
+    'The jasmine: sold in small bunches by street vendors, worn in the hair, carried in the pocket. The smell is a word for Damascus.',
+  )
+  addIf(cn === 'Syria' && era >= 2011,
+    'The neighbourhood has changed. You can name each street by what it was before it was what it is now.',
+    'The generator, the water storage, the flour: the household management that did not exist before and has become the day\'s first work.',
+  )
+  addIf(cn === 'Afghanistan',
+    'Green tea, always: hot in summer because hot tea cools you, or so it is said. The saying is believed and sufficient.',
+    'The bread from the tandoor: the dough slapped against the inside wall, the pull of it when it is ready. The smell enters the street.',
+    'The mulberry tree in the compound produces what it produces in its season. The season is known. The waiting is not anxious.',
+  )
+  addIf(cn === 'Afghanistan' && era >= 1996 && gender === 'female',
+    'The mahram — the male relative who must accompany you — is the condition of leaving the house. The condition is so established it requires no naming.',
+  )
+  addIf(cn === 'Haiti',
+    'The tap-tap: the converted truck decorated in every colour and phrase and biblical reference. The specific noise of it arriving.',
+    'Griot: the fried pork, the pikliz alongside it. The meal of Sunday, the meal of occasion.',
+    'Kreyòl: the language of the house, the street, the market. French is for school and government. Kreyòl is for everything real.',
+    'The heat of Port-au-Prince in July has mass. It requires management from the morning.',
+  )
+  addIf(cn === 'Democratic Republic of Congo' || cn === 'DRC',
+    'Pondu: the cassava leaves cooked down with palm oil. The smell of it in the kitchen makes a claim on the afternoon.',
+    'The humidity of Kinshasa: the air with weight, the clothing that requires changing by noon.',
+    'Rumba from the bar next door: the guitar line, the voice above it, the rhythm underneath that never quite resolves.',
+    'Libanga: the praise shout-outs built into the songs for people who paid to be named. Everyone waits for their name.',
+  )
+  addIf(cn === 'Rwanda',
+    'Kigali is perhaps the cleanest city in Africa. The umuganda — the last Saturday of every month — is when everyone cleans their street. Everyone.',
+    'Isombe: cassava leaves cooked with smoked fish and peanuts. A dish that requires patience. The patience is in the cooking.',
+    'The hills: Rwanda is built on them and every walk is also an ascent or a descent. The legs know this.',
+  )
+  addIf(cn === 'Bolivia',
+    'Coca leaves held in the cheek: the altitude remedy, the ancestral practice. At 3,600 metres it is not optional.',
+    'The cholitas in the market: the bowler hat, the layered skirt, the manner of women who carry substantial weight on their backs and know it.',
+    'Salteña in the morning: the pastry with meat and potato and olive and egg, juice escaping with the first bite if you are not prepared.',
+  )
+  addIf(cn === 'Ecuador',
+    'Locro: the potato soup with cheese and avocado. The altitude requires the warm meal at noon.',
+    'Ceviche, coastal style: the shrimp in citrus, the chulpe corn, the hot sauce. Eaten at noon. Distinct to here.',
+    'The market in Otavalo: the textiles, the precise patterns, the vendors who have been here since before anyone alive remembers.',
+  )
+  addIf(cn === 'Uruguay',
+    'Mate everywhere: in the hand at the bus stop, on the desk, in a thermos on any walk longer than fifteen minutes.',
+    'Chivito: the sandwich with everything in it. The national answer to hunger.',
+    'The quietness of Montevideo compared to Buenos Aires: the same language, the same mate, a different temperature of street.',
+  )
+  addIf(cn === 'Paraguay',
+    'Tereré: the cold mate drunk through a metal straw. The distinction from hot mate is not only temperature but identity.',
+    'Guaraní alongside Spanish — two languages in the same sentence is not mixing, it is Paraguayan.',
+    'Sopa paraguaya: the corn bread that is not bread, made with cheese and onion. The name is technically wrong. The thing is right.',
+  )
+  addIf(['Guatemala', 'El Salvador', 'Honduras', 'Nicaragua'].includes(cn),
+    'The pupusa, the tortilla, the tamale: corn in its forms, the form depending on the occasion and whose grandmother made it.',
+    'The afternoon rain in the rainy season arrives at the same hour every day with the punctuality of a church bell.',
+    'The painted bus: the religious references, the football team, the name of someone\'s loved one — a moving declaration.',
+  )
 
   // ── SCHOOLS AND EDUCATION (STUDENT PERSPECTIVE) ───────────────────────────
 
@@ -1650,6 +1737,49 @@ export function buildMundaneLayer(state) {
   addIf(isDeveloping && isPoor && phase === 'midlife',
     'The person who died of something preventable, or treatable, or addressed — had they reached the clinic, had they had the money.',
     'You paid the clinic fee. The fee was what it was and you paid it. What was left after the fee is what was left.',
+  )
+
+  // ── DESIRE-SHAPED TEXTURE ─────────────────────────────────────────────────
+  // What the character notices in ordinary years depends partly on what they have always needed.
+
+  addIf(desire === 'prove_worth',
+    'Something you did this year was done well. No one acknowledged it. The doing of it acknowledged it.',
+    'Someone else received credit for the kind of work you also do. You are still deciding what the correct feeling is.',
+    'You exceeded what was asked of you. You noted this in the way you always note it — privately, without telling anyone.',
+  )
+  addIf(desire === 'belong',
+    'There was a gathering you were fully inside — not watching from its edge but at its centre. You noticed the difference.',
+    'A group you are part of assumed your presence this year without remarking on it. The assumption felt like something.',
+    'A meal with people who knew each other well and knew you and the knowing ran in all directions at the table.',
+  )
+  addIf(desire === 'be_seen',
+    'Someone who does not know you well said something accurate about you. The accuracy was the thing — not the praise but the precision.',
+    'Your work reached someone you did not expect. The reaching happened without you.',
+  )
+  addIf(desire === 'safety',
+    'Nothing catastrophic happened this year. You noticed this in November, or December — the year closing without emergency.',
+    'A day with nothing threatening in it. By evening you noticed: the day passed without anything to manage.',
+    'The thing you have been watching for did not arrive this year. The year ends with it still theoretical.',
+  )
+  addIf(desire === 'connection',
+    'A conversation that outlasted its occasion — the coffee long finished, neither person moving to end it.',
+    'You and another person understood the same thing at the same moment, without saying so. The simultaneity was the thing.',
+    'Someone called to say they had been thinking about you. Nothing more. The call itself was the point.',
+  )
+  addIf(desire === 'leave_mark',
+    'Something you made continues to exist. This year, someone encountered it without knowing it was yours.',
+    'You passed something — a planted tree, a repaired thing, a decision someone made because of what you said once — that persists.',
+    'You thought about what will remain of this year. The thought was less bleak than expected.',
+  )
+  addIf(desire === 'freedom',
+    'A morning with no obligations until late afternoon. You spent the first hour finding out what you actually wanted, not what you had told yourself you would do with free time.',
+    'A choice made this year that was entirely yours — uninfluenced, unconsulted, made and lived with.',
+    'A week in which no one needed you urgently. The week felt different. It took a day to understand why.',
+  )
+  addIf(desire === 'redemption',
+    'Someone you wronged, years ago, is doing well. You know this from a distance. It doesn\'t resolve anything. It is still good.',
+    'You did the thing you once failed to do. The doing of it was quieter than you expected. The quietness was all right.',
+    'A second chance at something arrived. You took it differently from the first time. The difference was the point.',
   )
 
   // ── ADDITIONAL UNIVERSAL TEXTURE ──────────────────────────────────────────
