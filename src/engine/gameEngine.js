@@ -11146,6 +11146,32 @@ function buildYearTexture(state) {
     if (cn === 'Brazil' && era === 2000) return 'The Bolsa Família has pulled people out of a kind of poverty that was considered fixed. The fact of this is underreported outside Brazil.'
   }
 
+  // ─── CROSS-CUTTING EARLY-LIFE + ECONOMIC FLAGS ───────────────────────────────
+  if (F.has('adult_heartbreak') && phase !== 'early_childhood' && Math.random() < 0.15) return pick([
+    'The first real adult relationship ending — not adolescent heartbreak but a partnership with routines and a shared future — is a calibration point you carry. You ask questions earlier now. You leave more space.',
+    phase === 'late_life'
+      ? 'When you look back at who you were at twenty-something and what you thought love was, you recognise the gap between that understanding and what you know now. The gap closed over years. The closing was mostly gentle.'
+      : 'There is a version of you from that period you remember clearly. The relationship was real. The incompatibility was also real, and arrived slowly enough that naming it felt late. You named it.',
+  ])
+  if (F.has('money_zero_survived') && phase !== 'early_childhood' && phase !== 'childhood' && Math.random() < 0.15) return pick([
+    'You check the account balance more than you need to. The number above which you are fine and below which something tightens is irrational — you are not twenty-three and counting days anymore — but the body doesn\'t read bank statements. It reads memory.',
+    phase === 'late_life'
+      ? 'The people who were never genuinely broke young have a different relationship with money than you do. You can identify them by how they spend. You are not envious exactly. You understand both ways of moving through money now.'
+      : 'The experience of having nothing is not the same as the knowledge of having had nothing. The knowledge stays.',
+  ])
+  if (F.has('black_tax_contributor') && phase !== 'early_childhood' && phase !== 'childhood' && Math.random() < 0.18) return pick([
+    'The arithmetic of what you have sent home is a number you don\'t add up. If you added it up you would see exactly why your savings look the way they do. The family did not ask you to choose. They asked you to help. You helped.',
+    phase === 'late_life'
+      ? 'What was built with what you sent back is visible now: the education, the roof, the generation that started further along than you did. This is how wealth is actually constructed in communities that cannot rely on inheritance — one person in the middle of their working life, sending money home.'
+      : 'Being the one who made it out comes with the obligation of looking back. You knew this before anyone told you. You have been doing the arithmetic for years.',
+  ])
+  if (F.has('partition_generation') && phase !== 'early_childhood' && phase !== 'childhood' && Math.random() < 0.18) return pick([
+    'The country that was taken apart and the country that was made. You have lived on this side of the line long enough that your children do not feel it as a wound. For you it is the specific street on the other side and the way your mother said the name of that city in a different register than anything else.',
+    phase === 'late_life'
+      ? 'There is a generation now for whom the partition is history. For you it was geography — a specific place that became unreachable, a city that became another country. History is what happens to other people\'s losses.'
+      : 'The loss travels in the family differently than it appears in books. In books it is statistics. In the family it is what your grandmother said when anyone mentioned a certain city, which she never visited again.',
+  ])
+
   // ─── UNIVERSAL FALLBACK ───────────────────────────────────────────────────────
   return pick([
     'A year without incident. These exist.',
