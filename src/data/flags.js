@@ -1566,6 +1566,64 @@ export const FLAG_REGISTRY = {
     notes: 'Set by id98_late_reckoning (late_life, auto-resolve).',
   },
 
+  // ── INDONESIA DEPTH FLAGS ─────────────────────────────────────────────────
+
+  id_1965_stained: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'A family member was taken or killed in the 1965–66 anti-communist purge — carried as an undeclared grief through thirty years of New Order silence.',
+    intent: 'both',
+    notes: 'Set by id_1965_purge (family taken choice). The silence is enforced by the New Order; grief is privatized.',
+  },
+
+  id_1965_survived: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Navigated through the 1965–66 purge without losing immediate family — but carrying the knowledge of what happened under enforced silence.',
+    intent: 'both',
+    notes: 'Set by id_1965_purge (navigated through choice). Gates id_new_order_silence event.',
+  },
+
+  id_1965_silence_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Spent the New Order years in enforced silence about the 1965 purge — a generation that knew and could not say.',
+    intent: 'both',
+    notes: 'Set by id_new_order_silence event.',
+  },
+
+  id_bali_bombing_generation: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Lived through the October 12, 2002 Bali bombings — 202 dead, Indonesia\'s national reckoning with religious extremism.',
+    intent: 'both',
+    notes: 'Set by id_bali_bombing_2002.',
+  },
+
+  id_tsunami_2004_survivor: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived the December 26, 2004 Indian Ocean tsunami — 170,000 dead in Aceh alone, 230,000 total across the Indian Ocean.',
+    intent: 'both',
+    notes: 'Set by id_tsunami_2004. Rural-gated to approximate Acehnese/coastal Sumatran experience.',
+  },
+
+  id_transmigration_settler: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Participated in Suharto\'s transmigration program — Javanese resettled to Kalimantan, Sulawesi, or Papua; 6 million moved 1965–1990.',
+    intent: 'both',
+    notes: 'Set by id_transmigration (Javanese/Sundanese ethnicity gate).',
+  },
+
+  id_papua_identity: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Carries Papuan indigenous identity in Indonesia — the Morning Star flag, customary land, and structural exclusion from what "Indonesian" was designed to contain.',
+    intent: 'both',
+    notes: 'Set by id_papua_identity event. Papuan ethnicity gate.',
+  },
+
   // ── KURDISH IDENTITY FLAGS ────────────────────────────────────────────────
 
   kurd_identity_suppressed: {
@@ -2286,6 +2344,86 @@ export const FLAG_REGISTRY = {
     description: 'A witness to Japan\'s long arc — the postwar miracle, the bubble, the collapse, Fukushima — and to the national silence around the war that produced the recovery.',
     intent: 'year_texture',
     notes: 'Set by jpn_war_silence (both choices).',
+  },
+
+  hibakusha_survivor: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Atomic bomb survivor — survived Hiroshima or Nagasaki, carrying the flash, the burns, the radiation illness, and the subsequent decades of social discrimination.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_hibakusha. Also sets the hibakusha flag to gate ca2 downstream events (marriage discrimination, stigma).',
+  },
+
+  hibakusha_silent: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Atomic bomb survivor who chose not to disclose — carrying the secret of the bomb alongside its physical effects.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_hibakusha (silence choice). The weight of maintaining the secret over decades.',
+  },
+
+  zainichi_identity: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Zainichi Korean — Korean-Japanese living in Japan across generations, navigating alien registration, fingerprinting, name erasure, and the question of what citizenship is for.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_zainichi (dual identity and resist choices). One of the most historically significant minority identities in East Asia.',
+  },
+
+  zainichi_naturalized: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Zainichi Korean who naturalized Japanese citizenship — the Korean name leaves the official register, the identity does not.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_zainichi (naturalize choice).',
+  },
+
+  zainichi_resisted: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Refused fingerprinting as a Zainichi Korean in the 1970s-90s — part of the civil rights movement that ended the requirement in 1999.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_zainichi (resist choice).',
+  },
+
+  aum_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the 1995 Tokyo subway sarin attack — 13 dead, thousands injured, the assumption of Japanese safety punctured.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_aum_sarin_1995 (both choices).',
+  },
+
+  aum_proximate: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Was on or near an affected subway line on March 20, 1995 — or knew someone who was.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_aum_sarin_1995 (proximate choice).',
+  },
+
+  ainu_identity: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Ainu identity — Japan\'s indigenous Hokkaido people, dispossessed through 1899 colonial legislation, denied indigenous recognition until 2019.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_ainu (both choices). The Ainu are approximately 25,000 people; land and language rights remain contested.',
+  },
+
+  ainu_revival: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Participated in Ainu cultural revival — learning the nearly-lost language, reconnecting to practices whose chain of transmission was broken by colonisation.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_ainu (revival choice).',
+  },
+
+  okinawa_base_opposition: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lives under or opposes the US military base concentration in Okinawa — 70% of US bases on less than 1% of Japan\'s land, the 1995 rape protests, the Henoko relocation fight.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_okinawa_bases (both choices).',
   },
 
   // ── PERU ──────────────────────────────────────────────────────────────────────
@@ -6146,6 +6284,70 @@ export const FLAG_REGISTRY = {
     intent: 'year_texture',
     notes: 'Set by nga_sap_1980s. The word SAP used for decades to describe what was done.',
   },
+  nga_military_era: {
+    weight: 'major',
+    category: 'political',
+    description: 'Came of age under Nigerian military rule (1966–1999) — the coup culture, suspended constitutions, and patronage politics of the generals.',
+    intent: 'both',
+    notes: 'Set by nga_coup_culture. Distinct from country-specific Biafra/SAP flags.',
+  },
+
+  nga_june12_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived the June 12 1993 election annulment — Abiola\'s clear victory erased by Babangida, the democratic possibility unmade overnight.',
+    intent: 'both',
+    notes: 'Set by nga_june12_1993. One of Nigeria\'s defining political betrayals.',
+  },
+
+  nga_democracy_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Witnessed Nigeria\'s return to civilian rule in 1999 — the first peaceful democratic transfer after sixteen years of military government.',
+    intent: 'both',
+    notes: 'Set by nga_democracy_1999.',
+  },
+
+  nga_boko_haram_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the Boko Haram insurgency in North-East Nigeria — the displacement, the checkpoints, the Chibok kidnapping, the 2.6 million internally displaced.',
+    intent: 'both',
+    notes: 'Set by nga_boko_haram. Specifically for Northern Nigerian characters (hausa_fulani, kanuri) in the conflict years 2009–2020.',
+  },
+
+  nga_sharia_transition: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through the implementation of Sharia criminal law in 12 northern Nigerian states (1999–2002) — the complex intersection of faith, federalism, and ethnic identity.',
+    intent: 'both',
+    notes: 'Set by nga_sharia_north for Hausa-Fulani characters in the transition period.',
+  },
+
+  nga_delta_community: {
+    weight: 'major',
+    category: 'environmental',
+    description: 'Part of a Niger Delta community living with oil extraction — the gas flares, the spills, the contaminated creeks, the decades-long remediation deficit.',
+    intent: 'both',
+    notes: 'Set by nga_niger_delta for Ijaw and Delta-region characters.',
+  },
+
+  nga_naira_crisis_lived: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived through Nigeria\'s 2022–2024 naira crisis — the redesign-induced cash shortage, the rate collapse from 460 to 1,500+/dollar, the fuel subsidy removal.',
+    intent: 'both',
+    notes: 'Set by nga_naira_crisis.',
+  },
+
+  nga_ethnic_pride: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Carries Yoruba, Igbo, or Hausa-Fulani ethnic identity as a primary marker — the name, the accent, the network that determines political affiliation.',
+    intent: 'both',
+    notes: 'Set by nga_ethnic_navigation (choice: wear identity fully). Checked in year texture.',
+  },
+
   saro_wiwa_generation: {
     weight: 'moderate',
     category: 'historical',
@@ -10975,7 +11177,7 @@ export const FLAG_REGISTRY = {
     notes: 'Set by we_venezuela_collapse and similar catastrophic economic world events.',
   },
 
-  // ── events_sick_child.js flags ────────────────────────────────────────
+ // ── events_sick_child.js flags ────────────────────────────────────────
 
   child_seriously_ill: {
     weight: 'major',
@@ -11821,38 +12023,69 @@ export const FLAG_REGISTRY = {
     description: 'Exposed or bore witness to systematic corruption at close range — the knowledge of how the money actually moves.',
     intent: 'none',
     notes: 'Cross-cutting. Set by career-regime, Mani Pulite, and political events.',
+  // ── CROSSCUTTING LIFE CONDITION FLAGS ──────────────────────────────────────
+  poverty_childhood: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Grew up in poverty — food insecurity, material deprivation, and the specific knowledge that scarcity produces during formation years.',
+    intent: 'both',
+    notes: 'Set by multiple events across conflict_childhood, poverty, informal, and country-specific arcs. Checked in epitaph (hadHardChildhood) and event guards.',
+  },
+
+  grew_up_in_camp: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Spent childhood or formative years in a refugee or IDP camp — the specific institutional experience of displaced community life.',
+    intent: 'both',
+    notes: 'Set by rohingya, palestine, somalia, and conflict-zone events for characters displaced in early life.',
   },
 
   coup_generation: {
     weight: 'moderate',
     category: 'political',
-    description: 'Lived through a coup — the specific knowledge of the day the radio changes, when the constitutional order ends and something else begins.',
-    intent: 'none',
-    notes: 'Cross-cutting. Set by country-specific coup events (Bangladesh, Turkey, Thailand, etc.).',
+    description: 'Lived through a military coup — the overnight restructuring of power, the curfew, the announcements on state radio.',
+    intent: 'both',
+    notes: 'Generic version of country-specific coup flags. Set across West African, Southeast Asian, Latin American arcs.',
   },
 
-  independence_generation: {
+  disaster_survivor: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Survived a major natural disaster — earthquake, flood, cyclone — and carries the specific recalibration of risk that produces.',
+    intent: 'both',
+    notes: 'Set by events_disasters.js, events_nepal.js, events_haiti.js, and others where physical disaster survival is confirmed.',
+  },
+
+  activist: {
     weight: 'moderate',
     category: 'political',
-    description: 'Lived through national independence — the specific texture of a flag that is new, a name that is different, the feeling that now something is ours.',
-    intent: 'none',
-    notes: 'Cross-cutting. Set by decolonisation and independence events across Africa, Asia, Caribbean.',
+    description: 'Became an activist — organized, demonstrated, or dedicated sustained energy to a political or social cause.',
+    intent: 'both',
+    notes: 'Generic flag set across political, social justice, environmental, and rights-based event arcs.',
+  },
+
+  regime_self_censorship: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Learned to self-censor under an authoritarian regime — the automatic editing of thought before speech, the reflex of restraint.',
+    intent: 'both',
+    notes: 'Set across multiple authoritarian country arcs. Also gates career texture in education/government/media fields.',
+  },
+
+  education_interrupted: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'Had education interrupted — by conflict, poverty, family need, displacement, or regime policy — before reaching desired level.',
+    intent: 'both',
+    notes: 'Set across conflict, poverty, and country-specific arcs where formal education is cut short by circumstance.',
   },
 
   political_aware: {
     weight: 'minor',
     category: 'political',
-    description: 'Developed political consciousness — aware of how power works, who holds it, and what it costs to pay attention to that.',
-    intent: 'none',
-    notes: 'Cross-cutting. Set by early political awareness events across contexts.',
-  },
-
-  poverty_childhood: {
-    weight: 'major',
-    category: 'economics',
-    description: 'Grew up in poverty — the formative experience of scarcity that reorganises how you think about money, security, and enough.',
-    intent: 'year_texture',
-    notes: 'Cross-cutting. Checked in generateEpitaph, generateIdentityCard, and buildYearTexture (midlife/late_life: price-checking, full fridge, the counting that never stops).',
+    description: 'Developed political consciousness — aware of structural power, regime character, and the conditions that produce what is experienced as ordinary life.',
+    intent: 'both',
+    notes: 'Set by protest, crisis, and injustice events. Checked in epitaph for summary language.',
   },
 
   left_school_early: {
@@ -11863,49 +12096,193 @@ export const FLAG_REGISTRY = {
     notes: 'Cross-cutting. Set by poverty, child labor, family obligation, and conflict events.',
   },
 
-  education_interrupted: {
+  community_leader: {
     weight: 'moderate',
-    category: 'identity',
-    description: 'Education was disrupted — by conflict, displacement, illness, regime change, or economic collapse — and did not fully resume.',
-    intent: 'none',
-    notes: 'Cross-cutting. Set by conflict childhood, displacement, and authoritarian events.',
+    category: 'social',
+    description: 'Became a community leader — organized neighbors, represented the group, took on the unpaid work of holding community together.',
+    intent: 'both',
+    notes: 'Set by neighborhood, religious, and civic events across multiple arcs.',
   },
 
-  grew_up_in_camp: {
+  strong_marriage: {
+    weight: 'moderate',
+    category: 'relationship',
+    description: 'A strong, durable partnership — the kind that has survived difficulty and is a genuine resource rather than a background fact.',
+    intent: 'both',
+    notes: 'Set by romance arc, long partnership texture, and relationship quality events when relationship quality is high.',
+  },
+
+  found_meaning: {
+    weight: 'moderate',
+    category: 'psychological',
+    description: 'Found a source of meaning — work, community, faith, art, or relationship — that orients the life beyond survival.',
+    intent: 'both',
+    notes: 'Set by faith arc, project arc, teaching arc, and desire-resolution events.',
+  },
+
+  independence_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age around national independence — the flag change, the new constitution, the particular energy of a country becoming itself.',
+    intent: 'event',
+    notes: 'Set by decolonisation and independence event arcs. Generic version of country-specific independence flags.',
+  },
+
+  liberation_war_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up during or immediately after a liberation war — national independence achieved through armed struggle.',
+    intent: 'event',
+    notes: 'Set by Angola, Zimbabwe, Mozambique, Bangladesh and other liberation war arcs.',
+  },
+
+  mobile_money_user: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Adopted mobile money — M-Pesa, bKash, MTN Mobile Money — as a primary financial infrastructure before having a bank account.',
+    intent: 'event',
+    notes: 'Set alongside mobile_money flag. Both checked in year texture via mobile_money || mobile_money_user.',
+  },
+
+  acceptance: {
+    weight: 'minor',
+    category: 'psychological',
+    description: 'Reached a state of acceptance — of loss, limitation, or circumstance — that is not resignation but a genuine reckoning.',
+    intent: 'event',
+    notes: 'Set by grief, late-life, and disability arc events when character reaches genuine acceptance.',
+  },
+
+  integrity: {
+    weight: 'minor',
+    category: 'psychological',
+    description: 'Acted with integrity under pressure — a specific instance of choosing honesty or principle when the easier path was available.',
+    intent: 'event',
+    notes: 'Set by ethical choice events in career, crisis, and regime arcs.',
+  },
+
+  food_insecurity: {
     weight: 'major',
-    category: 'migration',
-    description: 'Spent formative years in a refugee or displaced persons camp — where the temporary became structural.',
-    intent: 'none',
-    notes: 'Cross-cutting. Set by Rohingya, Palestine, and Central American events.',
-  },
-
-  internet_generation: {
-    weight: 'moderate',
-    category: 'identity',
-    description: 'Came of age with the internet — the generation for whom the shift from offline to online happened during childhood or adolescence.',
-    intent: 'year_texture',
-    notes: 'Cross-cutting. Set by internet era events. Already in buildYearTexture.',
-  },
-
-  experienced_loss: {
-    weight: 'moderate',
-    category: 'trauma',
-    description: 'Carries accumulated loss — a grief that is not about one specific death or departure but about the accumulation of them.',
-    intent: 'year_texture',
-    notes: 'Cross-cutting. Set by loss and grief events. Already in buildYearTexture (not captured by specific widowed/orphaned flags).',
-  },
-
-  disaster_survivor: {
-    weight: 'moderate',
-    category: 'disaster',
-    description: 'Survived a significant natural or man-made disaster — the knowledge of what it is like when the ground stops behaving predictably.',
-    intent: 'none',
-    notes: 'Cross-cutting. Set by disaster, earthquake, flood, and climate events.',
+    category: 'economic',
+    description: 'Experienced food insecurity — irregular access to adequate nutrition due to poverty, conflict, drought, or economic collapse.',
+    intent: 'both',
+    notes: 'Set across many poverty, conflict, and country-specific arcs. Has year texture via food_insecurity block in buildYearTexture.',
   },
 
   remittance_family: {
     weight: 'moderate',
-    category: 'economics',
+    category: 'economic',
+    description: 'Part of a remittance economy — depends on money sent from a family member abroad to cover basic costs.',
+    intent: 'both',
+    notes: 'Set by OFW, emigration, and diaspora arcs. Has year texture in buildYearTexture.',
+  },
+
+  experienced_loss: {
+    weight: 'moderate',
+    category: 'psychological',
+    description: 'Experienced significant loss — beyond standard grief, a loss that reshaped the life\'s topology.',
+    intent: 'both',
+    notes: 'Set by grief, conflict, and crisis arcs as a catch-all for non-specific but significant loss. Has year texture in buildYearTexture.',
+  },
+
+  internet_generation: {
+    weight: 'moderate',
+    category: 'technology',
+    description: 'Part of the first generation for whom the internet was formative — shaped by early online culture, social media, and the specific consciousness of living publicly online.',
+    intent: 'year_texture',
+    notes: 'Set by technology arc events. Has year texture in buildYearTexture.',
+  },
+
+  // ── TURKEY DEPTH ────────────────────────────────────────────────────────────
+
+  tur_ataturk_era: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through Atatürk\'s top-down modernisation programme — the Latin alphabet, dress code reforms, secularist state — and is positioned by it, for or against.',
+    intent: 'both',
+    notes: 'Set by tur_ataturk_alphabet event. Has year texture in Turkey section of buildYearTexture.',
+  },
+
+  tur_kahramanmaras_survivor: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Experienced the February 2023 Kahramanmaraş earthquakes — either directly in the southeast or as a witnessing Turkish citizen following the count.',
+    intent: 'both',
+    notes: 'Set by tur_kahramanmaras_2023 event. Has year texture in Turkey section of buildYearTexture.',
+  },
+
+  tur_refugee_host_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived in Turkey during the Syrian refugee influx — neighbourhood transformation, economic pressure, and the dual reality of humanitarian obligation and political resentment.',
+    intent: 'both',
+    notes: 'Set by tur_syrian_refugees event. Has year texture in Turkey section of buildYearTexture.',
+  },
+
+  tur_lira_crisis_lived: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Experienced the Turkish lira\'s collapse of 2021–2022 — 80%+ inflation, savings eroded, everyday purchasing power gutted by unorthodox monetary policy.',
+    intent: 'both',
+    notes: 'Set by tur_lira_crisis event. Has year texture in Turkey section of buildYearTexture.',
+  },
+
+  tur_istanbul_convention_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'A Turkish woman who lived through the government\'s 2021 withdrawal from the Istanbul Convention on violence against women — either protesting or watching.',
+    intent: 'both',
+    notes: 'Set by tur_istanbul_convention event (female only). Has year texture in Turkey section.',
+  },
+
+  // ── NOMADIC LIFE ────────────────────────────────────────────────────────────
+
+  maasai_pastoralist: {
+    weight: 'major',
+    category: 'identity',
+    description: 'A Maasai who grew up in the cattle-herding pastoral system — age-set identity, seasonal migration, the cattle as economic and cultural foundation.',
+    intent: 'both',
+    notes: 'Set by nom_maasai_cattle_world event. Has year texture in nomadic section of buildYearTexture.',
+  },
+
+  maasai_conservation_displaced: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'A Maasai whose ancestral grazing land was absorbed into national parks or conservation areas without adequate compensation — experienced the colonial and post-colonial land dispossession.',
+    intent: 'both',
+    notes: 'Set by nom_maasai_national_park event. Has year texture in nomadic section of buildYearTexture.',
+  },
+
+  bedouin_settled: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'A Bedouin who grew up during the government sedentarisation programmes — concrete houses replacing tents, migration routes fenced and formalised, the tribal structure adapting to fixed addresses.',
+    intent: 'both',
+    notes: 'Set by nom_bedouin_settlement event. Has year texture in nomadic section of buildYearTexture.',
+  },
+
+  nomadic_heritage: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Carries nomadic or pastoral heritage — from Maasai, Bedouin, or Mongolian herder backgrounds — in a world that no longer accommodates the original way of life.',
+    intent: 'both',
+    notes: 'Set by multiple nomadic arc events (maasai city question, bedouin land claim, mongol UB). Has year texture in nomadic section of buildYearTexture.',
+  },
+
+  mongolian_herder: {
+    weight: 'major',
+    category: 'identity',
+    description: 'A Mongolian who grew up in a nomadic herder family — ger tent as home, seasonal migration, steppe pastoralism as the organising structure of daily life.',
+    intent: 'both',
+    notes: 'Set by nom_mongol_ger_childhood event. Has year texture in nomadic section of buildYearTexture.',
+  },
+
+  mongolian_dzud_survived: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'A Mongolian herder who survived a dzud winter catastrophe — the combined drought and freeze that kills livestock en masse and can wipe out a family\'s entire herd.',
+    intent: 'both',
+    notes: 'Set by nom_mongol_dzud event. Has year texture in nomadic section of buildYearTexture.',
+   category: 'economics',
     description: 'Family income includes remittances from a member working abroad — the arithmetic of absence built into the household budget.',
     intent: 'year_texture',
     notes: 'Cross-cutting. Set by OFW, Tajik remittance, migration, and emigrant events. Already in buildYearTexture.',
@@ -12359,11 +12736,6 @@ export const FLAG_REGISTRY = {
     weight: 'major', category: 'conflict',
     description: 'Generation defined by Operation Condor — the US-backed network of South American dictatorships that coordinated disappearances across borders.',
     intent: 'none', notes: 'Set by Operation Condor world events.',
-  },
-  liberation_war_generation: {
-    weight: 'major', category: 'conflict',
-    description: 'Came of age during a liberation war — independence achieved through armed struggle, not negotiation.',
-    intent: 'none', notes: 'Set by various liberation war world events.',
   },
   '1967_generation': {
     weight: 'moderate', category: 'identity',
