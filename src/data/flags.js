@@ -12495,4 +12495,94 @@ export const FLAG_REGISTRY = {
     notes: 'Set by we_sudan_civil_war_2023 world event. Sudan only.',
   },
 
+  // ── FOLLOWTHROUGH 26 FLAGS — early-life + cross-cutting ─────────────────────
+
+  adult_heartbreak: {
+    weight: 'major',
+    category: 'relationship',
+    description: 'Ended a serious adult relationship — not adolescent heartbreak but a real partnership with shared routines and a plausible future, that ended through incompatibility or diverging growth.',
+    intent: 'event',
+    notes: 'Set by ya_adult_breakup (all three branches). Gates ftw26_adult_heartbreak_echo.',
+  },
+
+  stayed_too_long: {
+    weight: 'moderate',
+    category: 'relationship',
+    description: 'Stayed in the adult relationship past the moment of knowing — the delay branch of ya_adult_breakup.',
+    intent: 'event',
+    notes: 'Set by ya_adult_breakup (delayed branch only). Branches ftw26_adult_heartbreak_echo text; gates ftw26_stayed_too_long_pattern.',
+  },
+
+  arranged_marriage_settled: {
+    weight: 'moderate',
+    category: 'relationship',
+    description: 'Arranged marriage that became something like love — chosen by repetition, confirmed by years.',
+    intent: 'none',
+    notes: 'Set by ftw26_arranged_marriage_midlife (first branch). Downstream: late-life warmth texture.',
+  },
+
+  money_zero_survived: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Was genuinely, counting-days broke in young adulthood — not symbolic poverty but an actual period of not having enough.',
+    intent: 'event',
+    notes: 'Set by ya_money_zero (all branches). Gates ftw26_money_zero_midlife and ftw26_money_zero_late.',
+  },
+
+  black_tax_contributor: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Has been sending a significant portion of income back to family for years — the informal tax on being the first to succeed that operates across African and diaspora communities.',
+    intent: 'event',
+    notes: 'Set by events_wealth_system.js black tax event. Gates ftw26_black_tax_midlife, ftw26_black_tax_late.',
+  },
+
+  arranged_marriage: {
+    weight: 'major',
+    category: 'relationship',
+    description: 'Entered a marriage arranged by family rather than chosen independently — the starting point, not the ending.',
+    intent: 'event',
+    notes: 'Set by events_texture.js rural marriage pressure event. Gates ftw26_arranged_marriage_midlife.',
+  },
+
+  partition_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Family was displaced or divided by a partition — the specific grief of a street or city on the other side of a new border.',
+    intent: 'event',
+    notes: 'Set by events_texture.js partition event. Gates ftw26_partition_late.',
+  },
+
+  foster_care: {
+    weight: 'major',
+    category: 'family',
+    description: 'Was placed in foster care as a child — the identity question of family that is real but differently configured.',
+    intent: 'event',
+    notes: 'Set by events.js foster home event. Gates ftw26_foster_care_identity.',
+  },
+
+  chose_family: {
+    weight: 'moderate',
+    category: 'relationship',
+    description: 'Built chosen family — people who function as kin without the biological or legal designation.',
+    intent: 'none',
+    notes: 'Set by ftw26_foster_care_identity (first branch). Late-life warmth texture.',
+  },
+
+  depression_era_childhood: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Grew up in a household still living with Depression-era habits — tins kept full, shoes mended, money never quite trusted to last.',
+    intent: 'event',
+    notes: 'Set by events_texture.js (Depression era). Gates ftw26_depression_era_late.',
+  },
+
+  nkrumah_era: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was alive and old enough to feel the Nkrumah era in Ghana — the independence euphoria and the 1966 coup that ended it.',
+    intent: 'event',
+    notes: 'Set by events_west_africa.js. Gates ftw26_nkrumah_late.',
+  },
+
 }
