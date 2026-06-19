@@ -13765,7 +13765,7 @@ export function tick(state) {
       [m.act_count_donate    ?? 0, 5,  'generous'],
       [m.act_count_read      ?? 0, 10, 'avid_reader'],
       [m.act_count_journal   ?? 0, 8,  'reflective_writer'],
-      [m.act_count_gym + (m.act_count_join_sports_team ?? 0) + (m.act_count_yoga ?? 0) ?? 0, 10, 'fitness_devotee'],
+      [(m.act_count_gym ?? 0) + (m.act_count_join_sports_team ?? 0) + (m.act_count_yoga ?? 0), 10, 'fitness_devotee'],
       [m.act_count_philosophy?? 0, 6,  'philosophical_mind'],
       [m.act_count_networking?? 0, 6,  'networker'],
       [m.act_count_save      ?? 0, 5,  'disciplined_saver'],

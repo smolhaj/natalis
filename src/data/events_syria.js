@@ -158,7 +158,7 @@ export const SYRIA_EVENTS = [
     text: (G) => {
       const hasProperty = (G.stats.wealth ?? 0) >= 40
       const hasChildren = (G.children ?? []).length > 0
-      const hasElderParents = (G.parents ?? []).some(p => p && p.age >= 65)
+      const hasElderParents = Object.values(G.parents ?? {}).some(p => p && p.age >= 65)
       let context = 'The calculation everyone makes: stay and endure, or go and arrive somewhere as a refugee with nothing official. '
       if (hasChildren) context += 'You have children. '
       if (hasElderParents) context += 'Your parents are old enough that the journey is dangerous and staying is dangerous. '

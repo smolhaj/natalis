@@ -224,7 +224,7 @@ export const PANDEMIC_EVENTS = [
     when: (G) =>
       G.currentYear >= 2020 &&
       G.currentYear <= 2021 &&
-      G.parents?.some((par) => !par?.dead) &&
+      Object.values(G.parents ?? {}).some((par) => par?.alive !== false) &&
       !G.mem?.panDeath,
     text: 'The call comes on a Tuesday. Your father, or your mother, is in the hospital. The rules say: no visitors. The specific rule is the specific shape of the loss. You have not been in the room. You will not be in the room. Someone holds a phone at the end and the last thing they hear is your voice from a device, which is not the same as being there, which you know, and which you will carry for a long time.',
     choices: [
@@ -264,7 +264,7 @@ export const PANDEMIC_EVENTS = [
     when: (G) =>
       G.currentYear >= 2020 &&
       G.currentYear <= 2021 &&
-      G.parents?.some((par) => !par?.dead) &&
+      Object.values(G.parents ?? {}).some((par) => par?.alive !== false) &&
       !G.mem?.panDeath,
     text: 'The call comes on a Tuesday. Your father, or your mother, is in the hospital. The rules say: no visitors. The specific rule is the specific shape of the loss. You have not been in the room. You will not be in the room. Someone holds a phone at the end and the last thing they hear is your voice from a device, which is not the same as being there, which you know, and which you will carry for a long time.',
     choices: [

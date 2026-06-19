@@ -51,12 +51,12 @@ export const CAMBODIA_EVENTS = [
       if (G.character.country.name !== 'Cambodia') return false
       if (G.currentYear < 1975 || G.currentYear > 1979) return false
       if (G.mem?.camFamilyTaken) return false
-      const hasLivingParent = G.parents?.some(p => p.alive)
+      const hasLivingParent = Object.values(G.parents ?? {}).some(p => p.alive)
       return hasLivingParent
     },
     text: (G) => {
-      const takenParent = G.parents?.find(p => p.alive) ?? null
-      const relation = takenParent?.relation === 'father' ? 'father' : 'mother'
+      const takenParent = Object.values(G.parents ?? {}).find(p => p.alive) ?? null
+      const relation = takenParent?.gender === 'male' ? 'father' : 'mother'
       return `Your ${relation} is summoned to a meeting. The cadre says it is for "re-education," which is a word that has a specific weight in the way it is said. People who go to re-education meetings do not always come back. Educated people, people who worked for the old government, people who speak French — these are the ones summoned.\n\nYour ${relation} packs a small bag, because the cadre says it may be several days. They do not take anything important, which you understand only later was also a choice — a way of not believing what was happening. You watch them walk up the road with two cadres, one on each side. You do not know yet that this is the last time.`
     },
     choices: null,

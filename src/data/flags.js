@@ -12023,6 +12023,8 @@ export const FLAG_REGISTRY = {
     description: 'Exposed or bore witness to systematic corruption at close range — the knowledge of how the money actually moves.',
     intent: 'none',
     notes: 'Cross-cutting. Set by career-regime, Mani Pulite, and political events.',
+  },
+
   // ── CROSSCUTTING LIFE CONDITION FLAGS ──────────────────────────────────────
   poverty_childhood: {
     weight: 'major',

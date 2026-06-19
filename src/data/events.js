@@ -3754,7 +3754,7 @@ const BASE_EVENTS = [
     id: 'mid_contested_inheritance',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.parents === null && G.money > 10000 && !G.mem.inheritanceContested,
+    when: (G) => G.parents?.mother?.alive === false && G.parents?.father?.alive === false && G.money > 10000 && !G.mem.inheritanceContested,
     text: (G) => {
       if (['subsaharan', 'developing_unstable'].includes(G.character.country.archetype))
         return 'Your parent has died. The land they farmed is now the subject of a family dispute. Relatives you barely know are laying claim to it.'
@@ -3792,7 +3792,7 @@ const BASE_EVENTS = [
     id: 'late_inheritance_received',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.parents === null && !G.mem.inheritanceReceived && G.money > 0,
+    when: (G) => G.parents?.mother?.alive === false && G.parents?.father?.alive === false && !G.mem.inheritanceReceived && G.money > 0,
     text: (G) => {
       if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
         return 'The estate is settled. After debts and taxes, an inheritance arrives — enough to reshape your final years.'
