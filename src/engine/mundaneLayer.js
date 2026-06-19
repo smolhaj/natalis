@@ -1964,6 +1964,110 @@ export function buildMundaneLayer(state) {
     'The way the phone changed who you can reach and who can reach you: both at once.',
   )
 
+  // ── BODY AT DIFFERENT AGES ────────────────────────────────────────────────
+  addIf(phase === 'young_adult' && age >= 18 && age <= 24,
+    'The body is what it is right now, which you will not appreciate until later.',
+    'Sleep: you take it when it comes and it always comes.',
+  )
+  addIf(phase === 'midlife' && age >= 40 && age <= 50,
+    'The body has started requiring more negotiation than it used to.',
+    'You recover from things more slowly than you did and you have adjusted what you attempt.',
+  )
+  addIf(phase === 'late_life' && age >= 65 && age <= 74,
+    'The body has opinions about the weather. It has had these opinions for some years now.',
+    'You have started conserving in ways that are automatic rather than deliberate.',
+  )
+  addIf(phase === 'late_life' && age >= 75,
+    'The day has a structure organised partly by the body\'s requirements. The requirements are not unreasonable.',
+    'You are slower and more accurate, which is not the same as slower and worse.',
+    'The memory that goes first is not the memory you expected. The memory you expected is still there.',
+  )
+
+  // ── EMPTY NEST ────────────────────────────────────────────────────────────
+  addIf(hasChildren && (phase === 'midlife' || phase === 'late_life') && age >= 50,
+    'The house is the size it was before them and also a different kind of size.',
+    'You find yourself cooking too much and have been doing it for a year.',
+    'They call. The call is good. The call is not the same as the presence.',
+  )
+
+  // ── POST-DIVORCE / UNPARTNERED AFTER PARTNERSHIP ─────────────────────────
+  addIf(F('divorced') && !hasPartner && (phase === 'midlife' || phase === 'young_adult'),
+    'The possessive grammar has not caught up: "our" still arrives before "my" corrects it.',
+    'The social calendar used to be managed jointly. Now you decide everything alone, which is freedom and also work.',
+    'You sleep on one side of the bed. You have not moved to the middle.',
+  )
+
+  // ── REFUGEE / ASYLUM STATUS ──────────────────────────────────────────────
+  addIf(state.residencyStatus === 'refugee_status' || state.residencyStatus === 'asylum_seeker',
+    'The waiting is a kind of work. It does not produce anything but it takes time.',
+    'You are learning the rules of a system that was not made for you and may not decide in your favour.',
+    'The documents, the appointments, the letters with decisions in them: this is now part of the year.',
+  )
+  addIf(state.residencyStatus === 'undocumented' || state.residencyStatus === 'tourist_overstay',
+    'There are things you do not do and places you do not go because of what the year contains.',
+    'The calculation is always present: risk and necessity and what you are willing to trade against each other.',
+  )
+
+  // ── WEALTH TEXTURE: VERY HIGH ─────────────────────────────────────────────
+  addIf(gdp === 'very_high' && isWealthyArch && phase !== 'early_childhood',
+    'The money has been invisible for long enough that its presence is harder to see than its absence would be.',
+    'The option you did not choose is still an option. Most choices work out for you at no particular cost.',
+  )
+
+  // ── WEALTH TEXTURE: VERY LOW ──────────────────────────────────────────────
+  addIf(gdp === 'very_low' && phase !== 'early_childhood',
+    'The month is divided into the before-the-money-runs-out and the after.',
+    'You are efficient with things in ways that people with more than you are not required to be.',
+    'The thing that broke: you are deciding whether to repair it or do without. These are the two options.',
+  )
+
+  // ── CITY-SPECIFIC TEXTURE ─────────────────────────────────────────────────
+  addIf((currentCn === 'United Kingdom' || cn === 'United Kingdom') && isUrban && era >= 1950,
+    'The particular British management of the queue: enforced by consensus and without being asked.',
+    'The pub on the corner and what it holds of the neighbourhood: the argument, the anniversary, the ordinary Thursday.',
+  )
+  addIf((currentCn === 'France' || cn === 'France') && isUrban && era >= 1950,
+    'The boulangerie: the same bread at the same hour, the same exchange. The constancy is a kind of contract.',
+    'The argument about the right way to do something is itself a form of attention paid to quality.',
+  )
+  addIf((currentCn === 'India' || cn === 'India') && isUrban && era >= 1970,
+    'The logic of the city: the way it absorbs everyone and moves at a pace that accommodates all paces simultaneously.',
+    'The power cut in the afternoon: the fans stop, the work continues, the generator starts or doesn\'t.',
+  )
+  addIf((currentCn === 'Brazil' || cn === 'Brazil') && isUrban && era >= 1960,
+    'The city exists at three speeds at once. You have found which speed is yours.',
+    'The football: in the year of a defeat or a victory, the city is the same city and also a different place.',
+  )
+  addIf((currentCn === 'Egypt' || cn === 'Egypt') && isUrban && era >= 1960,
+    'Cairo at midday versus Cairo at midnight: the city does not rest, it only changes character.',
+    'The coffee house is an institution that has no fixed programme. Its function is simply being there.',
+  )
+  addIf((currentCn === 'Mexico' || cn === 'Mexico') && isUrban && era >= 1960,
+    'The traffic: accepted as a condition of city life, complained about without expecting change.',
+    'Sunday: the family geography of it, everyone somewhere specific, everyone accounted for.',
+  )
+  addIf((currentCn === 'Japan' || cn === 'Japan') && isUrban && era >= 1960,
+    'The train arrives when it arrives, to the minute. This reliability is both ordinary and remarkable.',
+    'The sound the city makes between 6pm and 8pm: the specific texture of people going home.',
+  )
+  addIf((currentCn === 'Iran' || cn === 'Iran') && isUrban && era >= 1980,
+    'The two versions of conversation: the public one and the private one. You navigate both.',
+    'The city at night is more itself than in the day — the apartments, the rooftops, the sound of music from somewhere.',
+  )
+
+  // ── WORK FROM HOME ERA ────────────────────────────────────────────────────
+  addIf(era >= 2020 && phase !== 'early_childhood' && isWealthyArch,
+    'The commute that used to be a commute is now the walk from one room to another. The walk takes ten seconds.',
+    'The hour at which the working day ends has become uncertain in a way the beginning never was.',
+    'You have learned something about your neighbours you would not have known before. Mostly their schedules.',
+  )
+
+  // ── FIRST-GENERATION PROSPERITY TEXTURE ──────────────────────────────────
+  addIf(F('poverty_childhood') && phase === 'midlife' && (isWealthyArch || gdp === 'medium_high'),
+    'The thing you could buy now that you could not buy then: you buy it without quite deciding to.',
+    'You know the price of things your children do not know the price of. You do not know how to transfer this knowledge.',
+  )
+
   // ── DIASPORA / IMMIGRANT TEXTURE ─────────────────────────────────────────
   addIf(F('emigrated') && phase === 'young_adult',
     'The accent you had not known you had until someone here pointed it out.',
