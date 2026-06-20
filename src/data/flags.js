@@ -13257,4 +13257,102 @@ export const FLAG_REGISTRY = {
     notes: 'Set by bl_sharecrop_ledger first choice.',
   },
 
+  // ── SEX WORK ARC (BUILD 33) ──────────────────────────────────────────────────
+
+  sex_work_entry: {
+    weight: 'major',
+    category: 'labor',
+    description: 'Entered sex work — survival-driven, tolerated-grey-zone, or legalized European context. The primary gate flag for the sex work arc.',
+    intent: 'event',
+    notes: 'Set by sw_entry_survival, sw_entry_tolerated, sw_entry_legalized. Gates sw_daily_criminalized, sw_police_encounter, sw_regular_client, sw_family_knows, sw_exit_opportunity, sw_long_term, sw_late_reckoning.',
+  },
+
+  sw_criminalized_context: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Entered sex work in a criminalized legal context — police as extortion variable, safety calculation as constant.',
+    intent: 'none',
+    notes: 'Set alongside sex_work_entry by sw_entry_survival. Gates sw_daily_criminalized and sw_police_encounter.',
+  },
+
+  sw_tolerated_context: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'In a tolerated grey zone — Thailand-pattern, technically illegal but visibly present; tourist economy built around it.',
+    intent: 'none',
+    notes: 'Set by sw_entry_tolerated.',
+  },
+
+  sw_legalized_worker: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Registered sex worker in a legalized context — Netherlands, Germany, or New Zealand. Employment rights on paper; stigma persisting independently of legality.',
+    intent: 'none',
+    notes: 'Set by sw_entry_legalized first choice.',
+  },
+
+  sw_considered_sector: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Considered entering sex work in a legalized context and decided against it.',
+    intent: 'none',
+    notes: 'Set by sw_entry_legalized second choice.',
+  },
+
+  sw_police_extorted: {
+    weight: 'moderate',
+    category: 'adversity',
+    description: 'Extorted by police — paid or refused, either way the power relationship was explicit and the law was on the wrong side of it.',
+    intent: 'none',
+    notes: 'Set by both choices of sw_police_encounter.',
+  },
+
+  sw_regular_client_known: {
+    weight: 'minor',
+    category: 'relationship',
+    description: 'Had a regular client — the version that is almost kind, which creates its own particular accounting.',
+    intent: 'none',
+    notes: 'Set by sw_regular_client.',
+  },
+
+  sw_stigma_denied: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Denied the work to family — maintained the version that cost them less, at its own cost.',
+    intent: 'none',
+    notes: 'Set by sw_family_knows first choice.',
+  },
+
+  sw_stigma_handled: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Told family the truth about the work — the conversation was not easy and changed what the relationship could be.',
+    intent: 'none',
+    notes: 'Set by sw_family_knows second choice.',
+  },
+
+  sw_exited: {
+    weight: 'major',
+    category: 'labor',
+    description: 'Exited sex work — took the opportunity when it came, managed the income gap, moved on.',
+    intent: 'none',
+    notes: 'Set by sw_exit_opportunity first choice. sw_late_reckoning covers late-life for all sw_entry holders.',
+  },
+
+  sw_exit_declined: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Chose not to take an exit from sex work when one appeared — the gap between what stopping pays and what continuing pays was not abstract.',
+    intent: 'none',
+    notes: 'Set by sw_exit_opportunity second choice.',
+  },
+
+  sw_long_term_worker: {
+    weight: 'major',
+    category: 'labor',
+    description: 'Spent a decade or more in sex work — the expert knowledge, the social world, the specific body of understanding that comes with long experience in the sector.',
+    intent: 'texture',
+    notes: 'Set by sw_exit_opportunity second choice and sw_long_term. Needs year texture in buildYearTexture().',
+  },
+
 }

@@ -11450,6 +11450,19 @@ function buildYearTexture(state) {
       ? 'The children who left after the coups are in Australia, in New Zealand, in Canada. You stayed. The staying was not a simple decision and it has not become a simple decision with time.'
       : 'You have developed a working relationship with the asterisk. It is not acceptance. It is the management of something you cannot change by force of feeling.',
   ])
+  if (F.has('sw_long_term_worker') && Math.random() < 0.2) return pick([
+    'You know things about this work that took years to learn: who to take and who to refuse, how to set the terms, where the risk concentrates. The knowledge is not the kind you write down. It is the kind that sits in the body.',
+    phase === 'late_life'
+      ? 'The decade in the work — the social world of it, the women you knew, the particular texture of nights you can no longer remember individually but that formed the shape of the years — is its own education. Not the one anyone planned.'
+      : 'The safety calculation has become second nature. You do it before you are aware you are doing it. This is what expertise looks like in a context where expertise is not recognised as such.',
+    'The money was real. What it cost to earn it was also real. The accounting has shifted over the years — what you count and what you no longer bother to count and what you still cannot stop counting.',
+  ])
+  if (F.has('sex_work_entry') && !F.has('sw_long_term_worker') && Math.random() < 0.18) return pick([
+    'You move through this city in a way most people don\'t. The geography of safety, the hours that are and aren\'t workable, the network of women who share information without advertising that they are sharing it — this is a second map of the place, invisible to most.',
+    phase === 'young_adult'
+      ? 'What the work is and what you thought it would be are different in both directions — easier in some ways, harder in others that you could not have anticipated from outside.'
+      : 'The years in the sector gave you a specific understanding of money: how fast it moves, how little it sticks, how the urgency of the immediate always outbids the logic of the long-term.',
+  ])
 
   // ─── NEIGHBORHOOD TIER TEXTURE ───────────────────────────────────────────────
   {
