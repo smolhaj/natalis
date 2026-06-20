@@ -14693,4 +14693,214 @@ export const FLAG_REGISTRY = {
     notes: 'Set by sl_latin_america_maid. Cross-cutting developing_urban female experience.',
   },
 
+  // ── Batch 6 flags ─────────────────────────────────────────────────────────
+
+  boarding_school_indigenous: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Attended a federal or colonial Indigenous boarding school — the assimilation machinery that removed language, name, and cultural continuity; the reading gained at the price of what was taken.',
+    intent: 'event',
+    notes: 'Set by sl_native_boarding_school. Follow-through: sl_native_boarding_school_followthrough fires at young_adult.',
+  },
+
+  cultural_erasure_lived: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'The language their grandparents spoke, the ceremonies that correspond to months — not taught, because the system that taught reading also removed those. A specific absence shaped like a skill.',
+    intent: 'year_texture',
+    notes: 'Set by sl_native_boarding_school_followthrough.',
+  },
+
+  mission_station_raised: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Raised on a government mission station — rations on Thursdays, the manager\'s authority over marriage and wages, the trust accounts, the word that would not be spoken officially for decades.',
+    intent: 'year_texture',
+    notes: 'Set by sl_aboriginal_mission. Australia 1920–1970 Aboriginal experience.',
+  },
+
+  indigenous_language_reclaimed: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Part of a language revival generation — the kōhanga reo child, the grandchild who knows what the parent\'s generation was told not to speak. The reversal as act of inheritance.',
+    intent: 'none',
+    notes: 'Set by sl_maori_kohanga.',
+  },
+
+  punitive_psychiatry_survived: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Committed to a Soviet psychiatric institution for political dissent — "sluggish schizophrenia" as a diagnostic category that exists only for people who believe the system is unjust.',
+    intent: 'year_texture',
+    notes: 'Set by sl_soviet_punitive_psychiatry.',
+  },
+
+  gulag_birth_generation: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Born in or to a parent imprisoned in the Gulag — the camp nursery for children of female prisoners, the orphanage, the reunion years later that one person remembers and the other does not.',
+    intent: 'none',
+    notes: 'Set by sl_gulag_camp_born.',
+  },
+
+  exile_generation_tibetan: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'A Tibetan born in exile — knows the geography of a country never seen, oriented toward a return the adults around them have awaited for decades without it arriving.',
+    intent: 'year_texture',
+    notes: 'Set by sl_tibetan_dharamsala_childhood.',
+  },
+
+  witnessed_extreme_witness: {
+    weight: 'moderate',
+    category: 'grief',
+    description: 'Received news of self-immolation or comparable extreme political witness — the information carried through a diaspora network with no adequate frame for it.',
+    intent: 'none',
+    notes: 'Set by sl_tibetan_self_immolation_witness.',
+  },
+
+  bengal_partition_displaced: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Displaced by the Bengal Partition of 1947 — the line drawn in London through rice fields and market towns, the village now on the wrong side, the district that never quite becomes home.',
+    intent: 'year_texture',
+    notes: 'Set by sl_bengal_partition_hindu.',
+  },
+
+  refugee_rebuilt_network: {
+    weight: 'moderate',
+    category: 'resilience',
+    description: 'Rebuilt a pre-existing community network in the refugee or displaced context — the trader network older than the displacement that reassembled itself in the new city.',
+    intent: 'none',
+    notes: 'Set by sl_sindhi_hindu_refugee.',
+  },
+
+  colonial_contact_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Among the first generation to encounter colonial administration in their village — the patrol post, the flagpole, the mission school that came four years later.',
+    intent: 'none',
+    notes: 'Set by sl_png_first_contact_generation.',
+  },
+
+  third_gender_traditional: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Belongs to a traditional third-gender category — fa\'afafine, hijra, or equivalent — that predates Western gender terminology and carries its own social obligations and roles.',
+    intent: 'year_texture',
+    notes: 'Set by sl_samoan_fa_afafine.',
+  },
+
+  artisanal_miner: {
+    weight: 'moderate',
+    category: 'labour',
+    description: 'Works artisanal mining — the hand and the sack and the absence of protective equipment, the one to three dollars a day, the company that sells the mineral that is not called artisanal.',
+    intent: 'year_texture',
+    notes: 'Set by sl_drc_cobalt_miner.',
+  },
+
+  extraction_community: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up in an extraction-economy community — the spill not cleaned up, the community development fund that built things that did not function, the money deposited somewhere else.',
+    intent: 'year_texture',
+    notes: 'Set by sl_niger_delta_oil_community.',
+  },
+
+  professional_woman_trailblazer: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'A woman who entered a professional field when women were trained but not considered equal — the state policy of equality and the house that was not the policy.',
+    intent: 'year_texture',
+    notes: 'Set by sl_soviet_woman_scientist and sl_first_female_doctor_iran.',
+  },
+
+  wartime_labour_displaced: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Worked wartime industrial labour and was displaced by returning men when the war ended — excellent at the job, not kept; the law that gave the job back and the silence about what it cost.',
+    intent: 'year_texture',
+    notes: 'Set by sl_wartime_factory_woman_uk.',
+  },
+
+  professional_woman_islamic_republic: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'A professional woman who continued practicing in the Islamic Republic through the years of contested policy — the ongoing negotiation that does not appear in either the official history or the Western narrative.',
+    intent: 'none',
+    notes: 'Set by sl_first_female_doctor_iran.',
+  },
+
+  kibbutz_privatisation_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Part of the Israeli generation that experienced kibbutz privatisation — the communal children\'s house dissolved, the founding parents disappointed, the quiet relief of sleeping in the same house as your mother.',
+    intent: 'none',
+    notes: 'Set by sl_kibbutz_second_generation.',
+  },
+
+  commune_childhood: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Raised on a 1960s–70s commune — the insufficient vegetable garden, the considerable discussion, the six non-sibling children who are the comparison point for all other social arrangements.',
+    intent: 'year_texture',
+    notes: 'Set by sl_us_commune_child.',
+  },
+
+  civil_war_childhood: {
+    weight: 'major',
+    category: 'identity',
+    description: 'A childhood inside a civil war — the sounds that require moving to the corridor, the school that opens by which militia is where, the violence as texture rather than event.',
+    intent: 'year_texture',
+    notes: 'Set by sl_lebanon_war_child.',
+  },
+
+  siege_adolescence: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Adolescence spent inside a siege — the basement classrooms, the homework by candlelight, the girl liked and the music listened to on a battery radio, and the rest-of-life of explaining it.',
+    intent: 'year_texture',
+    notes: 'Set by sl_sarajevo_siege_teenager.',
+  },
+
+  precariat_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'The Japanese herbivore man generation — not aggressive about career or marriage, not because of failed ambition but because the pathways the previous generation walked are closed.',
+    intent: 'year_texture',
+    notes: 'Set by sl_japan_herbivore_men.',
+  },
+
+  sampo_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'South Korean sampo generation — gave up dating, marriage, children (and later home ownership and stable employment). The closing of doors the previous generation walked through when open.',
+    intent: 'year_texture',
+    notes: 'Set by sl_south_korea_sampo_generation.',
+  },
+
+  brain_drain_participant: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Left a country in crisis to practice elsewhere — the brain drain statistic, the remittances sent home, the work done well in a hospital that has supplies.',
+    intent: 'none',
+    notes: 'Set by sl_greek_crisis_doctor_leaves (leave branch).',
+  },
+
+  stayed_through_crisis: {
+    weight: 'moderate',
+    category: 'resilience',
+    description: 'Chose to stay and work through a national crisis rather than emigrating — the workarounds, the deficit management, the gratitude of patients, the system still broken, both things true.',
+    intent: 'none',
+    notes: 'Set by sl_greek_crisis_doctor_leaves (stay branch).',
+  },
+
+  generation_rent: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Part of the UK generation rent — earns adequately, cannot buy, pays rent higher than a mortgage payment for the same property, has done the arithmetic and found it both clarifying and enraging.',
+    intent: 'year_texture',
+    notes: 'Set by sl_uk_generation_rent.',
+  },
+
 }

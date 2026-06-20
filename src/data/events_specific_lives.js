@@ -2512,4 +2512,466 @@ export const SPECIFIC_LIFE_EVENTS = [
     choices: null,
     effect: (p) => { p.setMem('sl_la_maid', true); p.mo += 1800; p.m -= 4; p.addFlag('domestic_worker') },
   },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // BB. INDIGENOUS EDUCATION — assimilation machinery at work on specific bodies
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_native_boarding_school',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'United States' &&
+      G.ethnicity?.includes('indigenous') &&
+      G.currentYear >= 1930 && G.currentYear <= 1978 &&
+      G.age >= 6 && G.age <= 12 &&
+      !G.mem?.sl_native_board,
+    text: 'The school is a federal Indian boarding school five hundred miles from the reservation and you were taken there by the agency on a bus that stopped at six other reservations before yours. The rules: no Indian language, no Indian clothes, no Indian names. Your name is now Robert. The school has a marching band and a football team and a curriculum designed to prepare you for assimilation into a labour market that will not fully accept you regardless. You learn to read. You learn to be Robert. The cost of the reading and the cost of being Robert arrive at different speeds.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_native_board', true); p.e += 5; p.m -= 10; p.s -= 3; p.addFlag('boarding_school_indigenous') },
+  },
+
+  {
+    id: 'sl_native_boarding_school_followthrough',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('boarding_school_indigenous') &&
+      G.age >= 20 && G.age <= 30 &&
+      !G.mem?.sl_native_board_ft,
+    text: 'You know the language of the country. You know how the paperwork works and what the forms are asking. You know what the men at the agency expect you to say and how to say it. What you do not know — what was not taught — is the language your grandparents spoke to each other, the ceremonies that correspond to the months, the specific knowledge of how the land you come from names itself. The boarding school did its job. The job was not yours.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_native_board_ft', true); p.m -= 5; p.e += 2; p.r += 8; p.addFlag('cultural_erasure_lived') },
+  },
+
+  {
+    id: 'sl_aboriginal_mission',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Australia' &&
+      G.ethnicity?.includes('indigenous') &&
+      G.currentYear >= 1920 && G.currentYear <= 1970 &&
+      G.age >= 5 && G.age <= 14 &&
+      !G.mem?.sl_ab_mission,
+    text: 'The mission station is where the government determined you should live. The rations come on Thursdays. There is a church and a school and a dormitory for children whose parents are classified as Aboriginal, which includes you. The manager of the mission has authority over where you go, who you marry, and whether your wages reach you or are held in a trust account that you will spend decades trying to reclaim. The word for what this is will not be officially used until 2008, when the Prime Minister says sorry in Parliament and you are sixty years old.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_ab_mission', true); p.m -= 8; p.h -= 3; p.e += 2; p.addFlag('mission_station_raised') },
+  },
+
+  {
+    id: 'sl_maori_language_nest',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'New Zealand' &&
+      G.ethnicity?.includes('indigenous') &&
+      G.currentYear >= 1985 && G.currentYear <= 2010 &&
+      G.age >= 4 && G.age <= 10 &&
+      !G.mem?.sl_maori_kohanga,
+    text: 'Te kōhanga reo is where you learn te reo Māori in the years before school. Your parents speak it only partly — their parents\' generation was told not to, and the instruction was followed. You are the reversal: the generation that will know the language that the generation before almost lost. There are not enough fluent speakers to staff all the kōhanga that want to open. Your teacher is an elder. The elder is seventy-four. The urgency of the transfer is not explained to you because you are four years old, but the elder knows exactly how urgent it is.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_maori_kohanga', true); p.e += 5; p.s += 3; p.m += 4; p.addFlag('indigenous_language_reclaimed') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // CC. SOVIET REPRESSION VARIANTS — the machinery of the state against the mind
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_soviet_punitive_psychiatry',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'Russia' &&
+      G.currentYear >= 1960 && G.currentYear <= 1986 &&
+      G.age >= 20 && G.age <= 40 &&
+      (G.political_leaning === 'dissident' || G.flags.includes('dissident')) &&
+      !G.mem?.sl_sov_psych,
+    text: 'The diagnosis is "sluggish schizophrenia," a category that exists in Soviet psychiatry and nowhere else in the world, because the symptoms of sluggish schizophrenia include believing that the Soviet system is unjust. You are committed to the Serbsky Centre for commitment processing. The doctors are doctors and the hospital is a hospital and the treatments are medical treatments. None of them are metaphors. You are released after fourteen months. The release condition is that you stop talking about what happened here, which is also not a metaphor.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_sov_psych', true); p.m -= 15; p.h -= 8; p.e += 3; p.addFlag('punitive_psychiatry_survived') },
+  },
+
+  {
+    id: 'sl_gulag_camp_born',
+    phase: 'early_childhood',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'Russia' &&
+      G.currentYear >= 1930 && G.currentYear <= 1955 &&
+      G.age <= 5 &&
+      G.flags.includes('orphan') &&
+      !G.mem?.sl_gulag_child,
+    text: 'Your mother was a prisoner in the camp when you were born. The camp had a nursery for the children of prisoners, which is a sentence that requires reading twice. She was released when you were two. She found you three years later in the state orphanage where the children of female prisoners were taken. You do not remember her absence. She remembers it exactly.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_gulag_child', true); p.m -= 6; p.h -= 3; p.addFlag('gulag_birth_generation') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // DD. TIBETAN EXILE — the generation born outside the country
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_tibetan_dharamsala_childhood',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'India' &&
+      G.ethnicity === 'tibetan' &&
+      G.currentYear >= 1965 && G.currentYear <= 2010 &&
+      G.age >= 6 && G.age <= 14 &&
+      !G.mem?.sl_tib_dharam,
+    text: 'Dharamsala is where Tibetans in exile go, and you were born here, which means you are a Tibetan who has never been to Tibet. The school teaches Tibetan history and Tibetan language and Tibetan geography, because the Tibetan government-in-exile has decided the children must know a country they have not seen. You know the names of the cities. You have never been to them. The adults around you are oriented toward a return that has not happened in forty years and may not happen in your lifetime. You love the mountains you grew up in. They are not, technically, your mountains.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_tib_dharam', true); p.e += 4; p.m += 2; p.r += 4; p.addFlag('exile_generation_tibetan') },
+  },
+
+  {
+    id: 'sl_tibetan_self_immolation_witness',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) =>
+      (G.character.country.name === 'India' || G.character.country.name === 'China') &&
+      G.ethnicity === 'tibetan' &&
+      G.currentYear >= 2008 && G.currentYear <= 2022 &&
+      G.age >= 18 && G.age <= 35 &&
+      !G.mem?.sl_tib_immolation,
+    text: 'The news comes from someone who saw it. A monk, or a nun, or a young person — there have been more than a hundred and fifty. They burned themselves in the streets of Tibetan towns as a political act, which the Chinese government calls terrorism and the exile community calls witness. You hear about it through the phone, through the diaspora network, through the community in Dharamsala passing the information along. The information arrives with grief and arrives with the weight of something you are not sure how to carry.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_tib_immolation', true); p.m -= 8; p.r += 6; p.addFlag('witnessed_extreme_witness') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // EE. BENGAL PARTITION 1947 — the other partition nobody made films about
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_bengal_partition_hindu',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'India' &&
+      G.currentYear >= 1947 && G.currentYear <= 1955 &&
+      G.age >= 4 && G.age <= 12 &&
+      G.ruralUrban === 'rural' &&
+      !G.mem?.sl_bengal_part_h,
+    text: 'The village is in East Bengal, which is now East Pakistan, which means it is no longer a place where your family can remain. The people who made the line through Bengal made it in London, on a map, in six weeks. The line went through rivers and rice fields and the middle of market towns and your village is now on the wrong side of it. The move to West Bengal takes three months and the house you move into is not your house and the district is not your district and the language is Bengali everywhere, which should help but does not, because what you miss is the specific geography of the place the line went through.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_bengal_part_h', true); p.m -= 8; p.r += 6; p.addFlag('bengal_partition_displaced') },
+  },
+
+  {
+    id: 'sl_sindhi_hindu_refugee',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'India' &&
+      G.currentYear >= 1947 && G.currentYear <= 1960 &&
+      G.age >= 18 && G.age <= 35 &&
+      G.flags.includes('bengal_partition_displaced') &&
+      !G.mem?.sl_sindhi_bombay,
+    text: 'In Bombay the Sindhi Hindu refugees are called refugees even though Bombay is technically their country now. The camp in Ulhasnagar was built for them. Your family builds something there that is not quite a business and not quite a community organisation but is the thing that keeps the community from disintegrating, which is what displaced communities mostly need: someone willing to hold the structure before the structure becomes formal. The Sindhi trader network is older than Pakistan. You are rebuilding it here.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_sindhi_bombay', true); p.s += 4; p.m += 2; p.mo += 2000; p.addFlag('refugee_rebuilt_network') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // FF. PACIFIC IDENTITIES — the worlds the ocean separates and connects
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_png_first_contact_generation',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'Papua New Guinea' &&
+      G.currentYear >= 1940 && G.currentYear <= 1970 &&
+      G.ruralUrban === 'rural' &&
+      G.age >= 6 && G.age <= 14 &&
+      !G.mem?.sl_png_first,
+    text: 'The first Australians your village saw came up from the coast in 1948 carrying medicine and a flagpole. Your father had already seen them — he had walked down to the patrol post once, out of curiosity, and come back with a piece of cloth and no particular judgment. What the patrol post represents — an administration, a territory, an eventual independence — is not yet something your village has a word for. What it represents in your grandfather\'s memory is something older and more complicated. The mission school comes in 1952. You are one of the first children to go.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_png_first', true); p.e += 4; p.m += 2; p.addFlag('colonial_contact_generation') },
+  },
+
+  {
+    id: 'sl_samoan_fa_afafine',
+    phase: 'adolescence',
+    weight: 2,
+    when: (G) =>
+      ['Samoa', 'American Samoa', 'New Zealand', 'Australia'].includes(G.character.country.name) &&
+      G.character.gender === 'male' &&
+      G.age >= 13 && G.age <= 18 &&
+      !G.mem?.sl_samoa_faf,
+    text: 'Fa\'afafine is the third gender category that has existed in Samoan culture for longer than the modern words for what it is. It is not a translation of anything from outside — it is Samoan, with its own obligations and its own social role, which includes care of the extended family and certain ceremonial functions. You have known what you are since before you had the word for it. The word was there when you reached it. In the diaspora, in Auckland or Sydney, what you are requires translation. In Samoa, it does not.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_samoa_faf', true); p.s += 5; p.m += 3; p.addFlag('third_gender_traditional') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // GG. EXTRACTION ECONOMIES — what the ground costs the body
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_drc_cobalt_miner',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Democratic Republic of Congo' &&
+      G.currentYear >= 2000 && G.currentYear <= 2025 &&
+      G.age >= 16 && G.age <= 35 &&
+      G.stats.wealth <= 25 &&
+      !G.mem?.sl_drc_cobalt,
+    text: 'The cobalt mine in the Katanga is called artisanal, which means you dig it by hand with a pick and a sack and no machinery and no protective equipment and no employment contract. The company that sells the cobalt is not called artisanal. The battery in the phone of the person who bought the battery that contains this cobalt is not called artisanal either. You earn between one and three dollars a day depending on what you find. The mine is not safe. Everyone in the mine knows the mine is not safe. The alternative to the mine, in this town, in this year, is worse than the mine.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_drc_cobalt', true); p.h -= 6; p.mo += 600; p.addFlag('artisanal_miner') },
+  },
+
+  {
+    id: 'sl_bolivian_tin_miner_lung',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Bolivia' &&
+      G.ruralUrban !== 'urban' &&
+      G.currentYear >= 1950 && G.currentYear <= 2000 &&
+      G.age >= 35 && G.age <= 55 &&
+      !G.mem?.sl_bol_lung,
+    text: 'The diagnosis is silicosis and the doctor says it in a tone that is not hopeful, which tells you everything the word itself doesn\'t. Silicosis is what happens when you breathe rock dust for twenty years in a Potosí tin mine. The Potosí tin mines have been producing silicosis since before the word silicosis existed — the Spanish colonial records called it "the miner\'s disease" and the miner\'s disease was also what killed your father. You are forty-one. The doctor says to stop working in the mine. What the doctor does not say is how a man in Potosí stops working in the mine.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_bol_lung', true); p.h -= 15; p.m -= 6; p.addCondition('silicosis', 'moderate') },
+  },
+
+  {
+    id: 'sl_niger_delta_oil_community',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Nigeria' &&
+      G.ruralUrban === 'rural' &&
+      G.currentYear >= 1980 && G.currentYear <= 2020 &&
+      G.age >= 18 && G.age <= 35 &&
+      !G.mem?.sl_niger_delta,
+    text: 'The creek behind the village has oil in it. It has had oil in it since the spill in 1983, which was not cleaned up because the cleanup that was done was the official cleanup that documented the cleanup rather than the cleanup that removed the oil. The fishing is reduced. The soil is reduced. The company that spilled the oil has a community development fund that built a school with a roof that leaks and then built a health clinic with no doctor and then built a road that ends before the market. You are the generation that has grown up beside an oil industry that extracts from the land you live on and deposits the money somewhere you are not.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_niger_delta', true); p.m -= 5; p.h -= 3; p.e += 3; p.addFlag('extraction_community') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // HH. WOMEN IN PROFESSIONS — the specific physics of being first
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_soviet_woman_scientist',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Russia' &&
+      G.character.gender === 'female' &&
+      G.currentYear >= 1955 && G.currentYear <= 1985 &&
+      G.age >= 22 && G.age <= 35 &&
+      G.stats.smarts >= 70 &&
+      G.career?.field === 'science' &&
+      !G.mem?.sl_sov_woman_sci,
+    text: 'The Soviet Union trained women as engineers and scientists and doctors at rates that Western countries would not match for decades, which is something you did not know until you read it, because from inside it looked like a laboratory where the women were expected to be excellent at physics and also to do all the domestic labour and also not to have careers that outpaced their husbands\' careers. The state policy was equality. The state policy was not the house. The house was not the policy. You are excellent at physics. The rest is navigation.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_sov_woman_sci', true); p.e += 4; p.m -= 3; p.s += 2; p.addFlag('professional_woman_trailblazer') },
+  },
+
+  {
+    id: 'sl_wartime_factory_woman_uk',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'United Kingdom' &&
+      G.character.gender === 'female' &&
+      G.currentYear >= 1940 && G.currentYear <= 1946 &&
+      G.age >= 18 && G.age <= 35 &&
+      !G.mem?.sl_uk_factory_w,
+    text: 'The factory makes Spitfire parts and the shift is ten hours and you are good at it. You are better at it than the man who had this job before the war, which is not something anyone says officially. The wage is less than the man\'s wage by three shillings, which you know because Mary in assembly told you. The foreman says you\'re a natural. The men coming back from the fronts in 1945 are given their jobs back, which is the law, and you go back to the house, which is not the law but is what happens. You are a natural. You were not kept.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_uk_factory_w', true); p.e += 3; p.m -= 4; p.r += 6; p.addFlag('wartime_labour_displaced') },
+  },
+
+  {
+    id: 'sl_first_female_doctor_iran',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'Iran' &&
+      G.character.gender === 'female' &&
+      G.currentYear >= 1970 && G.currentYear <= 1985 &&
+      G.age >= 22 && G.age <= 32 &&
+      G.stats.smarts >= 75 &&
+      G.career?.field === 'healthcare' &&
+      !G.mem?.sl_ir_woman_doc,
+    text: 'You graduated from medical school in 1977 and the revolution came in 1979 and the question of whether women doctors could practice was contested and then settled and then unsettled again over three years. You practiced during the settling. You practiced during the unsettling. You kept your head covering and your credentials and your consulting room and the patients, who are mostly women and who need you, came and kept coming. The history of women in medicine in the Islamic Republic is not the history they write. It is this: a great deal of practice, continued under conditions that required continuous negotiation.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_ir_woman_doc', true); p.e += 3; p.s += 3; p.m += 2; p.addFlag('professional_woman_islamic_republic') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // II. COMMUNE AND COLLECTIVE — the utopia tried and found complicated
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_kibbutz_second_generation',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Israel' &&
+      G.currentYear >= 1985 && G.currentYear <= 2005 &&
+      G.age >= 18 && G.age <= 30 &&
+      G.religion === 'jewish' &&
+      !G.mem?.sl_kibbutz_2gen,
+    text: 'Your parents founded the kibbutz — or rather, your parents\' generation founded it, when founding kibbutzim was what you did if you were a young Zionist in 1948 and you believed in collective ownership and socialist labour and children raised in communal children\'s houses. You were raised in the communal children\'s house. The communal children\'s house is now being disbanded because it turned out that many of the people who chose collective ownership wanted their children to sleep in the same house as them, which is not a small thing to discover about yourself forty years into an experiment. The kibbutz is privatising. Your parents are disappointed. You are, carefully, relieved.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_kibbutz_2gen', true); p.m += 3; p.e += 3; p.r += 4; p.addFlag('kibbutz_privatisation_generation') },
+  },
+
+  {
+    id: 'sl_us_commune_child',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'United States' &&
+      G.currentYear >= 1967 && G.currentYear <= 1980 &&
+      G.age >= 6 && G.age <= 14 &&
+      G.stats.wealth >= 30 && G.stats.wealth <= 60 &&
+      !G.mem?.sl_us_commune,
+    text: 'The commune is twelve adults and their children on forty acres in Vermont. There are goats. There is a garden that produces insufficient vegetables and a philosophy that produces considerable discussion. The adults take turns cooking and rotating chores and having disagreements about the chores and the cooking and what the commune is for. You grow up with six other children who are not your siblings but are something closer than friends. This will be the social arrangement you spend the rest of your life comparing other social arrangements to, not always favourably, not always unfavourably.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_us_commune', true); p.s += 4; p.m += 2; p.e += 2; p.addFlag('commune_childhood') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // JJ. CHILDREN OF WAR — what the violence looks like from four feet high
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_lebanon_war_child',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Lebanon' &&
+      G.currentYear >= 1976 && G.currentYear <= 1990 &&
+      G.age >= 5 && G.age <= 14 &&
+      G.ruralUrban === 'urban' &&
+      !G.mem?.sl_leb_war_child,
+    text: 'You know which sounds to sleep through and which sounds require moving to the corridor, which is the interior wall and therefore the safest place in the apartment. You know this the way you know how to read — not through being taught but through repetition until it becomes automatic. The school opens when the shelling is in the south. It closes when the militias move into the neighbourhood. Your childhood has the shape of a civil war: not one violent event but the ordinary texture of violence spread across ten years of growing up, such that the violence is not the exception but the weather.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_leb_war_child', true); p.m -= 8; p.h -= 3; p.e += 3; p.addFlag('civil_war_childhood') },
+  },
+
+  {
+    id: 'sl_guatemala_maya_massacre',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'Guatemala' &&
+      G.ethnicity?.includes('indigenous') &&
+      G.currentYear >= 1978 && G.currentYear <= 1984 &&
+      G.age >= 6 && G.age <= 14 &&
+      G.ruralUrban === 'rural' &&
+      !G.mem?.sl_guat_maya,
+    text: 'The soldiers came to the village in the scorched earth campaign of 1981. The army called it a counterinsurgency operation. The truth commission called it genocide. You were eight years old and you hid in the corn with your cousin. They burned the houses. Forty-three villages in this region were destroyed that year and the official position was that the army was fighting Marxist guerrillas and the Marxist guerrillas were the Ixil Maya people, which is what the scorched earth policy believed. The corn was high. Your cousin put her hand over your mouth.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_guat_maya', true); p.m -= 15; p.h -= 5; p.r += 8; p.addFlag('genocide_survivor') },
+  },
+
+  {
+    id: 'sl_sarajevo_siege_teenager',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Bosnia and Herzegovina' &&
+      G.currentYear >= 1992 && G.currentYear <= 1995 &&
+      G.age >= 13 && G.age <= 18 &&
+      G.ruralUrban === 'urban' &&
+      !G.mem?.sl_sarajevo_siege,
+    text: 'The siege of Sarajevo lasts 1,425 days. You are thirteen when it begins and sixteen when it ends, which means your adolescence is inside the siege. You go to school in the basement of the school building because the classrooms have windows and the windows are sniper angles. You do homework by candlelight because the power is off. The teachers come even when it is dangerous to come, which is most days. There is a girl you like. There is music you listen to on a battery radio. There are things that are normal inside the siege that will be strange to explain to anyone who was not here. You will spend the rest of your life having to explain.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_sarajevo_siege', true); p.m -= 10; p.e += 4; p.r += 6; p.addFlag('siege_adolescence') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // KK. GENERATIONAL ECONOMIC FORECLOSURE — the door that was open and shut
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_japan_herbivore_men',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Japan' &&
+      G.character.gender === 'male' &&
+      G.currentYear >= 2000 && G.currentYear <= 2020 &&
+      G.age >= 20 && G.age <= 35 &&
+      !G.mem?.sl_jp_herbivore,
+    text: 'The word the media uses for men like you is sōshoku-kei, herbivore men — men who are not aggressive about career, not aggressive about dating, not interested in the lifetime employment and the company loyalty and the two hours of mandatory drinking with superiors that your father\'s generation understood as masculinity. The word is used by commentators as a diagnosis. You use it as a description of a rational response to an economy that will not give you what it gave your father regardless of how aggressive you are. The lifetime employment tracks are closed. The housing is unaffordable. The herbivore is not a failure of ambition. It is a response to a specific set of available options.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_jp_herbivore', true); p.m += 2; p.e += 3; p.addFlag('precariat_generation') },
+  },
+
+  {
+    id: 'sl_south_korea_sampo_generation',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'South Korea' &&
+      G.currentYear >= 2010 && G.currentYear <= 2025 &&
+      G.age >= 22 && G.age <= 35 &&
+      G.stats.smarts >= 60 &&
+      !G.mem?.sl_kr_sampo,
+    text: 'Sampo means giving up. The sampo generation is the generation that has given up three things: dating, marriage, and children. The next generation gave up two more: home ownership and employment with benefits. The five-renunciation generation. The education system said: study. The economy said: the jobs you studied for are not available. The housing market said: the city you studied in is not affordable. The marriage market said: marriage requires income and housing and stability. The combination is not a personal failure of ambition. It is a closing of doors that the previous generation walked through when the doors were open. You are the person who arrived when they closed.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_kr_sampo', true); p.m -= 4; p.e += 3; p.r += 5; p.addFlag('sampo_generation') },
+  },
+
+  {
+    id: 'sl_greek_crisis_doctor_leaves',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Greece' &&
+      G.currentYear >= 2010 && G.currentYear <= 2018 &&
+      G.age >= 25 && G.age <= 38 &&
+      G.stats.smarts >= 65 &&
+      (G.career?.field === 'healthcare' || G.career?.field === 'science') &&
+      !G.mem?.sl_gr_doctor,
+    text: 'The austerity has cut hospital wages by forty percent and cut hospital supplies by a percentage you do not measure in numbers but in the specific absence of things you need to do the job: anaesthesia in sufficient supply, bandages in sufficient supply, a functioning MRI that is not waiting for a part that cannot be ordered because the budget for ordering parts has been cut. You are a doctor who trained for seven years in this country and you are now considering Germany, where they are advertising for Greek doctors in Greek, which tells you something about how clearly they have read the situation. You love this country. That is the part that makes it complicated.',
+    choices: [
+      {
+        text: 'Go to Germany. The practice will be better. The life will be elsewhere.',
+        tag: 'leave',
+        outcome: 'Munich is efficient and the hospital is well-supplied and the pay is four times what you were making in Athens. You send money home. You become the brain drain statistic that the commentators write about. You do good work.',
+        effect: (p) => { p.setMem('sl_gr_doctor', true); p.mo += 15000; p.m -= 4; p.addFlag('emigrated'); p.addFlag('brain_drain_participant') },
+      },
+      {
+        text: 'Stay. The patients here need you.',
+        tag: 'stay',
+        outcome: 'The conditions do not improve for three years. You find workarounds and manage deficits and do the work with what is available. The patients are grateful. The system is still broken. Both things are true.',
+        effect: (p) => { p.setMem('sl_gr_doctor', true); p.h -= 5; p.m -= 3; p.karma += 5; p.addFlag('stayed_through_crisis') },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'sl_uk_generation_rent',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'United Kingdom' &&
+      G.currentYear >= 2008 && G.currentYear <= 2025 &&
+      G.age >= 25 && G.age <= 40 &&
+      G.stats.wealth <= 45 &&
+      G.career?.field !== 'finance' &&
+      !G.mem?.sl_uk_gen_rent,
+    text: 'The house your parents bought in 1987 for fifty thousand pounds is now worth six hundred and fifty thousand pounds, which is the result of a policy environment that treated housing as an asset class rather than a place to live. You earn adequately. You cannot buy. The deposit required is the amount your parents paid for the house. You rent. Your rent is higher than a mortgage payment would be for the same property. The people who own the property you rent bought it with a mortgage. The mortgage is now paid by you. This is not a mystery. This is arithmetic. You are doing the arithmetic in your thirties and finding it both clarifying and enraging.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_uk_gen_rent', true); p.m -= 4; p.e += 3; p.r += 4; p.addFlag('generation_rent') },
+  },
 ]
