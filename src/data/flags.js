@@ -14413,4 +14413,68 @@ export const FLAG_REGISTRY = {
     notes: 'Set by sl_dhaka_garment. Follow-through: sl_rana_plaza_aftermath fires 2013-2017.',
   },
 
+  lgbtq_lived_underground: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Lived LGBTQ identity in a hostile legal or social environment — the calibration of trust, the parallel community, the constant calculation.',
+    intent: 'year_texture',
+    notes: 'Set by sl_russia_gay_propaganda, sl_egypt_lgbtq_crackdown. Cross-cutting hostile-environment LGBTQ flag.',
+  },
+
+  witnessed_rights_expansion: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Witnessed a formal legal expansion of their rights — the moment a law changes and the country officially acknowledges your existence.',
+    intent: 'none',
+    notes: 'Set by sl_india_377_repeal and similar rights-expansion events.',
+  },
+
+  aids_generation_witness: {
+    weight: 'moderate',
+    category: 'grief',
+    description: 'Part of the generation that witnessed the AIDS epidemic as a community catastrophe — the funerals, the silence, the improvised care infrastructure.',
+    intent: 'year_texture',
+    notes: 'Set by sl_us_aids_gen. Distinct from AIDS personal diagnosis.',
+  },
+
+  industry_lost: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lost their occupation or livelihood to deindustrialisation — the letter, the closure, the identity built around a trade that no longer exists.',
+    intent: 'year_texture',
+    notes: 'Set by sl_coal_miner_pit_closure and similar industrial closure events.',
+  },
+
+  childhood_disability: {
+    weight: 'moderate',
+    category: 'health',
+    description: 'Acquired or lived with a significant disability from childhood — the architecture of education and public life built around what they could not do.',
+    intent: 'year_texture',
+    notes: 'Set by sl_polio_survivor_1950s. Distinct from born_with_disability (acquired) and born_deaf.',
+  },
+
+  intergenerational_trauma: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Carries the trauma of a historical atrocity through family silence — the things not in the album, the dates that make the room go still.',
+    intent: 'year_texture',
+    notes: 'Set by sl_second_gen_holocaust, sl_hiroshima_second_gen. Cross-generational historical wound.',
+  },
+
+  political_awakening: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Experienced a defining political awakening — a historical event that crystallised what had previously been diffuse into a clear political understanding.',
+    intent: 'none',
+    notes: 'Set by sl_soweto_student_1976 and similar politically clarifying events.',
+  },
+
+  political_prisoner_risk: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Under active risk of political detention or arrest for their known political affiliations — the specific lived precarity of being on a list.',
+    intent: 'none',
+    notes: 'Set by sl_chile_1973_morning and similar events where political network activity creates documented risk.',
+  },
+
 }

@@ -925,4 +925,474 @@ export const SPECIFIC_LIFE_EVENTS = [
     choices: null,
     effect: (p) => { p.setMem('sl_syr_return', true); p.m -= 6; p.e += 2 },
   },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // H. LGBTQ LIVES AT SPECIFIC LEGAL MOMENTS
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_uk_section28',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'United Kingdom' &&
+      G.character.gender === 'male' &&
+      G.currentYear >= 1988 && G.currentYear <= 2003 &&
+      G.age >= 13 && G.age <= 18 &&
+      G.flags.includes('questioning_sexuality') &&
+      !G.mem?.sl_s28,
+    text: 'Section 28 says the local authority shall not intentionally promote homosexuality or publish material with the intention of promoting homosexuality as a pretended family relationship. You found this in the library. The librarian is a woman you have always liked. She saw you reading it and said nothing and put another book on the shelf beside you. You read the first paragraph of that one too.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_s28', true); p.m -= 4; p.e += 2 },
+  },
+
+  {
+    id: 'sl_russia_gay_propaganda',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Russia' &&
+      G.currentYear >= 2013 &&
+      G.age >= 18 && G.age <= 35 &&
+      G.flags.includes('questioning_sexuality') &&
+      !G.mem?.sl_ru_prop,
+    text: 'The law against gay propaganda to minors passed in June. You are not a minor. The law does not apply to you technically. The effect of the law is not technical. Your friends from the club have stopped posting. One has left for Amsterdam. You delete the photos from your phone not because you are afraid of the specific law but because the specific law clarifies what was already true: you are in a country that has decided.',
+    choices: [
+      {
+        text: 'Stay, and find the people who stayed',
+        tag: 'stay',
+        outcome: 'The community goes underground in a different way — not hiding exactly, but knowing who to trust and calibrating for it. You stay inside the calibration.',
+        effect: (p) => { p.s += 2; p.m -= 3; p.addFlag('lgbtq_lived_underground'); p.setMem('sl_ru_prop', true) },
+      },
+      {
+        text: 'Begin making the calculations for leaving',
+        tag: 'leave',
+        outcome: 'The visa, the city, the job offer that is also an exit. It takes two years. The country you land in does not have a law about this. You spend a month not believing it.',
+        effect: (p) => { p.m += 3; p.e += 2; p.addFlag('emigrated'); p.setResidency('work_visa'); p.setMem('sl_ru_prop', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'sl_egypt_lgbtq_crackdown',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Egypt' &&
+      G.currentYear >= 2001 &&
+      G.age >= 18 && G.age <= 35 &&
+      G.flags.includes('questioning_sexuality') &&
+      !G.mem?.sl_eg_lgbtq,
+    text: 'The Queen Boat raid — fifty-two men arrested on a Nile cruise ship — happened before you were old enough to go to such places, but the name of the boat has circulated in the city\'s private knowledge ever since. There is no law against what you are. There is a debauchery law, which has the same effect with different paperwork. You know three people who know this from experience.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_eg_lgbtq', true); p.m -= 5; p.e += 1; p.addFlag('lgbtq_lived_underground') },
+  },
+
+  {
+    id: 'sl_india_377_repeal',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'India' &&
+      G.currentYear >= 2018 &&
+      G.age >= 18 && G.age <= 40 &&
+      G.flags.includes('questioning_sexuality') &&
+      !G.mem?.sl_in_377,
+    text: 'Section 377 has been struck down by the Supreme Court. You heard about it on your phone in the middle of a workday. You did not cry at your desk but it was close. The law had been there your entire conscious life — a thing that named you criminal without needing to arrest you. And now it is struck down. The country has said, officially, that you exist. That sentence is smaller than it sounds and larger than anything.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_in_377', true); p.m += 10; p.e += 2; p.addFlag('witnessed_rights_expansion') },
+  },
+
+  {
+    id: 'sl_us_aids_generation',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'United States' &&
+      G.character.gender === 'male' &&
+      G.currentYear >= 1983 && G.currentYear <= 1996 &&
+      G.age >= 20 && G.age <= 35 &&
+      G.flags.includes('questioning_sexuality') &&
+      !G.mem?.sl_us_aids_gen,
+    text: 'The ones you know who have died. You count them sometimes and stop counting. The number is not a number a generation should know. The disease arrived with a specific moral freight attached to it — the administration would not say the word for years — and you watched the community build the infrastructure of care that the government did not. The buddy system. The phone trees. The hospice that was an apartment. The funerals that happened too often for February.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_us_aids_gen', true); p.m -= 8; p.h -= 3; p.e += 3; p.addFlag('aids_generation_witness') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // I. OCCUPATIONAL SPECIFICITY AT HISTORICAL MOMENTS
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_print_worker_1980s',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      ['United Kingdom', 'United States', 'Australia'].includes(G.character.country.name) &&
+      G.currentYear >= 1982 && G.currentYear <= 1992 &&
+      G.career?.field === 'media' &&
+      G.age >= 28 && G.age <= 50 &&
+      !G.mem?.sl_print_comp,
+    text: 'The compositors have been clearing their cases for a century. You learned the trade from a man who learned it from a man who set type by hand. Now the new machines do in a minute what took a skilled man an afternoon. The owners call it modernisation. The union calls it something else. You are caught between what you are good at and what the industry has decided it needs.',
+    choices: [
+      {
+        text: 'Fight it — the skills are real, the craft is real, the union will hold',
+        tag: 'fight',
+        outcome: 'The strike is long and the outcome is not the one you fought for. The skills are real. The industry moved anyway.',
+        effect: (p) => { p.m -= 6; p.s += 3; p.karma += 3; p.addFlag('union_solidarity'); p.setMem('sl_print_comp', true) },
+      },
+      {
+        text: 'Retrain — the work is changing and the pension is not worth the fight',
+        tag: 'adapt',
+        outcome: 'You learn the new systems. The craft you carried is not transferable. The income is stable. Those are different things.',
+        effect: (p) => { p.m -= 3; p.e += 2; p.w += 2; p.setMem('sl_print_comp', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'sl_coal_miner_pit_closure',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      ['United Kingdom', 'Poland', 'Germany', 'Ukraine'].includes(G.character.country.name) &&
+      G.currentYear >= 1985 && G.currentYear <= 2000 &&
+      G.career?.field === 'labour' &&
+      G.age >= 30 && G.age <= 52 &&
+      !G.mem?.sl_pit_close,
+    text: 'The letter came on a Tuesday. The pit is closing. NCB are the three letters you have built your life around — the shift rota, the lamp check, the cage dropping, the seam. Twenty-three years. The village grew around the pit. The social club, the school fundraiser, the football team. The letter uses the word restructuring. You read it three times and then put it in the kitchen drawer because there is nowhere else to put it.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_pit_close', true); p.m -= 8; p.w -= 5; p.mo -= 2000; p.addFlag('industry_lost') },
+  },
+
+  {
+    id: 'sl_smallholder_green_revolution',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      ['India', 'Mexico', 'Philippines', 'Indonesia', 'Pakistan'].includes(G.character.country.name) &&
+      G.currentYear >= 1965 && G.currentYear <= 1985 &&
+      G.ruralUrban === 'rural' &&
+      G.age >= 25 && G.age <= 55 &&
+      !G.mem?.sl_grn_rev,
+    text: 'The new seeds need more water and more fertiliser than you have ever bought, but the yield is double. The agricultural officer from the district has been through the village twice this season. The bigger farmers have already switched. You have watched one poor season make a rich farmer and three good seasons leave a small farmer where he started. The question is whether to take the loan for the inputs. The loan is from the cooperative, which is run by the man whose land is four times yours.',
+    choices: [
+      {
+        text: 'Take the loan and plant the new variety — the yield numbers are real',
+        tag: 'modernise',
+        outcome: 'Two good seasons. The loan is repaid. The third season the rains fail and the chemical inputs cannot compensate for absent water. The debt is different from the first debt.',
+        effect: (p) => { p.mo += 800; p.w += 1; p.addFlag('indebted'); p.setMem('sl_grn_rev', true) },
+      },
+      {
+        text: 'Stay with the older variety — one bad yield with the new seed and the family eats nothing',
+        tag: 'traditional',
+        outcome: 'The older seeds produce what they have always produced. The gap between your output and your neighbour\'s widens. The stability is real. So is what it costs.',
+        effect: (p) => { p.m -= 2; p.karma += 2; p.setMem('sl_grn_rev', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'sl_hairdresser_township',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'South Africa' &&
+      G.currentYear >= 1975 && G.currentYear <= 1995 &&
+      G.age >= 18 && G.age <= 32 &&
+      G.ruralUrban === 'urban' &&
+      !G.mem?.sl_hair_twnshp,
+    text: 'The salon is four chairs in the front room of your aunt\'s house in Soweto. The women come on Saturdays. The conversation is the business as much as the hair — who has a pass, who has been stopped at the checkpoint, whose son is in detention, which corner shop has been petrol-bombed, the cost of the bus. The hair takes two hours and costs two rand and the conversation continues after the client leaves because someone else is already sitting down.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_hair_twnshp', true); p.s += 3; p.m += 3; p.mo += 400; p.addFlag('informal_economy') },
+  },
+
+  {
+    id: 'sl_chinese_factory_migrant',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'China' &&
+      G.currentYear >= 1995 && G.currentYear <= 2015 &&
+      G.age >= 17 && G.age <= 28 &&
+      G.ruralUrban === 'rural' &&
+      !G.mem?.sl_cn_fac_mig,
+    text: 'The factory is in Guangdong and your village is in Sichuan and the distance between them is a thirty-hour train ride on a hard seat you booked six weeks in advance. The dormitory is eight to a room. The line produces one part of a phone assembly. You move the same piece twelve hundred times in an eight-hour shift. The money is more than anything you could earn at home. The money is also twelve hundred times.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_cn_fac_mig', true); p.mo += 2400; p.h -= 3; p.m -= 3; p.addFlag('rural_urban_migrant') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // J. CHILDREN OF HISTORY — the generation born into the aftermath
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_second_gen_holocaust',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      ['Germany', 'Poland', 'Hungary', 'Romania', 'France', 'Netherlands', 'Israel'].includes(G.character.country.name) &&
+      G.currentYear >= 1945 && G.currentYear <= 1975 &&
+      G.age >= 6 && G.age <= 16 &&
+      G.religion === 'jewish' &&
+      !G.mem?.sl_2gen_shoa,
+    text: 'Your parents do not talk about it and that is the loudest thing in the house. You have learned the shape of the silence — what questions make the room go still, which photographs are not in the album, why your mother\'s hands do something specific when certain dates come around. The silence is the inheritance. You understand this before you can name it.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_2gen_shoa', true); p.m -= 4; p.e += 2; p.addFlag('intergenerational_trauma') },
+  },
+
+  {
+    id: 'sl_hiroshima_second_gen',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Japan' &&
+      G.currentYear >= 1955 && G.currentYear <= 1975 &&
+      G.age >= 6 && G.age <= 16 &&
+      G.flags.includes('hibakusha_survivor') &&
+      !G.mem?.sl_2gen_hiro,
+    text: 'Your parent is a hibakusha — survivor of the bomb. The word exists in Japanese because there was enough of something to need a word. The stigma attached to it — the marriage refusals, the employers who will not hire — you absorb before you understand what caused it. The body carries what it carries. What descends to you is harder to name than radiation.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_2gen_hiro', true); p.m -= 5; p.e += 2; p.addFlag('intergenerational_trauma') },
+  },
+
+  {
+    id: 'sl_armenian_diaspora_grandchild',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) =>
+      ['France', 'United States', 'Lebanon', 'Syria', 'Argentina'].includes(G.character.country.name) &&
+      G.currentYear >= 1960 && G.currentYear <= 2010 &&
+      G.age >= 13 && G.age <= 20 &&
+      G.flags.includes('arm_genocide_memory_bearer') &&
+      !G.mem?.sl_arm_disp_gc,
+    text: 'Your grandparents survived something that the country that did it still does not call by its name. You have grown up with this gap between the word your family uses and the word the Turkish government uses. The gap is not abstract. It is the reason your grandparents\' village is a Turkish village now, the reason you grew up here instead of there. The denial is the second thing they took.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_arm_disp_gc', true); p.m -= 3; p.e += 3; p.karma += 2 },
+  },
+
+  {
+    id: 'sl_apartheid_coloured_id',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'South Africa' &&
+      G.currentYear >= 1950 && G.currentYear <= 1990 &&
+      G.age >= 6 && G.age <= 14 &&
+      G.ethnicity === 'coloured_south_african' &&
+      !G.mem?.sl_apar_col_id,
+    text: 'The Population Registration Act says you are Coloured. This is a legal category that did not exist before 1950. It was invented to place you between White and Black on a hierarchy that needs you in between to maintain itself. The school you attend, the bus you take, the beach you are permitted on — all of these are determined by this word that the government invented thirteen years before you were born.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_apar_col_id', true); p.m -= 5; p.e += 2; p.addFlag('experienced_discrimination') },
+  },
+
+  {
+    id: 'sl_famine_child_ethiopia',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Ethiopia' &&
+      G.currentYear >= 1983 && G.currentYear <= 1987 &&
+      G.age >= 4 && G.age <= 10 &&
+      G.ruralUrban === 'rural' &&
+      !G.mem?.sl_eth_famine_child,
+    text: 'The food came from trucks with markings you did not understand. The men who drove the trucks had cameras. You remember the cameras more than the food — the way the men pointed them at the children in the line. You were one of the children in the line. You learned later that the photographs were broadcast on television in countries you had not known existed. You were evidence of something to people who were watching you eat.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_eth_famine_child', true); p.h -= 6; p.m -= 4; p.e += 2 },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // K. BODY AND DISABILITY IN SPECIFIC ERAS
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_polio_survivor_1950s',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) =>
+      G.currentYear >= 1945 && G.currentYear <= 1960 &&
+      G.age >= 4 && G.age <= 12 &&
+      !G.mem?.sl_polio_surv &&
+      Math.random() < 0.08,
+    text: 'The summer the polio came through the town, your mother would not let you swim in the public pool. You got it anyway — the fever first, then the weakness in the left leg, then the weeks in the iron lung ward where the machines breathed and the children did not go home at the same rate they arrived. You came home. The leg does not work the same. You are one of the lucky ones, which is a thing people will tell you for the rest of your life.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_polio_surv', true); p.h -= 15; p.m -= 5; p.addFlag('childhood_disability'); p.addCondition('mobility_impairment', 'moderate') },
+  },
+
+  {
+    id: 'sl_blind_braille_access',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) =>
+      G.currentYear >= 1960 && G.currentYear <= 2000 &&
+      G.age >= 12 && G.age <= 18 &&
+      G.flags.includes('childhood_disability') &&
+      G.stats.smarts >= 55 &&
+      !G.mem?.sl_blind_braille,
+    text: 'The school for the blind is three hours from your family by bus. The school there has a library with Braille books — forty-seven of them, which is more than you have ever had access to at once. The teacher of mathematics writes equations in raised dots on wax paper and hands them to you personally. You understand, in this school, that the architecture of your education has been determined by what the regular schools decided you could not do. The architecture here assumes you can do the things.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_blind_braille', true); p.e += 5; p.m += 4 },
+  },
+
+  {
+    id: 'sl_deaf_hearing_world_work',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.currentYear >= 1950 && G.currentYear <= 2010 &&
+      G.age >= 18 && G.age <= 30 &&
+      (G.flags.includes('born_deaf') || G.flags.includes('deaf_community_found')) &&
+      !G.mem?.sl_deaf_work,
+    text: 'The interview is your third this month. You have practised the lip-reading for the specific vocabulary of this industry. The interviewer speaks to the wall behind you for three of the fifteen minutes. You correct him twice, gently, and he is embarrassed and this changes the remainder of the interview in ways that are not in your favour. The job goes to someone else. You have no way of proving the connection and do not try.',
+    choices: [
+      {
+        text: 'Continue applying — the right employer exists',
+        tag: 'persist',
+        outcome: 'The fourth interview is different. The employer has a policy. The policy is not charity — they have found that Deaf workers have a specific kind of concentration that the work rewards. You are hired.',
+        effect: (p) => { p.m += 2; p.w += 3; p.karma += 2; p.setMem('sl_deaf_work', true) },
+      },
+      {
+        text: 'Move toward the Deaf community economy — the parallel world that does not need the hearing world to function',
+        tag: 'community',
+        outcome: 'The Deaf club, the Deaf-run business, the network that has always existed alongside. You build inside it and the building is real.',
+        effect: (p) => { p.s += 4; p.m += 5; p.addFlag('community_anchor'); p.setMem('sl_deaf_work', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // L. SPECIFIC HISTORICAL WEATHER — the ordinary life inside the event
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_berlin_wall_day',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Germany' &&
+      G.currentYear === 1989 &&
+      G.age >= 18 && G.age <= 40 &&
+      !G.mem?.sl_wall_fall,
+    text: 'The news came on the television and then came again on the radio and then you went outside because staying inside seemed wrong. People were at Bornholmer Strasse, at Checkpoint Charlie, at the Brandenburg Gate. People had hammers. The Wall had been there your entire life — a fact of the city you had stopped seeing the way you stopped seeing the furniture. And now it was coming down. The friends who came across in the following days had a different quality of attention: they looked at things the way people look at things they have been told about but not been permitted to see.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_wall_fall', true); p.m += 8; p.e += 2 },
+  },
+
+  {
+    id: 'sl_india_partition_train',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      ['India', 'Pakistan'].includes(G.character.country.name) &&
+      G.currentYear >= 1947 && G.currentYear <= 1948 &&
+      G.age >= 16 && G.age <= 35 &&
+      !G.mem?.sl_partition_train,
+    text: 'The train moved both ways across the new border and some trains arrived and some trains did not. You were on one that arrived. The carriage you came in held people who had been neighbours with people they would never see again and also people they had watched die. The word refugee did not feel like the right word for what you were because you had not chosen anything and the word implies a direction you chose. You arrived. You were what had arrived.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_partition_train', true); p.m -= 8; p.e += 2; p.addFlag('partition_generation'); p.addFlag('displaced') },
+  },
+
+  {
+    id: 'sl_chile_1973_morning',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Chile' &&
+      G.currentYear === 1973 &&
+      G.age >= 18 && G.age <= 45 &&
+      !G.mem?.sl_chile_73,
+    text: 'The radio played military music in the morning and you understood what that meant because other countries had already taught you what military music in the morning meant. The palace was burning on the television. Your neighbour, who had a Allende poster in her window until yesterday, had taken it down and you had not seen her do it. You had a list in your head of names — who knew where you stood, who might name you. You began moving through the day as if you were not making calculations.',
+    choices: [
+      {
+        text: 'Go to the address you were given for emergencies. People need to know you are safe.',
+        tag: 'network',
+        outcome: 'The house is already full. The network is still working. The risk of being seen arriving is part of the calculation you are making. Everyone is making it.',
+        effect: (p) => { p.s += 3; p.karma += 4; p.addFlag('political_prisoner_risk'); p.setMem('sl_chile_73', true) },
+      },
+      {
+        text: 'Stay home. Draw no attention. Survive the first week.',
+        tag: 'survive',
+        outcome: 'You survive the first week. The curfew. The neighbours\' cars in the night. The specific silence that a city makes when it is afraid.',
+        effect: (p) => { p.m -= 4; p.h -= 2; p.setMem('sl_chile_73', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'sl_chernobyl_liquidator',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      ['Ukraine', 'Russia', 'Belarus'].includes(G.character.country.name) &&
+      G.currentYear >= 1986 && G.currentYear <= 1988 &&
+      G.age >= 18 && G.age <= 35 &&
+      G.flags.includes('military_service') &&
+      !G.mem?.sl_cherno_liq,
+    text: 'They called you a liquidator. The task was to remove the contaminated material from the reactor roof. Each man could stay on the roof for ninety seconds. You went up four times. The dosimeter they gave you measured to a limit that the actual dose exceeded, so the dosimeter read the limit and stopped, which was a number that permitted you to continue working. You received a medal and a certificate and a diagnosis that came eight years later.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_cherno_liq', true); p.h -= 18; p.karma += 8; p.addCondition('radiation_exposure', 'severe'); p.addFlag('chernobyl_liquidator') },
+  },
+
+  {
+    id: 'sl_iran_1979_revolution_educated',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Iran' &&
+      G.currentYear >= 1979 && G.currentYear <= 1982 &&
+      G.age >= 18 && G.age <= 40 &&
+      G.stats.smarts >= 60 &&
+      !G.mem?.sl_iran_79_ed,
+    text: 'The revolution you supported is eating the revolution. The parties you organised in the Marxist student group, the manifesto you distributed, the night you spent chanting in Azadi Square — these are now evidence. The Islamic Republic has a word for people like you: monafeqin. The word has consequences. Two of the people from your study group are already gone. You do not know where gone means.',
+    choices: [
+      {
+        text: 'Get out. The exit window is still open.',
+        tag: 'leave',
+        outcome: 'You leave through the mountains or the airport or both. The exit costs what it costs. The country you arrive in does not have a word for what you were.',
+        effect: (p) => { p.addFlag('emigrated'); p.m -= 5; p.setResidency('asylum_seeker'); p.karma += 3; p.setMem('sl_iran_79_ed', true) },
+      },
+      {
+        text: 'Go underground. The revolution can still be corrected from inside.',
+        tag: 'underground',
+        outcome: 'The underground is smaller than it was. The corrections do not come. The survival does, year by year, in a country that is now something different from what you helped create.',
+        effect: (p) => { p.m -= 7; p.h -= 3; p.e += 2; p.addFlag('dissident'); p.setMem('sl_iran_79_ed', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'sl_apartheid_pass_book',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'South Africa' &&
+      G.currentYear >= 1952 && G.currentYear <= 1990 &&
+      G.age >= 18 && G.age <= 40 &&
+      !['white_south_african'].includes(G.ethnicity) &&
+      !G.mem?.sl_pass_book,
+    text: 'The pass book is the size of a passport and must be carried at all times and must be signed by your employer and must authorise your presence in this area on this day. Without the correct endorsement in the correct block you can be arrested for being where you are. You have been arrested once for a missing endorsement. The magistrate fined you and endorsed the pass and released you and the process took three days during which your children did not have their mother.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_pass_book', true); p.m -= 7; p.e += 2; p.addFlag('experienced_discrimination') },
+  },
+
+  {
+    id: 'sl_soweto_student_1976',
+    phase: 'adolescence',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'South Africa' &&
+      G.currentYear >= 1976 && G.currentYear <= 1978 &&
+      G.age >= 13 && G.age <= 20 &&
+      !['white_south_african'].includes(G.ethnicity) &&
+      !G.mem?.sl_soweto_76,
+    text: 'The march started over Afrikaans. The government decided your science class would be taught in Afrikaans, a language you did not learn to think in. You had enough language to understand the decision: it was not about the language. The police were at the school by midday. Hector Pieterson was thirteen, the same as you. The photograph of him was already in the world before you got home. You understood something that day that you have spent the rest of your life holding.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_soweto_76', true); p.m -= 6; p.e += 3; p.karma += 4; p.addFlag('political_awakening') },
+  },
 ]

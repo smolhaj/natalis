@@ -12681,6 +12681,46 @@ function buildYearTexture(state) {
     if (cn === 'Brazil' && era === 2000) return 'The Bolsa Família has pulled people out of a kind of poverty that was considered fixed. The fact of this is underreported outside Brazil.'
   }
 
+  if (F.has('lgbtq_lived_underground') && Math.random() < 0.2) return pick([
+    'The calculation is constant and mostly invisible: who knows, who can be told, who would react a certain way. After enough years the calculation becomes automatic.',
+    phase === 'late_life'
+      ? 'The laws have changed in some places and in others they have not. The calculation from the years when they had not does not disappear when the laws change. The body learned it too early.'
+      : 'There is a parallel geography to the city — the bars that are safe, the apartments where certain things are ordinary, the streets where you walk differently. You move between the two maps without thinking about it.',
+    'The community that formed around the necessity of protecting itself became something else: a community that chose itself. That distinction is the part of the history that gets left out.',
+  ])
+
+  if (F.has('aids_generation_witness') && Math.random() < 0.18) return pick([
+    'The names you carry. Not listed anywhere, not memorialised in any public way at the time. The private memorial that lives only in the people who knew them.',
+    phase === 'late_life'
+      ? 'There is a generation that grew up after the drugs worked, after the diagnosis stopped meaning what it meant in those years. They know the history. You knew the people.'
+      : 'The specific texture of that decade — the phone calls, the vigils, the way certain rooms smelled, the particular friendship that formed between people who were taking care of each other because no one else would.',
+    'The anger from those years — at the silence, at the policy, at the delay — did not go away when the crisis eased. It calcified into something else. A particular capacity for clarity about who shows up.',
+  ])
+
+  if (F.has('industry_lost') && Math.random() < 0.2) return pick([
+    'The trade that was your father\'s and was going to be yours and is no one\'s anymore. The skill is still there, in your hands. The economy for it is not.',
+    phase === 'late_life'
+      ? 'What was built with those jobs is still there: the houses, the clubs, the schools, the civic life. The jobs went and the buildings stayed and the community persisted by doing different things inside the same buildings.'
+      : 'The retraining programme was designed for someone younger. The pay in the new work is lower. The adjustment to the lower pay is slower than the counsellors at the job centre suggested it would be.',
+    'The argument about whether it had to happen this way has no resolution. The people who say it had to happen this way were not the ones it happened to.',
+  ])
+
+  if (F.has('childhood_disability') && Math.random() < 0.18) return pick([
+    'The world was built for a body that moved differently from yours. This is not a complaint, exactly. It is a fact that shapes almost every practical decision you make.',
+    phase === 'late_life'
+      ? 'The access that exists now did not exist when you were learning to navigate. The adaptations you made were improvised and private. The adaptations that exist now for others are designed and public. This is progress. It arrived after you needed it.'
+      : 'What you learned to do with the body you have took longer than what other people learned to do with theirs. What you know about the body in general, because of that, is more specific than what most people know.',
+    'Other people\'s difficulty with the situation is something you have spent more energy managing than your own.',
+  ])
+
+  if (F.has('intergenerational_trauma') && Math.random() < 0.18) return pick([
+    'The silence in the family about certain things is louder than the conversations. You have learned to read the silence as information.',
+    phase === 'late_life'
+      ? 'What your parents carried and could not name is something you have spent your adult life trying to name on their behalf. The naming does not undo what happened. It changes how you hold it.'
+      : 'The event happened before you were born and you carry it anyway. This is not unusual. This is how history transmits — not through books but through what grandparents do with their hands when certain subjects arise.',
+    'The specific grief of mourning something you did not personally lose is still grief. The absence is real even when you cannot describe what it is an absence of.',
+  ])
+
   if (F.has('afghan_girl_stopped_studying') && Math.random() < 0.2) return pick([
     'The books you stopped carrying. The year you stopped carrying them is not something you narrate. It is just the year you stopped.',
     phase === 'late_life'
