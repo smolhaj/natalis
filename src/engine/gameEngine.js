@@ -12716,6 +12716,69 @@ function buildYearTexture(state) {
       : 'What the floating population floats in is a city that runs on its labour and does not guarantee its children\'s schooling. You have navigated this every year since you arrived. The navigation is no longer navigation — it is the shape of the life.',
   ])
 
+  if (F.has('cold_war_childhood') && Math.random() < 0.15) return pick([
+    'The desk the teacher said to get under. The turtle in the film. The gap between the danger and the desk. You understood the gap at nine and the understanding has not gone away.',
+    phase === 'late_life'
+      ? 'You lived inside the possibility of nuclear annihilation for forty years and then the wall came down and the possibility shrank to a different shape. Looking back: the certainty that the world could end and the carrying on anyway. A strange thing to have been normal.'
+      : 'The bomb shelter your father built in the backyard is still there. The canned goods are expired. The transistor radio still works. The conversation about what it all means has still not happened.',
+  ])
+
+  if (F.has('exile_community_network') && Math.random() < 0.15) return pick([
+    'The people in the exile community are not the people you knew in the country. You did not know each other there. You know each other here, which is a different kind of knowing — assembled from the same shape of absence rather than a shared history.',
+    phase === 'late_life'
+      ? 'The exile community dispersed as the years went on — some went back when it was possible to go back, some stayed here and became ordinary immigrants rather than exiles, some died here. The particular intensity of the early years, the meetings in church halls, the newsletters: that has a specific character that later iterations do not have. You are one of the people who remember it.'
+      : 'The Swedish solidarity people who met you at the airport are still in contact. What they gave was material — housing, paperwork, translation — and also something harder to name, which is the recognition that what happened to you was real and wrong and that you deserved to be here.',
+  ])
+
+  if (F.has('hijra_community') && Math.random() < 0.15) return pick([
+    'The clapping enters the room before you do. The blessing is specific. The family will pay. The theology of why they will pay is complicated and old and you know it by heart.',
+    phase === 'late_life'
+      ? 'You have blessed several hundred births and an uncountable number of weddings. The children who were blessed are adults now. Some of them have called you guru. The succession is the continuity — the argot passed down inside the community, the knowledge that is not written anywhere, the work of transmission.'
+      : 'The sacred and the humiliated can exist in the same afternoon in the same street. You have learned to move between them without losing the thread of yourself. The thread is what the initiation gave you.',
+  ])
+
+  if (F.has('cyclone_survivor') && Math.random() < 0.15) return pick([
+    'The preparation is: know which relatives live on higher ground. Know where the boat is. The attachment goes into the people, which is where you can carry it.',
+    phase === 'late_life'
+      ? 'You have survived several bad seasons and many ordinary ones. The bad ones have different names. You can tell from a certain quality of the air before the season whether to be worried in a way that the weather service cannot. The body learned this separately from the mind. Both forms of knowing are useful.'
+      : 'May to November is the watch. The radio says coast watching. You watch. The watchfulness has become part of how you exist in time — the months are divided not into summer and winter but into safe and watchful.',
+  ])
+
+  if (F.has('issei_generation') && Math.random() < 0.15) return pick([
+    'The barracks organised by ethnic origin. The different pay by ethnic origin. The word issei already naming you before you have fully arrived. The category was ready for you.',
+    phase === 'late_life'
+      ? 'Your children are nisei. Your grandchildren are sansei. The generations were named before they existed, which is what happens when a community knows it will persist. The sugarcane fields are housing developments now. The plantation is a condominium. The naming continues.'
+      : 'The labor contract was for three years. Three years became a life. This is the accounting the issei made in their bodies: arrived temporary, became permanent, named it afterwards.',
+  ])
+
+  if (F.has('japanese_american_internment') && Math.random() < 0.15) return pick([
+    'The truck sold in three days for less than it was worth. The house with someone else in it in 1945. The order that required you to report to the assembly centre. The fact of being American and the fact of the order — both things simultaneously true.',
+    phase === 'late_life'
+      ? 'The redress came in 1988: twenty thousand dollars and a letter from the President that said it was wrong. Twenty thousand dollars is not the truck and is not the house and is not the years. The letter said the word wrong. The word matters. The twenty thousand dollars is what you get for the word wrong, which is not a fair exchange and is also the only exchange on offer.'
+      : 'The tar-paper barrack. The mess hall. The desert in winter. The school inside the camp where the teacher tried to teach what the school outside would have taught. You received an American education inside an American injustice. Both things were America.',
+  ])
+
+  if (F.has('uyghur_suppression_lived') && Math.random() < 0.18) return pick([
+    'The prayer mat is in the bag under the bed. The Quran is behind the other books. The calls to the relatives in the camps are not made because the calls are logged. The automatic nature of these precautions is itself the information.',
+    phase === 'late_life'
+      ? 'The things that disappeared: the language spoken freely, the calls to family, the relatives themselves in some cases. The things that remained: the language spoken at home, in the body, in the specific way of knowing the season that no surveillance captures. What is suppressed and what persists are two different inventories.'
+      : 'You know which apps are monitored. You know this the way you know the streets — not from a map but from navigating them. The navigation has become the texture of the day.',
+  ])
+
+  if (F.has('caribbean_diaspora') && Math.random() < 0.15) return pick([
+    'The remittances go home every month. The vote in the elections that determine the future of the island goes to your cousin. The island is where you come from. The city is where you live. The two facts do not simplify.',
+    phase === 'late_life'
+      ? 'You have gone back for carnival for thirty years and the carnival is always different and always the same. The faces get younger every year relative to yours. The thing you left and the thing that remained have both changed. You are the same person in both places and a slightly different one. The difference is affectionate.'
+      : 'The scholarship was the achievement the island could legibly export. You are the exported achievement. The people who stayed and built the clinic and ran the school are also achieving. The accounting between the two forms of achievement is something the island will work out over generations.',
+  ])
+
+  if (F.has('stayed_to_build') && Math.random() < 0.15) return pick([
+    'The people who left send money. The people who stayed make the decisions about how to spend it. This is not a clean arrangement but it is the arrangement.',
+    phase === 'late_life'
+      ? 'Looking back at what was built: the school, the clinic, the roads, the businesses, the children of the island who had the chance to leave because someone built the school well enough that they could. Some of those children left. Some stayed. The cycle continues. You are one of the nodes in it.'
+      : 'The diaspora comes back for carnival and calls it home. You are here the other fifty-one weeks of the year and also call it home. The two callings are different callings. Yours is daily and less romantic and more real.',
+  ])
+
   if (F.has('language_legacy_bearer') && Math.random() < 0.15) return pick([
     'The language is there if you reach for it. Fewer people to reach toward now. The conversations that require it are with people who are mostly older than you.',
     phase === 'late_life'

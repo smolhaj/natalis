@@ -14903,4 +14903,102 @@ export const FLAG_REGISTRY = {
     notes: 'Set by sl_uk_generation_rent.',
   },
 
+  // ── Batch 7 flags ─────────────────────────────────────────────────────────
+
+  cold_war_childhood: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up with duck-and-cover drills — the wooden desk, the gap between danger described and protection offered, the adults who were frightened but could not say so.',
+    intent: 'year_texture',
+    notes: 'Set by sl_us_nuclear_family_1950s.',
+  },
+
+  exile_community_network: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Found and joined the exile community abroad — the Chileans in Stockholm, the Iranians in Paris, the Cubans in Miami. A community assembled from a shared shape of absence rather than a shared origin.',
+    intent: 'year_texture',
+    notes: 'Set by sl_chile_exile_europe.',
+  },
+
+  reeducation_camp_family: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Had a parent or spouse sent to a Vietnamese re-education camp — the monitored letters written in careful language that both writer and reader understand is not the real language.',
+    intent: 'event',
+    notes: 'Set by sl_vietnam_reeducation_family. Follow-through: sl_vietnam_reeducation_return fires at adolescence.',
+  },
+
+  hijra_community: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Initiated into the South Asian hijra community — belonging opened, formal economy employment closed, the blessing work at weddings and births, the sacred and the humiliated in the same afternoon.',
+    intent: 'year_texture',
+    notes: 'Set by sl_hijra_initiation.',
+  },
+
+  cyclone_survivor: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Survived a major cyclone in the Bangladeshi delta — carries a specific number of people who did not survive; the annual preparation is now automatic, the attachment lives in people rather than things.',
+    intent: 'year_texture',
+    notes: 'Set by sl_bangladesh_bhola_child.',
+  },
+
+  issei_generation: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'First-generation Japanese immigrant to the United States — the plantation labour contract, the ethnic barracks, the already-named categories (issei, nisei) waiting to receive them.',
+    intent: 'year_texture',
+    notes: 'Set by sl_japanese_hawaii_issei.',
+  },
+
+  japanese_american_internment: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Interned under Executive Order 9066 — American-born, English-speaking, still required to report to the assembly centre, sold the truck in three days, found someone else in the house in 1945.',
+    intent: 'year_texture',
+    notes: 'Set by sl_japanese_american_internment.',
+  },
+
+  pentecostal_childhood: {
+    weight: 'minor',
+    category: 'spirituality',
+    description: 'Raised in Nigerian Pentecostal prosperity gospel — eight-hour Sundays, the building fund mentioned every week for twelve years, the faith genuine and the theological argument needing work.',
+    intent: 'event',
+    notes: 'Set by sl_nigeria_pentecostal_child. Follow-through: sl_nigeria_pentecostal_adult fires at young_adult.',
+  },
+
+  uyghur_suppression_lived: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Living under the Xinjiang surveillance and cultural suppression apparatus — family disappeared into "vocational training," learned which apps not to use, which calls not to make, where the Quran cannot be seen.',
+    intent: 'year_texture',
+    notes: 'Set by sl_uyghur_disappeared_family.',
+  },
+
+  independence_generation_carib: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Present at a Caribbean independence ceremony — the new flag, the flag that came down, the fireworks, the standing on the hill watching a country be born.',
+    intent: 'none',
+    notes: 'Set by sl_barbados_independence_child.',
+  },
+
+  caribbean_diaspora: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Caribbean graduate who emigrated via scholarship — the departure as the legible shape of achievement on a small island, the remittances sent, the carnival visits, the country of origin and the city of residence.',
+    intent: 'year_texture',
+    notes: 'Set by sl_small_island_brain_drain (leave branch).',
+  },
+
+  stayed_to_build: {
+    weight: 'moderate',
+    category: 'resilience',
+    description: 'Chose to stay in a small island or peripheral place when emigration was the available achievement — the achievement of staying is real and not always legible as achievement to those who left.',
+    intent: 'year_texture',
+    notes: 'Set by sl_small_island_brain_drain (stay branch).',
+  },
+
 }

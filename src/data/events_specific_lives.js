@@ -2974,4 +2974,313 @@ export const SPECIFIC_LIFE_EVENTS = [
     choices: null,
     effect: (p) => { p.setMem('sl_uk_gen_rent', true); p.m -= 4; p.e += 3; p.r += 4; p.addFlag('generation_rent') },
   },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // LL. COLD WAR SPECIFIC LIVES — the specific family shapes the conflict made
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_us_nuclear_family_1950s',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'United States' &&
+      G.currentYear >= 1950 && G.currentYear <= 1965 &&
+      G.age >= 6 && G.age <= 14 &&
+      G.ruralUrban !== 'rural' &&
+      !G.mem?.sl_us_duck_cover,
+    text: 'In school they teach duck-and-cover, which is the instruction to get under your desk and put your arms over your head in the event of a nuclear attack. Your teacher shows the film where the turtle hides in his shell. You and your classmates practise. The desk is made of wood. You are nine years old and you understand, from the gap between the danger described and the protection offered, that the adults are frightened but cannot say so. Duck-and-cover is what you do when there is nothing you can do and you need something to tell the children.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_us_duck_cover', true); p.m -= 3; p.e += 3; p.addFlag('cold_war_childhood') },
+  },
+
+  {
+    id: 'sl_us_cold_war_nuclear_family',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'United States' &&
+      G.currentYear >= 1955 && G.currentYear <= 1975 &&
+      G.age >= 22 && G.age <= 35 &&
+      G.flags.includes('cold_war_childhood') &&
+      !G.mem?.sl_us_bomb_shelter,
+    text: 'Your father built a fallout shelter in the backyard in 1961, the year of Berlin. He stocked it with canned goods and water and a transistor radio and the family has never discussed it directly. The shelter exists. The canned goods exist. The radio exists. The conversation about what the shelter means — the specific calculations your father made about survival and about what would be worth surviving into — has not happened and will not happen. The shelter is the conversation your family is not having. You mow around it on Saturdays.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_us_bomb_shelter', true); p.e += 3; p.r += 4; p.m += 1 },
+  },
+
+  {
+    id: 'sl_chile_exile_europe',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      ['Germany', 'Sweden', 'France', 'Netherlands', 'United Kingdom'].includes(G.character.country.name) &&
+      G.currentYear >= 1974 && G.currentYear <= 1990 &&
+      G.age >= 22 && G.age <= 40 &&
+      G.flags.includes('emigrated') &&
+      G.flags.includes('dissident') &&
+      !G.mem?.sl_chile_exile,
+    text: 'The Swedish solidarity network found you at the airport in 1974 and the people in the committee spoke Spanish with a German or a Swedish accent and they were very kind and they helped with everything they could help with and there were things they could not help with, which are the things inside. You are welcome here. The welcome is real. There are other Chileans in this city — there are Chilean exile communities in every European city — and you find them and the finding is not quite reunion because you were not in the same places in Chile but you have the same shape of absence.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_chile_exile', true); p.m -= 3; p.s += 3; p.addFlag('exile_community_network') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // MM. VIETNAM RE-EDUCATION — the family split by which side they were on
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_vietnam_reeducation_family',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Vietnam' &&
+      G.currentYear >= 1976 && G.currentYear <= 1985 &&
+      G.age >= 6 && G.age <= 14 &&
+      G.ruralUrban === 'urban' &&
+      !G.mem?.sl_viet_reedu,
+    text: 'Your father went to the re-education camp in 1975. The camp is called a re-education camp, which is the official name for the detention of South Vietnamese military officers and government employees and civil servants and anyone else the new government determined required political re-education. He has been there for three years. You write him letters that take two months to arrive. He writes back in careful language that you understand is the language of someone being monitored. The letters are not the letters he would write if no one were reading them. You know this. He knows you know this. The letters continue.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_viet_reedu', true); p.m -= 8; p.e += 3; p.r += 5; p.addFlag('reeducation_camp_family') },
+  },
+
+  {
+    id: 'sl_vietnam_reeducation_return',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('reeducation_camp_family') &&
+      G.character.country.name === 'Vietnam' &&
+      G.age >= 14 && G.age <= 20 &&
+      !G.mem?.sl_viet_reedu_return,
+    text: 'Your father came home from the re-education camp when you were fourteen. He was there for seven years. The person who came home is your father but the seven years are inside him in a way that he does not describe and that you can see without him describing. He is thin in a particular way. He speaks carefully in a way that does not stop when the officials are not present. The careful speaking has become permanent. You sit across from him at the dinner table and try to find the father who wrote the monitored letters in the person who is now here, who is careful, who is thin, who is home.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_viet_reedu_return', true); p.m -= 4; p.e += 3; p.r += 6 },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // NN. SOUTH ASIAN HIJRA — the initiation and the life it opens and closes
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_hijra_initiation',
+    phase: 'adolescence',
+    weight: 2,
+    when: (G) =>
+      ['India', 'Pakistan', 'Bangladesh'].includes(G.character.country.name) &&
+      G.character.gender === 'male' &&
+      G.currentYear >= 1960 && G.currentYear <= 2020 &&
+      G.age >= 14 && G.age <= 22 &&
+      !G.mem?.sl_hijra_init,
+    text: 'The hijra community found you, or you found them, or both — the finding is mutual when the person who is found has been visible in ways they did not intend. The guru is a woman of perhaps fifty and she knows what you are before you have said it and she says it in the language that is used inside the community, which is not Hindi or Urdu or Bengali but the argot that hijras use among themselves, which has been passed down inside the community for as long as there has been a community, which is a very long time. The initiation is a ceremony and a commitment. What it opens: belonging. What it closes: most employment in the formal economy, most family acceptance, most futures the society considers normal. Both things are real.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_hijra_init', true); p.s += 5; p.m += 3; p.mo -= 500; p.addFlag('hijra_community') },
+  },
+
+  {
+    id: 'sl_hijra_blessing_work',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('hijra_community') &&
+      G.age >= 20 && G.age <= 40 &&
+      !G.mem?.sl_hijra_work,
+    text: 'The work is blessings at weddings and births — the clapping that enters the house before you do, the specific blessing that comes from a hijra at a birth, which the family will pay for because the blessing is auspicious and the refusing of the blessing is also considered to have consequences. The theology of this is not simple. You are sacred in one context and humiliated in another and the transition between the two contexts can happen within the same afternoon in the same neighbourhood. The income is real. The dignity in it is real. The other thing is also real.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_hijra_work', true); p.mo += 2500; p.m += 2; p.s += 2 },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // OO. BANGLADESHI CYCLONE — what the body learns from water
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_bangladesh_bhola_child',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Bangladesh' &&
+      G.currentYear >= 1970 && G.currentYear <= 1972 &&
+      G.ruralUrban === 'rural' &&
+      G.age >= 4 && G.age <= 12 &&
+      !G.mem?.sl_bng_bhola,
+    text: 'The Bhola cyclone of November 1970 kills between three hundred thousand and five hundred thousand people. The number is imprecise because the counting in the delta is imprecise and because the government in West Pakistan was slow to respond and the slowness of the response became one of the facts that led to the independence of Bangladesh the following year. You are in the delta when the cyclone comes. The water comes from the sea through the mangroves and through the streets at a speed and a depth that is not water the way you know water — it is the sea, which is a different thing. You survive. The number of people you know who do not survive is a number you carry.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_bng_bhola', true); p.m -= 12; p.h -= 4; p.r += 8; p.addFlag('cyclone_survivor') },
+  },
+
+  {
+    id: 'sl_bangladesh_cyclone_annual',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Bangladesh' &&
+      G.flags.includes('cyclone_survivor') &&
+      G.ruralUrban === 'rural' &&
+      G.age >= 18 && G.age <= 45 &&
+      !G.mem?.sl_bng_cy_annual,
+    text: 'The cyclone season runs from May to November and every year the radio says watch the coast and every year you do. The preparation is: know which relatives live on higher ground, know where the boat is, know which things can be carried and which cannot. The things that cannot be carried are most things. You have learned to not build too much attachment into the things that cannot be carried. The attachment goes into the people, which is where you can carry it.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_bng_cy_annual', true); p.e += 2; p.s += 2; p.r += 3 },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // PP. MEIJI-ERA JAPANESE DIASPORA — the families that went to Hawaii
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_japanese_hawaii_issei',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'United States' &&
+      G.ethnicity === 'japanese' &&
+      G.currentYear >= 1900 && G.currentYear <= 1924 &&
+      G.age >= 18 && G.age <= 35 &&
+      !G.mem?.sl_jp_hawaii,
+    text: 'The labor contract brought you to the sugarcane fields of Maui from Hiroshima prefecture in 1910, which was two years before the Meiji Emperor died and the country you came from became a different country. The plantation has barracks organised by ethnic origin — Filipino barracks, Puerto Rican barracks, Japanese barracks — and the pay is different by ethnic origin too, which is a system that the plantation operators consider rational and the workers consider something else. The Japanese workers have a word: issei, first generation. You are issei. Your children, if you have them here, will be nisei. The generations are already named. The country is already organising you into a category.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_jp_hawaii', true); p.h -= 3; p.mo += 1500; p.addFlag('issei_generation') },
+  },
+
+  {
+    id: 'sl_japanese_american_internment',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'United States' &&
+      G.ethnicity === 'japanese' &&
+      G.currentYear >= 1942 && G.currentYear <= 1945 &&
+      G.age >= 18 && G.age <= 50 &&
+      !G.mem?.sl_ja_intern,
+    text: 'Executive Order 9066 requires you to report to the assembly centre. You are American. You were born in California. You speak English without an accent. None of these things affect the application of the order. The assembly centre is at the fairgrounds and then the internment camp is in the desert — one of ten camps for a hundred and twenty thousand Japanese Americans, two-thirds of whom are citizens. You sell the truck for what you can get in three days, which is less than it is worth. The camp has a tar-paper barrack and a mess hall and a school. You get out in 1945 and find someone else is in the house.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_ja_intern', true); p.m -= 12; p.mo -= 3000; p.h -= 4; p.addFlag('japanese_american_internment') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // QQ. NIGERIAN PENTECOSTALISM — prosperity gospel at the family dinner table
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_nigeria_pentecostal_child',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Nigeria' &&
+      G.religion === 'christian_pentecostal' &&
+      G.currentYear >= 1985 && G.currentYear <= 2010 &&
+      G.age >= 6 && G.age <= 14 &&
+      !G.mem?.sl_ng_pent_child,
+    text: 'Sunday is eight hours: morning service, children\'s church, afternoon service, evening prayer. The church is a warehouse that has been made into something more than a warehouse by the congregation\'s attention — the painted walls, the sound system, the ushers in their white gloves who know your family\'s tithe level and who seat you accordingly. You grow up knowing that breakthrough is coming and that faith is the mechanism and that the breakthrough of your family is tied to the breakthrough of the pastor\'s vision, which is tied to the building fund. The building fund is mentioned every Sunday. The building has been under construction for twelve years. The faith is genuine. Both things are true.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_ng_pent_child', true); p.s += 3; p.m += 2; p.e += 2; p.addFlag('pentecostal_childhood') },
+  },
+
+  {
+    id: 'sl_nigeria_pentecostal_adult',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Nigeria' &&
+      G.flags.includes('pentecostal_childhood') &&
+      G.age >= 22 && G.age <= 38 &&
+      !G.mem?.sl_ng_pent_adult,
+    text: 'The prosperity gospel says that faith produces material blessing and that the evidence of faith is material blessing and that the absence of material blessing indicates insufficient faith. You have been thinking about the structure of this argument for some years now. The pastor\'s private jet is one of the data points you are thinking about. The congregation members who pray faithfully and remain poor are another. Your uncle who never goes to church and runs a successful business is a third. The faith is still real. The argument needs work.',
+    choices: [
+      {
+        text: 'Keep the faith, let the theology sort itself out.',
+        tag: 'faith',
+        outcome: 'The church community is real. The support network is real. The theology can be complicated without the community being less real. You stay.',
+        effect: (p) => { p.setMem('sl_ng_pent_adult', true); p.s += 2; p.m += 3; p.karma += 3 },
+      },
+      {
+        text: 'Step back. The argument has become too visible to ignore.',
+        tag: 'question',
+        outcome: 'You don\'t leave faith — you leave the specific church. The transition is uncomfortable and your mother asks about it at every family dinner for two years. Eventually it becomes background noise.',
+        effect: (p) => { p.setMem('sl_ng_pent_adult', true); p.e += 3; p.m += 2; p.r += 3; p.addFlag('left_faith_community') },
+      },
+    ],
+    effect: null,
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // RR. UYGHUR SPECIFIC — the surveillance that came to the family table
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_uyghur_school_surveillance',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'China' &&
+      G.ethnicity === 'uyghur' &&
+      G.currentYear >= 2015 && G.currentYear <= 2025 &&
+      G.age >= 6 && G.age <= 14 &&
+      !G.mem?.sl_uyg_school,
+    text: 'The school teaches Mandarin. The school has a flag ceremony every Monday morning and the oath to the party and the study of Xi Jinping Thought. Your parents speak Uyghur at home but have stopped speaking it in the street and in the market and on the phone. You are learning that language has geography — where it is safe and where it is not — and you are learning this at the age of nine, which is the age when other children learn multiplication tables, which you are also learning, in Mandarin, which is the only language the school recognises.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_uyg_school', true); p.m -= 6; p.e += 3; p.addFlag('minority_language_gap') },
+  },
+
+  {
+    id: 'sl_uyghur_disappeared_family',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'China' &&
+      G.ethnicity === 'uyghur' &&
+      G.currentYear >= 2017 && G.currentYear <= 2025 &&
+      G.age >= 18 && G.age <= 35 &&
+      !G.mem?.sl_uyg_family,
+    text: 'Your uncle stopped answering his phone in August 2017. Your aunt\'s messages stopped in September. The official description for where they likely are is "vocational training centre." You do not attempt to find out officially because the people who have attempted to find out officially have sometimes also stopped answering their phones. You are in Ürümqi. You have a job. You go to work. You go home. You have learned not to keep the Quran where it can be seen, not to keep a prayer mat where it can be seen, not to use certain apps, not to call certain numbers. The learning took several months. The practice is now automatic.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_uyg_family', true); p.m -= 15; p.h -= 4; p.addFlag('uyghur_suppression_lived') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // SS. SMALL ISLAND INDEPENDENCE — the moment the flag changed
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_barbados_independence_child',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Barbados' &&
+      G.currentYear >= 1966 && G.currentYear <= 1968 &&
+      G.age >= 6 && G.age <= 14 &&
+      !G.mem?.sl_bds_indep,
+    text: 'The independence came on November 30, 1966, which was a Tuesday, and the school gave you the day off. The flag went up — a trident on gold and ultramarine, which the national competition chose over fifty other designs — and the Governor-General took the oath and the Union Jack came down and there was a military band and fireworks at Kensington Oval and you watched from the hill above the oval with your cousins. The country is three weeks old. You are in it. The thing that the country means — the specific thing, the daily thing, the difference between a colony and a country — will take years to find the words for, and the words will keep changing.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_bds_indep', true); p.m += 6; p.e += 2; p.addFlag('independence_generation_carib') },
+  },
+
+  {
+    id: 'sl_small_island_brain_drain',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      ['Barbados', 'Trinidad and Tobago', 'Jamaica', 'Guyana', 'Belize'].includes(G.character.country.name) &&
+      G.currentYear >= 1970 && G.currentYear <= 2010 &&
+      G.age >= 20 && G.age <= 35 &&
+      G.stats.smarts >= 60 &&
+      !G.mem?.sl_carib_leave,
+    text: 'The scholarship that takes you to the university in England or Canada is an achievement and a departure and both of these things are understood clearly by everyone who sees you off at the airport. The departure is the shape that achievement takes in a small island. The people who do not leave — who build things here, who run the clinics and the schools and the civil service — are also achieving, but the achievement that is most legible to the outside world is the departure. You are leaving. The people staying are your cousins. You will send remittances. They will vote in the elections that determine the future of the country you left. Both of you are contributing to the same small place in different ways that are not symmetrical.',
+    choices: [
+      {
+        text: 'Go. The island cannot contain what you want to build.',
+        tag: 'leave',
+        outcome: 'The university is excellent. The winter is extraordinary. You send money home and go back for carnival every few years. The island is where you come from. The city is where you live.',
+        effect: (p) => { p.setMem('sl_carib_leave', true); p.e += 4; p.mo += 5000; p.addFlag('emigrated'); p.addFlag('caribbean_diaspora') },
+      },
+      {
+        text: 'Stay. Someone has to build the place.',
+        tag: 'stay',
+        outcome: 'The civil service needs you. The school needs you. The island needs people who came back when most did not. The staying is its own achievement. It is not always legible as achievement to the people who left.',
+        effect: (p) => { p.setMem('sl_carib_leave', true); p.m += 4; p.karma += 5; p.addFlag('stayed_to_build') },
+      },
+    ],
+    effect: null,
+  },
 ]
