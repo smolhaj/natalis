@@ -4679,6 +4679,34 @@ export const FLAG_REGISTRY = {
     intent: 'year_texture',
     notes: 'Pakistan/India partition. Year texture in buildYearTexture.',
   },
+  partition_survivor: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the 1947 India-Pakistan Partition — the largest forced migration in recorded history',
+    intent: 'none',
+    notes: 'Set by partition_of_india world event (characters alive in 1947).',
+  },
+  partition_refugee: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Was part of the mass refugee movement of 1947 — crossed the new border during or after Partition',
+    intent: 'none',
+    notes: 'Set by partition_india_refugee world event.',
+  },
+  partition_india_memory: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up with family memory of Partition — the city they left, the neighbour who helped, the object that was carried',
+    intent: 'none',
+    notes: 'Set by ind_partition_family_memory. India Hindu/Sikh second generation.',
+  },
+  partition_colony_raised: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up in a refugee colony (Delhi: Lajpat Nagar, Punjabi Bagh, Rajinder Nagar) — the geography of displaced families',
+    intent: 'none',
+    notes: 'Set by ind_partition_colony. Gates on partition_india_memory.',
+  },
 
   '1971_war_lived': {
     weight: 'major',
