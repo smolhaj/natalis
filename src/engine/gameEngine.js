@@ -1549,10 +1549,78 @@ function buildYearTexture(state) {
     ])
   }
 
+  // ─── MEMORY LAYER: ELAPSED TIME ──────────────────────────────────────────────
+  // Uses TIMESTAMPED_FLAGS to surface the passage of time since significant events.
+
+  const yearsSinceEmigrated = mem?.emigratedYear ? currentYear - mem.emigratedYear : null
+  if (F.has('emigrated') && yearsSinceEmigrated !== null && yearsSinceEmigrated >= 5 && yearsSinceEmigrated <= 9 && Math.random() < 0.3) return pick([
+    'Five or six years. The city you live in now is the city you know. The one you came from is the city you remember, which is not the same city anymore.',
+    'The calculation you make about going back has changed. Not whether you could — whether you would recognise it, and whether it would recognise you.',
+    `You have lived here for ${yearsSinceEmigrated} years. The accent is the last thing to go, and it has not entirely gone.`,
+  ])
+  if (F.has('emigrated') && yearsSinceEmigrated !== null && yearsSinceEmigrated >= 10 && phase !== 'early_childhood' && Math.random() < 0.25) return pick([
+    'A decade or more away. The life you built here is the life. The one before it is the context for the life.',
+    phase === 'late_life'
+      ? 'The old country is for funerals and occasional visits and the dreams that still happen there.'
+      : 'The old country comes back in specific things — a smell, a song, the particular way a language sounds in a particular context. You are briefly in both places, and then the moment passes.',
+  ])
+
+  const yearsSinceDivorced = mem?.divorcedYear ? currentYear - mem.divorcedYear : null
+  if (F.has('divorced') && yearsSinceDivorced !== null && yearsSinceDivorced >= 3 && yearsSinceDivorced <= 6 && Math.random() < 0.28) return pick([
+    'The solo geometry has become ordinary. The solo schedule, the solo meals, the solo Tuesday evenings. You are not lonely in the way you were the first year. You are sometimes lonely in a different way.',
+    'Three or four years on the other side of the marriage. The version of yourself from inside it feels like someone you remember rather than someone you were.',
+    'You are better at being alone than you thought you would be. This is either reassuring or, occasionally, something to examine.',
+  ])
+  if (F.has('divorced') && yearsSinceDivorced !== null && yearsSinceDivorced >= 8 && Math.random() < 0.2) return pick([
+    phase === 'late_life'
+      ? 'The marriage that ended is part of who you are the way any significant thing that ended is — still present as formation, no longer present as fact.'
+      : 'The years since the divorce have had their own complete texture. You are not the person who went through it. You are the person who came out the other side.',
+  ])
+
+  const yearsSinceBusinessFailed = mem?.business_failedYear ? currentYear - mem.business_failedYear : null
+  if (F.has('business_failed') && yearsSinceBusinessFailed !== null && yearsSinceBusinessFailed >= 2 && yearsSinceBusinessFailed <= 5 && Math.random() < 0.25) return pick([
+    'The failure is in the past tense now. The accounting is also in the past tense. What remains is a specific knowledge about how things can go — which is different from pessimism.',
+    'There are things you would not do again. There are things you did right. The ratio is not what it felt like in the first year after.',
+  ])
+
+  const yearsSinceLostFriend = mem?.lost_friendYear ? currentYear - mem.lost_friendYear : null
+  if (F.has('lost_friend') && yearsSinceLostFriend !== null && yearsSinceLostFriend >= 2 && yearsSinceLostFriend <= 5 && Math.random() < 0.28) return pick([
+    'The specific absence. The things you still want to tell them — the joke they would have got immediately, the update they were owed. The impulse doesn\'t know they\'re gone. You still have to remind it.',
+    'The acute phase has passed. What remains is the structural gap — the place in the week where they would have been.',
+  ])
+
+  const yearsSinceFirstLove = mem?.first_love_overYear ? currentYear - mem.first_love_overYear : null
+  if (F.has('first_love_over') && yearsSinceFirstLove !== null && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.2) return pick([
+    'The first love from this distance is someone you barely knew. You knew them completely. Both are true.',
+    'From here the first love looks different — more tender and more naive in equal measure. The person you were inside it was also someone you barely knew.',
+  ])
+
+  // ─── BODY IN TIME ──────────────────────────────────────────────────────────────
+  // Age-gated texture for how the body shifts across the decades.
+
+  if (age >= 33 && age <= 43 && Math.random() < 0.14) return pick([
+    'You have started sleeping differently. Not worse. You surface at four in the morning for no reason, lie still for half an hour, then sink again. You have mentioned this to no one. It appears to be the new arrangement.',
+    'The body at this age has a quality of reliability that will not last and an unreliability that has already begun. You are in the brief overlap of knowing the first and not yet fully discovering the second.',
+  ])
+
+  if (age >= 43 && age <= 57 && Math.random() < 0.14) return pick([
+    'Recovery time. That is the category that has changed most. The same Saturday as five years ago requires a different Sunday.',
+    'You look like your father in certain lights. Or your mother. The mirror has been making this case for a few years. You are starting to accept it.',
+    'The body has started to keep its own record alongside yours — a particular notation in the shoulder, a preference for sleeping on one side, a knee that has opinions about stairs.',
+  ])
+
+  if (age >= 57 && phase === 'late_life' && Math.random() < 0.14) return pick([
+    'The body\'s maintenance is its own part-time occupation now. You attend to it with something between acceptance and mild bureaucratic resentment.',
+    'You have been in this body a long time. You know its full inventory — what holds under pressure, what doesn\'t, what the good days feel like from the bad ones. The knowledge took the whole life to accumulate.',
+  ])
+
   // ─── SONDER GLIMPSE ──────────────────────────────────────────────────────────
   // Rare: once every ~10 years, a brief pan to a stranger's life.
   // Not a mechanic — just the accidental glimpse that sonder is made of.
   // Per the design: "the person at the next table, the light on in the apartment above."
+
+  const _arch = state.character?.country?.archetype
+  const _isNonWest = _arch && !['wealthy_west', 'wealthy_east'].includes(_arch)
 
   const lastSonderAge = mem?.sonderGlimpseAge ?? -99
   if (age >= 12 && (age - lastSonderAge) >= 8 && Math.random() < 0.18) {
@@ -1563,22 +1631,30 @@ function buildYearTexture(state) {
       'You pass a lit window at eleven at night — someone reading in a chair, a lamp beside them, an entire life inside that apartment that has its own complete history.',
       'The couple across the café has been eating in silence for twenty minutes and neither of them looks unhappy. You have been watching without meaning to.',
       'An old woman is feeding pigeons with complete attention. Her whole afternoon is this. You wonder what the rest of her days look like and then you stop wondering and keep walking.',
+      _isNonWest ? 'An old man sits where he always sits, in the shade of the same wall. You have passed him for years. You do not know his name. Everyone around him seems to.' : 'Someone on the park bench has been watching the same stretch of path for an hour. There is no readable reason for it. The patience is complete.',
+      _isNonWest ? 'The market woman arranges her produce before the customers arrive. The arrangement has a logic that is entirely her own.' : 'The woman at the counter has served a hundred people since noon. Something is running underneath the work that is not the work.',
     ] : (phase === 'midlife') ? [
       'At a stoplight: the man in the car beside yours, your age, looking straight ahead at something that is not the intersection. You recognize the posture.',
       'The woman at the coffee counter has been smiling at customers for four hours. Something that is not the smile is happening behind it. You tip and leave.',
       'Your neighbor\'s door opens and closes at two in the morning. You don\'t know what schedule that belongs to. You have been curious about it for months and will never ask.',
       'A couple at the restaurant is not speaking — not in the bad way, in the other way. The specific silence of people who don\'t need to. You watch them for a moment without meaning to.',
       'The man on the train has been looking at a photograph on his phone for the past four stops. He does not scroll. He has been looking at the same image since before you sat down.',
+      _isNonWest ? 'The woman at the standpipe is organising who goes first. There is no official system. There is her, and the system she makes.' : 'The man in the café has been writing in the same notebook for an hour. The pages are covered. Something is being worked out in there that is not available to you.',
+      _isNonWest ? 'A man on a motorbike is carrying something too large for a motorbike, slowly, with complete certainty about how to do it.' : 'The couple at the next table is having the specific argument that is about everything except what they are arguing about.',
     ] : (phase === 'young_adult') ? [
       'The person who has the desk across from yours: you know what they eat for lunch and nothing else about them. An entire life is visible from there and inaccessible.',
       'Your neighbor comes home at the same time every night. You know this the way you know everything about people you have never spoken to — by the sound of it through the wall.',
       'A woman on the platform is crying without covering her face. No one speaks to her. The train comes and she gets on. You will never know what that was.',
       'The man at the next table has been looking at his phone without touching it for twenty minutes. Something is happening inside his life that has a shape you don\'t know.',
+      _isNonWest ? 'A young woman at the bus stop has a single bag and the posture of someone who has just made a decision. You don\'t know what the decision was.' : 'The woman at the desk next to yours leaves at exactly five every day. You have been curious about what that is about for months and have not asked.',
+      _isNonWest ? 'Someone sleeping on the pavement outside the bus station. Their things are arranged around them with a precision that makes it clear this is not the first time.' : 'The two people at the corner table have been speaking quietly for two hours. You can\'t tell if this is love or negotiation or both.',
     ] : [
       'A child at the other end of the street is doing something by themselves, absorbed completely. You watch them for a moment. The whole afternoon is in it.',
       'Someone in the apartment above yours walks the same path every evening. You know the route from the sound of it through the ceiling. You don\'t know their name.',
       'You overhear one side of a phone call through a wall. The emotional content is clear; the facts are missing. Someone nearby is having a hard week.',
       'An old man on the bench outside the market is watching the street with the patience of someone who has done this for a long time. You don\'t know what he is watching for.',
+      _isNonWest ? 'A woman is carrying water on her head and also talking to someone and also watching a child ahead of her. Three things at once, flawlessly.' : 'The child on the other side of the fence is conducting a long and serious negotiation with a dog. The dog is attentive.',
+      _isNonWest ? 'The old man in the chair outside his door is watching the street the way a person watches something they have watched for forty years.' : 'Someone is sitting in a parked car, engine off, not getting out. You walk past. You don\'t know what the inside of that moment is.',
     ]
     return pick(sonderPool)
   }
@@ -12435,6 +12511,8 @@ function buildYearTexture(state) {
         'Everything is in its correct place according to the plan. The plan is not everything.',
         'The collective has its logic. The individual has their own. They are not always the same logic.',
         'The queue is long. This is ordinary. The ordinariness of the queue is information about the system.',
+        'The apartment block is identical to the one beside it and the one beside that. Inside them: particular lives, none of them identical.',
+        'The summer dacha is the real home — the place where the city does not follow you, where the garden has its own logic.',
       ])
       if (era === 1990) return pick([
         'The system that organized everything is coming apart. What replaces it is not yet clear.',
@@ -12442,17 +12520,20 @@ function buildYearTexture(state) {
         'The ruble has lost something. What it has lost is not just purchasing power. It is a kind of certainty.',
         'New things are appearing: privately owned things, dollar stores, people who are suddenly rich. The arithmetic of it is not obvious.',
         'The factories are quiet. The men who ran them are doing something else now, or trying to.',
+        'The kiosk has appeared on the corner, stocked with things that were not available before. The prices are in a currency that is still finding its value.',
       ])
       if (era === 2000) return pick([
         'Stability is back. It is also the word the television uses. Both of these things are true at the same time.',
         'The oligarchs are visible now in a way they were not before — in the newspapers, in the buildings they own, in the talk at dinner.',
         'The West is further away than it seemed in the early nineties. Russia is doing something specific with that distance.',
         'The pension is not what it was supposed to be, and the generation that worked for it knows this.',
+        'The mobile phone arrived and the life reorganised itself around it. This happened everywhere and here it happened at a particular speed.',
       ])
       if (era >= 2010) return pick([
         'The nostalgia is for the certainty, not for the bread lines. Even the people who remember the bread lines sometimes feel it.',
         'The internet is the thing that has most changed daily life. Even here, even now.',
         'The young people are leaving for cities. The cities are better than they were.',
+        'Something has narrowed. What was briefly open in the nineties has been closing, in increments, for years. The closings are not announced.',
       ])
     }
 
@@ -12461,27 +12542,32 @@ function buildYearTexture(state) {
       if (era <= 1960) return pick([
         'The city is being built. The city is always being built. It arrives before the infrastructure that should have come first.',
         'Independence is recent. The flags and the buildings are new. The question of what independence actually means is being actively worked out.',
+        'The slum and the new suburb share a drainage ditch. The city was not designed for either of them. The people have improvised past the design.',
       ])
       if (era === 1970 || era === 1980) return pick([
         'The IMF has opinions about how the economy should be run. The people living in the economy have different opinions.',
         'Structural adjustment is the term. The structure being adjusted is the daily life of ordinary people.',
         'The city has grown faster than the roads, the water, the electricity. The gap between the plan and the reality is visible from the street.',
         'The informal sector employs more people than the formal sector. This is not in the official statistics.',
+        'The family who moved to the city sends money back to the village and sends news. The village knows what city life is from this relay. Most of what it knows is accurate.',
       ])
       if (era === 1990) return pick([
         'The mobile phone is arriving before the landline arrived. This is either a paradox or a bypass. Either way, things work.',
         'Democracy is the official story now — elections, campaigns, the whole machinery. The substance of it is still being negotiated.',
         'The middle class is emerging. It is visible in the cars, in the private schools, in the kind of shopping now available.',
+        'The family that buys a car this year is purchasing mobility and also membership in something — a tier of city life with its own traffic problems.',
       ])
       if (era === 2000) return pick([
         'The mobile phone is in everyone\'s pocket. Mobile money has made banking possible for people who never had an account.',
         'Chinese investment is visible in the roads, in the buildings, in the machinery at the port. The terms of the investment are less visible.',
         'The city is the size of a small country. Its problems are the size of a small country\'s.',
+        'The call centre at two in the morning, full of young people speaking across time zones. A whole economy organised around the gap between clocks.',
       ])
       if (era >= 2010) return pick([
         'The young population bulge is visible everywhere — in the schools, in the unemployment statistics, in the food stalls that appear each year.',
         'The smartphone has arrived. The politics are faster now and more visible and less controllable by the people who used to control them.',
         'The diaspora money is a significant part of the economy. The people who send it do not always get credit for what they are sustaining.',
+        'The ride-share platform arrived and the informal drivers are on apps now. The platform takes its share. This is visible to no one in the car.',
       ])
     }
 
@@ -12491,22 +12577,30 @@ function buildYearTexture(state) {
         'Independence changes the flag. The other structures of the colonial arrangement persist with more tenacity.',
         'The harvest determines most things. This is not said aloud in the town but it is understood.',
         'The extended family is the welfare system. It works through obligation rather than taxation. Both have costs.',
+        'The corrugated iron roof amplifies rain in a way no architect planned and the occupant long since stopped noticing.',
+        'The compound at evening. All the kitchens going at once, the competing smells, the television through a thin wall. A life not designed for privacy and not missing it.',
       ])
       if (era === 1970 || era === 1980) return pick([
         'The drought years leave marks that last. The body remembers scarcity even when the shelves are full.',
         'The SAP — structural adjustment programme — has arrived. The health clinic has fewer medications. The school has fewer teachers.',
         'The extended family absorbs the shock that the state cannot. This is efficient and also exhausting.',
+        'The church or the mosque is also the mutual aid society, the news network, the credit system. The attendance has reasons beyond the theological.',
+        'The informal sector employs more people than the formal sector, and it is not informal to the people working in it.',
       ])
       if (era === 1990 || era === 2000) return pick([
         'Mobile money has made it possible to send and receive money in ways that did not exist a decade ago. This is not a small thing.',
         'The Chinese traders have a shop on the main road now. They sell things that were not available before. The prices are different.',
         'The pastor\'s church has a bigger congregation than last year\'s. The church is the community center, the loan office, the safety net.',
         'The young people are saving for the journey. The journey is to the city, or to Europe, or to the Gulf. The direction is away.',
+        'The matatu, the tro-tro, the danfo: the shared minibus that connects the city to itself. The driver knows the system better than any map. The system is not in any map.',
+        'Power cuts so regular they have been accommodated. The candle in the sideboard. The neighbour with the generator who has become a kind of utility.',
       ])
       if (era >= 2010) return pick([
         'The smartphone has arrived before the electricity is reliable. Solar charging is a business now.',
         'The middle class is real. It is also precarious in a way the word middle doesn\'t quite capture.',
         'The diaspora is everywhere — in the remittances, in the WhatsApp groups, in the children who have two accents.',
+        'The young people are in two places at once — here and on the phone, here and in their plans, which include a version of elsewhere.',
+        'The church has a Facebook page and a WhatsApp group and a pastor who sends voice notes. The congregation has distributed itself across the digital infrastructure without leaving the building.',
       ])
     }
 
@@ -12626,6 +12720,9 @@ function buildYearTexture(state) {
     'You are learning what the world is by touching it.',
     'The smallest things carry the most weight: the pattern on a favourite cloth, the sound of a particular voice.',
     'You are entirely present. You do not know yet that this is unusual.',
+    'The adults move through the house with purposes you cannot entirely read. You follow the purposes anyway, because they organise the day.',
+    'You have a favourite corner of the house or the yard. No one else values it. It is yours exactly because of that.',
+    'There is a sound that means safety — a voice, a door, a particular kind of kitchen noise — and you register it below the level of thinking.',
   ])
 
   if (phase === 'childhood') return pick([
@@ -12697,6 +12794,9 @@ function buildYearTexture(state) {
     'The body has started to keep its own record — the shoulder, the knee, the sound of getting out of a chair in the morning.',
     'The people who are twenty-five now are doing what you were doing at twenty-five, with the same confidence and the same amount of information.',
     'You know things now that could not have been told to you earlier. Not because they were secret, but because they require a certain number of years.',
+    'A decade has gone somewhere. Not gradually — in retrospect it happened all at once. You were thirty-something and then you were forty-something and the decade between is present but also somehow compressed.',
+    'You have started saying things your parents said. Not deciding to. Just noticing, mid-sentence, that the phrase is theirs.',
+    'The friend group that assembled in your twenties has redistributed itself across distance and circumstance. The people who remain have lasted through enough versions of you to count as long-term.',
   ])
 
   if (phase === 'late_life') return pick([
@@ -12715,6 +12815,9 @@ function buildYearTexture(state) {
     'You have started using a phrase your parents used. You did not decide to start using it.',
     'There is a photograph on the shelf from a decade you remember clearly and a body you no longer recognise as this one.',
     'You do not rush anymore — not because there is more time, but because you understand the cost of rushing differently than you did at forty.',
+    'An object that has been on the shelf for thirty years. You do not see it most days. When you move it to dust underneath it, you notice it properly, and then it goes back.',
+    'You have outlived the versions of yourself that were going to do certain things. They are gone and what they were going to do went with them, and this is fine.',
+    'There are people who knew you in your thirties who would not recognise the life you are living now. You find this interesting rather than sad.',
   ])
 
   // ─── FINAL GENERIC FALLBACK ───────────────────────────────────────────────────
