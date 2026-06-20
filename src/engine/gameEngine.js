@@ -6108,24 +6108,74 @@ function buildYearTexture(state) {
 
   // ─── LEGACY TEXTURE ──────────────────────────────────────────────────────────
   // Prose for characters who have accumulated significant legacy score.
-  // Only in midlife/late_life; only when legacy is meaningfully high; low probability.
+  // Flag-aware: branches on HOW the legacy was built (teaching/mentoring/creative/parenting).
   const legacyScore = state.legacy ?? 0
-  if (legacyScore >= 60 && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.2) {
+  if (legacyScore >= 40 && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.22) {
+    const legacyViaTeaching = F.has('teacher_letter_received') || F.has('teacher_life_accounted')
+    const legacyViaMentor = F.has('is_mentor')
+    const legacyViaCreative = mem?.projWritingShown || F.has('art_shown_late') || F.has('proj_writing_shown')
+    const legacyViaChildren = mem?.childSurpassesYou
+
     if (legacyScore >= 80) {
-      return pick([
-        'There are people in the world whose lives went differently because of what you did or said or made available. You know this. Most of the time you do not think about it. Sometimes you do.',
-        'The mentoring, the teaching, the work you put into the world — it is out there doing things you can\'t track. That is what it means to have built something.',
+      if (legacyViaTeaching) return pick([
+        'There are teachers in the world who learned to teach from you. The line from your classroom goes further than you can see.',
         phase === 'late_life'
-          ? 'You leave rooms and the rooms remember you. You have made things that outlast the making. That is not nothing. You have begun to let yourself know this.'
+          ? 'Forty years of rooms. Some faces come back without warning. What you gave those faces is still going somewhere.'
+          : 'The letter arrived and said what those years were for. You have not stopped thinking about it.',
+        'The student you almost gave up on became someone. That is not a coincidence. You know this without taking too much credit for it.',
+      ])
+      if (legacyViaMentor) return pick([
+        'The people you brought along are somewhere out ahead of you now. Some of them you track; some you have lost to distance and time.',
+        phase === 'late_life'
+          ? 'You can trace the line from your work to people you will never meet — the mentee\'s mentee, the colleague your protégé trained. That line is real even when you can\'t see it.'
+          : 'You have given a considerable amount of yourself to other people\'s development. The return on that is in the world doing things you can\'t fully track.',
+        'The investment in people is harder to count than money. It is also harder to lose.',
+      ])
+      if (legacyViaCreative) return pick([
+        'What you made is out there. It exists independently of you now. Other people have their version of it, which is different from yours.',
+        phase === 'late_life'
+          ? 'Something you made has a life of its own that you cannot supervise. That is what making is for.'
+          : 'The work you put into the world is there, doing whatever it does when you are not watching it.',
+        'You didn\'t make it for the reaction. The reaction is still something you notice.',
+      ])
+      if (legacyViaChildren) return pick([
+        'Your child has surpassed you — in the good way, the way that means the work passed through you and didn\'t stop.',
+        phase === 'late_life'
+          ? 'They are further along than you were at their age. That was the goal, unnamed. You can name it now.'
+          : 'You watch what they do with what you gave them. They do more with it than you expected. That is the accounting.',
+      ])
+      return pick([
+        'There are people in the world whose lives went differently because of what you did or said or made available. You know this. Most of the time you do not think about it.',
+        'The work you put into the world — it is out there doing things you can\'t track. That is what it means to have built something.',
+        phase === 'late_life'
+          ? 'You leave rooms and the rooms remember you. You have made things that outlast the making. You have begun to let yourself know this.'
           : 'What you have given — the hours, the attention, the things you know and passed on — is accumulating in people you may not see clearly for years.',
       ])
     }
+
+    if (legacyScore >= 60) {
+      if (legacyViaTeaching) return pick([
+        'You can remember specific students who changed, or who you helped change. The names are specific. The names stay.',
+        'Teaching is investment with a delayed return, distributed across people. The accounting is slow and usually invisible.',
+      ])
+      if (legacyViaMentor) return pick([
+        'There are people carrying a way of approaching the work that you gave them — without them knowing you gave it.',
+        'The investment in other people\'s development is not visible in any particular account. It is visible in the people.',
+      ])
+      return pick([
+        'There are people carrying something you gave them — a skill, a way of approaching things, a word spoken at the right time. You don\'t always know who.',
+        'The investment in other people is not lost. It doesn\'t look like a return. It is one.',
+        phase === 'late_life'
+          ? 'The traces you have left are not monuments. They are in people. That is a better place for them.'
+          : 'You have put things into the world that the world is keeping. You are not always sure you understand the accounting of that.',
+      ])
+    }
+
+    // 40–59: early awareness that something has been given
     return pick([
-      'There are people carrying something you gave them — a skill, a way of approaching things, a word spoken at the right time. You don\'t always know who.',
-      'The investment in other people is not lost. It doesn\'t look like a return. It is one.',
       phase === 'late_life'
-        ? 'The traces you have left are not monuments. They are in people. That is a better place for them.'
-        : 'You have put things into the world that the world is keeping. You are not always sure you understand the accounting of that.',
+        ? 'You have given things that were taken forward. Most of them you can\'t track. Some of them you can.'
+        : 'Something you built or taught or gave has a life outside you now. The amount is small. It is real.',
     ])
   }
 
