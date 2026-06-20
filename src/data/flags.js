@@ -14235,4 +14235,86 @@ export const FLAG_REGISTRY = {
     notes: 'Set by loc_the_coach. Late-life texture available.',
   },
 
+  // ─── 2010s TEXTURE ─────────────────────────────────────────────────────────
+
+  gig_worker: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Worked in the platform/gig economy — Uber, Deliveroo, TaskRabbit, or equivalent — with flexibility as the primary benefit and instability as the structural cost.',
+    intent: 'followthrough',
+    notes: 'Set by dec10_gig_work. Follow-through at midlife: dec10_gig_echo.',
+  },
+
+  always_connected: {
+    weight: 'minor',
+    category: 'technology',
+    description: 'Experienced the decade of ubiquitous smartphone connectivity — the phone at the table, the half-lit screen, the permanent availability of interruption.',
+    intent: 'year_texture',
+    notes: 'Set by dec10_always_connected.',
+  },
+
+  climate_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Came of age during the 2015–2022 climate mobilisation — Greta Thunberg, school strikes, IPCC reports — with climate grief as a formative part of adolescence.',
+    intent: 'followthrough',
+    notes: 'Set by dec10_climate_grief_young.',
+  },
+
+  climate_activist: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Actively participated in climate activism — school strikes, Extinction Rebellion, climate marches — as a young person in the 2015–2022 period.',
+    intent: 'year_texture',
+    notes: 'Set by dec10_climate_grief_young (activist choice).',
+  },
+
+  political_fracture_lived: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Experienced the populist political fracture of the late 2010s as a personal rupture — Brexit, Trump, Bolsonaro, or equivalent — splitting families and friendships along newly visible lines.',
+    intent: 'year_texture',
+    notes: 'Set by dec10_populist_fracture.',
+  },
+
+  occupy_witness: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Witnessed or engaged with the Occupy movement (2011–12) — the camps, the vocabulary of the 99 percent, the question of what specifically was being demanded.',
+    intent: 'year_texture',
+    notes: 'Set by dec10_occupy_moment.',
+  },
+
+  born_digital: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Born after 2000 — has no pre-internet memory; the internet is not a technology they adopted but the medium they grew up inside.',
+    intent: 'none',
+    notes: 'Set by dec10_born_digital.',
+  },
+
+  information_overload: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Experienced the late-2010s condition of news saturation — more simultaneous crises than any previous generation had information about, and no clear way to act on the knowledge.',
+    intent: 'year_texture',
+    notes: 'Set by dec10_decade_exhaustion.',
+  },
+
+  algorithm_aware: {
+    weight: 'minor',
+    category: 'technology',
+    description: 'Became conscious of algorithmic curation — the feed stopping being chronological, the opacity of what gets shown and why, the difficulty of tracing opinion-formation.',
+    intent: 'none',
+    notes: 'Set by dec10_algorithm_life.',
+  },
+
+  smartphone_generation: {
+    weight: 'minor',
+    category: 'technology',
+    description: 'Part of the generation whose first sustained experience of the internet was through a smartphone rather than a desktop computer.',
+    intent: 'none',
+    notes: 'Set by internet_smartphone_arrival.',
+  },
+
 }

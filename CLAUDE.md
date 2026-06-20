@@ -231,7 +231,7 @@ Generic events are a last resort. Specific events — ones that could only fire 
 
 ## Current State
 
-106 countries, 242 world events, 237+ event modules (~4,360+ events), 1,737 registered flags, 314 ribbons. Last major work: PR #101 (ongoing) — MODE A: Mali arc (events_mali.js, 10 events), Ivory Coast arc (events_ivory_coast.js, 7 events), Cameroon arc (events_cameroon.js, 7 events), Senegal depth (events_senegal.js +4 events, 5 bug fixes); MODE B: events_followthrough_29.js (9 events), events_local.js (12 events: local significance arc — local_hero, local_trusted, community_healer, local_memory_keeper, coach legacy, farewell, forgotten generation, generational transmission — 9 new flags, 7 year-texture blocks); MODE C: Sonder polish (4 new events + bug fix). 1737 covered flags, 0 orphaned. Previous PRs: PR #95 MODE A: Jamaica + Trinidad (events_caribbean.js), Guinea (events_guinea.js), Mongolia (events_mongolia.js); PR #96 MODE A: Eritrea (events_eritrea.js); MODE B: political leaning consequence arc (events_political_arc.js); PR #97–100 MODE A/B/C: Egypt depth, India Partition, Fiji, bonded labor, sex work, aid worker, HCR, legacy year texture rewrite. Run `npm run check-flags` to audit flag coverage.
+108 countries, 249 world events, 253+ event modules (~4,400+ events), 1,747 registered flags, 321 ribbons. Last major work: PR #102 (current) — MODE A: 2010s texture arc (events_2010s.js, 8 events: gig economy, always-connected, climate grief, populist fracture, Occupy, born digital, information overload, algorithm awareness; 9 new flags; 4 buildYearTexture paths); MODE B: legacy field fully wired (buildEffectProxy, buildG, buildYearTexture, generateEpitaph, event accumulation across 8+ modules); MODE C: Soundtrack layer (soundtrack.js, 50 cultural markers 1942–2023, applySoundtrack() in gameEngine, violet visual treatment in LifeScreen.jsx). Plus 15+ undocumented event modules now documented (events_sonder.js 299 events, events_aid_worker.js 13 events, events_cults.js 10 events, events_sex_work.js 10 events, events_bonded_labor.js 9 events, events_fiji.js 8 events, events_new_zealand.js 9 events, events_nomadic.js 8 events, events_nigeria.js 8 events, events_bolivia.js 9 events, events_water_infra.js 6 events, events_indonesia_depth.js 6 events, events_turkey.js 5 events, events_fgm.js 5 events, events_bedouin.js 5 events). 1744 covered flags, 0 orphaned. Previous PRs: PR #95 MODE A: Jamaica + Trinidad (events_caribbean.js), Guinea (events_guinea.js), Mongolia (events_mongolia.js); PR #96 MODE A: Eritrea (events_eritrea.js); MODE B: political leaning consequence arc (events_political_arc.js); PR #97–101 MODE A/B/C: Egypt depth, India Partition, Fiji, bonded labor, sex work, aid worker, legacy year texture, Mali arc, Ivory Coast arc, Cameroon arc, Senegal depth, local significance arc, sonder polish. Run `npm run check-flags` to audit flag coverage.
 
 - Full event system descriptions and coverage history: `docs/codebase-state.md`
 - Full BUILD-by-BUILD roadmap and MICRO-EVENT DESIGN PRINCIPLE: `docs/roadmap.md`
@@ -453,6 +453,22 @@ src/
     events_ivory_coast.js    — 7 events: Ivory Coast arc — cocoa smallholder economy (2 choices), Houphouët-Boigny death Dec 7 1993, Christmas Eve coup 1999, Abidjan urban life (2 choices), north-south Muslim identity fork, 2010 election crisis (2 choices), late reckoning; 9 year-texture blocks; 2 world events
     events_cameroon.js       — 7 events: Cameroon arc — Bamileke identity/tontine network (2 choices), Biya 40-year rule (2 choices), Francophone/Anglophone divide (2 choices), Douala city texture, 2016 Anglophone strike to armed conflict (2 choices), Ambazonia displacement, late reckoning; 11 year-texture blocks; follow-throughs in events_followthrough_29.js
     events_local.js          — 12 events (BUILD 30): local significance arc — cross-cutting, any archetype; first recognition, teacher/healer recognition, trusted with problems, village healer (developing rural, 2 choices), small victory (2 choices), the coach (2 choices), memory keeper, formal role (2 choices), the farewell, forgotten in time, generational transmission; 9 flags (local_hero, local_trusted, local_achievement, community_healer, local_memory_keeper, local_legacy_rooted, local_official, local_coach_legacy, local_advocate); 7 year-texture blocks
+    events_sonder.js         — 299 events (MODE C): sonder polish pass — single-fire mem-gated auto-resolve events in two categories: STRANGER GLIMPSES (awareness of other lives, lit windows, the person on the platform) and MUNDANE LIFE (ordinary fabric events: the commute, the object on the shelf, the phrase noticed). Weight 2, no choices, small stat effects.
+    events_aid_worker.js     — 13 events: humanitarian aid worker arc (BUILD 17 supplement) — deployment, field conditions, moral injury, institutional frustration, colleague loss, return home difficulty, long-term aftermath
+    events_cults.js          — 10 events (BUILD 24): high-control religion and cult arc — born-in track (raised inside, discovering outside world, leave/stay fork) and joined track (recruitment, escalating commitment, exit attempt, long recovery)
+    events_sex_work.js       — 10 events (BUILD 33): sex work arc — survival/tolerated/legalized tracks, first entry, safety negotiation, client encounter, exit decision, long-term arc; criminalRecord intersection
+    events_bonded_labor.js   — 9 events (BUILD 37): debt bondage/bonded labor/sharecropping arc — South Asia and subsaharan focus; debt inheritance, labor extraction, escape attempt, aftermath, late reckoning
+    events_fiji.js           — 8 events: Fiji arc — iTaukei/Indo-Fijian community perspectives, 1987 Rabuka coups, ethnic politics, sugar economy, diaspora decision
+    events_new_zealand.js    — 9 events: NZ arc — Springbok Tour 1981, Rainbow Warrior 1985, Rogernomics shock therapy, nuclear-free legislation, Christchurch earthquakes 2011, Christchurch mosque shooting 2019
+    events_nomadic.js        — 8 events (BUILD 16): nomadic life arc — Maasai Kenya/Tanzania herder childhood, seasonal migration, sedentarisation pressure, cattle count economy, Mongolian herder texture; exports NOMADIC_EVENTS
+    events_nigeria.js        — 8 events: Nigeria depth — coup culture 1966–1999, June 12 1993 annulled election, civilian rule 1999, Boko Haram insurgency, sharia adoption 2000–02, Niger Delta oil community, naira crisis
+    events_bolivia.js        — 9 events: Bolivia arc — Potosí/Oruro mining culture, 1952 National Revolution, Banzer military dictatorship, hyperinflation 1984–85, Chapare coca economy, Gas War 2003, Evo Morales era
+    events_water_infra.js    — 6 events (BUILD 42): water infrastructure arc — standpipe committee politics, adult water walk echo, dry-season scarcity, village electrification, pump repair politics
+    events_indonesia_depth.js — 6 events: Indonesia depth — 1965 anti-communist purge family silence, Bali bombing 2002, 2004 Indian Ocean tsunami, Javanese transmigration programme, Papuan indigenous identity
+    events_turkey.js         — 5 events: Turkey depth — Atatürk Latin alphabet reform living memory, 2023 Kahramanmaraş earthquake, Syrian refugee hosting, lira crisis 2018–21, Istanbul Convention withdrawal; exports TURKEY_EVENTS
+    events_fgm.js            — 5 events (BUILD 22 supplement): female genital cutting arc — community expectation, the decision, aftermath, daughter decision, late-life reckoning; gated on subsaharan + relevant countries
+    events_bedouin.js        — 5 events: Bedouin sedentarisation arc — Saudi Arabia/Jordan 1950s–70s; tent to concrete house, camel to pickup truck, state identification pressure, identity negotiation
+    events_2010s.js          — 8 events (MODE A, PR #102): cross-cutting 2010s texture — gig economy entry arc (2013+, 2 choices + midlife echo), always-connected/phone at the table, climate grief as generational identity (adolescence 2015+, 2 choices), populist fracture at family table (2016+), Occupy/inequality awakening (wealthy_west 2011–14), born-into-internet (born 2001+), information overload, algorithm awareness; 9 new flags
     events_guinea.js          — 13 events: Guinea-Conakry arc — 1958 No vote (95% independence), French revenge withdrawal, Sékou Touré PDG apparatus 1958–84, Camp Boiro political prison (survivor/loss branches), educated class exile/stay, Conté coup morning 1984 (48-hour gap), 2009 stadium massacre; 6 late-life follow-throughs
     events_mali.js            — 10 events: Mali arc — ancient empire identity (Mansa Musa, Timbuktu universities), CMDT cotton economy (2 choices), Traoré 23-year dictatorship (2 choices), 1991 democratic revolution (2 choices), Tuareg identity nomadic/settled fork, 2012 Sanogo coup, Timbuktu manuscript rescue, Operation Serval (2 choices), Sahel late reckoning; 9 year-texture blocks
     events_mongolia.js        — 12 events: Mongolia arc — nomadic herder childhood (ger assembly, terrain knowledge), 1937–38 Stalinist purge family memory (22k killed, 700 monasteries), negdel collective life, 1990 democratic revolution (Sukhbaatar Square), negdel dissolution shock, dzud winter (2000/2010 branched), Ulaanbaatar ger district migration; 5 late-life follow-throughs
@@ -493,12 +509,13 @@ src/
     assets.js                 — property/vehicle data
     destinations.js           — travel destinations
     illnesses.js              — illness/disease system
-    ribbons.js                — end-of-life achievement ribbons (311 defined)
+    ribbons.js                — end-of-life achievement ribbons (321 defined)
+    soundtrack.js             — 50 cultural markers 1942–2023 (MODE C, PR #102): atmospheric cultural texture injected alongside headlines — music moments, technological shifts, generational cultural events. Distinct visual treatment (violet/🎵). Covers: 1940s–50s big bands/rock, 1960s Beatles/Woodstock, 1970s Walkman/Fela/Marley/disco, 1980s MTV/Thriller/Live Aid, 1990s Nirvana/web/Windows 95, 2000s iTunes/Facebook/iPhone, 2010s Netflix/Greta/TikTok/AI.
   engine/
     gameEngine.js             — core simulation: buildG, advanceYear, emigrate,
                                 generateEpitaph, generateIdentityCard, buildYearTexture,
                                 buildEffectProxy, resolveProxyExtras, tickPartner, attemptCrime,
-                                deriveGenerationalFlags, DESIRE_PATTERNS
+                                deriveGenerationalFlags, DESIRE_PATTERNS, applySoundtrack
     casinoEngine.js
     gangEngine.js
     lotteryEngine.js
@@ -509,7 +526,8 @@ src/
   components/
     LifeScreen.jsx            — main game screen (tabs: Life, Stats, Activities, Relationships, Prison)
                                 includes trial modal, gender markers, "Who You Are" card, newspaper headlines,
-                                relationship status chips (quality labels + flag overrides), conditions display
+                                relationship status chips (quality labels + flag overrides), conditions display;
+                                log entries: isDeath (zinc/dark), isHeadline (stone/📰), isSoundtrack (violet/🎵), isWorld (amber/🌐), isKey (blue)
     ActivitiesPanel.jsx       — activities tab (grouped by category)
     BirthScreen.jsx           — random character creation
     CuratedBirthScreen.jsx    — 4-step curated birth wizard (country, birth year/gender, origin/stability/religion, preview)

@@ -440,10 +440,11 @@ export default function LifeScreen() {
                 {/* ── RECENT VIEW ── */}
                 {logMode === 'recent' && recentLog.map((entry, i) => (
                   <div key={i} className={`rounded-xl px-4 py-3 border text-sm leading-relaxed ${
-                    entry.isDeath    ? 'bg-zinc-900 border-zinc-800 text-zinc-100' :
-                    entry.isHeadline ? 'bg-stone-100 border-stone-300 text-stone-700' :
-                    entry.isWorld    ? 'bg-amber-50 border-amber-200 text-amber-800' :
-                    entry.isKey      ? 'bg-blue-50 border-blue-200 text-blue-800' :
+                    entry.isDeath      ? 'bg-zinc-900 border-zinc-800 text-zinc-100' :
+                    entry.isHeadline   ? 'bg-stone-100 border-stone-300 text-stone-700' :
+                    entry.isSoundtrack ? 'bg-violet-50 border-violet-200 text-violet-900' :
+                    entry.isWorld      ? 'bg-amber-50 border-amber-200 text-amber-800' :
+                    entry.isKey        ? 'bg-blue-50 border-blue-200 text-blue-800' :
                     'bg-white border-natalis-border text-natalis-dim'
                   }`}>
                     {entry.isDeath && (
@@ -452,11 +453,14 @@ export default function LifeScreen() {
                     {entry.isHeadline && (
                       <div className="text-xs font-semibold uppercase tracking-wider text-stone-500 mb-1">📰 {entry.age}</div>
                     )}
+                    {entry.isSoundtrack && (
+                      <div className="text-xs font-semibold uppercase tracking-wider text-violet-500 mb-1">🎵 {entry.age}</div>
+                    )}
                     {entry.isWorld && entry.worldEventName && (
                       <div className="text-xs font-bold uppercase tracking-wider text-amber-700 mb-1">🌐 {entry.worldEventName}</div>
                     )}
-                    {!entry.isHeadline && !entry.isDeath && <span className="font-bold mr-2 text-xs uppercase tracking-wider opacity-60">Age {entry.age}</span>}
-                    <span className={entry.isHeadline ? 'italic text-sm' : ''}>{entry.text}</span>
+                    {!entry.isHeadline && !entry.isSoundtrack && !entry.isDeath && <span className="font-bold mr-2 text-xs uppercase tracking-wider opacity-60">Age {entry.age}</span>}
+                    <span className={entry.isHeadline || entry.isSoundtrack ? 'italic text-sm' : ''}>{entry.text}</span>
                   </div>
                 ))}
 
@@ -528,17 +532,19 @@ export default function LifeScreen() {
                           <div className="divide-y divide-natalis-border">
                             {entries.map((entry, i) => (
                               <div key={i} className={`px-4 py-2.5 text-sm leading-relaxed ${
-                                entry.isDeath    ? 'bg-zinc-900 text-zinc-100' :
-                                entry.isHeadline ? 'bg-stone-100 text-stone-700' :
-                                entry.isWorld    ? 'bg-amber-50 text-amber-800' :
-                                entry.isKey      ? 'bg-blue-50 text-blue-800' :
+                                entry.isDeath      ? 'bg-zinc-900 text-zinc-100' :
+                                entry.isHeadline   ? 'bg-stone-100 text-stone-700' :
+                                entry.isSoundtrack ? 'bg-violet-50 text-violet-900' :
+                                entry.isWorld      ? 'bg-amber-50 text-amber-800' :
+                                entry.isKey        ? 'bg-blue-50 text-blue-800' :
                                 'text-natalis-dim'
                               }`}>
                                 {entry.isDeath && <span className="font-semibold mr-1.5 text-xs text-zinc-400 uppercase">Age {entry.age} — </span>}
-                                {!entry.isHeadline && !entry.isDeath && <span className="font-bold mr-2 text-xs opacity-50">Age {entry.age}</span>}
+                                {!entry.isHeadline && !entry.isSoundtrack && !entry.isDeath && <span className="font-bold mr-2 text-xs opacity-50">Age {entry.age}</span>}
                                 {entry.isHeadline && <span className="text-xs font-semibold mr-1 text-stone-500">📰 {entry.age} — </span>}
+                                {entry.isSoundtrack && <span className="text-xs font-semibold mr-1 text-violet-500">🎵 {entry.age} — </span>}
                                 {entry.isWorld && entry.worldEventName && <span className="text-xs font-bold mr-1">🌐 {entry.worldEventName} — </span>}
-                                <span className={entry.isHeadline ? 'italic' : ''}>{entry.text}</span>
+                                <span className={entry.isHeadline || entry.isSoundtrack ? 'italic' : ''}>{entry.text}</span>
                               </div>
                             ))}
                           </div>
@@ -576,15 +582,17 @@ export default function LifeScreen() {
                           <p className="text-natalis-muted text-xs px-1">{matches.length} {matches.length === 1 ? 'result' : 'results'}</p>
                           {matches.slice(0, 60).map((entry, i) => (
                             <div key={i} className={`rounded-xl px-4 py-3 border text-sm leading-relaxed ${
-                              entry.isDeath    ? 'bg-zinc-900 border-zinc-800 text-zinc-100' :
-                              entry.isHeadline ? 'bg-stone-100 border-stone-300 text-stone-700' :
-                              entry.isWorld    ? 'bg-amber-50 border-amber-200 text-amber-800' :
-                              entry.isKey      ? 'bg-blue-50 border-blue-200 text-blue-800' :
+                              entry.isDeath      ? 'bg-zinc-900 border-zinc-800 text-zinc-100' :
+                              entry.isHeadline   ? 'bg-stone-100 border-stone-300 text-stone-700' :
+                              entry.isSoundtrack ? 'bg-violet-50 border-violet-200 text-violet-900' :
+                              entry.isWorld      ? 'bg-amber-50 border-amber-200 text-amber-800' :
+                              entry.isKey        ? 'bg-blue-50 border-blue-200 text-blue-800' :
                               'bg-white border-natalis-border text-natalis-dim'
                             }`}>
                               <span className="font-bold mr-2 text-xs uppercase tracking-wider opacity-60">Age {entry.age}</span>
+                              {entry.isSoundtrack && <span className="text-xs font-semibold mr-1 text-violet-500">🎵 </span>}
                               {entry.isWorld && entry.worldEventName && <span className="text-xs font-bold mr-1">🌐 {entry.worldEventName} — </span>}
-                              <span className={entry.isHeadline ? 'italic' : ''}>{entry.text}</span>
+                              <span className={entry.isHeadline || entry.isSoundtrack ? 'italic' : ''}>{entry.text}</span>
                             </div>
                           ))}
                         </>

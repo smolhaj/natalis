@@ -96,11 +96,7 @@ Partial from original spec — not yet implemented: congenital conditions at cha
 
 **1970s global texture** ✅ PARTIAL (PR #48): Oil shock 1973 periphery world event added (subsaharan/developing_urban/developing_unstable/conflict_zone), with context field. West and Gulf variants existed previously. Stagflation and post-independence disillusionment still to do.
 
-**2010s texture**:
-- Arab Spring consequences arc (expand existing)
-- Smartphone as defining generational experience: what it meant to have the internet in your pocket from age 13 (character event, 2010+)
-- Rise of populism: Brexit, Bolsonaro, Erdoğan — the experience of watching your country's politics radicalize
-- Climate anxiety as a generational identity (character event, 2015+, adolescence/young_adult)
+**2010s texture** ✅ DONE (PR #102): `events_2010s.js` (8 events). Gig economy entry arc (wealthy_west/developing_urban, 2013+, 2 choices + midlife echo); phone at the table (always_connected flag, smartphone-gated, 2012+); climate grief as generational identity (adolescence 2015+, 2 choices: activist or witness, sets `climate_generation` + optional `climate_activist`); populist fracture at the family table (2016+, 2 choices: argue/conciliate, sets `political_fracture_lived`); Occupy/inequality awakening (wealthy_west 2011–14, 2 choices); born into internet (born after 2001, 2012+); information overload / decade exhaustion (midlife 2017+); algorithm awareness (smartphone-gated, 2014+). 9 new flags registered in `flags.js`. Year-texture paths for all 4 `year_texture` flags added to `buildYearTexture()` in `gameEngine.js`.
 
 **India-specific depth**:
 - Engineering/medicine aspiration track (the specific pressure of the IIT/MBBS track)
@@ -1164,7 +1160,7 @@ Flags still orphaned that carry significant weight — add follow-through events
 
 - **The neighborhood field**: Add `neighborhood: 'informal'|'working_class'|'middle_class'|'elite'` to character state, set at creation (weighted by archetype/GDP) and modifiable by wealth thresholds during the life course. Gates a whole class of events (BUILD 32) and makes the `ruralUrban` field more granular without replacing it.
 
-- **The soundtrack layer**: One-line cultural markers injected alongside newspaper headlines — not historical events but cultural ones. "Fela Kuti's *Zombie* is banned in Nigeria." "Celine Dion's *My Heart Will Go On* is playing everywhere." No stat effects. Same implementation cost as the headline UI, doubles its power.
+- **The soundtrack layer** ✅ DONE (PR #102): `src/data/soundtrack.js` — 50 cultural markers from 1942–2023. Atmospheric cultural texture (not news): music moments, technological shifts, generational cultural events. Distinct visual treatment in life log (violet/purple with 🎵 marker). `applySoundtrack()` in `gameEngine.js` injects one matching entry per year. Entries are archetype/country/age-gated like headlines. Covers: 1940s big bands, 1950s–60s rock/television, 1970s Walkman/Fela/Marley/disco, 1980s MTV/Thriller/Live Aid, 1990s Nirvana/web/Windows 95, 2000s iTunes/Facebook/iPhone, 2010s Netflix/Greta/TikTok.
 
 - **Infrastructure arrival as a life event**: Electricity arriving in a village is one of the largest single quality-of-life changes in a person's life — and it is a one-time historical event with a specific before and after. The morning the first bulb comes on. Gate on country + ruralUrban + year (electrification rates by country are well-documented). No stat model change needed; handled as a character event with a permanent memory flag.
 
@@ -1188,7 +1184,7 @@ Flags still orphaned that carry significant weight — add follow-through events
 
 - **Letters as a UI element**: Pre-2000 characters with active relationship flags should occasionally receive a letter — formatted differently from events (indented block, italic, different prose register) from a sibling abroad, a parent, an old friend. Same event system; different visual treatment in `EventBox.jsx` via an `isLetter: true` property on the event. No new state required.
 
-- **The `legacy` field**: Add `legacy: number` (0–100) to state alongside karma and fame. Accumulates from: children raised (relationship quality), students mentored, community contributions, creative works completed, businesses that employed people. Used by `generateEpitaph` to describe what the character built that outlasts them. Currently the epitaph has no forward-looking dimension. Implementation: `p.legacy` delta in effect proxy, `G.legacy` in buildG, epitaph prose branch on `legacy > 60`, `legacy > 80`.
+- **The `legacy` field** ✅ DONE (PR #101): `legacy: 0` in `INITIAL_STATE`, `p.legacy` delta in `buildEffectProxy`, `G.legacy` in `buildG`. Accumulates via `p.legacy` in events: children arc (child surpasses you +8, child professional achievement +5), teacher arc (letter +8, life accounted +10), mentor arc (+4/+8/+6), local arc (farewell +8, transmitted +5), project arc (writing shown +6), dying arc (+5), followthrough_23 (+5), followthrough_24 (+4). `buildYearTexture()` prose paths at legacyScore ≥ 40/60/80 branching on HOW the legacy was built (teaching/mentoring/creative/parenting). `generateEpitaph` branches at legacy ≥ 80/60/40 for forward-looking dimension.
 
 ---
 
