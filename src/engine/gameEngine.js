@@ -9914,6 +9914,27 @@ function buildYearTexture(state) {
       : 'The junta governing now expelled the French and brought in Wagner. The jihadist violence that began in the north in 2012 is now in the centre and the south. You are watching the map change in ways you did not expect to watch.',
     'There are things you believed about Mali at thirty that you cannot quite believe at sixty. Not because they were false. Because you have watched too many different versions of the same story resolve in the same way.',
   ])
+  if (F.has('mali_empire_memory') && Math.random() < 0.18) return pick([
+    'Timbuktu had 25,000 university students when Paris had 200,000. You learned this in school and you have carried it in a way that is not pride exactly but something more durable than pride.',
+    'Mansa Musa distributed so much gold on his 1324 pilgrimage that the price of gold in Cairo and Alexandria did not recover for a decade. This is not a myth. The Egyptian records confirm it.',
+    phase === 'late_life'
+      ? 'You are from a place that was already great before Europe decided what "great" meant. You were told this at nine and it stayed.'
+      : 'The word "Mali" comes from the Mandinka for hippopotamus, or from the word for the place where the king lives, depending on who you ask. Either way the empire named itself.',
+  ])
+  if (F.has('mali_traore_era') && Math.random() < 0.18) return pick([
+    'Under the UDPM there was one party, one candidate, one outcome. The ballot was a formality that looked like participation. You learned very early the difference between the form of a thing and its function.',
+    'The things that could not be said were not announced as forbidden. You learned them by their absence — the conversation that stopped, the subject that changed, the question nobody asked twice.',
+    phase === 'late_life'
+      ? 'Twenty-three years of Traoré. An entire generation grew up not having seen an election. Then in 1991 they organised one in a matter of months. They already knew what they wanted. They had been deciding in silence.'
+      : 'The party had a word for everything that happened in the country. The word was always the same word: progress. The word and the thing it described were not always related.',
+  ])
+  if (F.has('mali_serval_witness') && Math.random() < 0.18) return pick([
+    'French jets flew from N\'Djamena and launched strikes in northern Mali within hours of Hollande\'s announcement. By the time the news reached Bamako it was already happening.',
+    'The people who cheered French soldiers in the streets of Bamako in January 2013 were the grandchildren of people who had marched against French rule. You noticed this. You did not resolve it. You were still glad.',
+    phase === 'late_life'
+      ? 'France expelled in 2022 by the junta it spent a decade helping stabilise. The contradiction of 2013 produced another contradiction nine years later. The Sahel keeps generating contradictions faster than they can be processed.'
+      : 'Operation Serval ended. Operation Barkhane began. Then Barkhane ended. The French presence in Mali lasted longer than the crisis it was supposed to solve and ended before the crisis did.',
+  ])
 
   // ─── ETHIOPIA TEXTURE ────────────────────────────────────────────────────────
   if (F.has('eth_abiy_generation') && Math.random() < 0.22) return pick([
