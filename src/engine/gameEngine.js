@@ -3498,6 +3498,42 @@ function buildYearTexture(state) {
       : 'The people doing it had a procedure. You had a body. The procedure did not distinguish.',
   ])
 
+  if (F.has('senegal_democracy_generation') && Math.random() < 0.22) return pick([
+    'You voted in 2000 when the alternance happened — the first peaceful transfer of power in Senegalese history. The polling station was ordinary. What it produced was not.',
+    'Alternance. The word entered the vocabulary as something that had finally been demonstrated. Wade was not everything the generation hoped for. But the transfer itself held.',
+    phase === 'late_life'
+      ? 'You have lived through enough elections now to know that the 2000 one was different — not because of who won but because of what happened when he won. The incumbent left. That was the event.'
+      : 'The democratic generation. The country that proved the transfer could be done. You carry this as a particular kind of pride — not in any leader but in the institution that survived one.',
+  ])
+  if (F.has('casamance_generation') && Math.random() < 0.22) return pick([
+    'The south. The Casamance. A name on a map that carried, for years, a particular weight in the news and in conversation.',
+    'Dakar and Ziguinchor speak the same language and have always been separated by something more than the Gambia River cutting the country in two.',
+    phase === 'late_life'
+      ? 'You lived through the years when the peace talks happened and the years when the fighting resumed. The conflict outlasted the expectation of resolution. You learned to carry it as something the country had not yet finished.'
+      : 'The Diola south and the Wolof north. The fault line has many names. The MFDC gave it one. The country has not resolved it in your lifetime.',
+  ])
+  if (F.has('sen_casamance_inside') && Math.random() < 0.22) return pick([
+    'Ziguinchor. The border town, the checkpoint town, the town that knows the sound of the bush at night. You grew up with a specific set of sounds that other Senegalese did not.',
+    'The Casamance conflict moved through your years like a weather system — worse sometimes, quiet sometimes, never fully absent.',
+    phase === 'late_life'
+      ? 'The MFDC and the army. The villages that emptied and refilled and emptied again. You watched the peace agreement of 2004 the way you watch weather in a season that has surprised you before.'
+      : 'Home is Casamance. That comes with a context — rice paddies, cashew groves, the specific music of the Diola ceremony — and it comes with a conflict that has no clean resolution.',
+  ])
+  if (F.has('teranga_household') && Math.random() < 0.2) return pick([
+    'The bowl goes down in the centre and everyone gathers. Thiéboudienne. The rice and the fish and whoever is present. The door was open and so they came.',
+    'Teranga is not a slogan. It is what happens when someone arrives with nothing arranged and is fed anyway. You have been both sides of this.',
+    phase === 'late_life'
+      ? 'You kept the door open when it would have been easier to close it. The years of guests, of extra plates, of the sleeping mat found for the cousin of a cousin. This is what you built. It outlasts the things that can be counted.'
+      : 'The household has always been bigger than the family. That has been the design and the inheritance and sometimes the exhaustion.',
+  ])
+  if (F.has('sen_intellectual_dakar') && Math.random() < 0.18) return pick([
+    'Senghor built the school he wanted to build. The generation that came after his had to work out what to do with the inheritance.',
+    'Negritude, the French language, the African philosophy that insisted on its own terms — Dakar has a particular relationship to all of this that is neither deference nor dismissal.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'The Cheikh Anta Diop University. The CODESRIA seminars. The long argument about what African intellectual life owes to France and what it owes to itself. You have spent years inside this argument.'
+      : 'You came up in a city that takes ideas seriously in a particular way — that publishes, debates, translates, argues in two languages and sometimes a third. This formed how you think.',
+  ])
+
   if (F.has('debt_recovered') && Math.random() < 0.22) return pick([
     'You are debt-free. That sentence is recent enough that it still surprises you. The years it took to be able to say it are still present in how you count things.',
     'The debt is gone. The habits the debt produced are still partly there — the checking, the careful relationship with money, the architecture built under pressure. It takes time to redesign.',

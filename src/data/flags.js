@@ -3359,6 +3359,41 @@ export const FLAG_REGISTRY = {
     intent: 'event',
     notes: 'Set by sen_melilla_fence (pushback choice). Follow-through: sen_fence_pushback_echo (ECHR ruling 2020).',
   },
+  senegal_democracy_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Witnessed Senegal\'s 2000 alternance — the peaceful transfer of power after 40 years of PS rule, Diouf shaking Wade\'s hand; one of the first democratic alternations in West Africa',
+    intent: 'year_texture',
+    notes: 'Set by sen_alternance_2000. Year texture: what it means to have seen power transferred without soldiers.',
+  },
+  casamance_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Grew up with the Casamance conflict (MFDC separatism since 1982) as background reality — from inside the region or as a distant awareness from Dakar',
+    intent: 'year_texture',
+    notes: 'Set by sen_casamance. Two branches: inside (sen_casamance_inside) or outside (Dakar awareness).',
+  },
+  sen_casamance_inside: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'From the Casamance region — lived with the low-intensity conflict, demining alerts, roadblocks, neighbours who left, the map of areas where you do not walk',
+    intent: 'year_texture',
+    notes: 'Set by sen_casamance (inside choice). Year texture: the specific geography of a region that is inside a country and also partly outside it.',
+  },
+  teranga_household: {
+    weight: 'moderate',
+    category: 'social',
+    description: 'Lives by teranga — the Wolof obligation of hospitality that exceeds cultural preference, requiring you to feed visitors and shelter family regardless of your own means',
+    intent: 'year_texture',
+    notes: 'Set by sen_teranga. Year texture: the meal that couldn\'t be spared, the debt that runs across generations.',
+  },
+  sen_intellectual_dakar: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Encountered the Dakar intellectual world — Cheikh Anta Diop, Présence Africaine, IFAN, the argument that African civilisation precedes Europe — and was changed by it',
+    intent: 'year_texture',
+    notes: 'Set by sen_dakar_intellectual. Year texture: the specific feeling of an argument that reframes everything.',
+  },
 
   // ── ADOPTEE FLAGS ─────────────────────────────────────────────────────────
 
