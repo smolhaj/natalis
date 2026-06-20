@@ -7907,6 +7907,36 @@ function buildYearTexture(state) {
     'January 1977: the bread price doubled overnight. The streets filled. Seventy-nine people died. The government re-imposed the subsidies two days later. The government backed down. That fact is a piece of information that stays.',
     'Intifadat al-haita — the uprising of the thieves, the government called it. The people who were in the streets called it bread, honour, freedom. You know which account is more accurate.',
   ])
+  if (F.has('egypt_gulf_worker') && Math.random() < 0.25) return pick([
+    phase === 'late_life'
+      ? 'The Gulf years have a specific texture in memory — the money that arrived, the separations that accumulated, the apartment in Cairo that kept changing shape while you were not in it.'
+      : 'You send the money home on the first of each month. The family is eating better. The apartment is slightly larger. You count these things against what it costs to know them from a distance.',
+    'Three weeks a year. That is the structure. The children have grown in intervals, between the weeks, in increments you receive as photographs.',
+    'The Gulf is not where you are from. It is where the work is. That distinction is clear in your mind and does not fully prevent the years from accumulating there.',
+  ])
+  if (F.has('egypt_wasta_beneficiary') && Math.random() < 0.15) return pick([
+    'The uncle\'s colleague made the call. You got the job. These two facts exist in adjacent columns in a ledger you keep without deciding to.',
+    'You know how the system works because you are inside the system. You tell yourself this is useful knowledge. It is useful knowledge.',
+  ])
+  if (F.has('egypt_wasta_blocked') && Math.random() < 0.2) return pick([
+    'The official path: eight months, two interviews, the posting to a city you didn\'t ask for. You learned what the primary operating principle was. The education had a cost.',
+    phase === 'late_life'
+      ? 'You went through the official process when the unofficial process was available to others. You are still not sure what that decision says about you. You think it says something.'
+      : 'The connection you didn\'t have is its own kind of knowledge. You understand the system from the outside. The view is specific.',
+  ])
+  if (F.has('egypt_blocked_generation') && Math.random() < 0.2) return pick([
+    'The engineering degree does not connect to the employment the way the achievement suggested it would. You have been adjusting your expectations in small increments since.',
+    phase === 'late_life'
+      ? 'The preparation and the thing the preparation was for never aligned. You built a life anyway, from different materials. The life is real.'
+      : 'Your cousin drives a taxi. He has a university degree. The taxi makes more than the government job. You think about this sometimes and stop thinking about it.',
+    'Cairo has more university graduates than it has university-graduate jobs. You are not anomalous. That fact is not as consoling as it should be.',
+  ])
+  if (F.has('coptic_navigation') && Math.random() < 0.2) return pick([
+    phase === 'late_life'
+      ? 'The church was where the community was. You know the parish families for three generations. That depth is not available to people who arrived at the national identity without your particular route into it.'
+      : 'The topography of what is and isn\'t available to you is so familiar that you only notice it when someone who doesn\'t know it asks. Then you have to explain what you have always simply known.',
+    'High military rank, interior ministry, intelligence: the places Copts do not go are also well understood. Engineering, medicine, private business: those doors are different. You know the doors.',
+  ])
 
   // ─── INDIA TEXTURE ────────────────────────────────────────────────────────────
   if (F.has('emergency_generation') && Math.random() < 0.25) return pick([
