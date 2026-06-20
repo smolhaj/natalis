@@ -224,6 +224,35 @@ export const WEST_AFRICA_EVENTS = [
     effect: null,
   },
 
+  {
+    id: 'nga_nepa_generator_culture',
+    phase: 'young_adult',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'Nigeria' &&
+      G.currentYear >= 1985 && G.currentYear <= 2015 &&
+      G.age >= 18 &&
+      !G.mem?.ngaNEPA,
+    text: '"NEPA has taken light." The phrase is embedded in daily life so completely that you know the power is going before you can confirm it has gone — from the specific stutter of the ceiling fan. The National Electric Power Authority is so reliably unreliable that Nigerians call it Never Expect Power Always. Your day organises around the generator: the diesel cost, the starting cord, the decibel level that determines whether you can sleep or work. The generator is not a backup. It is the primary system. The national grid is the backup, for the hours it works. Owning a generator, or sharing access to one, is the dividing line between two kinds of life.',
+    choices: null,
+    effect: (p) => { p.m -= 6; p.r += 4; p.addFlag('nepa_generation'); p.setMem('ngaNEPA', true) },
+  },
+
+  {
+    id: 'nga_lagos_go_slow',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Nigeria' &&
+      G.currentYear >= 1990 &&
+      G.age >= 18 &&
+      G.ruralUrban === 'urban' &&
+      !G.mem?.ngaLagosGoSlow,
+    text: 'The Lagos go-slow. You know it the way you know weather: variable but reliably present. The Third Mainland Bridge at 7am. The Apongbon junction at 5pm. A trip that should take twenty minutes takes two hours without any particular reason — a stalled danfo, a junction where the traffic lights have not worked in three years, a truck blocking two lanes while its driver argues with another driver. The hawkers work the stalled traffic: water sachets, newspapers, phone chargers, cooked corn, fan ice. They are more efficient than anything else moving on the road. You buy from them. The car is not moving. There is time.',
+    choices: null,
+    effect: (p) => { p.m -= 4; p.r += 3; p.addFlag('lagos_go_slow_generation'); p.setMem('ngaLagosGoSlow', true) },
+  },
+
   // ═══════════════════════════════════════════════════════════════════════
   // GHANA — depth events
   // ═══════════════════════════════════════════════════════════════════════

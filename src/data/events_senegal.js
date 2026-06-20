@@ -22,7 +22,7 @@ export const SENEGAL_EVENTS = [
     id: 'sen_marabout_authority',
     phase: 'midlife',
     weight: 3,
-    when: (G) => IS_SENEGAL(G) && G.flags.has('mouride_member') && G.age >= 30 && !G.mem.senMarabout,
+    when: (G) => IS_SENEGAL(G) && G.flags.includes('mouride_member') && G.age >= 30 && !G.mem.senMarabout,
     text: 'Your marabout has advised against the business partnership. He has not explained why. You have known him since childhood; his father knew your father. The partnership would double your income in two years, on conservative numbers. You sit with the advice and the numbers for a week. In the end you do not take the partnership. Six months later your would-be partner is in a dispute with the tax authority that would have consumed you both.',
     choices: [
       {
@@ -44,7 +44,7 @@ export const SENEGAL_EVENTS = [
     id: 'sen_diaspora_dahira',
     phase: 'young_adult',
     weight: 3,
-    when: (G) => G.flags.has('mouride_member') && G.flags.has('emigrated') && G.age >= 22 && G.age <= 40 && !G.mem.senDiaspora,
+    when: (G) => G.flags.includes('mouride_member') && G.flags.includes('emigrated') && G.age >= 22 && G.age <= 40 && !G.mem.senDiaspora,
     text: 'The dahira meets every two weeks in an apartment in the Bronx, or Marseille, or Milan. It is a savings circle and a prayer group and a mutual aid network and a connection to Touba that does not require being in Touba. You contribute a fixed amount each meeting. The community pools it and sends a portion to the brotherhood, and keeps a portion for members in difficulty. The state doesn\'t know it exists. It doesn\'t need to.',
     effect: (p) => { p.m += 8; p.karma += 6; p.addFlag('diaspora_community_built'); p.setMem('senDiaspora', true) },
   },
@@ -106,7 +106,7 @@ export const SENEGAL_EVENTS = [
     phase: 'young_adult',
     weight: 4,
     when: (G) =>
-      G.flags.has('sen_morocco_transit') &&
+      G.flags.includes('sen_morocco_transit') &&
       G.currentYear >= 2000 && G.currentYear <= 2020 &&
       !G.mem.senNadorForest,
     text: 'The camp is in the forest above Nador, two kilometres from the fence at Melilla. A hundred people, sometimes three hundred, from Senegal, Guinea, Cameroon, Niger — sleeping under plastic sheeting and cooking on fires. Moroccan police come periodically; the camp is dismantled and rebuilt. Some people have been here eight months. A man from Conakry has been here fourteen months. The fence is visible from the high ground: six metres of steel mesh, razor wire on top, a second fence inside. Spanish police on the other side, Moroccan police on yours. You wait for a night when enough people are ready to go at once.',
@@ -132,7 +132,7 @@ export const SENEGAL_EVENTS = [
     phase: 'young_adult',
     weight: 4,
     when: (G) =>
-      G.flags.has('sen_melilla_attempt') &&
+      G.flags.includes('sen_melilla_attempt') &&
       !G.mem.senMelillaFence,
     text: 'Two hundred people run out of the forest at three in the morning. The sound is not silence and not chaos — it is the sound of people who have agreed to do something that may not work. You get to the outer fence and start climbing. The razor wire opens your hands and your legs. Above you, people are going over. Below, people are falling. The Spanish civil guard is on the other side with rubber bullets. The Moroccan auxiliaries are behind you with batons. You are at the top of the fence.',
     choices: [
@@ -159,7 +159,7 @@ export const SENEGAL_EVENTS = [
     phase: 'midlife',
     weight: 2,
     when: (G) =>
-      G.flags.has('sen_fence_pushback') &&
+      G.flags.includes('sen_fence_pushback') &&
       G.age >= 30 &&
       !G.mem.senFencePushbackEcho,
     text: 'The European Court of Human Rights rules in 2020 that Spain\'s policy of "immediate return" at Melilla and Ceuta violates the prohibition on collective expulsion. The ruling comes years after the night you fell from the fence. What happened to you had a name, a legal category, a judgment. The judges in Strasbourg decided it was wrong. You are not sure what to do with that.',
@@ -174,5 +174,82 @@ export const SENEGAL_EVENTS = [
     when: (G) => IS_SENEGAL(G) && G.currentYear >= 1950 && G.currentYear <= 1980 && G.stats.smarts >= 55 && G.age >= 10 && !G.mem.senGoree,
     text: 'The William Ponty school, or its successor, or the system it became: the best-educated generation in West Africa, trained in French, shaped by Senghor\'s Négritude. You read French poetry and write essays on African philosophy in a language that is not African. The contradiction is the education. You graduate with tools that open doors in Paris and in Dakar, and a specific ambivalence about who those tools were made for.',
     effect: (p) => { p.m += 5; p.e += 4; p.addFlag('francophone_educated'); p.setMem('senGoree', true) },
+  },
+
+  // ── ALTERNANCE 2000 ──────────────────────────────────────────────────────────
+
+  {
+    id: 'sen_alternance_2000',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      IS_SENEGAL(G) &&
+      G.currentYear >= 2000 && G.currentYear <= 2001 &&
+      G.age >= 16 &&
+      !G.mem?.senAlternance,
+    text: 'March 19, 2000. Abdoulaye Wade wins the presidential election. The Parti Socialiste, which has governed Senegal for forty years — since independence — concedes the result and leaves power. Diouf shakes Wade\'s hand. This is called alternance: the alternation. The new word for a new thing in West African politics, where leaders are not usually replaced this way. You are watching this on a television in a compound in Dakar or Saint-Louis, and the watching is different from watching any election you have watched before, because this one changed something.',
+    choices: null,
+    effect: (p) => { p.m += 10; p.e += 2; p.addFlag('senegal_democracy_generation'); p.setMem('senAlternance', true); },
+  },
+
+  // ── CASAMANCE ────────────────────────────────────────────────────────────────
+
+  {
+    id: 'sen_casamance',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      IS_SENEGAL(G) &&
+      G.currentYear >= 1985 && G.currentYear <= 2010 &&
+      G.age >= 16 &&
+      !G.mem?.senCasamance,
+    text: 'The Casamance region is cut off from the rest of Senegal by the Gambia. It is also Catholic and Diola-speaking in a country that is Muslim and Wolof-speaking. The MFDC — the Mouvement des Forces Démocratiques de la Casamance — has been fighting for independence since 1982. The war is a low-intensity conflict that most Senegalese in Dakar are aware of the way you are aware of a recurring low-grade illness: it is always there, it disrupts the region, it occasionally flares. People are dying in Ziguinchor. The peace negotiations have been ongoing for twenty years.',
+    choices: [
+      {
+        text: 'You are from Casamance. The conflict is your daily reality.',
+        tag: 'Inside',
+        outcome: 'The roadblocks, the demining alerts, the neighbours who left and did not return. You grew up knowing the map of the region includes areas where you do not walk.',
+        effect: (p) => { p.m -= 10; p.r += 6; p.addFlag('casamance_generation'); p.addFlag('sen_casamance_inside'); p.setMem('senCasamance', true); },
+      },
+      {
+        text: 'You are from Dakar. Casamance is the south of the country and a different country.',
+        tag: 'Outside',
+        outcome: 'The north and the south of Senegal hold each other at a distance that is partly geographic and partly political and partly something that has not been named.',
+        effect: (p) => { p.m -= 3; p.addFlag('casamance_generation'); p.setMem('senCasamance', true); },
+      },
+    ],
+  },
+
+  // ── TERANGA ──────────────────────────────────────────────────────────────────
+
+  {
+    id: 'sen_teranga',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      IS_SENEGAL(G) &&
+      G.age >= 30 &&
+      !G.mem?.senTeranga,
+    text: 'Teranga. The word is Wolof for hospitality, generosity, welcome — but "hospitality" doesn\'t carry the obligation. Teranga is not a preference or a cultural value. It is closer to a moral requirement that operates regardless of whether you can afford it. The visitor is fed. The family member who arrives with nothing stays until they have something. The compound always has space. You have given meals you could not spare and shelter you needed yourself. The accounting of teranga runs differently from the accounting of money — the debts are social rather than financial and they extend across generations.',
+    choices: null,
+    effect: (p) => { p.m += 6; p.karma += 4; p.s += 2; p.addFlag('teranga_household'); p.setMem('senTeranga', true); },
+  },
+
+  // ── DAKAR INTELLECTUAL WORLD ─────────────────────────────────────────────────
+
+  {
+    id: 'sen_dakar_intellectual',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      IS_SENEGAL(G) &&
+      G.ruralUrban === 'urban' &&
+      G.currentYear >= 1960 && G.currentYear <= 2005 &&
+      G.stats.smarts >= 60 &&
+      G.age >= 18 && G.age <= 35 &&
+      !G.mem?.senDakarIntellectual,
+    text: 'Dakar in the 1960s, 1970s, 1980s: the publishing houses, the IFAN library with its archive of everything that Africa produced that Europe decided to store in Paris, the Présence Africaine bookshop that Senghor and Aimé Césaire built the idea of. Cheikh Anta Diop arguing that Egypt was African, that the pharaohs were Black, that the origins of European civilisation are African — this is not a comfortable argument to make in a city where the French still have cultural institutions. You read these arguments in a café in the Medina and you are changed by them in a way you can feel but cannot yet explain.',
+    choices: null,
+    effect: (p) => { p.e += 5; p.m += 3; p.addFlag('sen_intellectual_dakar'); p.setMem('senDakarIntellectual', true); },
   },
 ]

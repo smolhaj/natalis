@@ -1548,6 +1548,40 @@ function buildYearTexture(state) {
     ])
   }
 
+  // ─── SONDER GLIMPSE ──────────────────────────────────────────────────────────
+  // Rare: once every ~10 years, a brief pan to a stranger's life.
+  // Not a mechanic — just the accidental glimpse that sonder is made of.
+  // Per the design: "the person at the next table, the light on in the apartment above."
+
+  const lastSonderAge = mem?.sonderGlimpseAge ?? -99
+  if (age >= 12 && (age - lastSonderAge) >= 8 && Math.random() < 0.18) {
+    if (!state.mem) state.mem = {}
+    state.mem.sonderGlimpseAge = age
+    const sonderPool = (phase === 'late_life') ? [
+      'The young man on the bus has the posture of someone at the start of something large. You can see approximately where it goes from here. You do not tell him.',
+      'You pass a lit window at eleven at night — someone reading in a chair, a lamp beside them, an entire life inside that apartment that has its own complete history.',
+      'The couple across the café has been eating in silence for twenty minutes and neither of them looks unhappy. You have been watching without meaning to.',
+      'An old woman is feeding pigeons with complete attention. Her whole afternoon is this. You wonder what the rest of her days look like and then you stop wondering and keep walking.',
+    ] : (phase === 'midlife') ? [
+      'At a stoplight: the man in the car beside yours, your age, looking straight ahead at something that is not the intersection. You recognize the posture.',
+      'The woman at the coffee counter has been smiling at customers for four hours. Something that is not the smile is happening behind it. You tip and leave.',
+      'Your neighbor\'s door opens and closes at two in the morning. You don\'t know what schedule that belongs to. You have been curious about it for months and will never ask.',
+      'A couple at the restaurant is not speaking — not in the bad way, in the other way. The specific silence of people who don\'t need to. You watch them for a moment without meaning to.',
+      'The man on the train has been looking at a photograph on his phone for the past four stops. He does not scroll. He has been looking at the same image since before you sat down.',
+    ] : (phase === 'young_adult') ? [
+      'The person who has the desk across from yours: you know what they eat for lunch and nothing else about them. An entire life is visible from there and inaccessible.',
+      'Your neighbor comes home at the same time every night. You know this the way you know everything about people you have never spoken to — by the sound of it through the wall.',
+      'A woman on the platform is crying without covering her face. No one speaks to her. The train comes and she gets on. You will never know what that was.',
+      'The man at the next table has been looking at his phone without touching it for twenty minutes. Something is happening inside his life that has a shape you don\'t know.',
+    ] : [
+      'A child at the other end of the street is doing something by themselves, absorbed completely. You watch them for a moment. The whole afternoon is in it.',
+      'Someone in the apartment above yours walks the same path every evening. You know the route from the sound of it through the ceiling. You don\'t know their name.',
+      'You overhear one side of a phone call through a wall. The emotional content is clear; the facts are missing. Someone nearby is having a hard week.',
+      'An old man on the bench outside the market is watching the street with the patience of someone who has done this for a long time. You don\'t know what he is watching for.',
+    ]
+    return pick(sonderPool)
+  }
+
   // ─── GIFTED ARC TEXTURE ──────────────────────────────────────────────────────
 
   const isGiftedChar = F.has('born_gifted_intellectual') || F.has('born_gifted_musical') ||
@@ -1957,6 +1991,14 @@ function buildYearTexture(state) {
       'The second child cost money and social standing. The child exists. The cost was paid.',
       'You kept the second child. The system had opinions about this. You had the child anyway.',
     ])
+    if (F.has('china_hidden_second_child') && Math.random() < 0.3) return pick([
+      F.has('china_heihaizi_registered')
+        ? 'The ID card arrived. You are still adjusting to a version of your child who exists on paper the same way they exist in the room.'
+        : 'The child has no number in any registry. The government\'s version of the household does not include them. Your version does.',
+      phase === 'late_life'
+        ? 'The years of the second child before the registration window. You can still locate the specific texture of the waiting.'
+        : 'When someone asks how many children you have, the pause before you answer is very small. Not everyone can hear it.',
+    ])
     if (F.has('great_leap_hunger') && Math.random() < 0.35) return pick([
       'The famine years are carried as a particular knowledge of the body — the body knows what permanent hunger is. It does not forget.',
       'The 1959 harvest. The quota that was met while the village starved. You were a child and the lesson was not intended for you. You learned it anyway.',
@@ -2083,6 +2125,23 @@ function buildYearTexture(state) {
       phase === 'midlife' || phase === 'late_life'
         ? 'The Han River miracle, from inside it. Your parents\' generation built the infrastructure. You built the technology. The children are asking what the building cost.'
         : 'You are the first generation for whom the poverty your grandparents knew is history rather than memory. That gap — between memory and history — is the whole distance of the miracle.',
+    ])
+    if (F.has('sampo_generation') && (phase === 'young_adult' || phase === 'midlife') && Math.random() < 0.35) return pick([
+      'The apartment costs twelve years of a starting salary. The calculation is the same every time you run it.',
+      'Sampo — three abandonments. Romance, marriage, children. The number keeps expanding. Employment now. Housing. Social relationships. Each year the list grows.',
+      phase === 'midlife'
+        ? 'Looking back at the years of making the calculation: whether the cost of the things foregone is visible now, or still being deferred.'
+        : 'You are not unique in this arithmetic. The country does the arithmetic collectively and calls the result a birth rate problem. You are living inside the problem.',
+    ])
+    if (F.has('june_struggle_generation') && Math.random() < 0.2) return pick([
+      'June 29, 1987. The statement. The things that were treated as permanent turned out not to have been. You were there when this became clear.',
+      'Lee Han-yeol. The photograph. The office workers who came out into the street. The month when it turned.',
+    ])
+    if (F.has('gwangju_witness') && Math.random() < 0.2) return pick([
+      'May 1980. The suppressed account and the real account. You knew the difference before the country was ready to admit the difference publicly.',
+      phase === 'late_life'
+        ? 'May 18. The country has acknowledged it formally now. The formal acknowledgment is not the same as the memory of not being able to say it.'
+        : 'The nine days. The paratroopers. The citizens with the rifles. What you understood about the government you lived under, at the moment you understood it.',
     ])
   }
 
@@ -3439,6 +3498,42 @@ function buildYearTexture(state) {
       : 'The people doing it had a procedure. You had a body. The procedure did not distinguish.',
   ])
 
+  if (F.has('senegal_democracy_generation') && Math.random() < 0.22) return pick([
+    'You voted in 2000 when the alternance happened — the first peaceful transfer of power in Senegalese history. The polling station was ordinary. What it produced was not.',
+    'Alternance. The word entered the vocabulary as something that had finally been demonstrated. Wade was not everything the generation hoped for. But the transfer itself held.',
+    phase === 'late_life'
+      ? 'You have lived through enough elections now to know that the 2000 one was different — not because of who won but because of what happened when he won. The incumbent left. That was the event.'
+      : 'The democratic generation. The country that proved the transfer could be done. You carry this as a particular kind of pride — not in any leader but in the institution that survived one.',
+  ])
+  if (F.has('casamance_generation') && Math.random() < 0.22) return pick([
+    'The south. The Casamance. A name on a map that carried, for years, a particular weight in the news and in conversation.',
+    'Dakar and Ziguinchor speak the same language and have always been separated by something more than the Gambia River cutting the country in two.',
+    phase === 'late_life'
+      ? 'You lived through the years when the peace talks happened and the years when the fighting resumed. The conflict outlasted the expectation of resolution. You learned to carry it as something the country had not yet finished.'
+      : 'The Diola south and the Wolof north. The fault line has many names. The MFDC gave it one. The country has not resolved it in your lifetime.',
+  ])
+  if (F.has('sen_casamance_inside') && Math.random() < 0.22) return pick([
+    'Ziguinchor. The border town, the checkpoint town, the town that knows the sound of the bush at night. You grew up with a specific set of sounds that other Senegalese did not.',
+    'The Casamance conflict moved through your years like a weather system — worse sometimes, quiet sometimes, never fully absent.',
+    phase === 'late_life'
+      ? 'The MFDC and the army. The villages that emptied and refilled and emptied again. You watched the peace agreement of 2004 the way you watch weather in a season that has surprised you before.'
+      : 'Home is Casamance. That comes with a context — rice paddies, cashew groves, the specific music of the Diola ceremony — and it comes with a conflict that has no clean resolution.',
+  ])
+  if (F.has('teranga_household') && Math.random() < 0.2) return pick([
+    'The bowl goes down in the centre and everyone gathers. Thiéboudienne. The rice and the fish and whoever is present. The door was open and so they came.',
+    'Teranga is not a slogan. It is what happens when someone arrives with nothing arranged and is fed anyway. You have been both sides of this.',
+    phase === 'late_life'
+      ? 'You kept the door open when it would have been easier to close it. The years of guests, of extra plates, of the sleeping mat found for the cousin of a cousin. This is what you built. It outlasts the things that can be counted.'
+      : 'The household has always been bigger than the family. That has been the design and the inheritance and sometimes the exhaustion.',
+  ])
+  if (F.has('sen_intellectual_dakar') && Math.random() < 0.18) return pick([
+    'Senghor built the school he wanted to build. The generation that came after his had to work out what to do with the inheritance.',
+    'Negritude, the French language, the African philosophy that insisted on its own terms — Dakar has a particular relationship to all of this that is neither deference nor dismissal.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'The Cheikh Anta Diop University. The CODESRIA seminars. The long argument about what African intellectual life owes to France and what it owes to itself. You have spent years inside this argument.'
+      : 'You came up in a city that takes ideas seriously in a particular way — that publishes, debates, translates, argues in two languages and sometimes a third. This formed how you think.',
+  ])
+
   if (F.has('debt_recovered') && Math.random() < 0.22) return pick([
     'You are debt-free. That sentence is recent enough that it still surprises you. The years it took to be able to say it are still present in how you count things.',
     'The debt is gone. The habits the debt produced are still partly there — the checking, the careful relationship with money, the architecture built under pressure. It takes time to redesign.',
@@ -3453,6 +3548,61 @@ function buildYearTexture(state) {
     phase === 'midlife'
       ? 'The path you found by going around was longer than the direct one would have been. It also taught you things the direct one would not have. That is a real exchange, not a consolation.'
       : 'You navigated the gender barrier and found a route. The route is narrower than what was available to others. The gift does not care about the width of the route.',
+  ])
+
+  // ─── LOCAL SIGNIFICANCE ARC TEXTURE ─────────────────────────────────────────
+
+  if (F.has('local_hero') && Math.random() < 0.22) return pick([
+    'You are known here. Not broadly, not in the way that travels. In the way that means someone stops you outside the post office to ask your opinion on something they have already decided.',
+    'Local. The word once felt limiting. Now it feels like the right size — the radius within which you can actually be useful.',
+    phase === 'late_life'
+      ? 'You are the person people point to when they explain the neighbourhood to someone new. This is not something you planned.'
+      : 'The trust that accumulates in this direction is slower to build than the other kind and more durable once built.',
+  ])
+
+  if (F.has('local_trusted') && Math.random() < 0.20) return pick([
+    'Someone sat across from you this week with a problem that isn\'t your job. You listened and said the three useful things and they left in a different state than they arrived. This happens with some regularity now.',
+    'The unofficial role: the person who knows where the official channels are and what they will not do for you.',
+    phase === 'late_life'
+      ? 'You have been the person people come to with the problems they cannot bring to a doctor or a lawyer or the police. This has cost you things. It has also given you something that money does not easily purchase.'
+      : 'What you know about the people in this neighbourhood — held in confidence, used to help, never repeated — would fill a record.',
+  ])
+
+  if (F.has('local_achievement') && Math.random() < 0.18) return pick([
+    'The thing you built is still being used. Nobody remembers the specifics of how it was made, which is exactly right.',
+    phase === 'midlife'
+      ? 'You did a thing that needed doing in the place where it needed doing. This turns out to be rarer than you assumed when you started.'
+      : 'The improvement is now simply the way things are. The baseline shifted because of work you did, and the new baseline no longer carries your name.',
+  ])
+
+  if (F.has('community_healer') && Math.random() < 0.20) return pick([
+    'Someone came to the door last night. You keep a bag ready. You have learned what you can learn from books and from doing it and from the things you got wrong.',
+    'The gap between what you know and what they need is the permanent condition of this work. You have made peace with it not being a gap you can close.',
+    phase === 'late_life'
+      ? 'You have not counted how many times. It became uncountable after a certain point and that was right. It was always about the specific person in front of you, not the accumulation.'
+      : 'There is no one else within the distance they can travel. You are not the right person for this. You are the available person, which is not the same thing and has to function as if it were.',
+  ])
+
+  if (F.has('local_memory_keeper') && Math.random() < 0.18) return pick([
+    'You know what this place was before it was what it is now. The layer underneath the visible layer. Not many people here do.',
+    'You have been writing the names down. The house. The tree. The family that left in 1978 and the one that arrived. The record is not complete and never will be and matters anyway.',
+    phase === 'late_life'
+      ? 'You are the memory now. The things that exist only in your recall because the people who could corroborate them are gone. This is a responsibility you did not ask for and would not give up.'
+      : 'Local history is the kind that the archives don\'t keep. You are keeping it.',
+  ])
+
+  if (F.has('local_coach_legacy') && Math.random() < 0.18) return pick([
+    'One of them became a teacher. One of them runs a business in another city. One of them is raising children the same way you coached them. You know this from the messages you occasionally receive.',
+    phase === 'late_life'
+      ? 'What you built was not the wins. The wins are in the record and the record means less than you thought it would. What you built is the person the 16-year-old became at 40.'
+      : 'You coached them. Some of them are still playing. Some of them are coaching their own children. The thing you started is still moving forward by the time you have stopped.',
+  ])
+
+  if (F.has('local_legacy_rooted') && Math.random() < 0.18) return pick([
+    'You stepped back and could see it. The thing you made by being consistently present in one place for a long time. The shape of it was invisible from inside.',
+    phase === 'late_life'
+      ? 'People still speak of the years when you ran it. The edge is wearing off the specifics of what you actually did, but the fact of it is still there — a shape in the community\'s memory that outlasted the details.'
+      : 'You left something behind you when you stepped back. Not a monument. A practice. The way a thing continues to be done.',
   ])
 
   // ─── FOLLOW-THROUGH COMPLETION FLAG TEXTURE ──────────────────────────────────
@@ -6066,24 +6216,74 @@ function buildYearTexture(state) {
 
   // ─── LEGACY TEXTURE ──────────────────────────────────────────────────────────
   // Prose for characters who have accumulated significant legacy score.
-  // Only in midlife/late_life; only when legacy is meaningfully high; low probability.
+  // Flag-aware: branches on HOW the legacy was built (teaching/mentoring/creative/parenting).
   const legacyScore = state.legacy ?? 0
-  if (legacyScore >= 60 && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.2) {
+  if (legacyScore >= 40 && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.22) {
+    const legacyViaTeaching = F.has('teacher_letter_received') || F.has('teacher_life_accounted')
+    const legacyViaMentor = F.has('is_mentor')
+    const legacyViaCreative = mem?.projWritingShown || F.has('art_shown_late') || F.has('proj_writing_shown')
+    const legacyViaChildren = mem?.childSurpassesYou
+
     if (legacyScore >= 80) {
-      return pick([
-        'There are people in the world whose lives went differently because of what you did or said or made available. You know this. Most of the time you do not think about it. Sometimes you do.',
-        'The mentoring, the teaching, the work you put into the world — it is out there doing things you can\'t track. That is what it means to have built something.',
+      if (legacyViaTeaching) return pick([
+        'There are teachers in the world who learned to teach from you. The line from your classroom goes further than you can see.',
         phase === 'late_life'
-          ? 'You leave rooms and the rooms remember you. You have made things that outlast the making. That is not nothing. You have begun to let yourself know this.'
+          ? 'Forty years of rooms. Some faces come back without warning. What you gave those faces is still going somewhere.'
+          : 'The letter arrived and said what those years were for. You have not stopped thinking about it.',
+        'The student you almost gave up on became someone. That is not a coincidence. You know this without taking too much credit for it.',
+      ])
+      if (legacyViaMentor) return pick([
+        'The people you brought along are somewhere out ahead of you now. Some of them you track; some you have lost to distance and time.',
+        phase === 'late_life'
+          ? 'You can trace the line from your work to people you will never meet — the mentee\'s mentee, the colleague your protégé trained. That line is real even when you can\'t see it.'
+          : 'You have given a considerable amount of yourself to other people\'s development. The return on that is in the world doing things you can\'t fully track.',
+        'The investment in people is harder to count than money. It is also harder to lose.',
+      ])
+      if (legacyViaCreative) return pick([
+        'What you made is out there. It exists independently of you now. Other people have their version of it, which is different from yours.',
+        phase === 'late_life'
+          ? 'Something you made has a life of its own that you cannot supervise. That is what making is for.'
+          : 'The work you put into the world is there, doing whatever it does when you are not watching it.',
+        'You didn\'t make it for the reaction. The reaction is still something you notice.',
+      ])
+      if (legacyViaChildren) return pick([
+        'Your child has surpassed you — in the good way, the way that means the work passed through you and didn\'t stop.',
+        phase === 'late_life'
+          ? 'They are further along than you were at their age. That was the goal, unnamed. You can name it now.'
+          : 'You watch what they do with what you gave them. They do more with it than you expected. That is the accounting.',
+      ])
+      return pick([
+        'There are people in the world whose lives went differently because of what you did or said or made available. You know this. Most of the time you do not think about it.',
+        'The work you put into the world — it is out there doing things you can\'t track. That is what it means to have built something.',
+        phase === 'late_life'
+          ? 'You leave rooms and the rooms remember you. You have made things that outlast the making. You have begun to let yourself know this.'
           : 'What you have given — the hours, the attention, the things you know and passed on — is accumulating in people you may not see clearly for years.',
       ])
     }
+
+    if (legacyScore >= 60) {
+      if (legacyViaTeaching) return pick([
+        'You can remember specific students who changed, or who you helped change. The names are specific. The names stay.',
+        'Teaching is investment with a delayed return, distributed across people. The accounting is slow and usually invisible.',
+      ])
+      if (legacyViaMentor) return pick([
+        'There are people carrying a way of approaching the work that you gave them — without them knowing you gave it.',
+        'The investment in other people\'s development is not visible in any particular account. It is visible in the people.',
+      ])
+      return pick([
+        'There are people carrying something you gave them — a skill, a way of approaching things, a word spoken at the right time. You don\'t always know who.',
+        'The investment in other people is not lost. It doesn\'t look like a return. It is one.',
+        phase === 'late_life'
+          ? 'The traces you have left are not monuments. They are in people. That is a better place for them.'
+          : 'You have put things into the world that the world is keeping. You are not always sure you understand the accounting of that.',
+      ])
+    }
+
+    // 40–59: early awareness that something has been given
     return pick([
-      'There are people carrying something you gave them — a skill, a way of approaching things, a word spoken at the right time. You don\'t always know who.',
-      'The investment in other people is not lost. It doesn\'t look like a return. It is one.',
       phase === 'late_life'
-        ? 'The traces you have left are not monuments. They are in people. That is a better place for them.'
-        : 'You have put things into the world that the world is keeping. You are not always sure you understand the accounting of that.',
+        ? 'You have given things that were taken forward. Most of them you can\'t track. Some of them you can.'
+        : 'Something you built or taught or gave has a life outside you now. The amount is small. It is real.',
     ])
   }
 
@@ -6843,6 +7043,12 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'The Ayotzinapa case produced multiple versions of the official account and the contradictions between them are documented. The families produced a counter-investigation. Both are in the record. The forty-three are still not in the record.'
       : 'The disappearance was 2014. Each year that passes is a year the accountability has not arrived. You count the years.',
+  ])
+  if (F.has('mexico_earthquake_1985_witness') && Math.random() < 0.2) return pick([
+    'The brigadas de rescate formed without orders. People dug in the rubble before anyone told them to. That sequence — the citizens before the government — is something the city carried forward.',
+    phase === 'late_life'
+      ? 'The 1985 earthquake is a before-and-after in Mexico City in ways that the official history understates. The city that rebuilt itself was not the same city as before. It learned something about what it could do without being told.'
+      : 'September 19, 1985. The shaking was two minutes. The silence after the shaking was something else entirely. Then the people came out.',
   ])
   if (F.has('mex_2017_earthquake_generation') && Math.random() < 0.2) return pick([
     'The bucket chain: a person at the rubble passed a piece of debris back, and behind them another person, and behind them another, back to where there was space. The city organized itself in an hour.',
@@ -7858,6 +8064,36 @@ function buildYearTexture(state) {
   if (F.has('egypt_bread_generation') && Math.random() < 0.2) return pick([
     'January 1977: the bread price doubled overnight. The streets filled. Seventy-nine people died. The government re-imposed the subsidies two days later. The government backed down. That fact is a piece of information that stays.',
     'Intifadat al-haita — the uprising of the thieves, the government called it. The people who were in the streets called it bread, honour, freedom. You know which account is more accurate.',
+  ])
+  if (F.has('egypt_gulf_worker') && Math.random() < 0.25) return pick([
+    phase === 'late_life'
+      ? 'The Gulf years have a specific texture in memory — the money that arrived, the separations that accumulated, the apartment in Cairo that kept changing shape while you were not in it.'
+      : 'You send the money home on the first of each month. The family is eating better. The apartment is slightly larger. You count these things against what it costs to know them from a distance.',
+    'Three weeks a year. That is the structure. The children have grown in intervals, between the weeks, in increments you receive as photographs.',
+    'The Gulf is not where you are from. It is where the work is. That distinction is clear in your mind and does not fully prevent the years from accumulating there.',
+  ])
+  if (F.has('egypt_wasta_beneficiary') && Math.random() < 0.15) return pick([
+    'The uncle\'s colleague made the call. You got the job. These two facts exist in adjacent columns in a ledger you keep without deciding to.',
+    'You know how the system works because you are inside the system. You tell yourself this is useful knowledge. It is useful knowledge.',
+  ])
+  if (F.has('egypt_wasta_blocked') && Math.random() < 0.2) return pick([
+    'The official path: eight months, two interviews, the posting to a city you didn\'t ask for. You learned what the primary operating principle was. The education had a cost.',
+    phase === 'late_life'
+      ? 'You went through the official process when the unofficial process was available to others. You are still not sure what that decision says about you. You think it says something.'
+      : 'The connection you didn\'t have is its own kind of knowledge. You understand the system from the outside. The view is specific.',
+  ])
+  if (F.has('egypt_blocked_generation') && Math.random() < 0.2) return pick([
+    'The engineering degree does not connect to the employment the way the achievement suggested it would. You have been adjusting your expectations in small increments since.',
+    phase === 'late_life'
+      ? 'The preparation and the thing the preparation was for never aligned. You built a life anyway, from different materials. The life is real.'
+      : 'Your cousin drives a taxi. He has a university degree. The taxi makes more than the government job. You think about this sometimes and stop thinking about it.',
+    'Cairo has more university graduates than it has university-graduate jobs. You are not anomalous. That fact is not as consoling as it should be.',
+  ])
+  if (F.has('coptic_navigation') && Math.random() < 0.2) return pick([
+    phase === 'late_life'
+      ? 'The church was where the community was. You know the parish families for three generations. That depth is not available to people who arrived at the national identity without your particular route into it.'
+      : 'The topography of what is and isn\'t available to you is so familiar that you only notice it when someone who doesn\'t know it asks. Then you have to explain what you have always simply known.',
+    'High military rank, interior ministry, intelligence: the places Copts do not go are also well understood. Engineering, medicine, private business: those doors are different. You know the doors.',
   ])
 
   // ─── INDIA TEXTURE ────────────────────────────────────────────────────────────
@@ -9628,6 +9864,87 @@ function buildYearTexture(state) {
     'The line across the middle of the country. The zone of confidence. Abidjan in the south, Bouaké in the north, French troops and UN peacekeepers in the middle. You learned to navigate a country that had become two.',
     'The ceasefire line ran across the country for nine years. The things that crossed it — goods, people, phone signals — all crossed under specific conditions that you knew.',
   ])
+  if (F.has('ci_cocoa_farmer') && Math.random() < 0.22) return pick([
+    'The cocoa pods take four years from planting to harvest. You planted trees whose fruit you did not eat for four years and then harvested them for thirty. The patience required by a cocoa farm is not a patience anyone teaches. It accumulates.',
+    'The fermenting beans spread on mats in the sun. The smell is specific and not pleasant and entirely associated with income. You will always know it.',
+    phase === 'late_life'
+      ? 'Ivory Coast has grown a third of the world\'s cocoa for your entire adult life. The price was set in London. The crop was grown here. The gap between those two facts is where your margin lived.'
+      : 'Good years: a concrete block room added to the house. Bad years: the calculation of what can be deferred. The cocoa doesn\'t know which year it is.',
+  ])
+  if (F.has('ci_houphouet_witness') && Math.random() < 0.18) return pick([
+    'His photograph was in every classroom and government office for thirty-three years. When he died the photographs did not come down immediately. They stayed on the walls while the question of what came next was being decided.',
+    phase === 'late_life'
+      ? 'Houphouët-Boigny never confirmed his birth year. He may have been eighty-eight. He may have been older. He ruled for thirty-three years and the country had built itself around the assumption that he would continue.'
+      : 'December 7 1993. The succession had not been openly prepared. Bédié announced it on television before the army was consulted. The army noticed.',
+  ])
+  if (F.has('ci_coup_1999_witness') && Math.random() < 0.18) return pick([
+    'General Guéï\'s coup lasted fourteen months. He organised an election and then announced himself the winner. The streets of Abidjan filled and he left the country before morning. The system worked, in the way that systems sometimes work unexpectedly.',
+    phase === 'late_life'
+      ? 'Three coups: 1999, the 2002 civil war, the 2010 crisis. Each one produced a different arrangement of the same underlying question about who belongs in the country.'
+      : 'The Christmas Eve coup. The radio announcement after midnight. By morning the junta had a name and had excluded Ouattara again from the candidate list. The method changed. The result repeated.',
+  ])
+  if (F.has('ci_abidjan_generation') && Math.random() < 0.20) return pick([
+    'The lagoon at the centre of the city. The Plateau on one side, Treichville on the other, the bridges between them navigated daily. The city holds two versions of itself in the same geography.',
+    'The gbaka minibuses in traffic. The driver and the apprentice who collects the money. The routes that are not written on maps but known by the people who need them.',
+    phase === 'late_life'
+      ? 'Abidjan was called the Paris of West Africa in the years when that meant something different from what it means now. The description was comparison. It was also aspiration. Both were true at the same time.'
+      : 'The Treichville market at six in the morning: plantain, cloth, phone credit, the specific smell of wood fires and drain water. The market before the heat. This is the city before it is the city.',
+  ])
+  if (F.has('ci_election_crisis_witness') && Math.random() < 0.22) return pick([
+    'The Constitutional Council annulled the results after the Independent Electoral Commission announced them. The entire international community recognised Ouattara. Gbagbo had the army. The country waited to see what those facts resolved into.',
+    F.has('ci_election_displaced')
+      ? 'You were not in Abidjan for the worst of it. You watched from somewhere safer. The distance was the right choice and you have never been fully certain that it was.'
+      : 'Three thousand people died in five months in Abidjan and the western regions. The number was announced afterward. During it, the numbers were smaller and different and harder to confirm.',
+    phase === 'late_life'
+      ? 'Gbagbo was acquitted by the ICC in 2019 and returned to Ivory Coast in 2021 to crowds in Abidjan. Ouattara is still president. The crisis had an ending. The accounting of what it cost is still ongoing.'
+      : 'The Jeunes Patriotes roadblocks. The FRCI fighters from the north. The French intervention in the last weeks that ended it. The intervention from the country that had always been there, in different forms.',
+  ])
+  if (F.has('ci_northern_identity') && Math.random() < 0.20) return pick([
+    'Dioula is the trade language of the north and much of West Africa — you can conduct commerce in seven countries with it. The Ivorian state teaches French. The gap between the useful language and the official language is political.',
+    phase === 'late_life'
+      ? 'The northern identity that was coded as foreign under ivoirité is the same identity that governed the country after 2011. The category didn\'t change. The power changed.'
+      : 'The credential question: which identity opens which door. French and the Plateau for some doors. Dioula and the family network for others. You learned to read the door before choosing the key.',
+  ])
+  if (F.has('ci_long_witness') && Math.random() < 0.20) return pick([
+    'The phrase "Ivorian Miracle" has been used twice: once in the 1960s and 1970s, once now. Between the two uses was a civil war, two coups, a post-election crisis, and 3,000 deaths in five months. The phrase survived.',
+    phase === 'late_life'
+      ? 'You have lived through the miracle years, the austerity, the ivoirité politics, the civil war, the election crisis, and the recovery. Each period felt like it would define the country permanently. None of them did.'
+      : 'The glass towers on the Plateau are new. The reunification happened. The economy grew. The things that happened between 2002 and 2011 are not discussed the way they might be discussed.',
+  ])
+  if (F.has('ci_full_arc_witness') && Math.random() < 0.18) return pick([
+    'The first Ivorian Miracle. Then the crash. Then ivoirité. Then the civil war. Then the election crisis and the bodies. Then the second Ivorian Miracle. The phrase is the same. You are not the same person who first heard it.',
+    phase === 'late_life'
+      ? 'What you carry is not bitterness. It is specificity. You know exactly what happened between the two versions of the same phrase, in sequence, and the specificity doesn\'t compress into a lesson.'
+      : 'The country recovered. Economies recover. What doesn\'t recover in the same way is the knowledge of what was required for the first recovery to become the second problem.',
+  ])
+  if (F.has('ci_gbagbo_reckoning') && Math.random() < 0.17) return pick([
+    'Gbagbo returned to Abidjan in 2021, acquitted, and was met at the airport by crowds. Ouattara — the man whose election he refused to accept — is still president. They have met. The accounting of the 3,000 deaths exists in a separate column.',
+    phase === 'late_life'
+      ? 'The ICC acquittal doesn\'t mean it didn\'t happen. It means the court couldn\'t meet its own standard of proof. Both things are true and they produce a particular kind of cognitive discomfort that doesn\'t resolve with time.'
+      : 'You were not asked what you thought of the acquittal. No one was. The outcome was legal and happened in The Hague and the country moved on before you had finished deciding what you thought.',
+  ])
+  if (F.has('ci_cocoa_accounting') && Math.random() < 0.17) return pick([
+    'A bar of chocolate in Europe. Seven cents leaving your farm. The gap between those numbers is the gap that funded everything else in both directions: the concrete block room and the profit margin.',
+    phase === 'late_life'
+      ? 'The child labour reports from European NGOs use words like "supply chain" and "systemic." The words are accurate. They don\'t quite capture what it meant to feed your children in a year when the CMDT price fell.'
+      : 'You grew the crop that feeds the world\'s appetite for something it calls a treat. The word "treat" implies occasional. The appetite is not occasional.',
+  ])
+  if (F.has('ci_miracle_reckoned') && Math.random() < 0.15) return pick([
+    'The miracle required cheap labour, political stability maintained by one man, and commodity prices that held. Three conditions. When the commodity prices fell in 1987 the other two became harder to sustain.',
+    'What was real about the miracle: the roads, the schools, the GDP, the Abidjan skyline. What it was built on: also real. The two things were in the same sentence for a long time before someone said them both at once.',
+  ])
+  if (F.has('sahel_long_arc_witness') && Math.random() < 0.20) return pick([
+    'The Sahel crisis has a direction of travel and it isn\'t stopping. Mali first. Then Burkina Faso. Then the edges of Guinea, Niger, Benin, Ivory Coast. The French left. Wagner came. The civilian populations are in the same position in each country.',
+    phase === 'late_life'
+      ? 'You have watched this move across the map of the region you grew up in. The names of the countries change. The pattern doesn\'t. That is the specific thing you know that the people making policy elsewhere do not.'
+      : 'Each country thought it was watching someone else\'s problem. Then it became the same problem with the local names inserted.',
+  ])
+  if (F.has('tuareg_settled_reckoned') && Math.random() < 0.15) return pick([
+    'You settled. The city life, the credentials, the fixed address. The 2012 MNLA uprising declared independence for a territory that included where your grandparents\' grandparents grazed. You watched from the city. The distance was both physical and something else.',
+    phase === 'late_life'
+      ? 'You have held a Tuareg identity in a city for your entire adult life. The city didn\'t ask you to give it up. It just didn\'t make space for it. These are different forms of the same pressure.'
+      : 'Tamasheq in the city: the family speaks it at home, quietly, as a private thing. The children understand it. Whether they will pass it on is a question you have not asked directly.',
+  ])
   if (F.has('nigerian_oil_boom_generation') && Math.random() < 0.2) return pick([
     'The boom years: the naira strong, the roads being built, the government salaries that made sense. The structural problem was legible but the feeling of the moment was abundance. You remember the abundance.',
     'Oil at $35 a barrel and then higher. The federal government suddenly wealthy. The problem — that the wealth was flowing through patronage rather than into productive capacity — would become visible later.',
@@ -9708,6 +10025,165 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'Between June 12 and Lekki is thirty years of the same argument about what this country will and will not allow. You have been making the argument for thirty years. The country keeps answering.'
       : 'The generation at the toll gate was not born when Abiola won. You were. You tried to explain June 12 to them. They did not need to understand June 12 to understand what was happening at the toll gate. The argument is the same argument.',
+  ])
+  if (F.has('nepa_generation') && Math.random() < 0.28) return pick([
+    '"NEPA has taken light." The phrase is muscle memory. You know the power is going before it goes — from the ceiling fan, from the way the fridge hums differently. You have organised your life around this knowledge.',
+    phase === 'late_life'
+      ? 'Decades of generators: diesel costs, starting cords, the neighbour\'s generator that runs at 2am. You have calculated the running cost of electricity access more times than you can count. The national grid was never the primary system.'
+      : 'The generator has a maintenance schedule, a diesel budget, a noise level you have learned to sleep through. This is domestic life in Nigeria. The infrastructure failure is not a crisis. It is the baseline.',
+    'Two kinds of house: the one with a generator, the one without. Which side of that line you were on determined more than just light.',
+  ])
+  if (F.has('lagos_go_slow_generation') && Math.random() < 0.22) return pick([
+    'The Third Mainland Bridge at 7am. You have done the calculation — leave at 5:30 or accept the cost. The cost is two hours of your morning, which is also part of your life.',
+    'The hawkers work the stalled traffic faster than anything else moves on the road. Water sachet, fan ice, newspapers, phone chargers through the window. You know which junction has the best phone case vendors.',
+    phase === 'late_life'
+      ? 'Decades of go-slow: the hours added to every day, the books read in traffic, the radio programmes that marked the gridlock, the specific quality of Lagos light at 6pm on the bridge when you were not moving. You became a different kind of patient than you would have been elsewhere.'
+      : 'A trip that should take twenty minutes takes two hours without any particular reason. This is not a metaphor. This is Tuesday.',
+  ])
+
+  // ─── MALI TEXTURE ────────────────────────────────────────────────────────────
+  if (F.has('mali_cotton_generation') && Math.random() < 0.25) return pick([
+    'The CMDT price announcement comes in November. You have already grown the cotton; the price is announced after you cannot grow anything else instead. You do the arithmetic.',
+    'Cotton white in the field. The harvest week, the whole family working. The bales weighed by the CMDT agent. The number written down. The number is not negotiable.',
+    phase === 'late_life'
+      ? 'Thirty years of cotton. The CMDT changed the price almost every year; your input costs changed too. The arithmetic was never in your favour and you kept doing it because there was no other arithmetic available.'
+      : 'The fields that grew sorghum before cotton are better at growing cotton now — the soil has adapted to what the company requires. The soil knows which crop pays.',
+  ])
+  if (F.has('mali_democracy_generation') && Math.random() < 0.22) return pick([
+    'March 26, 1991. General Amadou Toumani Touré refused the order to fire. That refusal is the hinge of everything that followed — the transition, the elections, the twenty years of democracy. One officer\'s decision.',
+    phase === 'late_life'
+      ? 'The democracy lasted twenty years. Two coups in 2020 and 2021. You marched or you watched those who marched in 1991, and you have now lived to see what that march led to. The march was real. So is this.'
+      : 'Alpha Oumar Konaré won the election, then Amadou Toumani Touré himself — the general who refused to shoot — won ten years later. A soldier who became a democrat. This is what the transition was made of.',
+    'In 1991 you did not know what "democracy" would mean in practice. Twenty years later you knew exactly what it had meant and what was now ending.',
+  ])
+  if (F.has('mali_2012_crisis_lived') && Math.random() < 0.25) return pick([
+    'The coup happened on the anniversary of the revolution. March 22, 1991 and March 22, 2012 — the same date, the opposite event. The calendar keeps score in a way that feels intentional and is probably not.',
+    'Within seventy-two hours of the coup, Timbuktu, Gao, and Kidal had fallen. The coup removed the government that was losing the war. The war got lost faster.',
+    phase === 'late_life'
+      ? 'You have lived through three coups, two democracies, and a foreign intervention. Bamako is still here. The north is not what it was. You have outlasted several versions of the country you were born in.'
+      : 'The MNLA declared independence for Azawad on April 6, 2012. The declaration was not recognised by a single country. The territory was real. The declaration evaporated when the Islamists displaced the separatists.',
+  ])
+  if (F.has('timbuktu_generation') && Math.random() < 0.20) return pick([
+    'Three hundred thousand manuscripts. Librarians moved them in boxes to private homes, then south to Bamako, for months. When the Islamists arrived looking for documents to burn, the shelves were mostly empty.',
+    'The Ahmed Baba Institute had been built to house the manuscripts. When Timbuktu fell, its director found other places to put them. The Islamists used the empty building as a barracks.',
+    phase === 'late_life'
+      ? 'Most were saved. A few thousand were burned anyway, by militants who found caches that were not moved in time. What was saved is in a warehouse in Bamako. The building in Timbuktu is reconstructed. The fourteenth century is more portable than anyone expected.'
+      : 'What the manuscripts contain: astronomy, medicine, jurisprudence, grammar, music, mathematics. Written in Arabic and Tamasheq and Fulfulde. Not recovered from somewhere else — written here.',
+  ])
+  if (F.has('tuareg_malian') && Math.random() < 0.22) return pick([
+    'The border between Mali and Algeria is a line on a French map. Your people have crossed it for centuries without asking permission. The question of which country you belong to has a different answer depending on which side of the line you are standing on.',
+    F.has('tuareg_nomadic_life')
+      ? 'The seasonal route north for the dry season, south for the rains. The wells that your grandparents\' grandparents knew. The particular way the sky looks when you are four days from the next settlement and the stars are the only landmark.'
+      : 'You settled in the city but the city has not settled in you entirely. You still orient yourself by direction of travel rather than street name.',
+    phase === 'late_life'
+      ? 'The 1991 rebellion. The 2006 rebellion. The 2012 rebellion. Each time: Tuareg fighters, Malian state, ceasefire, grievances unaddressed, next rebellion. You have watched this pattern more times than it should have been allowed to repeat.'
+      : 'Tamasheq is not a language the school teaches. You learned to read in French and you think in Tamasheq and the translation happens continuously, below the level of notice.',
+  ])
+  if (F.has('mali_long_witness') && Math.random() < 0.22) return pick([
+    'The coups come at intervals you have now lived through enough of to count. 1968. 1991. 2012. 2020. 2021. You are not counting them in a history book. You are counting them in your own life.',
+    phase === 'late_life'
+      ? 'You marched in 1991, or you remember those who did. Democracy lasted twenty years. The march felt like the end of something. It turns out to have been the middle.'
+      : 'The junta governing now expelled the French and brought in Wagner. The jihadist violence that began in the north in 2012 is now in the centre and the south. You are watching the map change in ways you did not expect to watch.',
+    'There are things you believed about Mali at thirty that you cannot quite believe at sixty. Not because they were false. Because you have watched too many different versions of the same story resolve in the same way.',
+  ])
+  if (F.has('tuareg_settled') && Math.random() < 0.15) return pick([
+    'You settled. The city gave you a fixed address and an identity document and a school for the children. It also asked you to become a version of yourself that doesn\'t orient by stars.',
+    phase === 'late_life'
+      ? 'Your children speak Bambara better than Tamasheq. You told them the route names anyway. The routes are still there even if the children won\'t use them.'
+      : 'In Bamako or Gao you are a Tuareg in a place that processes you through that category before it sees anything else. The category is accurate. It is also incomplete.',
+  ])
+  if (F.has('mali_empire_memory') && Math.random() < 0.18) return pick([
+    'Timbuktu had 25,000 university students when Paris had 200,000. You learned this in school and you have carried it in a way that is not pride exactly but something more durable than pride.',
+    'Mansa Musa distributed so much gold on his 1324 pilgrimage that the price of gold in Cairo and Alexandria did not recover for a decade. This is not a myth. The Egyptian records confirm it.',
+    phase === 'late_life'
+      ? 'You are from a place that was already great before Europe decided what "great" meant. You were told this at nine and it stayed.'
+      : 'The word "Mali" comes from the Mandinka for hippopotamus, or from the word for the place where the king lives, depending on who you ask. Either way the empire named itself.',
+  ])
+  if (F.has('mali_traore_era') && Math.random() < 0.18) return pick([
+    'Under the UDPM there was one party, one candidate, one outcome. The ballot was a formality that looked like participation. You learned very early the difference between the form of a thing and its function.',
+    'The things that could not be said were not announced as forbidden. You learned them by their absence — the conversation that stopped, the subject that changed, the question nobody asked twice.',
+    phase === 'late_life'
+      ? 'Twenty-three years of Traoré. An entire generation grew up not having seen an election. Then in 1991 they organised one in a matter of months. They already knew what they wanted. They had been deciding in silence.'
+      : 'The party had a word for everything that happened in the country. The word was always the same word: progress. The word and the thing it described were not always related.',
+  ])
+  if (F.has('mali_serval_witness') && Math.random() < 0.18) return pick([
+    'French jets flew from N\'Djamena and launched strikes in northern Mali within hours of Hollande\'s announcement. By the time the news reached Bamako it was already happening.',
+    'The people who cheered French soldiers in the streets of Bamako in January 2013 were the grandchildren of people who had marched against French rule. You noticed this. You did not resolve it. You were still glad.',
+    phase === 'late_life'
+      ? 'France expelled in 2022 by the junta it spent a decade helping stabilise. The contradiction of 2013 produced another contradiction nine years later. The Sahel keeps generating contradictions faster than they can be processed.'
+      : 'Operation Serval ended. Operation Barkhane began. Then Barkhane ended. The French presence in Mali lasted longer than the crisis it was supposed to solve and ended before the crisis did.',
+  ])
+
+  // ─── CAMEROON TEXTURE ────────────────────────────────────────────────────────
+  if (F.has('bamileke_identity') && Math.random() < 0.22) return pick([
+    'The Bamileke are called industrious, entrepreneurial, commercially aggressive. The compliment has a structure: it explains their success without making room for them to simply have succeeded.',
+    F.has('tontine_member')
+      ? 'The tontine meets every month. The rotation means that every month someone receives a lump sum they could not have saved alone. The group trusts each other enough for this to function. The trust is the capital.'
+      : 'The Bamileke way: the market stall, the apprentice, the tontine. The ethnic economy as a bank that does not require a credit score, only presence and a reputation that travels.',
+    phase === 'late_life'
+      ? 'You have watched what happens to groups that are commercially successful in a state that distributes by ethnic patronage. The success draws scrutiny. The scrutiny requires caution. The caution restricts the success.'
+      : 'In Douala, in Paris, in New York: the tontine travels. The group that is the bank travels with the people who need it.',
+  ])
+  if (F.has('cmr_biya_era') && Math.random() < 0.20) return pick([
+    'Paul Biya has been president for forty years. The photograph in the office. The RDPC membership card required for the position. The election every seven years whose outcome is known before it happens.',
+    phase === 'late_life'
+      ? 'You have lived your entire adult life under one president. He has aged. The country has aged. The arrangement has not changed. You are now old enough to understand that this is itself a kind of stability — not the stability of resolution but the stability of things continuing by inertia.'
+      : 'The form asked for political affiliation. The answer required was clear. You wrote it. The form went into a file somewhere. The somewhere has never been specified.',
+  ])
+  if (F.has('anglophone_cameroonian') && Math.random() < 0.22) return pick([
+    'You go to court in English. The judge arrives speaking French. The court reporter takes notes in French. The verdict is read in French. Your appeal must be filed in French. This is the specific form the 20 percent takes in practice.',
+    F.has('anglophone_political')
+      ? 'The arithmetic: one cabinet minister for every five in the Francophone south. The arithmetic doesn\'t shift with the elections because the elections don\'t produce outcomes that shift it. You have been counting for a long time.'
+      : 'French for the government. English for home, church, the market. Pidgin for Douala, where nobody asks what language you were supposed to be using.',
+    phase === 'late_life'
+      ? 'The strike was in 2016. The lawyers and teachers had specific grievances. The specific grievances are still unresolved. What grew around them is a different thing entirely.'
+      : 'You have a common law education in a civil law country. The qualification is real and applies in the northwest and southwest provinces and in no other territory the government controls.',
+  ])
+  if (F.has('cmr_douala_generation') && Math.random() < 0.18) return pick([
+    'Douala traffic on a Monday morning: the moto-taximen navigating gaps that don\'t seem navigable. The okada arrives before the traffic does. The city has solved the traffic problem by making the solution informal.',
+    'Pidgin English in the market: "how yi go?" — how is it going? The lingua franca of commerce is neither French nor English but something that belongs to the city and to no colonial power specifically.',
+    phase === 'late_life'
+      ? 'Douala is not the capital but it generates 60 percent of the country\'s revenue. The capital takes the revenue and makes the decisions. Douala has an opinion about this arrangement that it expresses in the particular volume of its commercial life.'
+      : 'The Wouri estuary at evening. The port cranes. The fishing pirogues. The city holding its two rivers and all its languages simultaneously, not in harmony exactly but in a permanent negotiation that nobody has declared finished.',
+  ])
+  if (F.has('anglophone_crisis_witness') && Math.random() < 0.22) return pick([
+    'The lawyers went on strike about judges. The teachers went on strike about language. The government shut the internet down for three months instead of negotiating. What grew in the internet outage was armed.',
+    F.has('anglophone_crisis_inside')
+      ? 'The village at night: Amba Boys. The village in the morning: the military. The school closed in 2016. The children who were seven then are teenagers now who have not been to class. You count the years in children who cannot read.'
+      : 'The crisis is in the northwest and southwest. Yaoundé continues. The distance between the news and your daily life is the specific geography of the country\'s majority.',
+    phase === 'late_life'
+      ? 'No peace talks that have led anywhere. No negotiated solution. The Biya government\'s position: there is no Anglophone problem. The Anglophone regions\' position: there is. The gap between those two positions is where the villages burned.'
+      : 'The internet was restored. The soldiers stayed. The Amba Boys stayed. The category "conflict" applies to the northwest and southwest. The category "normal" applies to everywhere else. The border between the categories runs through the country.',
+  ])
+  if (F.has('ambazonia_displaced') && Math.random() < 0.22) return pick([
+    'You left. Or the town emptied and you were in what remained. The choice between those two things is the specific shape of the crisis in the northwest and southwest.',
+    phase === 'late_life'
+      ? 'The children who started school in 2016 are grown up now without having been to school. The school boycott outlasted everyone\'s estimate of how long it would last. The village that was burned has been rebuilt in some cases and not in others.'
+      : 'Half a million people displaced inside the country. Tens of thousands in Nigeria. The phrase "internally displaced" means you crossed no international border. It does not describe how far you are from where you lived.',
+  ])
+  if (F.has('cmr_long_witness') && Math.random() < 0.20) return pick([
+    '"Africa in miniature." The Sahel in the north, the rainforest in the south, 300 languages, eight culture zones, two colonial inheritances. Also forty years of the same president, and a conflict in the English-speaking regions that has been called many things but not resolved.',
+    phase === 'late_life'
+      ? 'You have watched what Cameroon was called and what it became and the gap between those two things. The country hasn\'t run out of potential. The potential has been in the same place for forty years, waiting for a different arrangement.'
+      : 'Paul Biya\'s absences from the country are counted in months. The government continues in his absence. The question of what the government is for is the question that does not get asked in official spaces.',
+  ])
+  if (F.has('anglophone_long_witness') && Math.random() < 0.20) return pick([
+    'The schools in the northwest and southwest have been closed or intermittently open since 2016. The children who were in primary school then are in their teenage years now without having completed primary school. You count the years as a generation.',
+    phase === 'late_life'
+      ? 'The grievances in 2016 were specific: judges, teachers, language. They were answerable. The government did not answer them and the answerable became the unanswerable. You watched this happen in sequence and the sequence had a logic that was visible before the result was visible.'
+      : 'No peace framework has been proposed that both the government and the separatist leadership accepted. The Amba Boys have split into factions. The government\'s position is that there is no Anglophone problem. The Anglophone regions\' position is that there is. The gap is where the villages burned.',
+  ])
+  if (F.has('anglophone_inside_reckoned') && Math.random() < 0.20) return pick([
+    'You are inside the conflict. This is different from watching the conflict. The specific dates — October 2016, January 2017, 2018 — are not dates in a history but a chronology you lived forward.',
+    phase === 'late_life'
+      ? 'The question you have stopped asking is "When will it end?" It no longer has an available answer. The question you ask instead is "What will be left?" This is also not a question with an available answer but it is the right question.'
+      : 'The crisis has factions now on the separatist side and strategies on the government side and both of them operate in the same territory where you live. You navigate between them the way people navigate between all things that have no interest in your opinion.',
+  ])
+  if (F.has('cmr_crisis_witness_reckoned') && Math.random() < 0.17) return pick([
+    'You are Francophone. The crisis is in the English-speaking regions. Yaoundé continues. Douala continues. The road north to the northwest is a different road than it was in 2015.',
+    phase === 'late_life'
+      ? 'You named, in private, the moral position of continuing normally while this happened in the same country. The naming didn\'t change anything. It stayed as a specific private knowledge that you carry forward.'
+      : 'The humanitarian organisations reported: schools destroyed, villages burned, hospitals looted, civilians killed by both sides. The reports were accurate. You read them. The distance between reading and acting is the specific shape of your position in this conflict.',
   ])
 
   // ─── ETHIOPIA TEXTURE ────────────────────────────────────────────────────────
@@ -11423,6 +11899,13 @@ function buildYearTexture(state) {
       : 'The work extracts something. You know this. The colleagues who have been doing it longest have learned either to replenish it actively or to stop noticing the extraction, which is not the same as replenishing it.',
     'There are people in the project area you will remember for the rest of your life who do not know your name. This asymmetry is part of what the work is.',
   ])
+  if (F.has('aw_international_staff') && Math.random() < 0.18) return pick([
+    'You are on the international scale, which is a different salary in the same building as the local staff doing the same work. This is documented policy. You live in it every day.',
+    phase === 'young_adult'
+      ? 'The expat bubble is real and you are inside it. The bubble has a function — the separation allows a specific kind of work focus. It also has a cost that you pay in a different currency than the one the work is denominated in.'
+      : 'You have been in several countries with this organisation or ones like it. What you carry from each one is accumulated in ways you do not always catalogue, but the weight has a number now, and the number changes your posture.',
+    'The security briefing, the evacuation plan, the emergency contacts, the packet that tells you what to do when things deteriorate. You know the packet by heart. Knowing it by heart has a specific effect on how you look at the place you are working.',
+  ])
   if (F.has('ngo_local_staff') && Math.random() < 0.2) return pick([
     'You know this community. The international staff arrive and leave and you remain. The knowledge asymmetry between you and the people you work with is obvious and is not discussed.',
     'The salary gap is a documented policy. You have read the policy. The policy explains it in language about cost-of-living adjustments that does not quite cover what you feel when you read it.',
@@ -11449,6 +11932,50 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'The children who left after the coups are in Australia, in New Zealand, in Canada. You stayed. The staying was not a simple decision and it has not become a simple decision with time.'
       : 'You have developed a working relationship with the asterisk. It is not acceptance. It is the management of something you cannot change by force of feeling.',
+  ])
+  if (F.has('sw_long_term_worker') && Math.random() < 0.2) return pick([
+    'You know things about this work that took years to learn: who to take and who to refuse, how to set the terms, where the risk concentrates. The knowledge is not the kind you write down. It is the kind that sits in the body.',
+    phase === 'late_life'
+      ? 'The decade in the work — the social world of it, the women you knew, the particular texture of nights you can no longer remember individually but that formed the shape of the years — is its own education. Not the one anyone planned.'
+      : 'The safety calculation has become second nature. You do it before you are aware you are doing it. This is what expertise looks like in a context where expertise is not recognised as such.',
+    'The money was real. What it cost to earn it was also real. The accounting has shifted over the years — what you count and what you no longer bother to count and what you still cannot stop counting.',
+  ])
+  if (F.has('hcr_rebuilding') && Math.random() < 0.2) return pick([
+    'You are learning, in your thirties or forties, things most people learned at seventeen: how to make a friend without a shared framework, how to be in a disagreement without treating it as a doctrinal matter, how to fill a Sunday.',
+    phase === 'late_life'
+      ? 'The secular social skills that were never taught are fully yours now. The cost of acquiring them at the age you acquired them is something you carry without resentment, mostly — what would resentment accomplish at this distance.'
+      : 'The congregation gave you certainty, community, an answer to every question. The secular world gives you the question. Learning to live in the question took longer than any skill you have learned since.',
+    'The friends you have now were made without a framework telling you to make them. That fact is small and large simultaneously — you are still working out what it means.',
+  ])
+  if (F.has('hcr_shunned') && !F.has('hcr_rebuilding') && Math.random() < 0.2) return pick([
+    'Someone you have known for twenty years saw you in the street and looked at the other side of the road. The mechanism is familiar — you would have done the same, once. The familiarity does not resolve the feeling of being looked through.',
+    phase === 'late_life'
+      ? 'The years of shunning have become years of separation. At this distance, the people who were your entire world are strangers. The separation was their choice and also, in the end, yours.'
+      : 'Your mother will not come to events. Your childhood friend has not answered a message in three years. The shunning is not vindictive — it follows a logic you understand completely, which is the part that is hardest to explain to people outside it.',
+  ])
+  if (F.has('hcr_born_in') && !F.has('hcr_exited') && !F.has('hcr_shunned') && Math.random() < 0.15) return pick([
+    'Two meetings this week. The same songs. The same pattern since before you can remember. The familiarity is the point — the doctrine holds partly because of its texture, the specific sensory weight of years spent inside the same rhythms.',
+    phase === 'late_life'
+      ? 'You have been in the congregation for sixty years or seventy. The questions that arose at various points were absorbed, managed, held differently at different ages. What you know is that you stayed, and the community is still here, and that is worth something that is hard to quantify outside the experience of having it.'
+      : 'The end has been coming for as long as you have been alive. You have developed a relationship with this expectation that is not exactly belief and not exactly not-belief — it is the background of your life, the ticking that stopped being audible.',
+  ])
+  if (F.has('sex_work_entry') && !F.has('sw_long_term_worker') && Math.random() < 0.18) return pick([
+    'You move through this city in a way most people don\'t. The geography of safety, the hours that are and aren\'t workable, the network of women who share information without advertising that they are sharing it — this is a second map of the place, invisible to most.',
+    phase === 'young_adult'
+      ? 'What the work is and what you thought it would be are different in both directions — easier in some ways, harder in others that you could not have anticipated from outside.'
+      : 'The years in the sector gave you a specific understanding of money: how fast it moves, how little it sticks, how the urgency of the immediate always outbids the logic of the long-term.',
+  ])
+  if (F.has('sami_language_returned') && Math.random() < 0.18) return pick([
+    'A word comes back unbidden — attached to a smell, the specific quality of light in a particular month. You did not know you still had it. The language is not restored; it was never going to be restored. But pieces of it arrive this way, in their original sensory context, and each arrival is its own small thing.',
+    phase === 'midlife'
+      ? 'You speak Northern Sami in the class once a week. Outside the class, mostly not — there are not many people here who would follow you. But the practice is changing something in how you move through the language that does not end when the class does.'
+      : 'Your grandchildren have some of it now — taught in school, imperfectly, alongside Norwegian. When they use a word you recognise from childhood, the recognition is not quite happiness and not quite grief. It is both things, briefly, and then it passes.',
+  ])
+  if (F.has('fgm_broke_cycle') && Math.random() < 0.18) return pick([
+    'Your daughter has reached the age your mother organized everything around. Nothing is happening. The family has stopped asking. What you gave her is something you cannot name directly, because the naming would require acknowledging too precisely what was done to you. You know what you gave her.',
+    phase === 'midlife'
+      ? 'She is old enough now to understand, abstractly, that something was different for you than it will be for her. She does not know the specific difference. You have decided this is right: some knowledge should not have to be acquired.'
+      : 'The women who organized the preparations for you — your mother, your aunts, the elder from the edge of the village — they acted out of care. This is also true. You hold both things.',
   ])
 
   // ─── NEIGHBORHOOD TIER TEXTURE ───────────────────────────────────────────────
@@ -12082,6 +12609,11 @@ function buildYearTexture(state) {
     'You have started to have opinions about things. You are partly right and partly wrong, which is what opinions are.',
     'You are memorising things without meaning to: routes, faces, sequences, the way the light falls at a certain time.',
     'The world is large and you are starting to understand just how large.',
+    'There is someone at school who is the thing you are afraid of being — ignored, wrong, too much. You watch them carefully.',
+    'You have learned to read a room: when the adults are tense, when something is being held back, when the silence is the wrong kind.',
+    'There is a phrase you have heard often enough that you have started saying it. You do not know yet where it came from.',
+    'You have a route you know so well you do not see it anymore — the cracks, the shortcut, the dog behind the fence. The route is part of you.',
+    'You have a private theory about how things work. You have not told anyone.',
   ])
 
   if (phase === 'adolescence') return pick([
@@ -12095,6 +12627,11 @@ function buildYearTexture(state) {
     'You feel things at a frequency that the years ahead will not sustain. You do not know this yet.',
     'You are watching older people for clues about how to be in the world. The clues are incomplete.',
     'There is a version of yourself you are trying to become. It is not yet clear if you are on the right track.',
+    'There are people your age who seem to know how to exist without thinking about it. You have been studying them, trying to learn how.',
+    'You have a sentence — from a book, a song, something someone said — that you say to yourself in the bad moments. It is yours now.',
+    'The music of this year will follow you for the rest of your life, attached to exactly who you were when you first heard it.',
+    'You are beginning to see what your parents gave you without asking — the words they use, the way they hold their face when something is wrong.',
+    'The body has an opinion about everything, and its opinion is very loud. You are learning which opinions to trust.',
   ])
 
   if (phase === 'young_adult') return pick([
@@ -12108,6 +12645,11 @@ function buildYearTexture(state) {
     'The friendships you make in this decade will last, some of them, for the rest of your life. You cannot tell yet which ones.',
     'You are learning what you are good at. You are also learning what you are not good at, which is equally useful.',
     'This is the period when the life takes its shape. The shaping is ongoing.',
+    'The commute — the route to work or study, whatever form it takes — has become invisible. You arrive without remembering the middle of it.',
+    'You are beginning to say things you heard adults say when you were young. You did not plan to start saying them.',
+    'The people you are closest to are not the people you planned to be closest to. Proximity and necessity did most of the work.',
+    'You have been eating the same few meals for months. They are not bad meals. They are the meals that the current situation makes possible.',
+    'You are slowly becoming the adult you always thought the adults were. The difference between them and you is smaller than expected.',
   ])
 
   if (phase === 'midlife') return pick([
@@ -12121,6 +12663,11 @@ function buildYearTexture(state) {
     'You have outlived some of your certainties. The ones that remain are more carefully held.',
     'You do not have more time than you thought. You have the same amount. You are more precise about it now.',
     'The middle of life is not a place. It is a quality of attention — a retrospective sight that was not possible before.',
+    'There is a photograph of yourself from fifteen years ago. The person in it was young in ways you could not see at the time.',
+    'You catch yourself giving someone advice that is almost word for word what an older person told you. You did not take it then either.',
+    'The body has started to keep its own record — the shoulder, the knee, the sound of getting out of a chair in the morning.',
+    'The people who are twenty-five now are doing what you were doing at twenty-five, with the same confidence and the same amount of information.',
+    'You know things now that could not have been told to you earlier. Not because they were secret, but because they require a certain number of years.',
   ])
 
   if (phase === 'late_life') return pick([
@@ -12134,6 +12681,11 @@ function buildYearTexture(state) {
     'There is a pleasure in small things that was not available in the same way before. Not because the things have changed. Because you have.',
     'The questions you have not answered are not going to be answered by more information. You know that now.',
     'You have been making your way through it. You are still making your way through it. Everyone is.',
+    'You have learned what cannot be fixed. This is different from the knowledge of what can be fixed, and more useful in this phase.',
+    'The people who knew you young are fewer. The ones who remain carry versions of you that you cannot access yourself.',
+    'You have started using a phrase your parents used. You did not decide to start using it.',
+    'There is a photograph on the shelf from a decade you remember clearly and a body you no longer recognise as this one.',
+    'You do not rush anymore — not because there is more time, but because you understand the cost of rushing differently than you did at forty.',
   ])
 
   // ─── FINAL GENERIC FALLBACK ───────────────────────────────────────────────────
@@ -12146,6 +12698,8 @@ function buildYearTexture(state) {
     'A year of small decisions that add up to something.',
     'The ordinary is underrated.',
     'You are making your way through it. Everyone is.',
+    'Nothing dramatic. The absence of drama is also a kind of year.',
+    'You are building something, or rebuilding it, or maintaining it. The categories blur after a while.',
   ])
 }
 

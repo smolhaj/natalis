@@ -128,4 +128,103 @@ export const EGYPT_EVENTS = [
     effect: (p) => { p.m -= 14; p.r += 12; p.addFlag('arab_spring_disillusionment'); p.setMem('egyAftmath', true) },
   },
 
+  // ── MUBARAK-ERA MIDDLE CLASS TEXTURE ────────────────────────────────────────
+
+  {
+    id: 'egy_wasta_career',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Egypt' &&
+      G.currentYear >= 1975 && G.currentYear <= 2011 &&
+      G.age >= 20 && G.age <= 35 &&
+      !G.mem?.egyWasta,
+    text: 'The job you want requires knowing the right person. This is not unusual. In Egypt, the network of connections through which opportunities circulate is called *wasta* — weight, influence, the phone call that does in two days what the official channel takes eight months. It is not corruption exactly; it is the social infrastructure that supplements the official system. Everyone uses it who can. Everyone who can\'t uses a longer route.',
+    choices: [
+      {
+        text: 'You have the connection. Your uncle\'s colleague makes the call.',
+        tag: 'wasta',
+        outcome: 'The position is yours. The work is real. The way you got it is also real, and you are aware of both facts in a proportion that shifts over the years.',
+        effect: (p) => { p.m += 6; p.karma -= 4; p.addFlag('egypt_wasta_beneficiary'); p.setMem('egyWasta', true) },
+      },
+      {
+        text: 'You don\'t have that. You go through the official process.',
+        tag: 'no_wasta',
+        outcome: 'The process takes eight months. The position is in a city you didn\'t ask for. You learn that merit is not the primary operating principle. This information is useful. The learning has a cost.',
+        effect: (p) => { p.m -= 8; p.r += 6; p.e += 3; p.addFlag('egypt_wasta_blocked'); p.setMem('egyWasta', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'egy_gulf_contract_choice',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Egypt' &&
+      G.currentYear >= 1978 && G.currentYear <= 2010 &&
+      G.age >= 25 && G.age <= 45 &&
+      !G.mem?.egyGulf,
+    text: 'Saudi Arabia, Kuwait, the UAE: the Gulf countries need workers, engineers, teachers, accountants. The numbers are specific — three times your current salary, tax-free, in a city you have never visited, with three weeks off per year to come back. You have watched colleagues leave. You have seen the remittances that arrive. You have also seen what happens when the contract ends: the return to a city that moved on without you, to a family that learned a new shape in your absence.',
+    choices: [
+      {
+        text: 'Take the Gulf contract.',
+        tag: 'gulf',
+        outcome: 'Riyadh. Abu Dhabi. Manama. You send money home every month. The separations become the structure of your life. You come back three weeks a year and each time the apartment feels slightly different, in ways no one can name.',
+        effect: (p) => { p.mo += 4500; p.m -= 8; p.r += 6; p.addFlag('egypt_gulf_worker'); p.setMem('egyGulf', true) },
+      },
+      {
+        text: 'Stay in Egypt.',
+        tag: 'stayed',
+        outcome: 'You watch the ones who go. You can see the money they come back with. You cannot see what the going cost them, and you stop trying to calculate it.',
+        effect: (p) => { p.m -= 4; p.r += 5; p.addFlag('egypt_stayed_for_roots'); p.setMem('egyGulf', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'egy_blocked_generation',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Egypt' &&
+      G.currentYear >= 1990 && G.currentYear <= 2015 &&
+      G.age >= 28 && G.age <= 50 &&
+      !G.flags.has('egypt_gulf_worker') &&
+      !G.mem?.egyBlocked,
+    text: 'You graduated from Cairo University with an engineering degree. This is an achievement your parents are genuinely proud of. The degree does not connect to employment the way the achievement suggests it should. The engineering faculty graduates fifteen thousand students per year; the private sector cannot absorb most of them; the government desk jobs pay twelve hundred pounds a month. Your cousin drives a taxi. He has a university degree in economics. The taxi makes more than the government job. You have chosen the government job, because the taxi is not what the degree was for. You are not sure the degree was for the government job either.',
+    choices: null,
+    effect: (p) => { p.m -= 6; p.r += 8; p.addFlag('egypt_blocked_generation'); p.setMem('egyBlocked', true) },
+  },
+
+  {
+    id: 'egy_coptic_navigation',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Egypt' &&
+      G.ethnicity === 'coptic_egyptian' &&
+      G.currentYear >= 1985 && G.currentYear <= 2011 &&
+      G.age >= 18 && G.age <= 45 &&
+      !G.mem?.egyCooptic,
+    text: 'The church is where the community is. Sunday mass, the saint\'s day celebrations, the specific social world of a Coptic family in Cairo — the weddings, the funerals, the network of who is related to whom through three generations of the same neighbourhood. In the university, in the workplace, you navigate the gap between your Coptic social world and the national one. You don\'t hide it — your name announces it. You don\'t advertise it — the calculus of when it helps and when it doesn\'t is something you learned without being taught.',
+    choices: [
+      {
+        text: 'The navigation is unremarkable. You\'ve done it your whole life.',
+        tag: 'navigate',
+        outcome: 'High military rank, intelligence, the interior ministry: not for Copts. Engineering, medicine, private business: those are different. You work within the topography. You have always worked within the topography.',
+        effect: (p) => { p.e += 4; p.m -= 3; p.addFlag('coptic_navigation'); p.setMem('egyCooptic', true) },
+      },
+      {
+        text: 'There are years when a church is bombed and the navigation changes.',
+        tag: 'targeted',
+        outcome: 'Not in your street. Someone related to someone you know. The news, which you follow differently than your Muslim colleagues do. The next morning the appropriate response is to return to normal, and you do, and the normalising is its own small cost.',
+        effect: (p) => { p.m -= 10; p.r += 7; p.addFlag('coptic_navigation'); p.addFlag('sectarian_threat_survived'); p.setMem('egyCooptic', true) },
+      },
+    ],
+    effect: null,
+  },
+
 ]

@@ -160,10 +160,16 @@ export const CHINA_EVENTS = [
         effect: (p) => { p.m -= 3; p.addFlag('one_child_policy_complied'); p.setMem('cnOneChildFired', true) },
       },
       {
-        text: 'You want a second child and will find a way',
+        text: 'You want a second child and will pay the fine',
         tag: null,
         outcome: 'The second child is born. The fine is paid — it is significant, several months\' salary. The child exists. That is the accounting.',
         effect: (p) => { p.m += 4; p.mo -= 2500; p.addFlag('one_child_policy_resisted'); p.setMem('cnOneChildFired', true) },
+      },
+      {
+        text: 'Have the second child in secret — unregistered',
+        tag: null,
+        outcome: 'The birth is not reported. No hukou entry. The child exists in the house but not in the registry. The weight of this decision will distribute across the next decade.',
+        effect: (p) => { p.m += 5; p.addFlag('china_hidden_second_child'); p.setMem('cnOneChildFired', true) },
       },
     ],
     effect: null,
@@ -693,6 +699,125 @@ export const CHINA_EVENTS = [
     text: 'What the countryside gave you that the professors didn\'t: you know what a harvest failure looks like from inside it. You know what it costs a family when the state quota cannot be met. You know what cold is when the walls are not insulated. These are not metaphors or research — they are texture. When you write or argue or teach now, this specific quality is present. Some of your contemporaries who were not sent down have noticed it. It cannot be taught and cannot be bought back.',
     choices: null,
     effect: (p) => { p.e += 5; p.m += 4; p.addFlag('sent_down_intellectual_echo'); p.setMem('cnSentDownEchoFired', true) },
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // HEIHAIZI ARC — hidden second child
+  // ═══════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'cn_heihaizi_schoolgate',
+    phase: 'midlife',
+    weight: 6,
+    when: (G) =>
+      isChina(G) &&
+      G.flags.has('china_hidden_second_child') &&
+      G.age >= 30 && G.age <= 50 &&
+      !G.mem?.cnHeihaiziSchoolFired,
+    text: (G) => {
+      const isUrban = G.ruralUrban === 'urban'
+      if (isUrban) return 'September: the enrollment. The school requires a hukou booklet for every child. Your second child has no entry — the birth was never registered, which means the child does not officially exist. The teacher at the gate is following procedure. The procedure was designed precisely for this situation. You can pay for a private school at several times the cost. Or you can explain to your child, who is six, why the other children are going through the gate and they are not.'
+      return 'The village primary school keeps the enrollment register. Every child in the register has a hukou number. Your second child has no number. The teacher knows the situation — half the village knows the situation — but the register is a government document and the government document requires what it requires. There are solutions. The solutions cost things.'
+    },
+    choices: [
+      {
+        text: 'Pay for private school — whatever it costs',
+        tag: null,
+        outcome: 'You find the money. The child goes to school. The unregistered status extends forward into adolescence as something to manage.',
+        effect: (p) => { p.mo -= 3000; p.m -= 5; p.addFlag('china_heihaizi_school_found'); p.setMem('cnHeihaiziSchoolFired', true) },
+      },
+      {
+        text: 'The child goes without formal schooling this year',
+        tag: null,
+        outcome: 'A year without the classroom. You teach what you can. The window to the state system is closed at this address.',
+        effect: (p) => { p.m -= 12; p.r += 6; p.addFlag('china_heihaizi_school_wall'); p.setMem('cnHeihaiziSchoolFired', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'cn_heihaizi_inspection',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      isChina(G) &&
+      G.flags.has('china_hidden_second_child') &&
+      !G.flags.has('china_heihaizi_fine_paid') &&
+      G.currentYear >= 1983 && G.currentYear < 2015 &&
+      G.age >= 28 && G.age <= 52 &&
+      !G.mem?.cnHeihaiziInspectionFired,
+    text: (G) => {
+      const isUrban = G.ruralUrban === 'urban'
+      if (isUrban) return 'The work unit family planning officer makes the annual household visit. You have rehearsed the conversation. Your second child is not in the registry. Whether the child is physically present in the apartment when the officer comes is a calculation you have been making since the appointment was confirmed three days ago.'
+      return 'The family planning cadre does the annual village inspection. Everyone knows the cadre. The cadre knows everyone. The understanding in this part of the village is that the inspection ends when the inspection ends. You have arranged what can be arranged. Whether it is enough is not yet known.'
+    },
+    choices: [
+      {
+        text: 'The inspection passes without discovery',
+        tag: null,
+        outcome: 'The officer leaves. Another year of the current arrangement extends forward. The specific quality of relief after that kind of morning has its own texture.',
+        effect: (p) => { p.m += 2; p.addFlag('china_heihaizi_uncaught'); p.setMem('cnHeihaiziInspectionFired', true) },
+      },
+      {
+        text: 'The inspector finds evidence of the second birth',
+        tag: null,
+        outcome: 'The fine is assessed at three times what is available. Arrangements are made for payment over years. The child\'s existence enters a different kind of record now.',
+        effect: (p) => { p.mo -= 6000; p.m -= 15; p.addFlag('china_heihaizi_fine_paid'); p.setMem('cnHeihaiziInspectionFired', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'cn_heihaizi_policy_2015',
+    phase: 'late_life',
+    weight: 5,
+    when: (G) =>
+      isChina(G) &&
+      G.flags.has('china_hidden_second_child') &&
+      !G.flags.has('china_heihaizi_registered') &&
+      G.currentYear >= 2015 &&
+      G.age >= 35 &&
+      !G.mem?.cnHeihaiziPolicyFired,
+    text: 'The two-child policy is announced. More important to you than the headline is the amnesty registration window that follows: unregistered births from the one-child era can now be documented without the full penalty structure. The phrase "registration window" is the most significant thing you have read in years. Your child is a young adult who has spent their whole life navigating the absence of a national ID card — no train ticket under their own name, no university application, no hospital card on file. The window is open for a specific period.',
+    choices: [
+      {
+        text: 'You go to the civil affairs office the first week',
+        tag: null,
+        outcome: 'The registration is processed. The ID card arrives six weeks later. Your child holds it with an attention that is hard to watch — the weight of a document that took their entire life to arrive.',
+        effect: (p) => { p.m += 12; p.karma += 5; p.addFlag('china_heihaizi_registered'); p.setMem('cnHeihaiziPolicyFired', true) },
+      },
+      {
+        text: 'You wait to see if the window is safe to use',
+        tag: null,
+        outcome: 'The window closes. You will try the next one, if there is a next one. Your child has an opinion about this they have not fully said.',
+        effect: (p) => { p.m -= 6; p.r += 5; p.setMem('cnHeihaiziPolicyFired', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'cn_heihaizi_late',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) =>
+      isChina(G) &&
+      G.flags.has('china_hidden_second_child') &&
+      G.age >= 58 &&
+      !G.mem?.cnHeihaiziLateFired,
+    text: (G) => {
+      if (G.flags.has('china_heihaizi_registered')) {
+        return 'The second child is registered now — a full legal person with an ID card, a passport, the ability to book a train ticket. There was a period, a decade or more, when none of that was true. You watched your child build a life inside that constraint. What they developed in those years — the specific self-reliance, the knowledge of where you stand with institutions — is theirs now. The registration did not remove what was built in the absence of it.'
+      }
+      if (G.flags.has('china_heihaizi_fine_paid')) {
+        return 'The fine was paid, eventually — you have calculated what it cost in total. The child grew up in a counted-against way. You are proud of them with the specific quality of pride you feel for someone who built themselves out of materials that should have been better.'
+      }
+      return 'The one-child policy — the hiding, the years of calculation whenever an official document was required — settled into the texture of your child\'s life without resolving cleanly. They are an adult. The accounting of what they lost is theirs to do. What you can say is: you wanted them, and you had them, and you stayed with what that cost.'
+    },
+    choices: null,
+    effect: (p) => { p.m += 5; p.r += 3; p.karma += 4; p.setMem('cnHeihaiziLateFired', true) },
   },
 
 ]

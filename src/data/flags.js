@@ -2508,6 +2508,22 @@ export const FLAG_REGISTRY = {
     notes: 'Set by la_mex_ayotzinapa_2014.',
   },
 
+  mexico_earthquake_1985_witness: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the September 19, 1985 Mexico City earthquake — the day civil society was born: brigadas de rescate, citizens digging with their hands while the PRI stalled.',
+    intent: 'year_texture',
+    notes: 'Set by we_mexico_city_earthquake_1985 world event. Complements la_mex_1985_earthquake character event (which sets earthquake_volunteer).',
+  },
+
+  earthquake_volunteer: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Went into the rubble during a disaster to help dig — not an official, not a soldier, just a person with their hands.',
+    intent: 'none',
+    notes: 'Set by la_mex_1985_earthquake (volunteer choice). Captures the spontaneous civilian response to the 1985 Mexico earthquake.',
+  },
+
   mex_2017_earthquake_generation: {
     weight: 'minor',
     category: 'historical',
@@ -3342,6 +3358,41 @@ export const FLAG_REGISTRY = {
     description: 'Was knocked down at the Melilla fence and pushed back by Moroccan guards — the illegal collective expulsion practice that the European Court of Human Rights later ruled violated Article 4 of Protocol 4.',
     intent: 'event',
     notes: 'Set by sen_melilla_fence (pushback choice). Follow-through: sen_fence_pushback_echo (ECHR ruling 2020).',
+  },
+  senegal_democracy_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Witnessed Senegal\'s 2000 alternance — the peaceful transfer of power after 40 years of PS rule, Diouf shaking Wade\'s hand; one of the first democratic alternations in West Africa',
+    intent: 'year_texture',
+    notes: 'Set by sen_alternance_2000. Year texture: what it means to have seen power transferred without soldiers.',
+  },
+  casamance_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Grew up with the Casamance conflict (MFDC separatism since 1982) as background reality — from inside the region or as a distant awareness from Dakar',
+    intent: 'year_texture',
+    notes: 'Set by sen_casamance. Two branches: inside (sen_casamance_inside) or outside (Dakar awareness).',
+  },
+  sen_casamance_inside: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'From the Casamance region — lived with the low-intensity conflict, demining alerts, roadblocks, neighbours who left, the map of areas where you do not walk',
+    intent: 'year_texture',
+    notes: 'Set by sen_casamance (inside choice). Year texture: the specific geography of a region that is inside a country and also partly outside it.',
+  },
+  teranga_household: {
+    weight: 'moderate',
+    category: 'social',
+    description: 'Lives by teranga — the Wolof obligation of hospitality that exceeds cultural preference, requiring you to feed visitors and shelter family regardless of your own means',
+    intent: 'year_texture',
+    notes: 'Set by sen_teranga. Year texture: the meal that couldn\'t be spared, the debt that runs across generations.',
+  },
+  sen_intellectual_dakar: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Encountered the Dakar intellectual world — Cheikh Anta Diop, Présence Africaine, IFAN, the argument that African civilisation precedes Europe — and was changed by it',
+    intent: 'year_texture',
+    notes: 'Set by sen_dakar_intellectual. Year texture: the specific feeling of an argument that reframes everything.',
   },
 
   // ── ADOPTEE FLAGS ─────────────────────────────────────────────────────────
@@ -4663,6 +4714,34 @@ export const FLAG_REGISTRY = {
     intent: 'year_texture',
     notes: 'Pakistan/India partition. Year texture in buildYearTexture.',
   },
+  partition_survivor: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Lived through the 1947 India-Pakistan Partition — the largest forced migration in recorded history',
+    intent: 'none',
+    notes: 'Set by partition_of_india world event (characters alive in 1947).',
+  },
+  partition_refugee: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Was part of the mass refugee movement of 1947 — crossed the new border during or after Partition',
+    intent: 'none',
+    notes: 'Set by partition_india_refugee world event.',
+  },
+  partition_india_memory: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up with family memory of Partition — the city they left, the neighbour who helped, the object that was carried',
+    intent: 'none',
+    notes: 'Set by ind_partition_family_memory. India Hindu/Sikh second generation.',
+  },
+  partition_colony_raised: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up in a refugee colony (Delhi: Lajpat Nagar, Punjabi Bagh, Rajinder Nagar) — the geography of displaced families',
+    intent: 'none',
+    notes: 'Set by ind_partition_colony. Gates on partition_india_memory.',
+  },
 
   '1971_war_lived': {
     weight: 'major',
@@ -4967,6 +5046,62 @@ export const FLAG_REGISTRY = {
     description: 'Lived the post-Tahrir counter-revolution — emergency law returns, square holds different meaning',
     intent: 'year_texture',
     notes: 'Set by egy_tahrir_aftermath. Gates on tahrir_generation.',
+  },
+  sadat_assassination_witness: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Present in Egypt the day Sadat was assassinated (October 6, 1981) — witnessed the moment that delivered Mubarak and thirty years of emergency law',
+    intent: 'none',
+    notes: 'Set by we_sadat_assassination_1981 world event.',
+  },
+  egypt_wasta_beneficiary: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Got a job or position through wasta (connections) rather than merit — knows how the system actually works',
+    intent: 'year_texture',
+    notes: 'Set by egy_wasta_career (first choice). Moral weight: the system is real but the benefitting is its own ledger.',
+  },
+  egypt_wasta_blocked: {
+    weight: 'moderate',
+    category: 'adversity',
+    description: 'Navigated Egyptian professional life without wasta — learned the longer, harder route through the system',
+    intent: 'year_texture',
+    notes: 'Set by egy_wasta_career (second choice).',
+  },
+  egypt_gulf_worker: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Took a Gulf contract — the Egyptian professional who chose Saudi/UAE/Kuwait over staying, sent remittances home, came back three weeks a year',
+    intent: 'year_texture',
+    notes: 'Set by egy_gulf_contract_choice (first choice). Distinct from OFW system; covers professional-class Egyptians.',
+  },
+  egypt_stayed_for_roots: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Chose to stay in Egypt when the Gulf option was available — watched others leave, held the longer path',
+    intent: 'none',
+    notes: 'Set by egy_gulf_contract_choice (second choice).',
+  },
+  egypt_blocked_generation: {
+    weight: 'moderate',
+    category: 'adversity',
+    description: 'Part of Egypt\'s blocked professional generation — university degree, government desk job, the gap between preparation and what the preparation is for',
+    intent: 'year_texture',
+    notes: 'Set by egy_blocked_generation. Only fires if not egypt_gulf_worker.',
+  },
+  coptic_navigation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Navigated professional and public life as a Coptic Christian in Egypt — the church community, the topography of what doors are and aren\'t open',
+    intent: 'year_texture',
+    notes: 'Set by egy_coptic_navigation (both choices).',
+  },
+  sectarian_threat_survived: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Experienced a sectarian attack or nearby threat — a church bombing, communal violence — and returned to normal life the next morning',
+    intent: 'none',
+    notes: 'Set by egy_coptic_navigation (second choice). Broader flag potentially applicable cross-country.',
   },
 
   // ── India ─────────────────────────────────────────────────────────────────────
@@ -6270,6 +6405,195 @@ export const FLAG_REGISTRY = {
     intent: 'year_texture',
     notes: 'Set by cdi_civil_war.',
   },
+  ci_cocoa_farmer: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Grew or harvested cocoa in Ivory Coast — part of the economy that made the Ivorian Miracle and employed four million West African migrants',
+    intent: 'year_texture',
+    notes: 'Set by ci_cocoa_smallholder. Year texture: fermenting pods, London/New York price, the concrete block room.',
+  },
+  ci_houphouet_witness: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Was alive when Houphouët-Boigny died December 7 1993 — witnessed the end of thirty-three years of the only presidency the country had known',
+    intent: 'year_texture',
+    notes: 'Set by ci_houphouet_death_1993. Year texture: the photograph still on the wall.',
+  },
+  ci_coup_1999_witness: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Witnessed the Christmas Eve 1999 coup by General Guéï — third coup in Francophone West Africa that year, ended Bédié\'s ivoirité project by different means',
+    intent: 'year_texture',
+    notes: 'Set by ci_coup_1999. Year texture: the radio at midnight, Guéï leaving.',
+  },
+  ci_abidjan_generation: {
+    weight: 'minor',
+    category: 'place',
+    description: 'Lived and worked in Abidjan — the lagoon city, Plateau business district, Treichville markets, gbaka minibuses, the city that was West Africa\'s showcase',
+    intent: 'year_texture',
+    notes: 'Set by ci_abidjan_life. Year texture: the bridge, the morning smell, the code.',
+  },
+  ci_election_crisis_witness: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Witnessed the 2010-2011 post-election crisis — Gbagbo vs. Ouattara, 3,000 dead, five months of street fighting in Abidjan before ICC arrest',
+    intent: 'both',
+    notes: 'Set by ci_election_crisis_2010. Follow-through: who was right about Ouattara, who benefited from reunification.',
+  },
+  ci_election_displaced: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Displaced during the 2010-2011 Ivorian election crisis — moved north, moved out, watched from safety while others didn\'t',
+    intent: 'year_texture',
+    notes: 'Set by ci_election_crisis_2010 (leave choice). Year texture: the silence of safe distance.',
+  },
+  ci_northern_identity: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Muslim Ivorian from the north — Sénoufo, Dioula, or Malinké — carrying an identity that ivoirité politics coded as foreign or incomplete',
+    intent: 'year_texture',
+    notes: 'Set by ci_north_south_identity. Year texture: the credential gap, the checkpoint language.',
+  },
+  ci_long_witness: {
+    weight: 'major',
+    category: 'experience',
+    description: 'Witnessed the full arc of modern Ivory Coast — miracle to crash to civil war to reunification, two versions of the same phrase',
+    intent: 'both',
+    notes: 'Set by ci_late_reckoning. Follow-through: ci_second_miracle_late. Year texture: the new glass towers and the silence about what happened between.',
+  },
+  ci_gbagbo_reckoning: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Processed the 2019 ICC acquittal of Laurent Gbagbo — the man whose refusal to leave office caused 3,000 deaths, acquitted and returned to Abidjan',
+    intent: 'year_texture',
+    notes: 'Set by ci_gbagbo_acquittal_2019. Year texture: what the legal outcome and the historical record imply together.',
+  },
+  ci_full_arc_witness: {
+    weight: 'major',
+    category: 'experience',
+    description: 'Has lived through both uses of "Ivorian Miracle" — the Houphouët years and the post-2012 recovery — and everything between them',
+    intent: 'year_texture',
+    notes: 'Set by ci_second_miracle_late. Year texture: the survival implicit in having witnessed both.',
+  },
+  ci_miracle_reckoned: {
+    weight: 'minor',
+    category: 'reflection',
+    description: 'Has arrived at a clear-eyed understanding of what the Ivorian Miracle required — migrant labour, one-man rule — and what it produced',
+    intent: 'year_texture',
+    notes: 'Set by ci_miracle_late_reckoning.',
+  },
+  ci_cocoa_accounting: {
+    weight: 'moderate',
+    category: 'reflection',
+    description: 'Has worked through the gap between the cocoa economy as lived from inside and as described in European supply chain reports — different accountings of the same numbers',
+    intent: 'year_texture',
+    notes: 'Set by ci_cocoa_late_accounting.',
+  },
+  sahel_long_arc_witness: {
+    weight: 'major',
+    category: 'political',
+    description: 'Has watched the Sahel crisis move through Mali, Burkina Faso, and towards Ivory Coast — coups, jihadist expansion, French departure, Wagner arrival — as a regional pattern across multiple decades',
+    intent: 'year_texture',
+    notes: 'Set by sahel_regional_witness_late. Cross-country flag for Mali, Burkina, and CI characters.',
+  },
+  tuareg_settled_reckoned: {
+    weight: 'minor',
+    category: 'reflection',
+    description: 'Has processed the position of settling — holding Tuareg identity while living in a city, watching the 2012 Azawad uprising from Bamako, belonging to neither side',
+    intent: 'year_texture',
+    notes: 'Set by tuareg_settled_late_return.',
+  },
+  bamileke_identity: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Bamileke Cameroonian identity — carries the entrepreneurial tradition, tontine networks, the "Jews of Africa" label and what it costs to be the ethnic group associated with commercial success in a state that distributes by other criteria',
+    intent: 'year_texture',
+    notes: 'Set by cmr_bamileke_world. Year texture: the tontine, the market stall, the suspicion.',
+  },
+  tontine_member: {
+    weight: 'minor',
+    category: 'social',
+    description: 'Participates in a tontine — rotating savings and credit association common across West/Central Africa, especially Bamileke communities; the group as the bank',
+    intent: 'year_texture',
+    notes: 'Set by cmr_bamileke_world (trade choice). Year texture: the monthly meeting, who wins, the trust required.',
+  },
+  cmr_biya_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Came of age under Paul Biya\'s presidency — the photo in every office, the RDPC as the party of the state, the managed elections across four decades',
+    intent: 'year_texture',
+    notes: 'Set by cmr_biya_long_rule. Year texture: the form that asks political affiliation, the conversation that stops.',
+  },
+  anglophone_cameroonian: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Anglophone Cameroonian — speaks English, inherited common law, belongs to the 20% linguistic minority navigating a Francophone state apparatus',
+    intent: 'both',
+    notes: 'Set by cmr_anglophone_identity. Follow-through: anglophone_crisis_inside events.',
+  },
+  anglophone_political: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Anglophone Cameroonian who names the arithmetic of exclusion explicitly — minority political consciousness in a majoritarian state',
+    intent: 'year_texture',
+    notes: 'Set by cmr_anglophone_identity (identity choice). Year texture: the counting of cabinet ministers.',
+  },
+  cmr_douala_generation: {
+    weight: 'minor',
+    category: 'place',
+    description: 'Lived and worked in Douala — the commercial capital, not the political capital; the Wouri estuary, Akwa, the market, Pidgin English as the common tongue',
+    intent: 'year_texture',
+    notes: 'Set by cmr_douala_life. Year texture: the traffic, the translations held simultaneously.',
+  },
+  anglophone_crisis_witness: {
+    weight: 'major',
+    category: 'political',
+    description: 'Witnessed the 2016-ongoing Anglophone crisis — what began as lawyers\' and teachers\' strikes became an armed conflict with burning villages, school boycotts, and half a million displaced',
+    intent: 'both',
+    notes: 'Set by cmr_anglophone_strike_2016. Follow-through: long-running unresolved conflict, no peace talks.',
+  },
+  anglophone_crisis_inside: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Experienced the Anglophone crisis from inside the Anglophone regions — the internet shutdown, the army, the Amba Boys, the village burning, the school years lost',
+    intent: 'both',
+    notes: 'Set by cmr_anglophone_strike_2016 (Anglophone choice). Follow-through: ambazonia_displaced for those who left.',
+  },
+  ambazonia_displaced: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Displaced by the Ambazonia conflict from 2018 — village emptied, children out of school, caught between military and armed separatists, no man\'s land',
+    intent: 'year_texture',
+    notes: 'Set by cmr_ambazonia_displacement. Year texture: counting the children who cannot read.',
+  },
+  cmr_long_witness: {
+    weight: 'major',
+    category: 'experience',
+    description: 'Has witnessed Cameroon\'s full arc under Biya — forty years, the promise of "Africa in miniature," the Anglophone crisis unresolved, the continued absence of transition',
+    intent: 'year_texture',
+    notes: 'Set by cmr_late_reckoning. Year texture: the miniature and what scale means.',
+  },
+  anglophone_long_witness: {
+    weight: 'major',
+    category: 'experience',
+    description: 'Anglophone Cameroonian who has watched the 2016 crisis extend for years without resolution — illiterate generation, factionalized armed groups, no peace framework',
+    intent: 'year_texture',
+    notes: 'Set by cmr_anglophone_late_reckoning. Year texture: the specific arithmetic of what was lost.',
+  },
+  cmr_crisis_witness_reckoned: {
+    weight: 'moderate',
+    category: 'reflection',
+    description: 'Francophone Cameroonian who has named, in private, the moral position of continuing normally while the Anglophone crisis happened in the same country',
+    intent: 'year_texture',
+    notes: 'Set by cmr_crisis_echo_francophone.',
+  },
+  anglophone_inside_reckoned: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Anglophone Cameroonian who was inside the crisis and has stayed inside it — holding the specific timeline of the crisis as a personal chronology, asking not when it ends but what will be left',
+    intent: 'year_texture',
+    notes: 'Set by cmr_inside_long_memory.',
+  },
   nigerian_oil_boom_generation: {
     weight: 'moderate',
     category: 'historical',
@@ -6361,6 +6685,20 @@ export const FLAG_REGISTRY = {
     description: 'Managed the 419 national stereotype abroad — the assumption that being Nigerian meant fraud association',
     intent: 'year_texture',
     notes: 'Set by nga_419_scam_culture.',
+  },
+  nepa_generation: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Organised daily life around generator access and power cuts — NEPA (Never Expect Power Always), diesel costs, the ceiling fan stutter that signals the grid going down.',
+    intent: 'year_texture',
+    notes: 'Set by nga_nepa_generator_culture. Universal Nigerian urban/semi-urban adult experience 1985–2015+.',
+  },
+  lagos_go_slow_generation: {
+    weight: 'minor',
+    category: 'experience',
+    description: 'Lived the Lagos go-slow — Third Mainland Bridge standstills, danfo jams, hawkers working the gridlock, trips that took two hours instead of twenty minutes.',
+    intent: 'year_texture',
+    notes: 'Set by nga_lagos_go_slow. Urban Nigeria only.',
   },
 
   // ── Uganda ────────────────────────────────────────────────────────────────────
@@ -8159,9 +8497,57 @@ export const FLAG_REGISTRY = {
   one_child_policy_resisted: {
     weight: 'moderate',
     category: 'family',
-    description: 'Had a second child despite the one-child policy — fines, job consequences, social pressure.',
+    description: 'Had a second child despite the one-child policy — paid the fine, accepted the consequences.',
     intent: 'year_texture',
-    notes: 'Set by cn_one_child_decision (have second choice). 1980–2015.',
+    notes: 'Set by cn_one_child_decision (pay fine choice). 1980–2015.',
+  },
+
+  china_hidden_second_child: {
+    weight: 'major',
+    category: 'adversity',
+    description: 'Had a second child in secret under the one-child policy — unregistered, no hukou, no legal existence for the child.',
+    intent: 'both',
+    notes: 'Set by cn_one_child_decision (hide the birth choice). Triggers heihaizi arc: schoolgate, inspection, 2015 policy window, late reckoning. Year texture in buildYearTexture.',
+  },
+
+  china_heihaizi_school_found: {
+    weight: 'moderate',
+    category: 'family',
+    description: 'Paid for private school when the unregistered child was denied public enrollment.',
+    intent: 'none',
+    notes: 'Set by cn_heihaizi_schoolgate. One outcome of the heihaizi arc.',
+  },
+
+  china_heihaizi_school_wall: {
+    weight: 'moderate',
+    category: 'adversity',
+    description: 'The hidden second child was denied schooling — no hukou, no enrollment.',
+    intent: 'none',
+    notes: 'Set by cn_heihaizi_schoolgate (can\'t pay choice). Hard outcome of the heihaizi arc.',
+  },
+
+  china_heihaizi_uncaught: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'The family planning inspection passed without discovering the unregistered child.',
+    intent: 'none',
+    notes: 'Set by cn_heihaizi_inspection. One escape outcome.',
+  },
+
+  china_heihaizi_fine_paid: {
+    weight: 'moderate',
+    category: 'adversity',
+    description: 'Discovered during a family planning inspection — the crushing fine for the unregistered second child.',
+    intent: 'none',
+    notes: 'Set by cn_heihaizi_inspection (caught choice). Several years\' salary in fines.',
+  },
+
+  china_heihaizi_registered: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Used the 2015 amnesty window to finally register the hidden second child — an ID card after a lifetime without one.',
+    intent: 'none',
+    notes: 'Set by cn_heihaizi_policy_2015. The resolution (partial) of the heihaizi arc.',
   },
 
   tiananmen_witness: {
@@ -8388,6 +8774,14 @@ export const FLAG_REGISTRY = {
     description: 'The compressed generation — farmer grandparents, university-educated self, study-abroad children. Three generations of mobility in one.',
     intent: 'year_texture',
     notes: 'Set by kr_compressed_generation.',
+  },
+
+  sampo_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'The generation that gave up romance, marriage, and children (sampo — three abandonments) under structural economic pressure — housing costs, precarious employment.',
+    intent: 'year_texture',
+    notes: 'Set by kr_sampo_generation. Korean youth 2010s+.',
   },
 
   // ── events_disability.js flags ────────────────────────────────────────
@@ -8632,6 +9026,54 @@ export const FLAG_REGISTRY = {
     description: 'Addiction present in the family — sibling, parent, or child with dependency.',
     intent: 'none',
     notes: 'Set upstream by family events or birth configuration. Gates add_family_witness.',
+  },
+
+  addiction_family_carried: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Said the hard thing to the person in the using — honest, risky, outcome uncontrollable.',
+    intent: 'event',
+    notes: 'Set by add_carrying_someone first choice. Late-life follow-through: ft28_addiction_carried_late.',
+  },
+
+  addiction_family_boundary: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Held the boundary — you cannot carry someone else\'s recovery; the cost to the relationship was real.',
+    intent: 'event',
+    notes: 'Set by add_carrying_someone second choice. Late-life follow-through: ft28_addiction_boundary_late.',
+  },
+
+  addiction_family_supported: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Found support (Al-Anon or equivalent) for loving someone in addiction — the reframe about what is and isn\'t yours to control.',
+    intent: 'event',
+    notes: 'Set by add_family_witness first choice. Midlife echo: ft28_addiction_supported_echo.',
+  },
+
+  addiction_family_isolated: {
+    weight: 'moderate',
+    category: 'adversity',
+    description: 'Held on alone — not ready to involve strangers, the specific accumulated cost of carrying it privately.',
+    intent: 'event',
+    notes: 'Set by add_family_witness second choice. Late-life follow-through: ft28_addiction_isolated_late.',
+  },
+
+  resisted_addiction: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Chose the other path when someone close went into addiction — the road not taken, visible at late-life distance.',
+    intent: 'event',
+    notes: 'Set upstream. Late-life follow-through: ft28_resisted_addiction_late.',
+  },
+
+  cycle_broken: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Stopped a destructive inherited pattern — violence, addiction, abandonment, financial recklessness — before it passed to the next generation.',
+    intent: 'event',
+    notes: 'Set in multiple contexts. Late-life follow-through: ft28_cycle_broken_late.',
   },
 
   gambler: {
@@ -11681,6 +12123,96 @@ export const FLAG_REGISTRY = {
     notes: 'Set by bfa_sahel_violence (Flee branch). Year texture: camp life, loss of home, uncertain return.',
   },
 
+  // ── MALI ARC ─────────────────────────────────────────────────────────────────
+
+  mali_empire_memory: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Carries the memory of the ancient Mali, Ghana, and Songhai empires as a living identity reference — Mansa Musa, Timbuktu, manuscripts — not just textbook history.',
+    intent: 'year_texture',
+    notes: 'Set by mli_empire_heritage. Informs late-life reckoning prose: "from poverty" vs. "from this."',
+  },
+
+  mali_cotton_generation: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Worked within Mali\'s CMDT cotton system — planted cotton under state price controls, experienced the gap between the farmer\'s risk and the company\'s price-setting power.',
+    intent: 'year_texture',
+    notes: 'Set by mli_cotton_economy. Year texture: harvest season arithmetic, cotton bales, the price announcement.',
+  },
+
+  mali_traore_era: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Came of age under Moussa Traoré\'s 23-year military dictatorship (1968–1991) — learned the vocabulary of the unsayable, navigated single-party silence.',
+    intent: 'year_texture',
+    notes: 'Set by mli_traore_era. Year texture: UDPM party formalities, the careful language of daily life under managed silence.',
+  },
+
+  mali_democracy_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through Mali\'s March 1991 democratic revolution — the moment General ATT refused to fire on protesters and Traoré was arrested in his own home.',
+    intent: 'year_texture',
+    notes: 'Set by mli_revolution_1991. Late-life reckoning in mli_sahel_late_reckoning when democracy collapses in 2020.',
+  },
+
+  tuareg_malian: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Tuareg (Kel Tamasheq) identity in Mali — nomadic Berber people living across Saharan borders, negotiating between the desert logic and the Malian state\'s sedentarization.',
+    intent: 'both',
+    notes: 'Set by mli_tuareg_question. Gates tuareg_nomadic_life and tuareg_settled branches. Year texture: the seasonal route, the tent, the identity document.',
+  },
+
+  tuareg_nomadic_life: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Tuareg character who maintained a nomadic way of life — seasonal migrations, camel herding, navigation by stars, existence outside state record-keeping.',
+    intent: 'year_texture',
+    notes: 'Set by mli_tuareg_question (nomadic branch). Year texture: the route, the well, the tent fabric in different temperatures.',
+  },
+
+  tuareg_settled: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Tuareg character who settled in cities — Bamako, Gao, or Kidal — navigating dual identity as Tuareg and urban Malian, visibility vs. assimilation.',
+    intent: 'year_texture',
+    notes: 'Set by mli_tuareg_question (settled branch). Year texture: being Tuareg in a city that sees you as a type.',
+  },
+
+  mali_2012_crisis_lived: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through the March 2012 coup by Captain Sanogo and the subsequent collapse of northern Mali to Tuareg separatists and Islamist groups within days.',
+    intent: 'both',
+    notes: 'Set by mli_coup_2012. Gates mli_timbuktu_islamists and mli_operation_serval.',
+  },
+
+  timbuktu_generation: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Aware of the rescue of Timbuktu\'s 300,000+ ancient manuscripts — librarians moving them south to Bamako box by box before Islamist forces could destroy them.',
+    intent: 'year_texture',
+    notes: 'Set by mli_timbuktu_islamists. Year texture: what the manuscripts represent vs. what their survival costs.',
+  },
+
+  mali_serval_witness: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Witnessed France\'s Operation Serval intervention in January 2013 — French jets retaking northern Malian cities, Malians cheering the soldiers of their former colonizer.',
+    intent: 'year_texture',
+    notes: 'Set by mli_operation_serval. Year texture: the specific irony of relief and contradiction held together.',
+  },
+
+  mali_long_witness: {
+    weight: 'major',
+    category: 'experience',
+    description: 'Late-life reckoning with Mali\'s cycle of coups (1968, 1991, 2012, 2020, 2021) — lived through democracy\'s arrival and its collapse, having marched or witnessed 1991.',
+    intent: 'year_texture',
+    notes: 'Set by mli_sahel_late_reckoning. Late-life only. The march as middle of a story rather than its end.',
+  },
+
   // ── POLITICAL ARC ────────────────────────────────────────────────────────────
 
   pol_left_noted: {
@@ -12973,7 +13505,7 @@ export const FLAG_REGISTRY = {
     weight: 'moderate',
     category: 'career',
     description: 'Entered the aid sector as international (expatriate) staff, deployed from a wealthy country.',
-    intent: 'texture',
+    intent: 'year_texture',
     notes: 'Set by aw_entry_international. Branches text in aw_salary_gap_intl, aw_evacuation.',
   },
 
@@ -12981,7 +13513,7 @@ export const FLAG_REGISTRY = {
     weight: 'moderate',
     category: 'career',
     description: 'Works as national/local staff within an NGO — the same work, different passport, different pay structure.',
-    intent: 'texture',
+    intent: 'year_texture',
     notes: 'Set by aw_local_entry. Branches text/choices in aw_salary_gap_local, aw_evacuation.',
   },
 
@@ -13255,6 +13787,452 @@ export const FLAG_REGISTRY = {
     description: 'Asked to see the ledger — questioned the accounting of someone with power over them.',
     intent: 'none',
     notes: 'Set by bl_sharecrop_ledger first choice.',
+  },
+
+  // ── SEX WORK ARC (BUILD 33) ──────────────────────────────────────────────────
+
+  sex_work_entry: {
+    weight: 'major',
+    category: 'labor',
+    description: 'Entered sex work — survival-driven, tolerated-grey-zone, or legalized European context. The primary gate flag for the sex work arc.',
+    intent: 'event',
+    notes: 'Set by sw_entry_survival, sw_entry_tolerated, sw_entry_legalized. Gates sw_daily_criminalized, sw_police_encounter, sw_regular_client, sw_family_knows, sw_exit_opportunity, sw_long_term, sw_late_reckoning.',
+  },
+
+  sw_criminalized_context: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Entered sex work in a criminalized legal context — police as extortion variable, safety calculation as constant.',
+    intent: 'none',
+    notes: 'Set alongside sex_work_entry by sw_entry_survival. Gates sw_daily_criminalized and sw_police_encounter.',
+  },
+
+  sw_tolerated_context: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'In a tolerated grey zone — Thailand-pattern, technically illegal but visibly present; tourist economy built around it.',
+    intent: 'none',
+    notes: 'Set by sw_entry_tolerated.',
+  },
+
+  sw_legalized_worker: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Registered sex worker in a legalized context — Netherlands, Germany, or New Zealand. Employment rights on paper; stigma persisting independently of legality.',
+    intent: 'none',
+    notes: 'Set by sw_entry_legalized first choice.',
+  },
+
+  sw_considered_sector: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Considered entering sex work in a legalized context and decided against it.',
+    intent: 'none',
+    notes: 'Set by sw_entry_legalized second choice.',
+  },
+
+  sw_police_extorted: {
+    weight: 'moderate',
+    category: 'adversity',
+    description: 'Extorted by police — paid or refused, either way the power relationship was explicit and the law was on the wrong side of it.',
+    intent: 'none',
+    notes: 'Set by both choices of sw_police_encounter.',
+  },
+
+  sw_regular_client_known: {
+    weight: 'minor',
+    category: 'relationship',
+    description: 'Had a regular client — the version that is almost kind, which creates its own particular accounting.',
+    intent: 'none',
+    notes: 'Set by sw_regular_client.',
+  },
+
+  sw_stigma_denied: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Denied the work to family — maintained the version that cost them less, at its own cost.',
+    intent: 'none',
+    notes: 'Set by sw_family_knows first choice.',
+  },
+
+  sw_stigma_handled: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Told family the truth about the work — the conversation was not easy and changed what the relationship could be.',
+    intent: 'none',
+    notes: 'Set by sw_family_knows second choice.',
+  },
+
+  sw_exited: {
+    weight: 'major',
+    category: 'labor',
+    description: 'Exited sex work — took the opportunity when it came, managed the income gap, moved on.',
+    intent: 'none',
+    notes: 'Set by sw_exit_opportunity first choice. sw_late_reckoning covers late-life for all sw_entry holders.',
+  },
+
+  sw_exit_declined: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Chose not to take an exit from sex work when one appeared — the gap between what stopping pays and what continuing pays was not abstract.',
+    intent: 'none',
+    notes: 'Set by sw_exit_opportunity second choice.',
+  },
+
+  sw_long_term_worker: {
+    weight: 'major',
+    category: 'labor',
+    description: 'Spent a decade or more in sex work — the expert knowledge, the social world, the specific body of understanding that comes with long experience in the sector.',
+    intent: 'year_texture',
+    notes: 'Set by sw_exit_opportunity second choice and sw_long_term. Needs year texture in buildYearTexture().',
+  },
+
+  // ── HIGH-CONTROL RELIGION / CULT ARC (BUILD 24) ─────────────────────────────
+
+  hcr_born_in: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Born into a high-control congregation — the restrictions not experienced as restrictions because there was nothing else to compare them to.',
+    intent: 'event',
+    notes: 'Set by hcr_childhood_congregation. Gates the whole HCR arc.',
+  },
+
+  hcr_member: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Member of a high-control religious group — social world and doctrinal world are the same world.',
+    intent: 'event',
+    notes: 'Set by hcr_childhood_congregation and hcr_adult_convert. Primary arc gate.',
+  },
+
+  hcr_convert: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Converted to a high-control group as an adult — recruited during a moment of searching; the warmth, the community, the clear answers.',
+    intent: 'none',
+    notes: 'Set by hcr_adult_convert first choice.',
+  },
+
+  hcr_social_reorganised: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Social world has reorganised entirely around the congregation — outside relationships are complicated in ways inside ones are not.',
+    intent: 'event',
+    notes: 'Set by hcr_community_deepens. Gates hcr_demands_escalate.',
+  },
+
+  hcr_demands_met: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Complied with escalating demands from the group — educational, financial, vocational.',
+    intent: 'none',
+    notes: 'Set by hcr_demands_escalate first choice.',
+  },
+
+  hcr_first_doubt_internal: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'First internal pushback against group demands — the doubt that has not yet been named.',
+    intent: 'event',
+    notes: 'Set by hcr_demands_escalate second choice. Gates hcr_committee.',
+  },
+
+  hcr_blood_refused: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Upheld the blood doctrine in a medical crisis — the card signed with full understanding, the cost now concrete.',
+    intent: 'none',
+    notes: 'Set by hcr_blood_crisis first choice.',
+  },
+
+  hcr_doctrine_broken: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Accepted medically necessary treatment that violated group doctrine — the congregation will hear; consequences will follow.',
+    intent: 'event',
+    notes: 'Set by hcr_blood_crisis second choice. Gates hcr_committee.',
+  },
+
+  hcr_restricted: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Privileges in the congregation curtailed after committee hearing — a period of restriction, monitored compliance.',
+    intent: 'none',
+    notes: 'Set by hcr_committee first choice.',
+  },
+
+  hcr_disfellowshipped: {
+    weight: 'major',
+    category: 'adversity',
+    description: 'Formally disfellowshipped — announced from the platform; members instructed to avoid contact.',
+    intent: 'event',
+    notes: 'Set by hcr_committee second choice. Gates hcr_exit (shunning prose variant).',
+  },
+
+  hcr_exited: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Left the high-control group — the social world closed in a single weekend; the question is what comes next.',
+    intent: 'event',
+    notes: 'Set by hcr_exit. Gates hcr_secular_reentry and hcr_shunning_years. Changes prose of hcr_late_reckoning.',
+  },
+
+  hcr_shunned: {
+    weight: 'major',
+    category: 'adversity',
+    description: 'Shunned by former congregation members including family — they look at the shelf when they see you in the supermarket.',
+    intent: 'event',
+    notes: 'Set alongside hcr_exited by hcr_exit. Gates hcr_shunning_years.',
+  },
+
+  hcr_rebuilding: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Rebuilding a secular social life after leaving — learning at thirty-five what was never taught.',
+    intent: 'year_texture',
+    notes: 'Set by hcr_secular_reentry. Needs year texture in buildYearTexture().',
+  },
+
+  // ── FOLLOWTHROUGH_27: WEALTH SYSTEM + ZIMBABWE + SOUTH AFRICA ───────────────
+
+  moneylender_debt_cleared: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Paid off the moneylender debt — years of reduced margin, then one season without the payment above everything.',
+    intent: 'none',
+    notes: 'Set by ft27_moneylender_ongoing first choice.',
+  },
+
+  // ── SAMI ARC (NORWAY / SWEDEN) ───────────────────────────────────────────────
+
+  sami_boarding_survivor: {
+    weight: 'major',
+    category: 'adversity',
+    description: 'Survived the Norwegian or Swedish boarding school (internatskole) where Sami language and identity were systematically suppressed, 1920–1970.',
+    intent: 'event',
+    notes: 'Set by ind_sami_boarding alongside language_lost. Changes ind_sami_hidden_identity prose and ind_sami_late prose.',
+  },
+
+  sami_reindeer_knowledge: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Holds the specific embodied knowledge of the reindeer migration — reading ice, weather, terrain — learned by presence rather than instruction.',
+    intent: 'none',
+    notes: 'Set by ind_sami_reindeer_migration.',
+  },
+
+  sami_alta_witness: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Witnessed or participated in the Alta dam controversy 1979–82, the galvanising moment of modern Sami political organization.',
+    intent: 'none',
+    notes: 'Set by both choices of ind_sami_alta.',
+  },
+
+  sami_parliament_moment: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Present (in some sense) for the opening of the Sami Parliament (Sámediggi) in 1989 and King Olav V\'s acknowledgment of state injustice.',
+    intent: 'none',
+    notes: 'Set by ind_sami_parliament_1989.',
+  },
+
+  sami_identity_reclaimed: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Began saying it openly — in rooms that had no prior category for it, making the explanation the other person\'s work.',
+    intent: 'none',
+    notes: 'Set by ind_sami_hidden_identity reclaim choice.',
+  },
+
+  sami_language_returned: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Re-learned Northern Sami as an adult — words arriving with sensory memories attached; the language came back changed, as living things do.',
+    intent: 'year_texture',
+    notes: 'Set by ind_sami_language_return. Changes ind_sami_late prose. Needs year texture in buildYearTexture().',
+  },
+
+  // ── AMAZONIAN INDIGENOUS ARC (BRAZIL / PERU / COLOMBIA) ─────────────────────
+
+  amazon_forest_knowledge: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Carries the embodied ecological knowledge of the Amazon — plant medicine, river reading, seasonal calendars — learned by following rather than instruction.',
+    intent: 'none',
+    notes: 'Set by ind_amazon_forest_knowledge. Gates ind_amazon_passing_knowledge and ind_amazon_late prose.',
+  },
+
+  amazon_territory_defender: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Understands, through experience, that the territory requires active defense against extractive industry.',
+    intent: 'none',
+    notes: 'Set by ind_amazon_garimpo_arrives resist choice, ind_amazon_bagua_2009, and ind_amazon_funai network choice.',
+  },
+
+  amazon_deforestation_witness: {
+    weight: 'moderate',
+    category: 'adversity',
+    description: 'Watched the smoke of deforestation come closer each dry season until the forest became pasture within living memory.',
+    intent: 'none',
+    notes: 'Set by ind_amazon_smoke_horizon.',
+  },
+
+  amazon_legal_fighter: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Engaged with FUNAI demarcation process or legal channels — learning bureaucratic language as a survival tool.',
+    intent: 'none',
+    notes: 'Set by ind_amazon_funai_demarcation both choices. Changes ind_amazon_late prose.',
+  },
+
+  amazon_stayed: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Chose to remain in the forest community when the city option appeared — the knowledge requires people who know it.',
+    intent: 'none',
+    notes: 'Set by ind_amazon_city_question stay choice.',
+  },
+
+  amazon_urban_indigenous: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Left the community for the city — the forest knowledge is not valued in the same way there, and is also not replaceable once absent.',
+    intent: 'none',
+    notes: 'Set by ind_amazon_city_question go choice.',
+  },
+
+  amazon_knowledge_passed: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Made the time and took the children into the forest; some of the knowledge passed, not all, enough for them to know what they do not know.',
+    intent: 'none',
+    notes: 'Set by ind_amazon_passing_knowledge teach choice. Changes ind_amazon_late prose.',
+  },
+
+  // ── FGM ARC: FEMALE GENITAL CUTTING ──────────────────────────────────────────
+
+  fgm_underwent: {
+    weight: 'major',
+    category: 'adversity',
+    description: 'Underwent female genital cutting — the ceremony, the recovery, the body carrying what the body carries.',
+    intent: 'event',
+    notes: 'Set by fgm_child_ceremony (auto-resolve) or fgm_adolescent_question comply choice. Gates fgm_medical_encounter and fgm_daughter_question. Changes fgm_late_reckoning prose.',
+  },
+
+  fgm_refused: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Refused the ceremony — older, more aware; the social cost was real and she paid it.',
+    intent: 'event',
+    notes: 'Set by fgm_adolescent_question refuse choice alongside fgm_social_cost. Changes fgm_late_reckoning prose.',
+  },
+
+  fgm_social_cost: {
+    weight: 'moderate',
+    category: 'adversity',
+    description: 'Paid the community cost of refusal — a quiet subtraction of things expected that were no longer available.',
+    intent: 'none',
+    notes: 'Set by fgm_adolescent_question refuse choice alongside fgm_refused.',
+  },
+
+  fgm_medical_known: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Medical system made a formal record; the clinical framework and the community framework named the same body differently.',
+    intent: 'none',
+    notes: 'Set by fgm_medical_encounter answer choice.',
+  },
+
+  fgm_broke_cycle: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Protected her daughter — the cycle ends here, at the cost of some relationships and some belonging.',
+    intent: 'year_texture',
+    notes: 'Set by fgm_daughter_question protect choice. Changes fgm_late_reckoning prose. Needs year texture in buildYearTexture().',
+  },
+
+  fgm_continued_cycle: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Did not intervene in the daughter\'s ceremony — the community remains intact; she carries a specific weight alongside the relief.',
+    intent: 'none',
+    notes: 'Set by fgm_daughter_question continue choice.',
+  },
+
+  // ─── LOCAL SIGNIFICANCE ARC (BUILD 30) ───────────────────────────────────────
+
+  local_hero: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Recognised within their immediate community — not fame, but the specific texture of being known and trusted within five kilometres.',
+    intent: 'both',
+    notes: 'Set by loc_first_recognition and career-specific recognition events in events_local.js. Gates trusted/achievement/coach/farewell events. Needs year texture.',
+  },
+
+  local_trusted: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Became the person the community brings its unofficial problems to — mediating disputes, holding confidences, navigating what cannot go to formal authority.',
+    intent: 'both',
+    notes: 'Set by loc_trusted_with_problems. Gates village healer event.',
+  },
+
+  local_achievement: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Organised something that actually happened — a community project, victory, or improvement that existed only because of their sustained effort.',
+    intent: 'year_texture',
+    notes: 'Set by loc_small_victory. Gates formal role choice.',
+  },
+
+  local_memory_keeper: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Began preserving community memory — names, places, events — that would otherwise disappear with the generation that experienced them.',
+    intent: 'both',
+    notes: 'Set by loc_memory_keeper. Needs year texture in buildYearTexture().',
+  },
+
+  local_legacy_rooted: {
+    weight: 'moderate',
+    category: 'legacy',
+    description: 'Stepped back from a community role and saw the shape of what they built — a farewell that revealed the structure they had created.',
+    intent: 'year_texture',
+    notes: 'Set by loc_the_farewell. Gates loc_forgotten_in_time and loc_transmitted.',
+  },
+
+  community_healer: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Became the de facto medical resource for a rural community without clinic access — absorbing the gap between what the state provides and what people need.',
+    intent: 'year_texture',
+    notes: 'Set by loc_village_healer. Fires in developing/subsaharan/conflict archetypes, rural characters.',
+  },
+
+  local_advocate: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Wrote letters, attended meetings, and pushed formal channels to bring resources to their community — without receiving or expecting credit.',
+    intent: 'none',
+    notes: 'Set by loc_village_healer advocate choice.',
+  },
+
+  local_official: {
+    weight: 'minor',
+    category: 'community',
+    description: 'Took a formal community role — council, board, association — translating informal community trust into official structure.',
+    intent: 'none',
+    notes: 'Set by loc_formal_role take choice.',
+  },
+
+  local_coach_legacy: {
+    weight: 'minor',
+    category: 'community',
+    description: 'Built something through years of coaching youth — the relationship with the people, not just the results.',
+    intent: 'year_texture',
+    notes: 'Set by loc_the_coach. Late-life texture available.',
   },
 
 }

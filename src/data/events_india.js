@@ -227,4 +227,38 @@ export const INDIA_EVENTS = [
     effect: null,
   },
 
+  // ── PARTITION FAMILY MEMORY ───────────────────────────────────────────────────
+  // India characters born after 1947 grew up with Partition as inherited memory.
+  // Pakistan's equivalent is pak_partition_memory in events_pakistan.js.
+
+  {
+    id: 'ind_partition_family_memory',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'India' &&
+      G.currentYear >= 1955 && G.currentYear <= 1982 &&
+      G.age >= 8 && G.age <= 17 &&
+      (G.religion === 'hindu' || G.religion === 'sikh') &&
+      !G.mem?.indPartitionMem,
+    text: 'The adults in your family describe a city they no longer live in. Lahore. Rawalpindi. Lyallpur. The name carries the weight of specific streets, a specific temple gate, the smell of wheat at harvest in a Punjab that is now in another country. The 1947 Partition moved fourteen million people in six weeks. Your family does not give you the numbers. They give you the name of the neighbour who helped them across, and the name of the one who did not, and the object they managed to carry.',
+    choices: null,
+    effect: (p) => { p.r += 7; p.e += 3; p.addFlag('partition_india_memory'); p.setMem('indPartitionMem', true) },
+  },
+
+  {
+    id: 'ind_partition_colony',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'India' &&
+      G.flags.has('partition_india_memory') &&
+      G.currentYear >= 1958 && G.currentYear <= 1985 &&
+      G.age >= 10 && G.age <= 20 &&
+      !G.mem?.indPartitionColony,
+    text: 'The neighbourhood has a name: the refugee colony. Lajpat Nagar. Punjabi Bagh. Rajinder Nagar. They were built in the 1950s and 60s for families who arrived carrying what fit in a trunk, or less. The children on your street know, in an imprecise way, that their families came from somewhere else. No one explains exactly when. It is simply before. Before the line was drawn, before the country became two countries, before whatever it was that the adults stop short of describing in full.',
+    choices: null,
+    effect: (p) => { p.r += 5; p.e += 2; p.addFlag('partition_colony_raised'); p.setMem('indPartitionColony', true) },
+  },
+
 ]
