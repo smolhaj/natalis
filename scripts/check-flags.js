@@ -129,12 +129,13 @@ for (const [section, content] of gameEngineSections) {
 function coverage(flag) {
   const setFiles    = allSetFlags.get(flag) ?? new Set()
   const checkedFiles = flagCheckedIn.get(flag) ?? new Set()
-  // inYearTexture: checked specifically inside buildYearTexture (not just anywhere in gameEngine)
-  const inYearTexture = [...checkedFiles].some(f => f.includes('buildYearTexture'))
-  const inEpitaph     = [...checkedFiles].some(f => f.includes('generateEpitaph') || f.includes('generateIdentityCard'))
+  // inYearTexture: checked inside buildYearTexture (now in yearTexture.js) or old virtual path
+  const inYearTexture = [...checkedFiles].some(f => f.includes('yearTexture') || f.includes('buildYearTexture'))
+  // inEpitaph: checked inside epitaph.js (generateEpitaph / generateIdentityCard)
+  const inEpitaph     = [...checkedFiles].some(f => f.includes('epitaph') || f.includes('generateEpitaph') || f.includes('generateIdentityCard'))
   const inRibbon      = [...checkedFiles].some(f => f.includes('ribbons'))
   const inEventGuard  = [...checkedFiles].some(f =>
-    !f.includes('gameEngine') && !f.includes('ribbons') && !f.includes('gameStore'))
+    !f.includes('gameEngine') && !f.includes('yearTexture') && !f.includes('epitaph') && !f.includes('ribbons') && !f.includes('gameStore'))
   return {
     setCount: setFiles.size,
     checkedCount: checkedFiles.size,
