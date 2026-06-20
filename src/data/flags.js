@@ -11899,6 +11899,96 @@ export const FLAG_REGISTRY = {
     notes: 'Set by bfa_sahel_violence (Flee branch). Year texture: camp life, loss of home, uncertain return.',
   },
 
+  // ── MALI ARC ─────────────────────────────────────────────────────────────────
+
+  mali_empire_memory: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Carries the memory of the ancient Mali, Ghana, and Songhai empires as a living identity reference — Mansa Musa, Timbuktu, manuscripts — not just textbook history.',
+    intent: 'year_texture',
+    notes: 'Set by mli_empire_heritage. Informs late-life reckoning prose: "from poverty" vs. "from this."',
+  },
+
+  mali_cotton_generation: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Worked within Mali\'s CMDT cotton system — planted cotton under state price controls, experienced the gap between the farmer\'s risk and the company\'s price-setting power.',
+    intent: 'year_texture',
+    notes: 'Set by mli_cotton_economy. Year texture: harvest season arithmetic, cotton bales, the price announcement.',
+  },
+
+  mali_traore_era: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Came of age under Moussa Traoré\'s 23-year military dictatorship (1968–1991) — learned the vocabulary of the unsayable, navigated single-party silence.',
+    intent: 'year_texture',
+    notes: 'Set by mli_traore_era. Year texture: UDPM party formalities, the careful language of daily life under managed silence.',
+  },
+
+  mali_democracy_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through Mali\'s March 1991 democratic revolution — the moment General ATT refused to fire on protesters and Traoré was arrested in his own home.',
+    intent: 'year_texture',
+    notes: 'Set by mli_revolution_1991. Late-life reckoning in mli_sahel_late_reckoning when democracy collapses in 2020.',
+  },
+
+  tuareg_malian: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Tuareg (Kel Tamasheq) identity in Mali — nomadic Berber people living across Saharan borders, negotiating between the desert logic and the Malian state\'s sedentarization.',
+    intent: 'both',
+    notes: 'Set by mli_tuareg_question. Gates tuareg_nomadic_life and tuareg_settled branches. Year texture: the seasonal route, the tent, the identity document.',
+  },
+
+  tuareg_nomadic_life: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Tuareg character who maintained a nomadic way of life — seasonal migrations, camel herding, navigation by stars, existence outside state record-keeping.',
+    intent: 'year_texture',
+    notes: 'Set by mli_tuareg_question (nomadic branch). Year texture: the route, the well, the tent fabric in different temperatures.',
+  },
+
+  tuareg_settled: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Tuareg character who settled in cities — Bamako, Gao, or Kidal — navigating dual identity as Tuareg and urban Malian, visibility vs. assimilation.',
+    intent: 'year_texture',
+    notes: 'Set by mli_tuareg_question (settled branch). Year texture: being Tuareg in a city that sees you as a type.',
+  },
+
+  mali_2012_crisis_lived: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through the March 2012 coup by Captain Sanogo and the subsequent collapse of northern Mali to Tuareg separatists and Islamist groups within days.',
+    intent: 'both',
+    notes: 'Set by mli_coup_2012. Gates mli_timbuktu_islamists and mli_operation_serval.',
+  },
+
+  timbuktu_generation: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Aware of the rescue of Timbuktu\'s 300,000+ ancient manuscripts — librarians moving them south to Bamako box by box before Islamist forces could destroy them.',
+    intent: 'year_texture',
+    notes: 'Set by mli_timbuktu_islamists. Year texture: what the manuscripts represent vs. what their survival costs.',
+  },
+
+  mali_serval_witness: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Witnessed France\'s Operation Serval intervention in January 2013 — French jets retaking northern Malian cities, Malians cheering the soldiers of their former colonizer.',
+    intent: 'year_texture',
+    notes: 'Set by mli_operation_serval. Year texture: the specific irony of relief and contradiction held together.',
+  },
+
+  mali_long_witness: {
+    weight: 'major',
+    category: 'experience',
+    description: 'Late-life reckoning with Mali\'s cycle of coups (1968, 1991, 2012, 2020, 2021) — lived through democracy\'s arrival and its collapse, having marched or witnessed 1991.',
+    intent: 'year_texture',
+    notes: 'Set by mli_sahel_late_reckoning. Late-life only. The march as middle of a story rather than its end.',
+  },
+
   // ── POLITICAL ARC ────────────────────────────────────────────────────────────
 
   pol_left_noted: {

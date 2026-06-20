@@ -3322,6 +3322,36 @@ export const WORLD_EVENTS = [
     when: (G) => !G.flags.has('burkina_2014_uprising'),
   },
 
+  // ── MALI WORLD EVENTS ────────────────────────────────────────────────────────
+
+  {
+    id: 'we_mali_revolution_1991',
+    name: 'Mali: Democratic Revolution',
+    years: [1991, 1992],
+    archetypes: 'all',
+    countries: ['Mali'],
+    narrative: 'March 22, 1991. Mass protests have filled the streets of Bamako for days. General Amadou Toumani Touré — commanding the presidential guard — is ordered to fire on the crowd. He refuses. Other officers follow. By the next morning, Moussa Traoré, who has ruled Mali for twenty-three years, is under arrest. A transitional government forms within weeks. Elections follow in June. For the first time since 1968, a civilian chosen by vote governs Mali.',
+    context: 'The 1991 Malian uprising ended Moussa Traoré\'s 23-year military dictatorship. The transition was unusual: a military officer (ATT — Amadou Toumani Touré) who refused the kill order then handed power to civilians rather than keeping it for himself. The pro-democracy movement was led by the ADEMA-PASJ and CNID parties, student organisations, and women\'s groups. Traoré was tried and convicted of economic crimes and murder; he was eventually pardoned in 2002 on health grounds. ATT himself won the presidency democratically in 2002 and 2007 — the general who defended democracy becoming its elected leader — before being overthrown in the 2012 coup.',
+    effect: (p) => { p.m += 12; p.addFlag('mali_democracy_generation'); },
+    addFlags: ['mali_democracy_generation'],
+    minAge: 10,
+    when: (G) => !G.flags.includes('mali_democracy_generation'),
+  },
+
+  {
+    id: 'we_mali_coup_2012',
+    name: 'Mali: Coup and Northern Collapse',
+    years: [2012, 2012],
+    archetypes: 'all',
+    countries: ['Mali'],
+    narrative: 'March 22, 2012 — exactly twenty-one years after the democratic revolution. Captain Amadou Sanogo and a group of officers seize power, citing the government\'s failure to handle the Tuareg uprising in the north. Within seventy-two hours, the northern cities of Kidal, Gao, and Timbuktu have fallen to the MNLA and Ansar Dine. The coup removed the government that was losing the war. The north fell faster without it.',
+    context: 'The 2012 Malian political crisis began with a Tuareg uprising by the MNLA (Mouvement national pour la libération de l\'Azawad) in January 2012, emboldened by Libyan weapons flowing south after Gaddafi\'s fall. Sanogo\'s March coup triggered the collapse of northern defences: Islamist groups (Ansar Dine, AQIM, MUJAO) quickly displaced the secular MNLA and declared northern Mali under sharia law. The MNLA declared Azawad independent on April 6 — unrecognised internationally. Timbuktu\'s ancient shrines were demolished by Islamists. France intervened in January 2013 (Operation Serval), driving Islamists north; the crisis contributed to a regional jihadist insurgency across the Sahel that continues.',
+    effect: (p) => { p.m -= 14; p.addFlag('mali_2012_crisis_lived'); },
+    addFlags: ['mali_2012_crisis_lived'],
+    minAge: 8,
+    when: (G) => !G.flags.includes('mali_2012_crisis_lived'),
+  },
+
   {
     id: 'we_mongolia_1990_revolution',
     name: "Mongolia's Democratic Revolution",

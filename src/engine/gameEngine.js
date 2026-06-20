@@ -9869,6 +9869,52 @@ function buildYearTexture(state) {
       : 'A trip that should take twenty minutes takes two hours without any particular reason. This is not a metaphor. This is Tuesday.',
   ])
 
+  // ─── MALI TEXTURE ────────────────────────────────────────────────────────────
+  if (F.has('mali_cotton_generation') && Math.random() < 0.25) return pick([
+    'The CMDT price announcement comes in November. You have already grown the cotton; the price is announced after you cannot grow anything else instead. You do the arithmetic.',
+    'Cotton white in the field. The harvest week, the whole family working. The bales weighed by the CMDT agent. The number written down. The number is not negotiable.',
+    phase === 'late_life'
+      ? 'Thirty years of cotton. The CMDT changed the price almost every year; your input costs changed too. The arithmetic was never in your favour and you kept doing it because there was no other arithmetic available.'
+      : 'The fields that grew sorghum before cotton are better at growing cotton now — the soil has adapted to what the company requires. The soil knows which crop pays.',
+  ])
+  if (F.has('mali_democracy_generation') && Math.random() < 0.22) return pick([
+    'March 26, 1991. General Amadou Toumani Touré refused the order to fire. That refusal is the hinge of everything that followed — the transition, the elections, the twenty years of democracy. One officer\'s decision.',
+    phase === 'late_life'
+      ? 'The democracy lasted twenty years. Two coups in 2020 and 2021. You marched or you watched those who marched in 1991, and you have now lived to see what that march led to. The march was real. So is this.'
+      : 'Alpha Oumar Konaré won the election, then Amadou Toumani Touré himself — the general who refused to shoot — won ten years later. A soldier who became a democrat. This is what the transition was made of.',
+    'In 1991 you did not know what "democracy" would mean in practice. Twenty years later you knew exactly what it had meant and what was now ending.',
+  ])
+  if (F.has('mali_2012_crisis_lived') && Math.random() < 0.25) return pick([
+    'The coup happened on the anniversary of the revolution. March 22, 1991 and March 22, 2012 — the same date, the opposite event. The calendar keeps score in a way that feels intentional and is probably not.',
+    'Within seventy-two hours of the coup, Timbuktu, Gao, and Kidal had fallen. The coup removed the government that was losing the war. The war got lost faster.',
+    phase === 'late_life'
+      ? 'You have lived through three coups, two democracies, and a foreign intervention. Bamako is still here. The north is not what it was. You have outlasted several versions of the country you were born in.'
+      : 'The MNLA declared independence for Azawad on April 6, 2012. The declaration was not recognised by a single country. The territory was real. The declaration evaporated when the Islamists displaced the separatists.',
+  ])
+  if (F.has('timbuktu_generation') && Math.random() < 0.20) return pick([
+    'Three hundred thousand manuscripts. Librarians moved them in boxes to private homes, then south to Bamako, for months. When the Islamists arrived looking for documents to burn, the shelves were mostly empty.',
+    'The Ahmed Baba Institute had been built to house the manuscripts. When Timbuktu fell, its director found other places to put them. The Islamists used the empty building as a barracks.',
+    phase === 'late_life'
+      ? 'Most were saved. A few thousand were burned anyway, by militants who found caches that were not moved in time. What was saved is in a warehouse in Bamako. The building in Timbuktu is reconstructed. The fourteenth century is more portable than anyone expected.'
+      : 'What the manuscripts contain: astronomy, medicine, jurisprudence, grammar, music, mathematics. Written in Arabic and Tamasheq and Fulfulde. Not recovered from somewhere else — written here.',
+  ])
+  if (F.has('tuareg_malian') && Math.random() < 0.22) return pick([
+    'The border between Mali and Algeria is a line on a French map. Your people have crossed it for centuries without asking permission. The question of which country you belong to has a different answer depending on which side of the line you are standing on.',
+    F.has('tuareg_nomadic_life')
+      ? 'The seasonal route north for the dry season, south for the rains. The wells that your grandparents\' grandparents knew. The particular way the sky looks when you are four days from the next settlement and the stars are the only landmark.'
+      : 'You settled in the city but the city has not settled in you entirely. You still orient yourself by direction of travel rather than street name.',
+    phase === 'late_life'
+      ? 'The 1991 rebellion. The 2006 rebellion. The 2012 rebellion. Each time: Tuareg fighters, Malian state, ceasefire, grievances unaddressed, next rebellion. You have watched this pattern more times than it should have been allowed to repeat.'
+      : 'Tamasheq is not a language the school teaches. You learned to read in French and you think in Tamasheq and the translation happens continuously, below the level of notice.',
+  ])
+  if (F.has('mali_long_witness') && Math.random() < 0.22) return pick([
+    'The coups come at intervals you have now lived through enough of to count. 1968. 1991. 2012. 2020. 2021. You are not counting them in a history book. You are counting them in your own life.',
+    phase === 'late_life'
+      ? 'You marched in 1991, or you remember those who did. Democracy lasted twenty years. The march felt like the end of something. It turns out to have been the middle.'
+      : 'The junta governing now expelled the French and brought in Wagner. The jihadist violence that began in the north in 2012 is now in the centre and the south. You are watching the map change in ways you did not expect to watch.',
+    'There are things you believed about Mali at thirty that you cannot quite believe at sixty. Not because they were false. Because you have watched too many different versions of the same story resolve in the same way.',
+  ])
+
   // ─── ETHIOPIA TEXTURE ────────────────────────────────────────────────────────
   if (F.has('eth_abiy_generation') && Math.random() < 0.22) return pick([
     'The border with Eritrea opened in 2018. Families separated for twenty years crossed at Zalambessa. The Nobel Peace Prize followed in 2019. That window lasted about two years.',
