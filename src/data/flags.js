@@ -13124,22 +13124,8 @@ export const FLAG_REGISTRY = {
   },
 
   // ── WATER / INFRASTRUCTURE ARC ───────────────────────────────────────────────
-
-  water_run_childhood: {
-    weight: 'major',
-    category: 'gender',
-    description: 'Grew up making the daily walk for water — the jerry can, the forty-minute path, the morning organized around water collection instead of school.',
-    intent: 'event',
-    notes: 'Set by wi_water_run (female rural low-GDP childhood). Gates wi_water_walk_adult, wi_water_reckoning.',
-  },
-
-  borehole_generation: {
-    weight: 'moderate',
-    category: 'identity',
-    description: 'The day an NGO borehole arrived and changed the daily schedule overnight — who controls the pump is the new question.',
-    intent: 'event',
-    notes: 'Set by wi_borehole_arrives. Gates wi_pump_committee.',
-  },
+  // Note: water_walk_childhood is set by events_rural_texture.js (rural_water_walk).
+  // These flags cover the downstream/extended layer.
 
   drought_childhood: {
     weight: 'moderate',
@@ -13154,7 +13140,7 @@ export const FLAG_REGISTRY = {
     category: 'historical',
     description: 'The village got electricity during childhood or adolescence — one of the largest single quality-of-life changes in a person\'s life.',
     intent: 'none',
-    notes: 'Set by wi_electrification. Guards against anachronistic re-electrification events.',
+    notes: 'Set by wi_electrification or rural_texture electrification events. Guards against re-electrification events.',
   },
 
   community_organiser: {

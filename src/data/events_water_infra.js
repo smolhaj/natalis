@@ -1,11 +1,9 @@
 // events_water_infra.js — Water, infrastructure, and the body in rural space (BUILD 42)
-// Covers the experiences absent from urban infrastructure events:
-// the morning water run (rural female childhood), the borehole arrival,
-// village electrification, dry-season water scarcity, the changed schedule
-// when a resource arrives that was previously days of labor.
-//
-// Urban infrastructure (power cuts, water shortages, floods) is in events_infrastructure.js.
-// This file is for the rural, pre-infrastructure, gendered daily-life layer.
+// Complements events_infrastructure.js (urban: power cuts, water shortages) and
+// events_rural_texture.js (which covers the water walk and borehole arrival).
+// This file adds: pump committee politics, the adult water walk echo,
+// dry-season scarcity, village electrification (missing from rural_texture),
+// and the Cochabamba water privatization 2000.
 
 const RURAL_LOW_GDP = (G) =>
   ['subsaharan', 'developing_unstable', 'developing_urban'].includes(G.currentCountry?.archetype) &&
@@ -15,44 +13,6 @@ const RURAL_LOW_GDP = (G) =>
 const FEMALE = (G) => G.character.gender === 'female'
 
 export const WATER_INFRA_EVENTS = [
-
-  // ── THE MORNING WATER RUN ─────────────────────────────────────────────────────
-  // Three hours a day, every day. This is not poverty texture — it is a structural
-  // gender-equity mechanism: the girl who carries water is not in school.
-
-  {
-    id: 'wi_water_run',
-    phase: 'childhood',
-    weight: 5,
-    when: (G) =>
-      RURAL_LOW_GDP(G) &&
-      FEMALE(G) &&
-      G.currentYear >= 1960 && G.currentYear <= 2010 &&
-      G.age >= 7 && G.age <= 14 &&
-      !G.mem?.wiWaterRun,
-    text: 'The jerry can is yellow plastic, twenty litres, and when it is full it weighs twenty kilograms. The well is forty minutes away, or an hour, depending on the season. You have been making this journey since you were old enough to carry the smaller can beside your mother or older sister. Now you go with the other girls from the compound — you know which paths are muddy after rain, which trees mark the turn, which older women are usually at the source and what they talk about. It takes most of the morning. Your brother is at school.',
-    choices: null,
-    effect: (p) => { p.h -= 2; p.e += 3; p.r += 4; p.addFlag('water_run_childhood'); p.setMem('wiWaterRun', true) },
-  },
-
-  // ── THE BOREHOLE ARRIVES ──────────────────────────────────────────────────────
-  // A development organisation drills a borehole. The daily schedule changes overnight.
-  // Who controls the pump is a new question.
-
-  {
-    id: 'wi_borehole_arrives',
-    phase: 'childhood',
-    weight: 4,
-    when: (G) =>
-      RURAL_LOW_GDP(G) &&
-      G.currentYear >= 1975 && G.currentYear <= 2010 &&
-      G.age >= 6 && G.age <= 16 &&
-      G.flags.has('water_run_childhood') &&
-      !G.mem?.wiBoreholeArrives,
-    text: 'The drilling rig came on a lorry from the regional capital and worked for three days. On the fourth day, clean water came up from sixty metres below the field behind the school. The people from the NGO held a ceremony and had photographs taken with the village leaders and several children. They left a maintenance manual in English. The well is now two minutes away instead of forty. The morning that changes because of this is a different kind of morning — the first one you have not organised around the walk. You do not know yet who will control who gets to use the pump, and when, and whether the family that lives closest has any special claim. These questions are already forming.',
-    choices: null,
-    effect: (p) => { p.m += 10; p.h += 5; p.e += 3; p.addFlag('borehole_generation'); p.setMem('wiBoreholeArrives', true) },
-  },
 
   // ── THE DRY SEASON ────────────────────────────────────────────────────────────
   // Annual, brutal, and entirely predictable. The specific knowledge of thirst.
@@ -65,7 +25,7 @@ export const WATER_INFRA_EVENTS = [
       RURAL_LOW_GDP(G) &&
       G.currentYear >= 1960 && G.currentYear <= 2020 &&
       G.age >= 6 && G.age <= 16 &&
-      !G.flags.has('borehole_generation') &&
+      !G.flags.has('village_electrified') &&
       !G.mem?.wiDrySeason,
     text: 'In the dry season the river is a wide pale scar and the water in it is slow, warm, and not safe to drink without boiling. You have known this since before you could name it. You know the specific hierarchy of thirst: the animals first because without them the farm fails, the children second, the adults last. You know how to go to sleep when you are still thirsty without lying awake thinking about it, which is a thing you learned by doing it enough times.',
     choices: null,
@@ -86,7 +46,7 @@ export const WATER_INFRA_EVENTS = [
       G.age >= 5 && G.age <= 16 &&
       !G.flags.has('village_electrified') &&
       !G.mem?.wiElectrification,
-    text: 'The government line reached the village in the dry season, which is when the work is easiest. The men who strung the cables worked for a week and then a sub-contractor came and connected the meters. There were three bulbs per household in the initial connection, one per room if your house was the usual size. The first evening with electric light is something you do not know how to describe afterwards — not because it is too emotional but because the thing that changes is too large and too ordinary simultaneously. You can see in the evenings now. The kerosene lamp stays in the cupboard for emergencies.',
+    text: 'The government line reached the village in the dry season, which is when the work is easiest. The men who strung the cables worked for a week and then a sub-contractor came and connected the meters. There were three bulbs per household in the initial connection — one per room if your house was the usual size. The first evening with electric light is something you do not know how to describe afterwards: not because it is too emotional but because what changes is too large and too ordinary simultaneously. You can see in the evenings now. The kerosene lamp stays in the cupboard for emergencies.',
     choices: null,
     effect: (p) => { p.m += 8; p.h += 3; p.e += 5; p.addFlag('village_electrified'); p.setMem('wiElectrification', true) },
   },
@@ -101,7 +61,7 @@ export const WATER_INFRA_EVENTS = [
     weight: 3,
     when: (G) =>
       RURAL_LOW_GDP(G) &&
-      G.flags.has('borehole_generation') &&
+      G.flags.has('water_walk_childhood') &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.wiPumpCommittee,
     text: 'The pump committee was formed the year the NGO left. Twelve people, one from each compound, to manage maintenance and resolve disputes. You are now old enough to be on it, or to have a family member on it, which is almost the same thing in terms of the decisions you are involved in. The main dispute is the same as always: how much the families who live closest to the pump can use before leaving water for those who walk further. The NGO\'s manual does not address this. The committee has developed its own rules, which are not written down, which means they can be argued.',
@@ -134,9 +94,7 @@ export const WATER_INFRA_EVENTS = [
       FEMALE(G) &&
       G.currentYear >= 1970 && G.currentYear <= 2015 &&
       G.age >= 18 && G.age <= 35 &&
-      !G.flags.has('borehole_generation') &&
-      !G.flags.has('village_electrified') &&
-      G.flags.has('water_run_childhood') &&
+      G.flags.has('water_walk_childhood') &&
       !G.mem?.wiWaterWalkAdult,
     text: 'You are twenty-three, or twenty-eight, or thirty-two, and you still make the morning walk for water. You made it as a child with your mother; you make it now with your daughter. The distance is the same. The weight is the same. The time it takes — an hour and a half, or two hours, or a little more in the dry season — is the same. This is not a complaint, exactly. It is an account.',
     choices: null,
@@ -146,7 +104,6 @@ export const WATER_INFRA_EVENTS = [
   // ── WATER PRIVATIZATION: COCHABAMBA 2000 ─────────────────────────────────────
   // Bolivia's Cochabamba: the city's water supply privatized, prices triple,
   // even rainwater collection becomes technically illegal. The uprising reverses it.
-  // (Pairs with events_bolivia.js: the Gas War is 2003, water war is 2000.)
 
   {
     id: 'wi_cochabamba_water_war',
@@ -183,7 +140,7 @@ export const WATER_INFRA_EVENTS = [
     phase: 'late_life',
     weight: 3,
     when: (G) =>
-      G.flags.has('water_run_childhood') &&
+      G.flags.has('water_walk_childhood') &&
       G.age >= 58 &&
       !G.mem?.wiWaterReckoning,
     text: 'There is a tap now, or a borehole, or a pipe from the municipal system — however the water arrived. You turn it on in the morning and you remember, briefly, the walk. You remember the particular weight of the full jerry can when you tried to shift it from one arm to the other at the midpoint. You remember the paths, the trees, the women who were always there before you and always left before you. The tap is ordinary now, which means the walk has become a different kind of memory — not of hardship exactly, but of a particular kind of time, and of what your body knew how to carry.',
