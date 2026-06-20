@@ -8634,6 +8634,54 @@ export const FLAG_REGISTRY = {
     notes: 'Set upstream by family events or birth configuration. Gates add_family_witness.',
   },
 
+  addiction_family_carried: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Said the hard thing to the person in the using — honest, risky, outcome uncontrollable.',
+    intent: 'event',
+    notes: 'Set by add_carrying_someone first choice. Late-life follow-through: ft28_addiction_carried_late.',
+  },
+
+  addiction_family_boundary: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Held the boundary — you cannot carry someone else\'s recovery; the cost to the relationship was real.',
+    intent: 'event',
+    notes: 'Set by add_carrying_someone second choice. Late-life follow-through: ft28_addiction_boundary_late.',
+  },
+
+  addiction_family_supported: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Found support (Al-Anon or equivalent) for loving someone in addiction — the reframe about what is and isn\'t yours to control.',
+    intent: 'event',
+    notes: 'Set by add_family_witness first choice. Midlife echo: ft28_addiction_supported_echo.',
+  },
+
+  addiction_family_isolated: {
+    weight: 'moderate',
+    category: 'adversity',
+    description: 'Held on alone — not ready to involve strangers, the specific accumulated cost of carrying it privately.',
+    intent: 'event',
+    notes: 'Set by add_family_witness second choice. Late-life follow-through: ft28_addiction_isolated_late.',
+  },
+
+  resisted_addiction: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Chose the other path when someone close went into addiction — the road not taken, visible at late-life distance.',
+    intent: 'event',
+    notes: 'Set upstream. Late-life follow-through: ft28_resisted_addiction_late.',
+  },
+
+  cycle_broken: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Stopped a destructive inherited pattern — violence, addiction, abandonment, financial recklessness — before it passed to the next generation.',
+    intent: 'event',
+    notes: 'Set in multiple contexts. Late-life follow-through: ft28_cycle_broken_late.',
+  },
+
   gambler: {
     weight: 'moderate',
     category: 'behavior',
