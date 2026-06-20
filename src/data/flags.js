@@ -14317,4 +14317,100 @@ export const FLAG_REGISTRY = {
     notes: 'Set by internet_smartphone_arrival.',
   },
 
+  afghan_girl_studied_secret: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'An Afghan girl chose to study in secret after the Taliban school ban — the continued education conducted in hiding, at risk.',
+    intent: 'followthrough',
+    notes: 'Set by sl_afghan_girl_school_ban. Follow-through: sl_afghan_girl_echo fires at young_adult.',
+  },
+
+  afghan_girl_stopped_studying: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'An Afghan girl stopped studying after the Taliban school ban — the foreclosure of a life trajectory by decree.',
+    intent: 'year_texture',
+    notes: 'Set by sl_afghan_girl_school_ban.',
+  },
+
+  japan_ol_track_accepted: {
+    weight: 'minor',
+    category: 'career',
+    description: 'Accepted the office-lady track — the career ceiling built into the role, the social smoothness that comes with not pushing back.',
+    intent: 'none',
+    notes: 'Set by sl_japan_ol_track.',
+  },
+
+  japan_career_fought: {
+    weight: 'minor',
+    category: 'career',
+    description: 'Pushed back against the OL track assignment — the friction this created, the tiny space that refusal opened.',
+    intent: 'none',
+    notes: 'Set by sl_japan_ol_track.',
+  },
+
+  karen_displaced: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'A Karen person was displaced by the Myanmar military offensive — fled to Mae La camp or the Thai border, now in refugee status.',
+    intent: 'followthrough',
+    notes: 'Set by sl_karen_displacement. Follow-through: sl_karen_camp_years fires at adolescence.',
+  },
+
+  refusenik_applied: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'A Soviet Jewish character filed the refusenik emigration application — beginning the years-long, career-destroying wait for an exit visa.',
+    intent: 'none',
+    notes: 'Set by sl_soviet_jew_emigration when the player chooses to apply.',
+  },
+
+  refusenik_stayed: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'A Soviet Jewish character withdrew their emigration application — choosing Soviet life over the refusenik limbo, whatever the reason.',
+    intent: 'none',
+    notes: 'Set by sl_soviet_jew_emigration when the player chooses to withdraw.',
+  },
+
+  igbo_fled_north: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'An Igbo person fled the north after the 1966 pogroms — part of the mass return of Igbos to the Eastern Region before the Biafra War.',
+    intent: 'none',
+    notes: 'Set by sl_igbo_after_66.',
+  },
+
+  igbo_stayed_north: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'An Igbo person chose to remain in the north after the 1966 pogroms — the decision and its weight, the neighbours who protected or did not.',
+    intent: 'none',
+    notes: 'Set by sl_igbo_after_66.',
+  },
+
+  venezuela_stayed_professional: {
+    weight: 'moderate',
+    category: 'resilience',
+    description: 'A Venezuelan professional stayed during the economic collapse — treating patients or maintaining infrastructure despite conditions that drove colleagues abroad.',
+    intent: 'year_texture',
+    notes: 'Set by sl_venezuela_professional_collapse when the player chooses to stay.',
+  },
+
+  coptic_fought_permit: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'A Coptic Christian persisted with the state church-building permit — the bureaucratic resistance that is the everyday texture of minority religious practice in Egypt.',
+    intent: 'none',
+    notes: 'Set by sl_coptic_church_permit.',
+  },
+
+  dhaka_garment_worked: {
+    weight: 'moderate',
+    category: 'labour',
+    description: 'Worked in the Dhaka garment industry — the factory floors, the quota systems, the twelve-hour days, the economic lifeline of Bangladesh.',
+    intent: 'followthrough',
+    notes: 'Set by sl_dhaka_garment. Follow-through: sl_rana_plaza_aftermath fires 2013-2017.',
+  },
+
 }

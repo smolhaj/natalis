@@ -12681,6 +12681,22 @@ function buildYearTexture(state) {
     if (cn === 'Brazil' && era === 2000) return 'The Bolsa Família has pulled people out of a kind of poverty that was considered fixed. The fact of this is underreported outside Brazil.'
   }
 
+  if (F.has('afghan_girl_stopped_studying') && Math.random() < 0.2) return pick([
+    'The books you stopped carrying. The year you stopped carrying them is not something you narrate. It is just the year you stopped.',
+    phase === 'late_life'
+      ? 'There is a woman in this city who teaches. You see her sometimes and understand what that life was — the parallel life, the one the decree closed. You do not dwell. You live in the one you have.'
+      : 'The decree came and the school closed and then you were home. The years since have been other things. The other things have been real and yours.',
+    'What you know, you taught yourself in other ways. The learning did not stop. The form it took changed.',
+  ])
+
+  if (F.has('venezuela_stayed_professional') && Math.random() < 0.2) return pick([
+    'The colleagues who left send news from their new cities — the salary, the equipment, the systems that work. You receive the news and note it and continue the ward round.',
+    phase === 'late_life'
+      ? 'The ones who stayed and the ones who went have built different things with the same training. You are not certain who chose correctly. You stayed. That is the choice you live with.'
+      : 'You stayed when staying was not the rational thing. The irrational thing required its own reasoning, which you have been working out ever since.',
+    'The patients you have treated in conditions that colleagues elsewhere would call impossible — they are the accounting. Not the salary. Not the equipment. The patients.',
+  ])
+
   // ─── CROSS-CUTTING EARLY-LIFE + ECONOMIC FLAGS ───────────────────────────────
   if (F.has('adult_heartbreak') && phase !== 'early_childhood' && Math.random() < 0.15) return pick([
     'The first real adult relationship ending — not adolescent heartbreak but a partnership with routines and a shared future — is a calibration point you carry. You ask questions earlier now. You leave more space.',
