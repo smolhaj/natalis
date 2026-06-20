@@ -9773,6 +9773,53 @@ function buildYearTexture(state) {
     'The line across the middle of the country. The zone of confidence. Abidjan in the south, Bouaké in the north, French troops and UN peacekeepers in the middle. You learned to navigate a country that had become two.',
     'The ceasefire line ran across the country for nine years. The things that crossed it — goods, people, phone signals — all crossed under specific conditions that you knew.',
   ])
+  if (F.has('ci_cocoa_farmer') && Math.random() < 0.22) return pick([
+    'The cocoa pods take four years from planting to harvest. You planted trees whose fruit you did not eat for four years and then harvested them for thirty. The patience required by a cocoa farm is not a patience anyone teaches. It accumulates.',
+    'The fermenting beans spread on mats in the sun. The smell is specific and not pleasant and entirely associated with income. You will always know it.',
+    phase === 'late_life'
+      ? 'Ivory Coast has grown a third of the world\'s cocoa for your entire adult life. The price was set in London. The crop was grown here. The gap between those two facts is where your margin lived.'
+      : 'Good years: a concrete block room added to the house. Bad years: the calculation of what can be deferred. The cocoa doesn\'t know which year it is.',
+  ])
+  if (F.has('ci_houphouet_witness') && Math.random() < 0.18) return pick([
+    'His photograph was in every classroom and government office for thirty-three years. When he died the photographs did not come down immediately. They stayed on the walls while the question of what came next was being decided.',
+    phase === 'late_life'
+      ? 'Houphouët-Boigny never confirmed his birth year. He may have been eighty-eight. He may have been older. He ruled for thirty-three years and the country had built itself around the assumption that he would continue.'
+      : 'December 7 1993. The succession had not been openly prepared. Bédié announced it on television before the army was consulted. The army noticed.',
+  ])
+  if (F.has('ci_coup_1999_witness') && Math.random() < 0.18) return pick([
+    'General Guéï\'s coup lasted fourteen months. He organised an election and then announced himself the winner. The streets of Abidjan filled and he left the country before morning. The system worked, in the way that systems sometimes work unexpectedly.',
+    phase === 'late_life'
+      ? 'Three coups: 1999, the 2002 civil war, the 2010 crisis. Each one produced a different arrangement of the same underlying question about who belongs in the country.'
+      : 'The Christmas Eve coup. The radio announcement after midnight. By morning the junta had a name and had excluded Ouattara again from the candidate list. The method changed. The result repeated.',
+  ])
+  if (F.has('ci_abidjan_generation') && Math.random() < 0.20) return pick([
+    'The lagoon at the centre of the city. The Plateau on one side, Treichville on the other, the bridges between them navigated daily. The city holds two versions of itself in the same geography.',
+    'The gbaka minibuses in traffic. The driver and the apprentice who collects the money. The routes that are not written on maps but known by the people who need them.',
+    phase === 'late_life'
+      ? 'Abidjan was called the Paris of West Africa in the years when that meant something different from what it means now. The description was comparison. It was also aspiration. Both were true at the same time.'
+      : 'The Treichville market at six in the morning: plantain, cloth, phone credit, the specific smell of wood fires and drain water. The market before the heat. This is the city before it is the city.',
+  ])
+  if (F.has('ci_election_crisis_witness') && Math.random() < 0.22) return pick([
+    'The Constitutional Council annulled the results after the Independent Electoral Commission announced them. The entire international community recognised Ouattara. Gbagbo had the army. The country waited to see what those facts resolved into.',
+    F.has('ci_election_displaced')
+      ? 'You were not in Abidjan for the worst of it. You watched from somewhere safer. The distance was the right choice and you have never been fully certain that it was.'
+      : 'Three thousand people died in five months in Abidjan and the western regions. The number was announced afterward. During it, the numbers were smaller and different and harder to confirm.',
+    phase === 'late_life'
+      ? 'Gbagbo was acquitted by the ICC in 2019 and returned to Ivory Coast in 2021 to crowds in Abidjan. Ouattara is still president. The crisis had an ending. The accounting of what it cost is still ongoing.'
+      : 'The Jeunes Patriotes roadblocks. The FRCI fighters from the north. The French intervention in the last weeks that ended it. The intervention from the country that had always been there, in different forms.',
+  ])
+  if (F.has('ci_northern_identity') && Math.random() < 0.20) return pick([
+    'Dioula is the trade language of the north and much of West Africa — you can conduct commerce in seven countries with it. The Ivorian state teaches French. The gap between the useful language and the official language is political.',
+    phase === 'late_life'
+      ? 'The northern identity that was coded as foreign under ivoirité is the same identity that governed the country after 2011. The category didn\'t change. The power changed.'
+      : 'The credential question: which identity opens which door. French and the Plateau for some doors. Dioula and the family network for others. You learned to read the door before choosing the key.',
+  ])
+  if (F.has('ci_long_witness') && Math.random() < 0.20) return pick([
+    'The phrase "Ivorian Miracle" has been used twice: once in the 1960s and 1970s, once now. Between the two uses was a civil war, two coups, a post-election crisis, and 3,000 deaths in five months. The phrase survived.',
+    phase === 'late_life'
+      ? 'You have lived through the miracle years, the austerity, the ivoirité politics, the civil war, the election crisis, and the recovery. Each period felt like it would define the country permanently. None of them did.'
+      : 'The glass towers on the Plateau are new. The reunification happened. The economy grew. The things that happened between 2002 and 2011 are not discussed the way they might be discussed.',
+  ])
   if (F.has('nigerian_oil_boom_generation') && Math.random() < 0.2) return pick([
     'The boom years: the naira strong, the roads being built, the government salaries that made sense. The structural problem was legible but the feeling of the moment was abundance. You remember the abundance.',
     'Oil at $35 a barrel and then higher. The federal government suddenly wealthy. The problem — that the wealth was flowing through patronage rather than into productive capacity — would become visible later.',

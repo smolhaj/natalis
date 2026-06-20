@@ -3541,6 +3541,34 @@ export const WORLD_EVENTS = [
   },
 
   {
+    id: 'we_ci_houphouet_death_1993',
+    name: 'Ivory Coast: Houphouët-Boigny Dies',
+    years: [1993, 1993],
+    archetypes: 'all',
+    countries: ['Ivory Coast'],
+    narrative: 'December 7, 1993. Félix Houphouët-Boigny dies in Yamoussoukro at the age of eighty-eight or possibly older — he never confirmed his birth year. He had been Ivory Coast\'s only president since independence in 1960: thirty-three years. His photograph had hung in every classroom, every government office, every police station. Henri Konan Bédié announces the succession on television before the army is consulted. The country will now have to decide what it is without the man who decided that question for thirty-three years.',
+    context: 'Houphouët-Boigny was the dominant figure of postcolonial Francophone Africa. He had maintained the Ivorian Miracle — one of Africa\'s strongest growth rates — through pragmatic pro-Western alignment, close ties with France, and the use of migrant labour from Burkina Faso and Mali in the cocoa sector. His death exposed the fragility of personalist rule: no succession mechanism, no legitimate opposition structures, and a constitution written around him. His successor Bédié would introduce ivoirité — authentic Ivorian identity politics — to block political rivals, which set in motion the dynamics that led to civil war in 2002.',
+    effect: (p) => { p.m -= 6; p.addFlag('ci_houphouet_witness'); },
+    addFlags: ['ci_houphouet_witness'],
+    minAge: 8,
+    when: (G) => !G.flags.includes('ci_houphouet_witness'),
+  },
+
+  {
+    id: 'we_ci_election_crisis_2010',
+    name: 'Ivory Coast: Post-Election Crisis',
+    years: [2010, 2011],
+    archetypes: 'all',
+    countries: ['Ivory Coast'],
+    narrative: 'November 28, 2010. The Independent Electoral Commission announces that Alassane Ouattara has won the presidential election with 54 percent of the vote. Hours later, the Constitutional Council — controlled by outgoing president Laurent Gbagbo\'s allies — annuls the results and declares Gbagbo the winner. The United Nations, the African Union, France, and the United States recognise Ouattara. Gbagbo has the national army. Ouattara has the Forces Nouvelles fighters and international legitimacy. Over the following five months, 3,000 people are killed in Abidjan and the western regions. In April 2011, French forces and Forces Nouvelles capture Gbagbo in his bunker.',
+    context: 'The 2010-2011 Ivorian crisis ended the nine-year division begun by the 2002 coup attempt. Gbagbo\'s refusal to accept electoral defeat drew on the dynamics of ivoirité — the argument that Ouattara, whose parents were from Burkina Faso, was not authentically Ivorian. Gbagbo was transferred to the International Criminal Court in 2011 and charged with crimes against humanity; he was acquitted in 2019 and returned to Ivory Coast in 2021. Alassane Ouattara was re-elected in 2015 and again in 2020. The reunified country achieved strong economic growth from 2012 onward, though political reconciliation remained incomplete.',
+    effect: (p) => { p.m -= 14; p.r += 6; p.addFlag('ci_election_crisis_witness'); },
+    addFlags: ['ci_election_crisis_witness'],
+    minAge: 10,
+    when: (G) => !G.flags.includes('ci_election_crisis_witness'),
+  },
+
+  {
     id: 'we_nepal_earthquake_2015',
     name: 'Nepal Earthquake',
     years: [2015, 2015],
