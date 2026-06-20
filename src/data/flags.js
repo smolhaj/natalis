@@ -14317,4 +14317,926 @@ export const FLAG_REGISTRY = {
     notes: 'Set by internet_smartphone_arrival.',
   },
 
+  afghan_girl_studied_secret: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'An Afghan girl chose to study in secret after the Taliban school ban — the continued education conducted in hiding, at risk.',
+    intent: 'followthrough',
+    notes: 'Set by sl_afghan_girl_school_ban. Follow-through: sl_afghan_girl_echo fires at young_adult.',
+  },
+
+  afghan_girl_stopped_studying: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'An Afghan girl stopped studying after the Taliban school ban — the foreclosure of a life trajectory by decree.',
+    intent: 'year_texture',
+    notes: 'Set by sl_afghan_girl_school_ban.',
+  },
+
+  japan_ol_track_accepted: {
+    weight: 'minor',
+    category: 'career',
+    description: 'Accepted the office-lady track — the career ceiling built into the role, the social smoothness that comes with not pushing back.',
+    intent: 'none',
+    notes: 'Set by sl_japan_ol_track.',
+  },
+
+  japan_career_fought: {
+    weight: 'minor',
+    category: 'career',
+    description: 'Pushed back against the OL track assignment — the friction this created, the tiny space that refusal opened.',
+    intent: 'none',
+    notes: 'Set by sl_japan_ol_track.',
+  },
+
+  karen_displaced: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'A Karen person was displaced by the Myanmar military offensive — fled to Mae La camp or the Thai border, now in refugee status.',
+    intent: 'followthrough',
+    notes: 'Set by sl_karen_displacement. Follow-through: sl_karen_camp_years fires at adolescence.',
+  },
+
+  refusenik_applied: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'A Soviet Jewish character filed the refusenik emigration application — beginning the years-long, career-destroying wait for an exit visa.',
+    intent: 'none',
+    notes: 'Set by sl_soviet_jew_emigration when the player chooses to apply.',
+  },
+
+  refusenik_stayed: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'A Soviet Jewish character withdrew their emigration application — choosing Soviet life over the refusenik limbo, whatever the reason.',
+    intent: 'none',
+    notes: 'Set by sl_soviet_jew_emigration when the player chooses to withdraw.',
+  },
+
+  igbo_fled_north: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'An Igbo person fled the north after the 1966 pogroms — part of the mass return of Igbos to the Eastern Region before the Biafra War.',
+    intent: 'none',
+    notes: 'Set by sl_igbo_after_66.',
+  },
+
+  igbo_stayed_north: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'An Igbo person chose to remain in the north after the 1966 pogroms — the decision and its weight, the neighbours who protected or did not.',
+    intent: 'none',
+    notes: 'Set by sl_igbo_after_66.',
+  },
+
+  venezuela_stayed_professional: {
+    weight: 'moderate',
+    category: 'resilience',
+    description: 'A Venezuelan professional stayed during the economic collapse — treating patients or maintaining infrastructure despite conditions that drove colleagues abroad.',
+    intent: 'year_texture',
+    notes: 'Set by sl_venezuela_professional_collapse when the player chooses to stay.',
+  },
+
+  coptic_fought_permit: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'A Coptic Christian persisted with the state church-building permit — the bureaucratic resistance that is the everyday texture of minority religious practice in Egypt.',
+    intent: 'none',
+    notes: 'Set by sl_coptic_church_permit.',
+  },
+
+  dhaka_garment_worked: {
+    weight: 'moderate',
+    category: 'labour',
+    description: 'Worked in the Dhaka garment industry — the factory floors, the quota systems, the twelve-hour days, the economic lifeline of Bangladesh.',
+    intent: 'followthrough',
+    notes: 'Set by sl_dhaka_garment. Follow-through: sl_rana_plaza_aftermath fires 2013-2017.',
+  },
+
+  lgbtq_lived_underground: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Lived LGBTQ identity in a hostile legal or social environment — the calibration of trust, the parallel community, the constant calculation.',
+    intent: 'year_texture',
+    notes: 'Set by sl_russia_gay_propaganda, sl_egypt_lgbtq_crackdown. Cross-cutting hostile-environment LGBTQ flag.',
+  },
+
+  witnessed_rights_expansion: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Witnessed a formal legal expansion of their rights — the moment a law changes and the country officially acknowledges your existence.',
+    intent: 'none',
+    notes: 'Set by sl_india_377_repeal and similar rights-expansion events.',
+  },
+
+  aids_generation_witness: {
+    weight: 'moderate',
+    category: 'grief',
+    description: 'Part of the generation that witnessed the AIDS epidemic as a community catastrophe — the funerals, the silence, the improvised care infrastructure.',
+    intent: 'year_texture',
+    notes: 'Set by sl_us_aids_gen. Distinct from AIDS personal diagnosis.',
+  },
+
+  industry_lost: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lost their occupation or livelihood to deindustrialisation — the letter, the closure, the identity built around a trade that no longer exists.',
+    intent: 'year_texture',
+    notes: 'Set by sl_coal_miner_pit_closure and similar industrial closure events.',
+  },
+
+  childhood_disability: {
+    weight: 'moderate',
+    category: 'health',
+    description: 'Acquired or lived with a significant disability from childhood — the architecture of education and public life built around what they could not do.',
+    intent: 'year_texture',
+    notes: 'Set by sl_polio_survivor_1950s. Distinct from born_with_disability (acquired) and born_deaf.',
+  },
+
+  intergenerational_trauma: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Carries the trauma of a historical atrocity through family silence — the things not in the album, the dates that make the room go still.',
+    intent: 'year_texture',
+    notes: 'Set by sl_second_gen_holocaust, sl_hiroshima_second_gen. Cross-generational historical wound.',
+  },
+
+  political_awakening: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Experienced a defining political awakening — a historical event that crystallised what had previously been diffuse into a clear political understanding.',
+    intent: 'none',
+    notes: 'Set by sl_soweto_student_1976 and similar politically clarifying events.',
+  },
+
+  political_prisoner_risk: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Under active risk of political detention or arrest for their known political affiliations — the specific lived precarity of being on a list.',
+    intent: 'none',
+    notes: 'Set by sl_chile_1973_morning and similar events where political network activity creates documented risk.',
+  },
+
+  code_switched: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Learned to perform the dominant-class register — voice, vocabulary, demeanour — as a social survival strategy when crossing class or cultural lines.',
+    intent: 'year_texture',
+    notes: 'Set by sl_first_gen_university_uk and similar code-switching events.',
+  },
+
+  class_guilt: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Carries ongoing guilt about class mobility — the moments of choosing the new world over the one they came from, and the people left out of those choices.',
+    intent: 'year_texture',
+    notes: 'Set by sl_class_betrayal. Cross-cutting upward mobility guilt.',
+  },
+
+  market_woman: {
+    weight: 'minor',
+    category: 'labour',
+    description: 'Runs a market stall or trading post as the primary economic unit — the informal sector management that underpins urban economies across the developing world.',
+    intent: 'none',
+    notes: 'Set by sl_nigeria_market_woman.',
+  },
+
+  minority_language_gap: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'The intergenerational language gap — speaks the dominant language more fluently than their parents\' minority language, or vice versa. A form of partial belonging in both.',
+    intent: 'none',
+    notes: 'Set by sl_kazakh_russified_generation and similar assimilation events.',
+  },
+
+  language_suppression_lived: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Lived the suppression of their native language in formal institutions — the school, the court, the government office where the minority language was banned.',
+    intent: 'year_texture',
+    notes: 'Set by sl_catalan_franco_language. Distinct from minority_language_speaker (more active suppression).',
+  },
+
+  indigenous_knowledge: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Carries practical traditional knowledge — crop varieties, ecological reading, craft techniques — that exists nowhere else and that formal education systems do not value.',
+    intent: 'none',
+    notes: 'Set by sl_peru_potato_altitude.',
+  },
+
+  faith_chosen: {
+    weight: 'minor',
+    category: 'spirituality',
+    description: 'Returned to a religious community as an adult after a period of exposure to alternatives — the faith that was inherited and then chosen again.',
+    intent: 'none',
+    notes: 'Set by sl_amish_rumspringa (return branch).',
+  },
+
+  left_faith_community: {
+    weight: 'moderate',
+    category: 'spirituality',
+    description: 'Left a tight-knit religious community through formal exit — shunning, excommunication, or social severing — to live outside its structures.',
+    intent: 'year_texture',
+    notes: 'Set by sl_amish_rumspringa (leave branch). Cross-cutting for high-control communities.',
+  },
+
+  ordained_temporary: {
+    weight: 'minor',
+    category: 'spirituality',
+    description: 'Temporarily ordained — completed a period of monastic life (Buddhist ordination, novitiate, etc.) as a cultural rite of passage rather than a permanent vocation.',
+    intent: 'none',
+    notes: 'Set by sl_thai_monk_ordination.',
+  },
+
+  welfare_state_beneficiary: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Directly benefited from a universal welfare system at a formative moment — NHS birth, free university, housing benefit — in a way that would not have been possible without the state.',
+    intent: 'none',
+    notes: 'Set by sl_uk_nhs_birth.',
+  },
+
+  refugee_camp_years: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Spent years in a refugee camp — the temporary status that becomes semi-permanent, the determination process, the category that cannot contain the full person.',
+    intent: 'year_texture',
+    notes: 'Set by sl_vietnamese_boat_arrival. Cross-cutting long-term camp experience.',
+  },
+
+  bracero_generation: {
+    weight: 'minor',
+    category: 'labour',
+    description: 'Part of the US Bracero Program or similar bilateral guest-worker contracts — the temporary migration that sustained remittance economies across borders.',
+    intent: 'none',
+    notes: 'Set by sl_mexican_bracero.',
+  },
+
+  second_country_rooted: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Put down roots in a country they arrived in as a temporary worker — the permanent life built inside a temporary legal status.',
+    intent: 'year_texture',
+    notes: 'Set by sl_german_gastarbeiter_stayed. Cross-cutting migrant settler experience.',
+  },
+
+  colonial_education: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'Educated in a colonial institution — the missionary school, the colonial syllabus, the history taught against itself.',
+    intent: 'year_texture',
+    notes: 'Set by sl_missionary_school_africa.',
+  },
+
+  iit_graduate: {
+    weight: 'minor',
+    category: 'achievement',
+    description: 'Graduated from an IIT or equivalent elite technical institution after the grinding preparation of JEE coaching culture.',
+    intent: 'none',
+    notes: 'Set by sl_india_iit_pressure (commit branch).',
+  },
+
+  informer_stasi: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Served as an unofficial informant for the Stasi or equivalent surveillance apparatus — the files that exist, the comrades reported, the complicity that was not called by that name at the time.',
+    intent: 'event',
+    notes: 'Set by sl_east_germany_stasi_informer. Follow-through: sl_stasi_file_opened fires at late_life.',
+  },
+
+  hukou_urban_migrant: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'A Chinese internal migrant living in a city without urban hukou — the floating population, the child whose schooling is not guaranteed, the labour without the rights.',
+    intent: 'year_texture',
+    notes: 'Set by sl_china_hukou_city.',
+  },
+
+  private_public_split: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Lives a bifurcated existence — one face for the state, the mosque, the collective; another for the cassette tape, the hidden room, the private music. Common in authoritarian and socially conservative contexts.',
+    intent: 'none',
+    notes: 'Set by sl_iran_cassette_tape.',
+  },
+
+  outlasted_regime: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Survived and outlasted the political order that defined their life — the specific surprise of permanence in an order assumed permanent.',
+    intent: 'none',
+    notes: 'Set by sl_late_regime_survived.',
+  },
+
+  language_legacy_bearer: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'A speaker of a dying or endangered language who carries what the recordings cannot — the precise inflection, the untranslatable phrase, the irony only native speakers know.',
+    intent: 'year_texture',
+    notes: 'Set by sl_late_language_last_speaker.',
+  },
+
+  land_transferred: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Completed a generational land transfer — the legal moment when accumulated labour becomes inheritance and the self steps out of the chain.',
+    intent: 'none',
+    notes: 'Set by sl_late_farm_handed_on.',
+  },
+
+  examined_politics: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Explicitly reckoned with how and why their political views changed over a lifetime — distinguishing genuine wisdom from the comfort of accommodation.',
+    intent: 'none',
+    notes: 'Set by sl_late_political_reckoning.',
+  },
+
+  racial_tax_paid: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Experienced the cumulative cost of being the only one in predominantly white professional environments — the exhaustion of representation, the calculation about naming things, the excellence required to be visible.',
+    intent: 'year_texture',
+    notes: 'Set by sl_black_uk_professional. Cross-cutting in any professional context for ethnic minorities.',
+  },
+
+  disability_hidden: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'A disability managed in private, concealed from the neighbourhood, the school, the outside world — the arrangement that takes considerable energy from those who maintain it.',
+    intent: 'year_texture',
+    notes: 'Set by sl_india_disabled_family_shame.',
+  },
+
+  hiv_positive_managed: {
+    weight: 'moderate',
+    category: 'health',
+    description: 'Living with HIV on antiretroviral treatment — the virus suppressed, the management ongoing, the window of the pharmaceutical negotiation still visible in retrospect.',
+    intent: 'year_texture',
+    notes: 'Set by sl_hiv_africa_treatment. Pairs with hiv_managed condition.',
+  },
+
+  beauty_capital_used: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Experienced their physical appearance as a resource managed by others — the pageant, the nomination, the usefulness to people around them that took years to process.',
+    intent: 'none',
+    notes: 'Set by sl_philippines_beauty_pageant.',
+  },
+
+  domestic_worker: {
+    weight: 'moderate',
+    category: 'labour',
+    description: 'Worked as a live-in domestic worker — the maid\'s room off the kitchen, the Sunday noon day off, the legal protections on paper that do not reliably reach the kitchen.',
+    intent: 'year_texture',
+    notes: 'Set by sl_latin_america_maid. Cross-cutting developing_urban female experience.',
+  },
+
+  // ── Batch 6 flags ─────────────────────────────────────────────────────────
+
+  boarding_school_indigenous: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Attended a federal or colonial Indigenous boarding school — the assimilation machinery that removed language, name, and cultural continuity; the reading gained at the price of what was taken.',
+    intent: 'event',
+    notes: 'Set by sl_native_boarding_school. Follow-through: sl_native_boarding_school_followthrough fires at young_adult.',
+  },
+
+  cultural_erasure_lived: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'The language their grandparents spoke, the ceremonies that correspond to months — not taught, because the system that taught reading also removed those. A specific absence shaped like a skill.',
+    intent: 'year_texture',
+    notes: 'Set by sl_native_boarding_school_followthrough.',
+  },
+
+  mission_station_raised: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Raised on a government mission station — rations on Thursdays, the manager\'s authority over marriage and wages, the trust accounts, the word that would not be spoken officially for decades.',
+    intent: 'year_texture',
+    notes: 'Set by sl_aboriginal_mission. Australia 1920–1970 Aboriginal experience.',
+  },
+
+  indigenous_language_reclaimed: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Part of a language revival generation — the kōhanga reo child, the grandchild who knows what the parent\'s generation was told not to speak. The reversal as act of inheritance.',
+    intent: 'none',
+    notes: 'Set by sl_maori_kohanga.',
+  },
+
+  punitive_psychiatry_survived: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Committed to a Soviet psychiatric institution for political dissent — "sluggish schizophrenia" as a diagnostic category that exists only for people who believe the system is unjust.',
+    intent: 'year_texture',
+    notes: 'Set by sl_soviet_punitive_psychiatry.',
+  },
+
+  gulag_birth_generation: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Born in or to a parent imprisoned in the Gulag — the camp nursery for children of female prisoners, the orphanage, the reunion years later that one person remembers and the other does not.',
+    intent: 'none',
+    notes: 'Set by sl_gulag_camp_born.',
+  },
+
+  exile_generation_tibetan: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'A Tibetan born in exile — knows the geography of a country never seen, oriented toward a return the adults around them have awaited for decades without it arriving.',
+    intent: 'year_texture',
+    notes: 'Set by sl_tibetan_dharamsala_childhood.',
+  },
+
+  witnessed_extreme_witness: {
+    weight: 'moderate',
+    category: 'grief',
+    description: 'Received news of self-immolation or comparable extreme political witness — the information carried through a diaspora network with no adequate frame for it.',
+    intent: 'none',
+    notes: 'Set by sl_tibetan_self_immolation_witness.',
+  },
+
+  bengal_partition_displaced: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Displaced by the Bengal Partition of 1947 — the line drawn in London through rice fields and market towns, the village now on the wrong side, the district that never quite becomes home.',
+    intent: 'year_texture',
+    notes: 'Set by sl_bengal_partition_hindu.',
+  },
+
+  refugee_rebuilt_network: {
+    weight: 'moderate',
+    category: 'resilience',
+    description: 'Rebuilt a pre-existing community network in the refugee or displaced context — the trader network older than the displacement that reassembled itself in the new city.',
+    intent: 'none',
+    notes: 'Set by sl_sindhi_hindu_refugee.',
+  },
+
+  colonial_contact_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Among the first generation to encounter colonial administration in their village — the patrol post, the flagpole, the mission school that came four years later.',
+    intent: 'none',
+    notes: 'Set by sl_png_first_contact_generation.',
+  },
+
+  third_gender_traditional: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Belongs to a traditional third-gender category — fa\'afafine, hijra, or equivalent — that predates Western gender terminology and carries its own social obligations and roles.',
+    intent: 'year_texture',
+    notes: 'Set by sl_samoan_fa_afafine.',
+  },
+
+  artisanal_miner: {
+    weight: 'moderate',
+    category: 'labour',
+    description: 'Works artisanal mining — the hand and the sack and the absence of protective equipment, the one to three dollars a day, the company that sells the mineral that is not called artisanal.',
+    intent: 'year_texture',
+    notes: 'Set by sl_drc_cobalt_miner.',
+  },
+
+  extraction_community: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up in an extraction-economy community — the spill not cleaned up, the community development fund that built things that did not function, the money deposited somewhere else.',
+    intent: 'year_texture',
+    notes: 'Set by sl_niger_delta_oil_community.',
+  },
+
+  professional_woman_trailblazer: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'A woman who entered a professional field when women were trained but not considered equal — the state policy of equality and the house that was not the policy.',
+    intent: 'year_texture',
+    notes: 'Set by sl_soviet_woman_scientist and sl_first_female_doctor_iran.',
+  },
+
+  wartime_labour_displaced: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Worked wartime industrial labour and was displaced by returning men when the war ended — excellent at the job, not kept; the law that gave the job back and the silence about what it cost.',
+    intent: 'year_texture',
+    notes: 'Set by sl_wartime_factory_woman_uk.',
+  },
+
+  professional_woman_islamic_republic: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'A professional woman who continued practicing in the Islamic Republic through the years of contested policy — the ongoing negotiation that does not appear in either the official history or the Western narrative.',
+    intent: 'none',
+    notes: 'Set by sl_first_female_doctor_iran.',
+  },
+
+  kibbutz_privatisation_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Part of the Israeli generation that experienced kibbutz privatisation — the communal children\'s house dissolved, the founding parents disappointed, the quiet relief of sleeping in the same house as your mother.',
+    intent: 'none',
+    notes: 'Set by sl_kibbutz_second_generation.',
+  },
+
+  commune_childhood: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Raised on a 1960s–70s commune — the insufficient vegetable garden, the considerable discussion, the six non-sibling children who are the comparison point for all other social arrangements.',
+    intent: 'year_texture',
+    notes: 'Set by sl_us_commune_child.',
+  },
+
+  civil_war_childhood: {
+    weight: 'major',
+    category: 'identity',
+    description: 'A childhood inside a civil war — the sounds that require moving to the corridor, the school that opens by which militia is where, the violence as texture rather than event.',
+    intent: 'year_texture',
+    notes: 'Set by sl_lebanon_war_child.',
+  },
+
+  siege_adolescence: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Adolescence spent inside a siege — the basement classrooms, the homework by candlelight, the girl liked and the music listened to on a battery radio, and the rest-of-life of explaining it.',
+    intent: 'year_texture',
+    notes: 'Set by sl_sarajevo_siege_teenager.',
+  },
+
+  precariat_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'The Japanese herbivore man generation — not aggressive about career or marriage, not because of failed ambition but because the pathways the previous generation walked are closed.',
+    intent: 'year_texture',
+    notes: 'Set by sl_japan_herbivore_men.',
+  },
+
+  sampo_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'South Korean sampo generation — gave up dating, marriage, children (and later home ownership and stable employment). The closing of doors the previous generation walked through when open.',
+    intent: 'year_texture',
+    notes: 'Set by sl_south_korea_sampo_generation.',
+  },
+
+  brain_drain_participant: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Left a country in crisis to practice elsewhere — the brain drain statistic, the remittances sent home, the work done well in a hospital that has supplies.',
+    intent: 'none',
+    notes: 'Set by sl_greek_crisis_doctor_leaves (leave branch).',
+  },
+
+  stayed_through_crisis: {
+    weight: 'moderate',
+    category: 'resilience',
+    description: 'Chose to stay and work through a national crisis rather than emigrating — the workarounds, the deficit management, the gratitude of patients, the system still broken, both things true.',
+    intent: 'none',
+    notes: 'Set by sl_greek_crisis_doctor_leaves (stay branch).',
+  },
+
+  generation_rent: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Part of the UK generation rent — earns adequately, cannot buy, pays rent higher than a mortgage payment for the same property, has done the arithmetic and found it both clarifying and enraging.',
+    intent: 'year_texture',
+    notes: 'Set by sl_uk_generation_rent.',
+  },
+
+  // ── Batch 7 flags ─────────────────────────────────────────────────────────
+
+  cold_war_childhood: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up with duck-and-cover drills — the wooden desk, the gap between danger described and protection offered, the adults who were frightened but could not say so.',
+    intent: 'year_texture',
+    notes: 'Set by sl_us_nuclear_family_1950s.',
+  },
+
+  exile_community_network: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Found and joined the exile community abroad — the Chileans in Stockholm, the Iranians in Paris, the Cubans in Miami. A community assembled from a shared shape of absence rather than a shared origin.',
+    intent: 'year_texture',
+    notes: 'Set by sl_chile_exile_europe.',
+  },
+
+  reeducation_camp_family: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Had a parent or spouse sent to a Vietnamese re-education camp — the monitored letters written in careful language that both writer and reader understand is not the real language.',
+    intent: 'event',
+    notes: 'Set by sl_vietnam_reeducation_family. Follow-through: sl_vietnam_reeducation_return fires at adolescence.',
+  },
+
+  hijra_community: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Initiated into the South Asian hijra community — belonging opened, formal economy employment closed, the blessing work at weddings and births, the sacred and the humiliated in the same afternoon.',
+    intent: 'year_texture',
+    notes: 'Set by sl_hijra_initiation.',
+  },
+
+  cyclone_survivor: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Survived a major cyclone in the Bangladeshi delta — carries a specific number of people who did not survive; the annual preparation is now automatic, the attachment lives in people rather than things.',
+    intent: 'year_texture',
+    notes: 'Set by sl_bangladesh_bhola_child.',
+  },
+
+  issei_generation: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'First-generation Japanese immigrant to the United States — the plantation labour contract, the ethnic barracks, the already-named categories (issei, nisei) waiting to receive them.',
+    intent: 'year_texture',
+    notes: 'Set by sl_japanese_hawaii_issei.',
+  },
+
+  japanese_american_internment: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Interned under Executive Order 9066 — American-born, English-speaking, still required to report to the assembly centre, sold the truck in three days, found someone else in the house in 1945.',
+    intent: 'year_texture',
+    notes: 'Set by sl_japanese_american_internment.',
+  },
+
+  pentecostal_childhood: {
+    weight: 'minor',
+    category: 'spirituality',
+    description: 'Raised in Nigerian Pentecostal prosperity gospel — eight-hour Sundays, the building fund mentioned every week for twelve years, the faith genuine and the theological argument needing work.',
+    intent: 'event',
+    notes: 'Set by sl_nigeria_pentecostal_child. Follow-through: sl_nigeria_pentecostal_adult fires at young_adult.',
+  },
+
+  uyghur_suppression_lived: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Living under the Xinjiang surveillance and cultural suppression apparatus — family disappeared into "vocational training," learned which apps not to use, which calls not to make, where the Quran cannot be seen.',
+    intent: 'year_texture',
+    notes: 'Set by sl_uyghur_disappeared_family.',
+  },
+
+  independence_generation_carib: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Present at a Caribbean independence ceremony — the new flag, the flag that came down, the fireworks, the standing on the hill watching a country be born.',
+    intent: 'none',
+    notes: 'Set by sl_barbados_independence_child.',
+  },
+
+  caribbean_diaspora: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Caribbean graduate who emigrated via scholarship — the departure as the legible shape of achievement on a small island, the remittances sent, the carnival visits, the country of origin and the city of residence.',
+    intent: 'year_texture',
+    notes: 'Set by sl_small_island_brain_drain (leave branch).',
+  },
+
+  stayed_to_build: {
+    weight: 'moderate',
+    category: 'resilience',
+    description: 'Chose to stay in a small island or peripheral place when emigration was the available achievement — the achievement of staying is real and not always legible as achievement to those who left.',
+    intent: 'year_texture',
+    notes: 'Set by sl_small_island_brain_drain (stay branch).',
+  },
+
+  // ── Batch 8 flags ─────────────────────────────────────────────────────────
+
+  coloured_classification: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Classified as Coloured under South Africa\'s Population Registration Act — a family split by the pencil test, the classification determining school, bus, hospital, and who could marry whom.',
+    intent: 'year_texture',
+    notes: 'Set by sl_apartheid_pencil_test.',
+  },
+
+  orthodox_fasting_formation: {
+    weight: 'minor',
+    category: 'spirituality',
+    description: 'Formed by the Ethiopian Orthodox fasting calendar — 250+ fasting days per year; the year structured by fasts rather than seasons; mother rising before dawn for lentils and shiro; the body knowing it.',
+    intent: 'none',
+    notes: 'Set by sl_ethiopia_fasting_year.',
+  },
+
+  gacaca_witness: {
+    weight: 'major',
+    category: 'grief',
+    description: 'Sat in a gacaca community court listening to a perpetrator confess the detail of what they did to someone you knew — the state\'s version of justice in open air, and not yet knowing if it is better or worse than not knowing.',
+    intent: 'year_texture',
+    notes: 'Set by sl_rwanda_gacaca_witness.',
+  },
+
+  climate_refugee: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Left a Pacific island due to rising seas and climate-driven uninhabitability — the taro gardens flooded, the cemetery flooding, the migration arrangements negotiated while the emissions continue.',
+    intent: 'year_texture',
+    notes: 'Set by sl_pacific_climate_rising_sea (leave branch).',
+  },
+
+  climate_displaced_stayed: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Chose to stay on a climate-threatened island despite rising seas — the staying as witness, the grief of watching the tides, the decision that will likely be made again.',
+    intent: 'year_texture',
+    notes: 'Set by sl_pacific_climate_rising_sea (stay branch).',
+  },
+
+  eviction_cycle_childhood: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Grew up in a Roma settlement subject to recurring municipal eviction orders — moved seven times in eleven years, transferred schools four times, the settlement rebuilt each time from what can be moved.',
+    intent: 'year_texture',
+    notes: 'Set by sl_roma_eviction_cycle.',
+  },
+
+  stateless_adjacent: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'EU citizen on paper but living outside the practice of EU rights — the gap between the right of free movement and the practiced reality of eviction, increased policing, and discriminatory applications.',
+    intent: 'year_texture',
+    notes: 'Set by sl_roma_adult_europe.',
+  },
+
+  transracial_adoptee: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Transracially adopted — Korean in Minnesota, Black in Sweden, the only one of their ethnicity in their school, a folder of paperwork and a photograph of a woman the agency says is their mother.',
+    intent: 'year_texture',
+    notes: 'Set by sl_korean_adoptee_child.',
+  },
+
+  adoptee_searched: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Searched for a birth parent as an adult adoptee — the file, the name, the intermediary, the not-responding that is its own information.',
+    intent: 'none',
+    notes: 'Set by sl_korean_adoptee_return (search branch).',
+  },
+
+  space_race_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Grew up with Gagarin\'s face on the classroom wall — the Soviet space achievement felt from inside, before the other feelings about the Soviet Union were available.',
+    intent: 'none',
+    notes: 'Set by sl_soviet_space_race_child.',
+  },
+
+  traveller_childhood: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Irish Traveller childhood — the barrel-top wagon, the harvest circuits, the horse as family economics, the moves before the week was out. Ireland did not officially recognise Travellers as an ethnic group until 2017.',
+    intent: 'event',
+    notes: 'Set by sl_irish_traveller_child. Follow-through: sl_irish_traveller_sedentarisation.',
+  },
+
+  forced_sedentarisation: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Settled into a council house by policy decision — the locked door unfamiliar, the trailer in the garden, the house as a solution to a problem they were not asked to define.',
+    intent: 'year_texture',
+    notes: 'Set by sl_irish_traveller_sedentarisation.',
+  },
+
+  tsunami_survivor: {
+    weight: 'major',
+    category: 'grief',
+    description: 'Survived the 2004 Indian Ocean tsunami — the specific morning, the specific house, the specific absence of the specific people who were in it; the number that is so large it becomes a number before you finish counting.',
+    intent: 'event',
+    notes: 'Set by sl_aceh_tsunami_2004. Follow-through: sl_aceh_tsunami_reconstruction.',
+  },
+
+  // ── Batch 9 flags ─────────────────────────────────────────────────────────
+
+  hmong_resettlement: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Hmong refugee resettled in Minnesota via Lutheran social services — the Secret War that was secret, Ban Vinai camp, January in Minneapolis at fifteen below zero, the snow nothing like anything in Laos.',
+    intent: 'year_texture',
+    notes: 'Set by sl_hmong_refugee_minnesota.',
+  },
+
+  matatu_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Nairobi working/lower-middle-class person whose daily infrastructure is the matatu — the tout hanging from the door, the sound system louder than physics requires, forty minutes becoming an hour forty.',
+    intent: 'none',
+    notes: 'Set by sl_kenya_matatu_generation.',
+  },
+
+  chechen_deportation_memory: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Inheritor of the 1944 Chechen deportation — four hundred and ninety thousand people in cattle cars in three days; grandparents who lost children in the first Kazakh winter; oblique references as inheritance.',
+    intent: 'year_texture',
+    notes: 'Set by sl_chechen_deportation_memory.',
+  },
+
+  intifada_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Palestinian child during the First Intifada — the school closed by military order, the flag illegal and put back up anyway, the men speaking in the kitchen after the children were supposed to be asleep.',
+    intent: 'year_texture',
+    notes: 'Set by sl_first_intifada_child.',
+  },
+
+  driving_ban_lived: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Saudi woman who lived and worked under the driving ban — the driver as a quarter of salary, the scheduling in advance, the medical professional who the country needed and also needed to not drive.',
+    intent: 'event',
+    notes: 'Set by sl_saudi_driving_ban. Follow-through: sl_saudi_driving_ban_lifted fires when ban lifted (2018+).',
+  },
+
+  blood_feud_family: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Family caught in an Albanian Kanun blood feud — father confined to the house for years, the child who brings meals, the reconciliation organisations who have visited twice, the other family that has not agreed.',
+    intent: 'year_texture',
+    notes: 'Set by sl_albanian_blood_feud.',
+  },
+
+  transmigrant_family: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Javanese family moved to outer islands under Indonesian transmigration programme — the two hectares, the wooden house, the soil different from Java, the indigenous community that did not agree to the programme.',
+    intent: 'year_texture',
+    notes: 'Set by sl_indonesia_transmigrant.',
+  },
+
+  dzud_survivor: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Mongolian herder who survived a major dzud — the winter that killed a quarter of the national herd, the emergency fodder arriving in March, the count after the thaw a different number.',
+    intent: 'year_texture',
+    notes: 'Set by sl_mongolia_dzud_winter.',
+  },
+
+  // ── Batch 10 flags ────────────────────────────────────────────────────────
+
+  cyprus_displaced: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Displaced by the 1974 Cyprus division — three days to leave Kyrenia, the Turkish-Cypriot neighbours also leaving in the opposite direction, the checkpoint that opened in 2003 and was not crossed.',
+    intent: 'event',
+    notes: 'Set by sl_cyprus_1974_displacement. Follow-through: sl_cyprus_checkpoint_2003 fires at late_life.',
+  },
+
+  colonial_resistance: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Participated in clandestine resistance to colonial occupation — the information network, the shelter given, the people who disappeared, the survival that was not guaranteed.',
+    intent: 'year_texture',
+    notes: 'Set by sl_east_timor_resistance (resist branch).',
+  },
+
+  occupation_survived: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Survived a military occupation by keeping a low profile — the accommodations, the silences, the things not said; processed for years after independence.',
+    intent: 'year_texture',
+    notes: 'Set by sl_east_timor_resistance (survive branch).',
+  },
+
+  soviet_educated: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Educated at the Peoples\' Friendship University Moscow or equivalent — the scholarship, the first January, the friendship of peoples and its specific limits on the metro.',
+    intent: 'year_texture',
+    notes: 'Set by sl_african_student_ussr.',
+  },
+
+  indigenous_land_rights: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Living through a land and water rights dispute as an indigenous community member — the river that was always there, the water code that privatised it, the tension that continues.',
+    intent: 'year_texture',
+    notes: 'Set by sl_mapuche_water_rights.',
+  },
+
+  witnessed_ethnic_cleansing: {
+    weight: 'major',
+    category: 'grief',
+    description: 'Witnessed an ethnic cleansing through the diaspora network — the forty-kilometre convoy, the cars abandoned, an entire population crossing a border in three days.',
+    intent: 'year_texture',
+    notes: 'Set by sl_karabakh_exodus_2023.',
+  },
+
+  land_dispossessed: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Lost a farm or substantial land through state confiscation — the letter, the three months, the crop already in the ground, the workers whose housing was on the land, both the injustice and the justice of it simultaneously.',
+    intent: 'year_texture',
+    notes: 'Set by sl_zimbabwe_white_farmer_seizure.',
+  },
+
+  art_through_conflict: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Continued making art during active conflict nearby — the rumba in Kinshasa while the war was in the east; the music as the thing that is not the war, both necessary.',
+    intent: 'year_texture',
+    notes: 'Set by sl_drc_musician_war.',
+  },
+
 }
