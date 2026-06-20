@@ -3551,4 +3551,221 @@ export const SPECIFIC_LIFE_EVENTS = [
     choices: null,
     effect: (p) => { p.setMem('sl_aceh_reconstruct', true); p.m += 3; p.e += 2; p.r += 5 },
   },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // CCC. HMONG RESETTLEMENT — the refugee camp, then Minnesota
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_hmong_refugee_minnesota',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'United States' &&
+      G.ethnicity === 'hmong' &&
+      G.currentYear >= 1978 && G.currentYear <= 2000 &&
+      G.age >= 5 && G.age <= 14 &&
+      !G.mem?.sl_hmong_minn,
+    text: 'The camp in Thailand was Ban Vinai and before that was Laos and before that was the Secret War in which the CIA recruited the Hmong to fight on the American side against the Pathet Lao, a fact that was secret for many years and has since become less secret but did not change the outcome for the people in the camp. The camp had a hundred and forty thousand people when you were four. Minnesota has the largest Hmong population outside Southeast Asia because the Lutheran social services organisations in Minnesota agreed to sponsor the resettlement. You arrive in Minneapolis in January. It is fifteen below zero. The snow is nothing like anything in Laos.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_hmong_minn', true); p.m -= 4; p.e += 3; p.h -= 2; p.addFlag('hmong_resettlement') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // DDD. KENYAN MATATU — the middle class forming inside the minibus
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_kenya_matatu_generation',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Kenya' &&
+      G.ruralUrban === 'urban' &&
+      G.currentYear >= 1990 && G.currentYear <= 2020 &&
+      G.age >= 18 && G.age <= 35 &&
+      !G.mem?.sl_ke_matatu,
+    text: 'The matatu is a shared minibus that runs the Nairobi routes and the matatu has a tout and the tout hangs from the door shouting the destination and the matatu has a sound system that is louder than physics strictly requires and the sound system plays what the driver has decided the passengers need to hear, which today is gospel and on Friday night will be genge. You take the matatu to work every day. The matatu is the infrastructure of the Nairobi working and lower-middle class, which is the class that is forming at a speed the city\'s actual infrastructure has not kept up with. The road from Eastlands to town takes forty minutes in the matatu and an hour and forty on a bad day and the bad day is most days.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_ke_matatu', true); p.s += 3; p.m += 2; p.addFlag('matatu_generation') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // EEE. CHECHEN DEPORTATION — the generation born in Kazakhstan
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_chechen_deportation_memory',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'Russia' &&
+      G.ethnicity === 'chechen' &&
+      G.currentYear >= 1957 && G.currentYear <= 1980 &&
+      G.age >= 6 && G.age <= 14 &&
+      !G.mem?.sl_chech_deport,
+    text: 'Your grandparents were deported from Chechnya to Kazakhstan in 1944. February 23, which was the Day of the Soviet Army, was the day Stalin ordered the deportation of the entire Chechen and Ingush population — four hundred and ninety thousand people — for alleged collaboration with the Germans. The deportation was carried out in three days. Your grandparents lost three children to the winter in the cattle cars and the first Kazakh winter. They returned to Chechnya in 1957 after Khrushchev\'s amnesty. They do not speak about the cattle cars except in oblique references that you have learned to read. The oblique references are your inheritance.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_chech_deport', true); p.e += 3; p.r += 6; p.m -= 3; p.addFlag('chechen_deportation_memory') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // FFF. FIRST INTIFADA CHILD — growing up at the checkpoint
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_first_intifada_child',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Palestine' &&
+      G.currentYear >= 1987 && G.currentYear <= 1993 &&
+      G.age >= 6 && G.age <= 14 &&
+      !G.mem?.sl_pal_intifada1,
+    text: 'The First Intifada begins in 1987 in Jabaliya refugee camp with a traffic accident and spreads from the camp to the streets of Gaza and the West Bank in six days. You are eight. What the Intifada looks like from eight is: the school is closed, then open, then closed by military order. The stones on the road after the night. The men in your family speaking in the kitchen after the women and children are supposed to be asleep. The flag that someone put on the roof of the school and that was taken down and put back up. The flag is illegal. The putting-it-back is an act that requires a decision you observe people making.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_pal_intifada1', true); p.m -= 5; p.e += 4; p.addFlag('intifada_generation') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // GGG. SAUDI WOMAN DRIVING BAN — the logistics of a prohibition
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_saudi_driving_ban',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Saudi Arabia' &&
+      G.character.gender === 'female' &&
+      G.currentYear >= 1990 && G.currentYear <= 2018 &&
+      G.age >= 18 && G.age <= 45 &&
+      !G.mem?.sl_sa_driving,
+    text: 'The driving ban for women means that to go anywhere you need a mahram — a male guardian who accompanies you or a driver who is hired to take you. The driver is an expense. The mahram is a family arrangement. You have a job at a hospital and the job is forty minutes from your house and the drive to the job costs a quarter of your salary and the driver has to be scheduled in advance and when the driver cancels you call in late to a job where you are needed. You are a medical professional. The country needs medical professionals. The country also needs you to not drive. The two things are both official policies of the same country simultaneously.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_sa_driving', true); p.m -= 4; p.e += 3; p.mo -= 1500; p.addFlag('driving_ban_lived') },
+  },
+
+  {
+    id: 'sl_saudi_driving_ban_lifted',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('driving_ban_lived') &&
+      G.character.country.name === 'Saudi Arabia' &&
+      G.currentYear >= 2018 && G.currentYear <= 2025 &&
+      G.age >= 30 && G.age <= 55 &&
+      !G.mem?.sl_sa_driving_lift,
+    text: 'The ban was lifted in June 2018. You drove yourself to work for the first time when you were forty-one. The first time felt significant and ordinary simultaneously — the car, the road, the familiar route you had taken for twenty years in other people\'s cars, now in your own hands. You called your mother from the car, which you technically should not do while driving, to tell her. She cried. You understood the crying without being able to explain to anyone outside it exactly what was being cried about, because what was being cried about was not only the driving.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_sa_driving_lift', true); p.m += 8; p.addFlag('witnessed_rights_expansion') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // HHH. VENEZUELAN DOCTOR EXODUS — the hospital with no supplies
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_venezuela_doctor_leaves',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Venezuela' &&
+      G.career?.field === 'healthcare' &&
+      G.currentYear >= 2014 && G.currentYear <= 2022 &&
+      G.age >= 30 && G.age <= 55 &&
+      !G.mem?.sl_ve_doc,
+    text: 'The hospital has no gloves. The IV bags run out on Tuesdays and the next delivery is not until Thursday and what happens between Tuesday and Thursday is that you improvise and the patients who can be improvised around survive and the ones who cannot survive differently. You trained for seven years and did your residency in a hospital that had supplies in 2005 and the hospital in 2018 is a different building in a different country with the same address. Four of your colleagues have left for Colombia or Chile or Spain. They send messages from hospitals with supplies. You have not left yet.',
+    choices: [
+      {
+        text: 'Leave for Colombia. The patients you can save are there.',
+        tag: 'leave',
+        outcome: 'Bogotá has a hospital that functions. The salary is adequate. You are practising medicine instead of managing the absence of medicine. You send money to family. You do not know if this was the right decision. You know it was a decision.',
+        effect: (p) => { p.setMem('sl_ve_doc', true); p.mo += 12000; p.m -= 3; p.addFlag('emigrated'); p.addFlag('brain_drain_participant') },
+      },
+      {
+        text: 'Stay. These patients have no one else.',
+        tag: 'stay',
+        outcome: 'You stay through 2019 and 2020 and the patients you can improvise around survive and the ones who cannot survive differently. You are still here. You are not sure if this is courage or inability to leave or both.',
+        effect: (p) => { p.setMem('sl_ve_doc', true); p.h -= 6; p.karma += 6; p.addFlag('stayed_through_crisis') },
+      },
+    ],
+    effect: null,
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // III. ALBANIAN BLOOD FEUD — the kanun and the house you cannot leave
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_albanian_blood_feud',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'Albania' &&
+      G.currentYear >= 1990 && G.currentYear <= 2020 &&
+      G.age >= 6 && G.age <= 16 &&
+      G.ruralUrban === 'rural' &&
+      !G.mem?.sl_alb_feud,
+    text: 'The Kanun of Lekë Dukagjini is the set of customary laws that govern blood feuds in northern Albania, which were suppressed under communism and which returned after 1991 when the state collapsed and the communities needed some system. The blood feud involves your family because of something that happened between your grandfather and a man in the neighbouring village in 1992. What it means practically is that your father cannot leave the house, because the Kanun requires the other family to kill a man from your family and your father is a man from your family. He has been inside the house for six years. You bring him his meals. The men from the reconciliation organisations have visited twice. The other family has not agreed to gjakmarrja forgiveness.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_alb_feud', true); p.m -= 10; p.e += 3; p.addFlag('blood_feud_family') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // JJJ. INDONESIAN JAVANESE TRANSMIGRATION — the policy that moved people
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_indonesia_transmigrant',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Indonesia' &&
+      G.currentYear >= 1970 && G.currentYear <= 2000 &&
+      G.age >= 18 && G.age <= 35 &&
+      G.ruralUrban === 'rural' &&
+      !G.mem?.sl_indo_transm,
+    text: 'The transmigration programme moves Javanese families to the outer islands — Kalimantan, Sulawesi, West Papua — to relieve population pressure on Java and to develop the outer islands. The development includes you. You were given two hectares of land and a wooden house and three months of government rations and then left to farm a soil that is different from Javanese soil in ways that the programme did not adequately prepare you for. The indigenous community in this part of Kalimantan has been here for several thousand years and did not agree to the programme that gave you their land, a fact that the programme also did not adequately account for.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_indo_transm', true); p.m -= 4; p.h -= 2; p.e += 2; p.addFlag('transmigrant_family') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // KKK. AIDS STIGMA — the partner you could not grieve publicly
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_aids_grief_partner',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'United States' &&
+      G.currentYear >= 1984 && G.currentYear <= 1996 &&
+      G.age >= 22 && G.age <= 40 &&
+      G.flags.includes('lgbtq') &&
+      !G.mem?.sl_aids_grief,
+    text: 'Michael died in October 1989. The hospital allowed you in because you said you were his cousin, which was a lie that the nurses accepted with a specific quality of deliberate not-asking, which was a small mercy inside a system that in some hospitals did not allow this lie to be accepted. The obituary in the suburban newspaper said he died after a long illness and listed the family members he was survived by and did not list you, which is the agreement his family required and which you made because the alternative was to be removed from the room in his final days. You made the agreement. You were in the room. The room and the obituary are both real.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_aids_grief', true); p.m -= 15; p.r += 8; p.addFlag('aids_generation_witness') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // LLL. MONGOLIAN DZUD — the winter that kills the herd
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_mongolia_dzud_winter',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Mongolia' &&
+      G.ruralUrban === 'rural' &&
+      G.currentYear >= 1999 && G.currentYear <= 2012 &&
+      G.age >= 18 && G.age <= 45 &&
+      !G.mem?.sl_mong_dzud,
+    text: 'The dzud is the combination of summer drought and winter extreme cold that kills the livestock. The dzud of 2010 kills eight point five million animals — a quarter of the national herd. Your family loses sixty percent of the sheep and forty percent of the horses in February. What this means economically is that the nomadic herd that was the family wealth for three generations is reduced to an insufficient number in one season. The government provides some emergency fodder. The emergency fodder arrives in March. The animals that survive to March are the ones that survive. The count after the thaw is a different number than the count before the dzud began.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_mong_dzud', true); p.m -= 10; p.mo -= 5000; p.h -= 3; p.addFlag('dzud_survivor') },
+  },
 ]

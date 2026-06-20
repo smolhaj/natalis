@@ -12835,6 +12835,48 @@ function buildYearTexture(state) {
       : 'The diaspora comes back for carnival and calls it home. You are here the other fifty-one weeks of the year and also call it home. The two callings are different callings. Yours is daily and less romantic and more real.',
   ])
 
+  if (F.has('hmong_resettlement') && Math.random() < 0.15) return pick([
+    'The snow in January in Minneapolis is nothing like anything in Laos. You have had thirty years to adjust to this. The adjustment is complete in some respects and not in others.',
+    phase === 'late_life'
+      ? 'The children speak English without accent and know Hmong the way you know English when you first arrived — enough to navigate, not enough for the poetry. The Secret War is in the history books now, which means it is in the books that the children do not read because it is history and history is what happened before you were born. You were born inside it.'
+      : 'The Lutheran social services network processed your family and gave you forms and took you to the apartment and explained the heat and the bus and the school. The kindness was real. The kindness and the distance between January in Minneapolis and the life before January in Minneapolis were both real simultaneously.',
+  ])
+
+  if (F.has('chechen_deportation_memory') && Math.random() < 0.15) return pick([
+    'The oblique references. Your grandfather\'s way of not completing certain sentences. The specific subject that causes the room to change temperature. The inheritance is the gap in what is said.',
+    phase === 'late_life'
+      ? 'February 23 is the date. Four hundred and ninety thousand people in three days. The cattle cars in winter. Your grandparents returned to Chechnya in 1957 with fewer children than they left with. The return is not in the oblique references — only the leaving is. The return was also terrible but the leaving was the thing they could not speak of.'
+      : 'The Chechen wars of the nineties brought the story back into conversation — now there was a new story to not speak of, layered over the 1944 story. The layers accumulate. What you carry is layered.',
+  ])
+
+  if (F.has('intifada_generation') && Math.random() < 0.15) return pick([
+    'The flag on the roof of the school. Illegal. Put back up. The decision the adults made that you observed at eight. The observation is not neutral. You learned something from the flag about what people do when something is illegal and necessary simultaneously.',
+    phase === 'late_life'
+      ? 'The First Intifada ended with Oslo. Oslo ended with the second intifada. The second intifada ended with the barrier. The barrier continues. The flag on the roof of the school is still the clearest thing you saw about what resistance looks like from inside, before you had the word for it.'
+      : 'The school opened and closed by military order nine times in two years. You tracked the openings and closings the way other children tracked the football schedule. The knowledge of which authority controls which movement — this is what growing up here teaches, in addition to the curriculum.',
+  ])
+
+  if (F.has('blood_feud_family') && Math.random() < 0.15) return pick([
+    'Six years inside the house. You bring the meals. The reconciliation organisations have visited twice. The Kanun requires the other family to agree and the other family has not agreed.',
+    phase === 'late_life'
+      ? 'The blood feud was finally resolved by a council of elders when your father was fifty-eight, after eleven years inside the house. The resolution involved your family paying compensation and the other family performing a ceremony of forgiveness. Your father walked outside for the first time in eleven years. He stood in the yard for twenty minutes without saying anything. Then he went back inside. The inside is what he knew.'
+      : 'The Kanun is an old system. The Kanun returned after the communist system that suppressed it collapsed and the communities needed something. The old system has rules that are very specific about what constitutes resolution and the rules require agreement from both families. The other family has not agreed. The rule continues.',
+  ])
+
+  if (F.has('transmigrant_family') && Math.random() < 0.15) return pick([
+    'The two hectares in Kalimantan. The wooden house. The soil that is different from Java soil. The indigenous community that did not agree to the programme that gave you the land.',
+    phase === 'late_life'
+      ? 'The land conflicts between transmigrant families and indigenous communities became violent in some areas after the fall of Suharto when the government was no longer able to suppress them. What had been managed by absence of complaint became present as complaint. You have lived between these communities for thirty years and have watched the management and the unmanagement of the tension.'
+      : 'You have learned to grow on this soil by learning what the soil needs that Javanese soil does not need and what it cannot do that Javanese soil can. The learning took years and the neighbours who were here before the programme have knowledge of this land that the programme did not include in your preparation. Some of them have shared it.',
+  ])
+
+  if (F.has('dzud_survivor') && Math.random() < 0.15) return pick([
+    'The count after the thaw. The sheep that survived to March and the sheep that did not. The family wealth that was the herd is now the remnant of the herd.',
+    phase === 'late_life'
+      ? 'The herd rebuilt over five years and was reduced again in the 2010 dzud and rebuilt again. The nomadic economy is an economy of rebuilding. You have known this your whole life. The body knows the weight of the count in spring — the specific number that determines what the year will be.'
+      : 'The dzud comes when the summer is dry and then the winter is extreme. The combination means the animals enter winter thin and the winter kills what thin animals cannot survive. Climate change is making the combination more likely. The herders know this. The government is aware. The herd does not have the option of waiting for policy.',
+  ])
+
   if (F.has('language_legacy_bearer') && Math.random() < 0.15) return pick([
     'The language is there if you reach for it. Fewer people to reach toward now. The conversations that require it are with people who are mostly older than you.',
     phase === 'late_life'

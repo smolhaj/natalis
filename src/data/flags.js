@@ -15107,4 +15107,70 @@ export const FLAG_REGISTRY = {
     notes: 'Set by sl_aceh_tsunami_2004. Follow-through: sl_aceh_tsunami_reconstruction.',
   },
 
+  // ── Batch 9 flags ─────────────────────────────────────────────────────────
+
+  hmong_resettlement: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Hmong refugee resettled in Minnesota via Lutheran social services — the Secret War that was secret, Ban Vinai camp, January in Minneapolis at fifteen below zero, the snow nothing like anything in Laos.',
+    intent: 'year_texture',
+    notes: 'Set by sl_hmong_refugee_minnesota.',
+  },
+
+  matatu_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Nairobi working/lower-middle-class person whose daily infrastructure is the matatu — the tout hanging from the door, the sound system louder than physics requires, forty minutes becoming an hour forty.',
+    intent: 'none',
+    notes: 'Set by sl_kenya_matatu_generation.',
+  },
+
+  chechen_deportation_memory: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Inheritor of the 1944 Chechen deportation — four hundred and ninety thousand people in cattle cars in three days; grandparents who lost children in the first Kazakh winter; oblique references as inheritance.',
+    intent: 'year_texture',
+    notes: 'Set by sl_chechen_deportation_memory.',
+  },
+
+  intifada_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Palestinian child during the First Intifada — the school closed by military order, the flag illegal and put back up anyway, the men speaking in the kitchen after the children were supposed to be asleep.',
+    intent: 'year_texture',
+    notes: 'Set by sl_first_intifada_child.',
+  },
+
+  driving_ban_lived: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Saudi woman who lived and worked under the driving ban — the driver as a quarter of salary, the scheduling in advance, the medical professional who the country needed and also needed to not drive.',
+    intent: 'event',
+    notes: 'Set by sl_saudi_driving_ban. Follow-through: sl_saudi_driving_ban_lifted fires when ban lifted (2018+).',
+  },
+
+  blood_feud_family: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Family caught in an Albanian Kanun blood feud — father confined to the house for years, the child who brings meals, the reconciliation organisations who have visited twice, the other family that has not agreed.',
+    intent: 'year_texture',
+    notes: 'Set by sl_albanian_blood_feud.',
+  },
+
+  transmigrant_family: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Javanese family moved to outer islands under Indonesian transmigration programme — the two hectares, the wooden house, the soil different from Java, the indigenous community that did not agree to the programme.',
+    intent: 'year_texture',
+    notes: 'Set by sl_indonesia_transmigrant.',
+  },
+
+  dzud_survivor: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Mongolian herder who survived a major dzud — the winter that killed a quarter of the national herd, the emergency fodder arriving in March, the count after the thaw a different number.',
+    intent: 'year_texture',
+    notes: 'Set by sl_mongolia_dzud_winter.',
+  },
+
 }
