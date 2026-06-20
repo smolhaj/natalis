@@ -3380,4 +3380,32 @@ export const WORLD_EVENTS = [
     when: (G) => !G.flags.includes('sudan_civil_war_2023'),
   },
 
+  {
+    id: 'we_mexico_city_earthquake_1985',
+    name: 'Mexico City Earthquake',
+    years: [1985, 1985],
+    archetypes: 'all',
+    countries: ['Mexico'],
+    narrative: 'At 7:19 on the morning of September 19, 1985, a magnitude 8.1 earthquake strikes 350 kilometres from Mexico City. The shaking lasts two minutes. In those two minutes more than forty hospitals collapse, hundreds of apartment blocks and office buildings fall. The government of the PRI — accustomed to managing disaster as a top-down spectacle — is slow and paralysed. But the city\'s citizens are not slow. Brigadas de rescate appear in the rubble without orders. People dig with their hands. They refuse, more than once, to be turned away by arriving soldiers. An estimated ten thousand people are dead. What replaces the rubble, slowly, is a self-organised city that the PRI spent sixty years trying to prevent.',
+    context: 'The 1985 earthquake remains the worst natural disaster in Mexican history. Damage was amplified because Mexico City sits on the drained lakebed of Lake Texcoco — soft sediment that amplified seismic waves far beyond what the magnitude alone would suggest. The volunteer brigades that emerged — including a network of seamstresses who organised across their collapsed workshops — are credited with launching Mexico\'s modern civil society. The disaster directly contributed to the gradual erosion of PRI single-party rule, completed in 2000.',
+    effect: (p) => { p.h -= 4; p.m -= 10; p.addFlag('mexico_earthquake_1985_witness') },
+    addFlags: ['mexico_earthquake_1985_witness'],
+    minAge: 8,
+    when: (G) => !G.flags.has('mexico_earthquake_1985_witness') && !G.mem?.mex_1985_earthquake,
+  },
+
+  {
+    id: 'we_nepal_earthquake_2015',
+    name: 'Nepal Earthquake',
+    years: [2015, 2015],
+    archetypes: 'all',
+    countries: ['Nepal'],
+    narrative: 'Saturday, April 25, 2015, at 11:56 in the morning: magnitude 7.8, epicentre near Gorkha. In Kathmandu, buildings collapse in seconds. The Dharahara tower, 170 years old, falls. The temples of Kathmandu Durbar Square, built over five centuries, are gone in two minutes. In Langtang valley, a rockslide buries the village. An avalanche sweeps Everest Base Camp. You count your people. Aftershocks continue for days. A 7.3 aftershock on May 12 kills two hundred more. The total dead reaches 9,000. Some 600,000 houses across the hill districts are destroyed or damaged. The reconstruction will take a decade.',
+    context: 'The 2015 Gorkha earthquake was Nepal\'s worst since 1934. The UNESCO World Heritage sites of Kathmandu Durbar Square, Patan Durbar Square, Boudhanath Stupa, and Changu Narayan were severely damaged or destroyed. The international relief effort was large but complicated by Nepal\'s limited infrastructure and by a subsequent Indian fuel blockade that delayed reconstruction supplies for months. Nepal lacked a functioning constitution at the time — the first constitution since 1990 was finally adopted in September 2015, four months after the quake.',
+    effect: (p) => { p.h -= 6; p.m -= 12; p.addFlag('nepal_earthquake_generation') },
+    addFlags: ['nepal_earthquake_generation'],
+    minAge: 8,
+    when: (G) => !G.flags.has('nepal_earthquake_generation'),
+  },
+
 ]

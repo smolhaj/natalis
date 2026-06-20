@@ -2508,6 +2508,22 @@ export const FLAG_REGISTRY = {
     notes: 'Set by la_mex_ayotzinapa_2014.',
   },
 
+  mexico_earthquake_1985_witness: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the September 19, 1985 Mexico City earthquake — the day civil society was born: brigadas de rescate, citizens digging with their hands while the PRI stalled.',
+    intent: 'year_texture',
+    notes: 'Set by we_mexico_city_earthquake_1985 world event. Complements la_mex_1985_earthquake character event (which sets earthquake_volunteer).',
+  },
+
+  earthquake_volunteer: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Went into the rubble during a disaster to help dig — not an official, not a soldier, just a person with their hands.',
+    intent: 'none',
+    notes: 'Set by la_mex_1985_earthquake (volunteer choice). Captures the spontaneous civilian response to the 1985 Mexico earthquake.',
+  },
+
   mex_2017_earthquake_generation: {
     weight: 'minor',
     category: 'historical',

@@ -6886,6 +6886,12 @@ function buildYearTexture(state) {
       ? 'The Ayotzinapa case produced multiple versions of the official account and the contradictions between them are documented. The families produced a counter-investigation. Both are in the record. The forty-three are still not in the record.'
       : 'The disappearance was 2014. Each year that passes is a year the accountability has not arrived. You count the years.',
   ])
+  if (F.has('mexico_earthquake_1985_witness') && Math.random() < 0.2) return pick([
+    'The brigadas de rescate formed without orders. People dug in the rubble before anyone told them to. That sequence — the citizens before the government — is something the city carried forward.',
+    phase === 'late_life'
+      ? 'The 1985 earthquake is a before-and-after in Mexico City in ways that the official history understates. The city that rebuilt itself was not the same city as before. It learned something about what it could do without being told.'
+      : 'September 19, 1985. The shaking was two minutes. The silence after the shaking was something else entirely. Then the people came out.',
+  ])
   if (F.has('mex_2017_earthquake_generation') && Math.random() < 0.2) return pick([
     'The bucket chain: a person at the rubble passed a piece of debris back, and behind them another person, and behind them another, back to where there was space. The city organized itself in an hour.',
     'September 19. The same date as 1985. When the alarm sounded at 1:14 in the afternoon the drill memory fired before the real event registered. Then the real event registered.',
