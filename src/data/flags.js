@@ -14477,4 +14477,44 @@ export const FLAG_REGISTRY = {
     notes: 'Set by sl_chile_1973_morning and similar events where political network activity creates documented risk.',
   },
 
+  code_switched: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Learned to perform the dominant-class register — voice, vocabulary, demeanour — as a social survival strategy when crossing class or cultural lines.',
+    intent: 'year_texture',
+    notes: 'Set by sl_first_gen_university_uk and similar code-switching events.',
+  },
+
+  class_guilt: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Carries ongoing guilt about class mobility — the moments of choosing the new world over the one they came from, and the people left out of those choices.',
+    intent: 'year_texture',
+    notes: 'Set by sl_class_betrayal. Cross-cutting upward mobility guilt.',
+  },
+
+  market_woman: {
+    weight: 'minor',
+    category: 'labour',
+    description: 'Runs a market stall or trading post as the primary economic unit — the informal sector management that underpins urban economies across the developing world.',
+    intent: 'none',
+    notes: 'Set by sl_nigeria_market_woman.',
+  },
+
+  minority_language_gap: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'The intergenerational language gap — speaks the dominant language more fluently than their parents\' minority language, or vice versa. A form of partial belonging in both.',
+    intent: 'none',
+    notes: 'Set by sl_kazakh_russified_generation and similar assimilation events.',
+  },
+
+  language_suppression_lived: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Lived the suppression of their native language in formal institutions — the school, the court, the government office where the minority language was banned.',
+    intent: 'year_texture',
+    notes: 'Set by sl_catalan_franco_language. Distinct from minority_language_speaker (more active suppression).',
+  },
+
 }

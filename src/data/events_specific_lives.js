@@ -1395,4 +1395,418 @@ export const SPECIFIC_LIFE_EVENTS = [
     choices: null,
     effect: (p) => { p.setMem('sl_soweto_76', true); p.m -= 6; p.e += 3; p.karma += 4; p.addFlag('political_awakening') },
   },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // M. CROSSING CLASS — the specific friction of mobility
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_first_gen_university_uk',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'United Kingdom' &&
+      G.currentYear >= 1960 && G.currentYear <= 2000 &&
+      G.age >= 18 && G.age <= 22 &&
+      G.flags.includes('first_gen_graduate') &&
+      !G.mem?.sl_fgu_uk,
+    text: 'The university is a place built for someone with different vowels. You hear your own accent in tutorials and understand that it is being heard differently. The boys from the public schools have a particular ease — in the bar, in the seminar, with the professors — that is not intelligence but something closer to the assumption of welcome. You are intelligent. The ease is not the same thing.',
+    choices: [
+      {
+        text: 'Learn to perform the ease. It is a skill like any other.',
+        tag: 'code_switch',
+        outcome: 'The performance is good enough. What it costs is subtle and cumulative and takes years to name.',
+        effect: (p) => { p.s += 4; p.m -= 3; p.addFlag('code_switched'); p.setMem('sl_fgu_uk', true) },
+      },
+      {
+        text: 'Stay with what you are. The qualification matters; the accent is yours.',
+        tag: 'stay_self',
+        outcome: 'Some doors are harder. The doors that open open to someone who is actually you, which turns out to be worth something.',
+        effect: (p) => { p.m += 4; p.karma += 3; p.e += 2; p.setMem('sl_fgu_uk', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'sl_class_betrayal',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('first_gen_graduate') &&
+      G.stats.wealth >= 60 &&
+      G.age >= 35 && G.age <= 55 &&
+      !G.mem?.sl_class_betray,
+    text: 'Your mother cannot come to the dinner party because she would not know which fork. This is not what you say. What you say is that she is not well, which is also true. The awareness of what you have just done sits with you for the rest of the evening. You think about the specific calculus — the social cost to you of bringing her against the cost to her of being left out — and understand that you chose yourself. The education that allowed you to be at this table also taught you the priorities of the people at this table.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_class_betray', true); p.r += 10; p.m -= 4; p.addFlag('class_guilt') },
+  },
+
+  {
+    id: 'sl_working_class_inheritance',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('first_gen_graduate') &&
+      G.age >= 55 &&
+      !G.mem?.sl_wc_inh,
+    text: 'What your parents gave you was not money. The inventory: a particular capacity for discomfort that does not stop them. A relation to work that does not require the work to mean anything beyond it being done well. A precise knowledge of how much things cost. A suspicion of people who have never had to think about this. These are inheritances. They operated differently from the ones your colleagues received. You are still working out whether the word better applies.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_wc_inh', true); p.m += 4; p.e += 2; p.karma += 2 },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // N. DOMESTIC LIFE WITH HISTORICAL PRECISION
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_japan_housewife_1970s',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Japan' &&
+      G.character.gender === 'female' &&
+      G.currentYear >= 1965 && G.currentYear <= 1985 &&
+      G.age >= 28 && G.age <= 50 &&
+      G.partner !== null &&
+      !G.career?.id &&
+      !G.mem?.sl_jp_shufu,
+    text: 'The word shufu — housewife — is the category the census puts you in. The category does not describe the administrative management of a household of five, the PTA chairmanship, the care of the in-laws, the accounting that keeps the family budget, the after-school schedule, the preservation of the social network that your husband\'s career depends on. You are in charge of all of these. The category does not describe them. The category describes the official absence of a salary.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_jp_shufu', true); p.s += 2; p.e += 2; p.m -= 2 },
+  },
+
+  {
+    id: 'sl_soviet_domestic_queue',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country.archetype === 'post_soviet' &&
+      G.currentYear >= 1960 && G.currentYear <= 1989 &&
+      G.character.gender === 'female' &&
+      G.age >= 25 && G.age <= 55 &&
+      !G.mem?.sl_sov_queue,
+    text: 'The queue for meat started at five-thirty in the morning. If you arrived at six there was nothing left. Your shift began at eight. You stood in the meat queue and then the bread queue and then walked to work having not been home since the night before, and this was a normal Tuesday. The official discourse called it full employment and gender equality. The unofficial truth was that the full employment was at the factory and the gender equality was in addition to the queue.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_sov_queue', true); p.m -= 3; p.e += 2 },
+  },
+
+  {
+    id: 'sl_india_joint_family_daughter_in_law',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'India' &&
+      G.character.gender === 'female' &&
+      G.currentYear >= 1960 && G.currentYear <= 2000 &&
+      G.age >= 18 && G.age <= 32 &&
+      G.partner !== null &&
+      !G.mem?.sl_in_dil,
+    text: 'The joint family house belongs to your husband\'s family. Your position in it was established before you arrived and is enforced by a thousand small daily practices: who wakes first, who serves the food, who does not eat until the men and the elders have eaten, what you are expected to feel about this arrangement and whether expressing what you actually feel is advisable. Your mother-in-law is not cruel. The structure does not require cruelty to operate.',
+    choices: [
+      {
+        text: 'Work within the structure. The position has its own power over time.',
+        tag: 'within',
+        outcome: 'The seniority accretes. In fifteen years you are the mother-in-law. The structure is unchanged. You are on the other side of it.',
+        effect: (p) => { p.s += 3; p.m -= 3; p.setMem('sl_in_dil', true) },
+      },
+      {
+        text: 'Negotiate quietly with your husband for your own household.',
+        tag: 'negotiate',
+        outcome: 'The negotiation takes two years and damages several relationships. The household you eventually have is yours. The damage is also yours.',
+        effect: (p) => { p.m += 4; p.s -= 2; p.setMem('sl_in_dil', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'sl_nigeria_market_woman',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Nigeria' &&
+      G.character.gender === 'female' &&
+      G.ruralUrban === 'urban' &&
+      G.age >= 28 && G.age <= 55 &&
+      !G.career?.id &&
+      !G.mem?.sl_ng_mkt_w,
+    text: 'The stall is open by six and closed after dark and the difference between those times is every transaction, every negotiation, every customer who wants credit extended and every supplier who wants earlier payment, every toll from the market association, every calculation about what to reorder and at what price. You run the stall and you run the household and you pay school fees for four children. The government statistics category for what you do is "informal sector." The informal sector is what keeps the city fed.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_ng_mkt_w', true); p.s += 3; p.m += 2; p.mo += 600; p.addFlag('market_woman') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // O. SPECIFIC EARLY CHILDHOODS — age 0–5 with texture
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_wartime_london_child',
+    phase: 'early_childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'United Kingdom' &&
+      G.currentYear >= 1940 && G.currentYear <= 1945 &&
+      G.age >= 3 && G.age <= 6 &&
+      !G.mem?.sl_blitz_child,
+    text: 'The shelter at the bottom of the garden was concrete and smelled of earth. You knew the sound of the all-clear and the sound of the warning and the difference was the sound of which direction to run. Your mother had a routine for the sirens the way she had a routine for bedtime. This is your earliest memory: the shelter, the smell, the routine, and the sense that the adults in your life had decided that routine was the same as safety.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_blitz_child', true); p.m -= 3; p.h -= 2; p.addFlag('war_childhood') },
+  },
+
+  {
+    id: 'sl_leningrad_siege_child',
+    phase: 'early_childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Russia' &&
+      G.currentYear >= 1941 && G.currentYear <= 1944 &&
+      G.age >= 2 && G.age <= 6 &&
+      !G.mem?.sl_lgrad_child,
+    text: 'The bread was 125 grams a day during the worst months. You were too young to understand grams. You understood hunger, which is more fundamental than units of measurement. The adults did not cry in front of you, which was a form of care. Later you understood what the adults were not eating so that you could eat what you ate.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_lgrad_child', true); p.h -= 8; p.m -= 5; p.addFlag('war_childhood') },
+  },
+
+  {
+    id: 'sl_postwar_japan_child',
+    phase: 'early_childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Japan' &&
+      G.currentYear >= 1945 && G.currentYear <= 1952 &&
+      G.age >= 3 && G.age <= 7 &&
+      !G.mem?.sl_pw_jp_child,
+    text: 'The American soldiers handed out chocolate in the street. You had not understood before that moment that a country could be occupied by the army of another country and that children could eat chocolate given by the soldiers of the occupying army. The chocolate was real. Everything else about the situation you spent the rest of your childhood slowly understanding.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_pw_jp_child', true); p.m -= 2; p.e += 2 },
+  },
+
+  {
+    id: 'sl_nigeria_oil_boom_child',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Nigeria' &&
+      G.currentYear >= 1973 && G.currentYear <= 1982 &&
+      G.age >= 6 && G.age <= 12 &&
+      G.stats.wealth >= 40 &&
+      !G.mem?.sl_ng_oil_child,
+    text: 'The oil money was visible in specific ways: the new buildings in Lagos with glass facades, the imported cars, the school with generators that ran through the power cuts. Your father had a title and a government contract and a car with a driver. The money was also visible in specific problems: the queue for the one thing that worked, the officials whose signature was the product they sold. You understood, at eight, that Nigeria was rich and that the richness was complicated in ways you did not yet have words for.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_ng_oil_child', true); p.e += 2; p.m += 2 },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // P. LANGUAGE AS SURVIVAL — the specific politics of what you speak
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_welsh_language_school',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'United Kingdom' &&
+      G.currentYear >= 1960 && G.currentYear <= 1990 &&
+      G.age >= 6 && G.age <= 12 &&
+      G.flags.includes('minority_language_speaker') &&
+      !G.mem?.sl_welsh_sch,
+    text: 'The teacher said not to speak Welsh in the classroom. This was not a prohibition against Welsh in general — outside was fine. Inside, English. You understood that the inside/outside distinction was not about practicality. You understood it was about which language the school had decided was the real one. You and your friends continued in Welsh at the back of the classroom in voices calibrated to be inaudible.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_welsh_sch', true); p.m -= 2; p.e += 2; p.s += 2 },
+  },
+
+  {
+    id: 'sl_catalan_franco_language',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Spain' &&
+      G.currentYear >= 1940 && G.currentYear <= 1975 &&
+      G.age >= 6 && G.age <= 14 &&
+      G.flags.includes('minority_language_speaker') &&
+      !G.mem?.sl_cat_lang,
+    text: 'The law says Spanish only — Habla la lengua del Imperio. In school: Spanish. In official settings: Spanish. At home, behind the closed door: Catalan, which your grandparents speak and your parents speak and you are learning to speak in the specific register of a language kept alive inside closed doors. You are seven years old and already aware of the architecture of when to speak which language, which is an unusual competence to develop at seven.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_cat_lang', true); p.m -= 2; p.e += 3; p.addFlag('language_suppression_lived') },
+  },
+
+  {
+    id: 'sl_kazakh_russified_generation',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Kazakhstan' &&
+      G.currentYear >= 1970 && G.currentYear <= 1991 &&
+      G.age >= 18 && G.age <= 35 &&
+      !G.mem?.sl_kaz_russ,
+    text: 'Your mother speaks Kazakh. You answer in Russian. This happened gradually enough that it is now simply how you are. The Russian was the language of advancement, of the city, of the scientific education. The Kazakh was for your grandmother\'s kitchen and the songs at Nauryz. You live between these two registers and have never been asked to choose between them, which is a form of choosing without choosing.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_kaz_russ', true); p.e += 2; p.m -= 2; p.addFlag('minority_language_gap') },
+  },
+
+  {
+    id: 'sl_arabic_dialect_social',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      ['Egypt', 'Morocco', 'Algeria', 'Tunisia', 'Lebanon', 'Syria', 'Jordan', 'Iraq'].includes(G.character.country.name) &&
+      G.currentYear >= 1980 &&
+      G.age >= 18 && G.age <= 35 &&
+      !G.mem?.sl_ar_dialect,
+    text: 'The written Arabic you use in formal documents is not the spoken Arabic you use with your mother. This is not translation exactly — it is two registers of the same inheritance. The television presenters speak a middle dialect that no one actually uses at home. The university professor writes in Fusha and speaks in Egyptian or Moroccan or Levantine. You navigate between the registers constantly, which is an act of intelligence so daily it has become invisible.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_ar_dialect', true); p.e += 2; p.s += 2 },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // Q. AGING IN SPECIFIC ERAS — late life with historical texture
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_elderly_internet_arrival',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      G.currentYear >= 1998 && G.currentYear <= 2008 &&
+      G.age >= 65 && G.age <= 80 &&
+      !G.mem?.sl_old_inet,
+    text: 'The grandchildren showed you how to use the email. The process of learning was more interesting than they expected and more frustrating than you let them see. What you understood immediately was that the letters your grandchildren wrote to you by email were shorter than the letters they would have written on paper — as if the medium had a maximum length it was comfortable with. You have adapted to the medium. You write short emails. You remember writing long letters.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_old_inet', true); p.e += 2; p.m += 2 },
+  },
+
+  {
+    id: 'sl_elderly_soviet_collapse',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      G.character.country.archetype === 'post_soviet' &&
+      G.currentYear >= 1991 && G.currentYear <= 1998 &&
+      G.age >= 65 &&
+      !G.mem?.sl_old_sov_coll,
+    text: 'You built your life inside the Soviet system. Your career, your pension, your apartment, your sense of what the future would contain — all of these were built inside the assumption that the system would persist. The system is gone. The pension is worth what it was worth in roubles when roubles bought what they bought. Your apartment is yours now in a legal sense that the Soviet system would not have recognised. The country you are in is not the country you learned to navigate.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_old_sov_coll', true); p.m -= 6; p.w -= 5; p.mo -= 3000 },
+  },
+
+  {
+    id: 'sl_elderly_pandemic_isolation',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      G.currentYear >= 2020 && G.currentYear <= 2022 &&
+      G.age >= 70 &&
+      !G.mem?.sl_old_pandemic,
+    text: 'The lockdown was the right decision. You understood this and agreed with it and were glad of it. You were also, by the third month, inside something that looked very much like the life you had been warned was coming — the attrition of days that were the same, the conversations by telephone that were not the same as conversations, the window as the primary interface with the world outside your walls. You had been told this would come, eventually, with age. You had not expected it to arrive at once and with a reason that was not age.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_old_pandemic', true); p.m -= 6; p.h -= 3; p.e += 1 },
+  },
+
+  {
+    id: 'sl_widow_farming_community',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('widowed') &&
+      G.ruralUrban === 'rural' &&
+      G.age >= 60 &&
+      !G.mem?.sl_wid_farm,
+    text: 'The farm was your husband\'s name in the official records and now that he is gone the question is what it is. Your son is in the city. The land is here. You know the land in ways your son does not — which fields hold water in wet years, which drainage ditch needs clearing in autumn, which neighbour will help with the harvest if you help with theirs. The knowledge is not on paper anywhere. It is in thirty years of doing it.',
+    choices: [
+      {
+        text: 'Stay and manage it yourself. The knowledge is yours even if the title was his.',
+        tag: 'stay',
+        outcome: 'The seasons continue. The management is harder alone. The knowledge is sufficient and the land is yours in all the ways that matter.',
+        effect: (p) => { p.m += 3; p.karma += 3; p.setMem('sl_wid_farm', true) },
+      },
+      {
+        text: 'Move to the city, near your son. The farm can be rented.',
+        tag: 'move',
+        outcome: 'The city is your son\'s world, not yours. The rent from the farm is something. The loss of the particular knowledge of that land is also something, without a word for it.',
+        effect: (p) => { p.m -= 4; p.mo += 2400; p.r += 5; p.setMem('sl_wid_farm', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // R. MICRO-HISTORIES — moments so specific they could not have been designed
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_rohingya_nameless',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Myanmar' &&
+      G.ethnicity === 'rohingya' &&
+      G.currentYear >= 1982 && G.currentYear <= 2017 &&
+      G.age >= 18 && G.age <= 35 &&
+      !G.mem?.sl_roh_nameless,
+    text: 'The 1982 Citizenship Law removed the word Rohingya from the list of recognized national races. The law does not say you do not exist. It says you are a Bengali, which means you are from somewhere else, which means the country you were born in is not yours by law. You have the papers the law says you cannot have and the identity the law says is not real and you live in the country where this is the official position.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_roh_nameless', true); p.m -= 6; p.e += 2; p.addFlag('stateless') },
+  },
+
+  {
+    id: 'sl_philippines_remittance_mother',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Philippines' &&
+      G.character.gender === 'female' &&
+      G.flags.includes('ofw_gulf') &&
+      G.age >= 30 && G.age <= 50 &&
+      G.children?.length > 0 &&
+      !G.mem?.sl_ph_rem_mother,
+    text: 'The money arrives on the fifteenth. You wire it from the money exchange beside the post office and it lands in your sister\'s account in Manila and she uses it to pay the school fees and the grocery bill and saves the remainder for the rent. The children on the phone sound different from how you remember them — older in their voices, with references to people and places you have not met or seen. You are their mother in the money and in the calls and in the decision to be here instead of there so that they can be in school instead of not.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_ph_rem_mother', true); p.m -= 4; p.karma += 5; p.mo += 1200 },
+  },
+
+  {
+    id: 'sl_hong_kong_handover',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'China' &&
+      G.currentYear >= 1996 && G.currentYear <= 1999 &&
+      G.age >= 18 && G.age <= 40 &&
+      G.ruralUrban === 'urban' &&
+      !G.mem?.sl_hk_handover,
+    text: 'The handover was a ceremony watched by most of the city and by a large part of the world. You watched it in a flat in Wan Chai with eleven other people and a television that was too small. The British flag came down at midnight and there was a complicated feeling in the room that was not quite grief and not quite celebration and not quite fear — something that combined elements of all three in proportions nobody in the room could quite specify. One person opened a beer. The rest continued watching.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_hk_handover', true); p.m += 2; p.e += 2 },
+  },
+
+  {
+    id: 'sl_rwanda_gacaca_witness',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Rwanda' &&
+      G.currentYear >= 2001 && G.currentYear <= 2012 &&
+      G.age >= 25 && G.age <= 55 &&
+      !G.mem?.sl_rwa_gacaca,
+    text: 'The gacaca court meets under a tree. The man who is testifying about what happened to your neighbour in 1994 is sitting twenty metres from the man he is testifying about. The man he is testifying about is required to be here. Rwanda has decided that justice in this case means community courts, truth-telling, reduced sentences in exchange for confession. You are required to be here too, as a witness. What you witnessed in 1994 is not the same as what is happening under the tree. You are learning what justice means when it is designed for a situation where everyone is already present.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_rwa_gacaca', true); p.m -= 4; p.e += 3; p.karma += 3 },
+  },
+
+  {
+    id: 'sl_brazil_favela_pacification',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Brazil' &&
+      G.currentYear >= 2008 && G.currentYear <= 2016 &&
+      G.age >= 18 && G.age <= 35 &&
+      G.ruralUrban === 'urban' &&
+      G.stats.wealth <= 35 &&
+      !G.mem?.sl_br_upp,
+    text: 'The UPP police came in 2010. Before the UPP: the traffic, the toque de recolher, the permission structure of the hill that everyone navigated and few acknowledged. After the UPP: police checkpoints, which you navigate differently. The violence is lower in certain categories and unchanged in others. The people of the favela debate what the pacification is for, which is a question about who the pacification serves, which is a question the UPP itself does not raise.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_br_upp', true); p.m += 2; p.e += 2; p.s += 1 },
+  },
 ]

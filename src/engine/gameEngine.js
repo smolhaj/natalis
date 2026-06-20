@@ -12681,6 +12681,28 @@ function buildYearTexture(state) {
     if (cn === 'Brazil' && era === 2000) return 'The Bolsa Família has pulled people out of a kind of poverty that was considered fixed. The fact of this is underreported outside Brazil.'
   }
 
+  if (F.has('code_switched') && Math.random() < 0.18) return pick([
+    'The voice you use at work and the voice you use at home are not the same voice. The distance between them is not a performance anymore. It is a fluency you developed from necessity and now cannot stop.',
+    phase === 'late_life'
+      ? 'Decades of moving between registers. The original one is still there if you need it — visits home make that clear. The question of which one is the real one resolved itself differently than you expected: they are both real. This is either a success or a loss and you have not been able to decide which.'
+      : 'The people you grew up with hear the new register and understand the distance. They don\'t hold it against you. That is a form of generosity you try to deserve.',
+  ])
+
+  if (F.has('class_guilt') && Math.random() < 0.18) return pick([
+    'The invitations you accept and the ones you don\'t are a form of accounting. You are choosing the new world when you accept and the old world when you don\'t. The accounting is not clean.',
+    phase === 'late_life'
+      ? 'What you have built for yourself and what you failed to bring along are two parts of the same story. The part about what you built tends to be the louder one in most conversations. The other part is louder when you\'re alone.'
+      : 'The gap between where you are and where you came from is not experienced as success by the people you left behind — or at least not only as success. There is also the fact of your absence from the places that formed you.',
+  ])
+
+  if (F.has('language_suppression_lived') && Math.random() < 0.18) return pick([
+    'The language that was banned in the schoolroom is still the language you dream in. The ban did not reach that far.',
+    phase === 'late_life'
+      ? 'The ban has been lifted in law. Whether it has been lifted in practice depends on which office you are in, which city, which generation of official. The law and the practice have not fully reconciled.'
+      : 'Your children know the words but not the grammar. You know both. The transmission is partial and that is the measure of what the suppression cost — not the generation that lived it but the next one.',
+    'The language survived because it was kept inside. The closing of doors was a form of preservation. This is not a defence of the policy; the policy was wrong. It is an observation about what communities do with what they are told to stop doing.',
+  ])
+
   if (F.has('lgbtq_lived_underground') && Math.random() < 0.2) return pick([
     'The calculation is constant and mostly invisible: who knows, who can be told, who would react a certain way. After enough years the calculation becomes automatic.',
     phase === 'late_life'
