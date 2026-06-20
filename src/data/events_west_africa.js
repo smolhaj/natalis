@@ -253,33 +253,6 @@ export const WEST_AFRICA_EVENTS = [
     effect: (p) => { p.m -= 4; p.r += 3; p.addFlag('lagos_go_slow_generation'); p.setMem('ngaLagosGoSlow', true) },
   },
 
-  {
-    id: 'nga_june12_1993',
-    phase: null,
-    weight: 5,
-    when: (G) =>
-      G.character.country.name === 'Nigeria' &&
-      G.currentYear >= 1993 && G.currentYear <= 1996 &&
-      G.age >= 18 &&
-      !G.mem?.ngaJune12,
-    text: 'June 12, 1993. Moshood Abiola wins the presidential election. International observers call it the freest and fairest in Nigerian history. Eleven days later, Ibrahim Babangida annuls the result. No official reason is given. The protests that follow — street blockades, a general strike in Lagos, soldiers at every junction — are answered the way the military has always answered. Abiola declares himself president in June 1994 and is arrested. He dies in custody in 1998, on the day he is supposed to meet the American ambassador. That is how the June 12 story ends: not with justice but with the removal of the question.',
-    choices: [
-      {
-        text: 'You join the protests. The annulment is not something you can accept quietly.',
-        tag: null,
-        outcome: 'The protests do not restore the election. The military does not give back what it takes. What you did in those weeks stays with you without resolution.',
-        effect: (p) => { p.m -= 10; p.karma += 8; p.r += 5; p.addFlag('nga_june12_generation'); p.addFlag('political_active'); p.setMem('ngaJune12', true); },
-      },
-      {
-        text: 'You watch. The military has guns and the outcome is not in doubt.',
-        tag: null,
-        outcome: 'The outcome was not in doubt. Neither was what it meant. The decision not to act is also a fact about the country and about yourself that you carry.',
-        effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('nga_june12_generation'); p.setMem('ngaJune12', true); },
-      },
-    ],
-    effect: null,
-  },
-
   // ═══════════════════════════════════════════════════════════════════════
   // GHANA — depth events
   // ═══════════════════════════════════════════════════════════════════════
