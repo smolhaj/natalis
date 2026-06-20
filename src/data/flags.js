@@ -15001,4 +15001,110 @@ export const FLAG_REGISTRY = {
     notes: 'Set by sl_small_island_brain_drain (stay branch).',
   },
 
+  // ── Batch 8 flags ─────────────────────────────────────────────────────────
+
+  coloured_classification: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Classified as Coloured under South Africa\'s Population Registration Act — a family split by the pencil test, the classification determining school, bus, hospital, and who could marry whom.',
+    intent: 'year_texture',
+    notes: 'Set by sl_apartheid_pencil_test.',
+  },
+
+  orthodox_fasting_formation: {
+    weight: 'minor',
+    category: 'spirituality',
+    description: 'Formed by the Ethiopian Orthodox fasting calendar — 250+ fasting days per year; the year structured by fasts rather than seasons; mother rising before dawn for lentils and shiro; the body knowing it.',
+    intent: 'none',
+    notes: 'Set by sl_ethiopia_fasting_year.',
+  },
+
+  gacaca_witness: {
+    weight: 'major',
+    category: 'grief',
+    description: 'Sat in a gacaca community court listening to a perpetrator confess the detail of what they did to someone you knew — the state\'s version of justice in open air, and not yet knowing if it is better or worse than not knowing.',
+    intent: 'year_texture',
+    notes: 'Set by sl_rwanda_gacaca_witness.',
+  },
+
+  climate_refugee: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Left a Pacific island due to rising seas and climate-driven uninhabitability — the taro gardens flooded, the cemetery flooding, the migration arrangements negotiated while the emissions continue.',
+    intent: 'year_texture',
+    notes: 'Set by sl_pacific_climate_rising_sea (leave branch).',
+  },
+
+  climate_displaced_stayed: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Chose to stay on a climate-threatened island despite rising seas — the staying as witness, the grief of watching the tides, the decision that will likely be made again.',
+    intent: 'year_texture',
+    notes: 'Set by sl_pacific_climate_rising_sea (stay branch).',
+  },
+
+  eviction_cycle_childhood: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Grew up in a Roma settlement subject to recurring municipal eviction orders — moved seven times in eleven years, transferred schools four times, the settlement rebuilt each time from what can be moved.',
+    intent: 'year_texture',
+    notes: 'Set by sl_roma_eviction_cycle.',
+  },
+
+  stateless_adjacent: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'EU citizen on paper but living outside the practice of EU rights — the gap between the right of free movement and the practiced reality of eviction, increased policing, and discriminatory applications.',
+    intent: 'year_texture',
+    notes: 'Set by sl_roma_adult_europe.',
+  },
+
+  transracial_adoptee: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Transracially adopted — Korean in Minnesota, Black in Sweden, the only one of their ethnicity in their school, a folder of paperwork and a photograph of a woman the agency says is their mother.',
+    intent: 'year_texture',
+    notes: 'Set by sl_korean_adoptee_child.',
+  },
+
+  adoptee_searched: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Searched for a birth parent as an adult adoptee — the file, the name, the intermediary, the not-responding that is its own information.',
+    intent: 'none',
+    notes: 'Set by sl_korean_adoptee_return (search branch).',
+  },
+
+  space_race_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Grew up with Gagarin\'s face on the classroom wall — the Soviet space achievement felt from inside, before the other feelings about the Soviet Union were available.',
+    intent: 'none',
+    notes: 'Set by sl_soviet_space_race_child.',
+  },
+
+  traveller_childhood: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Irish Traveller childhood — the barrel-top wagon, the harvest circuits, the horse as family economics, the moves before the week was out. Ireland did not officially recognise Travellers as an ethnic group until 2017.',
+    intent: 'event',
+    notes: 'Set by sl_irish_traveller_child. Follow-through: sl_irish_traveller_sedentarisation.',
+  },
+
+  forced_sedentarisation: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Settled into a council house by policy decision — the locked door unfamiliar, the trailer in the garden, the house as a solution to a problem they were not asked to define.',
+    intent: 'year_texture',
+    notes: 'Set by sl_irish_traveller_sedentarisation.',
+  },
+
+  tsunami_survivor: {
+    weight: 'major',
+    category: 'grief',
+    description: 'Survived the 2004 Indian Ocean tsunami — the specific morning, the specific house, the specific absence of the specific people who were in it; the number that is so large it becomes a number before you finish counting.',
+    intent: 'event',
+    notes: 'Set by sl_aceh_tsunami_2004. Follow-through: sl_aceh_tsunami_reconstruction.',
+  },
+
 }

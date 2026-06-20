@@ -3283,4 +3283,272 @@ export const SPECIFIC_LIFE_EVENTS = [
     ],
     effect: null,
   },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // TT. APARTHEID RACIAL CLASSIFICATION — the pencil test and what it decided
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_apartheid_pencil_test',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'South Africa' &&
+      G.currentYear >= 1950 && G.currentYear <= 1990 &&
+      G.age >= 6 && G.age <= 14 &&
+      G.flags.includes('experienced_discrimination') &&
+      !G.mem?.sl_sa_pencil,
+    text: 'The Population Registration Act classifies everyone into White, Coloured, Indian, or Native. The Classification Board, when cases are disputed, uses the pencil test: a pencil is put in the hair. If the hair holds the pencil, the person is classified Coloured or Native. If the pencil falls out, the person may be classified White. Your family\'s classification has been disputed. Your grandmother went to one side of this test. Your grandfather went to the other. The classification determines which school you attend, which bus you take, which hospital you go to, whether the person you love can marry you. A pencil in hair decides this. The decision is the law.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_sa_pencil', true); p.m -= 8; p.e += 3; p.addFlag('coloured_classification') },
+  },
+
+  {
+    id: 'sl_apartheid_coloured_midlife',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'South Africa' &&
+      G.flags.includes('coloured_classification') &&
+      G.currentYear >= 1990 && G.currentYear <= 2005 &&
+      G.age >= 30 && G.age <= 50 &&
+      !G.mem?.sl_sa_col_mid,
+    text: 'The new South Africa is non-racial in its constitution. The constitution does not undo the classification in the bodies of the people who were classified. You spent your childhood on the Coloured side of lines — Coloured schools, Coloured hospitals, Coloured bus seats — and now the lines are gone officially and the geography of the city still remembers them in which neighbourhoods were built where and who was allowed to own what and where the wealth is. You are in your forties. You are not sure what the new category is, or whether you want one. The pencil test is not the law anymore. You still remember which way your grandmother\'s pencil fell.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_sa_col_mid', true); p.e += 3; p.m += 2; p.r += 5 },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // UU. ETHIOPIAN FASTING — the year measured in the Orthodox calendar
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_ethiopia_fasting_year',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Ethiopia' &&
+      G.religion === 'christian_orthodox' &&
+      G.currentYear >= 1960 && G.currentYear <= 2020 &&
+      G.age >= 6 && G.age <= 14 &&
+      !G.mem?.sl_eth_fasting,
+    text: 'The Ethiopian Orthodox fasting calendar has over 250 fasting days a year. Your family observes the major fasts: Tsom, Filseta, the pre-Easter fast that lasts fifty-five days. During the fasts you eat only after three in the afternoon and eat no animal products and your mother rises before the sun to cook the injera and the lentils and the shiro before the day begins in earnest. This is not deprivation. This is the year. The year is structured by the fasts the way other years are structured by the seasons. The structure is old and specific and your body knows it.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_eth_fasting', true); p.m += 4; p.s += 2; p.addFlag('orthodox_fasting_formation') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // VV. RWANDAN GACACA — the perpetrator and the survivor in the same row
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_rwanda_gacaca_witness',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'Rwanda' &&
+      G.currentYear >= 2002 && G.currentYear <= 2012 &&
+      G.age >= 25 && G.age <= 55 &&
+      G.flags.includes('genocide_survivor') &&
+      !G.mem?.sl_rw_gacaca,
+    text: 'The gacaca court meets in the open air, which is traditional for Rwandan justice. The man who killed your uncle is in the row across from you. He stood up and said what he did, which is what the gacaca system requires — confession, detail, truth — in exchange for reduced sentence. You are required to listen. The state has decided this is justice. You are sitting in the open air listening to the detail of what happened to your uncle from the mouth of the man who did it, and you do not know yet whether this is better or worse than not knowing the detail. It is different from not knowing the detail. You can say that much.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_rw_gacaca', true); p.m -= 6; p.e += 3; p.r += 8; p.addFlag('gacaca_witness') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // WW. PACIFIC CLIMATE DISPLACEMENT — the island going under
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_pacific_climate_rising_sea',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      ['Kiribati', 'Tuvalu', 'Marshall Islands', 'Maldives', 'Fiji'].includes(G.character.country.name) &&
+      G.currentYear >= 2000 && G.currentYear <= 2030 &&
+      G.age >= 18 && G.age <= 40 &&
+      !G.mem?.sl_pac_climate,
+    text: 'The king tides flood the village now in ways they did not when your parents were children. The seawater is in the taro gardens. The cemetery is flooding. The government has been negotiating with New Zealand and Australia about migration arrangements because the island will not be habitable within the lifetimes of children born here now. At climate conferences, your country\'s delegation speaks and the countries that emit most of the carbon listen politely and make non-binding commitments. You have watched several rounds of this. The taro gardens continue to flood.',
+    choices: [
+      {
+        text: 'Apply for the Pacific access migrant visa to New Zealand.',
+        tag: 'leave',
+        outcome: 'Auckland is green and large and cold in winter and you have family there from the first wave of migration in the 1990s. The island is still the island. You send money back. You cannot send the island back to where it was.',
+        effect: (p) => { p.setMem('sl_pac_climate', true); p.m -= 5; p.mo += 3000; p.addFlag('climate_refugee'); p.addFlag('emigrated') },
+      },
+      {
+        text: 'Stay. This is not abstract. This is home.',
+        tag: 'stay',
+        outcome: 'You stay. The tides keep coming. The staying is an act of witness and also a kind of grief. You will make this decision again, probably, in five years.',
+        effect: (p) => { p.setMem('sl_pac_climate', true); p.m -= 4; p.r += 6; p.addFlag('climate_displaced_stayed') },
+      },
+    ],
+    effect: null,
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // XX. ROMA FAMILY — the eviction cycle in European cities
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_roma_eviction_cycle',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      ['Romania', 'Bulgaria', 'Hungary', 'Czech Republic', 'Slovakia', 'Serbia', 'France', 'Italy'].includes(G.character.country.name) &&
+      G.ethnicity === 'roma' &&
+      G.currentYear >= 1950 && G.currentYear <= 2020 &&
+      G.age >= 6 && G.age <= 14 &&
+      !G.mem?.sl_roma_evict,
+    text: 'The settlement has been here for eleven years. The municipal order to vacate gives you thirty days. The community has had thirty days six times in eleven years and has moved the settlement and rebuilt it each time. The settlement is a collection of what can be moved: the caravans, the timber structures that can be disassembled, the cooking equipment, the tools, the music. The school across town accepts the children theoretically. In practice, the children who have moved seven times in eleven years have a particular relationship with the word theoretically. You have transferred schools four times. You are twelve.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_roma_evict', true); p.m -= 8; p.h -= 2; p.e -= 3; p.addFlag('eviction_cycle_childhood') },
+  },
+
+  {
+    id: 'sl_roma_adult_europe',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('eviction_cycle_childhood') &&
+      G.ethnicity === 'roma' &&
+      G.age >= 18 && G.age <= 35 &&
+      !G.mem?.sl_roma_adult,
+    text: 'The EU free movement directive says you can live and work anywhere in the European Union. The practice of this right in this city is that you can be evicted from the settlement the municipality tolerates but wishes it did not have to tolerate, and you can be stopped by police more frequently than the statistical average, and you can find that the word Roma in an application has a measurable effect on outcomes in a system that claims to be non-discriminatory. The right exists. The practice modifies the right. You have learned to navigate the gap between the right and the practice.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_roma_adult', true); p.e += 3; p.s += 2; p.m -= 3; p.addFlag('stateless_adjacent') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // YY. KOREAN TRANSRACIAL ADOPTEE — the country you came from at 4 months
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_korean_adoptee_child',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) =>
+      ['United States', 'Sweden', 'Netherlands', 'France', 'Australia'].includes(G.character.country.name) &&
+      G.currentYear >= 1975 && G.currentYear <= 2005 &&
+      G.age >= 6 && G.age <= 14 &&
+      G.flags.includes('adopted') &&
+      !G.mem?.sl_kor_adopt_child,
+    text: 'You came from Korea at four months and have no memory of it. What you have is a folder with the adoption agency paperwork, a photograph of a woman the agency says is your birth mother, and a name that was your name for four months and then became your middle name, which no one uses. You are the only Korean person in your school. You are also not Korean in any way you can access — you do not speak the language, you do not know the food except from the restaurant your parents take you to twice a year as a form of cultural connection that you are not sure is working. You are from here. The question of what else you are is one you are beginning to sit with.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_kor_adopt_child', true); p.e += 2; p.m -= 2; p.addFlag('transracial_adoptee') },
+  },
+
+  {
+    id: 'sl_korean_adoptee_return',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('transracial_adoptee') &&
+      G.age >= 22 && G.age <= 40 &&
+      G.currentYear >= 1995 &&
+      !G.mem?.sl_kor_adopt_return,
+    text: 'Seoul is the country you came from and do not come from. You have looked up the flight prices many times. You have found online communities of Korean adoptees who went back — some found their birth families, some found records, some found a country that also did not know what to do with them because Korea does not have a clear category for Korean people who speak no Korean and were raised by white parents in Minnesota. The word for this, in Korean, is the word for overseas Korean, which is the word for every Korean who lives outside Korea, which was not made for exactly this situation. You have booked the flight.',
+    choices: [
+      {
+        text: 'Try to find your birth mother.',
+        tag: 'search',
+        outcome: 'The agency has a file. The file has a name. The name leads to a woman who is in her fifties and who, when the intermediary contacts her, does not respond. You wait. The not-responding is its own information.',
+        effect: (p) => { p.setMem('sl_kor_adopt_return', true); p.m -= 4; p.e += 3; p.r += 6; p.addFlag('adoptee_searched') },
+      },
+      {
+        text: 'Go to know the country, not to find her.',
+        tag: 'explore',
+        outcome: 'Seoul is enormous and fast and indifferent to your specific quest in a way that is both a relief and a disappointment. The kimchi tastes like something your body recognises before your mind does. You stay three weeks. You come back changed in a way you cannot yet describe.',
+        effect: (p) => { p.setMem('sl_kor_adopt_return', true); p.m += 3; p.e += 3; p.s += 2 },
+      },
+    ],
+    effect: null,
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // ZZ. SOVIET SPACE RACE — the child of the cosmonaut's city
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_soviet_space_race_child',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'Russia' &&
+      G.currentYear >= 1957 && G.currentYear <= 1972 &&
+      G.age >= 6 && G.age <= 14 &&
+      !G.mem?.sl_sov_space,
+    text: 'Gagarin\'s face is on the poster in your classroom in the same way that Lenin\'s face is on the poster — both are national achievements, both are looking at the future with appropriate confidence. The difference is that Gagarin actually went to space, which no American had done yet in 1961, which is a fact you know with a specific satisfaction. The Soviet Union will be the first country in space: this is what it felt like from inside, at ten, before the other things you later learned to feel about the Soviet Union were available to you. The first thing was the achievement. The first thing was real.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_sov_space', true); p.e += 3; p.m += 4; p.addFlag('space_race_generation') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // AAA. IRISH TRAVELLER — the barrel-top wagon and what the road takes
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_irish_traveller_child',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'Ireland' &&
+      G.ethnicity === 'traveller' &&
+      G.currentYear >= 1940 && G.currentYear <= 1990 &&
+      G.age >= 5 && G.age <= 14 &&
+      !G.mem?.sl_ire_traveller,
+    text: 'The family moves with the season and the work — the harvests in Wexford, the fairs in Ballinasloe, the roads between. The wagon is a barrel-top and the children sleep at the back and the horse is the economics of the family in the same way the car is the economics of the settled family, which means when the horse is sick everything is sick. The settled people call you tinkers and the settled people call you knackers and the settled people sometimes move you on from the side of the road before the week is out. Ireland has no official recognition of Travellers as an ethnic group until 2017. You are a child and do not know the word ethnic group, but you know the road.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_ire_traveller', true); p.s += 4; p.m += 2; p.e -= 2; p.addFlag('traveller_childhood') },
+  },
+
+  {
+    id: 'sl_irish_traveller_sedentarisation',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Ireland' &&
+      G.flags.includes('traveller_childhood') &&
+      G.currentYear >= 1970 && G.currentYear <= 2010 &&
+      G.age >= 18 && G.age <= 35 &&
+      !G.mem?.sl_ire_trav_settle,
+    text: 'The council house is a two-bedroom in Ballyfermot and the council has decided that the settled house is better for you than the road, which the council decided based on what is better for the settled community rather than what is better for you. The house is warm and has a kitchen and has a door that locks. Your mother finds the locked door unfamiliar and keeps opening it to see outside. Your father parks the trailer in the garden because the garden is the outside part. The neighbours on both sides have called the council about the trailer. You are in a house that is a solution to a problem you were not asked to define.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_ire_trav_settle', true); p.m -= 4; p.h += 2; p.r += 5; p.addFlag('forced_sedentarisation') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // BBB. ACEH TSUNAMI — the wave and the decade that followed
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_aceh_tsunami_2004',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'Indonesia' &&
+      G.currentYear >= 2004 && G.currentYear <= 2006 &&
+      G.age >= 18 && G.age <= 50 &&
+      G.ruralUrban === 'urban' &&
+      !G.mem?.sl_aceh_tsunami,
+    text: 'The wave comes from the sea on December 26, 2004, at seven fifty-eight in the morning, which is the information that arrived as you would have been making breakfast or walking to the market. The 2004 Indian Ocean tsunami kills two hundred and twenty-seven thousand people in fourteen countries. In Banda Aceh alone the number is sixty-one thousand. The number is so large it becomes a number and stops being people before you have finished counting. What the number does not contain is the specific morning, the specific house, the specific absence of the specific people who were in it. What you lost is specific. The number is not.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_aceh_tsunami', true); p.m -= 14; p.h -= 5; p.r += 8; p.addFlag('tsunami_survivor') },
+  },
+
+  {
+    id: 'sl_aceh_tsunami_reconstruction',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('tsunami_survivor') &&
+      G.character.country.name === 'Indonesia' &&
+      G.currentYear >= 2006 && G.currentYear <= 2015 &&
+      G.age >= 25 && G.age <= 55 &&
+      !G.mem?.sl_aceh_reconstruct,
+    text: 'The reconstruction came quickly because the world was watching — the NGOs, the foreign governments, the cameras, the money that flowed in the two years after. The town that was rebuilt is not the town that was. The houses are on different footprints. The streets are in different places. The mosque was rebuilt exactly as it was, which is one decision that the community made about what stays. In ten years you have rebuilt more or less everything that can be rebuilt. What cannot be rebuilt is not a building. You have rebuilt the buildings and held the other thing in a place that is not quite grief anymore and not quite over.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_aceh_reconstruct', true); p.m += 3; p.e += 2; p.r += 5 },
+  },
 ]

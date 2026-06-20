@@ -12716,6 +12716,62 @@ function buildYearTexture(state) {
       : 'What the floating population floats in is a city that runs on its labour and does not guarantee its children\'s schooling. You have navigated this every year since you arrived. The navigation is no longer navigation — it is the shape of the life.',
   ])
 
+  if (F.has('coloured_classification') && Math.random() < 0.15) return pick([
+    'The pencil in the hair. Your grandmother went one way. Your grandfather went the other. The classification decided which school, which bus, which hospital, which funeral.',
+    phase === 'late_life'
+      ? 'The new South Africa removed the lines from the law. The geography of the city remembers the lines. Where the wealth is, where the schools are, where the houses were built — the law changed and the accumulated result of the law persists. You are in your seventies in a non-racial country that was built in segments.'
+      : 'The lines are gone officially. The body that moved within the lines for twenty-five years does not receive the notification that the lines have moved. The body knows where to sit and where not to sit and keeps this knowledge past its usefulness.',
+  ])
+
+  if (F.has('gacaca_witness') && Math.random() < 0.15) return pick([
+    'The open air court. The row across from you. The detail that the state decided you needed to hear. You still do not know if this is better or worse than not hearing the detail.',
+    phase === 'late_life'
+      ? 'You have had twenty years with the detail. The detail has not become less precise. The state\'s theory was that the truth — said out loud, in public, in the presence of the person it was said about — would produce something. You are still determining what it produced. Something, but not exactly reconciliation. Something.'
+      : 'The man is out of prison now. The town is small enough that you see him. You have seen him seventy or eighty times in the years since the gacaca. Neither of you has found the arrangement for these encounters that makes them okay. You each look past each other. The looking is its own arrangement.',
+  ])
+
+  if (F.has('climate_refugee') && Math.random() < 0.15) return pick([
+    'The island is still there. The cemetery is flooding. The taro gardens are salt. You send money back. You cannot send the sea back.',
+    phase === 'late_life'
+      ? 'The climate conferences continue. The non-binding commitments accumulate. The island continues to go under at a rate that is measurable and measured and reported at those conferences and that continues regardless. You have been in Auckland for fifteen years. The island exists as a satellite image and as the faces of the cousins who stayed and as the specific quality of the ocean on a certain kind of morning that Auckland does not quite replicate.'
+      : 'The visa category that exists for you is called climate-related migration, which is a new category that did not exist for the people who had this problem before the world developed the vocabulary for the problem. Having the vocabulary does not change the tides.',
+  ])
+
+  if (F.has('climate_displaced_stayed') && Math.random() < 0.15) return pick([
+    'The king tide came in further this year than last. The cousins in New Zealand send pictures of their children. The cemetery needs another sandbar.',
+    phase === 'late_life'
+      ? 'You are still here. The island is still here, in reduced form. The reduced form is what you know. The people who left know the island as it was. You know the island as it is. Both knowledges are real. Yours is current.'
+      : 'You made the decision to stay again this year without making it formally. The staying is the default when the leaving is not done. The staying this year was not the same as last year\'s staying. The sea is not the same.',
+  ])
+
+  if (F.has('eviction_cycle_childhood') && Math.random() < 0.15) return pick([
+    'Four schools in twelve years. Seven eviction notices. The settlement rebuilt seven times from what could be moved. The word theoretically has had a specific meaning since you were eight.',
+    phase === 'late_life'
+      ? 'The city has had official halting sites since the nineties. The halting sites have waiting lists. The waiting lists are long. The evictions continue on the informal sites while people wait on the waiting lists. The architecture of the system has not changed. The vocabulary around it has.'
+      : 'The EU directive says free movement. The practice of free movement in this city is something you understand more precisely than the directive. The gap between the right and the practice is your daily geography.',
+  ])
+
+  if (F.has('stateless_adjacent') && Math.random() < 0.15) return pick([
+    'The right exists on paper. The paper and the practice are two different documents.',
+    phase === 'late_life'
+      ? 'The advocacy groups now document the gap between the EU rights and the Roma experience of those rights. The documentation is new. The gap has been here for decades. The documentation does not close the gap but gives it a name. Having the name is not nothing. It is not everything either.'
+      : 'What you have learned is how to navigate a system that claims to apply equally and applies unevenly. The navigation is a skill. The need to have the skill is the problem.',
+  ])
+
+  if (F.has('transracial_adoptee') && Math.random() < 0.15) return pick([
+    'The folder with the paperwork. The photograph. The name that is now your middle name. You are from here. The question of what else you are.',
+    phase === 'late_life'
+      ? 'You have met many other Korean adoptees over the years — in support groups, online, at reunions organised by adoption agencies trying to do something. The shared experience is not Korean-ness, which most of you don\'t have. The shared experience is the particular shape of being raised in one body and one face by people who do not have that body or face and must improvise the rest.'
+      : 'The kimchi at the restaurant tastes like cultural connection. The cultural connection is not adequate. The inadequacy is not the restaurant\'s fault. Nothing that exists is adequate to the specific gap. You are finding ways to live beside the gap rather than expecting it to close.',
+  ])
+
+  if (F.has('forced_sedentarisation') && Math.random() < 0.15) return pick([
+    'The council house has a door that locks. Your mother keeps opening it. The trailer is in the garden. The neighbours have called the council.',
+    phase === 'late_life'
+      ? 'You stayed in the council house for forty years. The trailer is gone. The road is not something you travel anymore. The road is something you remember from the body — the horse, the barrel-top, the specific quality of the morning in Ballinasloe in October. The house is where you live. The road is where you are from. The two things have not merged in forty years.'
+      : 'The house is warm and has a kitchen and has things the road did not have. The road had other things the house does not have. You find you are not able to say simply whether the house is better. The council found it simple. The council was not in the trade.',
+  ])
+
   if (F.has('cold_war_childhood') && Math.random() < 0.15) return pick([
     'The desk the teacher said to get under. The turtle in the film. The gap between the danger and the desk. You understood the gap at nine and the understanding has not gone away.',
     phase === 'late_life'
