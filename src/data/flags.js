@@ -12973,7 +12973,7 @@ export const FLAG_REGISTRY = {
     weight: 'moderate',
     category: 'career',
     description: 'Entered the aid sector as international (expatriate) staff, deployed from a wealthy country.',
-    intent: 'texture',
+    intent: 'year_texture',
     notes: 'Set by aw_entry_international. Branches text in aw_salary_gap_intl, aw_evacuation.',
   },
 
@@ -12981,7 +12981,7 @@ export const FLAG_REGISTRY = {
     weight: 'moderate',
     category: 'career',
     description: 'Works as national/local staff within an NGO — the same work, different passport, different pay structure.',
-    intent: 'texture',
+    intent: 'year_texture',
     notes: 'Set by aw_local_entry. Branches text/choices in aw_salary_gap_local, aw_evacuation.',
   },
 
@@ -13351,7 +13351,7 @@ export const FLAG_REGISTRY = {
     weight: 'major',
     category: 'labor',
     description: 'Spent a decade or more in sex work — the expert knowledge, the social world, the specific body of understanding that comes with long experience in the sector.',
-    intent: 'texture',
+    intent: 'year_texture',
     notes: 'Set by sw_exit_opportunity second choice and sw_long_term. Needs year texture in buildYearTexture().',
   },
 
@@ -13457,7 +13457,7 @@ export const FLAG_REGISTRY = {
     weight: 'moderate',
     category: 'identity',
     description: 'Rebuilding a secular social life after leaving — learning at thirty-five what was never taught.',
-    intent: 'texture',
+    intent: 'year_texture',
     notes: 'Set by hcr_secular_reentry. Needs year texture in buildYearTexture().',
   },
 
@@ -13517,7 +13517,7 @@ export const FLAG_REGISTRY = {
     weight: 'moderate',
     category: 'identity',
     description: 'Re-learned Northern Sami as an adult — words arriving with sensory memories attached; the language came back changed, as living things do.',
-    intent: 'texture',
+    intent: 'year_texture',
     notes: 'Set by ind_sami_language_return. Changes ind_sami_late prose. Needs year texture in buildYearTexture().',
   },
 
@@ -13559,7 +13559,7 @@ export const FLAG_REGISTRY = {
     weight: 'major',
     category: 'moral',
     description: 'Protected her daughter — the cycle ends here, at the cost of some relationships and some belonging.',
-    intent: 'texture',
+    intent: 'year_texture',
     notes: 'Set by fgm_daughter_question protect choice. Changes fgm_late_reckoning prose. Needs year texture in buildYearTexture().',
   },
 

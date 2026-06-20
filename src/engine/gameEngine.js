@@ -11423,6 +11423,13 @@ function buildYearTexture(state) {
       : 'The work extracts something. You know this. The colleagues who have been doing it longest have learned either to replenish it actively or to stop noticing the extraction, which is not the same as replenishing it.',
     'There are people in the project area you will remember for the rest of your life who do not know your name. This asymmetry is part of what the work is.',
   ])
+  if (F.has('aw_international_staff') && Math.random() < 0.18) return pick([
+    'You are on the international scale, which is a different salary in the same building as the local staff doing the same work. This is documented policy. You live in it every day.',
+    phase === 'young_adult'
+      ? 'The expat bubble is real and you are inside it. The bubble has a function — the separation allows a specific kind of work focus. It also has a cost that you pay in a different currency than the one the work is denominated in.'
+      : 'You have been in several countries with this organisation or ones like it. What you carry from each one is accumulated in ways you do not always catalogue, but the weight has a number now, and the number changes your posture.',
+    'The security briefing, the evacuation plan, the emergency contacts, the packet that tells you what to do when things deteriorate. You know the packet by heart. Knowing it by heart has a specific effect on how you look at the place you are working.',
+  ])
   if (F.has('ngo_local_staff') && Math.random() < 0.2) return pick([
     'You know this community. The international staff arrive and leave and you remain. The knowledge asymmetry between you and the people you work with is obvious and is not discussed.',
     'The salary gap is a documented policy. You have read the policy. The policy explains it in language about cost-of-living adjustments that does not quite cover what you feel when you read it.',
