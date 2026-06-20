@@ -4984,6 +4984,62 @@ export const FLAG_REGISTRY = {
     intent: 'year_texture',
     notes: 'Set by egy_tahrir_aftermath. Gates on tahrir_generation.',
   },
+  sadat_assassination_witness: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Present in Egypt the day Sadat was assassinated (October 6, 1981) — witnessed the moment that delivered Mubarak and thirty years of emergency law',
+    intent: 'none',
+    notes: 'Set by we_sadat_assassination_1981 world event.',
+  },
+  egypt_wasta_beneficiary: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Got a job or position through wasta (connections) rather than merit — knows how the system actually works',
+    intent: 'none',
+    notes: 'Set by egy_wasta_career (first choice). Moral weight: the system is real but the benefitting is its own ledger.',
+  },
+  egypt_wasta_blocked: {
+    weight: 'moderate',
+    category: 'adversity',
+    description: 'Navigated Egyptian professional life without wasta — learned the longer, harder route through the system',
+    intent: 'none',
+    notes: 'Set by egy_wasta_career (second choice).',
+  },
+  egypt_gulf_worker: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Took a Gulf contract — the Egyptian professional who chose Saudi/UAE/Kuwait over staying, sent remittances home, came back three weeks a year',
+    intent: 'none',
+    notes: 'Set by egy_gulf_contract_choice (first choice). Distinct from OFW system; covers professional-class Egyptians.',
+  },
+  egypt_stayed_for_roots: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Chose to stay in Egypt when the Gulf option was available — watched others leave, held the longer path',
+    intent: 'none',
+    notes: 'Set by egy_gulf_contract_choice (second choice).',
+  },
+  egypt_blocked_generation: {
+    weight: 'moderate',
+    category: 'adversity',
+    description: 'Part of Egypt\'s blocked professional generation — university degree, government desk job, the gap between preparation and what the preparation is for',
+    intent: 'none',
+    notes: 'Set by egy_blocked_generation. Only fires if not egypt_gulf_worker.',
+  },
+  coptic_navigation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Navigated professional and public life as a Coptic Christian in Egypt — the church community, the topography of what doors are and aren\'t open',
+    intent: 'none',
+    notes: 'Set by egy_coptic_navigation (both choices).',
+  },
+  sectarian_threat_survived: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Experienced a sectarian attack or nearby threat — a church bombing, communal violence — and returned to normal life the next morning',
+    intent: 'none',
+    notes: 'Set by egy_coptic_navigation (second choice). Broader flag potentially applicable cross-country.',
+  },
 
   // ── India ─────────────────────────────────────────────────────────────────────
   emergency_generation: {

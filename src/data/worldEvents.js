@@ -1764,6 +1764,20 @@ export const WORLD_EVENTS = [
   },
 
   {
+    id: 'we_sadat_assassination_1981',
+    name: 'Assassination of President Sadat',
+    years: [1981, 1981],
+    archetypes: 'all',
+    countries: ['Egypt'],
+    narrative: 'October 6, 1981. During the annual military parade marking the crossing of the Suez Canal, soldiers halt their vehicle and throw grenades at the reviewing stand. Sadat is shot multiple times at close range. He dies within hours. Mubarak, seated beside him, survives. The Emergency Law invoked that evening will not be lifted for thirty years.',
+    context: 'Sadat\'s Camp David Accords (1978) normalized relations with Israel, winning him a Nobel Peace Prize and costing him pan-Arab support. Members of Tanzim al-Jihad, a militant Islamist cell within the army, carried out the assassination. Hosni Mubarak assumed the presidency and governed Egypt under emergency law until 2011. The "emergency" measures — indefinite detention, restricted assembly, press censorship — became the permanent architecture of Egyptian governance for three decades.',
+    effect: (p) => { p.m -= 12; p.addFlag('sadat_assassination_witness') },
+    addFlags: ['sadat_assassination_witness'],
+    minAge: 8,
+    when: (G) => !G.flags.has('sadat_assassination_witness'),
+  },
+
+  {
     id: 'ghana_independence_1957',
     name: 'Ghanaian Independence',
     years: [1957, 1957],
