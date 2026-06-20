@@ -575,4 +575,214 @@ export const INDIGENOUS_EVENTS = [
     effect: (p) => { p.r += 6; p.e += 4; p.m += 3; p.setMem('samiLate', true); },
   },
 
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // AMAZONIAN INDIGENOUS (BRAZIL / PERU / COLOMBIA)
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // The Amazon basin holds the world's highest concentration of uncontacted peoples
+  // and some of the planet's oldest continuous land knowledge systems.
+  // Brazil has approximately 305 indigenous groups (1 million people, 13% of the Amazon).
+  // Peru has 55 Amazonian peoples. Colombia's Amazonian communities span the Putumayo,
+  // Vaupés, and Amazonas departments.
+  // The arc covers: forest knowledge childhood, the garimpo invasion, FUNAI demarcation
+  // politics (Brazil), the Bagua massacre 2009 (Peru), the smoke, the city option,
+  // the question of what can be passed on.
+
+  {
+    id: 'ind_amazon_forest_knowledge',
+    phase: 'childhood',
+    weight: 5,
+    when: (G) =>
+      ['amazonian_indigenous_pe', 'indigenous_brazilian', 'indigenous_colombian'].includes(G.character.ethnicity) &&
+      G.age >= 6 && G.age <= 14 &&
+      G.currentYear >= 1950 && G.currentYear <= 2010 &&
+      !G.mem?.amazonForestKnow,
+    text: 'What you are learning is not called education. It does not happen at a desk. You follow your father into the forest and the forest is a library — the tree that indicates water below, the plant whose bark reduces fever, the specific behaviour of the river at the start of the dry season, the constellation names that mark the fishing calendar. None of this is in a book. All of it is in the knowledge of specific people who learned it the same way: by following someone who already knew.',
+    choices: null,
+    effect: (p) => { p.e += 6; p.m += 10; p.addFlag('amazon_forest_knowledge'); p.setMem('amazonForestKnow', true); },
+  },
+
+  {
+    id: 'ind_amazon_garimpo_arrives',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) =>
+      ['amazonian_indigenous_pe', 'indigenous_brazilian', 'indigenous_colombian'].includes(G.character.ethnicity) &&
+      G.age >= 8 && G.age <= 18 &&
+      G.currentYear >= 1970 && G.currentYear <= 2010 &&
+      !G.mem?.amazonGarimpeiro,
+    text: (G) => G.character.country?.name === 'Brazil'
+      ? 'The garimpeiros come in the dry season when the rivers drop and the gold in the sediment is accessible. They come with equipment and they come in numbers. The mercury they use to separate the gold goes into the water. You know when the water is wrong before the adults explain why. The children in the village below the mining site have been sick since the rains returned. The sickness has a name now but the name does not change the water.'
+      : 'Men arrive from outside — in Peru they are gold miners, in Colombia sometimes oil workers, sometimes coca growers — and the arrival is the same in its structure: they need something that is in this territory and they have equipment to take it. The negotiation is between what they have and what your community has, and what your community has is the land, and the land is not something you knew you needed to defend because it had always simply been there.',
+    choices: [
+      {
+        text: 'You understand now that the territory requires defending. This is new knowledge.',
+        tag: 'resist',
+        outcome: 'The understanding is a beginning. The beginning is the start of a longer confrontation that will not resolve in your childhood.',
+        effect: (p) => { p.m -= 8; p.e += 5; p.addFlag('amazon_territory_defender'); p.setMem('amazonGarimpeiro', true); },
+      },
+      {
+        text: 'The adults manage it. You watch from the edge of what you are allowed to understand.',
+        tag: 'witness',
+        outcome: 'What you understand from the edge is that something is at stake that you do not yet have the words for.',
+        effect: (p) => { p.m -= 5; p.r += 4; p.setMem('amazonGarimpeiro', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ind_amazon_smoke_horizon',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      ['amazonian_indigenous_pe', 'indigenous_brazilian', 'indigenous_colombian'].includes(G.character.ethnicity) &&
+      G.age >= 16 && G.age <= 40 &&
+      G.currentYear >= 1975 &&
+      !G.mem?.amazonSmoke,
+    text: 'The smoke has been on the horizon every dry season for years now, but this year it is different — closer, and accompanied by the specific sound of chainsaw machinery that carries further than you expected. The farmers and cattle ranchers move in after the loggers clear. The forest that has been there since before your grandmother\'s grandmother becomes pasture in one dry season. The word for what is happening — desmatamento, deforestación, deforestation — is a word from outside the forest, which already tells you something.',
+    choices: null,
+    effect: (p) => { p.m -= 10; p.h -= 4; p.addFlag('amazon_deforestation_witness'); p.setMem('amazonSmoke', true); },
+  },
+
+  {
+    id: 'ind_amazon_funai_demarcation',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.ethnicity === 'indigenous_brazilian' &&
+      G.age >= 18 && G.age <= 50 &&
+      G.currentYear >= 1988 &&
+      !G.mem?.amazonFunai,
+    text: (G) => {
+      const yr = G.currentYear ?? 2000
+      if (yr >= 2019) {
+        return 'The demarcation of your territory — promised under the 1988 Constitution, processed through FUNAI over decades, contested in courts — is now under political attack from an administration that has said explicitly that indigenous land will not be expanded while he is president. The demarcation papers you spent years obtaining feel differently weighted than they did before.'
+      }
+      if (yr >= 2003) {
+        return 'The demarcation process moves slowly through FUNAI bureaucracy. There are surveys, reports, consultations, legal challenges from landowners. The forest that has been your community\'s for generations is moving through a process designed by people who need the forest explained to them in writing before they can recognise it as belonging to anyone.'
+      }
+      return 'The 1988 Constitution promised indigenous land rights. FUNAI is the agency that implements them. The implementation requires years of study, mapping, political approval. You are inside the process now. It does not move at the speed of the chainsaw.'
+    },
+    choices: [
+      {
+        text: 'Engage fully with the legal process — the papers are the protection.',
+        tag: 'legal',
+        outcome: 'You learn the language of Brazilian bureaucracy alongside the language of the forest. Both are necessary now.',
+        effect: (p) => { p.e += 6; p.s += 4; p.addFlag('amazon_legal_fighter'); p.setMem('amazonFunai', true); },
+      },
+      {
+        text: 'Coordinate with other indigenous communities — this is a collective fight.',
+        tag: 'network',
+        outcome: 'The network of communities facing the same pressure becomes its own kind of strength — one the forest taught you: what is connected is harder to clear.',
+        effect: (p) => { p.s += 6; p.karma += 6; p.addFlag('amazon_territory_defender'); p.addFlag('amazon_legal_fighter'); p.setMem('amazonFunai', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ind_amazon_bagua_2009',
+    phase: 'young_adult',
+    weight: 5,
+    when: (G) =>
+      G.character.ethnicity === 'amazonian_indigenous_pe' &&
+      G.currentYear === 2009 &&
+      G.age >= 14 && G.age <= 50 &&
+      !G.mem?.amazonBagua,
+    text: 'June 5, 2009. The Awajún and Wampis have been blocking the road at Bagua for months — protesting government decrees that open indigenous territory to extractive industry without consultation. This morning the police move in. The numbers of dead are disputed; the government says one number, the communities say another. You hear about it on a radio or from someone who was there. What you understand is that the right to say no to what is being done to the forest has just become a thing people died for.',
+    choices: [
+      {
+        text: 'You bear witness. This must be remembered and named.',
+        tag: 'witness',
+        outcome: 'The Baguazo enters the history that your community carries. The government investigations produce no convictions. The memory is yours.',
+        effect: (p) => { p.m -= 10; p.karma += 8; p.addFlag('amazon_territory_defender'); p.setMem('amazonBagua', true); },
+      },
+      {
+        text: 'The danger to those who speak is real. You know this now in a new way.',
+        tag: 'careful',
+        outcome: 'You continue the work with a specific new knowledge of what speaking costs.',
+        effect: (p) => { p.m -= 8; p.r += 6; p.setMem('amazonBagua', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ind_amazon_city_question',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      ['amazonian_indigenous_pe', 'indigenous_brazilian', 'indigenous_colombian'].includes(G.character.ethnicity) &&
+      G.age >= 17 && G.age <= 28 &&
+      G.currentYear >= 1980 &&
+      !G.mem?.amazonCityQ,
+    text: (G) => {
+      const city = G.character.country?.name === 'Brazil' ? 'Manaus' : G.character.country?.name === 'Colombia' ? 'Leticia' : 'Iquitos'
+      return `${city} is where the young people go — the ones who have done the missionary school, learned Portuguese or Spanish, acquired the documents the city needs. The city offers things the forest does not: wage work, education, the formal economy, a hospital within reach. What the city does not offer is visible only once you are already there. Some of the ones who went come back. Most do not.`
+    },
+    choices: [
+      {
+        text: 'You stay. The forest requires people who know it.',
+        tag: 'stay',
+        outcome: 'You stay. Some of your age cohort leaves. The knowledge that went with them is a different kind of loss from the forest.',
+        effect: (p) => { p.m += 5; p.addFlag('amazon_stayed'); p.setMem('amazonCityQ', true); },
+      },
+      {
+        text: 'You go. The life available here is narrowing.',
+        tag: 'go',
+        outcome: 'You go. The city takes the first years. The knowledge you carry is not valued there in the way you expected and is also not replaceable once you are away from it.',
+        effect: (p) => { p.m -= 5; p.r += 6; p.addFlag('amazon_urban_indigenous'); p.setMem('amazonCityQ', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ind_amazon_passing_knowledge',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      ['amazonian_indigenous_pe', 'indigenous_brazilian', 'indigenous_colombian'].includes(G.character.ethnicity) &&
+      G.flags.has('amazon_forest_knowledge') &&
+      G.age >= 35 && G.age <= 60 &&
+      !G.mem?.amazonPassingKnow,
+    text: 'Your children are at the age you were when you learned what you know. The question is whether you can teach it the way you were taught — by presence, by following, by the specific landscape — when the landscape has changed and the children have school schedules and phones and a different relationship with what the forest means. The knowledge does not transfer through explanation. It requires a particular kind of time and a particular kind of attention that neither you nor your children move through in the same way you once did.',
+    choices: [
+      {
+        text: 'You take them. The time exists if you make it exist.',
+        tag: 'teach',
+        outcome: 'Some of it passes. Not all of it. What passes is enough for them to understand what they do not know, which may be the most important thing.',
+        effect: (p) => { p.m += 8; p.karma += 8; p.addFlag('amazon_knowledge_passed'); p.setMem('amazonPassingKnow', true); },
+      },
+      {
+        text: 'The world they are entering is not the world the knowledge was built for.',
+        tag: 'grieve',
+        outcome: 'The knowledge that took generations to accumulate reaches the edge of what can be passed on without the conditions that made it. You carry this quietly.',
+        effect: (p) => { p.r += 10; p.m -= 5; p.setMem('amazonPassingKnow', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ind_amazon_late',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      ['amazonian_indigenous_pe', 'indigenous_brazilian', 'indigenous_colombian'].includes(G.character.ethnicity) &&
+      G.age >= 60 &&
+      !G.mem?.amazonLate,
+    text: (G) => {
+      if (G.flags.has('amazon_knowledge_passed')) {
+        return 'The forest that was there when you were born is smaller than it was. The river runs differently. The calendar of fish and flood and dry season that your grandparents read like a text has been disrupted by things happening upstream and far away. What you passed to your children is real, even where it no longer maps exactly onto what exists. The map and the territory have diverged. The map is still worth having.'
+      }
+      if (G.flags.has('amazon_legal_fighter')) {
+        return 'The papers exist. The demarcation exists, in some form, after everything. The territory is not what it was before the chainsaw and the mercury and the cattle. But it is demarcated land, which means it exists in the legal world as well as the world you have always known. Whether the legal protection holds across the next administration is a question you live with at the end of every dry season.'
+      }
+      return 'You have watched more of the forest disappear in your lifetime than was lost in the century before you were born. This is a number. It is also more than a number: it is the loss of specific trees, specific rivers, specific animals, specific knowledge about those trees and rivers and animals that was held in specific people and died with those people when the conditions for holding it ceased to exist. You hold what you hold. The holding has been a life.'
+    },
+    choices: null,
+    effect: (p) => { p.r += 8; p.e += 4; p.m += 2; p.setMem('amazonLate', true); },
+  },
+
 ]

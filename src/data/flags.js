@@ -13521,6 +13521,64 @@ export const FLAG_REGISTRY = {
     notes: 'Set by ind_sami_language_return. Changes ind_sami_late prose. Needs year texture in buildYearTexture().',
   },
 
+  // ── AMAZONIAN INDIGENOUS ARC (BRAZIL / PERU / COLOMBIA) ─────────────────────
+
+  amazon_forest_knowledge: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Carries the embodied ecological knowledge of the Amazon — plant medicine, river reading, seasonal calendars — learned by following rather than instruction.',
+    intent: 'none',
+    notes: 'Set by ind_amazon_forest_knowledge. Gates ind_amazon_passing_knowledge and ind_amazon_late prose.',
+  },
+
+  amazon_territory_defender: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Understands, through experience, that the territory requires active defense against extractive industry.',
+    intent: 'none',
+    notes: 'Set by ind_amazon_garimpo_arrives resist choice, ind_amazon_bagua_2009, and ind_amazon_funai network choice.',
+  },
+
+  amazon_deforestation_witness: {
+    weight: 'moderate',
+    category: 'adversity',
+    description: 'Watched the smoke of deforestation come closer each dry season until the forest became pasture within living memory.',
+    intent: 'none',
+    notes: 'Set by ind_amazon_smoke_horizon.',
+  },
+
+  amazon_legal_fighter: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Engaged with FUNAI demarcation process or legal channels — learning bureaucratic language as a survival tool.',
+    intent: 'none',
+    notes: 'Set by ind_amazon_funai_demarcation both choices. Changes ind_amazon_late prose.',
+  },
+
+  amazon_stayed: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Chose to remain in the forest community when the city option appeared — the knowledge requires people who know it.',
+    intent: 'none',
+    notes: 'Set by ind_amazon_city_question stay choice.',
+  },
+
+  amazon_urban_indigenous: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Left the community for the city — the forest knowledge is not valued in the same way there, and is also not replaceable once absent.',
+    intent: 'none',
+    notes: 'Set by ind_amazon_city_question go choice.',
+  },
+
+  amazon_knowledge_passed: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Made the time and took the children into the forest; some of the knowledge passed, not all, enough for them to know what they do not know.',
+    intent: 'none',
+    notes: 'Set by ind_amazon_passing_knowledge teach choice. Changes ind_amazon_late prose.',
+  },
+
   // ── FGM ARC: FEMALE GENITAL CUTTING ──────────────────────────────────────────
 
   fgm_underwent: {
