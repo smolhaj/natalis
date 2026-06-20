@@ -12,6 +12,7 @@ import { PROPERTY_TYPES, VEHICLE_TYPES } from '../data/assets'
 import { ILLNESSES } from '../data/illnesses'
 import { PLACES, getPlacesForCountry, pickBirthPlace, pickNeighborhoodTier, pickNamedNeighborhood, getRelocationCost } from '../data/places'
 import { HEADLINES } from '../data/headlines'
+import { SOUNDTRACK } from '../data/soundtrack'
 import { randomBetween, pickFrom, rollWeighted, clamp, chance } from '../utils/random'
 import { LIFE_SKELETON_EVENTS } from '../data/events_life_skeleton'
 import { PHASE_ENTRY_EVENTS } from '../data/events_phase_entries'
@@ -8881,6 +8882,34 @@ function buildYearTexture(state) {
       ? 'You watched a decade of public services contracted and then watch them again during a pandemic. The contraction and the pandemic were in sequence and the sequence is information about what the contraction left behind.'
       : 'The rhetoric of hard choices and living within our means produced specific outcomes in specific places. You are from one of those places or you know people from one of those places.',
   ])
+  if (F.has('political_fracture_lived') && Math.random() < 0.22) return pick([
+    'The divide is not about the policy. It is about what you think the world is — and whether that gap can be bridged at a dinner table or only navigated around.',
+    phase === 'late_life'
+      ? 'Looking back, the fracture of those years was not over a vote. It was about what different people thought was happening. The vote only made that visible.'
+      : 'The conversation is different now. Not always in ways you can name — but the dinner table has a different temperature than it did a decade ago.',
+    'You learned to code-switch: one register for family, another for friends. You are not sure when this started or whether you had a choice.',
+  ])
+  if (F.has('information_overload') && Math.random() < 0.2) return pick([
+    'More crises than you can hold simultaneously. You have started to notice which ones you check on and which ones you let go. The triage produces its own guilt.',
+    phase === 'late_life'
+      ? 'You watched a generation grow up with more access to horror than any generation before it. What that access produced — the specific personality it built — you are still watching.'
+      : 'The problem is not the information. The problem is the distance between knowing and being able to do anything. That distance is a daily condition now.',
+    'You read about it. You share it. You move on. You are aware this is a response, even if you cannot think of a better one.',
+  ])
+  if (F.has('occupy_witness') && Math.random() < 0.2) return pick([
+    'The camps came down. The specific demand that had been the movement\'s weakness — the inability to say precisely what it wanted — turned out to be also its durability. The vocabulary it put into circulation is still circulating.',
+    phase === 'late_life'
+      ? 'The tents are gone. The phrase "the 99 percent" is still in use. Whether it changed anything or only named something that was already changing — that accounting remains open.'
+      : 'You remember the assemblies. The talking sticks. The way agreement was expressed by waggling fingers rather than clapping. It felt participatory and strange and genuine all at once.',
+    'The inequality it described was real. The inequality is still there. Something about the scale of the problem and the instrument for addressing it.',
+  ])
+  if (F.has('always_connected') && Math.random() < 0.2) return pick([
+    'You cannot remember, quite, what you did with your attention before the phone. The phone has been there long enough that the before is hard to reconstruct.',
+    phase === 'late_life'
+      ? 'The permanent connection. The permanent distraction. The people who say this is bad for memory and the people who say memory is distributed now rather than internal. You are not sure which version is true.'
+      : 'The small pauses — waiting for the coffee, standing on the platform — have a different texture now. They are filled. You are not sure what they contained before.',
+    'You are available, which is a form of power and a form of exposure. The phone in your pocket knows where you are.',
+  ])
   if (F.has('falklands_generation') && Math.random() < 0.2) return pick([
     'The Task Force sailed in April 1982. Eight thousand miles. The names came through the news: Sheffield, Coventry, Ardent, Belgrano. Seventy-four days. 255 British dead, 649 Argentine dead, three civilians.',
     'The Falklands War ended on June 14, 1982. The 144-seat majority followed in June 1983. The seventy-four days remade the decade that followed them.',
@@ -12750,6 +12779,31 @@ function applyHeadlines(state) {
   }
 }
 
+function applySoundtrack(state) {
+  const year = state.currentYear
+  const archetype = state.character?.country?.archetype
+  const countryName = state.character?.country?.name
+  const seenKey = `soundtrack_${year}`
+  if (state.mem?.[seenKey]) return state
+  const matching = SOUNDTRACK.filter(s => {
+    if (s.year !== year) return false
+    if (s.minAge && state.age < s.minAge) return false
+    if (s.maxAge && state.age > s.maxAge) return false
+    if (s.archetypes !== 'all' && !s.archetypes.includes(archetype)) return false
+    if (s.countries && !s.countries.includes(countryName)) return false
+    return true
+  })
+  if (matching.length === 0) return state
+  // Pick one soundtrack entry per year, not all of them
+  const picked = matching[Math.floor(Math.random() * matching.length)]
+  const newEntry = { age: state.age, text: picked.text, isKey: false, isSoundtrack: true }
+  return {
+    ...state,
+    mem: { ...(state.mem ?? {}), [seenKey]: true },
+    log: [...state.log, newEntry],
+  }
+}
+
 // ─── Death ────────────────────────────────────────────────────────────────────
 
 // Historical infant mortality rates (deaths per 1000 live births) by archetype and decade.
@@ -14403,6 +14457,7 @@ export function tick(state) {
   // World events
   s = applyWorldEvents(s)
   s = applyHeadlines(s)
+  s = applySoundtrack(s)
 
   // Mundane layer — daily-life texture alongside main events
   const mundaneText = buildMundaneLayer(s)
