@@ -14613,4 +14613,84 @@ export const FLAG_REGISTRY = {
     notes: 'Set by sl_china_hukou_city.',
   },
 
+  private_public_split: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Lives a bifurcated existence — one face for the state, the mosque, the collective; another for the cassette tape, the hidden room, the private music. Common in authoritarian and socially conservative contexts.',
+    intent: 'none',
+    notes: 'Set by sl_iran_cassette_tape.',
+  },
+
+  outlasted_regime: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Survived and outlasted the political order that defined their life — the specific surprise of permanence in an order assumed permanent.',
+    intent: 'none',
+    notes: 'Set by sl_late_regime_survived.',
+  },
+
+  language_legacy_bearer: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'A speaker of a dying or endangered language who carries what the recordings cannot — the precise inflection, the untranslatable phrase, the irony only native speakers know.',
+    intent: 'year_texture',
+    notes: 'Set by sl_late_language_last_speaker.',
+  },
+
+  land_transferred: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Completed a generational land transfer — the legal moment when accumulated labour becomes inheritance and the self steps out of the chain.',
+    intent: 'none',
+    notes: 'Set by sl_late_farm_handed_on.',
+  },
+
+  examined_politics: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Explicitly reckoned with how and why their political views changed over a lifetime — distinguishing genuine wisdom from the comfort of accommodation.',
+    intent: 'none',
+    notes: 'Set by sl_late_political_reckoning.',
+  },
+
+  racial_tax_paid: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Experienced the cumulative cost of being the only one in predominantly white professional environments — the exhaustion of representation, the calculation about naming things, the excellence required to be visible.',
+    intent: 'year_texture',
+    notes: 'Set by sl_black_uk_professional. Cross-cutting in any professional context for ethnic minorities.',
+  },
+
+  disability_hidden: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'A disability managed in private, concealed from the neighbourhood, the school, the outside world — the arrangement that takes considerable energy from those who maintain it.',
+    intent: 'year_texture',
+    notes: 'Set by sl_india_disabled_family_shame.',
+  },
+
+  hiv_positive_managed: {
+    weight: 'moderate',
+    category: 'health',
+    description: 'Living with HIV on antiretroviral treatment — the virus suppressed, the management ongoing, the window of the pharmaceutical negotiation still visible in retrospect.',
+    intent: 'year_texture',
+    notes: 'Set by sl_hiv_africa_treatment. Pairs with hiv_managed condition.',
+  },
+
+  beauty_capital_used: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Experienced their physical appearance as a resource managed by others — the pageant, the nomination, the usefulness to people around them that took years to process.',
+    intent: 'none',
+    notes: 'Set by sl_philippines_beauty_pageant.',
+  },
+
+  domestic_worker: {
+    weight: 'moderate',
+    category: 'labour',
+    description: 'Worked as a live-in domestic worker — the maid\'s room off the kitchen, the Sunday noon day off, the legal protections on paper that do not reliably reach the kitchen.',
+    intent: 'year_texture',
+    notes: 'Set by sl_latin_america_maid. Cross-cutting developing_urban female experience.',
+  },
+
 }

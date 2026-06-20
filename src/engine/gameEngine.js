@@ -12716,6 +12716,41 @@ function buildYearTexture(state) {
       : 'What the floating population floats in is a city that runs on its labour and does not guarantee its children\'s schooling. You have navigated this every year since you arrived. The navigation is no longer navigation — it is the shape of the life.',
   ])
 
+  if (F.has('language_legacy_bearer') && Math.random() < 0.15) return pick([
+    'The language is there if you reach for it. Fewer people to reach toward now. The conversations that require it are with people who are mostly older than you.',
+    phase === 'late_life'
+      ? 'You have been asked to record things — the linguists come with equipment and ask you to say words, to tell stories. You say the words. What you cannot say is what they mean from inside, which is the part you are trying to preserve and cannot.'
+      : 'The word exists in this language for a thing that has no equivalent. You know this. The people who would understand the knowing are getting fewer.',
+  ])
+
+  if (F.has('racial_tax_paid') && Math.random() < 0.18) return pick([
+    'The meetings where you have to establish your authority twice — once by saying something and once by being the person who said it. The calculation has become automatic and invisible. The automatism is its own kind of cost.',
+    phase === 'late_life'
+      ? 'Looking back at the career, you can see the rooms where the credential was insufficient and something else was being evaluated. You navigated those rooms successfully. The navigation took something that did not come back.'
+      : 'You are the first Black person in this role, this office, this meeting. You were the first in the last job too. The accumulation of firsts has a specific weight.',
+  ])
+
+  if (F.has('disability_hidden') && Math.random() < 0.15) return pick([
+    'The energy that goes into the concealment is not counted. The concealment is the condition. The condition is not discussed.',
+    phase === 'late_life'
+      ? 'The hiding was its own burden, separate from the disability itself. You understand this now in ways you could not have articulated when you were younger, when the hiding was simply what was done.'
+      : 'Your mother organised the house around what you need and does not call it accommodation. The neighbourhood does not know. The arrangement requires someone to carry it, and the carrying is invisible because the arrangement is invisible.',
+  ])
+
+  if (F.has('hiv_positive_managed') && Math.random() < 0.15) return pick([
+    'The pills are so small. This is what you think sometimes. They are this small and they are why you are here.',
+    phase === 'late_life'
+      ? 'You have outlived the diagnosis by a number of years that was not guaranteed in the year you received it. The people who did not get to treatment in time did not outlive theirs. You carry that arithmetic.'
+      : 'Manageable now is the word. Manageable with daily medication, with regular tests, with the virus held at a level the body can live with. The management is routine. The routine sits inside the day without announcing itself.',
+  ])
+
+  if (F.has('domestic_worker') && Math.random() < 0.18) return pick([
+    'The family knows your name. The children of the family know your name. The adults of the family sometimes call you by it and sometimes do not. You have noted both.',
+    phase === 'late_life'
+      ? 'The work was in other people\'s kitchens for many years. Some of those families you remember in detail. Some of them remember you — a card at New Year, a message through the children. The relationship was not a friendship but was not nothing either. The nothing and the something existed at the same time.'
+      : 'Sunday noon. That is when your time starts. The hours before noon on Sunday are still the family\'s. The hours after are yours. You have learned to compress a week\'s worth of yourself into Sunday afternoon.',
+  ])
+
   if (F.has('code_switched') && Math.random() < 0.18) return pick([
     'The voice you use at work and the voice you use at home are not the same voice. The distance between them is not a performance anymore. It is a fluency you developed from necessity and now cannot stop.',
     phase === 'late_life'

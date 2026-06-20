@@ -2227,4 +2227,289 @@ export const SPECIFIC_LIFE_EVENTS = [
     ],
     effect: null,
   },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // Y. ADOLESCENCE WITHOUT TRANSLATION — teen years across specific worlds
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_iran_cassette_tape',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Iran' &&
+      G.currentYear >= 1980 && G.currentYear <= 1999 &&
+      G.age >= 13 && G.age <= 19 &&
+      !G.mem?.sl_ir_cass,
+    text: 'The cassette tapes came via cousins in Germany or through the bazaar in ways that did not require asking questions. Michael Jackson, Madonna, Metallica — contraband not because of the content specifically but because of the form, the western-ness of it. You had a Walkman and listened with one earbud and kept the other ear on the door. The arrangement between the private life and the public regime had this specific shape: you could have almost anything inside a room, provided the room was genuinely inside.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_ir_cass', true); p.m += 4; p.s += 2; p.addFlag('private_public_split') },
+  },
+
+  {
+    id: 'sl_nigeria_secondary_boarding',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Nigeria' &&
+      G.currentYear >= 1970 && G.currentYear <= 2000 &&
+      G.age >= 12 && G.age <= 17 &&
+      G.stats.smarts >= 55 &&
+      !G.mem?.sl_ng_board,
+    text: 'The government secondary school is eight hours away by bus and you live there during term. The dormitory is forty boys and the prefect system means that power in the dormitory operates according to rules that the school handbook does not contain. You learn something about institutions in this dormitory that no classroom teaches: how authority distributes itself among people who have not been formally assigned it, and what the people at the bottom of that distribution experience. The education is happening in both rooms simultaneously.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_ng_board', true); p.s += 4; p.e += 2; p.m += 2 },
+  },
+
+  {
+    id: 'sl_brazil_baile_funk',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Brazil' &&
+      G.ruralUrban === 'urban' &&
+      G.stats.wealth <= 40 &&
+      G.currentYear >= 1990 &&
+      G.age >= 14 && G.age <= 20 &&
+      !G.mem?.sl_br_funk,
+    text: 'The baile funk starts at midnight and goes until dawn. The sound system is borrowed from the association and the lights are string lights and the street is blocked with bodies. The music is from the favela and about the favela and for the people of the favela and the Brazilian media describes it as dangerous. The dangerous thing, from where you are dancing, is the police checkpoint on the way home at five in the morning. The music is not dangerous. The music is the one place in the week where nothing is asking anything of you except to be there.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_br_funk', true); p.m += 6; p.s += 3 },
+  },
+
+  {
+    id: 'sl_china_gaokao_village',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'China' &&
+      G.ruralUrban === 'rural' &&
+      G.currentYear >= 1980 &&
+      G.age >= 16 && G.age <= 19 &&
+      !G.mem?.sl_cn_gaokao,
+    text: 'The gaokao is the examination that determines the university and therefore the city and therefore the life you are able to have. Your county school has one teacher for three subjects and textbooks from five years ago. The students from the city schools have cram schools and tutors and full libraries. The examination is the same for everyone. The preparation is not the same for everyone. You sit the examination. You understand exactly what you are competing against. The understanding does not help you on the paper but it changes how you understand what the paper is.',
+    choices: [
+      {
+        text: 'Take what the score gives you. Get to any city.',
+        tag: 'accept',
+        outcome: 'The score is enough for a third-tier city university. The third-tier city is still a city. You have crossed the line that your parents did not cross.',
+        effect: (p) => { p.e += 3; p.m += 2; p.addFlag('first_gen_graduate'); p.addFlag('rural_urban_migrant'); p.setMem('sl_cn_gaokao', true) },
+      },
+      {
+        text: 'Retake it next year. Study the entire year for one shot.',
+        tag: 'retake',
+        outcome: 'The year of studying is the most singular year of your life. The score improves. The university is better. The year cost something that the score does not record.',
+        effect: (p) => { p.e += 5; p.m -= 3; p.addFlag('first_gen_graduate'); p.setMem('sl_cn_gaokao', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'sl_egypt_mahraganat',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Egypt' &&
+      G.currentYear >= 2007 &&
+      G.age >= 14 && G.age <= 21 &&
+      G.ruralUrban === 'urban' &&
+      !G.mem?.sl_eg_mahragan,
+    text: 'The mahraganat music comes from the microphones of the wedding tents and the rooftop parties and the cheap phone speakers in the minibus. It is not approved of. The state radio does not play it. The cultural establishment considers it a problem. The problem plays on every phone in the informal neighborhoods at every hour. You know every word of songs that no official channel has ever broadcast. This is the first thing in your life that belongs entirely to people your age and your neighbourhood and no institution.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_eg_mahragan', true); p.m += 5; p.s += 2 },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // Z. LATE-LIFE RECKONING — naming specific things at the end
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_late_life_country_question',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('emigrated') &&
+      G.age >= 65 &&
+      !G.mem?.sl_ll_country_q,
+    text: 'The question of where you want to be buried comes up, not dramatically, but in a conversation about practicalities. You realise you have been living in this country for forty years and have not decided. The country you came from is a different country now — the government changed, the language changed slightly, the neighbourhood you were from has been rebuilt. The country you are in is where your children are. Both of these facts are simultaneously true and do not resolve into an answer.',
+    choices: [
+      {
+        text: 'Here. The life was here. The end should be here.',
+        tag: 'here',
+        outcome: 'The decision, once made, is quieter than you expected. The children are relieved. The question does not come up again.',
+        effect: (p) => { p.setMem('sl_ll_country_q', true); p.m += 4; p.addFlag('second_country_rooted') },
+      },
+      {
+        text: 'There. Something should go back.',
+        tag: 'there',
+        outcome: 'The arrangement is made. The children don\'t fully understand. You don\'t fully explain it. The country you came from has been waiting in a specific way that you are only now admitting.',
+        effect: (p) => { p.setMem('sl_ll_country_q', true); p.m += 2; p.r += 5 },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'sl_late_regime_survived',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      G.age >= 65 &&
+      G.flags.includes('dissident') &&
+      !G.mem?.sl_ll_regime_surv,
+    text: 'The regime is gone and you are still here. This was not the order you expected the events to come in. The people who were certain the regime would outlast them — who built their lives inside the assumption of its permanence — had to revise that assumption faster than it seemed possible to revise it. You are revised too, but differently. You spent years assuming you would not outlast it. You did. The surprise of that contains a kind of grief you have no good word for.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_ll_regime_surv', true); p.m += 4; p.r += 5; p.e += 2; p.addFlag('outlasted_regime') },
+  },
+
+  {
+    id: 'sl_late_language_last_speaker',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) =>
+      G.flags.includes('minority_language_speaker') &&
+      G.age >= 70 &&
+      !G.mem?.sl_ll_lang_last,
+    text: 'Your grandchildren understand some words. They do not speak it. The language will continue in recordings and in academic papers and in the work of linguists who came to document it, which is a form of persistence that is different from the form you grew up in. You are not the last speaker — there are others your age — but you are aware that the number is specific and declining and that you know it in ways the recordings will not capture: the exact inflection for a certain kind of irony, the phrase for the particular feeling of returning to a place after a long absence and finding it changed.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_ll_lang_last', true); p.m -= 3; p.e += 2; p.r += 6; p.addFlag('language_legacy_bearer') },
+  },
+
+  {
+    id: 'sl_late_farm_handed_on',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      G.ruralUrban === 'rural' &&
+      G.age >= 65 &&
+      G.children?.length > 0 &&
+      !G.mem?.sl_ll_farm_hand,
+    text: 'The land transfer is a legal process that takes eight months and costs money you did not expect to spend and involves a surveyor who cannot find the boundary stones your grandfather put in, which are precisely where your grandfather said they would be. The document at the end says what has been true for forty years: this land is yours and now it is theirs. Your son does not plan to farm it. He plans to rent it. You understand the economics of his decision. You hold the document and think about the economics of your grandfather\'s decision and your father\'s decision and yours. The decisions accumulated into this moment, which is also an ending.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_ll_farm_hand', true); p.m += 2; p.r += 8; p.addFlag('land_transferred') },
+  },
+
+  {
+    id: 'sl_late_political_reckoning',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      G.age >= 65 &&
+      G.political_leaning !== null &&
+      G.flags.includes('election_felt') &&
+      !G.mem?.sl_ll_pol_reck,
+    text: 'The politics you held in your thirties and the politics you hold now are not the same politics and you have not always been honest with yourself about why they changed. Some of the change is wisdom — the accumulation of evidence has updated the position. Some of the change is comfort — the positions that threatened what you had accumulated have become less appealing as what you have accumulated has grown. Distinguishing between the two kinds of change is the work. Most people do not do the work. You are attempting the work, which is better than most.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_ll_pol_reck', true); p.m += 3; p.e += 3; p.r += 4; p.addFlag('examined_politics') },
+  },
+
+  {
+    id: 'sl_late_grandchild_different_world',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      G.age >= 65 &&
+      G.children?.length > 0 &&
+      !G.mem?.sl_ll_gc_world,
+    text: 'The grandchild asks what it was like before the internet and you understand, from the question, that what is being asked is what the world was like before something the child cannot imagine not existing. You describe it and the description sounds like deprivation: no instant access, no search, no way to find out immediately. What you cannot describe is what it felt like from inside — the specific texture of not-knowing that was ordinary rather than a failure of the system. The grandchild listens. The grandchild cannot imagine it. You realise you can no longer imagine it either.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_ll_gc_world', true); p.m += 4; p.e += 2 },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // AA. SPECIFIC INTERSECTIONS — combinations too precise for any other module
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_black_uk_professional',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'United Kingdom' &&
+      G.currentYear >= 1980 && G.currentYear <= 2010 &&
+      G.age >= 22 && G.age <= 38 &&
+      G.stats.smarts >= 65 &&
+      G.career?.field &&
+      G.flags.includes('experienced_discrimination') &&
+      !G.mem?.sl_uk_bl_prof,
+    text: 'The office has twelve people and you are the only Black person in it. You have been the only Black person in three consecutive jobs and you have learned what this means in practice: the specific exhaustion of being the one who gets asked to speak for a demographic, the meetings where you are not assumed to be the most senior person in the room until you speak, the calculation about whether to name what is happening or to let it pass, and the cost of both choices. Your CV is excellent. The excellence is not the whole story.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_uk_bl_prof', true); p.m -= 4; p.e += 2; p.s += 2; p.addFlag('racial_tax_paid') },
+  },
+
+  {
+    id: 'sl_india_disabled_family_shame',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'India' &&
+      G.currentYear >= 1960 && G.currentYear <= 2000 &&
+      G.age >= 6 && G.age <= 14 &&
+      G.flags.includes('born_with_disability') &&
+      !G.mem?.sl_in_dis_shame,
+    text: 'The disability is not something the family discusses outside the house. The official position is that nothing is wrong, which means that nothing can be accommodated, which means that the accommodation happens privately and the private accommodation is not called accommodation. Your mother has organised the house around what you need and does not call it that. The neighbours do not know. Not knowing is the arrangement. The arrangement takes considerable energy to maintain and the energy comes entirely from your mother.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_in_dis_shame', true); p.m -= 5; p.e += 2; p.addFlag('disability_hidden') },
+  },
+
+  {
+    id: 'sl_hiv_africa_treatment',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      ['South Africa', 'Zimbabwe', 'Zambia', 'Uganda', 'Kenya', 'Tanzania', 'Nigeria', 'Ethiopia'].includes(G.character.country.name) &&
+      G.currentYear >= 1995 && G.currentYear <= 2010 &&
+      G.age >= 25 && G.age <= 50 &&
+      !G.mem?.sl_hiv_treat &&
+      Math.random() < 0.12,
+    text: 'The test came back positive and the treatment was not available yet in this country — the antiretrovirals were available in Europe and the United States at a price that was eight times the annual income of most people in this country, and the pharmaceutical companies were still negotiating whether a different price applied here. The government was also still negotiating its official position on the connection between HIV and AIDS. You were not part of the negotiation. You were the thing the negotiation was about.',
+    choices: [
+      {
+        text: 'Get into a trial programme or NGO treatment scheme.',
+        tag: 'treatment',
+        outcome: 'The treatment works. The virus is suppressed. The work of staying in the programme is significant and ongoing and the management of it is now a permanent part of your life.',
+        effect: (p) => { p.setMem('sl_hiv_treat', true); p.h -= 5; p.addCondition('hiv_managed', 'mild'); p.addFlag('hiv_positive_managed') },
+      },
+      {
+        text: 'Wait and navigate the official system as it develops.',
+        tag: 'wait',
+        outcome: 'The treatment arrives in the public system two years later. Two years is a long time to wait in a body with untreated HIV in 2001. The treatment works when it arrives.',
+        effect: (p) => { p.setMem('sl_hiv_treat', true); p.h -= 12; p.addCondition('hiv_managed', 'moderate'); p.addFlag('hiv_positive_managed') },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'sl_philippines_beauty_pageant',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Philippines' &&
+      G.character.gender === 'female' &&
+      G.age >= 14 && G.age <= 20 &&
+      G.stats.looks >= 65 &&
+      !G.mem?.sl_ph_pageant,
+    text: 'The barangay fiesta has a queen contest and the barangay captain has nominated you and your mother has said yes before asking you. The preparation involves a sponsor, who is the daughter of the captain, and a costume, and learning to walk in a way you do not normally walk, and a response to the question "What does beauty mean to you?" which you are required to give in a particular format. You win. The winning is good for your mother. You understand that you have been useful to people around you in a way that you will spend the next several years working out your feelings about.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_ph_pageant', true); p.lo += 3; p.s += 3; p.m -= 2; p.addFlag('beauty_capital_used') },
+  },
+
+  {
+    id: 'sl_latin_america_maid',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      ['Colombia', 'Peru', 'Brazil', 'Mexico', 'Bolivia', 'Ecuador', 'Paraguay'].includes(G.character.country.name) &&
+      G.character.gender === 'female' &&
+      G.ruralUrban === 'urban' &&
+      G.stats.wealth <= 30 &&
+      G.age >= 16 && G.age <= 30 &&
+      !G.career?.id &&
+      !G.mem?.sl_la_maid,
+    text: 'The employer is a family in the nice part of the city. You live in the house, in the maid\'s room off the kitchen. The maid\'s room is small and has a different bathroom from the rest of the house and your day off is Sunday from noon, which is the arrangement and you understood the arrangement when you took the position. The children of the family know your name. The adults of the family sometimes do not use it. The legal protections for domestic workers in this country are on paper in ways that do not yet reliably reach the kitchen.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_la_maid', true); p.mo += 1800; p.m -= 4; p.addFlag('domestic_worker') },
+  },
 ]
