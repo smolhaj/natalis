@@ -10023,6 +10023,78 @@ function buildYearTexture(state) {
       : 'Operation Serval ended. Operation Barkhane began. Then Barkhane ended. The French presence in Mali lasted longer than the crisis it was supposed to solve and ended before the crisis did.',
   ])
 
+  // ─── CAMEROON TEXTURE ────────────────────────────────────────────────────────
+  if (F.has('bamileke_identity') && Math.random() < 0.22) return pick([
+    'The Bamileke are called industrious, entrepreneurial, commercially aggressive. The compliment has a structure: it explains their success without making room for them to simply have succeeded.',
+    F.has('tontine_member')
+      ? 'The tontine meets every month. The rotation means that every month someone receives a lump sum they could not have saved alone. The group trusts each other enough for this to function. The trust is the capital.'
+      : 'The Bamileke way: the market stall, the apprentice, the tontine. The ethnic economy as a bank that does not require a credit score, only presence and a reputation that travels.',
+    phase === 'late_life'
+      ? 'You have watched what happens to groups that are commercially successful in a state that distributes by ethnic patronage. The success draws scrutiny. The scrutiny requires caution. The caution restricts the success.'
+      : 'In Douala, in Paris, in New York: the tontine travels. The group that is the bank travels with the people who need it.',
+  ])
+  if (F.has('cmr_biya_era') && Math.random() < 0.20) return pick([
+    'Paul Biya has been president for forty years. The photograph in the office. The RDPC membership card required for the position. The election every seven years whose outcome is known before it happens.',
+    phase === 'late_life'
+      ? 'You have lived your entire adult life under one president. He has aged. The country has aged. The arrangement has not changed. You are now old enough to understand that this is itself a kind of stability — not the stability of resolution but the stability of things continuing by inertia.'
+      : 'The form asked for political affiliation. The answer required was clear. You wrote it. The form went into a file somewhere. The somewhere has never been specified.',
+  ])
+  if (F.has('anglophone_cameroonian') && Math.random() < 0.22) return pick([
+    'You go to court in English. The judge arrives speaking French. The court reporter takes notes in French. The verdict is read in French. Your appeal must be filed in French. This is the specific form the 20 percent takes in practice.',
+    F.has('anglophone_political')
+      ? 'The arithmetic: one cabinet minister for every five in the Francophone south. The arithmetic doesn\'t shift with the elections because the elections don\'t produce outcomes that shift it. You have been counting for a long time.'
+      : 'French for the government. English for home, church, the market. Pidgin for Douala, where nobody asks what language you were supposed to be using.',
+    phase === 'late_life'
+      ? 'The strike was in 2016. The lawyers and teachers had specific grievances. The specific grievances are still unresolved. What grew around them is a different thing entirely.'
+      : 'You have a common law education in a civil law country. The qualification is real and applies in the northwest and southwest provinces and in no other territory the government controls.',
+  ])
+  if (F.has('cmr_douala_generation') && Math.random() < 0.18) return pick([
+    'Douala traffic on a Monday morning: the moto-taximen navigating gaps that don\'t seem navigable. The okada arrives before the traffic does. The city has solved the traffic problem by making the solution informal.',
+    'Pidgin English in the market: "how yi go?" — how is it going? The lingua franca of commerce is neither French nor English but something that belongs to the city and to no colonial power specifically.',
+    phase === 'late_life'
+      ? 'Douala is not the capital but it generates 60 percent of the country\'s revenue. The capital takes the revenue and makes the decisions. Douala has an opinion about this arrangement that it expresses in the particular volume of its commercial life.'
+      : 'The Wouri estuary at evening. The port cranes. The fishing pirogues. The city holding its two rivers and all its languages simultaneously, not in harmony exactly but in a permanent negotiation that nobody has declared finished.',
+  ])
+  if (F.has('anglophone_crisis_witness') && Math.random() < 0.22) return pick([
+    'The lawyers went on strike about judges. The teachers went on strike about language. The government shut the internet down for three months instead of negotiating. What grew in the internet outage was armed.',
+    F.has('anglophone_crisis_inside')
+      ? 'The village at night: Amba Boys. The village in the morning: the military. The school closed in 2016. The children who were seven then are teenagers now who have not been to class. You count the years in children who cannot read.'
+      : 'The crisis is in the northwest and southwest. Yaoundé continues. The distance between the news and your daily life is the specific geography of the country\'s majority.',
+    phase === 'late_life'
+      ? 'No peace talks that have led anywhere. No negotiated solution. The Biya government\'s position: there is no Anglophone problem. The Anglophone regions\' position: there is. The gap between those two positions is where the villages burned.'
+      : 'The internet was restored. The soldiers stayed. The Amba Boys stayed. The category "conflict" applies to the northwest and southwest. The category "normal" applies to everywhere else. The border between the categories runs through the country.',
+  ])
+  if (F.has('ambazonia_displaced') && Math.random() < 0.22) return pick([
+    'You left. Or the town emptied and you were in what remained. The choice between those two things is the specific shape of the crisis in the northwest and southwest.',
+    phase === 'late_life'
+      ? 'The children who started school in 2016 are grown up now without having been to school. The school boycott outlasted everyone\'s estimate of how long it would last. The village that was burned has been rebuilt in some cases and not in others.'
+      : 'Half a million people displaced inside the country. Tens of thousands in Nigeria. The phrase "internally displaced" means you crossed no international border. It does not describe how far you are from where you lived.',
+  ])
+  if (F.has('cmr_long_witness') && Math.random() < 0.20) return pick([
+    '"Africa in miniature." The Sahel in the north, the rainforest in the south, 300 languages, eight culture zones, two colonial inheritances. Also forty years of the same president, and a conflict in the English-speaking regions that has been called many things but not resolved.',
+    phase === 'late_life'
+      ? 'You have watched what Cameroon was called and what it became and the gap between those two things. The country hasn\'t run out of potential. The potential has been in the same place for forty years, waiting for a different arrangement.'
+      : 'Paul Biya\'s absences from the country are counted in months. The government continues in his absence. The question of what the government is for is the question that does not get asked in official spaces.',
+  ])
+  if (F.has('anglophone_long_witness') && Math.random() < 0.20) return pick([
+    'The schools in the northwest and southwest have been closed or intermittently open since 2016. The children who were in primary school then are in their teenage years now without having completed primary school. You count the years as a generation.',
+    phase === 'late_life'
+      ? 'The grievances in 2016 were specific: judges, teachers, language. They were answerable. The government did not answer them and the answerable became the unanswerable. You watched this happen in sequence and the sequence had a logic that was visible before the result was visible.'
+      : 'No peace framework has been proposed that both the government and the separatist leadership accepted. The Amba Boys have split into factions. The government\'s position is that there is no Anglophone problem. The Anglophone regions\' position is that there is. The gap is where the villages burned.',
+  ])
+  if (F.has('anglophone_inside_reckoned') && Math.random() < 0.20) return pick([
+    'You are inside the conflict. This is different from watching the conflict. The specific dates — October 2016, January 2017, 2018 — are not dates in a history but a chronology you lived forward.',
+    phase === 'late_life'
+      ? 'The question you have stopped asking is "When will it end?" It no longer has an available answer. The question you ask instead is "What will be left?" This is also not a question with an available answer but it is the right question.'
+      : 'The crisis has factions now on the separatist side and strategies on the government side and both of them operate in the same territory where you live. You navigate between them the way people navigate between all things that have no interest in your opinion.',
+  ])
+  if (F.has('cmr_crisis_witness_reckoned') && Math.random() < 0.17) return pick([
+    'You are Francophone. The crisis is in the English-speaking regions. Yaoundé continues. Douala continues. The road north to the northwest is a different road than it was in 2015.',
+    phase === 'late_life'
+      ? 'You named, in private, the moral position of continuing normally while this happened in the same country. The naming didn\'t change anything. It stayed as a specific private knowledge that you carry forward.'
+      : 'The humanitarian organisations reported: schools destroyed, villages burned, hospitals looted, civilians killed by both sides. The reports were accurate. You read them. The distance between reading and acting is the specific shape of your position in this conflict.',
+  ])
+
   // ─── ETHIOPIA TEXTURE ────────────────────────────────────────────────────────
   if (F.has('eth_abiy_generation') && Math.random() < 0.22) return pick([
     'The border with Eritrea opened in 2018. Families separated for twenty years crossed at Zalambessa. The Nobel Peace Prize followed in 2019. That window lasted about two years.',

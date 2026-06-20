@@ -1,7 +1,9 @@
-// Follow-through events for Ivory Coast + Sahel cross-arc callbacks (PR #101)
+// Follow-through events for Ivory Coast, Cameroon + Sahel cross-arc callbacks (PR #101)
 // Resolves: ci_election_crisis_witness (intent: both), ci_long_witness,
 // ivorian_miracle_generation late reckoning, ci_cocoa_farmer late arc,
-// Sahel regional witness cross-arc (Mali + Burkina Faso + Ivory Coast).
+// Sahel regional witness cross-arc (Mali + Burkina Faso + Ivory Coast),
+// anglophone_cameroonian (intent: both), anglophone_crisis_witness (intent: both),
+// anglophone_crisis_inside (intent: both).
 
 export const FOLLOWTHROUGH_29_EVENTS = [
 
@@ -108,6 +110,49 @@ export const FOLLOWTHROUGH_29_EVENTS = [
     text: 'You settled in the city. You became urban, credentialled, documented. The seasonal routes your grandparents knew — north for dry season, south for rains — are routes you know as geography but not as movement. The 2012 uprising in the north, the MNLA declaring Azawad, the subsequent collapse: you watched it from Bamako or Gao or Kidal. The city was safer and more distant and you were part of neither the nomadic life that the rebellion claimed to defend nor the state that tried to suppress it. You held a position between two things that were at war with each other.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 2; p.addFlag('tuareg_settled_reckoned'); p.setMem('tuaregSettledLate', true); },
+  },
+
+
+  // ── CAMEROON: ANGLOPHONE LONG ARC ────────────────────────────────────────────
+
+  {
+    id: 'cmr_anglophone_late_reckoning',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) =>
+      G.flags.includes('anglophone_cameroonian') &&
+      G.currentYear >= 2020 &&
+      !G.mem?.cmrAngloLate,
+    text: 'The Anglophone regions\' grievances were, in 2016, about judges and teachers. The government\'s response made them about much more. You have now watched this for years. The schools that have been closed — some continuously since 2016 — have produced a generation of children in the northwest and southwest who are functionally illiterate. The armed groups that were meant to be a pressure tactic are now a set of factions fighting each other as much as the government. Biya has not visited the regions. No peace framework has been proposed that both sides accepted. The arithmetic of the cabinet ministers has not changed.',
+    choices: null,
+    effect: (p) => { p.r += 8; p.e += 3; p.addFlag('anglophone_long_witness'); p.setMem('cmrAngloLate', true); },
+  },
+
+  {
+    id: 'cmr_crisis_echo_francophone',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('anglophone_crisis_witness') &&
+      !G.flags.includes('anglophone_crisis_inside') &&
+      G.currentYear >= 2022 &&
+      !G.mem?.cmrCrisisEcho,
+    text: 'You watched the Anglophone crisis from the Francophone south. From Yaoundé or Douala or Bafoussam the northwest and southwest were a separate country, almost — accessible by road but operating by different rules. You heard the reports: villages burned, children kept out of school, the internet shut down, humanitarian organisations blocked. You continued. The specific moral position of continuing while something like this happens in the same country is not a position that gets named in the news or discussed in the government briefings. You named it yourself, in private, a few times.',
+    choices: null,
+    effect: (p) => { p.r += 6; p.e += 2; p.addFlag('cmr_crisis_witness_reckoned'); p.setMem('cmrCrisisEcho', true); },
+  },
+
+  {
+    id: 'cmr_inside_long_memory',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) =>
+      G.flags.includes('anglophone_crisis_inside') &&
+      G.currentYear >= 2023 &&
+      !G.mem?.cmrInsideLate,
+    text: 'It has been years now. The specific dates: the lawyers\' strike, October 2016. The internet shutdown, January 2017. The first village burnings, 2018. The name "Ambazonia" declared by the separatist leadership. The split between the armed factions. The children who have not been to school since the boycott began. You were inside this and you are still inside it. The phrase that keeps occurring to you is not "When will it end?" — that question has no available answer. The phrase is "What will be left?"',
+    choices: null,
+    effect: (p) => { p.r += 10; p.m -= 6; p.e += 3; p.addFlag('anglophone_inside_reckoned'); p.setMem('cmrInsideLate', true); },
   },
 
 ]
