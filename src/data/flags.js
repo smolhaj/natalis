@@ -6462,6 +6462,20 @@ export const FLAG_REGISTRY = {
     intent: 'year_texture',
     notes: 'Set by nga_419_scam_culture.',
   },
+  nepa_generation: {
+    weight: 'moderate',
+    category: 'experience',
+    description: 'Organised daily life around generator access and power cuts — NEPA (Never Expect Power Always), diesel costs, the ceiling fan stutter that signals the grid going down.',
+    intent: 'year_texture',
+    notes: 'Set by nga_nepa_generator_culture. Universal Nigerian urban/semi-urban adult experience 1985–2015+.',
+  },
+  lagos_go_slow_generation: {
+    weight: 'minor',
+    category: 'experience',
+    description: 'Lived the Lagos go-slow — Third Mainland Bridge standstills, danfo jams, hawkers working the gridlock, trips that took two hours instead of twenty minutes.',
+    intent: 'year_texture',
+    notes: 'Set by nga_lagos_go_slow. Urban Nigeria only.',
+  },
 
   // ── Uganda ────────────────────────────────────────────────────────────────────
   amin_generation: {

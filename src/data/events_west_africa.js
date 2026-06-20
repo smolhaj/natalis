@@ -224,6 +224,62 @@ export const WEST_AFRICA_EVENTS = [
     effect: null,
   },
 
+  {
+    id: 'nga_nepa_generator_culture',
+    phase: 'young_adult',
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'Nigeria' &&
+      G.currentYear >= 1985 && G.currentYear <= 2015 &&
+      G.age >= 18 &&
+      !G.mem?.ngaNEPA,
+    text: '"NEPA has taken light." The phrase is embedded in daily life so completely that you know the power is going before you can confirm it has gone — from the specific stutter of the ceiling fan. The National Electric Power Authority is so reliably unreliable that Nigerians call it Never Expect Power Always. Your day organises around the generator: the diesel cost, the starting cord, the decibel level that determines whether you can sleep or work. The generator is not a backup. It is the primary system. The national grid is the backup, for the hours it works. Owning a generator, or sharing access to one, is the dividing line between two kinds of life.',
+    choices: null,
+    effect: (p) => { p.m -= 6; p.r += 4; p.addFlag('nepa_generation'); p.setMem('ngaNEPA', true) },
+  },
+
+  {
+    id: 'nga_lagos_go_slow',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Nigeria' &&
+      G.currentYear >= 1990 &&
+      G.age >= 18 &&
+      G.ruralUrban === 'urban' &&
+      !G.mem?.ngaLagosGoSlow,
+    text: 'The Lagos go-slow. You know it the way you know weather: variable but reliably present. The Third Mainland Bridge at 7am. The Apongbon junction at 5pm. A trip that should take twenty minutes takes two hours without any particular reason — a stalled danfo, a junction where the traffic lights have not worked in three years, a truck blocking two lanes while its driver argues with another driver. The hawkers work the stalled traffic: water sachets, newspapers, phone chargers, cooked corn, fan ice. They are more efficient than anything else moving on the road. You buy from them. The car is not moving. There is time.',
+    choices: null,
+    effect: (p) => { p.m -= 4; p.r += 3; p.addFlag('lagos_go_slow_generation'); p.setMem('ngaLagosGoSlow', true) },
+  },
+
+  {
+    id: 'nga_june12_1993',
+    phase: null,
+    weight: 5,
+    when: (G) =>
+      G.character.country.name === 'Nigeria' &&
+      G.currentYear >= 1993 && G.currentYear <= 1996 &&
+      G.age >= 18 &&
+      !G.mem?.ngaJune12,
+    text: 'June 12, 1993. Moshood Abiola wins the presidential election. International observers call it the freest and fairest in Nigerian history. Eleven days later, Ibrahim Babangida annuls the result. No official reason is given. The protests that follow — street blockades, a general strike in Lagos, soldiers at every junction — are answered the way the military has always answered. Abiola declares himself president in June 1994 and is arrested. He dies in custody in 1998, on the day he is supposed to meet the American ambassador. That is how the June 12 story ends: not with justice but with the removal of the question.',
+    choices: [
+      {
+        text: 'You join the protests. The annulment is not something you can accept quietly.',
+        tag: null,
+        outcome: 'The protests do not restore the election. The military does not give back what it takes. What you did in those weeks stays with you without resolution.',
+        effect: (p) => { p.m -= 10; p.karma += 8; p.r += 5; p.addFlag('nga_june12_generation'); p.addFlag('political_active'); p.setMem('ngaJune12', true); },
+      },
+      {
+        text: 'You watch. The military has guns and the outcome is not in doubt.',
+        tag: null,
+        outcome: 'The outcome was not in doubt. Neither was what it meant. The decision not to act is also a fact about the country and about yourself that you carry.',
+        effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('nga_june12_generation'); p.setMem('ngaJune12', true); },
+      },
+    ],
+    effect: null,
+  },
+
   // ═══════════════════════════════════════════════════════════════════════
   // GHANA — depth events
   // ═══════════════════════════════════════════════════════════════════════

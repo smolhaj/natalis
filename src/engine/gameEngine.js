@@ -9854,6 +9854,20 @@ function buildYearTexture(state) {
       ? 'Between June 12 and Lekki is thirty years of the same argument about what this country will and will not allow. You have been making the argument for thirty years. The country keeps answering.'
       : 'The generation at the toll gate was not born when Abiola won. You were. You tried to explain June 12 to them. They did not need to understand June 12 to understand what was happening at the toll gate. The argument is the same argument.',
   ])
+  if (F.has('nepa_generation') && Math.random() < 0.28) return pick([
+    '"NEPA has taken light." The phrase is muscle memory. You know the power is going before it goes — from the ceiling fan, from the way the fridge hums differently. You have organised your life around this knowledge.',
+    phase === 'late_life'
+      ? 'Decades of generators: diesel costs, starting cords, the neighbour\'s generator that runs at 2am. You have calculated the running cost of electricity access more times than you can count. The national grid was never the primary system.'
+      : 'The generator has a maintenance schedule, a diesel budget, a noise level you have learned to sleep through. This is domestic life in Nigeria. The infrastructure failure is not a crisis. It is the baseline.',
+    'Two kinds of house: the one with a generator, the one without. Which side of that line you were on determined more than just light.',
+  ])
+  if (F.has('lagos_go_slow_generation') && Math.random() < 0.22) return pick([
+    'The Third Mainland Bridge at 7am. You have done the calculation — leave at 5:30 or accept the cost. The cost is two hours of your morning, which is also part of your life.',
+    'The hawkers work the stalled traffic faster than anything else moves on the road. Water sachet, fan ice, newspapers, phone chargers through the window. You know which junction has the best phone case vendors.',
+    phase === 'late_life'
+      ? 'Decades of go-slow: the hours added to every day, the books read in traffic, the radio programmes that marked the gridlock, the specific quality of Lagos light at 6pm on the bridge when you were not moving. You became a different kind of patient than you would have been elsewhere.'
+      : 'A trip that should take twenty minutes takes two hours without any particular reason. This is not a metaphor. This is Tuesday.',
+  ])
 
   // ─── ETHIOPIA TEXTURE ────────────────────────────────────────────────────────
   if (F.has('eth_abiy_generation') && Math.random() < 0.22) return pick([
