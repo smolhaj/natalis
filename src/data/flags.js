@@ -13461,4 +13461,14 @@ export const FLAG_REGISTRY = {
     notes: 'Set by hcr_secular_reentry. Needs year texture in buildYearTexture().',
   },
 
+  // ── FOLLOWTHROUGH_27: WEALTH SYSTEM + ZIMBABWE + SOUTH AFRICA ───────────────
+
+  moneylender_debt_cleared: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Paid off the moneylender debt — years of reduced margin, then one season without the payment above everything.',
+    intent: 'none',
+    notes: 'Set by ft27_moneylender_ongoing first choice.',
+  },
+
 }
