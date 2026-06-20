@@ -11457,6 +11457,25 @@ function buildYearTexture(state) {
       : 'The safety calculation has become second nature. You do it before you are aware you are doing it. This is what expertise looks like in a context where expertise is not recognised as such.',
     'The money was real. What it cost to earn it was also real. The accounting has shifted over the years — what you count and what you no longer bother to count and what you still cannot stop counting.',
   ])
+  if (F.has('hcr_rebuilding') && Math.random() < 0.2) return pick([
+    'You are learning, in your thirties or forties, things most people learned at seventeen: how to make a friend without a shared framework, how to be in a disagreement without treating it as a doctrinal matter, how to fill a Sunday.',
+    phase === 'late_life'
+      ? 'The secular social skills that were never taught are fully yours now. The cost of acquiring them at the age you acquired them is something you carry without resentment, mostly — what would resentment accomplish at this distance.'
+      : 'The congregation gave you certainty, community, an answer to every question. The secular world gives you the question. Learning to live in the question took longer than any skill you have learned since.',
+    'The friends you have now were made without a framework telling you to make them. That fact is small and large simultaneously — you are still working out what it means.',
+  ])
+  if (F.has('hcr_shunned') && !F.has('hcr_rebuilding') && Math.random() < 0.2) return pick([
+    'Someone you have known for twenty years saw you in the street and looked at the other side of the road. The mechanism is familiar — you would have done the same, once. The familiarity does not resolve the feeling of being looked through.',
+    phase === 'late_life'
+      ? 'The years of shunning have become years of separation. At this distance, the people who were your entire world are strangers. The separation was their choice and also, in the end, yours.'
+      : 'Your mother will not come to events. Your childhood friend has not answered a message in three years. The shunning is not vindictive — it follows a logic you understand completely, which is the part that is hardest to explain to people outside it.',
+  ])
+  if (F.has('hcr_born_in') && !F.has('hcr_exited') && !F.has('hcr_shunned') && Math.random() < 0.15) return pick([
+    'Two meetings this week. The same songs. The same pattern since before you can remember. The familiarity is the point — the doctrine holds partly because of its texture, the specific sensory weight of years spent inside the same rhythms.',
+    phase === 'late_life'
+      ? 'You have been in the congregation for sixty years or seventy. The questions that arose at various points were absorbed, managed, held differently at different ages. What you know is that you stayed, and the community is still here, and that is worth something that is hard to quantify outside the experience of having it.'
+      : 'The end has been coming for as long as you have been alive. You have developed a relationship with this expectation that is not exactly belief and not exactly not-belief — it is the background of your life, the ticking that stopped being audible.',
+  ])
   if (F.has('sex_work_entry') && !F.has('sw_long_term_worker') && Math.random() < 0.18) return pick([
     'You move through this city in a way most people don\'t. The geography of safety, the hours that are and aren\'t workable, the network of women who share information without advertising that they are sharing it — this is a second map of the place, invisible to most.',
     phase === 'young_adult'

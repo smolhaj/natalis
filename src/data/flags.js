@@ -13355,4 +13355,110 @@ export const FLAG_REGISTRY = {
     notes: 'Set by sw_exit_opportunity second choice and sw_long_term. Needs year texture in buildYearTexture().',
   },
 
+  // ── HIGH-CONTROL RELIGION / CULT ARC (BUILD 24) ─────────────────────────────
+
+  hcr_born_in: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Born into a high-control congregation — the restrictions not experienced as restrictions because there was nothing else to compare them to.',
+    intent: 'event',
+    notes: 'Set by hcr_childhood_congregation. Gates the whole HCR arc.',
+  },
+
+  hcr_member: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Member of a high-control religious group — social world and doctrinal world are the same world.',
+    intent: 'event',
+    notes: 'Set by hcr_childhood_congregation and hcr_adult_convert. Primary arc gate.',
+  },
+
+  hcr_convert: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Converted to a high-control group as an adult — recruited during a moment of searching; the warmth, the community, the clear answers.',
+    intent: 'none',
+    notes: 'Set by hcr_adult_convert first choice.',
+  },
+
+  hcr_social_reorganised: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Social world has reorganised entirely around the congregation — outside relationships are complicated in ways inside ones are not.',
+    intent: 'event',
+    notes: 'Set by hcr_community_deepens. Gates hcr_demands_escalate.',
+  },
+
+  hcr_demands_met: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Complied with escalating demands from the group — educational, financial, vocational.',
+    intent: 'none',
+    notes: 'Set by hcr_demands_escalate first choice.',
+  },
+
+  hcr_first_doubt_internal: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'First internal pushback against group demands — the doubt that has not yet been named.',
+    intent: 'event',
+    notes: 'Set by hcr_demands_escalate second choice. Gates hcr_committee.',
+  },
+
+  hcr_blood_refused: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Upheld the blood doctrine in a medical crisis — the card signed with full understanding, the cost now concrete.',
+    intent: 'none',
+    notes: 'Set by hcr_blood_crisis first choice.',
+  },
+
+  hcr_doctrine_broken: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Accepted medically necessary treatment that violated group doctrine — the congregation will hear; consequences will follow.',
+    intent: 'event',
+    notes: 'Set by hcr_blood_crisis second choice. Gates hcr_committee.',
+  },
+
+  hcr_restricted: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Privileges in the congregation curtailed after committee hearing — a period of restriction, monitored compliance.',
+    intent: 'none',
+    notes: 'Set by hcr_committee first choice.',
+  },
+
+  hcr_disfellowshipped: {
+    weight: 'major',
+    category: 'adversity',
+    description: 'Formally disfellowshipped — announced from the platform; members instructed to avoid contact.',
+    intent: 'event',
+    notes: 'Set by hcr_committee second choice. Gates hcr_exit (shunning prose variant).',
+  },
+
+  hcr_exited: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Left the high-control group — the social world closed in a single weekend; the question is what comes next.',
+    intent: 'event',
+    notes: 'Set by hcr_exit. Gates hcr_secular_reentry and hcr_shunning_years. Changes prose of hcr_late_reckoning.',
+  },
+
+  hcr_shunned: {
+    weight: 'major',
+    category: 'adversity',
+    description: 'Shunned by former congregation members including family — they look at the shelf when they see you in the supermarket.',
+    intent: 'event',
+    notes: 'Set alongside hcr_exited by hcr_exit. Gates hcr_shunning_years.',
+  },
+
+  hcr_rebuilding: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Rebuilding a secular social life after leaving — learning at thirty-five what was never taught.',
+    intent: 'texture',
+    notes: 'Set by hcr_secular_reentry. Needs year texture in buildYearTexture().',
+  },
+
 }
