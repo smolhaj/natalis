@@ -2126,6 +2126,23 @@ function buildYearTexture(state) {
         ? 'The Han River miracle, from inside it. Your parents\' generation built the infrastructure. You built the technology. The children are asking what the building cost.'
         : 'You are the first generation for whom the poverty your grandparents knew is history rather than memory. That gap — between memory and history — is the whole distance of the miracle.',
     ])
+    if (F.has('sampo_generation') && (phase === 'young_adult' || phase === 'midlife') && Math.random() < 0.35) return pick([
+      'The apartment costs twelve years of a starting salary. The calculation is the same every time you run it.',
+      'Sampo — three abandonments. Romance, marriage, children. The number keeps expanding. Employment now. Housing. Social relationships. Each year the list grows.',
+      phase === 'midlife'
+        ? 'Looking back at the years of making the calculation: whether the cost of the things foregone is visible now, or still being deferred.'
+        : 'You are not unique in this arithmetic. The country does the arithmetic collectively and calls the result a birth rate problem. You are living inside the problem.',
+    ])
+    if (F.has('june_struggle_generation') && Math.random() < 0.2) return pick([
+      'June 29, 1987. The statement. The things that were treated as permanent turned out not to have been. You were there when this became clear.',
+      'Lee Han-yeol. The photograph. The office workers who came out into the street. The month when it turned.',
+    ])
+    if (F.has('gwangju_witness') && Math.random() < 0.2) return pick([
+      'May 1980. The suppressed account and the real account. You knew the difference before the country was ready to admit the difference publicly.',
+      phase === 'late_life'
+        ? 'May 18. The country has acknowledged it formally now. The formal acknowledgment is not the same as the memory of not being able to say it.'
+        : 'The nine days. The paratroopers. The citizens with the rifles. What you understood about the government you lived under, at the moment you understood it.',
+    ])
   }
 
   // ─── DISABILITY ARC TEXTURE ──────────────────────────────────────────────────

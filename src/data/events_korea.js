@@ -98,13 +98,13 @@ export const KOREA_EVENTS = [
         text: 'The anger becomes political — this country is capable of better',
         tag: null,
         outcome: 'The Gwangju uprising becomes the foundation of a politics. You carry May 18th. What you do with it is still being decided.',
-        effect: (p) => { p.m -= 10; p.addFlag('gwangju_witness'); p.addFlag('political_active'); p.setMem('krGwangjuFired', true) },
+        effect: (p) => { p.m -= 10; p.addFlag('gwangju_witness'); p.addFlag('political_active'); p.setMem('krGwangjuFired', true); p.setMem('koreaGwangju', true) },
       },
       {
         text: 'You witness it — the fear is now specific',
         tag: null,
         outcome: 'The fear is concrete after Gwangju. What the state is capable of is no longer abstract. The calculus of what to say around certain people has been permanently recalibrated.',
-        effect: (p) => { p.m -= 12; p.addFlag('gwangju_witness'); p.setMem('krGwangjuFired', true) },
+        effect: (p) => { p.m -= 12; p.addFlag('gwangju_witness'); p.setMem('krGwangjuFired', true); p.setMem('koreaGwangju', true) },
       },
     ],
     effect: null,
@@ -216,7 +216,7 @@ export const KOREA_EVENTS = [
       return `${ref}. You grew up in a country that exported semiconductors and container ships. You did not grow up expecting to watch the world memorise the choreography of a Korean pop group or see a Korean film take the Palme d\'Or. The cultural exports carry a pride that is different from economic achievement — it is recognition of a different order. You feel it in a way that is embarrassing to describe and nonetheless real.`
     },
     choices: null,
-    effect: (p) => { p.m += 5; p.addFlag('hallyu_generation'); p.setMem('krHallyuFired', true) },
+    effect: (p) => { p.m += 5; p.addFlag('hallyu_generation'); p.setMem('krHallyuFired', true); p.setMem('koreaHallyu', true) },
   },
 
   {
@@ -294,6 +294,34 @@ export const KOREA_EVENTS = [
       p.addFlag('dmz_separated_family');
       p.setMem('krDMZFamily', true);
     },
+  },
+
+  {
+    id: 'kr_sampo_generation',
+    phase: 'young_adult',
+    weight: 7,
+    when: (G) =>
+      isSouthKorea(G) &&
+      G.currentYear >= 2010 &&
+      G.age >= 22 && G.age <= 35 &&
+      !G.partner &&
+      !G.mem?.krSampo,
+    text: 'The word is sampo — giving up three things: romance, marriage, and children. It began as a demographic description. It became, by the time you are twenty-eight, a word people use about themselves. The apartment costs twelve years of a starting salary. The hiring freeze at the chaebol that your father\'s generation walked into at graduation now has a 3% acceptance rate. The suneung you sat and the degree you got have produced a position in a precariat you were not told was where you were headed. The government\'s solution is tax incentives for marriage. You are not sure the government has correctly identified the problem.',
+    choices: [
+      {
+        text: 'The sampo framing resonates — you are making these calculations too.',
+        tag: null,
+        outcome: 'The calculations are practical and they add up consistently: there is no configuration of current wages and current housing costs that produces what the previous generation produced. The grief in the mathematics is real.',
+        effect: (p) => { p.m -= 8; p.r += 6; p.addFlag('sampo_generation'); p.setMem('krSampo', true) },
+      },
+      {
+        text: 'You are making a different calculation — finding the path through.',
+        tag: null,
+        outcome: 'The path is narrower and more specific than the one the previous generation walked. You are walking it. The extra precision required is itself a form of labour that is not on the CV.',
+        effect: (p) => { p.m -= 4; p.addFlag('sampo_generation'); p.setMem('krSampo', true) },
+      },
+    ],
+    effect: null,
   },
 
 ]

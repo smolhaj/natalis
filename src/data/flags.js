@@ -8538,6 +8538,14 @@ export const FLAG_REGISTRY = {
     notes: 'Set by kr_compressed_generation.',
   },
 
+  sampo_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'The generation that gave up romance, marriage, and children (sampo — three abandonments) under structural economic pressure — housing costs, precarious employment.',
+    intent: 'year_texture',
+    notes: 'Set by kr_sampo_generation. Korean youth 2010s+.',
+  },
+
   // ── events_disability.js flags ────────────────────────────────────────
 
   born_with_disability: {
