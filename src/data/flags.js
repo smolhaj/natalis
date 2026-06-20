@@ -13471,4 +13471,54 @@ export const FLAG_REGISTRY = {
     notes: 'Set by ft27_moneylender_ongoing first choice.',
   },
 
+  // ── FGM ARC: FEMALE GENITAL CUTTING ──────────────────────────────────────────
+
+  fgm_underwent: {
+    weight: 'major',
+    category: 'adversity',
+    description: 'Underwent female genital cutting — the ceremony, the recovery, the body carrying what the body carries.',
+    intent: 'event',
+    notes: 'Set by fgm_child_ceremony (auto-resolve) or fgm_adolescent_question comply choice. Gates fgm_medical_encounter and fgm_daughter_question. Changes fgm_late_reckoning prose.',
+  },
+
+  fgm_refused: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Refused the ceremony — older, more aware; the social cost was real and she paid it.',
+    intent: 'event',
+    notes: 'Set by fgm_adolescent_question refuse choice alongside fgm_social_cost. Changes fgm_late_reckoning prose.',
+  },
+
+  fgm_social_cost: {
+    weight: 'moderate',
+    category: 'adversity',
+    description: 'Paid the community cost of refusal — a quiet subtraction of things expected that were no longer available.',
+    intent: 'none',
+    notes: 'Set by fgm_adolescent_question refuse choice alongside fgm_refused.',
+  },
+
+  fgm_medical_known: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Medical system made a formal record; the clinical framework and the community framework named the same body differently.',
+    intent: 'none',
+    notes: 'Set by fgm_medical_encounter answer choice.',
+  },
+
+  fgm_broke_cycle: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Protected her daughter — the cycle ends here, at the cost of some relationships and some belonging.',
+    intent: 'texture',
+    notes: 'Set by fgm_daughter_question protect choice. Changes fgm_late_reckoning prose. Needs year texture in buildYearTexture().',
+  },
+
+  fgm_continued_cycle: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Did not intervene in the daughter\'s ceremony — the community remains intact; she carries a specific weight alongside the relief.',
+    intent: 'none',
+    notes: 'Set by fgm_daughter_question continue choice.',
+  },
+
 }

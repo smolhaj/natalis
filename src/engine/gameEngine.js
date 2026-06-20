@@ -11482,6 +11482,12 @@ function buildYearTexture(state) {
       ? 'What the work is and what you thought it would be are different in both directions — easier in some ways, harder in others that you could not have anticipated from outside.'
       : 'The years in the sector gave you a specific understanding of money: how fast it moves, how little it sticks, how the urgency of the immediate always outbids the logic of the long-term.',
   ])
+  if (F.has('fgm_broke_cycle') && Math.random() < 0.18) return pick([
+    'Your daughter has reached the age your mother organized everything around. Nothing is happening. The family has stopped asking. What you gave her is something you cannot name directly, because the naming would require acknowledging too precisely what was done to you. You know what you gave her.',
+    phase === 'midlife'
+      ? 'She is old enough now to understand, abstractly, that something was different for you than it will be for her. She does not know the specific difference. You have decided this is right: some knowledge should not have to be acquired.'
+      : 'The women who organized the preparations for you — your mother, your aunts, the elder from the edge of the village — they acted out of care. This is also true. You hold both things.',
+  ])
 
   // ─── NEIGHBORHOOD TIER TEXTURE ───────────────────────────────────────────────
   {
