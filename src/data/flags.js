@@ -14161,4 +14161,78 @@ export const FLAG_REGISTRY = {
     notes: 'Set by fgm_daughter_question continue choice.',
   },
 
+  // ─── LOCAL SIGNIFICANCE ARC (BUILD 30) ───────────────────────────────────────
+
+  local_hero: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Recognised within their immediate community — not fame, but the specific texture of being known and trusted within five kilometres.',
+    intent: 'both',
+    notes: 'Set by loc_first_recognition and career-specific recognition events in events_local.js. Gates trusted/achievement/coach/farewell events. Needs year texture.',
+  },
+
+  local_trusted: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Became the person the community brings its unofficial problems to — mediating disputes, holding confidences, navigating what cannot go to formal authority.',
+    intent: 'both',
+    notes: 'Set by loc_trusted_with_problems. Gates village healer event.',
+  },
+
+  local_achievement: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Organised something that actually happened — a community project, victory, or improvement that existed only because of their sustained effort.',
+    intent: 'year_texture',
+    notes: 'Set by loc_small_victory. Gates formal role choice.',
+  },
+
+  local_memory_keeper: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Began preserving community memory — names, places, events — that would otherwise disappear with the generation that experienced them.',
+    intent: 'both',
+    notes: 'Set by loc_memory_keeper. Needs year texture in buildYearTexture().',
+  },
+
+  local_legacy_rooted: {
+    weight: 'moderate',
+    category: 'legacy',
+    description: 'Stepped back from a community role and saw the shape of what they built — a farewell that revealed the structure they had created.',
+    intent: 'year_texture',
+    notes: 'Set by loc_the_farewell. Gates loc_forgotten_in_time and loc_transmitted.',
+  },
+
+  community_healer: {
+    weight: 'moderate',
+    category: 'community',
+    description: 'Became the de facto medical resource for a rural community without clinic access — absorbing the gap between what the state provides and what people need.',
+    intent: 'year_texture',
+    notes: 'Set by loc_village_healer. Fires in developing/subsaharan/conflict archetypes, rural characters.',
+  },
+
+  local_advocate: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Wrote letters, attended meetings, and pushed formal channels to bring resources to their community — without receiving or expecting credit.',
+    intent: 'none',
+    notes: 'Set by loc_village_healer advocate choice.',
+  },
+
+  local_official: {
+    weight: 'minor',
+    category: 'community',
+    description: 'Took a formal community role — council, board, association — translating informal community trust into official structure.',
+    intent: 'none',
+    notes: 'Set by loc_formal_role take choice.',
+  },
+
+  local_coach_legacy: {
+    weight: 'minor',
+    category: 'community',
+    description: 'Built something through years of coaching youth — the relationship with the people, not just the results.',
+    intent: 'year_texture',
+    notes: 'Set by loc_the_coach. Late-life texture available.',
+  },
+
 }

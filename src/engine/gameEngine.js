@@ -3550,6 +3550,61 @@ function buildYearTexture(state) {
       : 'You navigated the gender barrier and found a route. The route is narrower than what was available to others. The gift does not care about the width of the route.',
   ])
 
+  // ─── LOCAL SIGNIFICANCE ARC TEXTURE ─────────────────────────────────────────
+
+  if (F.has('local_hero') && Math.random() < 0.22) return pick([
+    'You are known here. Not broadly, not in the way that travels. In the way that means someone stops you outside the post office to ask your opinion on something they have already decided.',
+    'Local. The word once felt limiting. Now it feels like the right size — the radius within which you can actually be useful.',
+    phase === 'late_life'
+      ? 'You are the person people point to when they explain the neighbourhood to someone new. This is not something you planned.'
+      : 'The trust that accumulates in this direction is slower to build than the other kind and more durable once built.',
+  ])
+
+  if (F.has('local_trusted') && Math.random() < 0.20) return pick([
+    'Someone sat across from you this week with a problem that isn\'t your job. You listened and said the three useful things and they left in a different state than they arrived. This happens with some regularity now.',
+    'The unofficial role: the person who knows where the official channels are and what they will not do for you.',
+    phase === 'late_life'
+      ? 'You have been the person people come to with the problems they cannot bring to a doctor or a lawyer or the police. This has cost you things. It has also given you something that money does not easily purchase.'
+      : 'What you know about the people in this neighbourhood — held in confidence, used to help, never repeated — would fill a record.',
+  ])
+
+  if (F.has('local_achievement') && Math.random() < 0.18) return pick([
+    'The thing you built is still being used. Nobody remembers the specifics of how it was made, which is exactly right.',
+    phase === 'midlife'
+      ? 'You did a thing that needed doing in the place where it needed doing. This turns out to be rarer than you assumed when you started.'
+      : 'The improvement is now simply the way things are. The baseline shifted because of work you did, and the new baseline no longer carries your name.',
+  ])
+
+  if (F.has('community_healer') && Math.random() < 0.20) return pick([
+    'Someone came to the door last night. You keep a bag ready. You have learned what you can learn from books and from doing it and from the things you got wrong.',
+    'The gap between what you know and what they need is the permanent condition of this work. You have made peace with it not being a gap you can close.',
+    phase === 'late_life'
+      ? 'You have not counted how many times. It became uncountable after a certain point and that was right. It was always about the specific person in front of you, not the accumulation.'
+      : 'There is no one else within the distance they can travel. You are not the right person for this. You are the available person, which is not the same thing and has to function as if it were.',
+  ])
+
+  if (F.has('local_memory_keeper') && Math.random() < 0.18) return pick([
+    'You know what this place was before it was what it is now. The layer underneath the visible layer. Not many people here do.',
+    'You have been writing the names down. The house. The tree. The family that left in 1978 and the one that arrived. The record is not complete and never will be and matters anyway.',
+    phase === 'late_life'
+      ? 'You are the memory now. The things that exist only in your recall because the people who could corroborate them are gone. This is a responsibility you did not ask for and would not give up.'
+      : 'Local history is the kind that the archives don\'t keep. You are keeping it.',
+  ])
+
+  if (F.has('local_coach_legacy') && Math.random() < 0.18) return pick([
+    'One of them became a teacher. One of them runs a business in another city. One of them is raising children the same way you coached them. You know this from the messages you occasionally receive.',
+    phase === 'late_life'
+      ? 'What you built was not the wins. The wins are in the record and the record means less than you thought it would. What you built is the person the 16-year-old became at 40.'
+      : 'You coached them. Some of them are still playing. Some of them are coaching their own children. The thing you started is still moving forward by the time you have stopped.',
+  ])
+
+  if (F.has('local_legacy_rooted') && Math.random() < 0.18) return pick([
+    'You stepped back and could see it. The thing you made by being consistently present in one place for a long time. The shape of it was invisible from inside.',
+    phase === 'late_life'
+      ? 'People still speak of the years when you ran it. The edge is wearing off the specifics of what you actually did, but the fact of it is still there — a shape in the community\'s memory that outlasted the details.'
+      : 'You left something behind you when you stepped back. Not a monument. A practice. The way a thing continues to be done.',
+  ])
+
   // ─── FOLLOW-THROUGH COMPLETION FLAG TEXTURE ──────────────────────────────────
   // Second-layer echoes for flags set by events_followthrough_13.js
 
