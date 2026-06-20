@@ -2738,9 +2738,59 @@ export const SONDER_EVENTS = [
     id: 'sonder_inherited_apartment',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 40 && G.flags.has('lost_parent_mother') || G.flags.has('lost_parent_father') && !G.mem?.sonderInheritedApartment,
+    when: (G) => G.age >= 40 && (G.flags.includes('lost_parent_mother') || G.flags.includes('lost_parent_father')) && !G.mem?.sonderInheritedApartment,
     text: 'The apartment that belonged to your parent, now yours. The furniture they chose. The smell of it still slightly their smell, not yours. You are in it now in the way that tenants are in apartments — with the awareness that someone else was here first, arranged things in this order, and left this arrangement behind as the only inheritance a rented life can pass on.',
     effect: (p) => { p.r += 2; p.e += 1; p.setMem('sonderInheritedApartment', true); },
+  },
+
+  // ── WEST / CENTRAL AFRICA SPECIFIC ───────────────────────────────────────────
+
+  {
+    id: 'sonder_market_woman_dawn',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) =>
+      (G.character?.country?.archetype === 'subsaharan' || G.character?.country?.archetype === 'developing_urban') &&
+      G.age >= 20 && G.age <= 40 &&
+      !G.mem?.sonderMarketWomanDawn,
+    text: 'The market woman who arrives before dawn to claim her place. She is already there when you pass: the cloth laid down, the goods arranged, the calabash of water. She has done this for twenty years. She knows the light changes over the market in a specific order. She knows which buyers come first and which come last and what mood each day has by the time the sun reaches the middle stalls. This is a whole life\'s knowledge, and it belongs entirely to her.',
+    effect: (p) => { p.e += 2; p.setMem('sonderMarketWomanDawn', true); },
+  },
+
+  {
+    id: 'sonder_moto_taxi_driver',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) =>
+      (G.character?.country?.archetype === 'subsaharan' || G.character?.country?.archetype === 'developing_urban') &&
+      G.age >= 18 && G.age <= 35 &&
+      !G.mem?.sonderMotoTaxi,
+    text: 'The moto-taxi driver knows the city in a way you don\'t. He knows which road floods first, which shortcut opens after nine, which official\'s compound has guards who wave you through if you carry a certain kind of parcel. He has been driving this city for seven years. The city is a map that only exists in movement, and he carries it in his body. When you get off you don\'t know how to thank him for the city he just showed you.',
+    effect: (p) => { p.e += 1; p.m += 2; p.setMem('sonderMotoTaxi', true); },
+  },
+
+  {
+    id: 'sonder_evening_call_to_prayer',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) =>
+      (G.religion === 'muslim_sunni' || G.religion === 'muslim_sufi' || (G.character?.country?.religionWeights?.muslim_sunni > 0.2)) &&
+      G.age >= 30 &&
+      !G.mem?.sonderEveningCall,
+    text: 'The muezzin at Maghrib. The call comes over the rooftops and something in the city changes register. You watch a man across the street stop what he is doing and turn slightly, just slightly, and something moves through his face that you cannot name. His whole life is behind that turn of the head, every evening prayer he has ever made, and you are standing outside it looking in.',
+    effect: (p) => { p.e += 2; p.setMem('sonderEveningCall', true); },
+  },
+
+  {
+    id: 'sonder_diaspora_old_photo',
+    phase: 'late_life',
+    weight: 2,
+    when: (G) =>
+      G.age >= 55 &&
+      (G.flags.includes('emigrated') || G.flags.includes('diaspora_child') || G.flags.includes('left_for_city')) &&
+      !G.mem?.sonderDiasporaPhoto,
+    text: 'You find a photograph of the city you left, taken before you left it. It is someone else\'s photograph — a newspaper, an archive. The street in the photo is the street you knew. The people in it are not people you know. They are someone else\'s life happening in the place you thought was yours. You realise the city never belonged to you any more than it belongs to them. It was just the place you were, and then it wasn\'t.',
+    effect: (p) => { p.r += 3; p.e += 2; p.setMem('sonderDiasporaPhoto', true); },
   },
 
 ]

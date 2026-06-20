@@ -3569,6 +3569,20 @@ export const WORLD_EVENTS = [
   },
 
   {
+    id: 'we_cameroon_anglophone_crisis',
+    name: 'Cameroon: Anglophone Crisis',
+    years: [2016, 2020],
+    archetypes: 'all',
+    countries: ['Cameroon'],
+    narrative: 'October 2016. Lawyers in Cameroon\'s Anglophone northwest and southwest provinces go on strike: French-speaking judges are being assigned to common law courts. Teachers follow: French-speaking teachers who cannot teach in English are placed in Anglophone schools. Both professions have specific, answerable grievances. The government\'s response is to shut down the internet in the Anglophone regions for three months and deploy the military. What follows is not a negotiation. By 2017 a separatist movement has declared independence as the "Republic of Ambazonia." By 2018 villages are burning — burned by the military, burned by the armed separatist factions called Amba Boys. Half a million people are displaced. Schools close. Some will stay closed for years.',
+    context: 'The Anglophone crisis has roots in 1961, when British Southern Cameroons voted to join the French-speaking Republic of Cameroon rather than Nigeria. The resulting federation was abolished in 1972 when Biya\'s predecessor Ahmadou Ahidjo created a unitary state. The Anglophone minority — 20 percent of the population — inherited a different legal system, different schools, and a different administrative tradition, all increasingly overridden by a Francophone state apparatus. The lawyers\' and teachers\' strikes of 2016 were the flashpoint; the underlying grievances had accumulated over decades. As of 2024 no peace framework has been accepted by both sides. The UN estimates more than 700,000 displaced and 6,000 killed.',
+    effect: (p) => { p.m -= 10; p.addFlag('anglophone_crisis_witness'); },
+    addFlags: ['anglophone_crisis_witness'],
+    minAge: 10,
+    when: (G) => !G.flags.includes('anglophone_crisis_witness'),
+  },
+
+  {
     id: 'we_nepal_earthquake_2015',
     name: 'Nepal Earthquake',
     years: [2015, 2015],
