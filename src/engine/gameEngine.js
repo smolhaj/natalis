@@ -1548,6 +1548,40 @@ function buildYearTexture(state) {
     ])
   }
 
+  // ─── SONDER GLIMPSE ──────────────────────────────────────────────────────────
+  // Rare: once every ~10 years, a brief pan to a stranger's life.
+  // Not a mechanic — just the accidental glimpse that sonder is made of.
+  // Per the design: "the person at the next table, the light on in the apartment above."
+
+  const lastSonderAge = mem?.sonderGlimpseAge ?? -99
+  if (age >= 12 && (age - lastSonderAge) >= 8 && Math.random() < 0.18) {
+    if (!state.mem) state.mem = {}
+    state.mem.sonderGlimpseAge = age
+    const sonderPool = (phase === 'late_life') ? [
+      'The young man on the bus has the posture of someone at the start of something large. You can see approximately where it goes from here. You do not tell him.',
+      'You pass a lit window at eleven at night — someone reading in a chair, a lamp beside them, an entire life inside that apartment that has its own complete history.',
+      'The couple across the café has been eating in silence for twenty minutes and neither of them looks unhappy. You have been watching without meaning to.',
+      'An old woman is feeding pigeons with complete attention. Her whole afternoon is this. You wonder what the rest of her days look like and then you stop wondering and keep walking.',
+    ] : (phase === 'midlife') ? [
+      'At a stoplight: the man in the car beside yours, your age, looking straight ahead at something that is not the intersection. You recognize the posture.',
+      'The woman at the coffee counter has been smiling at customers for four hours. Something that is not the smile is happening behind it. You tip and leave.',
+      'Your neighbor\'s door opens and closes at two in the morning. You don\'t know what schedule that belongs to. You have been curious about it for months and will never ask.',
+      'A couple at the restaurant is not speaking — not in the bad way, in the other way. The specific silence of people who don\'t need to. You watch them for a moment without meaning to.',
+      'The man on the train has been looking at a photograph on his phone for the past four stops. He does not scroll. He has been looking at the same image since before you sat down.',
+    ] : (phase === 'young_adult') ? [
+      'The person who has the desk across from yours: you know what they eat for lunch and nothing else about them. An entire life is visible from there and inaccessible.',
+      'Your neighbor comes home at the same time every night. You know this the way you know everything about people you have never spoken to — by the sound of it through the wall.',
+      'A woman on the platform is crying without covering her face. No one speaks to her. The train comes and she gets on. You will never know what that was.',
+      'The man at the next table has been looking at his phone without touching it for twenty minutes. Something is happening inside his life that has a shape you don\'t know.',
+    ] : [
+      'A child at the other end of the street is doing something by themselves, absorbed completely. You watch them for a moment. The whole afternoon is in it.',
+      'Someone in the apartment above yours walks the same path every evening. You know the route from the sound of it through the ceiling. You don\'t know their name.',
+      'You overhear one side of a phone call through a wall. The emotional content is clear; the facts are missing. Someone nearby is having a hard week.',
+      'An old man on the bench outside the market is watching the street with the patience of someone who has done this for a long time. You don\'t know what he is watching for.',
+    ]
+    return pick(sonderPool)
+  }
+
   // ─── GIFTED ARC TEXTURE ──────────────────────────────────────────────────────
 
   const isGiftedChar = F.has('born_gifted_intellectual') || F.has('born_gifted_musical') ||
