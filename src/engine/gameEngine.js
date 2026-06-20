@@ -9820,6 +9820,40 @@ function buildYearTexture(state) {
       ? 'You have lived through the miracle years, the austerity, the ivoirité politics, the civil war, the election crisis, and the recovery. Each period felt like it would define the country permanently. None of them did.'
       : 'The glass towers on the Plateau are new. The reunification happened. The economy grew. The things that happened between 2002 and 2011 are not discussed the way they might be discussed.',
   ])
+  if (F.has('ci_full_arc_witness') && Math.random() < 0.18) return pick([
+    'The first Ivorian Miracle. Then the crash. Then ivoirité. Then the civil war. Then the election crisis and the bodies. Then the second Ivorian Miracle. The phrase is the same. You are not the same person who first heard it.',
+    phase === 'late_life'
+      ? 'What you carry is not bitterness. It is specificity. You know exactly what happened between the two versions of the same phrase, in sequence, and the specificity doesn\'t compress into a lesson.'
+      : 'The country recovered. Economies recover. What doesn\'t recover in the same way is the knowledge of what was required for the first recovery to become the second problem.',
+  ])
+  if (F.has('ci_gbagbo_reckoning') && Math.random() < 0.17) return pick([
+    'Gbagbo returned to Abidjan in 2021, acquitted, and was met at the airport by crowds. Ouattara — the man whose election he refused to accept — is still president. They have met. The accounting of the 3,000 deaths exists in a separate column.',
+    phase === 'late_life'
+      ? 'The ICC acquittal doesn\'t mean it didn\'t happen. It means the court couldn\'t meet its own standard of proof. Both things are true and they produce a particular kind of cognitive discomfort that doesn\'t resolve with time.'
+      : 'You were not asked what you thought of the acquittal. No one was. The outcome was legal and happened in The Hague and the country moved on before you had finished deciding what you thought.',
+  ])
+  if (F.has('ci_cocoa_accounting') && Math.random() < 0.17) return pick([
+    'A bar of chocolate in Europe. Seven cents leaving your farm. The gap between those numbers is the gap that funded everything else in both directions: the concrete block room and the profit margin.',
+    phase === 'late_life'
+      ? 'The child labour reports from European NGOs use words like "supply chain" and "systemic." The words are accurate. They don\'t quite capture what it meant to feed your children in a year when the CMDT price fell.'
+      : 'You grew the crop that feeds the world\'s appetite for something it calls a treat. The word "treat" implies occasional. The appetite is not occasional.',
+  ])
+  if (F.has('ci_miracle_reckoned') && Math.random() < 0.15) return pick([
+    'The miracle required cheap labour, political stability maintained by one man, and commodity prices that held. Three conditions. When the commodity prices fell in 1987 the other two became harder to sustain.',
+    'What was real about the miracle: the roads, the schools, the GDP, the Abidjan skyline. What it was built on: also real. The two things were in the same sentence for a long time before someone said them both at once.',
+  ])
+  if (F.has('sahel_long_arc_witness') && Math.random() < 0.20) return pick([
+    'The Sahel crisis has a direction of travel and it isn\'t stopping. Mali first. Then Burkina Faso. Then the edges of Guinea, Niger, Benin, Ivory Coast. The French left. Wagner came. The civilian populations are in the same position in each country.',
+    phase === 'late_life'
+      ? 'You have watched this move across the map of the region you grew up in. The names of the countries change. The pattern doesn\'t. That is the specific thing you know that the people making policy elsewhere do not.'
+      : 'Each country thought it was watching someone else\'s problem. Then it became the same problem with the local names inserted.',
+  ])
+  if (F.has('tuareg_settled_reckoned') && Math.random() < 0.15) return pick([
+    'You settled. The city life, the credentials, the fixed address. The 2012 MNLA uprising declared independence for a territory that included where your grandparents\' grandparents grazed. You watched from the city. The distance was both physical and something else.',
+    phase === 'late_life'
+      ? 'You have held a Tuareg identity in a city for your entire adult life. The city didn\'t ask you to give it up. It just didn\'t make space for it. These are different forms of the same pressure.'
+      : 'Tamasheq in the city: the family speaks it at home, quietly, as a private thing. The children understand it. Whether they will pass it on is a question you have not asked directly.',
+  ])
   if (F.has('nigerian_oil_boom_generation') && Math.random() < 0.2) return pick([
     'The boom years: the naira strong, the roads being built, the government salaries that made sense. The structural problem was legible but the feeling of the moment was abundance. You remember the abundance.',
     'Oil at $35 a barrel and then higher. The federal government suddenly wealthy. The problem — that the wealth was flowing through patronage rather than into productive capacity — would become visible later.',
@@ -9960,6 +9994,12 @@ function buildYearTexture(state) {
       ? 'You marched in 1991, or you remember those who did. Democracy lasted twenty years. The march felt like the end of something. It turns out to have been the middle.'
       : 'The junta governing now expelled the French and brought in Wagner. The jihadist violence that began in the north in 2012 is now in the centre and the south. You are watching the map change in ways you did not expect to watch.',
     'There are things you believed about Mali at thirty that you cannot quite believe at sixty. Not because they were false. Because you have watched too many different versions of the same story resolve in the same way.',
+  ])
+  if (F.has('tuareg_settled') && Math.random() < 0.15) return pick([
+    'You settled. The city gave you a fixed address and an identity document and a school for the children. It also asked you to become a version of yourself that doesn\'t orient by stars.',
+    phase === 'late_life'
+      ? 'Your children speak Bambara better than Tamasheq. You told them the route names anyway. The routes are still there even if the children won\'t use them.'
+      : 'In Bamako or Gao you are a Tuareg in a place that processes you through that category before it sees anything else. The category is accurate. It is also incomplete.',
   ])
   if (F.has('mali_empire_memory') && Math.random() < 0.18) return pick([
     'Timbuktu had 25,000 university students when Paris had 200,000. You learned this in school and you have carried it in a way that is not pride exactly but something more durable than pride.',
