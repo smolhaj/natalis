@@ -1809,4 +1809,422 @@ export const SPECIFIC_LIFE_EVENTS = [
     choices: null,
     effect: (p) => { p.setMem('sl_br_upp', true); p.m += 2; p.e += 2; p.s += 1 },
   },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // S. SPECIFIC RURAL LIVES — the texture of smallness and land
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_mali_cotton_body',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Mali' &&
+      G.ruralUrban === 'rural' &&
+      G.age >= 30 && G.age <= 55 &&
+      !G.mem?.sl_mali_cot_body,
+    text: 'The cotton season begins in October and the body keeps the account. By November the fingers are cracked at the joints from the burs. By December the back has logged the hours. The CMDT price is fixed before the season and does not change regardless of what the world price does. You have been doing this calculation for twelve years: the price the company fixes, the price the world charges for the fertiliser, the gap between them that is the shape of your year.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_mali_cot_body', true); p.h -= 4; p.m -= 2; p.e += 2 },
+  },
+
+  {
+    id: 'sl_vietnam_rice_paddy',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Vietnam' &&
+      G.ruralUrban === 'rural' &&
+      G.currentYear >= 1976 && G.currentYear <= 2000 &&
+      G.age >= 25 && G.age <= 50 &&
+      !G.mem?.sl_vn_paddy,
+    text: 'The cooperative quota is thirty percent of the harvest. Above the quota the family keeps what it grows. The mathematics of the quota means the mathematics of everything else — what the children eat, whether there is cooking oil, the calculation that happens every harvest between what the state takes and what remains. Doi Moi changed the mathematics. What did not change: the water level in the paddies at four in the morning, the specific ache of transplanting by hand, the number of days between planting and harvest that a body memorises without being asked.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_vn_paddy', true); p.h -= 3; p.m += 2; p.e += 2 },
+  },
+
+  {
+    id: 'sl_peru_potato_altitude',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Peru' &&
+      G.ruralUrban === 'rural' &&
+      G.currentYear >= 1950 && G.currentYear <= 2000 &&
+      G.age >= 8 && G.age <= 14 &&
+      !G.mem?.sl_pe_potato,
+    text: 'At 3,800 metres the potato is the thing the altitude permits. Your family grows twelve varieties — the names of them in Quechua are specific: the one that survives frost, the one that goes bitter if you boil it wrong, the one that is only for the highest field. The agricultural officer from the ministry visited once and noted that the family was using traditional varieties and suggested modern ones. Your grandmother explained the twelve names and the officer wrote something down and left. The twelve varieties are still there.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_pe_potato', true); p.e += 3; p.m += 2; p.addFlag('indigenous_knowledge') },
+  },
+
+  {
+    id: 'sl_kenya_tea_picker',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Kenya' &&
+      G.ruralUrban === 'rural' &&
+      G.age >= 18 && G.age <= 35 &&
+      G.currentYear >= 1970 && G.currentYear <= 2010 &&
+      !G.mem?.sl_ke_tea,
+    text: 'The target is twenty-two kilos of tea leaf per day. Below target, the supervisor notes it. At target, the wage is the wage. Above target, a bonus that is smaller than the calculation suggests it should be. You pick with both hands into the basket on your back. The posture the picking requires has a specific effect on the lower spine that you will carry for the rest of your life. The tea goes to Mombasa, then to the London auction, then to a supermarket shelf with a price that is not connected to the twenty-two kilos.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_ke_tea', true); p.h -= 4; p.mo += 800; p.e += 1 },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // T. FAITH IN ITS BODY — not doctrine but practice
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_amish_rumspringa',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'United States' &&
+      G.religion === 'christian_protestant' &&
+      G.ruralUrban === 'rural' &&
+      G.stats.smarts >= 30 && G.stats.smarts <= 60 &&
+      G.age >= 16 && G.age <= 20 &&
+      !G.mem?.sl_amish_rum,
+    text: 'Rumspringa means running around. The community allows you to go and see the world during this period before you are baptised, because the church holds that you should choose it knowing what you are choosing against. You have gone and seen: the electricity, the cars, the phones, the music that comes through headphones. You are now required to decide. The decision is not between the world and the community — it is between being known in one place, completely, and being unknown in a larger one.',
+    choices: [
+      {
+        text: 'Return and be baptised. The community is what you choose.',
+        tag: 'return',
+        outcome: 'The bishop performs the baptism. The church sings. You are in the community that knew you before you were old enough to choose it, and you have now chosen it. The weight of that choice is different from obligation.',
+        effect: (p) => { p.m += 8; p.s += 3; p.addFlag('faith_chosen'); p.setMem('sl_amish_rum', true) },
+      },
+      {
+        text: 'Stay out. The world is enormous and you want to be in it.',
+        tag: 'leave',
+        outcome: 'You are shunned in the specific way the Ordnung prescribes — not violently, but completely. Your family eats with you separately. The loss is total and chosen. The world is as large as you thought.',
+        effect: (p) => { p.m -= 8; p.e += 4; p.addFlag('left_faith_community'); p.setMem('sl_amish_rum', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'sl_iran_prayer_school',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Iran' &&
+      G.currentYear >= 1980 && G.currentYear <= 2000 &&
+      G.age >= 8 && G.age <= 14 &&
+      !G.mem?.sl_ir_pray_sch,
+    text: 'The school day begins with prayer. The prayer is required. The teacher walks the rows checking that the lips are moving. Your lips move. Whether anything behind them is moving is your private business. You have understood, at ten, that there are two registers of religious practice: the one that is public and required and the one that is private and optional. This is not cynicism. It is a sophisticated understanding of a political regime that you developed before you had words for politics or regimes.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_ir_pray_sch', true); p.e += 3; p.m -= 2 },
+  },
+
+  {
+    id: 'sl_hasidic_education',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      ['Israel', 'United States', 'Belgium', 'United Kingdom'].includes(G.character.country.name) &&
+      G.religion === 'jewish' &&
+      G.currentYear >= 1950 &&
+      G.age >= 6 && G.age <= 14 &&
+      !G.mem?.sl_hasid_ed,
+    text: 'The yeshiva teaches Talmud from six in the morning. The secular subjects — the ones the government requires — occupy two hours in the afternoon and are taught with a quality of attention that makes clear they are not the point. You are eight and you are learning to argue with Rashi\'s commentary on a passage that was old when Rashi wrote about it. The argumentation is rigorous and ancient and in a language that is not spoken on any street in the city outside these walls.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_hasid_ed', true); p.e += 3; p.s += 2 },
+  },
+
+  {
+    id: 'sl_thai_monk_ordination',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Thailand' &&
+      G.character.gender === 'male' &&
+      G.religion === 'buddhist' &&
+      G.age >= 18 && G.age <= 28 &&
+      !G.mem?.sl_thai_ord,
+    text: 'The ordination is temporary — a month, perhaps three. This is the custom: most Thai men ordain once, briefly, before marriage or a major life change. Your head is shaved by a barber who has done this many times. The saffron robe is yours for the duration. In the morning you walk with the alms bowl and the city feeds you. In the evenings you study suttas with a monk who is sixty and whose life has been entirely this. The temporary nature of your commitment does not diminish the practice. He does not make you feel it should.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_thai_ord', true); p.m += 6; p.e += 3; p.karma += 5; p.addFlag('ordained_temporary') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // U. HEALTH SYSTEMS — the body encountering the state's capacity
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_uk_nhs_birth',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'United Kingdom' &&
+      G.character.gender === 'female' &&
+      G.currentYear >= 1948 && G.currentYear <= 1990 &&
+      G.children?.length === 0 &&
+      G.age >= 18 && G.age <= 35 &&
+      !G.mem?.sl_uk_nhs_b,
+    text: 'The National Health Service was five years old when you were born and the maternity ward was the first time the state had paid for something your mother previously could not have afforded. The midwife\'s care, the hospital bed, the follow-up visit — none of it required money at the point of need. Your mother described the ward later. She said the women there were from every street in the borough and all of them were in the same beds with the same midwives. She found this remarkable. She did not know it was remarkable until she compared it to what came before.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_uk_nhs_b', true); p.h += 3; p.m += 3; p.addFlag('welfare_state_beneficiary') },
+  },
+
+  {
+    id: 'sl_nigeria_hospital_cost',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Nigeria' &&
+      G.stats.wealth <= 40 &&
+      G.age >= 28 && G.age <= 55 &&
+      !G.mem?.sl_ng_hosp_cost,
+    text: 'The doctor says the test is necessary and the test is two thousand naira and two thousand naira is not money you have in the pocket of the clothing you are wearing in this clinic. The doctor does not say what to do about this. He writes it down. You leave the clinic with the piece of paper and the information and the problem of how to turn the information on the piece of paper into the two thousand naira into the test. The health system is not the barrier. The fee is the barrier. The distinction is technical.',
+    choices: [
+      {
+        text: 'Borrow from the family. The test cannot wait.',
+        tag: 'borrow',
+        outcome: 'The family produces the money in a day. The test confirms what the doctor suspected. The treatment costs more. The family produces more.',
+        effect: (p) => { p.h -= 3; p.mo -= 2000; p.karma += 3; p.setMem('sl_ng_hosp_cost', true) },
+      },
+      {
+        text: 'Wait and see if it resolves. The test might not change anything.',
+        tag: 'wait',
+        outcome: 'It resolves, this time. The not-knowing that preceded the resolution had its own cost, which does not appear on any bill.',
+        effect: (p) => { p.h -= 6; p.m -= 4; p.setMem('sl_ng_hosp_cost', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'sl_cuba_double_standard_health',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Cuba' &&
+      G.currentYear >= 1995 &&
+      G.age >= 28 && G.age <= 55 &&
+      !G.mem?.sl_cu_health,
+    text: 'The health system is free. The aspirin is not available in the system. The aspirin is available at the dollar store, which requires dollars, which requires a relative in Miami or a tourist to tip. The Cuban health system has trained more doctors per capita than almost any country in the world and cannot reliably stock aspirin. You have been navigating this gap your entire adult life — the care that is excellent and free and the materials that are neither.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_cu_health', true); p.h -= 3; p.e += 2; p.m -= 2 },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // V. MIGRATION'S SPECIFIC TEXTURE — not the crossing but the after
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_windrush_arrival',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'United Kingdom' &&
+      G.currentYear >= 1948 && G.currentYear <= 1965 &&
+      G.age >= 18 && G.age <= 35 &&
+      G.flags.includes('emigrated') &&
+      !G.mem?.sl_windrush_arr,
+    text: 'The Empire Windrush docked at Tilbury in 1948. Subsequent ships continued the passage. You arrived by whatever vessel the year permitted and what you found was a country that had invited you — British subject, right of abode — and was not prepared for you. The landlady\'s sign: No Irish, No Coloureds, No Dogs. The buses that stopped. The pubs that went quiet. The country was larger and colder and less welcoming than the mother country it had represented itself as in the colonial classroom.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_windrush_arr', true); p.m -= 5; p.e += 2; p.addFlag('windrush_generation') },
+  },
+
+  {
+    id: 'sl_vietnamese_boat_arrival',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Vietnam' &&
+      G.flags.includes('emigrated') &&
+      G.currentYear >= 1975 && G.currentYear <= 1995 &&
+      G.age >= 15 && G.age <= 40 &&
+      !G.mem?.sl_vn_boat_arr,
+    text: 'The camp in Hong Kong was temporary in the way that temporary becomes permanent when the determination process takes three years. The Cantonese called you Vietnamese boat people, which was accurate but not complete. You had been a teacher, a civil servant, a mother with specific children. The camp category was boat person. Inside the category: your entire life, which the category could not contain and which you maintained by telling it, to the children and to anyone who would listen, so that it did not disappear inside the category.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_vn_boat_arr', true); p.m -= 6; p.e += 3; p.addFlag('refugee_camp_years') },
+  },
+
+  {
+    id: 'sl_mexican_bracero',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Mexico' &&
+      G.character.gender === 'male' &&
+      G.currentYear >= 1942 && G.currentYear <= 1964 &&
+      G.age >= 18 && G.age <= 35 &&
+      !G.mem?.sl_mex_bracero,
+    text: 'The Bracero Program gives you a contract and a work permit and a bed in a barrack in California and wages that are three times what you could earn at home. The contract runs for six weeks. At the end of six weeks you go back. The arrangement assumes you will go back. The arrangement is correct — most do. The money you send home is visible in the village: the tin roof, the school fees, the remittance economy that the village runs on. The visible thing does not include the barrack, the contractor\'s accounting, the way the wage is deducted for the bus to the field.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_mex_bracero', true); p.mo += 3000; p.h -= 3; p.addFlag('bracero_generation') },
+  },
+
+  {
+    id: 'sl_german_gastarbeiter_stayed',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Germany' &&
+      G.flags.includes('emigrated') &&
+      G.currentYear >= 1975 && G.currentYear <= 2000 &&
+      G.age >= 35 && G.age <= 60 &&
+      !G.mem?.sl_gast_stayed,
+    text: 'The Gastarbeiter contract said temporary. The word was in the name: guest. Guests do not stay. But the factory needed you the following year and the year after and the children were in school and the country they came from was not the same country it had been when you left, and the years passed in the way that years pass when you are busy with the work and the children and not attending to the accumulation. You have been here twenty years. The word temporary is no longer the right word. There is no better word in official use.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_gast_stayed', true); p.m -= 3; p.e += 2; p.addFlag('second_country_rooted') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // W. EDUCATION AS POWER — specific moments when knowledge is weaponised
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_missionary_school_africa',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      ['Nigeria', 'Kenya', 'Ghana', 'Uganda', 'Tanzania', 'Zambia', 'Zimbabwe', 'Mozambique', 'Rwanda', 'Ethiopia'].includes(G.character.country.name) &&
+      G.currentYear >= 1930 && G.currentYear <= 1970 &&
+      G.age >= 7 && G.age <= 14 &&
+      !G.mem?.sl_miss_sch,
+    text: 'The missionary school teaches reading and arithmetic and Scripture and the Empire\'s version of history, which is a version in which you appear briefly as the people the missionaries came to assist. The reading and arithmetic are real skills. The history is the one you are learning to read against. Your teacher, a man from England who cannot pronounce your name, does not know he is teaching you both things simultaneously.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_miss_sch', true); p.e += 4; p.m -= 2; p.addFlag('colonial_education') },
+  },
+
+  {
+    id: 'sl_india_iit_pressure',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'India' &&
+      G.currentYear >= 1970 &&
+      G.age >= 14 && G.age <= 18 &&
+      G.stats.smarts >= 70 &&
+      !G.mem?.sl_in_iit_pr,
+    text: 'The IIT-JEE coaching begins in class nine. The coaching is eight hours on Saturdays and four hours on three evenings and the mock tests are timed and the ranking is posted and the ranking has consequences in ways that are both explicit and ambient. Your rank this month is 847 in the state. The conversation in your household is about what 847 means. The conversation does not include what you think about for the four hours on Tuesday evening when you are supposed to be doing the practice problems but are instead doing something else that is not the IIT-JEE.',
+    choices: [
+      {
+        text: 'Commit to it. The IIT is the door and you are capable of opening it.',
+        tag: 'commit',
+        outcome: 'You get in. The institution is genuinely excellent. The cost of the years of preparation is something you assess only much later, when you understand what the years were also for.',
+        effect: (p) => { p.e += 6; p.m -= 5; p.addFlag('iit_graduate'); p.setMem('sl_in_iit_pr', true) },
+      },
+      {
+        text: 'Find a different path. The IIT is not the only door.',
+        tag: 'redirect',
+        outcome: 'The alternative is less prestigious and also sufficient. The sufficiency takes longer to understand than the prestige would have.',
+        effect: (p) => { p.m += 4; p.e += 2; p.setMem('sl_in_iit_pr', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'sl_singapore_streaming',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Singapore' &&
+      G.currentYear >= 1980 && G.currentYear <= 2020 &&
+      G.age >= 10 && G.age <= 12 &&
+      !G.mem?.sl_sg_stream,
+    text: 'At twelve, the PSLE score determines your secondary school stream: Express, Normal Academic, or Normal Technical. The score is public in the way that matters — your parents know, the neighbours know, the relatives know. You have spent three years preparing for one examination. The stream you are placed in determines the examination you can sit at sixteen which determines the university entry you can attempt. The meritocracy is real and the meritocracy begins at twelve, which is a thing the meritocracy does not emphasise.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_sg_stream', true); p.e += 2; p.m -= 2 },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // X. THE BODY UNDER SPECIFIC POLITICAL SYSTEMS
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_east_germany_stasi_informer',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'Germany' &&
+      G.currentYear >= 1970 && G.currentYear <= 1989 &&
+      G.age >= 25 && G.age <= 55 &&
+      G.regime === 'single_party_communist' &&
+      !G.mem?.sl_ddr_stasi,
+    text: 'The Stasi officer came to your workplace and said that you had been identified as a reliable comrade and that you could serve the Republic in a way that did not require changing anything about your daily life. You were required only to report, occasionally, on certain colleagues. You said yes. The reporting was infrequent and the information seemed routine and the promotion that followed was coincidental. You maintained this description of events for years. After 1989, the files were opened. Your file exists. You are in it as both subject and source.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_ddr_stasi', true); p.m -= 8; p.r += 12; p.karma -= 10; p.addFlag('informer_stasi') },
+  },
+
+  {
+    id: 'sl_north_korea_songbun',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'North Korea' &&
+      G.currentYear >= 1960 &&
+      G.age >= 6 && G.age <= 14 &&
+      !G.mem?.sl_nk_songbun,
+    text: 'Your songbun is inherited from your grandfather\'s classification in 1946. Your grandfather was a landlord before the land reform. The classification is hostile. The classification determines where you can live, what schools you can attend, what jobs you can be considered for, whether you can join the Party. Your grandfather died before you were born. His classification is with you the way DNA is with you — not chosen, not visible to you, but structuring everything.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_nk_songbun', true); p.m -= 6; p.e += 2; p.w -= 5 },
+  },
+
+  {
+    id: 'sl_china_hukou_city',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'China' &&
+      G.ruralUrban === 'rural' &&
+      G.currentYear >= 1985 && G.currentYear <= 2015 &&
+      G.age >= 18 && G.age <= 30 &&
+      !G.mem?.sl_cn_hukou,
+    text: 'Your hukou says you are from Anhui. You live in Shanghai. These two facts exist simultaneously in a legal condition that the city has a name for: floating population. You work in the factory, pay into the housing fund, use the roads, breathe the air, send your child to a school that the hukou says your child does not belong in. The city needs your labour. The city does not guarantee your child\'s education. The distinction between these two statements is the whole shape of the hukou system.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_cn_hukou', true); p.m -= 4; p.e += 2; p.addFlag('hukou_urban_migrant') },
+  },
+
+  {
+    id: 'sl_apartheid_homeland',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'South Africa' &&
+      G.currentYear >= 1960 && G.currentYear <= 1990 &&
+      G.age >= 18 && G.age <= 35 &&
+      !['white_south_african'].includes(G.ethnicity) &&
+      !G.mem?.sl_homeland,
+    text: 'The government has declared that you are a citizen of Bophuthatswana. Bophuthatswana does not appear on the map of countries the United Nations recognises. It is a portion of the former South Africa that the apartheid government has designated as the homeland for people classified as Tswana. You have never lived in Bophuthatswana. Your parents have never lived in Bophuthatswana. The government has solved the political problem of Black South Africans by reclassifying them as citizens of countries that exist only on maps that the government drew.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_homeland', true); p.m -= 6; p.e += 2; p.addFlag('experienced_discrimination') },
+  },
+
+  // ── FOLLOW-THROUGHS FOR BATCH 4 ──────────────────────────────────────────
+
+  {
+    id: 'sl_stasi_file_opened',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'Germany' &&
+      G.flags.includes('informer_stasi') &&
+      G.currentYear >= 1992 &&
+      G.age >= 40 &&
+      !G.mem?.sl_stasi_opened,
+    text: 'The Gauck Authority is opening the files. Anyone can request their own file. Some of the people you worked with have requested theirs and your name appears in it. You know this because one of them told you, quietly, in a car park in the middle of the afternoon. You have not requested your own file. The file exists regardless of whether you read it. Your name is in it as a source. The person you reported on spent eight months in a Stasi detention facility. You knew, when you reported, that reporting had consequences. You chose not to know what the consequences were.',
+    choices: [
+      {
+        text: 'Request your own file. See the full record.',
+        tag: 'read',
+        outcome: 'The file is sixty pages. Your own handwritten reports are in it. Reading your own handwriting describing your colleagues is a specific experience that you do not have language for and do not seek language for.',
+        effect: (p) => { p.setMem('sl_stasi_opened', true); p.m -= 10; p.r += 15; p.karma -= 5; p.e += 2 },
+      },
+      {
+        text: 'Do not request the file. You know what is in it.',
+        tag: 'avoid',
+        outcome: 'You do not read the file. The file persists. The people whose files you are in have read what you wrote. The not-reading changes nothing about that.',
+        effect: (p) => { p.setMem('sl_stasi_opened', true); p.m -= 7; p.r += 18 },
+      },
+    ],
+    effect: null,
+  },
 ]

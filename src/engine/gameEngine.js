@@ -12681,6 +12681,41 @@ function buildYearTexture(state) {
     if (cn === 'Brazil' && era === 2000) return 'The Bolsa Família has pulled people out of a kind of poverty that was considered fixed. The fact of this is underreported outside Brazil.'
   }
 
+  if (F.has('left_faith_community') && Math.random() < 0.18) return pick([
+    'The community you left practices on Sundays, or at the appointed hours, or in the specific way that the Ordnung or the tradition or the discipline prescribes. You know this. The rhythm of it is in your body even though you are not in it.',
+    phase === 'late_life'
+      ? 'What you left and what you built in its place have both been with you long enough that the comparison no longer has the urgency it once did. You live in what you built. You remember what you left. Both things are true.'
+      : 'The community does not seek you out. You are not pursued. The separation is complete and quiet and mutual, which is how the tradition designed it — to make the leaving total enough that the returning is the only alternative. You are living the other alternative.',
+  ])
+
+  if (F.has('refugee_camp_years') && Math.random() < 0.18) return pick([
+    'The camp was temporary. The word temporary does not have a duration attached to it. You understand now what temporary means in practice: it means as long as the situation that created it persists, which is determined by forces elsewhere.',
+    phase === 'late_life'
+      ? 'The years in the camp are years now, in the past, on the other side of wherever you ended up. The specific order of the days in the camp is something only people who were also there can understand from description alone. You have stopped trying to describe it to people who were not there.'
+      : 'What the camp could not contain was the life before it. The names, the house, the particular smell of your mother\'s kitchen — these did not become camp items. You kept them separate. The keeping took effort that the camp administration did not know was happening.',
+  ])
+
+  if (F.has('second_country_rooted') && Math.random() < 0.18) return pick([
+    'The country you came to was not the country you meant to stay in. That sentence no longer means anything useful. You stayed. The staying accumulated into a life. The life is here.',
+    phase === 'late_life'
+      ? 'Your children are from here in a way you are not. Your grandchildren will not understand the distinction. This is the measure of how far the roots have gone.'
+      : 'You know two sets of references: the country you came from and the country you live in. The references are not equally useful in every situation, which is a form of double knowledge that people who stayed in one place do not have.',
+  ])
+
+  if (F.has('colonial_education') && Math.random() < 0.18) return pick([
+    'The education gave you the tools to read the history that the education taught incorrectly. This is the central irony of the colonial school and it is possible that the teachers understood it and possible that they did not.',
+    phase === 'late_life'
+      ? 'What the mission school gave you — the English, the arithmetic, the route to the secondary and the university — was real. What it took in exchange is harder to name but also real: a particular relation to your own language and history that the school considered supplementary.'
+      : 'You read things now that the colonial curriculum would not have approved. The reading was made possible by the literacy the colonial curriculum produced. You find this funny in a way that is also not funny.',
+  ])
+
+  if (F.has('hukou_urban_migrant') && Math.random() < 0.18) return pick([
+    'The city is where you live. The hukou says you are from somewhere else. The gap between where you live and where the state says you are from is the shape of your daily legal existence.',
+    phase === 'late_life'
+      ? 'They relaxed the hukou in some cities, for some years, for some categories of worker. The relaxation was partial and the reforms did not reach your specific situation in the specific year that mattered. The policy moved. Your children benefited from movements that happened too late for you.'
+      : 'What the floating population floats in is a city that runs on its labour and does not guarantee its children\'s schooling. You have navigated this every year since you arrived. The navigation is no longer navigation — it is the shape of the life.',
+  ])
+
   if (F.has('code_switched') && Math.random() < 0.18) return pick([
     'The voice you use at work and the voice you use at home are not the same voice. The distance between them is not a performance anymore. It is a fluency you developed from necessity and now cannot stop.',
     phase === 'late_life'

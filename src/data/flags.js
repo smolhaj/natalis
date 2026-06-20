@@ -14517,4 +14517,100 @@ export const FLAG_REGISTRY = {
     notes: 'Set by sl_catalan_franco_language. Distinct from minority_language_speaker (more active suppression).',
   },
 
+  indigenous_knowledge: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Carries practical traditional knowledge — crop varieties, ecological reading, craft techniques — that exists nowhere else and that formal education systems do not value.',
+    intent: 'none',
+    notes: 'Set by sl_peru_potato_altitude.',
+  },
+
+  faith_chosen: {
+    weight: 'minor',
+    category: 'spirituality',
+    description: 'Returned to a religious community as an adult after a period of exposure to alternatives — the faith that was inherited and then chosen again.',
+    intent: 'none',
+    notes: 'Set by sl_amish_rumspringa (return branch).',
+  },
+
+  left_faith_community: {
+    weight: 'moderate',
+    category: 'spirituality',
+    description: 'Left a tight-knit religious community through formal exit — shunning, excommunication, or social severing — to live outside its structures.',
+    intent: 'year_texture',
+    notes: 'Set by sl_amish_rumspringa (leave branch). Cross-cutting for high-control communities.',
+  },
+
+  ordained_temporary: {
+    weight: 'minor',
+    category: 'spirituality',
+    description: 'Temporarily ordained — completed a period of monastic life (Buddhist ordination, novitiate, etc.) as a cultural rite of passage rather than a permanent vocation.',
+    intent: 'none',
+    notes: 'Set by sl_thai_monk_ordination.',
+  },
+
+  welfare_state_beneficiary: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Directly benefited from a universal welfare system at a formative moment — NHS birth, free university, housing benefit — in a way that would not have been possible without the state.',
+    intent: 'none',
+    notes: 'Set by sl_uk_nhs_birth.',
+  },
+
+  refugee_camp_years: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Spent years in a refugee camp — the temporary status that becomes semi-permanent, the determination process, the category that cannot contain the full person.',
+    intent: 'year_texture',
+    notes: 'Set by sl_vietnamese_boat_arrival. Cross-cutting long-term camp experience.',
+  },
+
+  bracero_generation: {
+    weight: 'minor',
+    category: 'labour',
+    description: 'Part of the US Bracero Program or similar bilateral guest-worker contracts — the temporary migration that sustained remittance economies across borders.',
+    intent: 'none',
+    notes: 'Set by sl_mexican_bracero.',
+  },
+
+  second_country_rooted: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Put down roots in a country they arrived in as a temporary worker — the permanent life built inside a temporary legal status.',
+    intent: 'year_texture',
+    notes: 'Set by sl_german_gastarbeiter_stayed. Cross-cutting migrant settler experience.',
+  },
+
+  colonial_education: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'Educated in a colonial institution — the missionary school, the colonial syllabus, the history taught against itself.',
+    intent: 'year_texture',
+    notes: 'Set by sl_missionary_school_africa.',
+  },
+
+  iit_graduate: {
+    weight: 'minor',
+    category: 'achievement',
+    description: 'Graduated from an IIT or equivalent elite technical institution after the grinding preparation of JEE coaching culture.',
+    intent: 'none',
+    notes: 'Set by sl_india_iit_pressure (commit branch).',
+  },
+
+  informer_stasi: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Served as an unofficial informant for the Stasi or equivalent surveillance apparatus — the files that exist, the comrades reported, the complicity that was not called by that name at the time.',
+    intent: 'event',
+    notes: 'Set by sl_east_germany_stasi_informer. Follow-through: sl_stasi_file_opened fires at late_life.',
+  },
+
+  hukou_urban_migrant: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'A Chinese internal migrant living in a city without urban hukou — the floating population, the child whose schooling is not guaranteed, the labour without the rights.',
+    intent: 'year_texture',
+    notes: 'Set by sl_china_hukou_city.',
+  },
+
 }
