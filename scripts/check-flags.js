@@ -13,13 +13,13 @@
  *   npm run check-flags -- --world         world-event flags specifically
  */
 
-import { readFileSync, readdirSync } from 'fs'
+import { readFileSync, readdirSync, statSync } from 'fs'
 import { join, extname } from 'path'
 import { fileURLToPath } from 'url'
 
 const __dir  = fileURLToPath(new URL('.', import.meta.url))
 const ROOT   = join(__dir, '..')
-const { FLAG_REGISTRY } = await import('../src/data/flags.js')
+const { FLAG_REGISTRY } = await import('../src/data/flags/index.js')
 
 // ── ANSI colours ─────────────────────────────────────────────────────────────
 const B   = s => `\x1b[1m${s}\x1b[0m`
@@ -34,9 +34,17 @@ const SRC_DIRS = ['src/data', 'src/engine', 'src/store']
 
 function jsFilesIn(dir) {
   try {
-    return readdirSync(join(ROOT, dir))
-      .filter(f => extname(f) === '.js')
-      .map(f => ({ rel: `${dir}/${f}`, content: readFileSync(join(ROOT, dir, f), 'utf8') }))
+    const results = []
+    for (const entry of readdirSync(join(ROOT, dir))) {
+      const absPath = join(ROOT, dir, entry)
+      const relPath = `${dir}/${entry}`
+      if (statSync(absPath).isDirectory()) {
+        results.push(...jsFilesIn(relPath))
+      } else if (extname(entry) === '.js') {
+        results.push({ rel: relPath, content: readFileSync(absPath, 'utf8') })
+      }
+    }
+    return results
   } catch { return [] }
 }
 
