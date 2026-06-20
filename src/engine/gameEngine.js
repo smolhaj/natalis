@@ -12175,6 +12175,11 @@ function buildYearTexture(state) {
     'You have started to have opinions about things. You are partly right and partly wrong, which is what opinions are.',
     'You are memorising things without meaning to: routes, faces, sequences, the way the light falls at a certain time.',
     'The world is large and you are starting to understand just how large.',
+    'There is someone at school who is the thing you are afraid of being — ignored, wrong, too much. You watch them carefully.',
+    'You have learned to read a room: when the adults are tense, when something is being held back, when the silence is the wrong kind.',
+    'There is a phrase you have heard often enough that you have started saying it. You do not know yet where it came from.',
+    'You have a route you know so well you do not see it anymore — the cracks, the shortcut, the dog behind the fence. The route is part of you.',
+    'You have a private theory about how things work. You have not told anyone.',
   ])
 
   if (phase === 'adolescence') return pick([
@@ -12188,6 +12193,11 @@ function buildYearTexture(state) {
     'You feel things at a frequency that the years ahead will not sustain. You do not know this yet.',
     'You are watching older people for clues about how to be in the world. The clues are incomplete.',
     'There is a version of yourself you are trying to become. It is not yet clear if you are on the right track.',
+    'There are people your age who seem to know how to exist without thinking about it. You have been studying them, trying to learn how.',
+    'You have a sentence — from a book, a song, something someone said — that you say to yourself in the bad moments. It is yours now.',
+    'The music of this year will follow you for the rest of your life, attached to exactly who you were when you first heard it.',
+    'You are beginning to see what your parents gave you without asking — the words they use, the way they hold their face when something is wrong.',
+    'The body has an opinion about everything, and its opinion is very loud. You are learning which opinions to trust.',
   ])
 
   if (phase === 'young_adult') return pick([
@@ -12201,6 +12211,11 @@ function buildYearTexture(state) {
     'The friendships you make in this decade will last, some of them, for the rest of your life. You cannot tell yet which ones.',
     'You are learning what you are good at. You are also learning what you are not good at, which is equally useful.',
     'This is the period when the life takes its shape. The shaping is ongoing.',
+    'The commute — the route to work or study, whatever form it takes — has become invisible. You arrive without remembering the middle of it.',
+    'You are beginning to say things you heard adults say when you were young. You did not plan to start saying them.',
+    'The people you are closest to are not the people you planned to be closest to. Proximity and necessity did most of the work.',
+    'You have been eating the same few meals for months. They are not bad meals. They are the meals that the current situation makes possible.',
+    'You are slowly becoming the adult you always thought the adults were. The difference between them and you is smaller than expected.',
   ])
 
   if (phase === 'midlife') return pick([
@@ -12214,6 +12229,11 @@ function buildYearTexture(state) {
     'You have outlived some of your certainties. The ones that remain are more carefully held.',
     'You do not have more time than you thought. You have the same amount. You are more precise about it now.',
     'The middle of life is not a place. It is a quality of attention — a retrospective sight that was not possible before.',
+    'There is a photograph of yourself from fifteen years ago. The person in it was young in ways you could not see at the time.',
+    'You catch yourself giving someone advice that is almost word for word what an older person told you. You did not take it then either.',
+    'The body has started to keep its own record — the shoulder, the knee, the sound of getting out of a chair in the morning.',
+    'The people who are twenty-five now are doing what you were doing at twenty-five, with the same confidence and the same amount of information.',
+    'You know things now that could not have been told to you earlier. Not because they were secret, but because they require a certain number of years.',
   ])
 
   if (phase === 'late_life') return pick([
@@ -12227,6 +12247,11 @@ function buildYearTexture(state) {
     'There is a pleasure in small things that was not available in the same way before. Not because the things have changed. Because you have.',
     'The questions you have not answered are not going to be answered by more information. You know that now.',
     'You have been making your way through it. You are still making your way through it. Everyone is.',
+    'You have learned what cannot be fixed. This is different from the knowledge of what can be fixed, and more useful in this phase.',
+    'The people who knew you young are fewer. The ones who remain carry versions of you that you cannot access yourself.',
+    'You have started using a phrase your parents used. You did not decide to start using it.',
+    'There is a photograph on the shelf from a decade you remember clearly and a body you no longer recognise as this one.',
+    'You do not rush anymore — not because there is more time, but because you understand the cost of rushing differently than you did at forty.',
   ])
 
   // ─── FINAL GENERIC FALLBACK ───────────────────────────────────────────────────
@@ -12239,6 +12264,8 @@ function buildYearTexture(state) {
     'A year of small decisions that add up to something.',
     'The ordinary is underrated.',
     'You are making your way through it. Everyone is.',
+    'Nothing dramatic. The absence of drama is also a kind of year.',
+    'You are building something, or rebuilding it, or maintaining it. The categories blur after a while.',
   ])
 }
 
