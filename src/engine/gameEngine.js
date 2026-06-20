@@ -14,8 +14,8 @@ import { PLACES, getPlacesForCountry, pickBirthPlace, pickNeighborhoodTier, pick
 import { HEADLINES } from '../data/headlines'
 import { SOUNDTRACK } from '../data/soundtrack'
 import { randomBetween, pickFrom, rollWeighted, clamp, chance } from '../utils/random'
-import { LIFE_SKELETON_EVENTS } from '../data/events_life_skeleton'
-import { PHASE_ENTRY_EVENTS } from '../data/events_phase_entries'
+import { LIFE_SKELETON_EVENTS } from '../data/events/lifecycle/events_life_skeleton'
+import { PHASE_ENTRY_EVENTS } from '../data/events/lifecycle/events_phase_entries'
 
 // ─── FlagSet ──────────────────────────────────────────────────────────────────
 // Extends Set with Array.prototype.includes as an alias for has(), so existing

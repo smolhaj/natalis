@@ -1,4 +1,4 @@
-import { randomBetween } from '../utils/random.js'
+import { randomBetween } from '../../../utils/random.js'
 
 export const HISTORICAL_EVENTS = [
 
