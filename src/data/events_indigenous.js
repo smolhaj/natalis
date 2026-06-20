@@ -424,4 +424,155 @@ export const INDIGENOUS_EVENTS = [
     effect: (p) => { p.m -= 2; p.e += 3; p.setMem('landAckComplexity', true); },
   },
 
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // SAMI (NORWAY / SWEDEN)
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // The indigenous Sámi people of Scandinavia. Approximately 40,000–60,000 in Norway,
+  // 20,000–40,000 in Sweden. The Norwegian state policy of Fornorskingspolitikken
+  // (Norwegianisation) — roughly 1850s to 1960s — forced Sami children through
+  // boarding schools where their language was punished and their identity systematically
+  // suppressed. The Alta dam controversy (1979–82) galvanised the modern Sami rights
+  // movement. The Sami Parliament (Sámediggi) opened in 1989 in Norway.
+
+  {
+    id: 'ind_sami_boarding',
+    phase: 'childhood',
+    weight: 6,
+    when: (G) =>
+      G.character.ethnicity === 'sami' &&
+      ['Norway', 'Sweden'].includes(G.character.country?.name) &&
+      G.currentYear >= 1920 && G.currentYear <= 1970 &&
+      G.age >= 6 && G.age <= 14 &&
+      !G.mem?.samiBoarding,
+    text: 'The internatskole is a long way from the siida — a day and a half by whatever transport the terrain allows. The rule is stated on the first day and enforced: Norwegian only. The word for the animal you have grown up alongside, the one with hundreds of names for its sex and age and condition, has one word here. You say that word and the word is empty. You learn to be silent about the things that require the right language. By the time you come home for summer, speaking to your grandmother requires an effort it did not require before.',
+    choices: null,
+    effect: (p) => { p.m -= 20; p.h -= 8; p.e += 3; p.addFlag('sami_boarding_survivor'); p.addFlag('language_lost'); p.setMem('samiBoarding', true); },
+  },
+
+  {
+    id: 'ind_sami_reindeer_migration',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) =>
+      G.character.ethnicity === 'sami' &&
+      ['Norway', 'Sweden'].includes(G.character.country?.name) &&
+      G.currentYear >= 1930 && G.currentYear <= 2000 &&
+      G.age >= 8 && G.age <= 16 &&
+      !G.mem?.samiMigration,
+    text: 'The spring migration is not a journey between places. It is a reading of everything — the ice thickness under the hooves, the way a particular peak holds weather, the sound a herd makes when it is calm versus the sound it makes when something is wrong. Your grandfather does not teach this as instruction. He does it and you are there. What you are learning cannot be put in the school curriculum because the school curriculum has no category for it.',
+    choices: null,
+    effect: (p) => { p.e += 5; p.m += 10; p.addFlag('sami_reindeer_knowledge'); p.setMem('samiMigration', true); },
+  },
+
+  {
+    id: 'ind_sami_alta',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.ethnicity === 'sami' &&
+      G.character.country?.name === 'Norway' &&
+      G.currentYear >= 1979 && G.currentYear <= 1982 &&
+      G.age >= 16 && G.age <= 45 &&
+      !G.mem?.samiAlta,
+    text: 'The government plans to dam the Alta-Kautokeino river. The valley that would be flooded is Sami land, and the state\'s response to the protests — that the development is for the national good — is not a new answer. The protestors set up camp outside the Storting. Some go on hunger strike. You go to Oslo, or you follow it from the north, or you argue about it in the siida for months. What is new is not the injury — it is the organized refusal.',
+    choices: [
+      {
+        text: 'You go to the protest. This is the thing that was worth going to Oslo for.',
+        tag: 'protest',
+        outcome: 'The dam is built — they build it anyway. But something that was not there before is now there: a Sami political voice that has been heard nationally and will not go quiet.',
+        effect: (p) => { p.m += 5; p.s += 5; p.karma += 6; p.addFlag('sami_alta_witness'); p.addFlag('activist'); p.setMem('samiAlta', true); },
+      },
+      {
+        text: 'You do not go. The outcome is already decided and you know it.',
+        tag: 'home',
+        outcome: 'The dam is built. The valley is flooded. What you feel watching it on the news is not quite surprise — it is something older than surprise.',
+        effect: (p) => { p.m -= 5; p.r += 6; p.addFlag('sami_alta_witness'); p.setMem('samiAlta', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ind_sami_parliament_1989',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.character.ethnicity === 'sami' &&
+      G.character.country?.name === 'Norway' &&
+      G.currentYear === 1989 &&
+      G.age >= 16 &&
+      !G.mem?.samiParliament,
+    text: 'The Sami Parliament opens on the twelfth of October. King Olav V speaks. He says: the Norwegian state was founded on the territory of two peoples — Norwegians and Sami — and that the state had treated the Sami unjustly. A sitting Norwegian king says this aloud in a ceremony. It is not the same as undoing what was done. The language is still diminished, the land is still managed by others, the boarding school generation is still alive and carrying what they carry. But the acknowledgment is real, and official acknowledgment is not nothing.',
+    choices: null,
+    effect: (p) => { p.m += 8; p.e += 4; p.addFlag('sami_parliament_moment'); p.setMem('samiParliament', true); },
+  },
+
+  {
+    id: 'ind_sami_hidden_identity',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.ethnicity === 'sami' &&
+      ['Norway', 'Sweden'].includes(G.character.country?.name) &&
+      G.currentYear >= 1960 && G.currentYear <= 2010 &&
+      G.age >= 18 && G.age <= 40 &&
+      !G.mem?.samiHidden,
+    text: (G) => G.flags.has('sami_boarding_survivor')
+      ? 'Your parents did not tell you to hide it — they simply did not mention it in the contexts where it could cause difficulty. You understood without being told. The neighbours who know your family know; the city does not need to know. The specific object you were taught to put away when visitors came was not a shameful object — it was the object that required explanation, and explanation was expensive in ways that varied by the year and who was doing the explaining.'
+      : 'Your grandmother stopped speaking Northern Sami in public somewhere in the 1950s. She did not stop speaking it at home entirely, but home was a specific category that the door closed on. What she carried was not hidden from you — it was held carefully. You have grown up knowing what you are and not always knowing what to do with that knowledge in rooms that have no category for it.',
+    choices: [
+      {
+        text: 'You begin to say it openly. This is who you are and the explanation is the other person\'s work now.',
+        tag: 'reclaim',
+        outcome: 'The explanation varies by audience. Some are curious. Some are dismissive. A few have questions that surprise you with their precision. The saying-it is its own thing, separate from the responses.',
+        effect: (p) => { p.m += 6; p.s += 4; p.addFlag('sami_identity_reclaimed'); p.setMem('samiHidden', true); },
+      },
+      {
+        text: 'The calculation remains complicated. Some rooms are not the place for it.',
+        tag: 'navigate',
+        outcome: 'You continue to navigate this. The navigation is not shame — it is an accurate reading of which rooms have room for you.',
+        effect: (p) => { p.r += 4; p.m -= 2; p.setMem('samiHidden', true); },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'ind_sami_language_return',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      G.character.ethnicity === 'sami' &&
+      ['Norway', 'Sweden'].includes(G.character.country?.name) &&
+      G.flags.has('language_lost') &&
+      G.currentYear >= 1992 &&
+      G.age >= 30 &&
+      !G.mem?.samiLangReturn,
+    text: 'The Sami Languages Act gave Northern Sami co-official status in certain municipalities. There are classes now — adult learners, most of them in the same position, which is: it was spoken in the house when they were small, and then it was not. The teacher is younger than you are. Some of what she teaches arrives in the room already — words attached to specific sensory memories that you did not know you had retained.',
+    choices: null,
+    effect: (p) => { p.m += 8; p.e += 5; p.r += 4; p.addFlag('sami_language_returned'); p.setMem('samiLangReturn', true); },
+  },
+
+  {
+    id: 'ind_sami_late',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      G.character.ethnicity === 'sami' &&
+      ['Norway', 'Sweden'].includes(G.character.country?.name) &&
+      G.age >= 60 &&
+      !G.mem?.samiLate,
+    text: (G) => {
+      if (G.flags.has('sami_language_returned')) {
+        return 'The language came back, partially. Enough to speak to your grandchildren in — a sentence here, the names of things, the specific word for the weather that Northern Sami has and Norwegian does not. It did not come back the way it was. It came back the way things come back: changed by the years it was gone, arriving as a living thing that has been through something rather than the preserved thing you thought you were recovering.'
+      }
+      if (G.flags.has('sami_boarding_survivor')) {
+        return 'What the boarding school took from you can be calculated and the calculation is not short. The language is the most visible item on the list — the direct line to the grandmother, the naming systems for animals and weather and terrain that have no equivalent. But there are things on the list that are harder to name: the specific way of knowing a landscape that requires the right words, and the relationship to time that the Sami calendar encodes. You carry what you retained. You know what you did not retain.'
+      }
+      return 'You are what you are, in the way the twentieth century made it possible and impossible to be. The Parliament exists now. The language has legal status. Your grandchildren are learning it in school, imperfectly but in school. What the century did cannot be undone by these things. What the century did also did not end here — it ended differently than it began.'
+    },
+    choices: null,
+    effect: (p) => { p.r += 6; p.e += 4; p.m += 3; p.setMem('samiLate', true); },
+  },
+
 ]

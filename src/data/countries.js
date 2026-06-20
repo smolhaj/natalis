@@ -150,8 +150,9 @@ export const COUNTRIES = [
     regimeHistory: [],
     religionWeights: { christian_protestant: 0.20, secular: 0.65, atheist: 0.12, muslim_sunni: 0.04 },
     ethnicGroups: [
-      { id: 'nordic', name: 'Nordic', share: 0.85 },
-      { id: 'immigrant', name: 'Immigrant', share: 0.15 },
+      { id: 'nordic', name: 'Nordic', share: 0.84 },
+      { id: 'sami', name: 'Sami', share: 0.005 },
+      { id: 'immigrant', name: 'Immigrant', share: 0.155 },
     ],
     casteSystem: false,
     lgbtqCriminalized: false,
@@ -175,7 +176,8 @@ export const COUNTRIES = [
     regimeHistory: [],
     religionWeights: { christian_protestant: 0.20, secular: 0.65, atheist: 0.12, muslim_sunni: 0.04 },
     ethnicGroups: [
-      { id: 'nordic', name: 'Nordic', share: 0.87 },
+      { id: 'nordic', name: 'Nordic', share: 0.855 },
+      { id: 'sami', name: 'Sami', share: 0.015 },
       { id: 'immigrant', name: 'Immigrant', share: 0.13 },
     ],
     casteSystem: false,

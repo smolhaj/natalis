@@ -11482,6 +11482,12 @@ function buildYearTexture(state) {
       ? 'What the work is and what you thought it would be are different in both directions — easier in some ways, harder in others that you could not have anticipated from outside.'
       : 'The years in the sector gave you a specific understanding of money: how fast it moves, how little it sticks, how the urgency of the immediate always outbids the logic of the long-term.',
   ])
+  if (F.has('sami_language_returned') && Math.random() < 0.18) return pick([
+    'A word comes back unbidden — attached to a smell, the specific quality of light in a particular month. You did not know you still had it. The language is not restored; it was never going to be restored. But pieces of it arrive this way, in their original sensory context, and each arrival is its own small thing.',
+    phase === 'midlife'
+      ? 'You speak Northern Sami in the class once a week. Outside the class, mostly not — there are not many people here who would follow you. But the practice is changing something in how you move through the language that does not end when the class does.'
+      : 'Your grandchildren have some of it now — taught in school, imperfectly, alongside Norwegian. When they use a word you recognise from childhood, the recognition is not quite happiness and not quite grief. It is both things, briefly, and then it passes.',
+  ])
   if (F.has('fgm_broke_cycle') && Math.random() < 0.18) return pick([
     'Your daughter has reached the age your mother organized everything around. Nothing is happening. The family has stopped asking. What you gave her is something you cannot name directly, because the naming would require acknowledging too precisely what was done to you. You know what you gave her.',
     phase === 'midlife'

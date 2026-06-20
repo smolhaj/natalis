@@ -13471,6 +13471,56 @@ export const FLAG_REGISTRY = {
     notes: 'Set by ft27_moneylender_ongoing first choice.',
   },
 
+  // ── SAMI ARC (NORWAY / SWEDEN) ───────────────────────────────────────────────
+
+  sami_boarding_survivor: {
+    weight: 'major',
+    category: 'adversity',
+    description: 'Survived the Norwegian or Swedish boarding school (internatskole) where Sami language and identity were systematically suppressed, 1920–1970.',
+    intent: 'event',
+    notes: 'Set by ind_sami_boarding alongside language_lost. Changes ind_sami_hidden_identity prose and ind_sami_late prose.',
+  },
+
+  sami_reindeer_knowledge: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Holds the specific embodied knowledge of the reindeer migration — reading ice, weather, terrain — learned by presence rather than instruction.',
+    intent: 'none',
+    notes: 'Set by ind_sami_reindeer_migration.',
+  },
+
+  sami_alta_witness: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Witnessed or participated in the Alta dam controversy 1979–82, the galvanising moment of modern Sami political organization.',
+    intent: 'none',
+    notes: 'Set by both choices of ind_sami_alta.',
+  },
+
+  sami_parliament_moment: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Present (in some sense) for the opening of the Sami Parliament (Sámediggi) in 1989 and King Olav V\'s acknowledgment of state injustice.',
+    intent: 'none',
+    notes: 'Set by ind_sami_parliament_1989.',
+  },
+
+  sami_identity_reclaimed: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Began saying it openly — in rooms that had no prior category for it, making the explanation the other person\'s work.',
+    intent: 'none',
+    notes: 'Set by ind_sami_hidden_identity reclaim choice.',
+  },
+
+  sami_language_returned: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Re-learned Northern Sami as an adult — words arriving with sensory memories attached; the language came back changed, as living things do.',
+    intent: 'texture',
+    notes: 'Set by ind_sami_language_return. Changes ind_sami_late prose. Needs year texture in buildYearTexture().',
+  },
+
   // ── FGM ARC: FEMALE GENITAL CUTTING ──────────────────────────────────────────
 
   fgm_underwent: {
