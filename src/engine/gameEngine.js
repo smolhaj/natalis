@@ -11387,6 +11387,69 @@ function buildYearTexture(state) {
       ? 'The body that did the work has a record of the work. You manage it. You have always managed it. The management has become more complex.'
       : 'Rain means no work. Holiday means no work. The landowner\'s decision means no work. You have learned to manage the gap between the days that pay and the days that don\'t.',
   ])
+  if (F.has('bonded_labor') && !F.has('bonded_labor_freed') && Math.random() < 0.25) return pick([
+    'The ledger exists. You have not seen it. The owner reads from it at the end of the month and the balance is approximately what it was the month before. You have learned to stop calculating.',
+    'The debt is a specific number that does not decrease. The work services the interest. The principal stays. This is the structure and the structure is not an accident.',
+    phase === 'young_adult'
+      ? 'You know the arithmetic of a trap: not a word for it, just the knowledge of what the numbers do when the terms are what the terms are. You carry this knowledge in your body before you carry it in words.'
+      : 'The years in the ledger are behind you. What they left is not a number — it is a reflex: the impulse to calculate terms before you agree to anything, the distrust of balances you cannot verify yourself.',
+    'The owner is also the landlord. The landlord is also the person who sells your family rice. The concentration of who controls what — you understand this before you have a word for it.',
+  ])
+  if (F.has('bonded_labor_freed') && Math.random() < 0.2) return pick([
+    'The certificate of release was a piece of paper. The paper was real. The freedom was real. What has taken longer to understand is that the arithmetic lives in you separately from the situation that created it.',
+    phase === 'late_life'
+      ? 'You count money in a way your grandchildren find excessive. You have not explained why. The explanation would take longer than they have patience for and would not land the way you need it to.'
+      : 'Free from the debt does not mean free from the way the debt shaped how you hold money, how you read terms, how you watch the space between what someone says and what the paper says.',
+  ])
+  if (F.has('sharecrop_generation') && Math.random() < 0.22) return pick([
+    'November is when the settlement comes. You know what the book will say before he opens it. The knowing does not make it easier, but it removes the surprise, which is something.',
+    'The commissary price and the seed price and the mule rental and the weight of the cotton — all of these numbers belong to the landowner. The number that belongs to you is what is left, which is nothing or less than nothing.',
+    phase === 'late_life'
+      ? 'The specific arithmetic of the sharecrop ledger — how it always resolved the same way regardless of the harvest — is something you understand now in a broader vocabulary than you had then. Then you just knew it was rigged. Now you can name how.'
+      : 'You plant more this year. You have decided this is the year the numbers will be different. You have decided this before.',
+  ])
+  if (F.has('great_migration') && Math.random() < 0.18) return pick([
+    'The city is not what the letter said and also exactly what the letter said. The letter described the wages. The letter did not describe February.',
+    'You work beside men from Mississippi, from Georgia, from Alabama. You do not talk much about where you came from. The not-talking is a kind of talking.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'You made it here and stayed here and built a life here. The people who stayed where you left — you think about them differently than you think about yourself. The thinking is not quite guilt. It is something adjacent.'
+      : 'The plant is loud and the work is hard and the check is real. The check is the thing that the letter was about and the letter was right about that part.',
+  ])
+  if (F.has('ngo_worker') && Math.random() < 0.2) return pick([
+    'The field report is accurate. What the field report becomes after it leaves your outbox is something you have stopped being able to predict.',
+    'The gap between what you can measure and what you know matters — you live in that gap every working day. The job is to act anyway.',
+    phase === 'young_adult'
+      ? 'You came to this work because you wanted to be useful. You are still finding out what useful means when the systems you are working against are larger than the programmes you are running.'
+      : 'The work extracts something. You know this. The colleagues who have been doing it longest have learned either to replenish it actively or to stop noticing the extraction, which is not the same as replenishing it.',
+    'There are people in the project area you will remember for the rest of your life who do not know your name. This asymmetry is part of what the work is.',
+  ])
+  if (F.has('ngo_local_staff') && Math.random() < 0.2) return pick([
+    'You know this community. The international staff arrive and leave and you remain. The knowledge asymmetry between you and the people you work with is obvious and is not discussed.',
+    'The salary gap is a documented policy. You have read the policy. The policy explains it in language about cost-of-living adjustments that does not quite cover what you feel when you read it.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'The international staff whose bags you helped carry at the gate — some of them write to you still. Some of them have written papers about this place. The papers cite data. The data came through you. Your name is in the acknowledgements.'
+      : 'You translate more than language. You translate context, history, power, what is safe to say and to whom. The translation budget covers the language part.',
+  ])
+  if (F.has('aw_burnout_endured') && Math.random() < 0.18) return pick([
+    'The specific exhaustion of this work is not like other exhaustions. It is not tiredness — it is the weight of what you have witnessed that cannot be put down.',
+    phase === 'late_life'
+      ? 'You stayed in the sector. You stayed when others left. You do not know entirely why. Partially the work still matters. Partially you are not sure you are capable of doing anything else.'
+      : 'You have developed systems for managing what you carry: the habit of running, the friend who will listen, the rule about not checking email after nine. The systems help. They are not a solution.',
+  ])
+  if (F.has('girmitiya_heritage') && Math.random() < 0.2) return pick([
+    'Your great-grandparents came on indenture — the girmit, the agreement. Five years of contracted labour in exchange for passage. The passage was one way.',
+    'Fiji is home. It is the only place that has ever been home. The legal and political question of belonging here is separate from that fact and runs alongside it constantly.',
+    phase === 'late_life'
+      ? 'You have outlived several versions of what belonging here meant. The constitution changed. The coup changed it again. The land lease expired. And yet here is where you are buried, or will be.'
+      : 'The cane fields and the girmitiya and the indenture — you know this history in a particular way, as something that was done to people who became you.',
+  ])
+  if (F.has('fiji_coup_displaced_politically') && Math.random() < 0.2) return pick([
+    'The coup was in 1987 and the constitution that followed was explicit about who the country was for. You live here. The country is not entirely for you.',
+    'Fiji-born, Fiji-schooled, Fiji everything — and then the laws changed and the everything acquired an asterisk.',
+    phase === 'late_life'
+      ? 'The children who left after the coups are in Australia, in New Zealand, in Canada. You stayed. The staying was not a simple decision and it has not become a simple decision with time.'
+      : 'You have developed a working relationship with the asterisk. It is not acceptance. It is the management of something you cannot change by force of feeling.',
+  ])
 
   // ─── NEIGHBORHOOD TIER TEXTURE ───────────────────────────────────────────────
   {
@@ -13345,6 +13408,8 @@ function checkIllnessRisk(state) {
             p.m += t.happinessEffect ?? 0
             if (willSucceed) {
               p.h += Math.abs(t.healthEffect ?? 0)
+              // Set survivor flag for illnesses that have one
+              if (illness.survivorFlag) p.addFlag(illness.survivorFlag)
             } else {
               p.h -= Math.abs(t.healthEffect ?? 0)
               p.addFlag(illness.flag)
@@ -13397,22 +13462,19 @@ function tickEnrollment(state) {
       s.flags = [...new Set([...s.flags, 'university_graduate', ...(isFirstGen ? ['first_gen_graduate'] : [])])]
       s.mem = { ...s.mem, graduated: 'university', uniField: field, uniGpa: s.gpa ?? 2.5 }
       s.stats = { ...s.stats, smarts: clamp(s.stats.smarts + 5, 0, 100), happiness: clamp(s.stats.happiness + 12, 0, 100) }
-      const gpaStr = s.gpa ? ` Final GPA: ${s.gpa.toFixed(2)}.` : ''
-      s.log = [...s.log, { age: s.age, text: `🎓 You graduate from university with a degree in ${field}.${isFirstGen ? ' The first in your family to do so.' : ''}${gpaStr}`, isKey: true }]
+      const graduationText = isFirstGen
+        ? `You are the first in your family to hold a university degree.`
+        : `You finish university. The years of it are behind you now.`
+      s.log = [...s.log, { age: s.age, text: graduationText, isKey: true }]
     } else {
       s.education = { ...s.education, level: 'secondary', field, enrolled: null }
       s.flags = [...new Set([...s.flags, 'vocational_trained', `trade_${field}`])]
       s.mem = { ...s.mem, graduated: 'vocational', vocField: field }
       s.stats = { ...s.stats, smarts: clamp(s.stats.smarts + 3, 0, 100), happiness: clamp(s.stats.happiness + 8, 0, 100) }
-      s.log = [...s.log, { age: s.age, text: `🔧 You complete your ${field} certification.`, isKey: true }]
+      s.log = [...s.log, { age: s.age, text: `The training finishes. You are qualified now. The work can begin.`, isKey: true }]
     }
   } else {
     s.education = { ...s.education, enrolled: { type, field, year: newYear } }
-    if (type === 'university') {
-      s.log = [...s.log, { age: s.age, text: `University — year ${newYear} of 4 (${field}).`, isKey: false }]
-    } else {
-      s.log = [...s.log, { age: s.age, text: `Trade school — year ${newYear} of 2 (${field}).`, isKey: false }]
-    }
   }
   return s
 }
@@ -13675,9 +13737,10 @@ export function tick(state) {
   // Debt interest accrual
   if (s.debt > 0) {
     const interestRate = (s.mem?.debtType === 'mortgage') ? 0.06 : 0.18
+    const preInterestDebt = s.debt
     const interest = Math.round(s.debt * interestRate)
     s.debt = s.debt + interest
-    s.money = (s.money ?? 0) - Math.round(s.debt * 0.05) // minimum payment
+    s.money = (s.money ?? 0) - Math.round(preInterestDebt * 0.05) // minimum payment (5% of pre-interest balance)
     if (s.money < -8000) {
       s.flags = [...new Set([...s.flags, 'bankrupt', 'declared_bankrupt', 'debt_spiral_survived'])]
       s.debt = 0
@@ -13768,7 +13831,7 @@ export function tick(state) {
       [m.act_count_donate    ?? 0, 5,  'generous'],
       [m.act_count_read      ?? 0, 10, 'avid_reader'],
       [m.act_count_journal   ?? 0, 8,  'reflective_writer'],
-      [m.act_count_gym + (m.act_count_join_sports_team ?? 0) + (m.act_count_yoga ?? 0) ?? 0, 10, 'fitness_devotee'],
+      [(m.act_count_gym ?? 0) + (m.act_count_join_sports_team ?? 0) + (m.act_count_yoga ?? 0), 10, 'fitness_devotee'],
       [m.act_count_philosophy?? 0, 6,  'philosophical_mind'],
       [m.act_count_networking?? 0, 6,  'networker'],
       [m.act_count_save      ?? 0, 5,  'disciplined_saver'],
@@ -14065,7 +14128,7 @@ export function tick(state) {
     const shuffled = [...s.partner.traits].sort(() => Math.random() - 0.5)
     for (const trait of shuffled.slice(0, 3)) {
       const lines = TRAIT_PROSE[trait]
-      if (lines) moments.push(pick(lines))
+      if (lines) moments.push(pickFrom(lines))
     }
     s.mem = { ...(s.mem ?? {}), partnerMoments: moments, partnerMomentsGenerated: true }
   }
@@ -14074,7 +14137,7 @@ export function tick(state) {
     const existing = s.mem.partnerMoments ?? []
     const trait = pickFrom(s.partner.traits.filter(t => TRAIT_PROSE[t]))
     if (trait) {
-      const newMoment = pick(TRAIT_PROSE[trait])
+      const newMoment = pickFrom(TRAIT_PROSE[trait])
       if (!existing.includes(newMoment)) {
         s.mem = { ...s.mem, partnerMoments: [...existing, newMoment].slice(-12) }
       }

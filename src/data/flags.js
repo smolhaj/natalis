@@ -12023,6 +12023,8 @@ export const FLAG_REGISTRY = {
     description: 'Exposed or bore witness to systematic corruption at close range — the knowledge of how the money actually moves.',
     intent: 'none',
     notes: 'Cross-cutting. Set by career-regime, Mani Pulite, and political events.',
+  },
+
   // ── CROSSCUTTING LIFE CONDITION FLAGS ──────────────────────────────────────
   poverty_childhood: {
     weight: 'major',
@@ -12955,6 +12957,304 @@ export const FLAG_REGISTRY = {
     description: 'Was alive and old enough to feel the Nkrumah era in Ghana — the independence euphoria and the 1966 coup that ended it.',
     intent: 'event',
     notes: 'Set by events_west_africa.js. Gates ftw26_nkrumah_late.',
+  },
+
+  // ── AID WORKER ARC ──────────────────────────────────────────────────────────
+
+  ngo_worker: {
+    weight: 'major',
+    category: 'career',
+    description: 'Works or worked in the humanitarian/NGO sector — the gate flag for the entire aid worker arc.',
+    intent: 'event',
+    notes: 'Set by aw_entry_international or aw_local_entry. Gates all subsequent aid worker events.',
+  },
+
+  aw_international_staff: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Entered the aid sector as international (expatriate) staff, deployed from a wealthy country.',
+    intent: 'texture',
+    notes: 'Set by aw_entry_international. Branches text in aw_salary_gap_intl, aw_evacuation.',
+  },
+
+  ngo_local_staff: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Works as national/local staff within an NGO — the same work, different passport, different pay structure.',
+    intent: 'texture',
+    notes: 'Set by aw_local_entry. Branches text/choices in aw_salary_gap_local, aw_evacuation.',
+  },
+
+  ngo_raised_pay_gap: {
+    weight: 'minor',
+    category: 'career',
+    description: 'Formally raised the national/international salary gap with management — it was noted; nothing changed.',
+    intent: 'none',
+    notes: 'Set by aw_salary_gap_local second choice. Late-life texture: the thing you said that was heard differently than you said it.',
+  },
+
+  aw_evacuated_and_left: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Was evacuated as international staff while national colleagues were left behind to shelter in place.',
+    intent: 'event',
+    notes: 'Set by aw_evacuation (international branch). Moral weight: the vehicle moving, the colleague watching.',
+  },
+
+  aw_left_behind: {
+    weight: 'major',
+    category: 'moral',
+    description: 'Was left behind during an evacuation order — sheltered in place while international colleagues were extracted.',
+    intent: 'event',
+    notes: 'Set by aw_evacuation (local branch). The asymmetry that the job description did not mention.',
+  },
+
+  aw_programme_ended: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Managed the closure of a humanitarian programme — not because the crisis ended but because funding shifted.',
+    intent: 'none',
+    notes: 'Set by aw_funding_cut (both choices). The families heard at approximately the same time as the flight home.',
+  },
+
+  aw_dissented: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Formally flagged internal dissent about an inadequate closure protocol — noted, unchanged.',
+    intent: 'none',
+    notes: 'Set by aw_funding_cut second choice. The thing on the record.',
+  },
+
+  aw_burnout_break: {
+    weight: 'moderate',
+    category: 'health',
+    description: 'Took leave from humanitarian work due to compassion fatigue — the switch that does not turn fully on.',
+    intent: 'none',
+    notes: 'Set by aw_burnout first choice.',
+  },
+
+  aw_left_sector: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Left the humanitarian sector entirely — the guilt and the relief both present and honest.',
+    intent: 'none',
+    notes: 'Set by aw_burnout second choice.',
+  },
+
+  aw_burnout_endured: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Continued aid work through compassion fatigue — the work got done; unclear whether this was commitment.',
+    intent: 'none',
+    notes: 'Set by aw_burnout third choice.',
+  },
+
+  // ── FIJI ARC ─────────────────────────────────────────────────────────────────
+
+  girmitiya_heritage: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Indo-Fijian character who carries the inherited memory of girmitiya indenture — the ships, the girmit paper, the reason for staying.',
+    intent: 'none',
+    notes: 'Set by fj_girmitiya_memory. Contextual identity marker; referenced in fj_late_life prose.',
+  },
+
+  cane_farming_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up in a cane-farming family on leased iTaukei land — the lease countdown as background fact.',
+    intent: 'event',
+    notes: 'Set by fj_cane_season. Gates fj_land_lease_expires.',
+  },
+
+  fiji_1987_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was an adult during the 1987 Rabuka coup — the first time Fiji\'s democratic result was militarily overturned.',
+    intent: 'event',
+    notes: 'Set by fj_1987_coup_indo or fj_1987_coup_itaukei. Gates fj_late_life.',
+  },
+
+  fiji_coup_displaced_politically: {
+    weight: 'major',
+    category: 'political',
+    description: 'Indo-Fijian whose elected government was removed by coup — the result stands in the record; what stands in the present is different.',
+    intent: 'none',
+    notes: 'Set by fj_1987_coup_indo. Contextual political marker; contributes to fj_late_life prose register.',
+  },
+
+  fiji_land_lost: {
+    weight: 'major',
+    category: 'economic',
+    description: 'ALTO lease was not renewed — left the cane land their family had farmed for thirty years.',
+    intent: 'none',
+    notes: 'Set by fj_land_lease_expires first choice. Contextual economic marker.',
+  },
+
+  fiji_lease_renewed: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Successfully petitioned for land lease renewal — thirty more years, the count starts again.',
+    intent: 'none',
+    notes: 'Set by fj_land_lease_expires second choice.',
+  },
+
+  fiji_emigrated: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Left Fiji as part of the Indo-Fijian emigration wave (1987–2010) — Brisbane, Auckland, Toronto, the specific knowledge of being Fijian Indian elsewhere.',
+    intent: 'event',
+    notes: 'Set by fj_emigration first choice. Gates fj_late_life emigrant branch.',
+  },
+
+  fiji_stayed_on: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Chose to remain in Fiji despite the emigration wave — part of what was left; watched others leave for years.',
+    intent: 'none',
+    notes: 'Set by fj_emigration second choice. Referenced in fj_late_life stayed branch prose.',
+  },
+
+  fiji_2000_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was adult during the Speight coup of 2000 — 56 days of George Speight holding parliament and a prime minister hostage.',
+    intent: 'none',
+    notes: 'Set by fj_2000_coup. Contextual historical marker; contributing weight to fj_late_life.',
+  },
+
+  // ── WATER / INFRASTRUCTURE ARC ───────────────────────────────────────────────
+  // Note: water_walk_childhood is set by events_rural_texture.js (rural_water_walk).
+  // These flags cover the downstream/extended layer.
+
+  drought_childhood: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up with annual dry-season water scarcity — the hierarchy of thirst, going to sleep still thirsty.',
+    intent: 'none',
+    notes: 'Set by wi_dry_season. Contextual marker for rural water hardship.',
+  },
+
+  village_electrified: {
+    weight: 'major',
+    category: 'historical',
+    description: 'The village got electricity during childhood or adolescence — one of the largest single quality-of-life changes in a person\'s life.',
+    intent: 'none',
+    notes: 'Set by wi_electrification or rural_texture electrification events. Guards against re-electrification events.',
+  },
+
+  community_organiser: {
+    weight: 'moderate',
+    category: 'social',
+    description: 'Took on a community leadership role — the pump committee, the neighbourhood meeting, the person who agreed to decide.',
+    intent: 'none',
+    notes: 'Set by wi_pump_committee first choice, and other community organizing events.',
+  },
+
+  water_war_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Experienced the Cochabamba Water War 2000 — the uprising that reversed the privatization of the city\'s water supply.',
+    intent: 'none',
+    notes: 'Set by wi_cochabamba_water_war protest choice.',
+  },
+
+  // ── BONDED LABOR ARC ─────────────────────────────────────────────────────────
+
+  bonded_labor: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Entered bonded labor — a debt taken during crisis at terms that make repayment structurally impossible, servicing interest without touching principal.',
+    intent: 'event',
+    notes: 'Set by bl_initial_loan, bl_carpet_child, bl_sharecrop_ledger. Gates bl_kiln_life, bl_debt_inherited, bl_abolition_gap, bl_late_reckoning.',
+  },
+
+  bonded_kiln: {
+    weight: 'major',
+    category: 'labor',
+    description: 'Works in a brick kiln under bonded labor conditions — the quota of one thousand bricks, the ledger that never resolves.',
+    intent: 'event',
+    notes: 'Set by bl_initial_loan first choice. Gates bl_kiln_life.',
+  },
+
+  bonded_generational: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Inherited a parent\'s bonded debt — the mechanism that makes the trap intergenerational.',
+    intent: 'none',
+    notes: 'Set by bl_debt_inherited first choice. The ledger with the new name.',
+  },
+
+  bonded_debt_disputed: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Formally disputed the inheritance of a bonded debt — the magistrate hearing scheduled eight months away, continuing to work while it is pending.',
+    intent: 'none',
+    notes: 'Set by bl_debt_inherited second choice. bl_abolition_gap fires regardless (gates on bonded_labor).',
+  },
+
+  bonded_release_process: {
+    weight: 'major',
+    category: 'legal',
+    description: 'Engaged with the NGO process for legal release from bonded labor — names given, reports filed, the process beginning.',
+    intent: 'event',
+    notes: 'Set by bl_abolition_gap first choice. Gates bl_liberation.',
+  },
+
+  bonded_labor_freed: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Received a certificate of release from bonded labor — the debt cancelled, the paper real, the daily navigation of the former owner\'s presence ongoing.',
+    intent: 'none',
+    notes: 'Set by bl_liberation (both choices). The freedom that comes with a particular kind of exposure.',
+  },
+
+  refused_bonded_debt: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Refused a bonded debt loan despite crisis — found another way; not bound.',
+    intent: 'none',
+    notes: 'Set by bl_initial_loan second choice.',
+  },
+
+  child_laborer: {
+    weight: 'major',
+    category: 'childhood',
+    description: 'Worked as a child laborer — the carpet loom, the kiln, the debt that was the father\'s but the work that was theirs.',
+    intent: 'none',
+    notes: 'Set by bl_carpet_child. The fingers the right size for the knots.',
+  },
+
+  sharecrop_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Black American sharecropper in the South — the settlement ledger, the debt that goes into next year, the counting that never comes out ahead.',
+    intent: 'event',
+    notes: 'Set by bl_sharecrop_ledger. Gates bl_sharecrop_north.',
+  },
+
+  great_migration: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Left the South for Northern industrial cities during the Great Migration — the check in real money, the different cold.',
+    intent: 'none',
+    notes: 'Set by bl_sharecrop_north first choice. Overlaps with Black American historical arc.',
+  },
+
+  stayed_sharecrop: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Chose to stay in the South while others left — the community, the family, the ongoing ledger.',
+    intent: 'none',
+    notes: 'Set by bl_sharecrop_north second choice.',
+  },
+
+  challenged_power: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'Asked to see the ledger — questioned the accounting of someone with power over them.',
+    intent: 'none',
+    notes: 'Set by bl_sharecrop_ledger first choice.',
   },
 
 }

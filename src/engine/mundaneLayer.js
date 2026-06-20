@@ -131,7 +131,7 @@ export function buildMundaneLayer(state) {
   // ── ERA TECHNOLOGY ─────────────────────────────────────────────────────────
   // Gated by decade + archetype. The texture of which tools the world provides.
 
-  addIf(era <= 1919 && !isWealthyArch,
+  addIf(era <= 1919 && !isWealthyArch && phase !== 'early_childhood',
     'The lamp needs trimming. This is the work of the evening.',
     'News of what has happened elsewhere takes days to arrive.',
     'Water is fetched, not delivered. The fetching organises the morning.',
@@ -326,7 +326,7 @@ export function buildMundaneLayer(state) {
 
   // ── SOCIOECONOMIC ──────────────────────────────────────────────────────────
 
-  addIf(isPoor,
+  addIf(isPoor && phase !== 'early_childhood',
     'The calculation of the week\'s food happens before the buying. The margin between enough and not enough is small.',
     'The phone is shared — with the household, or with a neighbour. Calls are arranged, not spontaneous.',
     'The thing that broke will be repaired. Replacement is not the first option.',
@@ -335,24 +335,24 @@ export function buildMundaneLayer(state) {
     'Rain on the roof is the loudest thing. Tonight it is the loudest thing.',
     'You send what you can. Home needs what you send.',
   )
-  addIf(isPoor && isRural,
+  addIf(isPoor && isRural && phase !== 'early_childhood',
     'The queue for water or kerosene or the clinic is the first appointment of the day.',
     'The shoes need resoling. This is done. The shoes continue.',
   )
-  addIf(isWorkingClass,
+  addIf(isWorkingClass && phase !== 'early_childhood',
     'The packed lunch is the economics of the day: made at home, eaten at work, nothing spent on a meal.',
     'Overtime was offered. The calculation took a moment. You said yes.',
     'The bill arrived. The bill is paid. The paying of it leaves something specific in the account.',
     'The week ends and the week was, in the main, fine. This is not a small thing.',
     'The bus fare is counted before the bus is caught.',
   )
-  addIf(isWealthy,
+  addIf(isWealthy && phase !== 'early_childhood',
     'The account was checked without anxiety. This continues to be unusual on a global scale. You know this intermittently.',
     'The choice is between two things of similar quality. The price is not the deciding factor.',
     'The donation was made. The amount was decided in a moment without significant calculation.',
     'The restaurant was chosen before the price was considered. This continues to be a privilege.',
   )
-  addIf(isWealthyArch && isWealthy,
+  addIf(isWealthyArch && isWealthy && phase !== 'early_childhood',
     'The cleaner comes on a scheduled day. Their name is known. The arrangement is professional and also human.',
     'The annual leave is taken. The destination was agreed months ago. The planning was part of the pleasure.',
   )
@@ -1540,7 +1540,7 @@ export function buildMundaneLayer(state) {
 
   // ── WAR AND CONFLICT TEXTURE ───────────────────────────────────────────────
 
-  addIf(arch === 'conflict_zone' || F('displacement') || F('war_survivor'),
+  addIf((arch === 'conflict_zone' || F('displacement') || F('war_survivor')) && phase !== 'early_childhood',
     'The checkpoint: the documents, the wait, the face of the soldier or the militia, the calculation of how much to say.',
     'The sound at night that might be distant thunder and might not be. You have learned not to run until the third.',
     'The building on that street has been gone for two years. You still see it when you pass.',
@@ -1712,7 +1712,7 @@ export function buildMundaneLayer(state) {
 
   // ── ILLNESS WATCHING ───────────────────────────────────────────────────────
 
-  addIf(F('caregiver') || F('has_chronic_condition'),
+  addIf((F('caregiver') || F('has_chronic_condition')) && phase !== 'early_childhood',
     'The medication schedule becomes yours even though the medication is not for you.',
     'You have learned to read a new set of signs: the pallor, the hesitation on the stairs, the careful way of sitting.',
     'The appointment is prepared for: the questions written down, the history brought, the answers anticipated.',
@@ -2913,7 +2913,7 @@ export function buildMundaneLayer(state) {
   )
 
   // ── FIRST GENERATION PROFESSIONAL ─────────────────────────────────────────
-  addIf(F('first_gen_educated') || F('poverty_childhood'),
+  addIf((F('first_gen_educated') || F('poverty_childhood')) && phase !== 'early_childhood',
     'The office and the accent and the clothes and the calibration of how much to explain about where you started.',
     'The things that your colleagues assume as given that you did not come with. You learned them. The learning is invisible now.',
   )

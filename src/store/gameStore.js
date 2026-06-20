@@ -326,6 +326,9 @@ export const useGameStore = create((set, get) => ({
       banked: initializeBanked(character),
       hardCurrencyReserve: 0,
       workStatus: null,
+      echoQueue: [],
+      legacy: 0,
+      currentProject: null,
     })
   },
 
@@ -434,6 +437,12 @@ export const useGameStore = create((set, get) => ({
       banked: initializeBanked(character),
       hardCurrencyReserve: 0,
       workStatus: null,
+      desire: null,
+      political_leaning: null,
+      conditions: [],
+      echoQueue: [],
+      legacy: 0,
+      currentProject: null,
     })
   },
 
