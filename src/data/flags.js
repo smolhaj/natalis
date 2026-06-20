@@ -8159,9 +8159,57 @@ export const FLAG_REGISTRY = {
   one_child_policy_resisted: {
     weight: 'moderate',
     category: 'family',
-    description: 'Had a second child despite the one-child policy — fines, job consequences, social pressure.',
+    description: 'Had a second child despite the one-child policy — paid the fine, accepted the consequences.',
     intent: 'year_texture',
-    notes: 'Set by cn_one_child_decision (have second choice). 1980–2015.',
+    notes: 'Set by cn_one_child_decision (pay fine choice). 1980–2015.',
+  },
+
+  china_hidden_second_child: {
+    weight: 'major',
+    category: 'adversity',
+    description: 'Had a second child in secret under the one-child policy — unregistered, no hukou, no legal existence for the child.',
+    intent: 'both',
+    notes: 'Set by cn_one_child_decision (hide the birth choice). Triggers heihaizi arc: schoolgate, inspection, 2015 policy window, late reckoning. Year texture in buildYearTexture.',
+  },
+
+  china_heihaizi_school_found: {
+    weight: 'moderate',
+    category: 'family',
+    description: 'Paid for private school when the unregistered child was denied public enrollment.',
+    intent: 'none',
+    notes: 'Set by cn_heihaizi_schoolgate. One outcome of the heihaizi arc.',
+  },
+
+  china_heihaizi_school_wall: {
+    weight: 'moderate',
+    category: 'adversity',
+    description: 'The hidden second child was denied schooling — no hukou, no enrollment.',
+    intent: 'none',
+    notes: 'Set by cn_heihaizi_schoolgate (can\'t pay choice). Hard outcome of the heihaizi arc.',
+  },
+
+  china_heihaizi_uncaught: {
+    weight: 'moderate',
+    category: 'moral',
+    description: 'The family planning inspection passed without discovering the unregistered child.',
+    intent: 'none',
+    notes: 'Set by cn_heihaizi_inspection. One escape outcome.',
+  },
+
+  china_heihaizi_fine_paid: {
+    weight: 'moderate',
+    category: 'adversity',
+    description: 'Discovered during a family planning inspection — the crushing fine for the unregistered second child.',
+    intent: 'none',
+    notes: 'Set by cn_heihaizi_inspection (caught choice). Several years\' salary in fines.',
+  },
+
+  china_heihaizi_registered: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Used the 2015 amnesty window to finally register the hidden second child — an ID card after a lifetime without one.',
+    intent: 'none',
+    notes: 'Set by cn_heihaizi_policy_2015. The resolution (partial) of the heihaizi arc.',
   },
 
   tiananmen_witness: {

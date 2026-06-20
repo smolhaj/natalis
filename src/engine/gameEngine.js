@@ -1957,6 +1957,14 @@ function buildYearTexture(state) {
       'The second child cost money and social standing. The child exists. The cost was paid.',
       'You kept the second child. The system had opinions about this. You had the child anyway.',
     ])
+    if (F.has('china_hidden_second_child') && Math.random() < 0.3) return pick([
+      F.has('china_heihaizi_registered')
+        ? 'The ID card arrived. You are still adjusting to a version of your child who exists on paper the same way they exist in the room.'
+        : 'The child has no number in any registry. The government\'s version of the household does not include them. Your version does.',
+      phase === 'late_life'
+        ? 'The years of the second child before the registration window. You can still locate the specific texture of the waiting.'
+        : 'When someone asks how many children you have, the pause before you answer is very small. Not everyone can hear it.',
+    ])
     if (F.has('great_leap_hunger') && Math.random() < 0.35) return pick([
       'The famine years are carried as a particular knowledge of the body — the body knows what permanent hunger is. It does not forget.',
       'The 1959 harvest. The quota that was met while the village starved. You were a child and the lesson was not intended for you. You learned it anyway.',
