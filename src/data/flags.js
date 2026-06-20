@@ -15173,4 +15173,70 @@ export const FLAG_REGISTRY = {
     notes: 'Set by sl_mongolia_dzud_winter.',
   },
 
+  // ── Batch 10 flags ────────────────────────────────────────────────────────
+
+  cyprus_displaced: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Displaced by the 1974 Cyprus division — three days to leave Kyrenia, the Turkish-Cypriot neighbours also leaving in the opposite direction, the checkpoint that opened in 2003 and was not crossed.',
+    intent: 'event',
+    notes: 'Set by sl_cyprus_1974_displacement. Follow-through: sl_cyprus_checkpoint_2003 fires at late_life.',
+  },
+
+  colonial_resistance: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Participated in clandestine resistance to colonial occupation — the information network, the shelter given, the people who disappeared, the survival that was not guaranteed.',
+    intent: 'year_texture',
+    notes: 'Set by sl_east_timor_resistance (resist branch).',
+  },
+
+  occupation_survived: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Survived a military occupation by keeping a low profile — the accommodations, the silences, the things not said; processed for years after independence.',
+    intent: 'year_texture',
+    notes: 'Set by sl_east_timor_resistance (survive branch).',
+  },
+
+  soviet_educated: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Educated at the Peoples\' Friendship University Moscow or equivalent — the scholarship, the first January, the friendship of peoples and its specific limits on the metro.',
+    intent: 'year_texture',
+    notes: 'Set by sl_african_student_ussr.',
+  },
+
+  indigenous_land_rights: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Living through a land and water rights dispute as an indigenous community member — the river that was always there, the water code that privatised it, the tension that continues.',
+    intent: 'year_texture',
+    notes: 'Set by sl_mapuche_water_rights.',
+  },
+
+  witnessed_ethnic_cleansing: {
+    weight: 'major',
+    category: 'grief',
+    description: 'Witnessed an ethnic cleansing through the diaspora network — the forty-kilometre convoy, the cars abandoned, an entire population crossing a border in three days.',
+    intent: 'year_texture',
+    notes: 'Set by sl_karabakh_exodus_2023.',
+  },
+
+  land_dispossessed: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Lost a farm or substantial land through state confiscation — the letter, the three months, the crop already in the ground, the workers whose housing was on the land, both the injustice and the justice of it simultaneously.',
+    intent: 'year_texture',
+    notes: 'Set by sl_zimbabwe_white_farmer_seizure.',
+  },
+
+  art_through_conflict: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Continued making art during active conflict nearby — the rumba in Kinshasa while the war was in the east; the music as the thing that is not the war, both necessary.',
+    intent: 'year_texture',
+    notes: 'Set by sl_drc_musician_war.',
+  },
+
 }

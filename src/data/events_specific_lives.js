@@ -3768,4 +3768,221 @@ export const SPECIFIC_LIFE_EVENTS = [
     choices: null,
     effect: (p) => { p.setMem('sl_mong_dzud', true); p.m -= 10; p.mo -= 5000; p.h -= 3; p.addFlag('dzud_survivor') },
   },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // MMM. CYPRUS 1974 — the line through the living room
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_cyprus_1974_displacement',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Cyprus' &&
+      G.currentYear >= 1974 && G.currentYear <= 1978 &&
+      G.age >= 18 && G.age <= 45 &&
+      !G.mem?.sl_cy_1974,
+    text: 'The Turkish military operation of July 1974 takes place over three days and divides the island into Turkish-controlled north and Greek-controlled south with a UN buffer zone between them. You are from Kyrenia, which is in the north. You have three days to leave. What you can carry in three days from a house is not the house. The Turkish-Cypriot neighbour family you have known since childhood is also leaving — south to north — and you watch them leave as they watch you leave and neither family knows what to say to the other because what happened to both of you was done by governments neither of you elected. You have not been back to Kyrenia. The checkpoint opened in 2003. You have not crossed it.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_cy_1974', true); p.m -= 10; p.r += 8; p.addFlag('cyprus_displaced') },
+  },
+
+  {
+    id: 'sl_cyprus_checkpoint_2003',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('cyprus_displaced') &&
+      G.currentYear >= 2003 && G.currentYear <= 2020 &&
+      G.age >= 50 &&
+      !G.mem?.sl_cy_cross,
+    text: 'The checkpoint at Ledra Street opened in April 2003, twenty-nine years after you left. You could go back to the house. You drove to the checkpoint and sat in the car for forty minutes and did not cross. You drove home. The house is there — you have seen the photographs that someone posted online, and someone else is living in it, a Turkish-Cypriot family who were placed there in 1975. This is also a displacement. Both displacements are real. You have sat with this for twenty-nine years and do not yet have a position on it that feels sufficient.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_cy_cross', true); p.m -= 4; p.e += 3; p.r += 6 },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // NNN. EAST TIMOR INDEPENDENCE — the generation that waited 24 years
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_east_timor_resistance',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'East Timor' &&
+      G.currentYear >= 1975 && G.currentYear <= 1999 &&
+      G.age >= 18 && G.age <= 40 &&
+      !G.mem?.sl_etimor_resist,
+    text: 'The Indonesian invasion came nine days after Portugal abandoned its colony in December 1975. The occupation lasts twenty-four years and kills between one hundred thousand and one hundred and eighty thousand people — a quarter of the Timorese population — through combat, famine, and disease. You are in the resistance or you are in the category of person who must decide whether to be in the resistance or what the alternative to being in the resistance is. The Falintil fighters are in the mountains. You are in Dili. The choice of where to be is also a choice.',
+    choices: [
+      {
+        text: 'Join the clandestine network in Dili. The resistance needs civilians as much as fighters.',
+        tag: 'resist',
+        outcome: 'The clandestine work is information and shelter and communication. It is not mountains and it is not safe. Several people you know disappear over the years. You do not disappear. The work continues.',
+        effect: (p) => { p.setMem('sl_etimor_resist', true); p.m -= 5; p.karma += 6; p.s += 3; p.addFlag('colonial_resistance') },
+      },
+      {
+        text: 'Keep your head down. Survive. Resistance is not the only form of survival.',
+        tag: 'survive',
+        outcome: 'You survive the occupation. The independence comes in 2002. What surviving required — the accommodations, the silences, the things not said — is something you process for years afterward.',
+        effect: (p) => { p.setMem('sl_etimor_resist', true); p.m -= 4; p.r += 5; p.addFlag('occupation_survived') },
+      },
+    ],
+    effect: null,
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // OOO. AFRICAN STUDENT IN MOSCOW — the friendship of peoples and its limits
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_african_student_ussr',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      ['Nigeria', 'Ghana', 'Ethiopia', 'Kenya', 'Tanzania', 'Senegal', 'Guinea', 'Mali', 'Angola', 'Mozambique'].includes(G.character.country.name) &&
+      G.currentYear >= 1965 && G.currentYear <= 1990 &&
+      G.age >= 18 && G.age <= 30 &&
+      G.stats.smarts >= 65 &&
+      G.flags.includes('emigrated') &&
+      !G.mem?.sl_afr_moscow,
+    text: 'The Patrice Lumumba Peoples\' Friendship University in Moscow was built specifically for students from Asia, Africa, and Latin America — the friendship of peoples being the Soviet doctrine that the Soviet Union was the friend of the newly independent nations and the friend-of-nations had excellent engineering and medical programmes. Your scholarship covers everything. The winter in Moscow in your first January is a physical fact unlike any prior physical fact in your experience. The friendship of peoples has limits that the scholarship did not mention: the Russian students at the other university across the city do not always observe the doctrine, and the encounters on the metro are sometimes an education in a different subject than the one your scholarship covers.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_afr_moscow', true); p.e += 6; p.s += 2; p.m -= 3; p.addFlag('soviet_educated') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // PPP. GUATEMALAN LANGUAGE REVIVAL — reclaiming what the war targeted
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_maya_language_revival',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'Guatemala' &&
+      G.ethnicity?.includes('indigenous') &&
+      G.currentYear >= 1996 && G.currentYear <= 2020 &&
+      G.age >= 18 && G.age <= 40 &&
+      !G.mem?.sl_guat_lang,
+    text: 'The peace accords of 1996 ended the civil war and included recognition of Maya rights and languages. The recognition is in the text of the accords. The text of the accords is one thing. The schoolbooks are still mostly in Spanish. The teachers in most towns are trained in Spanish. The Maya languages were what the army targeted in the scorched earth campaigns — burning the villages where they were spoken was partly burning the language. You are twenty-two and you are learning Kaqchikel formally for the first time, which is also the language your grandmother speaks at home and has spoken your whole life, which means you are learning your grandmother\'s language in a classroom. The classroom is where the peace accords sent it.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_guat_lang', true); p.e += 4; p.s += 3; p.m += 3; p.addFlag('indigenous_language_reclaimed') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // QQQ. CENTRAL AFRICAN REPUBLIC DIAMOND DIGGER — the mud and the price
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_car_diamond_digger',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Central African Republic' &&
+      G.currentYear >= 2000 && G.currentYear <= 2025 &&
+      G.age >= 18 && G.age <= 40 &&
+      G.stats.wealth <= 20 &&
+      !G.mem?.sl_car_diamond,
+    text: 'The diamond mining in Sangha-Mbaéré is artisanal, which means your tools are a shovel and a sieve and the body that operates them. You wash gravel in the river and look for the stone that catches the light differently from the other stones. When you find one, which is not every day or every week, you take it to the negociant who gives you a price and the price is a fraction of what the negociant will get from the buyer and the buyer will get from the market in Antwerp where the stone will be certified and sold to someone who will wear it. The chain is long. You are at the beginning of the chain. The beginning of the chain is the mud.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_car_diamond', true); p.h -= 4; p.mo += 800; p.addFlag('artisanal_miner') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // RRR. BURUNDIAN REFUGEE IN TANZANIA — the camp as the only country
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_burundian_refugee_tanzania',
+    phase: 'childhood',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'Tanzania' &&
+      G.currentYear >= 1993 && G.currentYear <= 2010 &&
+      G.age >= 4 && G.age <= 16 &&
+      G.residencyStatus === 'refugee_status' &&
+      !G.mem?.sl_bdi_refugee,
+    text: 'Nyarugusu camp was built for Congolese refugees and then the Burundian refugees came in 1993 when the Ndadaye assassination and the ethnic violence began and the camp that was built for one crisis absorbed another. You were born in the camp or you arrived when you were very young and the camp is the country you grew up in. The camp has a school and a health clinic and a distribution point for food rations and a UNHCR registration office. The camp does not have the right to settle permanently in Tanzania, which is the status of everyone in the camp, which means the camp is where you are from and you cannot become the place you are from.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_bdi_refugee', true); p.m -= 6; p.e += 3; p.addFlag('refugee_camp_years') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // SSS. DRC MUSICIAN DURING WAR — playing in Kinshasa when the front moves
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_drc_musician_war',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'Democratic Republic of Congo' &&
+      G.ruralUrban === 'urban' &&
+      G.currentYear >= 1996 && G.currentYear <= 2010 &&
+      G.age >= 20 && G.age <= 40 &&
+      G.flags.includes('musician') &&
+      !G.mem?.sl_drc_music_war,
+    text: 'The rumba continues. This is the specific thing about Kinshasa: the war is in the east, the militia is in the east, the UN peacekeepers are in the east, and in Kinshasa the rumba continues because the rumba has always continued through everything. You play guitar at the open-air venue in the Matonge neighbourhood and the set is three hours and the crowd is three hundred people and the three hundred people need the three hours more than they need anything you could say about the political situation, which everyone already knows the political situation. The music is not denial. The music is the thing that is not the war. Both are necessary.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_drc_music_war', true); p.m += 5; p.s += 3; p.karma += 3; p.addFlag('art_through_conflict') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // TTT. CHILEAN MAPUCHE WATER RIGHTS — the river that was always theirs
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_mapuche_water_rights',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'Chile' &&
+      G.ethnicity?.includes('indigenous') &&
+      G.currentYear >= 1990 && G.currentYear <= 2025 &&
+      G.age >= 18 && G.age <= 45 &&
+      !G.mem?.sl_mapuche_water,
+    text: 'The Water Code of 1981, which Pinochet signed, treats water as private property that can be bought and sold separate from the land. The river that runs through the Mapuche territory your family has occupied for generations was given a legal water right under the code and the legal water right was acquired by the forestry company that also planted eucalyptus on the hillsides, which lowered the water table. The river that was always there is now lower and sometimes in summer there is not enough. The legal right to the river belongs to the forestry company. The community continues to use the river because the river is there and has always been there and the community was there before the code. The code and the community are in tension. The tension continues.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_mapuche_water', true); p.m -= 5; p.e += 3; p.addFlag('indigenous_land_rights') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // UUU. KARABAKH 2023 — the corridor and what came through it
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_karabakh_exodus_2023',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'Armenia' &&
+      G.currentYear >= 2023 && G.currentYear <= 2025 &&
+      G.age >= 30 && G.age <= 65 &&
+      G.flags.includes('karabakh_generation') &&
+      !G.mem?.sl_karabakh_2023,
+    text: 'In September 2023, over one hundred thousand ethnic Armenians left Nagorno-Karabakh in seventy-two hours. The corridor through which they left was the Lachin corridor. The cars were backed up for forty kilometres. People abandoned cars when the fuel ran out and walked. You are watching this on a phone in Yerevan and the people in the cars are your relatives or are people who are your relatives\' relatives and the convoy is moving and then not moving for hours. The oldest population in the world — Armenians have been in Karabakh since the fifth century — crossed the border in three days. By October the territory was empty of Armenians.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_karabakh_2023', true); p.m -= 12; p.r += 8; p.addFlag('witnessed_ethnic_cleansing') },
+  },
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // VVV. ZIMBABWEAN WHITE FARMER — the letter and what it meant
+  // ══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'sl_zimbabwe_white_farmer_seizure',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) =>
+      G.character.country.name === 'Zimbabwe' &&
+      G.ethnicity === 'white' &&
+      G.currentYear >= 2000 && G.currentYear <= 2008 &&
+      G.age >= 35 && G.age <= 65 &&
+      !G.mem?.sl_zim_farm_seiz,
+    text: 'The letter from the Lands Ministry arrives in March 2001. The farm has been in your family since 1922, which is eighty years, which is longer than Zimbabwe has been Zimbabwe. The letter says the farm is being designated for resettlement. You have three months. What three months means for a working farm — the tobacco crop that is already in the ground, the animals, the workers who have been here for twenty years and whose own housing is on the land — is something the letter does not address. Three months is the legal period. The farm is the legal vehicle for the redistribution of land that was acquired by colonists and should not have been acquired by colonists. Both of these things are true. You have three months.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_zim_farm_seiz', true); p.m -= 12; p.mo -= 15000; p.addFlag('land_dispossessed') },
+  },
 ]

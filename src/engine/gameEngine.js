@@ -12835,6 +12835,55 @@ function buildYearTexture(state) {
       : 'The diaspora comes back for carnival and calls it home. You are here the other fifty-one weeks of the year and also call it home. The two callings are different callings. Yours is daily and less romantic and more real.',
   ])
 
+  if (F.has('colonial_resistance') && Math.random() < 0.15) return pick([
+    'The clandestine work was information and shelter and communication. It was not mountains and it was not safe. Several people you knew disappeared. You did not disappear.',
+    phase === 'late_life'
+      ? 'Independence came. Then the state that independence produced had its own problems and its own corruptions and its own disappointed people. You are one of the disappointed people who also remembers what the hope felt like before the disappointment, which means you hold two things at once: the disappointment and the legitimacy of having hoped.'
+      : 'What the resistance gave you: the knowledge that it is possible to act against something much larger than yourself and survive the acting. What it cost: the years of calculation, the specific fear of specific knocks at the door.',
+  ])
+
+  if (F.has('occupation_survived') && Math.random() < 0.15) return pick([
+    'The accommodation and the silence and the things not said are a record that exists only in you. The official record is the independence, the ceremony, the flag.',
+    phase === 'late_life'
+      ? 'The people who resisted openly are the ones commemorated. You survived by different means. Both forms of survival kept people alive during the occupation. The commemoration cannot hold all the shapes that survival took. You have made peace with your shape.'
+      : 'The occupation is over. What was required to survive it is still in you in the form of habits that outlasted their necessity — the careful sentences, the awareness of who is listening, the instinct that is slower to leave than the occupation itself.',
+  ])
+
+  if (F.has('soviet_educated') && Math.random() < 0.15) return pick([
+    'The Peoples\' Friendship University. The first January. The metro encounters that the doctrine of friendship of peoples did not eliminate. The engineering degree that has been useful in ways the Soviet Union did not intend.',
+    phase === 'late_life'
+      ? 'You were educated by a country that no longer exists, in an ideology that is no longer operative, in a language that is useful in several post-Soviet countries and their diaspora communities. The education was real. The country was real. Both are in the past and both are still in you.'
+      : 'The Russian you learned is still there. The colleagues who also went to Lumumba are scattered across the continent. There is a particular bond between people who were cold together in Moscow for five years. The bond is real and the cold is remembered and the shared experience of being from somewhere warm in a place that was doctrinally warm and physically very cold.',
+  ])
+
+  if (F.has('indigenous_land_rights') && Math.random() < 0.15) return pick([
+    'The water code privatised the river. The river is still there. The community is still using the river. The tension between the code and the use continues.',
+    phase === 'late_life'
+      ? 'The forestry company\'s eucalyptus plantations lowered the water table over thirty years. The lowering is measurable and measured. The measurement does not reverse the lowering. The river in summer is a different river than the river of your childhood.'
+      : 'The legal claim and the lived claim are two different claims to the same water. You hold the lived claim. The legal claim is held by people who have never stood in the river.',
+  ])
+
+  if (F.has('witnessed_ethnic_cleansing') && Math.random() < 0.15) return pick([
+    'The forty-kilometre convoy. The cars abandoned when the fuel ran out. People walking. One hundred thousand people in seventy-two hours.',
+    phase === 'late_life'
+      ? 'The territory is empty now. What was built there over centuries — the churches, the monasteries, the vineyards, the cemeteries — is still there physically and empty of the people who built and maintained it. An emptiness that has a specific shape. You carry the shape.'
+      : 'The relatives who were in the convoy are in Yerevan now. The adjustment to Yerevan is going. What they had was a world that was specific to that geography and those communities and that world is over and the adjustment to Yerevan is the wrong frame for what they are doing, which is not adjusting but surviving the end of something.',
+  ])
+
+  if (F.has('land_dispossessed') && Math.random() < 0.15) return pick([
+    'The letter said three months. The crop was already in the ground. The farm was in the family since 1922. The letter was correct about the underlying injustice and the three months were insufficient.',
+    phase === 'late_life'
+      ? 'You are in Harare or Johannesburg or Perth and the farm is being farmed by someone else or not being farmed because the person it was given to did not have the capital to farm it. The injustice of the original acquisition and the injustice of the specific implementation are two different injustices and both are real and the country has not yet found a way to hold both at once.'
+      : 'The workers who lived on the farm for twenty years also lost their homes when the farm was designated. This is a fact that gets lost in the political argument about the farm. The political argument is about two things and the workers were a third thing and the third thing is mostly not discussed.',
+  ])
+
+  if (F.has('art_through_conflict') && Math.random() < 0.15) return pick([
+    'The rumba continued. The three-hundred-person crowd needed the three hours more than they needed anything you could say about the situation. You gave them the three hours.',
+    phase === 'late_life'
+      ? 'You played through all of it — the first war, the second war, the reconstruction, the new political difficulties. The music is what was continuous when other things were not. There are people whose consistency through the bad years was the music, and you are one of the nodes of that consistency. The Matonge still has venues. The rumba still has crowds.'
+      : 'The art that happens during conflict is not separate from the conflict and is not the same as the conflict. It is the thing people do while surviving the conflict, which means it carries the weight of the conflict in it without being about the conflict. The audience knows this without being told.',
+  ])
+
   if (F.has('hmong_resettlement') && Math.random() < 0.15) return pick([
     'The snow in January in Minneapolis is nothing like anything in Laos. You have had thirty years to adjust to this. The adjustment is complete in some respects and not in others.',
     phase === 'late_life'
