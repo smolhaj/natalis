@@ -5105,8 +5105,8 @@ export const POLITICAL_FLAGS = {
     weight: 'moderate',
     category: 'historical',
     description: 'Watched from outside GBAO as the internet went dark during the 2022 crackdown.',
-    intent: 'none',
-    notes: 'Set by taj_gbao_2022 (distant path).',
+    intent: 'event',
+    notes: 'Set by taj_gbao_2022 (distant path). Follow-through: ft47_tajik_gbao_late.',
   },
 
   taj_rogun_generation: {

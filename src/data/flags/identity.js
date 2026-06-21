@@ -4625,8 +4625,8 @@ export const IDENTITY_FLAGS = {
     weight: 'minor',
     category: 'identity',
     description: 'Lived through the 2017–19 #MeToo reckoning — the public naming of what had been privately understood.',
-    intent: 'none',
-    notes: 'Set by we_metoo_2017.',
+    intent: 'event',
+    notes: 'Set by we_metoo_2017. Follow-through: ft47_metoo_midlife.',
   },
 
   black_summer_witnessed: {
@@ -5364,7 +5364,7 @@ export const IDENTITY_FLAGS = {
   quebec_referendum_lived: {
     weight: 'moderate', category: 'identity',
     description: 'Lived through the 1995 Quebec independence referendum — 49.4% for separation, the night that could have split Canada.',
-    intent: 'none', notes: 'Set by Quebec referendum world event.',
+    intent: 'event', notes: 'Set by Quebec referendum world event. Follow-through: ft47_quebec_late.',
   },
 
   '1967_generation': {
@@ -5393,20 +5393,20 @@ export const IDENTITY_FLAGS = {
 
   triangle_generation: {
     weight: 'moderate', category: 'identity',
-    description: 'Northern Triangle generation — grew up amid the gang violence and migration pressures of Guatemala, Honduras, or El Salvador.',
-    intent: 'none', notes: 'Set by Northern Triangle world event.',
+    description: 'Witnessed the 1911 Triangle Shirtwaist fire — 146 dead, the locked stairwell doors, the owners acquitted, the labour movement galvanised.',
+    intent: 'event', notes: 'Set by triangle_shirtwaist_1911 world event. Follow-through: ft47_triangle_fire_late.',
   },
 
   anarchist_barcelona: {
     weight: 'moderate', category: 'identity',
     description: 'Lived in anarchist Barcelona 1936–37 — the collectives, the militias, the brief utopia before it was crushed.',
-    intent: 'none', notes: 'Set by Spanish Civil War world event.',
+    intent: 'event', notes: 'Set by Spanish Civil War world event. Follow-through: ft47_anarchist_barcelona_late.',
   },
 
   flu_pandemic_survivor: {
     weight: 'major', category: 'trauma',
     description: 'Survived the 1918 Spanish flu pandemic — 50 million dead globally, the young killed disproportionately, the silence that followed.',
-    intent: 'none', notes: 'Set by Spanish flu world event.',
+    intent: 'event', notes: 'Set by Spanish flu world event. Follow-through: ft47_flu_pandemic_late.',
   },
 
   mabo_generation: {
@@ -5424,27 +5424,27 @@ export const IDENTITY_FLAGS = {
   reef_loss_generation: {
     weight: 'moderate', category: 'trauma',
     description: 'Generation witnessing the bleaching of the Great Barrier Reef — the visible loss of a living system in a single lifetime.',
-    intent: 'none', notes: 'Set by reef bleaching world events.',
+    intent: 'event', notes: 'Set by reef bleaching world events. Follow-through: ft47_reef_loss_late.',
   },
 
   heat_stress_generation: {
     weight: 'moderate', category: 'trauma',
     description: 'Generation experiencing dangerous heat as a new normal — wet-bulb temperatures that make outdoor work deadly for days at a time.',
-    intent: 'none', notes: 'Set by heat wave world events.',
+    intent: 'event', notes: 'Set by heat wave world events. Follow-through: ft47_heat_stress_late.',
   },
 
   tipping_point_generation: {
     weight: 'major', category: 'trauma',
     description: 'Generation living through climate tipping points — the Arctic ice cap gone, the coral systems bleached, the projections becoming present tense.',
-    intent: 'none', notes: 'Set by climate tipping point world events.',
+    intent: 'event', notes: 'Set by climate tipping point world events. Follow-through: ft47_tipping_point_late.',
   },
 
   turkey_syria_earthquake_2023: {
     weight: 'major',
     category: 'trauma',
     description: 'Survived the February 2023 Turkey-Syria earthquake — 50,000+ dead, cities in rubble, survivors waiting in freezing February nights.',
-    intent: 'none',
-    notes: 'Set by we_turkey_syria_earthquake_2023 world event. Turkey/Syria characters.',
+    intent: 'event',
+    notes: 'Set by we_turkey_syria_earthquake_2023 world event. Turkey/Syria characters. Follow-through: ft47_turkey_quake_late.',
   },
 
   aw_evacuated_and_left: {

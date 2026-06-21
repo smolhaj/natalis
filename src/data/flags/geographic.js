@@ -1259,7 +1259,7 @@ export const GEOGRAPHIC_FLAGS = {
   systemic_discrimination: {
     weight: 'major', category: 'conflict',
     description: 'Has experienced systemic discrimination — not the individual encounter but the structural, legal, or social system built against them.',
-    intent: 'none', notes: 'Set by apartheid and Jim Crow world events.',
+    intent: 'event', notes: 'Set by apartheid and Jim Crow world events. Follow-through: ft47_systemic_discrimination_late.',
   },
 
   yugoslav_war_survivor: {
@@ -1343,7 +1343,7 @@ export const GEOGRAPHIC_FLAGS = {
   civil_war_generation: {
     weight: 'major', category: 'conflict',
     description: 'Generation defined by civil war — fought over by factions, the state collapsed into competing armies.',
-    intent: 'none', notes: 'Set by various civil war world events.',
+    intent: 'event', notes: 'Set by various civil war world events. Follow-through: ft47_spanish_civil_war_late.',
   },
 
   lumumba_generation: {
@@ -1374,16 +1374,16 @@ export const GEOGRAPHIC_FLAGS = {
     weight: 'major',
     category: 'conflict',
     description: 'Lived through the 2022 Woman, Life, Freedom uprising in Iran — the most sustained challenge to the Islamic Republic since the revolution, sparked by Mahsa Amini\'s death in Morality Police custody.',
-    intent: 'none',
-    notes: 'Set by we_iran_mahsa_amini_2022 world event. Iran only.',
+    intent: 'event',
+    notes: 'Set by we_iran_mahsa_amini_2022 world event. Iran only. Follow-through: ft47_iran_wlf_late.',
   },
 
   sudan_civil_war_2023: {
     weight: 'major',
     category: 'conflict',
     description: 'Living through the 2023 Sudan civil war — SAF vs. RSF, Khartoum as a battlefield, 7 million displaced, the civilian transition destroyed.',
-    intent: 'none',
-    notes: 'Set by we_sudan_civil_war_2023 world event. Sudan only.',
+    intent: 'event',
+    notes: 'Set by we_sudan_civil_war_2023 world event. Sudan only. Follow-through: ft47_sudan_war_late.',
   },
 
   fiji_emigrated: {

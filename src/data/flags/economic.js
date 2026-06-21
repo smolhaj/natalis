@@ -830,7 +830,7 @@ export const ECONOMIC_FLAGS = {
   economic_stabilization: {
     weight: 'moderate', category: 'economics',
     description: 'Lived through economic stabilisation after crisis — the specific relief and residual distrust of a currency that had become worthless.',
-    intent: 'none', notes: 'Set by economic crisis/recovery world events.',
+    intent: 'event', notes: 'Set by economic crisis/recovery world events. Follow-through: ft47_economic_stabilization_midlife.',
   },
 
   post_soviet_shock: {
