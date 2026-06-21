@@ -3912,6 +3912,71 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by gr_oxi_2015.',
   },
 
+  // Greece depth arc flags (events_greece_depth.js)
+  greek_prosfyges_family: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Family heritage of the 1922 Asia Minor prosfyges — grandparents expelled from Smyrna, Pontus, or Eastern Thrace, carrying the geography of a lost world in speech.',
+    intent: 'none',
+    notes: 'Set by gr_prosfyges_family.',
+  },
+
+  greek_oxi_1940_gen: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived the October 1940 Oxi — Metaxas\'s refusal of Mussolini\'s ultimatum, the Greek army pushing the Italians back through the Pindus mountains in winter.',
+    intent: 'none',
+    notes: 'Set by gr_oxi_1940.',
+  },
+
+  greek_katochi_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Survived the Axis Occupation 1941-44 — the Katochi, the famine winter of 1941-42 in Athens when 300,000 died, the specific education of knowing what a government controls.',
+    intent: 'none',
+    notes: 'Set by gr_katochi.',
+  },
+
+  greek_elas_member: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Participated in EAM/ELAS — the Greek wartime resistance against the Axis, dominated by the Communist Party but broad-coalition, operating in the mountains and the cities.',
+    intent: 'none',
+    notes: 'Set by gr_elas_resistance.',
+  },
+
+  greek_civil_war_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the Greek Civil War 1946-49 — the war that ran through families and villages along a left/right line drawn by the occupation and not erased until 1981.',
+    intent: 'event',
+    notes: 'Set by gr_civil_war. Checked by gr_civil_war_late_reckoning.',
+  },
+
+  civic_record_denied: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Denied the Greek certificate of civic reliability (frouriko pistopiitiko) due to family political history — blocked from civil service, university, passport, emigration papers.',
+    intent: 'none',
+    notes: 'Set by gr_frouriko.',
+  },
+
+  greek_economic_miracle_gen: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Came of age in the Greek economic miracle of the 1950s-60s — the fastest growth in Europe after West Germany, the first refrigerator, the concrete going up everywhere.',
+    intent: 'none',
+    notes: 'Set by gr_economic_miracle.',
+  },
+
+  greek_gastarbeiter: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Emigrated to West Germany as a gastarbeiter in the 1960s-70s — part of the 300,000 Greeks who went north under bilateral labour agreements, living between two languages and two countries.',
+    intent: 'none',
+    notes: 'Set by gr_gastarbeiter.',
+  },
+
   estado_novo_generation: {
     weight: 'major',
     category: 'historical',
