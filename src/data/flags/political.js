@@ -1378,6 +1378,40 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by cze_eu_accession_2004. Year texture block.',
   },
 
+  // ── DENMARK ───────────────────────────────────────────────────────────────
+
+  den_occupation_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Danish person who lived through the German occupation 1940–45 — the "model protectorate", the government that stayed, the complicated question of accommodation.',
+    intent: 'event',
+    notes: 'Set by den_wwii_occupation. Follow-through: ft45_den_occupation_late.',
+  },
+
+  den_rescue_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed or participated in the October 1943 rescue of Danish Jews — fishing boats across the Øresund, 7,000 people ferried to Sweden.',
+    intent: 'event',
+    notes: 'Set by den_jewish_rescue. Follow-through in den_rescue_late event (self-contained within events_denmark.js).',
+  },
+
+  den_liberation_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed Danish liberation May 5, 1945 — the lights in windows, then the retsopgøret, the legal reckoning.',
+    intent: 'event',
+    notes: 'Set by den_liberation_1945. Follow-through: ft45_den_liberation_late.',
+  },
+
+  den_cartoon_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through the Jyllands-Posten cartoon crisis 2005–06 — the twelve cartoons, the diplomatic escalation, the burning embassies, the Danish self-image under examination.',
+    intent: 'event',
+    notes: 'Set by den_cartoon_crisis. Follow-through: ft45_den_cartoon_late.',
+  },
+
   // ── NORWAY ────────────────────────────────────────────────────────────────
 
   nor_occupation_generation: {
