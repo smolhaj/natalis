@@ -2746,6 +2746,70 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by ire_church_collapse.',
   },
 
+  ire_famine_family_memory: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Irish character who grew up with direct or near-direct family memory of the Great Hunger 1845-52 — grandparent testimony, weight of *an Gorta Mór* in the house.',
+    intent: 'none',
+    notes: 'Set by ire_famine_shadow.',
+  },
+
+  ire_rising_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Irish character who came of age during or just after the Easter Rising 1916 and War of Independence — the executions that changed opinion, the treaty that split everything.',
+    intent: 'none',
+    notes: 'Set by ire_easter_rising.',
+  },
+
+  ire_civil_war_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Irish character whose family took a side in the 1922-23 Civil War — the Treaty vs Anti-Treaty wound that became Fianna Fáil vs Fine Gael for seventy years.',
+    intent: 'none',
+    notes: 'Set by ire_civil_war_wound (both choice branches).',
+  },
+
+  ire_emergency_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Irish adult who lived through the Emergency (Irish neutrality in WWII 1939-46) — turf instead of coal, the BBC heard in secret, 160,000 Irish volunteering despite official neutrality.',
+    intent: 'none',
+    notes: 'Set by ire_emergency.',
+  },
+
+  ire_industrial_school_survivor: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was placed in or directly witnessed an Industrial School or Magdalene Laundry 1935-80 — the Church-run detention system for illegitimate, orphaned, or poor children.',
+    intent: 'event',
+    notes: 'Set by ire_industrial_school. Checked by ire_ryan_report (follow-through).',
+  },
+
+  ire_gaeltacht_gen: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Irish character who navigated the compulsory Irish language system and the Gaeltacht — Irish as state requirement and as contested living culture.',
+    intent: 'none',
+    notes: 'Set by ire_gaeltacht.',
+  },
+
+  ire_equality_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed or participated in Ireland\'s 2015 marriage equality referendum — the first country to approve same-sex marriage by popular vote (62.1%).',
+    intent: 'none',
+    notes: 'Set by ire_marriage_equality.',
+  },
+
+  ire_repeal_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Female Irish character who witnessed the 2018 Repeal of the Eighth Amendment — abortion legalised after 35 years of twelve women a day crossing to England.',
+    intent: 'none',
+    notes: 'Set by ire_repeal_eighth.',
+  },
+
   gezi_generation: {
     weight: 'major',
     category: 'historical',
