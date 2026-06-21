@@ -4867,4 +4867,78 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by kaz_late_reckoning. Terminal witness flag.',
   },
 
+  // ─── TAJIKISTAN FLAGS ───────────────────────────────────────────────────────
+
+  taj_soviet_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Grew up in Soviet-era Tajikistan — the industrial Dushanbe built from a Monday market town, Russian-medium schools.',
+    intent: 'none',
+    notes: 'Set by taj_soviet_dushanbe.',
+  },
+
+  taj_civil_war_witness: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed the Tajik civil war 1992–97 — 50,000–100,000 dead, one in ten displaced, most violent post-Soviet conflict in Central Asia.',
+    intent: 'none',
+    notes: 'Set by taj_civil_war_begins (both paths).',
+  },
+
+  taj_postwar_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age in the post-civil-war period — the peace that preserved the men who caused the war, the slow consolidation of Rahmon\'s power.',
+    intent: 'none',
+    notes: 'Set by taj_peace_1997.',
+  },
+
+  taj_rahmon_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived under Rahmon\'s "Leader of the Nation" rule — the title, the portrait in every office, the son positioned for succession.',
+    intent: 'year_texture',
+    notes: 'Set by taj_leader_of_nation. Needs year texture.',
+  },
+
+  taj_gbao_witness: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Present in GBAO during the 2022 security crackdown — armoured vehicles, internet blackout, deaths the government did not confirm.',
+    intent: 'none',
+    notes: 'Set by taj_gbao_2022 (in-GBAO path).',
+  },
+
+  taj_gbao_distant_witness: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Watched from outside GBAO as the internet went dark during the 2022 crackdown.',
+    intent: 'none',
+    notes: 'Set by taj_gbao_2022 (distant path).',
+  },
+
+  taj_rogun_generation: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Tajik who knows the Rogun Dam — sovereignty, electricity exports, the regional water conflict with Uzbekistan.',
+    intent: 'none',
+    notes: 'Set by taj_rogun_dam. Terminal.',
+  },
+
+  taj_remittance_household: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Part of a remittance-dependent household — the first of the month, the ruble fluctuations, the survival arithmetic.',
+    intent: 'none',
+    notes: 'Set by taj_remittance_life. Terminal.',
+  },
+
+  taj_testigo_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Late-life Tajik witness: Soviet Dushanbe through civil war through Rahmon\'s authoritarianism.',
+    intent: 'none',
+    notes: 'Set by taj_late_reckoning. Terminal.',
+  },
+
 }

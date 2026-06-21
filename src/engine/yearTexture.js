@@ -9777,6 +9777,26 @@ function buildYearTexture(state) {
       : 'Arabic script before 1928. Latin from 1928 to 1940. Cyrillic from 1940 to 1992. Latin again from 1992. The alphabet has changed four times in a century. The history of the alphabet is the history of who was deciding what Uzbekistan was.',
   ])
 
+  // ─── TAJIKISTAN TEXTURE ──────────────────────────────────────────────────────
+  if (F.has('taj_rahmon_era') && Math.random() < 0.2) return pick([
+    'The photograph is in the office, in the school corridor, at the entrance to the ministry. Emomali Rahmon: the same photograph, the same expression, the same suit. The "Leader of the Nation" title is law now, which means criticising him is a criminal matter, which means the photograph means something slightly different than it would if it were merely ceremonial.',
+    phase === 'late_life'
+      ? 'He ruled through the civil war and through the peace and through the consolidation and through the naming of his son as heir apparent. You have watched the complete arc. What the arc describes is not a transition from one system to another. It is the construction of a system from the material of its predecessors.'
+      : 'Rustam Emomali is chairman of the Senate. He is thirty-five. His father has been president since 1994. The mathematics of who comes next has been visible for years. You do not discuss this at work.',
+  ])
+  if (F.has('taj_civil_war_witness') && Math.random() < 0.2) return pick([
+    'The war ended in 1997. The people who caused it stayed in power. This is not unusual. You know what it means because you were there for the years that preceded the peace agreement.',
+    phase === 'late_life'
+      ? 'The civil war was a war between regions and clans and Soviet networks as much as between ideologies. The peace was a distribution of the state between those same groups, with Rahmon\'s group getting the most. The logic of the distribution has been visible in every appointment and every arrest since 1997.'
+      : 'You know people from Gharm. You know people from Kulob. You know what they call each other and what they called each other during the war. This knowledge sits under every conversation about the state, always present, rarely named.',
+  ])
+  if (F.has('taj_remittance_household') && Math.random() < 0.18) return pick([
+    'A quarter of the GDP comes home in envelopes. This is the economy: the person absent is also the economy present. You calculate the first of the month and then the fifth, which is when it usually arrives, and then you buy what has been waiting.',
+    phase === 'late_life'
+      ? 'When the ruble fell in 2022, the remittance halved in somoni terms within a month. The country felt it immediately — not as a statistic but as the calculation that families do when what was coming is suddenly less. You know this calculation. You have done it more than once.'
+      : 'The village empties in spring. The men go north, to Moscow, to Novosibirsk, to wherever the construction season is. The women manage the household, the children, the parents-in-law, the land. The village refills in winter. The phone calls are on Sundays.',
+  ])
+
   // ─── LIBYA TEXTURE ───────────────────────────────────────────────────────────
   if (F.has('libyan_jamahiriya_generation') && Math.random() < 0.18) return pick([
     'The Green Book was the theory. The Revolutionary Guards were the practice. Both were real.',

@@ -1594,4 +1594,38 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by kaz_russian_coexistence (considering path).',
   },
 
+  // ─── TAJIKISTAN FLAGS ───────────────────────────────────────────────────────
+
+  taj_civil_war_stayed: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Tajik who stayed in Dushanbe during the civil war — survived behind closed doors, learning the street day by day.',
+    intent: 'none',
+    notes: 'Set by taj_civil_war_begins (stayed path).',
+  },
+
+  taj_civil_war_displaced: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Displaced by the Tajik civil war — fled to mountain village or across border to Afghanistan, returned to a changed city.',
+    intent: 'none',
+    notes: 'Set by taj_civil_war_begins (fled path).',
+  },
+
+  taj_russia_migrant: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Tajik labour migrant in Russia — construction sites, dormitories, Sunday phone calls, money sent on the first of the month.',
+    intent: 'none',
+    notes: 'Set by taj_russia_migration (migrant path).',
+  },
+
+  taj_stayed_behind: {
+    weight: 'minor',
+    category: 'migration',
+    description: 'Tajik who stayed when the men went to Russia — built what could be built at local wages while the village emptied seasonally.',
+    intent: 'none',
+    notes: 'Set by taj_russia_migration (stayed path).',
+  },
+
 }

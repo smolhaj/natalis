@@ -6463,4 +6463,30 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by kaz_language_question (Russian path).',
   },
 
+  // ─── TAJIKISTAN FLAGS ───────────────────────────────────────────────────────
+
+  taj_pamiri_identity: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Pamiri identity in Tajikistan — Ismaili Muslim, Shughni or Wakhi speaker, GBAO resident or diaspora, marked in a Sunni Tajik state.',
+    intent: 'none',
+    notes: 'Set by taj_pamiri_identity event (both paths).',
+  },
+
+  taj_pamiri_stayed: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Pamiri who stayed in GBAO — the isolation as protection, the Aga Khan networks, the passes that close in winter.',
+    intent: 'none',
+    notes: 'Set by taj_pamiri_identity (stayed path).',
+  },
+
+  taj_pamiri_dushanbe: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Pamiri living in Dushanbe — recognizable by surname and accent, navigating the capital\'s informal Pamiri networks.',
+    intent: 'none',
+    notes: 'Set by taj_pamiri_identity (Dushanbe path).',
+  },
+
 }
