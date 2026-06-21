@@ -1628,4 +1628,36 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by taj_russia_migration (stayed path).',
   },
 
+  kyr_osh_uzbek_stayed_rooted: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Uzbek-Kyrgyz who chose to stay in Kyrgyzstan after the June 2010 violence — the decision accumulated over years of staying when leaving was still possible.',
+    intent: 'none',
+    notes: 'Set by ft31_osh_uzbek_decade_on (stay path).',
+  },
+
+  kyr_osh_uzbek_departing: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Uzbek-Kyrgyz who has decided to leave Kyrgyzstan — the question of when is open, the question of whether has been answered.',
+    intent: 'none',
+    notes: 'Set by ft31_osh_uzbek_decade_on (leave path).',
+  },
+
+  taj_war_narrated: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Told the civil war story to their child — more than before, some of it landing, some waiting for the right age.',
+    intent: 'none',
+    notes: 'Set by ft31_civil_war_son (full-telling path).',
+  },
+
+  taj_war_partial_telling: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Told the outline of the civil war to their child — the rest stays with them, still deciding who the telling would be for.',
+    intent: 'none',
+    notes: 'Set by ft31_civil_war_son (partial path).',
+  },
+
 }
