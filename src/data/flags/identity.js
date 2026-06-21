@@ -4625,8 +4625,8 @@ export const IDENTITY_FLAGS = {
     weight: 'minor',
     category: 'identity',
     description: 'Lived through the 2017–19 #MeToo reckoning — the public naming of what had been privately understood.',
-    intent: 'none',
-    notes: 'Set by we_metoo_2017.',
+    intent: 'event',
+    notes: 'Set by we_metoo_2017. Follow-through: ft47_metoo_midlife.',
   },
 
   black_summer_witnessed: {
@@ -5189,8 +5189,8 @@ export const IDENTITY_FLAGS = {
     weight: 'moderate',
     category: 'identity',
     description: 'Witnessed the 2005 election of Evo Morales — first indigenous president in a country where 62% of the population is indigenous.',
-    intent: 'none',
-    notes: 'Set by bol_evo_election_2005. Bolivia only.',
+    intent: 'event',
+    notes: 'Set by bol_evo_election_2005. Bolivia only. Follow-through: ft46_bol_evo_late.',
   },
 
   bol_2019_fraud_believed: {
@@ -5322,129 +5322,129 @@ export const IDENTITY_FLAGS = {
   drought_survivor: {
     weight: 'moderate', category: 'trauma',
     description: 'Survived a major drought — the specific experience of watching a landscape dry and food become scarce.',
-    intent: 'none', notes: 'Set by drought/famine world events.',
+    intent: 'event', notes: 'Set by drought/famine world events. Follow-through: ft39_drought_late.',
   },
 
   apartheid_privileged: {
     weight: 'major', category: 'moral',
     description: 'Was privileged under apartheid — white South African who benefited from a system of racial separation.',
-    intent: 'none', notes: 'Set by apartheid world events.',
+    intent: 'event', notes: 'Set by apartheid world events. Follow-through: ft39_apartheid_privileged_late.',
   },
 
   witnessed_climate_change: {
     weight: 'moderate', category: 'trauma',
     description: 'Has witnessed visible climate change effects — weather patterns, species, landscapes changed in a lifetime.',
-    intent: 'none', notes: 'Set by climate world events.',
+    intent: 'event', notes: 'Set by climate world events. Follow-through: ft39_climate_witness_late.',
   },
 
   genocide_witness: {
     weight: 'major', category: 'trauma',
     description: 'Witnessed a genocide — carries the specific weight of knowing what human beings did to each other in their time.',
-    intent: 'none', notes: 'Set by genocide world events (Rwanda, Srebrenica, etc.).',
+    intent: 'event', notes: 'Set by genocide world events (Rwanda, Srebrenica, etc.). Follow-through: ft44_genocide_witness_late.',
   },
 
   revolution_disillusionment: {
     weight: 'moderate', category: 'moral',
     description: 'Has experienced the disillusionment after a revolution — when the new order fails to deliver what the old order\'s overthrow promised.',
-    intent: 'none', notes: 'Set by post-revolutionary disillusionment world events.',
+    intent: 'event', notes: 'Set by post-revolutionary disillusionment world events. Follow-through: ft44_revolution_disillusionment_late.',
   },
 
   eu_generation: {
     weight: 'moderate', category: 'identity',
     description: 'Grew up with European Union membership as a given — free movement, the euro, the removal of borders that had defined a continent.',
-    intent: 'none', notes: 'Set by EU formation/expansion world events.',
+    intent: 'event', notes: 'Set by EU formation/expansion world events. Follow-through: ft44_eu_generation_late.',
   },
 
   brexit_era: {
     weight: 'moderate', category: 'identity',
     description: 'Lived through Brexit — the British referendum and exit from the EU, and the years of argument about what it meant.',
-    intent: 'none', notes: 'Set by Brexit world event.',
+    intent: 'event', notes: 'Set by Brexit world event. Follow-through: ft44_brexit_late.',
   },
 
   quebec_referendum_lived: {
     weight: 'moderate', category: 'identity',
     description: 'Lived through the 1995 Quebec independence referendum — 49.4% for separation, the night that could have split Canada.',
-    intent: 'none', notes: 'Set by Quebec referendum world event.',
+    intent: 'event', notes: 'Set by Quebec referendum world event. Follow-through: ft47_quebec_late.',
   },
 
   '1967_generation': {
     weight: 'moderate', category: 'identity',
     description: 'Defined by the 1967 Arab defeat — the Naksa, the Six-Day War, the moment the pan-Arab project broke.',
-    intent: 'none', notes: 'Set by 1967 war world event.',
+    intent: 'event', notes: 'Set by 1967 war world event. Follow-through: ft44_1967_generation_late.',
   },
 
   independence_ghana: {
     weight: 'major', category: 'identity',
     description: 'Witnessed Ghanaian independence 1957 — the night the lights came on at the polo grounds, Nkrumah\'s freedom speech.',
-    intent: 'none', notes: 'Set by Ghana independence world event.',
+    intent: 'event', notes: 'Set by Ghana independence world event. Follow-through: ft42_independence_ghana_late.',
   },
 
   independence_kenya: {
     weight: 'major', category: 'identity',
     description: 'Witnessed Kenyan independence 1963 — uhuru, and the specific expectations that came with it.',
-    intent: 'none', notes: 'Set by Kenya independence world event.',
+    intent: 'event', notes: 'Set by Kenya independence world event. Follow-through: ft42_independence_kenya_late.',
   },
 
   independence_zimbabwe: {
     weight: 'major', category: 'identity',
     description: 'Witnessed Zimbabwean independence 1980 — Robert Mugabe\'s first address, the hope that had specific content.',
-    intent: 'none', notes: 'Set by Zimbabwe independence world event.',
+    intent: 'event', notes: 'Set by Zimbabwe independence world event. Follow-through: ft42_independence_zimbabwe_late.',
   },
 
   triangle_generation: {
     weight: 'moderate', category: 'identity',
-    description: 'Northern Triangle generation — grew up amid the gang violence and migration pressures of Guatemala, Honduras, or El Salvador.',
-    intent: 'none', notes: 'Set by Northern Triangle world event.',
+    description: 'Witnessed the 1911 Triangle Shirtwaist fire — 146 dead, the locked stairwell doors, the owners acquitted, the labour movement galvanised.',
+    intent: 'event', notes: 'Set by triangle_shirtwaist_1911 world event. Follow-through: ft47_triangle_fire_late.',
   },
 
   anarchist_barcelona: {
     weight: 'moderate', category: 'identity',
     description: 'Lived in anarchist Barcelona 1936–37 — the collectives, the militias, the brief utopia before it was crushed.',
-    intent: 'none', notes: 'Set by Spanish Civil War world event.',
+    intent: 'event', notes: 'Set by Spanish Civil War world event. Follow-through: ft47_anarchist_barcelona_late.',
   },
 
   flu_pandemic_survivor: {
     weight: 'major', category: 'trauma',
     description: 'Survived the 1918 Spanish flu pandemic — 50 million dead globally, the young killed disproportionately, the silence that followed.',
-    intent: 'none', notes: 'Set by Spanish flu world event.',
+    intent: 'event', notes: 'Set by Spanish flu world event. Follow-through: ft47_flu_pandemic_late.',
   },
 
   mabo_generation: {
     weight: 'major', category: 'identity',
     description: 'Generation defined by the Mabo decision 1992 — the High Court ruling that recognised Indigenous title to land, ending the legal fiction of terra nullius.',
-    intent: 'none', notes: 'Set by Mabo world event.',
+    intent: 'event', notes: 'Set by Mabo world event. Follow-through: ft44_mabo_late.',
   },
 
   apology_generation: {
     weight: 'major', category: 'identity',
     description: 'Witnessed the 2008 National Apology to Indigenous Australians — the parliament, the prime minister, the Stolen Generations in the gallery.',
-    intent: 'none', notes: 'Set by Australian Apology world event.',
+    intent: 'event', notes: 'Set by Australian Apology world event. Follow-through: ft44_apology_late.',
   },
 
   reef_loss_generation: {
     weight: 'moderate', category: 'trauma',
     description: 'Generation witnessing the bleaching of the Great Barrier Reef — the visible loss of a living system in a single lifetime.',
-    intent: 'none', notes: 'Set by reef bleaching world events.',
+    intent: 'event', notes: 'Set by reef bleaching world events. Follow-through: ft47_reef_loss_late.',
   },
 
   heat_stress_generation: {
     weight: 'moderate', category: 'trauma',
     description: 'Generation experiencing dangerous heat as a new normal — wet-bulb temperatures that make outdoor work deadly for days at a time.',
-    intent: 'none', notes: 'Set by heat wave world events.',
+    intent: 'event', notes: 'Set by heat wave world events. Follow-through: ft47_heat_stress_late.',
   },
 
   tipping_point_generation: {
     weight: 'major', category: 'trauma',
     description: 'Generation living through climate tipping points — the Arctic ice cap gone, the coral systems bleached, the projections becoming present tense.',
-    intent: 'none', notes: 'Set by climate tipping point world events.',
+    intent: 'event', notes: 'Set by climate tipping point world events. Follow-through: ft47_tipping_point_late.',
   },
 
   turkey_syria_earthquake_2023: {
     weight: 'major',
     category: 'trauma',
     description: 'Survived the February 2023 Turkey-Syria earthquake — 50,000+ dead, cities in rubble, survivors waiting in freezing February nights.',
-    intent: 'none',
-    notes: 'Set by we_turkey_syria_earthquake_2023 world event. Turkey/Syria characters.',
+    intent: 'event',
+    notes: 'Set by we_turkey_syria_earthquake_2023 world event. Turkey/Syria characters. Follow-through: ft47_turkey_quake_late.',
   },
 
   aw_evacuated_and_left: {
@@ -6521,6 +6521,120 @@ export const IDENTITY_FLAGS = {
     description: 'Kyrgyz woman who carries the unspoken knowledge of tradition\'s limits — the things women know without saying.',
     intent: 'none',
     notes: 'Set by kyr_ala_kachuu (burden path).',
+  },
+
+  // ─── TURKMENISTAN ─────────────────────────────────────────────────────────────
+
+  tkm_soviet_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up in Soviet Turkmenistan — cotton quotas, the Karakum Canal, collective farm rhythms.',
+    intent: 'none',
+    notes: 'Set by tkm_soviet_cotton.',
+  },
+
+  tkm_ruhnama_compliant: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Learned the Ruhnama fully, as required — passages now permanent in memory, meaning uncertain.',
+    intent: 'none',
+    notes: 'Set by tkm_ruhnama_required.',
+  },
+
+  tkm_ruhnama_resistant: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Learned the minimum Ruhnama and found real reading elsewhere, quietly. The counter-curriculum.',
+    intent: 'none',
+    notes: 'Set by tkm_ruhnama_required.',
+  },
+
+  tkm_darvaza_witness: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Has seen the Darvaza gas crater — burning since 1971, visible for kilometres at night across the Karakum Desert.',
+    intent: 'none',
+    notes: 'Set by tkm_darvaza_crater.',
+  },
+
+  // ─── GHANA ────────────────────────────────────────────────────────────────────
+
+  gha_akan_day_name: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Carries the Akan day-name alongside their given name — Kwame, Kofi, Yaa, Ama: the name that tells Ghanaians which day you arrived.',
+    intent: 'none',
+    notes: 'Set by gha_day_name.',
+  },
+
+  gha_cocoa_family: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'From a cocoa-farming family — learned early that what you produce and what you receive are mediated by prices set in London and Zürich.',
+    intent: 'none',
+    notes: 'Set by gha_cocoa_family event.',
+  },
+
+  gha_pentecostal_committed: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Drawn into the new Pentecostalism — Lighthouse, ICGC, the conviction in the warehouse church that God\'s approval is imminent.',
+    intent: 'none',
+    notes: 'Set by gha_pentecostal_rise.',
+  },
+
+  gha_faith_private: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Maintains faith privately, at a distance from Pentecostal intensity — believes what they believe but not in that specific room.',
+    intent: 'none',
+    notes: 'Set by gha_pentecostal_rise.',
+  },
+
+  gha_year_of_return_witness: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Watched the 2019 Year of Return — diaspora arriving, Cape Coast castle ceremonies, the complicated feelings about recognition and performance.',
+    intent: 'none',
+    notes: 'Set by gha_year_of_return.',
+  },
+
+  // ─── ECUADOR ──────────────────────────────────────────────────────────────────
+
+  ecu_quechua_home: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up with Quechua as the home language — learned early that Spanish was the school language and what that distinction meant for the rest of life.',
+    intent: 'both',
+    notes: 'Set by ecu_school_quechua. Year texture + ft34_quechua_late follow-through.',
+  },
+
+  ecu_flower_worker: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Worked in the Cayambe/Cotopaxi flower export industry — the pre-dawn hours, the fumigation mist, botanical expertise that earns almost nothing.',
+    intent: 'both',
+    notes: 'Set by ecu_flower_hacienda. Year texture + ft34_flower_late follow-through.',
+  },
+
+  // ─── EL SALVADOR ─────────────────────────────────────────────────────────────
+
+  slv_gang_renta_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Paid or witnessed the gang renta economy — the weekly collection, the fixed rate, the understanding that this is simply what operating in these streets costs.',
+    intent: 'both',
+    notes: 'Set by slv_gang_renta. Year texture + ft35_renta_echo follow-through.',
+  },
+
+  // ─── GUATEMALA ────────────────────────────────────────────────────────────────
+
+  gua_highland_maya: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Maya highland identity — the milpa, the weaving patterns that say what village you are from, the cofradía calendar, the state that doesn\'t know you exist.',
+    intent: 'both',
+    notes: 'Set by gua_highland_childhood. Year texture + ft36_highland_maya_late follow-through.',
   },
 
 }

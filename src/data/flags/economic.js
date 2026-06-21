@@ -824,25 +824,25 @@ export const ECONOMIC_FLAGS = {
   hyperinflation_survivor: {
     weight: 'major', category: 'economics',
     description: 'Lived through hyperinflation — prices changing faster than earnings, money bundled in newspaper because wallets became impractical.',
-    intent: 'none', notes: 'Set by hyperinflation world events (Weimar, Zimbabwe, etc.).',
+    intent: 'event', notes: 'Set by hyperinflation world events (Weimar, Zimbabwe, etc.). Follow-through: ft39_hyperinflation_late.',
   },
 
   economic_stabilization: {
     weight: 'moderate', category: 'economics',
     description: 'Lived through economic stabilisation after crisis — the specific relief and residual distrust of a currency that had become worthless.',
-    intent: 'none', notes: 'Set by economic crisis/recovery world events.',
+    intent: 'event', notes: 'Set by economic crisis/recovery world events. Follow-through: ft47_economic_stabilization_midlife.',
   },
 
   post_soviet_shock: {
     weight: 'major', category: 'economics',
     description: 'Experienced the post-Soviet economic shock — savings wiped, factories closed, the state\'s guarantees withdrawn overnight.',
-    intent: 'none', notes: 'Set by Soviet collapse world events.',
+    intent: 'event', notes: 'Set by Soviet collapse world events. Follow-through: ft39_post_soviet_late.',
   },
 
   depression_generation: {
     weight: 'major', category: 'economics',
     description: 'Grew up during the Great Depression — the bread lines, Hoovervilles, the decade of unemployment that shaped a generation\'s relationship to money.',
-    intent: 'none', notes: 'Set by Great Depression world events.',
+    intent: 'event', notes: 'Set by Great Depression world events. Follow-through: ft42_depression_late.',
   },
 
   money_zero_survived: {

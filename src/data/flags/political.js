@@ -1304,6 +1304,248 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by cze_velvet_revolution. Follow-through: ft19_velvet_late.',
   },
 
+  // ─── CZECH REPUBLIC DEPTH ─────────────────────────────────────────────────────
+
+  cze_communist_takeover_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed the February 1948 Communist coup — the "Victorious February," Masaryk\'s death, the end of Czechoslovak democracy.',
+    intent: 'event',
+    notes: 'Set by cze_victorious_february_1948. Follow-through: ft40_february_48_late.',
+  },
+
+  cze_stalinist_terror_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the Stalinist show trials in Czechoslovakia — the Slánský trial 1952, antisemitic charges, eleven hanged.',
+    intent: 'event',
+    notes: 'Set by cze_slansky_trial. Follow-through: ft40_slansky_rehabilitation.',
+  },
+
+  cze_prague_spring_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the Prague Spring 1968 — the Dubček reform period, the seven months of something that felt like it would last.',
+    intent: 'both',
+    notes: 'Set by cze_prague_spring. Year texture + ft40_prague_spring_late.',
+  },
+
+  cze_invasion_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Present for the Warsaw Pact invasion of August 20, 1968 — 500,000 troops, 2,000 tanks, from five allied countries.',
+    intent: 'both',
+    notes: 'Set by cze_invasion_august_1968. Year texture + ft40_invasion_late.',
+  },
+
+  cze_emigrant_1968: {
+    weight: 'major',
+    category: 'geographic',
+    description: 'Left Czechoslovakia after the August 1968 invasion — part of the 300,000 who emigrated while borders were briefly open.',
+    intent: 'event',
+    notes: 'Set by cze_emigration_1968 (emigrate choice). Follow-through: ft40_emigrant_68_late.',
+  },
+
+  cze_stayer_1968: {
+    weight: 'moderate',
+    category: 'geographic',
+    description: 'Stayed in Czechoslovakia after August 1968 — chose to remain through the normalization years.',
+    intent: 'year_texture',
+    notes: 'Set by cze_emigration_1968 (stay choice). Year texture block.',
+  },
+
+  cze_havel_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Witnessed Václav Havel\'s presidency beginning January 1990 — the playwright-dissident who went from prison to president in weeks.',
+    intent: 'event',
+    notes: 'Set by cze_havel_president. Follow-through: ft40_havel_late.',
+  },
+
+  cze_velvet_divorce_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed the Velvet Divorce January 1, 1993 — Czechoslovakia splitting peacefully into Czech Republic and Slovakia without a referendum.',
+    intent: 'event',
+    notes: 'Set by cze_velvet_divorce. Follow-through: ft40_velvet_divorce_late.',
+  },
+
+  cze_eu_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through Czech EU accession May 1, 2004 — gaining the right to live and work across Europe, the Schengen opening.',
+    intent: 'year_texture',
+    notes: 'Set by cze_eu_accession_2004. Year texture block.',
+  },
+
+  // ── DENMARK ───────────────────────────────────────────────────────────────
+
+  den_occupation_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Danish person who lived through the German occupation 1940–45 — the "model protectorate", the government that stayed, the complicated question of accommodation.',
+    intent: 'event',
+    notes: 'Set by den_wwii_occupation. Follow-through: ft45_den_occupation_late.',
+  },
+
+  den_rescue_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed or participated in the October 1943 rescue of Danish Jews — fishing boats across the Øresund, 7,000 people ferried to Sweden.',
+    intent: 'event',
+    notes: 'Set by den_jewish_rescue. Follow-through in den_rescue_late event (self-contained within events_denmark.js).',
+  },
+
+  den_liberation_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed Danish liberation May 5, 1945 — the lights in windows, then the retsopgøret, the legal reckoning.',
+    intent: 'event',
+    notes: 'Set by den_liberation_1945. Follow-through: ft45_den_liberation_late.',
+  },
+
+  den_cartoon_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through the Jyllands-Posten cartoon crisis 2005–06 — the twelve cartoons, the diplomatic escalation, the burning embassies, the Danish self-image under examination.',
+    intent: 'event',
+    notes: 'Set by den_cartoon_crisis. Follow-through: ft45_den_cartoon_late.',
+  },
+
+  // ── NORWAY ────────────────────────────────────────────────────────────────
+
+  nor_occupation_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Norwegian who lived through the German occupation 1940–45 — the Quisling government, the NS, the resistance, the lowered voices.',
+    intent: 'event',
+    notes: 'Set by nor_wwii_occupation. Follow-through: ft43_occupation_late.',
+  },
+
+  nor_liberation_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed Norwegian liberation May 8, 1945 — the flags that had been hidden, the king returning from London on June 7.',
+    intent: 'event',
+    notes: 'Set by nor_liberation_1945. Follow-through: ft43_liberation_accounting.',
+  },
+
+  nor_oil_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Norwegian who lived through the oil discovery and wealth accumulation from 1969 onward — the slow transformation of Norway into the world\'s largest per-capita sovereign wealth fund.',
+    intent: 'both',
+    notes: 'Set by nor_oil_discovery. Year texture block and follow-through ft43_oil_fund_reckoning.',
+  },
+
+  nor_eu_no_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Norwegian who participated in or was shaped by the 1972 or 1994 EU referendums — both times the country chose not to join.',
+    intent: 'event',
+    notes: 'Set by nor_eu_referendums. Follow-through: ft43_eu_no_late.',
+  },
+
+  nor_july22_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Norwegian alive on July 22, 2011 — the bomb in Oslo and the massacre at Utøya. Seventy-seven dead. The name of the island entered the language as a wound.',
+    intent: 'event',
+    notes: 'Set by nor_july22. Follow-through: ft43_july22_late.',
+  },
+
+  // ── SWEDEN ────────────────────────────────────────────────────────────────
+
+  swe_wwii_neutral_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Swedish adult who lived through the postwar moral reckoning about neutrality — the transit routes, the iron sales, the absent occupation that left a different kind of question.',
+    intent: 'event',
+    notes: 'Set by swe_wwii_reckoning. Follow-through in ft41.',
+  },
+
+  swe_palme_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Knew exactly where they were when Olof Palme was shot on Sveavägen at 23:21 on February 28, 1986 — the thirty-four-year open wound in the Swedish national psyche.',
+    intent: 'both',
+    notes: 'Set by swe_palme_assassination. Year texture and follow-through in ft41.',
+  },
+
+  swe_welfare_retrenchment_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the 1992 Swedish banking and currency crisis — interest rates to 500%, unemployment tripling, welfare state cuts that restructured the meaning of folkhem.',
+    intent: 'event',
+    notes: 'Set by swe_1992_crisis. Follow-through in ft41.',
+  },
+
+  swe_immigration_era_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the transformation of Sweden into one of the world\'s most per-capita-generous refugee-receiving countries — and the collision of that self-image with integration limits.',
+    intent: 'year_texture',
+    notes: 'Set by swe_immigration_question. Year texture block.',
+  },
+
+  swe_democrats_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Watched the Sweden Democrats rise from 5.7% (2010) to 20% (2022), from the margins to government influence — with a founding history that the party has distanced itself from but not erased.',
+    intent: 'event',
+    notes: 'Set by swe_democrats_rise. Follow-through in ft41.',
+  },
+
+  // ── FINLAND ───────────────────────────────────────────────────────────────
+
+  no_1942_witness: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Norwegian who was alive during the November 1942 deportation of Jews — 773 sent to Auschwitz on the SS Donau, carried out by Norwegian police under NS orders. Thirty-four survived.',
+    intent: 'none',
+    notes: 'Set by no_1942_deportation.',
+  },
+
+  fin_continuation_war_gen: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Finnish adult who lived through the Continuation War 1941–44 — the *jatkosota*, fought alongside Germany to recover Karelia. Followed by a separate peace and 300 million USD in reparations.',
+    intent: 'none',
+    notes: 'Set by fin_continuation_war.',
+  },
+
+  fin_finlandized_gen: {
+    weight: 'major',
+    category: 'political',
+    description: 'Finnish adult who lived through Finlandization 1948–91 — the strategic self-censorship and careful accommodation of Soviet preferences that kept Finland free from occupation at a cost not said aloud.',
+    intent: 'event',
+    notes: 'Set by fin_finlandization. Checked by fin_nato_2023 (conditional bonus text).',
+  },
+
+  fin_nato_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Finnish adult alive when Finland joined NATO on April 4, 2023 — ending 75 years of military non-alignment with a 188-8 parliamentary vote.',
+    intent: 'none',
+    notes: 'Set by fin_nato_2023.',
+  },
+
+  fin_swedish_minority: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Swedish-speaking Finn (finlandssvensk) — part of the 5% constitutional minority with Swedish-medium institutions, navigating two languages and the question of which one they are.',
+    intent: 'none',
+    notes: 'Set by fin_swedish_speaker.',
+  },
+
+  fin_reconstruction_gen: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Finnish young adult who worked in or alongside the reparations-driven industrial build-out 1945–60 — the industrialisation of Finland as an accident of defeat.',
+    intent: 'none',
+    notes: 'Set by fin_reparations_industry.',
+  },
+
   baltic_russification_generation: {
     weight: 'moderate',
     category: 'historical',
@@ -1892,8 +2134,8 @@ export const POLITICAL_FLAGS = {
     weight: 'moderate',
     category: 'historical',
     description: 'Present in Egypt the day Sadat was assassinated (October 6, 1981) — witnessed the moment that delivered Mubarak and thirty years of emergency law',
-    intent: 'none',
-    notes: 'Set by we_sadat_assassination_1981 world event.',
+    intent: 'event',
+    notes: 'Set by we_sadat_assassination_1981 world event. Follow-through: ft44_sadat_late.',
   },
 
   emergency_generation: {
@@ -2792,6 +3034,62 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by tha_economic_middle_income.',
   },
 
+  thai_76_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed or survived the October 6 1976 Thammasat massacre — students killed by rightwing paramilitaries, hanged from trees, democratic opening reversed',
+    intent: 'none',
+    notes: 'Set by tha_thammasat_1976.',
+  },
+
+  thai_hilltribe_stateless: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Hill tribe person born in Thailand without Thai citizenship — Karen, Hmong, Akha, or Lahu communities whose borders predate the modern state',
+    intent: 'none',
+    notes: 'Set by tha_hilltribe_stateless.',
+  },
+
+  thai_boom_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Part of Thailand\'s 1985–96 economic boom — the factory migration, the construction surge, 9% annual growth reshaping who lives how',
+    intent: 'event',
+    notes: 'Set by tha_boom_years. Checked by tha_boom_late_reckoning.',
+  },
+
+  thai_deep_south_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the deep south insurgency 2004+ — Pattani, Yala, Narathiwat, the 7,000 dead, the Malay-speaking Muslim community in a Thai Buddhist state',
+    intent: 'none',
+    notes: 'Set by tha_deep_south.',
+  },
+
+  thai_ordained: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Temporarily ordained as a Buddhist monk — the Thai tradition of ordination for one rainy season before marriage',
+    intent: 'event',
+    notes: 'Set by tha_sangha_power. Checked by tha_ordained_echo.',
+  },
+
+  thai_2020_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Part of the 2020–21 youth protest movement — the unprecedented calls for monarchy reform, three-finger salute, Article 112 prosecutions',
+    intent: 'none',
+    notes: 'Set by tha_2020_protests.',
+  },
+
+  thai_covid_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Experienced the 2020–21 Thai tourism collapse — 39M visitors to 400K, the informal economy with no floor',
+    intent: 'event',
+    notes: 'Set by tha_covid_tourism. Checked by tha_covid_rebuilding.',
+  },
+
   bng_liberation_generation: {
     weight: 'major',
     category: 'historical',
@@ -3664,6 +3962,71 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by gr_oxi_2015.',
   },
 
+  // Greece depth arc flags (events_greece_depth.js)
+  greek_prosfyges_family: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Family heritage of the 1922 Asia Minor prosfyges — grandparents expelled from Smyrna, Pontus, or Eastern Thrace, carrying the geography of a lost world in speech.',
+    intent: 'none',
+    notes: 'Set by gr_prosfyges_family.',
+  },
+
+  greek_oxi_1940_gen: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived the October 1940 Oxi — Metaxas\'s refusal of Mussolini\'s ultimatum, the Greek army pushing the Italians back through the Pindus mountains in winter.',
+    intent: 'none',
+    notes: 'Set by gr_oxi_1940.',
+  },
+
+  greek_katochi_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Survived the Axis Occupation 1941-44 — the Katochi, the famine winter of 1941-42 in Athens when 300,000 died, the specific education of knowing what a government controls.',
+    intent: 'none',
+    notes: 'Set by gr_katochi.',
+  },
+
+  greek_elas_member: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Participated in EAM/ELAS — the Greek wartime resistance against the Axis, dominated by the Communist Party but broad-coalition, operating in the mountains and the cities.',
+    intent: 'none',
+    notes: 'Set by gr_elas_resistance.',
+  },
+
+  greek_civil_war_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the Greek Civil War 1946-49 — the war that ran through families and villages along a left/right line drawn by the occupation and not erased until 1981.',
+    intent: 'event',
+    notes: 'Set by gr_civil_war. Checked by gr_civil_war_late_reckoning.',
+  },
+
+  civic_record_denied: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Denied the Greek certificate of civic reliability (frouriko pistopiitiko) due to family political history — blocked from civil service, university, passport, emigration papers.',
+    intent: 'none',
+    notes: 'Set by gr_frouriko.',
+  },
+
+  greek_economic_miracle_gen: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Came of age in the Greek economic miracle of the 1950s-60s — the fastest growth in Europe after West Germany, the first refrigerator, the concrete going up everywhere.',
+    intent: 'none',
+    notes: 'Set by gr_economic_miracle.',
+  },
+
+  greek_gastarbeiter: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Emigrated to West Germany as a gastarbeiter in the 1960s-70s — part of the 300,000 Greeks who went north under bilateral labour agreements, living between two languages and two countries.',
+    intent: 'none',
+    notes: 'Set by gr_gastarbeiter.',
+  },
+
   estado_novo_generation: {
     weight: 'major',
     category: 'historical',
@@ -4135,16 +4498,60 @@ export const POLITICAL_FLAGS = {
     weight: 'minor',
     category: 'historical',
     description: 'Was present in Cochabamba during the 2000 Water War — the first successful uprising against water privatisation in the world.',
-    intent: 'none',
-    notes: 'Set by we_cochabamba_water_war_2000 world event.',
+    intent: 'event',
+    notes: 'Set by we_cochabamba_water_war_2000 world event. Follow-through: ft46_cochabamba_late.',
   },
 
   jamaican_independence_generation: {
     weight: 'moderate',
     category: 'historical',
     description: 'Was present in Jamaica for the August 6, 1962 independence celebrations — old enough to remember the flag going up and what was believed that night.',
-    intent: 'none',
-    notes: 'Set by we_jamaica_independence_1962. Generational marker; no separate follow-through needed.',
+    intent: 'event',
+    notes: 'Set by we_jamaica_independence_1962. Follow-through: ft46_jamaican_independence_late.',
+  },
+
+  // ── DOMINICAN REPUBLIC ────────────────────────────────────────────────────────
+
+  trujillo_generation: {
+    weight: 'major', category: 'historical',
+    description: 'Grew up under Trujillo\'s 31-year dictatorship — his photograph in every home, the SIM secret police, the required silence about certain people who disappeared.',
+    intent: 'none', notes: 'Set by dr_trujillo_childhood.',
+  },
+
+  dr_massacre_generation: {
+    weight: 'major', category: 'conflict',
+    description: 'Generation aware of the 1937 Parsley Massacre — 17,000-35,000 Haitians and dark-skinned Dominicans killed on Trujillo\'s orders at the border.',
+    intent: 'none', notes: 'Set by dr_parsley_massacre.',
+  },
+
+  dr_mirabal_generation: {
+    weight: 'major', category: 'conflict',
+    description: 'Generation defined by the assassination of the Mirabal sisters (November 25, 1960) — Patria, Minerva, and María Teresa, strangled on Trujillo\'s orders.',
+    intent: 'none', notes: 'Set by dr_mirabal_sisters.',
+  },
+
+  dr_trujillo_gone: {
+    weight: 'moderate', category: 'historical',
+    description: 'Lived through the death of Trujillo (May 30, 1961) — the end of 31 years, the uncertainty of what comes after.',
+    intent: 'none', notes: 'Set by dr_trujillo_killed.',
+  },
+
+  dr_1965_generation: {
+    weight: 'major', category: 'conflict',
+    description: 'Witnessed the 1965 Dominican civil war and US military intervention — 42,000 American troops, the Constitutionalists vs. the military junta.',
+    intent: 'none', notes: 'Set by dr_1965_intervention.',
+  },
+
+  dr_baseball_generation: {
+    weight: 'minor', category: 'identity',
+    description: 'Grew up in the Dominican baseball pipeline — the academies, the scouts, the bonus as exit strategy, the dream measured in kilometres per hour.',
+    intent: 'none', notes: 'Set by dr_baseball_dream.',
+  },
+
+  dr_remittance_generation: {
+    weight: 'moderate', category: 'economics',
+    description: 'Part of the Dominican remittance economy — either sending or receiving, the barrel from New York, Washington Heights as second capital.',
+    intent: 'none', notes: 'Set by dr_remittance_economy.',
   },
 
   jamaican_garrison_community: {
@@ -4239,8 +4646,8 @@ export const POLITICAL_FLAGS = {
     weight: 'moderate',
     category: 'historical',
     description: 'Was present in Guinea for the September 28, 1958 independence vote — the no that shocked de Gaulle and started Sékou Touré\'s experiment.',
-    intent: 'none',
-    notes: 'Set by we_guinea_independence_1958. Historical generational marker; no separate follow-through needed.',
+    intent: 'event',
+    notes: 'Set by we_guinea_independence_1958. Follow-through: ft46_guinea_independence_late.',
   },
 
   negdel_generation: {
@@ -4423,8 +4830,8 @@ export const POLITICAL_FLAGS = {
     weight: 'major',
     category: 'historical',
     description: 'Lived through the 1998–2000 Eritrea-Ethiopia border war — the trenches, the conscription, the 70,000 dead, and the Badme border ruling that was never implemented.',
-    intent: 'none',
-    notes: 'Set by we_eritrea_border_war_1998. The war that turned independence into permanent emergency; no separate follow-through needed beyond eri arc events.',
+    intent: 'event',
+    notes: 'Set by we_eritrea_border_war_1998. Follow-through: ft46_eritrean_border_war_late.',
   },
 
   eritrean_national_service: {
@@ -4831,8 +5238,8 @@ export const POLITICAL_FLAGS = {
     weight: 'moderate',
     category: 'political',
     description: 'Aware of the Zhanaozen massacre of December 16, 2011 — 16 oil workers killed on Independence Day.',
-    intent: 'none',
-    notes: 'Set by kaz_zhanaozen_2011 and kaz_zhanaozen_massacre_2011 world event.',
+    intent: 'event',
+    notes: 'Set by kaz_zhanaozen_2011 and kaz_zhanaozen_massacre_2011 world event. Follow-through: ft46_kaz_zhanaozen_late.',
   },
 
   kaz_post_nazarbayev: {
@@ -4913,8 +5320,8 @@ export const POLITICAL_FLAGS = {
     weight: 'moderate',
     category: 'historical',
     description: 'Watched from outside GBAO as the internet went dark during the 2022 crackdown.',
-    intent: 'none',
-    notes: 'Set by taj_gbao_2022 (distant path).',
+    intent: 'event',
+    notes: 'Set by taj_gbao_2022 (distant path). Follow-through: ft47_tajik_gbao_late.',
   },
 
   taj_rogun_generation: {
@@ -5013,6 +5420,332 @@ export const POLITICAL_FLAGS = {
     description: 'Late-life Kyrgyz witness: independence shock through three overthrown presidents through Osh through today.',
     intent: 'none',
     notes: 'Set by kyr_late_reckoning. Terminal.',
+  },
+
+  // ─── TURKMENISTAN ─────────────────────────────────────────────────────────────
+
+  tkm_turkmenbashi_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through the Niyazov personality cult — renamed months, Ruhnama memorisation, rotating gold statue, banana bans, ballet bans.',
+    intent: 'none',
+    notes: 'Set by tkm_turkmenbashi_decrees.',
+  },
+
+  tkm_post_turkmenbashi: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Alive for the December 2006 moment: what follows the man who renamed himself Father of All Turkmen?',
+    intent: 'none',
+    notes: 'Set by tkm_niyazov_death. Guards tkm_arkadag_era event.',
+  },
+
+  tkm_arkadag_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived the Berdymukhamedov/Arkadag era — portrait on cereal boxes, horse book, dynastic handoff to son in 2022.',
+    intent: 'none',
+    notes: 'Set by tkm_arkadag_era.',
+  },
+
+  tkm_gas_wealth_paradox: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Fourth-largest gas reserves in the world; bread ration cards. The gap between what the state has and what the people live on.',
+    intent: 'none',
+    notes: 'Set by tkm_gas_poverty_paradox.',
+  },
+
+  tkm_information_seeker: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Found ways around Turkmenistan\'s information blockade — VPN, passed USB sticks, shortwave. Carries knowledge that cannot be spoken about.',
+    intent: 'none',
+    notes: 'Set by tkm_information_border.',
+  },
+
+  tkm_information_cautious: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Chose the safety of not seeking blocked information. Lives with the particular cost of not knowing.',
+    intent: 'none',
+    notes: 'Set by tkm_information_border.',
+  },
+
+  tkm_exiled_silent: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Turkmen in exile who stays publicly silent — the constraint of family safety extends across the border.',
+    intent: 'none',
+    notes: 'Set by ft32_departure_attempted_echo.',
+  },
+
+  tkm_exiled_speaking: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Turkmen in exile who speaks publicly, with permission from family, knowing the cost.',
+    intent: 'none',
+    notes: 'Set by ft32_departure_attempted_echo.',
+  },
+
+  // ─── GHANA ────────────────────────────────────────────────────────────────────
+
+  gha_rawlings_believer: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Saw the Rawlings PNDC era as genuine accountability — the anger of the second lieutenant felt like overdue correction.',
+    intent: 'none',
+    notes: 'Set by gha_rawlings_pndc.',
+  },
+
+  gha_rawlings_skeptic: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Skeptical of the PDC era — saw "accountability" shade into arbitrary power with no recourse.',
+    intent: 'none',
+    notes: 'Set by gha_rawlings_pndc.',
+  },
+
+  gha_first_voter: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Cast a ballot in Ghana\'s first multiparty election 1992 — a civilian Rawlings, a boycotted parliament, a first vote with all its limits.',
+    intent: 'none',
+    notes: 'Set by gha_first_election.',
+  },
+
+  gha_volta_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Grew up knowing the Akosombo Dam — the 80,000 displaced, the lake over the villages, the power that comes and goes with the water level.',
+    intent: 'none',
+    notes: 'Set by gha_volta_dam.',
+  },
+
+  gha_dumsor_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through dumsor 2014–16 — the 12/24 hour off-on cycle, the generators, the diesel economy, the hashtag.',
+    intent: 'none',
+    notes: 'Set by gha_dumsor.',
+  },
+
+  // ─── ECUADOR ──────────────────────────────────────────────────────────────────
+
+  ecu_military_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Came of age under the 1963–79 military rule — the juntas, Rodríguez Lara\'s nationalist revolution, the managed press, the closed parties.',
+    intent: 'both',
+    notes: 'Set by ecu_military_dictatorship. Year texture + ft34 follow-through.',
+  },
+
+  ecu_correa_supporter: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Believed in the Citizen Revolution — the hospitals built with oil money, the debt restructuring, the closed US base at Manta.',
+    intent: 'event',
+    notes: 'Set by ecu_correa_revolution. Follow-through: ft34_correa_supporter_late.',
+  },
+
+  ecu_correa_skeptic: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Kept distance from the Citizen Revolution — watched the press restrictions tighten, opponents jailed, constitution bent toward permanence.',
+    intent: 'event',
+    notes: 'Set by ecu_correa_revolution. Follow-through: ft34_correa_skeptic_late.',
+  },
+
+  ecu_gang_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through Ecuador\'s 2023–24 gang crisis — the Villavicencio assassination, the TV studio takeover, the estado de excepción.',
+    intent: 'event',
+    notes: 'Set by ecu_gang_crisis_2024. Follow-through: ft34_gang_late.',
+  },
+
+  // ─── EL SALVADOR ─────────────────────────────────────────────────────────────
+
+  slv_romero_death_witness: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Alive in El Salvador when Archbishop Romero was assassinated on March 24, 1980 — the moment that made the war undeniable.',
+    intent: 'event',
+    notes: 'Set by slv_romero_death. Follow-throughs: ft35_romero_canonised, ft35_civil_war_late.',
+  },
+
+  slv_el_mozote_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Alive when the El Mozote bones were found in 1992 — the massacre denied for a decade, the forensic evidence that ended the denial.',
+    intent: 'event',
+    notes: 'Set by slv_el_mozote. Follow-through: ft35_mozote_late.',
+  },
+
+  slv_bukele_believer: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Believed in Bukele\'s break from the ARENA/FMLN duopoly — hopeful that something new was possible.',
+    intent: 'event',
+    notes: 'Set by slv_bukele_arrival. Follow-through: ft35_bukele_believer_late.',
+  },
+
+  slv_bukele_skeptic: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Skeptical of Bukele\'s governing style — recognised the concentration of power before its full extent was visible.',
+    intent: 'event',
+    notes: 'Set by slv_bukele_arrival. Follow-through: ft35_bukele_skeptic_late.',
+  },
+
+  slv_estado_excepcion_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through the 2022+ estado de excepción — the mass arrests, CECOT, the silence on the streets, the uninvestigated innocents.',
+    intent: 'event',
+    notes: 'Set by slv_estado_excepcion. Follow-throughs: ft35_estado_late, ft35_civil_war_late.',
+  },
+
+  // ─── GUATEMALA ────────────────────────────────────────────────────────────────
+
+  gua_1954_coup_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Alive when the CIA overthrew Árbenz in 1954 — Operation PBSUCCESS, the United Fruit Company, the end of Guatemala\'s democratic decade.',
+    intent: 'event',
+    notes: 'Set by gua_1954_coup. Follow-through: ft36_1954_late.',
+  },
+
+  gua_scorched_earth_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through the scorched earth campaign 1981–83 — 669 massacres, 200k dead, the genocide the CEH named in 1999.',
+    intent: 'both',
+    notes: 'Set by gua_scorched_earth. Year texture + ft36_scorched_earth_ceh follow-through.',
+  },
+
+  gua_modelo_village_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Relocated to a military "model village" (polo de desarrollo) — the army\'s system for making survivors legible, visible, and supervised.',
+    intent: 'both',
+    notes: 'Set by gua_modelo_village. Year texture + ft36_modelo_village_late follow-through.',
+  },
+
+  gua_1996_peace_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Alive for the 1996 Peace Accords — 36 years of civil war ending with the generals still free and the land question unresolved.',
+    intent: 'event',
+    notes: 'Set by gua_peace_accords_1996. Follow-through: ft36_peace_late.',
+  },
+
+  gua_rios_montt_witness: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Watched the 2013 genocide trial — the conviction that held for ten days, the procedural annulment, the death without sentence.',
+    intent: 'event',
+    notes: 'Set by gua_rios_montt_trial. Follow-through: ft36_rios_montt_late.',
+  },
+
+  // ─── HONDURAS ─────────────────────────────────────────────────────────────────
+
+  hon_battalion_316_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Alive in Honduras during the Battalion 316 years (1980–1986) — the CIA-trained death squad that made union organisers, students, journalists, and priests disappear.',
+    intent: 'event',
+    notes: 'Set by hon_battalion_316. Follow-through: ft37_battalion_truth.',
+  },
+
+  hon_mitch_survivor: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Survived Hurricane Mitch (October 1998) — four days stalled, 7,000 dead, 80% of crops destroyed, thirty years of infrastructure gone; the Choluteca River changed course.',
+    intent: 'both',
+    notes: 'Set by hon_hurricane_mitch. Year texture + ft37_mitch_late follow-through.',
+  },
+
+  hon_zelaya_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Alive in Honduras on June 28, 2009 — the morning soldiers dragged Zelaya from the presidential residence in pyjamas and flew him to Costa Rica.',
+    intent: 'event',
+    notes: 'Set by hon_zelaya_coup. Follow-through: ft37_zelaya_late.',
+  },
+
+  hon_berta_witness: {
+    weight: 'major',
+    category: 'political',
+    description: 'Knew of or witnessed Berta Cáceres — her activism stopping the Agua Zarca dam, the Goldman Prize in 2015, the assassination on March 2, 2016.',
+    intent: 'event',
+    notes: 'Set by hon_berta_caceres. Follow-through: ft37_berta_late.',
+  },
+
+  // ─── NICARAGUA ────────────────────────────────────────────────────────────────
+
+  nic_somoza_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up under the Somoza dynasty (1936–1979) — the three-generation family dictatorship backed by the US, the National Guard as a family business.',
+    intent: 'event',
+    notes: 'Set by nic_somoza_dynasty. Follow-through: ft38_somoza_late.',
+  },
+
+  nic_revolution_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Present for the Sandinista Revolution of July 19, 1979 — Somoza\'s flight, the columns entering Managua, the forty-three-year dynasty ending in hours.',
+    intent: 'both',
+    notes: 'Set by nic_revolution_1979. Year texture + ft38_revolution_late follow-through.',
+  },
+
+  nic_literacy_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Participated in or benefited from the 1980 National Literacy Crusade — five months, kerosene lamps, literacy rising from 50% to 87% in one year.',
+    intent: 'both',
+    notes: 'Set by nic_literacy_crusade. Year texture + ft38_literacy_late follow-through.',
+  },
+
+  nic_election_1990_shock: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Present for the 1990 electoral defeat of the FSLN — Ortega losing to Violeta Chamorro, the revolutionary government accepting democratic accountability.',
+    intent: 'event',
+    notes: 'Set by nic_election_1990. Follow-through: ft38_election_1990_late.',
+  },
+
+  nic_ortega_return: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through Ortega\'s return to power after 2007 — the FSLN back in government, the Árbol de la Vida roundabouts, the accommodation with the Catholic Church.',
+    intent: 'year_texture',
+    notes: 'Set by nic_ortega_returns. Year texture block in yearTexture.js.',
+  },
+
+  nic_2018_witness: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Present for the April 2018 uprising — students with morteros against riot police, 328 killed over five months, the government that came from 1979 shooting protesters.',
+    intent: 'event',
+    notes: 'Set by nic_uprising_2018. Follow-through: ft38_2018_witness_late.',
+  },
+
+  nic_protest_participant: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Actively joined the April 2018 protests in Nicaragua — in the street, at the tranques, making the gesture with everyone who was still out.',
+    intent: 'none',
+    notes: 'Set by nic_uprising_2018 protest choice. Narrative distinction only.',
+  },
+
+  nic_nicaraguan_exile: {
+    weight: 'major',
+    category: 'political',
+    description: 'Left Nicaragua after the 2018 crackdown — part of the tens of thousands in Costa Rica, Miami, Madrid; citizenship stripped, property expropriated.',
+    intent: 'event',
+    notes: 'Set by nic_exile_wave. Follow-through: ft38_exile_late.',
   },
 
 }

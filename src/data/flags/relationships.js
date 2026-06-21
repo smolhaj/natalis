@@ -641,7 +641,7 @@ export const RELATIONSHIP_FLAGS = {
   divided_family: {
     weight: 'major', category: 'relationships',
     description: 'Family separated by political division — a sibling, parent, or relative on the other side of a border that became permanent.',
-    intent: 'none', notes: 'Set by Korean division world event.',
+    intent: 'event', notes: 'Set by Korean division world event. Follow-through: ft47_divided_family_late.',
   },
 
   adult_heartbreak: {

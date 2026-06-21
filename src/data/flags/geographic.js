@@ -1204,7 +1204,7 @@ export const GEOGRAPHIC_FLAGS = {
     weight: 'moderate',
     category: 'conflict',
     description: 'Witnessed the Rainbow Warrior bombing in Auckland harbour — the specific education of state terrorism conducted by a nominal ally, and the world shrugging.',
-    intent: 'none',
+    intent: 'event', notes: 'Follow-through: ft46_nz_rainbow_warrior_late.',
     notes: 'Set by nz_rainbow_warrior_1985. New Zealand only.',
   },
 
@@ -1235,155 +1235,155 @@ export const GEOGRAPHIC_FLAGS = {
   lived_through_occupation: {
     weight: 'major', category: 'conflict',
     description: 'Lived through a military occupation — the experience of foreign soldiers, curfews, and daily civilian life under hostile control.',
-    intent: 'none', notes: 'Set by WWII occupation world events.',
+    intent: 'event', notes: 'Set by WWII occupation world events. Follow-through: ft39_occupation_late.',
   },
 
   lived_through_revolution: {
     weight: 'major', category: 'conflict',
     description: 'Lived through a revolution — the specific fear and possibility of a rapid political rupture.',
-    intent: 'none', notes: 'Set by various revolution world events.',
+    intent: 'event', notes: 'Set by various revolution world events. Follow-through: ft39_revolution_late.',
   },
 
   war_generation: {
     weight: 'major', category: 'conflict',
     description: 'Grew up or came of age during a major war — the formative compression of wartime.',
-    intent: 'none', notes: 'Set by WWII and major conflict world events.',
+    intent: 'event', notes: 'Set by WWII and major conflict world events. Follow-through: ft39_war_generation_late.',
   },
 
   tutsi_hidden: {
     weight: 'major', category: 'conflict',
     description: 'Was a Tutsi who survived the 1994 genocide by hiding or being sheltered — the specific debt of being found later.',
-    intent: 'none', notes: 'Set by Rwanda genocide world event.',
+    intent: 'event', notes: 'Set by Rwanda genocide world event. Follow-through: ft44_tutsi_hidden_late.',
   },
 
   systemic_discrimination: {
     weight: 'major', category: 'conflict',
     description: 'Has experienced systemic discrimination — not the individual encounter but the structural, legal, or social system built against them.',
-    intent: 'none', notes: 'Set by apartheid and Jim Crow world events.',
+    intent: 'event', notes: 'Set by apartheid and Jim Crow world events. Follow-through: ft47_systemic_discrimination_late.',
   },
 
   yugoslav_war_survivor: {
     weight: 'major', category: 'conflict',
     description: 'Survived the Yugoslav wars of the 1990s — the specific grief of a country that ceased to exist.',
-    intent: 'none', notes: 'Set by Yugoslav dissolution world events.',
+    intent: 'event', notes: 'Set by Yugoslav dissolution world events. Follow-through: ft42_yugoslav_late.',
   },
 
   iran_revolution_lived: {
     weight: 'major', category: 'conflict',
     description: 'Lived through the 1979 Iranian revolution — watched a monarchy become a theocracy in under a year.',
-    intent: 'none', notes: 'Set by Iranian revolution world event.',
+    intent: 'event', notes: 'Set by Iranian revolution world event. Follow-through: ft42_iran_revolution_late.',
   },
 
   korean_division_generation: {
     weight: 'major', category: 'conflict',
     description: 'Generation of Koreans who lived through or were defined by the division of the peninsula — family on the other side of a border that cannot be crossed.',
-    intent: 'none', notes: 'Set by Korean War/division world events.',
+    intent: 'event', notes: 'Set by Korean War/division world events. Follow-through: ft42_korean_division_late.',
   },
 
   cultural_revolution_survived: {
     weight: 'major', category: 'conflict',
     description: 'Survived the Chinese Cultural Revolution — the struggle sessions, the re-education, the specific terror of neighbours turned informers.',
-    intent: 'none', notes: 'Set by Cultural Revolution world events.',
+    intent: 'event', notes: 'Set by Cultural Revolution world events. Follow-through: ft42_cultural_revolution_late.',
   },
 
   saigon_fell: {
     weight: 'major', category: 'conflict',
     description: 'Was present when Saigon fell in April 1975 — the helicopters on the roof, the embassy, the end of the American war.',
-    intent: 'none', notes: 'Set by Fall of Saigon world event.',
+    intent: 'event', notes: 'Set by Fall of Saigon world event. Follow-through: ft42_saigon_late.',
   },
 
   soviet_collapse_lived: {
     weight: 'major', category: 'conflict',
     description: 'Witnessed the collapse of the Soviet Union — the end of an empire that had been presented as permanent.',
-    intent: 'none', notes: 'Set by Soviet collapse world events.',
+    intent: 'event', notes: 'Set by Soviet collapse world events. Follow-through: ft42_soviet_collapse_late.',
   },
 
   chechen_war_generation: {
     weight: 'major', category: 'conflict',
     description: 'Grew up during the Chechen wars — in Russia or Chechnya, the war was the permanent backdrop.',
-    intent: 'none', notes: 'Set by Chechen war world events.',
+    intent: 'event', notes: 'Set by Chechen war world events. Follow-through: ft44_chechen_late.',
   },
 
   chechen_civilian: {
     weight: 'major', category: 'conflict',
     description: 'Was a Chechen civilian during the wars — the specific experience of Grozny under bombardment.',
-    intent: 'none', notes: 'Set by Chechen war world events.',
+    intent: 'event', notes: 'Set by Chechen war world events. Follow-through: ft44_chechen_civilian_late.',
   },
 
   witnessed_democracy_end: {
     weight: 'major', category: 'conflict',
     description: 'Witnessed the end of a democratic government — a coup, an autogolpe, an election that was the last.',
-    intent: 'none', notes: 'Set by various coup/democratic collapse world events.',
+    intent: 'event', notes: 'Set by various coup/democratic collapse world events. Follow-through: ft46_witnessed_democracy_end_late.',
   },
 
   condor_generation: {
     weight: 'major', category: 'conflict',
     description: 'Generation defined by Operation Condor — the US-backed network of South American dictatorships that coordinated disappearances across borders.',
-    intent: 'none', notes: 'Set by Operation Condor world events.',
+    intent: 'event', notes: 'Set by Operation Condor world events. Follow-through: ft42_condor_late.',
   },
 
   red_terror_generation: {
     weight: 'major', category: 'conflict',
     description: 'Survived the Ethiopian Red Terror 1977–78 — 500,000 dead, the bodies displayed as warnings.',
-    intent: 'none', notes: 'Set by Red Terror world event.',
+    intent: 'event', notes: 'Set by Red Terror world event. Follow-through: ft42_red_terror_late.',
   },
 
   mau_mau_generation: {
     weight: 'major', category: 'conflict',
     description: 'Generation defined by the Mau Mau uprising and British counter-insurgency in Kenya — detention camps, collective punishment.',
-    intent: 'none', notes: 'Set by Mau Mau world event.',
+    intent: 'event', notes: 'Set by Mau Mau world event. Follow-through: ft44_mau_mau_late.',
   },
 
   biafra_generation: {
     weight: 'major', category: 'conflict',
     description: 'Generation marked by the Biafra war 1967–70 — one million dead from famine, the images of starving children, the silence after.',
-    intent: 'none', notes: 'Set by Biafra world event.',
+    intent: 'event', notes: 'Set by Biafra world event. Follow-through: ft42_biafra_late.',
   },
 
   civil_war_generation: {
     weight: 'major', category: 'conflict',
     description: 'Generation defined by civil war — fought over by factions, the state collapsed into competing armies.',
-    intent: 'none', notes: 'Set by various civil war world events.',
+    intent: 'event', notes: 'Set by various civil war world events. Follow-through: ft47_spanish_civil_war_late.',
   },
 
   lumumba_generation: {
     weight: 'major', category: 'conflict',
     description: 'Generation that witnessed Patrice Lumumba — his independence speech, his assassination weeks later, the lesson that independence could be reversed.',
-    intent: 'none', notes: 'Set by Lumumba world event.',
+    intent: 'event', notes: 'Set by Lumumba world event. Follow-through: ft42_lumumba_late.',
   },
 
   bay_of_pigs_generation: {
     weight: 'moderate', category: 'conflict',
     description: 'Lived through the Bay of Pigs invasion 1961 — the CIA-backed exile attempt, the Cuban defeat, the specific proof that the revolution would be defended.',
-    intent: 'none', notes: 'Set by Bay of Pigs world event.',
+    intent: 'event', notes: 'Set by Bay of Pigs world event. Follow-through: ft46_bay_of_pigs_late.',
   },
 
   mariel_generation: {
     weight: 'major', category: 'migration',
     description: 'Mariel boatlift generation — left Cuba in 1980, the 125,000 who sailed to Florida in five months.',
-    intent: 'none', notes: 'Set by Mariel boatlift world event.',
+    intent: 'event', notes: 'Set by Mariel boatlift world event. Follow-through: ft46_mariel_late.',
   },
 
   mobutu_fall_generation: {
     weight: 'moderate', category: 'conflict',
     description: 'Generation that witnessed Mobutu\'s fall 1997 — the collapse of Zaire and the chaos that followed.',
-    intent: 'none', notes: 'Set by Mobutu fall world event.',
+    intent: 'event', notes: 'Set by Mobutu fall world event. Follow-through: ft46_mobutu_fall_late.',
   },
 
   iran_woman_life_freedom_generation: {
     weight: 'major',
     category: 'conflict',
     description: 'Lived through the 2022 Woman, Life, Freedom uprising in Iran — the most sustained challenge to the Islamic Republic since the revolution, sparked by Mahsa Amini\'s death in Morality Police custody.',
-    intent: 'none',
-    notes: 'Set by we_iran_mahsa_amini_2022 world event. Iran only.',
+    intent: 'event',
+    notes: 'Set by we_iran_mahsa_amini_2022 world event. Iran only. Follow-through: ft47_iran_wlf_late.',
   },
 
   sudan_civil_war_2023: {
     weight: 'major',
     category: 'conflict',
     description: 'Living through the 2023 Sudan civil war — SAF vs. RSF, Khartoum as a battlefield, 7 million displaced, the civilian transition destroyed.',
-    intent: 'none',
-    notes: 'Set by we_sudan_civil_war_2023 world event. Sudan only.',
+    intent: 'event',
+    notes: 'Set by we_sudan_civil_war_2023 world event. Sudan only. Follow-through: ft47_sudan_war_late.',
   },
 
   fiji_emigrated: {
@@ -1626,6 +1626,126 @@ export const GEOGRAPHIC_FLAGS = {
     description: 'Tajik who stayed when the men went to Russia — built what could be built at local wages while the village emptied seasonally.',
     intent: 'none',
     notes: 'Set by taj_russia_migration (stayed path).',
+  },
+
+  kyr_osh_uzbek_stayed_rooted: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Uzbek-Kyrgyz who chose to stay in Kyrgyzstan after the June 2010 violence — the decision accumulated over years of staying when leaving was still possible.',
+    intent: 'none',
+    notes: 'Set by ft31_osh_uzbek_decade_on (stay path).',
+  },
+
+  kyr_osh_uzbek_departing: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Uzbek-Kyrgyz who has decided to leave Kyrgyzstan — the question of when is open, the question of whether has been answered.',
+    intent: 'none',
+    notes: 'Set by ft31_osh_uzbek_decade_on (leave path).',
+  },
+
+  taj_war_narrated: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Told the civil war story to their child — more than before, some of it landing, some waiting for the right age.',
+    intent: 'none',
+    notes: 'Set by ft31_civil_war_son (full-telling path).',
+  },
+
+  taj_war_partial_telling: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Told the outline of the civil war to their child — the rest stays with them, still deciding who the telling would be for.',
+    intent: 'none',
+    notes: 'Set by ft31_civil_war_son (partial path).',
+  },
+
+  // ─── TURKMENISTAN ─────────────────────────────────────────────────────────────
+
+  tkm_ashgabat_resident: {
+    weight: 'minor',
+    category: 'geographic',
+    description: 'Lives in white marble Ashgabat — gold domes, empty boulevards, fountains in the desert, bread queues past state monuments.',
+    intent: 'none',
+    notes: 'Set by tkm_ashgabat_marble.',
+  },
+
+  tkm_departure_attempted: {
+    weight: 'major',
+    category: 'geographic',
+    description: 'Made the attempt to leave Turkmenistan — a state where exit is controlled and families of those who speak out from outside receive visits.',
+    intent: 'none',
+    notes: 'Set by tkm_departure_question.',
+  },
+
+  tkm_stayed_for_family: {
+    weight: 'major',
+    category: 'geographic',
+    description: 'Stayed in Turkmenistan with the knowledge of what staying costs — the calculation that weighted family safety over personal exit.',
+    intent: 'none',
+    notes: 'Set by tkm_departure_question.',
+  },
+
+  // ─── GHANA ────────────────────────────────────────────────────────────────────
+
+  gha_accra_urban: {
+    weight: 'minor',
+    category: 'geographic',
+    description: 'Navigates Accra by the actual logic — trotros that run when full, the mate\'s shout, the city that grew faster than any plan for it.',
+    intent: 'none',
+    notes: 'Set by gha_accra_trotro.',
+  },
+
+  gha_diaspora_pressure: {
+    weight: 'moderate',
+    category: 'geographic',
+    description: 'Went abroad carrying the family\'s expectation — the Western Union transfer that success means, the specific weight of Ghanaian diaspora obligation.',
+    intent: 'none',
+    notes: 'Set by gha_abroad_expectation.',
+  },
+
+  gha_stayed_deliberate: {
+    weight: 'moderate',
+    category: 'geographic',
+    description: 'Chose to stay in Ghana — a decision less legible as a choice than going, but a choice nonetheless.',
+    intent: 'none',
+    notes: 'Set by gha_abroad_expectation.',
+  },
+
+  // ─── ECUADOR ──────────────────────────────────────────────────────────────────
+
+  ecu_andean_highland: {
+    weight: 'minor',
+    category: 'geographic',
+    description: 'From the Andean sierra — grew up with altitude, minga communal labour, and the specific knowledge of how the highlands sustain people.',
+    intent: 'year_texture',
+    notes: 'Set by ecu_minga. Year texture block.',
+  },
+
+  ecu_spain_emigrant: {
+    weight: 'major',
+    category: 'geographic',
+    description: 'Emigrated to Spain during the 2001–08 wave — part of the 800,000 who left after the sucre collapse, building a life in one country while maintaining a version in another.',
+    intent: 'both',
+    notes: 'Set by ecu_spain_wave. Year texture + ft34_spain_echo follow-through.',
+  },
+
+  ecu_stayed_home_crisis: {
+    weight: 'moderate',
+    category: 'geographic',
+    description: 'Stayed in Ecuador during the emigration wave — watched the neighbourhood empty, learned to live in a country exporting its people.',
+    intent: 'year_texture',
+    notes: 'Set by ecu_spain_wave. Year texture block.',
+  },
+
+  // ─── HONDURAS ─────────────────────────────────────────────────────────────────
+
+  hon_banana_generation: {
+    weight: 'moderate',
+    category: 'geographic',
+    description: 'Grew up in the shadow of the banana companies — United Fruit, Standard Fruit — and the plantation economy that the word "banana republic" was coined for.',
+    intent: 'year_texture',
+    notes: 'Set by hon_banana_plantation. Year texture block.',
   },
 
 }
