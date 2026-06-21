@@ -6165,6 +6165,21 @@ function buildYearTexture(state) {
     'When they said you could live and work anywhere in the EU, the size of what they were describing took time to arrive. You had grown up in a country where leaving required permission. Freedom of movement, it turns out, takes years to feel like a right rather than a gift.',
   ])
 
+  // ─── NORWAY TEXTURE ───────────────────────────────────────────────────────────
+  if (F.has('nor_oil_generation') && Math.random() < 0.2) return pick([
+    phase === 'late_life'
+      ? 'The fund has passed a trillion dollars. This number is larger than the Norwegian economy. You have lived through the whole arc of it — the discovery, the decision to save rather than spend, the wealth that arrived slowly and is still arriving. Other countries found oil and are not Norway. Norway is not sure why it is Norway and not the others, and this uncertainty is probably part of why it is Norway.'
+      : 'The oil money is saved rather than spent, mostly. The fund — the Government Pension Fund Global — is an abstraction in your daily life: you know it exists, you benefit indirectly, the investments are managed by central bank officials. But the welfare state it underwrites is real, and you understand that the welfare state and the oil are connected in a way that will eventually require reckoning.',
+    'Norway produces oil and saves the revenue for future generations and the oil contributes to the warming that will most severely affect those future generations. This circularity is visible and discussed and has not been resolved. You have your own position on it.',
+    'The fund owns small fractions of almost every large company on earth. When you buy something from any major international firm, a fraction of the profit comes back, eventually, to Norway. The abstraction of this — the country as shareholder in the global economy — is something you have tried to explain to people from other countries and they usually find it incomprehensible.',
+  ])
+  if (F.has('nor_occupation_generation') && Math.random() < 0.22) return pick([
+    phase === 'late_life'
+      ? 'The occupation lasted five years and the question of who did what during it lasted much longer. The legal trials ended; the social accounting continued for decades. Norway was occupied and had collaborators and had resisters and had people who simply endured, which is the vast majority of any occupied population. You were one of those people. The specific shade of that endurance is not in any official record.'
+      : 'The children who grew up during the occupation carry it differently from the people who were adults during it. You carry a child\'s version: the lowered voices, the soldiers in the street, the things you did not fully understand but understood enough. The adult account came later, from what people told you when you were old enough to be told.',
+    'Vidkun Quisling\'s name became a word in English for collaboration. In Norway it became something more specific: the question of how many ordinary people made ordinary choices to accommodate the occupiers, which is a different question from the committed collaborators and a more difficult one.',
+  ])
+
   // ─── SWEDEN TEXTURE ───────────────────────────────────────────────────────────
   if (F.has('swe_palme_generation') && Math.random() < 0.22) return pick([
     phase === 'late_life'

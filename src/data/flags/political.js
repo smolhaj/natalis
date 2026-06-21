@@ -1378,6 +1378,48 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by cze_eu_accession_2004. Year texture block.',
   },
 
+  // ── NORWAY ────────────────────────────────────────────────────────────────
+
+  nor_occupation_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Norwegian who lived through the German occupation 1940–45 — the Quisling government, the NS, the resistance, the lowered voices.',
+    intent: 'event',
+    notes: 'Set by nor_wwii_occupation. Follow-through: ft43_occupation_late.',
+  },
+
+  nor_liberation_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed Norwegian liberation May 8, 1945 — the flags that had been hidden, the king returning from London on June 7.',
+    intent: 'event',
+    notes: 'Set by nor_liberation_1945. Follow-through: ft43_liberation_accounting.',
+  },
+
+  nor_oil_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Norwegian who lived through the oil discovery and wealth accumulation from 1969 onward — the slow transformation of Norway into the world\'s largest per-capita sovereign wealth fund.',
+    intent: 'both',
+    notes: 'Set by nor_oil_discovery. Year texture block and follow-through ft43_oil_fund_reckoning.',
+  },
+
+  nor_eu_no_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Norwegian who participated in or was shaped by the 1972 or 1994 EU referendums — both times the country chose not to join.',
+    intent: 'event',
+    notes: 'Set by nor_eu_referendums. Follow-through: ft43_eu_no_late.',
+  },
+
+  nor_july22_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Norwegian alive on July 22, 2011 — the bomb in Oslo and the massacre at Utøya. Seventy-seven dead. The name of the island entered the language as a wound.',
+    intent: 'event',
+    notes: 'Set by nor_july22. Follow-through: ft43_july22_late.',
+  },
+
   // ── SWEDEN ────────────────────────────────────────────────────────────────
 
   swe_wwii_neutral_generation: {
