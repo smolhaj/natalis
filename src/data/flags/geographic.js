@@ -1265,37 +1265,37 @@ export const GEOGRAPHIC_FLAGS = {
   yugoslav_war_survivor: {
     weight: 'major', category: 'conflict',
     description: 'Survived the Yugoslav wars of the 1990s — the specific grief of a country that ceased to exist.',
-    intent: 'none', notes: 'Set by Yugoslav dissolution world events.',
+    intent: 'event', notes: 'Set by Yugoslav dissolution world events. Follow-through: ft42_yugoslav_late.',
   },
 
   iran_revolution_lived: {
     weight: 'major', category: 'conflict',
     description: 'Lived through the 1979 Iranian revolution — watched a monarchy become a theocracy in under a year.',
-    intent: 'none', notes: 'Set by Iranian revolution world event.',
+    intent: 'event', notes: 'Set by Iranian revolution world event. Follow-through: ft42_iran_revolution_late.',
   },
 
   korean_division_generation: {
     weight: 'major', category: 'conflict',
     description: 'Generation of Koreans who lived through or were defined by the division of the peninsula — family on the other side of a border that cannot be crossed.',
-    intent: 'none', notes: 'Set by Korean War/division world events.',
+    intent: 'event', notes: 'Set by Korean War/division world events. Follow-through: ft42_korean_division_late.',
   },
 
   cultural_revolution_survived: {
     weight: 'major', category: 'conflict',
     description: 'Survived the Chinese Cultural Revolution — the struggle sessions, the re-education, the specific terror of neighbours turned informers.',
-    intent: 'none', notes: 'Set by Cultural Revolution world events.',
+    intent: 'event', notes: 'Set by Cultural Revolution world events. Follow-through: ft42_cultural_revolution_late.',
   },
 
   saigon_fell: {
     weight: 'major', category: 'conflict',
     description: 'Was present when Saigon fell in April 1975 — the helicopters on the roof, the embassy, the end of the American war.',
-    intent: 'none', notes: 'Set by Fall of Saigon world event.',
+    intent: 'event', notes: 'Set by Fall of Saigon world event. Follow-through: ft42_saigon_late.',
   },
 
   soviet_collapse_lived: {
     weight: 'major', category: 'conflict',
     description: 'Witnessed the collapse of the Soviet Union — the end of an empire that had been presented as permanent.',
-    intent: 'none', notes: 'Set by Soviet collapse world events.',
+    intent: 'event', notes: 'Set by Soviet collapse world events. Follow-through: ft42_soviet_collapse_late.',
   },
 
   chechen_war_generation: {
@@ -1319,13 +1319,13 @@ export const GEOGRAPHIC_FLAGS = {
   condor_generation: {
     weight: 'major', category: 'conflict',
     description: 'Generation defined by Operation Condor — the US-backed network of South American dictatorships that coordinated disappearances across borders.',
-    intent: 'none', notes: 'Set by Operation Condor world events.',
+    intent: 'event', notes: 'Set by Operation Condor world events. Follow-through: ft42_condor_late.',
   },
 
   red_terror_generation: {
     weight: 'major', category: 'conflict',
     description: 'Survived the Ethiopian Red Terror 1977–78 — 500,000 dead, the bodies displayed as warnings.',
-    intent: 'none', notes: 'Set by Red Terror world event.',
+    intent: 'event', notes: 'Set by Red Terror world event. Follow-through: ft42_red_terror_late.',
   },
 
   mau_mau_generation: {
@@ -1337,7 +1337,7 @@ export const GEOGRAPHIC_FLAGS = {
   biafra_generation: {
     weight: 'major', category: 'conflict',
     description: 'Generation marked by the Biafra war 1967–70 — one million dead from famine, the images of starving children, the silence after.',
-    intent: 'none', notes: 'Set by Biafra world event.',
+    intent: 'event', notes: 'Set by Biafra world event. Follow-through: ft42_biafra_late.',
   },
 
   civil_war_generation: {
@@ -1349,7 +1349,7 @@ export const GEOGRAPHIC_FLAGS = {
   lumumba_generation: {
     weight: 'major', category: 'conflict',
     description: 'Generation that witnessed Patrice Lumumba — his independence speech, his assassination weeks later, the lesson that independence could be reversed.',
-    intent: 'none', notes: 'Set by Lumumba world event.',
+    intent: 'event', notes: 'Set by Lumumba world event. Follow-through: ft42_lumumba_late.',
   },
 
   bay_of_pigs_generation: {

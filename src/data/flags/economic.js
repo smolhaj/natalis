@@ -842,7 +842,7 @@ export const ECONOMIC_FLAGS = {
   depression_generation: {
     weight: 'major', category: 'economics',
     description: 'Grew up during the Great Depression — the bread lines, Hoovervilles, the decade of unemployment that shaped a generation\'s relationship to money.',
-    intent: 'none', notes: 'Set by Great Depression world events.',
+    intent: 'event', notes: 'Set by Great Depression world events. Follow-through: ft42_depression_late.',
   },
 
   money_zero_survived: {

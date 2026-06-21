@@ -5376,19 +5376,19 @@ export const IDENTITY_FLAGS = {
   independence_ghana: {
     weight: 'major', category: 'identity',
     description: 'Witnessed Ghanaian independence 1957 — the night the lights came on at the polo grounds, Nkrumah\'s freedom speech.',
-    intent: 'none', notes: 'Set by Ghana independence world event.',
+    intent: 'event', notes: 'Set by Ghana independence world event. Follow-through: ft42_independence_ghana_late.',
   },
 
   independence_kenya: {
     weight: 'major', category: 'identity',
     description: 'Witnessed Kenyan independence 1963 — uhuru, and the specific expectations that came with it.',
-    intent: 'none', notes: 'Set by Kenya independence world event.',
+    intent: 'event', notes: 'Set by Kenya independence world event. Follow-through: ft42_independence_kenya_late.',
   },
 
   independence_zimbabwe: {
     weight: 'major', category: 'identity',
     description: 'Witnessed Zimbabwean independence 1980 — Robert Mugabe\'s first address, the hope that had specific content.',
-    intent: 'none', notes: 'Set by Zimbabwe independence world event.',
+    intent: 'event', notes: 'Set by Zimbabwe independence world event. Follow-through: ft42_independence_zimbabwe_late.',
   },
 
   triangle_generation: {
