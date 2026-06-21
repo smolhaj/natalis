@@ -9711,6 +9711,72 @@ function buildYearTexture(state) {
     'Free in the specific way of having no protection from anyone. That is the best description you have found for what you are.',
   ])
 
+  // ─── KAZAKHSTAN TEXTURE ──────────────────────────────────────────────────────
+  if (F.has('kaz_steppe_identity') && Math.random() < 0.2) return pick([
+    'The steppe in winter is a particular kind of silence. Not empty — full of something that does not resolve into sound. You grew up knowing the difference between wind and silence in a way that is not translatable.',
+    phase === 'late_life'
+      ? 'The constellations have names in Kazakh that are not the names the Russian schoolbooks used. Your grandfather gave you the Kazakh names. You have given them to no one. This is a specific kind of ending — the thing that ends not with death but with the last person who knew it.'
+      : 'The sheep, the horses, the specific arithmetic of what could be carried and what had to be left when you moved. The steppe was an economy before it was a landscape.',
+  ])
+  if (F.has('kazakh_speaker') && Math.random() < 0.2) return pick([
+    'The language the professionals speak is Russian. The language you think in is Kazakh. The translation between them is always happening and rarely shows.',
+    'You write official documents in Russian, speak to your grandmother in Kazakh, argue with your friends in whichever comes first. This is not unusual. This is just what living here is.',
+    phase === 'late_life'
+      ? 'The language your grandchildren speak most comfortably is Kazakh — better than you spoke it at their age. Something that was nearly lost has been recovered. The recovery is incomplete and the incompleteness will persist. But the direction changed.'
+      : 'When Kazakh became official and mandatory, the people teaching it were also learning it. You were taught a language by teachers who were finding it as they went. The result is imperfect and real.',
+  ])
+  if (F.has('kaz_qantar_witness') && Math.random() < 0.22) return pick([
+    'The internet going dark has a texture. The Telegram channels going quiet one by one. The last timestamp before the gap. The hours between knowing something was happening and knowing what it was.',
+    phase === 'late_life'
+      ? 'January 2022 is the word Qantar now. You watched the name settle into the language after the fact — the way words arrive for things that needed naming. The government does not use it the way you use it.'
+      : 'Two hundred and thirty-eight people. Ten thousand arrested. The CSTO vehicles in the streets of Almaty. You carry these numbers the way witnesses carry numbers — not as statistics but as a measure of something specific that happened.',
+  ])
+  if (F.has('kaz_qantar_protester') && Math.random() < 0.22) return pick([
+    'You were in the streets before the internet went dark. You know what the streets were before the CSTO vehicles arrived. Both are true simultaneously and the second does not erase the first.',
+    phase === 'late_life'
+      ? 'The movement that filled the streets in January 2022 was real. The people were real. The days when it was possible felt possible in a way that certain days do and others do not. What happened next was also real. You carry both.'
+      : 'The gap between the day the streets filled and the day the internet went dark is where you locate your understanding of what this country is willing to do and what it is not.',
+  ])
+  if (F.has('kaz_post_nazarbayev') && Math.random() < 0.18) return pick([
+    'The Elbasy — the Leader of the Nation — resigned and the city was renamed for him the next day and then the January protests made the name untenable and it became Astana again. You have watched the logic of this play out in real time.',
+    phase === 'late_life'
+      ? 'You watched a country be managed from above for thirty years and then watch the management produce its own crisis and then watch the crisis be managed. The word for this architecture is continuity. You have watched continuity.'
+      : 'The question you return to: what changed when Nazarbayev resigned? His daughter runs the Senate. His son-in-law runs the national company. His party continues. The city\'s name changed twice. The oil continues to flow.',
+  ])
+  if (F.has('kaz_astana_generation') && Math.random() < 0.18) return pick([
+    'The capital was moved to the steppe in 1997. The glass buildings arrived first; then the roads; then the people. You watched a city be built from the category of city-that-will-exist-here into a city that does.',
+    'The Norman Foster pyramid. The Khan Shatyr tent. The Bayterek tower. The architecture was designed to be photographed from the air. You live at ground level.',
+    phase === 'late_life'
+      ? 'The city has been Akmola and Astana and Nur-Sultan and Astana again, all in your adult life. The signs changed. The buildings did not. The question of what a capital means — what gathering power here rather than in Almaty was supposed to produce — is one you have watched being answered and re-answered.'
+      : 'Astana was built to be the future and the oil money made the future buildable in a decade. The question of who the future was built for is a different question from whether it was built.',
+  ])
+
+  // ─── UZBEKISTAN TEXTURE ──────────────────────────────────────────────────────
+  if (F.has('uzb_silk_road_identity') && Math.random() < 0.2) return pick([
+    'Samarkand is a city from the histories — Ibn Battuta, Timur, the blue tiles of the Registan. You grew up with the photographs of the Registan in the schoolbooks before you saw it in person. When you saw it in person it was the photographs made real.',
+    phase === 'late_life'
+      ? 'The Soviet period named everything after Lenin and Marx and then the independent period renamed everything after Timur and Ulughbek. The architecture was always there under the names. The names changed; the tilework did not.'
+      : 'Silk Road sounds like a metaphor. It was a trade route with specific goods, specific exchange rates, specific cities at specific intervals. Your city was one of those cities. That fact is not a metaphor. It is the specific weight of where you are from.',
+  ])
+  if (F.has('uzb_karimov_era') && Math.random() < 0.2) return pick([
+    'The mahalla chairman knows who received a guest. The neighbourhood committee reports. The surveillance is not hidden — it functions by being known. You calibrate accordingly.',
+    phase === 'late_life'
+      ? 'You have outlived him. You did not expect to say that sentence. Islam Karimov ruled from 1989 until 2016 — twenty-seven years. You are still in the country he shaped. You are reading a newspaper that no longer has to avoid his name, which is a change. It is not the same as the country changing.'
+      : 'The things you do not say out loud have their own grammar by now. You learned it so young you cannot always identify it when it runs. The pause before certain subjects. The voice that drops. The check of who is present.',
+  ])
+  if (F.has('uzb_andijan_witness') && Math.random() < 0.2) return pick([
+    'May 13, 2005. The government said they fired on armed extremists. The people who were there said they fired on a crowd. The number the government gave was 187. Human rights organisations documented over seven hundred. You know which number you trust.',
+    phase === 'late_life'
+      ? 'The Andijan massacre was followed by an international response and then a quiet reintegration. The quiet reintegration is the lesson. You watched the world decide that Uzbekistan was too important strategically to hold to account for a specific afternoon in the Fergana Valley. You do not forget which afternoon.'
+      : 'The internet in 2005 was different from now. What happened in Andijan was documented on phones and then those phones were taken. What you know, you know from the accounts that got out. The accounts that got out are enough.',
+  ])
+  if (F.has('uzb_alphabet_transition') && Math.random() < 0.16) return pick([
+    'You learned to write in Cyrillic and then the country decided to use Latin. You spent years in the overlap — street signs in one script, textbooks in the other, your own handwriting in the one you learned first.',
+    phase === 'late_life'
+      ? 'Your grandchildren write in Latin letters and read Uzbek literature in a different script than the one you read it in. The books themselves have not changed. The way into them has. You think about this when you see them reading — whether the script makes the language feel different, or whether the language is just the language regardless.'
+      : 'Arabic script before 1928. Latin from 1928 to 1940. Cyrillic from 1940 to 1992. Latin again from 1992. The alphabet has changed four times in a century. The history of the alphabet is the history of who was deciding what Uzbekistan was.',
+  ])
+
   // ─── LIBYA TEXTURE ───────────────────────────────────────────────────────────
   if (F.has('libyan_jamahiriya_generation') && Math.random() < 0.18) return pick([
     'The Green Book was the theory. The Revolutionary Guards were the practice. Both were real.',
