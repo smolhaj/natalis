@@ -3004,8 +3004,8 @@ export const POLITICAL_FLAGS = {
     weight: 'moderate',
     category: 'historical',
     description: 'Part of Thailand\'s 1985–96 economic boom — the factory migration, the construction surge, 9% annual growth reshaping who lives how',
-    intent: 'year_texture',
-    notes: 'Set by tha_boom_years.',
+    intent: 'event',
+    notes: 'Set by tha_boom_years. Checked by tha_boom_late_reckoning.',
   },
 
   thai_deep_south_generation: {
@@ -3020,8 +3020,8 @@ export const POLITICAL_FLAGS = {
     weight: 'minor',
     category: 'identity',
     description: 'Temporarily ordained as a Buddhist monk — the Thai tradition of ordination for one rainy season before marriage',
-    intent: 'year_texture',
-    notes: 'Set by tha_sangha_power.',
+    intent: 'event',
+    notes: 'Set by tha_sangha_power. Checked by tha_ordained_echo.',
   },
 
   thai_2020_generation: {
@@ -3036,8 +3036,8 @@ export const POLITICAL_FLAGS = {
     weight: 'moderate',
     category: 'historical',
     description: 'Experienced the 2020–21 Thai tourism collapse — 39M visitors to 400K, the informal economy with no floor',
-    intent: 'year_texture',
-    notes: 'Set by tha_covid_tourism.',
+    intent: 'event',
+    notes: 'Set by tha_covid_tourism. Checked by tha_covid_rebuilding.',
   },
 
   bng_liberation_generation: {
