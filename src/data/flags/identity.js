@@ -6627,4 +6627,14 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by slv_gang_renta. Year texture + ft35_renta_echo follow-through.',
   },
 
+  // ─── GUATEMALA ────────────────────────────────────────────────────────────────
+
+  gua_highland_maya: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Maya highland identity — the milpa, the weaving patterns that say what village you are from, the cofradía calendar, the state that doesn\'t know you exist.',
+    intent: 'both',
+    notes: 'Set by gua_highland_childhood. Year texture + ft36_highland_maya_late follow-through.',
+  },
+
 }

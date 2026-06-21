@@ -3804,6 +3804,25 @@ function buildYearTexture(state) {
     'The voice on the Sunday radio that was not afraid of what it was saying. You have measured other voices against it since.',
     'He was canonized eventually. You are not sure the canonization does what the people who needed him needed.',
   ])
+  if (F.has('gua_highland_maya') && Math.random() < 0.2) return pick([
+    'The weaving takes a week. The pattern is the one from your village — the colours your grandmother used, the specific arrangement that says: this is where we are from. You do this in the evenings. The pattern has not changed.',
+    phase === 'late_life'
+      ? 'The tourists in Chichicastenango photograph the traje. The traje is still being made by the people whose grandmothers made it. This outlasted things that tried to end it. That is worth noting.'
+      : 'The milpa calendar and the solar calendar are different. You move between them the way you move between languages: naturally, without deciding to.',
+    'The cofradía still meets. The marimba at the fiesta is the same music. These things continued through the years when continuing was itself an act.',
+  ])
+  if (F.has('gua_scorched_earth_generation') && Math.random() < 0.22) return pick([
+    phase === 'late_life'
+      ? 'The CEH report is in the National Archive. 669 massacres. 440 villages. The word the commission used was genocide. The people it named have mostly died without standing trial. The word is still in the report.'
+      : 'You know which villages were burned. You know the names of people who were not there when the year turned. The names do not diminish with time the way you were told grief diminishes.',
+    'There were people who did this who then lived ordinary lives afterward — in the capital, in offices, in houses with gardens. You have known some of them. You have known you knew them.',
+  ])
+  if (F.has('gua_modelo_village_generation') && Math.random() < 0.18) return pick([
+    'The house the army built is your house now. You have been here longer than the army was. The rows are still rows. The gardens have made them something else over decades.',
+    phase === 'late_life'
+      ? 'Thirty years in the place they put you. You have made it yours in every way that matters. The origin is in the bones of the walls. You know this and live here anyway because this is where your life is.'
+      : 'The permission to go to the fields was what it was: the military understanding that you could not be kept in the rows and also expected to eat.',
+  ])
   if (F.has('northern_journey_taken') && Math.random() < 0.3) return pick([
     phase === 'late_life'
       ? 'You have spent years in a country that does not fully know what to do with you and has opinions about it. You have made a life here anyway. That is the fact of it.'

@@ -5199,4 +5199,46 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by slv_estado_excepcion. Follow-throughs: ft35_estado_late, ft35_civil_war_late.',
   },
 
+  // ─── GUATEMALA ────────────────────────────────────────────────────────────────
+
+  gua_1954_coup_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Alive when the CIA overthrew Árbenz in 1954 — Operation PBSUCCESS, the United Fruit Company, the end of Guatemala\'s democratic decade.',
+    intent: 'event',
+    notes: 'Set by gua_1954_coup. Follow-through: ft36_1954_late.',
+  },
+
+  gua_scorched_earth_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through the scorched earth campaign 1981–83 — 669 massacres, 200k dead, the genocide the CEH named in 1999.',
+    intent: 'both',
+    notes: 'Set by gua_scorched_earth. Year texture + ft36_scorched_earth_ceh follow-through.',
+  },
+
+  gua_modelo_village_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Relocated to a military "model village" (polo de desarrollo) — the army\'s system for making survivors legible, visible, and supervised.',
+    intent: 'both',
+    notes: 'Set by gua_modelo_village. Year texture + ft36_modelo_village_late follow-through.',
+  },
+
+  gua_1996_peace_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Alive for the 1996 Peace Accords — 36 years of civil war ending with the generals still free and the land question unresolved.',
+    intent: 'event',
+    notes: 'Set by gua_peace_accords_1996. Follow-through: ft36_peace_late.',
+  },
+
+  gua_rios_montt_witness: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Watched the 2013 genocide trial — the conviction that held for ten days, the procedural annulment, the death without sentence.',
+    intent: 'event',
+    notes: 'Set by gua_rios_montt_trial. Follow-through: ft36_rios_montt_late.',
+  },
+
 }
