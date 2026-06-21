@@ -6557,4 +6557,46 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by tkm_darvaza_crater.',
   },
 
+  // ─── GHANA ────────────────────────────────────────────────────────────────────
+
+  gha_akan_day_name: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Carries the Akan day-name alongside their given name — Kwame, Kofi, Yaa, Ama: the name that tells Ghanaians which day you arrived.',
+    intent: 'none',
+    notes: 'Set by gha_day_name.',
+  },
+
+  gha_cocoa_family: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'From a cocoa-farming family — learned early that what you produce and what you receive are mediated by prices set in London and Zürich.',
+    intent: 'none',
+    notes: 'Set by gha_cocoa_family event.',
+  },
+
+  gha_pentecostal_committed: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Drawn into the new Pentecostalism — Lighthouse, ICGC, the conviction in the warehouse church that God\'s approval is imminent.',
+    intent: 'none',
+    notes: 'Set by gha_pentecostal_rise.',
+  },
+
+  gha_faith_private: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Maintains faith privately, at a distance from Pentecostal intensity — believes what they believe but not in that specific room.',
+    intent: 'none',
+    notes: 'Set by gha_pentecostal_rise.',
+  },
+
+  gha_year_of_return_witness: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Watched the 2019 Year of Return — diaspora arriving, Cape Coast castle ceremonies, the complicated feelings about recognition and performance.',
+    intent: 'none',
+    notes: 'Set by gha_year_of_return.',
+  },
+
 }

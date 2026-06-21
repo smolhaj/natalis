@@ -5081,4 +5081,46 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by ft32_departure_attempted_echo.',
   },
 
+  // ─── GHANA ────────────────────────────────────────────────────────────────────
+
+  gha_rawlings_believer: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Saw the Rawlings PNDC era as genuine accountability — the anger of the second lieutenant felt like overdue correction.',
+    intent: 'none',
+    notes: 'Set by gha_rawlings_pndc.',
+  },
+
+  gha_rawlings_skeptic: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Skeptical of the PDC era — saw "accountability" shade into arbitrary power with no recourse.',
+    intent: 'none',
+    notes: 'Set by gha_rawlings_pndc.',
+  },
+
+  gha_first_voter: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Cast a ballot in Ghana\'s first multiparty election 1992 — a civilian Rawlings, a boycotted parliament, a first vote with all its limits.',
+    intent: 'none',
+    notes: 'Set by gha_first_election.',
+  },
+
+  gha_volta_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Grew up knowing the Akosombo Dam — the 80,000 displaced, the lake over the villages, the power that comes and goes with the water level.',
+    intent: 'none',
+    notes: 'Set by gha_volta_dam.',
+  },
+
+  gha_dumsor_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through dumsor 2014–16 — the 12/24 hour off-on cycle, the generators, the diesel economy, the hashtag.',
+    intent: 'none',
+    notes: 'Set by gha_dumsor.',
+  },
+
 }

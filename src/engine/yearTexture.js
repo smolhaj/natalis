@@ -8697,6 +8697,40 @@ function buildYearTexture(state) {
       ? 'You spent your life knowing that the country that was supposed to show what African independence could be was taken from its creator in a bloodless coup while he was abroad. The lesson is specific.'
       : 'February 24, 1966. The NLC names the streets after itself. The specific grief of a generation that believed the project would hold is something you carry.',
   ])
+
+  if (F.has('gha_cocoa_family') && Math.random() < 0.18) return pick([
+    'The price is set in London. Your family harvests what it harvests and receives what the world decides it is worth. These two facts coexist every season.',
+    'The trees require pruning. They require shade from legumes you plant between them. They require the right fungicide at the right moment. If you do everything correctly, what you receive is still whatever the world price happens to be.',
+    phase === 'late_life'
+      ? 'You have watched the chocolate bars that contain your family\'s labour advertised in markets on several continents, at prices that could purchase a very good week of what you earned for the cocoa in them. The arithmetic has never been equal. You do not know how to make it equal.'
+      : 'A good harvest year can still be a poor income year. This is the basic grammar of the smallholder life: work and reward are related, but the relationship goes through London.',
+  ])
+
+  if (F.has('gha_dumsor_era') && Math.random() < 0.18) return pick([
+    'Twelve hours off, twenty-four on, twelve off. You know the schedule the way you know weather — approximately, subject to revision. The generator is on standby.',
+    '"Dumsor" is the Twi word for the rhythm that is now the rhythm of everything: the food that can or cannot be kept cold, the phone that can or cannot be charged, the business that can or cannot run.',
+    age >= 50
+      ? 'In 2016 the dumsor ended, more or less. The power is more reliable now. You remember what it was to plan every day around a twelve-hour interruption. The memory is not distant.'
+      : 'Your neighbour has a generator. You know this because their lights are on when yours are not. The generator is also an economic statement.',
+  ])
+
+  if (F.has('gha_pentecostal_committed') && Math.random() < 0.17) return pick([
+    'The Sunday service runs three hours. The worship team plays until the sound is a physical presence in the room. You know what it is to be in a room where everyone is expecting the same thing.',
+    'The pastor says: God has a plan for your breakthrough. You have been in the room when this lands on someone who needed it. You have watched what happens to a face when the words arrive at the right moment.',
+  ])
+
+  if (F.has('gha_diaspora_pressure') && Math.random() < 0.17) return pick([
+    'The call home on Sunday. You do the conversion before you speak: what you can send, what that translates to, what the expectation was and what the reality is. These are never quite the same number.',
+    'Being Ghanaian abroad carries a specific pride that non-Ghanaians misread as arrogance. The pride is real. What it is covering — the obligation, the distance, the calculation — is also real.',
+    age >= 50
+      ? 'You have spent enough years abroad to understand that the image your family has of your life and the life you have led are two different things, and that correcting this image would cost more than maintaining it.'
+      : 'Someone from the village is coming to visit. You have been preparing the apartment for the version of abroad that you are supposed to be living.',
+  ])
+
+  if (F.has('gha_akan_day_name') && Math.random() < 0.14) return pick([
+    'Your day name announces when you arrived. Every Ghanaian who hears it knows the day of the week. You carry two names in two registers, shifting between them without thinking about it.',
+  ])
+
   if (F.has('ivorian_miracle_generation') && Math.random() < 0.2) return pick([
     'The Ivorian Miracle: 7 percent growth per year, the cocoa and coffee economy, Abidjan as the model African city. The miracle required four million migrants. The question of who belonged came later.',
     phase === 'late_life'

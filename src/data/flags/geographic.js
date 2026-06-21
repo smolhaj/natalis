@@ -1686,4 +1686,30 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by tkm_departure_question.',
   },
 
+  // ─── GHANA ────────────────────────────────────────────────────────────────────
+
+  gha_accra_urban: {
+    weight: 'minor',
+    category: 'geographic',
+    description: 'Navigates Accra by the actual logic — trotros that run when full, the mate\'s shout, the city that grew faster than any plan for it.',
+    intent: 'none',
+    notes: 'Set by gha_accra_trotro.',
+  },
+
+  gha_diaspora_pressure: {
+    weight: 'moderate',
+    category: 'geographic',
+    description: 'Went abroad carrying the family\'s expectation — the Western Union transfer that success means, the specific weight of Ghanaian diaspora obligation.',
+    intent: 'none',
+    notes: 'Set by gha_abroad_expectation.',
+  },
+
+  gha_stayed_deliberate: {
+    weight: 'moderate',
+    category: 'geographic',
+    description: 'Chose to stay in Ghana — a decision less legible as a choice than going, but a choice nonetheless.',
+    intent: 'none',
+    notes: 'Set by gha_abroad_expectation.',
+  },
+
 }
