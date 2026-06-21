@@ -5241,4 +5241,38 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by gua_rios_montt_trial. Follow-through: ft36_rios_montt_late.',
   },
 
+  // ─── HONDURAS ─────────────────────────────────────────────────────────────────
+
+  hon_battalion_316_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Alive in Honduras during the Battalion 316 years (1980–1986) — the CIA-trained death squad that made union organisers, students, journalists, and priests disappear.',
+    intent: 'event',
+    notes: 'Set by hon_battalion_316. Follow-through: ft37_battalion_truth.',
+  },
+
+  hon_mitch_survivor: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Survived Hurricane Mitch (October 1998) — four days stalled, 7,000 dead, 80% of crops destroyed, thirty years of infrastructure gone; the Choluteca River changed course.',
+    intent: 'both',
+    notes: 'Set by hon_hurricane_mitch. Year texture + ft37_mitch_late follow-through.',
+  },
+
+  hon_zelaya_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Alive in Honduras on June 28, 2009 — the morning soldiers dragged Zelaya from the presidential residence in pyjamas and flew him to Costa Rica.',
+    intent: 'event',
+    notes: 'Set by hon_zelaya_coup. Follow-through: ft37_zelaya_late.',
+  },
+
+  hon_berta_witness: {
+    weight: 'major',
+    category: 'political',
+    description: 'Knew of or witnessed Berta Cáceres — her activism stopping the Agua Zarca dam, the Goldman Prize in 2015, the assassination on March 2, 2016.',
+    intent: 'event',
+    notes: 'Set by hon_berta_caceres. Follow-through: ft37_berta_late.',
+  },
+
 }

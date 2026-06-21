@@ -3853,6 +3853,22 @@ function buildYearTexture(state) {
       : 'You have not left this neighbourhood because you know exactly what it costs to exist here. A different neighbourhood would have different costs you don\'t yet know. This arithmetic keeps many people where they are.',
     'The boy who collects does not look at you when he takes the money. He is perhaps nineteen. You do not look at him either.',
   ])
+  if (F.has('hon_banana_generation') && Math.random() < 0.2) return pick([
+    'The banana smell is specific — not the fruit but the chemical, the spray that came at scheduled intervals and that you learned to stay indoors for. You still hold your breath in garden centres.',
+    phase === 'late_life'
+      ? 'The company name changed once. The arrangement did not change. The price is still set somewhere else and what arrives here is the remainder after that price has been decided.'
+      : 'Your father knows every row by number. He knows which rows flood first and which rows the supervisor checks least often. This is the knowledge a life on the plantation gives you: its exact geography of power.',
+    'Honduras is the country the word was coined for. You grew up inside the word, which means you did not know it was a word until later.',
+  ])
+  if (F.has('hon_mitch_survivor') && Math.random() < 0.22) return pick([
+    phase === 'late_life'
+      ? 'The Choluteca River runs in a different channel now. The old bridge stands over dry land. You have seen photographs of it and know exactly what it means: that the world you grew up in is not there anymore, physically, the river has moved.'
+      : 'The storm stalled. Four days. You know what four days of rain looks like from inside a house where you are waiting to find out if the house is still there.',
+    'The people who rebuilt did not get everything back. The people who left did not come back. You are part of one of those sentences.',
+    phase === 'late_life'
+      ? 'Eighty percent of the crops. That was the official number. You knew what it meant before you understood the percentage: the market with nothing in it, the weeks that followed, the recalibration of what enough means.'
+      : 'You know the names of the dead. Mitch is not an abstraction — it is a list of names you can still produce.',
+  ])
   if (F.has('lira_collapse_lived') && Math.random() < 0.35) return pick([
     phase === 'late_life'
       ? 'You grew up knowing that savings are a story a government tells you. You stopped believing the story early.'

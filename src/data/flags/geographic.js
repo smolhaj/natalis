@@ -1738,4 +1738,14 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by ecu_spain_wave. Year texture block.',
   },
 
+  // ─── HONDURAS ─────────────────────────────────────────────────────────────────
+
+  hon_banana_generation: {
+    weight: 'moderate',
+    category: 'geographic',
+    description: 'Grew up in the shadow of the banana companies — United Fruit, Standard Fruit — and the plantation economy that the word "banana republic" was coined for.',
+    intent: 'year_texture',
+    notes: 'Set by hon_banana_plantation. Year texture block.',
+  },
+
 }
