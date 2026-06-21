@@ -1235,19 +1235,19 @@ export const GEOGRAPHIC_FLAGS = {
   lived_through_occupation: {
     weight: 'major', category: 'conflict',
     description: 'Lived through a military occupation — the experience of foreign soldiers, curfews, and daily civilian life under hostile control.',
-    intent: 'none', notes: 'Set by WWII occupation world events.',
+    intent: 'event', notes: 'Set by WWII occupation world events. Follow-through: ft39_occupation_late.',
   },
 
   lived_through_revolution: {
     weight: 'major', category: 'conflict',
     description: 'Lived through a revolution — the specific fear and possibility of a rapid political rupture.',
-    intent: 'none', notes: 'Set by various revolution world events.',
+    intent: 'event', notes: 'Set by various revolution world events. Follow-through: ft39_revolution_late.',
   },
 
   war_generation: {
     weight: 'major', category: 'conflict',
     description: 'Grew up or came of age during a major war — the formative compression of wartime.',
-    intent: 'none', notes: 'Set by WWII and major conflict world events.',
+    intent: 'event', notes: 'Set by WWII and major conflict world events. Follow-through: ft39_war_generation_late.',
   },
 
   tutsi_hidden: {

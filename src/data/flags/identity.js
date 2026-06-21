@@ -5322,19 +5322,19 @@ export const IDENTITY_FLAGS = {
   drought_survivor: {
     weight: 'moderate', category: 'trauma',
     description: 'Survived a major drought — the specific experience of watching a landscape dry and food become scarce.',
-    intent: 'none', notes: 'Set by drought/famine world events.',
+    intent: 'event', notes: 'Set by drought/famine world events. Follow-through: ft39_drought_late.',
   },
 
   apartheid_privileged: {
     weight: 'major', category: 'moral',
     description: 'Was privileged under apartheid — white South African who benefited from a system of racial separation.',
-    intent: 'none', notes: 'Set by apartheid world events.',
+    intent: 'event', notes: 'Set by apartheid world events. Follow-through: ft39_apartheid_privileged_late.',
   },
 
   witnessed_climate_change: {
     weight: 'moderate', category: 'trauma',
     description: 'Has witnessed visible climate change effects — weather patterns, species, landscapes changed in a lifetime.',
-    intent: 'none', notes: 'Set by climate world events.',
+    intent: 'event', notes: 'Set by climate world events. Follow-through: ft39_climate_witness_late.',
   },
 
   genocide_witness: {

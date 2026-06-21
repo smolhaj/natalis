@@ -824,7 +824,7 @@ export const ECONOMIC_FLAGS = {
   hyperinflation_survivor: {
     weight: 'major', category: 'economics',
     description: 'Lived through hyperinflation — prices changing faster than earnings, money bundled in newspaper because wallets became impractical.',
-    intent: 'none', notes: 'Set by hyperinflation world events (Weimar, Zimbabwe, etc.).',
+    intent: 'event', notes: 'Set by hyperinflation world events (Weimar, Zimbabwe, etc.). Follow-through: ft39_hyperinflation_late.',
   },
 
   economic_stabilization: {
@@ -836,7 +836,7 @@ export const ECONOMIC_FLAGS = {
   post_soviet_shock: {
     weight: 'major', category: 'economics',
     description: 'Experienced the post-Soviet economic shock — savings wiped, factories closed, the state\'s guarantees withdrawn overnight.',
-    intent: 'none', notes: 'Set by Soviet collapse world events.',
+    intent: 'event', notes: 'Set by Soviet collapse world events. Follow-through: ft39_post_soviet_late.',
   },
 
   depression_generation: {
