@@ -6489,4 +6489,38 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by taj_pamiri_identity (Dushanbe path).',
   },
 
+  // ─── KYRGYZSTAN FLAGS ────────────────────────────────────────────────────────
+
+  kyr_manas_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Grew up knowing the Manas epic — half a million lines, longest oral epic in world literature, recited in trance by manaschi singers.',
+    intent: 'none',
+    notes: 'Set by kyr_manas_epic.',
+  },
+
+  kyr_nomadic_heritage: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Carries Kyrgyz nomadic heritage — the boz üy, the high summer pastures, the horse culture that Soviet collectivisation disrupted.',
+    intent: 'none',
+    notes: 'Set by kyr_steppe_heritage.',
+  },
+
+  kyr_ala_kachuu_aware: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Kyrgyz woman who knows the edges of bride kidnapping custom — the law that prohibits it, the community that maintains it, the partial protection.',
+    intent: 'none',
+    notes: 'Set by kyr_ala_kachuu (aware path).',
+  },
+
+  kyr_tradition_burden: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Kyrgyz woman who carries the unspoken knowledge of tradition\'s limits — the things women know without saying.',
+    intent: 'none',
+    notes: 'Set by kyr_ala_kachuu (burden path).',
+  },
+
 }

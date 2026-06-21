@@ -4941,4 +4941,78 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by taj_late_reckoning. Terminal.',
   },
 
+  // ─── KYRGYZSTAN FLAGS ────────────────────────────────────────────────────────
+
+  kyr_independence_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age in the post-Soviet collapse of Kyrgyzstan — factories closed, Soviet credentials worthless, economy improvised.',
+    intent: 'none',
+    notes: 'Set by kyr_independence_collapse.',
+  },
+
+  kyr_tulip_participant: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Participated in or supported the Tulip Revolution of March 2005 — Akayev overthrown, storming of government buildings in Bishkek.',
+    intent: 'none',
+    notes: 'Set by kyr_tulip_revolution (participant path).',
+  },
+
+  kyr_tulip_skeptic: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Watched the Tulip Revolution with uncertainty — Bakiyev proved worse, the skepticism was vindicated.',
+    intent: 'none',
+    notes: 'Set by kyr_tulip_revolution (skeptic path).',
+  },
+
+  kyr_osh_kyrgyz_witness: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Kyrgyz witness to the June 2010 Osh ethnic violence — 400+ killed, Uzbek neighbourhoods burned, organised violence.',
+    intent: 'none',
+    notes: 'Set by kyr_osh_2010 (Kyrgyz path).',
+  },
+
+  kyr_osh_uzbek_witness: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Uzbek survivor of the June 2010 Osh ethnic violence — bore the brunt, 400+ killed, question of belonging in Kyrgyzstan.',
+    intent: 'none',
+    notes: 'Set by kyr_osh_2010 (Uzbek path).',
+  },
+
+  kyr_osh_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Carries the June 2010 silence — Kyrgyz-Uzbek coexistence after ethnic violence, the things not said around certain subjects.',
+    intent: 'none',
+    notes: 'Set by kyr_uzbek_coexistence. Terminal.',
+  },
+
+  kyr_three_revolutions_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Watched three presidents overthrown in fifteen years — Akayev 2005, Bakiyev 2010, Jeenbekov 2020. Most democratic, most chaotic.',
+    intent: 'none',
+    notes: 'Set by kyr_third_overthrow.',
+  },
+
+  kyr_kumtor_generation: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Kyrgyz who knows the Kumtor gold mine — a third of exports, twenty years of disputes, nationalized 2021, the mountain as political argument.',
+    intent: 'none',
+    notes: 'Set by kyr_economy_reality.',
+  },
+
+  kyr_testigo_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Late-life Kyrgyz witness: independence shock through three overthrown presidents through Osh through today.',
+    intent: 'none',
+    notes: 'Set by kyr_late_reckoning. Terminal.',
+  },
+
 }
