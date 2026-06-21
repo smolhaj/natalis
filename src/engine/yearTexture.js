@@ -3827,6 +3827,13 @@ function buildYearTexture(state) {
       ? 'You left the neighbourhood eventually. The neighbourhood didn\'t fully leave you — it left you with a particular reading of how power actually works at street level.'
       : 'The extortion fee the gang charged every small business was called a tax. The people who paid it called it something else.',
   ])
+  if (F.has('slv_gang_renta_generation') && Math.random() < 0.22) return pick([
+    'The money is put aside every week. You know the amount. You do not ask what it is used for. Asking would change the arrangement.',
+    phase === 'late_life'
+      ? 'After 2022 the renta stopped. You still put the amount aside for a month before you understood it was actually over.'
+      : 'You have not left this neighbourhood because you know exactly what it costs to exist here. A different neighbourhood would have different costs you don\'t yet know. This arithmetic keeps many people where they are.',
+    'The boy who collects does not look at you when he takes the money. He is perhaps nineteen. You do not look at him either.',
+  ])
   if (F.has('lira_collapse_lived') && Math.random() < 0.35) return pick([
     phase === 'late_life'
       ? 'You grew up knowing that savings are a story a government tells you. You stopped believing the story early.'

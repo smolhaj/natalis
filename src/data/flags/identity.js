@@ -6617,4 +6617,14 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by ecu_flower_hacienda. Year texture + ft34_flower_late follow-through.',
   },
 
+  // ─── EL SALVADOR ─────────────────────────────────────────────────────────────
+
+  slv_gang_renta_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Paid or witnessed the gang renta economy — the weekly collection, the fixed rate, the understanding that this is simply what operating in these streets costs.',
+    intent: 'both',
+    notes: 'Set by slv_gang_renta. Year texture + ft35_renta_echo follow-through.',
+  },
+
 }

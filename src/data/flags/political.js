@@ -5157,4 +5157,46 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by ecu_gang_crisis_2024. Follow-through: ft34_gang_late.',
   },
 
+  // ─── EL SALVADOR ─────────────────────────────────────────────────────────────
+
+  slv_romero_death_witness: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Alive in El Salvador when Archbishop Romero was assassinated on March 24, 1980 — the moment that made the war undeniable.',
+    intent: 'event',
+    notes: 'Set by slv_romero_death. Follow-throughs: ft35_romero_canonised, ft35_civil_war_late.',
+  },
+
+  slv_el_mozote_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Alive when the El Mozote bones were found in 1992 — the massacre denied for a decade, the forensic evidence that ended the denial.',
+    intent: 'event',
+    notes: 'Set by slv_el_mozote. Follow-through: ft35_mozote_late.',
+  },
+
+  slv_bukele_believer: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Believed in Bukele\'s break from the ARENA/FMLN duopoly — hopeful that something new was possible.',
+    intent: 'event',
+    notes: 'Set by slv_bukele_arrival. Follow-through: ft35_bukele_believer_late.',
+  },
+
+  slv_bukele_skeptic: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Skeptical of Bukele\'s governing style — recognised the concentration of power before its full extent was visible.',
+    intent: 'event',
+    notes: 'Set by slv_bukele_arrival. Follow-through: ft35_bukele_skeptic_late.',
+  },
+
+  slv_estado_excepcion_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through the 2022+ estado de excepción — the mass arrests, CECOT, the silence on the streets, the uninvestigated innocents.',
+    intent: 'event',
+    notes: 'Set by slv_estado_excepcion. Follow-throughs: ft35_estado_late, ft35_civil_war_late.',
+  },
+
 }
