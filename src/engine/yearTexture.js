@@ -6137,6 +6137,34 @@ function buildYearTexture(state) {
       : 'November 17 to December 29: forty-two days from the first student march to Havel elected president by the parliament that used to imprison him. The revolution earned its name.',
   ])
 
+  if (F.has('cze_prague_spring_generation') && Math.random() < 0.2) return pick([
+    'You know the difference between eight months of one thing and twenty years of the correction of that thing. The correction was called normalization. The thing it corrected was called the Spring.',
+    phase === 'late_life'
+      ? 'The people who were young in 1968 carry a specific knowledge: that the temperature change in a society is real, that it can be measured in what people say at work compared to what they say at home, that this gap can widen or close and that you can feel it narrowing in real time.'
+      : 'Dubček was alive until 1992. He died in November, from injuries after a car accident on the anniversary of the invasion. You are not sure what to make of the timing except that it seems unnecessary.',
+  ])
+  if (F.has('cze_invasion_generation') && Math.random() < 0.22) return pick([
+    phase === 'late_life'
+      ? 'The five countries that sent tanks are all in NATO now. You have had time to understand this fact and you have not finished understanding it.'
+      : 'The radios stayed on until the soldiers came to the doors. The people running the broadcasts knew what was coming and kept broadcasting. This is a fact about what people do.',
+    'The word for it that most captures it: occupation. The third occupation in thirty years. The country has experience with the word.',
+    phase === 'late_life'
+      ? 'When the wall came down in 1989 you watched it on television like everyone else. The specific thing you felt was that the tanks of 1968 had not, after all, been the final word. This is what the tanks of 1968 were supposed to teach. They were wrong about being the final word.'
+      : 'You watched a column of tanks for an hour. You understand something about the relationship between numbers and meaning that people who have not watched a column of tanks do not understand in the same way.',
+  ])
+  if (F.has('cze_stayer_1968') && Math.random() < 0.2) return pick([
+    'You stayed. The people who left built lives outside the country and the country went on without them. You watched the country go on and built a life inside the normalization, which was also a kind of life.',
+    phase === 'late_life'
+      ? 'After 1989 the emigres came back to visit. Some stayed. There was an awkwardness that nobody named directly: the people who had been inside the normalization had survived it by bending in ways the people who left did not have to bend. This difference was real and was not often spoken about directly.'
+      : 'You signed the self-criticism. You joined the union. You did what was required to keep your job and your children\'s school places. You are not sure this was wrong. You are not sure it was right.',
+  ])
+  if (F.has('cze_eu_generation') && Math.random() < 0.18) return pick([
+    phase === 'late_life'
+      ? 'You grew up in a country that needed permission to travel. Your grandchildren will travel anywhere in the Union without papers. The gap between those two facts is the gap between two worlds, and you crossed it in one life.'
+      : 'The passport has the EU ring of stars on the cover. You are still not accustomed to this. You hold it the way you hold something that should not, by the logic of your childhood, be yours.',
+    'When they said you could live and work anywhere in the EU, the size of what they were describing took time to arrive. You had grown up in a country where leaving required permission. Freedom of movement, it turns out, takes years to feel like a right rather than a gift.',
+  ])
+
   // ─── BALTIC STATES TEXTURE ────────────────────────────────────────────────────
   if (F.has('deportation_family_memory') && Math.random() < 0.3) return pick([
     'The family members who are not present: June 14, 1941 or March 1949. Cattle cars east. You know the names. The names are also history but the history does not account for the specific absence at the family table.',

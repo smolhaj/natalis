@@ -1304,6 +1304,80 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by cze_velvet_revolution. Follow-through: ft19_velvet_late.',
   },
 
+  // ─── CZECH REPUBLIC DEPTH ─────────────────────────────────────────────────────
+
+  cze_communist_takeover_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed the February 1948 Communist coup — the "Victorious February," Masaryk\'s death, the end of Czechoslovak democracy.',
+    intent: 'event',
+    notes: 'Set by cze_victorious_february_1948. Follow-through: ft40_february_48_late.',
+  },
+
+  cze_stalinist_terror_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the Stalinist show trials in Czechoslovakia — the Slánský trial 1952, antisemitic charges, eleven hanged.',
+    intent: 'event',
+    notes: 'Set by cze_slansky_trial. Follow-through: ft40_slansky_rehabilitation.',
+  },
+
+  cze_prague_spring_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the Prague Spring 1968 — the Dubček reform period, the seven months of something that felt like it would last.',
+    intent: 'both',
+    notes: 'Set by cze_prague_spring. Year texture + ft40_prague_spring_late.',
+  },
+
+  cze_invasion_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Present for the Warsaw Pact invasion of August 20, 1968 — 500,000 troops, 2,000 tanks, from five allied countries.',
+    intent: 'both',
+    notes: 'Set by cze_invasion_august_1968. Year texture + ft40_invasion_late.',
+  },
+
+  cze_emigrant_1968: {
+    weight: 'major',
+    category: 'geographic',
+    description: 'Left Czechoslovakia after the August 1968 invasion — part of the 300,000 who emigrated while borders were briefly open.',
+    intent: 'event',
+    notes: 'Set by cze_emigration_1968 (emigrate choice). Follow-through: ft40_emigrant_68_late.',
+  },
+
+  cze_stayer_1968: {
+    weight: 'moderate',
+    category: 'geographic',
+    description: 'Stayed in Czechoslovakia after August 1968 — chose to remain through the normalization years.',
+    intent: 'year_texture',
+    notes: 'Set by cze_emigration_1968 (stay choice). Year texture block.',
+  },
+
+  cze_havel_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Witnessed Václav Havel\'s presidency beginning January 1990 — the playwright-dissident who went from prison to president in weeks.',
+    intent: 'event',
+    notes: 'Set by cze_havel_president. Follow-through: ft40_havel_late.',
+  },
+
+  cze_velvet_divorce_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed the Velvet Divorce January 1, 1993 — Czechoslovakia splitting peacefully into Czech Republic and Slovakia without a referendum.',
+    intent: 'event',
+    notes: 'Set by cze_velvet_divorce. Follow-through: ft40_velvet_divorce_late.',
+  },
+
+  cze_eu_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through Czech EU accession May 1, 2004 — gaining the right to live and work across Europe, the Schengen opening.',
+    intent: 'year_texture',
+    notes: 'Set by cze_eu_accession_2004. Year texture block.',
+  },
+
   baltic_russification_generation: {
     weight: 'moderate',
     category: 'historical',
