@@ -5835,8 +5835,8 @@ export const IDENTITY_FLAGS = {
     weight: 'moderate',
     category: 'identity',
     description: 'Came of age during the 2015–2022 climate mobilisation — Greta Thunberg, school strikes, IPCC reports — with climate grief as a formative part of adolescence.',
-    intent: 'followthrough',
-    notes: 'Set by dec10_climate_grief_young.',
+    intent: 'event',
+    notes: 'Set by dec10_climate_grief_young. Checked in ribbons and worldEvents.',
   },
 
   born_digital: {

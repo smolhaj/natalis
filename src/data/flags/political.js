@@ -4739,4 +4739,36 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by sl_late_political_reckoning.',
   },
 
+  nl_colonial_reconciling: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Dutch citizen who receives the 2022 colonial apology as something — incomplete but not nothing.',
+    intent: 'none',
+    notes: 'Set by ft30_nl_colonial_apology (receiving path).',
+  },
+
+  nl_colonial_critical: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Dutch citizen who finds the formal colonial apology insufficient — the gap between what happened and what was named too wide to bridge with a press conference.',
+    intent: 'none',
+    notes: 'Set by ft30_nl_colonial_apology (critical path).',
+  },
+
+  tur_kemalist_identity: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Turkish character who holds Kemalist secularist identity as a considered position — the top-down modernisation project as worth defending.',
+    intent: 'none',
+    notes: 'Set by ft30_ataturk_positioned (secularist path).',
+  },
+
+  tur_religious_identity_reemergent: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Turkish character who sees the return of religious identity — Arabized call to prayer, Ottoman script recovery — as genuine rather than purely political.',
+    intent: 'none',
+    notes: 'Set by ft30_ataturk_positioned (religious identity path).',
+  },
+
 }

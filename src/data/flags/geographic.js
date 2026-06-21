@@ -1398,7 +1398,7 @@ export const GEOGRAPHIC_FLAGS = {
     weight: 'moderate',
     category: 'displacement',
     description: 'A Karen person was displaced by the Myanmar military offensive — fled to Mae La camp or the Thai border, now in refugee status.',
-    intent: 'followthrough',
+    intent: 'event',
     notes: 'Set by sl_karen_displacement. Follow-through: sl_karen_camp_years fires at adolescence.',
   },
 
@@ -1528,6 +1528,38 @@ export const GEOGRAPHIC_FLAGS = {
     description: 'Displaced by the 1974 Cyprus division — three days to leave Kyrenia, the Turkish-Cypriot neighbours also leaving in the opposite direction, the checkpoint that opened in 2003 and was not crossed.',
     intent: 'event',
     notes: 'Set by sl_cyprus_1974_displacement. Follow-through: sl_cyprus_checkpoint_2003 fires at late_life.',
+  },
+
+  planning_return_italy: {
+    weight: 'minor',
+    category: 'migration',
+    description: 'An Italian emigrant seriously considering a return — looking at the logistics, the job market, the life that would need to be reconstructed on the other end.',
+    intent: 'none',
+    notes: 'Set by ft30_italian_emigrant_return (italian_emigrant follow-through).',
+  },
+
+  emigrant_home_settled: {
+    weight: 'minor',
+    category: 'migration',
+    description: 'An emigrant who has accepted the country of migration as home — said it out loud, meant it, and noticed something change in the saying.',
+    intent: 'none',
+    notes: 'Set by ft30_italian_emigrant_return (italian_emigrant follow-through).',
+  },
+
+  transmigration_settled: {
+    weight: 'minor',
+    category: 'displacement',
+    description: 'Javanese transmigrant who has made a life on the outer island — home is now Kalimantan or Sulawesi or Papua, not Java.',
+    intent: 'none',
+    notes: 'Set by ft30_transmigration_years_on (settled path).',
+  },
+
+  transmigration_displaced_still: {
+    weight: 'minor',
+    category: 'displacement',
+    description: 'Javanese transmigrant who still measures the distance to Java — never fully settled, the original home still felt as the real one.',
+    intent: 'none',
+    notes: 'Set by ft30_transmigration_years_on (displaced path).',
   },
 
 }

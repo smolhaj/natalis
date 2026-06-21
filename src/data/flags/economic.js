@@ -1025,7 +1025,7 @@ export const ECONOMIC_FLAGS = {
     weight: 'moderate',
     category: 'economic',
     description: 'Worked in the platform/gig economy — Uber, Deliveroo, TaskRabbit, or equivalent — with flexibility as the primary benefit and instability as the structural cost.',
-    intent: 'followthrough',
+    intent: 'event',
     notes: 'Set by dec10_gig_work. Follow-through at midlife: dec10_gig_echo.',
   },
 
@@ -1057,7 +1057,7 @@ export const ECONOMIC_FLAGS = {
     weight: 'moderate',
     category: 'education',
     description: 'An Afghan girl chose to study in secret after the Taliban school ban — the continued education conducted in hiding, at risk.',
-    intent: 'followthrough',
+    intent: 'event',
     notes: 'Set by sl_afghan_girl_school_ban. Follow-through: sl_afghan_girl_echo fires at young_adult.',
   },
 
@@ -1089,7 +1089,7 @@ export const ECONOMIC_FLAGS = {
     weight: 'moderate',
     category: 'labour',
     description: 'Worked in the Dhaka garment industry — the factory floors, the quota systems, the twelve-hour days, the economic lifeline of Bangladesh.',
-    intent: 'followthrough',
+    intent: 'event',
     notes: 'Set by sl_dhaka_garment. Follow-through: sl_rana_plaza_aftermath fires 2013-2017.',
   },
 
@@ -1179,6 +1179,22 @@ export const ECONOMIC_FLAGS = {
     description: 'Lost a farm or substantial land through state confiscation — the letter, the three months, the crop already in the ground, the workers whose housing was on the land, both the injustice and the justice of it simultaneously.',
     intent: 'year_texture',
     notes: 'Set by sl_zimbabwe_white_farmer_seizure.',
+  },
+
+  second_business_started: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Started a second business after a previous failure — smaller, more cautious, the scar tissue from the first attempt converted into structural knowledge.',
+    intent: 'none',
+    notes: 'Set by ft30_business_second_attempt (business_failed follow-through).',
+  },
+
+  business_chapter_closed: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Decided not to try again after a business failure — the chapter closed, the energy redirected to career, family, or life outside the pitch deck.',
+    intent: 'none',
+    notes: 'Set by ft30_business_second_attempt (business_failed follow-through).',
   },
 
 }

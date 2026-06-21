@@ -988,6 +988,13 @@ function buildYearTexture(state) {
 
   // ─── CHILD SOLDIER ARC TEXTURE ───────────────────────────────────────────────
 
+  if (F.has('child_soldier') && !F.has('child_soldier_taken') && Math.random() < 0.3) return pick([
+    'You joined or were taken before you had the vocabulary for it. The body did what the body was told to do. The understanding came after, and the understanding is still arriving.',
+    phase === 'late_life'
+      ? 'You were a child. The commanders knew you were a child and used what that meant. You have spent your adult life working on the distance between what you were made to do and the person you chose to be after.'
+      : 'The things that happened when you were still in the phase of learning who you were: those things are in you, and the civilian life you built since is also in you, and you live in both.',
+    'You were not old enough to have made a choice in any real sense. The structures around you made the choice. What you have done since has been, in part, the long project of taking back the choice-making.',
+  ])
   if (F.has('child_soldier_taken')) {
     if (!F.has('child_soldier_free') && Math.random() < 0.4) return pick([
       'The unit, the weapon, the rotation. This is the world now.',
@@ -1647,6 +1654,28 @@ function buildYearTexture(state) {
     age >= 50
       ? 'Decades of refugee status. The protection has been continuous. The continuity has its own texture — you have arranged your whole life inside it, and the arrangement works, and you do not say that without knowing what it cost to make it work.'
       : 'You are building a life inside a legal category that was designed for emergencies. The emergency became permanent. The life adapted.',
+  ])
+  if (F.has('refugee') && Math.random() < 0.25) return pick([
+    'The word refugee is a legal category. Inside the category is a specific situation — a place you left, a reason you left it, a set of things that happened between then and now that the category does not describe.',
+    'You became a refugee in a specific year under specific circumstances. The word compresses all of that into an administrative category that travels with you.',
+    phase === 'late_life'
+      ? 'You have carried the fact of having been a refugee for decades now. It is not the most important thing about you. It is a thing that others have used to explain you to themselves, inaccurately, and which you have been correcting — quietly and sometimes not quietly — since.'
+      : 'The word arrives in different mouths with different weights — compassion, suspicion, distance, sympathy. None of them describe the specific thing it was to leave and keep moving.',
+    'You are here. You made it here by a route you don\'t always fully recount. The route is part of you even when you don\'t recount it.',
+    F.has('emigrated')
+      ? 'You have built something where you landed. The building is the thing. The category on your documents is what it costs to have the building permitted.'
+      : 'The journey from where you left to where you are is a specific distance. It is not a metaphor. It is a route with a specific number of crossings, and you know every part of it.',
+  ])
+  if (F.has('displaced') && Math.random() < 0.25) return pick([
+    'The word for what you are, officially, is displaced. The word contains its own precision and its own failure: you are still in the country, or you have crossed but not been resettled, or you are somewhere between the place you left and the place you will go, which is not yet determined.',
+    'You left a specific place under specific pressure. The place is still there — or it isn\'t anymore — and you are not in it.',
+    phase === 'late_life'
+      ? 'Decades of this. The place you left is a story you tell in the present tense to people who have never seen it. The present tense is accurate: the place is present, in you, in the way lost things are.'
+      : 'The neighbourhood, the street, the specific view from a specific window — those are gone from your daily life and present in your memory in the way that irreplaceable things are present.',
+    'Internal displacement or refugee status: the administrative difference between those two words is enormous. The experience of leaving under pressure is not entirely covered by either.',
+    F.has('war_childhood')
+      ? 'You were a child when you left. The displacement is the texture your childhood has in memory — not a single event but an ongoing condition, the reorganisation of everything around the fact of not being where you had been.'
+      : 'You organised your life around a place and the organisation collapsed when the place became impossible. The reorganisation has been ongoing since.',
   ])
   if (F.has('emigrated') && (yearsAbroad ?? 0) >= 1 && (yearsAbroad ?? 0) <= 2) return pick([
     'You are still learning what normal means here.',
@@ -4465,6 +4494,16 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'You have been watching the world catch up to what you already knew. There is no satisfaction in being right about this.'
       : 'You are ahead of a curve that most people don\'t yet understand they are on.',
+  ])
+  if (F.has('climate_activist') && Math.random() < 0.22) return pick([
+    'The strikes, the arrests, the carefully worded IPCC summaries for policymakers that were not quite what the underlying science said but were what the policymakers would accept. You were part of the movement that produced this evidence and this politics. The evidence has not moved the politics at the speed required.',
+    phase === 'late_life'
+      ? 'You spent years on this. The world moved slower than you needed it to. The movement was real. The outcome is the outcome. You are still deciding what to do with both of those facts simultaneously.'
+      : 'The gap between what the science says and what the policy does is a gap you have been measuring in marches and reports and speeches and negotiations that produce commitments that are not binding.',
+    'The question that the movement produced — individual behaviour versus systemic change — is still open, and you have changed your answer to it at least once.',
+    F.has('young_adult')
+      ? 'You were young when you started. The older activists told you this was a long game. You didn\'t fully understand what a long game meant until you were also old.'
+      : 'The anxiety that started it — the one that arrived as data, as graphs, as news from the coasts — is still there. It has not been resolved by the action. The action was necessary anyway.',
   ])
   if (F.has('first_gen_graduate') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) return pick([
     'You were the first in your family to graduate. That is a thing that can only happen once, and you were it.',
