@@ -4327,16 +4327,16 @@ export const POLITICAL_FLAGS = {
     weight: 'minor',
     category: 'historical',
     description: 'Was present in Cochabamba during the 2000 Water War — the first successful uprising against water privatisation in the world.',
-    intent: 'none',
-    notes: 'Set by we_cochabamba_water_war_2000 world event.',
+    intent: 'event',
+    notes: 'Set by we_cochabamba_water_war_2000 world event. Follow-through: ft46_cochabamba_late.',
   },
 
   jamaican_independence_generation: {
     weight: 'moderate',
     category: 'historical',
     description: 'Was present in Jamaica for the August 6, 1962 independence celebrations — old enough to remember the flag going up and what was believed that night.',
-    intent: 'none',
-    notes: 'Set by we_jamaica_independence_1962. Generational marker; no separate follow-through needed.',
+    intent: 'event',
+    notes: 'Set by we_jamaica_independence_1962. Follow-through: ft46_jamaican_independence_late.',
   },
 
   jamaican_garrison_community: {
@@ -4431,8 +4431,8 @@ export const POLITICAL_FLAGS = {
     weight: 'moderate',
     category: 'historical',
     description: 'Was present in Guinea for the September 28, 1958 independence vote — the no that shocked de Gaulle and started Sékou Touré\'s experiment.',
-    intent: 'none',
-    notes: 'Set by we_guinea_independence_1958. Historical generational marker; no separate follow-through needed.',
+    intent: 'event',
+    notes: 'Set by we_guinea_independence_1958. Follow-through: ft46_guinea_independence_late.',
   },
 
   negdel_generation: {
@@ -4615,8 +4615,8 @@ export const POLITICAL_FLAGS = {
     weight: 'major',
     category: 'historical',
     description: 'Lived through the 1998–2000 Eritrea-Ethiopia border war — the trenches, the conscription, the 70,000 dead, and the Badme border ruling that was never implemented.',
-    intent: 'none',
-    notes: 'Set by we_eritrea_border_war_1998. The war that turned independence into permanent emergency; no separate follow-through needed beyond eri arc events.',
+    intent: 'event',
+    notes: 'Set by we_eritrea_border_war_1998. Follow-through: ft46_eritrean_border_war_late.',
   },
 
   eritrean_national_service: {
@@ -5023,8 +5023,8 @@ export const POLITICAL_FLAGS = {
     weight: 'moderate',
     category: 'political',
     description: 'Aware of the Zhanaozen massacre of December 16, 2011 — 16 oil workers killed on Independence Day.',
-    intent: 'none',
-    notes: 'Set by kaz_zhanaozen_2011 and kaz_zhanaozen_massacre_2011 world event.',
+    intent: 'event',
+    notes: 'Set by kaz_zhanaozen_2011 and kaz_zhanaozen_massacre_2011 world event. Follow-through: ft46_kaz_zhanaozen_late.',
   },
 
   kaz_post_nazarbayev: {

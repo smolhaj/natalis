@@ -1204,7 +1204,7 @@ export const GEOGRAPHIC_FLAGS = {
     weight: 'moderate',
     category: 'conflict',
     description: 'Witnessed the Rainbow Warrior bombing in Auckland harbour — the specific education of state terrorism conducted by a nominal ally, and the world shrugging.',
-    intent: 'none',
+    intent: 'event', notes: 'Follow-through: ft46_nz_rainbow_warrior_late.',
     notes: 'Set by nz_rainbow_warrior_1985. New Zealand only.',
   },
 
@@ -1313,7 +1313,7 @@ export const GEOGRAPHIC_FLAGS = {
   witnessed_democracy_end: {
     weight: 'major', category: 'conflict',
     description: 'Witnessed the end of a democratic government — a coup, an autogolpe, an election that was the last.',
-    intent: 'none', notes: 'Set by various coup/democratic collapse world events.',
+    intent: 'event', notes: 'Set by various coup/democratic collapse world events. Follow-through: ft46_witnessed_democracy_end_late.',
   },
 
   condor_generation: {
@@ -1355,19 +1355,19 @@ export const GEOGRAPHIC_FLAGS = {
   bay_of_pigs_generation: {
     weight: 'moderate', category: 'conflict',
     description: 'Lived through the Bay of Pigs invasion 1961 — the CIA-backed exile attempt, the Cuban defeat, the specific proof that the revolution would be defended.',
-    intent: 'none', notes: 'Set by Bay of Pigs world event.',
+    intent: 'event', notes: 'Set by Bay of Pigs world event. Follow-through: ft46_bay_of_pigs_late.',
   },
 
   mariel_generation: {
     weight: 'major', category: 'migration',
     description: 'Mariel boatlift generation — left Cuba in 1980, the 125,000 who sailed to Florida in five months.',
-    intent: 'none', notes: 'Set by Mariel boatlift world event.',
+    intent: 'event', notes: 'Set by Mariel boatlift world event. Follow-through: ft46_mariel_late.',
   },
 
   mobutu_fall_generation: {
     weight: 'moderate', category: 'conflict',
     description: 'Generation that witnessed Mobutu\'s fall 1997 — the collapse of Zaire and the chaos that followed.',
-    intent: 'none', notes: 'Set by Mobutu fall world event.',
+    intent: 'event', notes: 'Set by Mobutu fall world event. Follow-through: ft46_mobutu_fall_late.',
   },
 
   iran_woman_life_freedom_generation: {

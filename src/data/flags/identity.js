@@ -5189,8 +5189,8 @@ export const IDENTITY_FLAGS = {
     weight: 'moderate',
     category: 'identity',
     description: 'Witnessed the 2005 election of Evo Morales — first indigenous president in a country where 62% of the population is indigenous.',
-    intent: 'none',
-    notes: 'Set by bol_evo_election_2005. Bolivia only.',
+    intent: 'event',
+    notes: 'Set by bol_evo_election_2005. Bolivia only. Follow-through: ft46_bol_evo_late.',
   },
 
   bol_2019_fraud_believed: {
