@@ -1712,4 +1712,30 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by gha_abroad_expectation.',
   },
 
+  // ─── ECUADOR ──────────────────────────────────────────────────────────────────
+
+  ecu_andean_highland: {
+    weight: 'minor',
+    category: 'geographic',
+    description: 'From the Andean sierra — grew up with altitude, minga communal labour, and the specific knowledge of how the highlands sustain people.',
+    intent: 'year_texture',
+    notes: 'Set by ecu_minga. Year texture block.',
+  },
+
+  ecu_spain_emigrant: {
+    weight: 'major',
+    category: 'geographic',
+    description: 'Emigrated to Spain during the 2001–08 wave — part of the 800,000 who left after the sucre collapse, building a life in one country while maintaining a version in another.',
+    intent: 'both',
+    notes: 'Set by ecu_spain_wave. Year texture + ft34_spain_echo follow-through.',
+  },
+
+  ecu_stayed_home_crisis: {
+    weight: 'moderate',
+    category: 'geographic',
+    description: 'Stayed in Ecuador during the emigration wave — watched the neighbourhood empty, learned to live in a country exporting its people.',
+    intent: 'year_texture',
+    notes: 'Set by ecu_spain_wave. Year texture block.',
+  },
+
 }

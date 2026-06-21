@@ -5123,4 +5123,38 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by gha_dumsor.',
   },
 
+  // ─── ECUADOR ──────────────────────────────────────────────────────────────────
+
+  ecu_military_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Came of age under the 1963–79 military rule — the juntas, Rodríguez Lara\'s nationalist revolution, the managed press, the closed parties.',
+    intent: 'both',
+    notes: 'Set by ecu_military_dictatorship. Year texture + ft34 follow-through.',
+  },
+
+  ecu_correa_supporter: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Believed in the Citizen Revolution — the hospitals built with oil money, the debt restructuring, the closed US base at Manta.',
+    intent: 'event',
+    notes: 'Set by ecu_correa_revolution. Follow-through: ft34_correa_supporter_late.',
+  },
+
+  ecu_correa_skeptic: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Kept distance from the Citizen Revolution — watched the press restrictions tighten, opponents jailed, constitution bent toward permanence.',
+    intent: 'event',
+    notes: 'Set by ecu_correa_revolution. Follow-through: ft34_correa_skeptic_late.',
+  },
+
+  ecu_gang_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through Ecuador\'s 2023–24 gang crisis — the Villavicencio assassination, the TV studio takeover, the estado de excepción.',
+    intent: 'event',
+    notes: 'Set by ecu_gang_crisis_2024. Follow-through: ft34_gang_late.',
+  },
+
 }

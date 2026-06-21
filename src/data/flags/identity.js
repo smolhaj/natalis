@@ -6599,4 +6599,22 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by gha_year_of_return.',
   },
 
+  // ─── ECUADOR ──────────────────────────────────────────────────────────────────
+
+  ecu_quechua_home: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up with Quechua as the home language — learned early that Spanish was the school language and what that distinction meant for the rest of life.',
+    intent: 'both',
+    notes: 'Set by ecu_school_quechua. Year texture + ft34_quechua_late follow-through.',
+  },
+
+  ecu_flower_worker: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Worked in the Cayambe/Cotopaxi flower export industry — the pre-dawn hours, the fumigation mist, botanical expertise that earns almost nothing.',
+    intent: 'both',
+    notes: 'Set by ecu_flower_hacienda. Year texture + ft34_flower_late follow-through.',
+  },
+
 }

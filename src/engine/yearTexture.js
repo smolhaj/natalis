@@ -6752,6 +6752,48 @@ function buildYearTexture(state) {
       ? 'CONAIE has shut down Ecuador multiple times in your adult life — 1990, 2000, 2019, 2022. Each time, the government eventually negotiated. Each time, the movement demonstrated that indigenous Ecuador has veto power over certain decisions, whether or not the constitution says so. You have watched this exercise of power across decades.'
       : 'A national movement that brought the government to the table — not through the ballot box but through the road, the highway, the physical blockage of the country\'s logistics. You watched it work. You are still thinking about what it means.',
   ])
+  if (F.has('ecu_andean_highland') && Math.random() < 0.18) return pick([
+    'The altitude does something to the light. At 2,800 metres the sky is a different colour than it is at sea level — sharper, closer. You have never lived anywhere low enough to compare.',
+    'The minga was last week. Everyone came. The road is repaired. Nobody owed anyone anything after, which is the point.',
+    phase === 'late_life'
+      ? 'The highland market has been in the same plaza since before your grandparents. The faces change; the arrangement — the flower sellers on one side, the grain on the other — has not.'
+      : 'The cold comes quickly once the sun moves behind the mountain. You have known this your whole life and you still do not dress for it soon enough.',
+  ])
+  if (F.has('ecu_quechua_home') && Math.random() < 0.17) return pick([
+    'You think in both languages. There are things you can say in Quechua that Spanish does not have words for. There are things Spanish lets you say that Quechua routes differently. You move between them without noticing until you notice.',
+    'Your grandmother speaks only Quechua. Your children speak only Spanish. You are the hinge. Some hinges rust open, some rust closed. You have not decided yet which kind you are.',
+    phase === 'late_life'
+      ? 'The bilingual school opened three years ago. The children learn Quechua on Tuesdays and Thursdays. You sit in the back of the classroom sometimes and listen to your own language being taught like a subject.'
+      : 'You code-switch in the middle of sentences when you are tired. The words that come first are not always the language you are supposed to be speaking.',
+  ])
+  if (F.has('ecu_flower_worker') && Math.random() < 0.18) return pick([
+    'The roses are at their peak for exactly four days. After that the stem begins softening. You know this the way you know your own age.',
+    'The greenhouse in February. Valentine\'s Day is six weeks away and the pace is different. Stems packed in water, sorted by stem length, the cold chain beginning. The people who will receive these flowers in two weeks do not know you exist.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'You left the greenhouse. Your lungs remember it. Some mornings the cough is the first thing, before you remember where you are.'
+      : 'Six a.m. The fumigation team came through at midnight. The residue is on every surface. You wear the mask when you remember to wear it.',
+  ])
+  if (F.has('ecu_stayed_home_crisis') && Math.random() < 0.17) return pick([
+    'The house on the corner has been under construction since Carlos sent money from Madrid. It has been under construction for four years. He is still in Madrid.',
+    'The neighbourhood is quieter. Not deserted — quieter. The people who would have been on the corner in the evening are in restaurants in Barcelona or cleaning offices in Rome. You are still here.',
+    phase === 'late_life'
+      ? 'Some of them came back. Some stayed. The ones who came back brought a version of Europe with them in their expectations — prices, behaviour, what counts as a good life. The Ecuador they came back to had changed too. Everyone adjusted.'
+      : 'The phone calls from Spain are expensive and getting cheaper. The money they send is more reliable than a salary here. You do not know if staying was the right decision. You made it before you understood it was a decision.',
+  ])
+  if (F.has('ecu_military_generation') && Math.random() < 0.16) return pick([
+    'There was a curfew. You knew which hours. You knew which streets to take.',
+    'The newspaper in those years was a document of managed information. You learned to read what the absence of a story meant as much as what a story said.',
+    phase === 'late_life'
+      ? 'The transition to democracy in 1979 happened while you were watching. You remember the specific feeling of elections where the result was not certain in advance. It was not a feeling you had known before.'
+      : 'You knew people who were involved in things you did not ask about. The not asking was its own kind of knowledge.',
+  ])
+  if (F.has('ecu_spain_emigrant') && Math.random() < 0.18) return pick([
+    'Madrid in the first year. The accents are different. The way people queue is different. The food is almost right and the almost is larger than you expected.',
+    'You send money on the fifteenth of every month. The amount is fixed. What it means at home varies depending on what the peso — the dollar — is doing.',
+    phase === 'late_life'
+      ? 'Spain had its own crisis starting in 2008. The construction stopped. You survived one economic collapse in Ecuador and one in Spain. You understand economic collapse from two directions now.'
+      : 'The Ecuadorian community here is its own world: the WhatsApp groups, the church on Sunday, the restaurant that does encebollado on Saturday morning. You live in Spain and also in a version of Ecuador that left in 2002 and has been preserved at that altitude ever since.',
+  ])
 
   // ─── NORTH KOREA TEXTURE ─────────────────────────────────────────────────────
   if (F.has('dprk_songbun_revealed') && Math.random() < 0.25) return pick([
