@@ -4339,6 +4339,50 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by we_jamaica_independence_1962. Follow-through: ft46_jamaican_independence_late.',
   },
 
+  // ── DOMINICAN REPUBLIC ────────────────────────────────────────────────────────
+
+  trujillo_generation: {
+    weight: 'major', category: 'historical',
+    description: 'Grew up under Trujillo\'s 31-year dictatorship — his photograph in every home, the SIM secret police, the required silence about certain people who disappeared.',
+    intent: 'none', notes: 'Set by dr_trujillo_childhood.',
+  },
+
+  dr_massacre_generation: {
+    weight: 'major', category: 'conflict',
+    description: 'Generation aware of the 1937 Parsley Massacre — 17,000-35,000 Haitians and dark-skinned Dominicans killed on Trujillo\'s orders at the border.',
+    intent: 'none', notes: 'Set by dr_parsley_massacre.',
+  },
+
+  dr_mirabal_generation: {
+    weight: 'major', category: 'conflict',
+    description: 'Generation defined by the assassination of the Mirabal sisters (November 25, 1960) — Patria, Minerva, and María Teresa, strangled on Trujillo\'s orders.',
+    intent: 'none', notes: 'Set by dr_mirabal_sisters.',
+  },
+
+  dr_trujillo_gone: {
+    weight: 'moderate', category: 'historical',
+    description: 'Lived through the death of Trujillo (May 30, 1961) — the end of 31 years, the uncertainty of what comes after.',
+    intent: 'none', notes: 'Set by dr_trujillo_killed.',
+  },
+
+  dr_1965_generation: {
+    weight: 'major', category: 'conflict',
+    description: 'Witnessed the 1965 Dominican civil war and US military intervention — 42,000 American troops, the Constitutionalists vs. the military junta.',
+    intent: 'none', notes: 'Set by dr_1965_intervention.',
+  },
+
+  dr_baseball_generation: {
+    weight: 'minor', category: 'identity',
+    description: 'Grew up in the Dominican baseball pipeline — the academies, the scouts, the bonus as exit strategy, the dream measured in kilometres per hour.',
+    intent: 'none', notes: 'Set by dr_baseball_dream.',
+  },
+
+  dr_remittance_generation: {
+    weight: 'moderate', category: 'economics',
+    description: 'Part of the Dominican remittance economy — either sending or receiving, the barrel from New York, Washington Heights as second capital.',
+    intent: 'none', notes: 'Set by dr_remittance_economy.',
+  },
+
   jamaican_garrison_community: {
     weight: 'major',
     category: 'political',
