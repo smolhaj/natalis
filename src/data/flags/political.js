@@ -4739,4 +4739,280 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by sl_late_political_reckoning.',
   },
 
+  nl_colonial_reconciling: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Dutch citizen who receives the 2022 colonial apology as something — incomplete but not nothing.',
+    intent: 'none',
+    notes: 'Set by ft30_nl_colonial_apology (receiving path).',
+  },
+
+  nl_colonial_critical: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Dutch citizen who finds the formal colonial apology insufficient — the gap between what happened and what was named too wide to bridge with a press conference.',
+    intent: 'none',
+    notes: 'Set by ft30_nl_colonial_apology (critical path).',
+  },
+
+  tur_kemalist_identity: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Turkish character who holds Kemalist secularist identity as a considered position — the top-down modernisation project as worth defending.',
+    intent: 'none',
+    notes: 'Set by ft30_ataturk_positioned (secularist path).',
+  },
+
+  tur_religious_identity_reemergent: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Turkish character who sees the return of religious identity — Arabized call to prayer, Ottoman script recovery — as genuine rather than purely political.',
+    intent: 'none',
+    notes: 'Set by ft30_ataturk_positioned (religious identity path).',
+  },
+
+  uzb_karimov_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Uzbek character who lived under Karimov\'s 27-year rule — the mahalla surveillance, the faith crackdown, the one-party consolidation.',
+    intent: 'event',
+    notes: 'Set by uzb_mahalla_system (both paths).',
+  },
+
+  uzb_andijan_witness: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Aware of or affected by the Andijan massacre of May 13, 2005 — the government\'s killing of between 187 and 750+ protesters.',
+    intent: 'none',
+    notes: 'Set by uzb_andijan_2005 and andijan_massacre_2005 world event. Terminal: knowledge of a suppressed atrocity is its own endpoint.',
+  },
+
+  uzb_faith_under_surveillance: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Practiced Islam under Karimov\'s religious surveillance state — where visible religiosity was coded as a security threat.',
+    intent: 'none',
+    notes: 'Set by uzb_faith_crackdown (both paths). Terminal: the surveillance is the arc.',
+  },
+
+  uzb_thaw_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Present during Mirziyoyev\'s partial opening — the released prisoners, the open borders, the tourists in Samarkand, the calibrated hope.',
+    intent: 'none',
+    notes: 'Set by uzb_mirziyoyev_opening (both paths). Terminal: the opening and the response to it are the arc.',
+  },
+
+  uzb_karimov_death_witness: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through Karimov\'s death in 2016 — the end of 27 years, the disorientation of a constant pressure suddenly absent.',
+    intent: 'none',
+    notes: 'Set by uzb_karimov_death. Terminal: the death-of-dictator moment is itself the endpoint; thaw generation follows.',
+  },
+
+  uzb_testigo_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Late-life Uzbek witness to the full arc — Soviet era, independence, Karimov, and whatever follows.',
+    intent: 'none',
+    notes: 'Set by uzb_late_reckoning. Terminal: late-life witness flags are endpoints of their arcs.',
+  },
+
+  kaz_astana_generation: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Watched Astana renamed Nur-Sultan and then Astana again — the city with three names in one generation.',
+    intent: 'none',
+    notes: 'Set by kaz_nursultan_rename.',
+  },
+
+  kaz_zhanaozen_witness: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Aware of the Zhanaozen massacre of December 16, 2011 — 16 oil workers killed on Independence Day.',
+    intent: 'none',
+    notes: 'Set by kaz_zhanaozen_2011 and kaz_zhanaozen_massacre_2011 world event.',
+  },
+
+  kaz_post_nazarbayev: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through Nazarbayev\'s managed resignation in 2019 — the thirty-year president who remained chairman, whose city was renamed for him.',
+    intent: 'none',
+    notes: 'Set by kaz_nazarbayev_steps_down.',
+  },
+
+  kaz_qantar_protester: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Participated in the January 2022 Qantar protests — in the streets before the CSTO arrived and the internet went dark.',
+    intent: 'none',
+    notes: 'Set by kaz_qantar_protests (street path).',
+  },
+
+  kaz_qantar_witness: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Witnessed the January 2022 Qantar crackdown — watching the internet go dark, 238 killed, 10,000 arrested.',
+    intent: 'none',
+    notes: 'Set by kaz_qantar_protests (home path) and kaz_qantar_2022 world event.',
+  },
+
+  kaz_testigo_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Late-life Kazakh witness: Soviet collectivisation through independence through oil boom through Qantar.',
+    intent: 'none',
+    notes: 'Set by kaz_late_reckoning. Terminal witness flag.',
+  },
+
+  // ─── TAJIKISTAN FLAGS ───────────────────────────────────────────────────────
+
+  taj_soviet_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Grew up in Soviet-era Tajikistan — the industrial Dushanbe built from a Monday market town, Russian-medium schools.',
+    intent: 'none',
+    notes: 'Set by taj_soviet_dushanbe.',
+  },
+
+  taj_civil_war_witness: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed the Tajik civil war 1992–97 — 50,000–100,000 dead, one in ten displaced, most violent post-Soviet conflict in Central Asia.',
+    intent: 'none',
+    notes: 'Set by taj_civil_war_begins (both paths).',
+  },
+
+  taj_postwar_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age in the post-civil-war period — the peace that preserved the men who caused the war, the slow consolidation of Rahmon\'s power.',
+    intent: 'none',
+    notes: 'Set by taj_peace_1997.',
+  },
+
+  taj_rahmon_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived under Rahmon\'s "Leader of the Nation" rule — the title, the portrait in every office, the son positioned for succession.',
+    intent: 'year_texture',
+    notes: 'Set by taj_leader_of_nation. Needs year texture.',
+  },
+
+  taj_gbao_witness: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Present in GBAO during the 2022 security crackdown — armoured vehicles, internet blackout, deaths the government did not confirm.',
+    intent: 'none',
+    notes: 'Set by taj_gbao_2022 (in-GBAO path).',
+  },
+
+  taj_gbao_distant_witness: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Watched from outside GBAO as the internet went dark during the 2022 crackdown.',
+    intent: 'none',
+    notes: 'Set by taj_gbao_2022 (distant path).',
+  },
+
+  taj_rogun_generation: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Tajik who knows the Rogun Dam — sovereignty, electricity exports, the regional water conflict with Uzbekistan.',
+    intent: 'none',
+    notes: 'Set by taj_rogun_dam. Terminal.',
+  },
+
+  taj_remittance_household: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Part of a remittance-dependent household — the first of the month, the ruble fluctuations, the survival arithmetic.',
+    intent: 'none',
+    notes: 'Set by taj_remittance_life. Terminal.',
+  },
+
+  taj_testigo_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Late-life Tajik witness: Soviet Dushanbe through civil war through Rahmon\'s authoritarianism.',
+    intent: 'none',
+    notes: 'Set by taj_late_reckoning. Terminal.',
+  },
+
+  // ─── KYRGYZSTAN FLAGS ────────────────────────────────────────────────────────
+
+  kyr_independence_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age in the post-Soviet collapse of Kyrgyzstan — factories closed, Soviet credentials worthless, economy improvised.',
+    intent: 'none',
+    notes: 'Set by kyr_independence_collapse.',
+  },
+
+  kyr_tulip_participant: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Participated in or supported the Tulip Revolution of March 2005 — Akayev overthrown, storming of government buildings in Bishkek.',
+    intent: 'none',
+    notes: 'Set by kyr_tulip_revolution (participant path).',
+  },
+
+  kyr_tulip_skeptic: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Watched the Tulip Revolution with uncertainty — Bakiyev proved worse, the skepticism was vindicated.',
+    intent: 'none',
+    notes: 'Set by kyr_tulip_revolution (skeptic path).',
+  },
+
+  kyr_osh_kyrgyz_witness: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Kyrgyz witness to the June 2010 Osh ethnic violence — 400+ killed, Uzbek neighbourhoods burned, organised violence.',
+    intent: 'none',
+    notes: 'Set by kyr_osh_2010 (Kyrgyz path).',
+  },
+
+  kyr_osh_uzbek_witness: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Uzbek survivor of the June 2010 Osh ethnic violence — bore the brunt, 400+ killed, question of belonging in Kyrgyzstan.',
+    intent: 'none',
+    notes: 'Set by kyr_osh_2010 (Uzbek path).',
+  },
+
+  kyr_osh_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Carries the June 2010 silence — Kyrgyz-Uzbek coexistence after ethnic violence, the things not said around certain subjects.',
+    intent: 'none',
+    notes: 'Set by kyr_uzbek_coexistence. Terminal.',
+  },
+
+  kyr_three_revolutions_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Watched three presidents overthrown in fifteen years — Akayev 2005, Bakiyev 2010, Jeenbekov 2020. Most democratic, most chaotic.',
+    intent: 'none',
+    notes: 'Set by kyr_third_overthrow.',
+  },
+
+  kyr_kumtor_generation: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Kyrgyz who knows the Kumtor gold mine — a third of exports, twenty years of disputes, nationalized 2021, the mountain as political argument.',
+    intent: 'none',
+    notes: 'Set by kyr_economy_reality.',
+  },
+
+  kyr_testigo_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Late-life Kyrgyz witness: independence shock through three overthrown presidents through Osh through today.',
+    intent: 'none',
+    notes: 'Set by kyr_late_reckoning. Terminal.',
+  },
+
 }

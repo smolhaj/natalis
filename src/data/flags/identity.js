@@ -5835,8 +5835,8 @@ export const IDENTITY_FLAGS = {
     weight: 'moderate',
     category: 'identity',
     description: 'Came of age during the 2015–2022 climate mobilisation — Greta Thunberg, school strikes, IPCC reports — with climate grief as a formative part of adolescence.',
-    intent: 'followthrough',
-    notes: 'Set by dec10_climate_grief_young.',
+    intent: 'event',
+    notes: 'Set by dec10_climate_grief_young. Checked in ribbons and worldEvents.',
   },
 
   born_digital: {
@@ -6413,6 +6413,114 @@ export const IDENTITY_FLAGS = {
     description: 'Continued making art during active conflict nearby — the rumba in Kinshasa while the war was in the east; the music as the thing that is not the war, both necessary.',
     intent: 'year_texture',
     notes: 'Set by sl_drc_musician_war.',
+  },
+
+  uzb_silk_road_identity: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Uzbek character who carries Timur/Samarkand/Bukhara as identity anchor — the Registan, the blue tilework, the Silk Road as inheritance.',
+    intent: 'none',
+    notes: 'Set by uzb_silk_road_identity (event).',
+  },
+
+  uzb_alphabet_transition: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Uzbek character who experienced all three alphabets: Arabic script (pre-1928), Cyrillic (1940-1993), modified Latin (1993+) — grandparents\' letters unreadable.',
+    intent: 'none',
+    notes: 'Set by uzb_alphabet_generation.',
+  },
+
+  uzb_fergana_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'From the Fergana Valley borderlands — the Soviet-drawn lines cutting through communities, the cousin who is now a different citizen, the 2010 ethnic violence.',
+    intent: 'none',
+    notes: 'Set by uzb_fergana_borders.',
+  },
+
+  kaz_steppe_identity: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Carries Kazakh steppe nomadic heritage — the star names in Kazakh, the grandfather\'s knowledge of seasonal routes, the identity persisting through Soviet collectivisation.',
+    intent: 'none',
+    notes: 'Set by kaz_steppe_memory.',
+  },
+
+  kazakh_speaker: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Primary Kazakh speaker — the language of the steppe recovered from Soviet suppression, now official policy, marker of authenticity.',
+    intent: 'none',
+    notes: 'Set by kaz_language_question (Kazakh path).',
+  },
+
+  kaz_russian_speaker_primary: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Russian-primary speaker in Kazakhstan — the professional language of Soviet legacy, now living alongside a Kazakh revival.',
+    intent: 'none',
+    notes: 'Set by kaz_language_question (Russian path).',
+  },
+
+  // ─── TAJIKISTAN FLAGS ───────────────────────────────────────────────────────
+
+  taj_pamiri_identity: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Pamiri identity in Tajikistan — Ismaili Muslim, Shughni or Wakhi speaker, GBAO resident or diaspora, marked in a Sunni Tajik state.',
+    intent: 'none',
+    notes: 'Set by taj_pamiri_identity event (both paths).',
+  },
+
+  taj_pamiri_stayed: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Pamiri who stayed in GBAO — the isolation as protection, the Aga Khan networks, the passes that close in winter.',
+    intent: 'none',
+    notes: 'Set by taj_pamiri_identity (stayed path).',
+  },
+
+  taj_pamiri_dushanbe: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Pamiri living in Dushanbe — recognizable by surname and accent, navigating the capital\'s informal Pamiri networks.',
+    intent: 'none',
+    notes: 'Set by taj_pamiri_identity (Dushanbe path).',
+  },
+
+  // ─── KYRGYZSTAN FLAGS ────────────────────────────────────────────────────────
+
+  kyr_manas_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Grew up knowing the Manas epic — half a million lines, longest oral epic in world literature, recited in trance by manaschi singers.',
+    intent: 'none',
+    notes: 'Set by kyr_manas_epic.',
+  },
+
+  kyr_nomadic_heritage: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Carries Kyrgyz nomadic heritage — the boz üy, the high summer pastures, the horse culture that Soviet collectivisation disrupted.',
+    intent: 'none',
+    notes: 'Set by kyr_steppe_heritage.',
+  },
+
+  kyr_ala_kachuu_aware: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Kyrgyz woman who knows the edges of bride kidnapping custom — the law that prohibits it, the community that maintains it, the partial protection.',
+    intent: 'none',
+    notes: 'Set by kyr_ala_kachuu (aware path).',
+  },
+
+  kyr_tradition_burden: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Kyrgyz woman who carries the unspoken knowledge of tradition\'s limits — the things women know without saying.',
+    intent: 'none',
+    notes: 'Set by kyr_ala_kachuu (burden path).',
   },
 
 }

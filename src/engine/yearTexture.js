@@ -988,6 +988,13 @@ function buildYearTexture(state) {
 
   // ─── CHILD SOLDIER ARC TEXTURE ───────────────────────────────────────────────
 
+  if (F.has('child_soldier') && !F.has('child_soldier_taken') && Math.random() < 0.3) return pick([
+    'You joined or were taken before you had the vocabulary for it. The body did what the body was told to do. The understanding came after, and the understanding is still arriving.',
+    phase === 'late_life'
+      ? 'You were a child. The commanders knew you were a child and used what that meant. You have spent your adult life working on the distance between what you were made to do and the person you chose to be after.'
+      : 'The things that happened when you were still in the phase of learning who you were: those things are in you, and the civilian life you built since is also in you, and you live in both.',
+    'You were not old enough to have made a choice in any real sense. The structures around you made the choice. What you have done since has been, in part, the long project of taking back the choice-making.',
+  ])
   if (F.has('child_soldier_taken')) {
     if (!F.has('child_soldier_free') && Math.random() < 0.4) return pick([
       'The unit, the weapon, the rotation. This is the world now.',
@@ -1647,6 +1654,28 @@ function buildYearTexture(state) {
     age >= 50
       ? 'Decades of refugee status. The protection has been continuous. The continuity has its own texture — you have arranged your whole life inside it, and the arrangement works, and you do not say that without knowing what it cost to make it work.'
       : 'You are building a life inside a legal category that was designed for emergencies. The emergency became permanent. The life adapted.',
+  ])
+  if (F.has('refugee') && Math.random() < 0.25) return pick([
+    'The word refugee is a legal category. Inside the category is a specific situation — a place you left, a reason you left it, a set of things that happened between then and now that the category does not describe.',
+    'You became a refugee in a specific year under specific circumstances. The word compresses all of that into an administrative category that travels with you.',
+    phase === 'late_life'
+      ? 'You have carried the fact of having been a refugee for decades now. It is not the most important thing about you. It is a thing that others have used to explain you to themselves, inaccurately, and which you have been correcting — quietly and sometimes not quietly — since.'
+      : 'The word arrives in different mouths with different weights — compassion, suspicion, distance, sympathy. None of them describe the specific thing it was to leave and keep moving.',
+    'You are here. You made it here by a route you don\'t always fully recount. The route is part of you even when you don\'t recount it.',
+    F.has('emigrated')
+      ? 'You have built something where you landed. The building is the thing. The category on your documents is what it costs to have the building permitted.'
+      : 'The journey from where you left to where you are is a specific distance. It is not a metaphor. It is a route with a specific number of crossings, and you know every part of it.',
+  ])
+  if (F.has('displaced') && Math.random() < 0.25) return pick([
+    'The word for what you are, officially, is displaced. The word contains its own precision and its own failure: you are still in the country, or you have crossed but not been resettled, or you are somewhere between the place you left and the place you will go, which is not yet determined.',
+    'You left a specific place under specific pressure. The place is still there — or it isn\'t anymore — and you are not in it.',
+    phase === 'late_life'
+      ? 'Decades of this. The place you left is a story you tell in the present tense to people who have never seen it. The present tense is accurate: the place is present, in you, in the way lost things are.'
+      : 'The neighbourhood, the street, the specific view from a specific window — those are gone from your daily life and present in your memory in the way that irreplaceable things are present.',
+    'Internal displacement or refugee status: the administrative difference between those two words is enormous. The experience of leaving under pressure is not entirely covered by either.',
+    F.has('war_childhood')
+      ? 'You were a child when you left. The displacement is the texture your childhood has in memory — not a single event but an ongoing condition, the reorganisation of everything around the fact of not being where you had been.'
+      : 'You organised your life around a place and the organisation collapsed when the place became impossible. The reorganisation has been ongoing since.',
   ])
   if (F.has('emigrated') && (yearsAbroad ?? 0) >= 1 && (yearsAbroad ?? 0) <= 2) return pick([
     'You are still learning what normal means here.',
@@ -4465,6 +4494,16 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'You have been watching the world catch up to what you already knew. There is no satisfaction in being right about this.'
       : 'You are ahead of a curve that most people don\'t yet understand they are on.',
+  ])
+  if (F.has('climate_activist') && Math.random() < 0.22) return pick([
+    'The strikes, the arrests, the carefully worded IPCC summaries for policymakers that were not quite what the underlying science said but were what the policymakers would accept. You were part of the movement that produced this evidence and this politics. The evidence has not moved the politics at the speed required.',
+    phase === 'late_life'
+      ? 'You spent years on this. The world moved slower than you needed it to. The movement was real. The outcome is the outcome. You are still deciding what to do with both of those facts simultaneously.'
+      : 'The gap between what the science says and what the policy does is a gap you have been measuring in marches and reports and speeches and negotiations that produce commitments that are not binding.',
+    'The question that the movement produced — individual behaviour versus systemic change — is still open, and you have changed your answer to it at least once.',
+    F.has('young_adult')
+      ? 'You were young when you started. The older activists told you this was a long game. You didn\'t fully understand what a long game meant until you were also old.'
+      : 'The anxiety that started it — the one that arrived as data, as graphs, as news from the coasts — is still there. It has not been resolved by the action. The action was necessary anyway.',
   ])
   if (F.has('first_gen_graduate') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) return pick([
     'You were the first in your family to graduate. That is a thing that can only happen once, and you were it.',
@@ -9670,6 +9709,124 @@ function buildYearTexture(state) {
     'You crossed at night. The Sudan border was dark and then it was lighter and then you were on the other side and the law that had controlled everything about your movement was a law for a country you were no longer in.',
     'Fifty thousand people leave Eritrea every year. You are one of them. The number does not make what you did less particular.',
     'Free in the specific way of having no protection from anyone. That is the best description you have found for what you are.',
+  ])
+
+  // ─── KAZAKHSTAN TEXTURE ──────────────────────────────────────────────────────
+  if (F.has('kaz_steppe_identity') && Math.random() < 0.2) return pick([
+    'The steppe in winter is a particular kind of silence. Not empty — full of something that does not resolve into sound. You grew up knowing the difference between wind and silence in a way that is not translatable.',
+    phase === 'late_life'
+      ? 'The constellations have names in Kazakh that are not the names the Russian schoolbooks used. Your grandfather gave you the Kazakh names. You have given them to no one. This is a specific kind of ending — the thing that ends not with death but with the last person who knew it.'
+      : 'The sheep, the horses, the specific arithmetic of what could be carried and what had to be left when you moved. The steppe was an economy before it was a landscape.',
+  ])
+  if (F.has('kazakh_speaker') && Math.random() < 0.2) return pick([
+    'The language the professionals speak is Russian. The language you think in is Kazakh. The translation between them is always happening and rarely shows.',
+    'You write official documents in Russian, speak to your grandmother in Kazakh, argue with your friends in whichever comes first. This is not unusual. This is just what living here is.',
+    phase === 'late_life'
+      ? 'The language your grandchildren speak most comfortably is Kazakh — better than you spoke it at their age. Something that was nearly lost has been recovered. The recovery is incomplete and the incompleteness will persist. But the direction changed.'
+      : 'When Kazakh became official and mandatory, the people teaching it were also learning it. You were taught a language by teachers who were finding it as they went. The result is imperfect and real.',
+  ])
+  if (F.has('kaz_qantar_witness') && Math.random() < 0.22) return pick([
+    'The internet going dark has a texture. The Telegram channels going quiet one by one. The last timestamp before the gap. The hours between knowing something was happening and knowing what it was.',
+    phase === 'late_life'
+      ? 'January 2022 is the word Qantar now. You watched the name settle into the language after the fact — the way words arrive for things that needed naming. The government does not use it the way you use it.'
+      : 'Two hundred and thirty-eight people. Ten thousand arrested. The CSTO vehicles in the streets of Almaty. You carry these numbers the way witnesses carry numbers — not as statistics but as a measure of something specific that happened.',
+  ])
+  if (F.has('kaz_qantar_protester') && Math.random() < 0.22) return pick([
+    'You were in the streets before the internet went dark. You know what the streets were before the CSTO vehicles arrived. Both are true simultaneously and the second does not erase the first.',
+    phase === 'late_life'
+      ? 'The movement that filled the streets in January 2022 was real. The people were real. The days when it was possible felt possible in a way that certain days do and others do not. What happened next was also real. You carry both.'
+      : 'The gap between the day the streets filled and the day the internet went dark is where you locate your understanding of what this country is willing to do and what it is not.',
+  ])
+  if (F.has('kaz_post_nazarbayev') && Math.random() < 0.18) return pick([
+    'The Elbasy — the Leader of the Nation — resigned and the city was renamed for him the next day and then the January protests made the name untenable and it became Astana again. You have watched the logic of this play out in real time.',
+    phase === 'late_life'
+      ? 'You watched a country be managed from above for thirty years and then watch the management produce its own crisis and then watch the crisis be managed. The word for this architecture is continuity. You have watched continuity.'
+      : 'The question you return to: what changed when Nazarbayev resigned? His daughter runs the Senate. His son-in-law runs the national company. His party continues. The city\'s name changed twice. The oil continues to flow.',
+  ])
+  if (F.has('kaz_astana_generation') && Math.random() < 0.18) return pick([
+    'The capital was moved to the steppe in 1997. The glass buildings arrived first; then the roads; then the people. You watched a city be built from the category of city-that-will-exist-here into a city that does.',
+    'The Norman Foster pyramid. The Khan Shatyr tent. The Bayterek tower. The architecture was designed to be photographed from the air. You live at ground level.',
+    phase === 'late_life'
+      ? 'The city has been Akmola and Astana and Nur-Sultan and Astana again, all in your adult life. The signs changed. The buildings did not. The question of what a capital means — what gathering power here rather than in Almaty was supposed to produce — is one you have watched being answered and re-answered.'
+      : 'Astana was built to be the future and the oil money made the future buildable in a decade. The question of who the future was built for is a different question from whether it was built.',
+  ])
+
+  // ─── KYRGYZSTAN TEXTURE ──────────────────────────────────────────────────────
+  if (F.has('kyr_manas_generation') && Math.random() < 0.18) return pick([
+    'The manaschi sings for three hours without a break. He is not reading. The words come from somewhere else — from the forty years he spent learning it, from the lineage of singers before him. You have heard this once and carry the quality of the silence after.',
+    phase === 'late_life'
+      ? 'The Manas epic is half a million lines and no one alive knows all of it. The singers who carry the most have specialisations — certain episodes, certain variations. The epic is bigger than any one person who holds it. That seems like the right relationship to a tradition.'
+      : 'You know the outline: Manas the warrior, the forty tribes united, the campaigns and the betrayals and the death. You know it the way you know a language — not every sentence ever spoken in it, but enough that you understand what you hear.',
+  ])
+  if (F.has('kyr_nomadic_heritage') && Math.random() < 0.18) return pick([
+    'The boz üy goes up in hours. The felt is layered from the outside in. The door faces east. You have helped erect one, at a cousin\'s celebration, and you know the order of things.',
+    phase === 'late_life'
+      ? 'Your grandfather knew which high pasture held water in August and which didn\'t. That knowledge was earned over decades of seasons and was not written down. You have none of it. What you have instead is the awareness of what was lost — which is a different thing but not nothing.'
+      : 'The summer jailoo — the high pasture — is still used. Some families still go up with the horses in June and come down in September. Most don\'t. You know someone who does. Their life looks, from outside, like the life the history books describe. From inside it is just their specific life.',
+  ])
+  if (F.has('kyr_three_revolutions_generation') && Math.random() < 0.2) return pick([
+    'Three presidents in fifteen years, each one removed by popular action. The country has a word for this pattern: you are inside the pattern, which makes it harder to see the pattern clearly.',
+    phase === 'late_life'
+      ? 'The political scientists abroad call Kyrgyzstan the most democratic of the Central Asian republics. The people inside it call it something else — a country where accountability has arrived, repeatedly, for the person at the top, and where the system underneath changes much more slowly.'
+      : 'Akayev fled to Russia with his family and his money. Bakiyev fled south and then to Belarus. Jeenbekov resigned and stayed. Three different endings for three different men who ended the same way. The mechanism works. The mechanism is rough. Both of these things are true.',
+  ])
+  if (F.has('kyr_osh_kyrgyz_witness') && Math.random() < 0.2) return pick([
+    'June 2010. The question your community has not been able to ask itself clearly is still there. You know it is there. You move around it without naming it, most of the time.',
+    phase === 'late_life'
+      ? 'The accounting of what happened in Osh in June 2010 was done partly by the Kyrgyz parliamentary commission, partly by international human rights organisations, partly by the Uzbek families who kept their own records. The accounts do not agree. You know what your side says. You know there is another side. You hold both.'
+      : 'The men who organized it are still here — some of them. They are not arrested. The Uzbek neighbours are still here — some of them. The ones who left have not all come back. The bazaar is the same bazaar. The silence around certain subjects is specific to certain ages.',
+  ])
+  if (F.has('kyr_osh_uzbek_witness') && Math.random() < 0.2) return pick([
+    'You know which block burned. You know the smell. You know the names of the people who were in the building when it burned and who were not.',
+    phase === 'late_life'
+      ? 'The question you could not stop asking in 2010 — is this country for us — has been answered in the way that time answers unanswerable questions: not resolved, just lived around. You are still here. That is the answer you have arrived at. It is not the same as the question going away.'
+      : 'The Uzbek community of southern Kyrgyzstan is smaller than it was. The ones who left went to Uzbekistan, mostly — some to Russia, some further. The ones who stayed stayed for reasons. You are one of the ones who stayed. You know your reason.',
+  ])
+
+  // ─── UZBEKISTAN TEXTURE ──────────────────────────────────────────────────────
+  if (F.has('uzb_silk_road_identity') && Math.random() < 0.2) return pick([
+    'Samarkand is a city from the histories — Ibn Battuta, Timur, the blue tiles of the Registan. You grew up with the photographs of the Registan in the schoolbooks before you saw it in person. When you saw it in person it was the photographs made real.',
+    phase === 'late_life'
+      ? 'The Soviet period named everything after Lenin and Marx and then the independent period renamed everything after Timur and Ulughbek. The architecture was always there under the names. The names changed; the tilework did not.'
+      : 'Silk Road sounds like a metaphor. It was a trade route with specific goods, specific exchange rates, specific cities at specific intervals. Your city was one of those cities. That fact is not a metaphor. It is the specific weight of where you are from.',
+  ])
+  if (F.has('uzb_karimov_era') && Math.random() < 0.2) return pick([
+    'The mahalla chairman knows who received a guest. The neighbourhood committee reports. The surveillance is not hidden — it functions by being known. You calibrate accordingly.',
+    phase === 'late_life'
+      ? 'You have outlived him. You did not expect to say that sentence. Islam Karimov ruled from 1989 until 2016 — twenty-seven years. You are still in the country he shaped. You are reading a newspaper that no longer has to avoid his name, which is a change. It is not the same as the country changing.'
+      : 'The things you do not say out loud have their own grammar by now. You learned it so young you cannot always identify it when it runs. The pause before certain subjects. The voice that drops. The check of who is present.',
+  ])
+  if (F.has('uzb_andijan_witness') && Math.random() < 0.2) return pick([
+    'May 13, 2005. The government said they fired on armed extremists. The people who were there said they fired on a crowd. The number the government gave was 187. Human rights organisations documented over seven hundred. You know which number you trust.',
+    phase === 'late_life'
+      ? 'The Andijan massacre was followed by an international response and then a quiet reintegration. The quiet reintegration is the lesson. You watched the world decide that Uzbekistan was too important strategically to hold to account for a specific afternoon in the Fergana Valley. You do not forget which afternoon.'
+      : 'The internet in 2005 was different from now. What happened in Andijan was documented on phones and then those phones were taken. What you know, you know from the accounts that got out. The accounts that got out are enough.',
+  ])
+  if (F.has('uzb_alphabet_transition') && Math.random() < 0.16) return pick([
+    'You learned to write in Cyrillic and then the country decided to use Latin. You spent years in the overlap — street signs in one script, textbooks in the other, your own handwriting in the one you learned first.',
+    phase === 'late_life'
+      ? 'Your grandchildren write in Latin letters and read Uzbek literature in a different script than the one you read it in. The books themselves have not changed. The way into them has. You think about this when you see them reading — whether the script makes the language feel different, or whether the language is just the language regardless.'
+      : 'Arabic script before 1928. Latin from 1928 to 1940. Cyrillic from 1940 to 1992. Latin again from 1992. The alphabet has changed four times in a century. The history of the alphabet is the history of who was deciding what Uzbekistan was.',
+  ])
+
+  // ─── TAJIKISTAN TEXTURE ──────────────────────────────────────────────────────
+  if (F.has('taj_rahmon_era') && Math.random() < 0.2) return pick([
+    'The photograph is in the office, in the school corridor, at the entrance to the ministry. Emomali Rahmon: the same photograph, the same expression, the same suit. The "Leader of the Nation" title is law now, which means criticising him is a criminal matter, which means the photograph means something slightly different than it would if it were merely ceremonial.',
+    phase === 'late_life'
+      ? 'He ruled through the civil war and through the peace and through the consolidation and through the naming of his son as heir apparent. You have watched the complete arc. What the arc describes is not a transition from one system to another. It is the construction of a system from the material of its predecessors.'
+      : 'Rustam Emomali is chairman of the Senate. He is thirty-five. His father has been president since 1994. The mathematics of who comes next has been visible for years. You do not discuss this at work.',
+  ])
+  if (F.has('taj_civil_war_witness') && Math.random() < 0.2) return pick([
+    'The war ended in 1997. The people who caused it stayed in power. This is not unusual. You know what it means because you were there for the years that preceded the peace agreement.',
+    phase === 'late_life'
+      ? 'The civil war was a war between regions and clans and Soviet networks as much as between ideologies. The peace was a distribution of the state between those same groups, with Rahmon\'s group getting the most. The logic of the distribution has been visible in every appointment and every arrest since 1997.'
+      : 'You know people from Gharm. You know people from Kulob. You know what they call each other and what they called each other during the war. This knowledge sits under every conversation about the state, always present, rarely named.',
+  ])
+  if (F.has('taj_remittance_household') && Math.random() < 0.18) return pick([
+    'A quarter of the GDP comes home in envelopes. This is the economy: the person absent is also the economy present. You calculate the first of the month and then the fifth, which is when it usually arrives, and then you buy what has been waiting.',
+    phase === 'late_life'
+      ? 'When the ruble fell in 2022, the remittance halved in somoni terms within a month. The country felt it immediately — not as a statistic but as the calculation that families do when what was coming is suddenly less. You know this calculation. You have done it more than once.'
+      : 'The village empties in spring. The men go north, to Moscow, to Novosibirsk, to wherever the construction season is. The women manage the household, the children, the parents-in-law, the land. The village refills in winter. The phone calls are on Sundays.',
   ])
 
   // ─── LIBYA TEXTURE ───────────────────────────────────────────────────────────
