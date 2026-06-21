@@ -756,4 +756,52 @@ export const RELATIONSHIP_FLAGS = {
     notes: 'Set by loc_the_coach. Late-life texture available.',
   },
 
+  uzb_mahalla_careful: {
+    weight: 'minor',
+    category: 'social',
+    description: 'Learned to be unremarkable around the mahalla surveillance apparatus — normal answers, normal attendance, the art of reflecting nothing the state did not put there.',
+    intent: 'none',
+    notes: 'Set by uzb_mahalla_system (careful path).',
+  },
+
+  uzb_mahalla_distanced: {
+    weight: 'minor',
+    category: 'social',
+    description: 'Maintained distance from the mahalla apparatus at the cost of the services and social fabric it controlled.',
+    intent: 'none',
+    notes: 'Set by uzb_mahalla_system (distanced path).',
+  },
+
+  uzb_faith_private: {
+    weight: 'minor',
+    category: 'social',
+    description: 'Practiced Islam in the domestic space under Karimov — the kitchen, the funeral, the things said between family members without being named as what they are.',
+    intent: 'none',
+    notes: 'Set by uzb_faith_crackdown (private path).',
+  },
+
+  uzb_faith_permitted: {
+    weight: 'minor',
+    category: 'social',
+    description: 'Limited Islamic practice to the state-registered mosque and approved texts under Karimov — the compliance real and so is the gap between it and what was handed down.',
+    intent: 'none',
+    notes: 'Set by uzb_faith_crackdown (permitted path).',
+  },
+
+  uzb_thaw_embraced: {
+    weight: 'minor',
+    category: 'social',
+    description: 'Chose to act on the Mirziyoyev opening — speaking more openly, applying for things not applied for before, cautious adjacency to optimism.',
+    intent: 'none',
+    notes: 'Set by uzb_mirziyoyev_opening (embraced path).',
+  },
+
+  uzb_thaw_skeptical: {
+    weight: 'minor',
+    category: 'social',
+    description: 'Waited out the Mirziyoyev thaw with the calibration that 27 years of Karimov had built — the structure was the same structure.',
+    intent: 'none',
+    notes: 'Set by uzb_mirziyoyev_opening (skeptical path).',
+  },
+
 }

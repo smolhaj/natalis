@@ -4771,4 +4771,52 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by ft30_ataturk_positioned (religious identity path).',
   },
 
+  uzb_karimov_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Uzbek character who lived under Karimov\'s 27-year rule — the mahalla surveillance, the faith crackdown, the one-party consolidation.',
+    intent: 'event',
+    notes: 'Set by uzb_mahalla_system (both paths).',
+  },
+
+  uzb_andijan_witness: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Aware of or affected by the Andijan massacre of May 13, 2005 — the government\'s killing of between 187 and 750+ protesters.',
+    intent: 'none',
+    notes: 'Set by uzb_andijan_2005 and andijan_massacre_2005 world event. Terminal: knowledge of a suppressed atrocity is its own endpoint.',
+  },
+
+  uzb_faith_under_surveillance: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Practiced Islam under Karimov\'s religious surveillance state — where visible religiosity was coded as a security threat.',
+    intent: 'none',
+    notes: 'Set by uzb_faith_crackdown (both paths). Terminal: the surveillance is the arc.',
+  },
+
+  uzb_thaw_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Present during Mirziyoyev\'s partial opening — the released prisoners, the open borders, the tourists in Samarkand, the calibrated hope.',
+    intent: 'none',
+    notes: 'Set by uzb_mirziyoyev_opening (both paths). Terminal: the opening and the response to it are the arc.',
+  },
+
+  uzb_karimov_death_witness: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through Karimov\'s death in 2016 — the end of 27 years, the disorientation of a constant pressure suddenly absent.',
+    intent: 'none',
+    notes: 'Set by uzb_karimov_death. Terminal: the death-of-dictator moment is itself the endpoint; thaw generation follows.',
+  },
+
+  uzb_testigo_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Late-life Uzbek witness to the full arc — Soviet era, independence, Karimov, and whatever follows.',
+    intent: 'none',
+    notes: 'Set by uzb_late_reckoning. Terminal: late-life witness flags are endpoints of their arcs.',
+  },
+
 }

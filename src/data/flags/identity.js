@@ -6415,4 +6415,28 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by sl_drc_musician_war.',
   },
 
+  uzb_silk_road_identity: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Uzbek character who carries Timur/Samarkand/Bukhara as identity anchor — the Registan, the blue tilework, the Silk Road as inheritance.',
+    intent: 'none',
+    notes: 'Set by uzb_silk_road_identity (event).',
+  },
+
+  uzb_alphabet_transition: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Uzbek character who experienced all three alphabets: Arabic script (pre-1928), Cyrillic (1940-1993), modified Latin (1993+) — grandparents\' letters unreadable.',
+    intent: 'none',
+    notes: 'Set by uzb_alphabet_generation.',
+  },
+
+  uzb_fergana_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'From the Fergana Valley borderlands — the Soviet-drawn lines cutting through communities, the cousin who is now a different citizen, the 2010 ethnic violence.',
+    intent: 'none',
+    notes: 'Set by uzb_fergana_borders.',
+  },
+
 }

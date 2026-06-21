@@ -1287,6 +1287,18 @@ export const WORLD_EVENTS = [
     minAge: 0,
   },
   {
+    id: 'andijan_massacre_2005',
+    name: 'Andijan Massacre',
+    years: [2005, 2006],
+    archetypes: ['post_soviet'],
+    countries: ['Uzbekistan'],
+    narrative: 'On May 13 in Andijan, soldiers open fire on a crowd of protesters. The government counts 187 dead and calls them terrorists. International organisations count between 500 and 750. The city is sealed. Journalists are expelled. The government\'s account prevails domestically. Outside Uzbekistan, the story is off the front pages within weeks.',
+    context: 'The Andijan massacre occurred when security forces stormed a prison holding 23 local businessmen accused of Islamic extremism, and a crowd gathered in the city square. The government claimed an armed Islamist uprising; witnesses described traders, family members, bystanders. The EU and US condemned the violence; Karimov responded by expelling the US military from Karshi-Khanabad. Russia and China backed the government\'s account. Uzbekistan refused an independent international investigation. The true death toll remains unknown because the city was sealed and bodies were reportedly buried in mass graves. Human Rights Watch placed the figure between 500 and 750.',
+    effect: (p) => { p.r += 8; p.m -= 6; p.addFlag('uzb_andijan_witness'); },
+    addFlags: ['uzb_andijan_witness'],
+    minAge: 12,
+  },
+  {
     id: 'hurricane_katrina',
     name: 'Hurricane Katrina',
     years: [2005, 2006],

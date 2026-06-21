@@ -1562,4 +1562,20 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by ft30_transmigration_years_on (displaced path).',
   },
 
+  uzb_stayed_behind: {
+    weight: 'minor',
+    category: 'migration',
+    description: 'Uzbek character who stayed when family members went to Russia — watching the village empty seasonally, holding the role at home.',
+    intent: 'none',
+    notes: 'Set by uzb_labour_russia (stayed path).',
+  },
+
+  uzb_russia_migrant: {
+    weight: 'minor',
+    category: 'migration',
+    description: 'Uzbek labour migrant who worked in Russia — the three-day bus, the shared apartment, the foreman who held the passport, the money sent home.',
+    intent: 'none',
+    notes: 'Set by uzb_labour_russia (migrant path).',
+  },
+
 }
