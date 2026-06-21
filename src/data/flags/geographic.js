@@ -1578,4 +1578,20 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by uzb_labour_russia (migrant path).',
   },
 
+  kaz_russian_stayed_home: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Russian-Kazakhstani who consciously identifies as Kazakhstani — stayed as Russians emigrated, children speak Kazakh better.',
+    intent: 'none',
+    notes: 'Set by kaz_russian_coexistence (stayed path).',
+  },
+
+  kaz_russian_considering_leave: {
+    weight: 'minor',
+    category: 'migration',
+    description: 'Russian minority in Kazakhstan doing the calculation — job, apartment, parents, the fact that Russia is not what Russia used to be either.',
+    intent: 'none',
+    notes: 'Set by kaz_russian_coexistence (considering path).',
+  },
+
 }

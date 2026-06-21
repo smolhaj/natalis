@@ -6439,4 +6439,28 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by uzb_fergana_borders.',
   },
 
+  kaz_steppe_identity: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Carries Kazakh steppe nomadic heritage — the star names in Kazakh, the grandfather\'s knowledge of seasonal routes, the identity persisting through Soviet collectivisation.',
+    intent: 'none',
+    notes: 'Set by kaz_steppe_memory.',
+  },
+
+  kazakh_speaker: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Primary Kazakh speaker — the language of the steppe recovered from Soviet suppression, now official policy, marker of authenticity.',
+    intent: 'none',
+    notes: 'Set by kaz_language_question (Kazakh path).',
+  },
+
+  kaz_russian_speaker_primary: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Russian-primary speaker in Kazakhstan — the professional language of Soviet legacy, now living alongside a Kazakh revival.',
+    intent: 'none',
+    notes: 'Set by kaz_language_question (Russian path).',
+  },
+
 }

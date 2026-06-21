@@ -4819,4 +4819,52 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by uzb_late_reckoning. Terminal: late-life witness flags are endpoints of their arcs.',
   },
 
+  kaz_astana_generation: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Watched Astana renamed Nur-Sultan and then Astana again — the city with three names in one generation.',
+    intent: 'none',
+    notes: 'Set by kaz_nursultan_rename.',
+  },
+
+  kaz_zhanaozen_witness: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Aware of the Zhanaozen massacre of December 16, 2011 — 16 oil workers killed on Independence Day.',
+    intent: 'none',
+    notes: 'Set by kaz_zhanaozen_2011 and kaz_zhanaozen_massacre_2011 world event.',
+  },
+
+  kaz_post_nazarbayev: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through Nazarbayev\'s managed resignation in 2019 — the thirty-year president who remained chairman, whose city was renamed for him.',
+    intent: 'none',
+    notes: 'Set by kaz_nazarbayev_steps_down.',
+  },
+
+  kaz_qantar_protester: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Participated in the January 2022 Qantar protests — in the streets before the CSTO arrived and the internet went dark.',
+    intent: 'none',
+    notes: 'Set by kaz_qantar_protests (street path).',
+  },
+
+  kaz_qantar_witness: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Witnessed the January 2022 Qantar crackdown — watching the internet go dark, 238 killed, 10,000 arrested.',
+    intent: 'none',
+    notes: 'Set by kaz_qantar_protests (home path) and kaz_qantar_2022 world event.',
+  },
+
+  kaz_testigo_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Late-life Kazakh witness: Soviet collectivisation through independence through oil boom through Qantar.',
+    intent: 'none',
+    notes: 'Set by kaz_late_reckoning. Terminal witness flag.',
+  },
+
 }
