@@ -1496,6 +1496,56 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by swe_democrats_rise. Follow-through in ft41.',
   },
 
+  // ── FINLAND ───────────────────────────────────────────────────────────────
+
+  no_1942_witness: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Norwegian who was alive during the November 1942 deportation of Jews — 773 sent to Auschwitz on the SS Donau, carried out by Norwegian police under NS orders. Thirty-four survived.',
+    intent: 'none',
+    notes: 'Set by no_1942_deportation.',
+  },
+
+  fin_continuation_war_gen: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Finnish adult who lived through the Continuation War 1941–44 — the *jatkosota*, fought alongside Germany to recover Karelia. Followed by a separate peace and 300 million USD in reparations.',
+    intent: 'none',
+    notes: 'Set by fin_continuation_war.',
+  },
+
+  fin_finlandized_gen: {
+    weight: 'major',
+    category: 'political',
+    description: 'Finnish adult who lived through Finlandization 1948–91 — the strategic self-censorship and careful accommodation of Soviet preferences that kept Finland free from occupation at a cost not said aloud.',
+    intent: 'event',
+    notes: 'Set by fin_finlandization. Checked by fin_nato_2023 (conditional bonus text).',
+  },
+
+  fin_nato_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Finnish adult alive when Finland joined NATO on April 4, 2023 — ending 75 years of military non-alignment with a 188-8 parliamentary vote.',
+    intent: 'none',
+    notes: 'Set by fin_nato_2023.',
+  },
+
+  fin_swedish_minority: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Swedish-speaking Finn (finlandssvensk) — part of the 5% constitutional minority with Swedish-medium institutions, navigating two languages and the question of which one they are.',
+    intent: 'none',
+    notes: 'Set by fin_swedish_speaker.',
+  },
+
+  fin_reconstruction_gen: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Finnish young adult who worked in or alongside the reparations-driven industrial build-out 1945–60 — the industrialisation of Finland as an accident of defeat.',
+    intent: 'none',
+    notes: 'Set by fin_reparations_industry.',
+  },
+
   baltic_russification_generation: {
     weight: 'moderate',
     category: 'historical',
