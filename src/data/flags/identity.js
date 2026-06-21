@@ -5340,25 +5340,25 @@ export const IDENTITY_FLAGS = {
   genocide_witness: {
     weight: 'major', category: 'trauma',
     description: 'Witnessed a genocide — carries the specific weight of knowing what human beings did to each other in their time.',
-    intent: 'none', notes: 'Set by genocide world events (Rwanda, Srebrenica, etc.).',
+    intent: 'event', notes: 'Set by genocide world events (Rwanda, Srebrenica, etc.). Follow-through: ft44_genocide_witness_late.',
   },
 
   revolution_disillusionment: {
     weight: 'moderate', category: 'moral',
     description: 'Has experienced the disillusionment after a revolution — when the new order fails to deliver what the old order\'s overthrow promised.',
-    intent: 'none', notes: 'Set by post-revolutionary disillusionment world events.',
+    intent: 'event', notes: 'Set by post-revolutionary disillusionment world events. Follow-through: ft44_revolution_disillusionment_late.',
   },
 
   eu_generation: {
     weight: 'moderate', category: 'identity',
     description: 'Grew up with European Union membership as a given — free movement, the euro, the removal of borders that had defined a continent.',
-    intent: 'none', notes: 'Set by EU formation/expansion world events.',
+    intent: 'event', notes: 'Set by EU formation/expansion world events. Follow-through: ft44_eu_generation_late.',
   },
 
   brexit_era: {
     weight: 'moderate', category: 'identity',
     description: 'Lived through Brexit — the British referendum and exit from the EU, and the years of argument about what it meant.',
-    intent: 'none', notes: 'Set by Brexit world event.',
+    intent: 'event', notes: 'Set by Brexit world event. Follow-through: ft44_brexit_late.',
   },
 
   quebec_referendum_lived: {
@@ -5370,7 +5370,7 @@ export const IDENTITY_FLAGS = {
   '1967_generation': {
     weight: 'moderate', category: 'identity',
     description: 'Defined by the 1967 Arab defeat — the Naksa, the Six-Day War, the moment the pan-Arab project broke.',
-    intent: 'none', notes: 'Set by 1967 war world event.',
+    intent: 'event', notes: 'Set by 1967 war world event. Follow-through: ft44_1967_generation_late.',
   },
 
   independence_ghana: {
@@ -5412,13 +5412,13 @@ export const IDENTITY_FLAGS = {
   mabo_generation: {
     weight: 'major', category: 'identity',
     description: 'Generation defined by the Mabo decision 1992 — the High Court ruling that recognised Indigenous title to land, ending the legal fiction of terra nullius.',
-    intent: 'none', notes: 'Set by Mabo world event.',
+    intent: 'event', notes: 'Set by Mabo world event. Follow-through: ft44_mabo_late.',
   },
 
   apology_generation: {
     weight: 'major', category: 'identity',
     description: 'Witnessed the 2008 National Apology to Indigenous Australians — the parliament, the prime minister, the Stolen Generations in the gallery.',
-    intent: 'none', notes: 'Set by Australian Apology world event.',
+    intent: 'event', notes: 'Set by Australian Apology world event. Follow-through: ft44_apology_late.',
   },
 
   reef_loss_generation: {

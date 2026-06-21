@@ -1253,7 +1253,7 @@ export const GEOGRAPHIC_FLAGS = {
   tutsi_hidden: {
     weight: 'major', category: 'conflict',
     description: 'Was a Tutsi who survived the 1994 genocide by hiding or being sheltered — the specific debt of being found later.',
-    intent: 'none', notes: 'Set by Rwanda genocide world event.',
+    intent: 'event', notes: 'Set by Rwanda genocide world event. Follow-through: ft44_tutsi_hidden_late.',
   },
 
   systemic_discrimination: {
@@ -1301,13 +1301,13 @@ export const GEOGRAPHIC_FLAGS = {
   chechen_war_generation: {
     weight: 'major', category: 'conflict',
     description: 'Grew up during the Chechen wars — in Russia or Chechnya, the war was the permanent backdrop.',
-    intent: 'none', notes: 'Set by Chechen war world events.',
+    intent: 'event', notes: 'Set by Chechen war world events. Follow-through: ft44_chechen_late.',
   },
 
   chechen_civilian: {
     weight: 'major', category: 'conflict',
     description: 'Was a Chechen civilian during the wars — the specific experience of Grozny under bombardment.',
-    intent: 'none', notes: 'Set by Chechen war world events.',
+    intent: 'event', notes: 'Set by Chechen war world events. Follow-through: ft44_chechen_civilian_late.',
   },
 
   witnessed_democracy_end: {
@@ -1331,7 +1331,7 @@ export const GEOGRAPHIC_FLAGS = {
   mau_mau_generation: {
     weight: 'major', category: 'conflict',
     description: 'Generation defined by the Mau Mau uprising and British counter-insurgency in Kenya — detention camps, collective punishment.',
-    intent: 'none', notes: 'Set by Mau Mau world event.',
+    intent: 'event', notes: 'Set by Mau Mau world event. Follow-through: ft44_mau_mau_late.',
   },
 
   biafra_generation: {

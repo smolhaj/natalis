@@ -2050,8 +2050,8 @@ export const POLITICAL_FLAGS = {
     weight: 'moderate',
     category: 'historical',
     description: 'Present in Egypt the day Sadat was assassinated (October 6, 1981) — witnessed the moment that delivered Mubarak and thirty years of emergency law',
-    intent: 'none',
-    notes: 'Set by we_sadat_assassination_1981 world event.',
+    intent: 'event',
+    notes: 'Set by we_sadat_assassination_1981 world event. Follow-through: ft44_sadat_late.',
   },
 
   emergency_generation: {
