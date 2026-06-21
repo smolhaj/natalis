@@ -3869,6 +3869,28 @@ function buildYearTexture(state) {
       ? 'Eighty percent of the crops. That was the official number. You knew what it meant before you understood the percentage: the market with nothing in it, the weeks that followed, the recalibration of what enough means.'
       : 'You know the names of the dead. Mitch is not an abstraction — it is a list of names you can still produce.',
   ])
+  if (F.has('nic_revolution_generation') && Math.random() < 0.2) return pick([
+    phase === 'late_life'
+      ? 'You have measured other mornings against that morning. The city filling up. The columns coming in. The sound a crowd makes when it understands that something has ended.'
+      : 'You know what it felt like when the dynasty fell. That specific morning is in the body, different from knowledge.',
+    'July 19 is still marked on the calendar. What it means to mark it has changed with time, and you have changed with it.',
+    phase === 'late_life'
+      ? 'The people who were eighteen in 1979 are the ones who have had to hold the most contradictions — what the revolution was, what it did, what it became. You are one of those people.'
+      : 'Forty-three years of the same family, and then one morning, not. You have never stopped understanding this as remarkable.',
+  ])
+  if (F.has('nic_literacy_generation') && Math.random() < 0.18) return pick([
+    'The family in the mountains. The kerosene lamp. The moment someone understood that marks on a page could be sound — that reading is voice slowed down. You watched this happen and it has not left you.',
+    phase === 'late_life'
+      ? 'The children who learned to read in 1980 have children now who have never known what 50 percent literacy looks like. This is what a campaign produces: a condition that becomes invisible because it succeeded.'
+      : 'You were part of something that worked. This is rarer than the histories suggest.',
+    'The primer was red and black. You still remember which page you started on with your family. They remember too.',
+  ])
+  if (F.has('nic_ortega_return') && Math.random() < 0.18) return pick([
+    'The árbol de la vida roundabouts are still there — the metal trees lit up at night, in the colours Rosario Murillo chose. They are not the revolution\'s aesthetic. You notice this every time you pass one.',
+    phase === 'late_life'
+      ? 'He has been in power longer this time than he was the first time. The revolution that ran from 1979 to 1990 is now a decorative element of a government that has jailed its critics. You have spent time thinking about what this means for what you believed.'
+      : 'The comandantes of 1979 are in the government or they are in exile or they have been stripped of citizenship. The ones who stayed became something different. The question is when the becoming started.',
+  ])
   if (F.has('lira_collapse_lived') && Math.random() < 0.35) return pick([
     phase === 'late_life'
       ? 'You grew up knowing that savings are a story a government tells you. You stopped believing the story early.'

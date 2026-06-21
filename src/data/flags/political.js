@@ -5275,4 +5275,70 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by hon_berta_caceres. Follow-through: ft37_berta_late.',
   },
 
+  // ─── NICARAGUA ────────────────────────────────────────────────────────────────
+
+  nic_somoza_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up under the Somoza dynasty (1936–1979) — the three-generation family dictatorship backed by the US, the National Guard as a family business.',
+    intent: 'event',
+    notes: 'Set by nic_somoza_dynasty. Follow-through: ft38_somoza_late.',
+  },
+
+  nic_revolution_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Present for the Sandinista Revolution of July 19, 1979 — Somoza\'s flight, the columns entering Managua, the forty-three-year dynasty ending in hours.',
+    intent: 'both',
+    notes: 'Set by nic_revolution_1979. Year texture + ft38_revolution_late follow-through.',
+  },
+
+  nic_literacy_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Participated in or benefited from the 1980 National Literacy Crusade — five months, kerosene lamps, literacy rising from 50% to 87% in one year.',
+    intent: 'both',
+    notes: 'Set by nic_literacy_crusade. Year texture + ft38_literacy_late follow-through.',
+  },
+
+  nic_election_1990_shock: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Present for the 1990 electoral defeat of the FSLN — Ortega losing to Violeta Chamorro, the revolutionary government accepting democratic accountability.',
+    intent: 'event',
+    notes: 'Set by nic_election_1990. Follow-through: ft38_election_1990_late.',
+  },
+
+  nic_ortega_return: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through Ortega\'s return to power after 2007 — the FSLN back in government, the Árbol de la Vida roundabouts, the accommodation with the Catholic Church.',
+    intent: 'year_texture',
+    notes: 'Set by nic_ortega_returns. Year texture block in yearTexture.js.',
+  },
+
+  nic_2018_witness: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Present for the April 2018 uprising — students with morteros against riot police, 328 killed over five months, the government that came from 1979 shooting protesters.',
+    intent: 'event',
+    notes: 'Set by nic_uprising_2018. Follow-through: ft38_2018_witness_late.',
+  },
+
+  nic_protest_participant: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Actively joined the April 2018 protests in Nicaragua — in the street, at the tranques, making the gesture with everyone who was still out.',
+    intent: 'none',
+    notes: 'Set by nic_uprising_2018 protest choice. Narrative distinction only.',
+  },
+
+  nic_nicaraguan_exile: {
+    weight: 'major',
+    category: 'political',
+    description: 'Left Nicaragua after the 2018 crackdown — part of the tens of thousands in Costa Rica, Miami, Madrid; citizenship stripped, property expropriated.',
+    intent: 'event',
+    notes: 'Set by nic_exile_wave. Follow-through: ft38_exile_late.',
+  },
+
 }
