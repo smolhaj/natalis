@@ -5015,4 +5015,70 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by kyr_late_reckoning. Terminal.',
   },
 
+  // ─── TURKMENISTAN ─────────────────────────────────────────────────────────────
+
+  tkm_turkmenbashi_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through the Niyazov personality cult — renamed months, Ruhnama memorisation, rotating gold statue, banana bans, ballet bans.',
+    intent: 'none',
+    notes: 'Set by tkm_turkmenbashi_decrees.',
+  },
+
+  tkm_post_turkmenbashi: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Alive for the December 2006 moment: what follows the man who renamed himself Father of All Turkmen?',
+    intent: 'none',
+    notes: 'Set by tkm_niyazov_death. Guards tkm_arkadag_era event.',
+  },
+
+  tkm_arkadag_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived the Berdymukhamedov/Arkadag era — portrait on cereal boxes, horse book, dynastic handoff to son in 2022.',
+    intent: 'none',
+    notes: 'Set by tkm_arkadag_era.',
+  },
+
+  tkm_gas_wealth_paradox: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Fourth-largest gas reserves in the world; bread ration cards. The gap between what the state has and what the people live on.',
+    intent: 'none',
+    notes: 'Set by tkm_gas_poverty_paradox.',
+  },
+
+  tkm_information_seeker: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Found ways around Turkmenistan\'s information blockade — VPN, passed USB sticks, shortwave. Carries knowledge that cannot be spoken about.',
+    intent: 'none',
+    notes: 'Set by tkm_information_border.',
+  },
+
+  tkm_information_cautious: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Chose the safety of not seeking blocked information. Lives with the particular cost of not knowing.',
+    intent: 'none',
+    notes: 'Set by tkm_information_border.',
+  },
+
+  tkm_exiled_silent: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Turkmen in exile who stays publicly silent — the constraint of family safety extends across the border.',
+    intent: 'none',
+    notes: 'Set by ft32_departure_attempted_echo.',
+  },
+
+  tkm_exiled_speaking: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Turkmen in exile who speaks publicly, with permission from family, knowing the cost.',
+    intent: 'none',
+    notes: 'Set by ft32_departure_attempted_echo.',
+  },
+
 }

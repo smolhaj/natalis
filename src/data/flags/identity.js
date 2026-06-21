@@ -6523,4 +6523,38 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by kyr_ala_kachuu (burden path).',
   },
 
+  // ─── TURKMENISTAN ─────────────────────────────────────────────────────────────
+
+  tkm_soviet_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up in Soviet Turkmenistan — cotton quotas, the Karakum Canal, collective farm rhythms.',
+    intent: 'none',
+    notes: 'Set by tkm_soviet_cotton.',
+  },
+
+  tkm_ruhnama_compliant: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Learned the Ruhnama fully, as required — passages now permanent in memory, meaning uncertain.',
+    intent: 'none',
+    notes: 'Set by tkm_ruhnama_required.',
+  },
+
+  tkm_ruhnama_resistant: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Learned the minimum Ruhnama and found real reading elsewhere, quietly. The counter-curriculum.',
+    intent: 'none',
+    notes: 'Set by tkm_ruhnama_required.',
+  },
+
+  tkm_darvaza_witness: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Has seen the Darvaza gas crater — burning since 1971, visible for kilometres at night across the Karakum Desert.',
+    intent: 'none',
+    notes: 'Set by tkm_darvaza_crater.',
+  },
+
 }

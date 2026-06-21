@@ -1660,4 +1660,30 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by ft31_civil_war_son (partial path).',
   },
 
+  // ─── TURKMENISTAN ─────────────────────────────────────────────────────────────
+
+  tkm_ashgabat_resident: {
+    weight: 'minor',
+    category: 'geographic',
+    description: 'Lives in white marble Ashgabat — gold domes, empty boulevards, fountains in the desert, bread queues past state monuments.',
+    intent: 'none',
+    notes: 'Set by tkm_ashgabat_marble.',
+  },
+
+  tkm_departure_attempted: {
+    weight: 'major',
+    category: 'geographic',
+    description: 'Made the attempt to leave Turkmenistan — a state where exit is controlled and families of those who speak out from outside receive visits.',
+    intent: 'none',
+    notes: 'Set by tkm_departure_question.',
+  },
+
+  tkm_stayed_for_family: {
+    weight: 'major',
+    category: 'geographic',
+    description: 'Stayed in Turkmenistan with the knowledge of what staying costs — the calculation that weighted family safety over personal exit.',
+    intent: 'none',
+    notes: 'Set by tkm_departure_question.',
+  },
+
 }

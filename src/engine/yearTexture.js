@@ -9829,6 +9829,51 @@ function buildYearTexture(state) {
       : 'The village empties in spring. The men go north, to Moscow, to Novosibirsk, to wherever the construction season is. The women manage the household, the children, the parents-in-law, the land. The village refills in winter. The phone calls are on Sundays.',
   ])
 
+  // ─── TURKMENISTAN TEXTURE ─────────────────────────────────────────────────────
+  if (F.has('tkm_turkmenbashi_generation') && Math.random() < 0.2) return pick([
+    'January is Turkmenbashi. April is Gurbansoltan-eje, for his mother. The calendar was changed by decree. You move through the months differently from how you would name them.',
+    'The rotating golden statue turns to face the sun. This was announced as a technological achievement. You have learned to receive announcements the way you receive weather forecasts: noting the direction, not the accuracy.',
+    'The circus has been banned. Ballet has been banned. Opera has been banned. You are not certain which logic connects these three things. You suspect the logic is: he disliked them.',
+  ])
+
+  if (F.has('tkm_gas_wealth_paradox') && Math.random() < 0.2) return pick([
+    'The gas burns in a pipeline to Russia. Money comes back. Between those two facts there is a gap, and in the gap is the daily arithmetic of what you have.',
+    'The bread ration is still in force. You queue on a Tuesday. The state television says the economy is growing.',
+    'Turkmenistan is the fourth largest gas producer in the world. The cereal box has the president\'s face on it. Both of these things are true simultaneously.',
+    phase === 'late_life'
+      ? 'You have spent your life in a country sitting on enormous reserves and eating from ration books. When people from outside ask what that felt like, you say: you stopped noticing the irony. You needed something else to do with your attention.'
+      : 'The fountain in the desert runs all day. Someone calculated this. Someone decided the water was worth it. You do not know who that person was.',
+  ])
+
+  if (F.has('tkm_ruhnama_compliant') && Math.random() < 0.15) return pick([
+    'The Ruhnama passages are in you the way geography is — not thought about until they surface. Turkmenbashi\'s sentence about the soul of the nation appears in your mind during unrelated moments.',
+    'You passed the test. The civil servants around you passed the test. You have all agreed, collectively and without speaking, never to mention it.',
+  ])
+
+  if (F.has('tkm_ruhnama_resistant') && Math.random() < 0.15) return pick([
+    'The books you actually wanted were found through a process that had no name. A person knew another person. A photocopy appeared. You returned it and received another. This was also an education.',
+    'You know the Ruhnama well enough to pass any examination. You know other things better. This asymmetry is one of the things you carry.',
+  ])
+
+  if (F.has('tkm_arkadag_generation') && Math.random() < 0.18) return pick([
+    'Arkadag means Patron. Both the father and the son are now Patron at different institutional levels. You have two Patrons. Neither of them asked you.',
+    'The Ruhnama is gone from the curriculum. The system that made it mandatory is unchanged. The adjustment has been stylistic.',
+    age >= 50
+      ? 'You have lived under two presidents who renamed themselves. The first renamed himself Father of All Turkmen. The second named himself Patron. The son has the father\'s title now. You have been tracking this longer than most countries run a democracy.'
+      : 'The horse book is required reading now. Not the Ruhnama — that was the previous era. You learn the horse book. You are developing skill at this form of reading.',
+  ])
+
+  if (F.has('tkm_information_seeker') && Math.random() < 0.15) return pick([
+    'What you know you cannot say you know. This is a specific kind of knowledge — useful, isolating, always preceded by a calculation about who is in the room.',
+    'The VPN runs in the background. When the signal drops you feel the shape of what has been removed more clearly than when it is there.',
+  ])
+
+  if (F.has('tkm_ashgabat_resident') && Math.random() < 0.16) return pick([
+    'The gold dome is lit at night. You walk past it on the way to the bread queue. You have stopped seeing it in the same way that you have stopped seeing your own hands.',
+    'The boulevards are empty of cars. They are wide enough for eight lanes. The marble is white and kept clean. The gap between what the city is designed to photograph and what it is designed to live in is a gap you navigate every day.',
+    'A foreign journalist came once, you heard, and photographed the fountains and the white marble and the gold-domed palaces and wrote about the emptiness. The emptiness is real. What the photographs did not get is also real.',
+  ])
+
   // ─── LIBYA TEXTURE ───────────────────────────────────────────────────────────
   if (F.has('libyan_jamahiriya_generation') && Math.random() < 0.18) return pick([
     'The Green Book was the theory. The Revolutionary Guards were the practice. Both were real.',
