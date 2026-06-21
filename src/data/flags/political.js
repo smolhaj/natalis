@@ -2984,6 +2984,62 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by tha_economic_middle_income.',
   },
 
+  thai_76_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed or survived the October 6 1976 Thammasat massacre — students killed by rightwing paramilitaries, hanged from trees, democratic opening reversed',
+    intent: 'none',
+    notes: 'Set by tha_thammasat_1976.',
+  },
+
+  thai_hilltribe_stateless: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Hill tribe person born in Thailand without Thai citizenship — Karen, Hmong, Akha, or Lahu communities whose borders predate the modern state',
+    intent: 'none',
+    notes: 'Set by tha_hilltribe_stateless.',
+  },
+
+  thai_boom_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Part of Thailand\'s 1985–96 economic boom — the factory migration, the construction surge, 9% annual growth reshaping who lives how',
+    intent: 'year_texture',
+    notes: 'Set by tha_boom_years.',
+  },
+
+  thai_deep_south_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the deep south insurgency 2004+ — Pattani, Yala, Narathiwat, the 7,000 dead, the Malay-speaking Muslim community in a Thai Buddhist state',
+    intent: 'none',
+    notes: 'Set by tha_deep_south.',
+  },
+
+  thai_ordained: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Temporarily ordained as a Buddhist monk — the Thai tradition of ordination for one rainy season before marriage',
+    intent: 'year_texture',
+    notes: 'Set by tha_sangha_power.',
+  },
+
+  thai_2020_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Part of the 2020–21 youth protest movement — the unprecedented calls for monarchy reform, three-finger salute, Article 112 prosecutions',
+    intent: 'none',
+    notes: 'Set by tha_2020_protests.',
+  },
+
+  thai_covid_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Experienced the 2020–21 Thai tourism collapse — 39M visitors to 400K, the informal economy with no floor',
+    intent: 'year_texture',
+    notes: 'Set by tha_covid_tourism.',
+  },
+
   bng_liberation_generation: {
     weight: 'major',
     category: 'historical',
