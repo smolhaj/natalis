@@ -9751,6 +9751,38 @@ function buildYearTexture(state) {
       : 'Astana was built to be the future and the oil money made the future buildable in a decade. The question of who the future was built for is a different question from whether it was built.',
   ])
 
+  // ─── KYRGYZSTAN TEXTURE ──────────────────────────────────────────────────────
+  if (F.has('kyr_manas_generation') && Math.random() < 0.18) return pick([
+    'The manaschi sings for three hours without a break. He is not reading. The words come from somewhere else — from the forty years he spent learning it, from the lineage of singers before him. You have heard this once and carry the quality of the silence after.',
+    phase === 'late_life'
+      ? 'The Manas epic is half a million lines and no one alive knows all of it. The singers who carry the most have specialisations — certain episodes, certain variations. The epic is bigger than any one person who holds it. That seems like the right relationship to a tradition.'
+      : 'You know the outline: Manas the warrior, the forty tribes united, the campaigns and the betrayals and the death. You know it the way you know a language — not every sentence ever spoken in it, but enough that you understand what you hear.',
+  ])
+  if (F.has('kyr_nomadic_heritage') && Math.random() < 0.18) return pick([
+    'The boz üy goes up in hours. The felt is layered from the outside in. The door faces east. You have helped erect one, at a cousin\'s celebration, and you know the order of things.',
+    phase === 'late_life'
+      ? 'Your grandfather knew which high pasture held water in August and which didn\'t. That knowledge was earned over decades of seasons and was not written down. You have none of it. What you have instead is the awareness of what was lost — which is a different thing but not nothing.'
+      : 'The summer jailoo — the high pasture — is still used. Some families still go up with the horses in June and come down in September. Most don\'t. You know someone who does. Their life looks, from outside, like the life the history books describe. From inside it is just their specific life.',
+  ])
+  if (F.has('kyr_three_revolutions_generation') && Math.random() < 0.2) return pick([
+    'Three presidents in fifteen years, each one removed by popular action. The country has a word for this pattern: you are inside the pattern, which makes it harder to see the pattern clearly.',
+    phase === 'late_life'
+      ? 'The political scientists abroad call Kyrgyzstan the most democratic of the Central Asian republics. The people inside it call it something else — a country where accountability has arrived, repeatedly, for the person at the top, and where the system underneath changes much more slowly.'
+      : 'Akayev fled to Russia with his family and his money. Bakiyev fled south and then to Belarus. Jeenbekov resigned and stayed. Three different endings for three different men who ended the same way. The mechanism works. The mechanism is rough. Both of these things are true.',
+  ])
+  if (F.has('kyr_osh_kyrgyz_witness') && Math.random() < 0.2) return pick([
+    'June 2010. The question your community has not been able to ask itself clearly is still there. You know it is there. You move around it without naming it, most of the time.',
+    phase === 'late_life'
+      ? 'The accounting of what happened in Osh in June 2010 was done partly by the Kyrgyz parliamentary commission, partly by international human rights organisations, partly by the Uzbek families who kept their own records. The accounts do not agree. You know what your side says. You know there is another side. You hold both.'
+      : 'The men who organized it are still here — some of them. They are not arrested. The Uzbek neighbours are still here — some of them. The ones who left have not all come back. The bazaar is the same bazaar. The silence around certain subjects is specific to certain ages.',
+  ])
+  if (F.has('kyr_osh_uzbek_witness') && Math.random() < 0.2) return pick([
+    'You know which block burned. You know the smell. You know the names of the people who were in the building when it burned and who were not.',
+    phase === 'late_life'
+      ? 'The question you could not stop asking in 2010 — is this country for us — has been answered in the way that time answers unanswerable questions: not resolved, just lived around. You are still here. That is the answer you have arrived at. It is not the same as the question going away.'
+      : 'The Uzbek community of southern Kyrgyzstan is smaller than it was. The ones who left went to Uzbekistan, mostly — some to Russia, some further. The ones who stayed stayed for reasons. You are one of the ones who stayed. You know your reason.',
+  ])
+
   // ─── UZBEKISTAN TEXTURE ──────────────────────────────────────────────────────
   if (F.has('uzb_silk_road_identity') && Math.random() < 0.2) return pick([
     'Samarkand is a city from the histories — Ibn Battuta, Timur, the blue tiles of the Registan. You grew up with the photographs of the Registan in the schoolbooks before you saw it in person. When you saw it in person it was the photographs made real.',
