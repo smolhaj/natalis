@@ -1378,6 +1378,48 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by cze_eu_accession_2004. Year texture block.',
   },
 
+  // ── SWEDEN ────────────────────────────────────────────────────────────────
+
+  swe_wwii_neutral_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Swedish adult who lived through the postwar moral reckoning about neutrality — the transit routes, the iron sales, the absent occupation that left a different kind of question.',
+    intent: 'event',
+    notes: 'Set by swe_wwii_reckoning. Follow-through in ft41.',
+  },
+
+  swe_palme_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Knew exactly where they were when Olof Palme was shot on Sveavägen at 23:21 on February 28, 1986 — the thirty-four-year open wound in the Swedish national psyche.',
+    intent: 'both',
+    notes: 'Set by swe_palme_assassination. Year texture and follow-through in ft41.',
+  },
+
+  swe_welfare_retrenchment_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the 1992 Swedish banking and currency crisis — interest rates to 500%, unemployment tripling, welfare state cuts that restructured the meaning of folkhem.',
+    intent: 'event',
+    notes: 'Set by swe_1992_crisis. Follow-through in ft41.',
+  },
+
+  swe_immigration_era_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the transformation of Sweden into one of the world\'s most per-capita-generous refugee-receiving countries — and the collision of that self-image with integration limits.',
+    intent: 'year_texture',
+    notes: 'Set by swe_immigration_question. Year texture block.',
+  },
+
+  swe_democrats_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Watched the Sweden Democrats rise from 5.7% (2010) to 20% (2022), from the margins to government influence — with a founding history that the party has distanced itself from but not erased.',
+    intent: 'event',
+    notes: 'Set by swe_democrats_rise. Follow-through in ft41.',
+  },
+
   baltic_russification_generation: {
     weight: 'moderate',
     category: 'historical',

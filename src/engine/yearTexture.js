@@ -6165,6 +6165,24 @@ function buildYearTexture(state) {
     'When they said you could live and work anywhere in the EU, the size of what they were describing took time to arrive. You had grown up in a country where leaving required permission. Freedom of movement, it turns out, takes years to feel like a right rather than a gift.',
   ])
 
+  // ─── SWEDEN TEXTURE ───────────────────────────────────────────────────────────
+  if (F.has('swe_palme_generation') && Math.random() < 0.22) return pick([
+    phase === 'late_life'
+      ? 'The case is closed. The man is dead. The gun was never found. You can describe where you were on February 28, 1986 in the kind of detail you can only describe things you experienced at a frequency that lodged them permanently. A prime minister walking home from the cinema. An ordinary Friday night. A shot from behind on Sveavägen.'
+      : 'The investigation has been running for years. You have watched it name suspects and then un-name them. You have watched it become a kind of national condition — the open thing that you carry while also getting on with your life. Most of the time you do not think about it. Then a headline appears and you do.',
+    'The question is not just who did it. The question is what kind of country lets this happen — a prime minister on a public street without protection, because the country was orderly and he trusted it, and then it wasn\'t and he shouldn\'t have. The trust was also part of what was killed.',
+    phase === 'midlife'
+      ? 'Someone mentions the Palme case and you know exactly where you were. This is a specifically Swedish thing — to have an unsolved murder at the centre of the national memory. Other countries have assassinations. Most of them have verdicts. Sweden has had thirty-something years of not-quite-knowing.'
+      : 'The Palme investigation has become something other than an investigation. It is a permanent feature of Swedish public life, like the seasons.',
+  ])
+  if (F.has('swe_immigration_era_generation') && Math.random() < 0.18) return pick([
+    phase === 'late_life'
+      ? 'You have watched the country change and change and you are still watching. The question of who belongs in Sweden and on what terms has been argued in every form — in parliamentary committees, in tabloids, in local school board meetings — and the argument has not resolved, only shifted register.'
+      : 'The country you live in looks different from the country you grew up in, in the specific way that Swedish cities look different now: the names on the school rolls, the restaurants, the mosques next to Lutheran churches, the languages you hear on the bus. You have formed an opinion about this. You sometimes say it out loud.',
+    'Sweden made itself into a country defined by its humanitarian commitments. The commitments were real and the capacity was finite. The collision between those two facts has been the main Swedish political argument of the last thirty years and it has not been won by anyone.',
+    'The specific Swedish difficulty: that the country wanted to be good at this and then discovered that being good at it required things the country was not entirely prepared for, and the gap between wanting and being able became the space in which the political arguments of your adult life took place.',
+  ])
+
   // ─── BALTIC STATES TEXTURE ────────────────────────────────────────────────────
   if (F.has('deportation_family_memory') && Math.random() < 0.3) return pick([
     'The family members who are not present: June 14, 1941 or March 1949. Cattle cars east. You know the names. The names are also history but the history does not account for the specific absence at the family table.',
