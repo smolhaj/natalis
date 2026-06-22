@@ -275,20 +275,21 @@ export const GRIEF_EVENTS = [
       G.partner &&
       G.age >= 22 && G.age <= 40 &&
       !G.mem.griefMiscarriage &&
-      !G.mem.miscarriageEvent,
+      !G.mem.miscarriageEvent &&
+      G.yearsSince('bereavement') >= 2,
     text: 'The pregnancy ends at eleven weeks. The medical process is straightforward in the way that medicine can be. The grief is not. It fits none of the standard categories — no name, no memorial, no established protocol. People do not know what to say because the loss has no social script. You and your partner sit with something that is entirely yours.',
     choices: [
       {
         text: 'Talk about it together — don\'t let the silence grow',
         tag: null,
         outcome: 'You grieve together, imperfectly. The shared language you build around it becomes something.',
-        effect: (p) => { p.m -= 12; p.r += 5; p.addFlag('experienced_loss'); p.setMem('griefMiscarriage', true) },
+        effect: (p) => { p.m -= 12; p.r += 5; p.addFlag('experienced_loss'); p.setLastMajorEvent('loss'); p.setMem('griefMiscarriage', true) },
       },
       {
         text: 'Each of you grieves in your own way',
         tag: null,
         outcome: 'The silence is not unkind. It becomes a small unexplained distance. It resolves, or it doesn\'t.',
-        effect: (p) => { p.m -= 16; p.r += 8; p.addFlag('experienced_loss'); p.setMem('griefMiscarriage', true) },
+        effect: (p) => { p.m -= 16; p.r += 8; p.addFlag('experienced_loss'); p.setLastMajorEvent('loss'); p.setMem('griefMiscarriage', true) },
       },
     ],
     effect: null,
@@ -308,7 +309,7 @@ export const GRIEF_EVENTS = [
       return `${child?.name ?? 'Your child'} dies. There is no way to write this. No parent expects to outlive their child. The grief is not an arc with a resolution — it is a reorganization. Everything after has a different shape.`
     },
     choices: null,
-    effect: (p) => { p.m -= 35; p.h -= 10; p.r += 25; p.addFlag('lost_child'); p.addFlag('bereaved'); p.setMem('griefChildDeath', true) },
+    effect: (p) => { p.m -= 35; p.h -= 10; p.r += 25; p.addFlag('lost_child'); p.addFlag('bereaved'); p.setLastMajorEvent('bereavement'); p.setMem('griefChildDeath', true) },
   },
 
   {

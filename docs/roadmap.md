@@ -41,23 +41,22 @@ When shipping any new event module: write follow-through events first, then work
 
 *Systemic additions worth considering alongside content builds.*
 
-- **The generational save**: On death, play the character's child, inheriting specific flags (not stats). A child born to a character with `holocaust_survived` starts with `holocaust_family_memory`. Multi-generational gameplay without requiring it. Would make BUILD 27's intergenerational trauma arcs much more powerful.
+**✅ Implemented:**
+- **The dream/memory** (`events_memory_layer.js`, 13 events): age-45–65 prose replays of timestamped flags — father's hands, mother's voice, the emigration smell, widowed anniversary. Single-fire, weight 2, no choices.
+- **Weather as texture**: `season` field added to `buildG()` (deterministic per character+year, hemisphere-aware, tropical = dry/wet). Seasonal fragments in `buildYearTexture()` for Nigeria/Ghana/Senegal, Bangladesh/India, Russia/Ukraine/Poland, Australia/NZ/SA, Japan/Korea, Norway/Sweden/Finland, Brazil/Colombia.
+- **The choice you didn't make** (`events_roads_not_taken.js`, 9 events): life-review at ages 38–68 — workforce vs. degree, stayed vs. emigrated, emigrated vs. stayed, affair not taken, scholarship declined, lost faith revisited, childless late, political disengaged. Gates on existing flags.
+- **The `lastMajorEvent` field**: `G.yearsSince('bereavement')` helper in `buildG()`. `p.setLastMajorEvent(cat)` proxy shorthand. Auto-set from `killParent()`/`killPartner()`. Miscarriage and child-loss events guard on `yearsSince('bereavement') >= 2`.
 
-- **The dream/memory**: Occasionally an event "replays" an earlier event with new framing. At 55, a childhood event recalled — not the original text but a memory of it, recontextualized by what the character has become. No new state needed, just careful event design referencing prior flags.
-
-- **Weather as texture**: Seasonal descriptors in event or life log — "a dry harmattan wind carries red dust through the city" for Abuja in January, "the monsoon has been six weeks late" for Bangladesh in July. Gate on country + approximate season. No stat effects; purely atmospheric.
+**Still to evaluate:**
+- **The generational save**: On death, play the character's child, inheriting specific flags (not stats). Multi-generational gameplay without requiring it. High complexity — evaluate when core content is exhausted.
 
 - **The oral tradition register**: For characters in pre-literate or low-literacy contexts, events framed as told rather than witnessed. "Your grandmother tells you about the year the rains didn't come." A distinct prose register.
 
 - **Letters as a UI element**: Pre-2000 characters with active relationship flags occasionally receive a letter — indented block, italic, different prose register — from a sibling abroad, a parent, an old friend. Same event system; different visual treatment via `isLetter: true` property on the event.
 
-- **The choice you didn't make**: Occasionally an event references a prior choice by naming what the other path would have looked like. "Your brother took the scholarship you turned down. He is a doctor in London now." Best used sparingly at life-review moments (ages 40, 60).
+- **Time-of-life activity unlocks**: Activities unlock and lock dynamically based on conditions, career status, relationships — not just age ranges. A character with severe arthritis cannot take up rock climbing at 60. A retired character has time for things they never could.
 
-- **Time-of-life activity unlocks**: Activities unlock and lock dynamically based on conditions, career status, relationships — not just age ranges. A character with severe arthritis cannot take up rock climbing at 60. A retired character has time for things they never could. A character in prison has a completely restricted activity set.
-
-- **Seasonal event modifiers**: Some events weighted differently by time of year — harvest festivals, monsoon arrivals, holy days, winter hardships. Add a `season` field to `buildG()` derived from country and approximate year-fraction. Events check `G.season` for texture.
-
-- **The `lastMajorEvent` field**: `lastMajorEvent: { category, year }` in state. Track most recent event by category (`'bereavement'|'birth'|'illness'|'loss'|'triumph'`). Prevents a miscarriage event firing immediately after a parent death. Implemented as `p.setMem('lastMajorEvent_bereavement', G.currentYear)` + `G.currentYear - G.mem.lastMajorEvent_bereavement > 2` guard.
+- **Seasonal event modifiers**: Now that `G.season` exists, individual events can gate on `G.season === 'wet'` for monsoon arrivals, harvest festivals, winter hardships. No system work needed — purely content.
 
 ---
 

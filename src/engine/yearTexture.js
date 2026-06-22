@@ -12424,6 +12424,76 @@ function buildYearTexture(state) {
     'The work was precise. The risk attached to the precision was not abstract.',
   ])
 
+  // ─── SEASONAL / WEATHER TEXTURE ──────────────────────────────────────────────
+  // Atmospheric only — no stat effects, no flags. Gate on country + season.
+
+  const countryName = G.character?.country?.name ?? ''
+  const season = G.season
+
+  if ((countryName === 'Nigeria' || countryName === 'Ghana' || countryName === 'Senegal') && Math.random() < 0.22) {
+    if (season === 'dry') return pick([
+      'The harmattan has come down from the Sahara. A fine red dust settles on every surface — the dashboard, the collar, the rim of a glass left out overnight. Your skin is tight. The sky is the colour of old paper.',
+      'Harmattan mornings: visibility half a kilometre, the sun a pale disc, the air carrying a mineral smell that is not unpleasant. The cold at six in the morning surprises people who have not been here in December before.',
+      'The dry season has locked in. The grass is the colour of straw now. Women carry buckets further. The standpipes produce a thinner stream.',
+    ])
+    if (season === 'wet') return pick([
+      'The rains have arrived. The first one after the long dry: people stand in doorways watching the street flood, not unhappy about it. The smell of it hitting hot tarmac is specific and seasonal.',
+      'The rains are here and everything that needs water is drinking it. The mosquitoes are also here. Both things are true simultaneously.',
+    ])
+  }
+
+  if ((countryName === 'Bangladesh' || countryName === 'India') && Math.random() < 0.22) {
+    if (season === 'wet') return pick([
+      'The monsoon has been six weeks late. People are counting. The farmers know it in their bodies before the meteorologists say it officially. Now it is here: the tank overflows, the road becomes a river, and no one complains.',
+      'Monsoon: the sound of it on a corrugated iron roof is the loudest thing. Conversation stops. You wait it out. After, a brief and absolute silence before the birds.',
+      'The rains are early this year. The mangoes were not finished.',
+    ])
+    if (season === 'dry') return pick([
+      'Pre-monsoon: the heat has a specific quality in April and May, a weight in the air that the rest of the year does not have. You know to wait.',
+    ])
+  }
+
+  if ((countryName === 'Russia' || countryName === 'Ukraine' || countryName === 'Belarus' || countryName === 'Poland') && Math.random() < 0.22) {
+    if (season === 'winter') return pick([
+      'January: the cold has its own quality here — not a degree of cold but a different physical state. The snow on the pavement has been walked into a hard grey tile. Your breath is a short flag.',
+      'February is the inside of the winter — the month when it has been cold long enough that you have stopped noticing and have simply restructured your life around it. The days are short. The tea is hot. You are managing.',
+      'The heating in this building is municipal. When the city turns it on, you have heat. When it turns it off, the decision has already been made. This is the arrangement.',
+    ])
+    if (season === 'summer') return pick([
+      'The city is restless with the light in June. Parks are full. The dachas are occupied. There is a sense that this particular abundance is temporary and everyone knows it.',
+    ])
+  }
+
+  if ((countryName === 'Australia' || countryName === 'New Zealand' || countryName === 'South Africa') && Math.random() < 0.22) {
+    if (season === 'summer') return pick([
+      'January: summer in the southern hemisphere. The heat comes early in the morning and does not apologise. The sky is a particular shade of blue that requires specific light to produce.',
+      'Christmas in summer: the dissonance of tinsel and heat, carols about snow in thirty-eight-degree weather. A specific local absurdity accepted as ordinary.',
+    ])
+    if (season === 'winter') return pick([
+      'June in the southern hemisphere: the light is lower now, more horizontal, coming through windows at angles it does not manage in summer. The days are shorter than people from elsewhere expect.',
+    ])
+  }
+
+  if ((countryName === 'Japan' || countryName === 'South Korea') && Math.random() < 0.25) {
+    if (season === 'spring') return pick([
+      'Cherry blossom: the specific two weeks when the trees are in full bloom and then drop. People plan around it — the parks full at noon on a weekday. The brevity is the point.',
+      'Hanami: the blossoms giving their two weeks of total attention. You have been watching this since childhood. The attention it produces is still warranted.',
+    ])
+    if (season === 'summer') return pick([
+      'The rainy season before summer: heavy warm rain for six weeks. The mould, the humidity, the feeling of stepping outside into air that is already wet.',
+    ])
+  }
+
+  if ((countryName === 'Norway' || countryName === 'Sweden' || countryName === 'Finland') && Math.random() < 0.25) {
+    if (season === 'winter') return pick([
+      'The polar night: the sun does not rise today. People have adapted — lamps with specific wavelengths, walks at noon in the thin blue light, the indoor life that is a second culture.',
+      'February: the long tunnel of the Nordic winter. The candles are lit. The coffee is hot. People have been perfecting indoor comfort out of necessity for generations.',
+    ])
+    if (season === 'summer') return pick([
+      'The midnight sun: it does not get dark tonight. The light stays, pale and horizontal, well past midnight. Sleep is an exercise in curtains and the agreement to rest even without dark.',
+    ])
+  }
+
   // ─── FINAL GENERIC FALLBACK ───────────────────────────────────────────────────
   return pick([
     'A year without incident. These exist.',
