@@ -231,7 +231,7 @@ Generic events are a last resort. Specific events — ones that could only fire 
 
 ## Current State
 
-109 countries, 255 world events, 275 event modules (~5,800+ events), 2051 registered flags, 321 ribbons. **0 orphaned, 0 partial flags.** Run `npm run check-flags` to verify.
+109 countries, 255 world events, 285+ event modules (~5,960+ events), 2075 registered flags, 321 ribbons. **0 orphaned flags.** Run `npm run check-flags` to verify.
 
 **Codebase refactor (PR #105)**: Events reorganized into subdirectories under `src/data/events/`: `geographic/` (country-specific), `thematic/` (cross-cutting arcs), `lifecycle/` (phase-specific), `sonder/` (contemplative layer), `specific_lives/` (extreme specificity), `followthrough/` (all followthroughs consolidated). `gameEngine.js` split into 5 focused modules. `flags.js` split into 6 category files.
 

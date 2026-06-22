@@ -12398,6 +12398,32 @@ function buildYearTexture(state) {
     'There are people who knew you in your thirties who would not recognise the life you are living now. You find this interesting rather than sad.',
   ])
 
+  // ─── NEW FLAG TEXTURE (BUILD 5 / 11 / 17 additions) ──────────────────────────
+
+  if (F.has('bengal_famine_generation') && Math.random() < 0.22) return pick([
+    'There are specific years when hunger was not hunger in the ordinary sense — it was a presence, physical and political at once. The newspapers did not use the word for it. You know which years those were.',
+    phase === 'late_life'
+      ? 'The 1943 famine is in the history books now. The historians argue about the causes: wartime requisitioning, policy failure, Churchill. You know what the pumpkin leaves tasted like. Those are different kinds of knowledge.'
+      : 'Some things you learned at an age before you had the words for them. You have the words now. The things themselves are still there.',
+    'The wartime censors called it a food crisis. What it was is what it was. You were inside it.',
+  ])
+
+  if (F.has('post_gulag') && Math.random() < 0.22) return pick([
+    'Free and prohibited from being in the places where your life was. That was the specific shape of release: the paper, the rule, the 101 kilometres. Technically at liberty.',
+    phase === 'late_life'
+      ? 'Decades since the release. The prohibition lifted, the city eventually reachable, the apartment long since occupied by strangers. None of the facts of what happened to you have changed. Only the legal status of your access to them.'
+      : 'The rehabilitation comes later, in documents. The documents do not contain what was inside the camp. You know what was inside the camp.',
+    'Released without transport. Released without money. Released without documentation permitting you to be where your family was. Released.',
+  ])
+
+  if (F.has('interpreter_endangered') && Math.random() < 0.2) return pick([
+    'Visible on both sides. That was the position — not chosen but structural. The foreign forces defined one side. The presence of your name on the list defined the other.',
+    phase === 'late_life'
+      ? 'You made it through. The route was difficult. The people who processed the visa application in the country you interpreted for were thorough and slow. Both things remain true.'
+      : 'Your name on a list you did not put it on. The visa category that could help you with a four-year waiting list. The gap between those two facts was the shape of the problem.',
+    'The work was precise. The risk attached to the precision was not abstract.',
+  ])
+
   // ─── FINAL GENERIC FALLBACK ───────────────────────────────────────────────────
   return pick([
     'A year without incident. These exist.',

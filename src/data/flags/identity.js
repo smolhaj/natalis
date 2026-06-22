@@ -6637,4 +6637,82 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by gua_highland_childhood. Year texture + ft36_highland_maya_late follow-through.',
   },
 
+  // ─── TEACHER IN POOR COUNTRY ──────────────────────────────────────────────────
+
+  rural_teacher: {
+    weight: 'major',
+    category: 'career',
+    description: 'Posted to a rural school in a developing country — highest social status in the village, lowest salary in the district. Gates the teacher-in-poor-country arc.',
+    intent: 'both',
+    notes: 'Set by tpc_rural_posting. Full arc: tpc_no_textbooks, tpc_exceptional_student, tpc_inspection_day, tpc_salary_delayed, tpc_student_returns, tpc_late_reckoning.',
+  },
+
+  taught_unpaid: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Continued teaching for months without salary — the job continued because the students continued, regardless of whether the government\'s accounting registered it.',
+    intent: 'none',
+    notes: 'Set by tpc_salary_delayed. Terminal — gates tpc_late_reckoning indirectly via rural_teacher.',
+  },
+
+  fought_for_student: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Spent two years writing letters to find a path for an exceptional student the formal system had failed — churches, NGOs, direct appeals to secondary schools.',
+    intent: 'none',
+    notes: 'Set by tpc_exceptional_student (choice: find another way). Terminal.',
+  },
+
+  // ─── CHILD OF POWER ───────────────────────────────────────────────────────────
+
+  child_of_power: {
+    weight: 'major',
+    category: 'identity',
+    description: 'The local governor\'s child, the Party official\'s son, the general\'s daughter — someone whose early life was defined by proximity to a parent who held power. Gates the child-of-power arc.',
+    intent: 'both',
+    notes: 'Set by cop_birth_privilege. Arc: cop_the_doors, cop_what_power_costs, cop_the_fall, cop_after_the_fall.',
+  },
+
+  power_fell: {
+    weight: 'major',
+    category: 'identity',
+    description: 'The parent was removed from power — the car gone, the photograph taken down from the district office wall, everything built on the photograph now reversed.',
+    intent: 'both',
+    notes: 'Set by cop_the_fall. Echo: cop_after_the_fall.',
+  },
+
+  // ─── INTERPRETER ARC ──────────────────────────────────────────────────────────
+
+  interpreter_colonial: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Translated colonial administration orders — between a district officer\'s requirements and a community\'s language, choosing which meaning to sacrifice.',
+    intent: 'none',
+    notes: 'Set by ia_interpreter_colonial. Terminal — context in event prose.',
+  },
+
+  interpreter_tribunal: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Translated atrocity testimony at a humanitarian tribunal — sentence by sentence, exactly, carrying words the speaker used for what was done to them into a second language.',
+    intent: 'none',
+    notes: 'Set by ia_interpreter_tribunal. Terminal — context in event prose.',
+  },
+
+  interpreter_military: {
+    weight: 'major',
+    category: 'career',
+    description: 'Interpreted for foreign military forces — visible to both sides of the conflict, face known to local commanders, still present when the soldiers go home.',
+    intent: 'both',
+    notes: 'Set by ia_interpreter_military. Can lead to interpreter_endangered if forces withdraw.',
+  },
+
+  interpreter_endangered: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Named on a list found in an abandoned base after foreign forces withdrew — the visa category that would help is on a four-year waiting list.',
+    intent: 'both',
+    notes: 'Set by ia_interpreter_danger. Choice: flee (asylum_seeker) or hide and wait.',
+  },
+
 }
