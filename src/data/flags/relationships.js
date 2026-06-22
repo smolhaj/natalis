@@ -804,4 +804,20 @@ export const RELATIONSHIP_FLAGS = {
     notes: 'Set by uzb_mirziyoyev_opening (skeptical path).',
   },
 
+  became_mentor: {
+    weight: 'moderate',
+    category: 'social',
+    description: 'Took on a mentoring role — gave someone starting out the specific guidance that wasn\'t given to you, or was.',
+    intent: 'none',
+    notes: 'Set by mentor_young activity (retirement panel, 45+). Surfaced in buildYearTexture and late-life prose.',
+  },
+
+  wrote_memoirs: {
+    weight: 'moderate',
+    category: 'social',
+    description: 'Wrote a memoir — set down the life; the act of writing changed what was remembered.',
+    intent: 'none',
+    notes: 'Set by write_memoirs activity (retirement panel, 60+).',
+  },
+
 }
