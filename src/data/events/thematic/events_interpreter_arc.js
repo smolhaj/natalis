@@ -114,6 +114,28 @@ export const INTERPRETER_ARC_EVENTS = [
   },
 
   {
+    id: 'ia_interpreter_endangered_aftermath',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      G.flags.has('interpreter_endangered') &&
+      !G.mem?.iaEndangeredAftermath,
+    text: (G) => {
+      if (G.residencyStatus === 'asylum_seeker') {
+        return `You are in a processing centre waiting for a decision that will take longer than they told you. The people who know your case change every few weeks. You have explained what you did, why it mattered, who is looking for you, what they will do if they find you — you have explained it nine times in three different languages. The tenth explanation begins next Tuesday.`
+      }
+      return `You are staying with your cousin in a district where you don't know anyone. Every week you check the visa status. It has not changed. You have learned what the different rejection codes mean. You know which codes have been reversed on appeal and which have not.`
+    },
+    choices: null,
+    effect: (p) => {
+      p.m -= 12;
+      p.h -= 5;
+      p.r += 8;
+      p.setMem('iaEndangeredAftermath', true);
+    },
+  },
+
+  {
     id: 'ia_interpreter_invisibility',
     phase: 'midlife',
     weight: 2,

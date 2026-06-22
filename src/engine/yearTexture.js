@@ -254,6 +254,100 @@ function buildYearTexture(state) {
     ])
   }
 
+  // ─── SURVIVAL MEMORY LAYER ───────────────────────────────────────────────────
+  // Year texture for lives shaped by historical illness, violence, or displacement.
+
+  if (F.has('cholera_survivor') && age >= 30 && Math.random() < 0.18) return pick([
+    'You still check water before you drink it — not the way people check out of habit, but in a different register. You know what contaminated water does.',
+    'The cholera came in August. You are still thinking about August.',
+    'The summer you were ill, and what came after. Most of it you have put down somewhere. Most of it.',
+  ])
+
+  if (F.has('pass_law_survivor') && Math.random() < 0.2) return pick([
+    'You have had your documents checked by people who did not believe they were yours. This changes your relationship to documents.',
+    phase === 'late_life'
+      ? 'You voted in 1994. You did not do it quickly. You stood at the booth and took the time.'
+      : 'The book is in a drawer. You have not thrown it away. You are not sure why.',
+    'The queue at the pass office. The clerk who looked through you rather than at you. The number of hours that cost. You remember all of it specifically.',
+  ])
+
+  if (F.has('received_international_aid') && phase === 'midlife' && !mem?.faminaAidEchoFired && Math.random() < 0.25) return pick([
+    'The convoy came. You were a child and you did not know the politics of it. You knew the food.',
+    'You think sometimes about the people who packed those boxes. Whether they imagined who was on the other end of them.',
+    'Aid. That was the category you were in, briefly. The category has stayed with you in a way the food did not.',
+  ])
+
+  if (F.has('mdr_tb_survivor') && Math.random() < 0.2) return pick([
+    'The treatment was longer than you were told and more difficult than the pamphlets described. You finished it, which not everyone does.',
+    'Multi-drug resistant. That was the phrase. The phrase implied the ordinary kind, which you had also had. You have now had more illness than most people encounter in a lifetime.',
+    'The cough is gone. You listen for it sometimes, the way you listen for a sound after it stops.',
+  ])
+
+  if (F.has('tb_survivor_russia') && Math.random() < 0.18) return pick([
+    'The sanatorium in the nineties. The shortage of streptomycin. The ward you stayed in and the people who did not leave it. You do not have a word for what that time was.',
+    'You coughed for eighteen months before it stopped. You have a different relationship with air now.',
+    'They called the nineties the lost decade. For you it was the lost year inside the lost decade. You have put it somewhere. You take it out occasionally.',
+  ])
+
+  if (F.has('interpreter_endangered') && Math.random() < 0.22) return pick([
+    'The withdrawal announcement was three months ago. You have been receiving new information about your situation regularly since then.',
+    'They know who you worked with. That knowledge does not change whether you leave or stay. It changes what happens after.',
+    'Interpreter. That was the title. The title now means something specific in contexts you did not originally sign up for.',
+  ])
+
+  if (F.has('interpreter_military') && !F.has('interpreter_endangered') && Math.random() < 0.15) return pick([
+    'You know two languages and what happened between the people who speak them.',
+    'Interpretation is not translation. You have had this argument more than once. You have been in rooms where the difference mattered.',
+  ])
+
+  if (F.has('rural_teacher') && Math.random() < 0.18) return pick([
+    'The school is the building at the end of the road. You are the person in it. Some years this means more than others.',
+    'You know your students\' names and their parents\' names and which families the money ran out for first. This is not in the curriculum. It is the actual curriculum.',
+    phase === 'late_life'
+      ? 'The student who came back. You think about them more than the others, which is probably not fair to the others.'
+      : 'The salary arrived late again. You have been counting on it and then adjusting and then counting again. You have not told the students this.',
+    'The textbooks are the wrong year. Some of the exercises reference events that have not happened yet in the year they were printed. You work around this.',
+  ])
+
+  if (F.has('bangladesh_malaysia_migrant') && Math.random() < 0.18) return pick([
+    'The recruitment agent said the work would be different. You cannot now say you were surprised that it was not.',
+    'You send money home. You have been sending money home long enough that they have stopped asking when you are coming back.',
+    phase === 'late_life'
+      ? 'The years in Malaysia. A different country. A different version of yourself. You are not sure which one is continuous with this one.'
+      : 'The factory in Penang. You can describe the floor plan from memory. You have not been back in three years.',
+  ])
+
+  if (F.has('zim_south_africa_migrant') && Math.random() < 0.18) return pick([
+    'The border. The walk. What you carried and what you left.',
+    '2008. That was the year the streets turned. You were in Johannesburg and you know what that means for people who looked like you.',
+    'You are Zimbabwean in South Africa, which is its own specific position in a specific hierarchy. You have learned to navigate it.',
+  ])
+
+  if (F.has('ghana_libya_migrant') && Math.random() < 0.2) return pick([
+    'Libya was supposed to be the step before the step. It became its own thing entirely.',
+    'The 2011 evacuation. The boat out. What you saw in the camps before the boat.',
+    'You have been to places that were not on your original plan. The plan was from before.',
+  ])
+
+  if (F.has('third_generation_refugee') && Math.random() < 0.2) return pick([
+    'You were born in the camp. You have lived in more countries than your grandparents knew existed. This is the biography. It does not fit in a box.',
+    'Third generation. Your grandmother left with nothing. Your mother was born in transit. You were born in a camp. The camp is the only constant.',
+    phase === 'late_life'
+      ? 'You have been a refugee longer than most countries have been countries. The status does not expire.'
+      : 'The right of return. That is the legal category. It is also, for your family, a way of counting time.',
+  ])
+
+  if (F.has('child_of_power') && !F.has('power_fell') && Math.random() < 0.15) return pick([
+    'The car that always came. The doors that opened. You understood what your family was before you had words for it.',
+    'There is a specific way that access shapes a person, and you do not always recognise it in yourself.',
+  ])
+
+  if (F.has('power_fell') && Math.random() < 0.22) return pick([
+    'After the fall. That is one way to divide the life.',
+    'You have had two kinds of money: the kind that is assumed and the kind that has to be rebuilt. You know which one requires more work.',
+    'The name your family had, and what that name means now. The calculation you do in new rooms before you use it.',
+  ])
+
   // ─── MEMORY LAYER: ELAPSED TIME ──────────────────────────────────────────────
   // Uses TIMESTAMPED_FLAGS to surface the passage of time since significant events.
 
