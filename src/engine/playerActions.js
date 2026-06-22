@@ -438,7 +438,8 @@ export function applyActivity(state, activityId) {
   }
 
   updated.actionsThisYear = state.actionsThisYear + 1
-  updated.log = [...updated.log, { age: state.age, text: activity.outcome, isKey: false }]
+  const activityLogText = typeof activity.prose === 'function' ? activity.prose(G) : activity.outcome
+  updated.log = [...updated.log, { age: state.age, text: activityLogText, isKey: false }]
 
   // Track cumulative activity counts for flag generation in tick()
   const countKey = `act_count_${activityId}`

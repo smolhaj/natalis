@@ -4,7 +4,7 @@ import StatBar from './StatBar'
 import FlagChip from './FlagChip'
 import EventBox from './EventBox'
 import { getCountryFlag, REGIME_LABELS, REGIME_COLORS, RELIGION_LABELS, RESIDENCY_LABELS } from '../utils/countryUtils'
-import { getCountryRegime, generateIdentityCard, DESIRE_LABELS, getWealthTierLabel, getFinancialReputationDisplay, formatParentIncome } from '../engine/gameEngine'
+import { getCountryRegime, generateIdentityCard, DESIRE_LABELS, getWealthTierLabel, getFinancialReputationDisplay, formatParentIncome, getPhase } from '../engine/gameEngine'
 import { PLACES, getPlacesForCountry, getRelocationCost } from '../data/places'
 import ActivitiesPanel from './ActivitiesPanel'
 
@@ -19,14 +19,6 @@ const PHASE_LABELS = {
 
 const BELT_NAMES = ['white','yellow','orange','green','blue','purple','red','brown','black']
 
-function getPhase(age) {
-  if (age <= 5) return 'early_childhood'
-  if (age <= 11) return 'childhood'
-  if (age <= 17) return 'adolescence'
-  if (age <= 29) return 'young_adult'
-  if (age <= 49) return 'midlife'
-  return 'late_life'
-}
 
 function RelBar({ value, color }) {
   return (
@@ -1531,11 +1523,16 @@ export default function LifeScreen() {
         <div className="fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-natalis-border shadow-card-lg">
           <div className="max-w-2xl mx-auto flex items-center px-4 py-2 gap-3">
 
-            {/* Actions remaining dots */}
-            <div className="flex gap-1">
-              {Array.from({ length: maxActionsPerYear }).map((_, i) => (
-                <div key={i} className="w-2 h-2 rounded-full" style={{ backgroundColor: i < actionsThisYear ? '#e5e5ea' : '#007aff' }} />
-              ))}
+            {/* Actions remaining */}
+            <div className="flex flex-col items-center gap-1 min-w-[36px]">
+              <div className="flex gap-1">
+                {Array.from({ length: maxActionsPerYear }).map((_, i) => (
+                  <div key={i} className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: i < actionsThisYear ? '#e5e5ea' : '#007aff' }} />
+                ))}
+              </div>
+              <span className="text-[9px] font-medium leading-none" style={{ color: actionsLeft > 0 ? '#007aff' : '#8e8e93' }}>
+                {actionsLeft > 0 ? `${actionsLeft} left` : 'none left'}
+              </span>
             </div>
 
             {/* Activities / Prison Life button */}
