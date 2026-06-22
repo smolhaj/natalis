@@ -155,7 +155,10 @@ export default function ActivitiesPanel({ onClose }) {
   const conditions = state.conditions ?? []
   const hasCondition = (id) => conditions.some(c => c.id === id)
   const hasSevereUnmanaged = (id) => conditions.some(c => c.id === id && c.severity === 'severe' && !c.managed)
+  const hasModerateOrWorse = (id) => conditions.some(c => c.id === id && (c.severity === 'moderate' || c.severity === 'severe'))
   const anySevereUnmanaged = conditions.some(c => c.severity === 'severe' && !c.managed)
+  const physicallyRestricted = hasSevereUnmanaged('disability_injury') || hasSevereUnmanaged('arthritis') || hasSevereUnmanaged('back_pain_chronic')
+  const physicalRestrictReason = hasSevereUnmanaged('arthritis') ? 'Severe arthritis limits high-impact activity.' : hasSevereUnmanaged('back_pain_chronic') ? 'Chronic back pain makes this inadvisable.' : hasSevereUnmanaged('disability_injury') ? 'Not possible with your current injury.' : null
   const isHomeless = state.mem?.isHomeless === true
 
   const CONDITION_LABELS = {
@@ -201,10 +204,10 @@ export default function ActivitiesPanel({ onClose }) {
                     ⚠️ Intense exercise carries real risk with your condition. Consider therapy or walking instead.
                   </div>
                 )}
-                <Btn disabled={noActions || hasSevereUnmanaged('disability_injury')}
+                <Btn disabled={noActions || physicallyRestricted}
                   onClick={() => go(() => takeActivity('gym'))}
                   title="Go to the Gym"
-                  subtitle={hasSevereUnmanaged('disability_injury') ? "Not possible with your current injury." : "Improve your fitness and health."}
+                  subtitle={physicallyRestricted ? (physicalRestrictReason ?? "Not possible with your current condition.") : "Improve your fitness and health."}
                   cost="Cost: $20/visit"
                 />
               </>
@@ -233,7 +236,9 @@ export default function ActivitiesPanel({ onClose }) {
                 <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">
                   Martial Arts {ma.discipline ? `— ${ma.discipline} (${BELT_NAMES[ma.belt ?? 0]} belt)` : ''}
                 </p>
-                {!ma.discipline
+                {physicallyRestricted ? (
+                  <p className="text-natalis-muted text-xs italic px-1">{physicalRestrictReason ?? "Physical condition prevents martial arts training."}</p>
+                ) : !ma.discipline
                   ? MARTIAL_DISCIPLINES.map(d => (
                       <Btn key={d} disabled={noActions} onClick={() => go(() => practiceMartalArts(d))} title={`Start ${d}`} subtitle="Begin your martial arts journey." />
                     ))
@@ -1354,6 +1359,15 @@ export default function ActivitiesPanel({ onClose }) {
             )}
             {state.age >= 55 && !state.retired && (
               <Btn onClick={() => go(retire)} title="Retire" subtitle="End your working life on your own terms." />
+            )}
+            {state.retired && (
+              <>
+                <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-2">Retirement</p>
+                <Btn disabled={noActions} onClick={() => go(() => takeActivity('volunteer'))} title="Volunteer" subtitle="Give time to a cause. The weeks have a different shape." />
+                <Btn disabled={noActions} onClick={() => go(() => takeActivity('mentor_young'))} title="Mentor Someone" subtitle="Pass on what you know. More useful than it sounds." />
+                {state.age >= 60 && <Btn disabled={noActions} onClick={() => go(() => takeActivity('write_memoirs'))} title="Write Memoirs" subtitle="Set it down, for yourself or for anyone who asks." />}
+                {!physicallyRestricted && state.age < 80 && <Btn disabled={noActions} onClick={() => go(() => takeActivity('walk'))} title="Walk More" subtitle="The retired body does better with routine movement." />}
+              </>
             )}
             {!isBlockedFromFormal && available.length > 0 && (
               <>

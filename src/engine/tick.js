@@ -136,9 +136,10 @@ function buildEffectProxy(state) {
     if (!proxy._friendRelDeltas) proxy._friendRelDeltas = {}
     proxy._friendRelDeltas[idx] = (proxy._friendRelDeltas[idx] ?? 0) + delta
   }
-  proxy.killPartner = () => { proxy._killPartner = true }
+  proxy.killPartner = () => { proxy._killPartner = true; proxy.mem['lastMajorEvent_bereavement'] = state.currentYear }
   proxy.releaseFromPrison = () => { proxy._releaseFromPrison = true }
-  proxy.killParent = (which) => { proxy._killParent = which }
+  proxy.killParent = (which) => { proxy._killParent = which; proxy.mem['lastMajorEvent_bereavement'] = state.currentYear }
+  proxy.setLastMajorEvent = (cat) => { proxy.mem[`lastMajorEvent_${cat}`] = state.currentYear }
   proxy.setResidency = (status) => { proxy._residencyStatus = status }
   proxy.setReligion = (religion) => { proxy._religion = religion }
   proxy.setClassTier = (tier) => { proxy._classTier = tier }
@@ -608,6 +609,32 @@ export function buildG(state) {
     capital: state.character?.country?.capital ?? '',
     currency: state.character?.country?.currency ?? '',
     cityName: (state.currentPlace ?? state.character?.birthPlace)?.name ?? state.character?.country?.capital ?? '',
+    // lastMajorEvent guard helper — prevents emotional clustering
+    // G.yearsSince('bereavement') >= 2 guards miscarriage after parent death, etc.
+    yearsSince: (cat) => currentYear - (state.mem?.[`lastMajorEvent_${cat}`] ?? 0),
+    // Season (0=winter 1=spring 2=summer 3=autumn) derived deterministically per year.
+    // Southern-hemisphere countries swap summer/winter. Tropical countries stay 0/1 (dry/wet).
+    season: (() => {
+      const southernHemisphere = new Set([
+        'Australia','New Zealand','Argentina','Brazil','Chile','South Africa','Peru',
+        'Bolivia','Uruguay','Paraguay','Zimbabwe','Zambia','Mozambique','Angola',
+        'Namibia','Tanzania','Kenya','Rwanda','Burundi','Madagascar','Malawi',
+      ])
+      const tropical = new Set([
+        'Nigeria','Ghana','Ivory Coast','Cameroon','DR Congo','Uganda','Ethiopia',
+        'Somalia','Sudan','Guinea','Mali','Burkina Faso','Senegal','Bangladesh',
+        'Thailand','Vietnam','Indonesia','Philippines','Cambodia','Myanmar','Laos',
+        'Colombia','Venezuela','Ecuador','Guatemala','Honduras','Nicaragua',
+        'El Salvador','Dominican Republic','Haiti','Cuba','Puerto Rico','Panama',
+      ])
+      const countryName = state.character?.country?.name ?? ''
+      // Pseudo-random but deterministic per character+year
+      const raw = ((state.character?.birthYear ?? 1960) * 7 + currentYear * 3) % 4
+      if (tropical.has(countryName)) return raw % 2 === 0 ? 'dry' : 'wet'
+      const seasons = ['winter','spring','summer','autumn']
+      const idx = southernHemisphere.has(countryName) ? (raw + 2) % 4 : raw
+      return seasons[idx]
+    })(),
   }
 }
 
@@ -2192,7 +2219,7 @@ export function tick(state) {
     if (resolvedEvent.effect) resolvedEvent.effect(proxy)
     s = applyProxy(s, proxy)
     s = resolveProxyExtras(s, proxy)
-    s.log = [...s.log, { age: s.age, text: resolvedText, isKey: resolvedEvent.isKey ?? false }]
+    s.log = [...s.log, { age: s.age, text: resolvedText, isKey: resolvedEvent.isKey ?? false, isLetter: resolvedEvent.isLetter ?? false }]
     return s
   }
 
@@ -2214,7 +2241,7 @@ export function resolveChoice(state, choiceIndex) {
   if (choice.inject) s.queue = [...s.queue, choice.inject]
   const evtText = typeof pendingEvent.text === 'function' ? pendingEvent.text(buildG(state)) : (pendingEvent.text ?? '')
   const outcomeText = typeof choice.outcome === 'function' ? choice.outcome(buildG(s)) : (choice.outcome ?? '')
-  s.log = [...s.log, { age: state.age, text: `${evtText.slice(0, 80)}… — ${outcomeText}`, isKey: true }]
+  s.log = [...s.log, { age: state.age, text: `${evtText.slice(0, 80)}… — ${outcomeText}`, isKey: true, isLetter: pendingEvent.isLetter ?? false }]
   s.pendingEvent = null
   return s
 }

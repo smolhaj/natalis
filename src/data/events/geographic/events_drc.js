@@ -152,4 +152,48 @@ export const DRC_EVENTS = [
     effect: (p) => { p.m += 5; p.s += 3; p.addFlag('church_community'); p.setMem('drcChurch', true); },
   },
 
+  // ── BUILD 11 DEPTH: MOBUTU-ERA TEACHER ───────────────────────────────────
+
+  {
+    id: 'drc_zaire_teacher',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      G.character.country.name === 'DR Congo' &&
+      G.currentYear >= 1975 && G.currentYear <= 1996 &&
+      G.career?.id === 'teacher' &&
+      !G.mem?.drcZaireTeacher,
+    text: 'The Ministry of Education has not sent new textbooks in four years. The curriculum still refers to the country as Zaire, though the official name changes again this year or the next. Your salary arrived in January and not since. What this means, practically, is that you teach on credit — credit you extend to yourself and to your students, secured against nothing. The chalk runs out in April. You teach anyway, writing on the ground outside when the room is too dark.',
+    choices: [
+      {
+        text: 'Find ways to supplement — private tutoring, whatever is available',
+        tag: null,
+        outcome: 'The tutoring income is irregular but real. You become known as the teacher who stayed when others left for Kinshasa. This is both a compliment and a description of your options.',
+        effect: (p) => { p.mo += 800; p.r += 5; p.addFlag('zaire_teacher_generation'); p.setMem('drcZaireTeacher', true) },
+      },
+      {
+        text: 'Stay and teach without supplementing — the job is the job',
+        tag: null,
+        outcome: 'You teach without being paid in the way the state promised. Your students know this. Some of them bring eggs or cassava. You accept because refusing would be unkind.',
+        effect: (p) => { p.mo -= 400; p.karma += 10; p.m -= 8; p.addFlag('zaire_teacher_generation'); p.setMem('drcZaireTeacher', true) },
+      },
+    ],
+  },
+
+  // ── BUILD 11 DEPTH: SECOND CONGO WAR — BUKAVU/KIVU ───────────────────────
+
+  {
+    id: 'drc_bukavu_1998',
+    phase: 'midlife',
+    weight: 4,
+    when: (G) =>
+      G.character.country.name === 'DR Congo' &&
+      G.currentYear >= 1998 && G.currentYear <= 2003 &&
+      G.character.ruralUrban !== 'rural' &&
+      !G.mem?.drcBukavu,
+    text: 'Bukavu changes hands twice in one month. The group that controls it now has a different name from the group that controlled it last month. The flags are different; the checkpoints are in the same places. You have a friend who works for a UN agency and he tells you things — casualty estimates, group movements — that are not on the radio. The radio has its own account. Between your friend\'s information and the radio\'s account is a gap you learn to live inside. You go to work in the morning. Sometimes work is there and sometimes it is not, depending on who controls the road.',
+    choices: null,
+    effect: (p) => { p.m -= 15; p.e += 4; p.addFlag('second_congo_war_urban_generation'); p.setMem('drcBukavu', true) },
+  },
+
 ]

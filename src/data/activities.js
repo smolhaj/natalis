@@ -424,6 +424,28 @@ export const ACTIVITIES = {
       condition: null,
       outcome: 'The community gives your calendar a shape.',
     },
+    {
+      id: 'mentor_young',
+      name: 'Mentor someone younger',
+      description: 'Pass on what you know to someone starting out.',
+      minAge: 45,
+      maxAge: null,
+      cost: 0,
+      effect: (p) => { p.s += 5; p.m += 6; p.karma += 6; p.addFlag('became_mentor'); },
+      condition: null,
+      outcome: 'You give them something you would have wanted. That is the whole of it.',
+    },
+    {
+      id: 'write_memoirs',
+      name: 'Write your memoirs',
+      description: 'Set down the life you have lived.',
+      minAge: 60,
+      maxAge: null,
+      cost: 0,
+      effect: (p) => { p.e += 4; p.m += 5; p.r -= 6; p.addFlag('wrote_memoirs'); },
+      condition: null,
+      outcome: 'You find that writing it down changes what you remember. Some of it is better than you thought.',
+    },
   ],
 
   money: [

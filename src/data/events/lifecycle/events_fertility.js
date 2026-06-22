@@ -15,7 +15,8 @@ export const FERTILITY_EVENTS = [
       G.character.gender === 'female' &&
       G.partner &&
       G.age >= 22 && G.age <= 38 &&
-      G.flags.includes('trying_for_child'),
+      G.flags.includes('trying_for_child') &&
+      G.yearsSince('bereavement') >= 2,
     text: 'You are eight weeks in when it ends. The clinic is matter-of-fact and kind, which is the correct combination. Your partner drives home. You do not talk much in the car. At home you sit together on the sofa for a long time. Later — days later — you will learn that it is very common. The commonness is both real and irrelevant to the specific weight of it.',
     choices: [
       {
@@ -43,7 +44,8 @@ export const FERTILITY_EVENTS = [
       G.character.gender === 'female' &&
       G.partner &&
       G.age >= 35 && G.age <= 42 &&
-      G.flags.includes('trying_for_child'),
+      G.flags.includes('trying_for_child') &&
+      G.yearsSince('bereavement') >= 2,
     text: 'The second time, you know what the signs mean. You do not tell anyone you were pregnant again. That means you cannot tell anyone you have lost it again. The silence is its own kind of grief — private and unwitnessed and somehow worse for that.',
     choices: [
       {

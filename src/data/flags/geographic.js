@@ -1748,4 +1748,116 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by hon_banana_plantation. Year texture block.',
   },
 
+  // ─── ERA GAPS ─────────────────────────────────────────────────────────────────
+
+  bengal_famine_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the 1943 Bengal Famine — the wartime food crisis that killed 2–3 million people while censors called it "food scarcity."',
+    intent: 'year_texture',
+    notes: 'Set by eg_bengal_famine_child or eg_bengal_famine_adult. Year texture block for India/Bangladesh 1943–1950s.',
+  },
+
+  buenos_aires_neutral_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived in Buenos Aires during WWII neutrality — the specific moral experience of a country that chose not to choose while Europe burned.',
+    intent: 'none',
+    notes: 'Set by eg_buenos_aires_neutrality. Terminal flag — context is the event prose itself.',
+  },
+
+  independence_disillusionment: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Watched independence promises collide with structural adjustment and IMF conditionality in the 1970s — the generation whose expectations were formed by independence and revised by reality.',
+    intent: 'year_texture',
+    notes: 'Set by eg_independence_broken_promise. Year texture for developing world 1968–85.',
+  },
+
+  // ─── SOUTH-TO-SOUTH MIGRATION ─────────────────────────────────────────────────
+
+  bangladesh_malaysia_migrant: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Left Bangladesh for Malaysia on a broker-fee arrangement — passport held by employer, wages withheld, debt at 30% interest financing the crossing.',
+    intent: 'both',
+    notes: 'Set by ss_bangladesh_malaysia_recruit. Full arc in events_south_south.js.',
+  },
+
+  zim_south_africa_migrant: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Crossed into South Africa from Zimbabwe after 2000 — a qualified professional doing domestic or casual work in Johannesburg because the rand is real money.',
+    intent: 'both',
+    notes: 'Set by ss_zim_sa_arrival. Arc includes xenophobia 2008 and late echo.',
+  },
+
+  ghana_libya_migrant: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Worked construction in Gaddafi\'s Libya — the Gulf-style labour destination for West Africans — before the 2011 uprising made getting home the only project.',
+    intent: 'both',
+    notes: 'Set by ss_ghana_libya. Events include ss_ghana_libya_2011 (evacuation).',
+  },
+
+  gulag_survivor: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Sentenced under Article 58 to the corrective labour camps — the Gulag as economic institution, extracting labour from anyone the Soviet state wished to classify as enemy.',
+    intent: 'both',
+    notes: 'Set by ss_gulag_arrest. Arc: arrest, Stalin death/amnesty release, 101-km rule, late silence.',
+  },
+
+  post_gulag: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Released from the Gulag after Stalin\'s death — free but prohibited from major cities, without transport, money, or documents, in a country that had no category for the formerly imprisoned.',
+    intent: 'year_texture',
+    notes: 'Set by ss_gulag_release. Gates late echo event ss_gulag_late_echo.',
+  },
+
+  pass_law_survivor: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Arrested under South Africa\'s pass laws — imprisoned for being in the wrong district without the right endorsement in the pass book every Black South African over sixteen was required to carry.',
+    intent: 'both',
+    notes: 'Set by ss_apartheid_pass_arrest. Echo event: first vote 1994.',
+  },
+
+  // ─── DRC DEPTH ────────────────────────────────────────────────────────────────
+
+  zaire_teacher_generation: {
+    weight: 'moderate',
+    category: 'geographic',
+    description: 'Taught in Zaire during the Mobutu era — the highest social status in the village, unpaid for months, writing lessons in charcoal when the chalk ran out.',
+    intent: 'none',
+    notes: 'Set by drc_zaire_teacher. Terminal — context in event prose.',
+  },
+
+  second_congo_war_urban_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived in Bukavu or eastern Congo during the Second Congo War — navigating the gap between radio accounts and a colleague\'s information about who controlled the road.',
+    intent: 'none',
+    notes: 'Set by drc_bukavu_1998. Terminal — context in event prose.',
+  },
+
+  // ─── PALESTINIAN CAMP DEPTH ───────────────────────────────────────────────────
+
+  third_generation_refugee: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Third-generation Palestinian refugee — born in a camp whose grandparents arrived in 1948, the key to a door that no longer exists kept on a hook by the entrance.',
+    intent: 'both',
+    notes: 'Set by pd_third_generation_key. Arc in events_palestine_depth.js.',
+  },
+
+  unrwa_educated: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Educated in an UNRWA school inside a refugee camp — taught that you come from somewhere else, Palestine in the textbook alongside cities you have never seen.',
+    intent: 'none',
+    notes: 'Set by pd_unrwa_school. Terminal — context in event prose.',
+  },
+
 }

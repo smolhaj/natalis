@@ -231,7 +231,13 @@ Generic events are a last resort. Specific events — ones that could only fire 
 
 ## Current State
 
-108 countries, 249 world events, 254+ event modules (~4,440+ events), 1,747 registered flags, 321 ribbons. Last major work: PR #103 (current) — MODE C sonder depth: events_sonder_2.js (40 contemplative auto-resolve events in four registers: non-Western sensory texture, body-in-time, relational drift, weight of time); buildYearTexture() expanded with memory-layer callbacks (emigrated/divorced/lost_friend/first_love/business_failed timestamps), body-in-time age blocks (33–43, 43–57, 57+), sonder glimpse pools expanded with non-Western options; archetype era pools deepened (subsaharan/developing_urban/post_soviet each +2–3 entries per era); universal phase fallback pools expanded. PR #102: MODE A/B/C: soundtrack layer, 2010s texture arc, legacy docs. Plus 15+ undocumented event modules now documented (events_sonder.js 299 events, events_aid_worker.js 13 events, events_cults.js 10 events, events_sex_work.js 10 events, events_bonded_labor.js 9 events, events_fiji.js 8 events, events_new_zealand.js 9 events, events_nomadic.js 8 events, events_nigeria.js 8 events, events_bolivia.js 9 events, events_water_infra.js 6 events, events_indonesia_depth.js 6 events, events_turkey.js 5 events, events_fgm.js 5 events, events_bedouin.js 5 events). 1744 covered flags, 0 orphaned. Previous PRs: PR #95 MODE A: Jamaica + Trinidad (events_caribbean.js), Guinea (events_guinea.js), Mongolia (events_mongolia.js); PR #96 MODE A: Eritrea (events_eritrea.js); MODE B: political leaning consequence arc (events_political_arc.js); PR #97–101 MODE A/B/C: Egypt depth, India Partition, Fiji, bonded labor, sex work, aid worker, legacy year texture, Mali arc, Ivory Coast arc, Cameroon arc, Senegal depth, local significance arc, sonder polish. Run `npm run check-flags` to audit flag coverage.
+109 countries, 255 world events, 285+ event modules (~5,960+ events), 2075 registered flags, 321 ribbons. **0 orphaned flags.** Run `npm run check-flags` to verify.
+
+**Codebase refactor (PR #105)**: Events reorganized into subdirectories under `src/data/events/`: `geographic/` (country-specific), `thematic/` (cross-cutting arcs), `lifecycle/` (phase-specific), `sonder/` (contemplative layer), `specific_lives/` (extreme specificity), `followthrough/` (all followthroughs consolidated). `gameEngine.js` split into 5 focused modules. `flags.js` split into 6 category files.
+
+**PR #104**: `events_specific_lives.js` — 221 micro-specific events targeting one-of-a-kind life circumstances (Dalit water pump, 1943 Leningrad ration card, maquiladora night shift, Stasi file retrieval, etc.).
+
+**PRs #107–109**: MODE A/B/C depth sprint — 12 new sonder modules (events_sonder_3.js through events_sonder_12.js, ~360 contemplative events); new geographic depth: Norway, Sweden, Denmark, Czech Republic, Ghana, Ecuador, El Salvador, Guatemala, Honduras, Nicaragua, Dominican Republic, Uzbekistan, Kazakhstan, Kyrgyzstan, Tajikistan, Turkmenistan, Greece depth, Ireland depth, Scandinavia depth; followthrough_30.js through followthrough_48.js (19 files, 236 events); events_followthrough_all.js (consolidated 317 followthrough events from the 29 original files).
 
 - Full event system descriptions and coverage history: `docs/codebase-state.md`
 - Full BUILD-by-BUILD roadmap and MICRO-EVENT DESIGN PRINCIPLE: `docs/roadmap.md`
@@ -243,267 +249,15 @@ Generic events are a last resort. Specific events — ones that could only fire 
 ```
 src/
   data/
-    countries.js              — 103 countries with full demographic data (covers all major regions; recent adds: Armenia, Azerbaijan, Australia,
-                                Belarus, Canada, Czech Republic, Ecuador, Estonia, Georgia, Germany, Greece, Hungary, Italy, Japan,
-                                Laos, Latvia, Lithuania, Malaysia, Namibia, Netherlands, New Zealand, North Korea, Norway, Palestine,
-                                Paraguay, Peru, Philippines, Poland, Portugal, Romania, Russia, Rwanda, Saudi Arabia, Serbia,
-                                Singapore, South Korea, Spain, Sweden, Taiwan, UAE, Ukraine, Uruguay and more across PRs #69–92)
+    countries.js              — 109 countries with full demographic data
     places.js                 — 250+ named places across all countries (scale, region, type, population)
     headlines.js              — ~130 major historical headlines for life log injection
-    events.js                 — root event file, imports 225+ modules, exports EVENTS array (~4,000+ total character events)
-    events_culture.js         — regime/ethnicity/education/LGBTQ events
-    events_gender.js          — gender-specific events
-    events_historical.js      — historical period events
-    events_religion.js        — religion-specific events
-    events_technology.js      — technology timeline (era-gated)
-    events_immigration.js     — emigration, residency, integration events
-    events_career_regime.js   — career × regime intersection events
-    events_conflict_childhood.js — conflict zone childhood events
-    events_lgbtq.js           — LGBTQ identity and rights events
-    events_mental_health.js   — mental health arc events
-    events_grief.js           — grief and loss events
-    events_grief_mental.js    — grief-mental health intersection events
-    events_religion_arc.js    — faith arc events
-    events_late_life.js       — late-life events (retirement, partner decline, health decline, legacy)
-    events_children_arc.js    — children arc events
-    events_fame_karma.js      — fame/karma/hobby/friendship events
-    events_texture.js         — rural/pre-1960/career texture events
-    events_society.js         — women's rights, healthcare, language suppression/identity
-    events_romance_arc.js     — post-marriage arc events
-    events_consequence.js     — downstream consequence events (illiteracy, addiction arc, STI arc)
-    events_friends.js         — friend lifecycle events
-    events_business.js        — business arc events
-    events_siblings.js        — sibling events
-    events_education_arc.js   — university depth events
-    events_adolescence.js     — adolescence identity events
-    events_fertility.js       — fertility depth events
-    events_career_wealth.js   — career late-arc, wealth gap, rural-to-urban events
-    events_gulf_east.js       — wealthy_gulf and wealthy_east specific events
-    events_followthrough.js   — 25 flag follow-through events
-    events_followthrough_2.js — 18 additional flag follow-through events
-    events_followthrough_3.js — 8 follow-through events: recovery one year on, faith settled, bereaved holiday, child-out years, integrity tested, meaning tested, close friend decade — cross-cutting quality-of-life follow-throughs
-    events_relationship_quality.js — 13 relationship quality threshold events
-    events_desires.js         — formative wound events + decade reflections (30/40/50/60)
-    events_small_life.js      — named friendships, first crushes, formative teachers, first home
-    events_activity_payoffs.js — downstream consequences for activity flags
-    events_places.js          — place-based events (moves, arrival texture, migration)
-    events_infrastructure.js  — infrastructure events (power cuts, floods, traffic, water shortage)
-    events_dying_city.js      — Rust Belt + post-Soviet urban decline arc
-    events_cities.js          — city-specific texture (Lagos, Mumbai, Cairo, Mexico City, Moscow)
-    events_cities_extended.js — extended city texture across more cities
-    events_rural_texture.js   — rural/suburban texture (water walk, electrification, brain drain)
-    events_post_soviet.js     — 15 post-Soviet arc events (communist childhood, 1990s collapse, oligarch split, emigration wave)
-    events_vietnam.js         — 10 Vietnam arc events (Saigon fall, re-education, boat people, Doi Moi, Viet Kieu)
-    events_wealth_system.js   — 17 wealth mechanics events (banking, ROSCA, hyperinflation, poverty trap, patron-client)
-    events_money.js           — 7 money-across-a-life events (first paycheck, inheritance, elder scam, hyperinflation personal, gift, counting days)
-    events_illness.js         — 14 chronic illness events (diabetes, heart disease, cancer, COPD, back pain, HIV/AIDS, vision/hearing loss, depression, disability)
-    events_parent_care.js     — 8-event parent care arc (first sign → final decline + killParent)
-    events_climate.js         — 18 climate arc events (2025–2100): heat, drought, flooding, displacement, Pacific extinction, late-life witness
-    events_indigenous.js      — 21 Indigenous peoples events: Aboriginal Australian, Native American, First Nations, Māori arcs
-    events_automation.js      — 12 automation/AI arc events (2025–2050): career-specific disruption + UBI debate
-    events_country_arcs.js    — 22 country arc events (BUILD 10): Nigeria (coup radio, first-gen degree, Biafra colleague), India, Egypt, Romania, Turkey, Kenya, Ghana, Ethiopia, South Korea deep texture
-    events_country_arcs_2.js  — 36 country arc events (BUILD 10 cont.): China Mao era (Great Leap, struggle sessions, hukou, reform euphoria, leftover woman, Hui Muslim), USA (Great Migration, Civil Rights, Vietnam, McCarthy, opioids, Rust Belt), Japan (hibakusha, Anpo, Minamata, salaryman, bubble)
-    events_country_arcs_3.js  — 13 country arc events: Iran (SAVAK/revolution/purge/war), South Africa (township/TRC), France WWII (occupation/Vel d'Hiv/liberation), Nigeria/Biafra
-    events_arts.js            — 9 arts-under-pressure events: samizdat arcs, jazz/bebop refusal, Nollywood entry + decade, censored artist stay-or-leave, unshown work, artistic integrity echo
-    events_asia_arcs.js       — 22 events: Cambodia (Khmer Rouge evacuation, Year Zero, denunciation, Vietnamese liberation, survivor silence, UNTAC election, ECCC tribunal, missing generation), Bangladesh (Liberation War, flood annual, garment worker, Rana Plaza, cyclone, microfinance, remittance), Pakistan (Muhajir arrival, East Wing war, Zia Islamisation, blasphemy law)
-    events_crosscutting.js    — 22 cross-cutting arc events: domestic worker (7 events, developing_urban archetype, global care chain); city under bombardment (8 events, conflict_zone/developing_unstable, survival + memory); refugee camp childhood (7 events)
-    events_decolonisation.js  — independence generation events: independence morning (country-specific word — uhuru/freedom/indépendance/istiqlal), first coup shock, brain drain, structural adjustment, mobile leapfrog; fires for subsaharan/developing archetypes 1956–1975
-    events_drc.js             — 10 DR Congo arc events: Lumumba independence speech 1960, assassination news, Mobutu Authenticité era, Zaire name change, first Congo War 1996, coltan mine labour, DRC civil war survival, post-war Kinshasa, late reckoning
-    events_early_life.js      — 20 early childhood + young adult events (BUILD 6): early_childhood (ages 0–5) from child's limited perspective; young_adult 18–25 sub-phase texture (first flat, first serious job, ideology formation, the friend group, leaving home)
-    events_internet_era.js    — early internet era texture events: PC bang Seoul, cybercafé Lagos, AOL dial-up Iowa, early web access across archetypes (1993–2005)
-    events_labor.js           — labor and union arc events (BUILD 20): union card, picket line, collective action, automation threat, strike, solidarity, management crossing the line, post-union generation; fires across archetypes gated on career type and era
-    events_latin_america.js   — 60+ events: Chile (DINA silence, exile decision, interrogation, plebiscite 1988, Rettig reckoning, 2019 Estallido); Argentina (disappeared colleague, proceso complicity, Falklands family, Nunca Más, CONADEP testimony, Nietos de Plaza de Mayo, 1978 Mundial contradiction); Brazil (AI-5, Tropicália, economic miracle paradox, Diretas Já, evangelical rise, 2014 heartbreak); Colombia (cartel adjacency, cartel offer, kidnap culture, displacement, city transformation, FARC peace); Mexico (PRI machine, 1985 earthquake, 1982 devaluation, Zapatista 1994, maquiladora, Tlatelolco 1968, dirty war, PRI falls, narco era, femicidio, Ayotzinapa 2014, 2017 earthquake); Operation Condor cross-country (exile warned, exile network, return possible)
-    events_zimbabwe.js        — 10 Zimbabwe arc events: white farming family land seizure + Black Zimbabwean land reform perspective, hyperinflation (100 trillion dollar bill), exodus south to South Africa, Mugabe early era, Gukurahundi 1982–87 (20k Ndebele killed), Murambatsvina 2005 urban clearance, Mugabe fall 2017, Gukurahundi late reckoning, hyperinflation memory
-    events_followthrough_4.js — 10 orphaned flag follow-throughs: caste ceiling, scandal resurfaces, betrayal trust, harvest pantry, civil war echo, ethnic identity at work, dissident reader cost, refugee anniversary, political active cost, dissident writer risk
-    events_followthrough_5.js — 12 events: 8 BUILD 40/orphan follow-throughs + 4 famine arc events (BUILD 49)
-    events_informal.js        — 18 informal economy events (BUILD 35): hawker/moto-taxi/market-stall/day-labor/subsistence tracks, mobile money, savings circle, formalization flip
-    events_neighborhoods.js   — 16 neighborhood-tier events (BUILD 32): standpipe, settlement fire, slumlord, gang block, moving-up guilt, elite isolation, gentrification return
-    events_postrelease.js     — 12 post-release events (BUILD 48): release morning, job checkbox, housing bar, parole, recidivism trap, USA rights lost, spent conviction, decade clean, political prisoner dignity
-    events_mentor.js          — 10 mentor arc events (BUILD 47): mentor deepens, favor, estrangement, death, echo; becoming mentor, protégé surpasses/betrayal, both arcs, teacher echo
-    events_adolescence_2.js   — 22 adolescence depth events: first job, curfew break, authority clash, exam results, scholarship test, dropout temptation, peer betrayal, rumour, peer death, diaspora identity, family honour, faith doubt at home, peer pressure, first smoke, shoplifting, social media pressure, body image, leaving question, privilege mirror, school fight, community service
-    events_childhood_texture.js — 19 childhood texture events: universal small-life for ages 6–17
-    events_family_silence.js  — 20 generational memory events: "what your parents didn't say" gated on trauma flags
-    events_dying_arc.js       — 6 final-years events: age 75+, the consciousness of approaching death
-    events_solo_life.js       — 8 solo-life events: unpartnered texture across all phases
-    events_coherence.js       — 11 coherence follow-throughs: orphaned flag callbacks
-    events_poverty.js         — 43 financial hardship events: eviction, repossession, homelessness, welfare
-    events_pregnancy.js       — 13 pregnancy arc events: first-trimester, birth (archetype/GDP/year-branched), postpartum
-    events_menopause.js       — 5 menopause arc events: female 45–58, culturally-branched
-    events_career_arcs.js     — 19 deep career arc events: athlete, academic, chef/hospitality
-    events_social_media.js    — 9 social media arc events: country-specific platforms, excitement→damage arc
-    events_scandinavia.js     — 8 Nordic events: welfare state, Norway oil, Finland Winter War, Janteloven
-    events_palestine.js       — 14 Palestine character events: Nakba memory, checkpoint, demolition, intifadas, Oslo hope/collapse, education resistance; +6 added: refugee camp generations, olive harvest, administrative detention, water rationing, Gaza bombardment, late return question
-    events_gang.js            — 10 gang/organised crime arc events: post-Soviet bratva, Lagos Area Boys, cartel
-    events_social_capital.js  — 8 social capital events: charisma/looks as era-dependent resources
-    events_world_response.js  — 6 world event response events: character choices in year of major world events
-    events_emigrant_integration.js — 7 emigrant integration arc events: staged by yearsAbroad (yr 1 through yr 12+)
-    events_intimacy.js        — 12 sex and intimacy arc events: sexual revolution arc, long marriage desire shift, affair temptation/not-taken, late love arriving, sexuality without vocabulary, body in late life, first love ending
-    events_school.js          — 11 school institution events: resource-poor classroom, teacher unpaid + echo, shared textbook, scholarship arrival + lunch table + payoff, war-zone school choice, national exam + echo
-    events_followthrough_6.js — 11 follow-throughs for BUILD 45/46/38/23 orphaned flags: first love reflection, liberation generation late, long marriage late, intimacy without vocabulary echo, scholarship declined wonder, war school echo, raised-by-extended-family loyalty, understood-the-cost, witness-to-exodus
-    events_children_abroad.js — 7 events: parent departs, grandmother texture, birthday call, package with wrong sizes, reunion stranger, cost accounting, midlife cycle repeating
-    events_stayed.js          — 5 events: watching departures, country empties, sibling visits, still connected, late reckoning on staying
-    events_sport.js           — 11 events: local match, cricket school, watching with parent, scout arrives, window closes, cricket empire, World Cup year, adult league, last game, teaching the game, cricket legacy
-    events_disasters.js       — 8 events: Bangladesh flood season (cooldown), bad flood year, flood from distance, earthquake preparedness, earthquake experience, typhoon season (cooldown), typhoon bad year, living with the knowledge
-    events_followthrough_7.js — 11 follow-throughs for sport + disaster + world event flags: sport path closed, stopped playing, World Cup teaching, flood echo, earthquake late, storm dignity, bhola×liberation, Tangshan memory, cricket generation
-    events_followthrough_8.js — 12 named-callback and desire/growth-tension events: crossed-line midlife, solidarity late, knows_failure reframe, childhood object midlife, compromised late, art-drawer choice; desire forks for prove_worth/be_seen/belong/connection/safety/freedom
-    events_activity_choice.js — 16 activity practice counter → story events: writing/music/running/art/reading/cooking/meditation arcs, creative identity synthesis
-    events_project_arc.js     — 7 project milestone events: middle doubt, someone notices, the stall, clarity moment, late reflection, the race, writing shown
-    events_industrial.js      — 9 industrial disaster events (BUILD 21): Chernobyl liquidator arc, Bhopal settlement follow-through, pollution as class (river/factory/Niger Delta)
-    events_followthrough_9.js — 17 follow-through events (PRs #69–72): genocide_survivor legacy, miscarriage arcs (3-event chain), torture_survived for political prisoners, traumatized_by_violence echo
-    events_followthrough_10.js — 13 follow-through events: OFW flag orphans (ofw_gulf passport-held, ofw_hongkong, ofw_italy, ofw_runaway, ofw_broker_debt), Algeria intellectual_target callback, decennie_noire_memory
-    events_followthrough_11.js — 37 orphaned flag follow-throughs: institutional complicity, debt recovery, earthquake anniversary, Kurd state pressure, uyghur suppression echo, veteran solidarity, medical debt, kafala, military reunion, and 28 more
-    events_followthrough_12.js — 8 desire-unfulfillment events: what happens in late life when prove_worth/belong/be_seen/safety/connection/leave_mark/freedom/redemption go unsatisfied
-    events_clergy.js          — 11 events (BUILD 17): Catholic priest rural Ireland 1940–80 (ordination, parish power, laundries knowledge, collapse); Buddhist monk Cambodia pre/post-Khmer Rouge; imam under Suharto; yeshiva student 1960s Jerusalem
-    events_soldier_arc.js     — 12 events (BUILD 9): deployment orders, first week, the friend, the order, return home, not sleeping, the question, veteran recognition, anniversary, physical cost, telling children, late reckoning; DEPLOYMENT_CONTEXT helper
-    events_documents.js       — 8 events (BUILD 25): Rwanda 1994 ID checkpoint (Hutu/Tutsi branch), Soviet propiska, Nansen passport, statelessness, colonial census creating ethnic categories
-    events_central_asia.js    — 10 events (BUILD 13): Kazakh nomad collectivisation 1928–36 (livestock list, the animal that disappears from the register), Uzbek cotton monoculture/Aral Sea, Kyrgyz 1991 collapse, Kazakhstan oil boom
-    events_indonesia.js       — 10 events: May 1998 ethnic Chinese riots (Jakarta, the choice to flee/shelter/stay), Reformasi arc, 35-year cultural expression ban lifting, Chinese Indonesian identity decade follow-through
-    events_kurdish.js         — 12 events (BUILD 7): Turkish language ban in schools (pre-1991), PKK question, village evacuation 1990s, Syrian citizenship stripped 1962, Anfal campaign 1988, Rojava 2012+; world event: anfal_campaign_1988
-    events_debt.js            — 14 events: consumer credit spiral (wealthy_west), microfinance trap (Bangladesh/India), IMF structural adjustment as personal experience, medical debt (USA), decade-clean follow-through
-    events_adoptee.js         — 5 events (BUILD 36): transracial identity, DNA test 2010+, search decision, origin trip as adult, the thing that doesn't resolve
-    events_senegal.js         — 5 events (BUILD 14 West Africa): Grand Magal pilgrimage, marabout authority, dahira networks, Barca Walla Barsakh migration
-    events_morocco.js         — 8 events (BUILD 14): Years of Lead, Amazigh recognition 2011, Equity and Reconciliation Commission, Strait of Gibraltar crossing
-    events_sri_lanka.js       — 8 events (BUILD 26): Black July 1983 (Tamil + Sinhalese perspectives), civil war, LTTE, Tamil diaspora 2009, 2022 economic collapse
-    events_haiti.js           — 10 events (BUILD 11): Tonton Macoutes, debt of independence, 2010 earthquake, diaspora obligation
-    events_rohingya.js        — 8 events (BUILD 7): 1982 statelessness law, pre-2017 restrictions, August 2017 clearance operations, Cox's Bazar camp life 5 years in
-    events_uyghur.js          — 3 events (BUILD 7): Ramadan restrictions, re-education camp "vocational training", diaspora silence
-    events_tanzania.js        — 7 events (BUILD 26): Ujamaa villagisation, Arusha Declaration, Tanzania-Uganda War, Swahili education, structural adjustment, Nyerere death 1999
-    events_multilingual.js    — 7 events (BUILD 41): parent-child language gap, language death, code-switch identity, lingua franca advantage, minority language as political act, interpreter's impossible word
-    events_ofw.js             — 15 events (BUILD 38 extension): Philippines OFW worker perspective — decision, POEA documentation, departure, destination-specific texture (Gulf kafala/HK domestic/Italy elder care), complications, return, late reckoning
-    events_algeria.js         — 13 events (BUILD 43): Décennie Noire 1991–2002, historical ambiguity preserved, intellectual targeting, journalist survival, 20-years-later memory
-    events_lebanon.js         — 14 events: civil war stairwell community (1975–90), sectarian geography, militia checkpoints, Hariri reconstruction 1990s, 2019 bank freeze, economic collapse, Beirut port explosion 2020
-    events_puerto_rico.js     — 2 events: Hurricane Maria 2017 (death toll gap 64 vs. 2,975), colonial status (American citizen who cannot vote for president)
-    events_central_america.js — 14 events: El Salvador/Guatemala/Honduras/Nicaragua civil wars, liberation theology, the disappeared, truth commissions, MS-13 gangs, Hurricane Mitch 1998, migration north
-    events_egypt.js           — 7 events: Nasser dream/Suez 1956, Naksa defeat 1967, Sadat infitah, Mubarak emergency law, bread riots 1977, Tahrir 2011, post-Tahrir disillusionment 2012–16
-    events_ethiopia.js        — 7 events: Red Terror 1977–78, 1984 famine, Derg fall 1991, Orthodox fasting calendar, coffee ceremony, Addis Ababa growth 2010s, red terror memory echo
-    events_india.js           — 7 events: Emergency 1975–77, Sikh massacre 1984, liberalisation 1991, Babri Masjid 1992, Gujarat riots 2002, call centre generation, demonetisation 2016
-    events_ireland_turkey.js  — 11 events: Ireland (emigration wave 1950–1990, The Troubles texture, church relationship, language loss); Turkey (Kurdish identity suppressed, Atatürk modernisation, lèse-majesté café politics, diaspora return)
-    events_kenya.js           — 7 events: Harambee communal self-help, Moi single-party rule, multiparty 1992+, ethnic patronage, 2007–08 election violence, M-Pesa mobile money, Nairobi migration
-    events_korea.js           — 14 events: hagwon education childhood, suneung exam, military conscription + return, Gwangju uprising 1980, chaebol work culture, Hallyu cultural pride, compressed modernisation generation; depth adds: post-war poverty childhood 1950–65, Park Chung-hee development bargain 2-choice, DMZ separated family
-    events_pakistan.js        — 9 events: Muhajir displacement from Partition, 1971 Bangladesh war, Karachi ethnic violence, Zia Islamisation, nuclear tests 1998, Kargil war texture
-    events_southeast_europe.js — 9 events: Yugoslav identity collapse, ethnic nationalism, Bosnian War 1992–95 (Srebrenica genocide), Kosovo War 1998–99, refugee flows, war crimes tribunal, rebuilding
-    events_west_africa.js     — 16 events: Nkrumah Ghana independence, Senghor Senegal, Biafra famine 1967–70, Liberian civil war, Sierra Leone RUF/diamonds, Côte d'Ivoire instability, decolonisation aftermath; Nigeria (oil boom 1973–81, SAP 1986, Saro-Wiwa 1995, 419 scam culture, EndSARS 2020); Ghana depth (Nkrumah first-gen education, 1966 coup disillusionment, brain drain witness 2-choice)
-    events_uganda.js          — 7 events: Amin dictatorship 1971–79 (300K dead), liberation war, Obote return, Museveni NRM era, HIV/AIDS 1980s–90s, child soldiers (LRA), refugee camps
-    events_somalia.js         — 7 events: Siad Barre socialism, civil war collapse 1991, "Black Hawk Down" 1993, Al-Shabaab 2007+, drought/famine cycle, piracy era, diaspora identity
-    events_thailand.js        — 6 events: Thammasat massacre 1973, democratic transition, Chakri dynasty centrality, coups (including 2014), lèse-majesté law, Red/Yellow political conflict
-    events_myanmar.js         — 7 events: Ne Win socialist isolation 1962–88, 8888 Uprising, Saffron Revolution 2007, Cyclone Nargis 2008, quasi-civilian 2011–21, February 2021 coup
-    events_nepal.js           — 6 events: Maoist People's War 1996–2006, King Gyanendra coup 2005, monarchy ends 2008, April 2015 earthquake, Gulf labor migration + kafala system
-    events_jordan.js          — 6 events: Palestinian family displacement (Nakba/1967), Black September 1970, King Hussein 47-year reign, Wadi Araba peace 1994, Syrian refugees 2011+, wasta system
-    events_angola.js          — 6 events: independence civil war (MPLA vs UNITA), 27-year war (500K dead), landmines, peace 2002, oil boom, Dos Santos authoritarian rule
-    events_libya.js           — 6 events: Gaddafi Jamahiriya 1975–90, Lockerbie/sanctions, rehabilitation 2003–11, February 2011 uprising, NATO intervention, post-Gaddafi fragmentation
-    events_afghanistan.js     — 6 events: Soviet occupation 1978, civil war, Taliban rule 1996–2001, 2001 hope, US withdrawal, Taliban return 2021
-    events_sudan.js           — 6 events: Nimeiry coup 1969, Darfur genocide 2003–08, South Sudan independence 2011, al-Bashir dictatorship, regional proxy wars, humanitarian crisis
-    events_tunisia.js         — 6 events: Ben Ali dictatorship 1987–2011, Jasmine Revolution 2011, constitutional moment, economic hardship, Islamic/secular tensions, post-2011 stability
-    events_zambia.js          — 6 events: Kenneth Kaunda independence + UNIP, copper economy volatility, Rhodesian Bush War, structural adjustment 1990s, multiparty politics, rural/urban divide
-    events_mozambique.js      — 6 events: FRELIMO independence, Machel era, RENAMO civil war (South African destabilisation), Machel crash 1986, Rome Accords 1992, Cyclone Eline 2000
-    events_yemen.js           — 6 events: Yemen War 1962–70, Saudi-Houthi conflict 2004+, 2015 Saudi-UAE intervention, humanitarian collapse (cholera/famine), refugee flows, Aden fragmentation
-    events_china.js           — 26 events: Cultural Revolution sent-down youth, gaokao, one-child policy, Tiananmen 1989, rural-urban migration, private business, social credit, zero-COVID, lying flat; +10: Great Leap famine, struggle sessions (target/witness), hukou barrier, reform euphoria, 996 burnout, leftover woman pressure, Hui Muslim identity, Xi-era tightening, sent-down intellectual echo
-    events_korea.js (see above)
-    events_gifted.js          — gifted arc (35+ events): manifestation (5 types), recognition + structural ceiling, door opens/closes/underground, young adult divergence (civil rights channel, community mentor, first public moment), extraordinary talent peaks, midlife reckoning, late-life accounting
-    events_gifted_2.js        — gifted arc depth: Gould arc (gift never named, parallel unlived life, cotton field accounting), generational transmission, prodigy cost, exploitation (contract trap, stolen credit), diaspora unlock, late-bloomer return, full realization path
-    events_gifted_3.js        — gifted arc extension: parental dismissal, public prodigy performance, academic olympiad path, gender × gift intersection, gift + disability intersection, elite recognition (world stage, major prize, after-peak reflection)
-    events_disability.js      — 18 disability arc events: birth disability (diagnosis, school, adolescence, employment barriers), Deaf arc (cochlear implant choice, Deaf community, hearing world navigation), acquired disability (event, rehabilitation, grief, new normal), progressive worsening, cross-cutting (inaccessibility, cure offered, tech equaliser, late-life disability)
-    events_addiction.js       — 14 addiction arc events: first use, spiral, rock bottom (overdose/death possible), recovery attempt, relapse, long-term sobriety, family members of addicts
-    events_dementia.js        — 9 dementia arc events: personal dementia (first signs, diagnosis, advance planning, clarity windows); caregiver arc (parent's signs, diagnosis, care decisions, parent doesn't recognize you, final stage, grief after)
-    events_divorce.js         — 11 divorce arc events: long ending, legal process, children/coparenting, first year after, dating again, long integration (5+ years), adult children reconciliation
-    events_celebrity.js       — 7 celebrity arc events: public self, parasocial relationships, media scrutiny, cancellation risk, exit strategies, reclamation of private life at midlife
-    events_child_soldier.js   — 9 child soldier arc events: abduction, indoctrination, the order (kill/refuse choice), liberation, DDR reintegration, civilian difficulty, moral injury reckoning, late-life closure
-    events_teacher_arc.js     — 9 teacher life arc events: calling moment, classroom reality, difficult student connections, burnout, mentoring next generation, systemic barriers, legacy, retirement
-    events_wwi_depression.js  — 10 WWI/Depression arc events: trench experience 1916–18, coming home changed, economic collapse 1929, Dust Bowl 1930s, Hooverville, union organising, breadline survival, veteran arc, wife's sacrifice, late-life reckoning
-    events_wound_coping.js    — 8 wound coping events: avoidance, performance/perfectionism, care-taking, intellectualizing, spiritualizing, community/connection, professional help — tested at adolescence (16) and young adult (25)
-    events_condition_arc.js   — 8 chronic condition lifecycle events: 3-year transition to chronic, unmanaged consequences, management milestone, compound body (2+ conditions), decade-managed milestone, HIV undetectable, depression recalibration, back pain identity
-    events_early_childhood.js — 13 early childhood depth events (ages 0–5): grandparent keeper, first small loss, market day, religious sound as home, water walk, parent rhythm, poverty known early, war texture
-    events_life_skeleton.js   — 4 guaranteed narrative beats at ages 15/30/40/55 (desire-gated): first test, midlife reckoning, legacy consideration, late-life accountability tied to core wound
-    events_phase_entries.js   — 3 life phase transition events: adolescence arrival (13–15), young adulthood (20–22), midlife (38–42) — thematic reflections on what each phase asks
-    events_partner_wants.js   — 8 relationship desire tension events: wanting children, unwilling to commit, wanting escape, unfulfilled intimacy, conflict, compromise at midlife
-    events_relationship_crossover.js — 8 partnership arc events: first meeting, intimacy deepening, conflict emergence, commitment test (stay/leave), repair, long partnership texture (5–10yr), marriage milestone (25yr+), post-divorce/widowhood path
-    events_followthrough_13.js — 10 follow-through events (Mode C): institutional_power reckoning, clergy_adapted late witness, yeshiva secular bridge, amazigh recognition post-2011, multilingual inheritance, minority language grandchild, Kurdish Europe return question, Moroccan diaspora arithmetic, Mouride diaspora dahira, debt-zero milestone
-    events_syria.js           — 8 events for Arab Syrian arc (excludes Kurdish Syria): Ba'ath childhood, Hama 1982, Damascus Spring 2000–01 (2 choices), March 2011 uprising (3 choices), checkpoint daily life 2012–19, displacement decision (leave/stay), Europe arrival, late-life reckoning for those who stayed
-    events_child_death_arc.js — 11 events for the child death arc: infant death trigger (archetype×era probability), first weeks (objects/room), telling new people, room decision (keep/change), try again (3-choice), surviving siblings, anniversary, cohort flash (seeing them in others), marriage reflection, late-life reckoning "who they would have been", the unsaid thing
-    events_israel.js          — 13 events for Israeli arc (Jewish and Arab citizen): founding memory, Mizrahi ma'abara (1949-72), IDF mandatory service (combat/support), Yom Kippur War 1973, Soviet Jewish aliyah 1990s, Ethiopian aliyah (Operations Moses/Solomon), Rabin assassination 1995, second intifada civilian experience 2001-05, settlement choice, Arab citizen divided identity, Oct 7 2023, post-Oslo despair
-    events_armenia_azerbaijan.js — 15 events: Armenian Genocide memory, Karabakh wars (both perspectives), Black January 1990 Baku, dark winter blockade 1991–95, 2020 Nagorno-Karabakh war
-    events_australia.js       — 8 events: White Australia Policy, Vietnam conscription lottery, The Dismissal 1975, Port Arthur 1996, Tampa 2001, mining boom, SSM postal survey 2017
-    events_baltic.js          — 6 events: Soviet deportations, Russification, song festival resistance, January 1991 independence, Russian minority, EU emigration
-    events_bangladesh.js      — 9 events: Bhola cyclone 1970, Liberation War 1971, 1974 famine, Mujib assassination 1975, garment economy + Rana Plaza 2013, Grameen Bank, 2024 student uprising
-    events_belarus.js         — 8 events: WWII partisan memory, Chernobyl 1986, independence 1991, Lukashenko consolidation 1994, 2020 election fraud + crackdown
-    events_brazil.js          — 9 events: favela ecosystem, military dictatorship 1964–85 (AI-5, economic miracle paradox), abertura opening, Diretas Já 1984, racial democracy myth, Amazon politics
-    events_canada.js          — 8 events: October Crisis 1970, Charter 1982, Meech Lake failure, Quebec Referendum 1995, TRC 2015, Chinese head tax, housing affordability crisis
-    events_central_europe.js  — 9 events: Hungary 1956 uprising + Soviet re-occupation + Kádár goulash communism + 1989 border opening; Czech Republic normalization + Charter 77 + Velvet Revolution + lustration
-    events_colombia.js        — 9 events: El Bogotazo 1948, La Violencia (200k dead), FARC/ELN guerrillas, Medellín cartel/Escobar, paramilitaries/AUC, 7M internally displaced, estratificación class, 2016 peace accord
-    events_cuba.js            — 8 events: revolutionary-generation childhood, Bay of Pigs 1961, Mariel boatlift 1980, Santería under atheist state, libreta ration-book, Raúl reforms 2008–17, Obama thaw, July 2021 protests
-    events_desire_resolution.js — 8 events: positive fulfillment paths when core wounds/desires are meaningfully pursued and met across all 8 desire types
-    events_followthrough_14.js — 13 follow-through events: USA late reckoning (Jim Crow generation, Vietnam generation), Australia political continuities
-    events_followthrough_15.js — 14 follow-through events: Japan salaryman retirement, Latin America long-arc (Argentine, Colombian, Peruvian) late echoes
-    events_followthrough_16.js — 5 follow-through events: Russia late-life callbacks (Soviet-Afghan War echoes, Chechen generation, Ukraine exile, Bolotnaya protest witness)
-    events_followthrough_17.js — 3 follow-through events: South Africa Soweto generation late witness, Ukraine Euromaidan generation legacy
-    events_followthrough_18.js — 8 follow-through events: Romania Securitate files opening/informer reckoning, Vietnam/Korea late registration
-    events_followthrough_19.js — 6 follow-through events: Central Europe: Hungarian 1956 fiftieth anniversary (2006 riot recontextualization), Czech normalization late accounting
-    events_followthrough_20.js — 4 follow-through events: Baltic states deportation family memory late reckoning, official memorialization, naming as acknowledgment
-    events_followthrough_21.js — 3 follow-through events: Georgia April 9 memorial + 2024 protest convergence, Abkhazia displacement legacy, avenue as accumulated history
-    events_followthrough_22.js — 6 follow-through events: Armenia/Azerbaijan: Karabakh veteran 2020 war echo, dark winter power-cut PTSD trigger
-    events_georgia.js         — 10 events: April 9 1989 Tbilisi massacre, independence/civil war, Abkhazia conflict, Rose Revolution 2003, 2008 Russia-Georgia war, 1990s collapse, supra culture, Saakashvili reforms, Orthodox identity, EU dream
-    events_germany_france.js  — 9 events: Germany Gastarbeiter arc, DDR daily life, reunification, 2015 refugee crisis; France Algerian war, banlieue texture, Charlie Hebdo/Bataclan 2015
-    events_greece_portugal.js — 11 events: Greece Colonels' junta 1967–74, Polytechnic uprising 1973, metapolitefsi transition, debt crisis 2010–18; Portugal Estado Novo 1926–74, colonial wars, Carnation Revolution 1974, retornados, EC accession 1986
-    events_india_depth.js     — 12 events: arranged marriage meetings (the family committee), joint family invisible economy, language identity (Hindi/English/regional), dowry pressure, first-generation pressure, NRI return question; Swachh Bharat Abhiyan rural toilet transition 2014+
-    events_iran.js            — 7 events: Khatami reform era 1997–2005 (press freedom/student uprising), sanctions economy (95% rial devaluation), private/public split (rooftop parties, satellite dishes), hijab enforcement, brain drain
-    events_sick_child.js      — 9 events (BUILD 9): parent of seriously ill child arc — diagnosis (archetype-branched), hospital texture, partner under pressure (choice), ward community, career eclipse, recovery path, chronic path, late follow-through (who they became / still being needed); 3 ribbons
-    events_cambodia.js        — 8 events: Cambodia depth arc — rural Year Zero witness, family taken for re-education (killParent), post-liberation Phnom Penh return, living alongside perpetrators 1985–2003 (2-choice), second-generation silence arc (2-choice), landmine landscape (era-branched), Tuol Sleng museum visit, late-life reckoning; 8 year-texture blocks in gameEngine.js
-    events_caribbean.js       — 14 events: Jamaica (garrison childhood, Rasta worldview, 1980 election violence 800 dead, Windrush emigration decision, area don moral economy, reggae generation, late reckoning + 2 follow-throughs); Trinidad and Tobago (Carnival as institution, oil boom 1973–86, ethnic Indo/Afro politics, 1990 Muslimeen coup, steelband oil drum origin)
-    events_burkina.js         — 8 events: Burkina Faso arc — Thomas Sankara 1983 revolution (name change, women's rights, literacy), assassination 1987, Compaoré accommodation era, 2014 Uprising (Blaise ousted), 2015 gendarmerie coup attempt, Sahel jihadist crisis 2015+, coup 2022, displacement crisis
-    events_ivory_coast.js    — 7 events: Ivory Coast arc — cocoa smallholder economy (2 choices), Houphouët-Boigny death Dec 7 1993, Christmas Eve coup 1999, Abidjan urban life (2 choices), north-south Muslim identity fork, 2010 election crisis (2 choices), late reckoning; 9 year-texture blocks; 2 world events
-    events_cameroon.js       — 7 events: Cameroon arc — Bamileke identity/tontine network (2 choices), Biya 40-year rule (2 choices), Francophone/Anglophone divide (2 choices), Douala city texture, 2016 Anglophone strike to armed conflict (2 choices), Ambazonia displacement, late reckoning; 11 year-texture blocks; follow-throughs in events_followthrough_29.js
-    events_local.js          — 12 events (BUILD 30): local significance arc — cross-cutting, any archetype; first recognition, teacher/healer recognition, trusted with problems, village healer (developing rural, 2 choices), small victory (2 choices), the coach (2 choices), memory keeper, formal role (2 choices), the farewell, forgotten in time, generational transmission; 9 flags (local_hero, local_trusted, local_achievement, community_healer, local_memory_keeper, local_legacy_rooted, local_official, local_coach_legacy, local_advocate); 7 year-texture blocks
-    events_sonder.js         — 299 events (MODE C): sonder polish pass — single-fire mem-gated auto-resolve events in two categories: STRANGER GLIMPSES (awareness of other lives, lit windows, the person on the platform) and MUNDANE LIFE (ordinary fabric events: the commute, the object on the shelf, the phrase noticed). Weight 2, no choices, small stat effects.
-    events_sonder_2.js       — 40 events (MODE C, PR #103): contemplative auto-resolve events in four registers: NON-WESTERN SENSORY (generator smell, harmattan, monsoon, power cut, market at dawn, traffic rhythm, adhan, compound evening, queue patience, dust season, rains, post-Soviet winter); BODY IN TIME (sleeping differently at 34–43, noise tolerance, face-like-parent, reading glasses, the knee, recovery time, handwriting, body-as-occupation at 62+, thermostat, full inventory); RELATIONAL DRIFT (friend who emigrated, father's number not deleted, cousin who moved, work friendship, childhood follow-on-social, stopped calling, parent's voice, the almost, specific friends for specific things, old-neighbourhood reconnect); WEIGHT OF TIME (decade gone, photo from fifteen years ago, mother-dead-longer-than-alive, street demolished, object on shelf, phrase from parent, year density, death anniversary). All mem-gated to fire once; no new flags.
-    events_aid_worker.js     — 13 events: humanitarian aid worker arc (BUILD 17 supplement) — deployment, field conditions, moral injury, institutional frustration, colleague loss, return home difficulty, long-term aftermath
-    events_cults.js          — 10 events (BUILD 24): high-control religion and cult arc — born-in track (raised inside, discovering outside world, leave/stay fork) and joined track (recruitment, escalating commitment, exit attempt, long recovery)
-    events_sex_work.js       — 10 events (BUILD 33): sex work arc — survival/tolerated/legalized tracks, first entry, safety negotiation, client encounter, exit decision, long-term arc; criminalRecord intersection
-    events_bonded_labor.js   — 9 events (BUILD 37): debt bondage/bonded labor/sharecropping arc — South Asia and subsaharan focus; debt inheritance, labor extraction, escape attempt, aftermath, late reckoning
-    events_fiji.js           — 8 events: Fiji arc — iTaukei/Indo-Fijian community perspectives, 1987 Rabuka coups, ethnic politics, sugar economy, diaspora decision
-    events_new_zealand.js    — 9 events: NZ arc — Springbok Tour 1981, Rainbow Warrior 1985, Rogernomics shock therapy, nuclear-free legislation, Christchurch earthquakes 2011, Christchurch mosque shooting 2019
-    events_nomadic.js        — 8 events (BUILD 16): nomadic life arc — Maasai Kenya/Tanzania herder childhood, seasonal migration, sedentarisation pressure, cattle count economy, Mongolian herder texture; exports NOMADIC_EVENTS
-    events_nigeria.js        — 8 events: Nigeria depth — coup culture 1966–1999, June 12 1993 annulled election, civilian rule 1999, Boko Haram insurgency, sharia adoption 2000–02, Niger Delta oil community, naira crisis
-    events_bolivia.js        — 9 events: Bolivia arc — Potosí/Oruro mining culture, 1952 National Revolution, Banzer military dictatorship, hyperinflation 1984–85, Chapare coca economy, Gas War 2003, Evo Morales era
-    events_water_infra.js    — 6 events (BUILD 42): water infrastructure arc — standpipe committee politics, adult water walk echo, dry-season scarcity, village electrification, pump repair politics
-    events_indonesia_depth.js — 6 events: Indonesia depth — 1965 anti-communist purge family silence, Bali bombing 2002, 2004 Indian Ocean tsunami, Javanese transmigration programme, Papuan indigenous identity
-    events_turkey.js         — 5 events: Turkey depth — Atatürk Latin alphabet reform living memory, 2023 Kahramanmaraş earthquake, Syrian refugee hosting, lira crisis 2018–21, Istanbul Convention withdrawal; exports TURKEY_EVENTS
-    events_fgm.js            — 5 events (BUILD 22 supplement): female genital cutting arc — community expectation, the decision, aftermath, daughter decision, late-life reckoning; gated on subsaharan + relevant countries
-    events_bedouin.js        — 5 events: Bedouin sedentarisation arc — Saudi Arabia/Jordan 1950s–70s; tent to concrete house, camel to pickup truck, state identification pressure, identity negotiation
-    events_2010s.js          — 8 events (MODE A, PR #102): cross-cutting 2010s texture — gig economy entry arc (2013+, 2 choices + midlife echo), always-connected/phone at the table, climate grief as generational identity (adolescence 2015+, 2 choices), populist fracture at family table (2016+), Occupy/inequality awakening (wealthy_west 2011–14), born-into-internet (born 2001+), information overload, algorithm awareness; 9 new flags
-    events_guinea.js          — 13 events: Guinea-Conakry arc — 1958 No vote (95% independence), French revenge withdrawal, Sékou Touré PDG apparatus 1958–84, Camp Boiro political prison (survivor/loss branches), educated class exile/stay, Conté coup morning 1984 (48-hour gap), 2009 stadium massacre; 6 late-life follow-throughs
-    events_mali.js            — 10 events: Mali arc — ancient empire identity (Mansa Musa, Timbuktu universities), CMDT cotton economy (2 choices), Traoré 23-year dictatorship (2 choices), 1991 democratic revolution (2 choices), Tuareg identity nomadic/settled fork, 2012 Sanogo coup, Timbuktu manuscript rescue, Operation Serval (2 choices), Sahel late reckoning; 9 year-texture blocks
-    events_mongolia.js        — 12 events: Mongolia arc — nomadic herder childhood (ger assembly, terrain knowledge), 1937–38 Stalinist purge family memory (22k killed, 700 monasteries), negdel collective life, 1990 democratic revolution (Sukhbaatar Square), negdel dissolution shock, dzud winter (2000/2010 branched), Ulaanbaatar ger district migration; 5 late-life follow-throughs
-    events_eritrea.js         — 12 events: Eritrea arc — liberation childhood 1965–91 (EPLF fighters, Amharic schooling vs. Tigrinya identity), independence referendum 1993 (April 27, 99.8%), border war 1998 (Zalambessa trench, serve/avoid), indefinite national service 2003+ (500 nakfa/month, stay/flee), G-15 crackdown 2001, leaving decision (Sudan crossing/refugee path), Sinai trafficking witness, diaspora 2% tax (pay/refuse), border war echo, national service reckoning, Sinai reckoning, late-life reckoning
-    events_political_arc.js   — 10 events (MODE B): political leaning consequence arc — left noted by authoritarian surveillance, dissident file known (archive choice at late_life), left in 1980s rightward shift (wealthy_west), nationalist in newly-independent country, apolitical character confronted (2-choice), centrist accused from both sides, dissident who outlasts regime (2-choice: read file/leave it), right-leaning under communism, nationalist in diaspora, political conviction at midlife
-    events_iraq.js            — 8 events: Ba'ath state 1968–2003, Iran-Iraq War 1980–88 (250–500k dead), Gulf War/12-year sanctions, 2003 US invasion, sectarian civil war 2006–08, ISIS 2014–17, professional diaspora exodus
-    events_italy.js           — 8 events: economic miracle 1950s–60s (Fiat 500, television arrival), Hot Autumn 1969, Years of Lead terrorism, Mani Pulite 1992 corruption, Berlusconi era, southern emigration, precariato generation
-    events_japan.js           — 12 events: 1945 defeat/atomic bombs, SCAP occupation, postwar economic miracle, 1964 Tokyo Olympics, 1960 Anpo protests, salaryman culture/karoshi, Bubble 1985–90 (Nikkei collapse), Lost Decade, hikikomori withdrawal, Fukushima 2011
-    events_laos.js            — 7 events: UXO from Secret War (most-bombed per capita), Buddhist alms culture, Hmong persecution, LPRP party discipline, Mekong border economy, Chinese debt-trap infrastructure, Mekong dam reckoning
-    events_namibia.js         — 8 events: Herero/Nama genocide oral history, communal vs. commercial land divide, SWANLA contract labor legacy, AIDS epidemic 1995–2010, SWAPO liberation to patronage, German 2021 "acknowledgment," diamond wealth contradiction, San displacement
-    events_netherlands.js     — 8 events: Verzuiling (pillarization) 1920–70, Hunger Winter 1944–45 (22k dead), Surinamese independence 1975 migration, Srebrenica 1995 (Dutchbat), Pim Fortuyn 2002 assassination
-    events_north_korea.js     — 9 events: Juche childhood indoctrination, songbun caste system, self-criticism sessions, Arduous March famine 1994–98, jangmadang black markets, USB drive information flow, public executions, defection calculation
-    events_pandemic.js        — 16 events: COVID-19 arc: healthcare worker experience, lockdown family separation, mourning without gathering, economic shutdown, mental health crisis, vaccine rollout divergence, conspiracy narratives, return to normalcy disorientation
-    events_peru.js            — 8 events: Shining Path 1980–92 (69k dead, 75% Quechua victims), Fujimori autogolpe 1992, forced sterilizations 1996–2000 (indigenous women), Vladivideo scandal 2000, Truth Commission 2001–03
-    events_philippines.js     — 9 events: Marcos martial law 1972–86, EDSA People Power 1986, Aquino assassination 1983, typhoon culture, political dynasties, Duterte drug war 2016+, Marcos Jr. return 2022
-    events_poland.js          — 7 events: communist childhood, Pope John Paul II 1978, Solidarity 1980, martial law 1981, underground resistance, Round Table 1989, shock therapy, EU accession 2004
-    events_romania.js         — 5 events: Ceaușescu Securitate surveillance state, Decree 779 systematization, December 1989 revolution (Christmas Day execution broadcast), EU accession, emigration wave
-    events_russia.js          — 4 events: Soviet-Afghan War service (afgantsy veterans), Beslan 2004 school siege, Bolotnaya 2011–12 protests, Navalny's death 2024
-    events_rwanda.js          — 8 events: post-independence Hutu Republic, Habyarimana single-party state with ethnic quotas, RTLM radio hate broadcasts, April 1994 genocide (800k in 100 days), RPF military victory, gacaca community courts 2001–12, post-genocide Rwanda under Kagame
-    events_saudi.js           — 9 events: Saud-Wahhabi founding alliance, oil discovery 1938, 1973 oil embargo, 1979 Grand Mosque siege, 1990 Gulf War/US troops near Mecca, mutaween morality police, gender segregation lived texture, 2002 school fire, Vision 2030
-    events_singapore.js       — 8 events: founding shock 1965 (Malaysian expulsion), kampung demolition/HDB blocks, Speak Mandarin campaign 1979, National Service male rite of passage, PSLE streaming at age 12, racial bargain/EIP, LKY death 2015
-    events_south_africa.js    — 4 events: Soweto Uprising 1976 (600+ student deaths), Mandela's release 1990, state capture/Zuma era kleptocracy, white emigration arc post-apartheid
-    events_spain.js           — 11 events: Franco dictatorship 1939–75 (Basque/Catalan suppression), La Transición 1975–78, 23-F coup attempt 1981, La Movida Madrileña 1978–85, 1992 Barcelona Olympics, 2008 property crash, 2010s crisis/brain drain, 2017 Catalan referendum
-    events_taiwan_malaysia.js — 9 events: Taiwan 228 Massacre 1947, martial law 1949–87 (longest in 20c), waishengren mainlander experience, democratization, TSMC era; Malaysia May 13 riots 1969, NEP Bumiputera policy, Mahathir era, GE14 2018
-    events_uk.js              — 7 events: Miners' strike 1984–85 (community survival), Poll Tax riots 1990, Good Friday Agreement 1998, Iraq War 2003, Brexit 2016, Grenfell Tower 2017, Windrush scandal 2018
-    events_ukraine.js         — 7 events: Holodomor family memory, independence 1991, language question (Ukrainian/Russian), Orange Revolution 2004, Euromaidan 2013–14, Donbas displacement 2014, 2022 Russian invasion from civilian perspective
-    events_usa.js             — 12 events: Great Migration + Jim Crow, Civil Rights era (sit-ins, Birmingham), Vietnam draft, Rust Belt deindustrialisation, War on Drugs/mass incarceration, 9/11 American experience, opioid crisis, school shooting era, 2008 foreclosure crisis
-    events_uy_py_ec.js        — 13 events: Uruguay Tupamaro urban guerrillas 1965–72 + military coup 1973; Paraguay Stroessner dictatorship 1954–89; Ecuador dollarization shock 2000
-    events_venezuela.js       — 8 events: El Caracazo 1989 (3k dead), Chávez failed coup 1992 (TV legend), 1998 electoral victory, 2002 coup reversal + Chávez return, misiones programs (poverty halved 1999–2012), Chávez death 2013, 2014–22 oil collapse (7M diaspora, highest displacement in Latin America)
-    worldEvents.js            — 231 world history events (year+country/archetype gated); 20+ events have `context` fields; includes Syrian civil war (2013–20, neighboring countries), Syrian refugee crisis (2015–17, wealthy_west perspective), COVID-19 pandemic 2020, Afghanistan girls' school ban 2022; recent adds: Guinea independence 1958 + stadium massacre 2009, Mongolia 1990 revolution, Jamaica independence 1962, Eritrea independence 1993 + border war 1998, Trinidad Muslimeen coup 1990
+    events.js                 — root event file, imports 275 modules, exports EVENTS array (~5,800+ total character events)
+    [All events are organized into src/data/events/ subdirectories — see below]
+
+    worldEvents.js            — 255 world history events (year+country/archetype gated); 20+ events have `context` fields
     headlines.js              — ~130 major historical headline entries (year-matched, injected as log entries)
-    flags.js                  — FLAG_REGISTRY: master design document for the flag system. 1,314 registered
-                                flags with weight/category/description/intent/notes per entry. Pure data,
-                                no imports. Run `npm run check-flags` to derive coverage dynamically.
+    flags/                    — FLAG_REGISTRY split into 6 category files (political, economic, social, personal, historical, identity). 2051 registered flags. Pure data, no imports. Run `npm run check-flags` to derive coverage.
     careers.js                — all career definitions with career-specific events
     crimes.js                 — criminal activity system
     activities.js             — activities panel options
@@ -511,8 +265,340 @@ src/
     destinations.js           — travel destinations
     illnesses.js              — illness/disease system
     ribbons.js                — end-of-life achievement ribbons (321 defined)
-    soundtrack.js             — 50 cultural markers 1942–2023 (MODE C, PR #102): atmospheric cultural texture injected alongside headlines — music moments, technological shifts, generational cultural events. Distinct visual treatment (violet/🎵). Covers: 1940s–50s big bands/rock, 1960s Beatles/Woodstock, 1970s Walkman/Fela/Marley/disco, 1980s MTV/Thriller/Live Aid, 1990s Nirvana/web/Windows 95, 2000s iTunes/Facebook/iPhone, 2010s Netflix/Greta/TikTok/AI.
+    soundtrack.js             — 50 cultural markers 1942–2023: atmospheric cultural texture alongside headlines
+    events/
+      [Root-level thematic]
+      thematic/
+        events_culture.js         — regime/ethnicity/education/LGBTQ events
+        events_gender.js          — gender-specific events
+        events_historical.js      — historical period events
+        events_religion.js        — religion-specific events
+        events_technology.js      — technology timeline (era-gated)
+        events_immigration.js     — emigration, residency, integration events
+        events_career_regime.js   — career × regime intersection events
+        events_conflict_childhood.js — conflict zone childhood events
+        events_lgbtq.js           — LGBTQ identity and rights events
+        events_mental_health.js   — mental health arc events
+        events_grief.js           — grief and loss events
+        events_grief_mental.js    — grief-mental health intersection events
+        events_religion_arc.js    — faith arc events
+        events_late_life.js       — late-life events (retirement, partner decline, health decline, legacy)
+        events_children_arc.js    — children arc events
+        events_fame_karma.js      — fame/karma/hobby/friendship events
+        events_texture.js         — rural/pre-1960/career texture events
+        events_society.js         — women's rights, healthcare, language suppression/identity
+        events_romance_arc.js     — post-marriage arc events
+        events_consequence.js     — downstream consequence events (illiteracy, addiction arc, STI arc)
+        events_friends.js         — friend lifecycle events
+        events_business.js        — business arc events
+        events_siblings.js        — sibling events
+        events_education_arc.js   — university depth events
+        events_adolescence.js     — adolescence identity events
+        events_fertility.js       — fertility depth events
+        events_career_wealth.js   — career late-arc, wealth gap, rural-to-urban events
+        events_gulf_east.js       — wealthy_gulf and wealthy_east specific events
+        events_relationship_quality.js — 13 relationship quality threshold events
+        events_activity_payoffs.js — downstream consequences for activity flags
+        events_places.js          — place-based events (moves, arrival texture, migration)
+        events_infrastructure.js  — infrastructure events (power cuts, floods, traffic, water shortage)
+        events_dying_city.js      — Rust Belt + post-Soviet urban decline arc
+        events_cities.js          — city-specific texture (Lagos, Mumbai, Cairo, Mexico City, Moscow)
+        events_cities_extended.js — extended city texture across more cities
+        events_rural_texture.js   — rural/suburban texture (water walk, electrification, brain drain)
+        events_wealth_system.js   — 17 wealth mechanics events (banking, ROSCA, hyperinflation, poverty trap, patron-client)
+        events_money.js           — 7 money-across-a-life events (first paycheck, inheritance, elder scam, counting days)
+        events_illness.js         — 14 chronic illness events (diabetes, heart disease, cancer, COPD, back pain, HIV/AIDS, vision/hearing loss, depression, disability)
+        events_parent_care.js     — 8-event parent care arc (first sign → final decline + killParent)
+        events_climate.js         — 18 climate arc events (2025–2100): heat, drought, flooding, displacement, Pacific extinction, late-life witness
+        events_indigenous.js      — 21 Indigenous peoples events: Aboriginal Australian, Native American, First Nations, Māori arcs
+        events_automation.js      — 12 automation/AI arc events (2025–2050): career-specific disruption + UBI debate
+        events_arts.js            — 9 arts-under-pressure events: samizdat arcs, jazz/bebop refusal, Nollywood, censored artist, artistic integrity echo
+        events_crosscutting.js    — 22 events: domestic worker arc, city bombardment arc, refugee camp childhood arc
+        events_decolonisation.js  — independence generation events (subsaharan/developing 1956–1975)
+        events_internet_era.js    — early internet era texture events: PC bang Seoul, cybercafé Lagos, AOL dial-up (1993–2005)
+        events_labor.js           — union card, strike, picket line, solidarity arc
+        events_informal.js        — 18 informal economy events (hawker/moto-taxi/market-stall/day-labor/subsistence)
+        events_neighborhoods.js   — 16 neighborhood-tier events (informal settlement, working class, elite)
+        events_postrelease.js     — 12 post-release events: job checkbox, housing bar, parole, recidivism trap
+        events_mentor.js          — 10 mentor arc events: receiving + becoming + protégé arcs
+        events_family_silence.js  — 20 generational memory events: "what your parents didn't say"
+        events_coherence.js       — 11 coherence follow-throughs: orphaned flag callbacks
+        events_poverty.js         — 43 financial hardship events: eviction, repossession, homelessness, welfare
+        events_career_arcs.js     — 19 deep career arc events: athlete, academic, chef/hospitality
+        events_social_media.js    — 9 social media arc events: country-specific platforms, excitement→damage arc
+        events_gang.js            — 10 gang/organised crime arc events
+        events_social_capital.js  — 8 social capital events: charisma/looks as era-dependent resources
+        events_world_response.js  — 6 world event response events
+        events_emigrant_integration.js — 7 emigrant integration arc events staged by yearsAbroad
+        events_intimacy.js        — 12 sex and intimacy arc events
+        events_school.js          — 11 school institution events
+        events_children_abroad.js — 7 events: parent departs, birthday call, package, reunion stranger
+        events_stayed.js          — 5 events: watching departures, country empties, late reckoning on staying
+        events_sport.js           — 11 events: local match, cricket, scout, World Cup year, last game
+        events_disasters.js       — 8 events: flood season, bad flood, earthquake preparedness/experience, typhoon
+        events_activity_choice.js — 16 activity practice counter → story events
+        events_project_arc.js     — 7 project milestone events
+        events_industrial.js      — 9 industrial disaster events (Chernobyl, Bhopal, Niger Delta)
+        events_debt.js            — 14 events: consumer credit spiral, microfinance trap, IMF adjustment, medical debt
+        events_adoptee.js         — 5 events: transracial identity, DNA test, search, origin trip, the thing that doesn't resolve
+        events_multilingual.js    — 7 events: parent-child language gap, language death, code-switch identity
+        events_ofw.js             — 15 events: Philippines OFW arc (Gulf/HK/Italy tracks)
+        events_political_arc.js   — 10 events: political leaning consequence arc
+        events_documents.js       — 8 events: Rwanda ID checkpoint, Soviet propiska, Nansen passport, statelessness, colonial census
+        events_soldier_arc.js     — 12 events: deployment, first week, the order, return, veteran recognition
+        events_clergy.js          — 11 events: Catholic priest Ireland, Buddhist monk Cambodia, imam under Suharto, yeshiva student
+        events_disability.js      — 18 disability arc events: birth/Deaf/acquired arcs
+        events_addiction.js       — 14 addiction arc events: first use → sobriety; family members' arc
+        events_dementia.js        — 9 dementia arc events: personal + caregiver perspectives
+        events_divorce.js         — 11 divorce arc events
+        events_celebrity.js       — 7 celebrity arc events
+        events_child_soldier.js   — 9 child soldier arc events
+        events_teacher_arc.js     — 9 teacher life arc events
+        events_wwi_depression.js  — 10 WWI/Depression arc events (1916–1940s)
+        events_wound_coping.js    — 8 wound coping events (adolescence + young adult)
+        events_condition_arc.js   — 8 chronic condition lifecycle events
+        events_desire_resolution.js — 8 events: positive fulfillment paths for all 8 desire types
+        events_georgia.js         — 10 events: April 9 1989, Rose Revolution, Russia-Georgia war, EU dream
+        events_syria.js           — 8 events: Ba'ath childhood, Hama 1982, 2011 uprising, displacement
+        events_child_death_arc.js — 11 events: infant death trigger through late-life reckoning
+        events_israel.js          — 13 events: founding, Mizrahi, IDF, Rabin, intifadas, Oct 7 2023
+        events_germany_france.js  — 9 events: Gastarbeiter, DDR, reunification; France Algerian war, banlieue
+        events_india_depth.js     — 12 events: arranged marriage, joint family, dowry, NRI question
+        events_iran.js            — 7 events: Khatami reform era, sanctions economy, hijab, brain drain
+        events_sick_child.js      — 9 events: parent of seriously ill child arc
+        events_local.js           — 12 events: local significance arc (village healer, coach, memory keeper)
+        events_2010s.js           — 8 events: gig economy, phone at the table, climate grief, populist fracture
+        events_aid_worker.js      — 13 events: humanitarian arc (deployment, moral injury, colleague loss)
+        events_cults.js           — 10 events: born-in track + joined track (high-control religion)
+        events_sex_work.js        — 10 events: survival/tolerated/legalized tracks
+        events_bonded_labor.js    — 9 events: debt bondage arc (South Asia + subsaharan)
+        events_water_infra.js     — 6 events: standpipe politics, electrification, dry-season scarcity
+        events_fgm.js             — 5 events: community expectation, decision, aftermath, daughter's choice
+        events_bedouin.js         — 5 events: Saudi/Jordan sedentarisation 1950s–70s
+        events_gifted.js          — 35+ gifted arc events: manifestation, ceiling, door opens/closes, midlife reckoning
+        events_gifted_2.js        — gifted arc depth: Gould arc, generational transmission, exploitation
+        events_gifted_3.js        — gifted arc extension: gender×gift, disability×gift, elite recognition
+        events_pandemic.js        — 16 events: COVID-19 arc across archetypes
+      lifecycle/
+        events_early_life.js      — 20 early childhood (0–5) + young adult (18–25) events
+        events_early_childhood.js — 13 early childhood depth events (ages 0–5)
+        events_childhood_texture.js — 19 childhood texture events (ages 6–17)
+        events_adolescence_2.js   — 22 adolescence depth events
+        events_small_life.js      — named friendships, first crushes, formative teachers, first home
+        events_solo_life.js       — 8 solo-life events: unpartnered texture across all phases
+        events_dying_arc.js       — 6 final-years events: consciousness of approaching death
+        events_pregnancy.js       — 13 pregnancy arc events: first-trimester, birth, postpartum
+        events_menopause.js       — 5 menopause arc events: female 45–58, culturally-branched
+        events_desires.js         — formative wound events + decade reflections (30/40/50/60)
+        events_life_skeleton.js   — 4 guaranteed narrative beats at ages 15/30/40/55
+        events_phase_entries.js   — 3 life phase transition events (adolescence/young_adult/midlife)
+        events_partner_wants.js   — 8 relationship desire tension events
+        events_relationship_crossover.js — 8 partnership arc events
+        events_fertility.js       — fertility depth events
+        events_wound_coping.js    — 8 wound coping events (also in thematic)
+      geographic/
+        [109 country/region arc files — each covers core historical events for that place]
+        events_post_soviet.js     — 15 post-Soviet arc events (communist childhood, 1990s collapse, oligarch split)
+        events_vietnam.js         — 10 Vietnam arc events (Saigon fall, re-education, boat people, Doi Moi)
+        events_latin_america.js   — 60+ events: Chile, Argentina, Brazil, Colombia, Mexico, Operation Condor
+        events_country_arcs.js    — 22 cross-country arcs: Nigeria, India, Egypt, Romania, Korea depth
+        events_country_arcs_2.js  — 36 events: China Mao era, USA specificity, Japan (hibakusha, salaryman, bubble)
+        events_country_arcs_3.js  — 13 events: Iran (SAVAK/revolution/war), South Africa (TRC), France WWII, Biafra
+        events_asia_arcs.js       — 22 events: Cambodia (Khmer Rouge), Bangladesh (Liberation War), Pakistan
+        events_drc.js             — 10 DR Congo arc events
+        events_central_asia.js    — 10 events: Kazakh collectivization, Uzbek cotton/Aral Sea, Kyrgyz 1991, Kazakhstan oil boom
+        events_indonesia.js       — 10 events: May 1998 riots, Reformasi, 35-year expression ban
+        events_indonesia_depth.js — 6 events: 1965 purge, Bali bombing, tsunami, transmigration
+        events_kurdish.js         — 12 events: language ban, PKK, Anfal 1988, Rojava
+        events_armenia_azerbaijan.js — 15 events: Armenian Genocide, Karabakh wars, Black January 1990
+        events_nomadic.js         — 8 events: Maasai + Mongolian herder texture
+        events_decolonisation.js  — independence generation (1956–1975, subsaharan/developing)
+        events_crosscutting.js    — 22 events: domestic worker, city bombardment, refugee camp childhood
+        events_central_europe.js  — 9 events: Hungary 1956, Czech Charter 77, Velvet Revolution
+        events_southeast_europe.js — 9 events: Yugoslav collapse, Bosnian War, Kosovo, tribunal
+        events_caribbean.js       — 14 events: Jamaica (garrison politics, 1980 violence, Windrush), Trinidad (Carnival, oil boom)
+        events_guinea.js          — 13 events: 1958 No vote, Sékou Touré, Camp Boiro, 2009 massacre
+        events_mali.js            — 10 events: ancient empire identity, Traoré dictatorship, 1991 revolution, Sahel crisis
+        events_eritrea.js         — 12 events: liberation, independence 1993, national service, diaspora tax
+        events_mongolia.js        — 12 events: herder childhood, Stalinist purge 1937, 1990 revolution, dzud
+        events_burkina.js         — 8 events: Sankara 1983, assassination 1987, 2022 coup, Sahel displacement
+        events_ivory_coast.js     — 7 events: cocoa economy, 1999 coup, 2010 election crisis
+        events_cameroon.js        — 7 events: Bamileke tontine, Biya 40-year rule, Anglophone crisis
+        events_georgia.js         — 10 events (in thematic): April 9 1989, Rose Revolution, Russia-Georgia war
+        events_west_africa.js     — 16 events: Ghana/Nkrumah, Biafra, Liberia/Taylor, Sierra Leone RUF
+        events_denmark.js         — 7 events: welfare state, WWII occupation, Danes in Resistance
+        events_norway.js          — 8 events: WWII occupation/resistance, Quisling, July 22 2011, oil fund reckoning
+        events_sweden.js          — 7 events: WWII moral debt, Palme 1986, immigration transformation, welfare reckoning
+        events_czech_republic.js  — 8 events: normalization, Charter 77, Velvet Revolution, lustration, EU
+        events_scandinavia.js     — 8 Nordic events: welfare state, Norway oil, Finland Winter War, Janteloven
+        events_scandinavia_depth.js — 6 events: Norway 1942 deportation, Finland continuation war, finlandization, NATO 2023
+        events_ireland_depth.js   — 10 events: Famine shadow, Easter Rising, Industrial Schools, Gaeltacht, referendums
+        events_ireland_turkey.js  — 11 events: Irish emigration wave + Troubles; Turkey modernization + diaspora
+        events_greece_portugal.js — 11 events: Greece junta 1967–74, debt crisis; Portugal Estado Novo, Carnation Revolution
+        events_greece_depth.js    — 9 events: Asia Minor prosfyges, Katochi famine, EAM/ELAS, Civil War 1946–49, gastarbeiter
+        events_ghana.js           — 10 events: Rawlings PNDC, cocoa farming, day-name identity, dumsor, Year of Return
+        events_south_africa.js    — 4 events: Soweto Uprising 1976, Mandela release 1990, state capture, white emigration
+        events_usa.js             — 15 events: Great Migration, Civil Rights, Vietnam draft, Rust Belt, War on Drugs, 9/11, opioids
+        events_ecuador.js         — 8 events: dollarization 2000, banana economy, Galapagos, Correa era, oil/Amazon conflict
+        events_el_salvador.js     — 7 events: civil war 1979–92, Romero, disappeared, MS-13, remittances
+        events_guatemala.js       — 8 events: 1954 coup, Ríos Montt genocide, peace accords, Mayan identity, migration north
+        events_honduras.js        — 8 events: banana republic history, 1980s contra proxy, 2009 coup, gang violence
+        events_nicaragua.js       — 8 events: Somoza dictatorship, Sandinista revolution, Contra war, Ortega return
+        events_dominican_republic.js — 9 events: Trujillo dictatorship, 1961 assassination, US occupation 1965, Haitian relations
+        events_uzbekistan.js      — 10 events: cotton monoculture, Karimov era, Andijan 2005, tashkent earthquake, Mirziyoyev thaw
+        events_kazakhstan.js      — 10 events: Aral Sea, nomad collectivization, oil boom 2000s, Nursultan rename, 2022 protests
+        events_kyrgyzstan.js      — 10 events: 1991 collapse, Akayev, Tulip Revolution, Osh violence 2010
+        events_tajikistan.js      — 10 events: Soviet collapse, civil war 1992–97, Rahmon era, labor migration
+        events_turkmenistan.js    — 10 events: Niyazov Turkmenbashi cult, Gurbanguly reforms, gas wealth, Ashgabat marble city
+        events_china.js           — 26 events: Cultural Revolution, gaokao, Tiananmen, rural-urban migration, social credit, lying flat
+        events_japan.js           — 12 events: 1945 defeat, occupation, economic miracle, salaryman/karoshi, Fukushima
+        events_korea.js           — 14 events: hagwon, suneung, military service, Gwangju 1980, chaebol, Hallyu, DMZ families
+        events_india.js           — 7 events: Emergency 1975–77, Sikh massacre 1984, liberalisation 1991, demonetisation
+        events_india_depth.js     — 12 events: arranged marriage, joint family economy, dowry pressure, NRI question
+        events_pakistan.js        — 9 events: Partition, 1971 East Wing, Zia Islamisation, nuclear tests
+        events_bangladesh.js      — 9 events: Bhola 1970, Liberation War 1971, Rana Plaza 2013, 2024 student uprising
+        events_sri_lanka.js       — 8 events: Black July 1983, civil war, Tamil diaspora, 2022 collapse
+        events_cambodia.js        — 8 events: Year Zero, denunciation choice, Vietnamese liberation, Tuol Sleng, late reckoning
+        events_myanmar.js         — 7 events: Ne Win, 8888 Uprising, Saffron Revolution, Nargis, 2021 coup
+        events_thailand.js        — 6 events: Thammasat 1973, Chakri dynasty, coups, lèse-majesté, Red/Yellow
+        events_laos.js            — 7 events: UXO/Secret War, Hmong persecution, LPRP discipline, Chinese debt-trap
+        events_nepal.js           — 6 events: Maoist war, Gyanendra coup, 2015 earthquake, Gulf migration
+        events_vietnam.js         — 10 events: Saigon fall, re-education, boat people, Doi Moi, Viet Kieu
+        events_indonesia.js       — 10 events: May 1998 riots, Reformasi, identity arc
+        events_philippines.js     — 9 events: Marcos, EDSA 1986, Duterte, Marcos Jr. return 2022
+        events_singapore.js       — 8 events: founding shock, kampung demolition, HDB, PSLE, LKY death
+        events_taiwan_malaysia.js — 9 events: 228 Massacre, martial law, democratization; Malaysia NEP, GE14 2018
+        events_north_korea.js     — 9 events: Juche, songbun, Arduous March famine, jangmadang, defection
+        events_australia.js       — 8 events: White Australia Policy, Vietnam conscription, The Dismissal, Port Arthur
+        events_new_zealand.js     — 9 events: Springbok Tour 1981, Rogernomics, nuclear-free, Christchurch 2019
+        events_fiji.js            — 8 events: iTaukei/Indo-Fijian perspectives, 1987 Rabuka coups
+        events_kenya.js           — 7 events: Harambee, Moi era, 2007 election violence, M-Pesa
+        events_nigeria.js         — 8 events: coup culture, June 12 1993, Boko Haram, naira crisis
+        events_ethiopia.js        — 7 events: Red Terror, 1984 famine, Derg fall, Addis Ababa boom
+        events_rwanda.js          — 8 events: RTLM radio, April 1994 genocide, gacaca courts
+        events_uganda.js          — 7 events: Amin, liberation war, HIV/AIDS, LRA child soldiers
+        events_somalia.js         — 7 events: Siad Barre, civil war collapse, Al-Shabaab, piracy
+        events_zimbabwe.js        — 10 events: land reform (both perspectives), hyperinflation, Gukurahundi, Mugabe fall
+        events_tanzania.js        — 7 events: Ujamaa villagisation, Swahili education, Nyerere death 1999
+        events_zambia.js          — 6 events: Kaunda, copper volatility, structural adjustment
+        events_mozambique.js      — 6 events: FRELIMO, RENAMO war, Machel crash 1986, peace 1992
+        events_angola.js          — 6 events: MPLA vs UNITA, 27-year war, landmines, peace 2002
+        events_namibia.js         — 8 events: Herero genocide, contract labor, AIDS, San displacement
+        events_senegal.js         — 5 events: Grand Magal, marabout authority, dahira networks, Barca Walla Barsakh
+        events_mali.js            — 10 events: ancient empire, cotton economy, Traoré, 1991 revolution, Timbuktu
+        events_guinea.js          — 13 events: 1958 No vote, Sékou Touré, Camp Boiro, 2009 massacre
+        events_ivory_coast.js     — 7 events: cocoa economy, Houphouët-Boigny death, coups, Anglophone identity
+        events_cameroon.js        — 7 events: Bamileke tontine, Biya rule, Anglophone crisis 2016+
+        events_burkina.js         — 8 events: Sankara 1983, coup 2022, Sahel jihad displacement
+        events_ghana.js           — 10 events: Rawlings, cocoa, democratic consolidation, dumsor
+        events_drc.js             — 10 DR Congo arc events: Lumumba, Mobutu, coltan mine, Kinshasa
+        events_west_africa.js     — 16 events: Nkrumah Ghana, Biafra, Liberian civil war, Sierra Leone RUF
+        events_egypt.js           — 7 events: Nasser/Suez 1956, Naksa 1967, Mubarak, Tahrir 2011
+        events_sudan.js           — 6 events: Darfur genocide 2003–08, South Sudan independence, al-Bashir
+        events_ethiopia.js        — 7 events: Red Terror, famine, Derg fall, coffee ceremony, Addis boom
+        events_angola.js          — 6 events: civil war, landmines, peace 2002, oil boom
+        events_morocco.js         — 8 events: Years of Lead, Amazigh recognition 2011, Strait crossing
+        events_algeria.js         — 13 events: Décennie Noire 1991–2002, intellectual targeting, journalist survival
+        events_tunisia.js         — 6 events: Ben Ali, Jasmine Revolution 2011, constitutional moment
+        events_libya.js           — 6 events: Gaddafi Jamahiriya, Lockerbie, 2011 uprising, fragmentation
+        events_egypt.js           — (above)
+        events_iraq.js            — 8 events: Ba'ath state, Iran-Iraq War, Gulf War, 2003 invasion, ISIS
+        events_iran.js            — 7 events: Khatami reform era, sanctions, hijab enforcement
+        events_saudi.js           — 9 events: Saud-Wahhabi, oil 1973 embargo, Grand Mosque siege, Vision 2030
+        events_jordan.js          — 6 events: Palestinian displacement, Black September, King Hussein, Syrian refugees
+        events_yemen.js           — 6 events: Yemen War 1962–70, Saudi-Houthi conflict, humanitarian collapse
+        events_palestine.js       — 14 events: Nakba memory, checkpoint, intifadas, Oslo, Gaza bombardment
+        events_syria.js           — 8 events: Ba'ath childhood, Hama 1982, 2011 uprising, displacement, Europe arrival
+        events_lebanon.js         — 14 events: civil war stairwell community, Hariri reconstruction, 2020 explosion
+        events_turkey.js          — 5 events: Atatürk literacy, 2023 earthquake, lira crisis, Istanbul Convention
+        events_kurdish.js         — 12 events: language ban, village evacuations, Anfal 1988, Rojava
+        events_rohingya.js        — 8 events: 1982 statelessness, August 2017 clearances, Cox's Bazar camp
+        events_uyghur.js          — 3 events: Ramadan restrictions, re-education camp, diaspora silence
+        events_israel.js          — 13 events: founding, Mizrahi, IDF, Rabin, intifadas, Oct 7 2023
+        events_armenia_azerbaijan.js — 15 events: Armenian Genocide, Karabakh wars, Black January 1990
+        events_georgia.js         — 10 events: April 9 1989, Rose Revolution, Russia-Georgia war
+        events_baltic.js          — 6 events: Soviet deportations, Singing Revolution, independence 1991
+        events_ukraine.js         — 7 events: Holodomor, independence, Orange Revolution, Euromaidan, 2022 invasion
+        events_russia.js          — 4 events: Soviet-Afghan War, Beslan 2004, Bolotnaya protests, Navalny death
+        events_belarus.js         — 8 events: WWII partisan memory, Chernobyl, Lukashenko consolidation, 2020 crackdown
+        events_poland.js          — 7 events: communist childhood, Solidarity 1980, martial law, Round Table 1989
+        events_romania.js         — 5 events: Securitate, Decree 779, December 1989 revolution, EU accession
+        events_central_europe.js  — 9 events: Hungary 1956, Czech Charter 77, Velvet Revolution, lustration
+        events_southeast_europe.js — 9 events: Yugoslav identity collapse, Bosnian War, Srebrenica, ICTY
+        events_spain.js           — 11 events: Franco, La Transición, La Movida, 2008 crisis, Catalan referendum
+        events_italy.js           — 8 events: economic miracle, Hot Autumn 1969, Years of Lead, Berlusconi, precariato
+        events_germany_france.js  — 9 events: Gastarbeiter, DDR, reunification; French Algerian war, banlieue
+        events_netherlands.js     — 8 events: Hunger Winter, Surinamese migration, Srebrenica (Dutchbat), Fortuyn
+        events_uk.js              — 7 events: Miners' strike 1984, Poll Tax, Good Friday, Iraq War, Brexit, Grenfell
+        events_ireland_turkey.js  — 11 events: Irish emigration + Troubles; Turkey modernity + diaspora
+        events_greece_portugal.js — 11 events: Greek junta, debt crisis; Portuguese Estado Novo, Carnation Revolution
+        events_post_soviet.js     — 15 events: communist childhood, 1990s collapse, oligarch split, emigration wave
+        events_latin_america.js   — 60+ events: Chile, Argentina, Brazil, Colombia, Mexico arcs
+        events_central_america.js — 14 events: civil wars, liberation theology, MS-13, Hurricane Mitch, migration
+        events_caribbean.js       — 14 events: Jamaica garrison politics, Trinidad oil boom + ethnic politics
+        events_colombia.js        — 9 events: La Violencia, FARC, cartel, 7M displaced, 2016 peace accord
+        events_brazil.js          — 9 events: favela, dictatorship 1964–85, abertura, racial democracy myth
+        events_cuba.js            — 8 events: revolution childhood, Mariel, Santería, ration book, July 2021
+        events_venezuela.js       — 8 events: Caracazo 1989, Chávez, oil collapse, 7M diaspora
+        events_peru.js            — 8 events: Shining Path, Fujimori, forced sterilizations, Truth Commission
+        events_uy_py_ec.js        — 13 events: Uruguay Tupamaros + coup; Paraguay Stroessner; Ecuador dollarization
+        events_ecuador.js         — 8 events: dollarization, Correa era, oil conflict, Galapagos
+        events_el_salvador.js     — 7 events: civil war, Romero, MS-13, gang era, immigration
+        events_guatemala.js       — 8 events: 1954 coup, genocide, Mayan identity, migration
+        events_honduras.js        — 8 events: banana republic, contra proxy, 2009 coup, gang violence
+        events_nicaragua.js       — 8 events: Somoza, Sandinista revolution, Contra war, Ortega return
+        events_dominican_republic.js — 9 events: Trujillo, 1961 assassination, US occupation 1965
+        events_haiti.js           — 10 events: Tonton Macoutes, debt of independence, 2010 earthquake
+        events_canada.js          — 8 events: October Crisis 1970, Charter 1982, Quebec Referendum 1995, TRC 2015
+        events_australia.js       — 8 events: White Australia Policy, Vietnam conscription, Port Arthur
+        events_new_zealand.js     — 9 events: Springbok Tour 1981, Rogernomics, Christchurch mosque shooting 2019
+        events_puerto_rico.js     — 2 events: Hurricane Maria 2017, colonial status
+        events_fiji.js            — 8 events: iTaukei/Indo-Fijian perspectives, 1987 Rabuka coups
+      sonder/
+        events_sonder.js         — 299 events: STRANGER GLIMPSES + MUNDANE LIFE (contemplative, mem-gated, weight 2)
+        events_sonder_2.js       — 40 events: non-Western sensory, body in time, relational drift, weight of time
+        events_sonder_3.js       — 34 events: authoritarian life texture, language of small decisions, migration/distance, late-life
+        events_sonder_4.js       — 36 events: technology as time, the workplace, objects from before, body in weather
+        events_sonder_5.js       — 36 events: childhood body memory, language and thought, money and counting
+        events_sonder_6.js       — 36 events: night and sleep, weather and season, body at work, waiting
+        events_sonder_7.js       — 36 events: food and meals, ceremony and ritual, the street
+        events_sonder_8.js       — 36 events: work and purpose, home and objects, weather and seasons, late life
+        events_sonder_9.js       — 36 events: childhood memory, language and words, money and want, friendship over time
+        events_sonder_10.js      — 36 events: the photograph, the neighbor, what the body learns, faith in small acts
+        events_sonder_11.js      — 36 events: the return, animals, what you inherit, the window
+        events_sonder_12.js      — 36 events: sound, what you made, the official language, the hour
+      specific_lives/
+        events_specific_lives.js — 221 micro-specific events: inherited social position, women's lives with precision,
+                                   labour at the granular level, minority within majority, religion at street level,
+                                   pre-1940 texture, 2000s–2020s specific losses. Events that could only fire for
+                                   one precise combination of person, place, and time.
+      followthrough/
+        events_followthrough_all.js — 317 consolidated follow-through events (all 29 original files merged):
+                                      racism/discrimination, LGBTQ, abuse, communist childhood, cancer survivor,
+                                      food insecurity, emigration anniversary, caste ceiling, civil war echo,
+                                      genocide legacy, miscarriage chain, OFW flags, desire arc follow-throughs,
+                                      sport flags, disaster flags, desire unfulfillment, Cameroon/Georgia/Brazil echoes
+        events_followthrough_30.js — 70 events: business failure, political disillusionment, relationship arcs
+        events_followthrough_31.js — 12 events: Central Asia arc echoes
+        events_followthrough_32.js — 8 events: Ghana/Angola arc echoes
+        events_followthrough_33.js — 12 events: Ghana + Angola arc follow-throughs
+        events_followthrough_34.js — 7 events: Ecuador depth follow-throughs
+        events_followthrough_35.js — 7 events: El Salvador + Guatemala arc echoes
+        events_followthrough_36.js — 6 events: Honduras arc echoes
+        events_followthrough_37.js — 5 events: Nicaragua arc echoes
+        events_followthrough_38.js — 6 events: Dominican Republic arc echoes
+        events_followthrough_39.js — 8 events: Czech Republic arc echoes
+        events_followthrough_40.js — 7 events: Sweden arc echoes
+        events_followthrough_41.js — 5 events: Denmark arc echoes
+        events_followthrough_42.js — 12 events: Norway arc echoes
+        events_followthrough_43.js — 5 events: Greece depth arc echoes
+        events_followthrough_44.js — 10 events: Thailand depth arc echoes
+        events_followthrough_45.js — 3 events: Dominican Republic follow-throughs
+        events_followthrough_46.js — 16 events: world-event follow-throughs (Central Asia, Baltic, misc)
+        events_followthrough_47.js — 17 events: world-event follow-throughs
+        events_followthrough_48.js — 10 events: Scandinavia/Ireland partial flag fixes
   engine/
+    [Split into 5 focused modules in PR #105]
     gameEngine.js             — core simulation: buildG, advanceYear, emigrate,
                                 generateEpitaph, generateIdentityCard, buildYearTexture,
                                 buildEffectProxy, resolveProxyExtras, tickPartner, attemptCrime,

@@ -442,4 +442,38 @@ export const HEALTH_FLAGS = {
     notes: 'Set by sl_karabakh_exodus_2023.',
   },
 
+  // ─── DISEASE ARCS ─────────────────────────────────────────────────────────────
+
+  cholera_survivor: {
+    weight: 'moderate',
+    category: 'health',
+    description: 'Survived a cholera infection in the 19th or early 20th century — when the waterborne transmission was known but the infrastructure to act on it was not yet available in this place.',
+    intent: 'both',
+    notes: 'Set by da_cholera_season. Echo: da_cholera_late_echo.',
+  },
+
+  tb_survivor_russia: {
+    weight: 'major',
+    category: 'health',
+    description: 'Contracted TB in 1990s Russia when the Soviet health system\'s skeleton still existed but the drug supply chain had been privatised away from it — treated with what was available, which was not always sufficient.',
+    intent: 'both',
+    notes: 'Set by da_tb_russia_1990s. Can lead to mdr_tb_survivor if treatment incomplete.',
+  },
+
+  mdr_tb_survivor: {
+    weight: 'major',
+    category: 'health',
+    description: 'Developed multi-drug resistant TB from an incomplete treatment course in post-Soviet Russia — the resistance created not by choice but by supply-chain failure.',
+    intent: 'year_texture',
+    notes: 'Set by da_tb_incomplete_treatment. Late echo: da_tb_late_echo.',
+  },
+
+  received_international_aid: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Received international humanitarian aid during a famine — the queue, the categories, the forms, the foreign worker who cannot pronounce your name. The system keeps you alive; the indignity it carries coexists with that fact.',
+    intent: 'both',
+    notes: 'Set by fam_aid_convoy. Echo: fam_aid_echo (midlife).',
+  },
+
 }
