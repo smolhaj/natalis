@@ -2219,7 +2219,7 @@ export function tick(state) {
     if (resolvedEvent.effect) resolvedEvent.effect(proxy)
     s = applyProxy(s, proxy)
     s = resolveProxyExtras(s, proxy)
-    s.log = [...s.log, { age: s.age, text: resolvedText, isKey: resolvedEvent.isKey ?? false }]
+    s.log = [...s.log, { age: s.age, text: resolvedText, isKey: resolvedEvent.isKey ?? false, isLetter: resolvedEvent.isLetter ?? false }]
     return s
   }
 
@@ -2241,7 +2241,7 @@ export function resolveChoice(state, choiceIndex) {
   if (choice.inject) s.queue = [...s.queue, choice.inject]
   const evtText = typeof pendingEvent.text === 'function' ? pendingEvent.text(buildG(state)) : (pendingEvent.text ?? '')
   const outcomeText = typeof choice.outcome === 'function' ? choice.outcome(buildG(s)) : (choice.outcome ?? '')
-  s.log = [...s.log, { age: state.age, text: `${evtText.slice(0, 80)}… — ${outcomeText}`, isKey: true }]
+  s.log = [...s.log, { age: state.age, text: `${evtText.slice(0, 80)}… — ${outcomeText}`, isKey: true, isLetter: pendingEvent.isLetter ?? false }]
   s.pendingEvent = null
   return s
 }

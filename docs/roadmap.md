@@ -52,11 +52,10 @@ When shipping any new event module: write follow-through events first, then work
 
 - **The oral tradition register**: For characters in pre-literate or low-literacy contexts, events framed as told rather than witnessed. "Your grandmother tells you about the year the rains didn't come." A distinct prose register.
 
-- **Letters as a UI element**: Pre-2000 characters with active relationship flags occasionally receive a letter — indented block, italic, different prose register — from a sibling abroad, a parent, an old friend. Same event system; different visual treatment via `isLetter: true` property on the event.
+- **Letters as a UI element** (`events_letters.js`, 8 events, `isLetter: true`): Pre-2000 sibling-abroad, parent-to-emigrated-child, old friend, official ominous, OFW parent, long-distance love, gulag censor letter, childbirth announcement. Amber treatment in LifeScreen.jsx for both recent and decades views. ✅
+- **Seasonal event modifiers** (`events_seasonal.js`, 11 events): Good/bad harvest, monsoon joy/flood, harmattan health, post-Soviet winter heating cut, Nordic winter dark, cherry blossom, Australian fire summer, Ramadan texture. All gate on `G.season`. ✅
 
 - **Time-of-life activity unlocks**: Activities unlock and lock dynamically based on conditions, career status, relationships — not just age ranges. A character with severe arthritis cannot take up rock climbing at 60. A retired character has time for things they never could.
-
-- **Seasonal event modifiers**: Now that `G.season` exists, individual events can gate on `G.season === 'wet'` for monsoon arrivals, harvest festivals, winter hardships. No system work needed — purely content.
 
 ---
 

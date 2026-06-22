@@ -444,6 +444,7 @@ export default function LifeScreen() {
                     entry.isHeadline   ? 'bg-stone-100 border-stone-300 text-stone-700' :
                     entry.isSoundtrack ? 'bg-violet-50 border-violet-200 text-violet-900' :
                     entry.isWorld      ? 'bg-amber-50 border-amber-200 text-amber-800' :
+                    entry.isLetter     ? 'bg-amber-50 border-amber-300 text-stone-800' :
                     entry.isKey        ? 'bg-blue-50 border-blue-200 text-blue-800' :
                     'bg-white border-natalis-border text-natalis-dim'
                   }`}>
@@ -459,8 +460,11 @@ export default function LifeScreen() {
                     {entry.isWorld && entry.worldEventName && (
                       <div className="text-xs font-bold uppercase tracking-wider text-amber-700 mb-1">🌐 {entry.worldEventName}</div>
                     )}
-                    {!entry.isHeadline && !entry.isSoundtrack && !entry.isDeath && <span className="font-bold mr-2 text-xs uppercase tracking-wider opacity-60">Age {entry.age}</span>}
-                    <span className={entry.isHeadline || entry.isSoundtrack ? 'italic text-sm' : ''}>{entry.text}</span>
+                    {entry.isLetter && (
+                      <div className="text-xs font-semibold uppercase tracking-wider text-amber-700 mb-2">✉ Age {entry.age}</div>
+                    )}
+                    {!entry.isHeadline && !entry.isSoundtrack && !entry.isDeath && !entry.isLetter && <span className="font-bold mr-2 text-xs uppercase tracking-wider opacity-60">Age {entry.age}</span>}
+                    <span className={`${entry.isHeadline || entry.isSoundtrack ? 'italic text-sm' : ''} ${entry.isLetter ? 'italic block ml-2 border-l-2 border-amber-400 pl-3' : ''}`}>{entry.text}</span>
                   </div>
                 ))}
 
@@ -536,15 +540,17 @@ export default function LifeScreen() {
                                 entry.isHeadline   ? 'bg-stone-100 text-stone-700' :
                                 entry.isSoundtrack ? 'bg-violet-50 text-violet-900' :
                                 entry.isWorld      ? 'bg-amber-50 text-amber-800' :
+                                entry.isLetter     ? 'bg-amber-50 text-stone-800' :
                                 entry.isKey        ? 'bg-blue-50 text-blue-800' :
                                 'text-natalis-dim'
                               }`}>
                                 {entry.isDeath && <span className="font-semibold mr-1.5 text-xs text-zinc-400 uppercase">Age {entry.age} — </span>}
-                                {!entry.isHeadline && !entry.isSoundtrack && !entry.isDeath && <span className="font-bold mr-2 text-xs opacity-50">Age {entry.age}</span>}
+                                {!entry.isHeadline && !entry.isSoundtrack && !entry.isDeath && !entry.isLetter && <span className="font-bold mr-2 text-xs opacity-50">Age {entry.age}</span>}
                                 {entry.isHeadline && <span className="text-xs font-semibold mr-1 text-stone-500">📰 {entry.age} — </span>}
                                 {entry.isSoundtrack && <span className="text-xs font-semibold mr-1 text-violet-500">🎵 {entry.age} — </span>}
                                 {entry.isWorld && entry.worldEventName && <span className="text-xs font-bold mr-1">🌐 {entry.worldEventName} — </span>}
-                                <span className={entry.isHeadline || entry.isSoundtrack ? 'italic' : ''}>{entry.text}</span>
+                                {entry.isLetter && <span className="text-xs font-semibold mr-1 text-amber-700">✉ {entry.age} — </span>}
+                                <span className={`${entry.isHeadline || entry.isSoundtrack ? 'italic' : ''} ${entry.isLetter ? 'italic' : ''}`}>{entry.text}</span>
                               </div>
                             ))}
                           </div>
