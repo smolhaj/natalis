@@ -621,6 +621,14 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by eth_red_terror_1977 (survived branch). Follow-through: eth_red_terror_echo (late_life, when asked about it as history).',
   },
 
+  eth_arbegnoch_family: {
+    weight: 'moderate',
+    category: 'conflict',
+    description: 'Grew up in a family that joined the Arbegnoch patriots during the Italian occupation 1935–41 — the guerrilla resistance from the countryside while Haile Selassie was in exile in Bath.',
+    intent: 'none',
+    notes: 'Set by eth_italian_invasion_1935 (resistance branch). Terminal flag — the identity marker needs no downstream event.',
+  },
+
   gukurahundi_generation: {
     weight: 'major',
     category: 'conflict',

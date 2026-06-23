@@ -1298,6 +1298,32 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by eth_abiy_peace_2018. Precedes the Tigray war context.',
   },
 
+  // ── ETHIOPIA DEPTH FLAGS (events_ethiopia_depth.js) ───────────────────────
+
+  eth_haile_selassie_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed Haile Selassie\'s removal in September 1974 — forty-four years of imperial rule ending in a Volkswagen Beetle, the Lion of Judah described as "former king" in the next day\'s newspaper.',
+    intent: 'year_texture',
+    notes: 'Set by eth_haile_selassie_fall (both choices). Year texture: post-imperial memory, the arc of governments in one lifetime. Follow-through: eth_emperor_late_reckoning.',
+  },
+
+  eth_eritrea_loss: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Ethiopian who lived through Eritrean independence in 1993 — the country becoming landlocked overnight, the ports of Assab and Massawa passing to a foreign state.',
+    intent: 'year_texture',
+    notes: 'Set by eth_eritrea_referendum_1993. Year texture: the specific condition of landlocked Ethiopia, the absence of a coast.',
+  },
+
+  eth_oromia_protest_witness: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Present for the Oromia protests 2015–2016 — the Irreechaa massacre at Lake Hora, the state of emergency, the years of pressure that preceded Abiy Ahmed\'s rise.',
+    intent: 'event',
+    notes: 'Set by eth_oromia_protests_2016 (both choices). Follow-through: eth_oromia_abiy_reckoning (when eth_abiy_generation is also set).',
+  },
+
   zimbabwe_independence_generation: {
     weight: 'minor',
     category: 'historical',

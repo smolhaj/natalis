@@ -9477,6 +9477,20 @@ function buildYearTexture(state) {
       ? 'The man who won the Nobel Peace Prize in 2019 fought a war in the north of Ethiopia that produced 300,000 to 500,000 deaths. The prize was not revoked. The dead are not un-dead. You are the generation that holds both of these facts.'
       : 'Eritrean troops were fighting in Tigray. The same Eritrea that Abiy made peace with. The same peace that won him the prize. The connections are legible if you lay them out. You have laid them out many times.',
   ])
+  if (F.has('eth_haile_selassie_generation') && Math.random() < 0.22) return pick([
+    'Haile Selassie ruled Ethiopia for forty-four years and was removed in a Volkswagen Beetle. The generation that had only ever known one emperor had to recalibrate who the country was without him. You were part of that recalibration.',
+    phase === 'late_life'
+      ? 'In the span of your adult life: the Emperor, the Derg, the EPRDF, Abiy Ahmed, the Tigray war. Each one ended or was supposed to end the era of the previous one. The country has had more history than most countries manage in twice the time.'
+      : 'The man who pleaded Ethiopia\'s case at Geneva in 1936, who survived the Italian occupation, who came back from Bath and restored the imperial system — was taken from the palace in a Volkswagen at eighty-two. The Derg called him "former king." Within a year they had killed many of the people who had served him.',
+    'The palace animals were well-fed during the 1973 famine. That is the specific fact the Derg used to justify the revolution. The fact is accurate. What followed the revolution is also on the record.',
+  ])
+  if (F.has('eth_eritrea_loss') && Math.random() < 0.20) return pick([
+    'Ethiopia is landlocked. The ports of Assab and Massawa — through which the country moved most of its imports and exports — are in Eritrea. The 1993 referendum was legitimate. The consequence is the permanent condition of 120 million people.',
+    'The specific weight of a landlocked country in a dry region: everything imported comes through a neighbouring country\'s ports, at their schedules and their goodwill. The Eritrean border closed in 1998 for the war and did not fully reopen for decades.',
+    phase === 'late_life'
+      ? 'You have lived in landlocked Ethiopia for most of your adult life. The sea is the thing the country does not have, does not discuss, has not discussed since the early 1990s. You are aware of it the way you are aware of an absence that has been there long enough to feel structural.'
+      : 'The 1998 war with Eritrea — fought over a border town called Badme — cost 70,000 lives and ended with the same border. What it also cost was the last period when the ports were operationally available. You learned to route everything through Djibouti instead.',
+  ])
 
   // ─── IRAN CONTEMPORARY TEXTURE ───────────────────────────────────────────────
   if (F.has('green_movement_generation') && Math.random() < 0.25) return pick([

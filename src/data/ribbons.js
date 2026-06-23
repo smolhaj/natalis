@@ -2776,6 +2776,43 @@ export const RIBBONS = [
     color: 'purple',
   },
 
+  // ── ETHIOPIA DEPTH RIBBONS ───────────────────────────────────────────────────
+  {
+    id: 'the_adwa_classroom',
+    label: 'The Adwa Classroom',
+    description: 'Learned the Battle of Adwa in the classroom it made possible.',
+    condition: (G) => G.character?.country?.name === 'Ethiopia' && G.age >= 10,
+    rarity: 'common',
+  },
+  {
+    id: 'the_volkswagen_generation',
+    label: 'The Volkswagen Generation',
+    description: 'Witnessed Haile Selassie removed from the Jubilee Palace in a Volkswagen Beetle — forty-four years of imperial Ethiopia ending on a Tuesday morning.',
+    condition: (G) => G.flags.includes('eth_haile_selassie_generation'),
+    rarity: 'uncommon',
+  },
+  {
+    id: 'the_arbegnoch',
+    label: 'The Arbegnoch',
+    description: 'Grew up in a family that joined the patriot resistance during the Italian occupation — five years in the mountains while the Emperor was in Bath.',
+    condition: (G) => G.flags.includes('eth_arbegnoch_family'),
+    rarity: 'rare',
+  },
+  {
+    id: 'the_landlocked',
+    label: 'The Landlocked',
+    description: 'Lived through the day Ethiopia became landlocked — Eritrean independence 1993 taking both ports, the 1959 treaty irrelevant, the Blue Nile the only asset that remained.',
+    condition: (G) => G.flags.includes('eth_eritrea_loss'),
+    rarity: 'uncommon',
+  },
+  {
+    id: 'the_irreechaa_generation',
+    label: 'The Irreechaa Generation',
+    description: 'Present for the Oromia protests — the Irreechaa massacre, the state of emergency, the years of pressure that preceded Abiy Ahmed.',
+    condition: (G) => G.flags.includes('eth_oromia_protest_witness'),
+    rarity: 'uncommon',
+  },
+
   // ── MEXICO DEPTH RIBBONS ─────────────────────────────────────────────────────
   {
     id: 'the_night_pri_fell',
