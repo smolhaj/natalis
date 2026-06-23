@@ -11179,6 +11179,34 @@ function buildYearTexture(state) {
     'April 2021. The ESMAD in Cali. The internet going dark in the neighborhoods where the protests were largest. Forty-six days of blockades. The reform withdrawn. Eighty-three people dead. The country goes back to something like ordinary.',
     'The paro nacional produced the biggest protests in Colombian history and eighty-three deaths and the withdrawal of the tax reform. What it produced after the withdrawal is still being sorted.',
   ])
+  if (F.has('col_falsos_positivos_generation') && Math.random() < 0.20) return pick([
+    'Falsos positivos. The army killed civilians and reported them as guerrilla casualties. The incentive was body counts for promotions. The word for this, in Colombia, is a euphemism: false positives, as if the error were statistical.',
+    'The twenty-two young men from Soacha disappeared and were found in Norte de Santander dressed as guerrillas. The Soacha number was the number that broke the system open. Behind it were ten thousand others.',
+    phase === 'late_life'
+      ? 'The JEP has been hearing falsos positivos cases. The generals are testifying. The words "I acknowledge" are in the official transcript. Whether acknowledgment is the same as accountability is the question the tribunal cannot fully answer.'
+      : 'What the scandal taught: the body count in the defense ministry annual report has a specific cost, paid by young men from poor neighbourhoods whose families organised to make the cost visible.',
+  ])
+  if (F.has('col_medellin_transformation') && Math.random() < 0.20) return pick([
+    'The cable car to the comunas takes twelve minutes. Before the cable car there was the route on foot you did not take after a certain hour. The transformation is in those twelve minutes.',
+    'Medellín won the Most Innovative City award in 2013. It had the highest murder rate in the world in 2003. Both sentences are in the record. The distance between them is one decade.',
+    phase === 'late_life'
+      ? 'You remember what it cost to take certain routes. The city remembers the death toll and calls it data. The difference between data and memory is that memory has faces.'
+      : 'The innovation story is real: the urban planning, the libraries in the comunas, the escalators in Moravia. The parallel story — the paramilitaries providing the order that dropped the murder rate — is also real and shown less frequently to international visitors.',
+  ])
+  if (F.has('col_afrocolombiano_choco') && Math.random() < 0.22) return pick([
+    'The Chocó has more rainfall than almost any place on earth and less infrastructure than most of Colombia. The gold in the river sediment has been extracted for five hundred years. The communities at the river have the worst health indicators in the country. These facts are related.',
+    'Law 70 of 1993 gave Afro-Colombian communities collective land rights on the Pacific coast. The law is real. The enforcement of the law against armed groups competing for the same territory is what the law could not guarantee.',
+    phase === 'late_life'
+      ? 'Three hundred years on this coast. After slavery ended, people moved to the places the Spanish didn\'t want — the swamp forests, the rivers, the Pacific bajas. Three centuries later those places are wanted by everyone and defended by no one with authority.'
+      : 'The displacement from Buenaventura — from the bajas beside the port — is the largest urban displacement in Colombia. The port handles a third of the country\'s imports. The people who live beside it have been moved to make room for the containers.',
+  ])
+  if (F.has('col_cafetero_generation') && Math.random() < 0.20) return pick([
+    'October is the harvest month. The specific soreness of reaching upward into the coffee rows for hours. The smell of wet coffee cherries. The price for the quintal set in New York by a market no one in the valley could see.',
+    'The school uniform was the measure of the harvest. A good year: paid before October. A bad year: still owed in February, the uniform arriving after everyone else\'s. You learned the commodity markets through that calendar.',
+    phase === 'late_life'
+      ? 'The farm was two hectares of coffee and one of food crops. The entire economic universe of a childhood. The grandchildren buy coffee in tins at the supermarket and know nothing about the basket tied at the waist at dawn.'
+      : 'The coffee economy is not just a product. It is October, and a specific loan, and a school uniform, and whether the price moved in a market six thousand kilometres away that has no knowledge of you.',
+  ])
 
   // ─── PERU TEXTURE ─────────────────────────────────────────────────────────────
   if (F.has('per_sendero_generation') && Math.random() < 0.27) return pick([

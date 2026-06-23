@@ -405,6 +405,62 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by col_la_violencia_rural (left choice), col_farc_question (moved choice), col_paramilitares (leave choice).',
   },
 
+  col_falsos_positivos_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through the falsos positivos scandal — the systematic killing of civilians by Colombian army units presented as combat kills (2002–2008). Knows the Soacha twenty-two.',
+    intent: 'year_texture',
+    notes: 'Set by col_dep_false_positives. Triggers col_dep_falsos_echo follow-through.',
+  },
+
+  col_medellin_transformation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed Medellín\'s transformation from the world\'s most dangerous city to an urban innovation story — the cable cars, the murder rate\'s fall, the complicated truth behind both.',
+    intent: 'year_texture',
+    notes: 'Set by col_dep_medellin_transforms.',
+  },
+
+  col_coca_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Grew up in a Colombian rural area where coca was the only viable cash crop — the buyer\'s scales, the fumigation planes, the substitution check that arrived late if it arrived.',
+    intent: 'event',
+    notes: 'Set by col_dep_coca_farmer. Follow-through: col_dep_coca_accord_echo (after 2017 peace accord).',
+  },
+
+  col_afrocolombiano_choco: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Afro-Colombian from the Chocó / Pacific coast — three hundred years of settlement, paradox of biodiversity and poverty, displacement from Buenaventura\'s bajas.',
+    intent: 'year_texture',
+    notes: 'Set by col_dep_choco_life, col_dep_choco_displaced.',
+  },
+
+  col_urban_settler: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Built a life in a city periphery neighbourhood as a desplazado — organised for water and electricity, becoming part of the city through the specific work of staying.',
+    intent: 'none',
+    notes: 'Set by col_dep_desplazado_city (build choice). Terminal flag.',
+  },
+
+  col_cafetero_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Grew up in a Colombian coffee farming family — the harvest in October, the price set in New York, the school uniform paid or delayed based on the quintal price.',
+    intent: 'year_texture',
+    notes: 'Set by col_dep_cafetero.',
+  },
+
+  col_jep_witness: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Testified before the Jurisdicción Especial para la Paz — chose to contribute to the official truth record of the Colombian conflict.',
+    intent: 'none',
+    notes: 'Set by col_dep_jep (testify choice). Terminal flag.',
+  },
+
   irn_diaspora_generation: {
     weight: 'moderate',
     category: 'displacement',
