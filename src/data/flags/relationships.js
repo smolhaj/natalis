@@ -862,6 +862,16 @@ export const RELATIONSHIP_FLAGS = {
     notes: 'Set by inh_late_reckoning. Terminal marker; also increments legacy by 5.',
   },
 
+  // ── EMPTY NEST ARC (events_children_arc.js + events_empty_nest.js)
+
+  empty_nest: {
+    weight: 'major',
+    category: 'family',
+    description: 'Watched the last child leave home — the house suddenly silent in a way that has no precedent in your adult life.',
+    intent: 'both',
+    notes: 'Set by child_leaves_home (events_children_arc.js, both choices). Year texture: the empty house, the rediscovery. Follow-throughs: empty_nest first year, partner rediscovery, late reckoning.',
+  },
+
   // ── GRANDPARENT ARC (events_grandparent_arc.js)
 
   became_grandparent: {

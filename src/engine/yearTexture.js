@@ -358,6 +358,17 @@ function buildYearTexture(state) {
       : 'Sometimes you notice it in the way you notice things you know well — which is to say briefly, in passing, and with a specific kind of recognition.',
   ])
 
+  // ─── EMPTY NEST ARC MEMORY LAYER ────────────────────────────────────────────
+
+  if (F.has('empty_nest') && Math.random() < 0.22) return pick([
+    'The house found a different shape after they left. Not worse. Just a shape you had forgotten, from before the family filled it.',
+    phase === 'late_life'
+      ? 'You raised them in this house. They left and the house changed, and then the grandchildren started coming for weekends and the house is noisy again on certain days. The long arc of what a house holds.'
+      : 'The evening is yours now. You have forgotten what to do with an evening that has no logistics in it. You are learning again.',
+    'The room that was theirs. You walk past it. The specific texture of a space that held a person and now holds their absence, which is a kind of presence.',
+    'The quiet is not hostile. It is just very large. You are still calibrating.',
+  ])
+
   // ─── GRANDPARENT ARC MEMORY LAYER ───────────────────────────────────────────
 
   if (F.has('became_grandparent') && Math.random() < 0.25) return pick([
