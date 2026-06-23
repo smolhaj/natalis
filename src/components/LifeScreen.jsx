@@ -4,7 +4,7 @@ import StatBar from './StatBar'
 import FlagChip from './FlagChip'
 import EventBox from './EventBox'
 import { getCountryFlag, REGIME_LABELS, REGIME_COLORS, RELIGION_LABELS, RESIDENCY_LABELS } from '../utils/countryUtils'
-import { getCountryRegime, generateIdentityCard, DESIRE_LABELS, getWealthTierLabel, getFinancialReputationDisplay, formatParentIncome } from '../engine/gameEngine'
+import { getCountryRegime, generateIdentityCard, DESIRE_LABELS, getWealthTierLabel, getFinancialReputationDisplay, formatParentIncome, getPhase } from '../engine/gameEngine'
 import { PLACES, getPlacesForCountry, getRelocationCost } from '../data/places'
 import ActivitiesPanel from './ActivitiesPanel'
 
@@ -19,14 +19,6 @@ const PHASE_LABELS = {
 
 const BELT_NAMES = ['white','yellow','orange','green','blue','purple','red','brown','black']
 
-function getPhase(age) {
-  if (age <= 5) return 'early_childhood'
-  if (age <= 11) return 'childhood'
-  if (age <= 17) return 'adolescence'
-  if (age <= 29) return 'young_adult'
-  if (age <= 49) return 'midlife'
-  return 'late_life'
-}
 
 function RelBar({ value, color }) {
   return (
@@ -190,6 +182,8 @@ export default function LifeScreen() {
     else if (extraFlags.includes('abroad')) labels.push({ text: 'Lives abroad', color: '#8e8e93' })
     else if (quality <= 24) labels.push({ text: 'Estranged', color: '#ff3b30' })
     else if (quality <= 39) labels.push({ text: 'Strained', color: '#ff9500' })
+    else if (quality <= 55) labels.push({ text: 'Steady', color: '#8e8e93' })
+    else if (quality <= 75) labels.push({ text: 'Good', color: '#5ac8fa' })
     else if (quality >= 90) labels.push({ text: 'Very close', color: '#34c759' })
     else if (quality >= 76) labels.push({ text: 'Close', color: '#34c759' })
     if (extraFlags.includes('caretaker')) labels.push({ text: 'You\'re their carer', color: '#007aff' })
@@ -920,6 +914,11 @@ export default function LifeScreen() {
                           </div>
                         ) : null
                       })()}
+                      {mem?.partnerMoments?.length > 0 && (
+                        <p className="text-[11px] italic text-natalis-muted mt-2 leading-snug">
+                          {mem.partnerMoments.at(-1)}
+                        </p>
+                      )}
                     </div>
                     <RelBar value={partner.relationshipQuality} color={relColor(partner.relationshipQuality)} />
                   </div>
@@ -1531,11 +1530,16 @@ export default function LifeScreen() {
         <div className="fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-natalis-border shadow-card-lg">
           <div className="max-w-2xl mx-auto flex items-center px-4 py-2 gap-3">
 
-            {/* Actions remaining dots */}
-            <div className="flex gap-1">
-              {Array.from({ length: maxActionsPerYear }).map((_, i) => (
-                <div key={i} className="w-2 h-2 rounded-full" style={{ backgroundColor: i < actionsThisYear ? '#e5e5ea' : '#007aff' }} />
-              ))}
+            {/* Actions remaining */}
+            <div className="flex flex-col items-center gap-1 min-w-[36px]">
+              <div className="flex gap-1">
+                {Array.from({ length: maxActionsPerYear }).map((_, i) => (
+                  <div key={i} className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: i < actionsThisYear ? '#e5e5ea' : '#007aff' }} />
+                ))}
+              </div>
+              <span className="text-[9px] font-medium leading-none" style={{ color: actionsLeft > 0 ? '#007aff' : '#8e8e93' }}>
+                {actionsLeft > 0 ? `${actionsLeft} left` : 'none left'}
+              </span>
             </div>
 
             {/* Activities / Prison Life button */}
@@ -1564,7 +1568,7 @@ export default function LifeScreen() {
             {/* Age Up — disabled during pending trial */}
             <div className="flex-1 flex flex-col gap-1">
               {desire && DESIRE_LABELS[desire] && (
-                <p className="text-center text-[11px] italic text-natalis-muted leading-tight px-1">
+                <p className="text-center text-xs italic text-natalis-dim leading-snug border-l-2 border-natalis-border pl-2">
                   {DESIRE_LABELS[desire]}
                 </p>
               )}

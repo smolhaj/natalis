@@ -37,11 +37,23 @@ export const SOCIETY_EVENTS = [
       if (!year) return false
       return Math.abs(G.currentYear - year) <= 2
     },
-    text: (() => {
-      // Text is resolved at runtime; we use a function-returning approach via the effect/text field.
-      // Since text is static, we use a representative composite text covering the range of contexts.
+    text: (G) => {
+      const country = G.character.country.name
+      const year = G.currentYear
+      if (country === 'Australia') return 'The Commonwealth Franchise Act has passed. You are among the first women in the world to hold this right at a national level. The polling booth is quiet. The man at the desk checks your name twice. You vote.'
+      if (country === 'Finland') return 'Finland is the first country in Europe to grant women both the vote and the right to stand for parliament. You have read the arguments for and against, most of them written by men. You walk to the polling station. There are other women ahead of you in the queue.'
+      if (country === 'Denmark') return `The constitutional revision has passed. It is ${year}. You are thirty-six years old and it is the first time you will vote. Your mother never did. You stand in the queue and think about that.`
+      if (country === 'Canada') return 'The Women\'s Franchise Act has passed. Federally, at least. Quebec women will wait another generation for the provincial vote. You know this. It complicates how you feel, holding the ballot. You vote anyway.'
+      if (country === 'Germany') return 'The Republic has granted women full suffrage. The Kaiser is gone. The war is over. The world is rearranging itself into something none of you recognise. The election is in January. You intend to vote in it.'
+      if (country === 'United States') return 'The Nineteenth Amendment has been ratified. Seventy-two years since Seneca Falls. You stand in line. The woman behind you is old enough to have marched. You do not know her name. You want to say something and don\'t.'
+      if (country === 'France') return `It is ${year}. The provisional government has granted women the right to vote. France is later than most of Europe. The men who fought in the Resistance will cast their ballots alongside the women who did. You put your name on the register.`
+      if (country === 'Italy') return 'The Fascists are gone. The new republic has granted women full suffrage. The first elections are next year. Your grandmother voted for Mussolini in the only referendum she was ever offered. You will not be repeating that particular history.'
+      if (country === 'Japan') return 'The occupation government has written universal suffrage into the new constitution. Your mother is uncertain about this. You are not. You go to the polling station early, before the heat.'
+      if (country === 'China') return 'The People\'s Republic has declared. The new constitution grants women equal voting rights. Whether those rights mean anything under a single-party state is a question you know better than to ask aloud. You mark your ballot.'
+      if (country === 'India') return 'The Constitution of the Republic of India grants universal adult suffrage. There is no literacy test, no property requirement, no husband\'s permission needed. You stand in a line that stretches around the block. Most of the women near you have never held a ballot before. Neither have you.'
+      if (country === 'Saudi Arabia') return 'The decree allows women to vote in municipal elections. Municipal elections only. You drive yourself to the polling station — that right came through last year. You vote. You know the boundaries. You vote anyway.'
       return 'The law has passed. Women may now vote. You hear the news and sit with it for a while. Some women in the street are weeping. Some are arguing already about what it will and will not change. You have been waiting your whole adult life for a right that was always supposed to be self-evident.'
-    })(),
+    },
     choices: null,
     effect: (p) => {
       p.m += 15

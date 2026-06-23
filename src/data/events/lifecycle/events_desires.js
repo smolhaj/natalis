@@ -22,7 +22,7 @@ export const DESIRES_EVENTS = [
       ),
     text: (G) => {
       const distant = G.parents.father?.alive && (G.parents.father.relationshipQuality ?? 70) < 55 ? 'father' : 'mother'
-      return `Your ${distant} says something small and it lands the wrong way — not cruelty, just carelessness. You carry it out of the room and down the street and further than that.`
+      return `Your ${distant} says something small and it lands the wrong way — not cruelty, just carelessness. You carry it out of the room and down the street and further than that. Something in you decides, from here, to earn what you were denied.`
     },
     choices: null,
     effect: (p) => { p.setDesire('prove_worth'); p.setMem('woundFired', true) },
@@ -36,7 +36,7 @@ export const DESIRES_EVENTS = [
     when: (G) => G.age >= 6 && G.age <= 11 && !G.mem?.woundFired &&
       (G.flags.has('emigrated') || G.flags.has('rural_to_urban') ||
        G.flags.has('war_childhood') || G.flags.has('civil_war_lived')),
-    text: 'You move again, or the world moves around you. Your friends stay where they were. There is a word for the place you came from, but you are less certain lately what it means.',
+    text: 'You move again, or the world moves around you. Your friends stay where they were. There is a word for the place you came from, but you are less certain lately what it means. Somewhere in you, a need forms — for a room, a street, a word that is yours.',
     choices: null,
     effect: (p) => { p.setDesire('belong'); p.setMem('woundFired', true) },
   },
@@ -49,7 +49,7 @@ export const DESIRES_EVENTS = [
     when: (G) => G.age >= 7 && G.age <= 11 && !G.mem?.woundFired && (G.siblings?.length ?? 0) > 0,
     text: (G) => {
       const sib = G.siblings?.[0]
-      return `${sib?.name?.split(' ')[0] ?? 'Your sibling'} gets the photograph taken. You are standing a little to the left. You remember this later, specifically.`
+      return `${sib?.name?.split(' ')[0] ?? 'Your sibling'} gets the photograph taken. You are standing a little to the left. You remember this later, specifically. A wish forms here: to be seen, completely, at least once.`
     },
     choices: null,
     effect: (p) => { p.setDesire('be_seen'); p.setMem('woundFired', true) },
@@ -62,7 +62,7 @@ export const DESIRES_EVENTS = [
     cooldown: 0,
     when: (G) => G.age >= 6 && G.age <= 11 && !G.mem?.woundFired &&
       (G.flags.has('food_insecurity') || G.character?.wealthTier <= 1),
-    text: 'There is a week when dinner is smaller each day. No one explains this. You learn to read the refrigerator like weather.',
+    text: 'There is a week when dinner is smaller each day. No one explains this. You learn to read the refrigerator like weather. You file something away: you will never let this happen again.',
     choices: null,
     effect: (p) => { p.setDesire('safety'); p.setMem('woundFired', true) },
   },
@@ -74,7 +74,7 @@ export const DESIRES_EVENTS = [
     cooldown: 0,
     when: (G) => G.age >= 6 && G.age <= 11 && !G.mem?.woundFired &&
       G.parents && (!G.parents.father?.alive || G.parents.father?.relationshipQuality === 0),
-    text: 'You wait at the window on the day they said they would come. They don\'t. You understand something that night that takes years to put into words.',
+    text: 'You wait at the window on the day they said they would come. They don\'t. You understand something that night that takes years to put into words. You decide, silently: never leave first.',
     choices: null,
     effect: (p) => { p.setDesire('connection'); p.setMem('woundFired', true) },
   },
@@ -87,7 +87,7 @@ export const DESIRES_EVENTS = [
     when: (G) => G.age >= 7 && G.age <= 11 && !G.mem?.woundFired &&
       (G.regime === 'military_dictatorship' || G.regime === 'single_party_authoritarian' ||
        G.regime === 'single_party_communist' || G.flags.has('war_childhood')),
-    text: 'You see something you cannot unsee. No one talks about it afterward. You understand that not talking about it is also a choice — and that you will have to make it yourself someday.',
+    text: 'You see something you cannot unsee. No one talks about it afterward. You understand that not talking about it is also a choice — and that you will have to make it yourself someday. You are going to do something, eventually, that cannot be quietly undone.',
     choices: null,
     effect: (p) => { p.setDesire('leave_mark'); p.setMem('woundFired', true) },
   },
@@ -100,7 +100,7 @@ export const DESIRES_EVENTS = [
     when: (G) => G.age >= 7 && G.age <= 11 && !G.mem?.woundFired &&
       (G.flags.has('experienced_racism') || G.flags.has('caste_discrimination') ||
        (G.character?.wealthTier ?? 3) <= 2),
-    text: 'Someone makes clear, without saying it, that you are a category before you are a person. You file this away. You are not sure yet what to do with it.',
+    text: 'Someone makes clear, without saying it, that you are a category before you are a person. You file this away. You start building, in some interior room, the person they cannot categorize.',
     choices: null,
     effect: (p) => { p.setDesire('freedom'); p.setMem('woundFired', true) },
   },
@@ -111,7 +111,7 @@ export const DESIRES_EVENTS = [
     weight: 2,
     cooldown: 0,
     when: (G) => G.age >= 9 && G.age <= 11 && !G.mem?.woundFired,
-    text: 'You have a wish you don\'t tell anyone. Most children do. It is specific and has a shape and you turn it over in your hands at night.',
+    text: 'You have a wish you don\'t tell anyone. Most children do. It is specific and has a shape and you turn it over in your hands at night. You keep it. You carry it carefully.',
     choices: null,
     effect: (p) => { p.setDesire('leave_mark'); p.setMem('woundFired', true) },
   },
