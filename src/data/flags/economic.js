@@ -2046,4 +2046,123 @@ export const ECONOMIC_FLAGS = {
     intent: 'none',
   },
 
+  // ── MERCHANT ARC ─────────────────────────────────────────────────────────────
+
+  merchant_market_knowledge: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Merchant who knows the market by its rhythm — which day suppliers are hungry, where the information is before it becomes price.',
+    intent: 'none',
+  },
+
+  merchant_claimed_business: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Merchant who claimed the family business as their own rather than something they were continuing.',
+    intent: 'none',
+  },
+
+  merchant_uncertain_inheritance: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Merchant who kept open the question of whether the business was chosen or inherited — the market doesn\'t distinguish.',
+    intent: 'none',
+  },
+
+  merchant_good_year: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Merchant who experienced the good year — conditions aligned, price moved right, the buyer came through.',
+    intent: 'none',
+  },
+
+  merchant_bad_year: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Merchant who lived through a significantly bad year — reserve substantially reduced; both uncontrollable factors and revisable decisions.',
+    intent: 'event',
+    notes: 'Guards mer_bad_year_echo (late_life).',
+  },
+
+  merchant_adapted: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Merchant who adapted to structural market shift — smaller position than before, but more stable than expected.',
+    intent: 'none',
+  },
+
+  merchant_held_position: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Merchant who held their original position during market shift — now serving the edge of the market.',
+    intent: 'none',
+  },
+
+  merchant_succession_question: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Merchant who arrived at the succession question — who takes over the market knowledge that cannot be transferred automatically.',
+    intent: 'none',
+  },
+
+  merchant_late_reckoning: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Merchant\'s late-life accounting — goods moved, markets navigated, bad years survived, knowledge built and leaving active use.',
+    intent: 'none',
+  },
+
+  // ── ACCOUNTANT ARC ───────────────────────────────────────────────────────────
+
+  accountant_number_knowledge: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Accountant who knows where the money is — structure, source, destination, and what the gap means about an enterprise.',
+    intent: 'none',
+  },
+
+  accountant_shaded_truth: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Accountant who produced a technically accurate presentation designed to create a specific impression for the client.',
+    intent: 'event',
+    notes: 'Guards acc_shaded_truth_echo (late_life).',
+  },
+
+  accountant_held_accuracy: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Accountant who pushed back on shading request — filing is straightforwardly true, client accepted with contextual notes.',
+    intent: 'none',
+  },
+
+  accountant_reported_fraud: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Accountant who reported discovered fraud to regulators — investigation ran two years, name permanently in documentation.',
+    intent: 'none',
+  },
+
+  accountant_documented_fraud: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Accountant who documented fraud internally rather than reporting externally — partial recovery, partial concealment.',
+    intent: 'event',
+    notes: 'Guards acc_fraud_echo (late_life).',
+  },
+
+  accountant_quiet_years: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Accountant who lived the quiet years — accurate numbers, reliable rhythm, knowledge of money\'s movement across decades.',
+    intent: 'none',
+  },
+
+  accountant_late_reckoning: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Accountant\'s late-life accounting — numbers accurate on balance, fraud decision made, knowledge of money leaving active use.',
+    intent: 'none',
+  },
+
 }

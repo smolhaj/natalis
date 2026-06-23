@@ -2982,4 +2982,53 @@ export const RIBBONS = [
     priority: 68,
     color: 'stone',
   },
+
+  // ── MERCHANT ARC ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'the_bad_year',
+    name: 'The Bad Year',
+    description: 'The year the market moved the wrong way. Reserve substantially reduced. You calculated the ratio of bad luck to bad decisions and then stopped calculating.',
+    condition: (G) => G.flags.includes('merchant_bad_year') && G.flags.includes('merchant_late_reckoning'),
+    priority: 66,
+    color: 'zinc',
+  },
+
+  {
+    id: 'the_market_breath',
+    name: 'The Market Breath',
+    description: 'Which day the suppliers are hungry. Where the information is before it becomes price. Twenty years to build. Leaving the phase of active use.',
+    condition: (G) => G.flags.includes('merchant_market_knowledge') && G.flags.includes('merchant_late_reckoning'),
+    priority: 64,
+    color: 'stone',
+  },
+
+  // ── ACCOUNTANT ARC ───────────────────────────────────────────────────────────
+
+  {
+    id: 'the_report',
+    name: 'The Report',
+    description: 'You saw the pattern in the numbers and filed the report. The investigation ran two years. Your name is in the documentation permanently.',
+    condition: (G) => G.flags.includes('accountant_reported_fraud') && G.flags.includes('accountant_late_reckoning'),
+    priority: 74,
+    color: 'gold',
+  },
+
+  {
+    id: 'the_internal_process',
+    name: 'The Internal Process',
+    description: 'You documented it and told the board. Partial recovery, partial concealment. You know what you did and did not do with what you found.',
+    condition: (G) => G.flags.includes('accountant_documented_fraud') && G.flags.includes('accountant_late_reckoning'),
+    priority: 68,
+    color: 'zinc',
+  },
+
+  {
+    id: 'where_the_money_is',
+    name: 'Where the Money Is',
+    description: 'A career spent knowing where the money is. Accurate numbers, on balance. The picture of how money moves, leaving the phase of active use.',
+    condition: (G) => G.flags.includes('accountant_late_reckoning'),
+    priority: 64,
+    color: 'stone',
+  },
 ]
