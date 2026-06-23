@@ -1438,4 +1438,153 @@ export const ECONOMIC_FLAGS = {
     intent: 'none',
   },
 
+  // ── FARMER ARC ──────────────────────────────────────────────────────────────
+
+  farmer_first_season: {
+    weight: 'minor',
+    category: 'career',
+    description: 'Farmer\'s first independent season — the lesson that farming is waiting on things larger than your effort.',
+    intent: 'event',
+    notes: 'Guards farmer_good_year.',
+  },
+
+  farmer_good_year: {
+    weight: 'minor',
+    category: 'career',
+    description: 'A year when the rains came right, the crop came through, the market was fair — the standard referenced in harder years.',
+    intent: 'none',
+  },
+
+  farmer_credit_trap: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Farmer locked into the trader-loan cycle — money at planting, repayment in crop at the trader\'s harvest price.',
+    intent: 'none',
+  },
+
+  farmer_land_titled: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Farmer obtained a formal land title — the document that clarifies ownership in ways that carry their own ambiguity.',
+    intent: 'none',
+  },
+
+  farmer_survived_bad_years: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Farmer survived consecutive bad seasons — came through, but something shifted in the margin.',
+    intent: 'none',
+  },
+
+  farmer_family_migrated: {
+    weight: 'moderate',
+    category: 'geographic',
+    description: 'A family member left for the city to provide income while the farm struggled — the farm changes shape.',
+    intent: 'none',
+  },
+
+  farmer_inheritance_question: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'The unresolved question of who will farm the land after the farmer — the child who stayed vs. the one who left.',
+    intent: 'event',
+  },
+
+  farmer_body_cost: {
+    weight: 'moderate',
+    category: 'health',
+    description: 'Farmer\'s body presenting the accumulated cost of thirty years of physical work — the back, the knees, the hands.',
+    intent: 'none',
+  },
+
+  farmer_late_reckoning: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Farmer\'s late-life accounting of a life in seasons — the land still there, the people gone, the food produced.',
+    intent: 'none',
+  },
+
+  // ── POLICE ARC ──────────────────────────────────────────────────────────────
+
+  police_first_call: {
+    weight: 'minor',
+    category: 'career',
+    description: 'Officer\'s first solo call — the gap between procedure and situation as the actual job.',
+    intent: 'event',
+    notes: 'Guards police_community_distrust.',
+  },
+
+  police_community_distrust: {
+    weight: 'major',
+    category: 'career',
+    description: 'Officer patrolling a community with documented reasons not to trust the police — the arithmetic of institutional debt.',
+    intent: 'none',
+  },
+
+  police_force_used: {
+    weight: 'major',
+    category: 'career',
+    description: 'Officer used proportionate force in the line of duty — the unprocessed weight of it at 11pm in the car outside home.',
+    intent: 'event',
+  },
+
+  police_sought_support: {
+    weight: 'minor',
+    category: 'career',
+    description: 'Officer sought psychological support after using force — partial processing within institutional limits.',
+    intent: 'none',
+  },
+
+  police_regime_enforcer: {
+    weight: 'major',
+    category: 'political',
+    description: 'Officer fully complied with orders to police political activity under an authoritarian regime.',
+    intent: 'none',
+  },
+
+  police_minimal_compliance: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Officer left a gap in authoritarian enforcement — small, deniable, some people used it.',
+    intent: 'none',
+  },
+
+  police_whistleblower: {
+    weight: 'major',
+    category: 'career',
+    description: 'Officer reported departmental wrongdoing through proper channels — career consequences, partial accountability.',
+    intent: 'none',
+  },
+
+  police_silence_kept: {
+    weight: 'major',
+    category: 'career',
+    description: 'Officer chose silence over reporting departmental wrongdoing — knows it, doesn\'t discuss it.',
+    intent: 'none',
+  },
+
+  police_career_weight: {
+    weight: 'major',
+    category: 'career',
+    description: 'Officer carrying the accumulated weight of exposure — scenes, decisions, the gap between procedure and situation over fifteen-plus years.',
+    intent: 'event',
+    notes: 'Guards pol_career_weight_echo (late_life echo).',
+  },
+
+  police_late_reckoning: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Officer\'s late-life accounting of a career holding authority in communities that had reason not to trust it.',
+    intent: 'none',
+  },
+
+  // ── FARMER ARC INHERITANCE ECHO ─────────────────────────────────────────────
+
+  farmer_inheritance_resolved: {
+    weight: 'minor',
+    category: 'career',
+    description: 'The farm inheritance question reached some resolution — who will farm it, or won\'t.',
+    intent: 'none',
+  },
+
 }
