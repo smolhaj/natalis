@@ -177,6 +177,14 @@ export const POLITICAL_FLAGS = {
     notes: 'events_arts.js has a late echo event.',
   },
 
+  project_revived: {
+    weight: 'minor',
+    category: 'achievement',
+    description: 'Character returned to a creative project they had abandoned for years.',
+    intent: 'none',
+    notes: 'Terminal flag. Set when writing_in_drawer project is reopened after 10+ years.',
+  },
+
   nollywood_generation: {
     weight: 'minor',
     category: 'achievement',
