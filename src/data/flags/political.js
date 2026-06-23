@@ -3777,6 +3777,54 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by zmb_democratic_transition_1991.',
   },
 
+  zmb_dep_tonga_kariba: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'BaTonga family displaced by the Kariba Dam flooding (1957-58) — 57,000 people removed from the Zambezi valley, Nyaminyami\'s domain drowned.',
+    intent: 'event',
+    notes: 'Follow-through: zmb_dep_tonga_echo (late_life witness).',
+  },
+
+  zmb_dep_copper_closure: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Grew up in a post-ZCCM Copperbelt closure town — the company town infrastructure without the company maintaining it.',
+    intent: 'year_texture',
+    notes: 'Set by zmb_dep_copper_closure.',
+  },
+
+  zmb_dep_aids_orphan: {
+    weight: 'major',
+    category: 'family',
+    description: 'Raised by grandparents or siblings after parents died in the Zambian AIDS crisis — the gap in the middle generation.',
+    intent: 'event',
+    notes: 'Follow-through: zmb_dep_aids_orphan_adult (young_adult).',
+  },
+
+  zmb_dep_compound_lusaka: {
+    weight: 'moderate',
+    category: 'geographic',
+    description: 'Grew up in a Lusaka informal compound — George, Kanyama, Kalingalinga — the charcoal economy, the tap at the end of the road.',
+    intent: 'year_texture',
+    notes: 'Set by zmb_dep_compound_lusaka.',
+  },
+
+  zmb_dep_mealie_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived through the post-SAP mealie meal price shock — the subsidy removed, the staple tripling in price.',
+    intent: 'year_texture',
+    notes: 'Set by zmb_dep_mealie_crisis.',
+  },
+
+  zmb_dep_chinese_copper: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Worked in or adjacent to Chinese-owned copper and coal operations (CNMC, Collum) — the wages below ZCCM, the labor disputes.',
+    intent: 'year_texture',
+    notes: 'Set by zmb_dep_chinese_copper.',
+  },
+
   mozambican_frelimo_generation: {
     weight: 'major',
     category: 'historical',

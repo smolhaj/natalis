@@ -10949,6 +10949,26 @@ function buildYearTexture(state) {
     'Zambia is a Christian nation — constitutionally, officially, since 1991. The Pentecostal churches grew faster than any other institution in the country through the contraction years.',
     'The church provides what the contracting state no longer provides: the social network, the crisis fund, the Sunday. The prosperity gospel has a particular appeal in a country where the copper promises didn\'t all arrive.',
   ])
+  if (F.has('zmb_dep_copper_closure') && Math.random() < 0.20) return pick([
+    'The company housing is still there and has not been maintained since the company left. The question of who maintains it now runs into the question of who owns it, which runs into the privatisation agreement, which is not public.',
+    'The clinic is open two days a week. It was open five days when ZCCM ran it. The staff is the same staff, older now, paid by a system that is not the one they were hired into.',
+    'The town was built for the mine and the mine is at reduced capacity. The town remains. The infrastructure remains in the shape that was intended for a different economy than the one that exists here now.',
+  ])
+  if (F.has('zmb_dep_compound_lusaka') && Math.random() < 0.20) return pick([
+    'The tap at the end of the road is the shared tap. The queue at the tap in the morning is ordered and efficient because everyone knows the queue and the queue knows everyone.',
+    'The charcoal seller comes through the compound on a specific day. The timing is known. The price is known. The exchange is part of the week\'s structure.',
+    'The compound knows who is sick, who has work, who has come back from the village. The density of the place means the information moves faster than it would in a more formal neighbourhood.',
+  ])
+  if (F.has('zmb_dep_mealie_generation') && Math.random() < 0.20) return pick([
+    'The price of nshima is what the price of food means in this household. The price of mealie meal is the price of the day.',
+    'You know what a full relish and what a thin relish looks like on the plate. The difference is not dramatic enough to see from outside and is precisely calibrated from inside.',
+    'The structural adjustment people called it rationalising subsidies. The household called it the year the mealie meal became something you managed rather than something you had.',
+  ])
+  if (F.has('zmb_dep_chinese_copper') && Math.random() < 0.18) return pick([
+    'The Chinese managers and the Zambian workers communicate through a specific set of gestures and Zambian English that works well enough for the shift. The things it doesn\'t work well enough for are the things that become grievances.',
+    'The mine safety record is kept by the company. The company\'s record and the workers\' record of what happened are different documents. Both documents exist. One of them is filed with the relevant authority.',
+    'The wage is better than no wage and is lower than what ZCCM paid for the same work. Both things are true and they are not the same thing.',
+  ])
 
   // ─── LATIN AMERICA TEXTURE ───────────────────────────────────────────────────
   if (F.has('favela_community_generation') && Math.random() < 0.22) return pick([
