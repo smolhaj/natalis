@@ -9984,6 +9984,31 @@ function buildYearTexture(state) {
     'The village is full of women and older people and children. The young men are in Qatar or Malaysia or Kuwait. This is what a remittance economy looks like from the inside.',
     'The economy cannot absorb the educated youth. The alternative — Kathmandu\'s government jobs, going to the connected — is not enough either. The airport is the third option.',
   ])
+  if (F.has('nep_dep_dalit_generation') && Math.random() < 0.22) return pick([
+    'The upper-caste household across the lane uses a different water source than yours. The distance between the sources is the distance the law abolished and practice maintains.',
+    'You move through this town with the knowledge of which thresholds you are welcome to cross and which ones require you to wait outside. The knowledge is precise. It was acquired early.',
+    'The Maoist insurgency promised to end the caste hierarchy. In some places it did. In some places the same family that owned the upper-caste well still owns the land.',
+  ])
+  if (F.has('nep_dep_kamaiya_generation') && Math.random() < 0.20) return pick([
+    'The Kamaiya system has been abolished for years now. The landlord\'s fields are still the landlord\'s fields. You work them for a daily wage instead of a debt repayment. The algebra has changed.',
+    'Freedom arrived without land. The legal category changed. The economic position changed less than the law implied it would.',
+    'You know the specific arithmetic of a debt that grows faster than labor repays it. You know it in your body rather than in numbers. The body\'s accounting is the more accurate one.',
+  ])
+  if (F.has('nep_dep_porter_generation') && Math.random() < 0.20) return pick([
+    'The altitude is information your body processes automatically. You have been walking this gradient for years and your legs know what the next hour requires before you do.',
+    'A trekker stops to photograph the view you are walking through. You have seen this view on every trip. It stopped being a view and became a distance measure years ago.',
+    'The load today is thirty-eight kilos. You know this by feel. The tumpline distributes it across the forehead and the back and you have been doing this long enough that you know what thirty-eight kilos feels like before the weighing.',
+  ])
+  if (F.has('nep_dep_remittance_generation') && Math.random() < 0.20) return pick([
+    'Your father calls and the signal breaks twice during the call and then reconnects. His voice from Qatar arrives in fragments. This is the texture of the relationship.',
+    'The Western Union office in the district town is where the household income arrives. Your mother goes on the same day each month. That day is a specific day in the calendar.',
+    'The money is there. The person who earns it is not. You have spent your whole childhood in the gap between those two facts.',
+  ])
+  if (F.has('nep_dep_kumari_witness') && Math.random() < 0.18) return pick([
+    'The former Kumari lives in the lane. She was goddess and is now ordinary and the transition had no ceremony proportional to what it required.',
+    'The living goddess is carried to the festival window and you can see her from the square, a child in elaborate paint and dress, before her feet touch ground again and the curtain closes.',
+    'You remember the selection. The examination, the astrologers, the darkened room. Someone\'s daughter went in and a goddess came out and eventually a young woman who didn\'t know how to be ordinary came back.',
+  ])
 
   // ─── MYANMAR TEXTURE ─────────────────────────────────────────────────────────
   if (F.has('myanmar_socialist_generation') && Math.random() < 0.14) return pick([

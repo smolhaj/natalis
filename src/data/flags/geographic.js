@@ -870,6 +870,62 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by nep_youth_exodus.',
   },
 
+  nep_dep_gurkha_generation: {
+    weight: 'major',
+    category: 'military',
+    description: 'Selected for the British or Indian Army Gurkha brigades — the hill run, the doko selection, the departure from the village.',
+    intent: 'event',
+    notes: 'Follow-through: nep_dep_gurkha_return in late_life.',
+  },
+
+  nep_dep_dalit_generation: {
+    weight: 'major',
+    category: 'caste',
+    description: 'Experienced Dalit caste discrimination in Nepal — barred from shared water sources, temples, tea houses under the Muluki Ain tradition.',
+    intent: 'year_texture',
+    notes: 'Set by nep_dep_dalit_water. Intersects with experienced_caste_discrimination.',
+  },
+
+  nep_dep_kamaiya_generation: {
+    weight: 'major',
+    category: 'labor',
+    description: 'Freed Tharu bonded laborer (Kamaiya system, abolished 2000) — the debt that accumulated faster than labor could repay it.',
+    intent: 'year_texture',
+    notes: 'Set by nep_dep_kamaiya.',
+  },
+
+  nep_dep_porter_generation: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Worked as mountain porter or guide on Nepal trekking routes — carrying loads by tumpline, the altitude as occupation.',
+    intent: 'year_texture',
+    notes: 'Set by nep_dep_porter.',
+  },
+
+  nep_dep_remittance_generation: {
+    weight: 'moderate',
+    category: 'family',
+    description: 'Grew up in a remittance household — father in Qatar or Malaysia, monthly transfer as economic structure of childhood.',
+    intent: 'event',
+    notes: 'Follow-through: nep_dep_remittance_adult (the choice to go or stay).',
+  },
+
+  nep_dep_kumari_witness: {
+    weight: 'moderate',
+    category: 'religious',
+    description: 'Was or knew the Kumari Devi — the living goddess selected from Newar Shakya community, the ritualized childhood, the difficult return.',
+    intent: 'year_texture',
+    notes: 'Set by nep_dep_kumari.',
+  },
+
+  nep_dep_pashupatinath: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Grew up with Pashupatinath cremations as part of ordinary life — the Bagmati ghats, death visible and continuous.',
+    intent: 'none',
+    notes: 'Terminal flag. Set by nep_dep_pashupatinath.',
+  },
+
   south_vietnamese_diaspora: {
     weight: 'major',
     category: 'displacement',
