@@ -3286,6 +3286,159 @@ export const COUNTRIES = [
     literacyMale: 0.93,
     literacyFemale: 0.82,
   },
+
+  // ── DENMARK ────────────────────────────────────────────────────────────────
+
+  {
+    name: 'Denmark', capital: 'Copenhagen', currency: 'Danish krone',
+    region: 'Northern Europe', archetype: 'wealthy_west',
+    gdp: 'very_high', healthcare: 'excellent', lifeExpectancy: 81,
+    conflictRisk: 0.0, genderGap: 0.08, socialMobility: 0.85,
+    wealthTierWeights: { 1: 0.03, 2: 0.12, 3: 0.35, 4: 0.35, 5: 0.15 },
+    namePool: {
+      male: ['Anders', 'Lars', 'Niels', 'Søren', 'Jens', 'Morten', 'Christian', 'Thomas', 'Peter', 'Henrik', 'Mikkel', 'Jonas'],
+      female: ['Anne', 'Mette', 'Kirsten', 'Hanne', 'Susanne', 'Lene', 'Pia', 'Karen', 'Lone', 'Ida', 'Emma', 'Laura'],
+    },
+    surnames: ['Nielsen', 'Jensen', 'Hansen', 'Andersen', 'Pedersen', 'Christensen', 'Larsen', 'Sørensen', 'Rasmussen', 'Jørgensen', 'Petersen', 'Madsen'],
+    languages: ['Danish'],
+    context: 'A small, prosperous Scandinavian state with one of the world\'s most generous welfare systems. WWII left a complicated legacy — the government\'s accommodation of German occupation 1940–45 coexists with the celebrated rescue of Danish Jews in 1943. Post-war Denmark built the comprehensive velfærdsstat (welfare state) and became a model of social democracy. Immigration debates from the 1990s onward produced some of the EU\'s strictest asylum policies. Janteloven — the cultural norm against standing out above others — shapes both the society\'s equality and its resistance to individual ambition.',
+    yearRange: [1940, 2005],
+    regime: 'constitutional_monarchy',
+    regimeHistory: [
+      { year: 1940, to: 'constitutional_monarchy' },
+    ],
+    religionWeights: { christian_protestant: 0.74, secular: 0.20, muslim: 0.05, other: 0.01 },
+    ethnicGroups: [
+      { id: 'danish', name: 'Danish', share: 0.87 },
+      { id: 'turkish_danish', name: 'Turkish-Danish', share: 0.03 },
+      { id: 'arab_danish', name: 'Arab-Danish', share: 0.03 },
+      { id: 'other_european', name: 'Other European', share: 0.05 },
+      { id: 'other_danish', name: 'Other', share: 0.02 },
+    ],
+    casteSystem: false,
+    lgbtqCriminalized: false,
+    lgbtqLegalYear: 1989,
+    childMarriageRisk: 0.00,
+    urbanRate: 0.88,
+    literacyMale: 0.99,
+    literacyFemale: 0.99,
+  },
+
+  // ── FINLAND ────────────────────────────────────────────────────────────────
+
+  {
+    name: 'Finland', capital: 'Helsinki', currency: 'Finnish markka (pre-1999) / euro',
+    region: 'Northern Europe', archetype: 'wealthy_west',
+    gdp: 'very_high', healthcare: 'excellent', lifeExpectancy: 82,
+    conflictRisk: 0.0, genderGap: 0.07, socialMobility: 0.87,
+    wealthTierWeights: { 1: 0.03, 2: 0.12, 3: 0.35, 4: 0.35, 5: 0.15 },
+    namePool: {
+      male: ['Juhani', 'Mikael', 'Matti', 'Pekka', 'Juha', 'Antti', 'Timo', 'Jari', 'Markku', 'Hannu', 'Ville', 'Paavo'],
+      female: ['Anna', 'Maria', 'Helena', 'Tuulikki', 'Aino', 'Kaisa', 'Päivi', 'Leena', 'Ritva', 'Maarit', 'Satu', 'Kirsi'],
+    },
+    surnames: ['Mäkinen', 'Korhonen', 'Heikkinen', 'Järvinen', 'Lehtonen', 'Leinonen', 'Virtanen', 'Nieminen', 'Mäkelä', 'Hämäläinen', 'Laitinen', 'Kinnunen'],
+    languages: ['Finnish', 'Swedish'],
+    context: 'Finland fought two wars against the Soviet Union (Winter War 1939–40, Continuation War 1941–44), retaining independence but ceding Karelia. Post-war finlandisation — careful foreign policy neutrality to avoid Soviet pressure — shaped Finnish pragmatism. The education system became the envy of the world. Nokia defined the mobile phone era. Rapid shift from agricultural to technology economy in two generations. Joining NATO in 2023, ending decades of neutrality, marked a historic foreign policy shift following Russia\'s invasion of Ukraine. The Finnish concept of sisu — stoic resilience — is foundational to national identity.',
+    yearRange: [1939, 2005],
+    regime: 'parliamentary_republic',
+    regimeHistory: [
+      { year: 1939, to: 'parliamentary_republic' },
+    ],
+    religionWeights: { christian_protestant: 0.69, secular: 0.26, christian_orthodox: 0.01, other: 0.04 },
+    ethnicGroups: [
+      { id: 'finnish', name: 'Finnish', share: 0.92 },
+      { id: 'swedish_finnish', name: 'Swedish-speaking Finnish', share: 0.05 },
+      { id: 'sami_finland', name: 'Sámi', share: 0.01 },
+      { id: 'other_finnish', name: 'Other', share: 0.02 },
+    ],
+    casteSystem: false,
+    lgbtqCriminalized: false,
+    lgbtqLegalYear: 1971,
+    childMarriageRisk: 0.00,
+    urbanRate: 0.85,
+    literacyMale: 0.99,
+    literacyFemale: 0.99,
+  },
+
+  // ── IRAQ ──────────────────────────────────────────────────────────────────
+
+  {
+    name: 'Iraq', capital: 'Baghdad', currency: 'Iraqi dinar',
+    region: 'Middle East', archetype: 'developing_unstable',
+    gdp: 'low_medium', healthcare: 'poor', lifeExpectancy: 68,
+    conflictRisk: 0.6, genderGap: 0.45, socialMobility: 0.30,
+    wealthTierWeights: { 1: 0.25, 2: 0.35, 3: 0.25, 4: 0.12, 5: 0.03 },
+    namePool: {
+      male: ['Ali', 'Omar', 'Ahmed', 'Hassan', 'Hussein', 'Khalid', 'Mohammed', 'Ibrahim', 'Mustafa', 'Tariq', 'Salam', 'Zaid'],
+      female: ['Fatima', 'Zainab', 'Maryam', 'Nadia', 'Sara', 'Hanan', 'Lena', 'Reem', 'Dalia', 'Sana', 'Rana', 'Lina'],
+    },
+    surnames: ['Al-Rashidi', 'Al-Tamimi', 'Al-Jubouri', 'Al-Dulaimi', 'Al-Hadithi', 'Al-Baghdadi', 'Al-Samaraai', 'Al-Tikriti', 'Al-Mosawi', 'Al-Basri', 'Al-Amiri', 'Hassan'],
+    languages: ['Arabic', 'Kurdish'],
+    context: 'Iraq under the Ba\'ath Party (from 1968) was a surveillance state with oil wealth — Saddam Hussein\'s mukhabarat reached into every household; portraits were mandatory; dissent was fatal. The Iran-Iraq War 1980–88 killed hundreds of thousands and ended in stalemate. The 1990 Gulf War and twelve years of UN sanctions destroyed the middle class. The 2003 US invasion toppled Saddam but disbanded the army, triggering sectarian civil war. ISIS captured Mosul in 2014 and held it for three years. Successive crises shattered infrastructure that had once made Iraq one of the region\'s most urbanised and educated societies.',
+    yearRange: [1958, 2005],
+    regime: 'military_dictatorship',
+    regimeHistory: [
+      { year: 1958, to: 'military_dictatorship' },
+      { year: 1963, to: 'single_party_authoritarian' },
+      { year: 1968, to: 'single_party_authoritarian' },
+      { year: 2003, to: 'federal_republic' },
+    ],
+    religionWeights: { muslim_shia: 0.60, muslim_sunni: 0.35, christian_other: 0.03, yezidi: 0.02 },
+    ethnicGroups: [
+      { id: 'arab_iraqi_shia', name: 'Arab Shia Iraqi', share: 0.55 },
+      { id: 'arab_iraqi_sunni', name: 'Arab Sunni Iraqi', share: 0.22 },
+      { id: 'kurdish_iraqi', name: 'Kurdish Iraqi', share: 0.17, disadvantaged: true },
+      { id: 'turkmen_iraqi', name: 'Turkmen Iraqi', share: 0.03 },
+      { id: 'other_iraqi', name: 'Other (Yazidi, Assyrian, Mandaean)', share: 0.03, disadvantaged: true },
+    ],
+    casteSystem: false,
+    lgbtqCriminalized: true,
+    lgbtqLegalYear: null,
+    childMarriageRisk: 0.24,
+    urbanRate: 0.68,
+    literacyMale: 0.77,
+    literacyFemale: 0.54,
+  },
+
+  // ── TUNISIA ────────────────────────────────────────────────────────────────
+
+  {
+    name: 'Tunisia', capital: 'Tunis', currency: 'Tunisian dinar',
+    region: 'North Africa', archetype: 'developing_urban',
+    gdp: 'medium', healthcare: 'fair', lifeExpectancy: 76,
+    conflictRisk: 0.1, genderGap: 0.25, socialMobility: 0.45,
+    wealthTierWeights: { 1: 0.15, 2: 0.30, 3: 0.30, 4: 0.18, 5: 0.07 },
+    namePool: {
+      male: ['Mohamed', 'Ahmed', 'Khaled', 'Sami', 'Walid', 'Hichem', 'Zied', 'Rami', 'Nabil', 'Tarek', 'Amine', 'Bilel'],
+      female: ['Fatma', 'Amira', 'Sonia', 'Nadia', 'Rania', 'Lilia', 'Rim', 'Ines', 'Myriam', 'Leila', 'Asma', 'Hajer'],
+    },
+    surnames: ['Ben Ali', 'Trabelsi', 'Karoui', 'Mzabi', 'Chebbi', 'Tlili', 'Bouzidi', 'Jlassi', 'Dridi', 'Nasr', 'Hamdi', 'Ayari'],
+    languages: ['Arabic', 'French'],
+    context: 'Habib Bourguiba modernised Tunisia after independence in 1956 — the Code of Personal Status abolished polygamy and gave women rights unprecedented in the Arab world, while secular nationalism suppressed Islamist opposition. Zine El Abidine Ben Ali\'s police state (1987–2011) delivered stability and controlled bread at the price of silence; his security services reached everywhere. When Mohamed Bouazizi set himself on fire in December 2010 after police humiliation, the Jasmine Revolution toppled Ben Ali within weeks — the Arab Spring\'s only democratic success story. The 2014 constitution was the region\'s most progressive. Kais Saied\'s 2021 constitutional coup reversed the gains.',
+    yearRange: [1956, 2005],
+    regime: 'single_party_authoritarian',
+    regimeHistory: [
+      { year: 1956, to: 'single_party_authoritarian' },
+      { year: 1987, to: 'single_party_authoritarian' },
+      { year: 2011, to: 'parliamentary_republic' },
+      { year: 2021, to: 'single_party_authoritarian' },
+    ],
+    religionWeights: { muslim_sunni: 0.97, jewish: 0.01, christian_other: 0.01, secular: 0.01 },
+    ethnicGroups: [
+      { id: 'arab_tunisian', name: 'Arab Tunisian', share: 0.83 },
+      { id: 'berber_tunisian', name: 'Berber/Amazigh Tunisian', share: 0.10 },
+      { id: 'arab_berber_mixed_tunisian', name: 'Arab-Berber Mixed', share: 0.05 },
+      { id: 'jewish_tunisian', name: 'Jewish Tunisian', share: 0.01 },
+      { id: 'other_tunisian', name: 'Other', share: 0.01 },
+    ],
+    casteSystem: false,
+    lgbtqCriminalized: true,
+    lgbtqLegalYear: null,
+    childMarriageRisk: 0.02,
+    urbanRate: 0.69,
+    literacyMale: 0.88,
+    literacyFemale: 0.71,
+  },
 ]
 
 export const COUNTRY_MAP = Object.fromEntries(COUNTRIES.map(c => [c.name, c]))

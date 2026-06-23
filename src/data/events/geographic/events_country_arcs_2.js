@@ -330,7 +330,7 @@ export const COUNTRY_ARC_2_EVENTS = [
     phase: 'adolescence',
     weight: 3,
     when: (G) =>
-      G.character.country.name === 'USA' &&
+      G.character.country.name === 'United States' &&
       (G.flags.includes('black_american') || (G.ethnicity && G.ethnicity.toLowerCase().includes('black'))) &&
       G.currentYear >= 1955 && G.currentYear <= 1968 &&
       !G.mem?.usaCivilRightsAction,
@@ -356,7 +356,7 @@ export const COUNTRY_ARC_2_EVENTS = [
     phase: 'childhood',
     weight: 2,
     when: (G) =>
-      G.character.country.name === 'USA' &&
+      G.character.country.name === 'United States' &&
       (G.flags.includes('black_american') || (G.ethnicity && G.ethnicity.toLowerCase().includes('black'))) &&
       G.currentYear >= 1963 && G.currentYear <= 1964 &&
       !G.mem?.usaChurchBombing,
@@ -370,7 +370,7 @@ export const COUNTRY_ARC_2_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) =>
-      G.character.country.name === 'USA' &&
+      G.character.country.name === 'United States' &&
       G.character.gender === 'male' &&
       G.currentYear >= 1969 && G.currentYear <= 1972 &&
       G.age >= 18 && G.age <= 26 &&
@@ -403,7 +403,7 @@ export const COUNTRY_ARC_2_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) =>
-      G.character.country.name === 'USA' &&
+      G.character.country.name === 'United States' &&
       G.flags.includes('vietnam_veteran') &&
       !G.mem?.usaVietnamReturn,
     text: 'The airport is ordinary. Nobody cheers. Nobody throws anything either, which you had been warned about. Someone asks what it was like and you begin an answer and then you stop because the answer requires a context that the person asking does not have and you do not know how to build it in a conversation at an airport. You say: "Hard." They nod as if you have told them something.',
@@ -416,7 +416,7 @@ export const COUNTRY_ARC_2_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) =>
-      G.character.country.name === 'USA' &&
+      G.character.country.name === 'United States' &&
       (G.flags.includes('lgbtq') || G.flags.includes('out') || G.flags.includes('gay') || G.flags.includes('queer')) &&
       G.currentYear >= 1981 && G.currentYear <= 1995 &&
       !G.mem?.usaAids,
@@ -442,7 +442,7 @@ export const COUNTRY_ARC_2_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) =>
-      G.character.country.name === 'USA' &&
+      G.character.country.name === 'United States' &&
       G.currentYear >= 1975 && G.currentYear <= 1995 &&
       G.stats.wealth < 50 &&
       G.career &&
@@ -469,7 +469,7 @@ export const COUNTRY_ARC_2_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) =>
-      G.character.country.name === 'USA' &&
+      G.character.country.name === 'United States' &&
       G.currentYear >= 1950 && G.currentYear <= 1954 &&
       G.career &&
       !G.mem?.usaMcCarthy,
@@ -495,7 +495,7 @@ export const COUNTRY_ARC_2_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) =>
-      G.character.country.name === 'USA' &&
+      G.character.country.name === 'United States' &&
       (G.religion === 'islam' || G.flags.includes('muslim') || (G.ethnicity && (G.ethnicity.toLowerCase().includes('arab') || G.ethnicity.toLowerCase().includes('south_asian') || G.ethnicity.toLowerCase().includes('middle_east')))) &&
       G.currentYear >= 2001 && G.currentYear <= 2005 &&
       !G.mem?.usaPost911Airport,
@@ -509,7 +509,7 @@ export const COUNTRY_ARC_2_EVENTS = [
     phase: 'childhood',
     weight: 3,
     when: (G) =>
-      G.character.country.name === 'USA' &&
+      G.character.country.name === 'United States' &&
       (G.flags.includes('black_american') || (G.ethnicity && G.ethnicity.toLowerCase().includes('black'))) &&
       G.currentYear >= 1930 && G.currentYear <= 1965 &&
       !G.mem?.usaGreatMigration,
@@ -535,7 +535,7 @@ export const COUNTRY_ARC_2_EVENTS = [
     phase: 'midlife',
     weight: 3,
     when: (G) =>
-      G.character.country.name === 'USA' &&
+      G.character.country.name === 'United States' &&
       G.ruralUrban === 'rural' &&
       G.currentYear >= 2000 && G.currentYear <= 2020 &&
       G.stats.health < 65 &&
