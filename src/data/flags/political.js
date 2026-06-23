@@ -3857,6 +3857,62 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by moz_gas_cabo_delgado.',
   },
 
+  moz_dep_aldeias: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Grew up during FRELIMO\'s communal villages (aldeias comunais) forced villagisation 1977–82 — displaced from ancestral machamba to collective plots',
+    intent: 'year_texture',
+    notes: 'Set by moz_dep_aldeias_comunais.',
+  },
+
+  moz_dep_reeducacao: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Had a close person taken to a FRELIMO reeducation camp 1975–85 — and lived with their absence or changed return',
+    intent: 'none',
+    notes: 'Set by moz_dep_reeducacao.',
+  },
+
+  moz_dep_landmine_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up in rural Mozambique among landmines laid during the civil war — learned safe paths before any other geography',
+    intent: 'event',
+    notes: 'Set by moz_dep_landmine. Follow-through: moz_dep_landmine_late.',
+  },
+
+  moz_dep_cashew_generation: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Lived through the World Bank structural adjustment that removed cashew export tariffs and collapsed domestic processing jobs',
+    intent: 'year_texture',
+    notes: 'Set by moz_dep_cashew.',
+  },
+
+  moz_dep_maputo_boom: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Came of age in Maputo during the post-peace reconstruction boom — churrasqueiras, new malls, the city rebuilding its energy',
+    intent: 'year_texture',
+    notes: 'Set by moz_dep_maputo_boom.',
+  },
+
+  moz_dep_hidden_debt: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Adult during the tuna bonds / hidden debt scandal 2013–16 — $2.2B in secret loans, IMF program collapse, currency crash',
+    intent: 'none',
+    notes: 'Set by moz_dep_hidden_debt.',
+  },
+
+  moz_dep_aids_orphan_moz: {
+    weight: 'moderate',
+    category: 'personal',
+    description: 'Grew up as an AIDS orphan in Mozambique — raised by grandmother or older sibling after parents died during the HIV peak 1995–2010',
+    intent: 'event',
+    notes: 'Set by moz_dep_aids_orphan. Follow-through: moz_dep_aids_orphan_adult.',
+  },
+
   afghan_saur_generation: {
     weight: 'moderate',
     category: 'historical',

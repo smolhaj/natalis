@@ -10799,6 +10799,25 @@ function buildYearTexture(state) {
     'The gas was supposed to change everything. The offshore reserves are among the largest in Africa. Total and ENI and ExxonMobil all said they were coming. In Cabo Delgado, the insurgency said something else.',
     'The connection between the gas discovery and the insurgency in Cabo Delgado is not simple. It is also not a coincidence. Nine hundred thousand displaced. Total evacuated its base. The gas is still there.',
   ])
+  if (F.has('moz_dep_aldeias') && Math.random() < 0.20) return pick([
+    'The machamba your grandparents worked is not the plot your parents were assigned in the communal village. The knowledge of that original land passed through stories, not hands.',
+    'The communal village was supposed to be the future: collective, organised, modern. By 1982 FRELIMO had quietly stopped insisting on it. The families that had moved stayed where they were moved to.',
+    phase === 'late_life'
+      ? 'The aldeias comunais failed as policy. The villages they created continued. You grew up in one. The original machamba is a memory your parents carried and you received second-hand.'
+      : 'You know the difference between the government\'s description of the communal village and what the communal village actually was. They are not the same description.',
+  ])
+  if (F.has('moz_dep_cashew_generation') && Math.random() < 0.18) return pick([
+    'The cashew trees are still productive. The relationship between the tree and the income it generates changed in the 1990s and has not changed back. The World Bank called it efficiency.',
+    'The processing jobs — ten thousand of them, mostly women — are gone. The raw nuts go to India. The comparative advantage is someone else\'s advantage.',
+    'You know the taste of a cashew and the value of a cashew and the gap between the two. The gap opened when the World Bank told Mozambique to liberalise exports and the gap is still there.',
+  ])
+  if (F.has('moz_dep_maputo_boom') && Math.random() < 0.18) return pick([
+    'Maputo in the post-peace years: the churrasqueiras back open, the South Africans discovering they had a neighbour, the Polana Hotel refurbished. A city finding its energy again.',
+    'The city rebuilt faster than the provinces. This is always how cities rebuild. The gap between Maputo and the interior is old and the peace years made it wider.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'You built your adult life in the Maputo of the boom years, which was a real boom compared to what came before. It is easy to forget what it was rebuilding from.'
+      : 'The energy in the city is real. The city knows it survived something and is not taking this for granted.',
+  ])
 
   // ─── YEMEN TEXTURE ───────────────────────────────────────────────────────────
   if (F.has('yemeni_saleh_generation') && Math.random() < 0.17) return pick([
