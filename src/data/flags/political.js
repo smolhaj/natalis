@@ -1130,6 +1130,23 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by tan_arusha_declaration. Follow-throughs: tan_villagisation, tan_ujamaa_late_reckoning, tan_nyerere_death.',
   },
 
+  // ── TANZANIA DEPTH FLAGS ──────────────────────────────────────────────────
+  tan_zanzibar_revolution_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Zanzibari character whose family was shaped by the 1964 revolution — either liberation from the sultanate or displacement and loss.',
+    intent: 'year_texture',
+    notes: 'Set by tan_zanzibar_revolution (both choices). Gates tan_zanzibar_identity follow-through event. Memory of a world-altering week in January 1964.',
+  },
+
+  tan_magufuli_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Tanzanian character who lived through Magufuli\'s Bulldozer era 2015–21 — infrastructure and authoritarianism, COVID denial, sudden death.',
+    intent: 'year_texture',
+    notes: 'Set by tan_magufuli_era (both choices). The ambivalence of a leader who built roads and buried statistics.',
+  },
+
   multiparty_generation: {
     weight: 'minor',
     category: 'political',

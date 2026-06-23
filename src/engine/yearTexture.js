@@ -3218,6 +3218,22 @@ function buildYearTexture(state) {
       : 'You grew up in a country that was trying something — a version of socialism that was distinctly African, specifically Tanzanian. The trying shaped you even when the thing being tried did not work as planned.',
   ])
 
+  if (F.has('tan_zanzibar_revolution_generation') && Math.random() < 0.22) return pick([
+    'The revolution happened in one week in January. The world that existed before that week — the sultanate, the Arab quarter, the specific hierarchies of the archipelago — stopped existing. What replaced it was also specific, also particular, and had its own accounting.',
+    phase === 'late_life'
+      ? 'You have been carrying January 1964 your whole life, in different ways depending on which side of the week your family was on. What does not change is the weight of a week that rearranged everything.'
+      : 'Zanzibar is part of Tanzania and not part of Tanzania. The union holds. The identity underneath the union also holds, and the two are in constant negotiation.',
+    'Stone Town holds the whole history: Arab architecture, Indian merchant houses, the old slave market, the colonial buildings, the faces that show five centuries of Indian Ocean crossing. The revolution is part of that history too. Not the end of it — another layer.',
+  ])
+
+  if (F.has('tan_magufuli_generation') && Math.random() < 0.20) return pick([
+    'Tingatinga built roads. He also closed newspapers. Both columns are on the ledger and you carry both, the concrete and the silence.',
+    phase === 'late_life'
+      ? 'Magufuli died and the government was careful about when and why. Samia came after and reversed the vaccine policy. The gap left by the denial is real and partly repaired. The accounting of those years requires precision.'
+      : 'The Bulldozer era was a particular thing — efficiency and authoritarianism delivered in the same breath, simultaneously. You learned something about how those two things can coexist.',
+    'He cancelled the independence day celebration and organised a clean-up instead. The gesture was real. The political will that made it was also real. The part of that will that later silenced opposition was also the same will. This is what you were taught about charisma by living through it.',
+  ])
+
   if (F.has('sangha_member') && Math.random() < 0.2) return pick([
     'The practice is the daily thing. The monastery or the meditation hall or the practice at home before the day begins — the Dhamma is the structure the days hang on.',
     'You have taken vows or precepts or simply made the commitment. The commitment is tested in ordinary conditions, not only exceptional ones.',
