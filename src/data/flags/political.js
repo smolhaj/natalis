@@ -1114,6 +1114,22 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by mor_years_of_lead. Follow-through: mor_years_of_lead_echo. Ribbon: the_years_of_lead.',
   },
 
+  mor_moudawwana_generation: {
+    weight: 'moderate',
+    category: 'social',
+    description: 'Moroccan woman who lived through the 2004 Moudawwana reform — the family code that raised the marriage age, restricted polygamy, and required judicial divorce.',
+    intent: 'year_texture',
+    notes: 'Set by mor_moudawwana_2004. Year texture: the gap between the law on paper and the practice on the ground; a reform that came from the throne rather than the street.',
+  },
+
+  refugee_status_generation: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Character was born or grew up in a refugee camp — where the homeland is a story transmitted by parents rather than a place experienced.',
+    intent: 'year_texture',
+    notes: 'Set by mor_sahrawi_tindouf (Sahrawi camps) and potentially other refugee camp events. Year texture: the intergenerational transmission of displacement.',
+  },
+
   rohingya_stateless: {
     weight: 'major',
     category: 'legal',

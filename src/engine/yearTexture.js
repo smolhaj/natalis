@@ -3197,6 +3197,51 @@ function buildYearTexture(state) {
       ? 'The Equity and Reconciliation Commission heard testimonies. Yours is one kind of testimony. The testimony is not the same as justice, but it is something.'
       : 'To have grown up in Morocco in those decades is to carry a specific wariness — about what can be said and to whom and in what space.',
   ])
+
+  if (F.has('mor_1971_coup_generation') && Math.random() < 0.20) return pick([
+    'He survived two attempts and ruled for thirty-eight more years. The survival was also a lesson, and the lesson was absorbed by the system and by everyone inside it.',
+    phase === 'late_life'
+      ? 'Hassan II died in his bed. You remember the birthday party massacre at Skhirat and the jets over the Strait and the years of detention that followed. The king survived and the people who tried to end him did not. That accounting has been the background of your whole political life.'
+      : 'The coup of 1971 happened at a birthday party. The jets came in 1972. Morocco in those years had the specific atmosphere of a country whose fate was being decided by men with guns in rooms you were not in.',
+    'The king announced the Green March on television in 1975 — 350,000 people, walk into the Sahara, take the territory. It worked. You have wondered, since, about a monarchy that can make that call and have 350,000 people show up. The authority is real, whatever its foundation.',
+  ])
+
+  if (F.has('sahrawi_identity') && Math.random() < 0.22) return pick([
+    'The camp at Tindouf has been there since 1976. You were born after the camp was already old. The homeland your parents describe is a coast and a desert and a fishing culture and a specific quality of silence at night, none of which you have experienced except through their telling.',
+    phase === 'late_life'
+      ? 'The UN referendum that was supposed to happen in 1992 has still not happened. You have been waiting for it, intermittently, for as long as you have understood the word referendum. The waiting is not the whole of your life. It is a layer underneath the rest of it.'
+      : 'You are Sahrawi in a world that does not agree on whether your people have a right to a country. The geopolitics of the question — Morocco, Algeria, Spain, the United Nations — are large. Your life is smaller and more specific than the geopolitics.',
+    'The camp has schools, hospitals, a radio station, a university programme. The camp has been there long enough to have institutions. This is what displacement looks like when it runs for two generations: not a temporary emergency but a permanent structure with its own way of life.',
+  ])
+
+  if (F.has('mor_casablanca_2003_generation') && Math.random() < 0.18) return pick([
+    'May 16, 2003 changed how the country talked about itself. Before: the question was poverty and corruption and unemployment. After: the same question but with a bomb attached to it.',
+    phase === 'late_life'
+      ? 'Sidi Moumen was a quartier that the city made and then forgot. The forgetting produced a generation. The generation produced May 16. The conversation about what the city made was shorter than the conversation about what May 16 made.'
+      : 'The security apparatus expanded after 2003 — surveillance, arrests, the specific intelligence presence in the mosques. You learned to navigate differently. Everyone did.',
+  ])
+
+  if (F.has('mor_moudawwana_generation') && Math.random() < 0.20) return pick([
+    'The Moudawwana changed the floor but not the ceiling. The law is what the judge applies and the judge is who he is, in the year he is in, in the city or village where you are, with the understanding of the text he brings.',
+    phase === 'late_life'
+      ? 'Your daughter got married under a different Moudawwana than the one your mother was married under. The distance between those two codes is one generation and a lifetime of advocacy.'
+      : 'The reform came from the king — not from the street, not from a women\'s movement winning, but from a political calculation in 2004 that the window was open. The source of the reform is part of its texture: it can be given and it could, in a different political moment, be taken.',
+  ])
+
+  if (F.has('mor_rif_movement_generation') && Math.random() < 0.18) return pick([
+    'Mouhcine Fikri was a fish vendor. The movement that started with his death made demands this specific: a cancer hospital, a university, economic investment. Twenty-year sentences for asking.',
+    phase === 'late_life'
+      ? 'Nasser Zefzafi has been in prison. The hospital was built. The movement was absorbed and dispersed and partly met and partly imprisoned. The Rif and the Makhzen have been in this relationship for a hundred years.'
+      : 'The Rif has been in tension with the central state since Abd el-Krim declared a republic in the 1920s. The Hirak was the latest version of something older — a region that the country has always treated as peripheral responding to that treatment.',
+  ])
+
+  if (F.has('refugee_status_generation') && Math.random() < 0.18) return pick([
+    'The camp was not a place your parents chose. It was where they ended up when the place they had was no longer available. You were born into the not-chosen place and you have been navigating the gap between where you are and where your family is supposed to be ever since.',
+    phase === 'late_life'
+      ? 'Two generations in the camp. The things your parents said about home — the specific foods, the specific sounds, the way the light was — have become things you say to your children about a place you have never been. This is what displacement does when it runs long enough: it becomes culture.'
+      : 'You belong to a place that is only available to you as a story. The story is precise because the people who told it needed it to be precise. It is all they could give you and they gave it carefully.',
+  ])
+
   if (F.has('maria_survivor') && Math.random() < 0.25) return pick([
     'Three thousand people. The official count was sixty-four for months. The study came later. The difference between sixty-four and three thousand is a count of who is worth counting.',
     'The power stayed off. Not for days — for months. You learned what the island runs on when the grid is gone. The answer was: each other, and whatever was left.',

@@ -445,6 +445,39 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by mor_strait_decision (crossed path). Follow-through: mor_diaspora_late.',
   },
 
+  // ── MOROCCO DEPTH FLAGS ───────────────────────────────────────────────────
+  mor_1971_coup_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Moroccan character who lived through the 1971 Skhirat coup attempt and 1972 F-5 attack — the years when the monarchy could have ended, and the specific political atmosphere of a king who survived twice.',
+    intent: 'year_texture',
+    notes: 'Set by mor_skhirat_coup and mor_green_march_1975. Year texture: the texture of living under a king who survives assassination.',
+  },
+
+  sahrawi_identity: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Sahrawi character — from Western Sahara, born or raised in the Tindouf refugee camps, carrying the homeland as a story rather than a memory.',
+    intent: 'year_texture',
+    notes: 'Set by mor_sahrawi_tindouf. Year texture: the specific weight of displacement transmitted across generations; a homeland that is a map and a name and not a place.',
+  },
+
+  mor_casablanca_2003_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Moroccan character who lived through the May 2003 Casablanca bombings — the before/after of how Morocco understood its own urban poor and its relationship with political Islam.',
+    intent: 'year_texture',
+    notes: 'Set by mor_casa_bombings_2003. Year texture: the specific atmosphere of a country watching its own cities.',
+  },
+
+  mor_rif_movement_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Moroccan character who lived through the 2016–17 Hirak Rif movement — from Mouhcine Fikri\'s death to Nasser Zefzafi\'s twenty-year sentence.',
+    intent: 'event',
+    notes: 'Set by mor_hirak_rif. Follow-through: mor_rif_echo (checks this flag).',
+  },
+
   rohingya_displacement: {
     weight: 'major',
     category: 'displacement',
