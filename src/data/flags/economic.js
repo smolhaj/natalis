@@ -2046,6 +2046,66 @@ export const ECONOMIC_FLAGS = {
     intent: 'none',
   },
 
+  // ── CHEF ARC ─────────────────────────────────────────────────────────────────
+
+  mentor_in_kitchen: {
+    weight: 'major',
+    category: 'career',
+    description: 'Chef who mentored junior staff — chose to build culture over pure efficiency; turnover slowed, food improved.',
+    intent: 'event',
+    notes: 'Guards chef_mentor_echo (midlife).',
+  },
+
+  demanding_chef: {
+    weight: 'major',
+    category: 'career',
+    description: 'Chef who ran an efficient, cold kitchen — standards non-negotiable, staff left, food excellent.',
+    intent: 'event',
+    notes: 'Guards chef_demanding_echo (late_life).',
+  },
+
+  creative_integrity_chef: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Chef who protected the creative core of their restaurant — some things not for sale; margins thin but the restaurant is theirs.',
+    intent: 'none',
+  },
+
+  chef_material_knowledge: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Chef who built sensory understanding of the material — not recipes, but what the material actually is.',
+    intent: 'none',
+  },
+
+  chef_formative_mentor: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Chef whose technique was shaped by a specific mentor — absorbed their philosophy without knowing it was a philosophy.',
+    intent: 'none',
+  },
+
+  chef_defining_dish: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Chef who arrived at a dish or technique that is genuinely theirs — could only have come from this kitchen, this sequence of years.',
+    intent: 'none',
+  },
+
+  chef_bad_service: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Chef who lived through a catastrophically bad service — carries it first as failure, then as information about what holds under pressure.',
+    intent: 'none',
+  },
+
+  chef_late_reckoning: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Chef\'s late-life accounting — material knowledge, formative mentor, defining dish, bad service, bodies shaped by heat and hours.',
+    intent: 'none',
+  },
+
   // ── MERCHANT ARC ─────────────────────────────────────────────────────────────
 
   merchant_market_knowledge: {
