@@ -2690,6 +2690,40 @@ export const RIBBONS = [
     color: 'green',
   },
 
+  // ── GRANDPARENT ARC RIBBONS ──────────────────────────────────────────────────
+  {
+    id: 'the_grandparent',
+    name: 'The Grandparent',
+    description: 'A child was born to your child and the category applied to you. The relationship that developed was not parent. It was something adjacent, and freer.',
+    condition: (G) => G.flags.includes('became_grandparent'),
+    priority: 74,
+    color: 'amber',
+  },
+  {
+    id: 'the_transmission',
+    name: 'The Transmission',
+    description: 'You passed something to your grandchild — a skill, or a story, or a way of doing a specific thing. They will not always know where it came from.',
+    condition: (G) => G.flags.includes('grandparent_transmitted_skill') || G.flags.includes('grandparent_transmitted_story'),
+    priority: 72,
+    color: 'green',
+  },
+  {
+    id: 'the_grandparent_question',
+    name: 'The Question About Before',
+    description: 'Your grandchild asked what it was like to be young when the thing happened. You answered as fully as you could. Some of it will stay with them.',
+    condition: (G) => G.flags.includes('grandparent_answered_question'),
+    priority: 70,
+    color: 'blue',
+  },
+  {
+    id: 'what_remained',
+    name: 'What Remained',
+    description: 'You reached the reckoning of grandparenthood: what was passed on, what wasn\'t, and what your contribution actually was versus what you planned it to be.',
+    condition: (G) => G.flags.includes('grandparent_late_reckoning'),
+    priority: 76,
+    color: 'violet',
+  },
+
   // ── SICK CHILD ARC RIBBONS ────────────────────────────────────────────────────
   {
     id: 'the_appointment_life',
@@ -2714,6 +2748,56 @@ export const RIBBONS = [
     condition: (G) => G.flags.includes('child_illness_chronic') && G.flags.includes('ill_child_late_witness'),
     priority: 78,
     color: 'purple',
+  },
+
+  // ── MEXICO DEPTH RIBBONS ─────────────────────────────────────────────────────
+  {
+    id: 'the_night_pri_fell',
+    name: 'The Night the PRI Fell',
+    description: 'You were alive in Mexico when 71 years of single-party rule ended on a single election night. Some things you thought were permanent turned out not to be.',
+    condition: (G) => G.flags.includes('mex_pri_fell_generation'),
+    priority: 76,
+    color: 'green',
+  },
+  {
+    id: 'the_error_de_diciembre',
+    name: 'The Error of December',
+    description: 'The peso devalued in three days. What you had been worth the day before, you were worth less. The mathematics of that December stayed with you.',
+    condition: (G) => G.flags.includes('mex_tequila_crisis_survivor'),
+    priority: 74,
+    color: 'amber',
+  },
+  {
+    id: 'the_cuarta_transformacion',
+    name: 'The Cuarta Transformación',
+    description: 'You watched AMLO\'s election with hope or with caution, and then you watched what the transformation actually was. The two things were not the same thing.',
+    condition: (G) => G.flags.includes('mex_amlo_generation'),
+    priority: 72,
+    color: 'stone',
+  },
+  {
+    id: 'the_gratuidad',
+    name: 'The Gratuidad',
+    description: 'You studied at the UNAM — free, public, vast — and you carry the argument for the rest of your life: that education is not a service you purchase.',
+    condition: (G) => G.flags.includes('mex_unam_generation'),
+    priority: 70,
+    color: 'blue',
+  },
+  {
+    id: 'the_north_crossing',
+    name: 'The North Crossing',
+    description: 'The calculation sent you north. The calculation didn\'t include everything. You went anyway, and the crossing is the hinge on which the rest turns.',
+    condition: (G) => G.flags.includes('mex_crossed_north'),
+    priority: 74,
+    color: 'zinc',
+  },
+  {
+    id: 'the_two_languages',
+    name: 'The Two Languages',
+    description: 'You grew up holding two languages: the one that names where you come from, and the one the school wanted. You have never been able to put either one down.',
+    condition: (G) => G.flags.includes('mex_indigenous_bilingual'),
+    priority: 72,
+    color: 'violet',
   },
 
   // ── CAREER ARC RIBBONS ────────────────────────────────────────────────────────

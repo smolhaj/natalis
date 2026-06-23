@@ -824,6 +824,112 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by la_mex_2017_earthquake.',
   },
 
+  // ── MEXICO DEPTH FLAGS (events_mexico.js)
+
+  mex_pri_fell_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Present for the July 2, 2000 election night when the PRI lost power after 71 years — the specific texture of watching a hegemony end in real time.',
+    intent: 'event',
+    notes: 'Set by mex_2000_election_night. Follow-through: mex_pri_fall_reckoning (12+ years later).',
+  },
+
+  mex_transition_uncertain: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Felt ambivalence rather than celebration at the PRI\'s 2000 defeat — the transition was real and the uncertainty about what followed was also real.',
+    intent: 'none',
+    notes: 'Set by mex_2000_election_night (stay-in branch). Narrative distinction only.',
+  },
+
+  mex_tequila_crisis_survivor: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived through the December 1994 "Error de diciembre" — the peso devaluation that wiped out middle-class savings and pushed interest rates above 80%.',
+    intent: 'year_texture',
+    notes: 'Set by mex_tequila_crisis_1994. Year texture for Mexican characters: the memory of savings that became worth less overnight.',
+  },
+
+  mex_dirty_war_witness: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed or was adjacent to Mexico\'s Guerra Sucia (1970s–80s) — the political disappearances that followed Tlatelolco, the Halcones, the rural guerrilla suppression.',
+    intent: 'none',
+    notes: 'Set by mex_dirty_war_1970s. Terminal marker; the name is kept but no follow-through event fires.',
+  },
+
+  mex_unam_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Studied at the UNAM — the free public university, its gratuidad principle, and the argument that education is not a service you purchase.',
+    intent: 'year_texture',
+    notes: 'Set by mex_unam_world. Year texture: the free university as a worldview carried forward.',
+  },
+
+  mex_strike_participant: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Joined the 1999–2000 UNAM student strike (the longest in university history) against proposed tuition fees.',
+    intent: 'none',
+    notes: 'Set by mex_unam_strike_1999. Narrative distinction from those who didn\'t join.',
+  },
+
+  mex_crossed_north: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Crossed into the United States from Mexico — the decision, the cost, the specific undocumented status that follows.',
+    intent: 'year_texture',
+    notes: 'Set by mex_going_north_question (go north branch). Co-fires with emigrated flag. Year texture for Mexico emigrant experience north of the border.',
+  },
+
+  mex_amlo_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Present for AMLO\'s 2018 election win (the largest popular vote in Mexican history) and the Cuarta Transformación promise.',
+    intent: 'event',
+    notes: 'Set by mex_amlo_2018. Follow-through: mex_amlo_echo (2022+, what the transformation actually produced).',
+  },
+
+  mex_amlo_believer: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Voted for or supported AMLO in 2018 with genuine hope in the Cuarta Transformación project.',
+    intent: 'none',
+    notes: 'Set by mex_amlo_2018 (hope branch). Narrative distinction from skeptics.',
+  },
+
+  mex_amlo_skeptic: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Watched the 2018 AMLO victory with cautious unease — the populist form concerned as much as the content.',
+    intent: 'none',
+    notes: 'Set by mex_amlo_2018 (caution branch). Narrative distinction.',
+  },
+
+  mex_indigenous_bilingual: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Grew up holding two languages: the indigenous language that names where you come from, and Spanish, the language of where you are going.',
+    intent: 'year_texture',
+    notes: 'Set by mex_indigenous_school. Year texture: the two-language life carried into adulthood.',
+  },
+
+  mex_cnte_teacher: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Identified with the CNTE dissident teachers\' union — primarily in Oaxaca, Chiapas, Guerrero — rather than the SNTE official structure.',
+    intent: 'none',
+    notes: 'Set by mex_oaxacan_teacher (union branch). Narrative marker.',
+  },
+
+  union_solidarity: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Took a principled stand with union action — whether at the UNAM, the CNTE, or another workers\' organisation.',
+    intent: 'none',
+    notes: 'Set by mex_oaxacan_teacher (solidarity branch). General labor solidarity marker.',
+  },
+
   paramilitary_era_lived: {
     weight: 'moderate',
     category: 'historical',

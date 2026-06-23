@@ -348,6 +348,21 @@ function buildYearTexture(state) {
     'The name your family had, and what that name means now. The calculation you do in new rooms before you use it.',
   ])
 
+  // ─── GRANDPARENT ARC MEMORY LAYER ───────────────────────────────────────────
+
+  if (F.has('became_grandparent') && Math.random() < 0.25) return pick([
+    'The grandchild is an age you can remember being, and watching them at that age is a specific kind of displacement — you see both the child and yourself at that age, occupying the same point.',
+    'The specific way they use your name when they want something. The way they assume you are available, which you largely are, which is one of the compensations of this phase.',
+    'The ease of it surprises you occasionally. Not parent — you know what that weight is, and this is not that weight. The grandparent relationship has a different centre of gravity.',
+    phase === 'late_life' ? 'They are older now and the questions they ask are the questions of someone who is becoming a person. The watching of that is its own specific pleasure.' : 'The visit ends and the house is quieter. Not the way it was quiet when your own children left — a different register of quiet.',
+  ])
+
+  if (F.has('grandparent_relationship_formed') && Math.random() < 0.2) return pick([
+    'The unhurried quality is still there. No developmental milestone to manage. No school situation to worry about. Just the specific person, available to you, and you to them.',
+    'They told you something today that they would not tell their parents. This is the grandparent-grandchild mechanism — it runs in both directions.',
+    'You are aware that you are accumulating time with them. The awareness is not dread — it is the attention you give to things that are precious and not infinite.',
+  ])
+
   // ─── CAREER ARC MEMORY LAYER ─────────────────────────────────────────────────
   // Quiet-year texture for lives shaped by career-specific accumulation.
 
@@ -6118,6 +6133,30 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'Mexico City has had two September 19th earthquakes in recorded memory. The date has a specific weight now. The city has been practising for one of them for thirty-two years. The practice was real practice.'
       : 'After the shaking stopped, people went to the rubble before anyone organised them to go. The impulse preceded the coordination. That sequence tells you something about the city.',
+  ])
+  if (F.has('mex_tequila_crisis_survivor') && Math.random() < 0.22) return pick([
+    'The peso in 1994 was worth what it was worth, and then in three days it was worth half of that. The savings stayed in pesos. The savings stayed.',
+    'The word "devaluación" has a specific frequency in the back of your mind when the exchange rate moves in any direction. It will always have that frequency.',
+    phase === 'late_life'
+      ? 'The 1994 crisis is the one you measure others against. What happened since has been worse in some ways and not in others, but the 1994 number is the calibration.'
+      : 'After the "Error de diciembre" your family recalculated what it had. The recalculation was not in the government\'s favour.',
+  ])
+  if (F.has('mex_unam_generation') && Math.random() < 0.2) return pick([
+    'The argument about the gratuidad — whether education is a right or a service you purchase — is the argument you made at twenty and still make. The university was free. That was not incidental.',
+    'The campus at Ciudad Universitaria is enormous and muralled and publicly owned. You studied there for years and the scale of the institution is still in your body.',
+    'When people ask where you went you say the UNAM and the conversation continues with that understood between you: the largest university in Latin America, free of charge, funded by the republic.',
+  ])
+  if (F.has('mex_crossed_north') && Math.random() < 0.25) return pick([
+    'The crossing was specific: the coyote\'s instructions, the actual border, the first job. The crossing does not disappear into the past. It is the hinge the years since turn on.',
+    'The calculation that sent you north was accurate. The calculation did not include everything.',
+    phase === 'late_life'
+      ? 'The country you crossed into is also the country your children were born in. They do not carry the crossing the way you carry the crossing. This is both the point and the loss.'
+      : 'You send money home. The amount has its own logic: enough to matter, not enough to suggest you have more than you do.',
+  ])
+  if (F.has('mex_indigenous_bilingual') && Math.random() < 0.2) return pick([
+    'The language you speak at home is not the language the school taught. Holding both has cost something you can\'t fully name and given you something you also can\'t fully name.',
+    'There are things in one language that do not go into the other. The translation exists but it is always approximate. You live with the approximation.',
+    'The school wanted Spanish. The home wanted the other. You learned to move between them and the movement has never become automatic.',
   ])
 
   // ─── SOUTHEAST EUROPE TEXTURE ────────────────────────────────────────────────

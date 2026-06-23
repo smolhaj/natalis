@@ -820,4 +820,54 @@ export const RELATIONSHIP_FLAGS = {
     notes: 'Set by write_memoirs activity (retirement panel, 60+).',
   },
 
+  // ── GRANDPARENT ARC (events_grandparent_arc.js)
+
+  became_grandparent: {
+    weight: 'major',
+    category: 'family',
+    description: 'A child was born to your child — the disorientation of the category "grandparent" applying to you for the first time.',
+    intent: 'both',
+    notes: 'Set by gp_first_grandchild. Gates entire grandparent arc. Year texture for late-life warmth and presence.',
+  },
+
+  grandparent_relationship_formed: {
+    weight: 'moderate',
+    category: 'family',
+    description: 'Developed the specific grandparent-grandchild relationship — present without the urgency, able to listen without intervention.',
+    intent: 'year_texture',
+    notes: 'Set by gp_the_relationship. Year texture: the quality of unhurried presence.',
+  },
+
+  grandparent_transmitted_skill: {
+    weight: 'minor',
+    category: 'family',
+    description: 'Passed a specific skill to a grandchild — the hands remember what the mind has half-forgotten.',
+    intent: 'none',
+    notes: 'Set by gp_the_teaching (skill branch). Narrative distinction from story branch.',
+  },
+
+  grandparent_transmitted_story: {
+    weight: 'minor',
+    category: 'family',
+    description: 'Passed a story to a grandchild — imperfect, partial; they will remember a version that differs from what was said.',
+    intent: 'none',
+    notes: 'Set by gp_the_teaching (story branch). Narrative distinction from skill branch.',
+  },
+
+  grandparent_answered_question: {
+    weight: 'minor',
+    category: 'family',
+    description: 'Answered a grandchild\'s question about the past as fully as possible — what it was like to be young when the thing happened.',
+    intent: 'none',
+    notes: 'Set by gp_the_question (full answer branch).',
+  },
+
+  grandparent_late_reckoning: {
+    weight: 'moderate',
+    category: 'family',
+    description: 'Arrived at the late reckoning of grandparenthood — what was passed on and what wasn\'t; the contribution that was there but not always the one planned.',
+    intent: 'none',
+    notes: 'Set by gp_late_reckoning. Terminal marker; also increments legacy by 10.',
+  },
+
 }
