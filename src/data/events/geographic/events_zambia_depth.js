@@ -9,7 +9,7 @@
 
 const IS_ZAMBIA = (G) => G.character.country?.name === 'Zambia'
 const IS_TONGA = (G) =>
-  IS_ZAMBIA(G) && G.character.ethnicity === 'tonga'
+  IS_ZAMBIA(G) && G.character.ethnicity === 'tonga_zambia'
 
 export const ZAMBIA_DEPTH_EVENTS = [
 
