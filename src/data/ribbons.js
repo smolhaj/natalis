@@ -2853,4 +2853,133 @@ export const RIBBONS = [
     priority: 76,
     color: 'gold',
   },
+
+  // ── ENGINEER ARC ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'the_thing_stands',
+    name: 'The Thing Stands',
+    description: 'You signed off on the substitute material. You drove past it twenty years later. The margin held. The structure is still there.',
+    condition: (G) => G.flags.includes('engineer_compromised') && G.flags.includes('engineer_late_reckoning'),
+    priority: 72,
+    color: 'stone',
+  },
+
+  {
+    id: 'the_safety_flag',
+    name: 'The Safety Flag',
+    description: 'You escalated the concern, caused the delay, got the detail corrected. The structure performs as designed. The ten days were worth it.',
+    condition: (G) => G.flags.includes('engineer_safety_flagged') && G.flags.includes('engineer_late_reckoning'),
+    priority: 74,
+    color: 'blue',
+  },
+
+  {
+    id: 'the_failure_report',
+    name: 'The Failure Report',
+    description: 'Your design failed. The investigation was thorough. You learned something specific from it that changed how you model similar systems.',
+    condition: (G) => G.flags.includes('engineer_failure') && G.flags.includes('engineer_late_reckoning'),
+    priority: 70,
+    color: 'zinc',
+  },
+
+  // ── SOFTWARE DEVELOPER ARC ───────────────────────────────────────────────────
+
+  {
+    id: 'the_decision_above',
+    name: 'The Decision Above',
+    description: 'You built the data collection. You put the ethics in the category of decisions made above your level. The breach eventually landed in the news.',
+    condition: (G) => G.flags.includes('dev_surveillance_complied') && G.flags.includes('dev_late_reckoning'),
+    priority: 68,
+    color: 'zinc',
+  },
+
+  {
+    id: 'the_stack_legacy',
+    name: 'Legacy Stack',
+    description: 'The stack you built your career on is what hiring managers call legacy. You hold the edge-case knowledge no one else has. Both things are true.',
+    condition: (G) => G.flags.includes('dev_obsolescence') && G.flags.includes('dev_late_reckoning'),
+    priority: 66,
+    color: 'stone',
+  },
+
+  // ── FACTORY WORKER ARC ───────────────────────────────────────────────────────
+
+  {
+    id: 'the_card',
+    name: 'The Card',
+    description: 'You signed. The drive succeeded. Fourteen months to the first contract. The grievance procedure was not modest.',
+    condition: (G) => G.flags.includes('factory_joined_union') && G.flags.includes('factory_late_reckoning'),
+    priority: 72,
+    color: 'blue',
+  },
+
+  {
+    id: 'the_line',
+    name: 'The Line',
+    description: 'The motion repeated, the speed-up absorbed, the injury survived. The plant closed or it did not. The body kept the record.',
+    condition: (G) => G.flags.includes('factory_late_reckoning'),
+    priority: 64,
+    color: 'stone',
+  },
+
+  // ── LABORER ARC ──────────────────────────────────────────────────────────────
+
+  {
+    id: 'the_seasons',
+    name: 'The Seasons',
+    description: 'Full months and thin months, the same shape every year. The body in weather. The debt arithmetic that runs forever. You did the work.',
+    condition: (G) => G.flags.includes('laborer_late_reckoning'),
+    priority: 64,
+    color: 'stone',
+  },
+
+  {
+    id: 'the_back',
+    name: 'The Back',
+    description: 'The disc that did not fully resolve. The negotiation that became permanent background. The body kept the record more carefully than any file.',
+    condition: (G) => G.flags.includes('laborer_injury') && G.flags.includes('laborer_late_reckoning'),
+    priority: 66,
+    color: 'zinc',
+  },
+
+  // ── CIVIL SERVANT ARC ────────────────────────────────────────────────────────
+
+  {
+    id: 'the_discretion',
+    name: 'The Discretion',
+    description: 'You found the provision the rule contains. It took longer. The outcome was the outcome the policy intended. The person left differently.',
+    condition: (G) => G.flags.includes('civil_servant_used_discretion') && G.flags.includes('civil_servant_late_reckoning'),
+    priority: 70,
+    color: 'blue',
+  },
+
+  {
+    id: 'the_reassignment',
+    name: 'The Reassignment',
+    description: 'You requested transfer rather than operate the machinery the regime directive required. It took six months. The machinery continued without you.',
+    condition: (G) => G.flags.includes('civil_servant_regime_refused') && G.flags.includes('civil_servant_late_reckoning'),
+    priority: 74,
+    color: 'gold',
+  },
+
+  // ── DRIVER ARC ───────────────────────────────────────────────────────────────
+
+  {
+    id: 'the_back_seat',
+    name: 'The Back Seat',
+    description: 'The specific privacy of the back seat. People told you things at 11pm that had nowhere else to go. You didn\'t carry it out of the car.',
+    condition: (G) => G.flags.includes('driver_late_passenger') && G.flags.includes('driver_late_reckoning'),
+    priority: 66,
+    color: 'stone',
+  },
+
+  {
+    id: 'the_city_at_2am',
+    name: 'The City at 2am',
+    description: 'The bones of the place with the ordinary activity stripped away. The city known better than most people who live in it. The map, memorised.',
+    condition: (G) => G.flags.includes('driver_night_work') && G.flags.includes('driver_late_reckoning'),
+    priority: 68,
+    color: 'stone',
+  },
 ]

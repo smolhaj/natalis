@@ -391,6 +391,38 @@ function buildYearTexture(state) {
       : 'The training described something like this. The training was not wrong. The specific texture of it is yours.',
   ])
 
+  if (F.has('engineer_compromised') && Math.random() < 0.14) return pick([
+    'You have driven past it more than once since. The substituted material is in there. The margin you reduced it to is in there. The structure is in there.',
+    'The tolerance held. This is the information available to you. Whether you made the right call is a different calculation and one that the held tolerance does not complete.',
+    phase === 'late_life'
+      ? 'After twenty years the question about the substitution has become a question you carry rather than one you answer. The thing stands. The question is still open.'
+      : 'The project manager signed off. The client signed off. You signed off. The structure is in service. The margin is still in there, reduced.',
+  ])
+
+  if (F.has('dev_burnout_unaddressed') && Math.random() < 0.14) return pick([
+    'The architecture problem is interesting enough. You are solving it correctly. The thing that used to accompany solving it correctly is less present.',
+    'Output same. Quality metrics same. The ratio of hours to the thing the hours used to produce: that ratio has changed in a direction you have not found a way to reverse.',
+    phase === 'late_life'
+      ? 'You kept going. The going produced the same quality at the same rate for a very long time. It cost something that does not show up in the output metrics.'
+      : 'The laptop opens. The work is there. You do the work. This has been the sequence for long enough that you have stopped noticing what is missing from it.',
+  ])
+
+  if (F.has('factory_joined_union') && Math.random() < 0.14) return pick([
+    'The card. The drive. Fourteen months of meetings. The contract with the grievance procedure that was not modest. You know what that decision cost and what it produced.',
+    'The collective leverage existed. You knew it existed because you had been in the room where it was built, which is information most people at this company do not have.',
+    phase === 'late_life'
+      ? 'The union is in a different state now than when you signed the card. What you know is what the card-signing version of the situation produced. That knowledge is real.'
+      : 'The grievance went the right way. You remember the specific grievance. The procedure worked because the contract existed. The contract existed because of the fourteen months.',
+  ])
+
+  if (F.has('civil_servant_regime_complied') && Math.random() < 0.14) return pick([
+    'The directive was processed correctly. Correctly is not the same as rightly. You have been living in the gap between those two words for longer than the directive has been in effect.',
+    'The file from that period is accurate. The file is not the whole situation. The file was never going to be the whole situation.',
+    phase === 'late_life'
+      ? 'The administration that issued the directive is not the current one. The files remain. You processed them correctly. The question of whether correctly was enough is still open.'
+      : 'You applied the category. The machinery operated. You documented everything. The documentation is in the file alongside the directive. Both of these things are true.',
+  ])
+
   if (F.has('police_career_weight') && Math.random() < 0.16) return pick([
     'The things you have seen are in you in the form that seen things take — not memories you access so much as a knowledge that shapes what you expect.',
     'The gap between procedure and situation. You have navigated it enough times that you know the map. The map does not make the navigation easier.',

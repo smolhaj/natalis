@@ -1702,4 +1702,348 @@ export const ECONOMIC_FLAGS = {
     intent: 'none',
   },
 
+  // ── ENGINEER ARC ─────────────────────────────────────────────────────────────
+
+  engineer_first_design: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Engineer saw the first thing they designed get built — tolerances held, fabrication drawings went out with their name.',
+    intent: 'none',
+  },
+
+  engineer_compromised: {
+    weight: 'major',
+    category: 'career',
+    description: 'Engineer signed off on a cheaper material substitution that met code but reduced their calculated margin.',
+    intent: 'both',
+    notes: 'Guards eng_compromise_echo (late_life).',
+  },
+
+  engineer_held_line: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Engineer pushed back on a spec substitution and got the original material restored via structural review.',
+    intent: 'none',
+  },
+
+  engineer_failure: {
+    weight: 'major',
+    category: 'career',
+    description: 'Something the engineer designed failed — not catastrophically, but traced back to a modelling assumption they made.',
+    intent: 'event',
+    notes: 'Guards eng_the_investigation.',
+  },
+
+  engineer_safety_flagged: {
+    weight: 'major',
+    category: 'career',
+    description: 'Engineer escalated a safety concern before breaking ground, causing delay but getting the detail corrected.',
+    intent: 'event',
+    notes: 'Guards eng_safety_echo (late_life).',
+  },
+
+  engineer_safety_documented: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Engineer documented a safety concern but did not escalate — the project proceeded with the concern in the file.',
+    intent: 'none',
+  },
+
+  engineer_obsolescence: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Engineer whose primary software stack has become legacy — still competent, holds physical system knowledge the new tools lack.',
+    intent: 'none',
+  },
+
+  engineer_late_reckoning: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Engineer\'s late-life accounting — things built, failure survived, compromises made, structures still standing.',
+    intent: 'none',
+  },
+
+  // ── SOFTWARE DEVELOPER ARC ───────────────────────────────────────────────────
+
+  dev_first_shipped: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Software developer shipped their first product — watched the first user interaction go the way they designed it.',
+    intent: 'none',
+  },
+
+  dev_pivot: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Developer\'s startup/company pivoted away from the product they joined for — still engineering, different mission.',
+    intent: 'none',
+  },
+
+  dev_raised_privacy: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Developer raised minimal data collection as an engineering concern — some collection was scoped down.',
+    intent: 'none',
+  },
+
+  dev_surveillance_complied: {
+    weight: 'major',
+    category: 'career',
+    description: 'Developer built data collection they had reservations about — framed as a product decision above their level.',
+    intent: 'event',
+    notes: 'Guards dev_surveillance_echo (late_life).',
+  },
+
+  dev_crunch: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Developer went through extended crunch period — health and mood costs of twelve-week-in-six-weeks delivery.',
+    intent: 'none',
+  },
+
+  dev_burnout_addressed: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Developer took time away during burnout — something returned in the third week that had been absent.',
+    intent: 'none',
+  },
+
+  dev_burnout_unaddressed: {
+    weight: 'major',
+    category: 'career',
+    description: 'Developer kept working through burnout — output same, but relationship to the work fundamentally shifted.',
+    intent: 'both',
+    notes: 'Guards dev_burnout_echo (late_life).',
+  },
+
+  dev_obsolescence: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Developer\'s primary stack classified as legacy — holds deep edge-case knowledge the newer engineers lack.',
+    intent: 'none',
+  },
+
+  dev_late_reckoning: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Developer\'s late-life accounting — systems shipped, ethical corners navigated, stack changed three times.',
+    intent: 'none',
+  },
+
+  // ── FACTORY WORKER ARC ───────────────────────────────────────────────────────
+
+  factory_first_shift: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Factory worker\'s first shift — motion repeated hundreds of times, body taking it over by hour four.',
+    intent: 'none',
+  },
+
+  factory_line_sped_up: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Production line speed increased 15% — efficiency study did not measure what the new pace costs the body across a year.',
+    intent: 'none',
+  },
+
+  factory_joined_union: {
+    weight: 'major',
+    category: 'labor',
+    description: 'Factory worker signed the union card during organising drive — first contract took 14 months, grievance procedure won.',
+    intent: 'both',
+    notes: 'Guards fac_union_echo (late_life).',
+  },
+
+  factory_declined_union: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Factory worker did not sign the union card — benefits from contract anyway; organiser knows.',
+    intent: 'none',
+  },
+
+  factory_repetitive_strain: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Factory worker developed repetitive strain injury — cumulative conversation between motion and joint over ten years.',
+    intent: 'none',
+  },
+
+  factory_injury: {
+    weight: 'major',
+    category: 'labor',
+    description: 'Factory worker injured by machine at hour nine — compensation form, recovery longer than doctor initially said.',
+    intent: 'event',
+    notes: 'Guards fac_injury_echo (late_life).',
+  },
+
+  factory_plant_closed: {
+    weight: 'major',
+    category: 'labor',
+    description: 'Factory worker\'s plant closed by holding company — severance paid, retraining has a waiting list.',
+    intent: 'none',
+  },
+
+  factory_late_reckoning: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Factory worker\'s late-life accounting — body as record, wages earned, solidarity or its absence.',
+    intent: 'none',
+  },
+
+  // ── LABORER ARC ──────────────────────────────────────────────────────────────
+
+  laborer_body_young: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Laborer at peak physical capability — knows their inventory of what they can lift, carry, sustain.',
+    intent: 'none',
+  },
+
+  laborer_seasonal_work: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Laborer navigating the precarious seasonal rhythm — full months and thin months, same shape every year.',
+    intent: 'none',
+  },
+
+  laborer_injury_recovered: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Laborer rested properly after back injury — returned with modified lifting protocol, clearer sense of limits.',
+    intent: 'none',
+  },
+
+  laborer_injury: {
+    weight: 'major',
+    category: 'labor',
+    description: 'Laborer returned to work too early after back injury — disc didn\'t fully resolve; negotiating the thing for years.',
+    intent: 'event',
+    notes: 'Guards lab_injury_echo (late_life).',
+  },
+
+  laborer_debt_cycle: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Laborer in debt-to-wage cycle — borrowed against next season\'s wages to cover this season\'s gap.',
+    intent: 'none',
+  },
+
+  laborer_aging_out: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Laborer in the category of workers who get the easier jobs — foreman\'s calculation about what the body can do today.',
+    intent: 'none',
+  },
+
+  laborer_late_reckoning: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Laborer\'s late-life accounting — body as record, peak years and accumulation, seasons survived.',
+    intent: 'none',
+  },
+
+  // ── CIVIL SERVANT ARC ────────────────────────────────────────────────────────
+
+  civil_servant_first_posting: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Civil servant\'s first posting — learned the gap between the form and the situation, and that the form is the only instrument.',
+    intent: 'none',
+  },
+
+  civil_servant_applied_rule: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Civil servant applied the rule where the rule was insufficient — technically correct, not the whole situation.',
+    intent: 'none',
+  },
+
+  civil_servant_used_discretion: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Civil servant found the discretionary provision in the rule to produce the outcome the policy intended.',
+    intent: 'none',
+  },
+
+  civil_servant_regime_complied: {
+    weight: 'major',
+    category: 'career',
+    description: 'Civil servant processed a regime directive requiring the civil service to categorise a population it hadn\'t categorised before.',
+    intent: 'both',
+    notes: 'Guards cs_regime_echo (late_life).',
+  },
+
+  civil_servant_regime_refused: {
+    weight: 'major',
+    category: 'career',
+    description: 'Civil servant requested reassignment rather than process a regime directive — took six months; machinery continued without them.',
+    intent: 'none',
+  },
+
+  civil_servant_small_decisions: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Civil servant who has made thousands of small decisions — the stream of situations processed, correctly on balance.',
+    intent: 'none',
+  },
+
+  civil_servant_late_reckoning: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Civil servant\'s late-life accounting — rules applied, discretion found or not, regime directive processed or refused.',
+    intent: 'none',
+  },
+
+  // ── DRIVER ARC ───────────────────────────────────────────────────────────────
+
+  driver_city_knowledge: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Driver who knows the city by its traffic — routes that breathe at which hours, badly timed signals, conditional shortcuts.',
+    intent: 'none',
+  },
+
+  driver_late_passenger: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Driver who became recipient of the specific privacy of the back seat — information that has nowhere else to go at 11pm.',
+    intent: 'none',
+  },
+
+  driver_body_cost: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Driver whose back shows what twelve-hour shifts in the same posture for ten years produces — managing the early-stage cost.',
+    intent: 'none',
+  },
+
+  driver_night_work: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Driver who worked night shifts — the city at 2am is a different city; developed a different alertness for it.',
+    intent: 'none',
+  },
+
+  driver_accident: {
+    weight: 'major',
+    category: 'career',
+    description: 'Driver involved in an accident that was not their fault — passenger not seriously injured; returned to work after three days.',
+    intent: 'event',
+    notes: 'Guards drv_accident_echo (late_life).',
+  },
+
+  driver_platform_worker: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Driver operating under a platform app — rated out of five, position in queue affected, managing the rating system.',
+    intent: 'none',
+  },
+
+  driver_late_reckoning: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Driver\'s late-life accounting — city known, passengers carried, accident survived, body cost paid.',
+    intent: 'none',
+  },
+
 }
