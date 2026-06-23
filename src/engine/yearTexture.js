@@ -4263,6 +4263,27 @@ function buildYearTexture(state) {
       ? 'You are the last one who remembers certain things. That is a weight you were not warned about.'
       : 'The sibling-shaped space in your life has a specific contour. You have learned its shape.',
   ])
+  if (F.has('sib_last_sibling') && Math.random() < 0.28) return pick([
+    'You are the last one. The household as it was — the parents as they were before they were old, the rooms before they were other people\'s rooms — exists now only in you.',
+    'A witnessed past is different from an unwitnessed one. Your sibling was the other witness. You are the last remaining witness to the early life.',
+    phase === 'late_life'
+      ? 'When you are gone, the particular memory of the family will be gone with you. You had not thought about that until recently. You think about it now.'
+      : 'There is no one left to say: do you remember when. The remembering is a solitary act now.',
+  ])
+  if (F.has('sib_the_stayer') && Math.random() < 0.2) return pick([
+    'You stayed. Over the years this accumulated into something — the one who knows where the documents are, who handles the calls, who goes to the funerals. Not a title. A function.',
+    'The sibling who left had the adventure. You had the proximity. Both things are true; neither cancels the other.',
+    phase === 'late_life'
+      ? 'Staying was not the choice it was when you made it. It became the fact of your life, the place you were from and never left, which shaped everything else.'
+      : 'The calls come to you first. That is the summary of what staying meant in practice.',
+  ])
+  if (F.has('sib_inheritance_conflict') && Math.random() < 0.17) return pick([
+    'The inheritance conversation revealed things about you and your sibling that had been present the whole time. The money was not mainly about money.',
+    'What was at stake was not the house. It was the question of who sacrificed what and for whom, and whose accounting was correct.',
+    phase === 'late_life'
+      ? 'The dispute is in the past now. How the relationship survived it — or didn\'t — is something you can see whole from here.'
+      : 'What a parent leaves behind always asks questions about the living. The questions are rarely about the money.',
+  ])
   if (F.has('multiple_miscarriage') && Math.random() < 0.35) return pick([
     phase === 'young_adult'
       ? 'The hope came more than once. The specific quality of hoping again, knowing what came before, is what you have not been able to explain to anyone who wasn\'t there.'
