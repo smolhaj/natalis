@@ -3505,6 +3505,54 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by mya_coup_2021 (first branch).',
   },
 
+  mya_dep_ethnic_minority_war: {
+    weight: 'major',
+    category: 'political',
+    description: 'Grew up in ethnic minority Myanmar (Karen, Kachin, Shan, Chin, etc.) during the civil wars — the sounds from the next valley, displacement, the road that changes hands.',
+    intent: 'event',
+    notes: 'Set by mya_dep_ethnic_civil_war. Follow-through: mya_dep_ethnic_war_late (late life reckoning).',
+  },
+
+  mya_dep_1990_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Voted in (or witnessed) the May 1990 election that the NLD won by 80% and the SLORC annulled — the world\'s largest ignored election result.',
+    intent: 'event',
+    notes: 'Set by mya_dep_1990_election. Follow-through: mya_dep_1990_echo (2021 coup déjà vu).',
+  },
+
+  mya_dep_jade_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Worked or lived near the Hpakant jade mines — the world\'s largest jade deposit, controlled by military concessions, generating $31B annually outside the tax register.',
+    intent: 'year_texture',
+    notes: 'Set by mya_dep_jade_miner.',
+  },
+
+  mya_dep_censorship_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up under SLORC/SPDC media censorship — approved films, the VCR parlour with the curtain, copies of copies of copies of the outside world on degraded tape.',
+    intent: 'year_texture',
+    notes: 'Set by mya_dep_vcr_culture.',
+  },
+
+  mya_dep_chin_hills: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'From the Chin Hills — the Baptist-converted, isolated highlands where the nearest market was a day\'s walk and the state arrived slowly and partially.',
+    intent: 'year_texture',
+    notes: 'Set by mya_dep_chin_hills event.',
+  },
+
+  mya_dep_spring_revolution: {
+    weight: 'major',
+    category: 'political',
+    description: 'Participated in or was shaped by the Spring Revolution — the civilian resistance to the 2021 coup, CDM, PDF, the junta\'s airstrikes on its own villages.',
+    intent: 'year_texture',
+    notes: 'Set by mya_dep_spring_revolution event. Also sets myanmar_cdm_participant or emigrated depending on choice.',
+  },
+
   tunisian_ben_ali_generation: {
     weight: 'moderate',
     category: 'historical',

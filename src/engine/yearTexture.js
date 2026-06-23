@@ -10037,6 +10037,34 @@ function buildYearTexture(state) {
       ? 'The years after the CDM cost specific things. You are still accounting for what you gained that cannot be subtracted.'
       : 'You are in the generation that had to decide what to do when the army came back in 2021. You made your decision. You live in it.',
   ])
+  if (F.has('mya_dep_jade_generation') && Math.random() < 0.20) return pick([
+    'The jade comes out of Kachin State and goes to China. The workers who dig it out stay in Hpakant. The generals who hold the concession rights stay in Naypyidaw. The geology of the arrangement has not changed in thirty years.',
+    'Hpakant at night: the camp fires of the khabang miners, the heroin that runs through the camp because the camp is in the Golden Triangle and because the work is what it is, the specific weight of a jade stone that is worth more than you will make this month.',
+    phase === 'late_life'
+      ? 'The Global Witness report estimated $31 billion annually out of Hpakant. The number is large enough to be abstract. What is not abstract is the specific cost of the years you spent in the debris piles.'
+      : 'The buyer arrives, sets the price, weighs the stone on his scale. The scale belongs to him. The price belongs to him. The stone is yours until it isn\'t, which is the moment of exchange.',
+  ])
+  if (F.has('mya_dep_censorship_generation') && Math.random() < 0.20) return pick([
+    'The VCR parlour with the curtain. The copies of copies: the colour degraded, the subtitles in handwritten Burmese photographed onto the tape. This was how the world arrived. The picture was never quite right. You formed your expectations of the outside accordingly.',
+    'The Press Scrutiny and Registration Division reviewed everything before it was printed. What was approved was approved. What was not was available anyway, through channels that censorship always generates, at a generation remove from the original.',
+    phase === 'late_life'
+      ? 'The world you saw on VCR tapes in the 1990s was already two years old by the time the tape arrived. The outside world you imagined was the outside world of several years ago. The real outside world had moved on. This was the specific temporal lag of being inside an information blackout.'
+      : 'The films approved by the censors were the films with the political content removed. What was left was the plot without certain of its reasons. You learned to read what had been taken out by the shape of what remained.',
+  ])
+  if (F.has('mya_dep_chin_hills') && Math.random() < 0.20) return pick([
+    'The Chin Hills: ridges that go to two thousand metres, where the road becomes a track and the track becomes a path. The nearest market was a day\'s walk. The state arrived slowly and partially, which in this context was not entirely a bad thing.',
+    'Baptist Christianity arrived in the Chin Hills with American missionaries in the late colonial period and stayed. The Burman Buddhist centre never fully accepted this as part of its national project. The Chin have been a minority within a minority: ethnic in a country that prizes Burman ethnicity, Christian in a country that prizes Buddhism.',
+    phase === 'late_life'
+      ? 'The Chin National Front has been fighting the Tatmadaw since 1988. After the 2021 coup the Chin Defence Force entered the same fight. The hills you grew up in have been contested for most of your life.'
+      : 'The isolation of the hills preserved some things and prevented others. What it preserved: the specific language, the specific practice, the specific relationship with terrain that people who grow up at altitude have. What it prevented: arriving where others arrived before you.',
+  ])
+  if (F.has('mya_dep_spring_revolution') && Math.random() < 0.20) return pick([
+    'The Spring Revolution: doctors who refused to work for the coup, teachers who stopped teaching for the junta\'s curriculum, civil servants who stopped servicing the administration. The CDM was the largest labour strike in modern Burmese history. The military had guns. The civilians had numbers and the refusal of their participation.',
+    'The People\'s Defence Force armed itself with hunting rifles and homemade weapons and began taking territory in the forest. The Tatmadaw responded with airstrikes on villages. The gap in firepower did not close. Something else opened instead.',
+    phase === 'late_life'
+      ? 'The Spring Revolution produced something that the 1988 uprising and the 2007 Saffron Revolution did not produce: an armed civilian resistance that continued for years. Whether it produces the country it is fighting for is still being answered.'
+      : 'You were in it — in the CDM, in the protests, in the diaspora that sent money and ran the NUG\'s communications. You are still in it, in whatever form the being-in-it takes where you are now.',
+  ])
 
   // ── LAOS ARC ─────────────────────────────────────────────────────────────────
   if (F.has('laos_uxo_generation') && Math.random() < 0.2) return pick([
