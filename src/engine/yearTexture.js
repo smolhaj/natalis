@@ -7309,6 +7309,20 @@ function buildYearTexture(state) {
       : 'The topography of what is and isn\'t available to you is so familiar that you only notice it when someone who doesn\'t know it asks. Then you have to explain what you have always simply known.',
     'High military rank, interior ministry, intelligence: the places Copts do not go are also well understood. Engineering, medicine, private business: those doors are different. You know the doors.',
   ])
+  if (F.has('october_war_generation') && Math.random() < 0.22) return pick([
+    'The water cannons cut through the sand berms of the Bar-Lev Line in the first hours. The crossing was real. The ceasefire and the American intervention came later. The crossing is what stayed.',
+    phase === 'late_life'
+      ? 'The October War answered 1967 in the way that wars answer each other — not cleanly, and at a cost that is also on the record. You were alive for both the Naksa and the crossing. That is the specific testimony of your generation.'
+      : 'The radio that reported victories in 1967 when there were defeats also reported the crossing in 1973, and the crossing was accurate. You learned something about what the radio could and could not be trusted with.',
+    'Egypt crossing the Suez Canal on October 6, 1973, is the event that competes with the Naksa for the defining national memory of your generation. It is not a simple competition. Both are in there.',
+  ])
+  if (F.has('egy_sisi_generation') && Math.random() < 0.20) return pick([
+    'Tahrir was eighteen days. Rabaa was one afternoon. The transition between them is the transition that describes where Egypt is now.',
+    phase === 'late_life'
+      ? 'You were inside the Mubarak era, the Tahrir moment, the SCAF transition, the Brotherhood year, the counter-revolution. That sequence — in a single lifetime — is Egypt\'s modern history compressed. You hold all of it.'
+      : 'The Emergency Law was what Mubarak had and what briefly lapsed under Morsi and what is back under Sisi. The continuity of the instrument across different administrations is a fact about where the instrument lives.',
+    'A military general is president. The university graduates who were in Tahrir are in prison, in London, in Toronto, or in the specific silence that is the alternative to the other options.',
+  ])
 
   // ─── INDIA TEXTURE ────────────────────────────────────────────────────────────
   if (F.has('emergency_generation') && Math.random() < 0.25) return pick([

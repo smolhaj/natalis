@@ -2238,6 +2238,40 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by egy_nasser_dream. Egypt 1956-67.',
   },
 
+  // ── EGYPT DEPTH FLAGS (events_egypt_depth.js) ─────────────────────────────
+
+  october_war_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Present for the October 1973 War — the crossing of the Suez Canal, the Bar-Lev Line breached, the real advance that answered 1967, the ceasefire that ended it under US pressure.',
+    intent: 'year_texture',
+    notes: 'Set by egy_october_war_1973 (both choices). Year texture: the crossing as national memory. Follow-through: egy_october_war_late_echo (late_life).',
+  },
+
+  egy_camp_david_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through Sadat\'s peace with Israel — the Camp David Accords 1978, Egypt\'s expulsion from the Arab League, Sadat\'s assassination 1981, the cold peace that followed.',
+    intent: 'event',
+    notes: 'Set by egy_camp_david_1978 (both choices). Follow-through: egy_camp_david_late_life (late_life reckoning on the peace and its price).',
+  },
+
+  egy_sisi_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through Sisi\'s 2013 counter-revolution — Morsi removed, the Rabaa massacre of 800–2,600 Brotherhood protesters, the emergency law restored, the Tahrir promise closed.',
+    intent: 'year_texture',
+    notes: 'Set by egy_sisi_2013 (both choices). Year texture: post-Arab Spring Egypt under the counter-revolution.',
+  },
+
+  egy_pound_crisis_2016: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived through the November 2016 Egyptian pound flotation — currency halved overnight as part of IMF conditions, prices spiked, the immediate material impact.',
+    intent: 'none',
+    notes: 'Set by egy_pound_flotation_2016. Terminal flag — the economic shock is its own event with no specific downstream.',
+  },
+
   infitah_generation: {
     weight: 'moderate',
     category: 'historical',

@@ -2776,6 +2776,29 @@ export const RIBBONS = [
     color: 'purple',
   },
 
+  // ── EGYPT DEPTH RIBBONS ──────────────────────────────────────────────────────
+  {
+    id: 'the_crossing',
+    label: 'The Crossing',
+    description: 'Witnessed the October 1973 War — the crossing of the Suez Canal, the Bar-Lev Line breached, the military answer to the Naksa.',
+    condition: (G) => G.flags.includes('october_war_generation'),
+    rarity: 'uncommon',
+  },
+  {
+    id: 'the_camp_david_reckoning',
+    label: 'The Camp David Reckoning',
+    description: 'Lived through Sadat\'s peace with Israel — the Arab League expulsion, the assassination, the cold peace that held for forty years.',
+    condition: (G) => G.flags.includes('egy_camp_david_generation'),
+    rarity: 'uncommon',
+  },
+  {
+    id: 'the_square_and_after',
+    label: 'The Square and After',
+    description: 'Present for both Tahrir 2011 and the Sisi counter-revolution — the eighteen days and the afternoon that closed them.',
+    condition: (G) => G.flags.includes('tahrir_generation') && G.flags.includes('egy_sisi_generation'),
+    rarity: 'rare',
+  },
+
   // ── ETHIOPIA DEPTH RIBBONS ───────────────────────────────────────────────────
   {
     id: 'the_adwa_classroom',
