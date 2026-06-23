@@ -348,6 +348,16 @@ function buildYearTexture(state) {
     'The name your family had, and what that name means now. The calculation you do in new rooms before you use it.',
   ])
 
+  // ─── INHERITANCE ARC MEMORY LAYER ────────────────────────────────────────────
+
+  if (F.has('inh_object_taken') && Math.random() < 0.2) return pick([
+    'The object from their house is still where you put it. It is the room in a different house — the room where it sat, the person it belonged to, compressed into the specific object.',
+    'You use it or you don\'t use it but it is in the house. The relationship between the object and its former location is available to you without effort.',
+    phase === 'late_life'
+      ? 'The object is older than most of what is in the house and it will outlast most of what is in the house. It has already outlasted the person who gave it its first meaning.'
+      : 'Sometimes you notice it in the way you notice things you know well — which is to say briefly, in passing, and with a specific kind of recognition.',
+  ])
+
   // ─── GRANDPARENT ARC MEMORY LAYER ───────────────────────────────────────────
 
   if (F.has('became_grandparent') && Math.random() < 0.25) return pick([

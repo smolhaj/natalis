@@ -2690,6 +2690,32 @@ export const RIBBONS = [
     color: 'green',
   },
 
+  // ── INHERITANCE ARC RIBBONS ──────────────────────────────────────────────────
+  {
+    id: 'the_sorting',
+    name: 'The Sorting',
+    description: 'You went through a dead parent\'s house and made decisions about objects that no longer had their person. Some things were worth keeping. Most things were not.',
+    condition: (G) => G.flags.includes('inh_sorting_happened'),
+    priority: 72,
+    color: 'stone',
+  },
+  {
+    id: 'the_oldest_generation',
+    name: 'The Oldest Generation',
+    description: 'Both your parents are gone. There is no one left who remembers you at the beginning. You are the oldest version of yourself in anyone\'s memory.',
+    condition: (G) => G.flags.includes('inh_both_parents_gone'),
+    priority: 78,
+    color: 'zinc',
+  },
+  {
+    id: 'the_patterns',
+    name: 'The Patterns',
+    description: 'What you inherited that is not an object or money: a way of holding your shoulders, a sentence structure, a fear, a capacity you recognized as theirs when it appeared.',
+    condition: (G) => G.flags.includes('inh_reckoning_completed'),
+    priority: 76,
+    color: 'violet',
+  },
+
   // ── GRANDPARENT ARC RIBBONS ──────────────────────────────────────────────────
   {
     id: 'the_grandparent',

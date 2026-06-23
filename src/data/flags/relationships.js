@@ -820,6 +820,48 @@ export const RELATIONSHIP_FLAGS = {
     notes: 'Set by write_memoirs activity (retirement panel, 60+).',
   },
 
+  // ── INHERITANCE ARC (events_inheritance_arc.js)
+
+  inh_sorting_happened: {
+    weight: 'minor',
+    category: 'family',
+    description: 'Went through a deceased parent\'s house to sort their belongings — the specific work of making decisions about objects that no longer have their person.',
+    intent: 'event',
+    notes: 'Set by inh_the_sorting. Gates inh_the_object and inh_what_they_left.',
+  },
+
+  inh_object_taken: {
+    weight: 'minor',
+    category: 'family',
+    description: 'Took one object from a deceased parent\'s house — the cup, the tool, the piece of furniture that now contains the room and the person.',
+    intent: 'year_texture',
+    notes: 'Set by inh_the_object. Year texture: the object that carries a room.',
+  },
+
+  inh_sibling_rupture: {
+    weight: 'moderate',
+    category: 'relationships',
+    description: 'The estate settlement surfaced old sibling dynamics — a relationship is different afterward.',
+    intent: 'none',
+    notes: 'Set by inh_sibling_estate (conflict branch). The rupture is the outcome; no follow-through event.',
+  },
+
+  inh_both_parents_gone: {
+    weight: 'major',
+    category: 'family',
+    description: 'Both parents are now dead — the threshold moment of being the oldest version of yourself in anyone\'s memory.',
+    intent: 'event',
+    notes: 'Set by inh_both_parents_gone. Gates inh_the_patterns and inh_late_reckoning.',
+  },
+
+  inh_reckoning_completed: {
+    weight: 'moderate',
+    category: 'family',
+    description: 'Arrived at the full accounting of inheritance — objects, money, patterns, knowledge — from the far side of it.',
+    intent: 'none',
+    notes: 'Set by inh_late_reckoning. Terminal marker; also increments legacy by 5.',
+  },
+
   // ── GRANDPARENT ARC (events_grandparent_arc.js)
 
   became_grandparent: {
