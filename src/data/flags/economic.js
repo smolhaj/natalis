@@ -1587,4 +1587,119 @@ export const ECONOMIC_FLAGS = {
     intent: 'none',
   },
 
+  // ── SOCIAL WORKER ARC ───────────────────────────────────────────────────────
+
+  sw_first_case: {
+    weight: 'minor',
+    category: 'career',
+    description: 'Social worker\'s first case — learned the gap between the referral form and the actual situation.',
+    intent: 'event',
+    notes: 'Guards sw_good_outcome.',
+  },
+
+  sw_good_outcome: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'A case that resolved well — the place in professional memory where the work was worth doing.',
+    intent: 'none',
+  },
+
+  sw_system_failure_witnessed: {
+    weight: 'major',
+    category: 'career',
+    description: 'Social worker watched the system fail a case they had flagged — the specific shape of avoidable harm.',
+    intent: 'none',
+  },
+
+  sw_secondary_trauma: {
+    weight: 'major',
+    category: 'career',
+    description: 'Social worker carrying secondary trauma — the accumulation of sustained proximity to others\' worst experiences.',
+    intent: 'event',
+    notes: 'Guards sw_secondary_trauma_echo (late_life).',
+  },
+
+  sw_sought_support: {
+    weight: 'minor',
+    category: 'career',
+    description: 'Social worker sought formal supervision or peer support for secondary trauma — ongoing processing.',
+    intent: 'none',
+  },
+
+  sw_colleague_left: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'A good colleague left social work entirely — the specific moment when a known abstract becomes a specific person\'s choice.',
+    intent: 'event',
+    notes: 'Guards sw_colleague_echo (late_life).',
+  },
+
+  sw_late_reckoning: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Social worker\'s late-life accounting — the system failures, the weight, the good-outcome file, what changed because you were the assigned worker.',
+    intent: 'none',
+  },
+
+  // ── ARTIST ARC ──────────────────────────────────────────────────────────────
+
+  artist_first_real_work: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Artist\'s first work that could only have come from them — origin unaccountable, conditions of arrival unrepeatable.',
+    intent: 'event',
+    notes: 'Guards artist_money_question and artist_recognized.',
+  },
+
+  artist_committed_to_work: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Artist chose the real work over the sellable work — precarious economy, real creative integrity.',
+    intent: 'none',
+  },
+
+  artist_commercial_path: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Artist chose the sellable work — margins for real work smaller than planned.',
+    intent: 'event',
+    notes: 'Guards artist_commercial_echo (late_life).',
+  },
+
+  artist_recognized: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Artist\'s work seen and understood by the right audience — the occasion that tells something true about the work.',
+    intent: 'none',
+  },
+
+  artist_fallow_period: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Artist went through a sustained fallow period — work not coming, conditions present, resource depleted.',
+    intent: 'event',
+    notes: 'Guards artist_after_fallow.',
+  },
+
+  artist_after_fallow: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Artist came out of the fallow period with work that surprised them — the fallow produced what the interrupted version wouldn\'t have.',
+    intent: 'none',
+  },
+
+  artist_body_of_work: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Artist has a body of work visible from a distance — accumulated, uneven, some of it the real stuff.',
+    intent: 'none',
+  },
+
+  artist_late_reckoning: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Artist\'s late-life accounting — real work made, money question unresolved, fallow survived, body of work exists.',
+    intent: 'none',
+  },
+
 }
