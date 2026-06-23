@@ -2719,7 +2719,7 @@ export const SPECIFIC_LIFE_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) =>
-      G.character.country.name === 'Democratic Republic of Congo' &&
+      G.character.country.name === 'DR Congo' &&
       G.currentYear >= 2000 && G.currentYear <= 2025 &&
       G.age >= 16 && G.age <= 35 &&
       G.stats.wealth <= 25 &&
@@ -3918,7 +3918,7 @@ export const SPECIFIC_LIFE_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) =>
-      G.character.country.name === 'Democratic Republic of Congo' &&
+      G.character.country.name === 'DR Congo' &&
       G.ruralUrban === 'urban' &&
       G.currentYear >= 1996 && G.currentYear <= 2010 &&
       G.age >= 20 && G.age <= 40 &&

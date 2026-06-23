@@ -3439,6 +3439,154 @@ export const COUNTRIES = [
     literacyMale: 0.88,
     literacyFemale: 0.71,
   },
+
+  // ── ALBANIA ────────────────────────────────────────────────────────────────
+
+  {
+    name: 'Albania', capital: 'Tirana', currency: 'Albanian lek',
+    region: 'Southern Europe', archetype: 'post_soviet',
+    gdp: 'medium', healthcare: 'fair', lifeExpectancy: 78,
+    conflictRisk: 0.1, genderGap: 0.22, socialMobility: 0.45,
+    wealthTierWeights: { 1: 0.15, 2: 0.30, 3: 0.35, 4: 0.15, 5: 0.05 },
+    namePool: {
+      male: ['Arben', 'Gentian', 'Dritan', 'Sokol', 'Edi', 'Fatos', 'Ilir', 'Luan', 'Skënder', 'Ardian', 'Blerim', 'Erion'],
+      female: ['Anila', 'Entela', 'Mirela', 'Flutura', 'Fatmire', 'Lindita', 'Albana', 'Elira', 'Teuta', 'Donika', 'Arta', 'Merita'],
+    },
+    surnames: ['Hoxha', 'Shehu', 'Koci', 'Bushati', 'Duka', 'Leka', 'Prifti', 'Marku', 'Musa', 'Gega', 'Basha', 'Rama'],
+    languages: ['Albanian'],
+    context: 'Albania under Enver Hoxha (1944–1985) was the world\'s most isolated communist state — officially atheist, closed to foreign contact, with 173,000 bunkers built across the country. After 1991 the state apparatus collapsed, triggering mass emigration to Italy and Greece and a brief anarchy during the 1997 pyramid scheme crisis. The Kanun customary law code, suppressed under communism, revived in northern Albania — including blood feud practices. Transition to parliamentary democracy was troubled, with persistent organised crime links. EU accession talks opened in 2020.',
+    yearRange: [1944, 2005],
+    regime: 'single_party_communist',
+    regimeHistory: [
+      { year: 1944, to: 'single_party_communist' },
+      { year: 1991, to: 'parliamentary_republic' },
+    ],
+    religionWeights: { muslim_sunni: 0.52, secular: 0.20, christian_orthodox: 0.17, christian_catholic: 0.10, bektashi: 0.01 },
+    ethnicGroups: [
+      { id: 'albanian', name: 'Albanian', share: 0.95 },
+      { id: 'greek_albanian', name: 'Greek Albanian', share: 0.03 },
+      { id: 'roma_albanian', name: 'Roma Albanian', share: 0.01, disadvantaged: true },
+      { id: 'other_albanian', name: 'Other', share: 0.01 },
+    ],
+    casteSystem: false,
+    lgbtqCriminalized: false,
+    lgbtqLegalYear: 1995,
+    childMarriageRisk: 0.09,
+    urbanRate: 0.62,
+    literacyMale: 0.95,
+    literacyFemale: 0.91,
+  },
+
+  // ── BOSNIA AND HERZEGOVINA ────────────────────────────────────────────────
+
+  {
+    name: 'Bosnia and Herzegovina', capital: 'Sarajevo', currency: 'Bosnian convertible mark',
+    region: 'Southern Europe', archetype: 'post_soviet',
+    gdp: 'medium', healthcare: 'fair', lifeExpectancy: 77,
+    conflictRisk: 0.2, genderGap: 0.23, socialMobility: 0.40,
+    wealthTierWeights: { 1: 0.15, 2: 0.30, 3: 0.35, 4: 0.15, 5: 0.05 },
+    namePool: {
+      male: ['Emir', 'Amir', 'Damir', 'Armin', 'Sead', 'Haris', 'Muamer', 'Mirza', 'Adnan', 'Tarik', 'Nedim', 'Faruk'],
+      female: ['Amra', 'Selma', 'Emina', 'Merima', 'Samra', 'Dina', 'Lejla', 'Aida', 'Belma', 'Naida', 'Jasna', 'Suada'],
+    },
+    surnames: ['Begić', 'Hodžić', 'Muratović', 'Kovačević', 'Sarajlić', 'Omerović', 'Husić', 'Bašić', 'Memić', 'Džanić', 'Avdić', 'Ibrišimović'],
+    languages: ['Bosnian', 'Serbian', 'Croatian'],
+    context: 'Bosnia and Herzegovina emerged from Yugoslavia\'s collapse into the worst European conflict since WWII. The siege of Sarajevo (1992–1996, 1,425 days) and the Srebrenica massacre (July 1995, 8,000 Bosniaks murdered) defined a generation. The Dayton Agreement ended the war but created a paralysed political structure — two entities, three constituent peoples, rotating presidencies — that has prevented meaningful state-building. Post-war Bosnia lives with the physical and psychological legacy of ethnic cleansing, missing persons, war crimes trials, and a complex Bosnian-Croat-Serb political architecture.',
+    yearRange: [1992, 2005],
+    regime: 'parliamentary_republic',
+    regimeHistory: [
+      { year: 1992, to: 'parliamentary_republic' },
+    ],
+    religionWeights: { muslim_sunni: 0.51, christian_orthodox: 0.31, christian_catholic: 0.15, secular: 0.03 },
+    ethnicGroups: [
+      { id: 'bosniak', name: 'Bosniak', share: 0.50 },
+      { id: 'bosnian_serb', name: 'Bosnian Serb', share: 0.31 },
+      { id: 'bosnian_croat', name: 'Bosnian Croat', share: 0.15 },
+      { id: 'other_bosnian', name: 'Other', share: 0.04 },
+    ],
+    casteSystem: false,
+    lgbtqCriminalized: false,
+    lgbtqLegalYear: 1998,
+    childMarriageRisk: 0.04,
+    urbanRate: 0.48,
+    literacyMale: 0.99,
+    literacyFemale: 0.97,
+  },
+
+  // ── CYPRUS ────────────────────────────────────────────────────────────────
+
+  {
+    name: 'Cyprus', capital: 'Nicosia', currency: 'Cypriot pound (pre-2008) / euro',
+    region: 'Southern Europe', archetype: 'wealthy_west',
+    gdp: 'high', healthcare: 'good', lifeExpectancy: 80,
+    conflictRisk: 0.1, genderGap: 0.18, socialMobility: 0.60,
+    wealthTierWeights: { 1: 0.08, 2: 0.22, 3: 0.38, 4: 0.22, 5: 0.10 },
+    namePool: {
+      male: ['Giorgos', 'Nikos', 'Christos', 'Andreas', 'Stavros', 'Antonis', 'Petros', 'Michalis', 'Stelios', 'Kyriakos', 'Costas', 'Markos'],
+      female: ['Maria', 'Elena', 'Eleni', 'Christina', 'Androulla', 'Sophia', 'Irene', 'Anastasia', 'Katerina', 'Despina', 'Anna', 'Stella'],
+    },
+    surnames: ['Petrou', 'Charalambous', 'Nicolaou', 'Constantinou', 'Andreou', 'Ioannou', 'Georgiou', 'Kyriacou', 'Christodoulou', 'Panagiotou', 'Stylianou', 'Iacovou'],
+    languages: ['Greek', 'Turkish'],
+    context: 'Cyprus gained independence from Britain in 1960 after intercommunal violence between Greek and Turkish Cypriots. The Turkish military intervention of July 1974, following a Greek junta–backed coup, divided the island: Turkish forces occupy the north (about 37% of the territory), now the unrecognised Turkish Republic of Northern Cyprus. About 160,000 Greek Cypriots fled south; about 45,000 Turkish Cypriots moved north. The Green Line has divided Nicosia since 1974. The checkpoint at Ledra Street opened in 2003, allowing movement for the first time in 29 years. Cyprus joined the EU in 2004.',
+    yearRange: [1960, 2005],
+    regime: 'parliamentary_republic',
+    regimeHistory: [
+      { year: 1960, to: 'parliamentary_republic' },
+    ],
+    religionWeights: { christian_orthodox: 0.78, muslim_sunni: 0.18, christian_other: 0.02, secular: 0.02 },
+    ethnicGroups: [
+      { id: 'greek_cypriot', name: 'Greek Cypriot', share: 0.78 },
+      { id: 'turkish_cypriot', name: 'Turkish Cypriot', share: 0.18 },
+      { id: 'armenian_cypriot', name: 'Armenian Cypriot', share: 0.01 },
+      { id: 'other_cypriot', name: 'Other (expat, Maronite)', share: 0.03 },
+    ],
+    casteSystem: false,
+    lgbtqCriminalized: false,
+    lgbtqLegalYear: 1998,
+    childMarriageRisk: 0.00,
+    urbanRate: 0.67,
+    literacyMale: 0.99,
+    literacyFemale: 0.97,
+  },
+
+  // ── EAST TIMOR ─────────────────────────────────────────────────────────────
+
+  {
+    name: 'East Timor', capital: 'Dili', currency: 'US dollar',
+    region: 'Southeast Asia', archetype: 'developing_unstable',
+    gdp: 'low', healthcare: 'poor', lifeExpectancy: 68,
+    conflictRisk: 0.3, genderGap: 0.38, socialMobility: 0.30,
+    wealthTierWeights: { 1: 0.35, 2: 0.35, 3: 0.20, 4: 0.08, 5: 0.02 },
+    namePool: {
+      male: ['Xanana', 'José', 'João', 'Manuel', 'António', 'Francisco', 'Pedro', 'Carlos', 'Rui', 'Filomeno', 'Arsenio', 'Domingos'],
+      female: ['Maria', 'Ana', 'Rosa', 'Teresa', 'Lucia', 'Fatima', 'Benedita', 'Catarina', 'Felicidade', 'Lurdes', 'Etelvina', 'Ermelinda'],
+    },
+    surnames: ['Gusmão', 'Ramos-Horta', 'Lobato', 'Belo', 'Araújo', 'da Costa', 'da Silva', 'de Carvalho', 'Alves', 'Correia', 'Pereira', 'Soares'],
+    languages: ['Tetum', 'Portuguese'],
+    context: 'Portuguese Timor was occupied by Japan 1942–45, then returned to Portugal. Indonesia invaded nine days after Portugal abandoned the colony in December 1975 and occupied East Timor for 24 years (1975–1999), during which between 100,000 and 180,000 Timorese — roughly a quarter of the population — died from combat, famine, and disease. The Santa Cruz massacre (1991) was filmed and circulated internationally. After a 1999 independence referendum, Indonesian militia with military backing killed around 1,400 people before UN peacekeepers arrived. Independence was formally declared in 2002 — the world\'s first new country of the 21st century.',
+    yearRange: [1975, 2005],
+    regime: 'single_party_authoritarian',
+    regimeHistory: [
+      { year: 1975, to: 'single_party_authoritarian' },
+      { year: 1999, to: 'parliamentary_republic' },
+    ],
+    religionWeights: { christian_catholic: 0.97, protestant: 0.02, muslim: 0.01 },
+    ethnicGroups: [
+      { id: 'tetum_timorese', name: 'Tetum-speaking Timorese', share: 0.30 },
+      { id: 'mambai', name: 'Mambai', share: 0.17 },
+      { id: 'makassae', name: 'Makassae', share: 0.11 },
+      { id: 'bunak', name: 'Bunak', share: 0.06 },
+      { id: 'kemak', name: 'Kemak', share: 0.06 },
+      { id: 'other_timorese', name: 'Other Timorese', share: 0.30 },
+    ],
+    casteSystem: false,
+    lgbtqCriminalized: true,
+    lgbtqLegalYear: null,
+    childMarriageRisk: 0.19,
+    urbanRate: 0.31,
+    literacyMale: 0.62,
+    literacyFemale: 0.49,
+  },
 ]
 
 export const COUNTRY_MAP = Object.fromEntries(COUNTRIES.map(c => [c.name, c]))
