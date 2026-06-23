@@ -2796,6 +2796,62 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by lby_post_gaddafi_chaos.',
   },
 
+  lby_dep_berber_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Amazigh/Berber identity under Gaddafi\'s Arabisation — language banned from public life, culture sustained at home',
+    intent: 'year_texture',
+    notes: 'Set by lby_dep_berber_identity.',
+  },
+
+  lby_dep_green_book_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Grew up studying the Green Book as mandatory curriculum — the Third Universal Theory as classroom subject',
+    intent: 'year_texture',
+    notes: 'Set by lby_dep_green_book_school.',
+  },
+
+  lby_dep_1986_generation: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Present in Libya during the April 1986 US bombing of Tripoli and Benghazi — Operation El Dorado Canyon, 63 Libyans killed',
+    intent: 'year_texture',
+    notes: 'Set by lby_dep_1986_bombing.',
+  },
+
+  lby_dep_student_surveilled: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Libyan scholarship student abroad under revolutionary committee surveillance — the carefully self-censored version of yourself',
+    intent: 'year_texture',
+    notes: 'Set by lby_dep_student_abroad.',
+  },
+
+  lby_dep_benghazi_identity: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Benghazi regional identity — the eastern city\'s long resentment of Tripoli, which became the origin point of the 2011 revolution',
+    intent: 'year_texture',
+    notes: 'Set by lby_dep_benghazi_identity.',
+  },
+
+  lby_dep_migration_witness: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Witnessed post-2011 Libya as migration bottleneck — detention camps, slave markets in Sabha, Mediterranean crossings from Libyan shores',
+    intent: 'year_texture',
+    notes: 'Set by lby_dep_migration_hub.',
+  },
+
+  lby_dep_fezzan_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Grew up in the Fezzan — the deep Saharan south of Libya, oasis towns, Tuareg communities, ancient trade routes',
+    intent: 'year_texture',
+    notes: 'Set by lby_dep_fezzan.',
+  },
+
   zambian_copper_crash_generation: {
     weight: 'major',
     category: 'trauma',

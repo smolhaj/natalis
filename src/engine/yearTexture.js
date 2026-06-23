@@ -10514,6 +10514,49 @@ function buildYearTexture(state) {
     'Libya has the largest oil reserves in Africa. One man decided how that was distributed. The distribution included you, and the Mukhabarat, simultaneously.',
     'The welfare state was real — the free housing, the free university, the subsidised everything. The surveillance that came with it was also real. You built your life inside both.',
   ])
+  if (F.has('lby_dep_berber_generation') && Math.random() < 0.18) return pick([
+    'Tamazight continued at home, in the household, in the private register. In public it did not exist. You learned early which parts of yourself were permitted where.',
+    'The Amazigh language and the Amazigh history were not in the curriculum. What was in the curriculum was a different version of this place and this people.',
+    phase === 'late_life'
+      ? 'After 2011 the Tamazight flags appeared in public for the first time in your life. What that looked like: you were not prepared for the feeling of it.'
+      : 'The Nafusa Mountains hold a culture that the coastal government has consistently tried to erase and consistently failed to erase. You are part of what didn\'t erase.',
+  ])
+  if (F.has('lby_dep_green_book_generation') && Math.random() < 0.16) return pick([
+    'The Green Book was in the curriculum the way arithmetic was in the curriculum. Correct answers were required. Private assessments were not the point.',
+    'Third Universal Theory: the direct democracy of basic popular congresses. What the theory looked like in practice is what you grew up inside.',
+    'You can still produce the vocabulary — Jamahiriya, the Third Universal Theory, the basic popular congress. It sits in the part of the brain where memorised things sit, available without being believed.',
+  ])
+  if (F.has('lby_dep_1986_generation') && Math.random() < 0.2) return pick([
+    'April 15, 1986. Tripoli at 2am. You know what American bombs sound like from the inside of their target country.',
+    'The F-111s came from England because France refused overflight. The French refusal saved time over the Atlantic and changed nothing about the bombs falling.',
+    phase === 'late_life'
+      ? 'You lived through the 1986 bombing and then the 2011 revolution and then the fragmentation. The country has been bombed from outside and inside in your lifetime.'
+      : 'Reagan called it self-defence. Sixty-three Libyans died. The infant daughter of Gaddafi died. The logic of who counts as collateral has never been symmetric.',
+  ])
+  if (F.has('lby_dep_student_surveilled') && Math.random() < 0.17) return pick([
+    'The Libyan People\'s Bureau monitored students abroad. You adjusted what you said and to whom. The adjustment became a habit that you carried home.',
+    'The careful version of yourself abroad was not entirely the same person who left Tripoli. The return required another adjustment. You have been adjusting since.',
+    'The revolutionary committee chapter at the university abroad: you knew which students were reporting and which were not. You were careful around the ones you were not sure about.',
+  ])
+  if (F.has('lby_dep_benghazi_identity') && Math.random() < 0.17) return pick([
+    'Benghazi and Tripoli: the same country and two different orientations toward it. The eastern city has its own sense of itself that the capital does not fully include.',
+    'The 2011 revolution started in Benghazi. That is where it was possible to start — the particular resentment of a city that had been governed from somewhere else for decades.',
+    phase === 'late_life'
+      ? 'Benghazi before the revolution and Benghazi after it are different cities in the same location. You knew both versions. The comparison is complicated.'
+      : 'The east-west divide runs through Libyan politics as the geography runs through the country. You learned to read which version of Libya you were in.',
+  ])
+  if (F.has('lby_dep_migration_witness') && Math.random() < 0.18) return pick([
+    'Libya became the main transit country for sub-Saharan Africans trying to reach Europe. The Mediterranean crossing from Libyan shores. You live in the country they are trying to leave through.',
+    'The CNN footage from the slave market near Sabha: the country being described in that footage is the country you are from. That requires a specific kind of sitting with.',
+    phase === 'late_life'
+      ? 'The Libya that became a migration hub after 2011 is not the country you were born into. You watch what your country became through international reports that describe it from outside.'
+      : 'The detention centres on the outskirts of Tripoli: you know they exist. The knowledge has different weights depending on how close to them you live.',
+  ])
+  if (F.has('lby_dep_fezzan_generation') && Math.random() < 0.16) return pick([
+    'The Fezzan: the deep south, the oasis towns, the Sahara in the full sense. The country of the coast is a distant authority. The desert has its own logic.',
+    'Sabha, Murzuk, Ghat: the Fezzan towns that exist on the ancient trans-Saharan routes. The routes predate the country by centuries and will outlast whatever follows it.',
+    'Growing up in the Fezzan is growing up in a Libya that the Mediterranean coast considers an interior — different light, cold nights, the date palms, the Tuareg crossings.',
+  ])
 
   // ─── JORDAN TEXTURE ──────────────────────────────────────────────────────────
   if (F.has('jordanian_palestinian_identity') && Math.random() < 0.22) return pick([
