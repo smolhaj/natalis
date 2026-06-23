@@ -1197,4 +1197,245 @@ export const ECONOMIC_FLAGS = {
     notes: 'Set by ft30_business_second_attempt (business_failed follow-through).',
   },
 
+  // ── DOCTOR ARC ──────────────────────────────────────────────────────────────
+
+  doc_first_death: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Doctor carried out of the room after their first patient death as the responsible physician.',
+    intent: 'event',
+    notes: 'Guard for doc_the_case and doc_the_question follow-ons.',
+  },
+
+  doc_resource_shortage: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Doctor working in a setting where essential medications and equipment are absent — the workaround as the primary skill.',
+    intent: 'none',
+  },
+
+  doc_the_case: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'The one case the doctor carries differently from all others — face and result retrievable without effort decades later.',
+    intent: 'none',
+  },
+
+  doc_tells_truth: {
+    weight: 'minor',
+    category: 'career',
+    description: 'Doctor chose to give a patient as full a truthful prognosis as possible when asked directly.',
+    intent: 'none',
+  },
+
+  doc_colleague_lost: {
+    weight: 'major',
+    category: 'career',
+    description: 'A medical colleague died by suicide — the specific shadow the profession carries.',
+    intent: 'event',
+  },
+
+  doc_burnout: {
+    weight: 'major',
+    category: 'career',
+    description: 'Doctor experiencing clinical emotional distance — the accumulation of years narrowing the felt significance of individual patients.',
+    intent: 'event',
+  },
+
+  doc_burnout_addressed: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Doctor took leave to address burnout — some of what was lost returned.',
+    intent: 'none',
+  },
+
+  doc_rural_posting: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Doctor posted to a rural clinic covering hundreds of square kilometres with minimal backup.',
+    intent: 'none',
+  },
+
+  doc_late_reckoning: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Doctor\'s late-life accounting of a medical career in terms of individual faces and moments rather than numbers.',
+    intent: 'none',
+  },
+
+  // ── JOURNALIST ARC ──────────────────────────────────────────────────────────
+
+  journalist_first_story: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'The journalist\'s first story that mattered — reached where it needed to reach, produced the response that said the information landed.',
+    intent: 'event',
+  },
+
+  journalist_source_kept: {
+    weight: 'major',
+    category: 'career',
+    description: 'Journalist protected a source when it was costly to do so — established a permanent position.',
+    intent: 'event',
+  },
+
+  journalist_self_censored: {
+    weight: 'major',
+    category: 'career',
+    description: 'Journalist filed a story without its central finding under editorial or political pressure.',
+    intent: 'event',
+  },
+
+  journalist_colleague_killed: {
+    weight: 'major',
+    category: 'career',
+    description: 'A journalist colleague was killed covering a story — the specific professional weight of this loss.',
+    intent: 'event',
+  },
+
+  journalist_subject_encountered: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Journalist encountered a subject of their work and confronted the gap between accuracy and full consequence.',
+    intent: 'none',
+  },
+
+  journalist_archive_read: {
+    weight: 'minor',
+    category: 'career',
+    description: 'Journalist read their own work from twenty-plus years ago — found some certainties wrong, the record permanent.',
+    intent: 'none',
+  },
+
+  journalist_late_reckoning: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Journalist\'s late-life accounting of what journalism does and does not accomplish.',
+    intent: 'none',
+  },
+
+  // ── LAWYER ARC ──────────────────────────────────────────────────────────────
+
+  lawyer_first_client: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Lawyer\'s first real client — taught the gap between what the law promises and what it delivers.',
+    intent: 'event',
+  },
+
+  lawyer_guilty_client: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Client privately admitted guilt; lawyer represented them anyway per the adversarial requirement.',
+    intent: 'none',
+  },
+
+  lawyer_justice_gap: {
+    weight: 'major',
+    category: 'career',
+    description: 'Case that resolved correctly under law but not justly — the two outcomes diverged.',
+    intent: 'event',
+  },
+
+  lawyer_pro_bono: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Lawyer took a case for nothing because it mattered — found something in themselves that billing work did not produce.',
+    intent: 'none',
+  },
+
+  lawyer_in_system: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Lawyer chose to stay inside a legal system used as political instrument — finding spaces where real law still operates.',
+    intent: 'none',
+  },
+
+  lawyer_dissident_cases: {
+    weight: 'major',
+    category: 'career',
+    description: 'Lawyer took cases the state would not like — using the law against itself under authoritarian conditions.',
+    intent: 'event',
+  },
+
+  lawyer_wrongful_conviction_doubt: {
+    weight: 'major',
+    category: 'career',
+    description: 'Lawyer became aware — without legal certainty — that someone they prosecuted or failed to defend may have been innocent.',
+    intent: 'event',
+  },
+
+  lawyer_late_career: {
+    weight: 'minor',
+    category: 'career',
+    description: 'Late-career lawyer who has seen enough legal change to know the law is more contingent than it appears.',
+    intent: 'none',
+  },
+
+  lawyer_life_accounted: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Lawyer\'s late-life accounting of a career inside the imperfect machinery of the law.',
+    intent: 'none',
+  },
+
+  // ── NURSE ARC ───────────────────────────────────────────────────────────────
+
+  nurse_first_death: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Nurse was the person in the room when a patient died — before the doctor arrived. First time.',
+    intent: 'event',
+  },
+
+  nurse_family_mediation: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Nurse translating between what medicine can offer and what a desperate family needs medicine to promise.',
+    intent: 'none',
+  },
+
+  nurse_advocated: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Nurse successfully challenged a treatment decision through proper escalation — clinical observation overrode the ward round.',
+    intent: 'none',
+  },
+
+  nurse_accumulated_grief: {
+    weight: 'major',
+    category: 'career',
+    description: 'Nurse who has accumulated years of patient deaths — the specific weight of repeated loss, the clinical distance built as a tool.',
+    intent: 'event',
+  },
+
+  nurse_short_staffed: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Nurse covering a chronic staffing gap — the gap is their body and hours.',
+    intent: 'none',
+  },
+
+  nurse_recognition_received: {
+    weight: 'minor',
+    category: 'career',
+    description: 'A patient family found the nurse specifically, after the fact, to say what the care meant.',
+    intent: 'none',
+  },
+
+  nurse_retired: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Nurse retired after a long career — last handover, keys left, something carried out.',
+    intent: 'event',
+    notes: 'Guards nurse_life_accounted (nur_life_accounting when: G.flags.has(nurse_retired)).',
+  },
+
+  nurse_life_accounted: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Nurse\'s late-life accounting of a career done in hands-knowledge and accumulated weight, not metrics.',
+    intent: 'none',
+  },
+
 }
