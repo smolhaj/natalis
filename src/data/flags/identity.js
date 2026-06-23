@@ -2628,6 +2628,78 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by sdn_civil_war_2023 (both choices). Follow-through: ft25_khartoum_war_echo.',
   },
 
+  sdn_dep_nile_khartoum: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Grew up in Khartoum knowing the Blue-White Nile confluence — the physical geography that defines the city',
+    intent: 'year_texture',
+    notes: 'Set by sdn_dep_two_niles.',
+  },
+
+  sdn_dep_haboob_child: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Grew up in Sudan knowing the haboob — the seasonal dust storms that define Khartoum\'s climate',
+    intent: 'year_texture',
+    notes: 'Set by sdn_dep_haboob.',
+  },
+
+  sdn_dep_nuba_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Survived the Nuba Mountains bombing campaign 1992–2002 — government Antonov bombers targeting civilian areas in South Kordofan',
+    intent: 'year_texture',
+    notes: 'Set by sdn_dep_nuba_bombing (both choices).',
+  },
+
+  sdn_dep_ghost_house_era: {
+    weight: 'moderate',
+    category: 'trauma',
+    description: 'Lived under the ghost house system — Bashir\'s unofficial detention centres that disappeared political opponents without record',
+    intent: 'year_texture',
+    notes: 'Set by sdn_dep_ghost_house_dread.',
+  },
+
+  sdn_dep_fur_highlands: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Fur identity in the Jebel Marra highlands of central Darfur — the specific agricultural and cultural geography of the region before the crisis',
+    intent: 'year_texture',
+    notes: 'Set by sdn_dep_fur_land.',
+  },
+
+  sdn_dep_masalit_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Masalit childhood in western Sudan near Geneina — the border trading culture and seasonal farming life before the Darfur genocide',
+    intent: 'year_texture',
+    notes: 'Set by sdn_dep_masalit_life.',
+  },
+
+  sdn_dep_transition_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived the 2019–2021 Sudanese transitional government as genuine possibility — the 26-month civilian-military arrangement before the October 2021 coup',
+    intent: 'year_texture',
+    notes: 'Set by sdn_dep_transition_hope (both choices).',
+  },
+
+  sdn_dep_sittat_al_shay: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Part of Khartoum\'s tea-lady economy — the sittaat al-shay who funded the 2019 sit-in and died at their stations on June 3',
+    intent: 'year_texture',
+    notes: 'Set by sdn_dep_tea_ladies.',
+  },
+
+  sdn_dep_arab_african_identity: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Navigates Sudan\'s Arab-African identity border — the political question of what Sudan is that became personal',
+    intent: 'year_texture',
+    notes: 'Set by sdn_dep_arab_african.',
+  },
+
   angola_civil_war_generation: {
     weight: 'major',
     category: 'trauma',
