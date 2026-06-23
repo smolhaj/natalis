@@ -11258,6 +11258,41 @@ function buildYearTexture(state) {
       ? 'The generation that holds this history is your generation. The generation after will have the official account — the reports and the trials and the museum exhibitions. You have what it actually felt like in the highlands, in Lima, in the post-office queue with the CLAE scandal on the news.'
       : 'You contain the archive of a country that had to reckon with what it had done to its highland majority, slowly, partially, incompletely. The reckoning is still in progress.',
   ])
+  if (F.has('per_dep_lima_migrant') && Math.random() < 0.20) return pick([
+    'You came from the sierra and you are in Lima now. The city runs on a grammar you learned rather than inherited. The people who inherited it spend no energy on the grammar. You always have.',
+    'The barriada was built in stages: the first wall from whatever was available, the second wall when there was money, the roof that didn\'t reach the edge for the first two winters. You built into the city and the city became yours through that building.',
+    phase === 'late_life'
+      ? 'Lima received you and did not welcome you and has become your city anyway, through the specific process of decades. Your grandchildren are limeños without complication. The journey that produced them is not a story they carry.'
+      : '"Serrano" in that office. "Serrano" in that voice. You learn the specific register of the word in each mouth and respond accordingly. The energy the response requires does not appear on any balance sheet.',
+  ])
+  if (F.has('per_dep_nikkei_identity') && Math.random() < 0.20) return pick([
+    'Your grandparents came from Japan and became Nikkei in Peru — Japanese by descent, Peruvian by culture, cooking lomo saltado alongside sushi, speaking Spanish at the market and something else at home. The category exists only here.',
+    'Alberto Fujimori was a Nikkei — son of Japanese immigrants — who became president of Peru. For the Nikkei community, this was either the proof of integration or an anomaly, and the country used it as both, depending on the year.',
+    phase === 'late_life'
+      ? 'The kenjinkai associations, the community schools, the Japanese-Peruvian cookbook, the face that Peru reads as foreign — these are the specific coordinates of an identity that is not quite any of its parts.'
+      : 'In the 1940 anti-Japanese riots in Lima, the community\'s businesses were destroyed. The community rebuilt. The integration of the Nikkei into Peru is not a smooth arc but a set of ruptures and rebuildings.',
+  ])
+  if (F.has('per_dep_afro_coast') && Math.random() < 0.20) return pick([
+    'The cajón was invented here, by enslaved people who were forbidden drums and used what was available. The music is festejo and landó. Nicomedes Santa Cruz collected these from the edge of loss in the 1950s. They are yours.',
+    'The Afro-Peruvian communities of Chincha and Cañete are the descendants of people brought to work the coastal haciendas. Three centuries of settlement on the southern coast, in a country that placed you at the bottom of its hierarchy and could not prevent you from building a culture the country now claims.',
+    phase === 'late_life'
+      ? 'What you preserved by living it — the festejo rhythms, the landó, the specific cooking of the southern coast — is what the folk revival had to find in the archives. You were the archive, ongoing, which is different from being preserved.'
+      : 'The distance between Chincha and Lima is a few hours. The distance between how Chincha is perceived and how Lima is perceived is the racial geography of a country that calls itself mestizo and means something specific by the word.',
+  ])
+  if (F.has('per_dep_coca_vraem') && Math.random() < 0.20) return pick([
+    'The VRAEM: the highest-producing coca valley in the world, where the helicopter comes with herbicide and the coca grows back, and the buyer who comes to you has scales that are consistently wrong in one direction.',
+    'The alternative development programs offer cacao, plantain, coffee — crops that need a road and a cold chain and a state presence the valley does not have. The coca buyer comes to you. The logic is not ideology. It is access.',
+    phase === 'late_life'
+      ? 'The plan was always voluntary substitution. The implementation was always slower than the signing. The valley is still producing, decades later, because the road was never built and the buyer still comes.'
+      : 'To grow coca in the VRAEM is to be taxed by the Sendero remnants and by the armed groups that followed and by the government eradication program and by the buyer\'s scales. Every actor takes a cut. You grow it anyway because the alternative does not reach you.',
+  ])
+  if (F.has('per_dep_castillo_generation') && Math.random() < 0.18) return pick([
+    'Pedro Castillo: the first serrano, the first rural teacher, the first person from outside Lima\'s orbit to reach the presidency in two hundred years of the republic. His government collapsed in eighteen months. The southern protesters who were shot were from the departments that voted for him by the highest margins.',
+    'The polarization of 2021: the coast and the capital voted Keiko, the sierra and the jungle voted Castillo, the margins were forty-four thousand votes from eighteen million, and the Boluarte government killed sixty people in the south when they protested the outcome.',
+    phase === 'late_life'
+      ? 'The question of who Peru is for has not been resolved by any administration you have lived through. The Castillo election made the question visible in a way that is harder to deny than it was before.'
+      : 'The Castillo era: the excitement, the incompetence, the corruption, the removal, the sixty dead in the protests, the way the Lima press covered the dead and the way the international press covered the same deaths differently.',
+  ])
 
   // ─── INFORMAL ECONOMY & RURAL-TO-URBAN TEXTURE ───────────────────────────────
   if (F.has('rural_to_urban') && !F.has('emigrated') && Math.random() < 0.22) return pick([

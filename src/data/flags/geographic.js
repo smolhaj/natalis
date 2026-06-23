@@ -1957,4 +1957,54 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by pd_unrwa_school. Terminal — context in event prose.',
   },
 
+  // ─── PERU DEPTH ───────────────────────────────────────────────────────────────
+
+  per_dep_lima_migrant: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Serrano who migrated to Lima — the accent flattened or kept, the barriada built over years, the city absorbing and not-absorbing simultaneously.',
+    intent: 'event',
+    notes: 'Set by per_dep_serrano_lima. Follow-through: per_dep_sierra_late_reckoning (age 60+).',
+  },
+
+  per_dep_smelter_generation: {
+    weight: 'moderate',
+    category: 'health',
+    description: 'Grew up near the La Oroya smelter — 99% of children with blood lead above WHO threshold, the company disputing the findings while the lungs did not wait.',
+    intent: 'event',
+    notes: 'Set by per_dep_la_oroya. Follow-through: per_dep_smelter_health_echo (late-life health cost).',
+  },
+
+  per_dep_nikkei_identity: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Nikkei-Peruvian — Japanese by descent, Peruvian by birth and culture, neither fully Japanese nor not, a category specific to Peru.',
+    intent: 'year_texture',
+    notes: 'Set by per_dep_nikkei.',
+  },
+
+  per_dep_afro_coast: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Afro-Peruvian from the southern coastal communities of Chincha or Cañete — festejo and landó, the cajón, three hundred years of culture built in the gap between visibility and recognition.',
+    intent: 'year_texture',
+    notes: 'Set by per_dep_afro_peruvian.',
+  },
+
+  per_dep_coca_vraem: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Grew up in the VRAEM coca economy — the highest-producing coca valley in the world, the helicopter eradication, the alternative crops that required infrastructure that wasn\'t there.',
+    intent: 'year_texture',
+    notes: 'Set by per_dep_vraem_coca.',
+  },
+
+  per_dep_castillo_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through the Castillo 2021 election and its aftermath — the first serrano president, the sixty dead in the south when the police fired on protesters who had voted for him.',
+    intent: 'year_texture',
+    notes: 'Set by per_dep_castillo_2021.',
+  },
+
 }
