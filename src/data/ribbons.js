@@ -2690,6 +2690,66 @@ export const RIBBONS = [
     color: 'green',
   },
 
+  // ── INHERITANCE ARC RIBBONS ──────────────────────────────────────────────────
+  {
+    id: 'the_sorting',
+    name: 'The Sorting',
+    description: 'You went through a dead parent\'s house and made decisions about objects that no longer had their person. Some things were worth keeping. Most things were not.',
+    condition: (G) => G.flags.includes('inh_sorting_happened'),
+    priority: 72,
+    color: 'stone',
+  },
+  {
+    id: 'the_oldest_generation',
+    name: 'The Oldest Generation',
+    description: 'Both your parents are gone. There is no one left who remembers you at the beginning. You are the oldest version of yourself in anyone\'s memory.',
+    condition: (G) => G.flags.includes('inh_both_parents_gone'),
+    priority: 78,
+    color: 'zinc',
+  },
+  {
+    id: 'the_patterns',
+    name: 'The Patterns',
+    description: 'What you inherited that is not an object or money: a way of holding your shoulders, a sentence structure, a fear, a capacity you recognized as theirs when it appeared.',
+    condition: (G) => G.flags.includes('inh_reckoning_completed'),
+    priority: 76,
+    color: 'violet',
+  },
+
+  // ── GRANDPARENT ARC RIBBONS ──────────────────────────────────────────────────
+  {
+    id: 'the_grandparent',
+    name: 'The Grandparent',
+    description: 'A child was born to your child and the category applied to you. The relationship that developed was not parent. It was something adjacent, and freer.',
+    condition: (G) => G.flags.includes('became_grandparent'),
+    priority: 74,
+    color: 'amber',
+  },
+  {
+    id: 'the_transmission',
+    name: 'The Transmission',
+    description: 'You passed something to your grandchild — a skill, or a story, or a way of doing a specific thing. They will not always know where it came from.',
+    condition: (G) => G.flags.includes('grandparent_transmitted_skill') || G.flags.includes('grandparent_transmitted_story'),
+    priority: 72,
+    color: 'green',
+  },
+  {
+    id: 'the_grandparent_question',
+    name: 'The Question About Before',
+    description: 'Your grandchild asked what it was like to be young when the thing happened. You answered as fully as you could. Some of it will stay with them.',
+    condition: (G) => G.flags.includes('grandparent_answered_question'),
+    priority: 70,
+    color: 'blue',
+  },
+  {
+    id: 'what_remained',
+    name: 'What Remained',
+    description: 'You reached the reckoning of grandparenthood: what was passed on, what wasn\'t, and what your contribution actually was versus what you planned it to be.',
+    condition: (G) => G.flags.includes('grandparent_late_reckoning'),
+    priority: 76,
+    color: 'violet',
+  },
+
   // ── SICK CHILD ARC RIBBONS ────────────────────────────────────────────────────
   {
     id: 'the_appointment_life',
@@ -2714,5 +2774,431 @@ export const RIBBONS = [
     condition: (G) => G.flags.includes('child_illness_chronic') && G.flags.includes('ill_child_late_witness'),
     priority: 78,
     color: 'purple',
+  },
+
+  // ── EGYPT DEPTH RIBBONS ──────────────────────────────────────────────────────
+  {
+    id: 'the_crossing',
+    label: 'The Crossing',
+    description: 'Witnessed the October 1973 War — the crossing of the Suez Canal, the Bar-Lev Line breached, the military answer to the Naksa.',
+    condition: (G) => G.flags.includes('october_war_generation'),
+    rarity: 'uncommon',
+  },
+  {
+    id: 'the_camp_david_reckoning',
+    label: 'The Camp David Reckoning',
+    description: 'Lived through Sadat\'s peace with Israel — the Arab League expulsion, the assassination, the cold peace that held for forty years.',
+    condition: (G) => G.flags.includes('egy_camp_david_generation'),
+    rarity: 'uncommon',
+  },
+  {
+    id: 'the_square_and_after',
+    label: 'The Square and After',
+    description: 'Present for both Tahrir 2011 and the Sisi counter-revolution — the eighteen days and the afternoon that closed them.',
+    condition: (G) => G.flags.includes('tahrir_generation') && G.flags.includes('egy_sisi_generation'),
+    rarity: 'rare',
+  },
+
+  // ── ETHIOPIA DEPTH RIBBONS ───────────────────────────────────────────────────
+  {
+    id: 'the_adwa_classroom',
+    label: 'The Adwa Classroom',
+    description: 'Learned the Battle of Adwa in the classroom it made possible.',
+    condition: (G) => G.character?.country?.name === 'Ethiopia' && G.age >= 10,
+    rarity: 'common',
+  },
+  {
+    id: 'the_volkswagen_generation',
+    label: 'The Volkswagen Generation',
+    description: 'Witnessed Haile Selassie removed from the Jubilee Palace in a Volkswagen Beetle — forty-four years of imperial Ethiopia ending on a Tuesday morning.',
+    condition: (G) => G.flags.includes('eth_haile_selassie_generation'),
+    rarity: 'uncommon',
+  },
+  {
+    id: 'the_arbegnoch',
+    label: 'The Arbegnoch',
+    description: 'Grew up in a family that joined the patriot resistance during the Italian occupation — five years in the mountains while the Emperor was in Bath.',
+    condition: (G) => G.flags.includes('eth_arbegnoch_family'),
+    rarity: 'rare',
+  },
+  {
+    id: 'the_landlocked',
+    label: 'The Landlocked',
+    description: 'Lived through the day Ethiopia became landlocked — Eritrean independence 1993 taking both ports, the 1959 treaty irrelevant, the Blue Nile the only asset that remained.',
+    condition: (G) => G.flags.includes('eth_eritrea_loss'),
+    rarity: 'uncommon',
+  },
+  {
+    id: 'the_irreechaa_generation',
+    label: 'The Irreechaa Generation',
+    description: 'Present for the Oromia protests — the Irreechaa massacre, the state of emergency, the years of pressure that preceded Abiy Ahmed.',
+    condition: (G) => G.flags.includes('eth_oromia_protest_witness'),
+    rarity: 'uncommon',
+  },
+
+  // ── MEXICO DEPTH RIBBONS ─────────────────────────────────────────────────────
+  {
+    id: 'the_night_pri_fell',
+    name: 'The Night the PRI Fell',
+    description: 'You were alive in Mexico when 71 years of single-party rule ended on a single election night. Some things you thought were permanent turned out not to be.',
+    condition: (G) => G.flags.includes('mex_pri_fell_generation'),
+    priority: 76,
+    color: 'green',
+  },
+  {
+    id: 'the_error_de_diciembre',
+    name: 'The Error of December',
+    description: 'The peso devalued in three days. What you had been worth the day before, you were worth less. The mathematics of that December stayed with you.',
+    condition: (G) => G.flags.includes('mex_tequila_crisis_survivor'),
+    priority: 74,
+    color: 'amber',
+  },
+  {
+    id: 'the_cuarta_transformacion',
+    name: 'The Cuarta Transformación',
+    description: 'You watched AMLO\'s election with hope or with caution, and then you watched what the transformation actually was. The two things were not the same thing.',
+    condition: (G) => G.flags.includes('mex_amlo_generation'),
+    priority: 72,
+    color: 'stone',
+  },
+  {
+    id: 'the_gratuidad',
+    name: 'The Gratuidad',
+    description: 'You studied at the UNAM — free, public, vast — and you carry the argument for the rest of your life: that education is not a service you purchase.',
+    condition: (G) => G.flags.includes('mex_unam_generation'),
+    priority: 70,
+    color: 'blue',
+  },
+  {
+    id: 'the_north_crossing',
+    name: 'The North Crossing',
+    description: 'The calculation sent you north. The calculation didn\'t include everything. You went anyway, and the crossing is the hinge on which the rest turns.',
+    condition: (G) => G.flags.includes('mex_crossed_north'),
+    priority: 74,
+    color: 'zinc',
+  },
+  {
+    id: 'the_two_languages',
+    name: 'The Two Languages',
+    description: 'You grew up holding two languages: the one that names where you come from, and the one the school wanted. You have never been able to put either one down.',
+    condition: (G) => G.flags.includes('mex_indigenous_bilingual'),
+    priority: 72,
+    color: 'violet',
+  },
+
+  // ── CAREER ARC RIBBONS ────────────────────────────────────────────────────────
+  {
+    id: 'the_patient_face',
+    name: 'The Patient Face',
+    description: 'You practised medicine for most of your working life. One face — one case — you can still retrieve without effort. That is the measure of it.',
+    condition: (G) => G.flags.includes('doc_the_case') && G.flags.includes('doc_late_reckoning'),
+    priority: 74,
+    color: 'blue',
+  },
+  {
+    id: 'the_rural_posting',
+    name: 'The Rural Posting',
+    description: 'You were posted to a clinic six hundred kilometres from backup. You held it together with workarounds and will. People lived because of it.',
+    condition: (G) => G.flags.includes('doc_rural_posting'),
+    priority: 72,
+    color: 'green',
+  },
+  {
+    id: 'the_story_not_written',
+    name: 'The Story Not Written',
+    description: 'You know exactly which story you should have written. You know why you didn\'t. The record is permanent. So is what\'s missing from it.',
+    condition: (G) => G.career?.id === 'journalist' && G.flags.includes('journalist_self_censored'),
+    priority: 74,
+    color: 'gray',
+  },
+  {
+    id: 'the_source',
+    name: 'The Source',
+    description: 'When it cost you, you protected them. This is the baseline requirement of the job. You treated it that way.',
+    condition: (G) => G.flags.includes('journalist_source_kept'),
+    priority: 72,
+    color: 'blue',
+  },
+  {
+    id: 'the_correspondent_lost',
+    name: 'The Correspondent',
+    description: 'A colleague was killed for covering something that someone didn\'t want covered. You are the reason their work is still known.',
+    condition: (G) => G.flags.includes('journalist_colleague_killed') && G.flags.includes('journalist_late_reckoning'),
+    priority: 80,
+    color: 'red',
+  },
+  {
+    id: 'the_pro_bono',
+    name: 'The Pro Bono',
+    description: 'You took a case for nothing because it mattered. You gave it the same hours as the cases that billed. You still know what the point was.',
+    condition: (G) => G.flags.includes('lawyer_pro_bono'),
+    priority: 70,
+    color: 'blue',
+  },
+  {
+    id: 'the_justice_gap',
+    name: 'The Gap',
+    description: 'The case resolved correctly. The correct outcome and the just outcome were not the same. You know which one it was. You have never fully put it down.',
+    condition: (G) => G.flags.includes('lawyer_justice_gap') && G.flags.includes('lawyer_life_accounted'),
+    priority: 76,
+    color: 'gray',
+  },
+  {
+    id: 'the_dissident_lawyer',
+    name: 'Against the Grain',
+    description: 'You took cases the state didn\'t want taken. Some you won on technicalities the system tolerated. The clients were worth it.',
+    condition: (G) => G.flags.includes('lawyer_dissident_cases'),
+    priority: 80,
+    color: 'purple',
+  },
+  {
+    id: 'the_last_handover',
+    name: 'The Last Handover',
+    description: 'You handed over to the night nurse for the last time. You left the keys. You walked out. Something that had no weight came with you.',
+    condition: (G) => G.flags.includes('nurse_retired') && G.flags.includes('nurse_life_accounted'),
+    priority: 74,
+    color: 'blue',
+  },
+  {
+    id: 'the_family_at_the_bedside',
+    name: 'The Family at the Bedside',
+    description: 'You translated between what medicine could offer and what a family needed medicine to promise. You did it thirty years, a room at a time.',
+    condition: (G) => G.flags.includes('nurse_family_mediation') && G.flags.includes('nurse_accumulated_grief'),
+    priority: 72,
+    color: 'gray',
+  },
+  {
+    id: 'the_good_year',
+    name: 'The Good Year',
+    description: 'The year the rains came right. The crop came through. The market was not bad. You measured every harder year against this one.',
+    condition: (G) => G.flags.includes('farmer_good_year') && G.flags.includes('farmer_survived_bad_years'),
+    priority: 68,
+    color: 'green',
+  },
+  {
+    id: 'the_land',
+    name: 'The Land',
+    description: 'The field exists. The field has fed people. You stood at its edge and the accounting of a farming life took that form.',
+    condition: (G) => G.flags.includes('farmer_late_reckoning'),
+    priority: 72,
+    color: 'green',
+  },
+  {
+    id: 'the_gap_between',
+    name: 'The Gap Between',
+    description: 'You held authority in communities that had reasons not to trust it. You tried to be worth trusting. You found what you found in yourself when you had to find it.',
+    condition: (G) => G.flags.includes('police_late_reckoning'),
+    priority: 72,
+    color: 'gray',
+  },
+  {
+    id: 'the_minimum_compliance',
+    name: 'The Gap in the Line',
+    description: 'The orders required you to enforce the law as an instrument. You left a gap small enough to deny. Some people used it.',
+    condition: (G) => G.flags.includes('police_minimal_compliance'),
+    priority: 78,
+    color: 'purple',
+  },
+  {
+    id: 'the_caseload',
+    name: 'The Caseload',
+    description: 'You worked with people at the worst points of their lives for thirty years. The good-outcome file is real. What you carry is real. You stayed.',
+    condition: (G) => G.flags.includes('sw_late_reckoning'),
+    priority: 74,
+    color: 'blue',
+  },
+  {
+    id: 'the_fallow',
+    name: 'After the Fallow',
+    description: 'There was a period where the work did not come. You waited. What came after the fallow was not the same work that stopped. It was better.',
+    condition: (G) => G.flags.includes('artist_after_fallow'),
+    priority: 72,
+    color: 'gold',
+  },
+  {
+    id: 'the_body_of_work',
+    name: 'The Body of Work',
+    description: 'You made things that needed making. Some of them were the real ones. The body of work exists in the world with a life of its own now.',
+    condition: (G) => G.flags.includes('artist_body_of_work') && G.flags.includes('artist_late_reckoning'),
+    priority: 76,
+    color: 'gold',
+  },
+
+  // ── ENGINEER ARC ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'the_thing_stands',
+    name: 'The Thing Stands',
+    description: 'You signed off on the substitute material. You drove past it twenty years later. The margin held. The structure is still there.',
+    condition: (G) => G.flags.includes('engineer_compromised') && G.flags.includes('engineer_late_reckoning'),
+    priority: 72,
+    color: 'stone',
+  },
+
+  {
+    id: 'the_safety_flag',
+    name: 'The Safety Flag',
+    description: 'You escalated the concern, caused the delay, got the detail corrected. The structure performs as designed. The ten days were worth it.',
+    condition: (G) => G.flags.includes('engineer_safety_flagged') && G.flags.includes('engineer_late_reckoning'),
+    priority: 74,
+    color: 'blue',
+  },
+
+  {
+    id: 'the_failure_report',
+    name: 'The Failure Report',
+    description: 'Your design failed. The investigation was thorough. You learned something specific from it that changed how you model similar systems.',
+    condition: (G) => G.flags.includes('engineer_failure') && G.flags.includes('engineer_late_reckoning'),
+    priority: 70,
+    color: 'zinc',
+  },
+
+  // ── SOFTWARE DEVELOPER ARC ───────────────────────────────────────────────────
+
+  {
+    id: 'the_decision_above',
+    name: 'The Decision Above',
+    description: 'You built the data collection. You put the ethics in the category of decisions made above your level. The breach eventually landed in the news.',
+    condition: (G) => G.flags.includes('dev_surveillance_complied') && G.flags.includes('dev_late_reckoning'),
+    priority: 68,
+    color: 'zinc',
+  },
+
+  {
+    id: 'the_stack_legacy',
+    name: 'Legacy Stack',
+    description: 'The stack you built your career on is what hiring managers call legacy. You hold the edge-case knowledge no one else has. Both things are true.',
+    condition: (G) => G.flags.includes('dev_obsolescence') && G.flags.includes('dev_late_reckoning'),
+    priority: 66,
+    color: 'stone',
+  },
+
+  // ── FACTORY WORKER ARC ───────────────────────────────────────────────────────
+
+  {
+    id: 'the_card',
+    name: 'The Card',
+    description: 'You signed. The drive succeeded. Fourteen months to the first contract. The grievance procedure was not modest.',
+    condition: (G) => G.flags.includes('factory_joined_union') && G.flags.includes('factory_late_reckoning'),
+    priority: 72,
+    color: 'blue',
+  },
+
+  {
+    id: 'the_line',
+    name: 'The Line',
+    description: 'The motion repeated, the speed-up absorbed, the injury survived. The plant closed or it did not. The body kept the record.',
+    condition: (G) => G.flags.includes('factory_late_reckoning'),
+    priority: 64,
+    color: 'stone',
+  },
+
+  // ── LABORER ARC ──────────────────────────────────────────────────────────────
+
+  {
+    id: 'the_seasons',
+    name: 'The Seasons',
+    description: 'Full months and thin months, the same shape every year. The body in weather. The debt arithmetic that runs forever. You did the work.',
+    condition: (G) => G.flags.includes('laborer_late_reckoning'),
+    priority: 64,
+    color: 'stone',
+  },
+
+  {
+    id: 'the_back',
+    name: 'The Back',
+    description: 'The disc that did not fully resolve. The negotiation that became permanent background. The body kept the record more carefully than any file.',
+    condition: (G) => G.flags.includes('laborer_injury') && G.flags.includes('laborer_late_reckoning'),
+    priority: 66,
+    color: 'zinc',
+  },
+
+  // ── CIVIL SERVANT ARC ────────────────────────────────────────────────────────
+
+  {
+    id: 'the_discretion',
+    name: 'The Discretion',
+    description: 'You found the provision the rule contains. It took longer. The outcome was the outcome the policy intended. The person left differently.',
+    condition: (G) => G.flags.includes('civil_servant_used_discretion') && G.flags.includes('civil_servant_late_reckoning'),
+    priority: 70,
+    color: 'blue',
+  },
+
+  {
+    id: 'the_reassignment',
+    name: 'The Reassignment',
+    description: 'You requested transfer rather than operate the machinery the regime directive required. It took six months. The machinery continued without you.',
+    condition: (G) => G.flags.includes('civil_servant_regime_refused') && G.flags.includes('civil_servant_late_reckoning'),
+    priority: 74,
+    color: 'gold',
+  },
+
+  // ── DRIVER ARC ───────────────────────────────────────────────────────────────
+
+  {
+    id: 'the_back_seat',
+    name: 'The Back Seat',
+    description: 'The specific privacy of the back seat. People told you things at 11pm that had nowhere else to go. You didn\'t carry it out of the car.',
+    condition: (G) => G.flags.includes('driver_late_passenger') && G.flags.includes('driver_late_reckoning'),
+    priority: 66,
+    color: 'stone',
+  },
+
+  {
+    id: 'the_city_at_2am',
+    name: 'The City at 2am',
+    description: 'The bones of the place with the ordinary activity stripped away. The city known better than most people who live in it. The map, memorised.',
+    condition: (G) => G.flags.includes('driver_night_work') && G.flags.includes('driver_late_reckoning'),
+    priority: 68,
+    color: 'stone',
+  },
+
+  // ── MERCHANT ARC ─────────────────────────────────────────────────────────────
+
+  {
+    id: 'the_bad_year',
+    name: 'The Bad Year',
+    description: 'The year the market moved the wrong way. Reserve substantially reduced. You calculated the ratio of bad luck to bad decisions and then stopped calculating.',
+    condition: (G) => G.flags.includes('merchant_bad_year') && G.flags.includes('merchant_late_reckoning'),
+    priority: 66,
+    color: 'zinc',
+  },
+
+  {
+    id: 'the_market_breath',
+    name: 'The Market Breath',
+    description: 'Which day the suppliers are hungry. Where the information is before it becomes price. Twenty years to build. Leaving the phase of active use.',
+    condition: (G) => G.flags.includes('merchant_market_knowledge') && G.flags.includes('merchant_late_reckoning'),
+    priority: 64,
+    color: 'stone',
+  },
+
+  // ── ACCOUNTANT ARC ───────────────────────────────────────────────────────────
+
+  {
+    id: 'the_report',
+    name: 'The Report',
+    description: 'You saw the pattern in the numbers and filed the report. The investigation ran two years. Your name is in the documentation permanently.',
+    condition: (G) => G.flags.includes('accountant_reported_fraud') && G.flags.includes('accountant_late_reckoning'),
+    priority: 74,
+    color: 'gold',
+  },
+
+  {
+    id: 'the_internal_process',
+    name: 'The Internal Process',
+    description: 'You documented it and told the board. Partial recovery, partial concealment. You know what you did and did not do with what you found.',
+    condition: (G) => G.flags.includes('accountant_documented_fraud') && G.flags.includes('accountant_late_reckoning'),
+    priority: 68,
+    color: 'zinc',
+  },
+
+  {
+    id: 'where_the_money_is',
+    name: 'Where the Money Is',
+    description: 'A career spent knowing where the money is. Accurate numbers, on balance. The picture of how money moves, leaving the phase of active use.',
+    condition: (G) => G.flags.includes('accountant_late_reckoning'),
+    priority: 64,
+    color: 'stone',
   },
 ]

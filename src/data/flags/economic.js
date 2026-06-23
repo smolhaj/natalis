@@ -1197,4 +1197,1032 @@ export const ECONOMIC_FLAGS = {
     notes: 'Set by ft30_business_second_attempt (business_failed follow-through).',
   },
 
+  // ── DOCTOR ARC ──────────────────────────────────────────────────────────────
+
+  doc_first_death: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Doctor carried out of the room after their first patient death as the responsible physician.',
+    intent: 'event',
+    notes: 'Guard for doc_the_case and doc_the_question follow-ons.',
+  },
+
+  doc_resource_shortage: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Doctor working in a setting where essential medications and equipment are absent — the workaround as the primary skill.',
+    intent: 'none',
+  },
+
+  doc_the_case: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'The one case the doctor carries differently from all others — face and result retrievable without effort decades later.',
+    intent: 'none',
+  },
+
+  doc_tells_truth: {
+    weight: 'minor',
+    category: 'career',
+    description: 'Doctor chose to give a patient as full a truthful prognosis as possible when asked directly.',
+    intent: 'none',
+  },
+
+  doc_colleague_lost: {
+    weight: 'major',
+    category: 'career',
+    description: 'A medical colleague died by suicide — the specific shadow the profession carries.',
+    intent: 'event',
+  },
+
+  doc_burnout: {
+    weight: 'major',
+    category: 'career',
+    description: 'Doctor experiencing clinical emotional distance — the accumulation of years narrowing the felt significance of individual patients.',
+    intent: 'both',
+  },
+
+  doc_burnout_addressed: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Doctor took leave to address burnout — some of what was lost returned.',
+    intent: 'none',
+  },
+
+  doc_rural_posting: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Doctor posted to a rural clinic covering hundreds of square kilometres with minimal backup.',
+    intent: 'none',
+  },
+
+  doc_late_reckoning: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Doctor\'s late-life accounting of a medical career in terms of individual faces and moments rather than numbers.',
+    intent: 'none',
+  },
+
+  // ── JOURNALIST ARC ──────────────────────────────────────────────────────────
+
+  journalist_first_story: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'The journalist\'s first story that mattered — reached where it needed to reach, produced the response that said the information landed.',
+    intent: 'event',
+  },
+
+  journalist_source_kept: {
+    weight: 'major',
+    category: 'career',
+    description: 'Journalist protected a source when it was costly to do so — established a permanent position.',
+    intent: 'event',
+  },
+
+  journalist_self_censored: {
+    weight: 'major',
+    category: 'career',
+    description: 'Journalist filed a story without its central finding under editorial or political pressure.',
+    intent: 'event',
+  },
+
+  journalist_colleague_killed: {
+    weight: 'major',
+    category: 'career',
+    description: 'A journalist colleague was killed covering a story — the specific professional weight of this loss.',
+    intent: 'both',
+  },
+
+  journalist_subject_encountered: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Journalist encountered a subject of their work and confronted the gap between accuracy and full consequence.',
+    intent: 'none',
+  },
+
+  journalist_archive_read: {
+    weight: 'minor',
+    category: 'career',
+    description: 'Journalist read their own work from twenty-plus years ago — found some certainties wrong, the record permanent.',
+    intent: 'none',
+  },
+
+  journalist_late_reckoning: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Journalist\'s late-life accounting of what journalism does and does not accomplish.',
+    intent: 'none',
+  },
+
+  // ── LAWYER ARC ──────────────────────────────────────────────────────────────
+
+  lawyer_first_client: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Lawyer\'s first real client — taught the gap between what the law promises and what it delivers.',
+    intent: 'event',
+  },
+
+  lawyer_guilty_client: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Client privately admitted guilt; lawyer represented them anyway per the adversarial requirement.',
+    intent: 'none',
+  },
+
+  lawyer_justice_gap: {
+    weight: 'major',
+    category: 'career',
+    description: 'Case that resolved correctly under law but not justly — the two outcomes diverged.',
+    intent: 'event',
+  },
+
+  lawyer_pro_bono: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Lawyer took a case for nothing because it mattered — found something in themselves that billing work did not produce.',
+    intent: 'none',
+  },
+
+  lawyer_in_system: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Lawyer chose to stay inside a legal system used as political instrument — finding spaces where real law still operates.',
+    intent: 'none',
+  },
+
+  lawyer_dissident_cases: {
+    weight: 'major',
+    category: 'career',
+    description: 'Lawyer took cases the state would not like — using the law against itself under authoritarian conditions.',
+    intent: 'event',
+  },
+
+  lawyer_wrongful_conviction_doubt: {
+    weight: 'major',
+    category: 'career',
+    description: 'Lawyer became aware — without legal certainty — that someone they prosecuted or failed to defend may have been innocent.',
+    intent: 'both',
+  },
+
+  lawyer_late_career: {
+    weight: 'minor',
+    category: 'career',
+    description: 'Late-career lawyer who has seen enough legal change to know the law is more contingent than it appears.',
+    intent: 'none',
+  },
+
+  lawyer_life_accounted: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Lawyer\'s late-life accounting of a career inside the imperfect machinery of the law.',
+    intent: 'none',
+  },
+
+  // ── NURSE ARC ───────────────────────────────────────────────────────────────
+
+  nurse_first_death: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Nurse was the person in the room when a patient died — before the doctor arrived. First time.',
+    intent: 'event',
+  },
+
+  nurse_family_mediation: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Nurse translating between what medicine can offer and what a desperate family needs medicine to promise.',
+    intent: 'none',
+  },
+
+  nurse_advocated: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Nurse successfully challenged a treatment decision through proper escalation — clinical observation overrode the ward round.',
+    intent: 'none',
+  },
+
+  nurse_accumulated_grief: {
+    weight: 'major',
+    category: 'career',
+    description: 'Nurse who has accumulated years of patient deaths — the specific weight of repeated loss, the clinical distance built as a tool.',
+    intent: 'both',
+  },
+
+  nurse_short_staffed: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Nurse covering a chronic staffing gap — the gap is their body and hours.',
+    intent: 'none',
+  },
+
+  nurse_recognition_received: {
+    weight: 'minor',
+    category: 'career',
+    description: 'A patient family found the nurse specifically, after the fact, to say what the care meant.',
+    intent: 'none',
+  },
+
+  nurse_retired: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Nurse retired after a long career — last handover, keys left, something carried out.',
+    intent: 'event',
+    notes: 'Guards nurse_life_accounted (nur_life_accounting when: G.flags.has(nurse_retired)).',
+  },
+
+  nurse_life_accounted: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Nurse\'s late-life accounting of a career done in hands-knowledge and accumulated weight, not metrics.',
+    intent: 'none',
+  },
+
+  // ── FARMER ARC ──────────────────────────────────────────────────────────────
+
+  farmer_first_season: {
+    weight: 'minor',
+    category: 'career',
+    description: 'Farmer\'s first independent season — the lesson that farming is waiting on things larger than your effort.',
+    intent: 'event',
+    notes: 'Guards farmer_good_year.',
+  },
+
+  farmer_good_year: {
+    weight: 'minor',
+    category: 'career',
+    description: 'A year when the rains came right, the crop came through, the market was fair — the standard referenced in harder years.',
+    intent: 'none',
+  },
+
+  farmer_credit_trap: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Farmer locked into the trader-loan cycle — money at planting, repayment in crop at the trader\'s harvest price.',
+    intent: 'none',
+  },
+
+  farmer_land_titled: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Farmer obtained a formal land title — the document that clarifies ownership in ways that carry their own ambiguity.',
+    intent: 'none',
+  },
+
+  farmer_survived_bad_years: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Farmer survived consecutive bad seasons — came through, but something shifted in the margin.',
+    intent: 'none',
+  },
+
+  farmer_family_migrated: {
+    weight: 'moderate',
+    category: 'geographic',
+    description: 'A family member left for the city to provide income while the farm struggled — the farm changes shape.',
+    intent: 'none',
+  },
+
+  farmer_inheritance_question: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'The unresolved question of who will farm the land after the farmer — the child who stayed vs. the one who left.',
+    intent: 'event',
+  },
+
+  farmer_body_cost: {
+    weight: 'moderate',
+    category: 'health',
+    description: 'Farmer\'s body presenting the accumulated cost of thirty years of physical work — the back, the knees, the hands.',
+    intent: 'none',
+  },
+
+  farmer_late_reckoning: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Farmer\'s late-life accounting of a life in seasons — the land still there, the people gone, the food produced.',
+    intent: 'none',
+  },
+
+  // ── POLICE ARC ──────────────────────────────────────────────────────────────
+
+  police_first_call: {
+    weight: 'minor',
+    category: 'career',
+    description: 'Officer\'s first solo call — the gap between procedure and situation as the actual job.',
+    intent: 'event',
+    notes: 'Guards police_community_distrust.',
+  },
+
+  police_community_distrust: {
+    weight: 'major',
+    category: 'career',
+    description: 'Officer patrolling a community with documented reasons not to trust the police — the arithmetic of institutional debt.',
+    intent: 'none',
+  },
+
+  police_force_used: {
+    weight: 'major',
+    category: 'career',
+    description: 'Officer used proportionate force in the line of duty — the unprocessed weight of it at 11pm in the car outside home.',
+    intent: 'event',
+  },
+
+  police_sought_support: {
+    weight: 'minor',
+    category: 'career',
+    description: 'Officer sought psychological support after using force — partial processing within institutional limits.',
+    intent: 'none',
+  },
+
+  police_regime_enforcer: {
+    weight: 'major',
+    category: 'political',
+    description: 'Officer fully complied with orders to police political activity under an authoritarian regime.',
+    intent: 'none',
+  },
+
+  police_minimal_compliance: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Officer left a gap in authoritarian enforcement — small, deniable, some people used it.',
+    intent: 'none',
+  },
+
+  police_whistleblower: {
+    weight: 'major',
+    category: 'career',
+    description: 'Officer reported departmental wrongdoing through proper channels — career consequences, partial accountability.',
+    intent: 'none',
+  },
+
+  police_silence_kept: {
+    weight: 'major',
+    category: 'career',
+    description: 'Officer chose silence over reporting departmental wrongdoing — knows it, doesn\'t discuss it.',
+    intent: 'none',
+  },
+
+  police_career_weight: {
+    weight: 'major',
+    category: 'career',
+    description: 'Officer carrying the accumulated weight of exposure — scenes, decisions, the gap between procedure and situation over fifteen-plus years.',
+    intent: 'both',
+    notes: 'Guards pol_career_weight_echo (late_life echo).',
+  },
+
+  police_late_reckoning: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Officer\'s late-life accounting of a career holding authority in communities that had reason not to trust it.',
+    intent: 'none',
+  },
+
+  // ── FARMER ARC INHERITANCE ECHO ─────────────────────────────────────────────
+
+  farmer_inheritance_resolved: {
+    weight: 'minor',
+    category: 'career',
+    description: 'The farm inheritance question reached some resolution — who will farm it, or won\'t.',
+    intent: 'none',
+  },
+
+  // ── SOCIAL WORKER ARC ───────────────────────────────────────────────────────
+
+  sw_first_case: {
+    weight: 'minor',
+    category: 'career',
+    description: 'Social worker\'s first case — learned the gap between the referral form and the actual situation.',
+    intent: 'event',
+    notes: 'Guards sw_good_outcome.',
+  },
+
+  sw_good_outcome: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'A case that resolved well — the place in professional memory where the work was worth doing.',
+    intent: 'none',
+  },
+
+  sw_system_failure_witnessed: {
+    weight: 'major',
+    category: 'career',
+    description: 'Social worker watched the system fail a case they had flagged — the specific shape of avoidable harm.',
+    intent: 'none',
+  },
+
+  sw_secondary_trauma: {
+    weight: 'major',
+    category: 'career',
+    description: 'Social worker carrying secondary trauma — the accumulation of sustained proximity to others\' worst experiences.',
+    intent: 'both',
+    notes: 'Guards sw_secondary_trauma_echo (late_life).',
+  },
+
+  sw_sought_support: {
+    weight: 'minor',
+    category: 'career',
+    description: 'Social worker sought formal supervision or peer support for secondary trauma — ongoing processing.',
+    intent: 'none',
+  },
+
+  sw_colleague_left: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'A good colleague left social work entirely — the specific moment when a known abstract becomes a specific person\'s choice.',
+    intent: 'event',
+    notes: 'Guards sw_colleague_echo (late_life).',
+  },
+
+  sw_late_reckoning: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Social worker\'s late-life accounting — the system failures, the weight, the good-outcome file, what changed because you were the assigned worker.',
+    intent: 'none',
+  },
+
+  // ── ARTIST ARC ──────────────────────────────────────────────────────────────
+
+  artist_first_real_work: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Artist\'s first work that could only have come from them — origin unaccountable, conditions of arrival unrepeatable.',
+    intent: 'event',
+    notes: 'Guards artist_money_question and artist_recognized.',
+  },
+
+  artist_committed_to_work: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Artist chose the real work over the sellable work — precarious economy, real creative integrity.',
+    intent: 'none',
+  },
+
+  artist_commercial_path: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Artist chose the sellable work — margins for real work smaller than planned.',
+    intent: 'event',
+    notes: 'Guards artist_commercial_echo (late_life).',
+  },
+
+  artist_recognized: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Artist\'s work seen and understood by the right audience — the occasion that tells something true about the work.',
+    intent: 'none',
+  },
+
+  artist_fallow_period: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Artist went through a sustained fallow period — work not coming, conditions present, resource depleted.',
+    intent: 'event',
+    notes: 'Guards artist_after_fallow.',
+  },
+
+  artist_after_fallow: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Artist came out of the fallow period with work that surprised them — the fallow produced what the interrupted version wouldn\'t have.',
+    intent: 'none',
+  },
+
+  artist_body_of_work: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Artist has a body of work visible from a distance — accumulated, uneven, some of it the real stuff.',
+    intent: 'none',
+  },
+
+  artist_late_reckoning: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Artist\'s late-life accounting — real work made, money question unresolved, fallow survived, body of work exists.',
+    intent: 'none',
+  },
+
+  // ── ENGINEER ARC ─────────────────────────────────────────────────────────────
+
+  engineer_first_design: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Engineer saw the first thing they designed get built — tolerances held, fabrication drawings went out with their name.',
+    intent: 'none',
+  },
+
+  engineer_compromised: {
+    weight: 'major',
+    category: 'career',
+    description: 'Engineer signed off on a cheaper material substitution that met code but reduced their calculated margin.',
+    intent: 'both',
+    notes: 'Guards eng_compromise_echo (late_life).',
+  },
+
+  engineer_held_line: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Engineer pushed back on a spec substitution and got the original material restored via structural review.',
+    intent: 'none',
+  },
+
+  engineer_failure: {
+    weight: 'major',
+    category: 'career',
+    description: 'Something the engineer designed failed — not catastrophically, but traced back to a modelling assumption they made.',
+    intent: 'event',
+    notes: 'Guards eng_the_investigation.',
+  },
+
+  engineer_safety_flagged: {
+    weight: 'major',
+    category: 'career',
+    description: 'Engineer escalated a safety concern before breaking ground, causing delay but getting the detail corrected.',
+    intent: 'event',
+    notes: 'Guards eng_safety_echo (late_life).',
+  },
+
+  engineer_safety_documented: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Engineer documented a safety concern but did not escalate — the project proceeded with the concern in the file.',
+    intent: 'none',
+  },
+
+  engineer_obsolescence: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Engineer whose primary software stack has become legacy — still competent, holds physical system knowledge the new tools lack.',
+    intent: 'none',
+  },
+
+  engineer_late_reckoning: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Engineer\'s late-life accounting — things built, failure survived, compromises made, structures still standing.',
+    intent: 'none',
+  },
+
+  // ── SOFTWARE DEVELOPER ARC ───────────────────────────────────────────────────
+
+  dev_first_shipped: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Software developer shipped their first product — watched the first user interaction go the way they designed it.',
+    intent: 'none',
+  },
+
+  dev_pivot: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Developer\'s startup/company pivoted away from the product they joined for — still engineering, different mission.',
+    intent: 'none',
+  },
+
+  dev_raised_privacy: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Developer raised minimal data collection as an engineering concern — some collection was scoped down.',
+    intent: 'none',
+  },
+
+  dev_surveillance_complied: {
+    weight: 'major',
+    category: 'career',
+    description: 'Developer built data collection they had reservations about — framed as a product decision above their level.',
+    intent: 'event',
+    notes: 'Guards dev_surveillance_echo (late_life).',
+  },
+
+  dev_crunch: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Developer went through extended crunch period — health and mood costs of twelve-week-in-six-weeks delivery.',
+    intent: 'none',
+  },
+
+  dev_burnout_addressed: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Developer took time away during burnout — something returned in the third week that had been absent.',
+    intent: 'none',
+  },
+
+  dev_burnout_unaddressed: {
+    weight: 'major',
+    category: 'career',
+    description: 'Developer kept working through burnout — output same, but relationship to the work fundamentally shifted.',
+    intent: 'both',
+    notes: 'Guards dev_burnout_echo (late_life).',
+  },
+
+  dev_obsolescence: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Developer\'s primary stack classified as legacy — holds deep edge-case knowledge the newer engineers lack.',
+    intent: 'none',
+  },
+
+  dev_late_reckoning: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Developer\'s late-life accounting — systems shipped, ethical corners navigated, stack changed three times.',
+    intent: 'none',
+  },
+
+  // ── FACTORY WORKER ARC ───────────────────────────────────────────────────────
+
+  factory_first_shift: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Factory worker\'s first shift — motion repeated hundreds of times, body taking it over by hour four.',
+    intent: 'none',
+  },
+
+  factory_line_sped_up: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Production line speed increased 15% — efficiency study did not measure what the new pace costs the body across a year.',
+    intent: 'none',
+  },
+
+  factory_joined_union: {
+    weight: 'major',
+    category: 'labor',
+    description: 'Factory worker signed the union card during organising drive — first contract took 14 months, grievance procedure won.',
+    intent: 'both',
+    notes: 'Guards fac_union_echo (late_life).',
+  },
+
+  factory_declined_union: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Factory worker did not sign the union card — benefits from contract anyway; organiser knows.',
+    intent: 'none',
+  },
+
+  factory_repetitive_strain: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Factory worker developed repetitive strain injury — cumulative conversation between motion and joint over ten years.',
+    intent: 'none',
+  },
+
+  factory_injury: {
+    weight: 'major',
+    category: 'labor',
+    description: 'Factory worker injured by machine at hour nine — compensation form, recovery longer than doctor initially said.',
+    intent: 'event',
+    notes: 'Guards fac_injury_echo (late_life).',
+  },
+
+  factory_plant_closed: {
+    weight: 'major',
+    category: 'labor',
+    description: 'Factory worker\'s plant closed by holding company — severance paid, retraining has a waiting list.',
+    intent: 'none',
+  },
+
+  factory_late_reckoning: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Factory worker\'s late-life accounting — body as record, wages earned, solidarity or its absence.',
+    intent: 'none',
+  },
+
+  // ── LABORER ARC ──────────────────────────────────────────────────────────────
+
+  laborer_body_young: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Laborer at peak physical capability — knows their inventory of what they can lift, carry, sustain.',
+    intent: 'none',
+  },
+
+  laborer_seasonal_work: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Laborer navigating the precarious seasonal rhythm — full months and thin months, same shape every year.',
+    intent: 'none',
+  },
+
+  laborer_injury_recovered: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Laborer rested properly after back injury — returned with modified lifting protocol, clearer sense of limits.',
+    intent: 'none',
+  },
+
+  laborer_injury: {
+    weight: 'major',
+    category: 'labor',
+    description: 'Laborer returned to work too early after back injury — disc didn\'t fully resolve; negotiating the thing for years.',
+    intent: 'event',
+    notes: 'Guards lab_injury_echo (late_life).',
+  },
+
+  laborer_debt_cycle: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Laborer in debt-to-wage cycle — borrowed against next season\'s wages to cover this season\'s gap.',
+    intent: 'none',
+  },
+
+  laborer_aging_out: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Laborer in the category of workers who get the easier jobs — foreman\'s calculation about what the body can do today.',
+    intent: 'none',
+  },
+
+  laborer_late_reckoning: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Laborer\'s late-life accounting — body as record, peak years and accumulation, seasons survived.',
+    intent: 'none',
+  },
+
+  // ── CIVIL SERVANT ARC ────────────────────────────────────────────────────────
+
+  civil_servant_first_posting: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Civil servant\'s first posting — learned the gap between the form and the situation, and that the form is the only instrument.',
+    intent: 'none',
+  },
+
+  civil_servant_applied_rule: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Civil servant applied the rule where the rule was insufficient — technically correct, not the whole situation.',
+    intent: 'none',
+  },
+
+  civil_servant_used_discretion: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Civil servant found the discretionary provision in the rule to produce the outcome the policy intended.',
+    intent: 'none',
+  },
+
+  civil_servant_regime_complied: {
+    weight: 'major',
+    category: 'career',
+    description: 'Civil servant processed a regime directive requiring the civil service to categorise a population it hadn\'t categorised before.',
+    intent: 'both',
+    notes: 'Guards cs_regime_echo (late_life).',
+  },
+
+  civil_servant_regime_refused: {
+    weight: 'major',
+    category: 'career',
+    description: 'Civil servant requested reassignment rather than process a regime directive — took six months; machinery continued without them.',
+    intent: 'none',
+  },
+
+  civil_servant_small_decisions: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Civil servant who has made thousands of small decisions — the stream of situations processed, correctly on balance.',
+    intent: 'none',
+  },
+
+  civil_servant_late_reckoning: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Civil servant\'s late-life accounting — rules applied, discretion found or not, regime directive processed or refused.',
+    intent: 'none',
+  },
+
+  // ── DRIVER ARC ───────────────────────────────────────────────────────────────
+
+  driver_city_knowledge: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Driver who knows the city by its traffic — routes that breathe at which hours, badly timed signals, conditional shortcuts.',
+    intent: 'none',
+  },
+
+  driver_late_passenger: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Driver who became recipient of the specific privacy of the back seat — information that has nowhere else to go at 11pm.',
+    intent: 'none',
+  },
+
+  driver_body_cost: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Driver whose back shows what twelve-hour shifts in the same posture for ten years produces — managing the early-stage cost.',
+    intent: 'none',
+  },
+
+  driver_night_work: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Driver who worked night shifts — the city at 2am is a different city; developed a different alertness for it.',
+    intent: 'none',
+  },
+
+  driver_accident: {
+    weight: 'major',
+    category: 'career',
+    description: 'Driver involved in an accident that was not their fault — passenger not seriously injured; returned to work after three days.',
+    intent: 'event',
+    notes: 'Guards drv_accident_echo (late_life).',
+  },
+
+  driver_platform_worker: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Driver operating under a platform app — rated out of five, position in queue affected, managing the rating system.',
+    intent: 'none',
+  },
+
+  driver_late_reckoning: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Driver\'s late-life accounting — city known, passengers carried, accident survived, body cost paid.',
+    intent: 'none',
+  },
+
+  // ── CHEF ARC ─────────────────────────────────────────────────────────────────
+
+  mentor_in_kitchen: {
+    weight: 'major',
+    category: 'career',
+    description: 'Chef who mentored junior staff — chose to build culture over pure efficiency; turnover slowed, food improved.',
+    intent: 'event',
+    notes: 'Guards chef_mentor_echo (midlife).',
+  },
+
+  demanding_chef: {
+    weight: 'major',
+    category: 'career',
+    description: 'Chef who ran an efficient, cold kitchen — standards non-negotiable, staff left, food excellent.',
+    intent: 'event',
+    notes: 'Guards chef_demanding_echo (late_life).',
+  },
+
+  creative_integrity_chef: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Chef who protected the creative core of their restaurant — some things not for sale; margins thin but the restaurant is theirs.',
+    intent: 'none',
+  },
+
+  chef_material_knowledge: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Chef who built sensory understanding of the material — not recipes, but what the material actually is.',
+    intent: 'none',
+  },
+
+  chef_formative_mentor: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Chef whose technique was shaped by a specific mentor — absorbed their philosophy without knowing it was a philosophy.',
+    intent: 'none',
+  },
+
+  chef_defining_dish: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Chef who arrived at a dish or technique that is genuinely theirs — could only have come from this kitchen, this sequence of years.',
+    intent: 'none',
+  },
+
+  chef_bad_service: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Chef who lived through a catastrophically bad service — carries it first as failure, then as information about what holds under pressure.',
+    intent: 'none',
+  },
+
+  chef_late_reckoning: {
+    weight: 'moderate',
+    category: 'career',
+    description: 'Chef\'s late-life accounting — material knowledge, formative mentor, defining dish, bad service, bodies shaped by heat and hours.',
+    intent: 'none',
+  },
+
+  // ── MERCHANT ARC ─────────────────────────────────────────────────────────────
+
+  merchant_market_knowledge: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Merchant who knows the market by its rhythm — which day suppliers are hungry, where the information is before it becomes price.',
+    intent: 'none',
+  },
+
+  merchant_claimed_business: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Merchant who claimed the family business as their own rather than something they were continuing.',
+    intent: 'none',
+  },
+
+  merchant_uncertain_inheritance: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Merchant who kept open the question of whether the business was chosen or inherited — the market doesn\'t distinguish.',
+    intent: 'none',
+  },
+
+  merchant_good_year: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Merchant who experienced the good year — conditions aligned, price moved right, the buyer came through.',
+    intent: 'none',
+  },
+
+  merchant_bad_year: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Merchant who lived through a significantly bad year — reserve substantially reduced; both uncontrollable factors and revisable decisions.',
+    intent: 'event',
+    notes: 'Guards mer_bad_year_echo (late_life).',
+  },
+
+  merchant_adapted: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Merchant who adapted to structural market shift — smaller position than before, but more stable than expected.',
+    intent: 'none',
+  },
+
+  merchant_held_position: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Merchant who held their original position during market shift — now serving the edge of the market.',
+    intent: 'none',
+  },
+
+  merchant_succession_question: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Merchant who arrived at the succession question — who takes over the market knowledge that cannot be transferred automatically.',
+    intent: 'none',
+  },
+
+  merchant_late_reckoning: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Merchant\'s late-life accounting — goods moved, markets navigated, bad years survived, knowledge built and leaving active use.',
+    intent: 'none',
+  },
+
+  // ── ACCOUNTANT ARC ───────────────────────────────────────────────────────────
+
+  accountant_number_knowledge: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Accountant who knows where the money is — structure, source, destination, and what the gap means about an enterprise.',
+    intent: 'none',
+  },
+
+  accountant_shaded_truth: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Accountant who produced a technically accurate presentation designed to create a specific impression for the client.',
+    intent: 'event',
+    notes: 'Guards acc_shaded_truth_echo (late_life).',
+  },
+
+  accountant_held_accuracy: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Accountant who pushed back on shading request — filing is straightforwardly true, client accepted with contextual notes.',
+    intent: 'none',
+  },
+
+  accountant_reported_fraud: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Accountant who reported discovered fraud to regulators — investigation ran two years, name permanently in documentation.',
+    intent: 'none',
+  },
+
+  accountant_documented_fraud: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Accountant who documented fraud internally rather than reporting externally — partial recovery, partial concealment.',
+    intent: 'event',
+    notes: 'Guards acc_fraud_echo (late_life).',
+  },
+
+  accountant_quiet_years: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Accountant who lived the quiet years — accurate numbers, reliable rhythm, knowledge of money\'s movement across decades.',
+    intent: 'none',
+  },
+
+  accountant_late_reckoning: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Accountant\'s late-life accounting — numbers accurate on balance, fraud decision made, knowledge of money leaving active use.',
+    intent: 'none',
+  },
+
 }

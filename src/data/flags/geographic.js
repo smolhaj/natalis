@@ -405,6 +405,62 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by col_la_violencia_rural (left choice), col_farc_question (moved choice), col_paramilitares (leave choice).',
   },
 
+  col_falsos_positivos_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through the falsos positivos scandal — the systematic killing of civilians by Colombian army units presented as combat kills (2002–2008). Knows the Soacha twenty-two.',
+    intent: 'year_texture',
+    notes: 'Set by col_dep_false_positives. Triggers col_dep_falsos_echo follow-through.',
+  },
+
+  col_medellin_transformation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed Medellín\'s transformation from the world\'s most dangerous city to an urban innovation story — the cable cars, the murder rate\'s fall, the complicated truth behind both.',
+    intent: 'year_texture',
+    notes: 'Set by col_dep_medellin_transforms.',
+  },
+
+  col_coca_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Grew up in a Colombian rural area where coca was the only viable cash crop — the buyer\'s scales, the fumigation planes, the substitution check that arrived late if it arrived.',
+    intent: 'event',
+    notes: 'Set by col_dep_coca_farmer. Follow-through: col_dep_coca_accord_echo (after 2017 peace accord).',
+  },
+
+  col_afrocolombiano_choco: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Afro-Colombian from the Chocó / Pacific coast — three hundred years of settlement, paradox of biodiversity and poverty, displacement from Buenaventura\'s bajas.',
+    intent: 'year_texture',
+    notes: 'Set by col_dep_choco_life, col_dep_choco_displaced.',
+  },
+
+  col_urban_settler: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Built a life in a city periphery neighbourhood as a desplazado — organised for water and electricity, becoming part of the city through the specific work of staying.',
+    intent: 'none',
+    notes: 'Set by col_dep_desplazado_city (build choice). Terminal flag.',
+  },
+
+  col_cafetero_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Grew up in a Colombian coffee farming family — the harvest in October, the price set in New York, the school uniform paid or delayed based on the quintal price.',
+    intent: 'year_texture',
+    notes: 'Set by col_dep_cafetero.',
+  },
+
+  col_jep_witness: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Testified before the Jurisdicción Especial para la Paz — chose to contribute to the official truth record of the Colombian conflict.',
+    intent: 'none',
+    notes: 'Set by col_dep_jep (testify choice). Terminal flag.',
+  },
+
   irn_diaspora_generation: {
     weight: 'moderate',
     category: 'displacement',
@@ -443,6 +499,39 @@ export const GEOGRAPHIC_FLAGS = {
     description: 'Moroccan character emigrated to France, Spain, or elsewhere — carrying the Darija of someone who left, and the obligation to send money home.',
     intent: 'both',
     notes: 'Set by mor_strait_decision (crossed path). Follow-through: mor_diaspora_late.',
+  },
+
+  // ── MOROCCO DEPTH FLAGS ───────────────────────────────────────────────────
+  mor_1971_coup_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Moroccan character who lived through the 1971 Skhirat coup attempt and 1972 F-5 attack — the years when the monarchy could have ended, and the specific political atmosphere of a king who survived twice.',
+    intent: 'year_texture',
+    notes: 'Set by mor_skhirat_coup and mor_green_march_1975. Year texture: the texture of living under a king who survives assassination.',
+  },
+
+  sahrawi_identity: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Sahrawi character — from Western Sahara, born or raised in the Tindouf refugee camps, carrying the homeland as a story rather than a memory.',
+    intent: 'year_texture',
+    notes: 'Set by mor_sahrawi_tindouf. Year texture: the specific weight of displacement transmitted across generations; a homeland that is a map and a name and not a place.',
+  },
+
+  mor_casablanca_2003_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Moroccan character who lived through the May 2003 Casablanca bombings — the before/after of how Morocco understood its own urban poor and its relationship with political Islam.',
+    intent: 'year_texture',
+    notes: 'Set by mor_casa_bombings_2003. Year texture: the specific atmosphere of a country watching its own cities.',
+  },
+
+  mor_rif_movement_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Moroccan character who lived through the 2016–17 Hirak Rif movement — from Mouhcine Fikri\'s death to Nasser Zefzafi\'s twenty-year sentence.',
+    intent: 'event',
+    notes: 'Set by mor_hirak_rif. Follow-through: mor_rif_echo (checks this flag).',
   },
 
   rohingya_displacement: {
@@ -621,6 +710,14 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by eth_red_terror_1977 (survived branch). Follow-through: eth_red_terror_echo (late_life, when asked about it as history).',
   },
 
+  eth_arbegnoch_family: {
+    weight: 'moderate',
+    category: 'conflict',
+    description: 'Grew up in a family that joined the Arbegnoch patriots during the Italian occupation 1935–41 — the guerrilla resistance from the countryside while Haile Selassie was in exile in Bath.',
+    intent: 'none',
+    notes: 'Set by eth_italian_invasion_1935 (resistance branch). Terminal flag — the identity marker needs no downstream event.',
+  },
+
   gukurahundi_generation: {
     weight: 'major',
     category: 'conflict',
@@ -771,6 +868,62 @@ export const GEOGRAPHIC_FLAGS = {
     description: 'Part of the generation that left Nepal or watched 1,500 young people a day leave — the village empty of anyone their age',
     intent: 'year_texture',
     notes: 'Set by nep_youth_exodus.',
+  },
+
+  nep_dep_gurkha_generation: {
+    weight: 'major',
+    category: 'military',
+    description: 'Selected for the British or Indian Army Gurkha brigades — the hill run, the doko selection, the departure from the village.',
+    intent: 'event',
+    notes: 'Follow-through: nep_dep_gurkha_return in late_life.',
+  },
+
+  nep_dep_dalit_generation: {
+    weight: 'major',
+    category: 'caste',
+    description: 'Experienced Dalit caste discrimination in Nepal — barred from shared water sources, temples, tea houses under the Muluki Ain tradition.',
+    intent: 'year_texture',
+    notes: 'Set by nep_dep_dalit_water. Intersects with experienced_caste_discrimination.',
+  },
+
+  nep_dep_kamaiya_generation: {
+    weight: 'major',
+    category: 'labor',
+    description: 'Freed Tharu bonded laborer (Kamaiya system, abolished 2000) — the debt that accumulated faster than labor could repay it.',
+    intent: 'year_texture',
+    notes: 'Set by nep_dep_kamaiya.',
+  },
+
+  nep_dep_porter_generation: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Worked as mountain porter or guide on Nepal trekking routes — carrying loads by tumpline, the altitude as occupation.',
+    intent: 'year_texture',
+    notes: 'Set by nep_dep_porter.',
+  },
+
+  nep_dep_remittance_generation: {
+    weight: 'moderate',
+    category: 'family',
+    description: 'Grew up in a remittance household — father in Qatar or Malaysia, monthly transfer as economic structure of childhood.',
+    intent: 'event',
+    notes: 'Follow-through: nep_dep_remittance_adult (the choice to go or stay).',
+  },
+
+  nep_dep_kumari_witness: {
+    weight: 'moderate',
+    category: 'religious',
+    description: 'Was or knew the Kumari Devi — the living goddess selected from Newar Shakya community, the ritualized childhood, the difficult return.',
+    intent: 'year_texture',
+    notes: 'Set by nep_dep_kumari.',
+  },
+
+  nep_dep_pashupatinath: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Grew up with Pashupatinath cremations as part of ordinary life — the Bagmati ghats, death visible and continuous.',
+    intent: 'none',
+    notes: 'Terminal flag. Set by nep_dep_pashupatinath.',
   },
 
   south_vietnamese_diaspora: {
@@ -1858,6 +2011,56 @@ export const GEOGRAPHIC_FLAGS = {
     description: 'Educated in an UNRWA school inside a refugee camp — taught that you come from somewhere else, Palestine in the textbook alongside cities you have never seen.',
     intent: 'none',
     notes: 'Set by pd_unrwa_school. Terminal — context in event prose.',
+  },
+
+  // ─── PERU DEPTH ───────────────────────────────────────────────────────────────
+
+  per_dep_lima_migrant: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Serrano who migrated to Lima — the accent flattened or kept, the barriada built over years, the city absorbing and not-absorbing simultaneously.',
+    intent: 'event',
+    notes: 'Set by per_dep_serrano_lima. Follow-through: per_dep_sierra_late_reckoning (age 60+).',
+  },
+
+  per_dep_smelter_generation: {
+    weight: 'moderate',
+    category: 'health',
+    description: 'Grew up near the La Oroya smelter — 99% of children with blood lead above WHO threshold, the company disputing the findings while the lungs did not wait.',
+    intent: 'event',
+    notes: 'Set by per_dep_la_oroya. Follow-through: per_dep_smelter_health_echo (late-life health cost).',
+  },
+
+  per_dep_nikkei_identity: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Nikkei-Peruvian — Japanese by descent, Peruvian by birth and culture, neither fully Japanese nor not, a category specific to Peru.',
+    intent: 'year_texture',
+    notes: 'Set by per_dep_nikkei.',
+  },
+
+  per_dep_afro_coast: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Afro-Peruvian from the southern coastal communities of Chincha or Cañete — festejo and landó, the cajón, three hundred years of culture built in the gap between visibility and recognition.',
+    intent: 'year_texture',
+    notes: 'Set by per_dep_afro_peruvian.',
+  },
+
+  per_dep_coca_vraem: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Grew up in the VRAEM coca economy — the highest-producing coca valley in the world, the helicopter eradication, the alternative crops that required infrastructure that wasn\'t there.',
+    intent: 'year_texture',
+    notes: 'Set by per_dep_vraem_coca.',
+  },
+
+  per_dep_castillo_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through the Castillo 2021 election and its aftermath — the first serrano president, the sixty dead in the south when the police fired on protesters who had voted for him.',
+    intent: 'year_texture',
+    notes: 'Set by per_dep_castillo_2021.',
   },
 
 }

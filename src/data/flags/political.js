@@ -177,6 +177,14 @@ export const POLITICAL_FLAGS = {
     notes: 'events_arts.js has a late echo event.',
   },
 
+  project_revived: {
+    weight: 'minor',
+    category: 'achievement',
+    description: 'Character returned to a creative project they had abandoned for years.',
+    intent: 'none',
+    notes: 'Terminal flag. Set when writing_in_drawer project is reopened after 10+ years.',
+  },
+
   nollywood_generation: {
     weight: 'minor',
     category: 'achievement',
@@ -824,6 +832,112 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by la_mex_2017_earthquake.',
   },
 
+  // ── MEXICO DEPTH FLAGS (events_mexico.js)
+
+  mex_pri_fell_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Present for the July 2, 2000 election night when the PRI lost power after 71 years — the specific texture of watching a hegemony end in real time.',
+    intent: 'event',
+    notes: 'Set by mex_2000_election_night. Follow-through: mex_pri_fall_reckoning (12+ years later).',
+  },
+
+  mex_transition_uncertain: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Felt ambivalence rather than celebration at the PRI\'s 2000 defeat — the transition was real and the uncertainty about what followed was also real.',
+    intent: 'none',
+    notes: 'Set by mex_2000_election_night (stay-in branch). Narrative distinction only.',
+  },
+
+  mex_tequila_crisis_survivor: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived through the December 1994 "Error de diciembre" — the peso devaluation that wiped out middle-class savings and pushed interest rates above 80%.',
+    intent: 'year_texture',
+    notes: 'Set by mex_tequila_crisis_1994. Year texture for Mexican characters: the memory of savings that became worth less overnight.',
+  },
+
+  mex_dirty_war_witness: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed or was adjacent to Mexico\'s Guerra Sucia (1970s–80s) — the political disappearances that followed Tlatelolco, the Halcones, the rural guerrilla suppression.',
+    intent: 'none',
+    notes: 'Set by mex_dirty_war_1970s. Terminal marker; the name is kept but no follow-through event fires.',
+  },
+
+  mex_unam_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Studied at the UNAM — the free public university, its gratuidad principle, and the argument that education is not a service you purchase.',
+    intent: 'year_texture',
+    notes: 'Set by mex_unam_world. Year texture: the free university as a worldview carried forward.',
+  },
+
+  mex_strike_participant: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Joined the 1999–2000 UNAM student strike (the longest in university history) against proposed tuition fees.',
+    intent: 'none',
+    notes: 'Set by mex_unam_strike_1999. Narrative distinction from those who didn\'t join.',
+  },
+
+  mex_crossed_north: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Crossed into the United States from Mexico — the decision, the cost, the specific undocumented status that follows.',
+    intent: 'year_texture',
+    notes: 'Set by mex_going_north_question (go north branch). Co-fires with emigrated flag. Year texture for Mexico emigrant experience north of the border.',
+  },
+
+  mex_amlo_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Present for AMLO\'s 2018 election win (the largest popular vote in Mexican history) and the Cuarta Transformación promise.',
+    intent: 'event',
+    notes: 'Set by mex_amlo_2018. Follow-through: mex_amlo_echo (2022+, what the transformation actually produced).',
+  },
+
+  mex_amlo_believer: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Voted for or supported AMLO in 2018 with genuine hope in the Cuarta Transformación project.',
+    intent: 'none',
+    notes: 'Set by mex_amlo_2018 (hope branch). Narrative distinction from skeptics.',
+  },
+
+  mex_amlo_skeptic: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Watched the 2018 AMLO victory with cautious unease — the populist form concerned as much as the content.',
+    intent: 'none',
+    notes: 'Set by mex_amlo_2018 (caution branch). Narrative distinction.',
+  },
+
+  mex_indigenous_bilingual: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Grew up holding two languages: the indigenous language that names where you come from, and Spanish, the language of where you are going.',
+    intent: 'year_texture',
+    notes: 'Set by mex_indigenous_school. Year texture: the two-language life carried into adulthood.',
+  },
+
+  mex_cnte_teacher: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Identified with the CNTE dissident teachers\' union — primarily in Oaxaca, Chiapas, Guerrero — rather than the SNTE official structure.',
+    intent: 'none',
+    notes: 'Set by mex_oaxacan_teacher (union branch). Narrative marker.',
+  },
+
+  union_solidarity: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Took a principled stand with union action — whether at the UNAM, the CNTE, or another workers\' organisation.',
+    intent: 'none',
+    notes: 'Set by mex_oaxacan_teacher (solidarity branch). General labor solidarity marker.',
+  },
+
   paramilitary_era_lived: {
     weight: 'moderate',
     category: 'historical',
@@ -1008,6 +1122,22 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by mor_years_of_lead. Follow-through: mor_years_of_lead_echo. Ribbon: the_years_of_lead.',
   },
 
+  mor_moudawwana_generation: {
+    weight: 'moderate',
+    category: 'social',
+    description: 'Moroccan woman who lived through the 2004 Moudawwana reform — the family code that raised the marriage age, restricted polygamy, and required judicial divorce.',
+    intent: 'year_texture',
+    notes: 'Set by mor_moudawwana_2004. Year texture: the gap between the law on paper and the practice on the ground; a reform that came from the throne rather than the street.',
+  },
+
+  refugee_status_generation: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Character was born or grew up in a refugee camp — where the homeland is a story transmitted by parents rather than a place experienced.',
+    intent: 'year_texture',
+    notes: 'Set by mor_sahrawi_tindouf (Sahrawi camps) and potentially other refugee camp events. Year texture: the intergenerational transmission of displacement.',
+  },
+
   rohingya_stateless: {
     weight: 'major',
     category: 'legal',
@@ -1022,6 +1152,23 @@ export const POLITICAL_FLAGS = {
     description: 'Tanzanian character lived through Nyerere\'s ujamaa era — believed in or sceptical of the Arusha Declaration, was moved in Operation Vijiji, carries the complexity of a failed vision that built real schools.',
     intent: 'both',
     notes: 'Set by tan_arusha_declaration. Follow-throughs: tan_villagisation, tan_ujamaa_late_reckoning, tan_nyerere_death.',
+  },
+
+  // ── TANZANIA DEPTH FLAGS ──────────────────────────────────────────────────
+  tan_zanzibar_revolution_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Zanzibari character whose family was shaped by the 1964 revolution — either liberation from the sultanate or displacement and loss.',
+    intent: 'year_texture',
+    notes: 'Set by tan_zanzibar_revolution (both choices). Gates tan_zanzibar_identity follow-through event. Memory of a world-altering week in January 1964.',
+  },
+
+  tan_magufuli_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Tanzanian character who lived through Magufuli\'s Bulldozer era 2015–21 — infrastructure and authoritarianism, COVID denial, sudden death.',
+    intent: 'year_texture',
+    notes: 'Set by tan_magufuli_era (both choices). The ambivalence of a leader who built roads and buried statistics.',
   },
 
   multiparty_generation: {
@@ -1190,6 +1337,32 @@ export const POLITICAL_FLAGS = {
     description: 'Lived through the Abiy Ahmed 2018 moment — the peace deal with Eritrea, the border opening, the Nobel Peace Prize, the euphoria of a country that seemed to be turning.',
     intent: 'year_texture',
     notes: 'Set by eth_abiy_peace_2018. Precedes the Tigray war context.',
+  },
+
+  // ── ETHIOPIA DEPTH FLAGS (events_ethiopia_depth.js) ───────────────────────
+
+  eth_haile_selassie_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed Haile Selassie\'s removal in September 1974 — forty-four years of imperial rule ending in a Volkswagen Beetle, the Lion of Judah described as "former king" in the next day\'s newspaper.',
+    intent: 'year_texture',
+    notes: 'Set by eth_haile_selassie_fall (both choices). Year texture: post-imperial memory, the arc of governments in one lifetime. Follow-through: eth_emperor_late_reckoning.',
+  },
+
+  eth_eritrea_loss: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Ethiopian who lived through Eritrean independence in 1993 — the country becoming landlocked overnight, the ports of Assab and Massawa passing to a foreign state.',
+    intent: 'year_texture',
+    notes: 'Set by eth_eritrea_referendum_1993. Year texture: the specific condition of landlocked Ethiopia, the absence of a coast.',
+  },
+
+  eth_oromia_protest_witness: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Present for the Oromia protests 2015–2016 — the Irreechaa massacre at Lake Hora, the state of emergency, the years of pressure that preceded Abiy Ahmed\'s rise.',
+    intent: 'event',
+    notes: 'Set by eth_oromia_protests_2016 (both choices). Follow-through: eth_oromia_abiy_reckoning (when eth_abiy_generation is also set).',
   },
 
   zimbabwe_independence_generation: {
@@ -2104,6 +2277,40 @@ export const POLITICAL_FLAGS = {
     description: 'Grew up during the Nasser era — Suez nationalization, pan-Arab nationalism, radio speeches that stopped rooms',
     intent: 'year_texture',
     notes: 'Set by egy_nasser_dream. Egypt 1956-67.',
+  },
+
+  // ── EGYPT DEPTH FLAGS (events_egypt_depth.js) ─────────────────────────────
+
+  october_war_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Present for the October 1973 War — the crossing of the Suez Canal, the Bar-Lev Line breached, the real advance that answered 1967, the ceasefire that ended it under US pressure.',
+    intent: 'year_texture',
+    notes: 'Set by egy_october_war_1973 (both choices). Year texture: the crossing as national memory. Follow-through: egy_october_war_late_echo (late_life).',
+  },
+
+  egy_camp_david_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through Sadat\'s peace with Israel — the Camp David Accords 1978, Egypt\'s expulsion from the Arab League, Sadat\'s assassination 1981, the cold peace that followed.',
+    intent: 'event',
+    notes: 'Set by egy_camp_david_1978 (both choices). Follow-through: egy_camp_david_late_life (late_life reckoning on the peace and its price).',
+  },
+
+  egy_sisi_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through Sisi\'s 2013 counter-revolution — Morsi removed, the Rabaa massacre of 800–2,600 Brotherhood protesters, the emergency law restored, the Tahrir promise closed.',
+    intent: 'year_texture',
+    notes: 'Set by egy_sisi_2013 (both choices). Year texture: post-Arab Spring Egypt under the counter-revolution.',
+  },
+
+  egy_pound_crisis_2016: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived through the November 2016 Egyptian pound flotation — currency halved overnight as part of IMF conditions, prices spiked, the immediate material impact.',
+    intent: 'none',
+    notes: 'Set by egy_pound_flotation_2016. Terminal flag — the economic shock is its own event with no specific downstream.',
   },
 
   infitah_generation: {
@@ -3306,6 +3513,54 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by mya_coup_2021 (first branch).',
   },
 
+  mya_dep_ethnic_minority_war: {
+    weight: 'major',
+    category: 'political',
+    description: 'Grew up in ethnic minority Myanmar (Karen, Kachin, Shan, Chin, etc.) during the civil wars — the sounds from the next valley, displacement, the road that changes hands.',
+    intent: 'event',
+    notes: 'Set by mya_dep_ethnic_civil_war. Follow-through: mya_dep_ethnic_war_late (late life reckoning).',
+  },
+
+  mya_dep_1990_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Voted in (or witnessed) the May 1990 election that the NLD won by 80% and the SLORC annulled — the world\'s largest ignored election result.',
+    intent: 'event',
+    notes: 'Set by mya_dep_1990_election. Follow-through: mya_dep_1990_echo (2021 coup déjà vu).',
+  },
+
+  mya_dep_jade_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Worked or lived near the Hpakant jade mines — the world\'s largest jade deposit, controlled by military concessions, generating $31B annually outside the tax register.',
+    intent: 'year_texture',
+    notes: 'Set by mya_dep_jade_miner.',
+  },
+
+  mya_dep_censorship_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up under SLORC/SPDC media censorship — approved films, the VCR parlour with the curtain, copies of copies of copies of the outside world on degraded tape.',
+    intent: 'year_texture',
+    notes: 'Set by mya_dep_vcr_culture.',
+  },
+
+  mya_dep_chin_hills: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'From the Chin Hills — the Baptist-converted, isolated highlands where the nearest market was a day\'s walk and the state arrived slowly and partially.',
+    intent: 'year_texture',
+    notes: 'Set by mya_dep_chin_hills event.',
+  },
+
+  mya_dep_spring_revolution: {
+    weight: 'major',
+    category: 'political',
+    description: 'Participated in or was shaped by the Spring Revolution — the civilian resistance to the 2021 coup, CDM, PDF, the junta\'s airstrikes on its own villages.',
+    intent: 'year_texture',
+    notes: 'Set by mya_dep_spring_revolution event. Also sets myanmar_cdm_participant or emigrated depending on choice.',
+  },
+
   tunisian_ben_ali_generation: {
     weight: 'moderate',
     category: 'historical',
@@ -3400,6 +3655,94 @@ export const POLITICAL_FLAGS = {
     description: 'Lived under Dos Santos\' 38-year MPLA rule — the party that fought colonialism becoming its own extraction machine',
     intent: 'year_texture',
     notes: 'Set by ang_dos_santos_rule.',
+  },
+
+  ang_dep_musseque_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Grew up in a Luanda musseque — the unplanned settlements on sandy ground where the colonial city\'s workforce lived',
+    intent: 'year_texture',
+    notes: 'Set by ang_dep_musseque_life.',
+  },
+
+  ang_dep_retornado_departure: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Witnessed the 1975 retornado exodus — 300,000 Portuguese settlers leaving furniture on pavements, cars at the airport',
+    intent: 'none',
+    notes: 'Set by ang_dep_retornados_1975.',
+  },
+
+  ang_dep_ovimbundu_highlands: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Ovimbundu who stayed in the central highlands during the civil war — UNITA territory, changed hands, agricultural land mined',
+    intent: 'year_texture',
+    notes: 'Set by ang_dep_ovimbundu_displacement (first choice).',
+  },
+
+  ang_dep_ovimbundu_luanda: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Ovimbundu who came to Luanda and navigated the ethnic geography of an MPLA city as highland-origin Angolans',
+    intent: 'year_texture',
+    notes: 'Set by ang_dep_ovimbundu_displacement (second choice).',
+  },
+
+  ang_dep_mestizo_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Mestiço Angolan who came of age under MPLA Marxist socialism — colonial-educated class leading independence, the complications that produced',
+    intent: 'year_texture',
+    notes: 'Set by ang_dep_mestizo_socialism.',
+  },
+
+  ang_dep_cuban_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Grew up with Cubans as part of the landscape — 30,000–50,000 Cuban soldiers, doctors, and teachers present 1976–1991',
+    intent: 'year_texture',
+    notes: 'Set by ang_dep_cuban_presence.',
+  },
+
+  ang_dep_demob_reunited: {
+    weight: 'moderate',
+    category: 'personal',
+    description: 'Child soldier demobilised and reunited with family after 2002 — the person who left is not the same person who came back',
+    intent: 'none',
+    notes: 'Set by ang_dep_child_soldier_demob (first choice).',
+  },
+
+  ang_dep_demob_no_family: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Child soldier demobilised with no family found — built a life from a vocational skill with a family-shaped absence',
+    intent: 'none',
+    notes: 'Set by ang_dep_child_soldier_demob (second choice).',
+  },
+
+  ang_dep_demining_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Witnessed post-war demining in rural Angola — the red tape moving back, the ceremony of walking onto cleared land',
+    intent: 'year_texture',
+    notes: 'Set by ang_dep_demining.',
+  },
+
+  ang_dep_oil_inequality: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Lived in Luanda during the oil boom inequality years — world\'s most expensive city for expats, musseque water trucks, villas on the ridge',
+    intent: 'year_texture',
+    notes: 'Set by ang_dep_luanda_inequality.',
+  },
+
+  ang_dep_portuguese_bilingual: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Grew up switching between a Bantu language at home and Portuguese in the public world — the colonial tongue as independence\'s lingua franca',
+    intent: 'year_texture',
+    notes: 'Set by ang_dep_portuguese_language.',
   },
 
   jordanian_peace_generation: {
@@ -3522,6 +3865,54 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by zmb_democratic_transition_1991.',
   },
 
+  zmb_dep_tonga_kariba: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'BaTonga family displaced by the Kariba Dam flooding (1957-58) — 57,000 people removed from the Zambezi valley, Nyaminyami\'s domain drowned.',
+    intent: 'event',
+    notes: 'Follow-through: zmb_dep_tonga_echo (late_life witness).',
+  },
+
+  zmb_dep_copper_closure: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Grew up in a post-ZCCM Copperbelt closure town — the company town infrastructure without the company maintaining it.',
+    intent: 'year_texture',
+    notes: 'Set by zmb_dep_copper_closure.',
+  },
+
+  zmb_dep_aids_orphan: {
+    weight: 'major',
+    category: 'family',
+    description: 'Raised by grandparents or siblings after parents died in the Zambian AIDS crisis — the gap in the middle generation.',
+    intent: 'event',
+    notes: 'Follow-through: zmb_dep_aids_orphan_adult (young_adult).',
+  },
+
+  zmb_dep_compound_lusaka: {
+    weight: 'moderate',
+    category: 'geographic',
+    description: 'Grew up in a Lusaka informal compound — George, Kanyama, Kalingalinga — the charcoal economy, the tap at the end of the road.',
+    intent: 'year_texture',
+    notes: 'Set by zmb_dep_compound_lusaka.',
+  },
+
+  zmb_dep_mealie_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived through the post-SAP mealie meal price shock — the subsidy removed, the staple tripling in price.',
+    intent: 'year_texture',
+    notes: 'Set by zmb_dep_mealie_crisis.',
+  },
+
+  zmb_dep_chinese_copper: {
+    weight: 'moderate',
+    category: 'labor',
+    description: 'Worked in or adjacent to Chinese-owned copper and coal operations (CNMC, Collum) — the wages below ZCCM, the labor disputes.',
+    intent: 'year_texture',
+    notes: 'Set by zmb_dep_chinese_copper.',
+  },
+
   mozambican_frelimo_generation: {
     weight: 'major',
     category: 'historical',
@@ -3552,6 +3943,62 @@ export const POLITICAL_FLAGS = {
     description: 'Came of age when offshore gas was discovered and the Cabo Delgado insurgency began — the resource and the violence arriving together',
     intent: 'year_texture',
     notes: 'Set by moz_gas_cabo_delgado.',
+  },
+
+  moz_dep_aldeias: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Grew up during FRELIMO\'s communal villages (aldeias comunais) forced villagisation 1977–82 — displaced from ancestral machamba to collective plots',
+    intent: 'year_texture',
+    notes: 'Set by moz_dep_aldeias_comunais.',
+  },
+
+  moz_dep_reeducacao: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Had a close person taken to a FRELIMO reeducation camp 1975–85 — and lived with their absence or changed return',
+    intent: 'none',
+    notes: 'Set by moz_dep_reeducacao.',
+  },
+
+  moz_dep_landmine_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up in rural Mozambique among landmines laid during the civil war — learned safe paths before any other geography',
+    intent: 'event',
+    notes: 'Set by moz_dep_landmine. Follow-through: moz_dep_landmine_late.',
+  },
+
+  moz_dep_cashew_generation: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Lived through the World Bank structural adjustment that removed cashew export tariffs and collapsed domestic processing jobs',
+    intent: 'year_texture',
+    notes: 'Set by moz_dep_cashew.',
+  },
+
+  moz_dep_maputo_boom: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Came of age in Maputo during the post-peace reconstruction boom — churrasqueiras, new malls, the city rebuilding its energy',
+    intent: 'year_texture',
+    notes: 'Set by moz_dep_maputo_boom.',
+  },
+
+  moz_dep_hidden_debt: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Adult during the tuna bonds / hidden debt scandal 2013–16 — $2.2B in secret loans, IMF program collapse, currency crash',
+    intent: 'none',
+    notes: 'Set by moz_dep_hidden_debt.',
+  },
+
+  moz_dep_aids_orphan_moz: {
+    weight: 'moderate',
+    category: 'personal',
+    description: 'Grew up as an AIDS orphan in Mozambique — raised by grandmother or older sibling after parents died during the HIV peak 1995–2010',
+    intent: 'event',
+    notes: 'Set by moz_dep_aids_orphan. Follow-through: moz_dep_aids_orphan_adult.',
   },
 
   afghan_saur_generation: {
