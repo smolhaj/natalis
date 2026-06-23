@@ -1239,7 +1239,7 @@ export const ECONOMIC_FLAGS = {
     weight: 'major',
     category: 'career',
     description: 'Doctor experiencing clinical emotional distance — the accumulation of years narrowing the felt significance of individual patients.',
-    intent: 'event',
+    intent: 'both',
   },
 
   doc_burnout_addressed: {
@@ -1290,7 +1290,7 @@ export const ECONOMIC_FLAGS = {
     weight: 'major',
     category: 'career',
     description: 'A journalist colleague was killed covering a story — the specific professional weight of this loss.',
-    intent: 'event',
+    intent: 'both',
   },
 
   journalist_subject_encountered: {
@@ -1362,7 +1362,7 @@ export const ECONOMIC_FLAGS = {
     weight: 'major',
     category: 'career',
     description: 'Lawyer became aware — without legal certainty — that someone they prosecuted or failed to defend may have been innocent.',
-    intent: 'event',
+    intent: 'both',
   },
 
   lawyer_late_career: {
@@ -1406,7 +1406,7 @@ export const ECONOMIC_FLAGS = {
     weight: 'major',
     category: 'career',
     description: 'Nurse who has accumulated years of patient deaths — the specific weight of repeated loss, the clinical distance built as a tool.',
-    intent: 'event',
+    intent: 'both',
   },
 
   nurse_short_staffed: {
@@ -1567,7 +1567,7 @@ export const ECONOMIC_FLAGS = {
     weight: 'major',
     category: 'career',
     description: 'Officer carrying the accumulated weight of exposure — scenes, decisions, the gap between procedure and situation over fifteen-plus years.',
-    intent: 'event',
+    intent: 'both',
     notes: 'Guards pol_career_weight_echo (late_life echo).',
   },
 
@@ -1615,7 +1615,7 @@ export const ECONOMIC_FLAGS = {
     weight: 'major',
     category: 'career',
     description: 'Social worker carrying secondary trauma — the accumulation of sustained proximity to others\' worst experiences.',
-    intent: 'event',
+    intent: 'both',
     notes: 'Guards sw_secondary_trauma_echo (late_life).',
   },
 

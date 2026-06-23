@@ -348,6 +348,57 @@ function buildYearTexture(state) {
     'The name your family had, and what that name means now. The calculation you do in new rooms before you use it.',
   ])
 
+  // ─── CAREER ARC MEMORY LAYER ─────────────────────────────────────────────────
+  // Quiet-year texture for lives shaped by career-specific accumulation.
+
+  if (F.has('doc_burnout') && Math.random() < 0.18) return pick([
+    'The clinical distance has been the background condition for some time now. Not indifference — a professional adaptation. You are still precise. The patients are still people. Something in the encounter is different from how it was.',
+    'You notice yourself listening to a patient and processing the diagnostic information correctly while something else — the thing that used to happen alongside the information — is less present than it was.',
+    phase === 'late_life'
+      ? 'After this long, you know which parts of the work you have given and which parts have been taken. The distinction matters more some years than others.'
+      : 'The notes are thorough. The diagnoses are accurate. The thing you are noticing is the space between the accurate diagnosis and what you used to feel about it.',
+  ])
+
+  if (F.has('nurse_accumulated_grief') && Math.random() < 0.18) return pick([
+    'The faces do not stack up consecutively — they exist somewhere in the specific way that years of loss exist, filed but present.',
+    'The clinical distance is real and was built for a reason. You know exactly when you built it.',
+    phase === 'late_life'
+      ? 'You have sat with more people at the end than you can count. The not-counting was eventually necessary. You remember some of them specifically anyway.'
+      : 'The shift ends and you go home and the shift is in you in a form that does not have a specific shape but is definitely present.',
+  ])
+
+  if (F.has('journalist_colleague_killed') && Math.random() < 0.15) return pick([
+    'The story they were writing is in someone\'s archive now. It did not run in the form they were writing it.',
+    'You still think about what they would have said about this story. The specific sentence they would have filed from the field.',
+    phase === 'late_life'
+      ? 'The names you carry from the work. The colleague is the name you carry most specifically. Not daily — but when something happens that they would have covered.'
+      : 'You have gotten better at not thinking about it in the middle of assignments. The middle of an assignment is not the right time.',
+  ])
+
+  if (F.has('lawyer_wrongful_conviction_doubt') && Math.random() < 0.17) return pick([
+    'The case is in the record. What the record does not contain is the information you came to have about it later.',
+    'Legal certainty and personal certainty are different measures. You have lived in the gap between them for some time.',
+    phase === 'late_life'
+      ? 'The question of what you could have done differently is a question you have stopped answering and started simply holding.'
+      : 'You take the cases that come and you make the best arguments available and you know that this is what the system requires of you. You also know what it felt like when the system was not enough.',
+  ])
+
+  if (F.has('sw_secondary_trauma') && Math.random() < 0.17) return pick([
+    'The accumulation is structural now. Not a crisis — something that has become part of the architecture of how you move through the day.',
+    'You have learned when the tiredness is physical and when it is the other kind. The other kind does not respond to sleep.',
+    phase === 'late_life'
+      ? 'This is what thirty years of other people\'s worst moments deposits in a person. You are that person. The deposit is also the expertise.'
+      : 'The training described something like this. The training was not wrong. The specific texture of it is yours.',
+  ])
+
+  if (F.has('police_career_weight') && Math.random() < 0.16) return pick([
+    'The things you have seen are in you in the form that seen things take — not memories you access so much as a knowledge that shapes what you expect.',
+    'The gap between procedure and situation. You have navigated it enough times that you know the map. The map does not make the navigation easier.',
+    phase === 'late_life'
+      ? 'A career of judgment calls. Some of them you would make the same way. Some you have been revising since they happened.'
+      : 'You know how things can go. This is the job\'s gift and the job\'s damage, in roughly equal measure.',
+  ])
+
   // ─── MEMORY LAYER: ELAPSED TIME ──────────────────────────────────────────────
   // Uses TIMESTAMPED_FLAGS to surface the passage of time since significant events.
 
