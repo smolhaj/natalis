@@ -3657,6 +3657,94 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by ang_dos_santos_rule.',
   },
 
+  ang_dep_musseque_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Grew up in a Luanda musseque — the unplanned settlements on sandy ground where the colonial city\'s workforce lived',
+    intent: 'year_texture',
+    notes: 'Set by ang_dep_musseque_life.',
+  },
+
+  ang_dep_retornado_departure: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Witnessed the 1975 retornado exodus — 300,000 Portuguese settlers leaving furniture on pavements, cars at the airport',
+    intent: 'none',
+    notes: 'Set by ang_dep_retornados_1975.',
+  },
+
+  ang_dep_ovimbundu_highlands: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Ovimbundu who stayed in the central highlands during the civil war — UNITA territory, changed hands, agricultural land mined',
+    intent: 'year_texture',
+    notes: 'Set by ang_dep_ovimbundu_displacement (first choice).',
+  },
+
+  ang_dep_ovimbundu_luanda: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Ovimbundu who came to Luanda and navigated the ethnic geography of an MPLA city as highland-origin Angolans',
+    intent: 'year_texture',
+    notes: 'Set by ang_dep_ovimbundu_displacement (second choice).',
+  },
+
+  ang_dep_mestizo_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Mestiço Angolan who came of age under MPLA Marxist socialism — colonial-educated class leading independence, the complications that produced',
+    intent: 'year_texture',
+    notes: 'Set by ang_dep_mestizo_socialism.',
+  },
+
+  ang_dep_cuban_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Grew up with Cubans as part of the landscape — 30,000–50,000 Cuban soldiers, doctors, and teachers present 1976–1991',
+    intent: 'year_texture',
+    notes: 'Set by ang_dep_cuban_presence.',
+  },
+
+  ang_dep_demob_reunited: {
+    weight: 'moderate',
+    category: 'personal',
+    description: 'Child soldier demobilised and reunited with family after 2002 — the person who left is not the same person who came back',
+    intent: 'none',
+    notes: 'Set by ang_dep_child_soldier_demob (first choice).',
+  },
+
+  ang_dep_demob_no_family: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Child soldier demobilised with no family found — built a life from a vocational skill with a family-shaped absence',
+    intent: 'none',
+    notes: 'Set by ang_dep_child_soldier_demob (second choice).',
+  },
+
+  ang_dep_demining_generation: {
+    weight: 'minor',
+    category: 'historical',
+    description: 'Witnessed post-war demining in rural Angola — the red tape moving back, the ceremony of walking onto cleared land',
+    intent: 'year_texture',
+    notes: 'Set by ang_dep_demining.',
+  },
+
+  ang_dep_oil_inequality: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Lived in Luanda during the oil boom inequality years — world\'s most expensive city for expats, musseque water trucks, villas on the ridge',
+    intent: 'year_texture',
+    notes: 'Set by ang_dep_luanda_inequality.',
+  },
+
+  ang_dep_portuguese_bilingual: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Grew up switching between a Bantu language at home and Portuguese in the public world — the colonial tongue as independence\'s lingua franca',
+    intent: 'year_texture',
+    notes: 'Set by ang_dep_portuguese_language.',
+  },
+
   jordanian_peace_generation: {
     weight: 'moderate',
     category: 'historical',

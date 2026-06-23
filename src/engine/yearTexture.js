@@ -10623,6 +10623,44 @@ function buildYearTexture(state) {
     'The MPLA has been in power since 1975. That is longer than most independent countries\' entire histories.',
     'Dos Santos in power for thirty-eight years. His daughter runs the oil company. His son runs the sovereign wealth fund. The movement that fought colonialism became a family business. You live inside this.',
   ])
+  if (F.has('ang_dep_musseque_generation') && Math.random() < 0.2) return pick([
+    'The musseque has its own calendar — the water truck Wednesday, the generator hours, the market days. You know it without thinking.',
+    'The colonial city and the musseque were built for different people and this is still legible in the architecture, the paving, the distance from the centre.',
+    'Growing up in the musseque: knowing the central city exists without being of it. A kind of geographical double vision that never leaves.',
+  ])
+  if (F.has('ang_dep_ovimbundu_highlands') && Math.random() < 0.18) return pick([
+    'The central highlands after the war: fields that were farmed for generations, suddenly empty, the paths that used to connect them no longer safe.',
+    'The agricultural economy of Bié and Huambo did not survive the war intact. The war was fought through it. What came back was not the same thing.',
+  ])
+  if (F.has('ang_dep_ovimbundu_luanda') && Math.random() < 0.17) return pick([
+    'Luanda is a Kimbundu city that became a Portuguese city that became everyone\'s city. Being Ovimbundu here is a specific navigation.',
+    'The city knows what you are by how you speak, by who you know, by what neighbourhood your family is from. This is information that is never asked and always known.',
+  ])
+  if (F.has('ang_dep_mestizo_generation') && Math.random() < 0.18) return pick([
+    'The mestiço position in the MPLA: present at the founding, educated in the colonial system, carrying that proximity. A useful complication.',
+    'Independence led by people who could read Marx in Lisbon. The revolution\'s relationship to literacy is its relationship to the colonial world. You are that relationship, in person.',
+  ])
+  if (F.has('ang_dep_cuban_generation') && Math.random() < 0.17) return pick([
+    'The Cuban doctor at the clinic spoke Portuguese with an accent that none of you knew what to make of at first. By the third visit it was simply the accent.',
+    'There were Cubans at the school, at the clinic, at the army post. They were soldiers who were also teachers. The combination didn\'t have a precedent in what you knew of foreign presence.',
+    'When the Cubans left in 1991, they had been in Angola for fifteen years. An entire generation had grown up with them as a fact of the landscape.',
+  ])
+  if (F.has('ang_dep_demining_generation') && Math.random() < 0.2) return pick([
+    'The ceremony of cleared land: walking forward when the red tape came down. The ground that had been there all along, finally accessible again.',
+    'Demining in a rural district takes months. The orange helmets become familiar. What the metal detector finds tells you what the war left behind.',
+    phase === 'late_life'
+      ? 'You were there when they cleared the field behind the church. You have never forgotten walking onto it.'
+      : 'The red tape and the sticks mark what cannot be walked on. When it comes down, the land is given back. The ceremony is small and not small.',
+  ])
+  if (F.has('ang_dep_oil_inequality') && Math.random() < 0.18) return pick([
+    'Luanda: the most expensive city in the world for foreign workers, the water truck coming to the musseque on Wednesdays. The two are in the same city.',
+    'The oil money that built the new villas on the ridge did not build the roads in the musseque. The construction cranes on the Marginal were building for someone specific.',
+  ])
+  if (F.has('ang_dep_portuguese_bilingual') && Math.random() < 0.18) return pick([
+    'Portuguese in public, Kimbundu at home, the switching between them invisible and constant. Only when someone asks do you notice how many times a day it happens.',
+    'The colonial language became the national language became the language you think in for certain thoughts. The Bantu language holds what it holds. The two tracks run parallel.',
+    'Your grandparents\' language is not Portuguese. Your children\'s primary language is Portuguese. Something was gained and this is also a description of something lost.',
+  ])
 
   // ─── SUDAN TEXTURE ───────────────────────────────────────────────────────────
   if (F.has('sudan_islamist_law_generation') && Math.random() < 0.17) return pick([
