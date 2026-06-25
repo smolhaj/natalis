@@ -8764,6 +8764,55 @@ function buildYearTexture(state) {
       : 'The protests in Istanbul. The purple banners. The police cordons. What happened after — what didn\'t change — is the longer sentence.',
   ])
 
+  // ─── TURKEY DEPTH TEXTURE ────────────────────────────────────────────────────
+  if (F.has('trk_dep_1980_generation') && Math.random() < 0.2) return pick([
+    'September 12 remains a date that divides. What came before — the street violence, the political deadlock — and what came after: 650,000 detained, a constitution the generals wrote, political parties banned. The restoration of order was also the installation of a different disorder.',
+    phase === 'late_life'
+      ? 'The 1982 constitution was the junta\'s document. Amended many times. Still the framework. You have lived inside it for most of your adult life, and the amendments have not changed its essential architecture.'
+      : 'The political parties were banned the morning of September 12. The leaders were arrested. What followed was not an absence of politics but politics conducted under the terms the generals set. You grew up in that.',
+  ])
+  if (F.has('trk_dep_alevi_generation') && Math.random() < 0.22) return pick([
+    'The cemevi is not a mosque. The state does not recognise it as a place of worship, which means it does not receive the state support that mosques receive, which means every cemevi exists through the community\'s own resources. This is one way the republic has been secular.',
+    'The cem ceremony on a Friday night. The music, the semah — the devotional turning. The poems of Yunus Emre and Pir Sultan Abdal. What happens in this room is not what happens in the mosque down the street. The distinction is not always comfortable to carry outside this room.',
+    phase === 'late_life'
+      ? 'Maraş 1978. Çorum 1980. Sivas 1993. The geography of violence against your community is mappable. You can trace it. The perpetrators of Sivas were never fully convicted; the statute of limitations ran out. You have had to hold that alongside everything else.'
+      : 'Growing up Alevi in a Sunni neighbourhood is learning when to explain and when to let it go. Most of the time: let it go. The explanation requires a patience for misunderstanding that is not always available.',
+  ])
+  if (F.has('trk_dep_sivas_generation') && Math.random() < 0.25) return pick([
+    'July 2, 1993. The Madımak Hotel. Thirty-five intellectuals and two hotel workers. The fire burned for hours. The police response was slow. The government response was slow. The trial was slow. The slowness was itself a message.',
+    'The names from Sivas — the writers, the poets, the musicians — were names you knew as names. After July 2 they were names of the dead. The cultural gathering they were at was the kind of gathering your community holds. This is part of what makes it specific.',
+    phase === 'late_life'
+      ? 'The Madımak Hotel is still standing. There have been years of argument about what it should become — a museum of shame, a cultural centre, torn down, left. It is still standing. The argument continues. The building is evidence that the question is not resolved.'
+      : 'The statute of limitations ran out in 2012 before a conviction was reached. This is the legal summary. The political summary is different and longer.',
+  ])
+  if (F.has('trk_dep_1999_earthquake') && Math.random() < 0.25) return pick([
+    'The permits were wrong. The concrete was wrong. The sand was from the sea rather than the river — a practice everybody in the industry knew about. The earthquake revealed the infrastructure of impunity that was already there. Seventeen thousand people died in buildings that passed inspection.',
+    'You were in Turkey on August 17, 1999 at 3:02am. Whether you felt it depends on where you were. What you felt regardless was what came after: the numbers, the buildings, the knowledge about the concrete.',
+    phase === 'late_life'
+      ? 'Turkey\'s building stock was supposed to be different after 1999. Some of it was. The February 2023 earthquake showed which parts. The lesson has been taught twice now in living memory.'
+      : 'The trapped survivors found after several days. The search-and-rescue teams from other countries. The specific quality of the weeks that followed — watching the number rise, watching the buildings come down on television.',
+  ])
+  if (F.has('trk_dep_gezi_generation') && Math.random() < 0.2) return pick([
+    'The Gezi coalition was temporary — it had to be. Kemalists and Kurds and anarchists and football ultras do not have a sustainable common agenda. What they had for three weeks was a common space: Taksim, and the park they were trying to save.',
+    'The woman in the red dress. The photograph travelled everywhere. You know what the photograph doesn\'t show — what the square was like from inside, what the hours before and after the moment in the photograph were like. The photograph and the reality were both true.',
+    phase === 'late_life'
+      ? 'Gezi was not a revolution. It was a referendum on a decade of one party\'s rule, conducted through bodies in a square. The government survived it. What survived in you is something different — a knowledge about what is possible in the street, even if what is possible in the street is not what is possible in the ballot box.'
+      : 'The tear gas at 5am on May 28. If you were there you remember the exact texture of it. If you weren\'t, you remember the television. Either way it became part of how you understood Turkey.',
+  ])
+  if (F.has('trk_dep_2016_generation') && Math.random() < 0.22) return pick([
+    'The ezan at midnight. Not for prayer — the mosques were told to broadcast it to call people out. You heard it or you heard about hearing it. The call to prayer used as a political signal: this is the night when the categories reorganised.',
+    'FaceTime from a hotel room. The president of Turkey, his face in a phone screen held up to a camera, calling on citizens to go to the streets. The image: a face in a phone screen. It worked. The coup failed.',
+    phase === 'late_life'
+      ? 'The purge in the months after July 15: 150,000 detained or dismissed. Judges, teachers, soldiers, academics. The apparatus of the Gülen network inside the state, and then the category of Gülenist expanded. You watched the list grow and knew people on it who were on it for reasons that weren\'t the stated reason.'
+      : 'You remember where you were when you heard. Then you remember staying up through the night as the reports came and shifted. By 3am the coup was failing. You did not sleep.',
+  ])
+  if (F.has('trk_dep_military_generation') && Math.random() < 0.15) return pick([
+    'The discharge papers. The certificate that every employer will ask about and every family will have an opinion about. The service is done. What it did to you is less legible than the certificate.',
+    phase === 'late_life'
+      ? 'The men you served with are spread across the country now. The two years made a cohort and the cohort scattered. Some of them you have never seen since. The time was shared enough to be a common reference. Not a friendship exactly — a shared knowledge.'
+      : 'The barracks in the first week. The adjustment that the body makes to the schedule, the noise, the collective sleeping. You were not the same person who entered the gate when you left it a year later. This is not a complaint — it is just true.',
+  ])
+
   // ─── NOMADIC TEXTURE ─────────────────────────────────────────────────────────
   if (F.has('maasai_pastoralist') && Math.random() < 0.28) return pick([
     'The cattle were the measure of everything. You learned which cow belonged to which lineage by ear notch and hide pattern. This is a literacy specific to that world and most of the world does not know it exists.',
@@ -10651,6 +10700,54 @@ function buildYearTexture(state) {
   if (F.has('irq_tishreen_generation') && Math.random() < 0.2) return pick([
     'October 2019. The young Iraqis in Baghdad and the Shia south — the generation that did not start the wars but received them. Six hundred dead in six months. The system absorbed the pressure and survived.',
     'Thawra — revolution. The word the protesters chose. The demands: a new electoral law, an end to the sectarian quota system, accountability. Some of this happened. Some of it reversed. Six hundred dead is not a partial victory.',
+  ])
+
+  // ─── IRAQ DEPTH TEXTURE ───────────────────────────────────────────────────────
+  if (F.has('irq_dep_yazidi_generation') && Math.random() < 0.22) return pick([
+    'Tawsi Melek is the Peacock Angel. The people who call him what they call him are wrong, and knowing they are wrong is one of the first things you learned. The distinction matters enough to die for, which eventually became literal.',
+    'The castes — sheikh, pir, murid — are the transmission system for the knowledge. Who you are in the community is inherited rather than chosen. This does not feel like a constraint; it feels like a location.',
+    phase === 'late_life'
+      ? 'You have carried the theology and the community through things it was not built to survive and it survived anyway. Not intact, but continuous. That is not nothing.'
+      : 'The sacred books are not shown to outsiders. Some things are for the community alone. The outsider\'s curiosity about your faith is an old phenomenon and you have responses for it at different levels of engagement.',
+  ])
+  if (F.has('irq_dep_marsh_generation') && Math.random() < 0.22) return pick([
+    'The reed mudhif is built without nails — only reed, bent into arches, the way it has been built here for six thousand years. You grew up knowing how it is done. The knowledge was handed down in the way knowledge is handed down in places that don\'t need documents.',
+    'The water buffalo know the channels. The channels know the seasons. The light on the water in this particular marsh at this particular hour is not available anywhere else in the world.',
+    phase === 'late_life'
+      ? 'The world you were born into and the world that exists are not the same world. The interval between them was a political decision. You are the evidence that the world it replaced existed.'
+      : 'The birds that come here come from everywhere. The marsh is a waypoint in migrations measured in thousands of miles. You are a child in a place that is on the route of the whole world.',
+  ])
+  if (F.has('irq_dep_marsh_displaced') && Math.random() < 0.25) return pick([
+    'The marsh was drained on purpose. Not an accident of development, not a side effect — a political decision to drain the world you were born in. The mechanism was engineering. The intent was punishment.',
+    'You have seen the satellite photographs: 1973 and 2000. The before and after. What you grew up in is gone from the image. The image cannot carry the smell of the water or the sound of the birds at dawn.',
+    phase === 'late_life'
+      ? 'The reflooding began after 2003. The water came back, and some of the birds came back, and some families came back. The world that came back is not the same world. You know the original.'
+      : 'The displacement was Basra, then the camps in Iran, then the slums at the edge of the city. The family was together for most of it. That is what you say when people ask how it was.',
+  ])
+  if (F.has('irq_dep_1991_generation') && Math.random() < 0.22) return pick([
+    'The Americans called on Iraqis to rise up. The Iraqis rose up. The Americans watched from twenty miles away. This sequence is what the uprising means in your memory — not just the fighting and the crushing, but that sequence.',
+    'The helicopter gunships were allowed under the ceasefire terms. Allowed. You have returned to this word many times since. The permission was structural — the terms were written by someone who had a different war in mind.',
+    phase === 'late_life'
+      ? 'The mass graves were opened after 2003. The names came from the graves. Some were names you knew. The documentation made the thing official. The thing did not require documentation to be real.'
+      : 'March 1991 is a specific month in your body, separate from the months before and after it. Something was proposed — resistance, possibility, an end — and then the proposal was withdrawn by force.',
+  ])
+  if (F.has('irq_dep_christian_generation') && Math.random() < 0.2) return pick([
+    'Aramaic in the liturgy. The language of Christ, still spoken in a church on this street in Baghdad. The congregation is old enough to have been here when this was unremarkable. It is no longer unremarkable.',
+    'Christmas in the neighbourhood. The lights, the relatives, the specific smell of the celebration. In a city that was seventy percent Muslim, the Christian quarter had its own calendar and the city accommodated it.',
+    phase === 'late_life'
+      ? 'You have watched the community empty over decades. The families you grew up with are in Detroit, in Sydney, in Gothenburg. The church is attended now by the ones who could not leave or would not. You are in that number.'
+      : 'The Chaldeans have been here since the first century. Not as a remnant, not as a protected minority — as a presence. The condition of that presence changed in 2003. It has been changing since.',
+  ])
+  if (F.has('irq_dep_christian_stayed') && Math.random() < 0.2) return pick([
+    'You stayed when almost everyone left. The reasons are various: property, family, refusal. The neighbourhood is not the neighbourhood it was. You are still in it.',
+    'The church fills less each year. Some Sundays you count the congregation. You have stopped counting on certain Sundays because the number does not help.',
+  ])
+  if (F.has('irq_dep_diaspora_amman') && Math.random() < 0.22) return pick([
+    'The waiting room of the resettlement office. The number taken from the machine. The interpreter who has done this ten thousand times and is still trying. Your file is somewhere in the system.',
+    'Swiefieh is the Iraqi neighbourhood of Amman. Iraqi restaurants, Iraqi music from the shops, Iraqis passing each other on the pavement and making the recognition. A community in suspension, waiting for a direction.',
+    phase === 'late_life'
+      ? 'The waiting in Amman was the period between your Iraqi life and whatever came after. Looking back it was eight months or fourteen months or two years. At the time it was indefinite, which is a different kind of time.'
+      : 'The Jordanian visa renewal is every month. The money from Baghdad was substantial; the money from Baghdad is becoming less substantial. The interview date moved again.',
   ])
 
   // ─── ANGOLA TEXTURE ──────────────────────────────────────────────────────────
@@ -12704,6 +12801,20 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'You have outlived the diagnosis by a number of years that was not guaranteed in the year you received it. The people who did not get to treatment in time did not outlive theirs. You carry that arithmetic.'
       : 'Manageable now is the word. Manageable with daily medication, with regular tests, with the virus held at a level the body can live with. The management is routine. The routine sits inside the day without announcing itself.',
+  ])
+
+  if (F.has('hiv_disclosed') && Math.random() < 0.14) return pick([
+    'Telling people changed things in both directions: the people who stayed and the ones who didn\'t, and you can read the list of both from memory.',
+    phase === 'late_life'
+      ? 'What you were afraid of when you first disclosed turned out to be partly right and mostly manageable. What you didn\'t anticipate was the relief, which was larger and lasted longer than the fear.'
+      : 'The status is not a secret. That alone changes the weight of the year — not everything, not most things, but the specific weight of the hiding, which is now gone.',
+  ])
+
+  if (F.has('deaf_community_identity') && Math.random() < 0.16) return pick([
+    'There is a conversation happening across the table that you are following completely. This was not always true. It became true when you had the language for it.',
+    phase === 'late_life'
+      ? 'The community scattered over the years — some to cities with better services, some to families who called them back, some gone. The language you share is still fluent. You can still enter a room where it is being used and be, immediately, home.'
+      : 'The world is built for people who hear it. That is still true. But you have a world that is built for you and it is not smaller for being specific — if anything it is more detailed in the ways that matter.',
   ])
 
   if (F.has('domestic_worker') && Math.random() < 0.18) return pick([

@@ -2780,6 +2780,62 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by irq_isis_mosul (auto-effect).',
   },
 
+  irq_dep_yazidi_generation: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Yazidi identity in Iraq — the Peacock Angel, the castes, the sacred copper vessels, the ancient pre-Abrahamic theology that outsiders misread as devil worship.',
+    intent: 'year_texture',
+    notes: 'Set by irq_dep_yazidi_identity.',
+  },
+
+  irq_dep_marsh_generation: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Grew up in the Mesopotamian marshes — the Ma\'dan world of floating reed villages, water buffalo, millennia of continuous habitation between the Tigris and Euphrates.',
+    intent: 'year_texture',
+    notes: 'Set by irq_dep_marsh_world.',
+  },
+
+  irq_dep_marsh_displaced: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Witnessed and survived Saddam\'s draining of the Mesopotamian marshes 1991–2003 — one of the great deliberate ecological catastrophes, used as collective punishment.',
+    intent: 'year_texture',
+    notes: 'Set by irq_dep_marsh_drained.',
+  },
+
+  irq_dep_1991_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Alive during the March 1991 Shia uprising — the revolt, the American non-intervention, the helicopter gunships, the mass graves that would only be opened after 2003.',
+    intent: 'year_texture',
+    notes: 'Set by irq_dep_1991_uprising.',
+  },
+
+  irq_dep_christian_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Iraqi Christian identity — Chaldean, Assyrian, Syriac — one of the oldest continuous Christian communities in the world, present since the first century, now in exodus.',
+    intent: 'year_texture',
+    notes: 'Set by irq_dep_christian_before.',
+  },
+
+  irq_dep_christian_stayed: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Chose to remain in Iraq as a Christian after 2003, despite the bombings and the exodus — one of fewer and fewer, in a diminishing church.',
+    intent: 'year_texture',
+    notes: 'Set by irq_dep_christian_exodus (stay branch).',
+  },
+
+  irq_dep_diaspora_amman: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Part of the 2003–2008 Iraqi diaspora stranded in Amman, Jordan — the waiting rooms, the dwindling savings, the resettlement interview dates that kept moving.',
+    intent: 'year_texture',
+    notes: 'Set by irq_dep_amman_diaspora.',
+  },
+
   libyan_revolution_generation: {
     weight: 'major',
     category: 'trauma',
@@ -5573,6 +5629,62 @@ export const IDENTITY_FLAGS = {
     description: 'Survived the February 2023 Turkey-Syria earthquake — 50,000+ dead, cities in rubble, survivors waiting in freezing February nights.',
     intent: 'event',
     notes: 'Set by we_turkey_syria_earthquake_2023 world event. Turkey/Syria characters. Follow-through: ft47_turkey_quake_late.',
+  },
+
+  trk_dep_1980_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Alive during the September 12 1980 coup — 650,000 detained, political parties banned, a constitution written by generals that shaped Turkey for forty years.',
+    intent: 'year_texture',
+    notes: 'Set by trk_dep_1980_coup.',
+  },
+
+  trk_dep_alevi_generation: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Alevi identity in Turkey — the cem ceremony, the cemevi unrecognised by the state, the history of massacres at Maraş and Çorum and Sivas, the theology that is not Sunni and not secular.',
+    intent: 'year_texture',
+    notes: 'Set by trk_dep_alevi_identity.',
+  },
+
+  trk_dep_sivas_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Alive during the Sivas massacre July 2 1993 — 35 Alevi intellectuals burned in the Madımak Hotel; charges tried for twenty years until the statute of limitations ran out.',
+    intent: 'year_texture',
+    notes: 'Set by trk_dep_sivas_massacre.',
+  },
+
+  trk_dep_1999_earthquake: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Alive during the İzmit/Marmara earthquake August 17 1999 — 17,000 dead, buildings built on corrupted permits, the infrastructure of impunity made physically visible.',
+    intent: 'year_texture',
+    notes: 'Set by trk_dep_1999_earthquake event.',
+  },
+
+  trk_dep_gezi_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Participated in or witnessed the Gezi Park protests of 2013 — the environmental sit-in that became a referendum on the AKP decade, tear gas in Taksim, the woman in the red dress.',
+    intent: 'year_texture',
+    notes: 'Set by trk_dep_gezi_2013 (protest branch).',
+  },
+
+  trk_dep_2016_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'In Turkey on the night of July 15 2016 — the FaceTime presidency, the call to prayer at midnight, tanks on the Bosphorus Bridge, and the purge that followed.',
+    intent: 'year_texture',
+    notes: 'Set by trk_dep_2016_coup_night.',
+  },
+
+  trk_dep_military_generation: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Completed mandatory military service in Turkey — the barracks, the hierarchy, the posting, the certificate of discharge that social life requires.',
+    intent: 'year_texture',
+    notes: 'Set by trk_dep_military_service.',
   },
 
   aw_evacuated_and_left: {

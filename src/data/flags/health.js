@@ -410,6 +410,22 @@ export const HEALTH_FLAGS = {
     notes: 'Set by sl_hiv_africa_treatment. Pairs with hiv_managed condition.',
   },
 
+  hiv_disclosed: {
+    weight: 'moderate',
+    category: 'health',
+    description: 'Chose to be visible about HIV status — to a partner, to a community, to the world. The silence had its cost; so does this.',
+    intent: 'year_texture',
+    notes: 'Set by cond_hiv_undetectable_life (disclosure branch). Checked in yearTexture.',
+  },
+
+  deaf_community_identity: {
+    weight: 'major',
+    category: 'health',
+    description: 'Found the Deaf community and its culture — the language, the gatherings, the shared grammar of a world built to its own scale, not the hearing world\'s diminished version of it.',
+    intent: 'year_texture',
+    notes: 'Set by cond_deafness_community in events_condition_arc_2.js.',
+  },
+
   witnessed_extreme_witness: {
     weight: 'moderate',
     category: 'grief',
