@@ -8764,6 +8764,55 @@ function buildYearTexture(state) {
       : 'The protests in Istanbul. The purple banners. The police cordons. What happened after — what didn\'t change — is the longer sentence.',
   ])
 
+  // ─── TURKEY DEPTH TEXTURE ────────────────────────────────────────────────────
+  if (F.has('trk_dep_1980_generation') && Math.random() < 0.2) return pick([
+    'September 12 remains a date that divides. What came before — the street violence, the political deadlock — and what came after: 650,000 detained, a constitution the generals wrote, political parties banned. The restoration of order was also the installation of a different disorder.',
+    phase === 'late_life'
+      ? 'The 1982 constitution was the junta\'s document. Amended many times. Still the framework. You have lived inside it for most of your adult life, and the amendments have not changed its essential architecture.'
+      : 'The political parties were banned the morning of September 12. The leaders were arrested. What followed was not an absence of politics but politics conducted under the terms the generals set. You grew up in that.',
+  ])
+  if (F.has('trk_dep_alevi_generation') && Math.random() < 0.22) return pick([
+    'The cemevi is not a mosque. The state does not recognise it as a place of worship, which means it does not receive the state support that mosques receive, which means every cemevi exists through the community\'s own resources. This is one way the republic has been secular.',
+    'The cem ceremony on a Friday night. The music, the semah — the devotional turning. The poems of Yunus Emre and Pir Sultan Abdal. What happens in this room is not what happens in the mosque down the street. The distinction is not always comfortable to carry outside this room.',
+    phase === 'late_life'
+      ? 'Maraş 1978. Çorum 1980. Sivas 1993. The geography of violence against your community is mappable. You can trace it. The perpetrators of Sivas were never fully convicted; the statute of limitations ran out. You have had to hold that alongside everything else.'
+      : 'Growing up Alevi in a Sunni neighbourhood is learning when to explain and when to let it go. Most of the time: let it go. The explanation requires a patience for misunderstanding that is not always available.',
+  ])
+  if (F.has('trk_dep_sivas_generation') && Math.random() < 0.25) return pick([
+    'July 2, 1993. The Madımak Hotel. Thirty-five intellectuals and two hotel workers. The fire burned for hours. The police response was slow. The government response was slow. The trial was slow. The slowness was itself a message.',
+    'The names from Sivas — the writers, the poets, the musicians — were names you knew as names. After July 2 they were names of the dead. The cultural gathering they were at was the kind of gathering your community holds. This is part of what makes it specific.',
+    phase === 'late_life'
+      ? 'The Madımak Hotel is still standing. There have been years of argument about what it should become — a museum of shame, a cultural centre, torn down, left. It is still standing. The argument continues. The building is evidence that the question is not resolved.'
+      : 'The statute of limitations ran out in 2012 before a conviction was reached. This is the legal summary. The political summary is different and longer.',
+  ])
+  if (F.has('trk_dep_1999_earthquake') && Math.random() < 0.25) return pick([
+    'The permits were wrong. The concrete was wrong. The sand was from the sea rather than the river — a practice everybody in the industry knew about. The earthquake revealed the infrastructure of impunity that was already there. Seventeen thousand people died in buildings that passed inspection.',
+    'You were in Turkey on August 17, 1999 at 3:02am. Whether you felt it depends on where you were. What you felt regardless was what came after: the numbers, the buildings, the knowledge about the concrete.',
+    phase === 'late_life'
+      ? 'Turkey\'s building stock was supposed to be different after 1999. Some of it was. The February 2023 earthquake showed which parts. The lesson has been taught twice now in living memory.'
+      : 'The trapped survivors found after several days. The search-and-rescue teams from other countries. The specific quality of the weeks that followed — watching the number rise, watching the buildings come down on television.',
+  ])
+  if (F.has('trk_dep_gezi_generation') && Math.random() < 0.2) return pick([
+    'The Gezi coalition was temporary — it had to be. Kemalists and Kurds and anarchists and football ultras do not have a sustainable common agenda. What they had for three weeks was a common space: Taksim, and the park they were trying to save.',
+    'The woman in the red dress. The photograph travelled everywhere. You know what the photograph doesn\'t show — what the square was like from inside, what the hours before and after the moment in the photograph were like. The photograph and the reality were both true.',
+    phase === 'late_life'
+      ? 'Gezi was not a revolution. It was a referendum on a decade of one party\'s rule, conducted through bodies in a square. The government survived it. What survived in you is something different — a knowledge about what is possible in the street, even if what is possible in the street is not what is possible in the ballot box.'
+      : 'The tear gas at 5am on May 28. If you were there you remember the exact texture of it. If you weren\'t, you remember the television. Either way it became part of how you understood Turkey.',
+  ])
+  if (F.has('trk_dep_2016_generation') && Math.random() < 0.22) return pick([
+    'The ezan at midnight. Not for prayer — the mosques were told to broadcast it to call people out. You heard it or you heard about hearing it. The call to prayer used as a political signal: this is the night when the categories reorganised.',
+    'FaceTime from a hotel room. The president of Turkey, his face in a phone screen held up to a camera, calling on citizens to go to the streets. The image: a face in a phone screen. It worked. The coup failed.',
+    phase === 'late_life'
+      ? 'The purge in the months after July 15: 150,000 detained or dismissed. Judges, teachers, soldiers, academics. The apparatus of the Gülen network inside the state, and then the category of Gülenist expanded. You watched the list grow and knew people on it who were on it for reasons that weren\'t the stated reason.'
+      : 'You remember where you were when you heard. Then you remember staying up through the night as the reports came and shifted. By 3am the coup was failing. You did not sleep.',
+  ])
+  if (F.has('trk_dep_military_generation') && Math.random() < 0.15) return pick([
+    'The discharge papers. The certificate that every employer will ask about and every family will have an opinion about. The service is done. What it did to you is less legible than the certificate.',
+    phase === 'late_life'
+      ? 'The men you served with are spread across the country now. The two years made a cohort and the cohort scattered. Some of them you have never seen since. The time was shared enough to be a common reference. Not a friendship exactly — a shared knowledge.'
+      : 'The barracks in the first week. The adjustment that the body makes to the schedule, the noise, the collective sleeping. You were not the same person who entered the gate when you left it a year later. This is not a complaint — it is just true.',
+  ])
+
   // ─── NOMADIC TEXTURE ─────────────────────────────────────────────────────────
   if (F.has('maasai_pastoralist') && Math.random() < 0.28) return pick([
     'The cattle were the measure of everything. You learned which cow belonged to which lineage by ear notch and hide pattern. This is a literacy specific to that world and most of the world does not know it exists.',
