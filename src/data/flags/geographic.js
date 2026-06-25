@@ -830,6 +830,60 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by nga_niger_delta for Ijaw and Delta-region characters.',
   },
 
+  nga_dep_nepa_generation: {
+    weight: 'moderate', category: 'infrastructure',
+    description: 'Grew up with NEPA/PHCN power cuts as a fact of life — candles, kerosene lamps, the generator economy, "there is light" as an announcement.',
+    intent: 'year_texture', notes: 'Set by nga_dep_nepa.',
+  },
+
+  nga_dep_exam_passed: {
+    weight: 'minor', category: 'education',
+    description: 'Passed WAEC/JAMB on the first attempt — the examination that gates university admission in Nigeria.',
+    intent: 'none', notes: 'Set by nga_dep_waec_jamb (good result choice).',
+  },
+
+  nga_dep_lagos_generation: {
+    weight: 'moderate', category: 'urban',
+    description: 'Formed by Lagos — the go-slow, the danfo, the perpetual negotiation of a megacity with more people than its infrastructure was built for.',
+    intent: 'year_texture', notes: 'Set by nga_dep_go_slow.',
+  },
+
+  nga_dep_nollywood_generation: {
+    weight: 'minor', category: 'cultural',
+    description: 'Grew up with Nollywood VCDs — the industry that became the world\'s third-largest film output built without state support.',
+    intent: 'year_texture', notes: 'Set by nga_dep_nollywood.',
+  },
+
+  nga_dep_endsars_generation: {
+    weight: 'major', category: 'conflict',
+    description: 'Was shaped by the #EndSARS protests of October 2020 — the Lekki toll gate shooting and what it revealed about the Nigerian state.',
+    intent: 'year_texture', notes: 'Set by nga_dep_endsars.',
+  },
+
+  nga_dep_japa_generation: {
+    weight: 'major', category: 'immigration',
+    description: 'Part of the Japa wave — the mass emigration of educated young Nigerians in the 2020s.',
+    intent: 'year_texture', notes: 'Set by nga_dep_japa (leave choice).',
+  },
+
+  nga_diaspora: {
+    weight: 'major', category: 'immigration',
+    description: 'Nigerian living abroad — carries Nigeria in remittances, in group chats, in the specific guilt and pride of the diaspora.',
+    intent: 'year_texture', notes: 'Set by nga_dep_japa (leave choice) and tech emigration events.',
+  },
+
+  nga_dep_stayed_generation: {
+    weight: 'moderate', category: 'resilience',
+    description: 'Chose to stay in Nigeria when the Japa wave offered an exit — the generation that held on.',
+    intent: 'year_texture', notes: 'Set by nga_dep_japa (stay choice).',
+  },
+
+  nga_dep_pentecostal_generation: {
+    weight: 'moderate', category: 'religious',
+    description: 'Formed by Nigerian Pentecostal church culture — megachurch as infrastructure, the prayer vocabulary, the testimony.',
+    intent: 'year_texture', notes: 'Set by nga_dep_pentecostal.',
+  },
+
   bng_dhaka_generation: {
     weight: 'minor',
     category: 'urban',

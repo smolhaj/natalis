@@ -9529,6 +9529,64 @@ function buildYearTexture(state) {
       : 'A trip that should take twenty minutes takes two hours without any particular reason. This is not a metaphor. This is Tuesday.',
   ])
 
+  // ─── NIGERIA DEPTH TEXTURE ───────────────────────────────────────────────────
+  if (F.has('nga_dep_nepa_generation') && Math.random() < 0.25) return pick([
+    '"There is light." The announcement in the house when NEPA restores power, which it does for hours at a time if you are lucky, for minutes if you are not. You have organised your schedule around the power\'s arrivals — the cooking, the charging, the ironing — the way a farmer organises around weather.',
+    'The generator: the starting cord, the petrol run before dark, the calculation about whether tonight warrants the fuel cost. Every household has a generator policy. Yours developed over years of practice.',
+    phase === 'late_life'
+      ? 'You have lived with power cuts for decades — since they became endemic in the 1980s, through the improvement promises of every government, through the privatisation of PHCN, through none of it resolving. You stopped expecting the grid to behave differently. You built your life around its behaviour.'
+      : 'Two types of light: grid light and generator light. Generator light is yellower, louder, costs something per hour. Grid light arrives unexpectedly. You check the socket before you do anything else to know which kind of evening it will be.',
+  ])
+  if (F.has('nga_dep_lagos_generation') && Math.random() < 0.22) return pick([
+    'The go-slow: not a temporary condition but the permanent state of the roads. You left earlier than necessary. You arrived later than planned. The interval between those two facts is where a significant fraction of your Lagos life has been spent.',
+    'The danfo bus, the keke NAPEP, the okada when everything else fails — a transport system assembled from private enterprise because the public system did not exist. You know which combination gets you where fastest on which day.',
+    phase === 'late_life'
+      ? 'You have spent years of your life in Lagos traffic, cumulatively. You learned things in it: patience, the radio, the hawkers, the specific sociology of people trapped in proximity with strangers. The city taught you something about endurance that you could not have learned differently.'
+      : 'Third Mainland Bridge at six-thirty in the morning: already gridlocked. The sky is doing its Lagos thing — haze, oil-refinery-orange. The radio is on. You know how to wait. Lagos required that knowledge of you early and has required it consistently since.',
+  ])
+  if (F.has('nga_dep_nollywood_generation') && Math.random() < 0.18) return pick([
+    'The Nollywood film on a VCD in someone\'s living room: the story specific to something you recognised, the drama that knew exactly what a family argument in this country sounds like. The industry was built without film schools or state funding. That is how Nigeria tends to build things that work.',
+    'You grew up watching films made by people who looked like you, about situations you understood. That sounds like it should be ordinary. It was not ordinary.',
+    phase === 'late_life'
+      ? 'Nollywood is now streaming. The same stories, bigger budgets, still unmistakably Nigerian. The VCD era is something you explain to younger people. You watched the industry grow from a video stall in Idumota into something that is studied abroad. You were part of the first audience.'
+      : 'The Nollywood storyline that exactly described a situation in your family. You did not discuss this with anyone. The recognition was private and complete.',
+  ])
+  if (F.has('nga_dep_endsars_generation') && Math.random() < 0.25) return pick([
+    '#EndSARS, October 2020. What the toll gate night showed was not surprising — the behavior of security forces in Nigeria toward young Nigerians was documented. What it showed was that the documentation changed nothing while it was happening and everything about what came after.',
+    'The lights went out at the Lekki toll gate. When they came back on. The government denied what the cameras showed. The cameras had been running. A generation learned, in real time, what the state would do and then deny.',
+    phase === 'late_life'
+      ? 'You were there or you watched it happen in real time on your phone. The protest was peaceful. The protesters were waving the Nigerian flag and singing the national anthem when the shooting started. The anthem and the flag were the irony the moment was made of. You carry it.'
+      : 'SARS was disbanded and replaced. The replacement had a different name. The pattern of behavior that produced #EndSARS was not addressed by the disbanding. You know this because you watched the replacement operating. The name changed. The uniform changed. The pattern did not change.',
+  ])
+  if (F.has('nga_dep_japa_generation') && Math.random() < 0.22) return pick([
+    'The group chat has people in three time zones. The ones in Calgary message late, the ones in London message at lunch, the ones in Lagos message all day. You are one of the ones who left. The chat is how you maintain the version of Nigeria that you carry.',
+    'You left during the Japa wave. You are not the first Nigerian to leave — there have been waves since the 1980s SAP. But this wave had a name and you were in it and the name captures something specific about what was being fled and why.',
+    phase === 'late_life'
+      ? 'You left Nigeria and you built a life elsewhere. The relationship with the country you left takes different forms at different distances: guilt at the hospital shortage you contributed to by leaving, pride in the relatives you support with remittances, the specific nostalgia that is sharper for the very things that made you go.'
+      : 'You send money home every month. The exchange rate calculation is part of your mental furniture. You know the naira-to-dollar rate the way you know your own phone number.',
+  ])
+  if (F.has('nga_dep_stayed_generation') && Math.random() < 0.2) return pick([
+    'Your mates left. You stayed. The reason you stayed is not the same as the reason you stayed when you reconsider it later. Both reasons have been true at different moments.',
+    'Someone has to stay and build the place. You say this sometimes. The people who stayed say this. The people who left say they are building the place from abroad, with remittances and advocacy and skills transfer. Both things are true and neither resolves the question.',
+    phase === 'late_life'
+      ? 'You stayed in Nigeria through the 1980s SAP, the military years, the return to democracy, the state capture, the Japa wave. The country that you stayed in is not the country you hoped to stay in. It is still the country you stayed in. The staying is the fact of your life here.'
+      : 'Every year some of your remaining people leave. The city gets emptier of the people who were your age when you arrived here. You build new networks from what is available. This is also Nigeria.',
+  ])
+  if (F.has('nga_dep_pentecostal_generation') && Math.random() < 0.2) return pick([
+    'The church is open for business every week and some weeks every day. The prayer point about the exam, the prayer point about the job interview, the prayer point about the visa application. Faith is the resource you deploy alongside every other resource.',
+    'The pastor who anoints your head with oil before the interview. You went because your mother asked you to go. You hold two things in your head simultaneously: the God who provides and the preparation that also matters. Nigerian Christianity is comfortable with both.',
+    phase === 'late_life'
+      ? 'The megachurch that grew from the small assembly in someone\'s living room. You have watched it grow. The prosperity gospel and the genuine community and the exploitative tithing and the real hospital the church built — all of these are true of the same institution. This is Nigerian Christianity in miniature.'
+      : 'On Sunday morning the whole neighbourhood is going to church. The traffic at 9am is a particular kind of traffic: well-dressed, purposeful, with the children in their church clothes. You are part of this current or you are in it without joining it. Either way, it defines the morning.',
+  ])
+  if (F.has('nga_diaspora') && !F.has('nga_dep_japa_generation') && Math.random() < 0.2) return pick([
+    'Being Nigerian abroad is a specific kind of Nigerian. The explanation you give when someone has questions about your name. The food you source. The news you follow alongside the news of where you live. The two streams running parallel.',
+    'You left before the Japa wave. The people who left in the 2020s find a diaspora already established — the restaurant, the grocery, the association, the church. You built some of what they found.',
+    phase === 'late_life'
+      ? 'You have lived abroad longer than you lived in Nigeria. Your children grew up here. They go back and it is a visit, not a homecoming, for them. The transfer did not complete in the generation you wanted it to complete in. This is common. You did not know it would feel like this.'
+      : 'You call home every Sunday. The call is the thread. The thread has specific content: who is well, who is not, what has happened with the house, whether the generator has been repaired. The thread holds.',
+  ])
+
   // ─── MALI TEXTURE ────────────────────────────────────────────────────────────
   if (F.has('mali_cotton_generation') && Math.random() < 0.25) return pick([
     'The CMDT price announcement comes in November. You have already grown the cotton; the price is announced after you cannot grow anything else instead. You do the arithmetic.',
