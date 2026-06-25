@@ -1165,6 +1165,22 @@ export const ECONOMIC_FLAGS = {
     notes: 'Set by sl_south_korea_sampo_generation.',
   },
 
+  kr_dep_imf_generation: {
+    weight: 'major',
+    category: 'economic',
+    description: 'South Korean generation that lived through the 1997 IMF crisis (외환위기) — mass layoffs, companies folding overnight, the won halving, the social contract of compressed development breaking in a single quarter.',
+    intent: 'year_texture',
+    notes: 'Set by kr_dep_imf_crisis, kr_dep_imf_childhood.',
+  },
+
+  kr_dep_jeonse_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Navigated the Korean jeonse lump-sum deposit housing system — the precariousness of a large sum in a landlord\'s hands, the fraud risk when property prices fall, the years of calculation about whether to trust.',
+    intent: 'year_texture',
+    notes: 'Set by kr_dep_jeonse.',
+  },
+
   generation_rent: {
     weight: 'moderate',
     category: 'economic',

@@ -6859,6 +6859,22 @@ function buildYearTexture(state) {
       ? 'Some families got one reunion at Mount Geumgang. Two hours. Cameras. Officials overseeing the conversation. Some got none. The wait continues for those still waiting.'
       : 'The North Korean relatives are a presence in absences: the seat at the table, the name not spoken because speaking it is a kind of grief with no object to carry it to.',
   ])
+  if (F.has('kr_dep_imf_generation') && Math.random() < 0.22) return pick([
+    'The IMF: not the institution but the word, which means 1997, which means the floor that opened. The companies that existed and then didn\'t. The generation that saw what can happen when the numbers stop adding up.',
+    phase === 'late_life'
+      ? 'When people ask where you learned not to trust permanence, the honest answer involves 1997 — the year when everything that had seemed fixed turned out to be conditional. You have carried that knowledge into every decision since.'
+      : 'The social contract your parents\' generation was handed — study hard, join a company, stay thirty years — was revised in 1997. You are navigating the revised version.',
+  ])
+  if (F.has('kr_dep_jeonse_generation') && Math.random() < 0.2) return pick([
+    'The jeonse deposit: a large sum sitting in someone else\'s hands, legally yours, practically unavailable. The calculation of trust you make once and then hope does not have to be made again.',
+    'The jeonse system means your home is a bet on someone else\'s solvency. Most bets are fine. The ones that are not are catastrophic in a particular way — years of savings, a legal dispute, an apartment you cannot leave because leaving means losing your place in the queue.',
+  ])
+  if (F.has('kr_dep_hell_joseon') && Math.random() < 0.2) return pick([
+    'Hell Joseon: the name that landed because it was precise. Not "difficult economy" or "housing crisis" but a historical reference — rigid hierarchy, closed mobility — applied to a country with the internet speeds of the future and the meritocracy of 1392.',
+    phase === 'late_life'
+      ? 'The hell Joseon conversation was the version you lived. Your children\'s generation is having the same conversation under different names. The structure that made the name necessary has not resolved.'
+      : 'The naming of a thing is not the same as fixing it. But the name was accurate, and accuracy is something.',
+  ])
 
   // ─── TAIWAN + MALAYSIA TEXTURE ───────────────────────────────────────────────
   if (F.has('taiwan_228_generation') && Math.random() < 0.3) return pick([
