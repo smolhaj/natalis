@@ -686,6 +686,30 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by ken_post_election_2007 (crossed branch). No follow-through required — the experience is self-contained.',
   },
 
+  ken_dep_matatu_generation: {
+    weight: 'moderate',
+    category: 'urban',
+    description: 'Nairobi matatu commuter — knows the routes, the touts, the shortcut logic, the graffiti that marks each route\'s personality. The daily calculus of getting across the city.',
+    intent: 'year_texture',
+    notes: 'Set by ken_dep_matatu.',
+  },
+
+  ken_dep_westgate_generation: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'Nairobi resident during the Westgate mall attack, September 2013 — the Al-Shabaab attack on a Saturday shopping crowd, 67 killed over four days. The city was different after.',
+    intent: 'year_texture',
+    notes: 'Set by ken_dep_westgate.',
+  },
+
+  ken_dep_runner_generation: {
+    weight: 'moderate',
+    category: 'sport',
+    description: 'Grew up in the Rift Valley running culture — altitude, cattle-herding fitness, the school races, the neighbours who came back with Olympic medals. Running as a possible path.',
+    intent: 'year_texture',
+    notes: 'Set by ken_dep_runner (both choices).',
+  },
+
   maasai_land_displaced: {
     weight: 'major',
     category: 'displacement',

@@ -11113,6 +11113,25 @@ function buildYearTexture(state) {
       ? 'You are from somewhere your children have never seen. The language you dreamed in first is not theirs. That is a migration that happens inside a single generation.'
       : 'The Nairobi Maasai community knows who they are: not farmers, not fully urban, maintaining something. You are part of that maintenance.',
   ])
+  if (F.has('ken_dep_matatu_generation') && Math.random() < 0.2) return pick([
+    'The matatu number and what it means — which direction, which driver today, whether the route passes the market or avoids it. You have this knowledge in a way that cannot be transferred, only accumulated.',
+    'The music from the matatu is already playing before you board. The tout has already called the destination three times in the same breath. The city is working at full volume.',
+    phase === 'late_life'
+      ? 'The BRT lines have taken some of the routes. The old matatus still run the back roads. You know which back roads and which matatus and the knowledge feels like a form of faithfulness to the city you learned.'
+      : 'You have been late to things because of matatus and early to things because of matatus and you have learned not to promise exact times, only approximate times.',
+  ])
+  if (F.has('ken_dep_westgate_generation') && Math.random() < 0.22) return pick([
+    'After Westgate: the bag search at the mall entrance, the guards at the car park who check underneath and inside. You go through the searches without thinking about them, which means the thinking happened once and was resolved.',
+    phase === 'late_life'
+      ? 'The names of the dead in September 2013 were in the newspaper for days. The nationality of each person — the spread of it, Kenyan and Ghanaian and British and Indian — was the population of a Nairobi weekend in a shopping centre. That was the point.'
+      : 'Al-Shabaab chose a Saturday in Westlands because a Saturday in Westlands is where people like you are. You think about this occasionally. It does not stop you going.',
+  ])
+  if (F.has('ken_dep_runner_generation') && Math.random() < 0.2) return pick([
+    'Eliud Kipchoge is from Eldoret. David Rudisha was at school not far from the road you grew up on. The Rift Valley produces distance runners at a rate that is still unexplained to everyone\'s satisfaction.',
+    phase === 'late_life'
+      ? 'The runners who came after you went further than you did. The ones who are still running now were children when you were competing. The knowledge of what running in the hills requires — that you still have.'
+      : 'You run in the morning because the morning is cool and the altitude makes the lungs work. The hills do not ask what you are training for.',
+  ])
 
   // ─── TUNISIA TEXTURE ─────────────────────────────────────────────────────────
   if (F.has('tunisian_womens_rights_generation') && Math.random() < 0.15) return pick([
