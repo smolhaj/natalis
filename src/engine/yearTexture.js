@@ -12706,6 +12706,20 @@ function buildYearTexture(state) {
       : 'Manageable now is the word. Manageable with daily medication, with regular tests, with the virus held at a level the body can live with. The management is routine. The routine sits inside the day without announcing itself.',
   ])
 
+  if (F.has('hiv_disclosed') && Math.random() < 0.14) return pick([
+    'Telling people changed things in both directions: the people who stayed and the ones who didn\'t, and you can read the list of both from memory.',
+    phase === 'late_life'
+      ? 'What you were afraid of when you first disclosed turned out to be partly right and mostly manageable. What you didn\'t anticipate was the relief, which was larger and lasted longer than the fear.'
+      : 'The status is not a secret. That alone changes the weight of the year — not everything, not most things, but the specific weight of the hiding, which is now gone.',
+  ])
+
+  if (F.has('deaf_community_identity') && Math.random() < 0.16) return pick([
+    'There is a conversation happening across the table that you are following completely. This was not always true. It became true when you had the language for it.',
+    phase === 'late_life'
+      ? 'The community scattered over the years — some to cities with better services, some to families who called them back, some gone. The language you share is still fluent. You can still enter a room where it is being used and be, immediately, home.'
+      : 'The world is built for people who hear it. That is still true. But you have a world that is built for you and it is not smaller for being specific — if anything it is more detailed in the ways that matter.',
+  ])
+
   if (F.has('domestic_worker') && Math.random() < 0.18) return pick([
     'The family knows your name. The children of the family know your name. The adults of the family sometimes call you by it and sometimes do not. You have noted both.',
     phase === 'late_life'
