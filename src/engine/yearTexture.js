@@ -10653,6 +10653,54 @@ function buildYearTexture(state) {
     'Thawra — revolution. The word the protesters chose. The demands: a new electoral law, an end to the sectarian quota system, accountability. Some of this happened. Some of it reversed. Six hundred dead is not a partial victory.',
   ])
 
+  // ─── IRAQ DEPTH TEXTURE ───────────────────────────────────────────────────────
+  if (F.has('irq_dep_yazidi_generation') && Math.random() < 0.22) return pick([
+    'Tawsi Melek is the Peacock Angel. The people who call him what they call him are wrong, and knowing they are wrong is one of the first things you learned. The distinction matters enough to die for, which eventually became literal.',
+    'The castes — sheikh, pir, murid — are the transmission system for the knowledge. Who you are in the community is inherited rather than chosen. This does not feel like a constraint; it feels like a location.',
+    phase === 'late_life'
+      ? 'You have carried the theology and the community through things it was not built to survive and it survived anyway. Not intact, but continuous. That is not nothing.'
+      : 'The sacred books are not shown to outsiders. Some things are for the community alone. The outsider\'s curiosity about your faith is an old phenomenon and you have responses for it at different levels of engagement.',
+  ])
+  if (F.has('irq_dep_marsh_generation') && Math.random() < 0.22) return pick([
+    'The reed mudhif is built without nails — only reed, bent into arches, the way it has been built here for six thousand years. You grew up knowing how it is done. The knowledge was handed down in the way knowledge is handed down in places that don\'t need documents.',
+    'The water buffalo know the channels. The channels know the seasons. The light on the water in this particular marsh at this particular hour is not available anywhere else in the world.',
+    phase === 'late_life'
+      ? 'The world you were born into and the world that exists are not the same world. The interval between them was a political decision. You are the evidence that the world it replaced existed.'
+      : 'The birds that come here come from everywhere. The marsh is a waypoint in migrations measured in thousands of miles. You are a child in a place that is on the route of the whole world.',
+  ])
+  if (F.has('irq_dep_marsh_displaced') && Math.random() < 0.25) return pick([
+    'The marsh was drained on purpose. Not an accident of development, not a side effect — a political decision to drain the world you were born in. The mechanism was engineering. The intent was punishment.',
+    'You have seen the satellite photographs: 1973 and 2000. The before and after. What you grew up in is gone from the image. The image cannot carry the smell of the water or the sound of the birds at dawn.',
+    phase === 'late_life'
+      ? 'The reflooding began after 2003. The water came back, and some of the birds came back, and some families came back. The world that came back is not the same world. You know the original.'
+      : 'The displacement was Basra, then the camps in Iran, then the slums at the edge of the city. The family was together for most of it. That is what you say when people ask how it was.',
+  ])
+  if (F.has('irq_dep_1991_generation') && Math.random() < 0.22) return pick([
+    'The Americans called on Iraqis to rise up. The Iraqis rose up. The Americans watched from twenty miles away. This sequence is what the uprising means in your memory — not just the fighting and the crushing, but that sequence.',
+    'The helicopter gunships were allowed under the ceasefire terms. Allowed. You have returned to this word many times since. The permission was structural — the terms were written by someone who had a different war in mind.',
+    phase === 'late_life'
+      ? 'The mass graves were opened after 2003. The names came from the graves. Some were names you knew. The documentation made the thing official. The thing did not require documentation to be real.'
+      : 'March 1991 is a specific month in your body, separate from the months before and after it. Something was proposed — resistance, possibility, an end — and then the proposal was withdrawn by force.',
+  ])
+  if (F.has('irq_dep_christian_generation') && Math.random() < 0.2) return pick([
+    'Aramaic in the liturgy. The language of Christ, still spoken in a church on this street in Baghdad. The congregation is old enough to have been here when this was unremarkable. It is no longer unremarkable.',
+    'Christmas in the neighbourhood. The lights, the relatives, the specific smell of the celebration. In a city that was seventy percent Muslim, the Christian quarter had its own calendar and the city accommodated it.',
+    phase === 'late_life'
+      ? 'You have watched the community empty over decades. The families you grew up with are in Detroit, in Sydney, in Gothenburg. The church is attended now by the ones who could not leave or would not. You are in that number.'
+      : 'The Chaldeans have been here since the first century. Not as a remnant, not as a protected minority — as a presence. The condition of that presence changed in 2003. It has been changing since.',
+  ])
+  if (F.has('irq_dep_christian_stayed') && Math.random() < 0.2) return pick([
+    'You stayed when almost everyone left. The reasons are various: property, family, refusal. The neighbourhood is not the neighbourhood it was. You are still in it.',
+    'The church fills less each year. Some Sundays you count the congregation. You have stopped counting on certain Sundays because the number does not help.',
+  ])
+  if (F.has('irq_dep_diaspora_amman') && Math.random() < 0.22) return pick([
+    'The waiting room of the resettlement office. The number taken from the machine. The interpreter who has done this ten thousand times and is still trying. Your file is somewhere in the system.',
+    'Swiefieh is the Iraqi neighbourhood of Amman. Iraqi restaurants, Iraqi music from the shops, Iraqis passing each other on the pavement and making the recognition. A community in suspension, waiting for a direction.',
+    phase === 'late_life'
+      ? 'The waiting in Amman was the period between your Iraqi life and whatever came after. Looking back it was eight months or fourteen months or two years. At the time it was indefinite, which is a different kind of time.'
+      : 'The Jordanian visa renewal is every month. The money from Baghdad was substantial; the money from Baghdad is becoming less substantial. The interview date moved again.',
+  ])
+
   // ─── ANGOLA TEXTURE ──────────────────────────────────────────────────────────
   if (F.has('angola_civil_war_generation') && Math.random() < 0.22) return pick([
     'The war lasted twenty-seven years. It began the day independence arrived. Those two facts are not unrelated.',

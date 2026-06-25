@@ -2780,6 +2780,62 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by irq_isis_mosul (auto-effect).',
   },
 
+  irq_dep_yazidi_generation: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Yazidi identity in Iraq — the Peacock Angel, the castes, the sacred copper vessels, the ancient pre-Abrahamic theology that outsiders misread as devil worship.',
+    intent: 'year_texture',
+    notes: 'Set by irq_dep_yazidi_identity.',
+  },
+
+  irq_dep_marsh_generation: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Grew up in the Mesopotamian marshes — the Ma\'dan world of floating reed villages, water buffalo, millennia of continuous habitation between the Tigris and Euphrates.',
+    intent: 'year_texture',
+    notes: 'Set by irq_dep_marsh_world.',
+  },
+
+  irq_dep_marsh_displaced: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Witnessed and survived Saddam\'s draining of the Mesopotamian marshes 1991–2003 — one of the great deliberate ecological catastrophes, used as collective punishment.',
+    intent: 'year_texture',
+    notes: 'Set by irq_dep_marsh_drained.',
+  },
+
+  irq_dep_1991_generation: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Alive during the March 1991 Shia uprising — the revolt, the American non-intervention, the helicopter gunships, the mass graves that would only be opened after 2003.',
+    intent: 'year_texture',
+    notes: 'Set by irq_dep_1991_uprising.',
+  },
+
+  irq_dep_christian_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Iraqi Christian identity — Chaldean, Assyrian, Syriac — one of the oldest continuous Christian communities in the world, present since the first century, now in exodus.',
+    intent: 'year_texture',
+    notes: 'Set by irq_dep_christian_before.',
+  },
+
+  irq_dep_christian_stayed: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Chose to remain in Iraq as a Christian after 2003, despite the bombings and the exodus — one of fewer and fewer, in a diminishing church.',
+    intent: 'year_texture',
+    notes: 'Set by irq_dep_christian_exodus (stay branch).',
+  },
+
+  irq_dep_diaspora_amman: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Part of the 2003–2008 Iraqi diaspora stranded in Amman, Jordan — the waiting rooms, the dwindling savings, the resettlement interview dates that kept moving.',
+    intent: 'year_texture',
+    notes: 'Set by irq_dep_amman_diaspora.',
+  },
+
   libyan_revolution_generation: {
     weight: 'major',
     category: 'trauma',
