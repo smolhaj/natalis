@@ -13,6 +13,7 @@ import {
   GDP_MULT, HYPERINFLATION_DRAIN, getHyperinflation,
   calculateHouseholdContribution,
   ADULT_TRAITS, CHILD_TRAITS, pickTraits, TRAIT_PROSE, BUSINESS_TYPES, PARTNER_OCCUPATIONS,
+  getLifeSkeletonMap,
 } from './character'
 import { buildYearTexture } from './yearTexture'
 
