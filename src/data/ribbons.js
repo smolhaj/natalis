@@ -688,8 +688,8 @@ export const RIBBONS = [
     color: 'gray',
   },
   {
-    id: 'the_resettled',
-    name: 'The Resettled',
+    id: 'the_resettled_refugee',
+    name: 'The Refugee Who Arrived',
     description: 'After years in the camp, the papers came. You arrived in a country that was not yours and made it yours anyway.',
     condition: (G) => G.flags.includes('resettlement_established'),
     priority: 78,
@@ -1095,7 +1095,7 @@ export const RIBBONS = [
   // ── BUILD 47 — MENTOR ARC ────────────────────────────────────────────────────
   {
     id: 'the_mentor',
-    name: 'The Mentor',
+    name: 'The Guide',
     description: 'Someone became more because of what you gave them. That chain continues past what you can see.',
     condition: (G) => G.flags.includes('is_mentor') || G.flags.includes('protege_exceeded'),
     priority: 65,
@@ -1141,7 +1141,7 @@ export const RIBBONS = [
   // ── BUILD 23 — THE DIASPORA WHO DIDN'T LEAVE ─────────────────────────────
   {
     id: 'the_one_who_stayed',
-    name: 'The One Who Stayed',
+    name: 'The Choice to Remain',
     description: 'Half the people you grew up with left. You watched them go and you stayed. The country did what it did. You were there for all of it.',
     condition: (G) => G.flags.includes('chose_to_stay'),
     priority: 62,
@@ -1583,7 +1583,7 @@ export const RIBBONS = [
   },
   {
     id: 'the_moral_weight',
-    name: 'The Weight',
+    name: 'The Moral Weight',
     description: 'The legality of it and the weight of it are separate things. They do not cancel each other out.',
     condition: (G) => G.flags.includes('moral_weight_carried'),
     priority: 72,
@@ -1791,7 +1791,7 @@ export const RIBBONS = [
   },
   {
     id: 'the_refusal',
-    name: 'The Refusal',
+    name: "The Soldier's Refusal",
     description: 'A child with a weapon was given an order. You refused. The consequences were real. The refusal was yours.',
     condition: (G) => G.flags.includes('child_soldier_order_refused'),
     priority: 88,
@@ -2267,7 +2267,7 @@ export const RIBBONS = [
   },
   {
     id: 'the_pillar',
-    name: 'The Pillar',
+    name: 'The Verzuiling Generation',
     description: 'You went to the right school, read the right newspaper, played sport in the right club. Verzuiling organized everything and then dissolved within a generation. You lived both sides of that.',
     condition: (G) => G.flags.includes('nl_pillarization_generation'),
     priority: 68,
@@ -2778,62 +2778,70 @@ export const RIBBONS = [
 
   // ── EGYPT DEPTH RIBBONS ──────────────────────────────────────────────────────
   {
-    id: 'the_crossing',
-    label: 'The Crossing',
+    id: 'the_egypt_crossing',
+    name: 'The October Crossing',
     description: 'Witnessed the October 1973 War — the crossing of the Suez Canal, the Bar-Lev Line breached, the military answer to the Naksa.',
     condition: (G) => G.flags.includes('october_war_generation'),
-    rarity: 'uncommon',
+    priority: 65,
+    color: 'amber',
   },
   {
     id: 'the_camp_david_reckoning',
-    label: 'The Camp David Reckoning',
+    name: 'The Camp David Reckoning',
     description: 'Lived through Sadat\'s peace with Israel — the Arab League expulsion, the assassination, the cold peace that held for forty years.',
     condition: (G) => G.flags.includes('egy_camp_david_generation'),
-    rarity: 'uncommon',
+    priority: 65,
+    color: 'blue',
   },
   {
     id: 'the_square_and_after',
-    label: 'The Square and After',
+    name: 'The Square and After',
     description: 'Present for both Tahrir 2011 and the Sisi counter-revolution — the eighteen days and the afternoon that closed them.',
     condition: (G) => G.flags.includes('tahrir_generation') && G.flags.includes('egy_sisi_generation'),
-    rarity: 'rare',
+    priority: 85,
+    color: 'red',
   },
 
   // ── ETHIOPIA DEPTH RIBBONS ───────────────────────────────────────────────────
   {
     id: 'the_adwa_classroom',
-    label: 'The Adwa Classroom',
+    name: 'The Adwa Classroom',
     description: 'Learned the Battle of Adwa in the classroom it made possible.',
     condition: (G) => G.character?.country?.name === 'Ethiopia' && G.age >= 10,
-    rarity: 'common',
+    priority: 40,
+    color: 'green',
   },
   {
     id: 'the_volkswagen_generation',
-    label: 'The Volkswagen Generation',
+    name: 'The Volkswagen Generation',
     description: 'Witnessed Haile Selassie removed from the Jubilee Palace in a Volkswagen Beetle — forty-four years of imperial Ethiopia ending on a Tuesday morning.',
     condition: (G) => G.flags.includes('eth_haile_selassie_generation'),
-    rarity: 'uncommon',
+    priority: 65,
+    color: 'amber',
   },
   {
     id: 'the_arbegnoch',
-    label: 'The Arbegnoch',
+    name: 'The Arbegnoch',
     description: 'Grew up in a family that joined the patriot resistance during the Italian occupation — five years in the mountains while the Emperor was in Bath.',
     condition: (G) => G.flags.includes('eth_arbegnoch_family'),
-    rarity: 'rare',
+    priority: 85,
+    color: 'blue',
   },
   {
     id: 'the_landlocked',
-    label: 'The Landlocked',
+    name: 'The Landlocked',
     description: 'Lived through the day Ethiopia became landlocked — Eritrean independence 1993 taking both ports, the 1959 treaty irrelevant, the Blue Nile the only asset that remained.',
     condition: (G) => G.flags.includes('eth_eritrea_loss'),
-    rarity: 'uncommon',
+    priority: 65,
+    color: 'gray',
   },
   {
     id: 'the_irreechaa_generation',
-    label: 'The Irreechaa Generation',
+    name: 'The Irreechaa Generation',
     description: 'Present for the Oromia protests — the Irreechaa massacre, the state of emergency, the years of pressure that preceded Abiy Ahmed.',
     condition: (G) => G.flags.includes('eth_oromia_protest_witness'),
-    rarity: 'uncommon',
+    priority: 65,
+    color: 'red',
   },
 
   // ── MEXICO DEPTH RIBBONS ─────────────────────────────────────────────────────

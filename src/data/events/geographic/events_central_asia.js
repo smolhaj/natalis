@@ -214,7 +214,7 @@ export const CENTRAL_ASIA_EVENTS = [
   },
 
   {
-    id: 'taj_peace_1997',
+    id: 'ca_taj_peace_1997',
     phase: 'midlife',
     weight: 4,
     when: (G) => IS_TAJIK(G) && G.currentYear >= 1997 && G.currentYear <= 2000 && G.age >= 25 && G.flags.some(f => f === 'tajik_civil_war_generation') && !G.mem?.tajPeace,

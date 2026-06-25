@@ -282,7 +282,7 @@ export const SEX_WORK_EVENTS = [
   // What the years mean, at a distance from them.
 
   {
-    id: 'sw_late_reckoning',
+    id: 'sexwork_late_reckoning',
     phase: 'late_life',
     weight: 3,
     when: (G) =>

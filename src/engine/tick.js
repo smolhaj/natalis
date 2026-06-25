@@ -3,7 +3,10 @@ import { EVENTS, EVENTS_BY_PHASE } from '../data/events'
 import { WORLD_EVENTS } from '../data/worldEvents'
 import { RIBBONS } from '../data/ribbons'
 import { CAREERS } from '../data/careers'
+import { CRIMES } from '../data/crimes'
 import { PROPERTY_TYPES } from '../data/assets'
+import { ILLNESSES } from '../data/illnesses'
+import { LIFE_SKELETON_EVENTS } from '../data/events/lifecycle/events_life_skeleton'
 import { PLACES, pickNeighborhoodTier, pickNamedNeighborhood } from '../data/places'
 import { HEADLINES } from '../data/headlines'
 import { SOUNDTRACK } from '../data/soundtrack'
@@ -11,11 +14,12 @@ import { randomBetween, pickFrom, clamp, chance } from '../utils/random'
 import {
   FlagSet, getPhase, getCountryRegime, isLgbtqCriminalized,
   GDP_MULT, HYPERINFLATION_DRAIN, getHyperinflation,
-  calculateHouseholdContribution,
+  calculateHouseholdContribution, tickFamilyIncome,
   ADULT_TRAITS, CHILD_TRAITS, pickTraits, TRAIT_PROSE, BUSINESS_TYPES, PARTNER_OCCUPATIONS,
-  getLifeSkeletonMap,
+  getLifeSkeletonMap, getPhaseEntryMap,
 } from './character'
 import { buildYearTexture } from './yearTexture'
+import { buildMundaneLayer } from './mundaneLayer'
 
 function createProxy(state) {
   return {
