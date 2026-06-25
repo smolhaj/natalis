@@ -4690,6 +4690,62 @@ function buildYearTexture(state) {
       ? 'December 2011: white ribbon, Bolotnaya Square, the briefly possible. February 2022: the border, Tbilisi or Riga or Istanbul, the unthinkable ordinary. You are one of the people who participated in both events. The first event did not prevent the second. You have been thinking about what that means.'
       : 'You stood in Bolotnaya Square. You stood at a border crossing in 2022. The space between those two facts is a decade of Russian political history summarised as personal experience.',
   ])
+  if (F.has('ru_dep_terror_generation') && Math.random() < 0.22) return pick([
+    'The knock came at night in 1937, or 1938. Not to your door — to a door close enough that you heard it. The apartment was quiet afterward in a way that apartments are not usually quiet.',
+    'You learned what Article 58 was before you learned what it meant. Anti-Soviet activity. The phrase covered everything it needed to cover. This was its point.',
+    phase === 'late_life'
+      ? 'The rehabilitation certificates came years later, after Stalin died, after Khrushchev spoke. A piece of paper saying: unjustly convicted. Your father was already a long time dead by then. The piece of paper went in a drawer.'
+      : 'You grew up knowing there was a category of absence that could not be named. Someone was on a business trip, or transferred, or simply not mentioned. You knew what the category meant before you had words for it.',
+  ])
+  if (F.has('ru_dep_chsir') && Math.random() < 0.22) return pick([
+    'On the forms that required you to name your father\'s occupation, you paused. The pause was trained, not deliberate. You had been pausing at that question since you were old enough to fill out a form.',
+    'CHSIR: member of the family of a traitor to the Motherland. The category followed you through every application, every admission, every employment file. You did not put your father\'s name. You did not not put your father\'s name. You found the phrasing that made the question answerable.',
+    phase === 'late_life'
+      ? 'You spent your life with a version of your father that existed only in your memory and in one photograph. What he looked like at the end you do not know. The zinc coffin came back to other families. Your family received nothing, which meant nothing was admitted.'
+      : 'Your mother said: do not ask, do not write it, do not say his name in school. You learned to have a father who was not a subject. This takes a specific kind of discipline from a specific kind of age.',
+  ])
+  if (F.has('ru_dep_kommunalka_generation') && Math.random() < 0.2) return pick([
+    'The kommunalka kitchen on Sunday morning: four families, four gas rings, four versions of breakfast happening simultaneously. The smell of all of it. The negotiations about the window and the drain and whose turn it is for what.',
+    'You knew your neighbours the way you knew your own family, which is not the same as choosing them. The room was yours. The kitchen was everyone\'s. The difference between those two things was everything.',
+    phase === 'late_life'
+      ? 'When you got your own apartment — your own kitchen, your own hallway, your own front door — you stood in it alone for a while and did not know what to do with the silence. The kommunalka had its own noise that you had always lived inside.'
+      : 'Privacy was what happened inside the room with the door closed. Outside the door it was shared life, which had its own rhythm and its own rules and its own small daily grievances that everyone had learned to maintain at a manageable level.',
+  ])
+  if (F.has('ru_dep_thaw_believer') && Math.random() < 0.18) return pick([
+    'After Khrushchev\'s speech, the spring feeling: this system has a capacity for truth about itself. You believed in that capacity for longer than it turned out to deserve.',
+    'The thaw years: poetry in stadiums, Solzhenitsyn published in Novy Mir, something loosening in the air. You thought the loosening was structural. It turned out to be seasonal.',
+    phase === 'late_life'
+      ? 'You can date your loss of that belief — not to a single moment, but to a period. The tanks in Prague, or the Brezhnev Constitution, or some smaller thing that told you the thaw was administered and could be administered closed again. You adjusted.'
+      : 'The difference between a system that corrects itself and a system that performs correction is the difference between the hope of the late 1950s and the reality of the 1970s. You were inside that interval when it was still hope.',
+  ])
+  if (F.has('ru_dep_thaw_sceptic') && Math.random() < 0.18) return pick([
+    'After Khrushchev read the secret speech, the question that wouldn\'t close: if this was true, what else was true? You carried that question forward through the Brezhnev years, the stagnation, the official optimism.',
+    'The thaw gave you something it did not intend to give: the habit of double reading. The official text and what the official text revealed by needing to be said. That habit stayed.',
+    phase === 'late_life'
+      ? 'You were right to be sceptical, though being right did not feel like anything in particular. The capacity for self-correction that the speech implied turned out to be limited. The limits were visible by the 1970s to anyone looking at the limits.'
+      : 'There were people your age who believed the thaw was the beginning of something genuine. You could not be those people after 1956. The speech told you too much about what the system was capable of admitting, which told you too much about what it was capable of not admitting.',
+  ])
+  if (F.has('ru_dep_blat_generation') && Math.random() < 0.2) return pick([
+    'The sausage arrived through a friend at the meat enterprise. The appointment went through someone who knew someone at the clinic. This is not corruption — corruption is a different category. This is the real economy running alongside the official one.',
+    'Blat: the network of reciprocal obligations that got things done. You were in someone else\'s network and they were in yours. The transaction was never explicit. That was the point of it.',
+    phase === 'late_life'
+      ? 'The market arrived in the 1990s and made blat unnecessary and then the market became its own kind of blat, which is not what the reformers intended. The connections that mattered changed their form. The principle stayed the same.'
+      : 'You know how to navigate a system that requires navigation. You know the difference between the official channel and the real channel. This knowledge was acquired over years and is not transferable by description.',
+  ])
+  if (F.has('ru_dep_1990s_generation') && Math.random() < 0.2) return pick([
+    'The kiosk economy: you could buy anything from a metal booth if you had the money and nothing from a state store if you didn\'t. The decade had a specific smell — diesel and cigarettes and something new happening violently.',
+    'The voucher was worth the paper it was printed on for most people, which is to say less than the television advertisements suggested. The small number of people who knew what to do with the voucher ended up owning the things the voucher was supposed to distribute.',
+    phase === 'late_life'
+      ? 'The 1990s are not a decade you can fully explain to someone who was not inside them. The combination of freedom and collapse is not something that translates. You had one and the other simultaneously and both were real.'
+      : 'You came of age in the interval between the Soviet system and whatever came after. You are constituted by that interval — the uncertainty, the improvisation, the strange fact of living in a country that did not yet know what it was.',
+  ])
+  if (F.has('ru_dep_chechnya_generation') && Math.random() < 0.22) return pick([
+    'Grozny in 1994: the mechanised units and the urban warfare. The official casualties and the unofficial casualties were different numbers. You know which number is true.',
+    'The Soldiers\' Mothers had photographs and they held them at the Defence Ministry until someone talked to them. The army had procedures and the procedures did not include releasing information. The mothers knew where the leverage was.',
+    phase === 'late_life'
+      ? 'The first war ended in Khasavyurt in 1996. The second war began in 1999. The ceasefire was a pause, not a settlement. You learned this through the experience of watching a ceasefire be a pause.'
+      : 'You went because the contract paid real money in 1994, which most salaries did not. Or you were conscripted and did not choose. The war had two types of people in it and they shared the same mountains and the same outcome.',
+  ])
   if (F.has('russia_1991_generation') && Math.random() < 0.22) return pick([
     'August 19, 1991: the coup announcement at six in the morning. The GKCHP with shaking hands at the press conference. Yeltsin on the tank. The three days when nobody knew what kind of country this would be next week. You were alive inside those three days.',
     phase === 'late_life'

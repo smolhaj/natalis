@@ -1457,6 +1457,54 @@ export const GEOGRAPHIC_FLAGS = {
     intent: 'event', notes: 'Set by Chechen war world events. Follow-through: ft44_chechen_late.',
   },
 
+  ru_dep_terror_generation: {
+    weight: 'major', category: 'conflict',
+    description: 'Grew up during the Great Terror 1937-38 — night knocks, arrests, the silence afterward.',
+    intent: 'year_texture', notes: 'Set by ru_dep_great_terror. Followed up by ru_dep_family_arrest.',
+  },
+
+  ru_dep_chsir: {
+    weight: 'major', category: 'conflict',
+    description: 'Member of the family of an arrested person — the CHSIR category that followed a child throughout Soviet life.',
+    intent: 'year_texture', notes: 'Set by ru_dep_family_arrest. The silence about the father in official documents.',
+  },
+
+  ru_dep_kommunalka_generation: {
+    weight: 'moderate', category: 'social',
+    description: 'Grew up in a kommunalka — the communal apartment life of Soviet urban Russia.',
+    intent: 'year_texture', notes: 'Set by ru_dep_kommunalka.',
+  },
+
+  ru_dep_thaw_believer: {
+    weight: 'moderate', category: 'political',
+    description: 'Believed in the possibility of reform after the secret speech — the Khrushchev thaw as genuine opening.',
+    intent: 'year_texture', notes: 'Set by ru_dep_secret_speech (reform choice).',
+  },
+
+  ru_dep_thaw_sceptic: {
+    weight: 'moderate', category: 'political',
+    description: 'The secret speech created questions that could not be answered — the thaw as the beginning of private disbelief.',
+    intent: 'year_texture', notes: 'Set by ru_dep_secret_speech (sceptic choice).',
+  },
+
+  ru_dep_blat_generation: {
+    weight: 'moderate', category: 'economic',
+    description: 'Came of age under the blat system — the Soviet economy of favours and reciprocal connections.',
+    intent: 'year_texture', notes: 'Set by ru_dep_blat_system.',
+  },
+
+  ru_dep_1990s_generation: {
+    weight: 'moderate', category: 'economic',
+    description: 'Came of age in the 1990s Russian chaos — kiosks, voucher privatization, the end of savings.',
+    intent: 'year_texture', notes: 'Set by ru_dep_1990s_kiosks.',
+  },
+
+  ru_dep_chechnya_generation: {
+    weight: 'major', category: 'conflict',
+    description: 'Served in or was directly touched by the first Chechen war 1994-96.',
+    intent: 'year_texture', notes: 'Set by ru_dep_chechnya_war.',
+  },
+
   chechen_civilian: {
     weight: 'major', category: 'conflict',
     description: 'Was a Chechen civilian during the wars — the specific experience of Grozny under bombardment.',
