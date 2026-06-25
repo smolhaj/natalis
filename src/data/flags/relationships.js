@@ -630,6 +630,30 @@ export const RELATIONSHIP_FLAGS = {
     notes: 'Set by events_siblings.js and events_late_life.js. Checked by ft23_sibling_reconciled_settled.',
   },
 
+  sib_the_stayer: {
+    weight: 'minor',
+    category: 'relationships',
+    description: 'The sibling who stayed while others emigrated — accumulated the family obligations, the logistics, the proximity to aging parents',
+    intent: 'year_texture',
+    notes: 'Set by ft56_sib_the_stayer.',
+  },
+
+  sib_inheritance_conflict: {
+    weight: 'minor',
+    category: 'relationships',
+    description: 'Navigated an inheritance dispute with a sibling after a parent\'s death — revealed assumptions about fairness and sacrifice',
+    intent: 'year_texture',
+    notes: 'Set by ft56_sib_inheritance.',
+  },
+
+  sib_last_sibling: {
+    weight: 'moderate',
+    category: 'relationships',
+    description: 'The last surviving sibling — sole remaining witness to the early household, the unshared past',
+    intent: 'year_texture',
+    notes: 'Set by ft56_sib_last_one.',
+  },
+
   found_community: {
     weight: 'major',
     category: 'relationships',

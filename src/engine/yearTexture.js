@@ -4263,6 +4263,27 @@ function buildYearTexture(state) {
       ? 'You are the last one who remembers certain things. That is a weight you were not warned about.'
       : 'The sibling-shaped space in your life has a specific contour. You have learned its shape.',
   ])
+  if (F.has('sib_last_sibling') && Math.random() < 0.28) return pick([
+    'You are the last one. The household as it was — the parents as they were before they were old, the rooms before they were other people\'s rooms — exists now only in you.',
+    'A witnessed past is different from an unwitnessed one. Your sibling was the other witness. You are the last remaining witness to the early life.',
+    phase === 'late_life'
+      ? 'When you are gone, the particular memory of the family will be gone with you. You had not thought about that until recently. You think about it now.'
+      : 'There is no one left to say: do you remember when. The remembering is a solitary act now.',
+  ])
+  if (F.has('sib_the_stayer') && Math.random() < 0.2) return pick([
+    'You stayed. Over the years this accumulated into something — the one who knows where the documents are, who handles the calls, who goes to the funerals. Not a title. A function.',
+    'The sibling who left had the adventure. You had the proximity. Both things are true; neither cancels the other.',
+    phase === 'late_life'
+      ? 'Staying was not the choice it was when you made it. It became the fact of your life, the place you were from and never left, which shaped everything else.'
+      : 'The calls come to you first. That is the summary of what staying meant in practice.',
+  ])
+  if (F.has('sib_inheritance_conflict') && Math.random() < 0.17) return pick([
+    'The inheritance conversation revealed things about you and your sibling that had been present the whole time. The money was not mainly about money.',
+    'What was at stake was not the house. It was the question of who sacrificed what and for whom, and whose accounting was correct.',
+    phase === 'late_life'
+      ? 'The dispute is in the past now. How the relationship survived it — or didn\'t — is something you can see whole from here.'
+      : 'What a parent leaves behind always asks questions about the living. The questions are rarely about the money.',
+  ])
   if (F.has('multiple_miscarriage') && Math.random() < 0.35) return pick([
     phase === 'young_adult'
       ? 'The hope came more than once. The specific quality of hoping again, knowing what came before, is what you have not been able to explain to anyone who wasn\'t there.'
@@ -10493,6 +10514,49 @@ function buildYearTexture(state) {
     'Libya has the largest oil reserves in Africa. One man decided how that was distributed. The distribution included you, and the Mukhabarat, simultaneously.',
     'The welfare state was real — the free housing, the free university, the subsidised everything. The surveillance that came with it was also real. You built your life inside both.',
   ])
+  if (F.has('lby_dep_berber_generation') && Math.random() < 0.18) return pick([
+    'Tamazight continued at home, in the household, in the private register. In public it did not exist. You learned early which parts of yourself were permitted where.',
+    'The Amazigh language and the Amazigh history were not in the curriculum. What was in the curriculum was a different version of this place and this people.',
+    phase === 'late_life'
+      ? 'After 2011 the Tamazight flags appeared in public for the first time in your life. What that looked like: you were not prepared for the feeling of it.'
+      : 'The Nafusa Mountains hold a culture that the coastal government has consistently tried to erase and consistently failed to erase. You are part of what didn\'t erase.',
+  ])
+  if (F.has('lby_dep_green_book_generation') && Math.random() < 0.16) return pick([
+    'The Green Book was in the curriculum the way arithmetic was in the curriculum. Correct answers were required. Private assessments were not the point.',
+    'Third Universal Theory: the direct democracy of basic popular congresses. What the theory looked like in practice is what you grew up inside.',
+    'You can still produce the vocabulary — Jamahiriya, the Third Universal Theory, the basic popular congress. It sits in the part of the brain where memorised things sit, available without being believed.',
+  ])
+  if (F.has('lby_dep_1986_generation') && Math.random() < 0.2) return pick([
+    'April 15, 1986. Tripoli at 2am. You know what American bombs sound like from the inside of their target country.',
+    'The F-111s came from England because France refused overflight. The French refusal saved time over the Atlantic and changed nothing about the bombs falling.',
+    phase === 'late_life'
+      ? 'You lived through the 1986 bombing and then the 2011 revolution and then the fragmentation. The country has been bombed from outside and inside in your lifetime.'
+      : 'Reagan called it self-defence. Sixty-three Libyans died. The infant daughter of Gaddafi died. The logic of who counts as collateral has never been symmetric.',
+  ])
+  if (F.has('lby_dep_student_surveilled') && Math.random() < 0.17) return pick([
+    'The Libyan People\'s Bureau monitored students abroad. You adjusted what you said and to whom. The adjustment became a habit that you carried home.',
+    'The careful version of yourself abroad was not entirely the same person who left Tripoli. The return required another adjustment. You have been adjusting since.',
+    'The revolutionary committee chapter at the university abroad: you knew which students were reporting and which were not. You were careful around the ones you were not sure about.',
+  ])
+  if (F.has('lby_dep_benghazi_identity') && Math.random() < 0.17) return pick([
+    'Benghazi and Tripoli: the same country and two different orientations toward it. The eastern city has its own sense of itself that the capital does not fully include.',
+    'The 2011 revolution started in Benghazi. That is where it was possible to start — the particular resentment of a city that had been governed from somewhere else for decades.',
+    phase === 'late_life'
+      ? 'Benghazi before the revolution and Benghazi after it are different cities in the same location. You knew both versions. The comparison is complicated.'
+      : 'The east-west divide runs through Libyan politics as the geography runs through the country. You learned to read which version of Libya you were in.',
+  ])
+  if (F.has('lby_dep_migration_witness') && Math.random() < 0.18) return pick([
+    'Libya became the main transit country for sub-Saharan Africans trying to reach Europe. The Mediterranean crossing from Libyan shores. You live in the country they are trying to leave through.',
+    'The CNN footage from the slave market near Sabha: the country being described in that footage is the country you are from. That requires a specific kind of sitting with.',
+    phase === 'late_life'
+      ? 'The Libya that became a migration hub after 2011 is not the country you were born into. You watch what your country became through international reports that describe it from outside.'
+      : 'The detention centres on the outskirts of Tripoli: you know they exist. The knowledge has different weights depending on how close to them you live.',
+  ])
+  if (F.has('lby_dep_fezzan_generation') && Math.random() < 0.16) return pick([
+    'The Fezzan: the deep south, the oasis towns, the Sahara in the full sense. The country of the coast is a distant authority. The desert has its own logic.',
+    'Sabha, Murzuk, Ghat: the Fezzan towns that exist on the ancient trans-Saharan routes. The routes predate the country by centuries and will outlast whatever follows it.',
+    'Growing up in the Fezzan is growing up in a Libya that the Mediterranean coast considers an interior — different light, cold nights, the date palms, the Tuareg crossings.',
+  ])
 
   // ─── JORDAN TEXTURE ──────────────────────────────────────────────────────────
   if (F.has('jordanian_palestinian_identity') && Math.random() < 0.22) return pick([
@@ -10714,6 +10778,67 @@ function buildYearTexture(state) {
       ? 'Khartoum is a different city now than the city you left in 2023. The one in your memory and the one that exists share a name.'
       : 'Four million people left Khartoum. You were one of them, or you were one of the ones who stayed in the houses and waited for it to pass.',
     'The 2023 war is what the 2021 coup was pointed at. The transition\'s real arc was always going to end here — or somewhere like here.',
+  ])
+
+  // ─── SUDAN DEPTH TEXTURE ─────────────────────────────────────────────────────
+  if (F.has('sdn_dep_nile_khartoum') && Math.random() < 0.18) return pick([
+    'The Blue Nile and the White Nile run side by side at the confluence — you can see the line where the two waters meet before they stop meeting. Every Khartoum child knows this.',
+    'The two Niles: one from Ethiopia, one from Central Africa. The city built where they converge. That geography is the fact everything else about Khartoum is arranged around.',
+    phase === 'late_life'
+      ? 'You have watched the confluence from the bridges many times. The line between the two rivers is still visible. Some things in Khartoum have not changed.'
+      : 'Khartoum is built at the meeting point of two waters coming from opposite ends of Africa. The geography is more cosmopolitan than the politics.',
+  ])
+  if (F.has('sdn_dep_haboob_child') && Math.random() < 0.17) return pick([
+    'The haboob arrives brown and then orange. You have minutes. After it passes, dust on everything — food, water, lungs. The sky goes sharp and clean. You know this cycle without thinking about it.',
+    'Reading the sky for haboob is the skill Khartoum gives its children. Other children in other places learn to read rain. You learned to read dust.',
+    'The haboob season is also the heat season. The combination is a specific Khartoum experience. You carry the knowledge of it the way you carry your address.',
+  ])
+  if (F.has('sdn_dep_ghost_house_era') && Math.random() < 0.2) return pick([
+    'Ghost houses: unofficial detention centres with no official address. What happens inside is not documented officially. People come back changed or do not come back. You know this without anyone having explained it.',
+    'You modified your behaviour in ways you did not acknowledge as modification. What you did not say at work. Who you did not call. The adjustments are invisible until you name them.',
+    phase === 'late_life'
+      ? 'After 2019 the ghost houses began to be officially investigated. The names were read out. That accounting is still incomplete. What happened there is still being named.'
+      : 'The NISS ran the ghost house system the way a city runs drainage — it was infrastructure. You lived in the city the infrastructure ran through.',
+  ])
+  if (F.has('sdn_dep_fur_highlands') && Math.random() < 0.18) return pick([
+    'Jebel Marra: the volcanic massif where the millet grows at altitude that it cannot grow on the plain. The water sources are different. The seasonal market calendar is different. You know this geography from the inside.',
+    'The Fur Sultanate is in the history books and also alive in the village structure — the genealogies, the elders\' authority. History that functions as the present without announcing itself.',
+    phase === 'late_life'
+      ? 'The Jebel Marra you grew up in and the Jebel Marra that exists after 2003 are not the same place. The geography is the same. The people in it are not.'
+      : 'Khartoum was a distant fact. The centre of the country, growing up in Jebel Marra, was somewhere other than Khartoum.',
+  ])
+  if (F.has('sdn_dep_masalit_generation') && Math.random() < 0.17) return pick([
+    'The Masalit calendar: rain arrives in July, fails in September, and your father knows which years it came and which it did not, going back before his grandfather. That knowledge is the agricultural knowledge of western Sudan.',
+    'The trans-Saharan routes passed through the area near Geneina. People came through with camels and news from Chad. The village was also a point on a longer trade line. You knew this as a child without the vocabulary for it.',
+    'The Masalit sultanate\'s formal structure was dismantled. The informal structure — the authority, the memory — remained. You grew up inside it.',
+  ])
+  if (F.has('sdn_dep_sittat_al_shay') && Math.random() < 0.18) return pick([
+    'The tea ladies: charcoal burner, kettle, plastic table, glasses. The attaya poured in a specific rhythm that is also ceremony. On every Khartoum street corner. Part of the city the way the Nile is part of the city.',
+    'During the 2019 sit-in the tea ladies ran the camp — cooked, supplied, organised. When the RSF came on June 3 some died at their stations. The tea was never separate from the politics.',
+    phase === 'late_life'
+      ? 'You have drunk tea from street stalls for most of your adult life. The women who poured it funded a revolution. That is a sentence that required living in Sudan to understand as ordinary fact.'
+      : 'The sittaat al-shay paid informal daily taxes to the police and fed millions during the sit-in. The informal economy and the political economy of Khartoum: the same thing.',
+  ])
+  if (F.has('sdn_dep_arab_african_identity') && Math.random() < 0.18) return pick([
+    'In Cairo you are African. In Lagos you are Arab. In Khartoum you are whatever the politics of the moment requires. The category shifts with the audience.',
+    'The Arabisation policy made the census categories a political act. Your identity has been a political question your whole life without being any less personal for it.',
+    phase === 'late_life'
+      ? 'The word Sudanese contains a conflict that the country has never resolved by simply using the word. You have used it your whole life. The conflict is still there.'
+      : 'Sudan sits at the border between the Arab world and sub-Saharan Africa. That border runs through the identity question. You navigate it in both directions daily.',
+  ])
+  if (F.has('sdn_dep_nuba_generation') && Math.random() < 0.2) return pick([
+    'The international press did not cover it. The word genocide was not applied. The people who lived through it lived through it without that coverage.',
+    'The Antonov\'s engine at a specific distance means move. This is knowledge acquired under the bombing. You carry it as a reflex that no longer has a practical application.',
+    phase === 'late_life'
+      ? 'The Nuba Mountains bombing happened between 1992 and 2002 and is not well known outside Sudan. You spent years noting who knew about it and who did not.'
+      : 'South Kordofan is in the news intermittently. When it is, the context provided is usually insufficient. You provide the context internally, without being asked.',
+  ])
+  if (F.has('sdn_dep_transition_generation') && Math.random() < 0.2) return pick([
+    'Twenty-six months. Civilian prime minister, women in cabinet, ghost houses being investigated. Then October 25, 2021. The sequence is the complete shape of it.',
+    'The transition was real and the coup ended it and both of those things are true simultaneously. The experience of both requires holding them at the same time.',
+    phase === 'late_life'
+      ? 'You lived through Bashir and the revolution and the transition and the coup after the transition. The arc from 2018 to 2021 is a completed sentence you can now read whole.'
+      : 'The 26 months between Bashir\'s fall and the 2021 coup is the reference point for what Sudan almost was. You use it as a benchmark without deciding what it means.',
   ])
 
   // ─── ZIMBABWE DIASPORA TEXTURE ────────────────────────────────────────────────
