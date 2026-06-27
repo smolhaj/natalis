@@ -10068,6 +10068,24 @@ function buildYearTexture(state) {
     'The war ended in 1975. The country that ended it exists and is called Vietnam. The world that was organized around the war — the alliances, the proxies, the domino theory — recalibrated without ever fully accounting for what the war had been.',
     'You are from the country that the war was about and that the war happened in. The war has a different shape from here than from the countries that were in it by choice rather than by geography.',
   ])
+  if (F.has('vn_dep_reeducation_survivor') && Math.random() < 0.22) return pick([
+    'The camp was for correction. The correction required years and hard labour and political study sessions and the documentation of everything you had been on the wrong side of. You came out. The country was reforming when you came out. The history you carried was not part of the reform.',
+    phase === 'late_life'
+      ? 'The camp was before. Everything since has been after. The before and after are not equal weights — the before occupies more of your memory than its years should warrant, because things that remove ordinary life from you take more space than the ordinary life they remove.'
+      : 'You learned in the camp to say what was required and hold what was yours in a different place. The skill of holding it separately is still in you. It comes forward in certain rooms and retreats in others.',
+  ])
+  if (F.has('vn_dep_con_lai') && Math.random() < 0.2) return pick([
+    'Con lai: the face that belongs to two countries and fits fully in neither. The American side left on the last flights. The Vietnamese side stayed. The face is what remained and the face is read differently in different decades.',
+    phase === 'late_life'
+      ? 'The Amerasian Homecoming Act arrived and some of you went to America and found it was not a homecoming. America treated you as Vietnamese. Vietnam had treated you as American. The middle is where you have always lived.'
+      : 'You carry the evidence of a history that the country would rather not look at directly. The evidence is your face. You have carried it in all the rooms your life has required.',
+  ])
+  if (F.has('vn_dep_doi_moi_generation') && Math.random() < 0.22) return pick([
+    'Doi Moi opened the small gaps — the private business, the foreign investment, the price not set by the state — and your generation built lives in those gaps. The party still led. The gaps were real anyway.',
+    phase === 'late_life'
+      ? 'GDP per capita in 1986 was $230. By your old age it is past $4,000. You watched the entire trajectory from inside it. The ideology required updating at every stage to account for what was happening in its name.'
+      : 'The cafe your uncle opened. The Honda your cousin saved for. The foreign company that set up in the industrial zone and hired fifty people from your street. Doi Moi arrived in your life as these specific things before it arrived as a word.',
+  ])
   if (F.has('vn_factory_generation') && Math.random() < 0.22) return pick([
     'Vietnam became the factory of the world\'s smartphones. Samsung built its largest plant in Thái Nguyên. Apple moved production to Bình Dương. Your generation is the one that assembled it.',
     phase === 'late_life'

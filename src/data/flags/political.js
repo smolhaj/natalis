@@ -3465,6 +3465,30 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by world event american_war_in_vietnam. Covers all Vietnamese regardless of side.',
   },
 
+  vn_dep_reeducation_survivor: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Survived re-education camp after 1975 — the ideology sessions, the hard labour, the years of correction for having served on the losing side or for class background.',
+    intent: 'year_texture',
+    notes: 'Set by vn_dep_reeducation_aftermath (both choices).',
+  },
+
+  vn_dep_con_lai: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Amerasian child (con lai) — mixed-race child of an American soldier, navigating the postwar decade in a country where the father\'s side lost and the face is the record.',
+    intent: 'year_texture',
+    notes: 'Set by vn_dep_con_lai (both choices).',
+  },
+
+  vn_dep_doi_moi_generation: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Came of age during Doi Moi — the economic renovation opened new private space inside one-party constraints, and this generation learned to move inside both.',
+    intent: 'year_texture',
+    notes: 'Set by vn_dep_doi_moi (both choices). Late echo in vn_dep_doi_moi_reckoning.',
+  },
+
   vn_sino_tension_generation: {
     weight: 'moderate',
     category: 'political',
@@ -4023,6 +4047,46 @@ export const POLITICAL_FLAGS = {
     description: 'Lived through the 2001 US invasion and the "Kabul bubble" — girls\' schools reopening, aid economy, reconstruction hope',
     intent: 'year_texture',
     notes: 'Set by afg_us_invasion_2001.',
+  },
+
+  afg_dep_refugee_generation: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Grew up in Pakistani refugee camps in the 1980s–90s — the tent school, the camp bazaar, Afghanistan known only through parents\' stories. The "going home" that was always deferred.',
+    intent: 'year_texture',
+    notes: 'Set by afg_dep_refugee_camp_peshawar, afg_dep_camp_school.',
+  },
+
+  afg_dep_hazara_generation: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Hazara Afghan — the recognisable face and the history it carries: Abdur Rahman\'s 1890s massacres, Taliban 1998 killings, Bamiyan Buddhas. The checkpoint calculus by who governs.',
+    intent: 'year_texture',
+    notes: 'Set by afg_dep_hazara_faces.',
+  },
+
+  afg_dep_bonn_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Built something during the 2001–2021 Bonn decade — a career, an education, a business. The years when things were possible that had not been possible. The architecture that did not hold.',
+    intent: 'year_texture',
+    notes: 'Set by afg_dep_bonn_decade (both choices), afg_dep_educated_woman.',
+  },
+
+  afg_dep_evacuation: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Left Afghanistan during the August 2021 Taliban return — Kabul airport chaos, flight out. Arrived somewhere else with twenty years of the Bonn decade behind them and resettlement ahead.',
+    intent: 'year_texture',
+    notes: 'Set by afg_dep_2021_airport (leave choice).',
+  },
+
+  afg_dep_stayed_2021: {
+    weight: 'major',
+    category: 'resilience',
+    description: 'Stayed in Afghanistan after August 2021 — either could not leave or would not. Living inside the new configuration, calculating what is possible.',
+    intent: 'year_texture',
+    notes: 'Set by afg_dep_2021_airport (stay choice).',
   },
 
   yemeni_saleh_generation: {
