@@ -686,6 +686,30 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by ken_post_election_2007 (crossed branch). No follow-through required — the experience is self-contained.',
   },
 
+  ken_dep_matatu_generation: {
+    weight: 'moderate',
+    category: 'urban',
+    description: 'Nairobi matatu commuter — knows the routes, the touts, the shortcut logic, the graffiti that marks each route\'s personality. The daily calculus of getting across the city.',
+    intent: 'year_texture',
+    notes: 'Set by ken_dep_matatu.',
+  },
+
+  ken_dep_westgate_generation: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'Nairobi resident during the Westgate mall attack, September 2013 — the Al-Shabaab attack on a Saturday shopping crowd, 67 killed over four days. The city was different after.',
+    intent: 'year_texture',
+    notes: 'Set by ken_dep_westgate.',
+  },
+
+  ken_dep_runner_generation: {
+    weight: 'moderate',
+    category: 'sport',
+    description: 'Grew up in the Rift Valley running culture — altitude, cattle-herding fitness, the school races, the neighbours who came back with Olympic medals. Running as a possible path.',
+    intent: 'year_texture',
+    notes: 'Set by ken_dep_runner (both choices).',
+  },
+
   maasai_land_displaced: {
     weight: 'major',
     category: 'displacement',
@@ -828,6 +852,60 @@ export const GEOGRAPHIC_FLAGS = {
     description: 'Part of a Niger Delta community living with oil extraction — the gas flares, the spills, the contaminated creeks, the decades-long remediation deficit.',
     intent: 'both',
     notes: 'Set by nga_niger_delta for Ijaw and Delta-region characters.',
+  },
+
+  nga_dep_nepa_generation: {
+    weight: 'moderate', category: 'infrastructure',
+    description: 'Grew up with NEPA/PHCN power cuts as a fact of life — candles, kerosene lamps, the generator economy, "there is light" as an announcement.',
+    intent: 'year_texture', notes: 'Set by nga_dep_nepa.',
+  },
+
+  nga_dep_exam_passed: {
+    weight: 'minor', category: 'education',
+    description: 'Passed WAEC/JAMB on the first attempt — the examination that gates university admission in Nigeria.',
+    intent: 'none', notes: 'Set by nga_dep_waec_jamb (good result choice).',
+  },
+
+  nga_dep_lagos_generation: {
+    weight: 'moderate', category: 'urban',
+    description: 'Formed by Lagos — the go-slow, the danfo, the perpetual negotiation of a megacity with more people than its infrastructure was built for.',
+    intent: 'year_texture', notes: 'Set by nga_dep_go_slow.',
+  },
+
+  nga_dep_nollywood_generation: {
+    weight: 'minor', category: 'cultural',
+    description: 'Grew up with Nollywood VCDs — the industry that became the world\'s third-largest film output built without state support.',
+    intent: 'year_texture', notes: 'Set by nga_dep_nollywood.',
+  },
+
+  nga_dep_endsars_generation: {
+    weight: 'major', category: 'conflict',
+    description: 'Was shaped by the #EndSARS protests of October 2020 — the Lekki toll gate shooting and what it revealed about the Nigerian state.',
+    intent: 'year_texture', notes: 'Set by nga_dep_endsars.',
+  },
+
+  nga_dep_japa_generation: {
+    weight: 'major', category: 'immigration',
+    description: 'Part of the Japa wave — the mass emigration of educated young Nigerians in the 2020s.',
+    intent: 'year_texture', notes: 'Set by nga_dep_japa (leave choice).',
+  },
+
+  nga_diaspora: {
+    weight: 'major', category: 'immigration',
+    description: 'Nigerian living abroad — carries Nigeria in remittances, in group chats, in the specific guilt and pride of the diaspora.',
+    intent: 'year_texture', notes: 'Set by nga_dep_japa (leave choice) and tech emigration events.',
+  },
+
+  nga_dep_stayed_generation: {
+    weight: 'moderate', category: 'resilience',
+    description: 'Chose to stay in Nigeria when the Japa wave offered an exit — the generation that held on.',
+    intent: 'year_texture', notes: 'Set by nga_dep_japa (stay choice).',
+  },
+
+  nga_dep_pentecostal_generation: {
+    weight: 'moderate', category: 'religious',
+    description: 'Formed by Nigerian Pentecostal church culture — megachurch as infrastructure, the prayer vocabulary, the testimony.',
+    intent: 'year_texture', notes: 'Set by nga_dep_pentecostal.',
   },
 
   bng_dhaka_generation: {
@@ -1455,6 +1533,54 @@ export const GEOGRAPHIC_FLAGS = {
     weight: 'major', category: 'conflict',
     description: 'Grew up during the Chechen wars — in Russia or Chechnya, the war was the permanent backdrop.',
     intent: 'event', notes: 'Set by Chechen war world events. Follow-through: ft44_chechen_late.',
+  },
+
+  ru_dep_terror_generation: {
+    weight: 'major', category: 'conflict',
+    description: 'Grew up during the Great Terror 1937-38 — night knocks, arrests, the silence afterward.',
+    intent: 'year_texture', notes: 'Set by ru_dep_great_terror. Followed up by ru_dep_family_arrest.',
+  },
+
+  ru_dep_chsir: {
+    weight: 'major', category: 'conflict',
+    description: 'Member of the family of an arrested person — the CHSIR category that followed a child throughout Soviet life.',
+    intent: 'year_texture', notes: 'Set by ru_dep_family_arrest. The silence about the father in official documents.',
+  },
+
+  ru_dep_kommunalka_generation: {
+    weight: 'moderate', category: 'social',
+    description: 'Grew up in a kommunalka — the communal apartment life of Soviet urban Russia.',
+    intent: 'year_texture', notes: 'Set by ru_dep_kommunalka.',
+  },
+
+  ru_dep_thaw_believer: {
+    weight: 'moderate', category: 'political',
+    description: 'Believed in the possibility of reform after the secret speech — the Khrushchev thaw as genuine opening.',
+    intent: 'year_texture', notes: 'Set by ru_dep_secret_speech (reform choice).',
+  },
+
+  ru_dep_thaw_sceptic: {
+    weight: 'moderate', category: 'political',
+    description: 'The secret speech created questions that could not be answered — the thaw as the beginning of private disbelief.',
+    intent: 'year_texture', notes: 'Set by ru_dep_secret_speech (sceptic choice).',
+  },
+
+  ru_dep_blat_generation: {
+    weight: 'moderate', category: 'economic',
+    description: 'Came of age under the blat system — the Soviet economy of favours and reciprocal connections.',
+    intent: 'year_texture', notes: 'Set by ru_dep_blat_system.',
+  },
+
+  ru_dep_1990s_generation: {
+    weight: 'moderate', category: 'economic',
+    description: 'Came of age in the 1990s Russian chaos — kiosks, voucher privatization, the end of savings.',
+    intent: 'year_texture', notes: 'Set by ru_dep_1990s_kiosks.',
+  },
+
+  ru_dep_chechnya_generation: {
+    weight: 'major', category: 'conflict',
+    description: 'Served in or was directly touched by the first Chechen war 1994-96.',
+    intent: 'year_texture', notes: 'Set by ru_dep_chechnya_war.',
   },
 
   chechen_civilian: {

@@ -3097,6 +3097,14 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by kr_park_development_bargain (both choices). Annual texture of the authoritarian growth era.',
   },
 
+  kr_dep_hell_joseon: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Adopted the "hell Joseon" (헬조선) framing — the 2013+ naming of South Korea\'s rigid hierarchy and closed mobility for young people despite world-class education and infrastructure. A generational political education.',
+    intent: 'year_texture',
+    notes: 'Set by kr_dep_hell_joseon event.',
+  },
+
   ivorian_miracle_generation: {
     weight: 'moderate',
     category: 'historical',
