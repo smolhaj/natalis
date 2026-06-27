@@ -592,6 +592,30 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by ven_late_reckoning.',
   },
 
+  vzla_dep_maduro_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Venezuelan who came of age or lived through the Maduro crisis years (2013+) — the CLAP box, the apagones, the colectivos, the hyperinflation arithmetic, the guarimbas.',
+    intent: 'year_texture',
+    notes: 'Set by multiple vzla_dep events. Year texture for Venezuelans in the crisis era.',
+  },
+
+  vzla_dep_crisis_diaspora: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Venezuelan who left during the crisis — one of the seven million who departed to Colombia, Peru, Chile, Spain, or elsewhere, by bus or foot or plane.',
+    intent: 'year_texture',
+    notes: 'Set by vzla_dep_departure (leave choice), vzla_dep_brain_drain (both), vzla_dep_colectivos (leave choice).',
+  },
+
+  vzla_dep_bolivarian_believer: {
+    weight: 'major',
+    category: 'political',
+    description: 'Believed in the Bolivarian revolution — the missions, the oil redistribution, the sense that the country was finally for its people — and watched what happened to the belief over the following decade.',
+    intent: 'year_texture',
+    notes: 'Set by vzla_dep_misiones (first choice). Reckoning in vzla_dep_believer_reckoning.',
+  },
+
   la_violencia_generation: {
     weight: 'major',
     category: 'historical',

@@ -11594,6 +11594,24 @@ function buildYearTexture(state) {
       ? 'You are the testimony. The memorial will have statistics. You have the specific supermarket, the specific route through the city, the specific faces of the people who are gone. The archive lives in this generation.'
       : 'Venezuela\'s story is not finished. You are in the middle of it. The reckoning — what the Bolivarian project actually was, what it actually built, what it actually cost — is still being written.',
   ])
+  if (F.has('vzla_dep_maduro_generation') && Math.random() < 0.22) return pick([
+    'The CLAP box arrived once a month, irregularly, with rice and pasta and cornmeal. The box was food and also a list of households and also a schedule that correlated with elections. You ate from the box. You understood the box.',
+    phase === 'late_life'
+      ? 'The apagones, the CLAP box, the colectivos, the hyperinflation — you lived all of it inside the country while seven million left. The people who left remember Venezuela from before they left. You remember it from inside the crisis, which is a different country.'
+      : 'The salary on Monday was not the salary on Friday. Not in purchasing power. The price of a kilo of harina PAN recalculated against last week and against the same week the year before and the comparison was not coherent. The unit had changed its meaning.',
+  ])
+  if (F.has('vzla_dep_crisis_diaspora') && Math.random() < 0.22) return pick([
+    'Seven million Venezuelans left. You are one of them. The bus to Cúcuta, the border, the country that received you. The receiving country did not always receive you well and you built something there anyway.',
+    phase === 'late_life'
+      ? 'You left with your degree and your skills and your name and rebuilt in a language that is your language in a country that was not your country. The country you left is in your phone every day — the WhatsApp group, the cousin who stayed, the price of things that changes faster than you can track.'
+      : 'The revalidation appointment is scheduled or done. The work you do now is the work or it is the other work while you wait for the work. The arithmetic of the exchange rate between here and there runs in the background of every calculation you make.',
+  ])
+  if (F.has('vzla_dep_bolivarian_believer') && Math.random() < 0.2) return pick([
+    'The mission in your barrio was real. The doctor was real. The neighbour who learned to read at fifty-three was real. What happened to all of it is also real. You hold the two facts in the same body and they do not resolve.',
+    phase === 'late_life'
+      ? 'You believed in the revolution when it was doing things worth believing in. The collapse of what it did things with — the oil price, the institutions, the people who knew how — does not retroactively make the mission a lie. The mission was real. The management of what came after the mission was something else.'
+      : 'The clinic still exists. The Cuban doctor left in 2018 when the government stopped paying Cuba. The medicines are not always there. The barrio has a colectivo where it used to have the mission committee. You are accounting for the difference.',
+  ])
   if (F.has('special_period_generation') && Math.random() < 0.22) return pick([
     'The Special Period: no Soviet oil, no Soviet subsidies, the blackouts, the food rationing that was already rationing rationed further. You learned what the minimum was.',
     'The bicycle boom of the 1990s was not optional. The government imported a million bicycles from China because there was no fuel. The city became a cycling city by necessity. You were in it.',
