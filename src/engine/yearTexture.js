@@ -8975,6 +8975,37 @@ function buildYearTexture(state) {
       : 'The historical rehabilitation took thirty years and a social media campaign. The result was thirty-one million votes. You are still deciding what to do with that number.',
   ])
 
+  if (F.has('ph_dep_ofw_family') && Math.random() < 0.22) return pick([
+    'The balikbayan box came by ship because shipping was cheaper. Inside: Spam, Oreos, clothes one size too large because your parent estimated you from nine months ago. You knew American brands from the box before you knew the country.',
+    phase === 'late_life'
+      ? 'The OFW life is measured in contracts. Your parent came home between nine-month blocks. You grew in between. The gaps are specific and the specific years are known.'
+      : 'Bagong Bayani — New Hero — the government called them. Twenty percent of GDP. The terminal at NAIA where the whole family stands on one side of the glass.',
+  ])
+  if (F.has('ph_dep_moro_identity') && Math.random() < 0.22) return pick([
+    'The checkpoint soldier reads your name and your name explains everything to him about you. You have learned to carry that explanation differently in different rooms.',
+    phase === 'late_life'
+      ? 'Fifty years of conflict and then the Bangsamoro Organic Law. The peace agreement means different things depending on which decade you spent in it. You have specific decades. You have specific things it means.'
+      : 'Moro was a Spanish slur that became a word people claimed. The MNLF, the MILF, the AFP operations with names. You grew up inside all of this and built a daily life inside it anyway.',
+  ])
+  if (F.has('ph_dep_bpo_generation') && Math.random() < 0.2) return pick([
+    'The night shift because the Americans were awake. You changed your sleep cycle. You adopted the neutral accent — which is the American accent with the edges removed. Between calls the cafeteria held everyone who had done what you had done.',
+    phase === 'late_life'
+      ? 'You worked years of night shifts in air-conditioned offices at the temperature Americans set their thermostats. The salary was better than a teacher\'s. The sleep cycle never fully recovered.'
+      : 'Your name was James or Karen for the call duration. The real name was on your ID badge, which faced inward. The accent was a skill, not an erasure. You told yourself this and sometimes believed it.',
+  ])
+  if (F.has('ph_dep_seaman_family') && Math.random() < 0.2) return pick([
+    'Nine months at sea, then home. The contract cycle. The children grew between voyages and you compared them to the photographs and they had changed in ways photographs do not prepare you for.',
+    phase === 'late_life'
+      ? 'A quarter of the world\'s seafarers are Filipino. You know why: the MARINA certification, the agencies, the Greeks and Norwegians who needed English-speaking crew. You were part of a system larger than you knew when you started.'
+      : 'The flag on the ship was Panama or Liberia — a flag of convenience. The crew was Filipino. The money went home through a money-changing service in whatever port city you were in that month.',
+  ])
+  if (F.has('ph_dep_ondoy_survivor') && Math.random() < 0.2) return pick([
+    'September 26, 2009: a month of rain in six hours. The Marikina overflowed. You know now exactly what elevation your house sits at. You know which streets were passable by which hour. The mud smell in the walls took weeks.',
+    phase === 'late_life'
+      ? 'Ondoy is before-and-after. The Metro Manila you knew before it and the Metro Manila you knew after it share streets and buildings but not the same relationship to where the water goes when it comes.'
+      : 'The rescue was private bangkas because the official rescue had a different timeline. The routes went through Twitter because the official channels could not process the scale. This was the first time social media was the emergency system.',
+  ])
+
   // ─── BRAZIL TEXTURE ──────────────────────────────────────────────────────────
   if (F.has('plano_real_generation') && Math.random() < 0.22) return pick([
     'The price tags used to change between when you picked something up and when you got to the checkout. Then the Real arrived in July 1994 and the price of a litre of milk was the same at the checkout as on the shelf. That is what economic stability means when you have lived without it.',
@@ -11341,6 +11372,38 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'You got out in August 2021. That sentence requires understanding what August 2021 was to have its full weight.'
       : 'Afghan in a place that is not Afghanistan. Again. The second time the exile has different weight from the first.',
+  ])
+
+  if (F.has('afg_dep_refugee_generation') && Math.random() < 0.22) return pick([
+    'The camp outside Peshawar or Quetta was where you learned to read, where you had friends, where your parents built something out of nothing and then spent years waiting to rebuild it somewhere else.',
+    phase === 'late_life'
+      ? 'You have now lived longer in the countries that took you in than you ever lived in Afghanistan. The country in your memory is the country from before the leaving, which is not the country that exists now.'
+      : 'Afghanistan from the stories and Afghanistan from the land are different things. The land is real and the stories are also real. The gap between them is where you live.',
+  ])
+  if (F.has('afg_dep_hazara_generation') && Math.random() < 0.22) return pick([
+    'The face that is read differently by different governments. The calculation of what your appearance means at this checkpoint, in this city, under this regime, is part of moving through the country.',
+    'The Hazara diaspora in Iran and Pakistan and the West is large because the conditions that pushed people out have recurred. Each generation has its own version of the push.',
+    phase === 'late_life'
+      ? 'You have watched the governments change and the treatment of Hazara change with the governments. The change is never final. What changes returns. What was taken returns. The land in Bamiyan is still there.'
+      : 'The history that is in your face is not something you chose. The fact that others read it as a category is not something you can resolve. You navigate the category as precisely as you can.',
+  ])
+  if (F.has('afg_dep_bonn_generation') && Math.random() < 0.2) return pick([
+    'The twenty years: the university that opened, the career that became possible, the generation of educated Afghans that existed for a specific window. That window was real while it was open.',
+    phase === 'late_life'
+      ? 'You built something in those years. The building required the conditions. The conditions were removed. What you built is not fully gone — it is somewhere, in reduced form, in different containers.'
+      : 'The Kabul of those years had traffic and women in offices and cell phone towers and a generation who had not grown up under the Taliban and did not know what it was like until they knew.',
+  ])
+  if (F.has('afg_dep_evacuation') && Math.random() < 0.2) return pick([
+    'You got out. That phrase — you got out — contains everything about what it means to have gotten out and everything about what was left.',
+    phase === 'late_life'
+      ? 'The people who got out and the people who did not — you know both groups. The line between them was not always a line of capability or preparation. It was also a line of timing, of contact, of chance.'
+      : 'Afghan in a country that is not Afghanistan, building a version of the thing you had, in a language you are learning, in a city you arrived at without having planned to arrive.',
+  ])
+  if (F.has('afg_dep_stayed_2021') && Math.random() < 0.2) return pick([
+    'You are inside the new arrangement. The new arrangement has its rules and its rhythms and you are learning them the way you learned all the previous arrangements: from the inside, under pressure, without being asked.',
+    phase === 'late_life'
+      ? 'You have lived through enough governments to know that governments end and other governments come. The question is always what survives the change and what does not, and you are learning the answer again.'
+      : 'The women you know who had careers are now in their homes. The school they attended is now closed to them. You see them through windows or at the bazaar in groups, speaking carefully.',
   ])
 
   // ─── ZAMBIA TEXTURE ──────────────────────────────────────────────────────────
