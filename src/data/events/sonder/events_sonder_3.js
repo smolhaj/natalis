@@ -277,7 +277,7 @@ export const EVENTS_SONDER_3 = [
     when: (G) =>
       !G.mem?.s3_callAfter &&
       G.flags.has('emigrated') &&
-      G.parents?.some(p => p.alive),
+      Object.values(G.parents ?? {}).some(p => p.alive),
     text: 'After you hang up, the silence is specific. Not empty — it has the shape of the conversation that just ended, the voice that was just there, the time zone you were talking across. You sit with it for a moment. The person is still alive; the call went well; nothing is wrong. The silence is just the distance, asserting itself after having been briefly annulled.',
     choices: null,
     effect: (p) => { p.m -= 2; p.setMem('s3_callAfter', true) },

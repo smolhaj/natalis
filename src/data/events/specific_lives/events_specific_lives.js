@@ -3342,7 +3342,7 @@ export const SPECIFIC_LIFE_EVENTS = [
   // ══════════════════════════════════════════════════════════════════════════
 
   {
-    id: 'sl_rwanda_gacaca_witness',
+    id: 'sl_rwanda_gacaca_witness_2',
     phase: 'midlife',
     weight: 2,
     when: (G) =>

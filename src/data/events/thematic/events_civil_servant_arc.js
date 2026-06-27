@@ -160,7 +160,7 @@ export const CIVIL_SERVANT_ARC_EVENTS = [
   },
 
   {
-    id: 'cs_late_reckoning',
+    id: 'civil_servant_late_reckoning',
     phase: 'late_life',
     weight: 7,
     when: (G) =>

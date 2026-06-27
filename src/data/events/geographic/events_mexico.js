@@ -313,7 +313,7 @@ export const MEXICO_DEPTH_EVENTS = [
     when: (G) =>
       isMex(G) &&
       G.age >= 35 &&
-      G.parents?.some(p => !p.alive) &&
+      Object.values(G.parents ?? {}).some(p => !p.alive) &&
       !G.mem?.mexAltarMuertos,
     text: `You build the altar the way you were shown: the levels, the photograph, the marigold path from the door so they can find their way back. The food they liked. A glass of water because the journey makes them thirsty. This is not tourism — it is the specific transaction of the living with the dead, which requires the marigolds to be fresh and the photograph to be the right one and the objects arranged in the order that means something to the person they represent. The dead do not stay and they are not gone. The altar is the infrastructure for the specific hours when both things are true.`,
     choices: null,
