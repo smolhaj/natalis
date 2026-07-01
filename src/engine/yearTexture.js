@@ -9350,6 +9350,63 @@ function buildYearTexture(state) {
       : 'The escolas do not emerge fully formed in February. They are made across months in the quadra, in November fittings, in December drumming sessions. What appears in the Sambódromo is the end of something the television cameras only catch the last part of.',
   ])
 
+  // ─── ARGENTINA DEPTH TEXTURE ─────────────────────────────────────────────────
+  if (F.has('arg_peronist_generation') && Math.random() < 0.25) return pick([
+    'The descamisados — the shirtless ones — in Plaza de Mayo on October 17, 1945. Your parents or grandparents were there or they were the reason people were there. The oligarchy used the word horde. The movement used the word descamisado and made it an identity.',
+    'Santa Evita. The embalmed body. The Bonyad-style social welfare. The hospitals. The women\'s vote in 1947. And then the coup in 1955 and the body hidden by the military for sixteen years, afraid even of the corpse.',
+    phase === 'late_life'
+      ? 'You have been a Peronist for your whole life and what Peronism means has been the Kirchners, and Menem, and the original descamisados, and the Triple A, all calling themselves by the same name. The name has been more consistent than what it contains.'
+      : 'The country splits on Perón — not left and right, not rich and poor, though those are part of it. Something older and more specific: whether the movement was for people like you or was the end of the republic as you understood it.',
+  ])
+  if (F.has('arg_plaza_mayo_bombing') && Math.random() < 0.2) return pick([
+    'June 16, 1955. The navy and air force bombed the square in the middle of the day. 308 civilians killed. Perón was the target; the office workers and pedestrians were the result. The coup succeeded in September. The bombing is not what ended the Peronist government — it is what tried and failed.',
+    'The specific thing about bombing your own capital from the air: it cannot be undone. The country went on. The square is the same square. But what was done in it, by the Argentine military on Argentine civilians, sits inside every subsequent use of that square.',
+    phase === 'late_life'
+      ? 'You have stood in the square since 1955 many times, for many reasons. The square is the square of the Mothers, of the cacerolazos, of every political moment the republic has. Underneath all of those is what happened on June 16, which people know about but do not say first.'
+      : 'The bombing happened. The country processed it without processing it. The military that did it governed the country from 1955 forward in various forms until 1983. Some of the officers who ordered it had careers afterward.',
+  ])
+  if (F.has('arg_buenos_aires_culture') && Math.random() < 0.22) return pick([
+    'The analyst\'s office is a specific room in a specific building in Buenos Aires and you know the quality of the silence in it better than you know most silences. Forty thousand analysts in the phone book at peak. The couch here is infrastructure.',
+    'The milonga on a Thursday night. The embrace that is a conversation. The tango that has a grammar you have spent years learning — the walk, the pause, the weight transfer. The dance that lets the city meet itself in the dark and say things it cannot say in the light.',
+    phase === 'late_life'
+      ? 'What decades of analysis gave you: the ability to name something faster than before, the knowledge of origins, the habit of the question. What it did not give you: the absence of difficulty. You did not expect it to. You just hoped a little.'
+      : 'Buenos Aires has a specific relationship with interiority. Not all of Latin America is this. The examined life as a shared assumption, as something you budget for alongside rent and food. The couch is not confession — it is conversation with a very patient interlocutor.',
+  ])
+  if (F.has('arg_amia_generation') && Math.random() < 0.22) return pick([
+    'July 18, 1994. The building comes down at 9:53 a.m. 85 killed. You knew someone inside or you knew someone who did, which in the Jewish Argentine community — 230,000 people — is nearly everyone.',
+    'The case. The case is still open. The prosecutor found dead in his apartment in 2015, hours before testifying to congress. Three decades of impunity, obstruction, and the specific indignity of being the victim of an unsolved crime in the city where you live.',
+    phase === 'late_life'
+      ? 'You have lived in Buenos Aires for thirty or forty years with the case still open. Some institutions maintain memory. Memory does not substitute for accountability. You know the difference between the two from inside the difference.'
+      : 'The Jewish Argentine community has been here since the great immigration waves — the 1880s, the 1890s, the early twentieth century. The community built something in this country. July 18 1994 was directed at the fact of the community\'s existence here. The investigation has not answered why.',
+  ])
+  if (F.has('arg_malvinas_conscript') && Math.random() < 0.25) return pick([
+    'You went south. The equipment was inadequate. The boots let in water. The officers received better rations. The British landed at San Carlos on May 21. The Air Force was brave and the navy stayed in port after the Belgrano. The surrender was June 14. 649 Argentines dead.',
+    'The homecoming: no parade, no ceremony. The defeat was too fresh for the country to look at the veterans directly. Looking at the veterans meant looking at the junta and the junta was in the process of falling because you lost.',
+    phase === 'late_life'
+      ? 'More Argentine veterans have died by suicide since 1982 than died in the war. This number is kept by the veterans because the state does not keep it. You were in the war for 74 days. You have been coming back from those 74 days for the rest of your life.'
+      : 'The islands are in the constitution. The claim is maintained. Political parties invoke it when they need a grievance. You were there, which puts you in a specific relationship to the sentence "Las Malvinas son argentinas" that the people who say it from Buenos Aires do not share.',
+  ])
+  if (F.has('arg_hyperinflation_1989') && Math.random() < 0.22) return pick([
+    'The grocery store price between the morning and the afternoon in 1989. You went to buy bread and the price was different when you reached the counter than when you chose the bread. 3,079 percent that year. The middle class discovering that savings are a form of magic that can be undone.',
+    'The Austral Plan failed. Alfonsin left six months early. Menem arrived and the Convertibility Plan tied the peso to the dollar and solved the inflation by creating the conditions for 2001. You learned to see the arc.',
+    phase === 'late_life'
+      ? 'The inflation is back. The body remembers 1989 before the mind catches up — the quick buy, the dollar holding, the savings in a mattress. The young people around you are learning this for the first time. You learned it before them and the learning is still in you.'
+      : 'The middle class of Argentina considers itself European and considers poverty someone else\'s condition. In 1989 the middle class discovered that savings are a denomination, not a fact, and denominations are a government decision.',
+  ])
+  if (F.has('arg_kirchner_trials_generation') && Math.random() < 0.2) return pick([
+    'The amnesty laws voided. The ESMA officers on trial. The Mothers of Plaza de Mayo watching from the gallery the officers they have been naming since 1977 finally convicted. The sentence is 25 years. The sentence cannot undo it. It is the closest thing the law has to acknowledgement.',
+    'More than a thousand convictions across the trials. The institutions that produced the dictatorship — the military, the church hierarchy, the business class that collaborated — are being disaggregated, case by case, from the crimes that were done under their cover.',
+    phase === 'late_life'
+      ? 'The argument is about whether the memory of the dictatorship should be permanent or whether it should give way to something. You do not have trouble with this argument. The people who argue for giving way were not among the disappeared or their families.'
+      : 'Argentina is doing something that most countries that have had dictatorships have not done: prosecuting the perpetrators, on the soil where the crimes occurred, under the law of the country. It is imperfect. It is also rare.',
+  ])
+  if (F.has('arg_returned_exile') && Math.random() < 0.2) return pick([
+    'The café on the corner is still the café. The street signs are the same street signs. The people you came back to are older. The city has a layer over it: the layer of all the years it continued without you, which you cannot see because you were not here.',
+    'The recognising feels like loss. You expected return to feel like return. What it feels like instead is the street you know and the stranger you have become to it.',
+    phase === 'late_life'
+      ? 'You came back and you stayed and the returning became a life rather than an episode. What you left behind in the place you were exiled to: the people who knew you there, the version of yourself that adapted. You left two places when you came back.'
+      : 'The people who stayed have a different accounting of the years you were away. You have compared the two accountings. Both are accurate. They are different in ways that close only slowly.',
+  ])
   // ─── ARGENTINA 2001 TEXTURE ──────────────────────────────────────────────────
   if (F.has('corralito_survivor') && Math.random() < 0.28) return pick([
     'The bank queue in December 2001 — the one that wrapped around the block before the branch opened — is physical in memory. The passbook number that was yours and then was converted into something worth a third as much.',

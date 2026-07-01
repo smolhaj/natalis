@@ -5238,6 +5238,70 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by bra_january_8_2023.',
   },
 
+  arg_peronist_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived the early Peronist era (1945-55) — the descamisados, Eva Perón\'s social welfare, women\'s suffrage 1947, and the polarised republic between the movement and the oligarchy.',
+    intent: 'both',
+    notes: 'Set by arg_dep_peronism_early. Year texture + follow-throughs: ft78_peronist_late_reckoning, ft78_evita_death.',
+  },
+
+  arg_plaza_mayo_bombing: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Present in Buenos Aires during the June 16 1955 Plaza de Mayo bombing — the Navy and Air Force bombing civilians in the square, killing 308, trying and failing to assassinate Perón.',
+    intent: 'year_texture',
+    notes: 'Set by arg_dep_bombing_1955.',
+  },
+
+  arg_buenos_aires_culture: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Formed by Buenos Aires cultural identity — the psychoanalysis as infrastructure, the milonga as social practice, the porteño relationship with interiority and the examined life.',
+    intent: 'both',
+    notes: 'Set by arg_dep_ba_texture. Year texture + follow-through: ft78_analysis_late.',
+  },
+
+  arg_amia_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the July 18 1994 AMIA bombing — 85 dead, Argentina\'s largest terrorist attack, the Jewish Argentine community\'s rupture, and three decades of impunity and obstruction.',
+    intent: 'both',
+    notes: 'Set by arg_dep_amia_1994. Follow-through: ft78_amia_impunity.',
+  },
+
+  arg_malvinas_conscript: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Served as a conscript in the 1982 Malvinas/Falklands War — sent to the islands at 18-22 under poorly-equipped junta officers, came home without a welcome to a country processing defeat.',
+    intent: 'both',
+    notes: 'Set by arg_dep_malvinas_conscript. Follow-throughs: ft78_malvinas_return, ft78_malvinas_late.',
+  },
+
+  arg_hyperinflation_1989: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through Argentina\'s 1989 hyperinflation (3,079%) — prices changing morning to afternoon, middle-class savings erased, Alfonsin leaving office six months early.',
+    intent: 'both',
+    notes: 'Set by arg_dep_hyperinflation_1989. Follow-through: ft78_inflation_returns.',
+  },
+
+  arg_kirchner_trials_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed the Kirchner-era human rights trials (2003+) — amnesty laws annulled, ESMA officers convicted, the Mothers of Plaza de Mayo living to see some justice after 30 years.',
+    intent: 'both',
+    notes: 'Set by arg_dep_kirchner_trials. Follow-through: ft78_trials_reckoning.',
+  },
+
+  arg_returned_exile: {
+    weight: 'moderate',
+    category: 'personal',
+    description: 'Returned to Argentina after exile (post-2001 or post-junta) — the neighbourhood the same and not the same, the recognising that feels like loss, the city that continued without you.',
+    intent: 'year_texture',
+    notes: 'Set by arg_dep_exile_return.',
+  },
+
   corralito_survivor: {
     weight: 'major',
     category: 'historical',
