@@ -4624,6 +4624,62 @@ function buildYearTexture(state) {
       ? 'February 24, 2022: the contact line became the whole country. What you experienced in 2014 — the displacement, the line, the loss of the place — happened to eight million more people.'
       : 'You rebuilt in the west of Ukraine or in Kyiv or in Lviv. The city you came from is still the city you came from. You have not been back.',
   ])
+  if (F.has('ukr_chernobyl_generation') && Math.random() < 0.3) return pick([
+    'Reactor four. April 26, 1986. The buses came 36 hours later. The iodine tablets arrived at school with no explanation. You learned what classified means when it is applied to weather.',
+    'The thyroid. The doctor who checks it uses careful language — monitoring, precautionary. You do not know if the precaution is warranted or routine. The difference is not always medical.',
+    phase === 'late_life'
+      ? 'You were not in Pripyat. You were close enough to take the tablets. The question of what that means for your body has been the background frequency of your adult life.'
+      : 'The Ferris wheel in Pripyat is still there. It was built for a city that evacuated with three days of luggage. The wheel has been there longer than the city was ever inhabited.',
+  ])
+  if (F.has('ukr_1990s_collapse_generation') && Math.random() < 0.25) return pick([
+    'The karbovanets coupon. Not a real currency — printed on cheap paper, worth less every week. In 1993 inflation ran at 10,000 percent. Your parents\' savings from forty years of work were worth nothing in six months.',
+    'The Sunday market where people sold personal possessions. The man selling his father\'s tools. The woman selling books. Survival had a market rate and the rate changed daily.',
+    phase === 'late_life'
+      ? 'You are in the generation that measures time by what it cost. The 1990s were the price of independence. You paid it in savings erased and careers made unreachable.'
+      : 'The mafia was real. The men with tracksuits and mobile phones were real. The president called it democracy and what was actually happening was something else.',
+  ])
+  if (F.has('ukr_soviet_identity') && Math.random() < 0.2) return pick([
+    'The school was in Russian. The films were in Russian. The songs you know by heart are in Russian. The village your grandmother came from speaks Ukrainian but that is not the language of official use.',
+    'Vasyl Stus died in a Soviet camp in 1985. Lina Kostenko was silenced for twenty years. You know their names. You do not say them at work.',
+    phase === 'late_life'
+      ? 'After 2022 the two languages sorted themselves. Ukrainian in the streets more than before, in the markets, in the shops. The sorting that had been happening for thirty years accelerated all at once.'
+      : 'You are Ukrainian and Soviet and both at once. The state has opinions about who you are that are different from your own.',
+  ])
+  if (F.has('ukr_crimea_2014_inside') && Math.random() < 0.25) return pick([
+    'The "polite people" — вежливые люди — who occupied the parliament building without insignia. The referendum announced in ten days with two options, neither of which was stay in Ukraine.',
+    'Two legal systems. Neither resolves the documents you hold into something coherent. The Ukrainian passport expires. The Russian office is now a Russian local office. You manage in the gap.',
+    phase === 'late_life'
+      ? 'The peninsula is on the other side of a checkpoint. Relatives in Kyiv call less often. The ruble replaced the hryvnia. The phone codes changed. The category you belong to has no clean legal status in international law.'
+      : '96.77 percent. The result announced for the referendum. The Crimean Tatars — deported by Stalin, allowed to return in the 1990s — did not participate. The number was the number.',
+  ])
+  if (F.has('ukr_lviv_galicia_generation') && Math.random() < 0.2) return pick([
+    'Lwów under Poland, Lemberg under Austria-Hungary, Lvov under the USSR, Lviv now. The coffee houses on the cobblestones date from a different country.',
+    'The Greek Catholic church — Uniate, Rome-connected, Ukrainian-language — survived Soviet suppression and re-emerged in 1990. Neither Orthodox nor Roman Catholic. A different history inside the stones.',
+    phase === 'late_life'
+      ? 'After February 24, 2022: Lviv became the city that received the east, that was always more western than Kyiv and found itself at the centre of what Kyiv was fighting for.'
+      : 'This city is different from Kyiv. More different from Kharkiv. The difference is the Austrian century, the Greek Catholic church, the OUN partisans in the hills. Not easy to explain to people from the east.',
+  ])
+  if (F.has('ukr_kharkiv_wartime') && Math.random() < 0.28) return pick([
+    '40 kilometres from the Russian border. The second city. Historically Russian-speaking — they expected it to fall quickly. It did not fall. Territorial defense units with hunting rifles.',
+    'The metro stations became the cities under the city. Folding beds, charging stations, someone\'s dog, children\'s books on a platform. The shelling audible from underground. You learned incoming from outgoing by sound.',
+    phase === 'late_life'
+      ? 'The city that was expected to welcome the Russian army welcomed it differently. The city is still standing. You are still in it.'
+      : 'Kharkiv identifies as Ukrainian despite the Russian it speaks. This is the sentence that surprised people who had not been here.',
+  ])
+  if (F.has('ukr_mobilization_2022') && Math.random() < 0.28) return pick([
+    'Men aged 18-60 prohibited from leaving. At the border crossings in February and March 2022: lines of women and children going west, and men being turned back. Some hid in trunks. Some swam the Tisza in February.',
+    'Three weeks of training: how to hold a weapon, how to dig a position, what the radio codes mean. The unit: an electrician, a teacher, two students, a man who ran a restaurant. The restaurant is closed now.',
+    phase === 'late_life'
+      ? 'The list of people who were in the unit is longer than the list of people currently in the unit. You do not count this. You do not not count it either.'
+      : 'The war takes many forms of labour — driving volunteers, translating for journalists, collecting medicines. The shooting is one form. The logistics that makes the shooting possible is another.',
+  ])
+  if (F.has('ukr_basement_2022') && Math.random() < 0.28) return pick([
+    'The alert sounds on the phone and you are already moving before you are fully aware you have started. The go-bag is by the door. The route to the basement is automatic.',
+    'The routine of war is mostly waiting: the alert, the descent, the basement, the return. The extraordinary part is the other part — the strike that hits somewhere else, the photographs in the morning.',
+    phase === 'late_life'
+      ? 'The body made itself useful in the conditions it was given. You did not ask for this calibration. You have it now — the ability to tell incoming from outgoing by sound, from the basement, in the dark.'
+      : 'Sometimes twenty minutes. Sometimes two hours. Sometimes the all-clear sounds and you go back up and the electricity is off. You have learned to keep a torch by the door.',
+  ])
   if (F.has('survived_soviet_collapse') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) return pick([
     'You watched the world you were born into dissolve in under two years. Some of it you didn\'t miss.',
     phase === 'late_life'
@@ -6386,6 +6442,58 @@ function buildYearTexture(state) {
       ? 'You left Romania when the border opened in 2007. You have been sending money since 2007. The calculation you made was the right calculation for you. The calculation has a cost that does not show in the calculation.'
       : 'The Romanian accent in the supermarket or on the construction site or in the care home. You recognise it. Sometimes you acknowledge it. Sometimes you do not.',
   ])
+  if (F.has('rom_systematization_displaced') && Math.random() < 0.22) return pick([
+    'The address on your documents changed. The building does not exist. The street that was your street is now a boulevard. The boulevard is wide and correct-looking and has nothing in it that was there before.',
+    phase === 'late_life'
+      ? 'The Casa Poporului sells tourist tickets. You can buy a ticket to walk through the 1,100 rooms of the building that was built on the site of the neighbourhood that was demolished for it. You have decided not to buy a ticket.'
+      : 'Systematization: the state\'s word for replacing what existed with what the state wanted to exist instead. Your neighbourhood was one of the things that existed. The boulevard is what the state wanted instead.',
+  ])
+  if (F.has('rom_timisoara_generation') && Math.random() < 0.22) return pick([
+    'The revolution started with a congregation forming a human chain around one man\'s door. The Securitate had come to arrest a Hungarian pastor. The congregation stood in front of the door. By nightfall there were thousands. This is how it started.',
+    phase === 'late_life'
+      ? 'December 16 to December 25, 1989: nine days. The congregation at the parsonage on the 16th. The first dead on the 17th. Ceaușescu\'s last rally on the 21st and the freeze that broadcast across the country. The helicopter on the 22nd. The Christmas Day trial. Nine days from the door of a pastor to the end of forty years.'
+      : 'You were in the days between the beginning and the end. The days were specific days with specific events at specific addresses. The summary misses how it felt to be inside them when the end was not yet certain.',
+  ])
+  if (F.has('rom_decree_generation') && Math.random() < 0.2) return pick([
+    'The institution taught you to need very little. The teaching was effective. You notice that needing very little is a skill in some contexts and a liability in others. You have learned to track which context you are in.',
+    phase === 'midlife'
+      ? 'The footage from 1990 — the rows of cots, the children rocking in the specific way that children rock when there is no one to rock them — is about a world you came out of. The footage does not capture what comes after the footage. You are what comes after the footage.'
+      : 'You learned the institutional logic before you could articulate it: fade, wait, need very little. Outside the institution the logic does not apply in the same way. You have been adapting it for years to conditions it was not made for.',
+  ])
+  if (F.has('rom_mineriad_generation') && Math.random() < 0.2) return pick([
+    'June 1990: six months after the revolution. The miners from the Jiu Valley arrived with clubs. The police stood back. The protesters in University Square were beaten. The new democracy used the old method. This is a sentence you have been sitting with since June 1990.',
+    phase === 'late_life'
+      ? 'Ion Iliescu was indicted for crimes against humanity in 2019 for ordering the miners into Bucharest in 1990. Twenty-nine years for the indictment to arrive. Whether the trial resolves is its own question. The specific pace of post-communist accountability is something you have come to understand very exactly.'
+      : 'The method: when threatened by people in a public square, send men with clubs. The men changed — not the Securitate, miners. The method did not change. The pattern became available in full only over the following decade, which is when you saw it as a pattern.',
+  ])
+  if (F.has('rom_file_opened') && Math.random() < 0.22) return pick([
+    'The CNSAS file is in a drawer. The name you recognised in the file is connected to a person you still see. The occasions at which you see them have not stopped occurring. The knowledge is in you at each of them.',
+    phase === 'late_life'
+      ? 'In late life you return to the question of what the Securitate file means. The state that created it is gone. The person who reported to it is still here. The two facts sit alongside each other with no clear instruction about what to do with them. The CNSAS process gave you access to the file. The access is all it gave you.'
+      : 'The handwriting you recognised. The specific certainty of recognising handwriting. The way the recognition happened before the processing of what the recognition meant. You have carried both since.',
+  ])
+  if (F.has('rom_italian_emigrant') && Math.random() < 0.2) return pick([
+    'The bus from Bucharest to Rome: twenty-six hours. You know the route now the way you know a route you have done many times. The arrival into Termini at 6am, the specific exhaustion of that arrival, the neighbourhood where you are going to. The Romanian who meets you at the station.',
+    phase === 'late_life'
+      ? 'You have been sending money home for long enough that the calculation is automatic. What you earn here, what it buys there, what it costs you to be here and not there. The calculation was right at the time it was made. In late life you make it again and the answer is not the same as the first time.'
+      : 'The Romanian mass on Sunday in the church that opened its doors. The specific community of people who left at the same time for the same reasons. The phone calls home at a certain hour. You are good at this life. The goodness at it is a different thing from having chosen it as your life.',
+  ])
+  if (F.has('rom_hungarian_minority') && Math.random() < 0.2) return pick([
+    'You speak Hungarian in the street because it is your language. You speak Romanian when it is required. The question of which is the real language is asked by people who have only one.',
+    phase === 'late_life'
+      ? 'The legal category in which you exist has been revised by the 1920 treaty, by the communist state, by the post-1989 parliament, by EU accession. Each revision is made by people who are not you. The revision goes on. You are still the same person.'
+      : 'Transylvania: where the majority language on the street can be Hungarian, where the church is Hungarian Reformed, where the school system has been reorganised several times on the question of which language to teach in. You are inside this question, not above it.',
+  ])
+  if (F.has('rom_democratic_disillusionment') && Math.random() < 0.18) return pick([
+    'The revolution cleared the Ceaușescus. It did not clear the system the Ceaușescus had used. The system adapted. You watched the adaptation over the decade following the revolution and drew the conclusion.',
+    phase === 'late_life'
+      ? 'You have watched Romanian politics for forty years since the revolution. The corruption investigations, the anti-corruption protests, the governments that promised something different and then became something familiar. You have not stopped voting. But you vote with the specific knowledge of someone who was in University Square in June 1990 and saw the miners arrive.'
+      : 'The new government used the miners the way the old government used the Securitate. A different instrument, the same relationship between power and protest. The conclusion is available from the evidence.',
+  ])
+  if (F.has('rom_returned_emigrant') && Math.random() < 0.2) return pick([
+    'You came back. The return is not the homecoming that the idea of the return was. The place moved on while you were gone. You moved on while you were gone. The two moved-on things are meeting each other now.',
+    'The years in Italy are visible in small ways — a phrase you use, a particular way you navigate queues, a comparison that arrives unbidden. People notice before you do.',
+  ])
   if (F.has('romania_orphan_generation') && Math.random() < 0.25) return pick([
     'You learned early that institutions do not have space for the individual child. The lesson generalized.',
     'The orphanage taught you to manage in large groups with limited resources. You notice that this is not a skill that gets named as such, but it is a skill.',
@@ -8041,6 +8149,54 @@ function buildYearTexture(state) {
       ? 'You were in your twenties in Sol in 2011 — the working groups, the assemblies, the slow patience of consensus. What it produced took a decade to arrive. You were part of what began there.'
       : 'The indignados said it precisely: "No somos antisistema, el sistema es antinosotros." Forty-six percent youth unemployment while the banks were rescued. The arithmetic that put people in the square.',
   ])
+  if (F.has('spain_rojo_family') && Math.random() < 0.25) return pick([
+    'The name that was not said in certain company. The photograph removed when visitors came. The specific silence around a specific relative: the grandfather, the uncle, the cousin who was on the losing side in 1939. The shape of the avoided subject, absorbed before the content was available.',
+    phase === 'late_life'
+      ? 'The Historical Memory Law and the DNA samples and the opened graves: the families who spent decades with the silence are now offered the possibility of the specific knowledge instead. The knowledge and the silence have different weights. Both are real. The families get to choose, which is the thing they were never allowed before.'
+      : 'The depuration records: the classification that determined employment, university access, professional licensing after 1939. The rojo classification followed the family in the documents even when no one spoke it in the house.',
+  ])
+  if (F.has('spain_anti_franco_cell') && Math.random() < 0.22) return pick([
+    'The illegal meeting in the apartment: the knock that meant it was safe, the pamphlets that were distributed through specific hands, the cold room where the Comisiones Obreras organized before it was legal to organize. The clandestinity as the ordinary condition of political life.',
+    phase === 'late_life'
+      ? 'The union hall in 1977 where the meeting happens openly, with your name on a membership card, which is the meeting you have been having in apartments for fifteen years. The difference between the clandestine and the legal version of the same meeting is the entire meaning of the transition.'
+      : 'The careful knowledge of who was reliable: the specific person in the factory you could speak to, the specific person you did not speak to, the specific signals. The organization required its own geography of trust in a city where trust had legal consequences.',
+  ])
+  if (F.has('spain_chabola_childhood') && Math.random() < 0.2) return pick([
+    'Two million people from Andalusia and Extremadura and Murcia to Barcelona and Madrid in twenty years. The barraca before the apartment block. The address that did not allow school registration. The city arriving around the migrant before the migrant arrived in the city.',
+    phase === 'late_life'
+      ? 'The neighbourhood where the barraca was is now apartments and a market. The generation that came in the barraca produced graduates. The social elevator worked, slowly, over the specific timeframe of a childhood and a youth and an adulthood. This was the wager. The wager paid off.'
+      : 'The specific community of the barraca: the people from the same village who arrived the same year, the church that organized around the same origin, the solidarity that poverty produces in proximity before the prosperity disperses it.',
+  ])
+  if (F.has('spain_carrero_blanco_lived') && Math.random() < 0.2) return pick([
+    'The car five stories over the building on Calle Claudio Coello. The bomb in the tunnel that launched a vehicle over a rooftop. The man who was Franco\'s mechanism for continuity, dead in the courtyard of a Jesuit church. The transition that happened after 1975 happened partly because this happened in December 1973.',
+    phase === 'late_life'
+      ? 'The question of whether the assassination of Carrero Blanco produced a better Spain is the kind of question that has an answer and does not resolve the moral question. The transition happened. The counterfactual in which it did not happen and Carrero Blanco continues the regime: unknown and terrifying to consider.'
+      : 'ETA at its peak: between 1978 and 1980 it kills more than one hundred people. The Carrero Blanco operation was the precise calculation. The years of lead that followed were the campaign without the precision.',
+  ])
+  if (F.has('spain_amnesia_pact') && Math.random() < 0.22) return pick([
+    'The Pacto del Olvido: the agreed forgetting that the transition required. The 1977 Amnesty Law freed the political prisoners and foreclosed prosecution of their jailors in the same legislation. The democracy was purchased partly with the right to justice for those who had none.',
+    phase === 'late_life'
+      ? 'The 2007 Historical Memory Law and the 2022 Democratic Memory Law: the slow return of what was agreed to be forgotten. The PP voted against both. The parties whose predecessors were protected by the pact continue to vote against the undoing of the pact. The pattern is not subtle.'
+      : 'Spain built its democracy on the agreement that what happened before would not be prosecuted. The democracies that built on trials — Germany, Argentina — have different relationships to their authoritarian pasts. The comparison is available. The Spaniards who made the pact knew the comparison.',
+  ])
+  if (F.has('spain_ley_peligrosidad_survived') && Math.random() < 0.25) return pick([
+    'The Ley de Peligrosidad: homosexuals as dangerous persons, subject to internment in the specific reformatories at Huelva and Badajoz. The bars that were not legal. The raids. The navigation of the city with the map of what was safe. The community that maintained itself invisible in order to survive.',
+    phase === 'late_life'
+      ? 'The arc: classified as dangerous in the Franco record, married in the municipal registry in 2005, the same person across the entire distance. The state changed its position. The record of the earlier position is still in the archives. Both are true and both are yours.'
+      : 'The modification of the law in 1979 to remove homosexuality from the list of social dangers. No apology. No rehabilitation. No acknowledgment. The modification as a bureaucratic change that does not address what the bureaucratic category meant for the years it was operative.',
+  ])
+  if (F.has('spain_fosa_recovery') && Math.random() < 0.2) return pick([
+    'The Association for the Recovery of Historical Memory: the families who spent decades knowing the approximate location of the mass grave and having no official mechanism for opening it. The DNA sample and the waiting and the result that comes back or does not.',
+    phase === 'late_life'
+      ? 'There are 114,000 bodies in the Spanish countryside estimated to be in unregistered graves from the Civil War and its aftermath. The graves that are opened replace permanent uncertainty with specific knowledge. The specific knowledge is worse and better than the uncertainty simultaneously. The families choose.'
+      : 'The grave is in the field at the edge of the village or on the road outside the town. The family has always known approximately where it is. The approximate has been the condition for eighty years. The 2007 law offers the mechanism to change the approximate to the specific.',
+  ])
+  if (F.has('spain_lgbtq_2005') && Math.random() < 0.2) return pick([
+    'June 30, 2005. The third country in the world. The ceremony in the room that the law now permits. The Partido Popular at a congress with two rings, explaining what marriage is. One of the rings is yours.',
+    phase === 'late_life'
+      ? 'The Constitutional Court upheld the law in 2012 after the PP\'s challenge. The PP later put the reversal in a manifesto and then did not reverse it when in government. The right to marry has been available since 2005 in a country where it was criminal thirty years before. The distance is the measure of something.'
+      : 'The specific year: 2005. Before 2005 the legal category did not exist in Spain. After 2005 it exists. The friends who married in 2005 or 2006 are married now in the legal record in the same way as the friends who married before. The alignment between the legal record and the actual fact is recent and feels older than it is.',
+  ])
 
   // ─── CANADA TEXTURE ──────────────────────────────────────────────────────────
   if (F.has('october_crisis_generation') && Math.random() < 0.2) return pick([
@@ -8556,6 +8712,84 @@ function buildYearTexture(state) {
     'The border that opened on May 1, 2004. The work permit that was not required. The Europe that became navigable. The Schengen zone that meant the passport stayed in the bag.',
     'You are European in a legal and practical sense that did not exist before 2004. The legal and practical sense makes other things possible. You use them.',
   ])
+  if (F.has('katyn_family_loss') && Math.random() < 0.22) return pick([
+    'The name that was not spoken without care. The absence that the family described differently in different years depending on who was in the room. The Soviet denial ran for fifty years. In 1990 the denial ended officially. The name in the rows at the Katyń cemetery was confirmed as being where it was always suspected to be.',
+    phase === 'late_life'
+      ? 'The Katyń Memorial Cemetery near Smolensk. You can go, or you can know it exists. The name that was spoken carefully in your family for decades is confirmed in the rows. The confirmation is fifty years late. The grave is specific and real and four hundred kilometres away.'
+      : 'The Katyń massacre: April 1940. 22,000 Polish officers, police, intellectuals. Shot in the back of the head. The Soviets blamed the Nazis for fifty years. In 1990, acknowledged. In your family the acknowledgment changed a category from disappeared to murdered, which is not the same thing as returning the person.',
+  ])
+  if (F.has('katyn_generation') && Math.random() < 0.2) return pick([
+    '22,000 people. The category: officer, policeman, educated reservist — the intellectual and officer class of Poland, systematically eliminated. The Soviets ran the denial for fifty years. In 1990, officially acknowledged. The scale you now know was always the scale. It had simply been deniable.',
+    phase === 'late_life'
+      ? 'You learned the full confirmed scale in 1990 and you are still living with it. The fact that it was true all along is not a surprise. The official confirmation still does something — makes the anger clean in a way that the suspected-but-denied version could not be.'
+      : 'The Katyń denial ran as official fact from 1940 to 1990. The denial was so complete that to say otherwise was a form of anti-Soviet activity. You held the truth privately for as long as the denial ran officially.',
+  ])
+  if (F.has('warsaw_uprising_veteran') && Math.random() < 0.25) return pick([
+    'For decades you could not officially acknowledge where you were in August and September 1944. The government called the AK fascist collaborators. Your sixty-three days were an official liability. After 1989, the rehabilitation arrived. The rehabilitation is real and late and not quite sufficient and also something.',
+    phase === 'late_life'
+      ? 'The Armia Krajowa veterans are recognised now. The medals can be worn. The anniversaries can be attended officially. You spent forty years unable to say what you did. The official saying is now permitted. You find yourself less interested in the official saying than in simply having done it.'
+      : 'The gap: sixty-three days in Warsaw in 1944 that the communist state required you to not have been in. The practice of holding a fact in private while maintaining a public version is a specific skill. You developed it without choosing to.',
+  ])
+  if (F.has('ak_veteran_silenced') && Math.random() < 0.2) return pick([
+    'The medal is in a drawer. After 1989 you can wear it. You sometimes do and sometimes do not. The wearing is now possible and the not-wearing is also possible, which is more choices than you had for the previous forty years.',
+    'The AK: the underground Home Army that the communist government classified as a reactionary organization. To have served in it was to be on the wrong side of the official history. You were on the right side of what actually happened. The distinction between these two things is the specific knowledge you have been carrying.',
+  ])
+  if (F.has('warsaw_uprising_generation') && Math.random() < 0.2) return pick([
+    'August 1, 1944. The Armia Krajowa rose. The Soviets waited across the Vistula. Sixty-three days. 200,000 dead. 85 percent of Warsaw destroyed building by building. You carry this as the thing that happened to your family\'s generation — directly or as the wound passed down.',
+    phase === 'late_life'
+      ? 'The Warsaw Uprising Museum opened in 2004. The building, the names, the exhibition. What was held in private for sixty years was named officially. The naming changes something. It does not change what happened. It changes who can see that it happened.'
+      : 'The uprising is in the adults\' faces before it is in history books. The specific silence that arrives when August 1 is mentioned. The way certain subjects close. The wound carried in a register just below speech.',
+  ])
+  if (F.has('kresy_family') && Math.random() < 0.2) return pick([
+    'Your family calls the city by its Polish name. On maps it appears under a different name, in a different country. The city is there. The streets are there. The name on the street signs is different. The people on the streets speak a different language from the language your family spoke on those streets.',
+    phase === 'late_life'
+      ? 'After 1991, you can go to the city your parents described. Some people from kresy families do go. The buildings are still there, the street layout recognisable. The Polish community is mostly gone. The churches have been converted. You are walking through the material record of a world that ended in 1945 and has not been restored.'
+      : 'The Kresy: the eastern borderlands that Poland lost in 1945 — Lwów to Ukraine, Wilno to Lithuania, the areas that were home to millions who were then moved westward into the houses of Germans who were moved westward in turn. The displacement was the largest ethnic reorganisation of European territory in the century.',
+  ])
+  if (F.has('nowa_huta_generation') && Math.random() < 0.18) return pick([
+    'They built the model socialist city without a church, which was the point. The first Polish city in a thousand years without a church. The workers wanted a church. The battle over the cross — the state trying to remove it, the workers defending it — ran for years. In 1977 the church was consecrated by the Cardinal of Kraków. The following year he was Pope.',
+    'Nowa Huta: the steelworks and the apartment blocks and the intended absence of religion, and then the church built anyway in defiance of the intended absence. The cross on the empty lot, defended by steelworkers against the state, in the model socialist city. This sequence of events is the history of Poland in miniature.',
+  ])
+  if (F.has('jedwabne_reckoning') && Math.random() < 0.2) return pick([
+    'Jedwabne, July 10, 1941. The Jewish community of the town: 340 people pushed into a barn and burned alive. Not by the German occupiers — by their Polish neighbours. Jan Gross published this in 2001. The Institute of National Remembrance confirmed it. President Kwaśniewski apologized. A significant part of Polish public opinion rejected the finding.',
+    phase === 'late_life'
+      ? 'The 2018 law making it criminal to accuse Polish institutions of Holocaust complicity was passed, then amended under international pressure. The direction of travel since the Jedwabne acknowledgment in 2001 has not been toward further acknowledgment. You have held a position about what happened in Jedwabne since 2001. The political climate around that position has changed. Your position has not.'
+      : 'The argument that followed the Jedwabne revelation is an argument about what Poles did and therefore about what Poland is and therefore about identity. The evidence is documented. The counter-arguments are about what people need the past to be. You are somewhere in this argument and the position you hold in it is not incidental.',
+  ])
+  if (F.has('pis_opposition') && Math.random() < 0.18) return pick([
+    'The Constitutional Tribunal packed. The Supreme Court reorganized. The state broadcaster turned into something else. The public media. The NRF. You watched the institutional dismantling court by court and were told by people on the other side that you were a hysterical defender of the liberal elite.',
+    phase === 'late_life'
+      ? 'PiS lost the 2023 election in terms of coalition seats though not in terms of votes. The restoration of what was dismantled is happening slower than the dismantling was done. You follow it with the attention of someone who watched the dismantling and knows which direction things moved.'
+      : 'The KOD marches. The black umbrellas. The Women\'s Strike. The EU Article 7 proceedings. The courts. You kept track of each item as it changed. The tracking is its own form of refusing the normalization.',
+  ])
+  if (F.has('pis_support') && Math.random() < 0.18) return pick([
+    'The 500+ benefit is real. The sense that someone in government speaks for people in your town rather than for Warsaw or Brussels: real. Whether the Constitutional Tribunal matters to your daily life is a question you have a specific answer to.',
+    phase === 'late_life'
+      ? 'PiS lost the 2023 election despite winning the most votes. The coalition that has more seats forms a government under Tusk. You are watching this with specific feelings that are different from what the urban commentary is expressing about the same events.'
+      : 'Poland A and Poland B: the urban educated mobile Tusk voter and the smaller-town parish-attending PiS voter. You know which Poland you live in. The people on television tend to live in the other one.',
+  ])
+  if (F.has('poland_uk_emigrant') && Math.random() < 0.2) return pick([
+    'The Polish deli. The Saturday school. The Sunday call home. The wages that are three or four times what they are in Kraków. The mental arithmetic about what you are saving and what you are building and whether you are going back.',
+    phase === 'late_life'
+      ? 'You came to the UK when the border opened in 2004. You have the Settled Status. The status is a category that did not exist when you arrived. Brexit created it as the document that confirms you can stay in the country you have lived in for twenty years. The documentation of the right to stay: specifically British.'
+      : 'Brexit, June 2016. The result that changed the calculation for a million Poles in the UK. Some left. Some applied for Settled Status. You went through the application. The application was approved. You are a different kind of European in Britain than you were when you arrived.',
+  ])
+  if (F.has('poland_returned_emigrant') && Math.random() < 0.18) return pick([
+    'You went back. The savings are real. The English is real. The comparative perspective on how other countries do certain things is specific and occasionally useful and occasionally irritating to the people around you who did not leave.',
+    'The return: you are Polish in ways that are specific and also at a slight angle to the place, which is the position that only leaving and returning produces. Inside and slightly outside simultaneously.',
+  ])
+  if (F.has('smolensk_conspiracy_view') && Math.random() < 0.18) return pick([
+    'The sequence: flying to Katyń, crashing in Russia, the investigation conducted by Russia. Whether the sequence points to something more than accident the evidence has not confirmed. The suspicion has stayed with you regardless.',
+    phase === 'late_life'
+      ? 'The PiS-appointed commission claimed to find evidence of an explosion in the wreckage. The previous commissions found pilot error. You have followed each iteration of the investigation with the attention of someone who is not sure the official account is complete.'
+      : 'Smolensk: the word now contains two events. April 1940 and April 2010. The first event was a Soviet massacre. The second event was a crash while going to commemorate the first. The connection between them is real. What the connection means is the question.',
+  ])
+  if (F.has('smolensk_accident_view') && Math.random() < 0.18) return pick([
+    'The accident investigation found pilot error. You accept this. The political weaponization of the grief by the Kaczyński camp is something else entirely from the grief itself. You have tried to hold these as separate things.',
+    phase === 'late_life'
+      ? 'PiS made Smolensk a founding myth. The assassination narrative, the exhumations, the second crash investigation. You watched the grief converted into political fuel and found it specific and wrong. The grief was real. What it was converted into was also real and different from the grief.'
+      : 'The grief in April 2010 was shared across the political divide. What happened to it after — the conspiracy narrative, the monument disputes, the anthem at the cross — divided people who had grieved together. The division happened in real time and you watched it.',
+  ])
 
   // ─── ITALY TEXTURE ───────────────────────────────────────────────────────────
   if (F.has('miracolo_generation') && Math.random() < 0.25) return pick([
@@ -8633,6 +8867,66 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'You crossed and you arrived and you built something on the Italian side of the crossing. The crossing is in the past and it is always in the past and it is always there. These are both true.'
       : 'The Italian side of the crossing: the papers, the permit, the renewal, the precariousness of status in a country that needed you to pick the tomatoes and did not want you to stay.',
+  ])
+  if (F.has('italy_partisan_veteran') && Math.random() < 0.25) return pick([
+    'The mountains in winter 1943-44. The cold and the hunger and the waiting and the occasional violence. What the Resistance was is different from what the Resistance became in the national memory. You know what it was.',
+    phase === 'late_life'
+      ? 'The Liberation was April 25, 1945. You have now lived more years after it than before it. The republic was built on that day. You were in the mountains contributing to the conditions for that day. This is the sentence about your life that you return to.'
+      : 'The Resistance was not heroic in the way it is described. It was cold and frightened and uncertain and the heroism was in continuing under those conditions, not in the absence of fear.',
+  ])
+  if (F.has('italy_resistenza_generation') && Math.random() < 0.2) return pick([
+    'The grey zone: most people in Italy during the occupation were in it. Not collaborating, not resisting. Getting through. The republic divided itself between chi ha fatto and chi non ha fatto. You lived in the division.',
+    phase === 'late_life'
+      ? 'The children of the Resistance and the children of those who did not resist grew up in the same country, at the same schools, in the same towns. The distinction that felt enormous in 1945 became something that was sometimes spoken about and sometimes not, which is its own kind of inheritance.'
+      : 'Italy\'s republican constitution was written in 1947 by people who had made specific choices in 1943-45. The constitution reflects those choices. You live under the constitution of a specific moral community formed under specific conditions.',
+  ])
+  if (F.has('pci_generation') && Math.random() < 0.25) return pick([
+    'Berlinguer\'s Eurocommunism: the largest Communist Party in Western Europe that had broken with Moscow, that argued for a different road. The moral seriousness of it. The permanent exclusion from government of a party that received a third of the vote.',
+    phase === 'late_life'
+      ? 'The PCI became the PDS in 1991 and the PDS became the DS and the DS became the PD. The lineage is continuous and changed at every step. What you were a member of no longer exists. Something that carries its inheritance exists. Whether that is the same thing is the question.'
+      : 'The Feste dell\'Unità: the party that built a culture around itself. Cinema and music and the newspaper and the summer festivals. The party as a way of life, not only a ballot choice. The culture outlasted the party by some years and then it also ended.',
+  ])
+  if (F.has('dc_generation') && Math.random() < 0.2) return pick([
+    'The DC governed Italy for forty-five years — from 1948 to 1993. The longest continuous governance of a democratic party in any Western democracy. The anticommunism that made it possible and the tangenti that financed it are both documented.',
+    phase === 'late_life'
+      ? 'After 1993 the DC was gone. The parties that came from it — CCD, PPI, UDC, the centre lists — held fragments of the electorate without reconstituting the party. What the DC held together, nobody else has managed to hold together since.'
+      : 'You voted DC for reasons that made sense to you. The party financed itself with bribes and your vote went toward a party that did that. Both things are true and you hold them both without an easy reconciliation.',
+  ])
+  if (F.has('postconciliar_generation') && Math.random() < 0.2) return pick([
+    'The mass in Italian: what had been Latin for four centuries became the language you actually spoke. The priest turned to face you. The liturgy opened. The Italy where Church and daily life are inseparable received Vatican II and adapted it in the Italian way — fully and partially simultaneously.',
+    phase === 'late_life'
+      ? 'The gap between what the hierarchy says and what Italian Catholics do has been the defining feature of Italian Catholicism since at least 1974. You have lived inside the gap. The gap is not hypocrisy; it is a specific relationship to institutional religion that Italy invented for itself.'
+      : 'The 1974 divorce referendum: Catholics voted 60 percent to keep divorce. The 1981 abortion referendum: Catholics voted 67 percent to keep abortion. The Church and the faithful agreed on the forms and diverged on the substance. This is the postconciliar Italy you live in.',
+  ])
+  if (F.has('seconda_repubblica_disillusion') && Math.random() < 0.2) return pick([
+    'The Second Republic that did not arrive. The space between the end of the First Republic in 1992 and whatever came next is the republic Italy actually lives in. The institutional reforms were proposed and not passed. The political culture changed its personnel and not its structure.',
+    phase === 'late_life'
+      ? 'You have watched governments form and fall across four decades of the Second Republic\'s non-arrival. The count of governments per decade: seven, eight, nine. The instability was not incidental to the system. It was the system.'
+      : 'Berlusconi, Prodi, D\'Alema, Berlusconi, Prodi, Berlusconi, Monti, Letta, Renzi, Gentiloni, Conte, Draghi, Meloni. Each name is a different government. The pace of change is the political condition.',
+  ])
+  if (F.has('italy_immigration_witness') && Math.random() < 0.2) return pick([
+    'Italy went from a country that sent workers abroad to a country that received them in approximately thirty years. Your parents or grandparents emigrated to Switzerland or Germany. You are now in a country that has Romanian badanti caring for Italian elders.',
+    phase === 'late_life'
+      ? 'The care economy: without the Eastern European and Filipino workers who moved into spare rooms and hospital wards and nursing homes, Italian elder care does not function. The country that resists immigration politically depends on immigration practically. You have seen both things from the inside.'
+      : 'The vu cumprà on the beach: the Senegalese vendors who arrived in the 1990s and became a fixture of Italian summers. Italy\'s response to immigration has been to depend on it economically while arguing about it politically, which is not unique to Italy but is very visible here.',
+  ])
+  if (F.has('italy_austerity_generation') && Math.random() < 0.25) return pick([
+    'The spread on every news programme: the differential between Italian and German bond yields, which became the number that governed Italian political life for two years. You knew this number. The number knew nothing about you and determined a great deal about you.',
+    phase === 'late_life'
+      ? 'Italy\'s GDP in 2020 was lower than in 2000. Twenty years. The euro and the austerity and the structural problems and the political instability: all of these are explanations and none of them, alone, is sufficient. You saved during the crisis years. The savings are worth less in real terms than when you made them.'
+      : 'Monti\'s cabinet of non-politicians implementing reforms that no elected government could pass: the technocratic solution to the democratic crisis. The voters who did not elect the government that changed their lives voted for Grillo two years later. The sequence was not difficult to predict.',
+  ])
+  if (F.has('italy_meloni_2022') && Math.random() < 0.2) return pick([
+    'Giorgia: mother, Christian, Italian. The nouns as identity politics. The first woman prime minister from a party whose logo carries the MSI flame. The European response. The Italian response. The distance between the two responses is the gap between how Italy looks from outside and how it looks from inside.',
+    phase === 'late_life'
+      ? 'The Meloni government: conventional fiscal policy, NATO support, EU alignment. The rupture that was feared did not arrive. The concern that the post-fascist genealogy would express itself in government policy has not, so far, been confirmed. What to make of a government whose record is conventional and whose lineage is what it is: this is the argument.'
+      : 'The Five Star Movement won 25 percent in 2013. The Lega won 34 percent in 2019. Fratelli d\'Italia won 26 percent in 2022. The insurgent parties follow each other into government and moderate or fail to deliver and are replaced by the next insurgency. The pattern is Italian and also not only Italian.',
+  ])
+  if (F.has('mezzogiorno_organized_crime_texture') && Math.random() < 0.2) return pick([
+    'The geometry of what is not said: the name you do not use, the street you do not walk at night, the question about what that business is for that you do not ask. You absorbed this without instruction. The absorbing is the instruction.',
+    phase === 'late_life'
+      ? 'The Calabrian \'Ndrangheta is now the most powerful criminal organization in Europe by revenue. It was the background texture of your childhood. The background became the foreground for the investigators and journalists who have spent decades naming what you absorbed at age ten without the name.'
+      : 'The maxi-process in Palermo, the Camorra trials, the captures in Calabria: the state and the organizations have been at war for decades in the places where you grew up. The news of the trials reads differently when you recognize the streets in the indictments.',
   ])
 
   // ─── GERMANY TEXTURE ─────────────────────────────────────────────────────────
@@ -9294,6 +9588,63 @@ function buildYearTexture(state) {
       : 'The escolas do not emerge fully formed in February. They are made across months in the quadra, in November fittings, in December drumming sessions. What appears in the Sambódromo is the end of something the television cameras only catch the last part of.',
   ])
 
+  // ─── ARGENTINA DEPTH TEXTURE ─────────────────────────────────────────────────
+  if (F.has('arg_peronist_generation') && Math.random() < 0.25) return pick([
+    'The descamisados — the shirtless ones — in Plaza de Mayo on October 17, 1945. Your parents or grandparents were there or they were the reason people were there. The oligarchy used the word horde. The movement used the word descamisado and made it an identity.',
+    'Santa Evita. The embalmed body. The Bonyad-style social welfare. The hospitals. The women\'s vote in 1947. And then the coup in 1955 and the body hidden by the military for sixteen years, afraid even of the corpse.',
+    phase === 'late_life'
+      ? 'You have been a Peronist for your whole life and what Peronism means has been the Kirchners, and Menem, and the original descamisados, and the Triple A, all calling themselves by the same name. The name has been more consistent than what it contains.'
+      : 'The country splits on Perón — not left and right, not rich and poor, though those are part of it. Something older and more specific: whether the movement was for people like you or was the end of the republic as you understood it.',
+  ])
+  if (F.has('arg_plaza_mayo_bombing') && Math.random() < 0.2) return pick([
+    'June 16, 1955. The navy and air force bombed the square in the middle of the day. 308 civilians killed. Perón was the target; the office workers and pedestrians were the result. The coup succeeded in September. The bombing is not what ended the Peronist government — it is what tried and failed.',
+    'The specific thing about bombing your own capital from the air: it cannot be undone. The country went on. The square is the same square. But what was done in it, by the Argentine military on Argentine civilians, sits inside every subsequent use of that square.',
+    phase === 'late_life'
+      ? 'You have stood in the square since 1955 many times, for many reasons. The square is the square of the Mothers, of the cacerolazos, of every political moment the republic has. Underneath all of those is what happened on June 16, which people know about but do not say first.'
+      : 'The bombing happened. The country processed it without processing it. The military that did it governed the country from 1955 forward in various forms until 1983. Some of the officers who ordered it had careers afterward.',
+  ])
+  if (F.has('arg_buenos_aires_culture') && Math.random() < 0.22) return pick([
+    'The analyst\'s office is a specific room in a specific building in Buenos Aires and you know the quality of the silence in it better than you know most silences. Forty thousand analysts in the phone book at peak. The couch here is infrastructure.',
+    'The milonga on a Thursday night. The embrace that is a conversation. The tango that has a grammar you have spent years learning — the walk, the pause, the weight transfer. The dance that lets the city meet itself in the dark and say things it cannot say in the light.',
+    phase === 'late_life'
+      ? 'What decades of analysis gave you: the ability to name something faster than before, the knowledge of origins, the habit of the question. What it did not give you: the absence of difficulty. You did not expect it to. You just hoped a little.'
+      : 'Buenos Aires has a specific relationship with interiority. Not all of Latin America is this. The examined life as a shared assumption, as something you budget for alongside rent and food. The couch is not confession — it is conversation with a very patient interlocutor.',
+  ])
+  if (F.has('arg_amia_generation') && Math.random() < 0.22) return pick([
+    'July 18, 1994. The building comes down at 9:53 a.m. 85 killed. You knew someone inside or you knew someone who did, which in the Jewish Argentine community — 230,000 people — is nearly everyone.',
+    'The case. The case is still open. The prosecutor found dead in his apartment in 2015, hours before testifying to congress. Three decades of impunity, obstruction, and the specific indignity of being the victim of an unsolved crime in the city where you live.',
+    phase === 'late_life'
+      ? 'You have lived in Buenos Aires for thirty or forty years with the case still open. Some institutions maintain memory. Memory does not substitute for accountability. You know the difference between the two from inside the difference.'
+      : 'The Jewish Argentine community has been here since the great immigration waves — the 1880s, the 1890s, the early twentieth century. The community built something in this country. July 18 1994 was directed at the fact of the community\'s existence here. The investigation has not answered why.',
+  ])
+  if (F.has('arg_malvinas_conscript') && Math.random() < 0.25) return pick([
+    'You went south. The equipment was inadequate. The boots let in water. The officers received better rations. The British landed at San Carlos on May 21. The Air Force was brave and the navy stayed in port after the Belgrano. The surrender was June 14. 649 Argentines dead.',
+    'The homecoming: no parade, no ceremony. The defeat was too fresh for the country to look at the veterans directly. Looking at the veterans meant looking at the junta and the junta was in the process of falling because you lost.',
+    phase === 'late_life'
+      ? 'More Argentine veterans have died by suicide since 1982 than died in the war. This number is kept by the veterans because the state does not keep it. You were in the war for 74 days. You have been coming back from those 74 days for the rest of your life.'
+      : 'The islands are in the constitution. The claim is maintained. Political parties invoke it when they need a grievance. You were there, which puts you in a specific relationship to the sentence "Las Malvinas son argentinas" that the people who say it from Buenos Aires do not share.',
+  ])
+  if (F.has('arg_hyperinflation_1989') && Math.random() < 0.22) return pick([
+    'The grocery store price between the morning and the afternoon in 1989. You went to buy bread and the price was different when you reached the counter than when you chose the bread. 3,079 percent that year. The middle class discovering that savings are a form of magic that can be undone.',
+    'The Austral Plan failed. Alfonsin left six months early. Menem arrived and the Convertibility Plan tied the peso to the dollar and solved the inflation by creating the conditions for 2001. You learned to see the arc.',
+    phase === 'late_life'
+      ? 'The inflation is back. The body remembers 1989 before the mind catches up — the quick buy, the dollar holding, the savings in a mattress. The young people around you are learning this for the first time. You learned it before them and the learning is still in you.'
+      : 'The middle class of Argentina considers itself European and considers poverty someone else\'s condition. In 1989 the middle class discovered that savings are a denomination, not a fact, and denominations are a government decision.',
+  ])
+  if (F.has('arg_kirchner_trials_generation') && Math.random() < 0.2) return pick([
+    'The amnesty laws voided. The ESMA officers on trial. The Mothers of Plaza de Mayo watching from the gallery the officers they have been naming since 1977 finally convicted. The sentence is 25 years. The sentence cannot undo it. It is the closest thing the law has to acknowledgement.',
+    'More than a thousand convictions across the trials. The institutions that produced the dictatorship — the military, the church hierarchy, the business class that collaborated — are being disaggregated, case by case, from the crimes that were done under their cover.',
+    phase === 'late_life'
+      ? 'The argument is about whether the memory of the dictatorship should be permanent or whether it should give way to something. You do not have trouble with this argument. The people who argue for giving way were not among the disappeared or their families.'
+      : 'Argentina is doing something that most countries that have had dictatorships have not done: prosecuting the perpetrators, on the soil where the crimes occurred, under the law of the country. It is imperfect. It is also rare.',
+  ])
+  if (F.has('arg_returned_exile') && Math.random() < 0.2) return pick([
+    'The café on the corner is still the café. The street signs are the same street signs. The people you came back to are older. The city has a layer over it: the layer of all the years it continued without you, which you cannot see because you were not here.',
+    'The recognising feels like loss. You expected return to feel like return. What it feels like instead is the street you know and the stranger you have become to it.',
+    phase === 'late_life'
+      ? 'You came back and you stayed and the returning became a life rather than an episode. What you left behind in the place you were exiled to: the people who knew you there, the version of yourself that adapted. You left two places when you came back.'
+      : 'The people who stayed have a different accounting of the years you were away. You have compared the two accountings. Both are accurate. They are different in ways that close only slowly.',
+  ])
   // ─── ARGENTINA 2001 TEXTURE ──────────────────────────────────────────────────
   if (F.has('corralito_survivor') && Math.random() < 0.28) return pick([
     'The bank queue in December 2001 — the one that wrapped around the block before the branch opened — is physical in memory. The passbook number that was yours and then was converted into something worth a third as much.',
@@ -9975,6 +10326,62 @@ function buildYearTexture(state) {
       : 'The cost was 500 dead and 20,000 arrested. The movement did not achieve what it asked for. What it changed is a question that will be answered by what comes next.',
   ])
 
+  if (F.has('irn_revolution_childhood') && Math.random() < 0.25) return pick([
+    'The school uniform changed. The textbooks arrived with pages glued together — the wrong pages, the pages from before. The komiteh had an office on the street. You learned early that the apartment and the street were different countries.',
+    'The before and after run through your generation specifically. Born before 1979: you remember what changed. Born after: the Islamic Republic is the only thing there is. You are in the smaller group.',
+    phase === 'late_life'
+      ? 'The generation born after 1979 has never known anything but the Islamic Republic. When they protest, they protest the only system they have ever had. You remember there was something before. The memory does not help as much as you thought it would.'
+      : 'The private life went inside. The party became quieter. The music went through the walls. You learned the texture of the double life before you had words for what the double life was.',
+  ])
+  if (F.has('irn_iraq_war_soldier') && Math.random() < 0.28) return pick([
+    'The Sacred Defence: the state\'s name for the Iran-Iraq War. The murals on the walls of every city — the martyrs\' faces, the years 1980–1988. The mural is not where you were. You were somewhere the mural does not show.',
+    'Eight years. Half a million Iranian casualties. The UN resolution Khomeini accepted as "drinking poison." You were there for some of those eight years. The ceasefire came and you came back different or you did not come back.',
+    phase === 'late_life'
+      ? 'The war is official memory now. The state has uses for the war that are not the same as your experience of the war. The gap between the mural and the memory is a gap you have been carrying for a long time.'
+      : 'The plastic key on a string, before the minefield. The Faw Peninsula. The Shatt al-Arab. Some details go in, some do not. What stays in the body is not always the details you would have chosen to keep.',
+  ])
+  if (F.has('irn_martyr_child') && Math.random() < 0.22) return pick([
+    'The photograph on the wall. Shahid, the date. The Bonyad-e Shahid sending money. The state announcing your category at school assemblies. The state has a use for your grief that is not the same as your grief.',
+    'You are now older than your father was in the photograph. He is younger than you. The image does not update. You are in territory the photograph did not reach.',
+    phase === 'late_life'
+      ? 'The anniversary comes every year. The state remembers the martyrs in its way. Your memory of the photograph on the wall is different from the state\'s memory of what the photograph represents.'
+      : 'The Bonyad-e Shahid certificate is a social position. The grief is personal. The two things overlap imperfectly.',
+  ])
+  if (F.has('irn_nowruz_keeper') && Math.random() < 0.2) return pick([
+    'The haft-sin table. The seven items beginning with S. The Hafiz poetry. The fire that the Islamic Republic never managed to put out. Every year: chaharshanbe suri, the fire in the street, the old words.',
+    'Nowruz predates Islam by two thousand years and the Islamic Republic has complicated feelings about it. The Republic did not abolish it. The Republic has tried to reduce it. The ancient feast refuses to become smaller than itself.',
+    phase === 'late_life'
+      ? 'The new year still comes at the vernal equinox. The table still has the same seven things. Some of the people who used to sit at this table are no longer here. The ritual holds the shape of the people who are absent.'
+      : 'Your redness to me, my paleness to you — give me your warmth and take my sickness. The words you jump the fire and say. The words are older than the country you are jumping in.',
+  ])
+  if (F.has('irn_1988_loss') && Math.random() < 0.22) return pick([
+    'The summer of 1988 is not in the textbooks. Not commemorated. You know because you received the bag of belongings. The family who received a bag knows a different version of recent history than the family that did not.',
+    'No official container for this. The public commemoration does not exist. You carry it the way you carry things that cannot be said in public — quietly, with the other families who know, in the specific company of the unspeakable.',
+    phase === 'late_life'
+      ? 'Decades later, the event is still not acknowledged officially. The families who know have gotten older. The question of whether this will ever have an official reckoning is a question you have stopped expecting to answer.'
+      : 'The number is disputed — three thousand to five thousand. The families who know the individual do not need the number. The individual is the number they carry.',
+  ])
+  if (F.has('irn_cultural_revolution_student') && Math.random() < 0.2) return pick([
+    'The universities closed in April 1980. They reopened in 1983 after the purge. The professors who remained were those who passed the review or were hired after it. You got an education shaped by what it decided not to include.',
+    'The Cultural Revolution closed the universities for three years and reopened them revised. You entered the revised institution or you left. The choice was the definition of your generation.',
+    phase === 'late_life'
+      ? 'The education you received or did not receive in those three years shaped the rest of it. The absence of certain professors, the presence of certain textbooks, the questions that could not be asked. All of it downstream.'
+      : 'Some professors left. Some were expelled. Some were imprisoned. The institution that reopened in 1983 knew what it was and what it was not.',
+  ])
+  if (F.has('irn_nuclear_pride') && Math.random() < 0.2) return pick([
+    'Iran will not give up its nuclear rights. The rial falls. Sanctions tighten. Medicines become hard to find. The salary buys less each month. The nuclear programme is a national project. The question is how to feel about a national project that is impoverishing you.',
+    'The official rate and the street rate: the gap between them is where certain people extract fortunes and where you are simply depleted. You hold the pride and the depletion together imperfectly.',
+    phase === 'late_life'
+      ? 'The JCPOA was signed. Trump withdrew. The rial collapsed sixty percent in months. The nuclear programme outlasted the hope of integration. The sanctions are still there. The programme is still there. You are still there.'
+      : 'Iran is not anyone\'s to dictate to. This sentence is true. The sanctions are also true. The two truths do not resolve into a single practical position at the end of the month.',
+  ])
+  if (F.has('irn_post_2022_departure') && Math.random() < 0.22) return pick([
+    'Turkey first. Georgia second. Germany if the visa cleared. You are part of the wave of engineers, developers, doctors, teachers who left after 2022 — not dissidents, the professional infrastructure that would have changed the country from within.',
+    'The Persian cafes in Tbilisi. The solidarity with people who speak your language and feel exactly what you feel. The distance is also real. The street in Tehran and the protest in front of an embassy are not the same thing.',
+    phase === 'late_life'
+      ? 'You left and you watch from outside. The country you left has continued without you. What it is becoming is something you track from a city that is not the city you grew up in. The tracking is a form of belonging that is different from being there.'
+      : 'Someone has to stay. You did not stay. The people who stayed are the thing you hoped for and also the people you left behind. The distinction between those two descriptions is not entirely clear to you.',
+  ])
   if (F.has('irn_khatami_generation') && Math.random() < 0.22) return pick([
     'Khatami won with seventy percent. Three hundred newspapers. The word "civil society" in print. And then the Guardian Council. The disqualifications. The newspapers closed. The arc from hope to answer was five years.',
     'You watched Iran attempt reform through the system that exists to prevent reform. The lesson of 2001-2004 is precise: which part of the system has the final authority.',

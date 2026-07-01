@@ -432,6 +432,70 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by ukr_euromaidan_2013. Needs year texture and a late-life follow-through about what Maidan led to.',
   },
 
+  ukr_chernobyl_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the Chernobyl disaster of April 26, 1986 — evacuated from the exclusion zone, or close enough for iodine tablets and classified weather.',
+    intent: 'both',
+    notes: 'Set by ukr_dep_chernobyl. Year texture in yearTexture.js. Follow-through: ft76_chernobyl_thyroid, ft76_chernobyl_return.',
+  },
+
+  ukr_1990s_collapse_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Came of age during Ukraine\'s 1990s economic collapse — karbovanets hyperinflation, 10,000% inflation in 1993, savings erased, survival through shuttle trading or subsistence gardening.',
+    intent: 'both',
+    notes: 'Set by ukr_dep_1990s_collapse. Year texture in yearTexture.js. Follow-through: ft76_1990s_reckoning.',
+  },
+
+  ukr_soviet_identity: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived the Soviet Ukrainian identity split — Russian-language schooling, Ukrainian village grandmother, the shistdesiatnyky writers who were silenced or killed.',
+    intent: 'year_texture',
+    notes: 'Set by ukr_dep_soviet_identity. Year texture only.',
+  },
+
+  ukr_crimea_2014_inside: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was in Crimea during and after the Russian annexation of February–March 2014 — the referendum with no stay-in-Ukraine option, the dual-passport legal limbo, the changed phone codes.',
+    intent: 'both',
+    notes: 'Set by ukr_dep_crimea_2014. Year texture in yearTexture.js. Follow-through: ft76_crimea_limbo.',
+  },
+
+  ukr_lviv_galicia_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Formed by western Ukraine\'s Galician identity — Habsburg cobblestones, Greek Catholic church, OUN partisan history, the city that was Lwów-Lemberg-Lvov-Lviv across its empires.',
+    intent: 'year_texture',
+    notes: 'Set by ukr_dep_lviv_galicia. Year texture only.',
+  },
+
+  ukr_kharkiv_wartime: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Experienced Kharkiv during the 2022 Russian invasion — the second city 40km from the Russian border that did not fall, the metro stations as neighbourhoods, the shelling audible from underground.',
+    intent: 'year_texture',
+    notes: 'Set by ukr_dep_kharkiv_wartime. Year texture in yearTexture.js.',
+  },
+
+  ukr_mobilization_2022: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Mobilised or stayed in Ukraine under martial law during the 2022 Russian invasion — men 18-60 barred from leaving, territorial defense units with no military background, the specific unit that formed.',
+    intent: 'both',
+    notes: 'Set by ukr_dep_mobilization_2022. Year texture in yearTexture.js. Follow-through: ft76_mobilization_late.',
+  },
+
+  ukr_basement_2022: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Experienced the civilian shelter routine of Ukraine\'s 2022 war — the air raid alert, the go-bag, the basement, the body\'s learned calibration of incoming vs outgoing by sound.',
+    intent: 'year_texture',
+    notes: 'Set by ukr_dep_basement_2022. Year texture in yearTexture.js. Follow-through: ft76_basement_normalised.',
+  },
+
   regime_compliance: {
     weight: 'minor',
     category: 'political',
@@ -734,6 +798,70 @@ export const POLITICAL_FLAGS = {
     description: 'A witness to Colombia\'s long arc of violence — from La Violencia through the cartel years through the paramilitaries through the peace accord. The map of it all.',
     intent: 'year_texture',
     notes: 'Set by col_late_reckoning.',
+  },
+
+  irn_revolution_childhood: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Grew up during the Islamic Revolution 1979 — school uniforms changed, textbooks arrived with glued pages, the komiteh came to the neighbourhood, the apartment became one country and the street another.',
+    intent: 'both',
+    notes: 'Set by irn_dep_revolution_childhood. Year texture + follow-through: ft77_revolution_childhood_late.',
+  },
+
+  irn_iraq_war_soldier: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Served or evaded service at the Iran-Iraq War front (1980-88) — the Faw Peninsula, the plastic key to paradise, the human wave attacks, the ceasefire Khomeini called drinking poison.',
+    intent: 'both',
+    notes: 'Set by irn_dep_war_soldier. Year texture + follow-throughs: ft77_war_soldier_body, ft77_war_soldier_silence.',
+  },
+
+  irn_martyr_child: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Child of an Iran-Iraq War martyr — the photograph on the wall, the Bonyad-e Shahid certificate, the state\'s use of grief as policy, the age when your age catches up with the photograph.',
+    intent: 'both',
+    notes: 'Set by irn_dep_martyr_child. Follow-throughs: ft77_martyr_child_state, ft77_martyr_child_identity.',
+  },
+
+  irn_nowruz_keeper: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Maintained the Nowruz (Persian New Year) tradition under the Islamic Republic — the haft-sin table, the Hafiz poetry, the Chaharshanbe Suri fire-jumping the Islamic Republic never suppressed.',
+    intent: 'year_texture',
+    notes: 'Set by irn_dep_nowruz.',
+  },
+
+  irn_1988_loss: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lost a family member or close person in the 1988 mass executions of political prisoners — the secret fatwa, the bag of belongings, the mass grave, the silence with no official container.',
+    intent: 'both',
+    notes: 'Set by irn_dep_1988_executions. Follow-through: ft77_1988_silence.',
+  },
+
+  irn_cultural_revolution_student: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'University disrupted by the 1980-83 Iranian Cultural Revolution — universities closed for purge, professors expelled or imprisoned, textbooks revised, the revised institution reopened in 1983.',
+    intent: 'year_texture',
+    notes: 'Set by irn_dep_university_purge.',
+  },
+
+  irn_nuclear_pride: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived the Ahmadinejad nuclear era (2005-13) — the pride of national defiance against sanctions vs the salary that bought less each month, the parallel economies of the official and street rial rates.',
+    intent: 'year_texture',
+    notes: 'Set by irn_dep_nuclear_pride.',
+  },
+
+  irn_post_2022_departure: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Part of the post-Mahsa Amini departure wave — engineers, developers, doctors, teachers who left for Turkey, Georgia, or Germany after the 2022 crackdown emptied the country of its professional generation.',
+    intent: 'both',
+    notes: 'Set by irn_dep_post_2022_leaving. Follow-through: ft77_mahsa_diaspora_distance.',
   },
 
   irn_khatami_generation: {
@@ -1515,6 +1643,78 @@ export const POLITICAL_FLAGS = {
     description: 'Was in Romania for the December 1989 revolution — Timișoara, Ceaușescu\'s last speech, the helicopter, the execution on Christmas Day.',
     intent: 'year_texture',
     notes: 'Set by rom_revolution_1989.',
+  },
+
+  rom_systematization_displaced: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lost home or neighbourhood to Ceaușescu\'s systematization programme — building demolished for the Boulevard of the Victory of Socialism or the Casa Poporului',
+    intent: 'both',
+    notes: 'Set by rom_dep_systematization. Follow-throughs: ft79_systematization_late, ft79_systematization_reckoning.',
+  },
+
+  rom_timisoara_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was present in Timișoara or Bucharest for the December 1989 revolution — the first days, the congregation\'s human chain, the frozen balcony moment',
+    intent: 'both',
+    notes: 'Set by rom_dep_timisoara_1989. Follow-throughs: ft79_timisoara_revolution_start, ft79_timisoara_late_life.',
+  },
+
+  rom_decree_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Born of or raised in the Romanian state orphanage system — child of Decree 770, learned the institutional logic of fading and needing very little',
+    intent: 'both',
+    notes: 'Set by rom_dep_orphan_generation. Follow-throughs: ft79_orphan_adult, ft79_orphan_midlife.',
+  },
+
+  rom_mineriad_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed the June 1990 Mineriad — miners beating students and protesters in University Square while police stood back, six months after the revolution',
+    intent: 'both',
+    notes: 'Set by rom_dep_mineriad_1990. Follow-throughs: ft79_mineriad_pattern, ft79_mineriad_late_reckoning.',
+  },
+
+  rom_file_opened: {
+    weight: 'major',
+    category: 'personal',
+    description: 'Opened a CNSAS Securitate file and discovered the name of an informer — someone whose handwriting was in the file, known to the character',
+    intent: 'both',
+    notes: 'Set by rom_dep_securitate_file. Follow-throughs: ft79_file_presence, ft79_file_late_question.',
+  },
+
+  rom_italian_emigrant: {
+    weight: 'moderate',
+    category: 'personal',
+    description: 'Emigrated from Romania to Italy — the 26-hour bus, the neighbourhood in Pigneto or Piazza Vittorio, the Sunday Romanian-language mass, remittances home',
+    intent: 'both',
+    notes: 'Set by rom_dep_italy_emigration. Follow-throughs: ft79_italy_years, ft79_italy_return_question.',
+  },
+
+  rom_hungarian_minority: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Ethnic Hungarian living in Transylvania — identity question of Romanian who speaks Hungarian vs Hungarian who lives in Romania, different answers across regimes',
+    intent: 'both',
+    notes: 'Set by rom_dep_hungarian_minority. Follow-throughs: ft79_hungarian_identity_question, ft79_hungarian_late.',
+  },
+
+  rom_democratic_disillusionment: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Drew the conclusion from the Mineriad that the method of the old regime survived into the new one — democracy that uses the same tools as the dictatorship',
+    intent: 'year_texture',
+    notes: 'Set by ft79_mineriad_pattern. Year-texture flag for late-life political reflection.',
+  },
+
+  rom_returned_emigrant: {
+    weight: 'minor',
+    category: 'personal',
+    description: 'Returned to Romania after years of emigration to Italy — the return that is not the homecoming the idea of the return was',
+    intent: 'year_texture',
+    notes: 'Set by ft79_italy_return_question (choice 1). Year-texture flag.',
   },
 
   hungarian_1956_generation: {
@@ -2841,6 +3041,118 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by pol_smolensk_2010 (doubt branch).',
   },
 
+  katyn_family_loss: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Has a family member killed in the 1940 Katyń massacre — an officer, policeman, or educated reservist executed by the NKVD, whose absence was explained differently across the decades',
+    intent: 'both',
+    notes: 'Set by pol_dep_katyn (family branch). Follow-throughs: ft80_katyn_family_late, ft80_katyn_smolensk_connection.',
+  },
+
+  katyn_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Polish adult who learned the full confirmed scale of the Katyń massacre in 1990 — 22,000 executed, fifty years of Soviet denial now officially ended',
+    intent: 'year_texture',
+    notes: 'Set by pol_dep_katyn (scale branch).',
+  },
+
+  warsaw_uprising_veteran: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Fought in the 1944 Warsaw Uprising — 63 days of AK resistance against German occupation, then decades of being officially designated a fascist collaborator by the communist state',
+    intent: 'both',
+    notes: 'Set by pol_dep_warsaw_uprising_adult (fought branch). Follow-throughs: ft80_uprising_veteran_forbidden, ft80_uprising_veteran_1989.',
+  },
+
+  warsaw_uprising_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Polish person shaped by the Warsaw Uprising — present or carrying the wound from parents; 200,000 dead, 85% of Warsaw destroyed while Soviets waited across the Vistula',
+    intent: 'both',
+    notes: 'Set by pol_dep_warsaw_uprising_child/adult. Follow-through: ft80_uprising_museum_2004.',
+  },
+
+  ak_veteran_silenced: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'AK (Home Army) veteran who could not officially acknowledge their service under communism — the Armia Krajowa classified as a reactionary organization from 1945 to 1989',
+    intent: 'year_texture',
+    notes: 'Set by ft80_uprising_veteran_forbidden.',
+  },
+
+  kresy_family: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Family from the Polish eastern borderlands (Kresy) — Lwów, Wilno, the areas transferred to the Soviet Union in 1945; parents\' city now in Ukraine or Lithuania under a different name',
+    intent: 'both',
+    notes: 'Set by pol_dep_kresy_family. Follow-throughs: ft80_kresy_name, ft80_kresy_late.',
+  },
+
+  nowa_huta_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Connected to Nowa Huta — the model socialist city built without a church, whose steelworkers fought for and eventually built the Ark of the Lord Church (1977)',
+    intent: 'year_texture',
+    notes: 'Set by pol_dep_nowa_huta.',
+  },
+
+  jedwabne_reckoning: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Engaged with the Jedwabne reckoning — the 2001 acknowledgment that Polish neighbors murdered 340 Jewish residents in July 1941, not the German occupiers',
+    intent: 'both',
+    notes: 'Set by pol_dep_jedwabne. Follow-through: ft80_jedwabne_late.',
+  },
+
+  pis_opposition: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Opposed to the PiS government\'s democratic backsliding post-2015 — judiciary dismantled, media captured, Article 7 proceedings, KOD marches',
+    intent: 'both',
+    notes: 'Set by pol_dep_pis_era (opposition branch). Follow-through: ft80_pis_opposition_2023.',
+  },
+
+  pis_support: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Supported the PiS government — 500+ child benefit, sense of being spoken for after Tusk\'s cosmopolitan years, "Poland B" represented at last',
+    intent: 'both',
+    notes: 'Set by pol_dep_pis_era (support branch). Follow-through: ft80_pis_support_loss.',
+  },
+
+  poland_uk_emigrant: {
+    weight: 'moderate',
+    category: 'personal',
+    description: 'Emigrated from Poland to the UK post-EU-accession 2004 — the Polish deli, the Saturday school, the Settled Status application after Brexit',
+    intent: 'both',
+    notes: 'Set by pol_dep_uk_emigrant (settle branch). Also sets emigrated. Follow-through: ft80_uk_brexit.',
+  },
+
+  poland_returned_emigrant: {
+    weight: 'minor',
+    category: 'personal',
+    description: 'Returned to Poland from UK emigration — Brexit as the signal to go back; the comparative perspective that only leaving and returning produces',
+    intent: 'both',
+    notes: 'Set by pol_dep_uk_emigrant (return branch). Follow-through: ft80_poland_return_adjustment.',
+  },
+
+  smolensk_conspiracy_view: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Holds the view that the 2010 Smolensk crash may not have been purely accidental — the sequence of Katyń commemoration, Russian territory, Russian investigation carries an uncomfortable shape',
+    intent: 'year_texture',
+    notes: 'Set by pol_dep_smolensk_conspiracy (conspiracy branch).',
+  },
+
+  smolensk_accident_view: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Holds the accident view of the 2010 Smolensk crash and opposes the political weaponization of the grief by the Kaczyński camp',
+    intent: 'year_texture',
+    notes: 'Set by pol_dep_smolensk_conspiracy (accident branch).',
+  },
+
   nl_hunger_winter_generation: {
     weight: 'major',
     category: 'historical',
@@ -2943,6 +3255,86 @@ export const POLITICAL_FLAGS = {
     description: 'Concerned by the concentration of media power in the hands of politicians — the overlap that lasted twenty years in Italy.',
     intent: 'year_texture',
     notes: 'Set by it_berlusconi_era (concerned choice).',
+  },
+
+  italy_partisan_veteran: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Fought as a partisan (partigiano) in the Italian Resistance 1943-45 — in the mountains, against Germans and fascists, until the Liberation of April 25 1945.',
+    intent: 'both',
+    notes: 'Set by it_dep_resistenza (fought choice). Follow-throughs: ft81_partisan_april25, ft81_partisan_late_politics.',
+  },
+
+  italy_resistenza_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the Resistance period 1943-45 — whether as a partisan or in the grey zone of survival.',
+    intent: 'year_texture',
+    notes: 'Set by it_dep_resistenza.',
+  },
+
+  pci_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'PCI voter or member — the Italian Communist Party during its Cold War exclusion from government, under Togliatti, Longo, Berlinguer.',
+    intent: 'both',
+    notes: 'Set by it_dep_dc_pci_anomalia (PCI choice). Follow-throughs: ft81_pci_berlinguer, ft81_pci_dissolution.',
+  },
+
+  dc_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'DC voter or supporter — the Christian Democracy that governed Italy from 1948 to 1994, revealed by Mani Pulite to have financed itself through systematic corruption.',
+    intent: 'both',
+    notes: 'Set by it_dep_dc_pci_anomalia (DC choice). Follow-through: ft81_dc_mani_pulite.',
+  },
+
+  postconciliar_generation: {
+    weight: 'minor',
+    category: 'personal',
+    description: 'Italian Catholic who grew up with Vatican II — the Mass in Italian, the turned altar, the 1974 divorce vote showing the gap between the hierarchy and the faithful.',
+    intent: 'both',
+    notes: 'Set by it_dep_vaticano_due. Follow-through: ft81_postconciliar_abortion.',
+  },
+
+  seconda_repubblica_disillusion: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Disillusioned by the failed transition after Mani Pulite — the Second Republic that never arrived, the First Republic that never quite ended, the permanent space between them.',
+    intent: 'both',
+    notes: 'Set by it_dep_seconda_repubblica. Follow-through: ft81_seconda_rep_grillo.',
+  },
+
+  italy_immigration_witness: {
+    weight: 'minor',
+    category: 'social',
+    description: 'Witnessed Italy\'s transformation from emigration to immigration country — the badanti, the vu cumprà, the care workers from Romania and Ukraine.',
+    intent: 'year_texture',
+    notes: 'Set by it_dep_badanti.',
+  },
+
+  italy_austerity_generation: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Lived through the 2011-2013 spread crisis and Monti technocratic government — the austerity, the IMU property tax, the rising retirement age, the GDP contraction.',
+    intent: 'both',
+    notes: 'Set by it_dep_spread. Follow-through: ft81_austerity_stagnation.',
+  },
+
+  italy_meloni_2022: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through Meloni\'s October 2022 election victory — the first woman prime minister, from a party with post-fascist lineage, watched with alarm across Europe.',
+    intent: 'both',
+    notes: 'Set by it_dep_meloni_2022. Follow-through: ft81_meloni_in_office.',
+  },
+
+  mezzogiorno_organized_crime_texture: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up in Calabria or Campania absorbing the ambient texture of organized crime — not as direct involvement but as the geometry of what is avoided and not spoken of.',
+    intent: 'both',
+    notes: 'Set by it_dep_ndrangheta. Follow-throughs: ft81_mezzogiorno_leave_or_stay, ft81_mezzogiorno_midlife.',
   },
 
   ddr_generation: {
@@ -5110,6 +5502,70 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by bra_january_8_2023.',
   },
 
+  arg_peronist_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived the early Peronist era (1945-55) — the descamisados, Eva Perón\'s social welfare, women\'s suffrage 1947, and the polarised republic between the movement and the oligarchy.',
+    intent: 'both',
+    notes: 'Set by arg_dep_peronism_early. Year texture + follow-throughs: ft78_peronist_late_reckoning, ft78_evita_death.',
+  },
+
+  arg_plaza_mayo_bombing: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Present in Buenos Aires during the June 16 1955 Plaza de Mayo bombing — the Navy and Air Force bombing civilians in the square, killing 308, trying and failing to assassinate Perón.',
+    intent: 'year_texture',
+    notes: 'Set by arg_dep_bombing_1955.',
+  },
+
+  arg_buenos_aires_culture: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Formed by Buenos Aires cultural identity — the psychoanalysis as infrastructure, the milonga as social practice, the porteño relationship with interiority and the examined life.',
+    intent: 'both',
+    notes: 'Set by arg_dep_ba_texture. Year texture + follow-through: ft78_analysis_late.',
+  },
+
+  arg_amia_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the July 18 1994 AMIA bombing — 85 dead, Argentina\'s largest terrorist attack, the Jewish Argentine community\'s rupture, and three decades of impunity and obstruction.',
+    intent: 'both',
+    notes: 'Set by arg_dep_amia_1994. Follow-through: ft78_amia_impunity.',
+  },
+
+  arg_malvinas_conscript: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Served as a conscript in the 1982 Malvinas/Falklands War — sent to the islands at 18-22 under poorly-equipped junta officers, came home without a welcome to a country processing defeat.',
+    intent: 'both',
+    notes: 'Set by arg_dep_malvinas_conscript. Follow-throughs: ft78_malvinas_return, ft78_malvinas_late.',
+  },
+
+  arg_hyperinflation_1989: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through Argentina\'s 1989 hyperinflation (3,079%) — prices changing morning to afternoon, middle-class savings erased, Alfonsin leaving office six months early.',
+    intent: 'both',
+    notes: 'Set by arg_dep_hyperinflation_1989. Follow-through: ft78_inflation_returns.',
+  },
+
+  arg_kirchner_trials_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed the Kirchner-era human rights trials (2003+) — amnesty laws annulled, ESMA officers convicted, the Mothers of Plaza de Mayo living to see some justice after 30 years.',
+    intent: 'both',
+    notes: 'Set by arg_dep_kirchner_trials. Follow-through: ft78_trials_reckoning.',
+  },
+
+  arg_returned_exile: {
+    weight: 'moderate',
+    category: 'personal',
+    description: 'Returned to Argentina after exile (post-2001 or post-junta) — the neighbourhood the same and not the same, the recognising that feels like loss, the city that continued without you.',
+    intent: 'year_texture',
+    notes: 'Set by arg_dep_exile_return.',
+  },
+
   corralito_survivor: {
     weight: 'major',
     category: 'historical',
@@ -5188,6 +5644,70 @@ export const POLITICAL_FLAGS = {
     description: 'Lived through the 2017 Catalan independence referendum and its aftermath — the fractured WhatsApp groups, the riot gear at ballot boxes, the constitutional position and its contradictions.',
     intent: 'year_texture',
     notes: 'Set by es_catalan_independence_2017.',
+  },
+
+  spain_rojo_family: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Family member was classified as rojo (Republican, left, anarchist) after the Civil War — depuration record, employment restrictions, the silence around a specific name that you learned before you learned the reason.',
+    intent: 'both',
+    notes: 'Set by es_dep_posguerra_rojo. Follow-throughs: ft82_rojo_document, ft82_rojo_transition.',
+  },
+
+  spain_anti_franco_cell: {
+    weight: 'major',
+    category: 'political',
+    description: 'Participated in or knew of clandestine anti-Franco organizing under the dictatorship — CCOO underground cells, student opposition, apartment meetings, passing illegal pamphlets.',
+    intent: 'both',
+    notes: 'Set by es_dep_clandestinity. Follow-throughs: ft82_anti_franco_1977, ft82_anti_franco_late.',
+  },
+
+  spain_chabola_childhood: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up in a barraca or chabola shantytown at the edge of Barcelona or Madrid — internal migrant from Andalusia or Extremadura, living on the urban periphery before the apartment blocks arrived.',
+    intent: 'both',
+    notes: 'Set by es_dep_chabolas. Follow-throughs: ft82_chabola_apartment, ft82_chabola_late.',
+  },
+
+  spain_carrero_blanco_lived: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the ETA assassination of Admiral Carrero Blanco on December 20, 1973 — the car launched five stories over the building, the death of Franco\'s expected successor.',
+    intent: 'both',
+    notes: 'Set by es_dep_carrero_blanco. Follow-through: ft82_carrero_transition.',
+  },
+
+  spain_amnesia_pact: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through the Pacto del Olvido — the 1977 Amnesty Law that simultaneously freed political prisoners and foreclosed prosecution of Franco-era crimes, the agreed forgetting that made the transition possible.',
+    intent: 'both',
+    notes: 'Set by es_dep_pacto_olvido. Follow-through: ft82_amnesia_historical_memory.',
+  },
+
+  spain_ley_peligrosidad_survived: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Navigated Spain under the Ley de Peligrosidad y Rehabilitación Social as an LGBTQ person — the clandestine bars, the police raids, the specific routes through a city in which you were legally classified as dangerous.',
+    intent: 'both',
+    notes: 'Set by es_dep_ley_peligrosidad. Follow-throughs: ft82_peligrosidad_transition, ft82_peligrosidad_2005.',
+  },
+
+  spain_fosa_recovery: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Participated in recovering a family member from a mass grave of Civil War victims — DNA sample, ARMH assistance, the process made possible by the 2007 and 2022 Historical Memory Laws.',
+    intent: 'both',
+    notes: 'Set by es_dep_fosa_comu. Follow-through: ft82_fosa_result.',
+  },
+
+  spain_lgbtq_2005: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Experienced Spain\'s legalization of same-sex marriage in June 2005 — the third country in the world to pass full marriage equality, including adoption rights, after the Netherlands and Belgium.',
+    intent: 'year_texture',
+    notes: 'Set by es_dep_matrimonio_igualitario. Surfaced via yearTexture prose; intersects ft82_peligrosidad_2005.',
   },
 
   madrid_11m_lived: {
