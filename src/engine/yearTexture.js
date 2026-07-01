@@ -8065,6 +8065,54 @@ function buildYearTexture(state) {
       ? 'You were the emigrant wave nobody put on the brochure: the 2010s wave, the doctors and engineers and nurses going to Angola and the UK and Brazil because the structural adjustment had made Portugal unable to pay them. You have a relationship with that irony that is still developing.'
       : 'The Portuguese community in Angola in the 2010s had a specific texture: qualified, professional, temporary, trying to decide whether temporary was the right word.',
   ])
+  if (F.has('pt_pide_generation') && Math.random() < 0.22) return pick([
+    'The PIDE file. Not a record of what you did — a record of what someone told them about what you did. The informant was someone you knew. The file makes this clear without making it official. You have been living with the knowledge since April 25.',
+    phase === 'late_life'
+      ? 'The PIDE files were opened. The informants are named in the margins, in the handwriting of the officers who processed the reports. Some of them are still alive. The choice of what to do with knowing who it was is a choice you have now had for decades.'
+      : 'The Estado Novo\'s surveillance infrastructure was not primarily the PIDE officers. It was the ordinary people who wrote the letters. The PIDE only needed the population to do part of the work, and the population did part of the work.',
+  ])
+  if (F.has('pt_clandestine_emigrant_france') && Math.random() < 0.2) return pick([
+    'A salto: the jump. The mountains at night. The Spanish side, then France, the bus to Paris. The Renault factory. The bidonville at Champigny. You sent money home every month. You were not supposed to be there and you were there for twelve years.',
+    phase === 'late_life'
+      ? 'You made the choice between the colonial war and France. The war ended while you were in France. The country you returned to was different from the one you left. You were also different. Returning immigrants and the country they left are two different things trying to recognise each other.'
+      : 'The arithmetic of the a salto emigration: the farm in Trás-os-Montes or the Minho paid in a year what the factory in France paid in a month. The Estado Novo said this was desertion. The men who crossed said it was arithmetic.',
+  ])
+  if (F.has('pt_prec_alentejo_land') && Math.random() < 0.18) return pick([
+    'The hot summer of 1975. The Alentejo wheat fields, the olive groves: occupied. The latifundia owners watching from the road. The cooperative meeting where nobody was entirely sure how to run collectively what had been run by one family for generations.',
+    phase === 'late_life'
+      ? 'The partial reversal. Some properties returned after the sixth provisional government, some not — the cooperatives had changed what was changeable. The Alentejo today is not what it was before 1975 or what it became in 1975. It is the result of the collision between those two things.'
+      : 'The PREC: the revolutionary process that the Carnation Revolution produced and that the constitutional governments then had to contain. The occupation of land was real. The reversal was real. What the Alentejo workers were trying to do was also real.',
+  ])
+  if (F.has('pt_retornado_child') && Math.random() < 0.2) return pick([
+    'You were born in Luanda. You arrived in Almada. The Portuguese kids asked where you were from and the true answer was not the answer that made sense to them. The colonial category — Portuguese, but from there — did not translate into the metropolitan one.',
+    phase === 'late_life'
+      ? 'Angola and Portugal are both countries you are from and from neither in the same way. The retornado child in adulthood: carrying a biographical claim to a place that became a foreign country, while living in a country that received you as a temporary problem and retained you as a permanent fact.'
+      : 'The apartment in Setúbal or Amadora was supposed to be temporary. Temporary lasted your whole childhood. By the time the temporariness was resolved into permanence, you had become someone who was from Portugal, except not exactly.',
+  ])
+  if (F.has('pt_luso_descendant_france') && Math.random() < 0.2) return pick([
+    'Two languages, two countries, neither one fully yours. In Portugal your cousins imitate how you speak. In France you are the Portuguese kid. The space in between is not a problem to be solved — it is the country you actually live in.',
+    phase === 'late_life'
+      ? 'Your children are French. Your grandchildren may not speak Portuguese. The family in the Minho becomes people you see at funerals. The translation that your parents began — from Portugal to France — has completed itself through you and your children into something that is no longer Portuguese except in the archive.'
+      : 'The summer trips to the Minho. The grandmother who spoke no French. The return to school in September with a tan and the feeling of having come from somewhere else. You were from somewhere else even though you were also from here.',
+  ])
+  if (F.has('pt_fado_political_memory') && Math.random() < 0.18) return pick([
+    'Fado was Salazar\'s gift to the Portuguese and also predated Salazar and also survived Salazar. After April 25, some people couldn\'t hear it without hearing the Estado Novo. Then Amália Rodrigues died in 1999 and the country understood what it had.',
+    phase === 'late_life'
+      ? 'The argument about what fado was — instrument of submission or music that exists before politics — has been going on your entire adult life. You have not resolved it. You still listen to it. The two things are not incompatible, which is the point.'
+      : 'The three F\'s: Fado, Football, Fátima. Salazar understood that a music of fate and beauty and loss could be the sound of a people accepting things as they are. The music did not care what Salazar understood.',
+  ])
+  if (F.has('pt_salazar_revisionist_debate') && Math.random() < 0.18) return pick([
+    '"Grandes Portugueses": Salazar first, in a 2007 public vote. Above Camões. Above Vasco da Gama. The country that overthrew Salazar voted him its greatest son. The people who voted: remembering the roads, the order, the fact that there was no crime. Not remembering the PIDE. Not remembering Angola.',
+    phase === 'late_life'
+      ? 'The Salazar revisionism exists in Portugal and will probably always exist. What people remember of the Estado Novo depends entirely on who they were during the Estado Novo. The worker who never had trouble with the PIDE may remember the roads. The prisoner remembers differently.'
+      : 'The specific Portuguese condition: a dictatorship mild enough, in the metropolitan experience, that its nostalgia was predictable. The colonial wars, the PIDE, the prisoners: these were real. They did not feel real to everyone.',
+  ])
+  if (F.has('pt_25_abril_2024_witness') && Math.random() < 0.18) return pick([
+    '50 years. The Assembleia da República. Chega walking out of the ceremony — the first time in fifty years a Portuguese party has refused to celebrate April 25. You were alive for April 25. You watched the walkout. These two facts do not belong in the same sentence and yet here they are.',
+    phase === 'late_life'
+      ? 'The captains of April are still alive, some of them. Salgueiro Maia\'s statue is in Santarém. The carnation is on the stamp. Chega says April 25 has been "stolen" by the left. The people who were there are still there, in decreasing numbers, holding the other version.'
+      : 'The 50th anniversary debate: whether April 25 belongs to everyone or only to those who celebrate its full meaning, including the PREC and the nationalizations and the things that were reversed. Chega says no. The constitution says yes. The argument continues.',
+  ])
 
   // ─── SPAIN TEXTURE ───────────────────────────────────────────────────────────
   if (F.has('franco_generation') && Math.random() < 0.22) return pick([
@@ -9163,6 +9211,54 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'The Dutch king apologized in Jakarta. The prime minister apologized for slavery in 2022. You watched both. The words arrived. The process of deciding what the words oblige is still ongoing.'
       : 'The Dutch East Indies, the plantation economy, the Bersiap period. The history is in the language — in street names, in the products in the supermarket, in which families came from where and why. Acknowledgment is arriving slowly.',
+  ])
+  if (F.has('nl_jodendeportatie_witness') && Math.random() < 0.22) return pick([
+    'May 4. Two minutes of silence at 8pm — the trams stop, the radio stops, the whole country stops. You have done this every year. As a child it was the silence of adults. Now you are the adult in the silence and the names you are thinking of are specific.',
+    phase === 'late_life'
+      ? 'The gap in the street is still there in your memory even when the street has become something else. The daughter who played on the steps. You never knew her name. The silence is partly for that still.'
+      : 'The population registers: Dutch administrative precision that made the deportation easier than anywhere else in Western Europe. The lists were produced when asked. Seventy-five percent of Dutch Jews died. The efficiency was Dutch.',
+  ])
+  if (F.has('nl_bijlmerramp_witness') && Math.random() < 0.18) return pick([
+    'The Bijlmer tower on fire. The official death toll: 43. The actual number: never established. The towers were full of people who could not go to hospitals because they did not officially exist. A crash revealed an invisible city within the city.',
+    phase === 'late_life'
+      ? 'The parliamentary inquiry tried to establish how many people actually died in the towers. The number was never established. This is what Amsterdam was in 1992: a city with thousands of people in it that the city did not count.'
+      : 'The Bijlmermeer towers were social housing built in the 1960s as the utopian Dutch solution. By 1992 they were full of Surinamese, Ghanaian, undocumented families from everywhere. The utopia had become invisible.',
+  ])
+  if (F.has('nl_same_sex_pioneer_2001') && Math.random() < 0.2) return pick([
+    'April 1, 2001. Four couples. The mayor of Amsterdam. The world\'s first legal same-sex marriages. You were in the country where this happened first. The position of first does not last but cannot be taken back.',
+    phase === 'late_life'
+      ? 'Belgium, Spain, Canada, South Africa, then more. The Netherlands was first and is now one of many. The word "first" is historical now. The marriages were always permanent.'
+      : 'Being from the first country where this was legal is a specific form of luck. The right existed here before it existed anywhere. You lived inside that fact while people in other countries were still waiting for their country to produce it.',
+  ])
+  if (F.has('nl_zwarte_piet_debate_generation') && Math.random() < 0.18) return pick([
+    'The annual Sinterklaas debate. The children\'s memory and the adult\'s argument occupy the same tradition. You grew up with the candy and the blackened faces as entirely normal. The argument about what was normal is the Dutch argument of the last thirty years.',
+    phase === 'late_life'
+      ? 'Roetveegpiet, chimney soot rather than blackface. The change is contested every year, differently in each city. The Netherlands negotiating its own childhood in public.'
+      : 'The specific Dutch difficulty: the tradition was genuinely a tradition, not performed malice. That it also depicted something is the argument. Both things are true and the Netherlands is working out what to do with both being simultaneously true.',
+  ])
+  if (F.has('nl_toeslagen_family') && Math.random() < 0.22) return pick([
+    'Ongekend onrecht. Unprecedented injustice. The words the parliamentary inquiry used for what the tax authority did — yours among 26,000 families flagged by an algorithm that treated your surname as a risk indicator.',
+    phase === 'late_life'
+      ? 'The Hersteloperatie. The money began to arrive years after the harm. The decade that was destroyed did not arrive with it. The cabinet had resigned. The debt eventually got addressed. The decade stayed gone.'
+      : 'The letter from the tax authority. The amount. You had not committed fraud. The system was designed to recover money and it recovered money from people who did not owe it. The word "systematic" is in the inquiry report.',
+  ])
+  if (F.has('nl_groningen_earthquake_affected') && Math.random() < 0.2) return pick([
+    'The crack in the wall. A hairline last year; wider this year. The Groningen field made the Netherlands rich in the 1960s. The people above the field got the earthquakes. The NAM said it was soil settling. The houses said otherwise.',
+    phase === 'late_life'
+      ? 'The gas extraction stopped in 2023. The field is closed. The cracks are still in the houses. The compensation process continues. The welfare state was funded by the gas. The welfare state did not extend to the people who got the earthquakes.'
+      : 'The claim form. The assessor who says the crack was pre-existing. The appeals process. The distinction between earthquake damage and soil settling is contested by exactly the parties who profit from the distinction.',
+  ])
+  if (F.has('nl_wilders_2023_generation') && Math.random() < 0.18) return pick([
+    'November 2023. 37 seats. The PVV the largest party. The analysis of who voted and why takes longer than the result. Housing. Toeslagen. Groningen. Nitrogen. The voters are not a single thing and Wilders is not the only explanation.',
+    phase === 'late_life'
+      ? 'The coalition. The extreme proposals modified by partners. Some implemented. The Netherlands having this argument since Fortuyn — and the same argument and a different argument both, because what the state did to certain people in the intervening years changed the terms.'
+      : 'Wilders under police protection since 2004 for jihadi death threats, now leading the largest party. The politics Fortuyn found a frequency for is still at that frequency. The frequency is not going away.',
+  ])
+  if (F.has('nl_bersiap_family_memory') && Math.random() < 0.18) return pick([
+    'Your grandfather did not speak about the Dutch East Indies the way veterans speak about liberation. The word the government used was "police actions." The word the 2022 inquiry used was "systematic and extreme violence." Both refer to what he did.',
+    phase === 'late_life'
+      ? 'The 2022 report. The Prime Minister in Jakarta. The apology directed at the people who were harmed. Your grandfather dead before any of this. The official language about what he did has now changed. He knew what he did. Whether he knew what it was is a question you cannot now ask.'
+      : 'The silence around the East Indies service. Not proud silence — a different texture. The shape of what cannot be said: the families at the receiving end of the politionele acties are still alive, some in the Netherlands, and what he did is between them.',
   ])
 
   // ─── IRELAND TEXTURE ─────────────────────────────────────────────────────────

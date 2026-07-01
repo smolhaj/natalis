@@ -3209,6 +3209,70 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by nl_water_country.',
   },
 
+  nl_jodendeportatie_witness: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed the gap left by Jewish deportations in WWII Netherlands — the highest Jewish death rate in Western Europe (75%), enabled by meticulous Dutch population registers.',
+    intent: 'both',
+    notes: 'Set by nl_dep_jodendeportatie (both choices). Follow-throughs: ft83_dodenherdenking, ft83_jodendeportatie_restitution.',
+  },
+
+  nl_bijlmerramp_witness: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed the Bijlmerramp (October 4, 1992) — El Al flight crashing into Amsterdam tower blocks and revealing thousands of undocumented immigrants with an unestablished death toll.',
+    intent: 'year_texture',
+    notes: 'Set by nl_dep_bijlmerramp.',
+  },
+
+  nl_same_sex_pioneer_2001: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Was present in the Netherlands for the world\'s first legal same-sex marriages on April 1, 2001 — either as one of the couples or as a witness to history.',
+    intent: 'both',
+    notes: 'Set by nl_dep_same_sex_huwelijk (requires lgbtq_identity). Follow-through: ft83_same_sex_world_follows.',
+  },
+
+  nl_zwarte_piet_debate_generation: {
+    weight: 'moderate',
+    category: 'social',
+    description: 'Grew up with the Sinterklaas / Zwarte Piet tradition as normal, before the decades-long Dutch debate about what the tradition depicts.',
+    intent: 'year_texture',
+    notes: 'Set by nl_dep_zwarte_piet.',
+  },
+
+  nl_toeslagen_family: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Wrongly accused of childcare benefit fraud in the Toeslagenaffaire — 26,000 families, disproportionately with migration backgrounds, destroyed by a tax authority algorithm.',
+    intent: 'both',
+    notes: 'Set by nl_dep_toeslagen. Follow-through: ft83_toeslagen_compensation.',
+  },
+
+  nl_groningen_earthquake_affected: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Home cracked by Groningen gas extraction earthquakes — 100,000+ homes damaged since 2012, with NAM (Shell/ExxonMobil) and the Dutch state disputing liability for years.',
+    intent: 'both',
+    notes: 'Set by nl_dep_groningen_gas. Follow-through: ft83_groningen_gas_stop.',
+  },
+
+  nl_wilders_2023_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Witnessed the PVV winning the most seats in November 2023 — Wilders\' party becoming the largest in Dutch parliament after decades of post-Fortuyn political transformation.',
+    intent: 'year_texture',
+    notes: 'Set by nl_dep_wilders_2023 (both choices).',
+  },
+
+  nl_bersiap_family_memory: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Carries family memory of a father or grandfather who served in the Dutch East Indies post-1945 — the "police actions" that the 2022 parliamentary inquiry called systematic and extreme violence.',
+    intent: 'both',
+    notes: 'Set by nl_dep_bersiap_memory. Follow-through: ft83_bersiap_2022_report.',
+  },
+
   miracolo_generation: {
     weight: 'major',
     category: 'historical',
@@ -5235,6 +5299,70 @@ export const POLITICAL_FLAGS = {
     description: 'Lived through Portugal\'s 1986 EC accession as an adult — the structural funds, the new roads, the specific relief of a generation that remembered dictatorship.',
     intent: 'year_texture',
     notes: 'Set by pt_eu_accession.',
+  },
+
+  pt_pide_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was summoned or imprisoned by the PIDE (Estado Novo secret police) — the "request for clarification," the three days in Caxias, the informant file.',
+    intent: 'both',
+    notes: 'Set by pt_dep_pide_interrogation (both choices). Follow-throughs: ft84_pide_files_open, ft84_pide_late.',
+  },
+
+  pt_clandestine_emigrant_france: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Made the clandestine "a salto" crossing to France in the 1960s-70s — crossing the border by night on foot, to the Renault factory and the bidonvilles of Paris, rather than serve in a colonial war.',
+    intent: 'both',
+    notes: 'Set by pt_dep_a_salto (choice 1). Follow-through: ft84_clandestine_emigrant_return.',
+  },
+
+  pt_prec_alentejo_land: {
+    weight: 'major',
+    category: 'political',
+    description: 'Was involved in the 1975 Alentejo land seizures during the PREC — either as a farmworker who occupied latifundia or as a landowner who lost land to the cooperatives.',
+    intent: 'both',
+    notes: 'Set by pt_dep_prec_alentejo (both choices). Follow-through: ft84_prec_reversal.',
+  },
+
+  pt_retornado_child: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Arrived in Portugal as a child from Angola or Mozambique in 1975 — born Portuguese in the colonies, arriving in a "home country" never previously inhabited.',
+    intent: 'both',
+    notes: 'Set by pt_dep_retornado_child. Follow-through: ft84_retornado_child_identity.',
+  },
+
+  pt_luso_descendant_france: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Grew up as a child of Portuguese emigrants in France — Portuguese in name and summer holidays, French in school and daily life, belonging fully to neither.',
+    intent: 'both',
+    notes: 'Set by pt_dep_luso_frances. Follow-through: ft84_luso_descendant_choice.',
+  },
+
+  pt_fado_political_memory: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Grew up with fado as both the soundtrack of Estado Novo accommodation and a music that precedes and outlasts any politics — the unresolvable Portuguese argument about what fado was.',
+    intent: 'year_texture',
+    notes: 'Set by pt_dep_fado_political (both choices).',
+  },
+
+  pt_salazar_revisionist_debate: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Witnessed the Portuguese "Grandes Portugueses" vote (2007) placing Salazar first — and the ongoing debate about Estado Novo nostalgia and whether Salazar "fez obras."',
+    intent: 'year_texture',
+    notes: 'Set by pt_dep_salazar_revisionism.',
+  },
+
+  pt_25_abril_2024_witness: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Was alive for the 50th anniversary of April 25, 2024 — and Chega\'s walkout from the parliamentary ceremony, the first time a Portuguese party refused to celebrate the Carnation Revolution.',
+    intent: 'year_texture',
+    notes: 'Set by pt_dep_25_abril_2024 (both choices).',
   },
 
   marcos_generation: {
