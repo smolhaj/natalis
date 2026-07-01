@@ -800,6 +800,70 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by col_late_reckoning.',
   },
 
+  irn_revolution_childhood: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Grew up during the Islamic Revolution 1979 — school uniforms changed, textbooks arrived with glued pages, the komiteh came to the neighbourhood, the apartment became one country and the street another.',
+    intent: 'both',
+    notes: 'Set by irn_dep_revolution_childhood. Year texture + follow-through: ft77_revolution_childhood_late.',
+  },
+
+  irn_iraq_war_soldier: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Served or evaded service at the Iran-Iraq War front (1980-88) — the Faw Peninsula, the plastic key to paradise, the human wave attacks, the ceasefire Khomeini called drinking poison.',
+    intent: 'both',
+    notes: 'Set by irn_dep_war_soldier. Year texture + follow-throughs: ft77_war_soldier_body, ft77_war_soldier_silence.',
+  },
+
+  irn_martyr_child: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Child of an Iran-Iraq War martyr — the photograph on the wall, the Bonyad-e Shahid certificate, the state\'s use of grief as policy, the age when your age catches up with the photograph.',
+    intent: 'both',
+    notes: 'Set by irn_dep_martyr_child. Follow-throughs: ft77_martyr_child_state, ft77_martyr_child_identity.',
+  },
+
+  irn_nowruz_keeper: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Maintained the Nowruz (Persian New Year) tradition under the Islamic Republic — the haft-sin table, the Hafiz poetry, the Chaharshanbe Suri fire-jumping the Islamic Republic never suppressed.',
+    intent: 'year_texture',
+    notes: 'Set by irn_dep_nowruz.',
+  },
+
+  irn_1988_loss: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lost a family member or close person in the 1988 mass executions of political prisoners — the secret fatwa, the bag of belongings, the mass grave, the silence with no official container.',
+    intent: 'both',
+    notes: 'Set by irn_dep_1988_executions. Follow-through: ft77_1988_silence.',
+  },
+
+  irn_cultural_revolution_student: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'University disrupted by the 1980-83 Iranian Cultural Revolution — universities closed for purge, professors expelled or imprisoned, textbooks revised, the revised institution reopened in 1983.',
+    intent: 'year_texture',
+    notes: 'Set by irn_dep_university_purge.',
+  },
+
+  irn_nuclear_pride: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived the Ahmadinejad nuclear era (2005-13) — the pride of national defiance against sanctions vs the salary that bought less each month, the parallel economies of the official and street rial rates.',
+    intent: 'year_texture',
+    notes: 'Set by irn_dep_nuclear_pride.',
+  },
+
+  irn_post_2022_departure: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Part of the post-Mahsa Amini departure wave — engineers, developers, doctors, teachers who left for Turkey, Georgia, or Germany after the 2022 crackdown emptied the country of its professional generation.',
+    intent: 'both',
+    notes: 'Set by irn_dep_post_2022_leaving. Follow-through: ft77_mahsa_diaspora_distance.',
+  },
+
   irn_khatami_generation: {
     weight: 'moderate',
     category: 'political',

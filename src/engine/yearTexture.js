@@ -10031,6 +10031,62 @@ function buildYearTexture(state) {
       : 'The cost was 500 dead and 20,000 arrested. The movement did not achieve what it asked for. What it changed is a question that will be answered by what comes next.',
   ])
 
+  if (F.has('irn_revolution_childhood') && Math.random() < 0.25) return pick([
+    'The school uniform changed. The textbooks arrived with pages glued together — the wrong pages, the pages from before. The komiteh had an office on the street. You learned early that the apartment and the street were different countries.',
+    'The before and after run through your generation specifically. Born before 1979: you remember what changed. Born after: the Islamic Republic is the only thing there is. You are in the smaller group.',
+    phase === 'late_life'
+      ? 'The generation born after 1979 has never known anything but the Islamic Republic. When they protest, they protest the only system they have ever had. You remember there was something before. The memory does not help as much as you thought it would.'
+      : 'The private life went inside. The party became quieter. The music went through the walls. You learned the texture of the double life before you had words for what the double life was.',
+  ])
+  if (F.has('irn_iraq_war_soldier') && Math.random() < 0.28) return pick([
+    'The Sacred Defence: the state\'s name for the Iran-Iraq War. The murals on the walls of every city — the martyrs\' faces, the years 1980–1988. The mural is not where you were. You were somewhere the mural does not show.',
+    'Eight years. Half a million Iranian casualties. The UN resolution Khomeini accepted as "drinking poison." You were there for some of those eight years. The ceasefire came and you came back different or you did not come back.',
+    phase === 'late_life'
+      ? 'The war is official memory now. The state has uses for the war that are not the same as your experience of the war. The gap between the mural and the memory is a gap you have been carrying for a long time.'
+      : 'The plastic key on a string, before the minefield. The Faw Peninsula. The Shatt al-Arab. Some details go in, some do not. What stays in the body is not always the details you would have chosen to keep.',
+  ])
+  if (F.has('irn_martyr_child') && Math.random() < 0.22) return pick([
+    'The photograph on the wall. Shahid, the date. The Bonyad-e Shahid sending money. The state announcing your category at school assemblies. The state has a use for your grief that is not the same as your grief.',
+    'You are now older than your father was in the photograph. He is younger than you. The image does not update. You are in territory the photograph did not reach.',
+    phase === 'late_life'
+      ? 'The anniversary comes every year. The state remembers the martyrs in its way. Your memory of the photograph on the wall is different from the state\'s memory of what the photograph represents.'
+      : 'The Bonyad-e Shahid certificate is a social position. The grief is personal. The two things overlap imperfectly.',
+  ])
+  if (F.has('irn_nowruz_keeper') && Math.random() < 0.2) return pick([
+    'The haft-sin table. The seven items beginning with S. The Hafiz poetry. The fire that the Islamic Republic never managed to put out. Every year: chaharshanbe suri, the fire in the street, the old words.',
+    'Nowruz predates Islam by two thousand years and the Islamic Republic has complicated feelings about it. The Republic did not abolish it. The Republic has tried to reduce it. The ancient feast refuses to become smaller than itself.',
+    phase === 'late_life'
+      ? 'The new year still comes at the vernal equinox. The table still has the same seven things. Some of the people who used to sit at this table are no longer here. The ritual holds the shape of the people who are absent.'
+      : 'Your redness to me, my paleness to you — give me your warmth and take my sickness. The words you jump the fire and say. The words are older than the country you are jumping in.',
+  ])
+  if (F.has('irn_1988_loss') && Math.random() < 0.22) return pick([
+    'The summer of 1988 is not in the textbooks. Not commemorated. You know because you received the bag of belongings. The family who received a bag knows a different version of recent history than the family that did not.',
+    'No official container for this. The public commemoration does not exist. You carry it the way you carry things that cannot be said in public — quietly, with the other families who know, in the specific company of the unspeakable.',
+    phase === 'late_life'
+      ? 'Decades later, the event is still not acknowledged officially. The families who know have gotten older. The question of whether this will ever have an official reckoning is a question you have stopped expecting to answer.'
+      : 'The number is disputed — three thousand to five thousand. The families who know the individual do not need the number. The individual is the number they carry.',
+  ])
+  if (F.has('irn_cultural_revolution_student') && Math.random() < 0.2) return pick([
+    'The universities closed in April 1980. They reopened in 1983 after the purge. The professors who remained were those who passed the review or were hired after it. You got an education shaped by what it decided not to include.',
+    'The Cultural Revolution closed the universities for three years and reopened them revised. You entered the revised institution or you left. The choice was the definition of your generation.',
+    phase === 'late_life'
+      ? 'The education you received or did not receive in those three years shaped the rest of it. The absence of certain professors, the presence of certain textbooks, the questions that could not be asked. All of it downstream.'
+      : 'Some professors left. Some were expelled. Some were imprisoned. The institution that reopened in 1983 knew what it was and what it was not.',
+  ])
+  if (F.has('irn_nuclear_pride') && Math.random() < 0.2) return pick([
+    'Iran will not give up its nuclear rights. The rial falls. Sanctions tighten. Medicines become hard to find. The salary buys less each month. The nuclear programme is a national project. The question is how to feel about a national project that is impoverishing you.',
+    'The official rate and the street rate: the gap between them is where certain people extract fortunes and where you are simply depleted. You hold the pride and the depletion together imperfectly.',
+    phase === 'late_life'
+      ? 'The JCPOA was signed. Trump withdrew. The rial collapsed sixty percent in months. The nuclear programme outlasted the hope of integration. The sanctions are still there. The programme is still there. You are still there.'
+      : 'Iran is not anyone\'s to dictate to. This sentence is true. The sanctions are also true. The two truths do not resolve into a single practical position at the end of the month.',
+  ])
+  if (F.has('irn_post_2022_departure') && Math.random() < 0.22) return pick([
+    'Turkey first. Georgia second. Germany if the visa cleared. You are part of the wave of engineers, developers, doctors, teachers who left after 2022 — not dissidents, the professional infrastructure that would have changed the country from within.',
+    'The Persian cafes in Tbilisi. The solidarity with people who speak your language and feel exactly what you feel. The distance is also real. The street in Tehran and the protest in front of an embassy are not the same thing.',
+    phase === 'late_life'
+      ? 'You left and you watch from outside. The country you left has continued without you. What it is becoming is something you track from a city that is not the city you grew up in. The tracking is a form of belonging that is different from being there.'
+      : 'Someone has to stay. You did not stay. The people who stayed are the thing you hoped for and also the people you left behind. The distinction between those two descriptions is not entirely clear to you.',
+  ])
   if (F.has('irn_khatami_generation') && Math.random() < 0.22) return pick([
     'Khatami won with seventy percent. Three hundred newspapers. The word "civil society" in print. And then the Guardian Council. The disqualifications. The newspapers closed. The arc from hope to answer was five years.',
     'You watched Iran attempt reform through the system that exists to prevent reform. The lesson of 2001-2004 is precise: which part of the system has the final authority.',
