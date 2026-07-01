@@ -5301,6 +5301,70 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by pt_eu_accession.',
   },
 
+  pt_pide_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was summoned or imprisoned by the PIDE (Estado Novo secret police) — the "request for clarification," the three days in Caxias, the informant file.',
+    intent: 'both',
+    notes: 'Set by pt_dep_pide_interrogation (both choices). Follow-throughs: ft84_pide_files_open, ft84_pide_late.',
+  },
+
+  pt_clandestine_emigrant_france: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Made the clandestine "a salto" crossing to France in the 1960s-70s — crossing the border by night on foot, to the Renault factory and the bidonvilles of Paris, rather than serve in a colonial war.',
+    intent: 'both',
+    notes: 'Set by pt_dep_a_salto (choice 1). Follow-through: ft84_clandestine_emigrant_return.',
+  },
+
+  pt_prec_alentejo_land: {
+    weight: 'major',
+    category: 'political',
+    description: 'Was involved in the 1975 Alentejo land seizures during the PREC — either as a farmworker who occupied latifundia or as a landowner who lost land to the cooperatives.',
+    intent: 'both',
+    notes: 'Set by pt_dep_prec_alentejo (both choices). Follow-through: ft84_prec_reversal.',
+  },
+
+  pt_retornado_child: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Arrived in Portugal as a child from Angola or Mozambique in 1975 — born Portuguese in the colonies, arriving in a "home country" never previously inhabited.',
+    intent: 'both',
+    notes: 'Set by pt_dep_retornado_child. Follow-through: ft84_retornado_child_identity.',
+  },
+
+  pt_luso_descendant_france: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Grew up as a child of Portuguese emigrants in France — Portuguese in name and summer holidays, French in school and daily life, belonging fully to neither.',
+    intent: 'both',
+    notes: 'Set by pt_dep_luso_frances. Follow-through: ft84_luso_descendant_choice.',
+  },
+
+  pt_fado_political_memory: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Grew up with fado as both the soundtrack of Estado Novo accommodation and a music that precedes and outlasts any politics — the unresolvable Portuguese argument about what fado was.',
+    intent: 'year_texture',
+    notes: 'Set by pt_dep_fado_political (both choices).',
+  },
+
+  pt_salazar_revisionist_debate: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Witnessed the Portuguese "Grandes Portugueses" vote (2007) placing Salazar first — and the ongoing debate about Estado Novo nostalgia and whether Salazar "fez obras."',
+    intent: 'year_texture',
+    notes: 'Set by pt_dep_salazar_revisionism.',
+  },
+
+  pt_25_abril_2024_witness: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Was alive for the 50th anniversary of April 25, 2024 — and Chega\'s walkout from the parliamentary ceremony, the first time a Portuguese party refused to celebrate the Carnation Revolution.',
+    intent: 'year_texture',
+    notes: 'Set by pt_dep_25_abril_2024 (both choices).',
+  },
+
   marcos_generation: {
     weight: 'moderate',
     category: 'historical',

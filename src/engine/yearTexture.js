@@ -8065,6 +8065,54 @@ function buildYearTexture(state) {
       ? 'You were the emigrant wave nobody put on the brochure: the 2010s wave, the doctors and engineers and nurses going to Angola and the UK and Brazil because the structural adjustment had made Portugal unable to pay them. You have a relationship with that irony that is still developing.'
       : 'The Portuguese community in Angola in the 2010s had a specific texture: qualified, professional, temporary, trying to decide whether temporary was the right word.',
   ])
+  if (F.has('pt_pide_generation') && Math.random() < 0.22) return pick([
+    'The PIDE file. Not a record of what you did — a record of what someone told them about what you did. The informant was someone you knew. The file makes this clear without making it official. You have been living with the knowledge since April 25.',
+    phase === 'late_life'
+      ? 'The PIDE files were opened. The informants are named in the margins, in the handwriting of the officers who processed the reports. Some of them are still alive. The choice of what to do with knowing who it was is a choice you have now had for decades.'
+      : 'The Estado Novo\'s surveillance infrastructure was not primarily the PIDE officers. It was the ordinary people who wrote the letters. The PIDE only needed the population to do part of the work, and the population did part of the work.',
+  ])
+  if (F.has('pt_clandestine_emigrant_france') && Math.random() < 0.2) return pick([
+    'A salto: the jump. The mountains at night. The Spanish side, then France, the bus to Paris. The Renault factory. The bidonville at Champigny. You sent money home every month. You were not supposed to be there and you were there for twelve years.',
+    phase === 'late_life'
+      ? 'You made the choice between the colonial war and France. The war ended while you were in France. The country you returned to was different from the one you left. You were also different. Returning immigrants and the country they left are two different things trying to recognise each other.'
+      : 'The arithmetic of the a salto emigration: the farm in Trás-os-Montes or the Minho paid in a year what the factory in France paid in a month. The Estado Novo said this was desertion. The men who crossed said it was arithmetic.',
+  ])
+  if (F.has('pt_prec_alentejo_land') && Math.random() < 0.18) return pick([
+    'The hot summer of 1975. The Alentejo wheat fields, the olive groves: occupied. The latifundia owners watching from the road. The cooperative meeting where nobody was entirely sure how to run collectively what had been run by one family for generations.',
+    phase === 'late_life'
+      ? 'The partial reversal. Some properties returned after the sixth provisional government, some not — the cooperatives had changed what was changeable. The Alentejo today is not what it was before 1975 or what it became in 1975. It is the result of the collision between those two things.'
+      : 'The PREC: the revolutionary process that the Carnation Revolution produced and that the constitutional governments then had to contain. The occupation of land was real. The reversal was real. What the Alentejo workers were trying to do was also real.',
+  ])
+  if (F.has('pt_retornado_child') && Math.random() < 0.2) return pick([
+    'You were born in Luanda. You arrived in Almada. The Portuguese kids asked where you were from and the true answer was not the answer that made sense to them. The colonial category — Portuguese, but from there — did not translate into the metropolitan one.',
+    phase === 'late_life'
+      ? 'Angola and Portugal are both countries you are from and from neither in the same way. The retornado child in adulthood: carrying a biographical claim to a place that became a foreign country, while living in a country that received you as a temporary problem and retained you as a permanent fact.'
+      : 'The apartment in Setúbal or Amadora was supposed to be temporary. Temporary lasted your whole childhood. By the time the temporariness was resolved into permanence, you had become someone who was from Portugal, except not exactly.',
+  ])
+  if (F.has('pt_luso_descendant_france') && Math.random() < 0.2) return pick([
+    'Two languages, two countries, neither one fully yours. In Portugal your cousins imitate how you speak. In France you are the Portuguese kid. The space in between is not a problem to be solved — it is the country you actually live in.',
+    phase === 'late_life'
+      ? 'Your children are French. Your grandchildren may not speak Portuguese. The family in the Minho becomes people you see at funerals. The translation that your parents began — from Portugal to France — has completed itself through you and your children into something that is no longer Portuguese except in the archive.'
+      : 'The summer trips to the Minho. The grandmother who spoke no French. The return to school in September with a tan and the feeling of having come from somewhere else. You were from somewhere else even though you were also from here.',
+  ])
+  if (F.has('pt_fado_political_memory') && Math.random() < 0.18) return pick([
+    'Fado was Salazar\'s gift to the Portuguese and also predated Salazar and also survived Salazar. After April 25, some people couldn\'t hear it without hearing the Estado Novo. Then Amália Rodrigues died in 1999 and the country understood what it had.',
+    phase === 'late_life'
+      ? 'The argument about what fado was — instrument of submission or music that exists before politics — has been going on your entire adult life. You have not resolved it. You still listen to it. The two things are not incompatible, which is the point.'
+      : 'The three F\'s: Fado, Football, Fátima. Salazar understood that a music of fate and beauty and loss could be the sound of a people accepting things as they are. The music did not care what Salazar understood.',
+  ])
+  if (F.has('pt_salazar_revisionist_debate') && Math.random() < 0.18) return pick([
+    '"Grandes Portugueses": Salazar first, in a 2007 public vote. Above Camões. Above Vasco da Gama. The country that overthrew Salazar voted him its greatest son. The people who voted: remembering the roads, the order, the fact that there was no crime. Not remembering the PIDE. Not remembering Angola.',
+    phase === 'late_life'
+      ? 'The Salazar revisionism exists in Portugal and will probably always exist. What people remember of the Estado Novo depends entirely on who they were during the Estado Novo. The worker who never had trouble with the PIDE may remember the roads. The prisoner remembers differently.'
+      : 'The specific Portuguese condition: a dictatorship mild enough, in the metropolitan experience, that its nostalgia was predictable. The colonial wars, the PIDE, the prisoners: these were real. They did not feel real to everyone.',
+  ])
+  if (F.has('pt_25_abril_2024_witness') && Math.random() < 0.18) return pick([
+    '50 years. The Assembleia da República. Chega walking out of the ceremony — the first time in fifty years a Portuguese party has refused to celebrate April 25. You were alive for April 25. You watched the walkout. These two facts do not belong in the same sentence and yet here they are.',
+    phase === 'late_life'
+      ? 'The captains of April are still alive, some of them. Salgueiro Maia\'s statue is in Santarém. The carnation is on the stamp. Chega says April 25 has been "stolen" by the left. The people who were there are still there, in decreasing numbers, holding the other version.'
+      : 'The 50th anniversary debate: whether April 25 belongs to everyone or only to those who celebrate its full meaning, including the PREC and the nationalizations and the things that were reversed. Chega says no. The constitution says yes. The argument continues.',
+  ])
 
   // ─── SPAIN TEXTURE ───────────────────────────────────────────────────────────
   if (F.has('franco_generation') && Math.random() < 0.22) return pick([
