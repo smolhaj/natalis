@@ -10298,6 +10298,19 @@ function buildYearTexture(state) {
     'The factory gave you a wage and the wage gave you a life that your parents did not have. The question of what the next step is has been open for a generation.',
   ])
 
+  if (F.has('tha_isan_migrant') && Math.random() < 0.2) return pick([
+    'The room in Bangkok: six people, a fan, the heat. You send money home at the end of every month. The amount has changed across years. The direction has not.',
+    phase === 'late_life'
+      ? 'You left Isan at nineteen and you have lived in Bangkok for thirty years and you are still from Isan. That is the specific identity: the city person who is from somewhere else, who calls somewhere else home, who has been here longer than anywhere else.'
+      : 'Songkran you go back. New Year you go back. Sometimes Loy Krathong. The rest of the year you are in the city and the village is in you in the way of something you carry without having to think about it.',
+  ])
+  if (F.has('tha_1973_generation') && Math.random() < 0.2) return pick([
+    'October 14, 1973. Five hundred thousand at Ratchadamnoen. Thanom fell. Three years followed in which the country briefly became something it had not been and then was not again after October 6, 1976.',
+    phase === 'late_life'
+      ? 'You were in the generation that saw what was possible in the three years from 1973 to 1976. You watched it end on October 6. You have been watching versions of that ending since.'
+      : 'The democratic window from 1973 to 1976: constitutions, press freedom, union organizing, student newspapers. Three years of a country that remembered what it could be. Then the Village Scouts came to Thammasat.',
+  ])
+
   // ─── NEPAL TEXTURE ───────────────────────────────────────────────────────────
   if (F.has('nepal_maoist_generation') && Math.random() < 0.2) return pick([
     'The Maoists had a presence in this area. That meant something specific about who you reported a dispute to, and who you did not.',

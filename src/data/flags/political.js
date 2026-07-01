@@ -7174,4 +7174,70 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by slk_dep_colombo_checkpoints. Follow-through: post-2009 Colombo and the unexamined foundation.',
   },
 
+  // ── THAILAND DEPTH FLAGS ──────────────────────────────────────────────────
+
+  tha_1973_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'In Bangkok or aware of the October 14, 1973 uprising — 500,000 at Ratchadamnoen, Thanom forced into exile, three years of democratic window before October 6, 1976.',
+    intent: 'event',
+    notes: 'Set by tha_dep_1973. Follow-through: the 1973-76 democratic window, its destruction in 1976.',
+  },
+
+  tha_isan_migrant: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Part of the Isan migration to Bangkok — the overnight bus, the factory or construction site, the remittance home, the two-address life.',
+    intent: 'year_texture',
+    notes: 'Set by tha_dep_isan_migration. Year texture: the Isan dual identity in the city.',
+  },
+
+  tha_muay_thai_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Trained in muay thai — the camp, the five limbs, the provincial circuit path toward the Bangkok stadiums (Rajadamnern, Lumpinee).',
+    intent: 'none',
+    notes: 'Set by tha_dep_muay_thai.',
+  },
+
+  tha_merit_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Shaped by Thai Buddhist merit-making (tam bun) — the morning alms bowl, the san phra phum spirit house, the merit economy running through daily life.',
+    intent: 'none',
+    notes: 'Set by tha_dep_merit_making.',
+  },
+
+  tha_songkran_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Knows Songkran as both ritual (elder blessing, temple merit) and event (water guns, the bus home, Isan emptying back to itself).',
+    intent: 'none',
+    notes: 'Set by tha_dep_songkran.',
+  },
+
+  tha_bar_economy_generation: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Worked in the Thai bar/entertainment economy — Pattaya, Patpong, the specific calculus of wages vs. factory work, the competencies nobody names.',
+    intent: 'none',
+    notes: 'Set by tha_dep_bar_economy.',
+  },
+
+  tha_royal_devotion: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Grew up with the monarchy as daily ambient presence — portraits in every room, national anthem stops, cinema royal anthem, King Bhumibol\'s photograph.',
+    intent: 'none',
+    notes: 'Set by tha_dep_royal_daily.',
+  },
+
+  tha_2011_flood_generation: {
+    weight: 'major',
+    category: 'disaster',
+    description: 'Lived through the 2011 Thailand floods — a third of provinces underwater, $45B damage, hard drive supply chain stopped, water taking three months to drain.',
+    intent: 'none',
+    notes: 'Set by tha_dep_floods_2011.',
+  },
+
 }
