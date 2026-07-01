@@ -60,6 +60,86 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by sa_marikana_2012 (betrayal choice).',
   },
 
+  sa_sharpeville_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through or was shaped by the Sharpeville Massacre of March 21, 1960 — 69 Black South Africans shot by police at an anti-pass-law protest, most in the back as they ran.',
+    intent: 'event',
+    notes: 'Set by sa_sharpeville_1960. Follow-through: ft63_sharpeville_midlife, ft63_sharpeville_late.',
+  },
+
+  sa_pass_humiliation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Experienced the dompas (reference book) system — the passbook apartheid required Black South Africans to carry at all times, controlling freedom of movement and employment.',
+    intent: 'event',
+    notes: 'Set by sa_pass_book_daily. Follow-through: ft63_pass_abolition (1986).',
+  },
+
+  sa_biko_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Influenced by Steve Biko and the Black Consciousness movement; present in the culture when Biko was killed in police detention on September 12, 1977.',
+    intent: 'event',
+    notes: 'Set by sa_biko_death_1977. Follow-through: ft63_biko_late.',
+  },
+
+  sa_anc_exile: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Left South Africa to join the ANC in exile — Lusaka, London, Dar es Salaam — through the Botswana route or other crossings; lived as a political exile.',
+    intent: 'event',
+    notes: 'Set by sa_anc_exile. Follow-through: ft63_exile_return_1990.',
+  },
+
+  sa_forced_removal: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Forcibly removed from home under the Group Areas Act or similar apartheid legislation — Sophiatown, District Six, Cato Manor, or any of the communities that were razed and resettled.',
+    intent: 'event',
+    notes: 'Set by sa_forced_removal. Follow-through: ft63_removal_restitution.',
+  },
+
+  sa_mbeki_aids_era: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the Mbeki AIDS denialism period (1999-2008) — the years in which ARV distribution was blocked and 330,000+ preventable deaths occurred.',
+    intent: 'event',
+    notes: 'Set by sa_mbeki_aids. Follow-through: ft63_mbeki_aids_post.',
+  },
+
+  sa_born_free: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'South African born after April 1994 — the "born free" generation who inherited the democracy without living through its winning, growing up into the gap between constitutional freedom and inherited material inequality.',
+    intent: 'year_texture',
+    notes: 'Set by sa_born_free_reality. Follow-through: ft63_born_free_vote.',
+  },
+
+  sa_service_delivery_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Participated in or witnessed the post-apartheid service delivery protests — a generation who held the ANC to the specific promises of 1994 (water, electricity, housing) at the local level.',
+    intent: 'event',
+    notes: 'Set by sa_service_delivery_protest. Follow-through: ft63_service_delivery_late.',
+  },
+
+  sa_afrikaner_transformed: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Afrikaner South African who worked through the transformation of Afrikaner identity after 1994 — the language question, the history question, the relationship between the language and what was done in its name.',
+    intent: 'year_texture',
+    notes: 'Set by sa_afrikaner_identity. Texture only.',
+  },
+
+  sa_land_debate_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Engaged with the South African land question — the 2018+ debate about expropriation without compensation, the arithmetic of apartheid-era dispossession still expressed in land ownership.',
+    intent: 'year_texture',
+    notes: 'Set by sa_land_question. Texture only.',
+  },
+
   endsars_generation: {
     weight: 'major',
     category: 'political',
@@ -4073,6 +4153,103 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by afg_us_invasion_2001.',
   },
 
+  afg_taliban_96_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the Taliban\'s first takeover of Kabul in September 1996 — the overnight edicts, music stopped, women confined, burqa enforced, girls\' schools closed.',
+    intent: 'event',
+    notes: 'Set by afg_taliban_kabul_1996. Follow-through: ft63_afg_96_late.',
+  },
+
+  afg_education_revoked: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Afghan girl whose formal education was revoked by Taliban decree — 1996–2001 or 2021+; the school that simply did not open one morning.',
+    intent: 'event',
+    notes: 'Set by afg_education_revoked. Follow-through: ft63_afg_educ_2001, ft63_afg_educ_2021.',
+  },
+
+  afg_secret_schooling: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Attended or taught a secret school for girls during Taliban rule — textbooks hidden under cloth, the accelerated reading out of fear of being discovered.',
+    intent: 'event',
+    notes: 'Set by afg_education_revoked event (secret school choice). Follow-through: ft63_afg_secret_school_late.',
+  },
+
+  afg_2001_liberation_hope: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Experienced the fall of the Taliban in November 2001 — the music returning to Kabul, women removing burqas, the first walk outside alone in five years.',
+    intent: 'event',
+    notes: 'Set by afg_2001_fall_of_kabul. Follow-through: ft63_afg_hope_2010.',
+  },
+
+  afg_interpreter_served: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Worked as interpreter for NATO/US forces in Afghanistan — translating not just words but context, register, and unspoken meaning, while carrying the risk of being targeted.',
+    intent: 'event',
+    notes: 'Set by afg_interpreter_nato. Follow-through: ft63_afg_interpreter_post, afg_interpreter_2021_threat.',
+  },
+
+  afg_women_career_built: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Afghan woman who built a professional career during the 2001-2021 period — degree, ministry work, NGO, journalism, medicine; the visible professional women\'s class that existed before 2021.',
+    intent: 'event',
+    notes: 'Set by afg_women_career_2013. Feeds into afg_2021_collapse event.',
+  },
+
+  afg_2021_escaped: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Escaped Afghanistan during the August 2021 Taliban takeover — the airport crush, the evacuation flight, the transit country, the visa category that determines the next three years.',
+    intent: 'event',
+    timestamped: true,
+    notes: 'Set by afg_2021_collapse (escaped choice). Follow-through: ft63_afg_escaped_first_year.',
+  },
+
+  afg_2021_stayed: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Stayed in Afghanistan when the Taliban returned in August 2021 — could not reach the airport, or would not leave family, or chose to remain.',
+    intent: 'event',
+    notes: 'Set by afg_2021_collapse (stayed choice). Follow-through: ft63_afg_stayed_2023.',
+  },
+
+  afg_diaspora_watches: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Afghan diaspora member watching the 2021 collapse from abroad — the group chat that goes quiet for three days, the careful messages that resume.',
+    intent: 'year_texture',
+    notes: 'Set by afg_2021_diaspora_watch. Texture only.',
+  },
+
+  afg_aid_economy_worker: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Worked in the reconstruction-era aid economy (NGO, UN, ministry, international organisation) in Afghanistan 2002–2021 — salaries that transformed, work that had a gap between intention and result.',
+    intent: 'year_texture',
+    notes: 'Set by afg_reconstruction_years (aid worker choice). Texture only.',
+  },
+
+  afg_interpreter_evacuated: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Afghan interpreter evacuated on a Special Immigrant Visa after the 2021 Taliban takeover — Fort Lee processing, resettlement, the survival of what the visa was for.',
+    intent: 'event',
+    notes: 'Set by afg_interpreter_2021_threat (made it choice).',
+  },
+
+  afg_post_2021_life: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Living in Afghanistan under Taliban rule post-2021 — the checkpoint calculations, the dress code management, the humanitarian crisis, the phone that connects to an outside world that is watching.',
+    intent: 'year_texture',
+    notes: 'Set by afg_living_under_new_taliban. Texture only.',
+  },
+
   afg_dep_refugee_generation: {
     weight: 'major',
     category: 'displacement',
@@ -4921,8 +5098,8 @@ export const POLITICAL_FLAGS = {
     weight: 'moderate',
     category: 'historical',
     description: 'Lived Operation Car Wash — the anti-corruption investigation that imprisoned Lula, elected Bolsonaro, and was later ruled to have been politically biased.',
-    intent: 'year_texture',
-    notes: 'Set by bra_lava_jato.',
+    intent: 'both',
+    notes: 'Set by bra_lava_jato and bra_dep_lava_jato. Year texture + follow-through: Vaza Jato 2019, Lula return 2023.',
   },
 
   bra_january_8_witness: {
@@ -6353,6 +6530,802 @@ export const POLITICAL_FLAGS = {
     description: 'Left Nicaragua after the 2018 crackdown — part of the tens of thousands in Costa Rica, Miami, Madrid; citizenship stripped, property expropriated.',
     intent: 'event',
     notes: 'Set by nic_exile_wave. Follow-through: ft38_exile_late.',
+  },
+
+  // ── JAPAN DEPTH (events_japan_depth.js) ──────────────────────────────────
+
+  okinawa_battle_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the Battle of Okinawa 1945 — 94,000 civilian dead, a third of the island\'s population; the specific wound that is different from Hiroshima\'s wound.',
+    intent: 'event',
+    notes: 'Set by jpn_okinawa_battle_1945. Follow-through: ft64_okinawa_midlife, ft64_okinawa_textbook.',
+  },
+
+  jpn_article9_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age under the postwar constitution — Article 9, renouncing war, written in nine days by MacArthur\'s government and ratified into Japanese identity.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_occupation_constitution (first choice).',
+  },
+
+  jpn_overwork_generation: {
+    weight: 'moderate',
+    category: 'social',
+    description: 'Lived the karoshi era — 70-80 hour weeks, the office at 10 p.m., the body keeping a different account from the official one.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_karoshi (first choice).',
+  },
+
+  jpn_kobe_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Present for the 1995 Kobe earthquake — 6,434 dead, the elevated highway on its side, the fires that spread for three days because the pipes broke.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_kobe_earthquake_1995 (both choices).',
+  },
+
+  jpn_lost_generation: {
+    weight: 'moderate',
+    category: 'social',
+    description: 'The employment ice age — graduated 1993–2005 into a Japan that had stopped hiring, the freeter economy, the "parasite singles" label, lifetime employment as something that happened to older siblings.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_lost_generation event (both choices).',
+  },
+
+  jpn_confronted_history: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Sought out the history that Japanese textbooks leave out — comfort women, Nanjing, the full civilian toll — and now carries two versions of the country.',
+    intent: 'event',
+    notes: 'Set by jpn_comfort_women_silence (first choice). Follow-through: ft64_confronted_history_late.',
+  },
+
+  jpn_rural_decline_witness: {
+    weight: 'moderate',
+    category: 'social',
+    description: 'Watched a Japanese rural village empty — the school closed, the cooperative dissolved, the post office on reduced hours; what remains is elderly, stubborn, and beautiful.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_rural_village (auto-resolve).',
+  },
+
+  jpn_article9_defender: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Stood in the 2015 protest against Abe\'s Article 9 reinterpretation — the 100,000 outside the Diet, the vote passing anyway, the feeling of having been counted and not having been the majority.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_article9_debate_late (first choice).',
+  },
+
+  jpn_women_career: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Pushed into the general track in a Japan that officially allowed it but practically did not — the cost continuous and specific, the project completed.',
+    intent: 'event',
+    notes: 'Set by jpn_women_ceiling (first choice). Follow-through: ft64_women_career_late.',
+  },
+
+  jpn_fukushima_evacuee: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Evacuated from the Fukushima exclusion zone after March 11, 2011 — the house is there, the documents were taken, the cat could not be caught, you are not allowed to live there.',
+    intent: 'event',
+    notes: 'Set by jpn_fukushima_evacuation (first choice). Follow-through: ft64_fukushima_evacuee_late.',
+  },
+
+  // ── ORAL TRADITION REGISTER (events_oral_tradition.js) ───────────────────
+
+  oral_famine_memory: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Received the oral history of a famine from grandparents — the story that gets told the same way each time because something in the telling has fixed.',
+    intent: 'year_texture',
+    notes: 'Set by oral_grandmother_famine.',
+  },
+
+  oral_market_listening: {
+    weight: 'minor',
+    category: 'social',
+    description: 'Learned to read adult faces when market news is bad — the specific stillness, the way conversation stops and starts in a different direction.',
+    intent: 'year_texture',
+    notes: 'Set by oral_market_news.',
+  },
+
+  oral_radio_generation: {
+    weight: 'minor',
+    category: 'social',
+    description: 'Grew up in a village with one radio — the man who had been a soldier, the crowd gathering around it, the translation that adjusted what the official language said.',
+    intent: 'year_texture',
+    notes: 'Set by oral_radio_man.',
+  },
+
+  oral_political_awareness: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Received political news through a chain of translation — newspaper to teacher to parent to you — and learned that the echo is adjusted in transit.',
+    intent: 'year_texture',
+    notes: 'Set by oral_political_news.',
+  },
+
+  oral_displacement_considered: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'The family discussed leaving when violence arrived in the next district — a discussion that is itself a departure, a point after which you are not fully in the place.',
+    intent: 'event',
+    notes: 'Set by oral_violence_nearby (first choice). Follow-through: ft64_displacement_considered_late.',
+  },
+
+  oral_city_curiosity: {
+    weight: 'minor',
+    category: 'social',
+    description: 'Heard about the city from the cousin who went there and came back with objects and stories — learned that the version and the city are not identical, and will find out how much when going.',
+    intent: 'year_texture',
+    notes: 'Set by oral_cousin_city.',
+  },
+
+  oral_independence_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed independence as a child — the teacher who ran into class, the sound at weddings from the crowd outside, the flag and money and officials who spoke your grandparents\' language.',
+    intent: 'year_texture',
+    notes: 'Set by oral_independence_announced.',
+  },
+
+  oral_harvest_failed: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Was old enough to watch the harvest assessment by silence — the men standing in the field, the length of the pause, the mother beginning the arithmetic that is not arithmetic.',
+    intent: 'year_texture',
+    notes: 'Set by oral_harvest_failed event.',
+  },
+
+  oral_elder_taught: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Began receiving elder knowledge — the oral history of lineage, land, forbidden marriages — given in pieces on a schedule the elder controls.',
+    intent: 'year_texture',
+    notes: 'Set by oral_elder_knowledge.',
+  },
+
+  oral_disease_era: {
+    weight: 'minor',
+    category: 'health',
+    description: 'Navigated a local disease outbreak through five contradictory accounts and learned to weight the version from someone who was actually present.',
+    intent: 'year_texture',
+    notes: 'Set by oral_disease_rumour.',
+  },
+
+  oral_soldiers_passed: {
+    weight: 'moderate',
+    category: 'conflict',
+    description: 'Soldiers came through, took some things, moved on. "No one was hurt this time" — with the word "this time" in it even when no one says it.',
+    intent: 'event',
+    notes: 'Set by oral_soldiers_passed event. Follow-through: ft64_soldiers_passed_late.',
+  },
+
+  // ── VENEZUELA DEPTH (events_venezuela_depth.js) ───────────────────────────
+
+  ven_chavez_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Came of political age in 1998 believing the Chávez project could transform Venezuela — the grandmother who cried, the sense that someone who spoke like your father had finally won.',
+    intent: 'event',
+    notes: 'Set by ven_chavez_1998 (first choice). Follow-through: ft65_chavez_gen_midlife, ft65_chavez_gen_late.',
+  },
+
+  ven_missions_beneficiary: {
+    weight: 'moderate',
+    category: 'social',
+    description: 'Received access to Barrio Adentro social missions — the Cuban doctor at the módulo, the first blood pressure check, the subsidized medicine; something that had always been for other people becoming, once, for you.',
+    intent: 'event',
+    notes: 'Set by ven_barrio_adentro (auto-resolve). Follow-through: ft65_missions_late.',
+  },
+
+  ven_boom_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived through the oil petrodollar boom 2006–2013 — the shopping trips to Miami, the cheap imports, the appliances and cars, a country spending its future on its present.',
+    intent: 'event',
+    notes: 'Set by ven_oil_boom (both choices). Follow-through: ft65_boom_gen_late.',
+  },
+
+  ven_chavez_death_witness: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Present for the March 5, 2013 announcement at 4:25 p.m. — the grief of the barrio or the quiet of a different neighbourhood, and the question of what continues without him.',
+    intent: 'year_texture',
+    notes: 'Set by ven_chavez_death (auto-resolve).',
+  },
+
+  ven_food_scarcity_era: {
+    weight: 'major',
+    category: 'social',
+    description: 'Lived through the food queue years 2015–2020 — the 5 a.m. number, the cornmeal calculation, the bachaquero premium, the woman with the two-day-old number.',
+    intent: 'event',
+    notes: 'Set by ven_food_line (both choices). Follow-through: ft65_food_scarcity_late.',
+  },
+
+  ven_2017_witness: {
+    weight: 'major',
+    category: 'political',
+    description: 'Present for the 2017 protests — 126 dead, tear gas in residential streets, the guarimba and the colectivo response; in the street or watching from the window.',
+    intent: 'event',
+    notes: 'Set by ven_2017_protest (both choices). Follow-through: ft65_2017_witness_late.',
+  },
+
+  ven_hyperinflation_era: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Survived Venezuelan hyperinflation — three currencies in four years, prices doubling weekly, the dollar bill carried like a saint\'s image, the zeroes removed and then added again.',
+    intent: 'event',
+    notes: 'Set by ven_hyperinflation (auto-resolve). Follow-through: ft65_hyperinflation_late.',
+  },
+
+  ven_diaspora: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Left Venezuela — by air with a bag, or across the Simón Bolívar bridge with almost nothing; one of 7 million who departed between 2015 and 2023.',
+    intent: 'event',
+    notes: 'Set by ven_departure (both choices). Follow-through: ft65_diaspora_first_year, ft65_diaspora_reckoning.',
+  },
+
+  ven_colectivo_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived with colectivos — pro-government armed groups on motorcycles in the barrios, the social navigation required, the grammar of what you say in front of them.',
+    intent: 'year_texture',
+    notes: 'Set by ven_colectivo (both choices).',
+  },
+
+  ven_dollarization_era: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived through Venezuela\'s informal dollarization from 2019 — prices in USD in a country whose revolution declared the dollar the enemy, the state tacitly permitting what it could no longer stop.',
+    intent: 'event',
+    notes: 'Set by ven_dollarization (auto-resolve). Follow-through: ft65_dollarization_late.',
+  },
+
+  ven_clap_system: {
+    weight: 'moderate',
+    category: 'social',
+    description: 'Navigated the CLAP food distribution system — the party-linked monthly food bag, the coordinator whose goodwill is required, the food that is real regardless of what it represents.',
+    intent: 'year_texture',
+    notes: 'Set by ven_clap (first choice).',
+  },
+
+  ven_colombia_migrant: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Venezuelan migrant in Colombia — the PPT document, the informal economy or the formal job, the register in which "venezolano" is said.',
+    intent: 'event',
+    notes: 'Set by ven_migrant_colombia (both choices). Follow-through: ft65_colombia_migrant_late.',
+  },
+
+  // ── CUBA DEPTH (events_cuba_depth.js) ────────────────────────────────────
+
+  cub_missile_crisis_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was on the island during the 13 days of October 1962 — the anti-aircraft batteries, the broadcasts, the specific fear of knowing you are inside the thing the superpowers are negotiating about.',
+    intent: 'year_texture',
+    notes: 'Set by cub_dep_missile_crisis. Follow-through: ft66_missile_crisis_late.',
+  },
+
+  cub_nueva_trova_generation: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Came of age with nueva trova — Silvio Rodríguez, Pablo Milanés; songs that were political and personal at the same time, containing ambivalences the official culture could not fully contain.',
+    intent: 'year_texture',
+    notes: 'Set by cub_dep_nueva_trova. Follow-through: ft66_nueva_trova_midlife.',
+  },
+
+  cub_doctor_export: {
+    weight: 'major',
+    category: 'career',
+    description: 'Was sent on an internationalist medical mission — two or more years treating patients in a country that is not Cuba, paid by Cuba, returning with comparisons that do not resolve cleanly.',
+    intent: 'event',
+    notes: 'Set by cub_dep_doctor_mission (first choice). Follow-through: ft66_doctor_mission_return.',
+  },
+
+  cub_elian_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Was an adult during the Elián González affair 1999–2000 — the raid photograph, the custody battle as proxy for Cuba–Miami politics, the boy as referendum.',
+    intent: 'none',
+    notes: 'Set by cub_dep_elian. No downstream event needed.',
+  },
+
+  cub_dual_currency_era: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived the CUC/CUP dual-currency economy 1994–2021 — earning pesos, pricing life in convertibles, the two Cubas sharing the same streets.',
+    intent: 'none',
+    notes: 'Set by cub_dep_dual_currency. Follow-through: ft66_dual_currency_late (not flagged for intent).',
+  },
+
+  cub_education_generation: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'Educated under the Cuban revolutionary system — high literacy, equalised access, credentials that exceed what the domestic economy can absorb.',
+    intent: 'event',
+    notes: 'Set by cub_dep_education. Follow-through: ft66_cuba_education_late.',
+  },
+
+  cub_exit_visa_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived under the tarjeta blanca exit visa requirement — the state permission required to leave the island, removed in 2013.',
+    intent: 'none',
+    notes: 'Set by cub_dep_exit_visa. Follow-through: ft66_exit_visa_2013 (not flagged for intent).',
+  },
+
+  cub_lgbtq_suppression: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Experienced the revolutionary state\'s persecution of homosexuality — UMAP labour camps, Paragraph 69 university expulsions, CDR reporting, the gay man as incompatible with the New Man.',
+    intent: 'none',
+    notes: 'Set by cub_dep_paragraph_69. Yearbook reckoning available for future events.',
+  },
+
+  cub_cultural_conformity: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Chose to work within the quinquenio gris cultural parameters — finding what could be made within constraints, the work that survived the gray period.',
+    intent: 'none',
+    notes: 'Set by cub_dep_gray_period (first choice).',
+  },
+
+  cub_rural_tobacco: {
+    weight: 'minor',
+    category: 'occupation',
+    description: 'Worked in the Viñales tobacco vegas — knowledge of soil and leaf and harvest that the state quota cannot contain.',
+    intent: 'none',
+    notes: 'Set by cub_dep_vinales_tobacco.',
+  },
+
+  // ── PHILIPPINES DEPTH FLAGS ───────────────────────────────────────────────
+
+  ph_bpo_generation: {
+    weight: 'moderate',
+    category: 'occupation',
+    description: 'Worked the BPO/call center graveyard shift — the body clock inverted, speaking American English in the Manila night.',
+    intent: 'year_texture',
+    notes: 'Set by ph_dep_bpo_shift. Deserves yearTexture prose about night-shift body, the name you answered to.',
+  },
+
+  ph_fiesta_culture: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Shaped by the barrio fiesta — the patron saint\'s gravity that pulls the diaspora home once a year.',
+    intent: 'year_texture',
+    notes: 'Set by ph_dep_fiesta. YearTexture: fiesta season, the smell of lechón, the committee meetings.',
+  },
+
+  ph_basketball_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Grew up on the concrete barangay court — the game that America left and the Philippines kept.',
+    intent: 'none',
+    notes: 'Set by ph_dep_basketball.',
+  },
+
+  ph_black_nazarene_devout: {
+    weight: 'minor',
+    category: 'religious',
+    description: 'Joined the Black Nazarene procession — nine million faithful in the Manila streets, white towels reaching toward the image.',
+    intent: 'none',
+    notes: 'Set by ph_dep_black_nazarene.',
+  },
+
+  ph_moro_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'From the Moro homeland — a community whose identity is defined by the armed conflict with Manila and the long road to Bangsamoro autonomy.',
+    intent: 'event',
+    notes: 'Set by ph_dep_mindanao_moro. Follow-through: Bangsamoro Organic Law 2019, post-autonomy reckoning.',
+  },
+
+  ph_hacienda_generation: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Grew up under the hacienda system — the land that was always that family\'s land, the cane that always required your labour.',
+    intent: 'event',
+    notes: 'Set by ph_dep_hacienda. Follow-through: land reform reckoning, city escape echo.',
+  },
+
+  ph_jeepney_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Knew the jeepney routes the way you know the bones of a place — the fare passed forward, the chrome horses, the rosary on the dash.',
+    intent: 'none',
+    notes: 'Set by ph_dep_jeepney.',
+  },
+
+  ph_undas_generation: {
+    weight: 'minor',
+    category: 'religious',
+    description: 'Observed Undas — the two-day occupation of the cemetery where the dead have a specific address your family has maintained.',
+    intent: 'none',
+    notes: 'Set by ph_dep_undas.',
+  },
+
+  ph_probinsya_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Still from the probinsya even after years in Manila — the balikbayan box as proxy self, the province as permanent address of the heart.',
+    intent: 'none',
+    notes: 'Set by ph_dep_probinsya.',
+  },
+
+  ph_ofw_departed: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Took the OFW contract — the airport goodbye with the whole family, the two-year equation that becomes a way of life.',
+    intent: 'event',
+    notes: 'Set by ph_dep_ofw_calculus (go choice). Also sets emigrated. Follow-through: return, the changed house.',
+  },
+
+  ph_stayed_behind: {
+    weight: 'minor',
+    category: 'migration',
+    description: 'Chose to stay when the economic logic pointed away — the one who receives the balikbayan box instead of sending it.',
+    intent: 'event',
+    notes: 'Set by ph_dep_ofw_calculus (stay choice). Follow-through: watching others leave, the calculus revisited.',
+  },
+
+  // ── PAKISTAN DEPTH FLAGS ──────────────────────────────────────────────────
+
+  pak_cricket_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Grew up with Pakistan cricket as religion — the 1992 World Cup, the gali cricket, the irrational loyalty.',
+    intent: 'event',
+    notes: 'Set by pak_dep_cricket. Follow-through: midlife reckoning with the team\'s ongoing drama.',
+  },
+
+  pak_basant_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Knew Basant Lahore — the February kite season on the old city rooftops, banned in 2007 after the manja string deaths.',
+    intent: 'event',
+    notes: 'Set by pak_dep_basant. Follow-through: the ban as specific loss.',
+  },
+
+  pak_2010_flood_generation: {
+    weight: 'moderate',
+    category: 'disaster',
+    description: 'Lived through the 2010 Pakistan floods — a fifth of the country underwater, twenty million displaced.',
+    intent: 'event',
+    notes: 'Set by pak_dep_floods_2010. Follow-through: late-life understanding of the attention economy around disaster.',
+  },
+
+  pak_dep_flood_survivor: {
+    weight: 'moderate',
+    category: 'disaster',
+    description: 'Area flooded in 2010 — direct loss of home, assets, and the years it took to reconstruct.',
+    intent: 'none',
+    notes: 'Set by pak_dep_floods_2010 (flood survivor choice).',
+  },
+
+  pak_hazara_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Hazara from Quetta — a community defined by its persecution, the geography of its survival, and the calculus of leaving.',
+    intent: 'event',
+    notes: 'Set by pak_dep_hazara. Follow-through: 2013 sit-in, ongoing targeting.',
+  },
+
+  pak_baloch_missing_person_family: {
+    weight: 'major',
+    category: 'political',
+    description: 'Family member among the Balochistan disappeared — the photograph at the courthouse, the life organized around absence.',
+    intent: 'event',
+    notes: 'Set by pak_dep_baloch_missing. Follow-through: return or non-return reckoning in late life.',
+  },
+
+  pak_faiz_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Carries Faiz Ahmed Faiz — the poetry that became protest and then became common ground and cannot be taken away.',
+    intent: 'event',
+    notes: 'Set by pak_dep_faiz. Follow-through: Hum Dekhenge in later protests.',
+  },
+
+  pak_pashtunwali_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Raised in Pashtunwali — the code of melmastia, nanawatai, and badal that precedes any modern state.',
+    intent: 'none',
+    notes: 'Set by pak_dep_pashtunwali.',
+  },
+
+  pak_domestic_economy_generation: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Grew up in a household with domestic servants — the asymmetry of mutual knowledge that becomes visible only in retrospect.',
+    intent: 'none',
+    notes: 'Set by pak_dep_servant.',
+  },
+
+  pak_rishta_married: {
+    weight: 'minor',
+    category: 'relationship',
+    description: 'Married through the rishta system — the family visit, the assessment, the negotiated match.',
+    intent: 'event',
+    notes: 'Set by pak_dep_rishta (go through process choice). Follow-through: years-later reckoning with the method vs. the outcome.',
+  },
+
+  pak_rishta_resisted: {
+    weight: 'minor',
+    category: 'relationship',
+    description: 'Resisted the rishta process — the negotiation with family that produced a partial rather than a chosen outcome.',
+    intent: 'none',
+    notes: 'Set by pak_dep_rishta (resist choice).',
+  },
+
+  pak_overseas_departed: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Left Pakistan for the Gulf, UK, or Canada — the overseas Pakistani as a specific figure in the domestic imagination.',
+    intent: 'event',
+    notes: 'Set by pak_dep_overseas_pull (leave choice). Also sets emigrated. Follow-through: return to a changed Pakistan.',
+  },
+
+  pak_overseas_stayed: {
+    weight: 'minor',
+    category: 'migration',
+    description: 'Chose to stay in Pakistan when the arithmetic pointed toward leaving — the one who lives the country others send money to.',
+    intent: 'none',
+    notes: 'Set by pak_dep_overseas_pull (stay choice).',
+  },
+
+  // ── BANGLADESH DEPTH FLAGS ────────────────────────────────────────────────
+
+  bng_ekushey_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Grew up with Ekushey — February 21, the Language Movement martyrs, the day language and nationhood became the same word.',
+    intent: 'event',
+    notes: 'Set by bng_dep_ekushey. Follow-through: UNESCO recognition 1999, late-life Shaheed Minar.',
+  },
+
+  bng_1988_flood_generation: {
+    weight: 'moderate',
+    category: 'disaster',
+    description: 'Lived through the 1988 Bangladesh floods — 75% of the country underwater, the worst in recorded history.',
+    intent: 'event',
+    notes: 'Set by bng_dep_floods_1988. Follow-through: climate echo in late life.',
+  },
+
+  bng_cht_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Jumma people from the Chittagong Hill Tracts — the forest homeland, the insurgency, the partial peace accord of 1997.',
+    intent: 'event',
+    notes: 'Set by bng_dep_cht_jumma. Follow-through: CHT accord reckoning.',
+  },
+
+  bng_rohingya_host_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Witnessed Bangladesh hosting the Rohingya crisis — the world\'s largest refugee camp at Cox\'s Bazar after August 2017.',
+    intent: 'event',
+    notes: 'Set by bng_dep_rohingya_host. Follow-through: years of no repatriation.',
+  },
+
+  bng_hilsa_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Knows the hilsa fish — the seasonal river run, the specific price in the bazaar, the technique that is regional and not transferable.',
+    intent: 'none',
+    notes: 'Set by bng_dep_hilsa.',
+  },
+
+  bng_eid_migration_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Part of the Eid migration — 15 million people leaving Dhaka by boat, bus, and launch, the two-address life of city and village.',
+    intent: 'none',
+    notes: 'Set by bng_dep_eid_journey.',
+  },
+
+  bng_rana_plaza_witness: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Witnessed Rana Plaza — 1,134 dead, the brands, the voluntary compensation fund, the gap between what happened and what was accounted for.',
+    intent: 'event',
+    notes: 'Set by bng_dep_rana_after. Follow-through: compensation fund reckoning.',
+  },
+
+  bng_bkash_generation: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Lived the bKash revolution — mobile money that skipped the branch banking era and moved 60 million accounts onto a SIM card.',
+    intent: 'event',
+    notes: 'Set by bng_dep_bkash. Follow-through: remittance + bKash combination.',
+  },
+
+  // ── BRAZIL DEPTH FLAGS ────────────────────────────────────────────────────
+
+  bra_candomble_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Grew up with Candomblé and syncretic faith — the orixás behind Catholic saints, the terreiro in the neighbourhood, the double identity that is strategy become theology.',
+    intent: 'none',
+    notes: 'Set by bra_dep_candomble.',
+  },
+
+  bra_carnaval_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Knows Carnaval from inside the morro — the escolas de samba, the bateria starting in October, the enredo known by heart by February.',
+    intent: 'year_texture',
+    notes: 'Set by bra_dep_carnaval. Year texture: the difference between Carnaval on television and Carnaval from inside.',
+  },
+
+  bra_mst_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Connected to the MST landless workers movement — the plastic tarp encampment, the overnight occupation, the three-year legal process, the 1,635 activists killed since 1985.',
+    intent: 'event',
+    notes: 'Set by bra_dep_mst. Follow-through: title reckoning, Bolsonaro era.',
+  },
+
+  bra_funk_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Grew up with baile funk — Miami bass on pirate cassettes, the MC, the proibidão, the Saturday night baile that the middle-class press covered as a crime story.',
+    intent: 'none',
+    notes: 'Set by bra_dep_baile_funk.',
+  },
+
+  bra_amazon_city_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'From Belém or the Amazon urban world — Ver-o-Peso market, the daily 2pm rain, the forest economy that organises the city.',
+    intent: 'none',
+    notes: 'Set by bra_dep_belem.',
+  },
+
+  bra_quilombola_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'From a quilombola community — descendants of escaped enslaved people, 1988 constitutional land rights, title still under review after three hundred years of occupation.',
+    intent: 'event',
+    notes: 'Set by bra_dep_quilombo. Follow-through: title still pending, ruralista lobbying.',
+  },
+
+  bra_soy_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'On the agricultural frontier of cerrado-to-soy conversion — the logging road, the cattle, the soy, the water held in deep root systems that is now in the atmosphere.',
+    intent: 'event',
+    notes: 'Set by bra_dep_soy. Follow-through: Cantareira water crisis, cerrado-water connection.',
+  },
+
+  // ── SRI LANKA DEPTH FLAGS ─────────────────────────────────────────────────
+
+  slk_tsunami_generation: {
+    weight: 'major',
+    category: 'disaster',
+    description: 'Lived through or near the December 26, 2004 Boxing Day tsunami — 30,000 dead in Sri Lanka, the 11-day war pause, the sea going out before it returned.',
+    intent: 'none',
+    notes: 'Set by slk_dep_tsunami.',
+  },
+
+  slk_estate_tamil_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Indian Tamil from the hill country estates — three generations picking tea, citizenship stripped 1948, restored 1988, daily wage below general minimum, housing tied to employment.',
+    intent: 'event',
+    notes: 'Set by slk_dep_estate_tamil. Follow-through: estate worker wage structure, three-generation reckoning.',
+  },
+
+  slk_sinhala_buddhist_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Shaped by Sinhalese Buddhist nationalist politics — JHU monks in parliament 2004, BBS anti-Muslim campaigns, the political use of the Dhamma.',
+    intent: 'none',
+    notes: 'Set by slk_dep_buddhist_nationalism.',
+  },
+
+  slk_mullivaikkal_witness: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Has direct connection to Mullivaikkal 2009 — the final offshore strip, the No Fire Zones shelled, 40,000-70,000 civilian dead, no accountability.',
+    intent: 'event',
+    notes: 'Set by slk_dep_mullivaikkal. Follow-through: UNHRC resolution not implemented.',
+  },
+
+  slk_rajapaksa_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through the Rajapaksa family capture of Sri Lankan state institutions — four brothers in key offices, 18th Amendment removing term limits, Hambantota port Chinese debt.',
+    intent: 'none',
+    notes: 'Set by slk_dep_rajapaksa.',
+  },
+
+  slk_easter_sunday_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the April 21, 2019 Easter Sunday bombings — 267 dead, NTJ/IS-linked, warnings not acted on; enabled Gota Rajapaksa\'s election.',
+    intent: 'none',
+    notes: 'Set by slk_dep_easter_sunday.',
+  },
+
+  slk_colombo_checkpoint_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up in Colombo during the civil war — the checkpoint on the route to work, the bombing two kilometres from the restaurant, the war as managed ambient condition.',
+    intent: 'event',
+    notes: 'Set by slk_dep_colombo_checkpoints. Follow-through: post-2009 Colombo and the unexamined foundation.',
+  },
+
+  // ── THAILAND DEPTH FLAGS ──────────────────────────────────────────────────
+
+  tha_1973_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'In Bangkok or aware of the October 14, 1973 uprising — 500,000 at Ratchadamnoen, Thanom forced into exile, three years of democratic window before October 6, 1976.',
+    intent: 'event',
+    notes: 'Set by tha_dep_1973. Follow-through: the 1973-76 democratic window, its destruction in 1976.',
+  },
+
+  tha_isan_migrant: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Part of the Isan migration to Bangkok — the overnight bus, the factory or construction site, the remittance home, the two-address life.',
+    intent: 'year_texture',
+    notes: 'Set by tha_dep_isan_migration. Year texture: the Isan dual identity in the city.',
+  },
+
+  tha_muay_thai_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Trained in muay thai — the camp, the five limbs, the provincial circuit path toward the Bangkok stadiums (Rajadamnern, Lumpinee).',
+    intent: 'none',
+    notes: 'Set by tha_dep_muay_thai.',
+  },
+
+  tha_merit_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Shaped by Thai Buddhist merit-making (tam bun) — the morning alms bowl, the san phra phum spirit house, the merit economy running through daily life.',
+    intent: 'none',
+    notes: 'Set by tha_dep_merit_making.',
+  },
+
+  tha_songkran_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Knows Songkran as both ritual (elder blessing, temple merit) and event (water guns, the bus home, Isan emptying back to itself).',
+    intent: 'none',
+    notes: 'Set by tha_dep_songkran.',
+  },
+
+  tha_bar_economy_generation: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Worked in the Thai bar/entertainment economy — Pattaya, Patpong, the specific calculus of wages vs. factory work, the competencies nobody names.',
+    intent: 'none',
+    notes: 'Set by tha_dep_bar_economy.',
+  },
+
+  tha_royal_devotion: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Grew up with the monarchy as daily ambient presence — portraits in every room, national anthem stops, cinema royal anthem, King Bhumibol\'s photograph.',
+    intent: 'none',
+    notes: 'Set by tha_dep_royal_daily.',
+  },
+
+  tha_2011_flood_generation: {
+    weight: 'major',
+    category: 'disaster',
+    description: 'Lived through the 2011 Thailand floods — a third of provinces underwater, $45B damage, hard drive supply chain stopped, water taking three months to drain.',
+    intent: 'none',
+    notes: 'Set by tha_dep_floods_2011.',
   },
 
 }
