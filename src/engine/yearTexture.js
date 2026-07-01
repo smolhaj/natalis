@@ -7750,6 +7750,13 @@ function buildYearTexture(state) {
   ])
 
   // ─── BANGLADESH TEXTURE ──────────────────────────────────────────────────────
+  if (F.has('bng_ekushey_generation') && Math.random() < 0.2) return pick([
+    'Rafiquddin. Barkat. Jabbar. Salauddin. The names of the February 21 martyrs are learned by every Bengali child before they understand what the names mean. You learned them before you understood them. Now you understand them. The understanding does not reduce the names to an event. The names are still the names of people.',
+    'The Shaheed Minar is covered in flowers before dawn. People come barefoot. The barefoot is important: something of the body available to the memorial. You have come barefoot. You know why.',
+    phase === 'late_life'
+      ? 'The Language Movement was 1952. The Liberation War was 1971. International Mother Language Day is February 21. The date that the police fired on students for the right to speak their own language became a global day. The world recognized something without fully understanding what it recognized. You understand.'
+      : 'Your language is Bengali. This sounds obvious. It is not obvious. The government of Pakistan in 1952 did not think you should have a language. The students who died disagreed. You are in the language that they died for.',
+  ])
   if (F.has('bng_liberation_generation') && Math.random() < 0.3) return pick([
     'Nine months. March 25 to December 16, 1971. Operation Searchlight at midnight, then the Mukti Bahini, then the Indian army crossing the border, then the surrender of ninety-three thousand Pakistani soldiers. Joy Bangla. The country born out of those nine months is the country you live in.',
     phase === 'late_life'

@@ -6992,4 +6992,70 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by pak_dep_overseas_pull (stay choice).',
   },
 
+  // ── BANGLADESH DEPTH FLAGS ────────────────────────────────────────────────
+
+  bng_ekushey_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Grew up with Ekushey — February 21, the Language Movement martyrs, the day language and nationhood became the same word.',
+    intent: 'event',
+    notes: 'Set by bng_dep_ekushey. Follow-through: UNESCO recognition 1999, late-life Shaheed Minar.',
+  },
+
+  bng_1988_flood_generation: {
+    weight: 'moderate',
+    category: 'disaster',
+    description: 'Lived through the 1988 Bangladesh floods — 75% of the country underwater, the worst in recorded history.',
+    intent: 'event',
+    notes: 'Set by bng_dep_floods_1988. Follow-through: climate echo in late life.',
+  },
+
+  bng_cht_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Jumma people from the Chittagong Hill Tracts — the forest homeland, the insurgency, the partial peace accord of 1997.',
+    intent: 'event',
+    notes: 'Set by bng_dep_cht_jumma. Follow-through: CHT accord reckoning.',
+  },
+
+  bng_rohingya_host_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Witnessed Bangladesh hosting the Rohingya crisis — the world\'s largest refugee camp at Cox\'s Bazar after August 2017.',
+    intent: 'event',
+    notes: 'Set by bng_dep_rohingya_host. Follow-through: years of no repatriation.',
+  },
+
+  bng_hilsa_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Knows the hilsa fish — the seasonal river run, the specific price in the bazaar, the technique that is regional and not transferable.',
+    intent: 'none',
+    notes: 'Set by bng_dep_hilsa.',
+  },
+
+  bng_eid_migration_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Part of the Eid migration — 15 million people leaving Dhaka by boat, bus, and launch, the two-address life of city and village.',
+    intent: 'none',
+    notes: 'Set by bng_dep_eid_journey.',
+  },
+
+  bng_rana_plaza_witness: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Witnessed Rana Plaza — 1,134 dead, the brands, the voluntary compensation fund, the gap between what happened and what was accounted for.',
+    intent: 'event',
+    notes: 'Set by bng_dep_rana_after. Follow-through: compensation fund reckoning.',
+  },
+
+  bng_bkash_generation: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Lived the bKash revolution — mobile money that skipped the branch banking era and moved 60 million accounts onto a SIM card.',
+    intent: 'event',
+    notes: 'Set by bng_dep_bkash. Follow-through: remittance + bKash combination.',
+  },
+
 }
