@@ -5010,8 +5010,8 @@ export const POLITICAL_FLAGS = {
     weight: 'moderate',
     category: 'historical',
     description: 'Lived Operation Car Wash — the anti-corruption investigation that imprisoned Lula, elected Bolsonaro, and was later ruled to have been politically biased.',
-    intent: 'year_texture',
-    notes: 'Set by bra_lava_jato.',
+    intent: 'both',
+    notes: 'Set by bra_lava_jato and bra_dep_lava_jato. Year texture + follow-through: Vaza Jato 2019, Lula return 2023.',
   },
 
   bra_january_8_witness: {
@@ -7056,6 +7056,64 @@ export const POLITICAL_FLAGS = {
     description: 'Lived the bKash revolution — mobile money that skipped the branch banking era and moved 60 million accounts onto a SIM card.',
     intent: 'event',
     notes: 'Set by bng_dep_bkash. Follow-through: remittance + bKash combination.',
+  },
+
+  // ── BRAZIL DEPTH FLAGS ────────────────────────────────────────────────────
+
+  bra_candomble_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Grew up with Candomblé and syncretic faith — the orixás behind Catholic saints, the terreiro in the neighbourhood, the double identity that is strategy become theology.',
+    intent: 'none',
+    notes: 'Set by bra_dep_candomble.',
+  },
+
+  bra_carnaval_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Knows Carnaval from inside the morro — the escolas de samba, the bateria starting in October, the enredo known by heart by February.',
+    intent: 'year_texture',
+    notes: 'Set by bra_dep_carnaval. Year texture: the difference between Carnaval on television and Carnaval from inside.',
+  },
+
+  bra_mst_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Connected to the MST landless workers movement — the plastic tarp encampment, the overnight occupation, the three-year legal process, the 1,635 activists killed since 1985.',
+    intent: 'event',
+    notes: 'Set by bra_dep_mst. Follow-through: title reckoning, Bolsonaro era.',
+  },
+
+  bra_funk_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Grew up with baile funk — Miami bass on pirate cassettes, the MC, the proibidão, the Saturday night baile that the middle-class press covered as a crime story.',
+    intent: 'none',
+    notes: 'Set by bra_dep_baile_funk.',
+  },
+
+  bra_amazon_city_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'From Belém or the Amazon urban world — Ver-o-Peso market, the daily 2pm rain, the forest economy that organises the city.',
+    intent: 'none',
+    notes: 'Set by bra_dep_belem.',
+  },
+
+  bra_quilombola_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'From a quilombola community — descendants of escaped enslaved people, 1988 constitutional land rights, title still under review after three hundred years of occupation.',
+    intent: 'event',
+    notes: 'Set by bra_dep_quilombo. Follow-through: title still pending, ruralista lobbying.',
+  },
+
+  bra_soy_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'On the agricultural frontier of cerrado-to-soy conversion — the logging road, the cattle, the soy, the water held in deep root systems that is now in the atmosphere.',
+    intent: 'event',
+    notes: 'Set by bra_dep_soy. Follow-through: Cantareira water crisis, cerrado-water connection.',
   },
 
 }

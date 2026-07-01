@@ -9249,6 +9249,13 @@ function buildYearTexture(state) {
       : 'You watched the institutions be occupied and damaged and then you watched the police arrive. The democracy survived January 8. The question of what the people who entered those buildings believe, and what they will try next, is the question the survival leaves open.',
   ])
 
+  if (F.has('bra_carnaval_generation') && Math.random() < 0.2) return pick([
+    'The escola de samba starts rehearsals in October. By February you know the samba-enredo by heart — the story of the quilombo or the orixá or the Amazon that the escola chose this year. When the escola enters the Sambódromo the people who made it are not in the television coverage of the people who made it.',
+    phase === 'late_life'
+      ? 'The bloco de rua, the truck of instruments, the crowd that fills whatever street it finds. The Sambódromo is the television version. The morro version is still there behind it, older and larger and not for export.'
+      : 'The escolas do not emerge fully formed in February. They are made across months in the quadra, in November fittings, in December drumming sessions. What appears in the Sambódromo is the end of something the television cameras only catch the last part of.',
+  ])
+
   // ─── ARGENTINA 2001 TEXTURE ──────────────────────────────────────────────────
   if (F.has('corralito_survivor') && Math.random() < 0.28) return pick([
     'The bank queue in December 2001 — the one that wrapped around the block before the branch opened — is physical in memory. The passbook number that was yours and then was converted into something worth a third as much.',
