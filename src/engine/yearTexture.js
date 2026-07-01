@@ -11741,6 +11741,20 @@ function buildYearTexture(state) {
       ? 'Pablo Milanés died in 2022 in Madrid, in exile. The exile complicated the songs retrospectively, the way exile complicates everything retrospectively. The songs still hold.'
       : 'The songs circulated on cassette before they circulated on record, and on the cassette before the official release they sounded more like what they were — which is to say more ambivalent, more dangerous.',
   ])
+  if (F.has('ph_bpo_generation') && Math.random() < 0.18) return pick([
+    'The graveyard shift is the shift that runs while Manila sleeps. You answered as "David" or "Jessica" — whichever name the account required — and you solved the problems of people who did not know where you were. The salary was real. The name was temporary. You are not sure which you miss less.',
+    'The night-shift body is a different body. It learned to sleep in the hours when light came in and to wake when the building was dark and quiet. Years after you stopped, you still wake sometimes in the pre-dawn and feel, for a second, that the headset should be in your hand.',
+    phase === 'late_life'
+      ? 'The BPO industry employed millions and left a specific mark on a generation: the inverted clock, the code-switching, the particular skill of performing patience across a cultural gap at 3am. You were part of the generation the industry made. The industry is still running. You are not.'
+      : 'You speak American English without thinking about it — the flat vowels, the midwest softness. It was a professional tool. It became a habit. In the right context, it still sounds like the accent of someone who needs your help.',
+  ])
+  if (F.has('ph_fiesta_culture') && Math.random() < 0.16) return pick([
+    'The patron saint\'s feast day approaches and you know it by the preparations — the committee meetings, the lechón on order, the families returning from Manila and Hong Kong. The barangay has been doing this since before you were born and will do it after. This is the calendar that matters.',
+    'The fiesta is the barangay\'s claim on the year. Everything arranges itself around it: the houses repainted, the relatives who come back, the three days when the street is a kitchen and the patron saint\'s gravity pulls the diaspora home. You have been part of this since you were small enough to run between the tables.',
+    phase === 'late_life'
+      ? 'You have attended the fiesta from every angle: the child underfoot, the adult committee member, the one who came back from Manila, the one who stayed. The saint is the same. The people around the saint are different each decade. The continuity is the point.'
+      : 'Someone always comes back who wasn\'t expected. The fiesta is the gravity that does this — the pull strong enough to bring people from the Gulf or from Riyadh or from Hong Kong for the three days when the barangay is its fullest self.',
+  ])
   if (F.has('proceso_lived') && Math.random() < 0.22) return pick([
     'Thirty thousand. The number is not exact and is not disputed. The method was established: the flights, the camps, the specific vocabulary of disappearance.',
     'The Proceso lasted until 1983. The courts came later. The repentance came even later. The grandmothers were in the Plaza de Mayo every Thursday from 1977 onward. You saw them.',

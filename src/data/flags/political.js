@@ -6796,4 +6796,94 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by cub_dep_vinales_tobacco.',
   },
 
+  // ── PHILIPPINES DEPTH FLAGS ───────────────────────────────────────────────
+
+  ph_bpo_generation: {
+    weight: 'moderate',
+    category: 'occupation',
+    description: 'Worked the BPO/call center graveyard shift — the body clock inverted, speaking American English in the Manila night.',
+    intent: 'year_texture',
+    notes: 'Set by ph_dep_bpo_shift. Deserves yearTexture prose about night-shift body, the name you answered to.',
+  },
+
+  ph_fiesta_culture: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Shaped by the barrio fiesta — the patron saint\'s gravity that pulls the diaspora home once a year.',
+    intent: 'year_texture',
+    notes: 'Set by ph_dep_fiesta. YearTexture: fiesta season, the smell of lechón, the committee meetings.',
+  },
+
+  ph_basketball_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Grew up on the concrete barangay court — the game that America left and the Philippines kept.',
+    intent: 'none',
+    notes: 'Set by ph_dep_basketball.',
+  },
+
+  ph_black_nazarene_devout: {
+    weight: 'minor',
+    category: 'religious',
+    description: 'Joined the Black Nazarene procession — nine million faithful in the Manila streets, white towels reaching toward the image.',
+    intent: 'none',
+    notes: 'Set by ph_dep_black_nazarene.',
+  },
+
+  ph_moro_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'From the Moro homeland — a community whose identity is defined by the armed conflict with Manila and the long road to Bangsamoro autonomy.',
+    intent: 'event',
+    notes: 'Set by ph_dep_mindanao_moro. Follow-through: Bangsamoro Organic Law 2019, post-autonomy reckoning.',
+  },
+
+  ph_hacienda_generation: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Grew up under the hacienda system — the land that was always that family\'s land, the cane that always required your labour.',
+    intent: 'event',
+    notes: 'Set by ph_dep_hacienda. Follow-through: land reform reckoning, city escape echo.',
+  },
+
+  ph_jeepney_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Knew the jeepney routes the way you know the bones of a place — the fare passed forward, the chrome horses, the rosary on the dash.',
+    intent: 'none',
+    notes: 'Set by ph_dep_jeepney.',
+  },
+
+  ph_undas_generation: {
+    weight: 'minor',
+    category: 'religious',
+    description: 'Observed Undas — the two-day occupation of the cemetery where the dead have a specific address your family has maintained.',
+    intent: 'none',
+    notes: 'Set by ph_dep_undas.',
+  },
+
+  ph_probinsya_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Still from the probinsya even after years in Manila — the balikbayan box as proxy self, the province as permanent address of the heart.',
+    intent: 'none',
+    notes: 'Set by ph_dep_probinsya.',
+  },
+
+  ph_ofw_departed: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Took the OFW contract — the airport goodbye with the whole family, the two-year equation that becomes a way of life.',
+    intent: 'event',
+    notes: 'Set by ph_dep_ofw_calculus (go choice). Also sets emigrated. Follow-through: return, the changed house.',
+  },
+
+  ph_stayed_behind: {
+    weight: 'minor',
+    category: 'migration',
+    description: 'Chose to stay when the economic logic pointed away — the one who receives the balikbayan box instead of sending it.',
+    intent: 'event',
+    notes: 'Set by ph_dep_ofw_calculus (stay choice). Follow-through: watching others leave, the calculus revisited.',
+  },
+
 }
