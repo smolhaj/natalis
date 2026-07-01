@@ -8664,6 +8664,84 @@ function buildYearTexture(state) {
     'The border that opened on May 1, 2004. The work permit that was not required. The Europe that became navigable. The Schengen zone that meant the passport stayed in the bag.',
     'You are European in a legal and practical sense that did not exist before 2004. The legal and practical sense makes other things possible. You use them.',
   ])
+  if (F.has('katyn_family_loss') && Math.random() < 0.22) return pick([
+    'The name that was not spoken without care. The absence that the family described differently in different years depending on who was in the room. The Soviet denial ran for fifty years. In 1990 the denial ended officially. The name in the rows at the Katyń cemetery was confirmed as being where it was always suspected to be.',
+    phase === 'late_life'
+      ? 'The Katyń Memorial Cemetery near Smolensk. You can go, or you can know it exists. The name that was spoken carefully in your family for decades is confirmed in the rows. The confirmation is fifty years late. The grave is specific and real and four hundred kilometres away.'
+      : 'The Katyń massacre: April 1940. 22,000 Polish officers, police, intellectuals. Shot in the back of the head. The Soviets blamed the Nazis for fifty years. In 1990, acknowledged. In your family the acknowledgment changed a category from disappeared to murdered, which is not the same thing as returning the person.',
+  ])
+  if (F.has('katyn_generation') && Math.random() < 0.2) return pick([
+    '22,000 people. The category: officer, policeman, educated reservist — the intellectual and officer class of Poland, systematically eliminated. The Soviets ran the denial for fifty years. In 1990, officially acknowledged. The scale you now know was always the scale. It had simply been deniable.',
+    phase === 'late_life'
+      ? 'You learned the full confirmed scale in 1990 and you are still living with it. The fact that it was true all along is not a surprise. The official confirmation still does something — makes the anger clean in a way that the suspected-but-denied version could not be.'
+      : 'The Katyń denial ran as official fact from 1940 to 1990. The denial was so complete that to say otherwise was a form of anti-Soviet activity. You held the truth privately for as long as the denial ran officially.',
+  ])
+  if (F.has('warsaw_uprising_veteran') && Math.random() < 0.25) return pick([
+    'For decades you could not officially acknowledge where you were in August and September 1944. The government called the AK fascist collaborators. Your sixty-three days were an official liability. After 1989, the rehabilitation arrived. The rehabilitation is real and late and not quite sufficient and also something.',
+    phase === 'late_life'
+      ? 'The Armia Krajowa veterans are recognised now. The medals can be worn. The anniversaries can be attended officially. You spent forty years unable to say what you did. The official saying is now permitted. You find yourself less interested in the official saying than in simply having done it.'
+      : 'The gap: sixty-three days in Warsaw in 1944 that the communist state required you to not have been in. The practice of holding a fact in private while maintaining a public version is a specific skill. You developed it without choosing to.',
+  ])
+  if (F.has('ak_veteran_silenced') && Math.random() < 0.2) return pick([
+    'The medal is in a drawer. After 1989 you can wear it. You sometimes do and sometimes do not. The wearing is now possible and the not-wearing is also possible, which is more choices than you had for the previous forty years.',
+    'The AK: the underground Home Army that the communist government classified as a reactionary organization. To have served in it was to be on the wrong side of the official history. You were on the right side of what actually happened. The distinction between these two things is the specific knowledge you have been carrying.',
+  ])
+  if (F.has('warsaw_uprising_generation') && Math.random() < 0.2) return pick([
+    'August 1, 1944. The Armia Krajowa rose. The Soviets waited across the Vistula. Sixty-three days. 200,000 dead. 85 percent of Warsaw destroyed building by building. You carry this as the thing that happened to your family\'s generation — directly or as the wound passed down.',
+    phase === 'late_life'
+      ? 'The Warsaw Uprising Museum opened in 2004. The building, the names, the exhibition. What was held in private for sixty years was named officially. The naming changes something. It does not change what happened. It changes who can see that it happened.'
+      : 'The uprising is in the adults\' faces before it is in history books. The specific silence that arrives when August 1 is mentioned. The way certain subjects close. The wound carried in a register just below speech.',
+  ])
+  if (F.has('kresy_family') && Math.random() < 0.2) return pick([
+    'Your family calls the city by its Polish name. On maps it appears under a different name, in a different country. The city is there. The streets are there. The name on the street signs is different. The people on the streets speak a different language from the language your family spoke on those streets.',
+    phase === 'late_life'
+      ? 'After 1991, you can go to the city your parents described. Some people from kresy families do go. The buildings are still there, the street layout recognisable. The Polish community is mostly gone. The churches have been converted. You are walking through the material record of a world that ended in 1945 and has not been restored.'
+      : 'The Kresy: the eastern borderlands that Poland lost in 1945 — Lwów to Ukraine, Wilno to Lithuania, the areas that were home to millions who were then moved westward into the houses of Germans who were moved westward in turn. The displacement was the largest ethnic reorganisation of European territory in the century.',
+  ])
+  if (F.has('nowa_huta_generation') && Math.random() < 0.18) return pick([
+    'They built the model socialist city without a church, which was the point. The first Polish city in a thousand years without a church. The workers wanted a church. The battle over the cross — the state trying to remove it, the workers defending it — ran for years. In 1977 the church was consecrated by the Cardinal of Kraków. The following year he was Pope.',
+    'Nowa Huta: the steelworks and the apartment blocks and the intended absence of religion, and then the church built anyway in defiance of the intended absence. The cross on the empty lot, defended by steelworkers against the state, in the model socialist city. This sequence of events is the history of Poland in miniature.',
+  ])
+  if (F.has('jedwabne_reckoning') && Math.random() < 0.2) return pick([
+    'Jedwabne, July 10, 1941. The Jewish community of the town: 340 people pushed into a barn and burned alive. Not by the German occupiers — by their Polish neighbours. Jan Gross published this in 2001. The Institute of National Remembrance confirmed it. President Kwaśniewski apologized. A significant part of Polish public opinion rejected the finding.',
+    phase === 'late_life'
+      ? 'The 2018 law making it criminal to accuse Polish institutions of Holocaust complicity was passed, then amended under international pressure. The direction of travel since the Jedwabne acknowledgment in 2001 has not been toward further acknowledgment. You have held a position about what happened in Jedwabne since 2001. The political climate around that position has changed. Your position has not.'
+      : 'The argument that followed the Jedwabne revelation is an argument about what Poles did and therefore about what Poland is and therefore about identity. The evidence is documented. The counter-arguments are about what people need the past to be. You are somewhere in this argument and the position you hold in it is not incidental.',
+  ])
+  if (F.has('pis_opposition') && Math.random() < 0.18) return pick([
+    'The Constitutional Tribunal packed. The Supreme Court reorganized. The state broadcaster turned into something else. The public media. The NRF. You watched the institutional dismantling court by court and were told by people on the other side that you were a hysterical defender of the liberal elite.',
+    phase === 'late_life'
+      ? 'PiS lost the 2023 election in terms of coalition seats though not in terms of votes. The restoration of what was dismantled is happening slower than the dismantling was done. You follow it with the attention of someone who watched the dismantling and knows which direction things moved.'
+      : 'The KOD marches. The black umbrellas. The Women\'s Strike. The EU Article 7 proceedings. The courts. You kept track of each item as it changed. The tracking is its own form of refusing the normalization.',
+  ])
+  if (F.has('pis_support') && Math.random() < 0.18) return pick([
+    'The 500+ benefit is real. The sense that someone in government speaks for people in your town rather than for Warsaw or Brussels: real. Whether the Constitutional Tribunal matters to your daily life is a question you have a specific answer to.',
+    phase === 'late_life'
+      ? 'PiS lost the 2023 election despite winning the most votes. The coalition that has more seats forms a government under Tusk. You are watching this with specific feelings that are different from what the urban commentary is expressing about the same events.'
+      : 'Poland A and Poland B: the urban educated mobile Tusk voter and the smaller-town parish-attending PiS voter. You know which Poland you live in. The people on television tend to live in the other one.',
+  ])
+  if (F.has('poland_uk_emigrant') && Math.random() < 0.2) return pick([
+    'The Polish deli. The Saturday school. The Sunday call home. The wages that are three or four times what they are in Kraków. The mental arithmetic about what you are saving and what you are building and whether you are going back.',
+    phase === 'late_life'
+      ? 'You came to the UK when the border opened in 2004. You have the Settled Status. The status is a category that did not exist when you arrived. Brexit created it as the document that confirms you can stay in the country you have lived in for twenty years. The documentation of the right to stay: specifically British.'
+      : 'Brexit, June 2016. The result that changed the calculation for a million Poles in the UK. Some left. Some applied for Settled Status. You went through the application. The application was approved. You are a different kind of European in Britain than you were when you arrived.',
+  ])
+  if (F.has('poland_returned_emigrant') && Math.random() < 0.18) return pick([
+    'You went back. The savings are real. The English is real. The comparative perspective on how other countries do certain things is specific and occasionally useful and occasionally irritating to the people around you who did not leave.',
+    'The return: you are Polish in ways that are specific and also at a slight angle to the place, which is the position that only leaving and returning produces. Inside and slightly outside simultaneously.',
+  ])
+  if (F.has('smolensk_conspiracy_view') && Math.random() < 0.18) return pick([
+    'The sequence: flying to Katyń, crashing in Russia, the investigation conducted by Russia. Whether the sequence points to something more than accident the evidence has not confirmed. The suspicion has stayed with you regardless.',
+    phase === 'late_life'
+      ? 'The PiS-appointed commission claimed to find evidence of an explosion in the wreckage. The previous commissions found pilot error. You have followed each iteration of the investigation with the attention of someone who is not sure the official account is complete.'
+      : 'Smolensk: the word now contains two events. April 1940 and April 2010. The first event was a Soviet massacre. The second event was a crash while going to commemorate the first. The connection between them is real. What the connection means is the question.',
+  ])
+  if (F.has('smolensk_accident_view') && Math.random() < 0.18) return pick([
+    'The accident investigation found pilot error. You accept this. The political weaponization of the grief by the Kaczyński camp is something else entirely from the grief itself. You have tried to hold these as separate things.',
+    phase === 'late_life'
+      ? 'PiS made Smolensk a founding myth. The assassination narrative, the exhumations, the second crash investigation. You watched the grief converted into political fuel and found it specific and wrong. The grief was real. What it was converted into was also real and different from the grief.'
+      : 'The grief in April 2010 was shared across the political divide. What happened to it after — the conspiracy narrative, the monument disputes, the anthem at the cross — divided people who had grieved together. The division happened in real time and you watched it.',
+  ])
 
   // ─── ITALY TEXTURE ───────────────────────────────────────────────────────────
   if (F.has('miracolo_generation') && Math.random() < 0.25) return pick([

@@ -3041,6 +3041,118 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by pol_smolensk_2010 (doubt branch).',
   },
 
+  katyn_family_loss: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Has a family member killed in the 1940 Katyń massacre — an officer, policeman, or educated reservist executed by the NKVD, whose absence was explained differently across the decades',
+    intent: 'both',
+    notes: 'Set by pol_dep_katyn (family branch). Follow-throughs: ft80_katyn_family_late, ft80_katyn_smolensk_connection.',
+  },
+
+  katyn_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Polish adult who learned the full confirmed scale of the Katyń massacre in 1990 — 22,000 executed, fifty years of Soviet denial now officially ended',
+    intent: 'year_texture',
+    notes: 'Set by pol_dep_katyn (scale branch).',
+  },
+
+  warsaw_uprising_veteran: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Fought in the 1944 Warsaw Uprising — 63 days of AK resistance against German occupation, then decades of being officially designated a fascist collaborator by the communist state',
+    intent: 'both',
+    notes: 'Set by pol_dep_warsaw_uprising_adult (fought branch). Follow-throughs: ft80_uprising_veteran_forbidden, ft80_uprising_veteran_1989.',
+  },
+
+  warsaw_uprising_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Polish person shaped by the Warsaw Uprising — present or carrying the wound from parents; 200,000 dead, 85% of Warsaw destroyed while Soviets waited across the Vistula',
+    intent: 'both',
+    notes: 'Set by pol_dep_warsaw_uprising_child/adult. Follow-through: ft80_uprising_museum_2004.',
+  },
+
+  ak_veteran_silenced: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'AK (Home Army) veteran who could not officially acknowledge their service under communism — the Armia Krajowa classified as a reactionary organization from 1945 to 1989',
+    intent: 'year_texture',
+    notes: 'Set by ft80_uprising_veteran_forbidden.',
+  },
+
+  kresy_family: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Family from the Polish eastern borderlands (Kresy) — Lwów, Wilno, the areas transferred to the Soviet Union in 1945; parents\' city now in Ukraine or Lithuania under a different name',
+    intent: 'both',
+    notes: 'Set by pol_dep_kresy_family. Follow-throughs: ft80_kresy_name, ft80_kresy_late.',
+  },
+
+  nowa_huta_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Connected to Nowa Huta — the model socialist city built without a church, whose steelworkers fought for and eventually built the Ark of the Lord Church (1977)',
+    intent: 'year_texture',
+    notes: 'Set by pol_dep_nowa_huta.',
+  },
+
+  jedwabne_reckoning: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Engaged with the Jedwabne reckoning — the 2001 acknowledgment that Polish neighbors murdered 340 Jewish residents in July 1941, not the German occupiers',
+    intent: 'both',
+    notes: 'Set by pol_dep_jedwabne. Follow-through: ft80_jedwabne_late.',
+  },
+
+  pis_opposition: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Opposed to the PiS government\'s democratic backsliding post-2015 — judiciary dismantled, media captured, Article 7 proceedings, KOD marches',
+    intent: 'both',
+    notes: 'Set by pol_dep_pis_era (opposition branch). Follow-through: ft80_pis_opposition_2023.',
+  },
+
+  pis_support: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Supported the PiS government — 500+ child benefit, sense of being spoken for after Tusk\'s cosmopolitan years, "Poland B" represented at last',
+    intent: 'both',
+    notes: 'Set by pol_dep_pis_era (support branch). Follow-through: ft80_pis_support_loss.',
+  },
+
+  poland_uk_emigrant: {
+    weight: 'moderate',
+    category: 'personal',
+    description: 'Emigrated from Poland to the UK post-EU-accession 2004 — the Polish deli, the Saturday school, the Settled Status application after Brexit',
+    intent: 'both',
+    notes: 'Set by pol_dep_uk_emigrant (settle branch). Also sets emigrated. Follow-through: ft80_uk_brexit.',
+  },
+
+  poland_returned_emigrant: {
+    weight: 'minor',
+    category: 'personal',
+    description: 'Returned to Poland from UK emigration — Brexit as the signal to go back; the comparative perspective that only leaving and returning produces',
+    intent: 'both',
+    notes: 'Set by pol_dep_uk_emigrant (return branch). Follow-through: ft80_poland_return_adjustment.',
+  },
+
+  smolensk_conspiracy_view: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Holds the view that the 2010 Smolensk crash may not have been purely accidental — the sequence of Katyń commemoration, Russian territory, Russian investigation carries an uncomfortable shape',
+    intent: 'year_texture',
+    notes: 'Set by pol_dep_smolensk_conspiracy (conspiracy branch).',
+  },
+
+  smolensk_accident_view: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Holds the accident view of the 2010 Smolensk crash and opposes the political weaponization of the grief by the Kaczyński camp',
+    intent: 'year_texture',
+    notes: 'Set by pol_dep_smolensk_conspiracy (accident branch).',
+  },
+
   nl_hunger_winter_generation: {
     weight: 'major',
     category: 'historical',
