@@ -11627,6 +11627,24 @@ function buildYearTexture(state) {
       ? 'You are the testimony. The memorial will have statistics. You have the specific supermarket, the specific route through the city, the specific faces of the people who are gone. The archive lives in this generation.'
       : 'Venezuela\'s story is not finished. You are in the middle of it. The reckoning — what the Bolivarian project actually was, what it actually built, what it actually cost — is still being written.',
   ])
+  if (F.has('ven_chavez_death_witness') && Math.random() < 0.2) return pick([
+    'March 5, 2013. 4:25 p.m. The announcement. You remember which room you were in, which television, what the sound in your building was: quiet or not quiet, depending on the building.',
+    phase === 'late_life'
+      ? 'You have lived long enough to watch what came after: the charisma gap, the maduro years, the food queue, the exodus. Whether the project outlasted the man or only its name did is the argument the country has been having ever since.'
+      : 'The question that came immediately after was not about grief or relief. It was: who controls it now. The answer to "who controls it now" determined everything about the next decade.',
+  ])
+  if (F.has('ven_colectivo_era') && Math.random() < 0.18) return pick([
+    'The colectivo on the motorcycle. You know the face, or the helmet, or the way the group moves at certain hours. The knowledge of how to behave in their presence is in the body now — automatic, not thought.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'The colectivos as a structure outlasted the boom and the food shortage and the dollarization. They are the durable infrastructure of a certain kind of order. Order maintained by who has the motorcycle and who does not.'
+      : 'There is a version of the colectivo that is neighbourhood watch, mutual aid, political apparatus, armed militia — all at once. The version you deal with is whichever version it is showing today.',
+  ])
+  if (F.has('ven_clap_system') && Math.random() < 0.18) return pick([
+    'The CLAP box arrives. The composition this month: cornmeal, lentils, cooking oil, pasta. No rice. You note the composition and note what is missing and note the gap between the CLAP rate and the market rate and do the arithmetic of whether to sell any of it.',
+    phase === 'midlife' || phase === 'late_life'
+      ? 'The CLAP is a food system and also a political system and also a social infrastructure. The coordinator knows who has it and who doesn\'t, and the knowing is a form of power that is small and absolute in the specific geography of your block.'
+      : 'The food in the box is real. The condition attached to receiving it — the coordinator, the registration, the political alignment that is understood if not stated — is also real. Both are real in the same monthly box.',
+  ])
   if (F.has('special_period_generation') && Math.random() < 0.22) return pick([
     'The Special Period: no Soviet oil, no Soviet subsidies, the blackouts, the food rationing that was already rationing rationed further. You learned what the minimum was.',
     'The bicycle boom of the 1990s was not optional. The government imported a million bicycles from China because there was no fuel. The city became a cycling city by necessity. You were in it.',

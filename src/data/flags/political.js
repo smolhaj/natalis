@@ -6616,4 +6616,102 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by oral_soldiers_passed event. Follow-through: ft64_soldiers_passed_late.',
   },
 
+  // ── VENEZUELA DEPTH (events_venezuela_depth.js) ───────────────────────────
+
+  ven_chavez_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Came of political age in 1998 believing the Chávez project could transform Venezuela — the grandmother who cried, the sense that someone who spoke like your father had finally won.',
+    intent: 'event',
+    notes: 'Set by ven_chavez_1998 (first choice). Follow-through: ft65_chavez_gen_midlife, ft65_chavez_gen_late.',
+  },
+
+  ven_missions_beneficiary: {
+    weight: 'moderate',
+    category: 'social',
+    description: 'Received access to Barrio Adentro social missions — the Cuban doctor at the módulo, the first blood pressure check, the subsidized medicine; something that had always been for other people becoming, once, for you.',
+    intent: 'event',
+    notes: 'Set by ven_barrio_adentro (auto-resolve). Follow-through: ft65_missions_late.',
+  },
+
+  ven_boom_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived through the oil petrodollar boom 2006–2013 — the shopping trips to Miami, the cheap imports, the appliances and cars, a country spending its future on its present.',
+    intent: 'event',
+    notes: 'Set by ven_oil_boom (both choices). Follow-through: ft65_boom_gen_late.',
+  },
+
+  ven_chavez_death_witness: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Present for the March 5, 2013 announcement at 4:25 p.m. — the grief of the barrio or the quiet of a different neighbourhood, and the question of what continues without him.',
+    intent: 'year_texture',
+    notes: 'Set by ven_chavez_death (auto-resolve).',
+  },
+
+  ven_food_scarcity_era: {
+    weight: 'major',
+    category: 'social',
+    description: 'Lived through the food queue years 2015–2020 — the 5 a.m. number, the cornmeal calculation, the bachaquero premium, the woman with the two-day-old number.',
+    intent: 'event',
+    notes: 'Set by ven_food_line (both choices). Follow-through: ft65_food_scarcity_late.',
+  },
+
+  ven_2017_witness: {
+    weight: 'major',
+    category: 'political',
+    description: 'Present for the 2017 protests — 126 dead, tear gas in residential streets, the guarimba and the colectivo response; in the street or watching from the window.',
+    intent: 'event',
+    notes: 'Set by ven_2017_protest (both choices). Follow-through: ft65_2017_witness_late.',
+  },
+
+  ven_hyperinflation_era: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Survived Venezuelan hyperinflation — three currencies in four years, prices doubling weekly, the dollar bill carried like a saint\'s image, the zeroes removed and then added again.',
+    intent: 'event',
+    notes: 'Set by ven_hyperinflation (auto-resolve). Follow-through: ft65_hyperinflation_late.',
+  },
+
+  ven_diaspora: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Left Venezuela — by air with a bag, or across the Simón Bolívar bridge with almost nothing; one of 7 million who departed between 2015 and 2023.',
+    intent: 'event',
+    notes: 'Set by ven_departure (both choices). Follow-through: ft65_diaspora_first_year, ft65_diaspora_reckoning.',
+  },
+
+  ven_colectivo_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived with colectivos — pro-government armed groups on motorcycles in the barrios, the social navigation required, the grammar of what you say in front of them.',
+    intent: 'year_texture',
+    notes: 'Set by ven_colectivo (both choices).',
+  },
+
+  ven_dollarization_era: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived through Venezuela\'s informal dollarization from 2019 — prices in USD in a country whose revolution declared the dollar the enemy, the state tacitly permitting what it could no longer stop.',
+    intent: 'event',
+    notes: 'Set by ven_dollarization (auto-resolve). Follow-through: ft65_dollarization_late.',
+  },
+
+  ven_clap_system: {
+    weight: 'moderate',
+    category: 'social',
+    description: 'Navigated the CLAP food distribution system — the party-linked monthly food bag, the coordinator whose goodwill is required, the food that is real regardless of what it represents.',
+    intent: 'year_texture',
+    notes: 'Set by ven_clap (first choice).',
+  },
+
+  ven_colombia_migrant: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'Venezuelan migrant in Colombia — the PPT document, the informal economy or the formal job, the register in which "venezolano" is said.',
+    intent: 'event',
+    notes: 'Set by ven_migrant_colombia (both choices). Follow-through: ft65_colombia_migrant_late.',
+  },
+
 }
