@@ -8388,6 +8388,55 @@ function buildYearTexture(state) {
       : 'The fires are the event your generation will be measured by — not Port Arthur or Tampa or the Dismissal but this. The red sky is the image. You were inside it.',
   ])
 
+  if (F.has('aus_stolen_generation') && Math.random() < 0.3) return pick([
+    'The mission: a word that contains a building, a regime, a suppression of the language, a generation. You know what the mission was from the inside. The people who describe it from the outside use the word differently.',
+    phase === 'late_life'
+      ? 'Link-Up, the Healing Foundation, the Sorry Day ceremonies — the infrastructure built around what was done to your generation. The infrastructure exists because what was done required infrastructure to address. You are both the reason for the infrastructure and the person it tries to reach.'
+      : 'You are building a life in a country that removed you from your family as a child and called it welfare. The country has not yet apologised. The apology will come in 2008. You are in the years before it.',
+  ])
+  if (F.has('ten_pound_pom_generation') && Math.random() < 0.2) return pick([
+    'The ship from Southampton: five weeks, the equator, the heat that arrived like a wall. The promotional films did not mention the migrant hostel at Bonegilla. The country was real. The films were the country\'s idea of itself.',
+    phase === 'late_life'
+      ? 'You came for ten pounds and stayed for sixty years. The country you came from and the country you came to have both changed enough that the migration is now the single fixed point. You are Australian. You are also from somewhere that no longer exists in the form you left it.'
+      : 'Being Australian takes longer than the arrival. It takes the school years, the job, the first time you wake up and know where you are without thinking about it.',
+  ])
+  if (F.has('aus_1967_generation') && Math.random() < 0.25) return pick([
+    'Ninety point seven seven percent. The highest yes vote in Australian referendum history. They counted you — officially, constitutionally, in the census. What the counting would produce was a different question.',
+    phase === 'late_life'
+      ? 'You have been in the census for fifty years. What the census did and what it failed to do are both in the record. Being counted is the beginning of being seen. It is not the same as being seen.'
+      : 'Before 1967 the Australian constitution allowed the Commonwealth to make laws for any race except Aboriginal people. The referendum changed that. You are in the before and the after.',
+  ])
+  if (F.has('aus_mardi_gras_original') && Math.random() < 0.25) return pick([
+    'The parade that became the festival: you know what it came from. The night in 1978 when the police charged the crowd on Oxford Street. The names in the newspaper. The jobs and houses lost from a column in the Herald.',
+    phase === 'late_life'
+      ? 'The Mardi Gras now has corporate floats and media coverage and a prime minister in the stands. You remember the night it started. The celebration is real. The distance between what started it and what it has become is also real, and you hold both.'
+      : 'People come from overseas for the parade. They know it as a celebration. The fifty-three who were arrested in 1978 are not in the promotional material. You remember the list of names.',
+  ])
+  if (F.has('aus_cronulla_generation') && Math.random() < 0.2) return pick([
+    'December 11, 2005. The flags on the beach. The phrase was "reclaim the beach" and the people doing the reclaiming had Australian flags. The flag means different things to different people on the same day in the same country.',
+    phase === 'late_life'
+      ? 'The analysis of Cronulla has accumulated: the talkback radio, the text messages, the specific chemistry of that summer. What produced the crowd on the beach has not been fully dismantled. You watch the conditions and make the assessment.'
+      : 'You are in a country where the flag was used as a weapon on a beach and the prime minister said it was not about race. Both things happened. You were watching.',
+  ])
+  if (F.has('aus_convict_heritage') && Math.random() < 0.2) return pick([
+    'The sentence at the Old Bailey: seven years transportation. The specific crime — a bolt of cloth, a sheep, seven shillings. The ship. The colony. The person at the beginning of the line you found yourself at the end of.',
+    phase === 'late_life'
+      ? 'The convict ancestry: what was once suppressed is now the claim. You have both the shame the ancestors felt and the status the genealogy now confers. The reversal happened in your lifetime.'
+      : 'Your great-great-something came on a convict ship. The colony absorbed them. They became Australian in the particular way that someone becomes something when they have no other option. You are the continuation of that becoming.',
+  ])
+  if (F.has('aus_outback_childhood') && Math.random() < 0.25) return pick([
+    'The HF radio at seven in the morning: the teacher in a city three hundred kilometres away, the crackle of static, the lesson conducted across the red country. School of the Air. You were one of forty students in a region the size of France.',
+    phase === 'late_life'
+      ? 'The isolation of the outback childhood is not something you explain easily. It was not loneliness — it was distance, which is a physical condition and not a psychological one. The sky was very large. The nearest person your age was very far. Both were simply true.'
+      : 'In the wet season the road was impassable. The flying doctor landed on the airstrip behind the homestead. These are facts about a childhood rather than the texture of it. The texture was the size of the quiet.',
+  ])
+  if (F.has('aus_voice_generation') && Math.random() < 0.2) return pick([
+    'October 14, 2023. Sixty point zero six percent No. Every state. An advisory body with no legislative power, no veto, no right to compel anything. Sixty percent of Australians voted against it.',
+    phase === 'late_life'
+      ? 'The Voice campaign made certain things legible that had been present but less visible. What a referendum reveals about a country is different from what it decides. You are still reading what this one revealed.'
+      : 'The gap in life expectancy, in incarceration, in child removal: these numbers existed before the referendum and after it. The referendum was about something separate from those numbers and also not separate from them at all.',
+  ])
+
   // ─── UNITED STATES TEXTURE ───────────────────────────────────────────────────
   if (F.has('jim_crow_childhood') && Math.random() < 0.3) return pick([
     'You learned the rules of survival before you learned to read. The rules are still there, twenty or forty years later, in the way you move through certain rooms — the reflex of the second calculation that white people in those rooms do not make.',
