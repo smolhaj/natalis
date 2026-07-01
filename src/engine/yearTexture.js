@@ -6442,6 +6442,58 @@ function buildYearTexture(state) {
       ? 'You left Romania when the border opened in 2007. You have been sending money since 2007. The calculation you made was the right calculation for you. The calculation has a cost that does not show in the calculation.'
       : 'The Romanian accent in the supermarket or on the construction site or in the care home. You recognise it. Sometimes you acknowledge it. Sometimes you do not.',
   ])
+  if (F.has('rom_systematization_displaced') && Math.random() < 0.22) return pick([
+    'The address on your documents changed. The building does not exist. The street that was your street is now a boulevard. The boulevard is wide and correct-looking and has nothing in it that was there before.',
+    phase === 'late_life'
+      ? 'The Casa Poporului sells tourist tickets. You can buy a ticket to walk through the 1,100 rooms of the building that was built on the site of the neighbourhood that was demolished for it. You have decided not to buy a ticket.'
+      : 'Systematization: the state\'s word for replacing what existed with what the state wanted to exist instead. Your neighbourhood was one of the things that existed. The boulevard is what the state wanted instead.',
+  ])
+  if (F.has('rom_timisoara_generation') && Math.random() < 0.22) return pick([
+    'The revolution started with a congregation forming a human chain around one man\'s door. The Securitate had come to arrest a Hungarian pastor. The congregation stood in front of the door. By nightfall there were thousands. This is how it started.',
+    phase === 'late_life'
+      ? 'December 16 to December 25, 1989: nine days. The congregation at the parsonage on the 16th. The first dead on the 17th. Ceaușescu\'s last rally on the 21st and the freeze that broadcast across the country. The helicopter on the 22nd. The Christmas Day trial. Nine days from the door of a pastor to the end of forty years.'
+      : 'You were in the days between the beginning and the end. The days were specific days with specific events at specific addresses. The summary misses how it felt to be inside them when the end was not yet certain.',
+  ])
+  if (F.has('rom_decree_generation') && Math.random() < 0.2) return pick([
+    'The institution taught you to need very little. The teaching was effective. You notice that needing very little is a skill in some contexts and a liability in others. You have learned to track which context you are in.',
+    phase === 'midlife'
+      ? 'The footage from 1990 — the rows of cots, the children rocking in the specific way that children rock when there is no one to rock them — is about a world you came out of. The footage does not capture what comes after the footage. You are what comes after the footage.'
+      : 'You learned the institutional logic before you could articulate it: fade, wait, need very little. Outside the institution the logic does not apply in the same way. You have been adapting it for years to conditions it was not made for.',
+  ])
+  if (F.has('rom_mineriad_generation') && Math.random() < 0.2) return pick([
+    'June 1990: six months after the revolution. The miners from the Jiu Valley arrived with clubs. The police stood back. The protesters in University Square were beaten. The new democracy used the old method. This is a sentence you have been sitting with since June 1990.',
+    phase === 'late_life'
+      ? 'Ion Iliescu was indicted for crimes against humanity in 2019 for ordering the miners into Bucharest in 1990. Twenty-nine years for the indictment to arrive. Whether the trial resolves is its own question. The specific pace of post-communist accountability is something you have come to understand very exactly.'
+      : 'The method: when threatened by people in a public square, send men with clubs. The men changed — not the Securitate, miners. The method did not change. The pattern became available in full only over the following decade, which is when you saw it as a pattern.',
+  ])
+  if (F.has('rom_file_opened') && Math.random() < 0.22) return pick([
+    'The CNSAS file is in a drawer. The name you recognised in the file is connected to a person you still see. The occasions at which you see them have not stopped occurring. The knowledge is in you at each of them.',
+    phase === 'late_life'
+      ? 'In late life you return to the question of what the Securitate file means. The state that created it is gone. The person who reported to it is still here. The two facts sit alongside each other with no clear instruction about what to do with them. The CNSAS process gave you access to the file. The access is all it gave you.'
+      : 'The handwriting you recognised. The specific certainty of recognising handwriting. The way the recognition happened before the processing of what the recognition meant. You have carried both since.',
+  ])
+  if (F.has('rom_italian_emigrant') && Math.random() < 0.2) return pick([
+    'The bus from Bucharest to Rome: twenty-six hours. You know the route now the way you know a route you have done many times. The arrival into Termini at 6am, the specific exhaustion of that arrival, the neighbourhood where you are going to. The Romanian who meets you at the station.',
+    phase === 'late_life'
+      ? 'You have been sending money home for long enough that the calculation is automatic. What you earn here, what it buys there, what it costs you to be here and not there. The calculation was right at the time it was made. In late life you make it again and the answer is not the same as the first time.'
+      : 'The Romanian mass on Sunday in the church that opened its doors. The specific community of people who left at the same time for the same reasons. The phone calls home at a certain hour. You are good at this life. The goodness at it is a different thing from having chosen it as your life.',
+  ])
+  if (F.has('rom_hungarian_minority') && Math.random() < 0.2) return pick([
+    'You speak Hungarian in the street because it is your language. You speak Romanian when it is required. The question of which is the real language is asked by people who have only one.',
+    phase === 'late_life'
+      ? 'The legal category in which you exist has been revised by the 1920 treaty, by the communist state, by the post-1989 parliament, by EU accession. Each revision is made by people who are not you. The revision goes on. You are still the same person.'
+      : 'Transylvania: where the majority language on the street can be Hungarian, where the church is Hungarian Reformed, where the school system has been reorganised several times on the question of which language to teach in. You are inside this question, not above it.',
+  ])
+  if (F.has('rom_democratic_disillusionment') && Math.random() < 0.18) return pick([
+    'The revolution cleared the Ceaușescus. It did not clear the system the Ceaușescus had used. The system adapted. You watched the adaptation over the decade following the revolution and drew the conclusion.',
+    phase === 'late_life'
+      ? 'You have watched Romanian politics for forty years since the revolution. The corruption investigations, the anti-corruption protests, the governments that promised something different and then became something familiar. You have not stopped voting. But you vote with the specific knowledge of someone who was in University Square in June 1990 and saw the miners arrive.'
+      : 'The new government used the miners the way the old government used the Securitate. A different instrument, the same relationship between power and protest. The conclusion is available from the evidence.',
+  ])
+  if (F.has('rom_returned_emigrant') && Math.random() < 0.2) return pick([
+    'You came back. The return is not the homecoming that the idea of the return was. The place moved on while you were gone. You moved on while you were gone. The two moved-on things are meeting each other now.',
+    'The years in Italy are visible in small ways — a phrase you use, a particular way you navigate queues, a comparison that arrives unbidden. People notice before you do.',
+  ])
   if (F.has('romania_orphan_generation') && Math.random() < 0.25) return pick([
     'You learned early that institutions do not have space for the individual child. The lesson generalized.',
     'The orphanage taught you to manage in large groups with limited resources. You notice that this is not a skill that gets named as such, but it is a skill.',

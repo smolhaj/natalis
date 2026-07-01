@@ -1645,6 +1645,78 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by rom_revolution_1989.',
   },
 
+  rom_systematization_displaced: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lost home or neighbourhood to Ceaușescu\'s systematization programme — building demolished for the Boulevard of the Victory of Socialism or the Casa Poporului',
+    intent: 'both',
+    notes: 'Set by rom_dep_systematization. Follow-throughs: ft79_systematization_late, ft79_systematization_reckoning.',
+  },
+
+  rom_timisoara_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was present in Timișoara or Bucharest for the December 1989 revolution — the first days, the congregation\'s human chain, the frozen balcony moment',
+    intent: 'both',
+    notes: 'Set by rom_dep_timisoara_1989. Follow-throughs: ft79_timisoara_revolution_start, ft79_timisoara_late_life.',
+  },
+
+  rom_decree_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Born of or raised in the Romanian state orphanage system — child of Decree 770, learned the institutional logic of fading and needing very little',
+    intent: 'both',
+    notes: 'Set by rom_dep_orphan_generation. Follow-throughs: ft79_orphan_adult, ft79_orphan_midlife.',
+  },
+
+  rom_mineriad_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed the June 1990 Mineriad — miners beating students and protesters in University Square while police stood back, six months after the revolution',
+    intent: 'both',
+    notes: 'Set by rom_dep_mineriad_1990. Follow-throughs: ft79_mineriad_pattern, ft79_mineriad_late_reckoning.',
+  },
+
+  rom_file_opened: {
+    weight: 'major',
+    category: 'personal',
+    description: 'Opened a CNSAS Securitate file and discovered the name of an informer — someone whose handwriting was in the file, known to the character',
+    intent: 'both',
+    notes: 'Set by rom_dep_securitate_file. Follow-throughs: ft79_file_presence, ft79_file_late_question.',
+  },
+
+  rom_italian_emigrant: {
+    weight: 'moderate',
+    category: 'personal',
+    description: 'Emigrated from Romania to Italy — the 26-hour bus, the neighbourhood in Pigneto or Piazza Vittorio, the Sunday Romanian-language mass, remittances home',
+    intent: 'both',
+    notes: 'Set by rom_dep_italy_emigration. Follow-throughs: ft79_italy_years, ft79_italy_return_question.',
+  },
+
+  rom_hungarian_minority: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Ethnic Hungarian living in Transylvania — identity question of Romanian who speaks Hungarian vs Hungarian who lives in Romania, different answers across regimes',
+    intent: 'both',
+    notes: 'Set by rom_dep_hungarian_minority. Follow-throughs: ft79_hungarian_identity_question, ft79_hungarian_late.',
+  },
+
+  rom_democratic_disillusionment: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Drew the conclusion from the Mineriad that the method of the old regime survived into the new one — democracy that uses the same tools as the dictatorship',
+    intent: 'year_texture',
+    notes: 'Set by ft79_mineriad_pattern. Year-texture flag for late-life political reflection.',
+  },
+
+  rom_returned_emigrant: {
+    weight: 'minor',
+    category: 'personal',
+    description: 'Returned to Romania after years of emigration to Italy — the return that is not the homecoming the idea of the return was',
+    intent: 'year_texture',
+    notes: 'Set by ft79_italy_return_question (choice 1). Year-texture flag.',
+  },
+
   hungarian_1956_generation: {
     weight: 'major',
     category: 'historical',
