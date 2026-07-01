@@ -718,6 +718,46 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by ken_maasai_land_displacement (both branches). Year texture: the animals inside worth more than the people outside.',
   },
 
+  ph_dep_ofw_family: {
+    weight: 'major',
+    category: 'migration',
+    description: 'Filipino OFW family — either the one who left or the one who waited. The balikbayan box, the monthly remittance, the missed years that arrive by phone call.',
+    intent: 'year_texture',
+    notes: 'Set by ph_dep_ofw_departure (both choices).',
+  },
+
+  ph_dep_moro_identity: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Muslim Filipino (Moro) identity in Mindanao — navigating the checkpoint, the conflict, the name that explains everything to the soldier who reads it.',
+    intent: 'year_texture',
+    notes: 'Set by ph_dep_moro_identity (both choices).',
+  },
+
+  ph_dep_bpo_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Filipino BPO/call center generation — the night shift, the adopted accent, the salary that beats teaching, the sleep cycle that does not.',
+    intent: 'year_texture',
+    notes: 'Set by ph_dep_bpo (both choices).',
+  },
+
+  ph_dep_seaman_family: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Filipino seafarer or family of seafarer — nine-month contracts, Panama-flag ships, remittances from every port, children who grow between voyages.',
+    intent: 'year_texture',
+    notes: 'Set by ph_dep_seaman (leave choice).',
+  },
+
+  ph_dep_ondoy_survivor: {
+    weight: 'major',
+    category: 'disaster',
+    description: 'Survivor of Tropical Storm Ondoy (2009) — the rooftop, the Marikina overflow, the mud smell in the walls for months, the elevation of your house now known exactly.',
+    intent: 'year_texture',
+    notes: 'Set by ph_dep_ondoy_2009 (both choices).',
+  },
+
   maasai_nairobi: {
     weight: 'major',
     category: 'migration',

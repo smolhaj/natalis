@@ -1,401 +1,376 @@
 // events_sonder_34.js
-// Contemplative layer — 30 events.
-// Themes: the body at different ages, what news travels and what doesn't,
-// the object that survives everything, language in the mind, working late,
-// the village you left or didn't leave, memory made of smell.
+// Contemplative layer — weight 2, no choices, no new flags, mem-gated.
+// Themes: the drawer of things with no place, morning light before anyone else
+// is awake, the joke only two people knew, the smell of someone's coat,
+// the word you mispronounced for years, the road you always meant to take,
+// the sound of an empty house, what the hands remember.
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
 export const EVENTS_SONDER_34 = [
 
   {
-    id: 'sonder_34_a',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => G.age >= 22 && G.age <= 32 && !G.mem?.s34a,
-    text: pick([
-      'You are learning where your body keeps things. The shoulders for certain kinds of worry. The jaw at night when things are unresolved. The stomach before a particular kind of conversation. You did not know you were going to have this body for so long. You assumed there would be a different arrangement.',
-      'The body at twenty-six is just the body. You don\'t notice it the way you will later. This is a gift you don\'t know is a gift.',
-    ]),
-    choices: null,
-    effect: (p) => { p.setMem('s34a', true) },
-  },
-
-  {
-    id: 'sonder_34_b',
+    id: 'sonder34_drawer_of_things',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 35 && G.age <= 48 && !G.mem?.s34b,
+    when: (G) => !G.mem?.s34DrawerOfThings,
     text: pick([
-      'The body is keeping score on a different accounting system than the one you use. You don\'t find out until a morning when something doesn\'t work the way it worked, or until the doctor shows you numbers, or until you try to do something you used to do without thinking. The accounting system was running the whole time.',
-      'You notice it first in the morning. The way you get up is different now than it was. Not dramatic — just a few degrees of something. A negotiation the body makes before you\'re fully awake.',
+      'There is a drawer that holds the things with no designated place: the batteries of uncertain charge, the key to something you can no longer identify, the restaurant receipt from a meal that was significant at the time. You have not organised the drawer and will not. The drawer is honest in a way the organised parts of the room are not.',
+      'The drawer contains: a button, a coin from a country you visited once, a pen that probably works, three small screws from a piece of furniture you assembled and had three screws left over and put them here in case they were important. They were probably not important. You have not thrown them away.',
     ]),
     choices: null,
-    effect: (p) => { p.setMem('s34b', true) },
+    effect: (p) => { p.setMem('s34DrawerOfThings', true) },
   },
 
   {
-    id: 'sonder_34_c',
-    phase: 'late_life',
+    id: 'sonder34_morning_before_anyone',
+    phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 60 && !G.mem?.s34c,
+    when: (G) => !G.mem?.s34MorningBefore,
     text: pick([
-      'The body has become a project. Not in a bad way, necessarily, but in the way that anything requiring daily maintenance and management becomes a project. You have a relationship with it that is partly collaboration and partly negotiation.',
-      'There are things the body has decided it will no longer do easily. You find workarounds. The workarounds become the new normal. In ten years the workarounds will have workarounds.',
+      'There is an hour in the morning before anyone else is awake. The house makes small sounds. The light is the colour it is only at this hour before the angle changes. You have learned to exist in this hour as a kind of privacy that requires no one to leave.',
+      'The early morning has a quality the rest of the day does not. Something is possible in it that closes as the day fills. You have tried to describe the quality and found that describing it is part of what closes it.',
     ]),
     choices: null,
-    effect: (p) => { p.setMem('s34c', true) },
+    effect: (p) => { p.setMem('s34MorningBefore', true) },
   },
 
   {
-    id: 'sonder_34_d',
+    id: 'sonder34_joke_two_people',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => !G.mem?.s34JokeTwoPeople,
+    text: pick([
+      'There was a joke that required two specific people to be funny. Outside the two people, the setup did not work. You were one of the two people. The other person has not been in your life for years. The joke is still available to you — the whole architecture of it — and has nowhere to go.',
+      'A shared joke is a small private language. You had one with someone. The language still exists in you and the other speaker is not in your life. This is not grief, exactly. It is closer to carrying a coin from a currency that no longer circulates.',
+    ]),
+    choices: null,
+    effect: (p) => { p.r += 2; p.setMem('s34JokeTwoPeople', true) },
+  },
+
+  {
+    id: 'sonder34_smell_of_coat',
     phase: 'childhood',
     weight: 2,
-    when: (G) => G.age >= 7 && G.age <= 12 && !G.mem?.s34d,
+    when: (G) => !G.mem?.s34SmellOfCoat,
     text: pick([
-      'Someone in the village went away and came back different. You are too young to say what is different exactly, but you can see it — the way they sit, the way they hold silences, the new words that appear in their speech. You learn from this that going away changes people. You file this information.',
-      'News travels through your community by voice. You know this because you can sometimes trace a piece of information back to its source — the truck driver, the trader, the relative who visited. You are learning the infrastructure of knowing.',
+      'There is a smell that belongs to a specific person — a coat, a soap, a particular combination that you cannot reconstruct but that you recognise completely when it arrives. The smell appears sometimes in unexpected places and for a moment places you in a room you have not been in for decades.',
+      'Someone from a long time ago had a specific smell that was not cologne or anything named — the accumulation of daily life into a scent that belonged to that person. You have encountered it again in strangers and each time you are briefly somewhere else.',
     ]),
     choices: null,
-    effect: (p) => { p.e += 2; p.setMem('s34d', true) },
+    effect: (p) => { p.r += 2; p.setMem('s34SmellOfCoat', true) },
   },
 
   {
-    id: 'sonder_34_e',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 38 && G.age <= 55 && !G.mem?.s34e,
-    text: pick([
-      'There is an object in your home that has moved with you through every place you have lived. You don\'t always notice it but it\'s always there. If someone asked you to explain its significance you would not be able to explain it completely. The significance is partly that it survived everything.',
-      'The thing about photographs from twenty years ago is not the faces — it\'s the objects in the background. The furniture that is gone. The wallpaper. The clothing that places the image in a year. The background tells you more about the year than the face does, because the face tried to present itself and the background didn\'t.',
-    ]),
-    choices: null,
-    effect: (p) => { p.r += 3; p.setMem('s34e', true) },
-  },
-
-  {
-    id: 'sonder_34_f',
+    id: 'sonder34_mispronounced_word',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 24 && G.age <= 36 && !G.mem?.s34f,
+    when: (G) => !G.mem?.s34MispronouncedWord,
     text: pick([
-      'You are working late. Not because you have to, tonight, but because the work is in a particular state that makes it hard to stop — the problem is almost solved, the document is almost finished. You notice you have been here four hours past when you thought you\'d leave. The office or the workspace is quiet. This version of concentration, of being alone with the almost-finished thing, has a specific texture.',
-      'The commute has become so familiar that you no longer have memories of it. You arrive. There is no narrative of arriving — just the before and the after. This is true of things you do every day: the automatic makes no deposit in memory.',
+      'There was a word you mispronounced for years — not badly, just wrongly, and in a way that no one corrected you because the mispronunciation was not so far off as to interrupt the sentence. When you finally heard the correct version you discovered the shape of your mistake. You still sometimes feel the old shape in your mouth before you catch it.',
+      'You learned some words from reading and some from hearing, and the ones you learned from reading you sometimes pronounced incorrectly until someone said the word aloud near you and the gap closed. There is still a gap somewhere, probably, that has not closed yet.',
     ]),
     choices: null,
-    effect: (p) => { p.setMem('s34f', true) },
+    effect: (p) => { p.setMem('s34MispronouncedWord', true) },
   },
 
   {
-    id: 'sonder_34_g',
-    phase: 'childhood',
-    weight: 2,
-    when: (G) => G.age >= 8 && G.age <= 13 && !G.mem?.s34g,
-    text: pick([
-      'There are two languages inside you. The one for school and the one for home are not the same. You switch between them without thinking. You understand that the switching is a skill but you did not learn it the way you learn skills — it happened, and now you have it.',
-      'The adults talk about something in the other room and you understand more of it than they know you understand. This is information you keep to yourself. The gap between what adults think children understand and what children actually understand is something you live inside.',
-    ]),
-    choices: null,
-    effect: (p) => { p.e += 2; p.setMem('s34g', true) },
-  },
-
-  {
-    id: 'sonder_34_h',
-    phase: 'adolescence',
-    weight: 2,
-    when: (G) => G.age >= 14 && G.age <= 19 && !G.mem?.s34h,
-    text: pick([
-      'You are becoming someone. The process is uncomfortable in a way that nobody told you about in advance — the not-yet of it, the way you are finishing one version of yourself before the next one is ready. The gap between the versions is where most of adolescence lives.',
-      'You have discovered the version of yourself that exists in someone else\'s eyes. It\'s different from the version you carry. You\'re not sure which is more accurate. You try to reconcile them. You will spend years on this.',
-    ]),
-    choices: null,
-    effect: (p) => { p.r += 3; p.setMem('s34h', true) },
-  },
-
-  {
-    id: 'sonder_34_i',
+    id: 'sonder34_road_always_meant',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 42 && G.age <= 55 && !G.mem?.s34i,
+    when: (G) => !G.mem?.s34RoadMeant,
     text: pick([
-      'You have become someone\'s memory of who they were when they knew you. You understand this when you run into a person from twenty years ago and see yourself in their eyes as you were then: a person who no longer exists but still exists, apparently, in this person\'s archive. You find this alarming and comforting in equal measure.',
-      'The younger colleague does something the way you used to do it ten years ago, when you thought you were doing it right. You watch them. You do not say: that\'s what I did, and here is what I learned. You do not say anything. You let them learn it the way you learned it.',
+      'There is a road you have passed the entrance to many times and always meant to go down. The road is small and the entrance is not dramatic and each time you have been going somewhere else. The road has existed in your life as a possibility for longer than most things you actually did.',
+      'You have a category of unvisited places that you know exist and have made a note to visit and have not. The note is internal. The places remain. The life is organised around different priorities and the unvisited places wait in a part of it that is not the centre.',
     ]),
     choices: null,
-    effect: (p) => { p.r += 4; p.setMem('s34i', true) },
+    effect: (p) => { p.r += 2; p.setMem('s34RoadMeant', true) },
   },
 
   {
-    id: 'sonder_34_j',
+    id: 'sonder34_empty_house_sound',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => !G.mem?.s34EmptyHouseSound,
+    text: pick([
+      'An empty house sounds different from a house with people in it. The difference is not absence of voice — it is something structural, the way the building sits with its own sounds when no one is there to cover them. The settling, the refrigerator, the thing that ticks for no obvious reason. You know which sounds are yours.',
+      'Coming home to an empty house has a specific quality that coming home to a full house does not. The quality is not simply loneliness, though loneliness can be inside it. It is also a kind of belonging — the house recognising you as the one it has been waiting for.',
+    ]),
+    choices: null,
+    effect: (p) => { p.setMem('s34EmptyHouseSound', true) },
+  },
+
+  {
+    id: 'sonder34_what_hands_remember',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => !G.mem?.s34WhatHandsRemember,
+    text: pick([
+      'Your hands know things your mind does not actively hold. They know the sequence for a task you have done ten thousand times. They know the weight and position of tools you no longer use. They reach for switches in rooms that have changed. The knowledge in them is not the same kind as the knowledge in your head.',
+      'There is a skill in your hands that lives below the level of thought — the angle, the pressure, the timing. You learned it so long ago that the learning is gone and what remains is only the doing. When you try to explain the doing you lose it briefly and have to stop explaining and let the hands show instead.',
+    ]),
+    choices: null,
+    effect: (p) => { p.setMem('s34WhatHandsRemember', true) },
+  },
+
+  {
+    id: 'sonder34_the_long_pause',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => !G.mem?.s34LongPause,
+    text: pick([
+      'There is a pause at the end of a conversation that could become anything. You have learned to read the pause: it either means the conversation is finished or the conversation is about to say the thing it has been approaching for the last ten minutes. You have been wrong both ways.',
+      'Some silences are endings and some silences are the thing about to be said. The skill of distinguishing between them is something you have gotten better at and still get wrong. The wrong ones — the silences you filled when you should have waited — are more memorable than the right ones.',
+    ]),
+    choices: null,
+    effect: (p) => { p.setMem('s34LongPause', true) },
+  },
+
+  {
+    id: 'sonder34_something_you_avoided',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => !G.mem?.s34SomethingAvoided,
+    text: pick([
+      'You have been avoiding something for long enough that the avoidance has become comfortable. The thing is still there. The comfort of avoiding it is now its own reason to continue avoiding it. You have, at intervals, considered facing it, and then found something else to do instead.',
+      'Not all avoidance is cowardice. Some of it is resource management — the thing is not urgent and other things are, and when you get to it you will get to it. The interval between deciding to get to it and getting to it is longer than it looks from the beginning.',
+    ]),
+    choices: null,
+    effect: (p) => { p.r += 2; p.setMem('s34SomethingAvoided', true) },
+  },
+
+  {
+    id: 'sonder34_window_across_the_way',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => !G.mem?.s34WindowAcross,
+    text: pick([
+      'From your window you can see a window in the building across the way. The light in it goes on and off at intervals that suggest a life with its own schedule, its own reasons for being awake at eleven or midnight or two. You know nothing about the life. You have watched the light for a long time.',
+      'The lighted window across the way: someone in it, or the light left on, or a television. The window is not yours and the life behind it is not yours and the ordinary miracle of another specific life going on behind a specific window has become ordinary enough that you only sometimes notice it.',
+    ]),
+    choices: null,
+    effect: (p) => { p.r += 2; p.setMem('s34WindowAcross', true) },
+  },
+
+  {
+    id: 'sonder34_the_counting_habit',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => !G.mem?.s34CountingHabit,
+    text: pick([
+      'You count things when you are anxious or bored or in a room where nothing requires your attention. Steps, lights, people, the tiles in a ceiling. The counting organises the space in a way that is not useful but is calming. You have been doing this since before you were aware that you were doing it.',
+      'A friend pointed out that you count things and you realised they were right and that you had been doing it for so long you had stopped noticing. The counting has no particular end — you do not do anything with the number. The count is the thing.',
+    ]),
+    choices: null,
+    effect: (p) => { p.setMem('s34CountingHabit', true) },
+  },
+
+  {
+    id: 'sonder34_the_particular_chair',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => !G.mem?.s34ParticularChair,
+    text: pick([
+      'There is a chair that is yours in the way that no one decided but everyone understands. In your parents\' house, in your own house, somewhere you have lived — a particular chair that accumulated meaning by repetition until the chair and the person became the same thing in certain conversations. When someone else sits in the chair it registers in the room.',
+      'The chair at the table that is yours: not assigned, just accumulated. The angle to the window that works. The distance from the heat. The way the room opens from that seat so you can see the door. These are things you noticed once, years ago, and the choice stuck.',
+    ]),
+    choices: null,
+    effect: (p) => { p.setMem('s34ParticularChair', true) },
+  },
+
+  {
+    id: 'sonder34_the_face_on_the_platform',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => !G.mem?.s34FaceOnPlatform,
+    text: pick([
+      'A face on the platform: someone you do not know but whose expression you read for no reason except that you were both waiting and there was nothing else to look at. The expression said something — not legibly, but in the way faces say things in transit, where there is no one performing for anyone. The train came. You went different directions.',
+      'In a transit space you catch a face at a moment it does not expect to be caught — the private expression between destinations. You see it, the person does not see you seeing it, and for a second you know something about someone you will never know. Then the platform clears and the knowing is gone too.',
+    ]),
+    choices: null,
+    effect: (p) => { p.setMem('s34FaceOnPlatform', true) },
+  },
+
+  {
+    id: 'sonder34_the_recipe_in_the_head',
+    phase: 'midlife',
+    weight: 2,
+    when: (G) => !G.mem?.s34RecipeInHead,
+    text: pick([
+      'There are recipes you carry in your head that you did not write down because you did not think you would need to write them down. Some of them came from someone who is gone and the recipe is now the only version left. You have made the dish from the version in your head and it is close but not the same and you cannot identify what is different.',
+      'The dish that someone always made — the version they always made — is not a recipe so much as a set of adjustments from a recipe, made by hand, made by feel, made so many times that the adjustments were the point. You know most of them. The ones you are missing are the ones you would not have known to ask about.',
+    ]),
+    choices: null,
+    effect: (p) => { p.r += 3; p.setMem('s34RecipeInHead', true) },
+  },
+
+  {
+    id: 'sonder34_news_from_somewhere',
+    phase: 'young_adult',
+    weight: 2,
+    when: (G) => !G.mem?.s34NewsFromSomewhere,
+    text: pick([
+      'The news arrives and the news is from somewhere you have been or from somewhere that contains people you know. The news lands differently from news about places that are just names. You check the names in the news against the names in your life and the overlap is small but the checking is automatic now.',
+      'You carry the habit of scanning news for the places you have a connection to. The connection may be thin — a visit, a friend of a friend, a year spent there — but it changes the quality of the information. Generic disaster becomes a street you walked.',
+    ]),
+    choices: null,
+    effect: (p) => { p.setMem('s34NewsFromSomewhere', true) },
+  },
+
+  {
+    id: 'sonder34_the_thing_that_wasnt_said',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 65 && !G.mem?.s34j,
+    when: (G) => G.age >= 50 && !G.mem?.s34ThingNotSaid,
     text: pick([
-      'You are someone\'s old person now. The children and grandchildren have the same relationship to you that you had to the people who were old when you were young — the half-attention, the patience that is not always quite patience, the private certainty that your experience is more than it looks. The cycle is complete and you are on the far side of it.',
-      'Memory is not filed chronologically. It\'s filed by intensity. The years that were eventful are large in the archive. The years that were quiet are thin. You have lived through both kinds. You have no preference now. You miss the quiet years more.',
+      'There is something you did not say to someone who is gone. Not a confession — something ordinary, an acknowledgement, a piece of information that would have landed well. The situation passed and you thought there would be another and there was not. The unsaid thing is not dramatic. That is part of what makes it stay.',
+      'The word you did not say in time: not a declaration but a small remark that would have let someone know you were paying attention. The opportunity closed. The person is gone or the moment is gone. The remark is still in you, waiting for a situation that will never have the same shape.',
     ]),
     choices: null,
-    effect: (p) => { p.r += 4; p.setMem('s34j', true) },
+    effect: (p) => { p.r += 4; p.setMem('s34ThingNotSaid', true) },
   },
 
   {
-    id: 'sonder_34_k',
+    id: 'sonder34_the_ceiling_at_night',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 20 && G.age <= 30 && !G.mem?.s34k,
+    when: (G) => !G.mem?.s34CeilingAtNight,
     text: pick([
-      'You are calling home less often. Not because anything changed — not because of a fight or a decision — but because life expands around you and the call that was going to happen today gets moved to tomorrow, and then it\'s been two weeks. The two weeks become the new interval. You notice this without reversing it.',
-      'The apartment is the first place that is only yours. Everything in it was chosen by you. The aesthetic it expresses is yours, for the first time in your life. You are learning what you like from looking at what you chose.',
+      'The ceiling at three in the morning is a different object from the ceiling in the day. You have studied specific ceilings over years. The stain that appeared and remained. The crack that extends another millimetre. The light from outside that moves across the plaster in a pattern that depends on the traffic below.',
+      'Lying awake: the problem organises itself into the ceiling and the ceiling provides a neutral surface for it. The ceiling is not helpful but it is available. You have spent many hours in this specific exchange.',
     ]),
     choices: null,
-    effect: (p) => { p.r += 3; p.setMem('s34k', true) },
+    effect: (p) => { p.setMem('s34CeilingAtNight', true) },
   },
 
   {
-    id: 'sonder_34_l',
+    id: 'sonder34_the_return_to_a_place',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 40 && G.age <= 52 && !G.mem?.s34l,
+    when: (G) => G.age >= 30 && !G.mem?.s34ReturnToPlace,
     text: pick([
-      'The city you grew up in, or the village, or the neighbourhood — you return and it is changed. Not dramatically, but in the way that a face you know well changes over years: the same structure, the new surface. The buildings that are gone have left negative spaces you read automatically. The people you knew are mostly gone or inside. The street does not remember you.',
-      'You are the age now that some of your parents\' friends were when you were a child. You remember them as fully formed adults. You now understand that they were at the age you are, which means they were figuring things out, which means the fully formed adult was a costume they were wearing.',
+      'The place you return to after years: the buildings are mostly the same but the scale is different. The street you remembered as wide is narrower. The tree you remembered as large is larger. The house where something important happened is occupied by people who do not know that important thing happened there. The place holds no record of you.',
+      'Return visits reorganise memory. The distance between two buildings that you remembered as far apart is not far. The hill you remembered as steep is a slope. The memory was built by a smaller body with different resources. The discrepancy between the memory and the place is not the memory being wrong.',
     ]),
     choices: null,
-    effect: (p) => { p.r += 4; p.setMem('s34l', true) },
+    effect: (p) => { p.r += 3; p.setMem('s34ReturnToPlace', true) },
   },
 
   {
-    id: 'sonder_34_m',
-    phase: 'childhood',
-    weight: 2,
-    when: (G) => G.age >= 6 && G.age <= 11 && !G.mem?.s34m,
-    text: pick([
-      'You have a smell that is home. Not a named smell — not bread or wood or rain exactly — but a combination that you will recognise for the rest of your life and that will, for the rest of your life, produce the specific feeling of being small in a place where you are known.',
-      'There is someone who is always there. A grandparent, an aunt, a neighbour: the person whose presence is so constant it\'s structural, like a wall. You don\'t know yet that you will lose this person. You don\'t know yet what the loss of something structural feels like from the inside.',
-    ]),
-    choices: null,
-    effect: (p) => { p.m += 3; p.r += 3; p.setMem('s34m', true) },
-  },
-
-  {
-    id: 'sonder_34_n',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => G.age >= 22 && G.age <= 35 && !G.mem?.s34n,
-    text: pick([
-      'There are things you believed ten years ago that you no longer believe. The revision was gradual — no single conversion, just the slow accumulation of evidence against a position until the position became unsupportable. You don\'t remember changing your mind. You only notice afterward that you did.',
-      'You are living in a city that is not the one you grew up in. The original city has become theoretical — the place you came from, not the place you are. You have two versions of yourself running: the one that belongs to the city of origin and the one that belongs to here. They are not yet reconciled.',
-    ]),
-    choices: null,
-    effect: (p) => { p.e += 2; p.r += 3; p.setMem('s34n', true) },
-  },
-
-  {
-    id: 'sonder_34_o',
+    id: 'sonder34_the_photograph_not_taken',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 45 && G.age <= 58 && !G.mem?.s34o,
+    when: (G) => !G.mem?.s34PhotographNotTaken,
     text: pick([
-      'Your children are at an age where they make major decisions without consulting you. You were consulted about their choices for twenty years. The consulting has ended. The ending is what you were trying to produce the whole time. The ending is strange.',
-      'You have been at this job, or in this town, or in this relationship, long enough that the before-and-after of it is visible. You can remember the beginning. The beginning is far enough away that it is clearly behind you. What this makes you is a different kind of person from who you were at the beginning.',
+      'There are moments you decided not to photograph because you wanted to be in them without the camera between you and them. The moments are not documented. Whether the decision was right — whether being present was better than having the record — you cannot evaluate because you cannot compare the two versions of what happened.',
+      'The photograph you did not take is always the more vivid one in memory, which is partly because memory has nothing to compete with. The photographs you took are accurate about specific surfaces. The things you did not photograph are the ones the memory renders in full.',
     ]),
     choices: null,
-    effect: (p) => { p.r += 4; p.setMem('s34o', true) },
+    effect: (p) => { p.r += 2; p.setMem('s34PhotographNotTaken', true) },
   },
 
   {
-    id: 'sonder_34_p',
+    id: 'sonder34_the_voice_still_heard',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 68 && !G.mem?.s34p,
+    when: (G) => G.age >= 45 && !G.mem?.s34VoiceStillHeard,
     text: pick([
-      'You have outlived several things you thought would outlive you: the company, the neighborhood as it was, the marriage of people you thought were solid, the certainty about things that turned out to be arguable. You have not outlived yourself, yet. This is something.',
-      'The grandchildren do not understand what the world was. Not because they are unintelligent — they are sharp, some of them. But they are inside the world as it is now, and the world as it was is not available to them the way memory is available to you. You carry something they will have secondhand at best. You are a primary source. This is not nothing.',
+      'The voice of someone gone: you can still produce it in your head, the specific pitch and rhythm and the particular phrases that person used. The voice has not degraded. You are not sure if you are remembering the voice or constructing a version that resembles it closely enough. The distinction has started to matter less.',
+      'You can hear someone\'s voice who has been dead for years. The hearing is internal, produced from memory, assembled from the recordings you carry without knowing you are carrying them. The voice says things the person might have said. Sometimes it says things you wish the person had said. You can usually tell the difference.',
     ]),
     choices: null,
-    effect: (p) => { p.r += 5; p.m += 2; p.setMem('s34p', true) },
+    effect: (p) => { p.r += 3; p.setMem('s34VoiceStillHeard', true) },
   },
 
   {
-    id: 'sonder_34_q',
-    phase: 'adolescence',
-    weight: 2,
-    when: (G) => G.age >= 15 && G.age <= 20 && !G.mem?.s34q,
-    text: pick([
-      'You notice you have started saying something your parents say. A particular phrase. A way of responding to news. You catch it coming out of your mouth and there is a moment of recognition that is both amusing and slightly alarming. You are downloading something.',
-      'The teacher who is difficult is also the teacher whose class you are learning the most in. You don\'t know yet whether to be grateful for this. You hold both things: resentment of the difficulty and the thing the difficulty is producing.',
-    ]),
-    choices: null,
-    effect: (p) => { p.e += 2; p.setMem('s34q', true) },
-  },
-
-  {
-    id: 'sonder_34_r',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 38 && G.age <= 50 && !G.mem?.s34r,
-    text: pick([
-      'Sleep has changed. You wake at three and cannot return. The thoughts that come at three are a specific category of thought — the ones about things you can\'t fix, amplified to fill the time. You have developed strategies. The strategies work sometimes.',
-      'There is a friendship that is no longer what it was. Not because of a falling-out — there was no falling-out — but because you and this person are in different configurations of life now and the overlap has narrowed. The friendship still exists but in a reduced version. You grieve the fuller version without quite admitting this is what you are doing.',
-    ]),
-    choices: null,
-    effect: (p) => { p.r += 4; p.setMem('s34r', true) },
-  },
-
-  {
-    id: 'sonder_34_s',
+    id: 'sonder34_the_route_by_heart',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 26 && G.age <= 38 && !G.mem?.s34s,
+    when: (G) => !G.mem?.s34RouteByHeart,
     text: pick([
-      'The money is enough now. Not comfortable — but enough: the specific relief of enough, after the years of calculating. You notice you have stopped the calculation and don\'t know exactly when. The stopping is quiet. It feels like something lifted without announcement.',
-      'You have the job. The job is what you said you wanted. On the third month in the job you notice that having the thing you wanted does not produce the feeling you expected having the thing to produce. The feeling is more complicated than the wanting was.',
+      'There is a route you know so well that you can travel it without looking, the body navigating by accumulated repetition. You have walked or driven or taken transit this way so many times that the route is in your feet or your hands or your sense of duration. When you finally pay attention to it, it looks slightly different from the route you have been travelling in your mind.',
+      'The walk you have taken so many times: the uneven pavement at one corner, the smell from the bakery that appears three-quarters of the way, the turn that comes earlier than it seems like it should. The route is a different kind of knowledge from directions. You could not describe it but your body would not get lost.',
     ]),
     choices: null,
-    effect: (p) => { p.m += 3; p.r += 2; p.setMem('s34s', true) },
+    effect: (p) => { p.setMem('s34RouteByHeart', true) },
   },
 
   {
-    id: 'sonder_34_t',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => G.age >= 70 && !G.mem?.s34t,
-    text: pick([
-      'Someone much younger asks you what it was like. You are aware as you answer that you are editing — not lying but selecting, shaping, leaving out the parts that don\'t translate. The story you tell is true but it is not all of it. All of it would take too long and also would not fit in their available understanding. This is what getting old is: you become a summarised version of what actually happened.',
-      'The garden in the morning. This is still a thing you have. The same garden or a different garden — but the fact of a garden, and the morning, and the specific quality of attention you bring to it now. You didn\'t have this attention when you were forty. It is one of the compensations.',
-    ]),
-    choices: null,
-    effect: (p) => { p.m += 3; p.r += 3; p.setMem('s34t', true) },
-  },
-
-  {
-    id: 'sonder_34_u',
-    phase: 'childhood',
-    weight: 2,
-    when: (G) => G.age >= 8 && G.age <= 14 && !G.mem?.s34u,
-    text: pick([
-      'There is a game that exists only here, in this street or this compound or this schoolyard. A game with rules that were invented locally and exist nowhere else and are transmitted only child to child. You will teach this game to no one because there will be no one to teach it to in the same way. The game ends when your generation grows up.',
-      'The season changes and the change is in your body before it\'s visible outside — something in the light, or the smell of the air, or a quality of afternoon. You are calibrated to this place in a way you don\'t know is calibration. You will only understand it later, when you live somewhere else and the calibration no longer matches.',
-    ]),
-    choices: null,
-    effect: (p) => { p.m += 3; p.setMem('s34u', true) },
-  },
-
-  {
-    id: 'sonder_34_v',
+    id: 'sonder34_the_conversation_replayed',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 18 && G.age <= 28 && !G.mem?.s34v,
+    when: (G) => !G.mem?.s34ConversationReplayed,
     text: pick([
-      'You are in a new place and you do not have the years of context that tell you what this neighbourhood sounds like at night, what the weather does in March, which shop is reliable. You are relearning a city from the beginning. The relearning is slow. It is also interesting in a way that familiarity will eventually replace.',
-      'You have been reading the newspaper — or the feed, or whatever it is — for long enough to notice that some things recur. The recurrence is not a good sign but it is information. You are learning the grammar of the news, which is different from the content of the news.',
+      'You replay conversations after they are over. Not all of them — specific ones, ones where something was said that requires processing, or ones where something was not said and you are now reconstructing what would have happened if it had been. The replay is not accurate. It is a model of the conversation that you are adjusting.',
+      'The conversation you go over again later: what you said, what they said, the point where the thing you should have said was available and you did not take it. The reconstruction has a particular energy — part analysis, part self-argument. It resolves eventually. Sometimes it takes longer than the conversation was.',
     ]),
     choices: null,
-    effect: (p) => { p.e += 2; p.setMem('s34v', true) },
+    effect: (p) => { p.setMem('s34ConversationReplayed', true) },
   },
 
   {
-    id: 'sonder_34_w',
+    id: 'sonder34_what_the_body_knew_first',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 43 && G.age <= 55 && !G.mem?.s34w,
+    when: (G) => G.age >= 35 && !G.mem?.s34BodyKnewFirst,
     text: pick([
-      'You are watching a person do the thing you did at their age with the information you didn\'t have at their age. You could intervene. The intervention would be unwelcome. You let them learn it the way you learned it. This is a form of respect that is also a form of distance.',
-      'The things you are still carrying from twenty years ago: you can list them now with some precision. You have tried addressing some of them. Some of them do not respond to being addressed. They require a different approach that you have not yet found or that does not exist.',
+      'The body knew before the mind. You felt the wrongness of something before you had assembled the argument for the wrongness. The signal was specific — a tightness, a reluctance, a change in the quality of your attention — and you have learned to read it. The reading comes earlier than it used to.',
+      'There are things the body decided before you made a decision. The weight of dread before a day you did not yet know would go badly. The lightness before something you did not yet know would go well. The body has information and it delivers the information in its own format, which is not propositional.',
     ]),
     choices: null,
-    effect: (p) => { p.r += 4; p.setMem('s34w', true) },
+    effect: (p) => { p.e += 2; p.setMem('s34BodyKnewFirst', true) },
   },
 
   {
-    id: 'sonder_34_x',
-    phase: 'adolescence',
-    weight: 2,
-    when: (G) => G.age >= 16 && G.age <= 21 && !G.mem?.s34x,
-    text: pick([
-      'You are aware, suddenly, of the specificity of where you are: this country, this town, this family. Someone else was born somewhere else into something else. You are not abstract. You are here, precisely. This fact is either comforting or frightening and sometimes both in the same afternoon.',
-      'You are waiting to find out who you are. You assume you will find out. The finding-out is taking longer than expected. Meanwhile you perform a temporary version of yourself while the real version assembles.',
-    ]),
-    choices: null,
-    effect: (p) => { p.r += 4; p.e += 2; p.setMem('s34x', true) },
-  },
-
-  {
-    id: 'sonder_34_y',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => G.age >= 72 && !G.mem?.s34y,
-    text: pick([
-      'The era has a name now. Historians have put a bracket around the period you lived through and given it a name. It\'s not what you would have called it. The name describes the period from outside. From inside, the period was specific and daily and often uncertain. You were inside. The historians are outside. Both are true.',
-      'The things you made. The children, if you had them. The objects, the work. Some of what you made will outlast you. You are not certain which parts. You hope you are right about which parts.',
-    ]),
-    choices: null,
-    effect: (p) => { p.r += 5; p.setMem('s34y', true) },
-  },
-
-  {
-    id: 'sonder_34_z',
+    id: 'sonder34_the_gift_kept',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 36 && G.age <= 48 && !G.mem?.s34z,
+    when: (G) => !G.mem?.s34GiftKept,
     text: pick([
-      'You drove past the house you grew up in. You don\'t know why. It was not on the way to where you were going. Someone else lives there now. The colour of the door has been changed. The garden is different. The specifics of what it meant to you live in a room that is now someone else\'s kitchen.',
-      'A smell. That\'s all — a smell from somewhere, from someone passing on a street, from an open door, and you are immediately somewhere else. Not metaphorically somewhere else. You are ten, or eight, or thirteen, and the specific density of that time is available. Then it goes. Memory is mostly unavailable. This is the exception.',
+      'You have kept a gift long after the relationship with the giver has changed or ended. The object remains on a shelf or in a drawer and you have not moved it because moving it would require a decision about what it is now. The object holds a version of a person that no longer exists in the same form.',
+      'The thing someone gave you that you cannot throw away: not because it is useful or beautiful but because throwing it away would be a declaration you are not ready to make. The object sits and does not ask for anything. You walk past it and the relationship it encodes is available for a moment and then not.',
     ]),
     choices: null,
-    effect: (p) => { p.r += 5; p.m += 2; p.setMem('s34z', true) },
+    effect: (p) => { p.r += 3; p.setMem('s34GiftKept', true) },
   },
 
   {
-    id: 'sonder_34_aa',
+    id: 'sonder34_the_inherited_opinion',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 28 && G.age <= 38 && !G.mem?.s34aa,
+    when: (G) => !G.mem?.s34InheritedOpinion,
     text: pick([
-      'Somewhere in the last five years you became the person making the decisions. Not all decisions — not the large abstract ones — but the operational ones, the ones about this situation in front of you. You didn\'t notice the transition happening. You are in the middle of it before you recognised it.',
-      'You know what you want now in a way you didn\'t at twenty-two. The knowing is partial and still changing. But at twenty-two there was almost no signal. Now there is signal. The signal says: this is what matters and this doesn\'t and this matters more than you thought.',
+      'You hold opinions that you did not form — you received them. About a family, a neighbourhood, a kind of person, a political question. At some point the opinion was handed to you and you took it and it became yours. You have been examining which ones you would hold if you had started from zero.',
+      'The opinion you inherited: about a group, a country, a kind of work, a class of person. You held it for years before you noticed it was received rather than formed. The noticing does not automatically change it. Some inherited opinions survive examination. The surviving is worth something.',
     ]),
     choices: null,
-    effect: (p) => { p.e += 2; p.m += 2; p.setMem('s34aa', true) },
+    effect: (p) => { p.e += 2; p.r += 2; p.setMem('s34InheritedOpinion', true) },
   },
 
   {
-    id: 'sonder_34_ab',
+    id: 'sonder34_the_last_good_year',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 65 && G.age <= 78 && !G.mem?.s34ab,
+    when: (G) => G.age >= 55 && !G.mem?.s34LastGoodYear,
     text: pick([
-      'You are less interested in being right. This happened gradually. At forty you were considerably more interested in being right than you are now. You are not sure if this is wisdom or tiredness. Maybe they are the same thing. Maybe it doesn\'t matter what it\'s called.',
-      'The parts of the life that you are glad to be done with. There are some. The commute in winter, or the performance review, or the specific anxiety of early parenthood, or the years when money was not enough. You have arrived past those. The arrival is quiet and you would have wanted to know it was coming.',
+      'There is a year in the past that you think of as the last one before something changed. The year itself was not special — it was full of ordinary problems. But after it, something shifted: a relationship, a health thing, a capacity you had that reduced. You did not know at the time that you were in the last good year of that particular arrangement.',
+      'Looking back: a year that was the last year of a particular kind of ease. Not the last happy year — you have had happy moments since — but the last year of a specific configuration that made certain things naturally possible. The year passed and you did not mark it because you did not know yet.',
     ]),
     choices: null,
-    effect: (p) => { p.m += 4; p.r += 3; p.setMem('s34ab', true) },
+    effect: (p) => { p.r += 5; p.setMem('s34LastGoodYear', true) },
   },
 
   {
-    id: 'sonder_34_ac',
+    id: 'sonder34_the_stranger_you_helped',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 45 && G.age <= 60 && !G.mem?.s34ac,
+    when: (G) => !G.mem?.s34StrangerHelped,
     text: pick([
-      'Your parents are old now in a different way than they were old before. Old-old: the way the body rearranges its priorities, the things that can\'t be maintained anymore. You watch this and understand that you are watching something that will eventually be true of you. The distance between watching and being-watched is a question of years.',
-      'The conversation at dinner that turned into something real. The one where the formalities dropped and the people at the table said what was actually true. This happens less often than it should. When it happens you notice it. Afterward you think: that should be more of what dinner is. Then the next dinner is formal again.',
+      'There is a stranger you helped once in a way that was small and required nothing from you — directions, a held door, a piece of information. You have thought about that stranger occasionally since. You do not know what happened next for them. The small help is complete in itself and you will never know if it mattered.',
+      'You helped someone you did not know and will not see again. The help was proportionate and the person left and you returned to whatever you were doing. Somewhere a small good thing happened in the world because you were there at that moment. It is enough that it happened. It does not need to be remembered.',
     ]),
     choices: null,
-    effect: (p) => { p.r += 5; p.setMem('s34ac', true) },
-  },
-
-  {
-    id: 'sonder_34_ad',
-    phase: 'childhood',
-    weight: 2,
-    when: (G) => G.age >= 9 && G.age <= 13 && !G.mem?.s34ad,
-    text: pick([
-      'The light in summer at the end of the day, when it goes horizontal and turns everything amber. The specific hour when this happens is different here than it is anywhere else — or it feels that way. It probably isn\'t different. But it is specific to here in your memory, and in your memory is where it lives.',
-      'There is a person at school who is not unkind and not kind — who exists in the middle register, who is there, who you see every day, who will become, without either of you knowing it, one of the people who populate the background of your childhood memory. In ten years they will be hard to distinguish from the wallpaper of the time. In thirty years you will remember their name and not their face.',
-    ]),
-    choices: null,
-    effect: (p) => { p.m += 2; p.r += 2; p.setMem('s34ad', true) },
+    effect: (p) => { p.karma += 2; p.setMem('s34StrangerHelped', true) },
   },
 
 ]
