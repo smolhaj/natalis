@@ -2809,6 +2809,70 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by aus_rudd_apology_2008.',
   },
 
+  aus_stolen_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Removed from family as a child under the Stolen Generations policies — the Protection Acts, the missions, the years of forced assimilation and cultural erasure.',
+    intent: 'both',
+    notes: 'Set by aus_dep_stolen_generations_removed. Follow-throughs: ft85_stolen_generation_reunion, ft85_stolen_generation_apology_2008.',
+  },
+
+  ten_pound_pom_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'British migrant who came to Australia under the Assisted Passage Migration Scheme 1945–1972 — the £10 fare, the migrant hostel, the long project of becoming Australian.',
+    intent: 'both',
+    notes: 'Set by aus_dep_ten_pound_pom_arrival. Follow-through: ft85_ten_pound_pom_return.',
+  },
+
+  aus_1967_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'An Indigenous Australian adult at the time of the 1967 referendum — the 90.77% Yes vote, the constitutional change that meant Aboriginal people were counted in the census.',
+    intent: 'both',
+    notes: 'Set by aus_dep_referendum_1967_counted. Follow-through: ft85_1967_forty_years_on.',
+  },
+
+  aus_mardi_gras_original: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Present at or shaped by the original 1978 Sydney Mardi Gras — the night of police violence, the 53 arrested, the names published in the Herald.',
+    intent: 'both',
+    notes: 'Set by aus_dep_mardi_gras_1978. Follow-through: ft85_mardi_gras_becomes_festival.',
+  },
+
+  aus_cronulla_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Shaped by the Cronulla riots of December 2005 — five thousand on the beach, the Australian flag as weapon, the reprisal attacks across Sydney.',
+    intent: 'both',
+    notes: 'Set by aus_dep_cronulla_2005_riots. Follow-through: ft85_cronulla_decade_on.',
+  },
+
+  aus_convict_heritage: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Australian who discovered convict ancestry — the Old Bailey sentence, the transportation, the genealogical reckoning with what was once a shame and became a claim to belonging.',
+    intent: 'year_texture',
+    notes: 'Set by aus_dep_convict_heritage_reckoning.',
+  },
+
+  aus_outback_childhood: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up in remote/outback Australia — School of the Air, Royal Flying Doctor Service, the isolation that was not scenery but the basic condition of the life.',
+    intent: 'year_texture',
+    notes: 'Set by aus_dep_outback_childhood.',
+  },
+
+  aus_voice_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'An adult Australian during the Voice to Parliament referendum 2023 — 60.06% No, every state, the advisory body with no veto power that the country voted against.',
+    intent: 'both',
+    notes: 'Set by aus_dep_voice_2023. Follow-through: ft85_voice_aftermath.',
+  },
+
   great_migration_generation: {
     weight: 'major',
     category: 'historical',
