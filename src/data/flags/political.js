@@ -60,6 +60,86 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by sa_marikana_2012 (betrayal choice).',
   },
 
+  sa_sharpeville_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through or was shaped by the Sharpeville Massacre of March 21, 1960 — 69 Black South Africans shot by police at an anti-pass-law protest, most in the back as they ran.',
+    intent: 'event',
+    notes: 'Set by sa_sharpeville_1960. Follow-through: ft63_sharpeville_midlife, ft63_sharpeville_late.',
+  },
+
+  sa_pass_humiliation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Experienced the dompas (reference book) system — the passbook apartheid required Black South Africans to carry at all times, controlling freedom of movement and employment.',
+    intent: 'event',
+    notes: 'Set by sa_pass_book_daily. Follow-through: ft63_pass_abolition (1986).',
+  },
+
+  sa_biko_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Influenced by Steve Biko and the Black Consciousness movement; present in the culture when Biko was killed in police detention on September 12, 1977.',
+    intent: 'event',
+    notes: 'Set by sa_biko_death_1977. Follow-through: ft63_biko_late.',
+  },
+
+  sa_anc_exile: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Left South Africa to join the ANC in exile — Lusaka, London, Dar es Salaam — through the Botswana route or other crossings; lived as a political exile.',
+    intent: 'event',
+    notes: 'Set by sa_anc_exile. Follow-through: ft63_exile_return_1990.',
+  },
+
+  sa_forced_removal: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Forcibly removed from home under the Group Areas Act or similar apartheid legislation — Sophiatown, District Six, Cato Manor, or any of the communities that were razed and resettled.',
+    intent: 'event',
+    notes: 'Set by sa_forced_removal. Follow-through: ft63_removal_restitution.',
+  },
+
+  sa_mbeki_aids_era: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the Mbeki AIDS denialism period (1999-2008) — the years in which ARV distribution was blocked and 330,000+ preventable deaths occurred.',
+    intent: 'event',
+    notes: 'Set by sa_mbeki_aids. Follow-through: ft63_mbeki_aids_post.',
+  },
+
+  sa_born_free: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'South African born after April 1994 — the "born free" generation who inherited the democracy without living through its winning, growing up into the gap between constitutional freedom and inherited material inequality.',
+    intent: 'year_texture',
+    notes: 'Set by sa_born_free_reality. Follow-through: ft63_born_free_vote.',
+  },
+
+  sa_service_delivery_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Participated in or witnessed the post-apartheid service delivery protests — a generation who held the ANC to the specific promises of 1994 (water, electricity, housing) at the local level.',
+    intent: 'event',
+    notes: 'Set by sa_service_delivery_protest. Follow-through: ft63_service_delivery_late.',
+  },
+
+  sa_afrikaner_transformed: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Afrikaner South African who worked through the transformation of Afrikaner identity after 1994 — the language question, the history question, the relationship between the language and what was done in its name.',
+    intent: 'year_texture',
+    notes: 'Set by sa_afrikaner_identity. Texture only.',
+  },
+
+  sa_land_debate_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Engaged with the South African land question — the 2018+ debate about expropriation without compensation, the arithmetic of apartheid-era dispossession still expressed in land ownership.',
+    intent: 'year_texture',
+    notes: 'Set by sa_land_question. Texture only.',
+  },
+
   endsars_generation: {
     weight: 'major',
     category: 'political',
@@ -4023,6 +4103,103 @@ export const POLITICAL_FLAGS = {
     description: 'Lived through the 2001 US invasion and the "Kabul bubble" — girls\' schools reopening, aid economy, reconstruction hope',
     intent: 'year_texture',
     notes: 'Set by afg_us_invasion_2001.',
+  },
+
+  afg_taliban_96_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the Taliban\'s first takeover of Kabul in September 1996 — the overnight edicts, music stopped, women confined, burqa enforced, girls\' schools closed.',
+    intent: 'event',
+    notes: 'Set by afg_taliban_kabul_1996. Follow-through: ft63_afg_96_late.',
+  },
+
+  afg_education_revoked: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Afghan girl whose formal education was revoked by Taliban decree — 1996–2001 or 2021+; the school that simply did not open one morning.',
+    intent: 'event',
+    notes: 'Set by afg_education_revoked. Follow-through: ft63_afg_educ_2001, ft63_afg_educ_2021.',
+  },
+
+  afg_secret_schooling: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Attended or taught a secret school for girls during Taliban rule — textbooks hidden under cloth, the accelerated reading out of fear of being discovered.',
+    intent: 'event',
+    notes: 'Set by afg_education_revoked event (secret school choice). Follow-through: ft63_afg_secret_school_late.',
+  },
+
+  afg_2001_liberation_hope: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Experienced the fall of the Taliban in November 2001 — the music returning to Kabul, women removing burqas, the first walk outside alone in five years.',
+    intent: 'event',
+    notes: 'Set by afg_2001_fall_of_kabul. Follow-through: ft63_afg_hope_2010.',
+  },
+
+  afg_interpreter_served: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Worked as interpreter for NATO/US forces in Afghanistan — translating not just words but context, register, and unspoken meaning, while carrying the risk of being targeted.',
+    intent: 'event',
+    notes: 'Set by afg_interpreter_nato. Follow-through: ft63_afg_interpreter_post, afg_interpreter_2021_threat.',
+  },
+
+  afg_women_career_built: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Afghan woman who built a professional career during the 2001-2021 period — degree, ministry work, NGO, journalism, medicine; the visible professional women\'s class that existed before 2021.',
+    intent: 'event',
+    notes: 'Set by afg_women_career_2013. Feeds into afg_2021_collapse event.',
+  },
+
+  afg_2021_escaped: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Escaped Afghanistan during the August 2021 Taliban takeover — the airport crush, the evacuation flight, the transit country, the visa category that determines the next three years.',
+    intent: 'event',
+    timestamped: true,
+    notes: 'Set by afg_2021_collapse (escaped choice). Follow-through: ft63_afg_escaped_first_year.',
+  },
+
+  afg_2021_stayed: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Stayed in Afghanistan when the Taliban returned in August 2021 — could not reach the airport, or would not leave family, or chose to remain.',
+    intent: 'event',
+    notes: 'Set by afg_2021_collapse (stayed choice). Follow-through: ft63_afg_stayed_2023.',
+  },
+
+  afg_diaspora_watches: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Afghan diaspora member watching the 2021 collapse from abroad — the group chat that goes quiet for three days, the careful messages that resume.',
+    intent: 'year_texture',
+    notes: 'Set by afg_2021_diaspora_watch. Texture only.',
+  },
+
+  afg_aid_economy_worker: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Worked in the reconstruction-era aid economy (NGO, UN, ministry, international organisation) in Afghanistan 2002–2021 — salaries that transformed, work that had a gap between intention and result.',
+    intent: 'year_texture',
+    notes: 'Set by afg_reconstruction_years (aid worker choice). Texture only.',
+  },
+
+  afg_interpreter_evacuated: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Afghan interpreter evacuated on a Special Immigrant Visa after the 2021 Taliban takeover — Fort Lee processing, resettlement, the survival of what the visa was for.',
+    intent: 'event',
+    notes: 'Set by afg_interpreter_2021_threat (made it choice).',
+  },
+
+  afg_post_2021_life: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Living in Afghanistan under Taliban rule post-2021 — the checkpoint calculations, the dress code management, the humanitarian crisis, the phone that connects to an outside world that is watching.',
+    intent: 'year_texture',
+    notes: 'Set by afg_living_under_new_taliban. Texture only.',
   },
 
   yemeni_saleh_generation: {
