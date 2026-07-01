@@ -4624,6 +4624,62 @@ function buildYearTexture(state) {
       ? 'February 24, 2022: the contact line became the whole country. What you experienced in 2014 — the displacement, the line, the loss of the place — happened to eight million more people.'
       : 'You rebuilt in the west of Ukraine or in Kyiv or in Lviv. The city you came from is still the city you came from. You have not been back.',
   ])
+  if (F.has('ukr_chernobyl_generation') && Math.random() < 0.3) return pick([
+    'Reactor four. April 26, 1986. The buses came 36 hours later. The iodine tablets arrived at school with no explanation. You learned what classified means when it is applied to weather.',
+    'The thyroid. The doctor who checks it uses careful language — monitoring, precautionary. You do not know if the precaution is warranted or routine. The difference is not always medical.',
+    phase === 'late_life'
+      ? 'You were not in Pripyat. You were close enough to take the tablets. The question of what that means for your body has been the background frequency of your adult life.'
+      : 'The Ferris wheel in Pripyat is still there. It was built for a city that evacuated with three days of luggage. The wheel has been there longer than the city was ever inhabited.',
+  ])
+  if (F.has('ukr_1990s_collapse_generation') && Math.random() < 0.25) return pick([
+    'The karbovanets coupon. Not a real currency — printed on cheap paper, worth less every week. In 1993 inflation ran at 10,000 percent. Your parents\' savings from forty years of work were worth nothing in six months.',
+    'The Sunday market where people sold personal possessions. The man selling his father\'s tools. The woman selling books. Survival had a market rate and the rate changed daily.',
+    phase === 'late_life'
+      ? 'You are in the generation that measures time by what it cost. The 1990s were the price of independence. You paid it in savings erased and careers made unreachable.'
+      : 'The mafia was real. The men with tracksuits and mobile phones were real. The president called it democracy and what was actually happening was something else.',
+  ])
+  if (F.has('ukr_soviet_identity') && Math.random() < 0.2) return pick([
+    'The school was in Russian. The films were in Russian. The songs you know by heart are in Russian. The village your grandmother came from speaks Ukrainian but that is not the language of official use.',
+    'Vasyl Stus died in a Soviet camp in 1985. Lina Kostenko was silenced for twenty years. You know their names. You do not say them at work.',
+    phase === 'late_life'
+      ? 'After 2022 the two languages sorted themselves. Ukrainian in the streets more than before, in the markets, in the shops. The sorting that had been happening for thirty years accelerated all at once.'
+      : 'You are Ukrainian and Soviet and both at once. The state has opinions about who you are that are different from your own.',
+  ])
+  if (F.has('ukr_crimea_2014_inside') && Math.random() < 0.25) return pick([
+    'The "polite people" — вежливые люди — who occupied the parliament building without insignia. The referendum announced in ten days with two options, neither of which was stay in Ukraine.',
+    'Two legal systems. Neither resolves the documents you hold into something coherent. The Ukrainian passport expires. The Russian office is now a Russian local office. You manage in the gap.',
+    phase === 'late_life'
+      ? 'The peninsula is on the other side of a checkpoint. Relatives in Kyiv call less often. The ruble replaced the hryvnia. The phone codes changed. The category you belong to has no clean legal status in international law.'
+      : '96.77 percent. The result announced for the referendum. The Crimean Tatars — deported by Stalin, allowed to return in the 1990s — did not participate. The number was the number.',
+  ])
+  if (F.has('ukr_lviv_galicia_generation') && Math.random() < 0.2) return pick([
+    'Lwów under Poland, Lemberg under Austria-Hungary, Lvov under the USSR, Lviv now. The coffee houses on the cobblestones date from a different country.',
+    'The Greek Catholic church — Uniate, Rome-connected, Ukrainian-language — survived Soviet suppression and re-emerged in 1990. Neither Orthodox nor Roman Catholic. A different history inside the stones.',
+    phase === 'late_life'
+      ? 'After February 24, 2022: Lviv became the city that received the east, that was always more western than Kyiv and found itself at the centre of what Kyiv was fighting for.'
+      : 'This city is different from Kyiv. More different from Kharkiv. The difference is the Austrian century, the Greek Catholic church, the OUN partisans in the hills. Not easy to explain to people from the east.',
+  ])
+  if (F.has('ukr_kharkiv_wartime') && Math.random() < 0.28) return pick([
+    '40 kilometres from the Russian border. The second city. Historically Russian-speaking — they expected it to fall quickly. It did not fall. Territorial defense units with hunting rifles.',
+    'The metro stations became the cities under the city. Folding beds, charging stations, someone\'s dog, children\'s books on a platform. The shelling audible from underground. You learned incoming from outgoing by sound.',
+    phase === 'late_life'
+      ? 'The city that was expected to welcome the Russian army welcomed it differently. The city is still standing. You are still in it.'
+      : 'Kharkiv identifies as Ukrainian despite the Russian it speaks. This is the sentence that surprised people who had not been here.',
+  ])
+  if (F.has('ukr_mobilization_2022') && Math.random() < 0.28) return pick([
+    'Men aged 18-60 prohibited from leaving. At the border crossings in February and March 2022: lines of women and children going west, and men being turned back. Some hid in trunks. Some swam the Tisza in February.',
+    'Three weeks of training: how to hold a weapon, how to dig a position, what the radio codes mean. The unit: an electrician, a teacher, two students, a man who ran a restaurant. The restaurant is closed now.',
+    phase === 'late_life'
+      ? 'The list of people who were in the unit is longer than the list of people currently in the unit. You do not count this. You do not not count it either.'
+      : 'The war takes many forms of labour — driving volunteers, translating for journalists, collecting medicines. The shooting is one form. The logistics that makes the shooting possible is another.',
+  ])
+  if (F.has('ukr_basement_2022') && Math.random() < 0.28) return pick([
+    'The alert sounds on the phone and you are already moving before you are fully aware you have started. The go-bag is by the door. The route to the basement is automatic.',
+    'The routine of war is mostly waiting: the alert, the descent, the basement, the return. The extraordinary part is the other part — the strike that hits somewhere else, the photographs in the morning.',
+    phase === 'late_life'
+      ? 'The body made itself useful in the conditions it was given. You did not ask for this calibration. You have it now — the ability to tell incoming from outgoing by sound, from the basement, in the dark.'
+      : 'Sometimes twenty minutes. Sometimes two hours. Sometimes the all-clear sounds and you go back up and the electricity is off. You have learned to keep a torch by the door.',
+  ])
   if (F.has('survived_soviet_collapse') && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.3) return pick([
     'You watched the world you were born into dissolve in under two years. Some of it you didn\'t miss.',
     phase === 'late_life'

@@ -432,6 +432,70 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by ukr_euromaidan_2013. Needs year texture and a late-life follow-through about what Maidan led to.',
   },
 
+  ukr_chernobyl_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the Chernobyl disaster of April 26, 1986 — evacuated from the exclusion zone, or close enough for iodine tablets and classified weather.',
+    intent: 'both',
+    notes: 'Set by ukr_dep_chernobyl. Year texture in yearTexture.js. Follow-through: ft76_chernobyl_thyroid, ft76_chernobyl_return.',
+  },
+
+  ukr_1990s_collapse_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Came of age during Ukraine\'s 1990s economic collapse — karbovanets hyperinflation, 10,000% inflation in 1993, savings erased, survival through shuttle trading or subsistence gardening.',
+    intent: 'both',
+    notes: 'Set by ukr_dep_1990s_collapse. Year texture in yearTexture.js. Follow-through: ft76_1990s_reckoning.',
+  },
+
+  ukr_soviet_identity: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived the Soviet Ukrainian identity split — Russian-language schooling, Ukrainian village grandmother, the shistdesiatnyky writers who were silenced or killed.',
+    intent: 'year_texture',
+    notes: 'Set by ukr_dep_soviet_identity. Year texture only.',
+  },
+
+  ukr_crimea_2014_inside: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was in Crimea during and after the Russian annexation of February–March 2014 — the referendum with no stay-in-Ukraine option, the dual-passport legal limbo, the changed phone codes.',
+    intent: 'both',
+    notes: 'Set by ukr_dep_crimea_2014. Year texture in yearTexture.js. Follow-through: ft76_crimea_limbo.',
+  },
+
+  ukr_lviv_galicia_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Formed by western Ukraine\'s Galician identity — Habsburg cobblestones, Greek Catholic church, OUN partisan history, the city that was Lwów-Lemberg-Lvov-Lviv across its empires.',
+    intent: 'year_texture',
+    notes: 'Set by ukr_dep_lviv_galicia. Year texture only.',
+  },
+
+  ukr_kharkiv_wartime: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Experienced Kharkiv during the 2022 Russian invasion — the second city 40km from the Russian border that did not fall, the metro stations as neighbourhoods, the shelling audible from underground.',
+    intent: 'year_texture',
+    notes: 'Set by ukr_dep_kharkiv_wartime. Year texture in yearTexture.js.',
+  },
+
+  ukr_mobilization_2022: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Mobilised or stayed in Ukraine under martial law during the 2022 Russian invasion — men 18-60 barred from leaving, territorial defense units with no military background, the specific unit that formed.',
+    intent: 'both',
+    notes: 'Set by ukr_dep_mobilization_2022. Year texture in yearTexture.js. Follow-through: ft76_mobilization_late.',
+  },
+
+  ukr_basement_2022: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Experienced the civilian shelter routine of Ukraine\'s 2022 war — the air raid alert, the go-bag, the basement, the body\'s learned calibration of incoming vs outgoing by sound.',
+    intent: 'year_texture',
+    notes: 'Set by ukr_dep_basement_2022. Year texture in yearTexture.js. Follow-through: ft76_basement_normalised.',
+  },
+
   regime_compliance: {
     weight: 'minor',
     category: 'political',
