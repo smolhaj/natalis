@@ -7216,6 +7216,54 @@ function buildYearTexture(state) {
       ? 'You have watched Singapore go from survival anxiety to embarrassment of economic riches inside one lifetime. The country you were born into and the country you will die in share a geography and a name and almost nothing else. This is either a miracle or a very interesting experiment in social engineering. Probably it is both.'
       : 'The neighbours who said Singapore would not last six months. You know their names. The country has lasted sixty years. The neighbours have not apologised but they have also not been asked.',
   ])
+  if (F.has('sg_coldstore_generation') && Math.random() < 0.2) return pick([
+    'The men in Changi Prison in 1963 were not criminals. The Internal Security Act does not require a crime. The order has no fixed end date. You know what that means from inside it or from the outside of it, and both positions have a weight.',
+    phase === 'late_life'
+      ? 'The oral history projects began in the 1990s — the former detainees speaking for the first time, the documents preserved in archives. The state never acknowledged the detentions were unjust. The ISA remains in force. What exists is the record, and you are part of it.'
+      : 'Operation Coldstore was the precondition for the Singapore that exists. The men who were in Changi for a decade built a different country in their heads. That country also exists, in the gap between what happened and what might have.',
+  ])
+  if (F.has('sg_nantah_generation') && Math.random() < 0.2) return pick([
+    'Nantah was built by trishaw riders and taxi drivers who pooled donations for a Chinese-medium university. The economic argument for closing it was correct. The things that are lost when the economic argument wins are also real.',
+    phase === 'late_life'
+      ? 'The generation that was educated at Nanyang University in the 1970s navigated a Singapore that was deciding what language its future would be in. The decision was English. The Chinese-educated carried the cost of it in their careers and in what they could give their children and could not.'
+      : 'The practical thing and the right thing are not always the same thing. The Nantah merger was the practical thing. What it cost is also true.',
+  ])
+  if (F.has('sg_spectrum_generation') && Math.random() < 0.2) return pick([
+    'Operation Spectrum 1987: twenty-two social workers, theatre people, a law student. The word the government used was "Marxist." The word the people who knew them used was "social worker."',
+    phase === 'late_life'
+      ? 'Some of the detainees were re-detained after they spoke to foreign journalists. No charges were ever filed in a court. The ISA does not require charges. The record of what they were doing before the detentions is in the archives and in the memory of people who were there.'
+      : 'You cannot publicly say what you know about what they were actually doing. Singapore has mechanisms for what happens to people who say certain things in public. You have weighed the mechanisms against the knowing and made your calculation.',
+  ])
+  if (F.has('sg_malay_muslim_sg_identity') && Math.random() < 0.2) return pick([
+    'Your language is the national language. The national language is spoken by fifteen percent of the country. You hold this quietly the way you hold other things in Singapore: quietly.',
+    phase === 'late_life'
+      ? 'MUIS administers the mosques. The GRCs guarantee Malay representation in Parliament while ensuring the PAP endorses the candidates. The engineering is thoughtful and also keeps certain things from arriving naturally. You have made your peace with the engineering because the alternative is not available.'
+      : 'You are Singaporean. You are also Malay. The country says these two things are the same thing. On National Day they feel the same. In the job interview, or at the NS posting, or at the flat you could not buy because of the EIP quota, they feel like two things.',
+  ])
+  if (F.has('sg_migrant_worker_sg') && Math.random() < 0.2) return pick([
+    'The dormitory, the room, the sixteen beds. The salary minus the levy, the dormitory fee, the transport. The arithmetic is why you came. The arithmetic works if you do not add everything.',
+    phase === 'late_life'
+      ? 'The COVID-19 outbreak in the dormitories in April 2020: Singapore looked at the outbreak and at the dormitory conditions and had a conversation about them. The conditions were described as unacceptable. The dormitories are still there. The conversation continues.'
+      : 'You are building the Marina Bay Sands or the Changi Airport extension or the HDB block in Tampines. The building will be there after you are gone. The building will not remember you built it. You will remember.',
+  ])
+  if (F.has('sg_foreign_talent_debate') && Math.random() < 0.15) return pick([
+    '2011: the PAP\'s worst result since 1963. The word on the ground was immigration — not migrant workers but Employment Pass holders in the same offices and competing for the same roles.',
+    phase === 'late_life'
+      ? 'The Population White Paper projected six point nine million by 2030. Sixty thousand people signed the petition against it. The government adjusted the projections. The debate did not resolve. Singapore is still Singapore: it needs the people and the people ask questions about what the needing costs them.'
+      : 'You know the argument for openness is correct and also you know your colleague\'s brother and what the last year of his job search looked like. Both things are true. Holding both is the specific work of being a Singaporean professional in this decade.',
+  ])
+  if (F.has('sg_lgbtq_377a_repeal') && Math.random() < 0.2) return pick([
+    'January 2023. Section 377A repealed. The same legislative session: the constitution amended to define marriage as between a man and a woman. The gift and the door closed in the same package.',
+    phase === 'late_life'
+      ? 'You remember when Section 377A was discussed in the fine city event — present but unenforceable, they said. The journey from that to the repeal is long and the people who made it are not all here to see it. You let yourself feel the full length of it.'
+      : 'The repeal is real. You know people who have been waiting for it since the 1990s. The constitutional amendment is also real. Singapore has given something and placed a ceiling on the same day. You sit with the whole package.',
+  ])
+  if (F.has('sg_sg50_generation') && Math.random() < 0.2) return pick([
+    'Fifty years since separation. LKY died in March. The National Day parade on the Padang. The country is dense with the weight of the founding generation passing.',
+    phase === 'late_life'
+      ? 'You were young when separation happened and you are old now. Between those two points is everything — the HDB flat, the NS service, the PSLE scores of children and grandchildren, the passport that opens doors, the city that rebuilt itself three times. The country works. That is the sentence that covers most of it.'
+      : 'SG50 is for people older than you. You watch the old men and women in the photographs and understand that they built what you live in. The question of whether the building was worth the costs is a question that belongs to people with enough of both the building and the costs to hold the question honestly.',
+  ])
 
   // ─── ARMENIA + AZERBAIJAN TEXTURE ────────────────────────────────────────────
   if (F.has('arm_genocide_memory_bearer') && Math.random() < 0.3) return pick([

@@ -3001,6 +3001,70 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by nz_dep_oe_london.',
   },
 
+  sg_coldstore_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Singaporean adult during Operation Coldstore 1963 — the ISA detention of 100+ Barisan Sosialis leaders, unionists, and student activists without trial before separation from Malaysia.',
+    intent: 'both',
+    notes: 'Set by sg_dep_coldstore_1963. Follow-through: ft88_coldstore_oral_history.',
+  },
+
+  sg_nantah_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Chinese Singaporean who came of age around the Nanyang University (Nantah) closure 1980 — the Chinese-medium university built by community donations, merged into NUS, instruction ended.',
+    intent: 'year_texture',
+    notes: 'Set by sg_dep_nantah_closure_1980.',
+  },
+
+  sg_spectrum_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Singaporean who lived through Operation Spectrum 1987 — 22 Catholic social workers and activists detained under ISA for alleged Marxist conspiracy; no charges ever filed.',
+    intent: 'both',
+    notes: 'Set by sg_dep_spectrum_1987. Follow-through: ft88_spectrum_released.',
+  },
+
+  sg_malay_muslim_sg_identity: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Malay-Muslim Singaporean navigating identity in a Chinese-majority state — the national language spoken by 15%, MUIS-administered religion, National Service routing, GRC guarantees.',
+    intent: 'year_texture',
+    notes: 'Set by sg_dep_malay_muslim_sg_identity.',
+  },
+
+  sg_migrant_worker_sg: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Foreign construction or domestic worker in Singapore — the dormitory, the salary deductions, the dormitory COVID outbreak 2020 when workers were locked in for months.',
+    intent: 'both',
+    notes: 'Set by sg_dep_migrant_worker. Follow-through: ft88_migrant_worker_covid_dorms.',
+  },
+
+  sg_foreign_talent_debate: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Singaporean professional who lived through the 2010s "foreign talent" debate — PAP\'s worst GE result in 2011 partly driven by immigration concerns, the 6.9M Population White Paper.',
+    intent: 'year_texture',
+    notes: 'Set by sg_dep_foreign_talent_debate.',
+  },
+
+  sg_lgbtq_377a_repeal: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'LGBTQ Singaporean who witnessed the Section 377A repeal in January 2023 — the decriminalisation paired with constitutional amendment defining marriage as man-woman.',
+    intent: 'year_texture',
+    notes: 'Set by sg_dep_377a_repeal_2022.',
+  },
+
+  sg_sg50_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Singaporean elder who was alive at independence (separation 1965) and present at the SG50 celebrations 2015 — the founding generation reckoning with fifty years of what was built.',
+    intent: 'year_texture',
+    notes: 'Set by sg_dep_sg50_reckoning.',
+  },
+
   great_migration_generation: {
     weight: 'major',
     category: 'historical',
