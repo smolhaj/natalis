@@ -8149,6 +8149,54 @@ function buildYearTexture(state) {
       ? 'You were in your twenties in Sol in 2011 — the working groups, the assemblies, the slow patience of consensus. What it produced took a decade to arrive. You were part of what began there.'
       : 'The indignados said it precisely: "No somos antisistema, el sistema es antinosotros." Forty-six percent youth unemployment while the banks were rescued. The arithmetic that put people in the square.',
   ])
+  if (F.has('spain_rojo_family') && Math.random() < 0.25) return pick([
+    'The name that was not said in certain company. The photograph removed when visitors came. The specific silence around a specific relative: the grandfather, the uncle, the cousin who was on the losing side in 1939. The shape of the avoided subject, absorbed before the content was available.',
+    phase === 'late_life'
+      ? 'The Historical Memory Law and the DNA samples and the opened graves: the families who spent decades with the silence are now offered the possibility of the specific knowledge instead. The knowledge and the silence have different weights. Both are real. The families get to choose, which is the thing they were never allowed before.'
+      : 'The depuration records: the classification that determined employment, university access, professional licensing after 1939. The rojo classification followed the family in the documents even when no one spoke it in the house.',
+  ])
+  if (F.has('spain_anti_franco_cell') && Math.random() < 0.22) return pick([
+    'The illegal meeting in the apartment: the knock that meant it was safe, the pamphlets that were distributed through specific hands, the cold room where the Comisiones Obreras organized before it was legal to organize. The clandestinity as the ordinary condition of political life.',
+    phase === 'late_life'
+      ? 'The union hall in 1977 where the meeting happens openly, with your name on a membership card, which is the meeting you have been having in apartments for fifteen years. The difference between the clandestine and the legal version of the same meeting is the entire meaning of the transition.'
+      : 'The careful knowledge of who was reliable: the specific person in the factory you could speak to, the specific person you did not speak to, the specific signals. The organization required its own geography of trust in a city where trust had legal consequences.',
+  ])
+  if (F.has('spain_chabola_childhood') && Math.random() < 0.2) return pick([
+    'Two million people from Andalusia and Extremadura and Murcia to Barcelona and Madrid in twenty years. The barraca before the apartment block. The address that did not allow school registration. The city arriving around the migrant before the migrant arrived in the city.',
+    phase === 'late_life'
+      ? 'The neighbourhood where the barraca was is now apartments and a market. The generation that came in the barraca produced graduates. The social elevator worked, slowly, over the specific timeframe of a childhood and a youth and an adulthood. This was the wager. The wager paid off.'
+      : 'The specific community of the barraca: the people from the same village who arrived the same year, the church that organized around the same origin, the solidarity that poverty produces in proximity before the prosperity disperses it.',
+  ])
+  if (F.has('spain_carrero_blanco_lived') && Math.random() < 0.2) return pick([
+    'The car five stories over the building on Calle Claudio Coello. The bomb in the tunnel that launched a vehicle over a rooftop. The man who was Franco\'s mechanism for continuity, dead in the courtyard of a Jesuit church. The transition that happened after 1975 happened partly because this happened in December 1973.',
+    phase === 'late_life'
+      ? 'The question of whether the assassination of Carrero Blanco produced a better Spain is the kind of question that has an answer and does not resolve the moral question. The transition happened. The counterfactual in which it did not happen and Carrero Blanco continues the regime: unknown and terrifying to consider.'
+      : 'ETA at its peak: between 1978 and 1980 it kills more than one hundred people. The Carrero Blanco operation was the precise calculation. The years of lead that followed were the campaign without the precision.',
+  ])
+  if (F.has('spain_amnesia_pact') && Math.random() < 0.22) return pick([
+    'The Pacto del Olvido: the agreed forgetting that the transition required. The 1977 Amnesty Law freed the political prisoners and foreclosed prosecution of their jailors in the same legislation. The democracy was purchased partly with the right to justice for those who had none.',
+    phase === 'late_life'
+      ? 'The 2007 Historical Memory Law and the 2022 Democratic Memory Law: the slow return of what was agreed to be forgotten. The PP voted against both. The parties whose predecessors were protected by the pact continue to vote against the undoing of the pact. The pattern is not subtle.'
+      : 'Spain built its democracy on the agreement that what happened before would not be prosecuted. The democracies that built on trials — Germany, Argentina — have different relationships to their authoritarian pasts. The comparison is available. The Spaniards who made the pact knew the comparison.',
+  ])
+  if (F.has('spain_ley_peligrosidad_survived') && Math.random() < 0.25) return pick([
+    'The Ley de Peligrosidad: homosexuals as dangerous persons, subject to internment in the specific reformatories at Huelva and Badajoz. The bars that were not legal. The raids. The navigation of the city with the map of what was safe. The community that maintained itself invisible in order to survive.',
+    phase === 'late_life'
+      ? 'The arc: classified as dangerous in the Franco record, married in the municipal registry in 2005, the same person across the entire distance. The state changed its position. The record of the earlier position is still in the archives. Both are true and both are yours.'
+      : 'The modification of the law in 1979 to remove homosexuality from the list of social dangers. No apology. No rehabilitation. No acknowledgment. The modification as a bureaucratic change that does not address what the bureaucratic category meant for the years it was operative.',
+  ])
+  if (F.has('spain_fosa_recovery') && Math.random() < 0.2) return pick([
+    'The Association for the Recovery of Historical Memory: the families who spent decades knowing the approximate location of the mass grave and having no official mechanism for opening it. The DNA sample and the waiting and the result that comes back or does not.',
+    phase === 'late_life'
+      ? 'There are 114,000 bodies in the Spanish countryside estimated to be in unregistered graves from the Civil War and its aftermath. The graves that are opened replace permanent uncertainty with specific knowledge. The specific knowledge is worse and better than the uncertainty simultaneously. The families choose.'
+      : 'The grave is in the field at the edge of the village or on the road outside the town. The family has always known approximately where it is. The approximate has been the condition for eighty years. The 2007 law offers the mechanism to change the approximate to the specific.',
+  ])
+  if (F.has('spain_lgbtq_2005') && Math.random() < 0.2) return pick([
+    'June 30, 2005. The third country in the world. The ceremony in the room that the law now permits. The Partido Popular at a congress with two rings, explaining what marriage is. One of the rings is yours.',
+    phase === 'late_life'
+      ? 'The Constitutional Court upheld the law in 2012 after the PP\'s challenge. The PP later put the reversal in a manifesto and then did not reverse it when in government. The right to marry has been available since 2005 in a country where it was criminal thirty years before. The distance is the measure of something.'
+      : 'The specific year: 2005. Before 2005 the legal category did not exist in Spain. After 2005 it exists. The friends who married in 2005 or 2006 are married now in the legal record in the same way as the friends who married before. The alignment between the legal record and the actual fact is recent and feels older than it is.',
+  ])
 
   // ─── CANADA TEXTURE ──────────────────────────────────────────────────────────
   if (F.has('october_crisis_generation') && Math.random() < 0.2) return pick([

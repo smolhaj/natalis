@@ -5646,6 +5646,70 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by es_catalan_independence_2017.',
   },
 
+  spain_rojo_family: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Family member was classified as rojo (Republican, left, anarchist) after the Civil War — depuration record, employment restrictions, the silence around a specific name that you learned before you learned the reason.',
+    intent: 'both',
+    notes: 'Set by es_dep_posguerra_rojo. Follow-throughs: ft82_rojo_document, ft82_rojo_transition.',
+  },
+
+  spain_anti_franco_cell: {
+    weight: 'major',
+    category: 'political',
+    description: 'Participated in or knew of clandestine anti-Franco organizing under the dictatorship — CCOO underground cells, student opposition, apartment meetings, passing illegal pamphlets.',
+    intent: 'both',
+    notes: 'Set by es_dep_clandestinity. Follow-throughs: ft82_anti_franco_1977, ft82_anti_franco_late.',
+  },
+
+  spain_chabola_childhood: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up in a barraca or chabola shantytown at the edge of Barcelona or Madrid — internal migrant from Andalusia or Extremadura, living on the urban periphery before the apartment blocks arrived.',
+    intent: 'both',
+    notes: 'Set by es_dep_chabolas. Follow-throughs: ft82_chabola_apartment, ft82_chabola_late.',
+  },
+
+  spain_carrero_blanco_lived: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the ETA assassination of Admiral Carrero Blanco on December 20, 1973 — the car launched five stories over the building, the death of Franco\'s expected successor.',
+    intent: 'both',
+    notes: 'Set by es_dep_carrero_blanco. Follow-through: ft82_carrero_transition.',
+  },
+
+  spain_amnesia_pact: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through the Pacto del Olvido — the 1977 Amnesty Law that simultaneously freed political prisoners and foreclosed prosecution of Franco-era crimes, the agreed forgetting that made the transition possible.',
+    intent: 'both',
+    notes: 'Set by es_dep_pacto_olvido. Follow-through: ft82_amnesia_historical_memory.',
+  },
+
+  spain_ley_peligrosidad_survived: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Navigated Spain under the Ley de Peligrosidad y Rehabilitación Social as an LGBTQ person — the clandestine bars, the police raids, the specific routes through a city in which you were legally classified as dangerous.',
+    intent: 'both',
+    notes: 'Set by es_dep_ley_peligrosidad. Follow-throughs: ft82_peligrosidad_transition, ft82_peligrosidad_2005.',
+  },
+
+  spain_fosa_recovery: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Participated in recovering a family member from a mass grave of Civil War victims — DNA sample, ARMH assistance, the process made possible by the 2007 and 2022 Historical Memory Laws.',
+    intent: 'both',
+    notes: 'Set by es_dep_fosa_comu. Follow-through: ft82_fosa_result.',
+  },
+
+  spain_lgbtq_2005: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Experienced Spain\'s legalization of same-sex marriage in June 2005 — the third country in the world to pass full marriage equality, including adoption rights, after the Netherlands and Belgium.',
+    intent: 'year_texture',
+    notes: 'Set by es_dep_matrimonio_igualitario. Surfaced via yearTexture prose; intersects ft82_peligrosidad_2005.',
+  },
+
   madrid_11m_lived: {
     weight: 'moderate',
     category: 'historical',
