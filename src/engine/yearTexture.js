@@ -11727,6 +11727,20 @@ function buildYearTexture(state) {
     'You watched from the window. The sound of the chants. The neighbor going out and the neighbor not coming back. The arithmetic of staying inside.',
     'The risk calculation on July 11 came out a certain way for you. You have thought about it since — whether you calculated correctly or whether "correctly" is the wrong frame.',
   ])
+  if (F.has('cub_missile_crisis_generation') && Math.random() < 0.15) return pick([
+    'The anti-aircraft battery at the edge of town is the detail October 1962 left in your body. The negotiation happened in Washington and Moscow. The battery was here.',
+    'Thirteen days. The specific fear of that October is not the same as the general fear of the Cold War — it was geographically located, on your island, in your sky.',
+    phase === 'late_life'
+      ? 'The historians write about the Missile Crisis as a superpower negotiation. You were inside the thing being negotiated about, which is a different position than the historians have.'
+      : 'Kennedy and Khrushchev found a resolution. What you understood from the resolution: the island was a variable in their equation, not the subject of it.',
+  ])
+  if (F.has('cub_nueva_trova_generation') && Math.random() < 0.17) return pick([
+    'The Silvio song comes back whole — melody, words, the specific guitar voicing. You learned it before you understood what it was saying. Now you understand. The song is the same and not the same.',
+    'Nueva trova is the music of the generation that believed and also doubted and couldn\'t fully separate the two. You carry that ambivalence in the specific key of the songs you know by heart.',
+    phase === 'late_life'
+      ? 'Pablo Milanés died in 2022 in Madrid, in exile. The exile complicated the songs retrospectively, the way exile complicates everything retrospectively. The songs still hold.'
+      : 'The songs circulated on cassette before they circulated on record, and on the cassette before the official release they sounded more like what they were — which is to say more ambivalent, more dangerous.',
+  ])
   if (F.has('proceso_lived') && Math.random() < 0.22) return pick([
     'Thirty thousand. The number is not exact and is not disputed. The method was established: the flights, the camps, the specific vocabulary of disappearance.',
     'The Proceso lasted until 1983. The courts came later. The repentance came even later. The grandmothers were in the Plaza de Mayo every Thursday from 1977 onward. You saw them.',

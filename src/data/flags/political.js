@@ -6714,4 +6714,86 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by ven_migrant_colombia (both choices). Follow-through: ft65_colombia_migrant_late.',
   },
 
+  // ── CUBA DEPTH (events_cuba_depth.js) ────────────────────────────────────
+
+  cub_missile_crisis_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was on the island during the 13 days of October 1962 — the anti-aircraft batteries, the broadcasts, the specific fear of knowing you are inside the thing the superpowers are negotiating about.',
+    intent: 'year_texture',
+    notes: 'Set by cub_dep_missile_crisis. Follow-through: ft66_missile_crisis_late.',
+  },
+
+  cub_nueva_trova_generation: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Came of age with nueva trova — Silvio Rodríguez, Pablo Milanés; songs that were political and personal at the same time, containing ambivalences the official culture could not fully contain.',
+    intent: 'year_texture',
+    notes: 'Set by cub_dep_nueva_trova. Follow-through: ft66_nueva_trova_midlife.',
+  },
+
+  cub_doctor_export: {
+    weight: 'major',
+    category: 'career',
+    description: 'Was sent on an internationalist medical mission — two or more years treating patients in a country that is not Cuba, paid by Cuba, returning with comparisons that do not resolve cleanly.',
+    intent: 'event',
+    notes: 'Set by cub_dep_doctor_mission (first choice). Follow-through: ft66_doctor_mission_return.',
+  },
+
+  cub_elian_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Was an adult during the Elián González affair 1999–2000 — the raid photograph, the custody battle as proxy for Cuba–Miami politics, the boy as referendum.',
+    intent: 'none',
+    notes: 'Set by cub_dep_elian. No downstream event needed.',
+  },
+
+  cub_dual_currency_era: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Lived the CUC/CUP dual-currency economy 1994–2021 — earning pesos, pricing life in convertibles, the two Cubas sharing the same streets.',
+    intent: 'none',
+    notes: 'Set by cub_dep_dual_currency. Follow-through: ft66_dual_currency_late (not flagged for intent).',
+  },
+
+  cub_education_generation: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'Educated under the Cuban revolutionary system — high literacy, equalised access, credentials that exceed what the domestic economy can absorb.',
+    intent: 'event',
+    notes: 'Set by cub_dep_education. Follow-through: ft66_cuba_education_late.',
+  },
+
+  cub_exit_visa_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived under the tarjeta blanca exit visa requirement — the state permission required to leave the island, removed in 2013.',
+    intent: 'none',
+    notes: 'Set by cub_dep_exit_visa. Follow-through: ft66_exit_visa_2013 (not flagged for intent).',
+  },
+
+  cub_lgbtq_suppression: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Experienced the revolutionary state\'s persecution of homosexuality — UMAP labour camps, Paragraph 69 university expulsions, CDR reporting, the gay man as incompatible with the New Man.',
+    intent: 'none',
+    notes: 'Set by cub_dep_paragraph_69. Yearbook reckoning available for future events.',
+  },
+
+  cub_cultural_conformity: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Chose to work within the quinquenio gris cultural parameters — finding what could be made within constraints, the work that survived the gray period.',
+    intent: 'none',
+    notes: 'Set by cub_dep_gray_period (first choice).',
+  },
+
+  cub_rural_tobacco: {
+    weight: 'minor',
+    category: 'occupation',
+    description: 'Worked in the Viñales tobacco vegas — knowledge of soil and leaf and harvest that the state quota cannot contain.',
+    intent: 'none',
+    notes: 'Set by cub_dep_vinales_tobacco.',
+  },
+
 }
