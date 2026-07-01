@@ -8820,6 +8820,66 @@ function buildYearTexture(state) {
       ? 'You crossed and you arrived and you built something on the Italian side of the crossing. The crossing is in the past and it is always in the past and it is always there. These are both true.'
       : 'The Italian side of the crossing: the papers, the permit, the renewal, the precariousness of status in a country that needed you to pick the tomatoes and did not want you to stay.',
   ])
+  if (F.has('italy_partisan_veteran') && Math.random() < 0.25) return pick([
+    'The mountains in winter 1943-44. The cold and the hunger and the waiting and the occasional violence. What the Resistance was is different from what the Resistance became in the national memory. You know what it was.',
+    phase === 'late_life'
+      ? 'The Liberation was April 25, 1945. You have now lived more years after it than before it. The republic was built on that day. You were in the mountains contributing to the conditions for that day. This is the sentence about your life that you return to.'
+      : 'The Resistance was not heroic in the way it is described. It was cold and frightened and uncertain and the heroism was in continuing under those conditions, not in the absence of fear.',
+  ])
+  if (F.has('italy_resistenza_generation') && Math.random() < 0.2) return pick([
+    'The grey zone: most people in Italy during the occupation were in it. Not collaborating, not resisting. Getting through. The republic divided itself between chi ha fatto and chi non ha fatto. You lived in the division.',
+    phase === 'late_life'
+      ? 'The children of the Resistance and the children of those who did not resist grew up in the same country, at the same schools, in the same towns. The distinction that felt enormous in 1945 became something that was sometimes spoken about and sometimes not, which is its own kind of inheritance.'
+      : 'Italy\'s republican constitution was written in 1947 by people who had made specific choices in 1943-45. The constitution reflects those choices. You live under the constitution of a specific moral community formed under specific conditions.',
+  ])
+  if (F.has('pci_generation') && Math.random() < 0.25) return pick([
+    'Berlinguer\'s Eurocommunism: the largest Communist Party in Western Europe that had broken with Moscow, that argued for a different road. The moral seriousness of it. The permanent exclusion from government of a party that received a third of the vote.',
+    phase === 'late_life'
+      ? 'The PCI became the PDS in 1991 and the PDS became the DS and the DS became the PD. The lineage is continuous and changed at every step. What you were a member of no longer exists. Something that carries its inheritance exists. Whether that is the same thing is the question.'
+      : 'The Feste dell\'Unità: the party that built a culture around itself. Cinema and music and the newspaper and the summer festivals. The party as a way of life, not only a ballot choice. The culture outlasted the party by some years and then it also ended.',
+  ])
+  if (F.has('dc_generation') && Math.random() < 0.2) return pick([
+    'The DC governed Italy for forty-five years — from 1948 to 1993. The longest continuous governance of a democratic party in any Western democracy. The anticommunism that made it possible and the tangenti that financed it are both documented.',
+    phase === 'late_life'
+      ? 'After 1993 the DC was gone. The parties that came from it — CCD, PPI, UDC, the centre lists — held fragments of the electorate without reconstituting the party. What the DC held together, nobody else has managed to hold together since.'
+      : 'You voted DC for reasons that made sense to you. The party financed itself with bribes and your vote went toward a party that did that. Both things are true and you hold them both without an easy reconciliation.',
+  ])
+  if (F.has('postconciliar_generation') && Math.random() < 0.2) return pick([
+    'The mass in Italian: what had been Latin for four centuries became the language you actually spoke. The priest turned to face you. The liturgy opened. The Italy where Church and daily life are inseparable received Vatican II and adapted it in the Italian way — fully and partially simultaneously.',
+    phase === 'late_life'
+      ? 'The gap between what the hierarchy says and what Italian Catholics do has been the defining feature of Italian Catholicism since at least 1974. You have lived inside the gap. The gap is not hypocrisy; it is a specific relationship to institutional religion that Italy invented for itself.'
+      : 'The 1974 divorce referendum: Catholics voted 60 percent to keep divorce. The 1981 abortion referendum: Catholics voted 67 percent to keep abortion. The Church and the faithful agreed on the forms and diverged on the substance. This is the postconciliar Italy you live in.',
+  ])
+  if (F.has('seconda_repubblica_disillusion') && Math.random() < 0.2) return pick([
+    'The Second Republic that did not arrive. The space between the end of the First Republic in 1992 and whatever came next is the republic Italy actually lives in. The institutional reforms were proposed and not passed. The political culture changed its personnel and not its structure.',
+    phase === 'late_life'
+      ? 'You have watched governments form and fall across four decades of the Second Republic\'s non-arrival. The count of governments per decade: seven, eight, nine. The instability was not incidental to the system. It was the system.'
+      : 'Berlusconi, Prodi, D\'Alema, Berlusconi, Prodi, Berlusconi, Monti, Letta, Renzi, Gentiloni, Conte, Draghi, Meloni. Each name is a different government. The pace of change is the political condition.',
+  ])
+  if (F.has('italy_immigration_witness') && Math.random() < 0.2) return pick([
+    'Italy went from a country that sent workers abroad to a country that received them in approximately thirty years. Your parents or grandparents emigrated to Switzerland or Germany. You are now in a country that has Romanian badanti caring for Italian elders.',
+    phase === 'late_life'
+      ? 'The care economy: without the Eastern European and Filipino workers who moved into spare rooms and hospital wards and nursing homes, Italian elder care does not function. The country that resists immigration politically depends on immigration practically. You have seen both things from the inside.'
+      : 'The vu cumprà on the beach: the Senegalese vendors who arrived in the 1990s and became a fixture of Italian summers. Italy\'s response to immigration has been to depend on it economically while arguing about it politically, which is not unique to Italy but is very visible here.',
+  ])
+  if (F.has('italy_austerity_generation') && Math.random() < 0.25) return pick([
+    'The spread on every news programme: the differential between Italian and German bond yields, which became the number that governed Italian political life for two years. You knew this number. The number knew nothing about you and determined a great deal about you.',
+    phase === 'late_life'
+      ? 'Italy\'s GDP in 2020 was lower than in 2000. Twenty years. The euro and the austerity and the structural problems and the political instability: all of these are explanations and none of them, alone, is sufficient. You saved during the crisis years. The savings are worth less in real terms than when you made them.'
+      : 'Monti\'s cabinet of non-politicians implementing reforms that no elected government could pass: the technocratic solution to the democratic crisis. The voters who did not elect the government that changed their lives voted for Grillo two years later. The sequence was not difficult to predict.',
+  ])
+  if (F.has('italy_meloni_2022') && Math.random() < 0.2) return pick([
+    'Giorgia: mother, Christian, Italian. The nouns as identity politics. The first woman prime minister from a party whose logo carries the MSI flame. The European response. The Italian response. The distance between the two responses is the gap between how Italy looks from outside and how it looks from inside.',
+    phase === 'late_life'
+      ? 'The Meloni government: conventional fiscal policy, NATO support, EU alignment. The rupture that was feared did not arrive. The concern that the post-fascist genealogy would express itself in government policy has not, so far, been confirmed. What to make of a government whose record is conventional and whose lineage is what it is: this is the argument.'
+      : 'The Five Star Movement won 25 percent in 2013. The Lega won 34 percent in 2019. Fratelli d\'Italia won 26 percent in 2022. The insurgent parties follow each other into government and moderate or fail to deliver and are replaced by the next insurgency. The pattern is Italian and also not only Italian.',
+  ])
+  if (F.has('mezzogiorno_organized_crime_texture') && Math.random() < 0.2) return pick([
+    'The geometry of what is not said: the name you do not use, the street you do not walk at night, the question about what that business is for that you do not ask. You absorbed this without instruction. The absorbing is the instruction.',
+    phase === 'late_life'
+      ? 'The Calabrian \'Ndrangheta is now the most powerful criminal organization in Europe by revenue. It was the background texture of your childhood. The background became the foreground for the investigators and journalists who have spent decades naming what you absorbed at age ten without the name.'
+      : 'The maxi-process in Palermo, the Camorra trials, the captures in Calabria: the state and the organizations have been at war for decades in the places where you grew up. The news of the trials reads differently when you recognize the streets in the indictments.',
+  ])
 
   // ─── GERMANY TEXTURE ─────────────────────────────────────────────────────────
   if (F.has('gastarbeiter_generation') && Math.random() < 0.3) return pick([

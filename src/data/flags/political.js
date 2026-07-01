@@ -3257,6 +3257,86 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by it_berlusconi_era (concerned choice).',
   },
 
+  italy_partisan_veteran: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Fought as a partisan (partigiano) in the Italian Resistance 1943-45 — in the mountains, against Germans and fascists, until the Liberation of April 25 1945.',
+    intent: 'both',
+    notes: 'Set by it_dep_resistenza (fought choice). Follow-throughs: ft81_partisan_april25, ft81_partisan_late_politics.',
+  },
+
+  italy_resistenza_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Lived through the Resistance period 1943-45 — whether as a partisan or in the grey zone of survival.',
+    intent: 'year_texture',
+    notes: 'Set by it_dep_resistenza.',
+  },
+
+  pci_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'PCI voter or member — the Italian Communist Party during its Cold War exclusion from government, under Togliatti, Longo, Berlinguer.',
+    intent: 'both',
+    notes: 'Set by it_dep_dc_pci_anomalia (PCI choice). Follow-throughs: ft81_pci_berlinguer, ft81_pci_dissolution.',
+  },
+
+  dc_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'DC voter or supporter — the Christian Democracy that governed Italy from 1948 to 1994, revealed by Mani Pulite to have financed itself through systematic corruption.',
+    intent: 'both',
+    notes: 'Set by it_dep_dc_pci_anomalia (DC choice). Follow-through: ft81_dc_mani_pulite.',
+  },
+
+  postconciliar_generation: {
+    weight: 'minor',
+    category: 'personal',
+    description: 'Italian Catholic who grew up with Vatican II — the Mass in Italian, the turned altar, the 1974 divorce vote showing the gap between the hierarchy and the faithful.',
+    intent: 'both',
+    notes: 'Set by it_dep_vaticano_due. Follow-through: ft81_postconciliar_abortion.',
+  },
+
+  seconda_repubblica_disillusion: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Disillusioned by the failed transition after Mani Pulite — the Second Republic that never arrived, the First Republic that never quite ended, the permanent space between them.',
+    intent: 'both',
+    notes: 'Set by it_dep_seconda_repubblica. Follow-through: ft81_seconda_rep_grillo.',
+  },
+
+  italy_immigration_witness: {
+    weight: 'minor',
+    category: 'social',
+    description: 'Witnessed Italy\'s transformation from emigration to immigration country — the badanti, the vu cumprà, the care workers from Romania and Ukraine.',
+    intent: 'year_texture',
+    notes: 'Set by it_dep_badanti.',
+  },
+
+  italy_austerity_generation: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Lived through the 2011-2013 spread crisis and Monti technocratic government — the austerity, the IMU property tax, the rising retirement age, the GDP contraction.',
+    intent: 'both',
+    notes: 'Set by it_dep_spread. Follow-through: ft81_austerity_stagnation.',
+  },
+
+  italy_meloni_2022: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through Meloni\'s October 2022 election victory — the first woman prime minister, from a party with post-fascist lineage, watched with alarm across Europe.',
+    intent: 'both',
+    notes: 'Set by it_dep_meloni_2022. Follow-through: ft81_meloni_in_office.',
+  },
+
+  mezzogiorno_organized_crime_texture: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up in Calabria or Campania absorbing the ambient texture of organized crime — not as direct involvement but as the geometry of what is avoided and not spoken of.',
+    intent: 'both',
+    notes: 'Set by it_dep_ndrangheta. Follow-throughs: ft81_mezzogiorno_leave_or_stay, ft81_mezzogiorno_midlife.',
+  },
+
   ddr_generation: {
     weight: 'major',
     category: 'political',
