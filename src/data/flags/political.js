@@ -2937,6 +2937,70 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by aus_dep_voice_2023. Follow-through: ft85_voice_aftermath.',
   },
 
+  nz_waitangi_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Māori New Zealander who engaged with the Waitangi Tribunal process — the 1975 mechanism to hear Treaty grievances, the slow decades of claims and partial settlements.',
+    intent: 'both',
+    notes: 'Set by nz_dep_maori_land_waitangi. Follow-through: ft87_waitangi_settlement_1990s.',
+  },
+
+  nz_dawn_raids_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Pacific Islander New Zealander who lived through the dawn raids of 1974–1976 — the disproportionate enforcement against Pacific communities, the Polynesian Panthers resistance.',
+    intent: 'both',
+    notes: 'Set by nz_dep_dawn_raids_pacific. Follow-through: ft87_dawn_raids_apology_2021.',
+  },
+
+  nz_homosexual_reform_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'LGBTQ New Zealander who came of age around the Homosexual Law Reform Act 1986 — the two-year parliamentary debate, the 800,000-signature petition against, the 9 July passage.',
+    intent: 'both',
+    notes: 'Set by nz_dep_homosexual_law_reform. Follow-through: ft87_marriage_equality_2013.',
+  },
+
+  nz_erebus_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Adult New Zealander who lived through the Erebus disaster 1979 — 257 dead, the coordinated cover-up, Justice Mahon\'s "orchestrated litany of lies", the decade of legal battle.',
+    intent: 'both',
+    notes: 'Set by nz_dep_erebus_1979. Follow-through: ft87_erebus_mahon_vindicated.',
+  },
+
+  nz_pike_river_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Adult New Zealander shaped by the Pike River disaster 2010 — 29 miners, systematic regulatory failure, the sealed mine, the families at the gate across nine years of waiting.',
+    intent: 'both',
+    notes: 'Set by nz_dep_pike_river_2010. Follow-through: ft87_pike_river_reentry_2019.',
+  },
+
+  nz_urban_maori: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Urban-born Māori navigating identity in a city not built to hold it — the marae as a place you visit, not the centre; the double challenge from both Pākehā and rural Māori.',
+    intent: 'year_texture',
+    notes: 'Set by nz_dep_urban_maori_identity.',
+  },
+
+  nz_bastion_point_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Māori witness or participant of the 506-day Bastion Point / Ōrākei occupation 1977–78 — the bulldozers on 25 May 1978, the arrests, the photographs that circulated for years.',
+    intent: 'year_texture',
+    notes: 'Set by nz_dep_bastion_point_1978.',
+  },
+
+  nz_oe_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'New Zealander who did the Overseas Experience — the Earls Court flat, the years in London or Europe, the return home that clarified what New Zealand was by its absence.',
+    intent: 'year_texture',
+    notes: 'Set by nz_dep_oe_london.',
+  },
+
   great_migration_generation: {
     weight: 'major',
     category: 'historical',

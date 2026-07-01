@@ -8485,6 +8485,64 @@ function buildYearTexture(state) {
       : 'The gap in life expectancy, in incarceration, in child removal: these numbers existed before the referendum and after it. The referendum was about something separate from those numbers and also not separate from them at all.',
   ])
 
+  // ─── NEW ZEALAND DEPTH TEXTURE ───────────────────────────────────────────────
+  if (F.has('nz_waitangi_generation') && Math.random() < 0.25) return pick([
+    'The Waitangi Tribunal: the process that never quite finishes but continues to move, one claim at a time, one settlement at a time.',
+    'You know the Treaty in the way that most New Zealanders do not — its two texts, its two understandings, the distance between them. That distance is the country in small.',
+    phase === 'late_life'
+      ? 'You have watched the settlements come through over decades. Partial. Permanent. The word "tūturu" in the settlement deeds. Both adjectives true at once.'
+      : 'The Tribunal was new when you engaged with it. It was the first mechanism. You did not know how long the mechanism would take. You know now.',
+  ])
+  if (F.has('nz_dawn_raids_generation') && Math.random() < 0.25) return pick([
+    'The knock at the door carries a different weight for people who lived through the raids than for people who did not. The weight does not fully diminish when the policy ends.',
+    'Three-quarters of the deportations. A quarter of the overstayers. You know the ratio because you lived on the wrong side of it.',
+    phase === 'late_life'
+      ? 'You are old enough to have grandchildren who have never heard of the Polynesian Panthers. You tell them. The Panthers knew the law as both weapon and shield, and the knowing was passed on.'
+      : 'The raids ended. What they made in the body — the listening, the checking before the door opens — that did not end when the policy did.',
+  ])
+  if (F.has('nz_homosexual_reform_generation') && Math.random() < 0.25) return pick([
+    'There is a before and an after, and the date is specific: 9 July 1986. You remember where you were when the vote was announced.',
+    'The 800,000 names on the petition are in an archive somewhere. People you knew signed it. People you knew also signed the other one.',
+    phase === 'late_life'
+      ? 'You have watched it go from criminal to legal to equal. The young people do not know what criminal felt like from inside. That is good. You know what it cost to change it.'
+      : 'The opposition speeches are in Hansard. You have read them. The language they used is a record of what the country officially believed in 1985 about people like you.',
+  ])
+  if (F.has('nz_erebus_generation') && Math.random() < 0.2) return pick([
+    'Erebus: the word is not only a mountain now. It is what the country learned about what institutions do when they are afraid of what they have done.',
+    'The coordinates were changed and nobody told the crew. You keep returning to that sentence. There is no version of it that becomes less wrong the more you look at it.',
+    phase === 'late_life'
+      ? 'Mahon was vindicated by the Privy Council. The "orchestrated litany of lies" stands. The vindication did not bring 257 people back. It established that what happened was concealment, not error, which is a different thing.'
+      : 'The inquiry, the appeal, the airline suing the judge — the legal architecture around the disaster was as revealing as the disaster. You watched all of it.',
+  ])
+  if (F.has('nz_pike_river_generation') && Math.random() < 0.2) return pick([
+    'Twenty-nine men. The mine sealed. The families at the gate at every anniversary with photographs.',
+    'Systematic failures: that is the Royal Commission finding. The word "systematic" is doing significant work in that sentence. You have thought about that word.',
+    phase === 'late_life'
+      ? 'The re-entry happened in 2019. Cameras went in. Evidence came out. The bodies did not come out. Some families said it was what they needed. Some said it was not enough. You think both things are exactly right.'
+      : 'The mine is three hours from here or ten hours or across the island, but New Zealand is the size of a country where distance is measured differently. The twenty-nine are not abstract.',
+  ])
+  if (F.has('nz_urban_maori') && Math.random() < 0.2) return pick([
+    'The city is real and the marae is real and the distance between them is the architecture of your life.',
+    'Someone asks where you are from and you say Auckland and they ask where you are really from and you name the place you are from and the conversation moves on as if the question is resolved, though it is not resolved.',
+    phase === 'late_life'
+      ? 'You watched the language come back into the city — kōhanga reo, kura kaupapa, the urban kohanga that your parents did not have. The urban generation learning what the city removed from the generation before it.'
+      : 'You carry the identity in a city that was not built to hold it. You have been building what you need to carry it for as long as you have been in the city.',
+  ])
+  if (F.has('nz_bastion_point_generation') && Math.random() < 0.2) return pick([
+    'Bastion Point: 506 days and then the bulldozers. The photographs from that day are still sharp in your memory thirty years on.',
+    'Six hundred police and army to remove an occupation. You know the number. The number is part of what the day was.',
+    phase === 'late_life'
+      ? 'The land was eventually returned in 1988, ten years after the removal. Settlement. The word sounds like resolution. It is also the word for what you do with something that cannot be fully resolved, which is what this was.'
+      : 'You were young when the bulldozers came. The thing you carry from that day is not only rage — it is also the clarity of seeing what a government will do when it has decided to do it.',
+  ])
+  if (F.has('nz_oe_generation') && Math.random() < 0.2) return pick([
+    'The OE: everyone did it or did not do it, and each side knows the other side and what the other side says about them.',
+    'Being twelve thousand miles from New Zealand made it visible in a way it was not visible from inside it. Specificity requires distance sometimes.',
+    phase === 'late_life'
+      ? 'You have children who did their OE or did not. The ones who did ask about London as if you were a colleague. The ones who did not ask about London as if you went to a foreign country. Both descriptions are correct.'
+      : 'You went for a year. You stayed for longer. What you came back with was a clearer sense of what you were from, which is not something you could have acquired by staying.',
+  ])
+
   // ─── UNITED STATES TEXTURE ───────────────────────────────────────────────────
   if (F.has('jim_crow_childhood') && Math.random() < 0.3) return pick([
     'You learned the rules of survival before you learned to read. The rules are still there, twenty or forty years later, in the way you move through certain rooms — the reflex of the second calculation that white people in those rooms do not make.',
