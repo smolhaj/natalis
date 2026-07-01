@@ -7734,6 +7734,21 @@ function buildYearTexture(state) {
       : 'The person from your neighbourhood who was accused: the question of what they actually did or said is not separable from the question of who accused them and why. Both questions are about the same law.',
   ])
 
+  if (F.has('pak_cricket_generation') && Math.random() < 0.18) return pick([
+    'The match against India is not a game. You have known this since childhood. Whatever the scoreboard does, the result matters in a register that scorecards do not capture.',
+    'Gali cricket: the stumps chalked on the wall, the rubber ball, the argument about whether it crossed the line. This is the real game. The national team is what happens when you imagine the gali game scaling to a country.',
+    phase === 'late_life'
+      ? 'You have followed this team for fifty years. In fifty years of following a team you learn that the attachment is not about the team. The team is the occasion for something that is about something else — the street, the people you watched with, the particular evening in 1992 when something moved in the city.'
+      : 'Pakistan cricket produces a specific kind of suffering — the match that was won and then lost in the last over, the captain who was brilliant and then disgraced, the inconsistency that is itself consistent. You follow it anyway. The following is the point.',
+  ])
+  if (F.has('pak_faiz_generation') && Math.random() < 0.15) return pick([
+    'Hum dekhenge. We shall witness. You know it by heart. The poem moves through different registers depending on the year: protest song, banned text, defended common ground. The poem is the same poem through all the registers.',
+    'Faiz wrote in the Montgomery Jail and the jail became part of the poem. The poem is more complete for having been written there. This is one of the things imprisonment produces, occasionally and against its intention.',
+    phase === 'late_life'
+      ? 'You have outlived the eras the poems described. The poems are still current. This is what it means when people say a poet was great: the poems did not date when the era did. The poems are still doing their work in the next era and the era after that.'
+      : 'The verse is part of the air. You learned it before you understood what it was saying. Now you understand what it was saying and the understanding has complicated the verse without reducing it.',
+  ])
+
   // ─── BANGLADESH TEXTURE ──────────────────────────────────────────────────────
   if (F.has('bng_liberation_generation') && Math.random() < 0.3) return pick([
     'Nine months. March 25 to December 16, 1971. Operation Searchlight at midnight, then the Mukti Bahini, then the Indian army crossing the border, then the surrender of ninety-three thousand Pakistani soldiers. Joy Bangla. The country born out of those nine months is the country you live in.',

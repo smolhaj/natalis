@@ -6886,4 +6886,110 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by ph_dep_ofw_calculus (stay choice). Follow-through: watching others leave, the calculus revisited.',
   },
 
+  // ── PAKISTAN DEPTH FLAGS ──────────────────────────────────────────────────
+
+  pak_cricket_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Grew up with Pakistan cricket as religion — the 1992 World Cup, the gali cricket, the irrational loyalty.',
+    intent: 'event',
+    notes: 'Set by pak_dep_cricket. Follow-through: midlife reckoning with the team\'s ongoing drama.',
+  },
+
+  pak_basant_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Knew Basant Lahore — the February kite season on the old city rooftops, banned in 2007 after the manja string deaths.',
+    intent: 'event',
+    notes: 'Set by pak_dep_basant. Follow-through: the ban as specific loss.',
+  },
+
+  pak_2010_flood_generation: {
+    weight: 'moderate',
+    category: 'disaster',
+    description: 'Lived through the 2010 Pakistan floods — a fifth of the country underwater, twenty million displaced.',
+    intent: 'event',
+    notes: 'Set by pak_dep_floods_2010. Follow-through: late-life understanding of the attention economy around disaster.',
+  },
+
+  pak_dep_flood_survivor: {
+    weight: 'moderate',
+    category: 'disaster',
+    description: 'Area flooded in 2010 — direct loss of home, assets, and the years it took to reconstruct.',
+    intent: 'none',
+    notes: 'Set by pak_dep_floods_2010 (flood survivor choice).',
+  },
+
+  pak_hazara_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Hazara from Quetta — a community defined by its persecution, the geography of its survival, and the calculus of leaving.',
+    intent: 'event',
+    notes: 'Set by pak_dep_hazara. Follow-through: 2013 sit-in, ongoing targeting.',
+  },
+
+  pak_baloch_missing_person_family: {
+    weight: 'major',
+    category: 'political',
+    description: 'Family member among the Balochistan disappeared — the photograph at the courthouse, the life organized around absence.',
+    intent: 'event',
+    notes: 'Set by pak_dep_baloch_missing. Follow-through: return or non-return reckoning in late life.',
+  },
+
+  pak_faiz_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Carries Faiz Ahmed Faiz — the poetry that became protest and then became common ground and cannot be taken away.',
+    intent: 'event',
+    notes: 'Set by pak_dep_faiz. Follow-through: Hum Dekhenge in later protests.',
+  },
+
+  pak_pashtunwali_generation: {
+    weight: 'minor',
+    category: 'cultural',
+    description: 'Raised in Pashtunwali — the code of melmastia, nanawatai, and badal that precedes any modern state.',
+    intent: 'none',
+    notes: 'Set by pak_dep_pashtunwali.',
+  },
+
+  pak_domestic_economy_generation: {
+    weight: 'minor',
+    category: 'economic',
+    description: 'Grew up in a household with domestic servants — the asymmetry of mutual knowledge that becomes visible only in retrospect.',
+    intent: 'none',
+    notes: 'Set by pak_dep_servant.',
+  },
+
+  pak_rishta_married: {
+    weight: 'minor',
+    category: 'relationship',
+    description: 'Married through the rishta system — the family visit, the assessment, the negotiated match.',
+    intent: 'event',
+    notes: 'Set by pak_dep_rishta (go through process choice). Follow-through: years-later reckoning with the method vs. the outcome.',
+  },
+
+  pak_rishta_resisted: {
+    weight: 'minor',
+    category: 'relationship',
+    description: 'Resisted the rishta process — the negotiation with family that produced a partial rather than a chosen outcome.',
+    intent: 'none',
+    notes: 'Set by pak_dep_rishta (resist choice).',
+  },
+
+  pak_overseas_departed: {
+    weight: 'moderate',
+    category: 'migration',
+    description: 'Left Pakistan for the Gulf, UK, or Canada — the overseas Pakistani as a specific figure in the domestic imagination.',
+    intent: 'event',
+    notes: 'Set by pak_dep_overseas_pull (leave choice). Also sets emigrated. Follow-through: return to a changed Pakistan.',
+  },
+
+  pak_overseas_stayed: {
+    weight: 'minor',
+    category: 'migration',
+    description: 'Chose to stay in Pakistan when the arithmetic pointed toward leaving — the one who lives the country others send money to.',
+    intent: 'none',
+    notes: 'Set by pak_dep_overseas_pull (stay choice).',
+  },
+
 }
