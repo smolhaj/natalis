@@ -9164,6 +9164,54 @@ function buildYearTexture(state) {
       ? 'The Dutch king apologized in Jakarta. The prime minister apologized for slavery in 2022. You watched both. The words arrived. The process of deciding what the words oblige is still ongoing.'
       : 'The Dutch East Indies, the plantation economy, the Bersiap period. The history is in the language — in street names, in the products in the supermarket, in which families came from where and why. Acknowledgment is arriving slowly.',
   ])
+  if (F.has('nl_jodendeportatie_witness') && Math.random() < 0.22) return pick([
+    'May 4. Two minutes of silence at 8pm — the trams stop, the radio stops, the whole country stops. You have done this every year. As a child it was the silence of adults. Now you are the adult in the silence and the names you are thinking of are specific.',
+    phase === 'late_life'
+      ? 'The gap in the street is still there in your memory even when the street has become something else. The daughter who played on the steps. You never knew her name. The silence is partly for that still.'
+      : 'The population registers: Dutch administrative precision that made the deportation easier than anywhere else in Western Europe. The lists were produced when asked. Seventy-five percent of Dutch Jews died. The efficiency was Dutch.',
+  ])
+  if (F.has('nl_bijlmerramp_witness') && Math.random() < 0.18) return pick([
+    'The Bijlmer tower on fire. The official death toll: 43. The actual number: never established. The towers were full of people who could not go to hospitals because they did not officially exist. A crash revealed an invisible city within the city.',
+    phase === 'late_life'
+      ? 'The parliamentary inquiry tried to establish how many people actually died in the towers. The number was never established. This is what Amsterdam was in 1992: a city with thousands of people in it that the city did not count.'
+      : 'The Bijlmermeer towers were social housing built in the 1960s as the utopian Dutch solution. By 1992 they were full of Surinamese, Ghanaian, undocumented families from everywhere. The utopia had become invisible.',
+  ])
+  if (F.has('nl_same_sex_pioneer_2001') && Math.random() < 0.2) return pick([
+    'April 1, 2001. Four couples. The mayor of Amsterdam. The world\'s first legal same-sex marriages. You were in the country where this happened first. The position of first does not last but cannot be taken back.',
+    phase === 'late_life'
+      ? 'Belgium, Spain, Canada, South Africa, then more. The Netherlands was first and is now one of many. The word "first" is historical now. The marriages were always permanent.'
+      : 'Being from the first country where this was legal is a specific form of luck. The right existed here before it existed anywhere. You lived inside that fact while people in other countries were still waiting for their country to produce it.',
+  ])
+  if (F.has('nl_zwarte_piet_debate_generation') && Math.random() < 0.18) return pick([
+    'The annual Sinterklaas debate. The children\'s memory and the adult\'s argument occupy the same tradition. You grew up with the candy and the blackened faces as entirely normal. The argument about what was normal is the Dutch argument of the last thirty years.',
+    phase === 'late_life'
+      ? 'Roetveegpiet, chimney soot rather than blackface. The change is contested every year, differently in each city. The Netherlands negotiating its own childhood in public.'
+      : 'The specific Dutch difficulty: the tradition was genuinely a tradition, not performed malice. That it also depicted something is the argument. Both things are true and the Netherlands is working out what to do with both being simultaneously true.',
+  ])
+  if (F.has('nl_toeslagen_family') && Math.random() < 0.22) return pick([
+    'Ongekend onrecht. Unprecedented injustice. The words the parliamentary inquiry used for what the tax authority did — yours among 26,000 families flagged by an algorithm that treated your surname as a risk indicator.',
+    phase === 'late_life'
+      ? 'The Hersteloperatie. The money began to arrive years after the harm. The decade that was destroyed did not arrive with it. The cabinet had resigned. The debt eventually got addressed. The decade stayed gone.'
+      : 'The letter from the tax authority. The amount. You had not committed fraud. The system was designed to recover money and it recovered money from people who did not owe it. The word "systematic" is in the inquiry report.',
+  ])
+  if (F.has('nl_groningen_earthquake_affected') && Math.random() < 0.2) return pick([
+    'The crack in the wall. A hairline last year; wider this year. The Groningen field made the Netherlands rich in the 1960s. The people above the field got the earthquakes. The NAM said it was soil settling. The houses said otherwise.',
+    phase === 'late_life'
+      ? 'The gas extraction stopped in 2023. The field is closed. The cracks are still in the houses. The compensation process continues. The welfare state was funded by the gas. The welfare state did not extend to the people who got the earthquakes.'
+      : 'The claim form. The assessor who says the crack was pre-existing. The appeals process. The distinction between earthquake damage and soil settling is contested by exactly the parties who profit from the distinction.',
+  ])
+  if (F.has('nl_wilders_2023_generation') && Math.random() < 0.18) return pick([
+    'November 2023. 37 seats. The PVV the largest party. The analysis of who voted and why takes longer than the result. Housing. Toeslagen. Groningen. Nitrogen. The voters are not a single thing and Wilders is not the only explanation.',
+    phase === 'late_life'
+      ? 'The coalition. The extreme proposals modified by partners. Some implemented. The Netherlands having this argument since Fortuyn — and the same argument and a different argument both, because what the state did to certain people in the intervening years changed the terms.'
+      : 'Wilders under police protection since 2004 for jihadi death threats, now leading the largest party. The politics Fortuyn found a frequency for is still at that frequency. The frequency is not going away.',
+  ])
+  if (F.has('nl_bersiap_family_memory') && Math.random() < 0.18) return pick([
+    'Your grandfather did not speak about the Dutch East Indies the way veterans speak about liberation. The word the government used was "police actions." The word the 2022 inquiry used was "systematic and extreme violence." Both refer to what he did.',
+    phase === 'late_life'
+      ? 'The 2022 report. The Prime Minister in Jakarta. The apology directed at the people who were harmed. Your grandfather dead before any of this. The official language about what he did has now changed. He knew what he did. Whether he knew what it was is a question you cannot now ask.'
+      : 'The silence around the East Indies service. Not proud silence — a different texture. The shape of what cannot be said: the families at the receiving end of the politionele acties are still alive, some in the Netherlands, and what he did is between them.',
+  ])
 
   // ─── IRELAND TEXTURE ─────────────────────────────────────────────────────────
   if (F.has('irish_emigrant_generation') && Math.random() < 0.3) return pick([

@@ -3209,6 +3209,70 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by nl_water_country.',
   },
 
+  nl_jodendeportatie_witness: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Witnessed the gap left by Jewish deportations in WWII Netherlands — the highest Jewish death rate in Western Europe (75%), enabled by meticulous Dutch population registers.',
+    intent: 'both',
+    notes: 'Set by nl_dep_jodendeportatie (both choices). Follow-throughs: ft83_dodenherdenking, ft83_jodendeportatie_restitution.',
+  },
+
+  nl_bijlmerramp_witness: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed the Bijlmerramp (October 4, 1992) — El Al flight crashing into Amsterdam tower blocks and revealing thousands of undocumented immigrants with an unestablished death toll.',
+    intent: 'year_texture',
+    notes: 'Set by nl_dep_bijlmerramp.',
+  },
+
+  nl_same_sex_pioneer_2001: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Was present in the Netherlands for the world\'s first legal same-sex marriages on April 1, 2001 — either as one of the couples or as a witness to history.',
+    intent: 'both',
+    notes: 'Set by nl_dep_same_sex_huwelijk (requires lgbtq_identity). Follow-through: ft83_same_sex_world_follows.',
+  },
+
+  nl_zwarte_piet_debate_generation: {
+    weight: 'moderate',
+    category: 'social',
+    description: 'Grew up with the Sinterklaas / Zwarte Piet tradition as normal, before the decades-long Dutch debate about what the tradition depicts.',
+    intent: 'year_texture',
+    notes: 'Set by nl_dep_zwarte_piet.',
+  },
+
+  nl_toeslagen_family: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Wrongly accused of childcare benefit fraud in the Toeslagenaffaire — 26,000 families, disproportionately with migration backgrounds, destroyed by a tax authority algorithm.',
+    intent: 'both',
+    notes: 'Set by nl_dep_toeslagen. Follow-through: ft83_toeslagen_compensation.',
+  },
+
+  nl_groningen_earthquake_affected: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Home cracked by Groningen gas extraction earthquakes — 100,000+ homes damaged since 2012, with NAM (Shell/ExxonMobil) and the Dutch state disputing liability for years.',
+    intent: 'both',
+    notes: 'Set by nl_dep_groningen_gas. Follow-through: ft83_groningen_gas_stop.',
+  },
+
+  nl_wilders_2023_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Witnessed the PVV winning the most seats in November 2023 — Wilders\' party becoming the largest in Dutch parliament after decades of post-Fortuyn political transformation.',
+    intent: 'year_texture',
+    notes: 'Set by nl_dep_wilders_2023 (both choices).',
+  },
+
+  nl_bersiap_family_memory: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Carries family memory of a father or grandfather who served in the Dutch East Indies post-1945 — the "police actions" that the 2022 parliamentary inquiry called systematic and extreme violence.',
+    intent: 'both',
+    notes: 'Set by nl_dep_bersiap_memory. Follow-through: ft83_bersiap_2022_report.',
+  },
+
   miracolo_generation: {
     weight: 'major',
     category: 'historical',
