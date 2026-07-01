@@ -6444,4 +6444,176 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by nic_exile_wave. Follow-through: ft38_exile_late.',
   },
 
+  // ── JAPAN DEPTH (events_japan_depth.js) ──────────────────────────────────
+
+  okinawa_battle_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the Battle of Okinawa 1945 — 94,000 civilian dead, a third of the island\'s population; the specific wound that is different from Hiroshima\'s wound.',
+    intent: 'event',
+    notes: 'Set by jpn_okinawa_battle_1945. Follow-through: ft64_okinawa_midlife, ft64_okinawa_textbook.',
+  },
+
+  jpn_article9_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Came of age under the postwar constitution — Article 9, renouncing war, written in nine days by MacArthur\'s government and ratified into Japanese identity.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_occupation_constitution (first choice).',
+  },
+
+  jpn_overwork_generation: {
+    weight: 'moderate',
+    category: 'social',
+    description: 'Lived the karoshi era — 70-80 hour weeks, the office at 10 p.m., the body keeping a different account from the official one.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_karoshi (first choice).',
+  },
+
+  jpn_kobe_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Present for the 1995 Kobe earthquake — 6,434 dead, the elevated highway on its side, the fires that spread for three days because the pipes broke.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_kobe_earthquake_1995 (both choices).',
+  },
+
+  jpn_lost_generation: {
+    weight: 'moderate',
+    category: 'social',
+    description: 'The employment ice age — graduated 1993–2005 into a Japan that had stopped hiring, the freeter economy, the "parasite singles" label, lifetime employment as something that happened to older siblings.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_lost_generation event (both choices).',
+  },
+
+  jpn_confronted_history: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Sought out the history that Japanese textbooks leave out — comfort women, Nanjing, the full civilian toll — and now carries two versions of the country.',
+    intent: 'event',
+    notes: 'Set by jpn_comfort_women_silence (first choice). Follow-through: ft64_confronted_history_late.',
+  },
+
+  jpn_rural_decline_witness: {
+    weight: 'moderate',
+    category: 'social',
+    description: 'Watched a Japanese rural village empty — the school closed, the cooperative dissolved, the post office on reduced hours; what remains is elderly, stubborn, and beautiful.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_rural_village (auto-resolve).',
+  },
+
+  jpn_article9_defender: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Stood in the 2015 protest against Abe\'s Article 9 reinterpretation — the 100,000 outside the Diet, the vote passing anyway, the feeling of having been counted and not having been the majority.',
+    intent: 'year_texture',
+    notes: 'Set by jpn_article9_debate_late (first choice).',
+  },
+
+  jpn_women_career: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Pushed into the general track in a Japan that officially allowed it but practically did not — the cost continuous and specific, the project completed.',
+    intent: 'event',
+    notes: 'Set by jpn_women_ceiling (first choice). Follow-through: ft64_women_career_late.',
+  },
+
+  jpn_fukushima_evacuee: {
+    weight: 'major',
+    category: 'displacement',
+    description: 'Evacuated from the Fukushima exclusion zone after March 11, 2011 — the house is there, the documents were taken, the cat could not be caught, you are not allowed to live there.',
+    intent: 'event',
+    notes: 'Set by jpn_fukushima_evacuation (first choice). Follow-through: ft64_fukushima_evacuee_late.',
+  },
+
+  // ── ORAL TRADITION REGISTER (events_oral_tradition.js) ───────────────────
+
+  oral_famine_memory: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Received the oral history of a famine from grandparents — the story that gets told the same way each time because something in the telling has fixed.',
+    intent: 'year_texture',
+    notes: 'Set by oral_grandmother_famine.',
+  },
+
+  oral_market_listening: {
+    weight: 'minor',
+    category: 'social',
+    description: 'Learned to read adult faces when market news is bad — the specific stillness, the way conversation stops and starts in a different direction.',
+    intent: 'year_texture',
+    notes: 'Set by oral_market_news.',
+  },
+
+  oral_radio_generation: {
+    weight: 'minor',
+    category: 'social',
+    description: 'Grew up in a village with one radio — the man who had been a soldier, the crowd gathering around it, the translation that adjusted what the official language said.',
+    intent: 'year_texture',
+    notes: 'Set by oral_radio_man.',
+  },
+
+  oral_political_awareness: {
+    weight: 'minor',
+    category: 'political',
+    description: 'Received political news through a chain of translation — newspaper to teacher to parent to you — and learned that the echo is adjusted in transit.',
+    intent: 'year_texture',
+    notes: 'Set by oral_political_news.',
+  },
+
+  oral_displacement_considered: {
+    weight: 'moderate',
+    category: 'displacement',
+    description: 'The family discussed leaving when violence arrived in the next district — a discussion that is itself a departure, a point after which you are not fully in the place.',
+    intent: 'event',
+    notes: 'Set by oral_violence_nearby (first choice). Follow-through: ft64_displacement_considered_late.',
+  },
+
+  oral_city_curiosity: {
+    weight: 'minor',
+    category: 'social',
+    description: 'Heard about the city from the cousin who went there and came back with objects and stories — learned that the version and the city are not identical, and will find out how much when going.',
+    intent: 'year_texture',
+    notes: 'Set by oral_cousin_city.',
+  },
+
+  oral_independence_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed independence as a child — the teacher who ran into class, the sound at weddings from the crowd outside, the flag and money and officials who spoke your grandparents\' language.',
+    intent: 'year_texture',
+    notes: 'Set by oral_independence_announced.',
+  },
+
+  oral_harvest_failed: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Was old enough to watch the harvest assessment by silence — the men standing in the field, the length of the pause, the mother beginning the arithmetic that is not arithmetic.',
+    intent: 'year_texture',
+    notes: 'Set by oral_harvest_failed event.',
+  },
+
+  oral_elder_taught: {
+    weight: 'minor',
+    category: 'identity',
+    description: 'Began receiving elder knowledge — the oral history of lineage, land, forbidden marriages — given in pieces on a schedule the elder controls.',
+    intent: 'year_texture',
+    notes: 'Set by oral_elder_knowledge.',
+  },
+
+  oral_disease_era: {
+    weight: 'minor',
+    category: 'health',
+    description: 'Navigated a local disease outbreak through five contradictory accounts and learned to weight the version from someone who was actually present.',
+    intent: 'year_texture',
+    notes: 'Set by oral_disease_rumour.',
+  },
+
+  oral_soldiers_passed: {
+    weight: 'moderate',
+    category: 'conflict',
+    description: 'Soldiers came through, took some things, moved on. "No one was hurt this time" — with the word "this time" in it even when no one says it.',
+    intent: 'event',
+    notes: 'Set by oral_soldiers_passed event. Follow-through: ft64_soldiers_passed_late.',
+  },
+
 }
