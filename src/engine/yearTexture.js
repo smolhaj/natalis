@@ -3164,6 +3164,13 @@ function buildYearTexture(state) {
     'The international aid came. The UN and the NGOs and the governments came. The cholera came in the aid workers\' sewage outfall. The two facts belong to the same story.',
   ])
 
+  if (F.has('slk_colombo_checkpoint_generation') && Math.random() < 0.2) return pick([
+    'The checkpoint at Colombo 3. You hand the ID without stopping to think about it anymore. The soldier is nineteen. You are twenty-six. Your restaurant is two kilometres from the site of the 1987 bomb. This is the arithmetic of the city during the war: managed, ambient, not resolved.',
+    phase === 'late_life'
+      ? 'After 2009 the checkpoints came down. The road to Colombo 3 opened up. What was underneath the checkpoint routine — the question of accountability, the question of what the war cost — those are still there, unmovable.'
+      : 'You normalise the checkpoint the way you normalise the commute. Then one day you understand what you\'ve been normalising. The understanding doesn\'t change the commute.',
+  ])
+
   if (F.has('black_july_survived') && Math.random() < 0.25) return pick([
     'July 1983. The mobs had voter registration lists. The list told them which houses. You know what that specificity means — it was not spontaneous.',
     'The houses, the shops, the people — it lasted six days. Three thousand dead, 150,000 displaced. Those numbers compress specific addresses and specific families.',

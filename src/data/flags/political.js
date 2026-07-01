@@ -7116,4 +7116,62 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by bra_dep_soy. Follow-through: Cantareira water crisis, cerrado-water connection.',
   },
 
+  // ── SRI LANKA DEPTH FLAGS ─────────────────────────────────────────────────
+
+  slk_tsunami_generation: {
+    weight: 'major',
+    category: 'disaster',
+    description: 'Lived through or near the December 26, 2004 Boxing Day tsunami — 30,000 dead in Sri Lanka, the 11-day war pause, the sea going out before it returned.',
+    intent: 'none',
+    notes: 'Set by slk_dep_tsunami.',
+  },
+
+  slk_estate_tamil_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Indian Tamil from the hill country estates — three generations picking tea, citizenship stripped 1948, restored 1988, daily wage below general minimum, housing tied to employment.',
+    intent: 'event',
+    notes: 'Set by slk_dep_estate_tamil. Follow-through: estate worker wage structure, three-generation reckoning.',
+  },
+
+  slk_sinhala_buddhist_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Shaped by Sinhalese Buddhist nationalist politics — JHU monks in parliament 2004, BBS anti-Muslim campaigns, the political use of the Dhamma.',
+    intent: 'none',
+    notes: 'Set by slk_dep_buddhist_nationalism.',
+  },
+
+  slk_mullivaikkal_witness: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Has direct connection to Mullivaikkal 2009 — the final offshore strip, the No Fire Zones shelled, 40,000-70,000 civilian dead, no accountability.',
+    intent: 'event',
+    notes: 'Set by slk_dep_mullivaikkal. Follow-through: UNHRC resolution not implemented.',
+  },
+
+  slk_rajapaksa_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Lived through the Rajapaksa family capture of Sri Lankan state institutions — four brothers in key offices, 18th Amendment removing term limits, Hambantota port Chinese debt.',
+    intent: 'none',
+    notes: 'Set by slk_dep_rajapaksa.',
+  },
+
+  slk_easter_sunday_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Lived through the April 21, 2019 Easter Sunday bombings — 267 dead, NTJ/IS-linked, warnings not acted on; enabled Gota Rajapaksa\'s election.',
+    intent: 'none',
+    notes: 'Set by slk_dep_easter_sunday.',
+  },
+
+  slk_colombo_checkpoint_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up in Colombo during the civil war — the checkpoint on the route to work, the bombing two kilometres from the restaurant, the war as managed ambient condition.',
+    intent: 'event',
+    notes: 'Set by slk_dep_colombo_checkpoints. Follow-through: post-2009 Colombo and the unexamined foundation.',
+  },
+
 }
