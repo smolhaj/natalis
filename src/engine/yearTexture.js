@@ -8301,6 +8301,54 @@ function buildYearTexture(state) {
       ? 'The housing affordability crisis: the thing that reorganizes who can stay in the city and who cannot. You stayed in the city, renting, or you left for a smaller city that then became expensive. The problem moved with you.'
       : 'Twelve years on the social housing waitlist in Toronto. The stress test. The first-time buyer incentive. The policy instruments for a problem that is structural.',
   ])
+  if (F.has('can_residential_school_survivor') && Math.random() < 0.3) return pick([
+    'The school\'s name is in the records now. The records are in the Truth and Reconciliation Commission\'s archive. The number of children who died there is also in the records. The number is larger than what was admitted for decades.',
+    phase === 'late_life'
+      ? 'Justice Murray Sinclair said: education is what got us into this mess. You know what he meant by education on both sides of it — the school you were taken to and the education that might have changed the country that built the school.'
+      : 'The language they would not let you speak: you said it in your head, which is where they could not reach. Some of it survived. Some did not. The inventory of what survived is something you have been taking since you left.',
+  ])
+  if (F.has('can_japanese_internment_generation') && Math.random() < 0.25) return pick([
+    'Shikata ga nai: it cannot be helped. The phrase was not resignation — it was the choice to keep building in the face of what could not be changed. You rebuilt. The rebuilding was real. The loss was also real and not spoken of.',
+    phase === 'late_life'
+      ? 'Mulroney said the word in 1988. Twenty-one thousand dollars. You knew what the twenty-one thousand dollars was not — the boat, the farm, the business, the years. You knew what the word was worth and what it cost the country to say it and received both.'
+      : 'Born in Canada, educated in Canada, working in Canada — and required to leave the coast as an enemy alien. The logic of the order did not survive examination. It was not designed to survive examination.',
+  ])
+  if (F.has('can_quiet_revolution_generation') && Math.random() < 0.2) return pick([
+    'Maîtres chez nous. The phrase was an election slogan and then a description of what the generation built: a French-language economy, a secular state, institutions that were not the Church\'s. The building took twenty years.',
+    phase === 'late_life'
+      ? 'You voted in 1980 and 1995. Both times the result came in after midnight. The 49.4 percent of 1995 is the number that stays. What the country would have been if fifty thousand votes had gone differently — you have been turning this question over for thirty years.'
+      : 'The Quiet Revolution is happening in the world where you are growing up. The Church school becomes the state school. The hospital that was Catholic becomes the hospital that is public. The words for things change as the things change.',
+  ])
+  if (F.has('can_komagata_generation') && Math.random() < 0.2) return pick([
+    'The Komagata Maru sat in Burrard Inlet for two months. Three hundred and seventy-six British subjects. The continuous journey regulation existed to prevent exactly the journey they had made. You are in Vancouver in 1914 and you understand what the regulation is for.',
+    phase === 'late_life'
+      ? 'Harper apologised in 2016 in the House of Commons. The passengers who were refused entry at gunpoint and killed at Budge Budge in 1914 are not here to hear it. The families of some of them are. The apology is both real and very late.'
+      : 'The continuous journey regulation: you had to travel directly from your country of origin. There was no direct steamship service from India to Canada. The regulation was written to prevent the journey you had made. You understand exactly what it was written for.',
+  ])
+  if (F.has('can_bathhouse_raids_generation') && Math.random() < 0.25) return pick([
+    'Operation Soap: two hundred officers, four bathhouses, three hundred charged as found-ins in a bawdy house. The next night: three thousand people on Carlton Street in February. The cold. The counting of the number. The beginning of the organisation.',
+    phase === 'late_life'
+      ? 'The community that organised after February 5, 1981 is the community that survived the AIDS years. The two events are four years apart and connected by the same infrastructure — the community that knew how to make itself visible had learned it in front of 52 Division. You were there for both.'
+      : 'The largest mass arrest in Toronto since the October Crisis. The next night you were on Carlton Street with three thousand other people in February. The counting of that number: that is the beginning of understanding what the raids produced.',
+  ])
+  if (F.has('can_prairie_homestead') && Math.random() < 0.2) return pick([
+    'The quarter section: a mile by a mile, 160 acres, a house and a barn and the land which is good in good years. The good years alternate with the years when the rain doesn\'t come or comes too much, and the years when the price of wheat doesn\'t justify the fuel to harvest it.',
+    phase === 'late_life'
+      ? 'The farm is gone or the farm is still there, depending on what happened to the family and the price of land and whether a child wanted to farm. The prairie that you grew up on is still there. The population of the small towns is half what it was when you were a child.'
+      : 'The grain elevator is the centre of the community in the way that the church or the school cannot quite manage. It is where the crop goes. The price of the crop is the price of the year.',
+  ])
+  if (F.has('can_visible_minority_multicultural') && Math.random() < 0.2) return pick([
+    'The official policy says all cultures are equal. The official policy is not what happens in the job interview where your name becomes a question. Multiculturalism as law and multiculturalism as experience are two separate things in a single country.',
+    phase === 'late_life'
+      ? 'Canada became more multicultural over your lifetime — the share of visible minorities in the cities rose each decade. What that changed and what it didn\'t change are both visible to you from where you are standing. The policy made the space. What fills the space is still being negotiated.'
+      : 'You are Canadian by citizenship and also not from here by the logic that operates in certain rooms. The country has a word for this: hyphenated. The hyphen is where your navigation lives.',
+  ])
+  if (F.has('can_oil_sands_worker') && Math.random() < 0.2) return pick([
+    'The camp: a city of temporary buildings where the money is real and the loneliness is also real and neither cancels the other. The week home and the two weeks in camp. The truck driver who earns more than the nurse. The tailings pond visible from the helicopter.',
+    phase === 'late_life'
+      ? 'The boom years and the bust years: you have ridden both cycles. The price of oil moves without asking. The camp empties in a season when it does. You built what you built in the years the price was right and lived with what remained when it wasn\'t.'
+      : 'The arithmetic of the camp: two weeks in, one week home. The home week passes faster than the camp weeks. The money is real. The account balance is the argument you make to yourself for the next rotation.',
+  ])
 
   // ─── AUSTRALIA TEXTURE ───────────────────────────────────────────────────────
   if (F.has('white_australia_generation') && Math.random() < 0.3) return pick([

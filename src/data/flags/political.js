@@ -2753,6 +2753,70 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by can_trc_calls_to_action_2015.',
   },
 
+  can_residential_school_survivor: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Attended a residential school — the church-run, federally-funded institutions that operated 1876–1996, where language, culture, and family were systematically removed.',
+    intent: 'both',
+    notes: 'Set by can_dep_residential_school_inside. Follow-throughs: ft86_residential_school_family_silence, ft86_residential_school_trc_moment.',
+  },
+
+  can_japanese_internment_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Japanese Canadian interned under P.C. 1486 (1942) — property seized, forced to leave BC coast, 22,000 people, permitted to return only in 1949.',
+    intent: 'both',
+    notes: 'Set by can_dep_japanese_internment_1942. Follow-through: ft86_japanese_internment_redress_1988.',
+  },
+
+  can_quiet_revolution_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Came of age during Quebec\'s Quiet Revolution 1960s — the secularisation, the Caisse de dépôt, the French-language economy, Maîtres chez nous.',
+    intent: 'both',
+    notes: 'Set by can_dep_quiet_revolution_quebec. Follow-through: ft86_quiet_revolution_sovereignty_referenda.',
+  },
+
+  can_komagata_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'South Asian Canadian who lived through or witnessed the Komagata Maru affair 1914 — 376 British subjects refused entry under the continuous journey regulation.',
+    intent: 'year_texture',
+    notes: 'Set by can_dep_komagata_maru_1914.',
+  },
+
+  can_bathhouse_raids_generation: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Gay man in Toronto shaped by Operation Soap 1981 — the largest mass arrest since the October Crisis, the night that organised the community into a political force.',
+    intent: 'both',
+    notes: 'Set by can_dep_bathhouse_raids_1981. Follow-through: ft86_bathhouse_aids_years.',
+  },
+
+  can_prairie_homestead: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up on a Prairie homestead — 160 acres, the wheat economy, the drought years, the CPR freight rates, the community around the grain elevator and the rink.',
+    intent: 'year_texture',
+    notes: 'Set by can_dep_prairie_homestead.',
+  },
+
+  can_visible_minority_multicultural: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Visible minority Canadian who came of age under the official multiculturalism policy — the gap between policy and the "where are you really from" encounter.',
+    intent: 'year_texture',
+    notes: 'Set by can_dep_visible_minority_multicultural.',
+  },
+
+  can_oil_sands_worker: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Worked in the Alberta oil sands — Fort McMurray FIFO, the boom wages, the prefab camp, the price-cycle vulnerability.',
+    intent: 'both',
+    notes: 'Set by can_dep_oil_sands_worker. Follow-through: ft86_oil_sands_bust.',
+  },
+
   aus_vietnam_generation: {
     weight: 'moderate',
     category: 'historical',
