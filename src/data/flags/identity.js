@@ -100,6 +100,14 @@ export const IDENTITY_FLAGS = {
     timestamped: true,
   },
 
+  lgbtq_had_relationship: {
+    weight: 'moderate',
+    category: 'relationships',
+    description: 'Character has had a relationship with a same-sex or LGBTQ partner.',
+    intent: 'event',
+    notes: 'Set in events_lgbtq.js. Follow-through in events_followthrough_all.js (relationship echo, breakup arc, long-partnership event).',
+  },
+
   abusive_relationship: {
     weight: 'major',
     category: 'trauma',

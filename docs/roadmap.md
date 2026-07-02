@@ -28,12 +28,12 @@ Consult when planning new content, auditing coverage, or choosing what to tackle
 
 #### BUILD 54 — Flag Audit (ongoing)
 
-Run `npm run check-flags -- --orphans` before and after every new module. Flags that still have incomplete follow-through coverage and should be addressed when their module is touched:
+Run `npm run check-flags -- --orphans` before and after every new module. As of the last audit: **0 orphaned, 0 partial across all 2672 registered flags.**
 
-- `lgbtq_had_relationship` — relationship texture event in adulthood
-- `had_abortion` — follow-through in future pregnancy or partner contexts
-- `war_childhood` — adult PTSD-adjacent event (partially covered by conflict events)
-- `refugee_status` (pure, not combined with `emigrated`) — needs resettlement anniversary event
+Previously flagged gaps, now resolved:
+- `lgbtq_had_relationship`, `had_abortion` — follow-through already existed in `events_followthrough_all.js`; both were simply unregistered. Registered in `identity.js` / `health.js`.
+- `war_childhood` — year texture coverage already existed (`yearTexture.js`); the registry note was stale.
+- `refugee_status` residency (pure, not combined with `emigrated`) — several arcs (North Korea defection, Venezuela crisis diaspora, Rohingya displacement) set this residency status without the `emigrated` flag, so the refugee-texture block in `yearTexture.js` never fired for them. Dropped the `emigrated` requirement since the prose doesn't depend on it.
 
 When shipping any new event module: write follow-through events first, then work backward to the triggering event. An event with no downstream consequence disappears from the life the moment it resolves.
 

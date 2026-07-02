@@ -1856,7 +1856,7 @@ function buildYearTexture(state) {
     'The interview is over. The waiting after the interview is a different kind of waiting — it has evidence in it, which the waiting before did not.',
     'You cannot plan more than one year out. That is not a philosophy. It is the administrative fact of the current situation.',
   ])
-  if (residencyStatus === 'refugee_status' && F.has('emigrated') && Math.random() < 0.3) return pick([
+  if (residencyStatus === 'refugee_status' && Math.random() < 0.3) return pick([
     'You have the right to remain. That sentence — the right to remain — took time to fully arrive.',
     'Refugee status is a category. Inside the category is a specific person in a specific situation. The category gives you the protection. The specificity is yours to carry.',
     phase === 'late_life'
@@ -4526,6 +4526,22 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'You left in the nineties or the two-thousands. The country you left is not the country that exists now — neither better nor worse in a simple direction, just different and ongoing.'
       : 'The question of whether you should have stayed is not a question with a clean answer. The people who stayed ask it sometimes. You ask it more.',
+  ])
+  if (F.has('sa_born_free') && Math.random() < 0.2) return pick([
+    'You were born after 1994. The word for that is "born free," and you have spent your life discovering what the word does and does not include.',
+    phase === 'late_life'
+      ? 'Born free was a promise made about your generation before your generation had done anything. You have had decades now to test how much of the promise was true.'
+      : 'The older generations fought for the vote. You inherited the vote and a country that still sorts people by the old lines in ways nobody had to write down.',
+  ])
+  if (F.has('sa_land_debate_era') && Math.random() < 0.18) return pick([
+    'The land question is in the news again — whose farm, whose ancestors, whose compensation. It has been in the news, in some form, for your entire adult life.',
+    'You know people on both sides of the land argument, and both sets of facts are real, and the country has not found the sentence that holds both at once.',
+  ])
+  if (F.has('sa_afrikaner_transformed') && Math.random() < 0.18) return pick([
+    'The language you grew up speaking is still yours and it is also, unmistakably, other people\'s — Cape Malay, Griqua, Namaqualand. You hold both facts without them cancelling each other.',
+    phase === 'late_life'
+      ? 'You have had a long time now to sit with what Afrikaans carries and what it doesn\'t have to keep carrying. Neither part of that has gotten simpler.'
+      : 'The word for your language is not the word for the politics that once claimed it exclusively. You keep having to make that distinction to people who assume otherwise.',
   ])
   // ── NAMIBIA ARC ─────────────────────────────────────────────────────────────
   if (F.has('nam_herero_memory_bearer') && Math.random() < 0.2) return pick([
@@ -12633,6 +12649,24 @@ function buildYearTexture(state) {
     phase === 'late_life'
       ? 'You have lived through enough governments to know that governments end and other governments come. The question is always what survives the change and what does not, and you are learning the answer again.'
       : 'The women you know who had careers are now in their homes. The school they attended is now closed to them. You see them through windows or at the bazaar in groups, speaking carefully.',
+  ])
+  if (F.has('afg_aid_economy_worker') && Math.random() < 0.18) return pick([
+    'The salary that came from an organisation with a foreign acronym paid for things a local salary never would have. You have never stopped noticing the gap between the money and what it was meant to fix.',
+    phase === 'late_life'
+      ? 'You worked in the reconstruction economy for years. Some of what that money built is still standing. Some of it was a line in a report that was true for exactly as long as the funding cycle.'
+      : 'You know the vocabulary — capacity building, sustainability, exit strategy — the way you know any language you speak for work and not for yourself.',
+  ])
+  if (F.has('afg_diaspora_watches') && Math.random() < 0.18) return pick([
+    'You watch the country from outside it now, on a screen, in a language the news anchors don\'t share with the people they\'re reporting on. The watching does not feel like enough and there is nothing else available.',
+    phase === 'late_life'
+      ? 'You have spent years now watching Afghanistan happen to people you cannot reach in the way you once could. The watching has become its own kind of relationship to the place.'
+      : 'Relatives still there answer messages carefully, in shorter sentences than they used to. You read the shortness for what it is.',
+  ])
+  if (F.has('afg_post_2021_life') && Math.random() < 0.2) return pick([
+    'The rules changed again and you are living inside the new version, the way you or your parents lived inside every previous version. The arrangement is the constant. Only the specifics change.',
+    phase === 'late_life'
+      ? 'You have now outlasted several Afghanistans. This one, too, you are learning to live inside, in the specific ways it asks of you and not the ways you would have chosen.'
+      : 'What was ordinary two years ago — a woman walking to a university lecture, a girl in a secondary school uniform — is not ordinary now. You adjust the sentence in your head before you say it out loud.',
   ])
 
   // ─── ZAMBIA TEXTURE ──────────────────────────────────────────────────────────
