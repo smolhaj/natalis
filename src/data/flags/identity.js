@@ -908,6 +908,46 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by laos_alms_round. Year texture (what you give out of the house at dawn comes back).',
   },
 
+  laos_seminar_camp_kin: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Had a family member taken to a post-1975 re-education "seminar" camp — the samana system that held thousands of RLAF officers, civil servants, and intellectuals in remote provinces',
+    intent: 'both',
+    notes: 'Set by laos_dep_seminar_camps. Follow-through: ft94_seminar_late.',
+  },
+
+  laos_scholarship_generation: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'Part of the scholarship generation sent to study abroad — the USSR, Vietnam, Cuba, or East Germany — returning with technical knowledge and a specific relationship to comparison',
+    intent: 'year_texture',
+    notes: 'Set by laos_dep_scholarship.',
+  },
+
+  laos_that_luang_generation: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Grew up attending the Boun That Luang festival — the golden stupa, the monks at dawn, the party speeches alongside the ceremony, two layers occupying the same ritual space',
+    intent: 'year_texture',
+    notes: 'Set by laos_dep_that_luang.',
+  },
+
+  laos_river_generation: {
+    weight: 'minor',
+    category: 'place',
+    description: 'Grew up with the Mekong\'s seasonal calendar — wet-season floods, dry-season sandbanks, fish traps, the pirogue kept on the bank',
+    intent: 'year_texture',
+    notes: 'Set by laos_dep_river_childhood.',
+  },
+
+  laos_hmong_return_era: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Hmong who witnessed the 2009 forced repatriation from Huay Nam Khao camp — 4,600 people sent back under UNHCR observation that was later acknowledged as inadequate',
+    intent: 'both',
+    notes: 'Set by laos_dep_hmong_return. Follow-through: ft94_hmong_return_late.',
+  },
+
   laos_mekong_generation: {
     weight: 'minor',
     category: 'identity',
@@ -1346,6 +1386,70 @@ export const IDENTITY_FLAGS = {
     description: 'Completed the Hanawon resettlement facility in South Korea — the cashcard, the pronunciation gap, the constitution that says you\'re already Korean',
     intent: 'year_texture',
     notes: 'Set by dprk_hanawon.',
+  },
+
+  dprk_inminban_awareness: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Learned as a child how the inminban neighbourhood surveillance unit works — the notebook, the Tuesday visits, the space between neighbour and informant',
+    intent: 'year_texture',
+    notes: 'Set by nk_dep_inminban.',
+  },
+
+  dprk_kwanliso_witness: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Witnessed someone disappear into the kwan-li-so political prison camp system — the euphemism used, the silence around their name, the space they left',
+    intent: 'both',
+    notes: 'Set by nk_dep_kwanliso. Follow-through: ft91_kwanliso_late.',
+  },
+
+  dprk_notel_era: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Used a Notel portable media player to watch smuggled South Korean dramas — the battery charging, the 2am curtain, the food visible in every background scene',
+    intent: 'year_texture',
+    notes: 'Set by nk_dep_notel.',
+  },
+
+  dprk_tumen_phone: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Made a cross-border phone call near the Tumen River using a Chinese SIM — three minutes, the voice of someone already on the other side, going back down before the light',
+    intent: 'both',
+    notes: 'Set by nk_dep_tumen_call. Follow-through: ft91_tumen_phone_late.',
+  },
+
+  dprk_pyongyang_privilege: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Experienced the gap between Pyongyang (showcase city, better rations, specific bearing) and provincial North Korean life',
+    intent: 'year_texture',
+    notes: 'Set by nk_dep_pyongyang.',
+  },
+
+  dprk_party_rejected: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Applied for Korean Workers\' Party membership and was rejected — no explanation given, the reasons understood, the doors that stayed closed',
+    intent: 'year_texture',
+    notes: 'Set by nk_dep_party_card choice rejected.',
+  },
+
+  dprk_songbun_reclassified: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Had hostile songbun reclassified through market-era bribery — grandfather\'s record amended in a transaction at an office desk, ceiling removed',
+    intent: 'year_texture',
+    notes: 'Set by nk_dep_songbun_market.',
+  },
+
+  dprk_south_korea_adjustment: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Adjusted to life in South Korea post-Hanawon — the accent that marks you, the ramen wall, the knowledge of food scarcity that lives in the body',
+    intent: 'both',
+    notes: 'Set by nk_dep_post_hanawon. Follow-through: ft91_south_korea_late.',
   },
 
   uru_dictatorship_lived: {
@@ -2268,6 +2372,38 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by ci_cocoa_late_accounting.',
   },
 
+  ci_cocoa_child_labor: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Worked in cocoa harvest as a child — the machete, the pods, the Burkinabé boys in the shed, the distinction between July and September',
+    intent: 'both',
+    notes: 'Set by ci_dep_cocoa_child. Follow-through: ft92_cocoa_child_late.',
+  },
+
+  ci_nouchi_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up speaking Nouchi — Abidjan\'s street argot mixing French, Dioula, Bété, with zouglou music underneath as political commentary',
+    intent: 'year_texture',
+    notes: 'Set by ci_dep_nouchi.',
+  },
+
+  ci_yamoussoukro_basilica: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed the Yamoussoukro Basilica — largest church in the world, built by Houphouët-Boigny in his home village, pews largely empty, peacocks on the esplanade',
+    intent: 'year_texture',
+    notes: 'Set by ci_dep_basilica.',
+  },
+
+  ci_dozo_witness: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'Witnessed the Dozo hunters\' militia operating during the civil war — talisman tunics, checkpoint authority, the space between traditional order and immediate violence',
+    intent: 'both',
+    notes: 'Set by ci_dep_dozo. Follow-through: ft92_dozo_late.',
+  },
+
   tuareg_settled_reckoned: {
     weight: 'minor',
     category: 'reflection',
@@ -2338,6 +2474,54 @@ export const IDENTITY_FLAGS = {
     description: 'Anglophone Cameroonian who was inside the crisis and has stayed inside it — holding the specific timeline of the crisis as a personal chronology, asking not when it ends but what will be left',
     intent: 'year_texture',
     notes: 'Set by cmr_inside_long_memory.',
+  },
+
+  cmr_oil_generation: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Came of age during Cameroon\'s oil years — the SNH revenues, the promises of transformation, the structural adjustment that followed when the price fell in 1985',
+    intent: 'both',
+    notes: 'Set by cmr_dep_oil. Follow-through: ft93_oil_late.',
+  },
+
+  cmr_boko_north_witness: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Witnessed Boko Haram\'s incursion into the Cameroonian far north from 2014 — the raids, the Lake Chad basin drought, the multinational task force that coordinates in theory',
+    intent: 'both',
+    notes: 'Set by cmr_dep_boko_north. Follow-through: ft93_boko_late.',
+  },
+
+  cmr_lions_generation: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Grew up during the Lions Indomptables 1990 World Cup run — Roger Milla\'s corner flag dance as a moment of national unity that belonged to no president',
+    intent: 'year_texture',
+    notes: 'Set by cmr_dep_lions.',
+  },
+
+  cmr_kondengui_witness: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Knows someone who passed through Kondengui Central Prison — the overcrowding, the years of provisional detention, the acquittal that came four years too late',
+    intent: 'both',
+    notes: 'Set by cmr_dep_kondengui. Follow-through: ft93_kondengui_late.',
+  },
+
+  cmr_ghost_town_generation: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'Anglophone Cameroonian living through the ghost town Mondays — the school boycott generation, the shops that close as the only available protest',
+    intent: 'both',
+    notes: 'Set by cmr_dep_ghost_town. Follow-through: ft93_ghost_town_late.',
+  },
+
+  cmr_bushfaller_generation: {
+    weight: 'moderate',
+    category: 'diaspora',
+    description: 'Part of the bushfaller generation — watching cousins and neighbors fall in the bush (go abroad), receiving money that is both the relationship and its complication',
+    intent: 'year_texture',
+    notes: 'Set by cmr_dep_bushfaller.',
   },
 
   nga_boko_haram_generation: {
