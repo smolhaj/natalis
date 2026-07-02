@@ -1856,7 +1856,7 @@ function buildYearTexture(state) {
     'The interview is over. The waiting after the interview is a different kind of waiting — it has evidence in it, which the waiting before did not.',
     'You cannot plan more than one year out. That is not a philosophy. It is the administrative fact of the current situation.',
   ])
-  if (residencyStatus === 'refugee_status' && F.has('emigrated') && Math.random() < 0.3) return pick([
+  if (residencyStatus === 'refugee_status' && Math.random() < 0.3) return pick([
     'You have the right to remain. That sentence — the right to remain — took time to fully arrive.',
     'Refugee status is a category. Inside the category is a specific person in a specific situation. The category gives you the protection. The specificity is yours to carry.',
     phase === 'late_life'

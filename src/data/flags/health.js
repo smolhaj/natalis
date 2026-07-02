@@ -87,6 +87,14 @@ export const HEALTH_FLAGS = {
     notes: 'Set in events_fertility.js late miscarriage events. No year texture or midlife echo. High priority gap.',
   },
 
+  had_abortion: {
+    weight: 'moderate',
+    category: 'reproductive',
+    description: 'Character had an abortion.',
+    intent: 'event',
+    notes: 'Set in events_fertility.js. Follow-through in events_followthrough_all.js (private echo at 28+, resurfaces on later pregnancy).',
+  },
+
   cancer_survivor: {
     weight: 'major',
     category: 'loss',
