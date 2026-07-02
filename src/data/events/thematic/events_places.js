@@ -367,7 +367,7 @@ export const PLACES_EVENTS = [
     phase: 'early_childhood',
     weight: 3,
     cooldown: 0,
-    when: (G) => G.flags.has('partition_survived') && !G.mem?.partitionDisplacementAck,
+    when: (G) => (G.flags.has('partition_memory_family') || G.flags.has('partition_india_memory') || G.flags.has('partition_colony_raised')) && !G.mem?.partitionDisplacementAck,
     text: (G) => `The family came here from somewhere else. The word for what happened changes depending on who is telling the story. You know the name of the city they left. You know the name of the street. You have never been there. Your parents say: it doesn\'t matter now. Their hands say something different when they say it.`,
     choices: null,
     effect: (p) => { p.r += 4; p.e += 2; p.addFlag('family_displaced'); p.setMem('partitionDisplacementAck', true) },

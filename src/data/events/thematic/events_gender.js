@@ -776,14 +776,14 @@ export const GENDER_EVENTS = [
         text: 'Go through with the illegal procedure',
         tag: null,
         outcome: 'It works. The risk was real. You did not know how real until afterward, when you read about the women who did not survive theirs.',
-        effect: (p) => { p.h -= 8; p.m -= 6; p.mo -= 200; p.r += 3; },
+        effect: (p) => { p.h -= 8; p.m -= 6; p.mo -= 200; p.r += 3; p.addFlag('had_abortion'); },
         inject: null,
       },
       {
         text: 'Travel to a state or country where it is legal',
         tag: null,
         outcome: 'A friend lends you the train fare. The procedure is safe and quiet. The journey home feels like something you will never speak of.',
-        effect: (p) => { p.h -= 2; p.m -= 5; p.mo -= 350; },
+        effect: (p) => { p.h -= 2; p.m -= 5; p.mo -= 350; p.addFlag('had_abortion'); },
         inject: null,
       },
       {
@@ -812,14 +812,14 @@ export const GENDER_EVENTS = [
         text: 'Find the local woman who does this — everyone knows her name',
         tag: null,
         outcome: 'She is matter-of-fact and competent. The infection afterward sends you to hospital with a story about something you ate.',
-        effect: (p) => { p.h -= 12; p.m -= 5; p.mo -= 150; },
+        effect: (p) => { p.h -= 12; p.m -= 5; p.mo -= 150; p.addFlag('had_abortion'); },
         inject: null,
       },
       {
         text: 'Find pills through an underground network',
         tag: null,
         outcome: 'They arrive wrapped in packaging that says something else. The process is painful and private. You are alone through it.',
-        effect: (p) => { p.h -= 6; p.m -= 7; p.mo -= 80; },
+        effect: (p) => { p.h -= 6; p.m -= 7; p.mo -= 80; p.addFlag('had_abortion'); },
         inject: null,
       },
       {
@@ -848,7 +848,7 @@ export const GENDER_EVENTS = [
         text: 'Travel to England',
         tag: null,
         outcome: 'You go alone. The clinic is quiet and kind. The ferry home feels like something private between you and the sea.',
-        effect: (p) => { p.m -= 7; p.mo -= 600; p.r += 2; },
+        effect: (p) => { p.m -= 7; p.mo -= 600; p.r += 2; p.addFlag('had_abortion'); },
         inject: null,
       },
       {
