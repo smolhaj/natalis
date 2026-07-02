@@ -1,6 +1,6 @@
 # natalis — Codebase State
 
-Current snapshot: **121 countries**, **255 world events**, **463+ event modules** (~7,550+ events), **2670 registered flags** (0 orphaned, 6 partial), **379 ribbons**. Run `npm run check-flags` to verify.
+Current snapshot: **145 countries**, **255 world events**, **463+ event modules** (~7,550+ events), **2672 registered flags** (0 orphaned, 0 partial), **379 ribbons**. Run `npm run check-flags` to verify.
 
 ---
 
@@ -66,9 +66,11 @@ All followthrough files (30–95) live in `thematic/`. Root-level `events.js` im
 
 ---
 
-## Geographic Coverage (121 countries)
+## Geographic Coverage (145 countries)
 
 All major regions covered. Geographic modules in `src/data/events/geographic/` (184 files). Most countries now have both a base arc file and a `_depth.js` companion with second-wave specificity.
+
+**24 countries added post-audit** (referenced by existing events but missing from `countries.js` until fixed): Djibouti, Sierra Leone, Chad, Niger, Togo, Benin, Central African Republic, Qatar, Bahrain, Kuwait, Belgium, Switzerland, Bulgaria, Slovakia, Papua New Guinea, Samoa, Kiribati, Tuvalu, Marshall Islands, Maldives, Barbados, Guyana, Belize, Puerto Rico. These have full demographic schemas (`namePool`, `surnames`, `religionWeights`, `ethnicGroups`, `regimeHistory`, `context`) but do not yet have dedicated geographic event files beyond the existing cross-country events that referenced them.
 
 - **Africa**: Algeria (13), Angola (6+depth), Burkina Faso (8), Cameroon (7+depth), DRC (9), Eritrea (12), Ethiopia (7+depth), Fiji (8), Ghana (10+depth), Guinea (13), Ivory Coast (7+depth), Kenya (7+depth), Libya (6+depth), Mali (10), Morocco (8+depth), Mozambique (6+depth), Namibia (8+depth), Nigeria (8+depth), Rwanda (8), Senegal (5), Somalia (7), South Africa (4+depth), Sudan (6+depth), Tanzania (7+depth), Tunisia (6), Uganda (7), West Africa multi-country (16), Zambia (6+depth), Zimbabwe (6)
 - **Americas**: Argentina (via Latin America + depth), Bolivia (9+depth), Brazil (9+depth), Canada (8+depth), Caribbean (14), Central America (14), Colombia (9+depth), Cuba (8+depth), Dominican Republic (9), Ecuador (8), El Salvador (7), Guatemala (8), Haiti (10), Honduras (8), Mexico (standalone depth), Nicaragua (8), Peru (8+depth), Puerto Rico (2), USA (15), Uruguay/Paraguay via uy_py_ec (13), Venezuela (8+depth×2)
