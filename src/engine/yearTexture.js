@@ -10378,6 +10378,54 @@ function buildYearTexture(state) {
     'The miracle required cheap labour, political stability maintained by one man, and commodity prices that held. Three conditions. When the commodity prices fell in 1987 the other two became harder to sustain.',
     'What was real about the miracle: the roads, the schools, the GDP, the Abidjan skyline. What it was built on: also real. The two things were in the same sentence for a long time before someone said them both at once.',
   ])
+  if (F.has('ci_cocoa_child_labor') && Math.random() < 0.22) return pick([
+    'The machete in July. The pods on the farm. The boys from Burkina Faso in the shed who had no families within two hundred kilometers. This is what cocoa farming looked like from inside it at your age, which is a different thing from what it looks like in the supply chain reports.',
+    phase === 'late_life'
+      ? 'The international pledges to end child labour in Ivorian cocoa have been made since 2001. The number of children working in cocoa farms increased between 2001 and 2020. You know what the work was. The normalcy of July is not in the pledges.'
+      : 'You wore the school uniform in September. You used the machete in July. The two things were the same life and no one discussed the relationship between them.',
+  ])
+  if (F.has('ci_nouchi_generation') && Math.random() < 0.2) return pick([
+    'Nouchi is the language of the quartier — the mix of French and Dioula and Bété and whatever else Abidjan has absorbed. Your parents speak an older version of it. The current version is yours. Slang is time.',
+    phase === 'late_life'
+      ? 'The Nouchi you spoke at fifteen is now historical. The young people speak a version that contains references you would need explained. The slang you learned when it was current is the proof of when you were current.'
+      : 'Zouglou music talks about unemployment and corruption in a register that is too specific to ban and too coded for the officials it is talking about. This is what popular music does when the direct statement is not available.',
+  ])
+  if (F.has('ci_yamoussoukro_basilica') && Math.random() < 0.18) return pick([
+    'The Basilica of Our Lady of Peace is larger than St. Peter\'s in Rome. Houphouët-Boigny built it in his home village at a cost the government did not publish. The air conditioning runs. The pews are largely empty. The peacocks wander the esplanade.',
+    phase === 'late_life'
+      ? 'The basilica is still there. It is maintained. The scale of it in a village of forty thousand is still its own commentary on the man who built it, which is also a commentary on what leaders do with certainty and surplus and the desire to leave something that cannot be missed.'
+      : 'You have stood in front of something that cost more than your country\'s education budget for several years and tried to have an appropriate response. The scale prevents the appropriate response. Scale is one of its functions.',
+  ])
+  if (F.has('ci_dozo_witness') && Math.random() < 0.2) return pick([
+    'The Dozos came in their talisman tunics. They operated checkpoints in the zone where the state was absent. The authority they exercised was traditional and immediate and had no appeals process. The village was glad they were there and afraid of them. Both things were simultaneous.',
+    phase === 'late_life'
+      ? 'What the Dozos were during the war years is not in the reconciliation commission\'s report. The report names combatants with guns. The Dozos operated in a category that the report does not have language for. You know what they were. The report says what the report says.'
+      : 'Traditional authority and wartime necessity combined into something that was neither traditional nor governed. The combination had a specific weight in the village that lasted longer than the checkpoints did.',
+  ])
+  if (F.has('ci_cfa_awareness') && Math.random() < 0.18) return pick([
+    'The interest rate is set in Frankfurt. The foreign exchange reserves are in Paris. The exchange rate is fixed. The stability is real. The location of the decision-making is also real. Both facts live in the same monetary system.',
+    phase === 'late_life'
+      ? 'You spent your working life in an economy whose monetary policy was managed in Europe. The stability that provided was genuine. The sovereignty it replaced was also genuine. You have arrived at a position on this that is not comfortable and not false.'
+      : 'Ghana and Nigeria manage their own currencies and have inflation and volatility. Ivory Coast has the CFA and has stability and no monetary sovereignty. The comparison is a choice of which risks to accept.',
+  ])
+  if (F.has('ci_ouattara_era_witness') && Math.random() < 0.2) return pick([
+    'The economy grew seven percent for ten years. The cranes on the Plateau. The new bridge. Ouattara\'s government prosecuted some people and not others. The commission existed. The report exists. Three thousand people remain dead.',
+    phase === 'late_life'
+      ? 'You have lived in a country that grew and did not fully reckon. This is a common condition for countries after violent transitions. It does not become less specific for being common. The specific people. The specific crimes. The specific acquittals.'
+      : 'The glass towers are real and the incomplete justice is real and both things are the present condition of the same city, which has learned to hold them at the same time because there is no alternative to holding them at the same time.',
+  ])
+  if (F.has('ci_abidjan_lagoon_generation') && Math.random() < 0.18) return pick([
+    'The pinasse crosses the lagoon in twelve minutes. Less than the bridge. The fishermen left before dawn. The tilapia arrive at the market at Koumassi at five. The lagoon has been here longer than the city and does not arrange itself around the city\'s needs.',
+    phase === 'late_life'
+      ? 'The lagoon is more polluted than it was when you were young. The pirogue fishermen\'s catch is smaller. The lagoon absorbed everything the city put into it and continues to function, diminished and still present, which is a specific kind of endurance.'
+      : 'Abidjan built itself around the lagoon without deciding what to do with it. The lagoon is not scenery and not infrastructure. It is what was here first and is still here, conducting its own business at the edges of the city\'s business.',
+  ])
+  if (F.has('ci_licorne_era') && Math.random() < 0.2) return pick([
+    'The French trucks in the street. The zone of confidence on the map. Operation Licorne for thirteen years. France maintaining stability or maintaining a side, depending on which analysis you find convincing and which evidence you weight more heavily.',
+    phase === 'late_life'
+      ? 'France withdrew in 2015. The base is still there under a different arrangement. The relationship with France that Ivory Coast was born into has not been renegotiated, only periodically renamed. The sequencing of who France supported in 2011 and who governed afterward is available to anyone who wants to consider it.'
+      : 'In November 2004 French soldiers shot Ivorian civilians protesting at their base. Twenty people died. The French call it the Ivory Coast crisis. You were there. The term for what you were was civilian. The term for what they were was peacekeepers.',
+  ])
   if (F.has('sahel_long_arc_witness') && Math.random() < 0.20) return pick([
     'The Sahel crisis has a direction of travel and it isn\'t stopping. Mali first. Then Burkina Faso. Then the edges of Guinea, Niger, Benin, Ivory Coast. The French left. Wagner came. The civilian populations are in the same position in each country.',
     phase === 'late_life'

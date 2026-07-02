@@ -2332,6 +2332,38 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by ci_cocoa_late_accounting.',
   },
 
+  ci_cocoa_child_labor: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Worked in cocoa harvest as a child — the machete, the pods, the Burkinabé boys in the shed, the distinction between July and September',
+    intent: 'both',
+    notes: 'Set by ci_dep_cocoa_child. Follow-through: ft92_cocoa_child_late.',
+  },
+
+  ci_nouchi_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up speaking Nouchi — Abidjan\'s street argot mixing French, Dioula, Bété, with zouglou music underneath as political commentary',
+    intent: 'year_texture',
+    notes: 'Set by ci_dep_nouchi.',
+  },
+
+  ci_yamoussoukro_basilica: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed the Yamoussoukro Basilica — largest church in the world, built by Houphouët-Boigny in his home village, pews largely empty, peacocks on the esplanade',
+    intent: 'year_texture',
+    notes: 'Set by ci_dep_basilica.',
+  },
+
+  ci_dozo_witness: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'Witnessed the Dozo hunters\' militia operating during the civil war — talisman tunics, checkpoint authority, the space between traditional order and immediate violence',
+    intent: 'both',
+    notes: 'Set by ci_dep_dozo. Follow-through: ft92_dozo_late.',
+  },
+
   tuareg_settled_reckoned: {
     weight: 'minor',
     category: 'reflection',

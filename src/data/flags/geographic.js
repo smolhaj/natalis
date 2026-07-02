@@ -878,6 +878,14 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by ci_abidjan_life. Year texture: the bridge, the morning smell, the code.',
   },
 
+  ci_abidjan_lagoon_generation: {
+    weight: 'moderate',
+    category: 'place',
+    description: 'Knows Abidjan through the Ébrié Lagoon — the pinasse ferries, the dawn pirogue fishermen, the market at Koumassi, the water older than the city',
+    intent: 'year_texture',
+    notes: 'Set by ci_dep_lagoon.',
+  },
+
   cmr_douala_generation: {
     weight: 'minor',
     category: 'place',

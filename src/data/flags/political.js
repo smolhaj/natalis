@@ -3961,6 +3961,30 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by ci_coup_1999. Year texture: the radio at midnight, Guéï leaving.',
   },
 
+  ci_cfa_awareness: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Understood the CFA franc system — fixed rate, 50% reserves at Banque de France, interest rates set in Frankfurt, the tradeoffs of monetary stability without monetary sovereignty',
+    intent: 'year_texture',
+    notes: 'Set by ci_dep_cfa.',
+  },
+
+  ci_ouattara_era_witness: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived Ouattara\'s reconstruction era 2012+: GDP growth, incomplete justice for 2010 war crimes, third term controversy, the country growing while the accounting stayed partial',
+    intent: 'both',
+    notes: 'Set by ci_dep_ouattara_era. Follow-through: ft92_ouattara_late.',
+  },
+
+  ci_licorne_era: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived under Operation Licorne — 13 years of French troops in Ivory Coast, the 2004 shooting of protesters, France\'s role in ending the 2011 crisis in Ouattara\'s favour',
+    intent: 'both',
+    notes: 'Set by ci_dep_licorne. Follow-through: ft92_licorne_late.',
+  },
+
   ci_gbagbo_reckoning: {
     weight: 'moderate',
     category: 'political',
