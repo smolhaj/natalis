@@ -12,10 +12,18 @@ export default function EventBox({ event }) {
 
   return (
     <div className="bg-white rounded-2xl shadow-card-lg overflow-hidden border border-natalis-border">
-      {/* Event header band */}
-      <div className="px-5 py-3" style={{ background: isAutomatic ? '#6b7280' : event.isWorld ? '#1d4ed8' : '#007aff' }}>
+      {/* Event header band — heavier treatment for significant choice events */}
+      <div className="px-5 py-3" style={{
+        background: isAutomatic
+          ? '#6b7280'
+          : event.isWorld
+            ? '#1d4ed8'
+            : event.isKey
+              ? 'linear-gradient(135deg, #1a1a2e, #16213e)'
+              : '#007aff',
+      }}>
         <p className="text-white text-xs font-semibold uppercase tracking-widest opacity-80">
-          {event.isWorld ? '🌍 World Event' : isAutomatic ? '· Life' : '📖 Life Event'}
+          {event.isWorld ? '🌍 World Event' : isAutomatic ? '· Life' : event.isKey ? '◆ Life — Choose carefully' : '📖 Life Event'}
         </p>
       </div>
 
