@@ -373,6 +373,48 @@ export const CAREERS = [
     ],
   },
   {
+    id: 'interpreter',
+    title: 'Interpreter',
+    field: 'interpreter',
+    levels: [
+      { title: 'Field Interpreter', salaryRange: [10000, 20000] },
+      { title: 'Interpreter', salaryRange: [18000, 32000] },
+      { title: 'Senior Interpreter', salaryRange: [28000, 48000] },
+      { title: 'Court/Conference Interpreter', salaryRange: [40000, 75000] },
+    ],
+    requirements: { education: null, field: null, minSmarts: 55, minAge: 18 },
+    archetypeAvailable: 'all',
+    gdpRequired: 'any',
+    promotionChance: 0.10,
+    description: 'Carry meaning across a line that language alone cannot cross.',
+    events: [
+      {
+        id: 'career_interpreter_confidentiality',
+        phase: 'young_adult',
+        weight: 3,
+        text: 'You are asked to interpret something you were not supposed to hear said plainly — a negotiation, a confession, a threat. The client on each side assumes you belong to the other.',
+        choices: [
+          {
+            text: 'Render it exactly, without softening either side',
+            tag: 'integrity',
+            outcome: 'Neither side thanks you for the precision. Both sides trust you again next time.',
+            effect: (p) => { p.karma += 5; p.r += 3; p.addFlag('integrity'); },
+            inject: null,
+          },
+          {
+            text: 'Soften what you carry across — nobody needs the whole thing',
+            tag: 'compromised',
+            outcome: 'The meeting goes more smoothly. You know what you left out.',
+            effect: (p) => { p.m += 3; p.r += 5; p.addFlag('compromised'); },
+            inject: null,
+          },
+        ],
+        effect: null,
+        when: (G) => G.career?.id === 'interpreter',
+      },
+    ],
+  },
+  {
     id: 'soldier',
     title: 'Soldier',
     field: 'military',

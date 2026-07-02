@@ -51,7 +51,7 @@ export const EL_SALVADOR_EVENTS = [
       G.age >= 25 &&
       !G.mem?.slvGangRenta,
     text: (G) => {
-      const hasShop = G.career?.id === 'entrepreneur' || G.stats.wealth >= 45
+      const hasShop = G.flags.has('entrepreneur') || G.stats.wealth >= 45
       return hasShop
         ? 'The renta comes every week. The boy who collects it is sixteen and does not make eye contact. The amount is fixed and is not negotiable — you know this because someone on the next street negotiated once and the store burned down that night. You pay it the way you pay electricity: as an operating cost of existing in this neighborhood. The government is aware of this system. The government does not control these streets.'
         : 'The bus drivers pay renta. The market vendors pay renta. The woman who sells pupusas at the corner pays renta. The rate depends on the income. The boys who collect are known. The people above the boys are known. This is all known and none of it is possible to say aloud to anyone who would do something about it, because the ones who have tried to say it have been made examples of.'
