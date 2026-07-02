@@ -964,6 +964,22 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by nam_san_ancestral_land. Year texture (what the resettlement area came with and didn\'t come with).',
   },
 
+  nam_swanla_generation: {
+    weight: 'major',
+    category: 'labor',
+    description: 'Worked under the SWANLA contract labor system — 18-month mine contracts with no right to bring family, no freedom of movement, compound living, wages suppressed by law',
+    intent: 'both',
+    notes: 'Set by nam_dep_swanla. Follow-through: ft95_swanla_late.',
+  },
+
+  nam_german_descent_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'German-Namibian character — a community three or four generations deep in a country shaped by the genocide their ancestors\' government carried out, holding colonial guilt and belonging simultaneously',
+    intent: 'year_texture',
+    notes: 'Set by nam_dep_german_community.',
+  },
+
   black_july_survived: {
     weight: 'major',
     category: 'trauma',
