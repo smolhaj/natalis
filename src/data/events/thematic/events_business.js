@@ -10,7 +10,7 @@ export const BUSINESS_EVENTS = [
     id: 'biz_key_hire',
     phase: 'young_adult',
     weight: 3,
-    when: (G) => G.career?.id === 'entrepreneur' && G.age >= 24 && !G.mem.bizKeyHire,
+    when: (G) => G.flags.has('entrepreneur') && G.age >= 24 && !G.mem.bizKeyHire,
     text: 'Someone applies who is genuinely better at one part of this than you are. You recognize it in the interview. The gap between what they know and what you know is the gap between where the business is and where it could be.',
     choices: [
       {
@@ -33,7 +33,7 @@ export const BUSINESS_EVENTS = [
     id: 'biz_first_big_client',
     phase: 'young_adult',
     weight: 3,
-    when: (G) => G.career?.id === 'entrepreneur' && G.age >= 23 && !G.mem.bizFirstBigClient,
+    when: (G) => G.flags.has('entrepreneur') && G.age >= 23 && !G.mem.bizFirstBigClient,
     text: 'A contract lands that is twice the size of anything you have handled before. The margin is there. So is the exposure — if this goes wrong, there is no larger client to absorb the loss. You will have to be better than you have had to be so far.',
     choices: [
       {
@@ -56,7 +56,7 @@ export const BUSINESS_EVENTS = [
     id: 'biz_acquisition_offer',
     phase: 'midlife',
     weight: 1,
-    when: (G) => G.career?.id === 'entrepreneur' && G.age >= 32 && (G.money ?? 0) > 20000 && !G.mem.bizAcquisitionOffer,
+    when: (G) => G.flags.has('entrepreneur') && G.age >= 32 && (G.money ?? 0) > 20000 && !G.mem.bizAcquisitionOffer,
     text: 'A larger company makes an offer. The number is real and substantial. You would have equity and a role for two years, after which you would be free and considerably richer and no longer running the thing you built. The man who presents the offer has done this many times and is skilled at making it seem uncomplicated.',
     choices: [
       {
@@ -81,7 +81,7 @@ export const BUSINESS_EVENTS = [
     id: 'biz_lose_major_client',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.career?.id === 'entrepreneur' && G.age >= 25 && !G.mem.bizLoseClient,
+    when: (G) => G.flags.has('entrepreneur') && G.age >= 25 && !G.mem.bizLoseClient,
     text: 'The largest client sends a termination notice with thirty days. The reason is polite and almost plausible. The actual reason — a cousin of someone senior has started a competing service — is known to you but unactionable. Thirty percent of revenue ends on a Tuesday afternoon in an email.',
     choices: [
       {
@@ -104,7 +104,7 @@ export const BUSINESS_EVENTS = [
     id: 'biz_market_downturn',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.career?.id === 'entrepreneur' && G.age >= 30 &&
+    when: (G) => G.flags.has('entrepreneur') && G.age >= 30 &&
       (G.currentYear === 2001 || G.currentYear === 2009 || G.currentYear === 2020) && !G.mem.bizDownturn,
     text: 'The orders slow in a way that is not about you. The calls take longer to return. The invoices take longer to pay. Something systemic is happening and you are small enough to feel every tremor of it. You look at the payroll and look at the runway and make calculations.',
     choices: [
@@ -128,7 +128,7 @@ export const BUSINESS_EVENTS = [
     id: 'biz_cashflow_crisis',
     phase: 'young_adult',
     weight: 3,
-    when: (G) => G.career?.id === 'entrepreneur' && G.age >= 24 && (G.money ?? 0) < 5000 && !G.mem.bizCashflow,
+    when: (G) => G.flags.has('entrepreneur') && G.age >= 24 && (G.money ?? 0) < 5000 && !G.mem.bizCashflow,
     text: 'The invoices are real but unpaid. The expenses are real and immediate. The gap between them is thirty days, which is also the gap between surviving and not. You have sat in this specific chair, in this specific feeling, before. You know more now but not enough to make it less uncomfortable.',
     choices: [
       {
@@ -153,7 +153,7 @@ export const BUSINESS_EVENTS = [
     id: 'biz_failure',
     phase: 'midlife',
     weight: 1,
-    when: (G) => G.career?.id === 'entrepreneur' && G.age >= 30 && (G.money ?? 0) < -5000 && !G.mem.bizFailure,
+    when: (G) => G.flags.has('entrepreneur') && G.age >= 30 && (G.money ?? 0) < -5000 && !G.mem.bizFailure,
     text: 'The business is not viable any longer. You have known this for three months and have been proceeding anyway, which is sometimes the right call and this time was not. You close it formally, which involves more paperwork than opening it did. You sit in the empty office on the last day for longer than necessary.',
     choices: [
       {

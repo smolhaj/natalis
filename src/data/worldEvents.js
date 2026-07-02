@@ -2704,7 +2704,7 @@ export const WORLD_EVENTS = [
     addFlags: [],
     minAge: 0,
     when: (G) => ['developing_unstable', 'conflict_zone', 'subsaharan'].includes(G.character.country?.archetype) &&
-      ['Angola', 'Namibia', 'Zambia', 'Zimbabwe', 'DRC', 'Congo'].includes(G.character.country?.name),
+      ['Angola', 'Namibia', 'Zambia', 'Zimbabwe', 'DR Congo'].includes(G.character.country?.name),
   },
 
   // ── MOZAMBIQUE CIVIL WAR 1977–1992 ────────────────────────────────────────

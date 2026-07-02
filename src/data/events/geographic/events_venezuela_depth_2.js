@@ -90,7 +90,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
   },
 
   {
-    id: 'ven_chavez_death',
+    id: 'ven_dep_chavez_death',
     phase: 'midlife',
     weight: 5,
     when: (G) =>

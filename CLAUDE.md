@@ -159,7 +159,7 @@ Covers: WWII, Cold War (Berlin Wall, Cuban Missile Crisis, Prague Spring, Polish
 
 ### Country Data (`src/data/countries.js`)
 
-121 countries. Every country has:
+145 countries. Every country has:
 ```js
 {
   name, archetype, gdp, yearRange,
@@ -231,13 +231,15 @@ Generic events are a last resort. Specific events — ones that could only fire 
 
 ## Current State
 
-121 countries, 255 world events, 463+ event modules (~7,550+ events), 2670 registered flags, 379 ribbons. **0 orphaned flags.** Run `npm run check-flags` to verify.
+145 countries, 255 world events, 463+ event modules (~7,550+ events), 2672 registered flags, 379 ribbons. **0 orphaned, 0 partial flags.** Run `npm run check-flags` to verify.
 
 **Codebase refactor (PR #105)**: Events reorganized into subdirectories under `src/data/events/`: `geographic/` (country-specific), `thematic/` (cross-cutting arcs), `lifecycle/` (phase-specific), `sonder/` (contemplative layer), `specific_lives/` (extreme specificity), `followthrough/` (all followthroughs consolidated). `gameEngine.js` split into 5 focused modules. `flags.js` split into 6 category files.
 
 **PR #104**: `events_specific_lives.js` — 221 micro-specific events targeting one-of-a-kind life circumstances (Dalit water pump, 1943 Leningrad ration card, maquiladora night shift, Stasi file retrieval, etc.).
 
 **PRs #107–122**: Extended MODE A/B/C depth sprint — 66 sonder modules total (~1,980+ contemplative events); 50+ geographic depth arcs added (most countries now have a `_depth.js` companion); followthrough_30.js through followthrough_95.js (66 files); deep career arcs for 15+ professions; new lifecycle arcs (body, empty nest, grandparent, inheritance); letters, memory layer, oral tradition, seasonal, and roads-not-taken registers; events_followthrough_all.js (consolidated 317 followthrough events from the 29 original files).
+
+**Consequence/consistency audit (PR #131+)**: Systematic sweep for events that could never fire or fired incorrectly. Fixed: a duplicate event id that silently blocked one of two Venezuela Chávez-death narrations; `G.r`/`G.currentNeighborhoodTier`/`G.gdp` guard typos that made three events either dead or wrongly-scoped; `'USA'` vs `'United States'` and `'Wales'` (not a playable country — rerouted to a new `welsh_british` ethnic group under United Kingdom) naming bugs; and, most significantly, two entirely dead career-gated arcs — `events_business.js` (9 events) checked a nonexistent `entrepreneur` career instead of the `entrepreneur` *flag* actually set by `startBusiness()`, and `events_interpreter_arc.js` (7 events) checked a career that was simply never added to `careers.js` (added it). Also added 24 countries (Djibouti, Sierra Leone, Chad, Niger, Togo, Benin, Central African Republic, Qatar, Bahrain, Kuwait, Belgium, Switzerland, Bulgaria, Slovakia, Papua New Guinea, Samoa, Kiribati, Tuvalu, Marshall Islands, Maldives, Barbados, Guyana, Belize, Puerto Rico) that were referenced by existing events but never defined in `countries.js`, recovering ~10 more previously-unreachable events. `npm run check-flags` now reports 0 orphaned, 0 partial across all 2672 registered flags.
 
 - Full event system descriptions and coverage history: `docs/codebase-state.md`
 - Full BUILD-by-BUILD roadmap and MICRO-EVENT DESIGN PRINCIPLE: `docs/roadmap.md`
@@ -249,7 +251,7 @@ Generic events are a last resort. Specific events — ones that could only fire 
 ```
 src/
   data/
-    countries.js              — 121 countries with full demographic data
+    countries.js              — 145 countries with full demographic data
     places.js                 — 250+ named places across all countries (scale, region, type, population)
     headlines.js              — ~130 major historical headlines for life log injection
     events.js                 — root event file, imports 463+ modules, exports EVENTS array (~7,550+ total character events)

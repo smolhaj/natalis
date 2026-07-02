@@ -8,7 +8,6 @@
 // multiparty 1995, Nyerere death 1999).
 
 const IS_TANZANIA = (G) => G.character.country?.name === 'Tanzania'
-const IS_ZANZIBAR = (G) => G.character.country?.name === 'Tanzania' && G.currentPlace?.includes('Zanzibar')
 
 export const TANZANIA_DEPTH_EVENTS = [
 

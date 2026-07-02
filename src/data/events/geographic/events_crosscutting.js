@@ -157,7 +157,7 @@ export const CROSSCUTTING_EVENTS = [
       !G.mem?.ccBombardmentStart &&
       !G.flags.includes('city_under_bombardment') &&
       (G.archetype === 'conflict_zone' ||
-        ['Lebanon', 'Syria', 'Iraq', 'Bosnia', 'Palestine'].includes(G.character.country.name) ||
+        ['Lebanon', 'Syria', 'Iraq', 'Bosnia and Herzegovina', 'Palestine'].includes(G.character.country.name) ||
         G.flags.includes('war_zone_civilian')) &&
       G.age >= 5,
     text: 'The first night it starts in earnest, the sound is instructive. Close means a particular compression in the chest — not just heard but felt. The sound that missed you has a different quality, a lateral passage. Silence after a sound is not the absence of sound: it is the two seconds in which you calculate. By morning you understand a vocabulary you did not have yesterday. You do not know yet that you will carry it for the rest of your life.',

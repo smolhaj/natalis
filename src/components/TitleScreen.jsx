@@ -130,7 +130,7 @@ export default function TitleScreen() {
 
         {/* Feature pills */}
         <div className="flex flex-wrap gap-2 justify-center">
-          {['121 Countries', '59 Careers', '379 Ribbons', 'Real History'].map(tag => (
+          {['145 Countries', '59 Careers', '379 Ribbons', 'Real History'].map(tag => (
             <span key={tag} className="px-3 py-1 bg-white rounded-full text-xs font-semibold text-natalis-dim border border-natalis-border shadow-sm">
               {tag}
             </span>

@@ -105,7 +105,7 @@ export const LABORER_ARC_EVENTS = [
     weight: 5,
     when: (G) =>
       isLaborer(G) &&
-      G.gdp !== 'very_high' && G.gdp !== 'high' &&
+      G.character.country?.gdp !== 'very_high' && G.character.country?.gdp !== 'high' &&
       G.age >= 30 &&
       !G.mem?.labDebtFired,
     text: `You have borrowed against next season's wages to cover this season's gap. The lender is local and the terms are the terms that exist when you need money before the season. You will work it off. You have worked it off before. The arithmetic of the situation is that you work to produce the wage that covers the debt that you needed to cover the gap between the last wages and this season's start. The arithmetic has been running for several years.`,

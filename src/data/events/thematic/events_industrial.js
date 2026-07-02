@@ -168,7 +168,7 @@ export const INDUSTRIAL_EVENTS = [
     weight: 3,
     when: (G) =>
       ['post_soviet', 'developing_urban'].includes(G.character.country?.archetype) &&
-      (G.currentNeighborhoodTier === 'working_class' || G.currentNeighborhoodTier === 'informal' || G.currentNeighborhoodTier == null) &&
+      (G.neighborhoodTier === 'working_class' || G.neighborhoodTier === 'informal' || G.neighborhoodTier == null) &&
       G.currentYear >= 1950 && G.currentYear <= 2010 &&
       G.age >= 6 && G.age <= 14 &&
       !G.flags.has('grew_up_polluted') &&

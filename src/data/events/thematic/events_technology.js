@@ -246,7 +246,7 @@ export const TECHNOLOGY_EVENTS = [
     id: 'tech_mobile_money_business',
     phase: 'young_adult',
     weight: 3,
-    when: (G) => G.flags.includes('mobile_money_user') && G.career?.id === 'entrepreneur' &&
+    when: (G) => G.flags.includes('mobile_money_user') && G.flags.has('entrepreneur') &&
       G.currentYear >= 2010 && G.age >= 20,
     text: 'Your business takes payments on a mobile number. You have customers in three towns. None of them have been to your premises. The infrastructure of trade that took wealthy countries a century to build — payment networks, credit, invoicing — exists here in something small enough to fit in a pocket.',
     choices: null,
