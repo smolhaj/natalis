@@ -149,8 +149,13 @@ const BANGLADESH_EVENTS = [
       {
         text: 'The building worries you — cracks appeared last week and the manager said it was fine',
         tag: null,
-        outcome: 'Rana Plaza collapsed on April 24, 2013, the day after cracks appeared and workers were sent home and then ordered back. 1,134 people died. The order had a deadline.',
-        effect: (p) => { p.h -= 3; p.r += 5; p.addFlag('bng_garment_generation'); p.setMem('bng_garment', true); },
+        outcome: (G) => (G.currentYear >= 2012 && G.currentYear <= 2014)
+          ? 'Rana Plaza collapsed on April 24, 2013, the day after cracks appeared and workers were sent home and then ordered back. 1,134 people died. The order had a deadline. You got out.'
+          : 'The cracks are patched over. The manager is right this time, or you are lucky, or both. You have heard what happened at other buildings that worried people and were not fixed.',
+        effect: (p) => {
+          p.h -= 3; p.r += 5; p.addFlag('bng_garment_generation'); p.setMem('bng_garment', true)
+          if (p._state.currentYear >= 2012 && p._state.currentYear <= 2014) p.addFlag('rana_plaza_survived')
+        },
       },
     ],
     effect: null,
