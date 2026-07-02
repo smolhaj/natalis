@@ -1348,6 +1348,70 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by dprk_hanawon.',
   },
 
+  dprk_inminban_awareness: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Learned as a child how the inminban neighbourhood surveillance unit works — the notebook, the Tuesday visits, the space between neighbour and informant',
+    intent: 'year_texture',
+    notes: 'Set by nk_dep_inminban.',
+  },
+
+  dprk_kwanliso_witness: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Witnessed someone disappear into the kwan-li-so political prison camp system — the euphemism used, the silence around their name, the space they left',
+    intent: 'both',
+    notes: 'Set by nk_dep_kwanliso. Follow-through: ft91_kwanliso_late.',
+  },
+
+  dprk_notel_era: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Used a Notel portable media player to watch smuggled South Korean dramas — the battery charging, the 2am curtain, the food visible in every background scene',
+    intent: 'year_texture',
+    notes: 'Set by nk_dep_notel.',
+  },
+
+  dprk_tumen_phone: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Made a cross-border phone call near the Tumen River using a Chinese SIM — three minutes, the voice of someone already on the other side, going back down before the light',
+    intent: 'both',
+    notes: 'Set by nk_dep_tumen_call. Follow-through: ft91_tumen_phone_late.',
+  },
+
+  dprk_pyongyang_privilege: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Experienced the gap between Pyongyang (showcase city, better rations, specific bearing) and provincial North Korean life',
+    intent: 'year_texture',
+    notes: 'Set by nk_dep_pyongyang.',
+  },
+
+  dprk_party_rejected: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Applied for Korean Workers\' Party membership and was rejected — no explanation given, the reasons understood, the doors that stayed closed',
+    intent: 'year_texture',
+    notes: 'Set by nk_dep_party_card choice rejected.',
+  },
+
+  dprk_songbun_reclassified: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Had hostile songbun reclassified through market-era bribery — grandfather\'s record amended in a transaction at an office desk, ceiling removed',
+    intent: 'year_texture',
+    notes: 'Set by nk_dep_songbun_market.',
+  },
+
+  dprk_south_korea_adjustment: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Adjusted to life in South Korea post-Hanawon — the accent that marks you, the ramen wall, the knowledge of food scarcity that lives in the body',
+    intent: 'both',
+    notes: 'Set by nk_dep_post_hanawon. Follow-through: ft91_south_korea_late.',
+  },
+
   uru_dictatorship_lived: {
     weight: 'major',
     category: 'trauma',

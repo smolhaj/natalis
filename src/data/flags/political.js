@@ -2135,6 +2135,14 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by dprk_criticism_session.',
   },
 
+  dprk_party_member: {
+    weight: 'major',
+    category: 'political',
+    description: 'Received Korean Workers\' Party membership card after years of political study — the card the size of a business card that determines what opens and what does not',
+    intent: 'both',
+    notes: 'Set by nk_dep_party_card choice accepted. Follow-through: ft91_party_late.',
+  },
+
   uru_tupamaro_era: {
     weight: 'major',
     category: 'historical',

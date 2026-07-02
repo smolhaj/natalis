@@ -7723,6 +7723,60 @@ function buildYearTexture(state) {
       ? 'You attended mandatory public executions across your working life. The calibration of how to watch — present, witnessing, not displaying grief or approval — is something you learned and taught to your children. The calibration sits in the body alongside the criticism session calibration and the portrait calibration.'
       : 'What the state requires you to watch is part of the contract. The contract was set before you could have declined it. You were part of the crowd. You watched. The watching is in you now, the way the portrait is in you, at the same depth.',
   ])
+  if (F.has('dprk_inminban_awareness') && Math.random() < 0.22) return pick([
+    'The inminban leader came on Tuesday. You had the correct things in the correct places and nothing was out of order and the visit lasted eight minutes and she made her note and left. The correct arrangement is not a performance. It is what the room looks like now.',
+    phase === 'late_life'
+      ? 'You have arranged things for inminban visits for most of your adult life. The arrangement is automatic — you do not think about it the way you do not think about breathing. The habit outlasted the visits themselves, in the way that most long habits outlast their original reasons.'
+      : 'The neighbor across the hall has been making the same arrangement longer than you have. You watch how she does it — not the items themselves but the ease. The ease takes years.',
+  ])
+  if (F.has('dprk_kwanliso_witness') && Math.random() < 0.25) return pick([
+    'The person is still not back. You stopped calculating how long it has been. The calculation became something that had to be put down.',
+    phase === 'late_life'
+      ? 'You have learned, since, that the place had a name known internationally before you knew it domestically. The name was in foreign reports for many years while you did not know what the place was called. The reports describe conditions. You do not read past a certain point.'
+      : 'Someone asks about them and you say you do not know where they are. This is accurate. You do not know where they are. You know the direction.',
+  ])
+  if (F.has('dprk_notel_era') && Math.random() < 0.2) return pick([
+    'The Notel fits in a jacket pocket. The USB slot takes what the market provides. You charge it at the stall that charges electronics for a fee that includes silence. The dramas are three years old when you see them. The food in the background of every scene is not a small detail.',
+    phase === 'late_life'
+      ? 'You watched South Korean dramas on a device small enough to hide under a floorboard, in a city where the penalty for watching them was public execution. The device and the dramas and the penalty all existed at the same time. You exist at a later time and the dramas still exist.'
+      : 'The characters use phones that do not exist where you are. The phones are a minor detail in the dramas. The refrigerators are not a minor detail.',
+  ])
+  if (F.has('dprk_tumen_phone') && Math.random() < 0.2) return pick([
+    'The signal from the Chinese tower. The high ground near the river. The three minutes before the call becomes risky. You say what can be said in three minutes. She says what can be said. You go back down before the light comes.',
+    phase === 'late_life'
+      ? 'The call on the hill near the Tumen was the first time in your life the outside arrived as a voice rather than as a concept. The voice was someone you knew. The voice was also someone who had been somewhere else long enough to sound partly like somewhere else.'
+      : 'Very little is said. The information exchanged is: she is alive, you are alive, things are continuing. This is the information that was needed.',
+  ])
+  if (F.has('dprk_pyongyang_privilege') && Math.random() < 0.2) return pick([
+    'The Pyongyangers have a bearing that provincial people recognize before they can name it — a way of standing that the city arranges in its residents over years. The rations are different in Pyongyang. Everyone knows this. It is not mentioned.',
+    phase === 'late_life'
+      ? 'You spent your life outside the capital and know, with the precision that only outsiders develop, exactly how Pyongyang residents differ from the rest. The bearing. The rations. The way of not mentioning the rations.'
+      : 'The metro station goes deep enough to be a shelter. The mosaics on the walls are vivid because they were made to be vivid. The station is clean in a way that nothing else is clean.',
+  ])
+  if (F.has('dprk_party_member') && Math.random() < 0.22) return pick([
+    'The card is in the drawer. The doors it opens are not visible until you walk toward them and they open. This is how party membership works. You have learned to walk toward doors that are not yet visible.',
+    phase === 'late_life'
+      ? 'You spent your working life inside the party structure. Inside the structure you found what was possible. What was possible was not nothing. The structure that made it possible is still there. Whether the structure will always be there is a different question.'
+      : 'The three years of political study required before the card arrived were not wasted. Some of the knowledge from those sessions is not the knowledge that turned out to matter. The attendance itself turned out to matter.',
+  ])
+  if (F.has('dprk_party_rejected') && Math.random() < 0.2) return pick([
+    'The rejection arrived in the form of silence — the notification that was expected did not come. The reasons were not given. You understood the likely reasons. The understanding was not new information.',
+    phase === 'late_life'
+      ? 'The doors that stayed closed because of the rejection are visible in the architecture of what your life became. The life is what it is. You know approximately what it would have been with the card. The gap is measurable. It is not the only thing that is true.'
+      : 'You continued. The work unit, the market, the arrangements. The card would have opened certain doors. There were other arrangements, and you made them.',
+  ])
+  if (F.has('dprk_songbun_reclassified') && Math.random() < 0.2) return pick([
+    'The file was corrected. Your grandfather\'s record was amended. The amendment is in the record now. The record is what the record says.',
+    phase === 'late_life'
+      ? 'You spent the first part of your life with a ceiling you could see. The ceiling was removed in a transaction at an office desk. The second half had a different shape. Both halves are yours. The ceiling is in neither of them now and is in both of them still.'
+      : 'The grandfather whose record defined your ceiling did not know he was defining it. The grandfather whose record was corrected in the market era does not know that either. You are the only one who knows both facts.',
+  ])
+  if (F.has('dprk_south_korea_adjustment') && Math.random() < 0.25) return pick([
+    'The accent marks you before you have finished your third word. The vowels, the pitch of certain consonants, the words that came from Russian rather than English. You have been here for years. The accent is still there.',
+    phase === 'late_life'
+      ? 'Your children do not have the accent. Their Korean is the Korean of here. The gap between their language and yours is one specific kind of distance, and it is also evidence that you brought them somewhere and they became from there.'
+      : 'You stand in front of the ramen wall in the supermarket. You know the abundance is ordinary. You know that you know it is not ordinary. Both things are true and you have stopped trying to resolve them.',
+  ])
 
   // ─── ERA TEXTURE ─────────────────────────────────────────────────────────────
   if (F.has('spanish_flu_generation') && Math.random() < 0.25) return pick([
