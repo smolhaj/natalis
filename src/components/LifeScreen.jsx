@@ -71,44 +71,6 @@ export default function LifeScreen() {
     setOpenDecades(prev => prev.has(d) ? prev : new Set([...prev, d]))
   }, [Math.floor(ageFromStore / 10)])
 
-  // Stat delta flash — shows +/- on stat bars when values change
-  useEffect(() => {
-    if (!prevStatsRef.current) { prevStatsRef.current = stats; return }
-    const prev = prevStatsRef.current
-    const deltas = {}
-    let changed = false
-    for (const key of ['happiness', 'health', 'smarts', 'looks']) {
-      const d = Math.round((stats[key] ?? 0) - (prev[key] ?? 0))
-      if (d !== 0) { deltas[key] = d; changed = true }
-    }
-    prevStatsRef.current = { ...stats }
-    if (changed) {
-      setFlashDeltas(deltas)
-      if (flashTimerRef.current) clearTimeout(flashTimerRef.current)
-      flashTimerRef.current = setTimeout(() => setFlashDeltas({}), 2000)
-    }
-  }, [stats.happiness, stats.health, stats.smarts, stats.looks])
-
-  // Keyboard shortcuts: Space/Enter → age up or continue; 1/2/3 → choices
-  useEffect(() => {
-    const handleKey = (e) => {
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return
-      if (e.metaKey || e.ctrlKey || e.altKey) return
-      if (pendingEvent?.isAutomatic) {
-        if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); resolveAutoEvent() }
-        return
-      }
-      if (pendingEvent?.choices?.length > 0) {
-        if (e.key === '1') { resolveChoice(0); return }
-        if (e.key === '2' && pendingEvent.choices.length > 1) { resolveChoice(1); return }
-        if (e.key === '3' && pendingEvent.choices.length > 2) { resolveChoice(2); return }
-        return
-      }
-      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); ageUp() }
-    }
-    window.addEventListener('keydown', handleKey)
-    return () => window.removeEventListener('keydown', handleKey)
-  }, [pendingEvent, ageUp, resolveAutoEvent, resolveChoice])
   const [showMoveModal, setShowMoveModal] = useState(false)
   const [moveStep, setMoveStep] = useState('pick') // 'pick' | 'confirm'
   const [selectedPlace, setSelectedPlace] = useState(null)
@@ -163,6 +125,45 @@ export default function LifeScreen() {
   const creditScore  = useGameStore(s => s.creditScore)
   const pendingMinigame = useGameStore(s => s.pendingMinigame)
   const ageUp        = useGameStore(s => s.ageUp)
+
+  // Stat delta flash — shows +/- on stat bars when values change
+  useEffect(() => {
+    if (!prevStatsRef.current) { prevStatsRef.current = stats; return }
+    const prev = prevStatsRef.current
+    const deltas = {}
+    let changed = false
+    for (const key of ['happiness', 'health', 'smarts', 'looks']) {
+      const d = Math.round((stats[key] ?? 0) - (prev[key] ?? 0))
+      if (d !== 0) { deltas[key] = d; changed = true }
+    }
+    prevStatsRef.current = { ...stats }
+    if (changed) {
+      setFlashDeltas(deltas)
+      if (flashTimerRef.current) clearTimeout(flashTimerRef.current)
+      flashTimerRef.current = setTimeout(() => setFlashDeltas({}), 2000)
+    }
+  }, [stats.happiness, stats.health, stats.smarts, stats.looks])
+
+  // Keyboard shortcuts: Space/Enter → age up or continue; 1/2/3 → choices
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return
+      if (e.metaKey || e.ctrlKey || e.altKey) return
+      if (pendingEvent?.isAutomatic) {
+        if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); resolveAutoEvent() }
+        return
+      }
+      if (pendingEvent?.choices?.length > 0) {
+        if (e.key === '1') { resolveChoice(0); return }
+        if (e.key === '2' && pendingEvent.choices.length > 1) { resolveChoice(1); return }
+        if (e.key === '3' && pendingEvent.choices.length > 2) { resolveChoice(2); return }
+        return
+      }
+      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); ageUp() }
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [pendingEvent, ageUp, resolveAutoEvent, resolveChoice])
 
   if (!character) return null
 
