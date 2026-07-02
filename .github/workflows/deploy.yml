@@ -37,18 +37,5 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Cancel any stuck Pages deployment
-        continue-on-error: true
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          # A deployment wedged in deployment_queued blocks all new deploys
-          # with "in progress deployment" 400s. Cancel known-stuck IDs and
-          # this run's own SHA (in case a previous attempt left it queued).
-          for id in 9d414ceeb4d53063c84bd47c59862ed48e067670 "${GITHUB_SHA}"; do
-            gh api --method POST "/repos/${GITHUB_REPOSITORY}/pages/deployments/${id}/cancel" 2>/dev/null \
-              && echo "Cancelled stuck deployment ${id}" \
-              || echo "No stuck deployment ${id} (ok)"
-          done
       - uses: actions/deploy-pages@v4
         id: deployment
