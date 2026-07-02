@@ -504,6 +504,12 @@ export function getNextEvent(state) {
     }
   }
 
+  // Sonder rate limit — at most one sonder/contemplative event every 2 years
+  const lastSonderYear = state.mem?.lastSonderYear ?? 0
+  if (currentYear - lastSonderYear < 2) {
+    pool = pool.filter(e => !e.id?.startsWith('sonder_'))
+  }
+
   devLogPool(phase, pool, null, usedEventMap, phaseEvents)
 
   if (pool.length === 0) return null
@@ -2220,15 +2226,30 @@ export function tick(state) {
   const resolvedEvent = resolvedText !== event.text ? { ...event, text: resolvedText } : event
 
   if (!resolvedEvent.choices || resolvedEvent.choices.length === 0) {
-    const proxy = buildEffectProxy(s)
-    if (resolvedEvent.effect) resolvedEvent.effect(proxy)
-    s = applyProxy(s, proxy)
-    s = resolveProxyExtras(s, proxy)
-    s.log = [...s.log, { age: s.age, text: resolvedText, isKey: resolvedEvent.isKey ?? false, isLetter: resolvedEvent.isLetter ?? false }]
+    s.pendingEvent = { ...resolvedEvent, isAutomatic: true }
     return s
   }
 
   s.pendingEvent = resolvedEvent
+  return s
+}
+
+export function resolveAutoEvent(state) {
+  const { pendingEvent } = state
+  if (!pendingEvent?.isAutomatic) return state
+
+  const proxy = buildEffectProxy(state)
+  if (pendingEvent.effect) pendingEvent.effect(proxy)
+  let s = applyProxy(state, proxy)
+  s = resolveProxyExtras(s, proxy)
+
+  // Track sonder rate limiting
+  if (pendingEvent.id?.startsWith('sonder_')) {
+    s.mem = { ...(s.mem ?? {}), lastSonderYear: state.currentYear }
+  }
+
+  s.log = [...s.log, { age: state.age, text: pendingEvent.text, isKey: pendingEvent.isKey ?? false, isLetter: pendingEvent.isLetter ?? false }]
+  s.pendingEvent = null
   return s
 }
 

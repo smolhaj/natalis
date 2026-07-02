@@ -50,14 +50,14 @@ function flagLabel(flag) {
   return flag.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
 }
 
-export default function FlagChip({ flag }) {
+export default function FlagChip({ flag, label }) {
   const s = flagStyle(flag)
   return (
     <span
       className="inline-block text-xs px-2.5 py-1 rounded-full font-semibold border"
       style={{ backgroundColor: s.bg, color: s.text, borderColor: s.border }}
     >
-      {flagLabel(flag)}
+      {label ?? flagLabel(flag)}
     </span>
   )
 }

@@ -3,18 +3,19 @@ import { useGameStore } from '../store/gameStore'
 
 export default function EventBox({ event }) {
   const resolveChoice = useGameStore(s => s.resolveChoice)
+  const resolveAutoEvent = useGameStore(s => s.resolveAutoEvent)
   const [contextOpen, setContextOpen] = useState(false)
 
   if (!event) return null
 
-  const isAutomatic = !event.choices || event.choices.length === 0
+  const isAutomatic = event.isAutomatic === true
 
   return (
     <div className="bg-white rounded-2xl shadow-card-lg overflow-hidden border border-natalis-border">
       {/* Event header band */}
-      <div className="bg-bit-blue px-5 py-3">
+      <div className="px-5 py-3" style={{ background: isAutomatic ? '#6b7280' : event.isWorld ? '#1d4ed8' : '#007aff' }}>
         <p className="text-white text-xs font-semibold uppercase tracking-widest opacity-80">
-          {event.isWorld ? '🌍 World Event' : '📖 Life Event'}
+          {event.isWorld ? '🌍 World Event' : isAutomatic ? '· Life' : '📖 Life Event'}
         </p>
       </div>
 
@@ -40,7 +41,16 @@ export default function EventBox({ event }) {
           </div>
         )}
 
-        {!isAutomatic && (
+        {isAutomatic ? (
+          <div className="pt-1">
+            <button
+              onClick={resolveAutoEvent}
+              className="w-full text-center px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-150 active:scale-95 border border-natalis-border text-natalis-muted hover:bg-natalis-bg"
+            >
+              Continue
+            </button>
+          </div>
+        ) : (
           <div className="space-y-2 pt-1">
             <p className="text-natalis-muted text-xs font-semibold uppercase tracking-wider">What will you do?</p>
             {event.choices.map((choice, i) => (
