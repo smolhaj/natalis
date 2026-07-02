@@ -145,6 +145,7 @@ export default function LifeScreen() {
   const jointFamilyPool   = useGameStore(s => s.jointFamilyPool ?? 0)
   const banked            = useGameStore(s => s.banked ?? false)
   const hardCurrencyReserve = useGameStore(s => s.hardCurrencyReserve ?? 0)
+  const legacy            = useGameStore(s => s.legacy ?? 0)
 
   // Derive addiction stage label for display
   const getAddictionStage = () => {
@@ -686,6 +687,23 @@ export default function LifeScreen() {
                         : 'Clear'}
                     </span>
                   </div>
+
+                  {/* Legacy — only shown once it accumulates */}
+                  {legacy > 0 && (
+                    <div className="flex items-center justify-between py-0.5">
+                      <div className="flex items-center gap-2">
+                        <span>🕯️</span>
+                        <span className="text-sm text-natalis-dim font-medium">Legacy</span>
+                      </div>
+                      <span className="text-xs font-semibold text-natalis-muted">
+                        {legacy >= 80 ? 'Enduring'
+                          : legacy >= 60 ? 'Remembered'
+                          : legacy >= 40 ? 'Touched lives'
+                          : legacy >= 20 ? 'Left a mark'
+                          : 'Taking shape'}
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -827,15 +845,76 @@ export default function LifeScreen() {
                 </div>
               )}
 
-              {/* Flags */}
-              {flags.length > 0 && (
-                <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-                  <p className="font-bold text-natalis-text text-sm mb-3">Life Flags</p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {flags.map(f => <FlagChip key={f} flag={f} />)}
+              {/* Significant Experiences — curated subset of flags */}
+              {(() => {
+                const SIGNIFICANT_FLAG_LABELS = {
+                  // Hardships & wounds
+                  war_childhood: 'War Childhood', hunger_childhood: 'Childhood Hunger',
+                  anxious_child: 'Anxious Child', orphan: 'Orphan', early_grief: 'Early Grief',
+                  child_labor: 'Child Labor', child_soldier: 'Child Soldier',
+                  missed_schooling: 'Missed Schooling', left_school_early: 'Left School Early',
+                  dropped_out: 'Dropped Out', early_marriage: 'Early Marriage',
+                  refugee: 'Refugee', displaced: 'Displaced',
+                  abusive_relationship: 'Abusive Relationship',
+                  learned_silence: 'Learned Silence', guarded_heart: 'Guarded Heart',
+                  estranged_family: 'Estranged Family', reluctant_parent: 'Reluctant Parent',
+                  deadbeat_parent: 'Absent Parent', child_loss: 'Lost a Child',
+                  // Struggles & conditions
+                  smoker: 'Smoker', heavy_drinker: 'Heavy Drinker',
+                  alcohol_addiction: 'Alcohol Addiction', drug_addiction: 'Drug Addiction',
+                  gambling_addiction: 'Gambling Addiction', addiction: 'Addiction',
+                  chronic_illness: 'Chronic Illness', medical_debt: 'Medical Debt',
+                  in_therapy: 'In Therapy', abuser: 'Abuser', widowed: 'Widowed',
+                  divorced: 'Divorced', criminal_record: 'Criminal Record',
+                  gang_past: 'Gang Past', gang_member: 'Gang Member',
+                  compromised: 'Compromised', corruption_exposed: 'Exposed for Corruption',
+                  // World events survived
+                  genocide_survivor: 'Genocide Survivor', famine_survivor: 'Famine Survivor',
+                  disaster_survivor: 'Disaster Survivor', war_generation: 'War Generation',
+                  revolution_generation: 'Revolution Generation',
+                  lived_through_occupation: 'Lived Through Occupation',
+                  lived_through_coup: 'Lived Through Coup',
+                  hyperinflation_survivor: 'Hyperinflation Survivor',
+                  economic_collapse_survivor: 'Economic Collapse Survivor',
+                  aids_generation: 'AIDS Generation', apartheid_generation: 'Apartheid Generation',
+                  chernobyl_generation: 'Chernobyl Generation',
+                  lived_through_pandemic: 'Pandemic Survivor',
+                  // Achievements & character
+                  secure_base: 'Stable Upbringing', determined_student: 'Determined Student',
+                  scholarship_won: 'Scholarship', university_graduate: 'University Graduate',
+                  first_gen_graduate: 'First-Gen Graduate', adult_learner: 'Adult Learner',
+                  integrity: 'Person of Integrity', trusted_person: 'Trusted',
+                  emotionally_honest: 'Emotionally Honest', compassionate: 'Compassionate',
+                  strong_marriage: 'Strong Marriage', found_meaning: 'Found Meaning',
+                  acceptance: 'At Peace', processed_grief: 'Processed Grief',
+                  reconciled_family: 'Family Reconciled', reconciled_with_child: 'Reconciled with Child',
+                  cared_for_parents: 'Cared for Parents', cycle_broken: 'Broke the Cycle',
+                  in_recovery: 'In Recovery', rehab_graduate: 'Rehabilitation',
+                  grandparent: 'Grandparent', mentor: 'Mentor',
+                  community_leader: 'Community Leader', committed_activist: 'Activist',
+                  bridge_builder: 'Bridge Builder', legacy_support: 'Left a Legacy',
+                  // Life paths
+                  emigrated: 'Emigrated', entrepreneur: 'Entrepreneur',
+                  self_made_woman: 'Self-Made', veteran: 'Veteran',
+                  prison_education: 'Educated in Prison',
+                  health_conscious: 'Health Conscious',
+                  bookworm: 'Bookworm', school_athlete: 'School Athlete',
+                  has_close_friend: 'Close Friend', martial_arts: 'Martial Artist',
+                  has_licence: "Driver's Licence", pilot_licence: "Pilot's Licence",
+                  survived_soviet_collapse: 'Survived Soviet Collapse',
+                  cold_war_generation: 'Cold War Generation',
+                }
+                const significant = flags.filter(f => SIGNIFICANT_FLAG_LABELS[f])
+                if (significant.length === 0) return null
+                return (
+                  <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
+                    <p className="font-bold text-natalis-text text-sm mb-3">Significant Experiences</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {significant.map(f => <FlagChip key={f} flag={f} label={SIGNIFICANT_FLAG_LABELS[f]} />)}
+                    </div>
                   </div>
-                </div>
-              )}
+                )
+              })()}
             </div>
           )}
 
@@ -888,39 +967,44 @@ export default function LifeScreen() {
 
               {/* Partner */}
               {partner && (
-                <div className="bg-white rounded-2xl p-4 border border-natalis-border shadow-card">
-                  <p className="font-bold text-natalis-text text-sm mb-3">❤️ Partner</p>
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className="font-semibold text-natalis-text">{partner.name}{genderMark(partner.gender)}</p>
-                      <p className="text-natalis-muted text-xs">{partner.married ? '💍 Married' : partner.engaged ? '💌 Engaged' : '💑 Dating'}{partner.age ? ` · Age ${partner.age}` : ''}</p>
-                      {partner.traits?.length > 0 && (
-                        <div className="flex gap-1 mt-1 flex-wrap">
-                          {partner.traits.map(t => (
-                            <span key={t} className="text-[10px] bg-natalis-bg px-1.5 py-0.5 rounded-full text-natalis-muted capitalize">{t}</span>
-                          ))}
-                        </div>
-                      )}
-                      {(() => {
-                        const pFlags = []
-                        if (flags.includes('partner_illness_caretaker')) pFlags.push('caretaker')
-                        if (flags.includes('couples_therapy')) pFlags.push('therapy')
-                        const labels = relStatusLabel(partner.relationshipQuality, pFlags)
-                        return labels.length > 0 ? (
+                <div className="bg-white rounded-2xl overflow-hidden border border-natalis-border shadow-card">
+                  {/* Partner moment — shown prominently at top when available */}
+                  {mem?.partnerMoments?.length > 0 && (
+                    <div className="px-4 pt-4 pb-3" style={{ background: 'linear-gradient(135deg, #fff0f3, #fff5f7)' }}>
+                      <p className="text-[13px] italic leading-relaxed" style={{ color: '#9d174d' }}>
+                        &ldquo;{mem.partnerMoments.at(-1)}&rdquo;
+                      </p>
+                    </div>
+                  )}
+                  <div className="p-4">
+                    <p className="font-bold text-natalis-text text-sm mb-3">❤️ Partner</p>
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <p className="font-semibold text-natalis-text">{partner.name}{genderMark(partner.gender)}</p>
+                        <p className="text-natalis-muted text-xs">{partner.married ? '💍 Married' : partner.engaged ? '💌 Engaged' : '💑 Dating'}{partner.age ? ` · Age ${partner.age}` : ''}</p>
+                        {partner.traits?.length > 0 && (
                           <div className="flex gap-1 mt-1 flex-wrap">
-                            {labels.map(l => (
-                              <span key={l.text} className="text-[10px] px-1.5 py-0.5 rounded-full font-semibold" style={{ color: l.color, background: l.color + '18' }}>{l.text}</span>
+                            {partner.traits.map(t => (
+                              <span key={t} className="text-[10px] bg-natalis-bg px-1.5 py-0.5 rounded-full text-natalis-muted capitalize">{t}</span>
                             ))}
                           </div>
-                        ) : null
-                      })()}
-                      {mem?.partnerMoments?.length > 0 && (
-                        <p className="text-[11px] italic text-natalis-muted mt-2 leading-snug">
-                          {mem.partnerMoments.at(-1)}
-                        </p>
-                      )}
+                        )}
+                        {(() => {
+                          const pFlags = []
+                          if (flags.includes('partner_illness_caretaker')) pFlags.push('caretaker')
+                          if (flags.includes('couples_therapy')) pFlags.push('therapy')
+                          const labels = relStatusLabel(partner.relationshipQuality, pFlags)
+                          return labels.length > 0 ? (
+                            <div className="flex gap-1 mt-1 flex-wrap">
+                              {labels.map(l => (
+                                <span key={l.text} className="text-[10px] px-1.5 py-0.5 rounded-full font-semibold" style={{ color: l.color, background: l.color + '18' }}>{l.text}</span>
+                              ))}
+                            </div>
+                          ) : null
+                        })()}
+                      </div>
+                      <RelBar value={partner.relationshipQuality} color={relColor(partner.relationshipQuality)} />
                     </div>
-                    <RelBar value={partner.relationshipQuality} color={relColor(partner.relationshipQuality)} />
                   </div>
                 </div>
               )}

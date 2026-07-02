@@ -65,6 +65,7 @@ export {
   attemptCrime,
   tick,
   resolveChoice,
+  resolveAutoEvent,
 } from './tick'
 
 // ── playerActions.js ──────────────────────────────────────────────────────────

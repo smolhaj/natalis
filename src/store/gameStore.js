@@ -73,6 +73,7 @@ import {
   seekAsylum,
   relocate,
   buildG,
+  resolveAutoEvent as applyAutoEventEffect,
 } from '../engine/gameEngine'
 import { COUNTRIES } from '../data/countries'
 import { CRIMES } from '../data/crimes'
@@ -511,6 +512,14 @@ export const useGameStore = create((set, get) => ({
     const resolved = { ...next, lastOutcome }
     set(resolved)
     saveToStorage(resolved)
+  },
+
+  resolveAutoEvent: () => {
+    const state = get()
+    if (!state.pendingEvent?.isAutomatic) return
+    const next = applyAutoEventEffect(state)
+    set(next)
+    saveToStorage(next)
   },
 
   takeActivity: (activityId) => {
