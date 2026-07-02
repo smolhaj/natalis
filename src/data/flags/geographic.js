@@ -878,12 +878,36 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by ci_abidjan_life. Year texture: the bridge, the morning smell, the code.',
   },
 
+  ci_abidjan_lagoon_generation: {
+    weight: 'moderate',
+    category: 'place',
+    description: 'Knows Abidjan through the Ébrié Lagoon — the pinasse ferries, the dawn pirogue fishermen, the market at Koumassi, the water older than the city',
+    intent: 'year_texture',
+    notes: 'Set by ci_dep_lagoon.',
+  },
+
   cmr_douala_generation: {
     weight: 'minor',
     category: 'place',
     description: 'Lived and worked in Douala — the commercial capital, not the political capital; the Wouri estuary, Akwa, the market, Pidgin English as the common tongue',
     intent: 'year_texture',
     notes: 'Set by cmr_douala_life. Year texture: the traffic, the translations held simultaneously.',
+  },
+
+  cmr_yaounde_generation: {
+    weight: 'minor',
+    category: 'place',
+    description: 'Came of age in Yaoundé — the political capital on the hill, the Beti social calendar, the University graduates waiting for government jobs that arrive slowly',
+    intent: 'year_texture',
+    notes: 'Set by cmr_dep_yaounde.',
+  },
+
+  laos_vientiane_generation: {
+    weight: 'minor',
+    category: 'place',
+    description: 'Came of age in Vientiane — the quietest capital in Southeast Asia, the French colonial boulevard along the Mekong, the That Luang stupa, the evening light on the Thai shore across the river',
+    intent: 'year_texture',
+    notes: 'Set by laos_dep_vientiane.',
   },
 
   nga_delta_community: {
@@ -1461,6 +1485,70 @@ export const GEOGRAPHIC_FLAGS = {
     description: 'Lived through or participated in the 2003 Gas War — sixty-seven dead in El Alto, Goni\'s flight to Miami, the gas kept under Bolivian soil.',
     intent: 'year_texture',
     notes: 'Set by bol_gas_war_2003. Bolivia only.',
+  },
+
+  bol_sea_loss_identity: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Grew up in Bolivia learning the Día del Mar — the annual March 23 ceremony for the coast lost to Chile in 1884. The map with the Litoral Region as part of Bolivia is in every classroom.',
+    intent: 'both',
+    notes: 'Set by bol_dep_dia_del_mar. Checked by ft89_sea_loss_late_reckoning.',
+  },
+
+  bol_che_guevara_echo: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed or came of age during the news of Che Guevara\'s capture and death at La Higuera in 1967 — the failed revolution and its contested meaning.',
+    intent: 'year_texture',
+    notes: 'Set by bol_dep_che_1967. Bolivia only.',
+  },
+
+  bol_potosi_colonial_weight: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up in a Bolivian mining community and learned the colonial arithmetic: eight million dead in Potosí mines, the silver that built Spain and left Bolivia hollow.',
+    intent: 'year_texture',
+    notes: 'Set by bol_dep_potosi_colonial. Requires bol_mining_generation.',
+  },
+
+  bol_cholita_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Witnessed the cultural shift around cholita identity after 2006 — the pollera no longer only a market-woman marker, the wrestlers of El Alto performing pride in ordinary clothes.',
+    intent: 'year_texture',
+    notes: 'Set by bol_dep_cholita_pollera. Bolivia only, 2005+.',
+  },
+
+  bol_lithium_generation: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Aware of Bolivia\'s lithium debate — the Salar de Uyuni, the electric car market building around it, the Potosí pattern repeating in slow motion.',
+    intent: 'both',
+    notes: 'Set by bol_dep_lithium_debate. Checked by ft89_lithium_nationalization_echo.',
+  },
+
+  bol_tipnis_generation: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'Lived through the TIPNIS road conflict 2011 — the Evo Morales government versus Amazon indigenous communities, the march to La Paz, Pachamama in the constitution and a road through protected territory.',
+    intent: 'both',
+    notes: 'Set by bol_dep_tipnis_road. Checked by ft89_tipnis_road_outcome.',
+  },
+
+  bol_sacred_coca_identity: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Knows the coca leaf as sacred object — the Pachamama ceremony, the miners\' altitude aid, the akullico — distinct from its narco-politics in other countries.',
+    intent: 'year_texture',
+    notes: 'Set by bol_dep_sacred_coca_ceremony. Bolivia only.',
+  },
+
+  bol_maritime_icj_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Followed Bolivia\'s ICJ case against Chile 2013–2018 — the argument for a negotiating obligation that the court declined to find, the landlocked identity sharpened by a ruling.',
+    intent: 'both',
+    notes: 'Set by bol_dep_maritime_icj. Checked by ft89_icj_ruling_2018.',
   },
 
   nz_springbok_generation: {

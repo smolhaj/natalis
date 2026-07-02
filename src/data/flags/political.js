@@ -1298,6 +1298,22 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by laos_mekong_dams. Year texture (the river the fishermen were born on is changing).',
   },
 
+  laos_monarchy_fallen: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Childhood witness of the monarchy\'s end in December 1975 — the photograph in the classroom replaced, King Savang Vatthana sent to Viengxai and never returned',
+    intent: 'year_texture',
+    notes: 'Set by laos_dep_monarchy.',
+  },
+
+  laos_sombath_era: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through the December 2012 disappearance of civil society leader Sombath Somphone — the CCTV checkpoint footage, the ongoing investigation, the specific lesson about accountability in Laos',
+    intent: 'both',
+    notes: 'Set by laos_dep_sombath. Follow-through: ft94_sombath_late.',
+  },
+
   nam_herero_memory_bearer: {
     weight: 'major',
     category: 'historical',
@@ -2135,6 +2151,14 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by dprk_criticism_session.',
   },
 
+  dprk_party_member: {
+    weight: 'major',
+    category: 'political',
+    description: 'Received Korean Workers\' Party membership card after years of political study — the card the size of a business card that determines what opens and what does not',
+    intent: 'both',
+    notes: 'Set by nk_dep_party_card choice accepted. Follow-through: ft91_party_late.',
+  },
+
   uru_tupamaro_era: {
     weight: 'major',
     category: 'historical',
@@ -2753,6 +2777,70 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by can_trc_calls_to_action_2015.',
   },
 
+  can_residential_school_survivor: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Attended a residential school — the church-run, federally-funded institutions that operated 1876–1996, where language, culture, and family were systematically removed.',
+    intent: 'both',
+    notes: 'Set by can_dep_residential_school_inside. Follow-throughs: ft86_residential_school_family_silence, ft86_residential_school_trc_moment.',
+  },
+
+  can_japanese_internment_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Japanese Canadian interned under P.C. 1486 (1942) — property seized, forced to leave BC coast, 22,000 people, permitted to return only in 1949.',
+    intent: 'both',
+    notes: 'Set by can_dep_japanese_internment_1942. Follow-through: ft86_japanese_internment_redress_1988.',
+  },
+
+  can_quiet_revolution_generation: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Came of age during Quebec\'s Quiet Revolution 1960s — the secularisation, the Caisse de dépôt, the French-language economy, Maîtres chez nous.',
+    intent: 'both',
+    notes: 'Set by can_dep_quiet_revolution_quebec. Follow-through: ft86_quiet_revolution_sovereignty_referenda.',
+  },
+
+  can_komagata_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'South Asian Canadian who lived through or witnessed the Komagata Maru affair 1914 — 376 British subjects refused entry under the continuous journey regulation.',
+    intent: 'year_texture',
+    notes: 'Set by can_dep_komagata_maru_1914.',
+  },
+
+  can_bathhouse_raids_generation: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Gay man in Toronto shaped by Operation Soap 1981 — the largest mass arrest since the October Crisis, the night that organised the community into a political force.',
+    intent: 'both',
+    notes: 'Set by can_dep_bathhouse_raids_1981. Follow-through: ft86_bathhouse_aids_years.',
+  },
+
+  can_prairie_homestead: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up on a Prairie homestead — 160 acres, the wheat economy, the drought years, the CPR freight rates, the community around the grain elevator and the rink.',
+    intent: 'year_texture',
+    notes: 'Set by can_dep_prairie_homestead.',
+  },
+
+  can_visible_minority_multicultural: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Visible minority Canadian who came of age under the official multiculturalism policy — the gap between policy and the "where are you really from" encounter.',
+    intent: 'year_texture',
+    notes: 'Set by can_dep_visible_minority_multicultural.',
+  },
+
+  can_oil_sands_worker: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Worked in the Alberta oil sands — Fort McMurray FIFO, the boom wages, the prefab camp, the price-cycle vulnerability.',
+    intent: 'both',
+    notes: 'Set by can_dep_oil_sands_worker. Follow-through: ft86_oil_sands_bust.',
+  },
+
   aus_vietnam_generation: {
     weight: 'moderate',
     category: 'historical',
@@ -2871,6 +2959,134 @@ export const POLITICAL_FLAGS = {
     description: 'An adult Australian during the Voice to Parliament referendum 2023 — 60.06% No, every state, the advisory body with no veto power that the country voted against.',
     intent: 'both',
     notes: 'Set by aus_dep_voice_2023. Follow-through: ft85_voice_aftermath.',
+  },
+
+  nz_waitangi_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Māori New Zealander who engaged with the Waitangi Tribunal process — the 1975 mechanism to hear Treaty grievances, the slow decades of claims and partial settlements.',
+    intent: 'both',
+    notes: 'Set by nz_dep_maori_land_waitangi. Follow-through: ft87_waitangi_settlement_1990s.',
+  },
+
+  nz_dawn_raids_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Pacific Islander New Zealander who lived through the dawn raids of 1974–1976 — the disproportionate enforcement against Pacific communities, the Polynesian Panthers resistance.',
+    intent: 'both',
+    notes: 'Set by nz_dep_dawn_raids_pacific. Follow-through: ft87_dawn_raids_apology_2021.',
+  },
+
+  nz_homosexual_reform_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'LGBTQ New Zealander who came of age around the Homosexual Law Reform Act 1986 — the two-year parliamentary debate, the 800,000-signature petition against, the 9 July passage.',
+    intent: 'both',
+    notes: 'Set by nz_dep_homosexual_law_reform. Follow-through: ft87_marriage_equality_2013.',
+  },
+
+  nz_erebus_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Adult New Zealander who lived through the Erebus disaster 1979 — 257 dead, the coordinated cover-up, Justice Mahon\'s "orchestrated litany of lies", the decade of legal battle.',
+    intent: 'both',
+    notes: 'Set by nz_dep_erebus_1979. Follow-through: ft87_erebus_mahon_vindicated.',
+  },
+
+  nz_pike_river_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Adult New Zealander shaped by the Pike River disaster 2010 — 29 miners, systematic regulatory failure, the sealed mine, the families at the gate across nine years of waiting.',
+    intent: 'both',
+    notes: 'Set by nz_dep_pike_river_2010. Follow-through: ft87_pike_river_reentry_2019.',
+  },
+
+  nz_urban_maori: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Urban-born Māori navigating identity in a city not built to hold it — the marae as a place you visit, not the centre; the double challenge from both Pākehā and rural Māori.',
+    intent: 'year_texture',
+    notes: 'Set by nz_dep_urban_maori_identity.',
+  },
+
+  nz_bastion_point_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Māori witness or participant of the 506-day Bastion Point / Ōrākei occupation 1977–78 — the bulldozers on 25 May 1978, the arrests, the photographs that circulated for years.',
+    intent: 'year_texture',
+    notes: 'Set by nz_dep_bastion_point_1978.',
+  },
+
+  nz_oe_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'New Zealander who did the Overseas Experience — the Earls Court flat, the years in London or Europe, the return home that clarified what New Zealand was by its absence.',
+    intent: 'year_texture',
+    notes: 'Set by nz_dep_oe_london.',
+  },
+
+  sg_coldstore_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Singaporean adult during Operation Coldstore 1963 — the ISA detention of 100+ Barisan Sosialis leaders, unionists, and student activists without trial before separation from Malaysia.',
+    intent: 'both',
+    notes: 'Set by sg_dep_coldstore_1963. Follow-through: ft88_coldstore_oral_history.',
+  },
+
+  sg_nantah_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Chinese Singaporean who came of age around the Nanyang University (Nantah) closure 1980 — the Chinese-medium university built by community donations, merged into NUS, instruction ended.',
+    intent: 'year_texture',
+    notes: 'Set by sg_dep_nantah_closure_1980.',
+  },
+
+  sg_spectrum_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Singaporean who lived through Operation Spectrum 1987 — 22 Catholic social workers and activists detained under ISA for alleged Marxist conspiracy; no charges ever filed.',
+    intent: 'both',
+    notes: 'Set by sg_dep_spectrum_1987. Follow-through: ft88_spectrum_released.',
+  },
+
+  sg_malay_muslim_sg_identity: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Malay-Muslim Singaporean navigating identity in a Chinese-majority state — the national language spoken by 15%, MUIS-administered religion, National Service routing, GRC guarantees.',
+    intent: 'year_texture',
+    notes: 'Set by sg_dep_malay_muslim_sg_identity.',
+  },
+
+  sg_migrant_worker_sg: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Foreign construction or domestic worker in Singapore — the dormitory, the salary deductions, the dormitory COVID outbreak 2020 when workers were locked in for months.',
+    intent: 'both',
+    notes: 'Set by sg_dep_migrant_worker. Follow-through: ft88_migrant_worker_covid_dorms.',
+  },
+
+  sg_foreign_talent_debate: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Singaporean professional who lived through the 2010s "foreign talent" debate — PAP\'s worst GE result in 2011 partly driven by immigration concerns, the 6.9M Population White Paper.',
+    intent: 'year_texture',
+    notes: 'Set by sg_dep_foreign_talent_debate.',
+  },
+
+  sg_lgbtq_377a_repeal: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'LGBTQ Singaporean who witnessed the Section 377A repeal in January 2023 — the decriminalisation paired with constitutional amendment defining marriage as man-woman.',
+    intent: 'year_texture',
+    notes: 'Set by sg_dep_377a_repeal_2022.',
+  },
+
+  sg_sg50_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Singaporean elder who was alive at independence (separation 1965) and present at the SG50 celebrations 2015 — the founding generation reckoning with fifty years of what was built.',
+    intent: 'year_texture',
+    notes: 'Set by sg_dep_sg50_reckoning.',
   },
 
   great_migration_generation: {
@@ -3761,6 +3977,30 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by ci_coup_1999. Year texture: the radio at midnight, Guéï leaving.',
   },
 
+  ci_cfa_awareness: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Understood the CFA franc system — fixed rate, 50% reserves at Banque de France, interest rates set in Frankfurt, the tradeoffs of monetary stability without monetary sovereignty',
+    intent: 'year_texture',
+    notes: 'Set by ci_dep_cfa.',
+  },
+
+  ci_ouattara_era_witness: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived Ouattara\'s reconstruction era 2012+: GDP growth, incomplete justice for 2010 war crimes, third term controversy, the country growing while the accounting stayed partial',
+    intent: 'both',
+    notes: 'Set by ci_dep_ouattara_era. Follow-through: ft92_ouattara_late.',
+  },
+
+  ci_licorne_era: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived under Operation Licorne — 13 years of French troops in Ivory Coast, the 2004 shooting of protesters, France\'s role in ending the 2011 crisis in Ouattara\'s favour',
+    intent: 'both',
+    notes: 'Set by ci_dep_licorne. Follow-through: ft92_licorne_late.',
+  },
+
   ci_gbagbo_reckoning: {
     weight: 'moderate',
     category: 'political',
@@ -3783,6 +4023,14 @@ export const POLITICAL_FLAGS = {
     description: 'Came of age under Paul Biya\'s presidency — the photo in every office, the RDPC as the party of the state, the managed elections across four decades',
     intent: 'year_texture',
     notes: 'Set by cmr_biya_long_rule. Year texture: the form that asks political affiliation, the conversation that stops.',
+  },
+
+  cmr_ahidjo_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Grew up under Ahmadou Ahidjo\'s single-party state — the photograph in the school, the form that requires the party name, the UPC suppression that predated independence',
+    intent: 'year_texture',
+    notes: 'Set by cmr_dep_ahidjo.',
   },
 
   anglophone_political: {
@@ -6160,6 +6408,70 @@ export const POLITICAL_FLAGS = {
     description: 'Alive during Mongolia\'s 1990 democratic revolution — hunger strikes in Sukhbaatar Square, the MPRP\'s unexpected agreement to multi-party elections.',
     intent: 'event',
     notes: 'Set by mn_1990_revolution.',
+  },
+
+  mn_naadam_childhood: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up attending Naadam — the Three Games (wrestling, horse racing, archery) that the Soviet government could not cancel because cancelling them would mean cancelling the people.',
+    intent: 'year_texture',
+    notes: 'Set by mn_dep_naadam_childhood. Mongolia only.',
+  },
+
+  mn_genghis_rehabilitation_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up after 1990 when Genghis Khan was rehabilitated as national hero — airport named for him, face on currency, the forty-metre equestrian statue on the steppe — the opposite of what the previous generation was officially taught.',
+    intent: 'year_texture',
+    notes: 'Set by mn_dep_genghis_rehabilitation. Mongolia only, 1990+.',
+  },
+
+  mn_mongolian_script_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Learned traditional vertical Mongolian script as part of the post-1990 revival — the script Cyrillic replaced in 1941, preserved in Inner Mongolia (China), recovered in Mongolia.',
+    intent: 'both',
+    notes: 'Set by mn_dep_mongolian_script. Checked by ft90_mongolian_script_late.',
+  },
+
+  mn_buddhism_revival_generation: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Connected to the post-1990 Buddhism revival — the reopened Gandantegchinlen monastery, thangkas brought out of hiding, the transmission of religious knowledge that survived the 1937 purges.',
+    intent: 'both',
+    notes: 'Set by mn_dep_buddhism_revival. Requires stalinist_purge_family_memory. Checked by ft90_buddhism_late_reckoning.',
+  },
+
+  mn_cashmere_steppe_awareness: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Mongolian herder who shifted to cashmere goats in the 1990s market boom and watched the steppe degrade — goats strip roots, sheep graze tops; the calculation that made sense in 1996 became visible as desertification by 2010.',
+    intent: 'both',
+    notes: 'Set by mn_dep_cashmere_goats. Checked by ft90_cashmere_desertification.',
+  },
+
+  mn_oyu_tolgoi_generation: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Alive during the Oyu Tolgoi copper/gold mine debate — the 66/34 foreign/state split, the 2012 renegotiation, the question of whether Mongolia would repeat or interrupt its resource extraction history.',
+    intent: 'both',
+    notes: 'Set by mn_dep_oyu_tolgoi. Checked by ft90_oyu_tolgoi_late.',
+  },
+
+  mn_inner_mongolia_connection: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Mongolian aware of Inner Mongolia (China) — more ethnic Mongolians in China than in Mongolia; the traditional script preserved there; the 2020 Mandarin education imposition and protests.',
+    intent: 'year_texture',
+    notes: 'Set by mn_dep_inner_mongolia_connection. Mongolia only.',
+  },
+
+  mn_ulaanbaatar_air_crisis: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Experienced Ulaanbaatar\'s winter air crisis — PM2.5 levels 80x WHO guidelines, coal burning in ger districts, the worst urban air quality of any capital city in the world.',
+    intent: 'year_texture',
+    notes: 'Set by mn_dep_ulaanbaatar_air. Mongolia only, 2010+.',
   },
 
   sankara_generation: {
