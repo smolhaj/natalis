@@ -902,6 +902,14 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by cmr_dep_yaounde.',
   },
 
+  laos_vientiane_generation: {
+    weight: 'minor',
+    category: 'place',
+    description: 'Came of age in Vientiane — the quietest capital in Southeast Asia, the French colonial boulevard along the Mekong, the That Luang stupa, the evening light on the Thai shore across the river',
+    intent: 'year_texture',
+    notes: 'Set by laos_dep_vientiane.',
+  },
+
   nga_delta_community: {
     weight: 'major',
     category: 'environmental',

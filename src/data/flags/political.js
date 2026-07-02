@@ -1298,6 +1298,22 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by laos_mekong_dams. Year texture (the river the fishermen were born on is changing).',
   },
 
+  laos_monarchy_fallen: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Childhood witness of the monarchy\'s end in December 1975 — the photograph in the classroom replaced, King Savang Vatthana sent to Viengxai and never returned',
+    intent: 'year_texture',
+    notes: 'Set by laos_dep_monarchy.',
+  },
+
+  laos_sombath_era: {
+    weight: 'major',
+    category: 'political',
+    description: 'Lived through the December 2012 disappearance of civil society leader Sombath Somphone — the CCTV checkpoint footage, the ongoing investigation, the specific lesson about accountability in Laos',
+    intent: 'both',
+    notes: 'Set by laos_dep_sombath. Follow-through: ft94_sombath_late.',
+  },
+
   nam_herero_memory_bearer: {
     weight: 'major',
     category: 'historical',

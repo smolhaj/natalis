@@ -908,6 +908,46 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by laos_alms_round. Year texture (what you give out of the house at dawn comes back).',
   },
 
+  laos_seminar_camp_kin: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Had a family member taken to a post-1975 re-education "seminar" camp — the samana system that held thousands of RLAF officers, civil servants, and intellectuals in remote provinces',
+    intent: 'both',
+    notes: 'Set by laos_dep_seminar_camps. Follow-through: ft94_seminar_late.',
+  },
+
+  laos_scholarship_generation: {
+    weight: 'moderate',
+    category: 'education',
+    description: 'Part of the scholarship generation sent to study abroad — the USSR, Vietnam, Cuba, or East Germany — returning with technical knowledge and a specific relationship to comparison',
+    intent: 'year_texture',
+    notes: 'Set by laos_dep_scholarship.',
+  },
+
+  laos_that_luang_generation: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Grew up attending the Boun That Luang festival — the golden stupa, the monks at dawn, the party speeches alongside the ceremony, two layers occupying the same ritual space',
+    intent: 'year_texture',
+    notes: 'Set by laos_dep_that_luang.',
+  },
+
+  laos_river_generation: {
+    weight: 'minor',
+    category: 'place',
+    description: 'Grew up with the Mekong\'s seasonal calendar — wet-season floods, dry-season sandbanks, fish traps, the pirogue kept on the bank',
+    intent: 'year_texture',
+    notes: 'Set by laos_dep_river_childhood.',
+  },
+
+  laos_hmong_return_era: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Hmong who witnessed the 2009 forced repatriation from Huay Nam Khao camp — 4,600 people sent back under UNHCR observation that was later acknowledged as inadequate',
+    intent: 'both',
+    notes: 'Set by laos_dep_hmong_return. Follow-through: ft94_hmong_return_late.',
+  },
+
   laos_mekong_generation: {
     weight: 'minor',
     category: 'identity',

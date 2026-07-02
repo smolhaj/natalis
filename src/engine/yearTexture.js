@@ -11451,6 +11451,50 @@ function buildYearTexture(state) {
       ? 'You have been a citizen of the Lao PDR since it was proclaimed. The country that was the Kingdom of Laos exists now as a name in history books. Both countries are the country you were born in.'
       : 'The war was secret. The revolution was public. The things done in the name of the revolution, to the people who chose the wrong side, are less documented than the revolution itself.',
   ])
+  if (F.has('laos_monarchy_fallen') && Math.random() < 0.17) return pick([
+    'The photograph in the school that had been the king\'s photograph was replaced. The new photograph was the party leadership. You absorbed this as the natural order of things. It was only later that you understood what replaced what.',
+    phase === 'late_life'
+      ? 'King Savang Vatthana was sent to Viengxai and never came back. The royal family was held in camps in the northeast. The official line was that they were being re-educated. The line between re-education and something else was managed by the people who held them.'
+      : 'You were young enough in 1975 that the monarchy is a before-time rather than a memory. The adults in your life had memories of it. The memories were not shared freely in the years after.',
+  ])
+  if (F.has('laos_seminar_camp_kin') && Math.random() < 0.20) return pick([
+    'He came back from the seminar changed in a way that took five more years to understand and then settled as the version of him you knew afterward. The camp had done something to the calibration between what he showed and what he thought.',
+    phase === 'late_life'
+      ? 'The people who were in the samana camps and died there are not officially counted. The people who came back and died of age carrying what they carried — their accounts went with them. The historical record is whatever they agreed to share.'
+      : 'The word for it was "seminar." Samana. The same word used for a conference or a course of study. This is the specific work that language does when it is managed by people who benefit from the ambiguity.',
+  ])
+  if (F.has('laos_scholarship_generation') && Math.random() < 0.17) return pick([
+    'You learned what your country looked like from outside. The scholarship generation carried back technical knowledge and, quietly, a specific relationship to comparison that did not quite go away.',
+    phase === 'late_life'
+      ? 'The people you studied alongside in the USSR are not the people they were when you studied with them. Neither are you. The country you came back to was also different. Three transformations and the question of which one changed you most is genuinely open.'
+      : 'Three months of not understanding the lectures. Then understanding. Then understanding better than the classmates who had grown up there. That sequence — the arrival, the gap, the closing of the gap — is the scholarship experience regardless of country.',
+  ])
+  if (F.has('laos_vientiane_generation') && Math.random() < 0.17) return pick([
+    'Vientiane at sunset: the Mekong, the sandbanks, the Thai shore in the last light. The quietest capital in Southeast Asia is quietest in the hour before dark. You have stopped noticing it, which is the same thing as knowing it completely.',
+    'The French colonial buildings on the boulevard. The NGO vehicles and the Chinese construction crews and the monks in orange. The pace that slows in the afternoon heat and does not return to speed until evening. This is the city.',
+  ])
+  if (F.has('laos_that_luang_generation') && Math.random() < 0.17) return pick([
+    'The Boun That Luang has two layers: the monks circling the stupa at dawn, which has been happening for eight hundred years; and the party officials under the flag, which has been happening since 1975. The layers do not cancel each other.',
+    phase === 'late_life'
+      ? 'A country that had a revolution and also had Buddhism before it is a country where the revolution happened on top of something that predates it and continues underneath. This is visible at the That Luang stupa every November if you are looking for it.'
+      : 'The candles go up regardless. The monks circle the stupa regardless. The political speech is given and finished and the ceremony continues. There is a lesson in the sequencing but no one states it.',
+  ])
+  if (F.has('laos_river_generation') && Math.random() < 0.17) return pick([
+    'The Mekong\'s calendar was your calendar: wet season when the fish came, dry season when the sandbanks appeared and you could walk to places that were river in October. The river was the road and the food supply and the boundary.',
+    'The pirogue leaked. It required bailing before it could be used. At speed it leaked anyway. This is what you remember about the river at that age — not the beauty of it, which you did not see yet, but the specific problems of managing a leaking boat.',
+  ])
+  if (F.has('laos_sombath_era') && Math.random() < 0.20) return pick([
+    'The CCTV footage from the checkpoint exists. You know what it shows. In Laos you do not say publicly what you believe it shows. The government says the investigation continues. The investigation has continued since December 2012.',
+    phase === 'late_life'
+      ? 'Shui Meng has continued to ask publicly for information that has not been provided. The lesson her persistence teaches — about what is available to a person who asks a government directly for accountability, in this country — is specific and not easy to look at directly.'
+      : 'Sombath worked on rural development and youth education. He received the Ramon Magsaysay Award. He was taken at a checkpoint on the outskirts of Vientiane on a December night. The term for what happened after has not officially been determined.',
+  ])
+  if (F.has('laos_hmong_return_era') && Math.random() < 0.20) return pick([
+    'The families who came back in 2009 are a generation between two places. The children who grew up in Huay Nam Khao camp are adults now who grew up afterward in Laos. They know how to manage without expecting much from the structures around them.',
+    phase === 'late_life'
+      ? 'The UNHCR monitoring of the return was later acknowledged as inadequate. The guarantees of safety were given and the ability to verify them was limited. This is the record. The families are in the resettlement villages. The record and the families both exist.'
+      : 'You know the specific quality of their silence about where they had been and what happened. It is a silence that comes from having had something witnessed that was not supposed to be witnessed and then being returned to the country of the people who did not want it witnessed.',
+  ])
 
   // ─── CARIBBEAN TEXTURE ───────────────────────────────────────────────────────
   if (F.has('jamaican_garrison_community') && Math.random() < 0.22) return pick([
