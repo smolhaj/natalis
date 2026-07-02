@@ -488,7 +488,7 @@ export const EARLY_LIFE_EVENTS = [
       G.age >= 19 && G.age <= 25 &&
       !G.mem?.yaMoneyZero &&
       G.money < 400 &&
-      !G.flags.has('student'),
+      !G.education?.enrolled,
     text: 'The account shows a number that requires decisions to be made immediately. You calculate what is required between now and next payment. The calculation has no slack in it. You walk past a cafe and do not go in. You eat what is in the cupboard in a specific order — cheapest last, in case something changes.',
     choices: [
       {

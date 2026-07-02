@@ -314,7 +314,7 @@ export const EVENTS_SONDER_2 = [
     weight: 2,
     when: (G) =>
       !G.mem?.s2_dfn &&
-      G.flags.includes('lost_parent_father') &&
+      G.parents?.father?.alive === false &&
       G.age >= 35,
     text: 'Your father\'s phone number is still in your contacts. You have not deleted it. You have not examined this closely.',
     choices: null,
@@ -377,7 +377,7 @@ export const EVENTS_SONDER_2 = [
     weight: 2,
     when: (G) =>
       !G.mem?.s2_dpv &&
-      (G.flags.includes('lost_parent_mother') || G.flags.includes('lost_parent_father')) &&
+      G.flags.includes('lost_parent') &&
       G.age >= 35,
     text: 'You can still hear how they answered the phone. The specific tone — slightly more formal before they recognised the voice, then the change. That voice was a constant for forty years. You hear it now only in memory, which is less reliable each year.',
     choices: null,

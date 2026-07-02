@@ -132,7 +132,7 @@ export const WEALTH_SYSTEM_EVENTS = [
     id: 'ws_hyperinflation_conversion',
     phase: null,
     weight: 4,
-    when: (G) => G.flags.includes('hyperinflation_experienced') && !G.flags.includes('converted_hard_currency') &&
+    when: (G) => G.flags.includes('survived_hyperinflation') && !G.flags.includes('converted_hard_currency') &&
       G.money > 200 && G.age >= 18,
     text: 'The prices have been doubling every few weeks. Bread, cooking oil, transport. Your salary arrives and by Friday it buys less than it did on Monday. A neighbour mentions a man who changes money — dollars, euros, rand. Real currency. The rate is not good, but the alternative is watching everything you have dissolve.',
     choices: [
@@ -213,7 +213,7 @@ export const WEALTH_SYSTEM_EVENTS = [
     id: 'ws_dowry_negotiation',
     phase: 'young_adult',
     weight: 3,
-    when: (G) => G.character?.gender === 'female' && G.flags.includes('engaged') &&
+    when: (G) => G.character?.gender === 'female' && G.partner?.engaged &&
       !G.mem?.dowryNegotiated &&
       ['India', 'Pakistan', 'Bangladesh', 'Nepal', 'Sri Lanka'].includes(G.character?.country?.name) &&
       G.currentYear < 2010,
@@ -253,7 +253,7 @@ export const WEALTH_SYSTEM_EVENTS = [
     id: 'ws_lobola_payment',
     phase: 'young_adult',
     weight: 3,
-    when: (G) => G.character?.gender === 'male' && G.flags.includes('engaged') &&
+    when: (G) => G.character?.gender === 'male' && G.partner?.engaged &&
       !G.mem?.lobolaPaid &&
       ['South Africa', 'Zimbabwe', 'Zambia', 'Kenya', 'Uganda',
        'Tanzania', 'Nigeria', 'Ghana'].includes(G.character?.country?.name),
@@ -293,7 +293,7 @@ export const WEALTH_SYSTEM_EVENTS = [
     id: 'ws_mahr_setting',
     phase: 'young_adult',
     weight: 3,
-    when: (G) => G.flags.includes('engaged') && !G.mem?.mahrSet &&
+    when: (G) => G.partner?.engaged && !G.mem?.mahrSet &&
       ['muslim', 'muslim_sunni', 'muslim_shia'].includes(G.religion ?? G.character?.religion) &&
       G.character?.gender === 'male',
     text: 'The nikah requires a mahr — a gift from you to your wife, hers unconditionally, stated in the contract. It is not symbolic. The sheikh explains that it is her financial security, her right, independent of anything that comes after.',

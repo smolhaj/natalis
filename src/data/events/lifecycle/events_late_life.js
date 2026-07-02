@@ -587,7 +587,7 @@ export const LATE_LIFE_EVENTS = [
     when: (G) =>
       !G.mem.legacyFaithReturn &&
       G.age >= 65 &&
-      (G.flags.includes('left_religion') || G.flags.includes('secular') || !G.religion),
+      (G.flags.includes('left_religion') || G.religion === 'secular'),
     text: 'You find yourself back in the building. You do not know exactly when the impulse returned or what to call it. Not belief, maybe. Not disbelief either. Something adjacent to comfort, or the recognition that the familiar has a different value at this distance from the beginning. You sit in the same kind of pew you sat in as a child and something is different and something is exactly the same.',
     choices: [
       {

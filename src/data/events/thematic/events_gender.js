@@ -1671,7 +1671,7 @@ export const GENDER_EVENTS = [
     when: (G) =>
       G.character.gender === 'male' &&
       G.age >= 8 && G.age <= 14 &&
-      G.flags.includes('orphaned'),
+      G.parents?.father?.alive === false,
     text: 'Your father is gone. Your mother or grandmother sits you down. "You are the man of the house now." You are eleven. You understand this is both trust and weight, love and something that will cost you.',
     context: null,
     choices: [

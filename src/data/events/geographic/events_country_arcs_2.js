@@ -496,7 +496,7 @@ export const COUNTRY_ARC_2_EVENTS = [
     weight: 3,
     when: (G) =>
       G.character.country.name === 'United States' &&
-      (G.religion === 'islam' || G.flags.includes('muslim') || (G.ethnicity && (G.ethnicity.toLowerCase().includes('arab') || G.ethnicity.toLowerCase().includes('south_asian') || G.ethnicity.toLowerCase().includes('middle_east')))) &&
+      (G.religion?.startsWith('muslim') || (G.ethnicity && (G.ethnicity.toLowerCase().includes('arab') || G.ethnicity.toLowerCase().includes('south_asian') || G.ethnicity.toLowerCase().includes('middle_east')))) &&
       G.currentYear >= 2001 && G.currentYear <= 2005 &&
       !G.mem?.usaPost911Airport,
     text: 'The security line at the airport is routine until it is not. You are pulled aside. Your passport is American. They know this. The questions are specific in a way that makes their logic clear. You calculate, as you have been calculating in many rooms since September, each word before it leaves your mouth. The other passengers watch or look away. Both are a kind of answer.',

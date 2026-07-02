@@ -685,6 +685,7 @@ export const useGameStore = create((set, get) => ({
       ...state,
       partner: state.pendingPartner,
       pendingPartner: null,
+      flags: [...new Set([...state.flags, 'first_relationship'])],
       log: [...state.log, { age: state.age, text: `You start dating ${state.pendingPartner.name}.`, isKey: true }],
     })
   },

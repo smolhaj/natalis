@@ -50,7 +50,7 @@ export const EVENTS_SONDER_16 = [
     weight: 2,
     when: (G) =>
       G.age >= 40 &&
-      (G.flags.has('mother_died') || G.flags.has('father_died') || G.flags.has('friend_died')) &&
+      (G.flags.has('lost_parent') || G.flags.has('friend_died')) &&
       !G.mem?.s16HandwritingDead,
     text: pick([
       `You find a note in their handwriting — a grocery list, a card, something unremarkable at the time of writing and now entirely remarkable. The handwriting is more their presence than the photograph. The photograph captures an exterior. The handwriting is them making a decision about where to place their pen.`,
@@ -425,7 +425,7 @@ export const EVENTS_SONDER_16 = [
     weight: 2,
     when: (G) =>
       G.age >= 65 &&
-      (G.flags.has('mother_died') || G.flags.has('father_died')) &&
+      G.flags.has('lost_parent') &&
       !G.mem?.s16WhatTheyCalledYou,
     text: pick([
       `There is a name only one person ever called you — a nickname from childhood, a version of your name that existed only in their mouth. Nobody else used it. With them gone, nobody uses it. The name died when they did, and you did not know you were going to miss it this specifically.`,
