@@ -8,6 +8,14 @@ import { getCountryRegime, generateIdentityCard, DESIRE_LABELS, getWealthTierLab
 import { PLACES, getPlacesForCountry, getRelocationCost } from '../data/places'
 import ActivitiesPanel from './ActivitiesPanel'
 
+const PHASE_CHAPTER_LABELS = {
+  childhood: 'Early Years',
+  adolescence: 'Coming of Age',
+  young_adult: 'Young Adulthood',
+  midlife: 'Midlife',
+  late_life: 'Late Life',
+}
+
 const PHASE_LABELS = {
   early_childhood: 'Early Childhood',
   childhood: 'Childhood',
@@ -62,9 +70,54 @@ export default function LifeScreen() {
     const d = Math.floor(ageFromStore / 10) * 10
     setOpenDecades(prev => prev.has(d) ? prev : new Set([...prev, d]))
   }, [Math.floor(ageFromStore / 10)])
+
+  // Stat delta flash — shows +/- on stat bars when values change
+  useEffect(() => {
+    if (!prevStatsRef.current) { prevStatsRef.current = stats; return }
+    const prev = prevStatsRef.current
+    const deltas = {}
+    let changed = false
+    for (const key of ['happiness', 'health', 'smarts', 'looks']) {
+      const d = Math.round((stats[key] ?? 0) - (prev[key] ?? 0))
+      if (d !== 0) { deltas[key] = d; changed = true }
+    }
+    prevStatsRef.current = { ...stats }
+    if (changed) {
+      setFlashDeltas(deltas)
+      if (flashTimerRef.current) clearTimeout(flashTimerRef.current)
+      flashTimerRef.current = setTimeout(() => setFlashDeltas({}), 2000)
+    }
+  }, [stats.happiness, stats.health, stats.smarts, stats.looks])
+
+  // Keyboard shortcuts: Space/Enter → age up or continue; 1/2/3 → choices
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return
+      if (e.metaKey || e.ctrlKey || e.altKey) return
+      if (pendingEvent?.isAutomatic) {
+        if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); resolveAutoEvent() }
+        return
+      }
+      if (pendingEvent?.choices?.length > 0) {
+        if (e.key === '1') { resolveChoice(0); return }
+        if (e.key === '2' && pendingEvent.choices.length > 1) { resolveChoice(1); return }
+        if (e.key === '3' && pendingEvent.choices.length > 2) { resolveChoice(2); return }
+        return
+      }
+      if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); ageUp() }
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [pendingEvent, ageUp, resolveAutoEvent, resolveChoice])
   const [showMoveModal, setShowMoveModal] = useState(false)
   const [moveStep, setMoveStep] = useState('pick') // 'pick' | 'confirm'
   const [selectedPlace, setSelectedPlace] = useState(null)
+  const [flashDeltas, setFlashDeltas] = useState({})
+  const prevStatsRef = useRef(null)
+  const flashTimerRef = useRef(null)
+
+  const resolveAutoEvent = useGameStore(s => s.resolveAutoEvent)
+  const resolveChoice = useGameStore(s => s.resolveChoice)
 
   const character    = useGameStore(s => s.character)
   const stats        = useGameStore(s => s.stats)
@@ -234,10 +287,10 @@ export default function LifeScreen() {
       {/* ── Stats strip ────────────────────────────────────────────────── */}
       <div className="bg-white border-b border-natalis-border flex-shrink-0">
         <div className="max-w-2xl mx-auto px-4 py-3 grid grid-cols-2 gap-x-6 gap-y-2">
-          <StatBar stat="happiness" label="Happiness" value={stats.happiness} />
-          <StatBar stat="health"    label="Health"    value={stats.health} />
-          <StatBar stat="smarts"    label="Smarts"    value={stats.smarts} />
-          <StatBar stat="looks"     label="Looks"     value={stats.looks} />
+          <StatBar stat="happiness" label="Happiness" value={stats.happiness} delta={flashDeltas.happiness} />
+          <StatBar stat="health"    label="Health"    value={stats.health}    delta={flashDeltas.health} />
+          <StatBar stat="smarts"    label="Smarts"    value={stats.smarts}    delta={flashDeltas.smarts} />
+          <StatBar stat="looks"     label="Looks"     value={stats.looks}     delta={flashDeltas.looks} />
         </div>
       </div>
 
@@ -433,35 +486,58 @@ export default function LifeScreen() {
                 </div>
 
                 {/* ── RECENT VIEW ── */}
-                {logMode === 'recent' && recentLog.map((entry, i) => (
-                  <div key={i} className={`rounded-xl px-4 py-3 border text-sm leading-relaxed ${
-                    entry.isDeath      ? 'bg-zinc-900 border-zinc-800 text-zinc-100' :
-                    entry.isHeadline   ? 'bg-stone-100 border-stone-300 text-stone-700' :
-                    entry.isSoundtrack ? 'bg-violet-50 border-violet-200 text-violet-900' :
-                    entry.isWorld      ? 'bg-amber-50 border-amber-200 text-amber-800' :
-                    entry.isLetter     ? 'bg-amber-50 border-amber-300 text-stone-800' :
-                    entry.isKey        ? 'bg-blue-50 border-blue-200 text-blue-800' :
-                    'bg-white border-natalis-border text-natalis-dim'
-                  }`}>
-                    {entry.isDeath && (
-                      <div className="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1">Age {entry.age}</div>
-                    )}
-                    {entry.isHeadline && (
-                      <div className="text-xs font-semibold uppercase tracking-wider text-stone-500 mb-1">📰 {entry.age}</div>
-                    )}
-                    {entry.isSoundtrack && (
-                      <div className="text-xs font-semibold uppercase tracking-wider text-violet-500 mb-1">🎵 {entry.age}</div>
-                    )}
-                    {entry.isWorld && entry.worldEventName && (
-                      <div className="text-xs font-bold uppercase tracking-wider text-amber-700 mb-1">🌐 {entry.worldEventName}</div>
-                    )}
-                    {entry.isLetter && (
-                      <div className="text-xs font-semibold uppercase tracking-wider text-amber-700 mb-2">✉ Age {entry.age}</div>
-                    )}
-                    {!entry.isHeadline && !entry.isSoundtrack && !entry.isDeath && !entry.isLetter && <span className="font-bold mr-2 text-xs uppercase tracking-wider opacity-60">Age {entry.age}</span>}
-                    <span className={`${entry.isHeadline || entry.isSoundtrack ? 'italic text-sm' : ''} ${entry.isLetter ? 'italic block ml-2 border-l-2 border-amber-400 pl-3' : ''}`}>{entry.text}</span>
-                  </div>
-                ))}
+                {logMode === 'recent' && recentLog.map((entry, i) => {
+                  const entryYear = entry.year ?? ((character.birthYear ?? 1960) + (entry.age ?? 0))
+                  const ageLabel = `Age ${entry.age} · ${entryYear}`
+
+                  // Phase transition — chapter heading treatment
+                  if (entry.isPhaseTransition) {
+                    const chapterLabel = PHASE_CHAPTER_LABELS[entry.toPhase] ?? ''
+                    return (
+                      <div key={i} className="relative flex items-center my-1">
+                        <div className="flex-grow border-t border-natalis-border" />
+                        <div className="mx-3 text-center">
+                          {chapterLabel && <p className="text-[10px] font-bold uppercase tracking-widest text-natalis-muted mb-0.5">{chapterLabel}</p>}
+                          <p className="text-xs italic text-natalis-dim leading-snug max-w-xs">{entry.text}</p>
+                          <p className="text-[10px] text-natalis-muted mt-0.5">{ageLabel}</p>
+                        </div>
+                        <div className="flex-grow border-t border-natalis-border" />
+                      </div>
+                    )
+                  }
+
+                  return (
+                    <div key={i} className={`rounded-xl px-4 py-3 border text-sm leading-relaxed ${
+                      entry.isDeath      ? 'bg-zinc-900 border-zinc-800 text-zinc-100' :
+                      entry.isHeadline   ? 'bg-stone-100 border-stone-300 text-stone-700' :
+                      entry.isSoundtrack ? 'bg-violet-50 border-violet-200 text-violet-900' :
+                      entry.isWorld      ? 'bg-amber-50 border-amber-200 text-amber-800' :
+                      entry.isLetter     ? 'bg-amber-50 border-amber-300 text-stone-800' :
+                      entry.isKey        ? 'bg-blue-50 border-l-4 border-blue-400 text-blue-900' :
+                      'bg-white border-natalis-border text-natalis-dim'
+                    }`}>
+                      {entry.isDeath && (
+                        <div className="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1">{ageLabel}</div>
+                      )}
+                      {entry.isHeadline && (
+                        <div className="text-xs font-semibold uppercase tracking-wider text-stone-500 mb-1">📰 {ageLabel}</div>
+                      )}
+                      {entry.isSoundtrack && (
+                        <div className="text-xs font-semibold uppercase tracking-wider text-violet-500 mb-1">🎵 {ageLabel}</div>
+                      )}
+                      {entry.isWorld && entry.worldEventName && (
+                        <div className="text-xs font-bold uppercase tracking-wider text-amber-700 mb-1">🌐 {entry.worldEventName}</div>
+                      )}
+                      {entry.isLetter && (
+                        <div className="text-xs font-semibold uppercase tracking-wider text-amber-700 mb-2">✉ {ageLabel}</div>
+                      )}
+                      {!entry.isHeadline && !entry.isSoundtrack && !entry.isDeath && !entry.isLetter && (
+                        <span className={`font-bold mr-2 text-xs uppercase tracking-wider ${entry.isKey ? 'text-blue-500 opacity-100' : 'opacity-60'}`}>{ageLabel}</span>
+                      )}
+                      <span className={`${entry.isHeadline || entry.isSoundtrack ? 'italic text-sm' : ''} ${entry.isLetter ? 'italic block ml-2 border-l-2 border-amber-400 pl-3' : ''} ${entry.isKey && !entry.isWorld ? 'font-medium' : ''}`}>{entry.text}</span>
+                    </div>
+                  )
+                })}
 
                 {/* ── TIMELINE / DECADES VIEW ── */}
                 {logMode === 'decades' && (() => {
@@ -529,25 +605,37 @@ export default function LifeScreen() {
 
                         {isOpen && (
                           <div className="divide-y divide-natalis-border">
-                            {entries.map((entry, i) => (
-                              <div key={i} className={`px-4 py-2.5 text-sm leading-relaxed ${
-                                entry.isDeath      ? 'bg-zinc-900 text-zinc-100' :
-                                entry.isHeadline   ? 'bg-stone-100 text-stone-700' :
-                                entry.isSoundtrack ? 'bg-violet-50 text-violet-900' :
-                                entry.isWorld      ? 'bg-amber-50 text-amber-800' :
-                                entry.isLetter     ? 'bg-amber-50 text-stone-800' :
-                                entry.isKey        ? 'bg-blue-50 text-blue-800' :
-                                'text-natalis-dim'
-                              }`}>
-                                {entry.isDeath && <span className="font-semibold mr-1.5 text-xs text-zinc-400 uppercase">Age {entry.age} — </span>}
-                                {!entry.isHeadline && !entry.isSoundtrack && !entry.isDeath && !entry.isLetter && <span className="font-bold mr-2 text-xs opacity-50">Age {entry.age}</span>}
-                                {entry.isHeadline && <span className="text-xs font-semibold mr-1 text-stone-500">📰 {entry.age} — </span>}
-                                {entry.isSoundtrack && <span className="text-xs font-semibold mr-1 text-violet-500">🎵 {entry.age} — </span>}
-                                {entry.isWorld && entry.worldEventName && <span className="text-xs font-bold mr-1">🌐 {entry.worldEventName} — </span>}
-                                {entry.isLetter && <span className="text-xs font-semibold mr-1 text-amber-700">✉ {entry.age} — </span>}
-                                <span className={`${entry.isHeadline || entry.isSoundtrack ? 'italic' : ''} ${entry.isLetter ? 'italic' : ''}`}>{entry.text}</span>
-                              </div>
-                            ))}
+                            {entries.map((entry, i) => {
+                              const ey = entry.year ?? ((character.birthYear ?? 1960) + (entry.age ?? 0))
+                              const al = `Age ${entry.age} · ${ey}`
+                              if (entry.isPhaseTransition) {
+                                return (
+                                  <div key={i} className="px-4 py-3 text-center bg-natalis-bg">
+                                    <p className="text-[10px] font-bold uppercase tracking-widest text-natalis-muted">{PHASE_CHAPTER_LABELS[entry.toPhase] ?? ''}</p>
+                                    <p className="text-xs italic text-natalis-dim mt-0.5">{entry.text}</p>
+                                  </div>
+                                )
+                              }
+                              return (
+                                <div key={i} className={`px-4 py-2.5 text-sm leading-relaxed ${
+                                  entry.isDeath      ? 'bg-zinc-900 text-zinc-100' :
+                                  entry.isHeadline   ? 'bg-stone-100 text-stone-700' :
+                                  entry.isSoundtrack ? 'bg-violet-50 text-violet-900' :
+                                  entry.isWorld      ? 'bg-amber-50 text-amber-800' :
+                                  entry.isLetter     ? 'bg-amber-50 text-stone-800' :
+                                  entry.isKey        ? 'bg-blue-50 border-l-4 border-blue-400 text-blue-900' :
+                                  'text-natalis-dim'
+                                }`}>
+                                  {entry.isDeath && <span className="font-semibold mr-1.5 text-xs text-zinc-400 uppercase">{al} — </span>}
+                                  {!entry.isHeadline && !entry.isSoundtrack && !entry.isDeath && !entry.isLetter && <span className={`font-bold mr-2 text-xs ${entry.isKey ? 'text-blue-500' : 'opacity-50'}`}>{al}</span>}
+                                  {entry.isHeadline && <span className="text-xs font-semibold mr-1 text-stone-500">📰 {al} — </span>}
+                                  {entry.isSoundtrack && <span className="text-xs font-semibold mr-1 text-violet-500">🎵 {al} — </span>}
+                                  {entry.isWorld && entry.worldEventName && <span className="text-xs font-bold mr-1">🌐 {entry.worldEventName} — </span>}
+                                  {entry.isLetter && <span className="text-xs font-semibold mr-1 text-amber-700">✉ {al} — </span>}
+                                  <span className={`${entry.isHeadline || entry.isSoundtrack ? 'italic' : ''} ${entry.isLetter ? 'italic' : ''} ${entry.isKey && !entry.isWorld ? 'font-medium' : ''}`}>{entry.text}</span>
+                                </div>
+                              )
+                            })}
                           </div>
                         )}
                       </div>

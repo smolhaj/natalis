@@ -78,7 +78,8 @@ import {
 import { COUNTRIES } from '../data/countries'
 import { CRIMES } from '../data/crimes'
 
-const SAVE_KEY = 'natalis_v1'
+const SLOT_KEYS = ['natalis_v1', 'natalis_v2', 'natalis_v3']
+const META_KEYS = ['natalis_meta_0', 'natalis_meta_1', 'natalis_meta_2']
 
 function serializeState(state) {
   try {
@@ -106,18 +107,54 @@ function deserializeState(raw) {
   } catch { return null }
 }
 
-function saveToStorage(state) {
-  if (!state || state.screen === 'title' || state.screen === 'birth' || state.screen === 'curated_birth') return
-  const s = serializeState(state)
-  if (s) localStorage.setItem(SAVE_KEY, s)
+function saveSlotMeta(state, slot) {
+  try {
+    const meta = {
+      displayName: `${state.character?.firstName ?? ''} ${state.character?.surname ?? ''}`.trim(),
+      country: state.character?.country?.name ?? '',
+      age: state.age,
+      year: state.currentYear,
+      gender: state.character?.gender,
+      alive: !state.dead,
+    }
+    localStorage.setItem(META_KEYS[slot], JSON.stringify(meta))
+  } catch { /* ignore */ }
 }
 
-function loadFromStorage() {
+function saveToStorage(state) {
+  if (!state || state.screen === 'title' || state.screen === 'birth' || state.screen === 'curated_birth') return
+  const slot = state.activeSaveSlot ?? 0
+  const s = serializeState(state)
+  if (s) {
+    localStorage.setItem(SLOT_KEYS[slot], s)
+    saveSlotMeta(state, slot)
+  }
+}
+
+function loadFromStorage(slot = 0) {
   try {
-    const raw = localStorage.getItem(SAVE_KEY)
+    const raw = localStorage.getItem(SLOT_KEYS[slot])
     if (!raw) return null
     return deserializeState(raw)
   } catch { return null }
+}
+
+function findAvailableSlot() {
+  for (let i = 0; i < SLOT_KEYS.length; i++) {
+    if (!localStorage.getItem(SLOT_KEYS[i])) return i
+  }
+  return 0 // All full — overwrite slot 0
+}
+
+export function getAllSlotMeta() {
+  return SLOT_KEYS.map((key, i) => {
+    const hasSave = !!localStorage.getItem(key)
+    if (!hasSave) return { slot: i, empty: true }
+    try {
+      const raw = localStorage.getItem(META_KEYS[i])
+      return { slot: i, empty: false, ...(raw ? JSON.parse(raw) : {}) }
+    } catch { return { slot: i, empty: false } }
+  })
 }
 
 function deriveInitialMem(flags) {
@@ -212,6 +249,7 @@ const INITIAL_STATE = {
   currentProject: null, // { type, startYear, phase, name } — slow-burn personal project
   echoQueue: [], // [{ eventId, fireAtAge }] — guaranteed follow-up events scheduled by effects
   legacy: 0, // 0-100: accumulates from children raised, mentoring, community, creative works
+  activeSaveSlot: 0,
 }
 
 const _savedState = loadFromStorage()
@@ -222,18 +260,34 @@ export const useGameStore = create((set, get) => ({
 
   // ── Persistence ─────────────────────────────────────────────────────────────
 
-  hasSave: () => !!localStorage.getItem(SAVE_KEY),
+  hasSave: () => SLOT_KEYS.some(k => !!localStorage.getItem(k)),
 
   continueSave: () => {
-    const saved = loadFromStorage()
-    if (saved) set(saved)
+    const saved = loadFromStorage(0)
+    if (saved) set({ ...saved, activeSaveSlot: 0 })
   },
 
-  deleteSave: () => { localStorage.removeItem(SAVE_KEY); set(INITIAL_STATE) },
+  continueSaveSlot: (slot) => {
+    const saved = loadFromStorage(slot)
+    if (saved) set({ ...saved, activeSaveSlot: slot })
+  },
+
+  deleteSave: () => {
+    SLOT_KEYS.forEach((k, i) => { localStorage.removeItem(k); localStorage.removeItem(META_KEYS[i]) })
+    set(INITIAL_STATE)
+  },
+
+  deleteSaveSlot: (slot) => {
+    localStorage.removeItem(SLOT_KEYS[slot])
+    localStorage.removeItem(META_KEYS[slot])
+    const { activeSaveSlot } = get()
+    if (activeSaveSlot === slot) set({ ...INITIAL_STATE })
+    else set(s => s) // force re-render without state change
+  },
 
   // ── Navigation ──────────────────────────────────────────────────────────────
 
-  goToTitle: () => { localStorage.removeItem(SAVE_KEY); set(INITIAL_STATE) },
+  goToTitle: () => { set(INITIAL_STATE) },
 
   goToBirth: () => {
     const character = createCharacter()
@@ -253,6 +307,7 @@ export const useGameStore = create((set, get) => ({
     const siblings = deriveInitialSiblings(character)
     const initialGpa = parseFloat(Math.min(4.0, 1.5 + stats.smarts * 0.02).toFixed(2))
     const flags = deriveGenerationalFlags(character)
+    const slot = findAvailableSlot()
     set({
       screen: 'life',
       character,
@@ -265,7 +320,8 @@ export const useGameStore = create((set, get) => ({
       queue: [],
       pendingEvent: null,
       mem: deriveInitialMem(flags),
-      log: [{ age: 0, text: deriveBirthText(character), isKey: true }],
+      log: [{ age: 0, year: character.birthYear, text: deriveBirthText(character), isKey: true }],
+      activeSaveSlot: slot,
       career: null,
       education: { level: 'none', field: null, enrolled: null },
       partner: null,
@@ -333,7 +389,7 @@ export const useGameStore = create((set, get) => ({
     })
   },
 
-  // ── Birth screen ────────────────────────────────────────────────────────────
+  // ── Birth screen ─────────────────────────────────────────────────────────────
 
   rerollCharacter: () => {
     set({ character: createCharacter() })
@@ -362,6 +418,7 @@ export const useGameStore = create((set, get) => ({
     const siblings = deriveInitialSiblings(character)
     const initialGpa = parseFloat(Math.min(4.0, 1.5 + stats.smarts * 0.02).toFixed(2))
     const flags = deriveGenerationalFlags(character)
+    const slot = findAvailableSlot()
     set({
       screen: 'life',
       stats,
@@ -376,10 +433,12 @@ export const useGameStore = create((set, get) => ({
       log: [
         {
           age: 0,
+          year: character.birthYear,
           text: deriveBirthText(character),
           isKey: true,
         },
       ],
+      activeSaveSlot: slot,
       career: null,
       education: { level: 'none', field: null, enrolled: null },
       partner: null,
@@ -457,7 +516,9 @@ export const useGameStore = create((set, get) => ({
       const epitaph = generateEpitaph(next)
       const final = { ...next, epitaph }
       set(final)
-      localStorage.removeItem(SAVE_KEY)
+      const slot = state.activeSaveSlot ?? 0
+      localStorage.removeItem(SLOT_KEYS[slot])
+      localStorage.removeItem(META_KEYS[slot])
     } else {
       set(next)
       saveToStorage(next)

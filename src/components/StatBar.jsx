@@ -22,7 +22,7 @@ function getTierLabel(stat, value) {
   return tiers[Math.min(4, Math.floor(value / 20))]
 }
 
-export default function StatBar({ stat, label, value }) {
+export default function StatBar({ stat, label, value, delta }) {
   const cfg = STAT_CONFIG[stat] ?? STAT_CONFIG.health
   const pct = Math.round(Math.max(0, Math.min(100, value)))
   const tier = getTierLabel(stat, pct)
@@ -35,6 +35,11 @@ export default function StatBar({ stat, label, value }) {
           <span className="text-xs font-semibold text-natalis-dim">{label ?? cfg.label}</span>
           <div className="flex items-center gap-1.5">
             {tier && <span className="text-[10px] italic text-natalis-muted">{tier}</span>}
+            {delta != null && delta !== 0 && (
+              <span className="text-[10px] font-bold animate-pulse" style={{ color: delta > 0 ? '#34c759' : '#ff3b30' }}>
+                {delta > 0 ? `+${delta}` : delta}
+              </span>
+            )}
             <span className="text-xs font-bold" style={{ color: cfg.color }}>{pct}</span>
           </div>
         </div>

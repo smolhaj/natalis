@@ -666,7 +666,7 @@ function applyWorldEvents(state) {
     updated = applyProxy(updated, proxy)
     updated.worldEventsFired = new Set([...updated.worldEventsFired, we.id])
     const narrativeText = typeof we.narrative === 'function' ? we.narrative(G) : we.narrative
-    updated.log = [...updated.log, { age: updated.age, text: narrativeText, worldEventName: we.name, isKey: true, isWorld: true }]
+    updated.log = [...updated.log, { age: updated.age, year: updated.currentYear, text: narrativeText, worldEventName: we.name, isKey: true, isWorld: true }]
     if (we.addFlags) updated.flags = [...new Set([...updated.flags, ...we.addFlags])]
   }
   return updated
@@ -1577,7 +1577,7 @@ export function tick(state) {
       midlife:     (desire && _desireMidlife[desire]) ?? 'You are thirty. The life you have been building has become recognizable as a life.',
       late_life:   (desire && _desireLateLife[desire]) ?? 'You are fifty. What you carry into this half is mostly set.',
     }[newPhase]
-    if (phaseLine) s.log = [...s.log, { age: s.age, text: phaseLine, isKey: true, isPhaseTransition: true }]
+    if (phaseLine) s.log = [...s.log, { age: s.age, year: s.currentYear, text: phaseLine, isKey: true, isPhaseTransition: true, toPhase: newPhase }]
 
     // Inject guaranteed phase entry decision events at key phase boundaries
     const phaseEntryMap = getPhaseEntryMap()
@@ -2214,7 +2214,7 @@ export function tick(state) {
   const event = getNextEvent(s)
   if (!event) {
     s.pendingEvent = null
-    s.log = [...s.log, { age: s.age, text: buildYearTexture(s), isKey: false }]
+    s.log = [...s.log, { age: s.age, year: s.currentYear, text: buildYearTexture(s), isKey: false }]
     return s
   }
 
@@ -2248,7 +2248,7 @@ export function resolveAutoEvent(state) {
     s.mem = { ...(s.mem ?? {}), lastSonderYear: state.currentYear }
   }
 
-  s.log = [...s.log, { age: state.age, text: pendingEvent.text, isKey: pendingEvent.isKey ?? false, isLetter: pendingEvent.isLetter ?? false }]
+  s.log = [...s.log, { age: state.age, year: state.currentYear, text: pendingEvent.text, isKey: pendingEvent.isKey ?? false, isLetter: pendingEvent.isLetter ?? false, isPhaseTransition: pendingEvent.isPhaseTransition ?? false }]
   s.pendingEvent = null
   return s
 }
@@ -2267,7 +2267,7 @@ export function resolveChoice(state, choiceIndex) {
   if (choice.inject) s.queue = [...s.queue, choice.inject]
   const evtText = typeof pendingEvent.text === 'function' ? pendingEvent.text(buildG(state)) : (pendingEvent.text ?? '')
   const outcomeText = typeof choice.outcome === 'function' ? choice.outcome(buildG(s)) : (choice.outcome ?? '')
-  s.log = [...s.log, { age: state.age, text: `${evtText.slice(0, 80)}… — ${outcomeText}`, isKey: true, isLetter: pendingEvent.isLetter ?? false }]
+  s.log = [...s.log, { age: state.age, year: state.currentYear, text: `${evtText.slice(0, 80)}… — ${outcomeText}`, isKey: true, isLetter: pendingEvent.isLetter ?? false }]
   s.pendingEvent = null
   return s
 }
