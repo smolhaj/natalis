@@ -1,6 +1,6 @@
 # natalis — Codebase State
 
-Current snapshot: **109 countries**, **255 world events**, **275 event modules** (~5,800+ events), **2051 registered flags** (0 orphaned, 0 partial), **321 ribbons**. Run `npm run check-flags` to verify.
+Current snapshot: **121 countries**, **255 world events**, **463+ event modules** (~7,550+ events), **2670 registered flags** (0 orphaned, 6 partial), **379 ribbons**. Run `npm run check-flags` to verify.
 
 ---
 
@@ -10,15 +10,15 @@ Events organized under `src/data/events/`:
 
 ```
 events/
-  thematic/      — cross-cutting arcs (culture, gender, religion, labor, career, etc.)
-  lifecycle/     — phase-specific (adolescence, pregnancy, menopause, desires, etc.)
-  geographic/    — country and region arcs (109 entries)
-  sonder/        — contemplative layer (12 modules, ~693 events)
+  thematic/      — cross-cutting arcs (culture, gender, religion, labor, career, etc.) + all followthrough_30–95 files
+  lifecycle/     — phase-specific (adolescence, pregnancy, menopause, desires, body arc, empty nest, grandparent, inheritance)
+  geographic/    — country and region arcs (184 files: base arcs + _depth.js companions for most countries)
+  sonder/        — contemplative layer (66 modules, ~1,980+ events)
   specific_lives/ — events_specific_lives.js (221 micro-specific events)
-  followthrough/ — events_followthrough_all.js (317 consolidated events)
+  followthrough/ — events_followthrough_all.js (317 consolidated events from original 29 files)
 ```
 
-All new followthrough files (30–48) live in `thematic/`. Root-level `events.js` imports everything.
+All followthrough files (30–95) live in `thematic/`. Root-level `events.js` imports everything (463+ imports).
 
 ---
 
@@ -66,25 +66,26 @@ All new followthrough files (30–48) live in `thematic/`. Root-level `events.js
 
 ---
 
-## Geographic Coverage (109 countries)
+## Geographic Coverage (121 countries)
 
-All major regions covered. Geographic modules now in `src/data/events/geographic/`. Key depth arcs:
+All major regions covered. Geographic modules in `src/data/events/geographic/` (184 files). Most countries now have both a base arc file and a `_depth.js` companion with second-wave specificity.
 
-- **Africa**: Algeria (13), Angola (6), Burkina Faso (8), Cameroon (7), DRC (9), Eritrea (12), Ethiopia (7), Fiji (8), Ghana (10+depth), Guinea (13), Ivory Coast (7), Kenya (7), Libya (6), Mali (10), Morocco (8), Mozambique (6), Namibia (8), Nigeria (8), Rwanda (8), Senegal (5), Somalia (7), South Africa (4), Sudan (6), Tanzania (7), Tunisia (6), Uganda (7), West Africa multi-country (16), Yemen (6), Zambia (6), Zimbabwe (6)
-- **Americas**: Bolivia (9), Brazil (9), Canada (8), Caribbean (14), Central America (14), Chile/Argentina/Colombia via Latin America (60+), Cuba (8), Dominican Republic, Ecuador, El Salvador, Guatemala, Haiti (10), Honduras, Nicaragua, Peru (8), Philippines OFW (15), Puerto Rico (2), Uruguay/Paraguay/Ecuador (13), USA (12), Venezuela (8)
-- **Asia-Pacific**: Afghanistan (6), Australia (8), Bangladesh (9), Cambodia (8), Central Asia multi (10), China (26), India (7+11 depth), Indonesia (10+6 depth), Iran (7), Iraq (8), Israel (13), Japan (12), Jordan (6), Kazakhstan (10), Korea (14), Kyrgyzstan (10), Laos (7), Lebanon (14), Malaysia via Taiwan/Malaysia (9), Mongolia (12), Myanmar (7), Nepal (6), New Zealand (9), North Korea (9), OFW/Philippines (15), Pakistan (9), Palestine (14), Rohingya (8), Saudi Arabia (9), Singapore (8), Sri Lanka (8), Syria (8), Taiwan via Taiwan/Malaysia (9), Tajikistan (10), Thailand (6), Turkmenistan (10), Uyghur (3), Uzbekistan (10), Vietnam (10), Yemen (6)
-- **Europe**: Armenia/Azerbaijan (15), Baltic states (6), Belarus (8), Bosnia/Serbia/Yugoslavia (9), Canada (8), Czech Republic (8), Denmark (7), Finland via Scandinavia, France via Germany/France (9), Georgia (10), Germany via Germany/France (9), Greece (11+9 depth), Hungary via Central Europe, Ireland depth (10), Italy (8), Netherlands (8), Norway (8), Poland (7), Portugal via Greece/Portugal, Romania (5), Russia (4), Scandinavia multi (8+6 depth), Spain (11), Sweden (7), Turkey (5), UK (7), Ukraine (7)
-- **Middle East**: Bedouin (5), Egypt (7), Iraq (8), Iran (7), Israel (13), Jordan (6), Lebanon (14), Palestine (14), Saudi Arabia (9), Syria (8), Turkey (5), Yemen (6)
+- **Africa**: Algeria (13), Angola (6+depth), Burkina Faso (8), Cameroon (7+depth), DRC (9), Eritrea (12), Ethiopia (7+depth), Fiji (8), Ghana (10+depth), Guinea (13), Ivory Coast (7+depth), Kenya (7+depth), Libya (6+depth), Mali (10), Morocco (8+depth), Mozambique (6+depth), Namibia (8+depth), Nigeria (8+depth), Rwanda (8), Senegal (5), Somalia (7), South Africa (4+depth), Sudan (6+depth), Tanzania (7+depth), Tunisia (6), Uganda (7), West Africa multi-country (16), Zambia (6+depth), Zimbabwe (6)
+- **Americas**: Argentina (via Latin America + depth), Bolivia (9+depth), Brazil (9+depth), Canada (8+depth), Caribbean (14), Central America (14), Colombia (9+depth), Cuba (8+depth), Dominican Republic (9), Ecuador (8), El Salvador (7), Guatemala (8), Haiti (10), Honduras (8), Mexico (standalone depth), Nicaragua (8), Peru (8+depth), Puerto Rico (2), USA (15), Uruguay/Paraguay via uy_py_ec (13), Venezuela (8+depth×2)
+- **Asia-Pacific**: Afghanistan (6+depth), Australia (8+depth), Bangladesh (9+depth), Cambodia (8), Central Asia multi (10), China (26), India (7+depth), Indonesia (10+6 depth), Iran (7+depth), Iraq (8+depth), Israel (13), Japan (12+depth), Jordan (6), Kazakhstan (10), Korea (14+depth), Kyrgyzstan (10), Laos (7+depth), Lebanon (14), Malaysia via Taiwan/Malaysia (9), Mongolia (12+depth), Myanmar (7+depth), Nepal (6+depth), New Zealand (9+depth), North Korea (9+depth), Pakistan (9+depth), Palestine (14+depth), Philippines (9+depth×2), Rohingya (8), Saudi Arabia (9), Singapore (8+depth), Sri Lanka (8+depth), Syria (8), Taiwan via Taiwan/Malaysia (9), Tajikistan (10), Thailand (6+depth), Turkmenistan (10), Uyghur (3), Uzbekistan (10), Vietnam (10+depth), Yemen (6)
+- **Europe**: Armenia/Azerbaijan (15), Baltic states (6), Belarus (8), Bosnia/Serbia/Yugoslavia (9), Czech Republic (8), Denmark (7), Finland via Scandinavia, France via Germany/France (9), Georgia (10), Germany via Germany/France (9), Greece (11+9 depth), Hungary via Central Europe, Ireland depth (10), Italy (8+depth), Netherlands (8+depth), Norway (8), Poland (7+depth), Portugal via Greece/Portugal + depth, Romania (5+depth), Russia (4+depth), Scandinavia multi (8+6 depth), Spain (11+depth), Sweden (7), Turkey (5+depth), UK (7), Ukraine (7+depth)
+- **Middle East**: Bedouin (5), Egypt (7+depth), Iran (7+depth), Iraq (8+depth), Israel (13), Jordan (6), Lebanon (14), Palestine (14+depth), Saudi Arabia (9), Syria (8), Turkey (5+depth), Yemen (6)
 
 ---
 
 ## Sonder Layer (events/sonder/)
 
-12 modules, ~693 total events. All mem-gated, weight 2, no choices, no new flags, minimal stat effects.
+66 modules, ~1,980+ total events. All mem-gated, weight 2, no choices, no new flags, minimal stat effects.
 
 - `events_sonder.js` — 299 events: STRANGER GLIMPSES + MUNDANE LIFE (commute, object on shelf, phrase noticed)
 - `events_sonder_2.js` — 40 events: non-Western sensory, body-in-time, relational drift, weight of time
 - `events_sonder_3.js` through `events_sonder_12.js` — 10 modules, ~354 events: extended contemplative registers across all life phases, archetypes, and eras
+- `events_sonder_13.js` through `events_sonder_66.js` — 54 additional modules, ~30 events each (~1,620 more events): technology and time, the workplace, food and meals, ceremony, the street, body in weather, night and sleep, what you inherit, the window, the hour, and more; covers all archetypes
 
 ---
 
@@ -92,7 +93,12 @@ All major regions covered. Geographic modules now in `src/data/events/geographic
 
 `events/followthrough/events_followthrough_all.js` — 317 consolidated events from the original 29 followthrough files (events_followthrough.js through events_followthrough_22.js).
 
-`thematic/events_followthrough_30.js` through `events_followthrough_48.js` — 19 files, ~236 events covering followthroughs for PRs #103–109 content.
+`thematic/events_followthrough_30.js` through `events_followthrough_95.js` — 66 files covering followthroughs for all depth arcs and new thematic arcs. Highlights:
+- 30: business failure, political disillusionment, relationship arcs (70 events)
+- 31–48: Central Asia, Ghana/Angola, Ecuador, Central America, Czech Republic, Scandinavia, Greece, Thailand, world events
+- 49: aid convoy + received-aid echo (famine survivor texture)
+- 50: anniversary-aware follow-throughs (emigration 5/10/20yr, divorce 5/10yr)
+- 51–95: echoes for every _depth.js arc (Nigeria, Vietnam, Brazil, Cuba, Colombia, Peru, Poland, Russia, Ukraine, Spain, Italy, Australia, New Zealand, Singapore, North Korea, Japan, Korea, Egypt, Iran, Iraq, Sudan, Afghanistan, Bangladesh, Pakistan, Sri Lanka, Myanmar, Nepal, Laos, Mexico, Argentina, Bolivia, Ecuador, Angola, Zambia, Tanzania, Cameroon, Mongolia, Namibia, and more)
 
 ---
 
@@ -107,7 +113,7 @@ All major regions covered. Geographic modules now in `src/data/events/geographic
 `src/data/flags/` — split into 6 category files:
 - `political.js`, `social.js`, `personal.js`, `career.js`, `geographic.js`, `health.js`
 
-2051 registered flags. Run `npm run check-flags -- --orphans` to verify 0 orphaned.
+2670 registered flags. Run `npm run check-flags -- --orphans` to verify 0 orphaned (6 partial currently).
 
 `TIMESTAMPED_FLAGS` in `buildEffectProxy`: 22+ flags auto-store `mem.[flag]Year` for memory-layer callbacks.
 
@@ -140,5 +146,18 @@ All major regions covered. Geographic modules now in `src/data/events/geographic
 - ✅ Geographic places system (250+ named places, places.js)
 - ✅ Activities panel (grouping, practice counters → story events)
 - ✅ Dynamic wealthTier (computed from net worth in buildG())
-- ✅ Ribbons (321 defined in ribbons.js)
+- ✅ Ribbons (379 defined in ribbons.js)
 - ✅ FLAG_REGISTRY audit tooling (npm run check-flags)
+- ✅ Seasonal events (G.season infrastructure, events_seasonal.js)
+- ✅ Letters register (isLetter: true, amber treatment in LifeScreen)
+- ✅ Oral tradition register (events_oral_tradition.js, received-speech framing)
+- ✅ Memory/dream layer (events_memory_layer.js, timestamped flag replays at 45–65)
+- ✅ Roads not taken (events_roads_not_taken.js, life-review at 38–68)
+- ✅ Anniversary-aware follow-throughs (emigration 5/10/20yr, divorce 5/10yr)
+- ✅ Regret threshold arc (events_followthrough_55.js, regret-stat-crossing events)
+- ✅ Deep career arcs for 15+ professions (doctor, nurse, lawyer, journalist, engineer, developer, accountant, artist, merchant, police, social worker, civil servant, chef, factory worker, farmer, laborer, driver)
+- ✅ Body arc (events_body_arc.js — ordinary physical aging outside illness arc)
+- ✅ Empty nest arc (events_empty_nest.js)
+- ✅ Grandparent arc (events_grandparent_arc.js)
+- ✅ Inheritance arc (events_inheritance_arc.js)
+- ✅ Time-of-life activity unlocks (activities gate on conditions/career/relationships)
