@@ -6354,6 +6354,70 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by mn_1990_revolution.',
   },
 
+  mn_naadam_childhood: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Grew up attending Naadam — the Three Games (wrestling, horse racing, archery) that the Soviet government could not cancel because cancelling them would mean cancelling the people.',
+    intent: 'year_texture',
+    notes: 'Set by mn_dep_naadam_childhood. Mongolia only.',
+  },
+
+  mn_genghis_rehabilitation_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up after 1990 when Genghis Khan was rehabilitated as national hero — airport named for him, face on currency, the forty-metre equestrian statue on the steppe — the opposite of what the previous generation was officially taught.',
+    intent: 'year_texture',
+    notes: 'Set by mn_dep_genghis_rehabilitation. Mongolia only, 1990+.',
+  },
+
+  mn_mongolian_script_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Learned traditional vertical Mongolian script as part of the post-1990 revival — the script Cyrillic replaced in 1941, preserved in Inner Mongolia (China), recovered in Mongolia.',
+    intent: 'both',
+    notes: 'Set by mn_dep_mongolian_script. Checked by ft90_mongolian_script_late.',
+  },
+
+  mn_buddhism_revival_generation: {
+    weight: 'major',
+    category: 'identity',
+    description: 'Connected to the post-1990 Buddhism revival — the reopened Gandantegchinlen monastery, thangkas brought out of hiding, the transmission of religious knowledge that survived the 1937 purges.',
+    intent: 'both',
+    notes: 'Set by mn_dep_buddhism_revival. Requires stalinist_purge_family_memory. Checked by ft90_buddhism_late_reckoning.',
+  },
+
+  mn_cashmere_steppe_awareness: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Mongolian herder who shifted to cashmere goats in the 1990s market boom and watched the steppe degrade — goats strip roots, sheep graze tops; the calculation that made sense in 1996 became visible as desertification by 2010.',
+    intent: 'both',
+    notes: 'Set by mn_dep_cashmere_goats. Checked by ft90_cashmere_desertification.',
+  },
+
+  mn_oyu_tolgoi_generation: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Alive during the Oyu Tolgoi copper/gold mine debate — the 66/34 foreign/state split, the 2012 renegotiation, the question of whether Mongolia would repeat or interrupt its resource extraction history.',
+    intent: 'both',
+    notes: 'Set by mn_dep_oyu_tolgoi. Checked by ft90_oyu_tolgoi_late.',
+  },
+
+  mn_inner_mongolia_connection: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Mongolian aware of Inner Mongolia (China) — more ethnic Mongolians in China than in Mongolia; the traditional script preserved there; the 2020 Mandarin education imposition and protests.',
+    intent: 'year_texture',
+    notes: 'Set by mn_dep_inner_mongolia_connection. Mongolia only.',
+  },
+
+  mn_ulaanbaatar_air_crisis: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Experienced Ulaanbaatar\'s winter air crisis — PM2.5 levels 80x WHO guidelines, coal burning in ger districts, the worst urban air quality of any capital city in the world.',
+    intent: 'year_texture',
+    notes: 'Set by mn_dep_ulaanbaatar_air. Mongolia only, 2010+.',
+  },
+
   sankara_generation: {
     weight: 'major',
     category: 'historical',

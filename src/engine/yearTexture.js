@@ -11445,6 +11445,62 @@ function buildYearTexture(state) {
       ? 'Your children know the city and only the city. When you take them to the countryside they admire the sky — the specific dark of a Mongolian night sky — and call it beautiful and want to leave by the third day. The steppe is a thing they visit; for you it is the ground everything else is built on.'
       : 'The ger district is not a slum in the way people who have not been here use the word. The gers are warm. The community is dense. The coal smoke is real and the AQI is real and in January the city is the most polluted place on earth. Both things are true simultaneously.',
   ])
+  if (F.has('mn_naadam_childhood') && Math.random() < 0.25) return pick([
+    'The wrestlers in their open-fronted jackets. The jockeys who are children, riding without saddles over thirty kilometres. The archers at seventy-five metres. You grew up knowing what the Three Games look like from close enough to hear the crowd.',
+    'The Naadam is what the Soviet government could not cancel. Cancelling it would have required cancelling the people. You grew up knowing this was what it meant to be Mongolian — the thing that could not be taken.',
+    phase === 'late_life'
+      ? 'You have watched Naadam since childhood. The games are the same. The crowd is the same mixture of pride and celebration. The knowledge of how close it came to not continuing is different.'
+      : 'The horse race finishes with children who have ridden thirty kilometres. They are your age. The winner is named Song of the Steppe or something like that. The names for the horses are the poetry of the games.',
+  ])
+  if (F.has('mn_genghis_rehabilitation_generation') && Math.random() < 0.25) return pick([
+    'The previous generation was taught Genghis Khan was a feudal warlord, a negative force in history. You were taught he was the founder of the largest contiguous land empire in human history and a source of pride. Both generations were taught what was required.',
+    'The forty-metre steel statue on the Töv steppe catches the morning light. You have seen it from the road several times. The horse he is riding is ten metres tall. This is what recovery from being taught to forget yourself looks like — enormous and made of steel.',
+    phase === 'late_life'
+      ? 'You have lived through two official accounts of Genghis Khan. The version you learned as a child and the version your grandchildren will grow up knowing. The subject of the history is the same. The story told about it is a political object.'
+      : 'His face is on the money. The airport is named for him. The currency of a country is called the tögrög and its highest denomination shows the man who in 1206 united the Mongolian peoples into one state. This is recent history, the rehabilitation.',
+  ])
+  if (F.has('mn_mongolian_script_generation') && Math.random() < 0.25) return pick([
+    'The traditional script runs vertically. You learned to read it as an adolescent, after decades when it was forbidden. The shape of it on the page is different from anything else you read. Older.',
+    'The cousins in Inner Mongolia have been writing the traditional script continuously since before you were born. You and they write the same language in the same alphabet but for you it was a recovery and for them it was a continuation.',
+    phase === 'late_life'
+      ? 'You can read the street signs in traditional script now, the ones the city has added alongside the Cyrillic. You read them slowly. The script and the speed feel right for each other — something old read carefully.'
+      : 'Learning to write in the traditional script felt like learning something that had been waiting. The letters connect differently from Cyrillic. The right direction to read is unexpected. The feeling of getting it right is specific and quiet.',
+  ])
+  if (F.has('mn_buddhism_revival_generation') && Math.random() < 0.25) return pick([
+    'The monastery is full. Young monks learn lineages that almost ended. The thangkas that lived hidden in felt blankets for fifty years are in proper frames in places where they can be seen.',
+    'Your family held things in secret for two generations. The thangkas rolled in felt, the prayers said quietly. After 1990 the secret could end. The ending of it took longer than the beginning had — things hidden that long do not come out cleanly.',
+    phase === 'late_life'
+      ? 'You have watched the monastery grow from a reopening to a full institution. The monks who trained in Inner Mongolia and Tibet are now the teachers of monks who were born after the revolution. The transmission survived, which was not guaranteed.'
+      : 'The transmission of something your family kept alive in private is now available in public. The public version and the private version are different. Both are real.',
+  ])
+  if (F.has('mn_cashmere_steppe_awareness') && Math.random() < 0.25) return pick([
+    'The cashmere goat pulls the grass out by the root. The sheep grazes the top and the grass grows back. This distinction is a sentence that contains the history of what happened to the southern steppe.',
+    'The steppe around the ger district edge has been retreating since the 1990s. Dust storms reach Ulaanbaatar now that did not reach it before. The calculation that made sense in 1996 is visible from the road as bare ground.',
+    phase === 'late_life'
+      ? 'The satellite images confirm what herders already knew. The degraded zone is measurable now, documented. You do not need the satellite to tell you what you watched happen from where you stood.'
+      : 'Mongolia produces forty percent of the world\'s cashmere. The market is real. The steppe change is real. You live inside both of those sentences, which do not resolve each other.',
+  ])
+  if (F.has('mn_oyu_tolgoi_generation') && Math.random() < 0.25) return pick([
+    'The mine in the South Gobi produces copper and gold in volumes that should matter. The GDP figures are large. The ger districts are still there. Both things are precisely true.',
+    'The argument about whether to renegotiate the mining agreement in 2012 was the argument about Potosí in another language. Who processes the resource. Where the value goes. Who builds the infrastructure.',
+    phase === 'late_life'
+      ? 'The resource that was supposed to change everything did change some things. Whether the right things changed is a measurement the next generation will make. You will not be here for it.'
+      : 'The foreign percentage of the mine is 66. The Mongolian state percentage is 34. These numbers are not a description of who benefits from what is pulled out of the ground. They are the starting point of that argument.',
+  ])
+  if (F.has('mn_inner_mongolia_connection') && Math.random() < 0.2) return pick([
+    'There are more ethnic Mongolians in China than in Mongolia. The border between them was drawn in 1945 by other countries\' negotiations. The people on both sides did not draw it.',
+    'Your cousins in Inner Mongolia write in the traditional script. They speak Mongolian. In 2020 China required Mandarin as the primary language of instruction in their schools. They kept their children home in protest. The protest was one sentence in the international news.',
+    phase === 'late_life'
+      ? 'The two trajectories — Mongolia since 1990, Inner Mongolia inside China — have diverged in ways neither side fully chose. You have watched both from one side. The letter you get in traditional script from the other side is the evidence of what they have kept.'
+      : 'The border that divides you from them is a Soviet-Chinese agreement from 1945. The language you share is older than every border in the region.',
+  ])
+  if (F.has('mn_ulaanbaatar_air_crisis') && Math.random() < 0.25) return pick([
+    'Mongolia has the largest sky in the world. In January in Ulaanbaatar the sky is gray-brown from the coal smoke and close and costs something to breathe. Both of these things are true of the same country at the same time of year.',
+    'The air quality index in January: 687. The WHO guideline is 10. The children in the ger districts develop respiratory conditions at rates that doctors have started documenting publicly. You know what the breathing feels like from the inside.',
+    phase === 'late_life'
+      ? 'The city has grown too large for its valley. The coal burning that heats it cannot go anywhere because the topography holds the air. You came from the steppe where air was simply what surrounded you. Here it is what you manage.'
+      : 'In February the cold begins to lift but the smoke does not lift as quickly. March is when the air starts to clear. You count those first days of clear air the way people in other places count the first days of spring.',
+  ])
 
   // ─── ERITREA TEXTURE ─────────────────────────────────────────────────────────
   if (F.has('eritrean_independence_generation') && Math.random() < 0.22) return pick([
