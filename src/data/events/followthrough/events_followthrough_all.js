@@ -3340,7 +3340,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.desire === 'connection' &&
       G.age >= 62 &&
       !G.flags.has('desire_connection_fulfilled') &&
-      !G.flags.has('partner') &&
+      !G.partner &&
       !G.mem.ft12Connection,
     text: 'What you wanted was close proximity to another person — not the abstraction of love but the specific daily practice of a life alongside someone who knew what you were actually like and remained. You had pieces of it. A relationship that lasted a decade. A friendship of the kind that doesn\'t require explanation. A child who calls on a regular basis. These were real. What you also had was the specific loneliness of people who know what they want and have only had partial versions of it.',
     choices: [

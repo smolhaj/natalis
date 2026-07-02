@@ -236,7 +236,7 @@ export const CLIMATE_EVENTS = [
       G.currentYear >= 2035 &&
       G.age >= 30 &&
       ['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype) &&
-      G.flags.includes('property_owner') &&
+      G.flags.includes('homeowner') &&
       !G.mem?.climInsuranceCancel,
     text: 'A letter from the insurance company. They are withdrawing flood coverage from properties in your postcode. The reason for the decision is, the letter says, actuarial. The reason is also visible from your front door. The letter uses the phrase structural reassessment of risk and does not use the phrase we are leaving before the cost of staying exceeds the profit, which is what it means.',
     choices: null,

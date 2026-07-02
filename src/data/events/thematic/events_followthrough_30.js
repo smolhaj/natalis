@@ -14,7 +14,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
     when: (G) =>
       G.flags.has('business_failed') &&
       !G.flags.has('second_business_started') &&
-      !G.flags.has('business_started') &&
+      !G.flags.has('entrepreneur') &&
       G.age >= 34 &&
       !G.mem?.ft30Biz2,
     text: 'Five years on from the failure. You have processed it to the extent it can be processed — the structural causes, the choices you made, the six months in which you launched into a market that was already closing. The knowledge doesn\'t resolve the question of what to do with it.',
@@ -42,7 +42,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
     weight: 3,
     when: (G) =>
       G.flags.has('foreclosure_generation') &&
-      !G.flags.has('bought_property') &&
+      !G.flags.has('homeowner') &&
       G.age >= 38 &&
       !G.mem?.ft30ForcRent,
     text: 'Fifteen years since the foreclosure. You have been renting since. The housing market did not wait — it rose and rose and the window that existed in 2010, 2012, when prices were low enough to have been a re-entry point, is a different kind of window now. You watch people your age talk about their mortgage as if it is normal. For them it is.',

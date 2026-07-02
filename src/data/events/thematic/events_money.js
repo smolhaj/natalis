@@ -168,7 +168,7 @@ export const MONEY_EVENTS = [
       !G.mem?.moneyCountingDays &&
       G.money < 300 &&
       G.age >= 28 && G.age <= 58 &&
-      !G.flags.has('student'),
+      !G.education?.enrolled,
     text: 'The account balance is the kind of number that means decisions have been made for you. You count the days until the next payment. Each day is a small calculation. You walk past things in shops without stopping — not because you are disciplined, but because stopping would cost something you do not have.',
     choices: null,
     effect: (p) => { p.m -= 6; p.h -= 3; p.addFlag('experienced_true_poverty'); p.setMem('moneyCountingDays', true) },
