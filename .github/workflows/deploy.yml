@@ -36,20 +36,44 @@ jobs:
     timeout-minutes: 60
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.resolve.outputs.page_url }}
     steps:
-      - uses: actions/deploy-pages@v4
-        id: deployment
+      - name: Deploy attempt 1
+        id: d1
+        uses: actions/deploy-pages@v4
         continue-on-error: true
+
+      - name: Cool-down before retry
+        if: steps.d1.outcome == 'failure'
+        run: sleep 20
+
+      - name: Deploy attempt 2
+        id: d2
+        if: steps.d1.outcome == 'failure'
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+
+      - name: Cool-down before retry
+        if: steps.d1.outcome == 'failure' && steps.d2.outcome == 'failure'
+        run: sleep 20
+
+      - name: Deploy attempt 3
+        id: d3
+        if: steps.d1.outcome == 'failure' && steps.d2.outcome == 'failure'
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+
       - name: Wait out slow Pages queue
-        if: steps.deployment.outcome == 'failure'
+        id: waitout
+        if: steps.d1.outcome == 'failure' && steps.d2.outcome == 'failure' && steps.d3.outcome == 'failure'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          # deploy-pages caps its own timeout at 10 minutes, but a queued
-          # deployment keeps processing after the action gives up (and even
-          # after the action's cancel request). Poll it to completion.
-          echo "deploy-pages gave up; polling deployment ${GITHUB_SHA} directly"
+          # deploy-pages caps its own timeout at 10 minutes, and can also
+          # report an immediate hard failure from the Pages backend. Either
+          # way, poll the deployment status directly for up to 45 more
+          # minutes before actually giving up.
+          echo "all direct attempts failed; polling deployment ${GITHUB_SHA} directly"
           deadline=$(( $(date +%s) + 2700 ))
           while [ "$(date +%s)" -lt "$deadline" ]; do
             status=$(gh api "/repos/${GITHUB_REPOSITORY}/pages/deployments/${GITHUB_SHA}" --jq .status 2>/dev/null || echo unknown)
@@ -68,3 +92,13 @@ jobs:
           done
           echo "Deployment did not land within 45 extra minutes."
           exit 1
+
+      - name: Resolve page url
+        id: resolve
+        if: always()
+        run: |
+          url="${{ steps.d1.outputs.page_url }}"
+          [ -n "$url" ] || url="${{ steps.d2.outputs.page_url }}"
+          [ -n "$url" ] || url="${{ steps.d3.outputs.page_url }}"
+          [ -n "$url" ] || url="https://smolhaj.github.io/natalis/"
+          echo "page_url=$url" >> "$GITHUB_OUTPUT"
