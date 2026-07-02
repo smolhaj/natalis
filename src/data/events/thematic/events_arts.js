@@ -72,7 +72,7 @@ export const ARTS_EVENTS = [
     weight: 3,
     when: (G) =>
       !G.mem?.artsJazzBebop &&
-      G.character.country.name === 'USA' &&
+      G.character.country.name === 'United States' &&
       (G.flags.has('black_american') || (G.ethnicity && G.ethnicity.toLowerCase().includes('black'))) &&
       G.currentYear >= 1943 && G.currentYear <= 1965 &&
       G.career?.id === 'musician' &&
@@ -103,7 +103,7 @@ export const ARTS_EVENTS = [
     weight: 3,
     when: (G) =>
       !G.mem?.artsJazzJimCrow &&
-      G.character.country.name === 'USA' &&
+      G.character.country.name === 'United States' &&
       (G.flags.has('black_american') || (G.ethnicity && G.ethnicity.toLowerCase().includes('black'))) &&
       G.currentYear >= 1930 && G.currentYear <= 1965 &&
       G.career?.id === 'musician' &&

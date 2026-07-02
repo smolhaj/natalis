@@ -661,7 +661,7 @@ export const LATE_LIFE_EVENTS = [
     weight: 3,
     when: (G) =>
       !G.mem.lateRegretUnsaid &&
-      G.r > 20 &&
+      G.regret > 20 &&
       G.age >= 60 &&
       (G.flags.includes('lost_parent') || G.flags.includes('widowed') || G.flags.includes('lost_sibling')),
     text: 'There was something you meant to say. You knew you meant to say it and you kept not saying it — waiting for the right moment, the right afternoon, the occasion that would make the saying feel natural. The person is gone now. The thing you meant to say exists only in you. It will go with you. You sit with this, and the weight of it, and the fact that the weight is fair.',
@@ -870,7 +870,7 @@ export const LATE_LIFE_EVENTS = [
     when: (G) =>
       !G.mem.lateAcceptance &&
       G.age >= 75 &&
-      (G.r < 20 || G.karma >= 65),
+      (G.regret < 20 || G.karma >= 65),
     text: 'It is an ordinary afternoon. You are sitting somewhere you often sit. The light is doing something specific. You are not actively happy, or unhappy, or arranging anything in your mind. You are simply present in a life that happened. The particular shape of it — the places, the people, the things you did and did not do — is the shape it is. You do not feel that the accounting is finished or perfect. You feel that the accounting is what it is, and you are still here, and the afternoon is still happening.',
     choices: null,
     effect: (p) => { p.m += 12; p.r -= 10; p.karma += 6; p.addFlag('acceptance'); p.setMem('lateAcceptance', true) },

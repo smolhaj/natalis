@@ -71,7 +71,8 @@ export const COUNTRIES = [
     regimeHistory: [],
     religionWeights: { christian_protestant: 0.35, christian_catholic: 0.10, muslim_sunni: 0.05, hindu: 0.02, jewish: 0.005, secular: 0.40, atheist: 0.08 },
     ethnicGroups: [
-      { id: 'white_british', name: 'White British', share: 0.82 },
+      { id: 'white_british', name: 'White British', share: 0.77 },
+      { id: 'welsh_british', name: 'Welsh', share: 0.05 },
       { id: 'south_asian_british', name: 'South Asian', share: 0.07 },
       { id: 'black_british', name: 'Black British', share: 0.03 },
       { id: 'mixed_british', name: 'Mixed', share: 0.02 },

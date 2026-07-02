@@ -666,7 +666,7 @@ export const SOCIETY_EVENTS = [
       const name = G.character.country.name
       if (suppressedCountries[name] && G.currentYear < suppressedCountries[name]) return true
       if (name === 'France' && G.currentYear < 1952 && G.flags.includes('minority_language_speaker')) return true
-      if (name === 'Wales' && G.currentYear < 1967) return true
+      if (name === 'United Kingdom' && G.ethnicity === 'welsh_british' && G.currentYear < 1967) return true
       if (G.flags.includes('minority_language_speaker') && G.currentYear < 1970) return true
       return false
     },
@@ -736,7 +736,8 @@ export const SOCIETY_EVENTS = [
     when: (G) =>
       G.age >= 40 &&
       (G.flags.includes('suppressed_language') ||
-        ['Wales', 'Ireland', 'Spain', 'Turkey', 'France'].includes(G.character.country.name)) &&
+        ['Ireland', 'Spain', 'Turkey', 'France'].includes(G.character.country.name) ||
+        (G.character.country.name === 'United Kingdom' && G.ethnicity === 'welsh_british')) &&
       !G.mem?.language_loss_grief,
     text: 'Your grandchildren do not speak the language your grandparents spoke. The last fluent speakers in the valley are in their eighties. When they die the language will exist only in recordings and academic papers. You are watching a way of thinking disappear.',
     choices: null,
