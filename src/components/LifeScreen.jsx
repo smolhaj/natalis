@@ -125,6 +125,7 @@ export default function LifeScreen() {
   const creditScore  = useGameStore(s => s.creditScore)
   const pendingMinigame = useGameStore(s => s.pendingMinigame)
   const ageUp        = useGameStore(s => s.ageUp)
+  const goToTitle    = useGameStore(s => s.goToTitle)
 
   // Stat delta flash — shows +/- on stat bars when values change
   useEffect(() => {
@@ -275,12 +276,21 @@ export default function LifeScreen() {
               <p className="text-natalis-muted text-xs">{career ? career.title : (retired ? 'Retired' : PHASE_LABELS[phase])}</p>
             </div>
           </div>
-          <div className="text-right">
-            <p className="font-bold text-bit-green text-base leading-tight">{formatMoney(money)}</p>
-            <p className="text-natalis-muted text-xs">
-              <span className="mr-1">{getCountryFlag(currentCountry ?? character.country)}</span>
-              Age {age} · {currentYear}
-            </p>
+          <div className="flex items-center gap-3">
+            <div className="text-right">
+              <p className="font-bold text-bit-green text-base leading-tight">{formatMoney(money)}</p>
+              <p className="text-natalis-muted text-xs">
+                <span className="mr-1">{getCountryFlag(currentCountry ?? character.country)}</span>
+                Age {age} · {currentYear}
+              </p>
+            </div>
+            <button
+              onClick={goToTitle}
+              className="text-natalis-muted text-xs font-semibold border border-natalis-border rounded-lg px-2 py-1.5 hover:bg-natalis-bg transition-colors"
+              title="Save and return to title"
+            >
+              Menu
+            </button>
           </div>
         </div>
       </header>

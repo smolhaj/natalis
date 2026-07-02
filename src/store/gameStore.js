@@ -252,11 +252,8 @@ const INITIAL_STATE = {
   activeSaveSlot: 0,
 }
 
-const _savedState = loadFromStorage()
-
 export const useGameStore = create((set, get) => ({
   ...INITIAL_STATE,
-  ...(_savedState ?? {}),
 
   // ── Persistence ─────────────────────────────────────────────────────────────
 
@@ -287,7 +284,11 @@ export const useGameStore = create((set, get) => ({
 
   // ── Navigation ──────────────────────────────────────────────────────────────
 
-  goToTitle: () => { set(INITIAL_STATE) },
+  goToTitle: () => {
+    const s = get()
+    if (s.screen === 'life') saveToStorage(s)
+    set(INITIAL_STATE)
+  },
 
   goToBirth: () => {
     const character = createCharacter()
@@ -387,6 +388,7 @@ export const useGameStore = create((set, get) => ({
       legacy: 0,
       currentProject: null,
     })
+    saveToStorage(get())
   },
 
   // ── Birth screen ─────────────────────────────────────────────────────────────
@@ -504,6 +506,7 @@ export const useGameStore = create((set, get) => ({
       legacy: 0,
       currentProject: null,
     })
+    saveToStorage(get())
   },
 
   // ── Life screen ─────────────────────────────────────────────────────────────
