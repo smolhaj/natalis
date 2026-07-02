@@ -220,6 +220,14 @@ export const ECONOMIC_FLAGS = {
     notes: 'Set by nam_diamond_wealth. Year texture (two facts in the same country).',
   },
 
+  nam_walvis_generation: {
+    weight: 'moderate',
+    category: 'economic',
+    description: 'Works or lives in Walvis Bay\'s fishing industry — the Benguela Current, the quota system\'s promise and its failure, Chinese and Spanish trawlers in Namibian waters',
+    intent: 'year_texture',
+    notes: 'Set by nam_dep_walvis_bay.',
+  },
+
   swahili_educated: {
     weight: 'moderate',
     category: 'education',

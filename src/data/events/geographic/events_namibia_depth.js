@@ -1,0 +1,147 @@
+// Namibia depth arc events
+// Covers: SWANLA contract labor, SWAPO exile generation, Katutura 1959 massacre,
+// SADF border war conscription, Walvis Bay fishing industry, independence 1990,
+// post-independence land redistribution wait, German descent community texture
+
+const IS_NAMIBIAN = (G) => G.character.country?.name === 'Namibia'
+
+export const NAMIBIA_DEPTH_EVENTS = [
+
+  {
+    id: 'nam_dep_swanla',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      IS_NAMIBIAN(G) &&
+      G.currentYear >= 1950 && G.currentYear <= 1975 &&
+      G.ethnicity !== 'white_namibian' &&
+      G.age >= 18 && G.age <= 30 &&
+      !G.flags.has('nam_swanla_generation'),
+    text: 'The South West Africa Native Labour Association recruits at the communal area office. The contract is for eighteen months. You sign — a thumbprint if you cannot sign — and are transported to Tsumeb or Rosh Pinah or Consolidated Diamond Mines. Your family stays behind. The contract forbids them from accompanying you. You live in a compound. You cannot leave the compound without a pass. The work is deep in the earth or in the heat of the processing plant and the wages are paid in a currency that buys less in the compound store than it would elsewhere. Eighteen months. Then you go home. Then you sign again, because the communal land cannot support the family alone and because the mine is what there is.',
+    choices: null,
+    effect: (p) => { p.m -= 8; p.h -= 4; p.e += 2; p.addFlag('nam_swanla_generation') },
+  },
+
+  {
+    id: 'nam_dep_exile',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      IS_NAMIBIAN(G) &&
+      G.currentYear >= 1966 && G.currentYear <= 1989 &&
+      G.age >= 18 && G.age <= 30 &&
+      G.ethnicity !== 'white_namibian' &&
+      !G.flags.has('nam_swapo_exile_generation'),
+    text: (G) => {
+      const yr = G.currentYear
+      const detail = yr <= 1975
+        ? 'The route goes north — across the Caprivi into Botswana and then Zambia. The SWAPO camp at Kongwa, in Tanzania. You train with Soviet instructors and Cubans who speak through interpreters. The long argument about how and when and whether the armed struggle will produce independence runs through the camp like a competing temperature.'
+        : 'The route goes north — across the Caprivi or into Angola, where SWAPO has camps near the Angolan border. The Tobias Hainyeko camp. You are training for a war and also waiting for a war and the distance between Lusaka and Windhoek is not geographical.'
+      return `${detail} You left Namibia because the alternative was the SADF or silence or prison. The years in exile accumulate their own texture: the specific longing for a place you are fighting for and cannot return to, the SWAPO organization that is also a hierarchy with its own politics, the people who went into Lubango and did not come back. The liberation movement is also an organization with human failings. Both are true.`
+    },
+    choices: null,
+    effect: (p) => { p.m -= 6; p.r += 5; p.e += 3; p.addFlag('nam_swapo_exile_generation') },
+  },
+
+  {
+    id: 'nam_dep_katutura',
+    phase: 'childhood',
+    weight: 4,
+    when: (G) =>
+      IS_NAMIBIAN(G) &&
+      G.ruralUrban === 'urban' &&
+      G.currentYear >= 1960 && G.currentYear <= 2000 &&
+      G.ethnicity !== 'white_namibian' &&
+      G.age >= 7 && G.age <= 14 &&
+      !G.flags.has('nam_katutura_generation'),
+    text: (G) => {
+      const yr = G.currentYear
+      const context = yr <= 1980
+        ? 'In 1959 the South African administration moved the Black population of the Old Location into a new township outside Windhoek. When residents protested, police opened fire. Eleven people died. The township was named Katutura — in Herero, "the place we do not want to be." The name stuck the way the place stuck: as the default.'
+        : 'Katutura was built to keep the Black population of Windhoek outside Windhoek. The apartheid logic of it was dismantled after independence but the geography of it was not. The township that was "the place we do not want to be" became the city\'s largest neighborhood and the one with the least infrastructure.'
+      return `${context} You grew up here. The shebeen on the corner. The unpaved road that floods in the rainy season. The community that exists because people make a community out of what they have, which in Katutura was each other and ingenuity and the specific social knowledge of surviving a system built to extract labor and contain its suppliers.`
+    },
+    choices: null,
+    effect: (p) => { p.m -= 3; p.e += 2; p.r += 3; p.addFlag('nam_katutura_generation') },
+  },
+
+  {
+    id: 'nam_dep_border_war',
+    phase: 'young_adult',
+    weight: 4,
+    when: (G) =>
+      IS_NAMIBIAN(G) &&
+      G.ethnicity === 'white_namibian' &&
+      G.currentYear >= 1970 && G.currentYear <= 1989 &&
+      G.age >= 18 && G.age <= 25 &&
+      !G.flags.has('nam_border_war_generation'),
+    text: 'The SADF conscripts you at eighteen. The Border War: Operation Savannah, Operation Protea, the counterinsurgency operations in the Caprivi and north of the Cutline. The enemy in the bush is SWAPO, which is also an abbreviation for the people who live in this country alongside you and went north rather than wait. The military says what you are doing. The military does not say what the people you are fighting are doing and why. You are nineteen. The bush at night. The specific discomfort of a position you were put in before you were old enough to have an opinion about it. Some of the men you serve with understand what they are defending. Some have not been asked to think about it. You are among both types, in foxholes in the dark.',
+    choices: null,
+    effect: (p) => { p.m -= 7; p.r += 6; p.e += 2; p.addFlag('nam_border_war_generation') },
+  },
+
+  {
+    id: 'nam_dep_walvis_bay',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      IS_NAMIBIAN(G) &&
+      G.currentYear >= 1990 &&
+      G.age >= 18 && G.age <= 35 &&
+      !G.flags.has('nam_walvis_generation'),
+    text: 'The Benguela Current runs up the Atlantic coast from the Cape and makes the cold water one of the world\'s richest fishing grounds. Off Walvis Bay: pilchard, hake, horse mackerel, rock lobster. The processing factories on the waterfront process what the trawlers bring in. The quota system was supposed to give previously disadvantaged Namibians a share of the resource that colonialism and apartheid had kept from them. The quota system also produces quota-holders who sell their quotas to the Chinese and Spanish trawler companies without having worked a day on a boat. You know which way the fish money flows. The harbor smells the same regardless of who owns the quotas.',
+    choices: null,
+    effect: (p) => { p.e += 3; p.r += 3; p.addFlag('nam_walvis_generation') },
+  },
+
+  {
+    id: 'nam_dep_independence_1990',
+    phase: 'young_adult',
+    weight: 5,
+    when: (G) =>
+      IS_NAMIBIAN(G) &&
+      G.currentYear >= 1990 && G.currentYear <= 1993 &&
+      G.age >= 14 && G.age <= 35 &&
+      !G.flags.has('nam_independence_1990_generation'),
+    text: 'March 21, 1990. The Stadium in Windhoek. Sam Nujoma raises the Namibian flag for the first time. After a century of German colonial rule, South African administration, apartheid, and a twenty-four-year armed struggle — independence. The crowd is specific in its joy: the people who were here, who stayed, who went north and came back, who buried children on both sides of the Cutline. Nelson Mandela is in the stadium, still three weeks out of prison. You are watching. Whatever the country becomes next, you were present at the moment when the word "Namibia" became the name of a country that governed itself. That specific fact is not erased by what comes after.',
+    choices: null,
+    effect: (p) => { p.m += 8; p.s += 2; p.addFlag('nam_independence_1990_generation') },
+  },
+
+  {
+    id: 'nam_dep_land_wait',
+    phase: 'midlife',
+    weight: 3,
+    when: (G) =>
+      IS_NAMIBIAN(G) &&
+      G.currentYear >= 2000 &&
+      G.ethnicity !== 'white_namibian' &&
+      G.flags.has('nam_communal_land_lived') &&
+      G.age >= 30 &&
+      !G.flags.has('nam_land_wait_generation'),
+    text: 'You registered on the land redistribution list. The National Resettlement Programme was supposed to transfer land from the commercial farms — most of them still white-owned, still the same land that was taken in the colonial era — to landless Namibians. The list exists. The transfers happen slowly. The commercial farms that were bought were bought at market price from willing sellers, which is the willing-seller-willing-buyer principle, which means the land market sets the price of correcting the land theft, which means the correction is slow and partial and conditional on fiscal space the government does not always have. You are on the list. The list is long.',
+    choices: null,
+    effect: (p) => { p.r += 5; p.m -= 4; p.addFlag('nam_land_wait_generation') },
+  },
+
+  {
+    id: 'nam_dep_german_community',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      IS_NAMIBIAN(G) &&
+      G.ethnicity === 'white_namibian' &&
+      G.age >= 8 && G.age <= 16 &&
+      !G.flags.has('nam_german_descent_generation'),
+    text: (G) => {
+      const yr = G.currentYear
+      const context = yr <= 1990
+        ? 'The Evangelical Lutheran church in Swakopmund has services in German. The Rhenish Mission building. The brewery. The German school. Your family has been here for three or four generations — descended from settlers who came before the Vernichtungsbefehl and who stayed after, who were here for German South West Africa and South West Africa and Namibia, accumulating a specific relationship to the place that is not colonizer and not indigenous and has no simple name.'
+        : 'Your great-grandparents came in the 1900s. You were born in independent Namibia. The Oktoberfest in Swakopmund. The Brauhaus. The German church service. The German-Namibian identity is a real thing — you were born here and speak Afrikaans and Oshiwambo alongside German — and it is also a complicated thing. The Herero genocide was carried out by the government of the country your family came from. Whether that is your inheritance or your history or neither depends on the conversation and who is having it.'
+      return context
+    },
+    choices: null,
+    effect: (p) => { p.e += 2; p.r += 3; p.addFlag('nam_german_descent_generation') },
+  },
+
+]

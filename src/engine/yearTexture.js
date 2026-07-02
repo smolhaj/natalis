@@ -4575,6 +4575,50 @@ function buildYearTexture(state) {
       ? 'You have been a Namibian citizen your whole life — which is the same length of time that Namibian citizenship has existed. The country and your adulthood are the same age.'
       : 'Sam Nujoma was in exile for thirty years before he came home as the first president. The country that existed when he left was not the country he came back to. Both of those things are still inside the word "independence."',
   ])
+  if (F.has('nam_swanla_generation') && Math.random() < 0.20) return pick([
+    'Eighteen months. Then go home. Then sign again. The compound you lived in. The pass required to leave the compound. The wages that bought less at the compound store than they would elsewhere. The mine is what there is.',
+    phase === 'late_life'
+      ? 'The men who worked the eighteen-month contracts in the 1960s came home changed in a way that had no name. The SWANLA system ended at independence. The mine is still operating. Some of the arrangements are different. The extraction continues under better-named terms.'
+      : 'You signed — a thumbprint — and were transported north. Your family stayed behind. The contract said so. The contract was the only contract available. That is not consent in the usual sense of the word.',
+  ])
+  if (F.has('nam_swapo_exile_generation') && Math.random() < 0.20) return pick([
+    'The training camps in Zambia. The Soviet instructors through interpreters. The years between leaving and returning. The specific longing for a country you were fighting for and could not go back to.',
+    phase === 'late_life'
+      ? 'The Lubango prison was SWAPO holding SWAPO members accused of being spies. Some were spies. Some were not. The truth commission that was supposed to address this was never established. You have lived with the unaddressed version for thirty years.'
+      : 'The liberation movement is also an organization with human failings. You knew this in the camps. You know it now in the governing party. The failings and the achievement coexist and do not cancel each other.',
+  ])
+  if (F.has('nam_katutura_generation') && Math.random() < 0.18) return pick([
+    'Katutura: "the place we do not want to be." The name stuck the way the place stuck. In 1959 the police opened fire on residents protesting the forced removal. Eleven died. The township continued.',
+    phase === 'late_life'
+      ? 'The apartheid geography of Windhoek was dismantled officially at independence. The township remained. The infrastructure deficit remained. The name remained. Some things persist past the legal framework that created them because the legal framework was not the only thing creating them.'
+      : 'The shebeen on the corner. The road that floods in the rainy season. The community that made something from what it had, which was each other and the specific knowledge of surviving a system designed to extract labor and contain those who provided it.',
+  ])
+  if (F.has('nam_border_war_generation') && Math.random() < 0.20) return pick([
+    'The bush at night. The SADF conscription at eighteen. The enemy who was also the person your country was fighting for and against simultaneously. You were nineteen and had not been asked to have an opinion about it.',
+    phase === 'late_life'
+      ? 'The reconciliation happened by not having the conversation. There was no Truth and Reconciliation process for the South African Border War in Namibia. The people you fought against are in the same country. Some of them are in government. The not-having-the-conversation has lasted thirty years and is its own kind of peace.'
+      : 'Operation Savannah. Operation Protea. The counterinsurgency in the Caprivi. The military said what you were doing. It did not say what the people across the Cutline were doing and why.',
+  ])
+  if (F.has('nam_walvis_generation') && Math.random() < 0.17) return pick([
+    'The Benguela Current makes this one of the richest fishing grounds in the world. The quota system was supposed to give previously disadvantaged Namibians a share. The quota-holders who sell to Chinese trawler companies without working a day on a boat are also part of the share.',
+    'The harbor smells the same regardless of who owns the quotas. The fish come in. The processing factory processes them. The value moves through channels that are visible if you look and invisible if you don\'t, which is true of most value chains.',
+  ])
+  if (F.has('nam_independence_1990_generation') && Math.random() < 0.18) return pick([
+    'March 21, 1990. The Stadium in Windhoek. Sam Nujoma raised the flag. Whatever the country became next, you were present at the moment the word Namibia became the name of a country that governed itself. That is not erased by what follows.',
+    'Nelson Mandela was in the stadium. Three weeks out of prison. The specific gathering of those two events — Namibian independence and Mandela newly free — is a coincidence of timing that made the crowd feel a larger thing than either event separately.',
+  ])
+  if (F.has('nam_land_wait_generation') && Math.random() < 0.18) return pick([
+    'The resettlement list. The willing-seller-willing-buyer principle: the land market sets the price of correcting the land theft, which means the correction is conditional on fiscal space the government does not always have. You are still on the list.',
+    phase === 'late_life'
+      ? 'The land question in Namibia was not resolved in your lifetime. The land question in Zimbabwe was not resolved. In South Africa. In Kenya. The common feature is that independence transferred political power and did not transfer the land, and in these economies the land is still the means of production.'
+      : 'The commercial farms look the same from outside as they did before independence. The families working them are different. The families owning most of them are not different in a way that is visible from the road.',
+  ])
+  if (F.has('nam_german_descent_generation') && Math.random() < 0.17) return pick([
+    'The Lutheran church service in German. The Rhenish Mission building. The German school in Swakopmund. Your family has been here for four generations and the country has had three different names in that time and you have been here for all three.',
+    phase === 'late_life'
+      ? 'You were born in independent Namibia. Your great-grandparents arrived before the Vernichtungsbefehl. Whether what they arrived into is your history, your inheritance, or neither depends on the conversation and who is having it. You have had that conversation many times and it has different endings.'
+      : 'The Herero genocide was carried out by the government of the country your family came from. You were born here. The two facts are both yours to hold. Holding them without resolving them is the German-Namibian condition.',
+  ])
   if (F.has('holodomor_generation') && Math.random() < 0.25) return pick([
     'The famine of 1932-33. The bread that was taken from the village. The body at the side of the road. The knowledge that asking the wrong question — or saying the word famine — could bring consequences. You learned what official reality requires of you.',
     'Six million in Ukraine. The Soviet census of 1937 returned lower population figures than 1926. The statisticians were arrested. The category "starvation" was removed from death certificates.',

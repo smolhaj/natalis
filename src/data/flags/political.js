@@ -1354,6 +1354,46 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by nam_independence_1990 world event. Year texture (the flag that was not there before and is there now).',
   },
 
+  nam_katutura_generation: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up in Katutura — the apartheid-era township outside Windhoek whose name means "the place we do not want to be" in Herero; site of the 1959 massacre',
+    intent: 'year_texture',
+    notes: 'Set by nam_dep_katutura.',
+  },
+
+  nam_border_war_generation: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'White Namibian conscripted into the SADF during the South African Border War (1966–1989) — the bush war, Operation Savannah, the ambiguity of who was fighting whom and why',
+    intent: 'both',
+    notes: 'Set by nam_dep_border_war. Follow-through: ft95_border_war_late.',
+  },
+
+  nam_independence_1990_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Was present at independence on March 21, 1990 — the Stadium in Windhoek, Sam Nujoma raising the Namibian flag, Mandela in the crowd',
+    intent: 'year_texture',
+    notes: 'Set by nam_dep_independence_1990.',
+  },
+
+  nam_land_wait_generation: {
+    weight: 'major',
+    category: 'political',
+    description: 'Registered on the land redistribution list after independence — the willing-seller-willing-buyer mechanism, the list that has grown longer, the correction that moves slower than the demand',
+    intent: 'both',
+    notes: 'Set by nam_dep_land_wait. Follow-through: ft95_land_wait_late.',
+  },
+
+  nam_swapo_exile_generation: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'Part of the SWAPO exile generation — training camps in Zambia, Angola, and Tanzania; the Lubango dungeons; the years of fighting for a country you could not return to',
+    intent: 'both',
+    notes: 'Set by nam_dep_exile. Follow-through: ft95_exile_late.',
+  },
+
   aragalaya_generation: {
     weight: 'moderate',
     category: 'political',
