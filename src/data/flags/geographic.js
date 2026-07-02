@@ -1463,6 +1463,70 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by bol_gas_war_2003. Bolivia only.',
   },
 
+  bol_sea_loss_identity: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Grew up in Bolivia learning the Día del Mar — the annual March 23 ceremony for the coast lost to Chile in 1884. The map with the Litoral Region as part of Bolivia is in every classroom.',
+    intent: 'both',
+    notes: 'Set by bol_dep_dia_del_mar. Checked by ft89_sea_loss_late_reckoning.',
+  },
+
+  bol_che_guevara_echo: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Witnessed or came of age during the news of Che Guevara\'s capture and death at La Higuera in 1967 — the failed revolution and its contested meaning.',
+    intent: 'year_texture',
+    notes: 'Set by bol_dep_che_1967. Bolivia only.',
+  },
+
+  bol_potosi_colonial_weight: {
+    weight: 'moderate',
+    category: 'historical',
+    description: 'Grew up in a Bolivian mining community and learned the colonial arithmetic: eight million dead in Potosí mines, the silver that built Spain and left Bolivia hollow.',
+    intent: 'year_texture',
+    notes: 'Set by bol_dep_potosi_colonial. Requires bol_mining_generation.',
+  },
+
+  bol_cholita_generation: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Witnessed the cultural shift around cholita identity after 2006 — the pollera no longer only a market-woman marker, the wrestlers of El Alto performing pride in ordinary clothes.',
+    intent: 'year_texture',
+    notes: 'Set by bol_dep_cholita_pollera. Bolivia only, 2005+.',
+  },
+
+  bol_lithium_generation: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Aware of Bolivia\'s lithium debate — the Salar de Uyuni, the electric car market building around it, the Potosí pattern repeating in slow motion.',
+    intent: 'both',
+    notes: 'Set by bol_dep_lithium_debate. Checked by ft89_lithium_nationalization_echo.',
+  },
+
+  bol_tipnis_generation: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'Lived through the TIPNIS road conflict 2011 — the Evo Morales government versus Amazon indigenous communities, the march to La Paz, Pachamama in the constitution and a road through protected territory.',
+    intent: 'both',
+    notes: 'Set by bol_dep_tipnis_road. Checked by ft89_tipnis_road_outcome.',
+  },
+
+  bol_sacred_coca_identity: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Knows the coca leaf as sacred object — the Pachamama ceremony, the miners\' altitude aid, the akullico — distinct from its narco-politics in other countries.',
+    intent: 'year_texture',
+    notes: 'Set by bol_dep_sacred_coca_ceremony. Bolivia only.',
+  },
+
+  bol_maritime_icj_generation: {
+    weight: 'major',
+    category: 'historical',
+    description: 'Followed Bolivia\'s ICJ case against Chile 2013–2018 — the argument for a negotiating obligation that the court declined to find, the landlocked identity sharpened by a ruling.',
+    intent: 'both',
+    notes: 'Set by bol_dep_maritime_icj. Checked by ft89_icj_ruling_2018.',
+  },
+
   nz_springbok_generation: {
     weight: 'major',
     category: 'conflict',

@@ -4933,6 +4933,62 @@ function buildYearTexture(state) {
       ? 'The Gas War is history now. For you it was four days at four thousand metres, the cold, and then the news. You carry the specific knowledge of what it took to make that stop.'
       : 'The natural gas is still under the soil. The question of who it is for has not been finally answered.',
   ])
+  if (F.has('bol_sea_loss_identity') && Math.random() < 0.3) return pick([
+    'March 23rd. You know the date the way Bolivians know dates attached to losses — not as a date in a calendar but as a date with a weight.',
+    'The ocean that Bolivia does not have is the most specific thing about being Bolivian in some ways. The claim is precise. The landlocked identity is precise. Neither resolves.',
+    phase === 'late_life'
+      ? 'You have probably seen the ocean, eventually. Most Bolivians do. It is not the same as having access to it.'
+      : 'The Litoral Region is the region that was. The map with it included is in every classroom. The coastline it shows has been Chilean since 1884.',
+  ])
+  if (F.has('bol_che_guevara_echo') && Math.random() < 0.3) return pick([
+    'La Higuera is a small village in the south of Bolivia. You know it the way you know a place that became larger than itself.',
+    'The photograph of his body was released. He looked like someone who had been somewhere very cold for a long time. The world took the photograph and made it a poster. Bolivia kept the village.',
+    phase === 'late_life'
+      ? 'You have had decades to think about what he was doing here and why it did not work. The analysis and the image exist in you simultaneously.'
+      : 'Whether the revolution failed or was destroyed is a distinction that felt important at a certain age. Whether it still feels important is something you periodically test.',
+  ])
+  if (F.has('bol_potosi_colonial_weight') && Math.random() < 0.3) return pick([
+    'Eight million. The number is in you the way dates are in you — not as a number but as a texture of understanding what the mountain meant to people who were not from here.',
+    'The Casa de la Moneda is where the silver was weighed and stamped before it left. The building is still there. The silver is gone. You grew up in a place the world extracted and moved on from.',
+    phase === 'late_life'
+      ? 'The Cerro Rico has been hollowing for five centuries. They say it is structurally compromised now. The mountain that gave Spain its empire is becoming too empty to stand up.'
+      : 'The cathedral in Potosí was built from colonial wealth. You have sat in it. The architecture and the dead it represents are present in the same building at the same time.',
+  ])
+  if (F.has('bol_cholita_generation') && Math.random() < 0.3) return pick([
+    'The pollera was what you wore to the market and now it is what you wear everywhere. Not everywhere. But the places it was not welcome before are fewer than they were.',
+    'The cholita wrestlers are performing something and also just being what they are. The audience has several understandings. The women performing have one.',
+    phase === 'late_life'
+      ? 'The generation that wore the pollera to hide in the market and the generation that wears it to everything are both in you as lived memory. The distance between them is what Bolivia moved.'
+      : 'After 2006 something changed in how the pollera was held. Not everywhere. But in enough places that you noticed it.',
+  ])
+  if (F.has('bol_lithium_generation') && Math.random() < 0.3) return pick([
+    'The salt flat is not silent but close to it. What is under it is the most wanted mineral on earth right now. Bolivia has been in this position before with different minerals.',
+    'The Potosí pattern: extract, export, benefit elsewhere. The argument about lithium is whether Bolivia can interrupt that at the processing stage. Nobody knows yet.',
+    phase === 'late_life'
+      ? 'Bolivia\'s resources and Bolivia\'s poverty exist alongside each other the way they always have. Whether lithium interrupted that relationship will be something the next generation measures.'
+      : 'The electric car market is being built around what is under the Salar de Uyuni. The terms of that relationship are still being negotiated. The negotiation is the history of Bolivia repeating.',
+  ])
+  if (F.has('bol_tipnis_generation') && Math.random() < 0.3) return pick([
+    'The TIPNIS march reached La Paz. You know what it takes to walk from the Amazon to La Paz at altitude. You know what it means that they came anyway.',
+    'Highland politics and lowland politics are not the same politics even when the president is indigenous. The communities inside the TIPNIS were voting against the road. The government saw different votes.',
+    phase === 'late_life'
+      ? 'The road argument is still not finished. The law protecting TIPNIS changed more than once. The communities are still there. Whether they are still there in fifty years is the question the road raised.'
+      : 'Pachamama was written into the constitution as a rights-holder. Then the government that wrote it wanted to build a road through the territory. You spent time thinking about what that meant.',
+  ])
+  if (F.has('bol_sacred_coca_identity') && Math.random() < 0.3) return pick([
+    'The leaf is what it is before it becomes anything else. Before the word cocaine, before the DEA, before the Chapare — the leaf and the cold and the altitude and the reason miners have chewed it for five hundred years.',
+    'You know the leaf the way you know altitude — not as a condition but as a context. The way some people know rain.',
+    phase === 'late_life'
+      ? 'Evo Morales chewed a coca leaf in front of the UN General Assembly in 2006. You watched it on television. Something specific was being said with the leaf in front of that specific audience.'
+      : 'The ceremony is older than the names given to what the leaf becomes after it leaves Bolivia. What it is here, in the cold, on the altiplano, is not what it is in that other story.',
+  ])
+  if (F.has('bol_maritime_icj_generation') && Math.random() < 0.3) return pick([
+    'The court ruled fourteen to two that Chile has no legal obligation to negotiate. You were alive when Bolivia made the argument. The argument did not produce the coast.',
+    'Bolivia\'s case was never going to produce the coast. It was going to produce a ruling. A ruling in your favour would have created pressure. A ruling against you created the record.',
+    phase === 'late_life'
+      ? 'The Día del Mar continues. The ICJ ruling is in the footnotes now. March 23rd and the map with the Litoral Region will outlast both the ruling and the judges who wrote it.'
+      : 'The legal argument and the national feeling are two different arguments. The ICJ handled the legal one. The national feeling does not require a court.',
+  ])
   if (F.has('interrogated_by_state') && Math.random() < 0.3) return pick([
     'The room where they questioned you is still a room you are in sometimes.',
     'You know now what it feels like when the state turns toward you. The knowledge reorganised certain things.',
