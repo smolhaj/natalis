@@ -2436,6 +2436,54 @@ export const IDENTITY_FLAGS = {
     notes: 'Set by cmr_inside_long_memory.',
   },
 
+  cmr_oil_generation: {
+    weight: 'major',
+    category: 'economic',
+    description: 'Came of age during Cameroon\'s oil years — the SNH revenues, the promises of transformation, the structural adjustment that followed when the price fell in 1985',
+    intent: 'both',
+    notes: 'Set by cmr_dep_oil. Follow-through: ft93_oil_late.',
+  },
+
+  cmr_boko_north_witness: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Witnessed Boko Haram\'s incursion into the Cameroonian far north from 2014 — the raids, the Lake Chad basin drought, the multinational task force that coordinates in theory',
+    intent: 'both',
+    notes: 'Set by cmr_dep_boko_north. Follow-through: ft93_boko_late.',
+  },
+
+  cmr_lions_generation: {
+    weight: 'moderate',
+    category: 'cultural',
+    description: 'Grew up during the Lions Indomptables 1990 World Cup run — Roger Milla\'s corner flag dance as a moment of national unity that belonged to no president',
+    intent: 'year_texture',
+    notes: 'Set by cmr_dep_lions.',
+  },
+
+  cmr_kondengui_witness: {
+    weight: 'major',
+    category: 'trauma',
+    description: 'Knows someone who passed through Kondengui Central Prison — the overcrowding, the years of provisional detention, the acquittal that came four years too late',
+    intent: 'both',
+    notes: 'Set by cmr_dep_kondengui. Follow-through: ft93_kondengui_late.',
+  },
+
+  cmr_ghost_town_generation: {
+    weight: 'major',
+    category: 'conflict',
+    description: 'Anglophone Cameroonian living through the ghost town Mondays — the school boycott generation, the shops that close as the only available protest',
+    intent: 'both',
+    notes: 'Set by cmr_dep_ghost_town. Follow-through: ft93_ghost_town_late.',
+  },
+
+  cmr_bushfaller_generation: {
+    weight: 'moderate',
+    category: 'diaspora',
+    description: 'Part of the bushfaller generation — watching cousins and neighbors fall in the bush (go abroad), receiving money that is both the relationship and its complication',
+    intent: 'year_texture',
+    notes: 'Set by cmr_dep_bushfaller.',
+  },
+
   nga_boko_haram_generation: {
     weight: 'major',
     category: 'trauma',

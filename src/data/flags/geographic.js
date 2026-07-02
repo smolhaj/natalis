@@ -894,6 +894,14 @@ export const GEOGRAPHIC_FLAGS = {
     notes: 'Set by cmr_douala_life. Year texture: the traffic, the translations held simultaneously.',
   },
 
+  cmr_yaounde_generation: {
+    weight: 'minor',
+    category: 'place',
+    description: 'Came of age in Yaoundé — the political capital on the hill, the Beti social calendar, the University graduates waiting for government jobs that arrive slowly',
+    intent: 'year_texture',
+    notes: 'Set by cmr_dep_yaounde.',
+  },
+
   nga_delta_community: {
     weight: 'major',
     category: 'environmental',

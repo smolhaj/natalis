@@ -10736,6 +10736,46 @@ function buildYearTexture(state) {
       ? 'You named, in private, the moral position of continuing normally while this happened in the same country. The naming didn\'t change anything. It stayed as a specific private knowledge that you carry forward.'
       : 'The humanitarian organisations reported: schools destroyed, villages burned, hospitals looted, civilians killed by both sides. The reports were accurate. You read them. The distance between reading and acting is the specific shape of your position in this conflict.',
   ])
+  if (F.has('cmr_oil_generation') && Math.random() < 0.20) return pick([
+    'The oil revenues went somewhere. The hospitals still use 1960s equipment. The education ministry got the new building; the health ministry got the promise. You learned this not as an economic theory but as the specific distribution of what is new and what is old in the country you grew up in.',
+    phase === 'late_life'
+      ? 'The offshore fields are nearly depleted. The structural adjustment that was supposed to modernize what the oil funded is visible now in what remains: the oil was real, the transformation was not. The standard comparison is Norway. You make it when you want to understand where the decades went.'
+      : 'Cameroon did not become Nigeria. Cameroon did not become Gabon. The resource came before the institutions that would manage it and the institutions reshaped themselves around the resource. This is the pattern. You know the pattern because you lived inside it.',
+  ])
+  if (F.has('cmr_boko_north_witness') && Math.random() < 0.22) return pick([
+    'The raids come at night. They take what can be taken. The army is present and understaffed. The multinational task force coordinates across the border in theory and in practice the logic of which villages get hit next is not legible from outside.',
+    phase === 'late_life'
+      ? 'The Lake Chad has lost ninety percent of its surface area since 1963. The fishing communities are gone. The herding routes are gone. The recruits for armed groups are partly produced by the lake\'s disappearance. This is in the landscape and not in the Boko Haram analysis and both things are true.'
+      : 'You know which villages have been hit and which ones have not yet been hit. The not-yet is the specific texture of living in a region where the risk is distributed unevenly and the distribution changes.',
+  ])
+  if (F.has('cmr_ahidjo_era') && Math.random() < 0.18) return pick([
+    'The photograph in the school is his photograph. The form requires the party name. The party has one name. You learned early that the organization of public life and the organization of permission are the same organization.',
+    'The UPC was declared illegal in 1955, five years before independence. Its leaders were hunted. Félix Moumié was poisoned in Geneva. You were taught independence as a moment of arrival. What preceded it required different categories than arrival.',
+  ])
+  if (F.has('cmr_lions_generation') && Math.random() < 0.18) return pick([
+    'Roger Milla came off the bench at thirty-eight and scored and danced at the corner flag and the country was briefly one thing. That week exists as its own category in what you remember: the week that belonged to no president.',
+    'The 1990 World Cup quarter-final run is stored differently than other memories — in the body, before analysis. You were watching. The corner flag dance went in before you were old enough to have an opinion about it.',
+  ])
+  if (F.has('cmr_kondengui_witness') && Math.random() < 0.20) return pick([
+    'The provisional detention stretches. Six months becomes a year. A year becomes three. The acquittal comes after four years in a prison built for 1,500 that holds ten thousand. In Cameroon this is described as the justice system working. It is, in a sense.',
+    phase === 'late_life'
+      ? 'The person you knew came out. The reform that would require the president to stop using detention as a political instrument requires a president with different instruments. You have thought about this for a long time and arrived at no conclusion that changes the situation.'
+      : 'You know someone who was held at Kondengui without charge, without trial date, without lawyer, and was eventually acquitted. The acquittal took four years. You have a specific relationship to the word "provisional" as a result.',
+  ])
+  if (F.has('cmr_yaounde_generation') && Math.random() < 0.18) return pick([
+    'Yaoundé is the political city. The roads are better near the presidency and worse toward the periphery. This is not a metaphor. It is a description of the roads. You learn early that the hill and the foot of the hill are separated by a distance shorter than it appears on the map.',
+    'The University of Yaoundé produces graduates who wait. The jobs come from the government. The government comes from the hill. The distance between graduating and arriving at a government position is measured in years and in the right introductions.',
+  ])
+  if (F.has('cmr_ghost_town_generation') && Math.random() < 0.22) return pick([
+    'Monday is a ghost town. The shops are closed. The schools are closed. The market does not function. This has been true for years now. The compliance is partly coercion and partly the only available protest. Separating them is work you do carefully and do not always resolve.',
+    phase === 'late_life'
+      ? 'The children who lost six or seven years of school during the boycott are adults now carrying a specific gap in their formation. You know them. The gap is theirs and it is the resolution of the question: what does a ghost town cost?'
+      : 'What can you do? You can close your shop on Monday. It costs you a day\'s income. It costs the armed groups nothing. It is the only form of protest available that does not require a weapon. You close the shop.',
+  ])
+  if (F.has('cmr_bushfaller_generation') && Math.random() < 0.18) return pick([
+    'The cousin who fell in the bush — who went to France, to Germany, to the United States — sends money. The money is the relationship and also the complication. They know what things cost here in a way that reveals they no longer know what things cost here.',
+    'The family WhatsApp group has a separate section for the diaspora contacts. The bushfallers return occasionally with a different posture. The posture is earned. The posture is also a reminder of what stays unavailable at home, which is both facts at once.',
+  ])
 
   // ─── ETHIOPIA TEXTURE ────────────────────────────────────────────────────────
   if (F.has('eth_abiy_generation') && Math.random() < 0.22) return pick([

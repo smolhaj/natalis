@@ -4009,6 +4009,14 @@ export const POLITICAL_FLAGS = {
     notes: 'Set by cmr_biya_long_rule. Year texture: the form that asks political affiliation, the conversation that stops.',
   },
 
+  cmr_ahidjo_era: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Grew up under Ahmadou Ahidjo\'s single-party state — the photograph in the school, the form that requires the party name, the UPC suppression that predated independence',
+    intent: 'year_texture',
+    notes: 'Set by cmr_dep_ahidjo.',
+  },
+
   anglophone_political: {
     weight: 'moderate',
     category: 'political',
