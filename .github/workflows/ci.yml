@@ -53,9 +53,35 @@ jobs:
             exit 1
           fi
 
-      # Includes the simulation-level suites (engineBalance, engineRobustness,
-      # effectPurity, saveMigration). These are the guardrails for the failure
-      # class the audit found: content that is authored but statistically or
-      # mechanically unreachable, which no static check can see.
+      # Fast suite: unit tests plus the static reachability audits (effect purity,
+      # phase/guard-age, enum domains, save migration). Seconds, not minutes.
       - name: Tests
-        run: npm test
+        run: npm run test:fast
+
+      # Reachability audits over the imported corpus — dead guards, enum domains,
+      # phase and year windows. Content the engine can never reach.
+      - name: Reachability audit
+        run: npm run check-events
+
+  # The simulation guardrails run the REAL engine over ~1,000 whole lives, which
+  # takes minutes rather than seconds. Split into its own job so it runs
+  # CONCURRENTLY with the fast checks: the PR still gates on it, but wall-clock
+  # is the slower of the two jobs instead of their sum.
+  simulate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+
+      # These are the guardrails for the failure class the audit found: content
+      # that is authored but statistically or mechanically unreachable, which no
+      # static check can see. Asserts register mix, prose-layer coverage, glimpse
+      # cadence, death ages against the historical record, and that no country x
+      # era x mode combination throws.
+      - name: Simulation guardrails
+        run: npm run test:sim
