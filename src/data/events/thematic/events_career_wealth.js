@@ -391,4 +391,16 @@ export const CAREER_WEALTH_EVENTS = [
     ],
     effect: null,
   },
+
+  // ── ECHO: THE ONE YOU TOOK ────────────────────────────────────────────────────
+
+  {
+    id: 'career_took_leap_echo',
+    phase: null,
+    weight: 2,
+    when: (G) => G.flags.has('career_took_the_leap') && G.age >= 42 && !G.mem?.careerLeapEcho,
+    text: `You still describe it as the year you left, as though it were one decision rather than about forty. The first winter there was genuinely bad and you have stopped mentioning that part. What you have instead is a set of colleagues who knew you only after, and who would not recognise the person who spent nine days not deciding.`,
+    choices: null,
+    effect: (p) => { p.m += 5; p.e += 3; p.r -= 3; p.setMem('careerLeapEcho', true) },
+  },
 ]

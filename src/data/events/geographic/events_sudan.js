@@ -86,7 +86,8 @@ export const SUDAN_EVENTS = [
       G.currentYear === 2019 &&
       G.age >= 16 &&
       !G.mem.sdnRevolution,
-    text: 'December 2018. The price of bread triples. Protests start in Atbara and spread to Khartoum. By April 2019 millions are camped in front of the military headquarters in Khartoum, singing and demanding the end of Bashir\'s thirty-year rule. On April 11, the army removes Bashir. He is arrested. The crowd stays, demanding civilian rule. On June 3, the Rapid Support Forces — the Janjaweed rebranded — fire into the sit-in. More than a hundred are killed. The bodies are thrown into the Nile. In August, a civilian-military transitional agreement is signed. Sudan is changing, for now.',
+    text: 'The bread triples in December and it starts in Atbara, of all places, a railway town, and it comes down the line to Khartoum. By April the ground in front of the army headquarters is a city: tents, a clinic, a stage, tea sellers, people who have not gone home in six weeks. On the eleventh they take the old man away and everybody stays anyway, because he was not the point. On the third of June the Rapid Support Forces come in at dawn and afterwards they are pulling bodies out of the Nile.',
+    context: 'Protests over the tripling of bread prices began in Atbara in December 2018 and spread nationwide. A sit-in outside the army general command in Khartoum began on 6 April 2019 and the military removed Omar al-Bashir on 11 April after thirty years in power. The Rapid Support Forces, descended from the Janjaweed militias of Darfur, cleared the camp on 3 June, killing more than a hundred people and dumping bodies in the Nile. A civilian-military transitional agreement was signed in August.',
     choices: [
       {
         text: 'You are in the sit-in.',

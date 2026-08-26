@@ -216,7 +216,8 @@ export const UZBEKISTAN_EVENTS = [
       IS_UZBEK(G) &&
       G.age >= 60 &&
       !G.mem?.uzbLate,
-    text: 'You have lived inside the Soviet project, the independence moment, the Karimov consolidation, and whatever comes after. The Registan is still there. The Aral Sea is not. The language you learned in school is now in an alphabet that was not the alphabet you learned it in. Three scripts in one lifetime is a specific kind of cultural dislocation that does not have an entry in the standard accounts of what the twentieth century did to people. You know it from the inside. The cotton still grows in the fields where the Syr Darya\'s tributaries used to flow. The dust from the exposed sea bottom still reaches you on certain days in a certain wind. You have outlasted the systems that formed you. This is something.',
+    text: 'You learned the alphabet three times: Arabic from your grandmother, then Cyrillic at school, then the Latin one they brought in when you were already old. The Registan is where it always was. The sea is a hundred kilometres from where the sea was, and on certain days in a certain wind the salt off the dry bed reaches the washing on your line. The cotton still comes up in fields that the river no longer feeds. You have outlived every system that made you.',
+    context: 'Uzbek has been written in Arabic, Latin, Cyrillic and Latin script again across the twentieth century, with the final change legislated in 1993. Soviet irrigation for cotton diverted the Amu Darya and Syr Darya, and the Aral Sea lost about ninety percent of its volume; salt and pesticide dust from the exposed seabed is carried hundreds of kilometres by wind.',
     choices: null,
     effect: (p) => { p.m += 6; p.r += 7; p.karma += 4; p.e += 4; p.addFlag('uzb_testigo_generation'); p.setMem('uzbLate', true) },
   },

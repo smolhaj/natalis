@@ -177,7 +177,8 @@ export const BANGLADESH_DEPTH_EVENTS = [
       G.flags.has('bng_garment_generation') &&
       G.age >= 22 &&
       !G.mem?.bngDepRanaAfter,
-    text: 'Rana Plaza. April 24, 2013. You know the name the way you know a name that was said on the radio at a specific moment. The eight-story building that contained garment factories whose brands you would recognize collapsed in thirty seconds. 1,134 people dead. 2,500 injured. The brands that sourced from Rana Plaza released statements. The Accord on Fire and Building Safety was signed by one hundred and ninety brands. The inspections happened. Some buildings were improved. The compensation fund paid less than it promised to survivors. The brands continued to source from Bangladesh because the wages were still low.',
+    text: 'There were cracks in the pillars on the Tuesday and the bank on the ground floor sent its staff home. The floors above were told to come in or lose the month. It took thirty seconds. Afterwards there is an accord and there are inspections and a fire door on your own floor that now opens outward, and the fund pays your neighbour less than the letter said it would. The orders did not go anywhere else, because the wage here is still the wage.',
+    context: 'Rana Plaza in Savar collapsed on 24 April 2013, killing 1,134 garment workers and injuring some 2,500. Cracks had been reported the previous day and the building\'s bank and shops evacuated, but garment workers were ordered back in. The Accord on Fire and Building Safety, signed by over 190 brands, inspected more than 1,600 factories. The compensation fund reached its target only after two years of campaigning.',
     choices: null,
     effect: (p) => {
       p.m -= 10

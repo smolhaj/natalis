@@ -30,7 +30,8 @@ export const MYANMAR_EVENTS = [
       G.currentYear === 1988 &&
       G.age >= 14 &&
       !G.mem.mya1988,
-    text: 'August 8, 1988. The 8888 Uprising. Students from Rangoon University are in the streets. Then workers. Then monks. Then hundreds of thousands of people across the country, demanding an end to military rule. The numbers are larger than anything in living memory. For a moment the streets are what they might be. On September 18, the military shoots into crowds in Rangoon. Three thousand people die — some say more. The generals announce SLORC: the State Law and Order Restoration Council. Aung San Suu Kyi, who gave her first political speech in August, is placed under house arrest in July 1989.',
+    text: 'It starts with the students and by the eighth of August it is the dockers and the clerks and the monks in a column that takes forty minutes to pass. For six weeks the street belongs to whoever is standing in it. On the eighteenth of September the soldiers fire into Sule Pagoda Road and keep firing. The generals give themselves a new name in English and a woman who made her first speech in August is put inside her house on University Avenue.',
+    context: 'The 8888 Uprising began with Rangoon student protests in March 1988 and became a nationwide general strike by 8 August. The military fired on crowds and seized power on 18 September as the State Law and Order Restoration Council; estimates of the dead run to 3,000 or more. Aung San Suu Kyi addressed a crowd at the Shwedagon Pagoda in August 1988 and was placed under house arrest in July 1989.',
     choices: [
       {
         text: 'You were in the streets.',

@@ -343,4 +343,16 @@ export const NEIGHBORHOOD_EVENTS = [
     effect: (p) => { p.setMem('nbrGoodYearsAck', true); p.m += 5; p.r += 3 },
   },
 
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_street_in_summer',
+    phase: null,
+    weight: 3,
+    when: (G) => G.age >= 12 && G.age <= 70 && G.neighborhoodTier && !G.mem?.ordStreetSummer && Math.random() < 0.14,
+    text: `Somebody is getting a sofa up a stairwell and it has become a public matter. Four people are giving instructions and three of them are wrong. A window opens above and adds an opinion. When it finally goes through the door there is applause from the pavement, and the man with the sofa takes a small bow, and everyone goes back inside.`,
+    choices: null,
+    effect: (p) => { p.m += 8; p.s += 3; p.setMem('ordStreetSummer', true) },
+  },
 ]

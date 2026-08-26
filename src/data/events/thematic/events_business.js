@@ -205,4 +205,16 @@ export const BUSINESS_EVENTS = [
     ],
     effect: null,
   },
+
+  // ── ECHO: THE EMAIL AT 6AM ────────────────────────────────────────────────────
+
+  {
+    id: 'biz_whistleblower_echo',
+    phase: null,
+    weight: 2,
+    when: (G) => G.flags.has('whistleblower_internal') && G.age >= 42 && !G.mem?.bizWhistleEcho,
+    text: `The role they moved you into has a long title and about nine hours of actual work in it a week. You have been in it for six years. Occasionally someone junior is sent to you for a conversation about integrity, which is either a compliment or a use, and you have stopped needing to know which. You sleep through the night, every night, which was the deal.`,
+    choices: null,
+    effect: (p) => { p.m += 4; p.e += 2; p.karma += 3; p.setMem('bizWhistleEcho', true) },
+  },
 ]

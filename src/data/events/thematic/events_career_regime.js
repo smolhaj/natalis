@@ -593,4 +593,26 @@ export const CAREER_REGIME_EVENTS = [
     ],
     effect: null,
   },
+
+  // ── ECHOES OF THE ROOM ────────────────────────────────────────────────────────
+
+  {
+    id: 'creg_truth_cost_echo',
+    phase: null,
+    weight: 2,
+    when: (G) => G.flags.has('told_the_truth_at_cost') && G.age >= 40 && !G.mem?.cregTruthEcho,
+    text: `Four people stopped eating lunch with you and none of them ever said why, and it has been eleven years. You do not regret the sentence. You have simply learned what it costs to be the person who says the sentence, which is not remorse and is not comfortable either. When your own name comes up for something now, someone always pauses first.`,
+    choices: null,
+    effect: (p) => { p.r += 4; p.e += 3; p.karma += 2; p.setMem('cregTruthEcho', true) },
+  },
+
+  {
+    id: 'creg_refused_inform_echo',
+    phase: null,
+    weight: 2,
+    when: (G) => G.flags.has('refused_to_inform') && G.age >= 35 && !G.mem?.cregRefusedEcho,
+    text: `You are passed over again and there is no letter explaining it, because there never is. The list your name went onto is not a document anyone will ever show you. You have made your peace with the arithmetic: a career that stops at a certain floor, and a blank form handed back across a desk in a year you can still name exactly.`,
+    choices: null,
+    effect: (p) => { p.m -= 4; p.w -= 3; p.karma += 4; p.setMem('cregRefusedEcho', true) },
+  },
 ]

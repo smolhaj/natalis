@@ -186,7 +186,7 @@ export const DIVORCE_EVENTS = [
       !G.partner &&
       G.age <= 45 &&
       !G.mem?.divDatingFired,
-    text: 'Someone asks you out, or a friend suggests someone, or you create a profile on an app late at night and feel immediately strange about it. Dating after a marriage is different from dating before one. You know more — about yourself, about what a relationship actually requires. The knowing is useful and also makes the early meetings feel more procedural than they should. You are forty-something, or thirty-something, sitting across from a person who does not know the shape of the years you have had.',
+    text: 'You create a profile on an app late at night and feel strange about it immediately. Dating after a marriage is different from dating before one. You know more — about yourself, about what a relationship actually requires. The knowing is useful and also makes the early meetings feel more procedural than they should. You are sitting across from a person who does not know the shape of the years you have had.',
     choices: [
       {
         text: 'Try — the alternative is staying closed',

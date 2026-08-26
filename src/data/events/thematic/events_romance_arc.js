@@ -469,4 +469,26 @@ export const ROMANCE_ARC_EVENTS = [
     ],
     effect: null,
   },
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_household_running_joke',
+    phase: null,
+    weight: 3,
+    when: (G) => G.partner && (G.partner.relationshipQuality ?? 60) >= 50 && G.age >= 25 && !G.mem?.ordRunningJoke && Math.random() < 0.15,
+    text: `A misunderstanding about a jar of something, six years ago, has become a fixed institution. Neither of you can remember the original facts. It gets deployed roughly twice a month, always in the same three words, always at the same moment, and it works every single time. Guests do not understand it and you do not explain it.`,
+    choices: null,
+    effect: (p) => { p.m += 9; p.updatePartnerRel(3); p.addPartnerMoment('the jar joke, six years old and still working'); p.setMem('ordRunningJoke', true) },
+  },
+
+  {
+    id: 'ord_first_meal_own_place',
+    phase: null,
+    weight: 3,
+    when: (G) => G.age >= 18 && G.age <= 30 && !G.mem?.ordFirstMeal && (G.career || G.partner || G.age >= 21) && Math.random() < 0.16,
+    text: `You cook the first thing in your own kitchen and it is not good. The pan is wrong, there is too much of one thing, and you eat it out of the pan sitting on the floor because the chairs have not arrived. Through the wall someone is watching television at a volume that will annoy you within a fortnight. Tonight you sit there with the pan on your knees and you are entirely pleased with yourself.`,
+    choices: null,
+    effect: (p) => { p.m += 10; p.e += 2; p.setMem('ordFirstMeal', true) },
+  },
 ]

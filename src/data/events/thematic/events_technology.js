@@ -253,4 +253,16 @@ export const TECHNOLOGY_EVENTS = [
     effect: (p) => { p.mo += 1500; p.e += 5; p.w += 4; p.addFlag('mobile_business') },
   },
 
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_teaching_parent_the_device',
+    phase: null,
+    weight: 3,
+    when: (G) => G.currentYear >= 1998 && G.age >= 20 && G.age <= 55 && (G.parents?.mother?.alive || G.parents?.father?.alive) && !G.mem?.ordTeachDevice && Math.random() < 0.16,
+    text: `You are explaining the same three steps for the fourth time and your parent is writing them down on the back of an envelope in an order that will not work. Then they get it. Then they do it again unaided while narrating every step out loud to you. They are so pleased that you have to look at the floor for a second.`,
+    choices: null,
+    effect: (p) => { p.m += 9; p.s += 2; p.setMem('ordTeachDevice', true) },
+  },
 ]

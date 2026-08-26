@@ -213,12 +213,7 @@ export const MEXICO_DEPTH_EVENTS = [
     weight: 5,
     when: (G) =>
       isMex(G) &&
-      (G.ethnicity?.id === 'indigenous_nahua' ||
-       G.ethnicity?.id === 'indigenous_maya' ||
-       G.ethnicity?.id === 'indigenous_zapotec' ||
-       G.ethnicity?.id === 'indigenous_mixtec' ||
-       G.ethnicity?.id === 'indigenous_mexican' ||
-       G.ethnicity?.disadvantaged) &&
+      G.ethnicity === 'indigenous_mexican' &&
       G.age >= 6 && G.age <= 12 &&
       !G.mem?.mexIndigenousSchool,
     text: `The school teaches in Spanish. The language you speak at home — Nahuatl or Zapotec or Mixtec or the language that has a name for its mountains and no word for the republic that claims them — is not the language of the books or the tests or the teacher. The teacher is not always cruel about this. Sometimes the teacher is not from here and genuinely does not know that there is another language in the room. You learn to hold two things separately: the language that says where you come from, and the language that says where you are going.`,

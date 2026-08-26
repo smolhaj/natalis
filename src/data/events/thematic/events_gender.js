@@ -1997,7 +1997,7 @@ export const GENDER_EVENTS = [
     when: (G) =>
       G.age >= 14 && G.age <= 22 &&
       !G.flags.includes('trans_identity'),
-    text: 'The word exists. You found it on the internet, or in a book, or someone else used it and you heard yourself in it. It explains something you have been trying to explain to yourself since childhood. The clarity is real and frightening and, underneath that, a relief you were not expecting.',
+    text: 'The word exists. Someone else used it in a sentence that was not about you and you heard yourself in it. It explains something you have been trying to explain to yourself since childhood. The clarity is real and frightening and, underneath that, a relief you were not expecting.',
     context: null,
     choices: [
       {

@@ -342,4 +342,26 @@ export const SPORT_EVENTS = [
     },
   },
 
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_swimming_where_you_shouldnt',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) => G.age >= 13 && G.age <= 17 && G.stats.health >= 45 && !G.mem?.ordSwim,
+    text: `The water is colder than anyone admits for the first ninety seconds and then it is not. There is a sign somewhere behind you that says something. Your body does the thing bodies do when they are seventeen and in water: everything works, nothing hurts, you can go under and stay under. Someone shouts your name from the bank and you do not answer, just to be underneath a while longer.`,
+    choices: null,
+    effect: (p) => { p.m += 10; p.h += 4; p.setMem('ordSwim', true) },
+  },
+
+  {
+    id: 'ord_sea_in_october',
+    phase: null,
+    weight: 3,
+    when: (G) => G.age >= 38 && G.age <= 70 && G.stats.health >= 40 && !G.mem?.ordSeaOctober && Math.random() < 0.14,
+    text: `You go in in October, which is a thing you started doing for no articulable reason. The cold takes the top of your head off for a count of ten and then hands you back a body that is entirely awake. You swim out as far as the second marker and turn over. On the way home you are hungry in a way you have not been hungry in years.`,
+    choices: null,
+    effect: (p) => { p.m += 11; p.h += 5; p.setMem('ordSeaOctober', true) },
+  },
 ]

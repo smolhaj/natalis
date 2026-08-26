@@ -72,7 +72,8 @@ export const AFGHANISTAN_EVENTS = [
       G.currentYear >= 1996 && G.currentYear <= 2000 &&
       G.age >= 16 &&
       !G.mem.afgTaliban,
-    text: 'September 1996. The Taliban enter Kabul. Najibullah is castrated and hanged from a traffic post. The new rules are announced. Women cannot leave the house without a male guardian. Women cannot work. Girls\' schools are closed. Music is banned. Television is banned. Kite-flying is banned. Men must grow beards to the length of a fist. The religious police — the Ministry for the Promotion of Virtue and Prevention of Vice — enforce the rules in the streets. The Hazara villages in the Bamyan valley face not just the rules but massacres.',
+    text: 'They hang the man who used to be president from a traffic post at Ariana Square and leave him there. The rules come over the radio as a list: no music, no television, no kites, beards to the length of a fist, no woman on the street without a man of her own family. The Ministry for the Promotion of Virtue has a pickup and a length of cable and it works the bazaar in the afternoons. Your sister has not been outside the compound since September.',
+    context: 'The Taliban took Kabul in September 1996 and killed the former president Mohammad Najibullah, displaying his body at Ariana Square. Their decrees banned music, television, kite-flying and photography, mandated beards, and prohibited women from working or leaving home without a male relative. The Ministry for the Promotion of Virtue and Prevention of Vice enforced them in public. Hazara communities in Bamyan and Mazar-i-Sharif were subjected to mass killings.',
     choices: [
       {
         text: 'You are a woman — your world has been abolished.',

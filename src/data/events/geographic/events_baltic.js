@@ -5,7 +5,7 @@
 const BALTIC_COUNTRIES = ['Estonia', 'Latvia', 'Lithuania']
 
 const isRussianMinority = (G) => {
-  const id = G.character?.ethnicity?.id || ''
+  const id = G.character?.ethnicity || ''
   return id.startsWith('russian_') && BALTIC_COUNTRIES.includes(G.character.country.name)
 }
 

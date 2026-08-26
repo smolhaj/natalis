@@ -1137,7 +1137,7 @@ export const LATIN_AMERICA_EVENTS = [
       G.age >= 20 &&
       !G.mem?.bol_evo,
     text: (G) => {
-      const ethnicId = G.character.ethnicity?.id ?? ''
+      const ethnicId = G.character.ethnicity ?? ''
       if (ethnicId.includes('quechua') || ethnicId.includes('aymara')) {
         return 'Evo Morales is inaugurated first in the traditional ceremony at Tiwanaku, in Aymara and Quechua, with the coca leaf and the wiphala. The second ceremony is in La Paz. You have waited your entire life for a person who looks like you to stand in this place and say: the original people of this land are no longer simply the majority that does not govern.'
       }

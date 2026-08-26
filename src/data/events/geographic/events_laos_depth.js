@@ -93,7 +93,8 @@ export const LAOS_DEPTH_EVENTS = [
       G.currentYear >= 2013 &&
       G.age >= 25 &&
       !G.flags.has('laos_sombath_era'),
-    text: 'On the night of 15 December 2012, Sombath Somphone stopped at a police checkpoint on the outskirts of Vientiane. The checkpoint CCTV captured what happened: he was taken from his car. Other vehicles arrived. He was put in a different vehicle and driven away. He has not been seen since. Sombath was Laos\'s most prominent civil society leader — the recipient of the Ramon Magsaysay Award, known for rural development and youth work. The government said it was investigating. It has been investigating since 2012. In Laos you do not say publicly what you believe happened. You know what you believe happened. The CCTV footage exists.',
+    text: 'The footage is from the police camera at the post on Thadeua Road and it is on the internet, so everybody has seen it. A jeep, a man getting out of his own car, another vehicle arriving, and then the road with nobody on it. That was December and it is now years later and the ministry says the investigation continues. At the office you and the man at the next desk have both watched it, and neither of you has ever said so.',
+    context: 'Sombath Somphone, Laos\'s best-known civil society figure and a 2005 Ramon Magsaysay laureate for community development, was stopped at a police post on the edge of Vientiane on 15 December 2012 and driven away in another vehicle. The abduction was recorded by a traffic camera and the footage circulated internationally. The Lao government has maintained since that its investigation is ongoing. He has not been seen since.',
     choices: null,
     effect: (p) => { p.r += 5; p.m -= 5; p.addFlag('laos_sombath_era') },
   },

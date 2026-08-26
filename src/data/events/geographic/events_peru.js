@@ -151,7 +151,8 @@ const PERU_EVENTS = [
       G.currentYear >= 2000 && G.currentYear <= 2001 &&
       G.age >= 18 &&
       !G.mem?.per_vladi,
-    text: 'September 2000. The video: Vladimiro Montesinos, head of the SIN — the intelligence service — handing $15,000 in cash to an opposition congressman, on tape, while they discuss the price. Then another tape. Then another. Eventually there are thousands of videos. Judges being paid. Military officers being paid. Television executives being paid. The entire bribery infrastructure of the Fujimori system on tape, because Montesinos taped everything. Fujimori flees to Japan via Brunei. He faxes his resignation from Tokyo. His minister accepts it by fax. That is how the decade ends.',
+    text: 'The tape is grainy and the sound is poor and it is a man counting fifteen thousand dollars onto a table for a congressman who takes it. Then there is another tape, and by December there are thousands of them, because he filmed everything he ever did. Judges, generals, the men who own the television channels. The president leaves for Japan by way of Brunei and sends his resignation by fax. His own minister accepts it by fax, and that is how the decade ends.',
+    context: 'Vladimiro Montesinos, head of Peru\'s intelligence service under Alberto Fujimori, secretly videotaped his own bribery of politicians, judges, officers and media owners. The first tape was broadcast in September 2000. Fujimori fled to Japan in November and faxed his resignation from Tokyo; Congress rejected it and removed him for moral incapacity instead. Both men were later convicted and imprisoned.',
     choices: null,
     effect: (p) => { p.e += 3; p.r += 6; p.addFlag('per_postfujimori_generation'); p.setMem('per_vladi', true); },
   },

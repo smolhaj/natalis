@@ -20,7 +20,7 @@ export const USA_EVENTS = [
       G.age >= 6 && G.age <= 14 &&
       !G.mem?.usaJimCrow,
     text: (G) => {
-      const state = G.ruralUrban === 'rural' || G.ruralUrban === 'small_town'
+      const state = G.ruralUrban === 'rural'
         ? 'rural South'
         : 'the South'
       return `There is the water fountain for white people and the one for colored people. There is the school for white children, which has new textbooks, and the school you go to, which has the textbooks that came from the white school after they were old. There are the signs. You learn to read the signs before you learn to read words. You learn where to walk, how to look, what to say when a white man speaks to you. The learning is thorough and your parents are thorough teachers because the consequences of not knowing are permanent. This is ${state} in the middle of the century.`
@@ -459,7 +459,7 @@ export const USA_EVENTS = [
       G.age >= 25 &&
       !G.mem?.usaOpioids,
     text: (G) => {
-      const isRural = G.ruralUrban === 'rural' || G.ruralUrban === 'small_town'
+      const isRural = G.ruralUrban === 'rural'
       if (isRural) {
         return 'OxyContin in 1996. The pharmaceutical company\'s sales representatives tell the doctors that the addiction risk is less than one percent. The doctors prescribe it for back pain, for shoulder injuries, for the ordinary pain of physical work. The one-percent figure was taken out of context from a letter in the New England Journal of Medicine. By 2010, enough OxyContin is being prescribed in the US to medicate every adult American continuously for a month. In your town, you know who is on it. You know who the on-it became something else. You know the house where the parents died within a year of each other and no one was surprised.'
       }

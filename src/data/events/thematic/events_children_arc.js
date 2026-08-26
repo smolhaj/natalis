@@ -105,7 +105,7 @@ export const CHILDREN_ARC_EVENTS = [
         return a >= 17 && a <= 19
       })
       const name = child?.name ?? 'Your child'
-      return `The letter arrives, or the email, or the phone notification — the format has changed but the fact has not. ${name} got in. You stand in the kitchen with the news and feel something you cannot name cleanly: pride, and the cost of it, and the distance that is coming, and pride again.`
+      return `The letter arrives on a Thursday and sits on the hall table until she is home to open it. ${name} got in. You stand in the kitchen with the news and feel something you cannot name cleanly: pride, and the cost of it, and the distance that is coming, and pride again.`
     },
     choices: [
       {
@@ -1364,4 +1364,29 @@ export const CHILDREN_ARC_EVENTS = [
     effect: null,
   },
 
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_child_actually_funny',
+    phase: null,
+    weight: 3,
+    when: (G) => (G.children ?? []).length > 0 && G.age >= 28 && G.age <= 55 && !G.mem?.ordChildFunny && Math.random() < 0.18,
+    text: (G) => {
+      const c = (G.children ?? [])[0]?.name ?? 'your child'
+      return c + ` says something at dinner that is genuinely, structurally funny — not funny-because-a-child-said-it, funny. There is a pause while you work out whether they know. They do know. You laugh properly, the ugly kind, and they are delighted with themselves and file it away for use later. They will use it later.`
+    },
+    choices: null,
+    effect: (p) => { p.m += 11; p.updateChildRel(0, 5); p.setMem('ordChildFunny', true) },
+  },
+
+  {
+    id: 'ord_grandchild_absurd',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.flags.has('grandparent') && G.age >= 60 && !G.mem?.ordGrandAbsurd,
+    text: `The four-year-old has decided that you are a bus. This has rules, which are explained to you at length and are not negotiable. You are a bus for forty minutes. At the end of it you have a sore knee and you have been addressed exclusively as Driver, and you notice that you have not thought about anything else the entire time.`,
+    choices: null,
+    effect: (p) => { p.m += 12; p.h -= 1; p.setMem('ordGrandAbsurd', true) },
+  },
 ]

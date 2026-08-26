@@ -119,7 +119,8 @@ const SAUDI_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 1992 &&
       G.age >= 15 &&
       !G.mem?.sau_gulf_war,
-    text: 'August 1990. Saddam Hussein invades Kuwait. King Fahd calls for American troops. Five hundred thousand US soldiers on Saudi soil. The religious establishment issues fatwas supporting the arrangement. Other voices argue that having non-Muslim troops on the Arabian peninsula — near Mecca, near Medina — is a desecration. Osama bin Laden, recently returned from Afghanistan, offered to defend the kingdom with his Arab veterans. The offer was rejected. He leaves for Sudan. The war is over in a hundred hours. The American bases remain for years. The argument about what was wrong about this stays much longer.',
+    text: 'In August there are American soldiers at the airbase outside the city and by the autumn there are half a million of them in the country. The senior scholars issue the ruling that permits it. At the mosque a younger preacher says the word desecration and by the following Friday he is not preaching. Your cousin argues both sides of it at dinner and neither side goes away. The fighting itself lasts a hundred hours; the bases stay for thirteen years.',
+    context: 'Iraq invaded Kuwait in August 1990 and King Fahd requested American military protection, eventually hosting some 500,000 US troops. The Council of Senior Scholars issued a fatwa permitting the deployment; the Sahwa movement of younger clerics opposed it and many were imprisoned in the crackdown that followed. Osama bin Laden\'s offer to defend the kingdom with Afghan veterans was refused and he left for Sudan. US forces withdrew from Saudi Arabia in 2003.',
     choices: [
       {
         text: 'The defense was necessary — Saddam was on the border.',

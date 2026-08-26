@@ -220,4 +220,26 @@ export const LOCAL_EVENTS = [
     effect: (p) => { p.m += 8; p.karma += 5; p.legacy += 5; p.setMem('loc_transmitted_noted', true); },
   },
 
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_known_by_the_shopkeeper',
+    phase: null,
+    weight: 3,
+    when: (G) => G.age >= 24 && !G.mem?.ordShopkeeper && Math.random() < 0.14,
+    text: `The man in the shop has started getting your thing down before you reach the counter. Neither of you has ever asked the other's name and this is not going to change. Today he says something about the weather that is slightly too well constructed to be about the weather, and you both enjoy it. You smile the whole way to the corner.`,
+    choices: null,
+    effect: (p) => { p.m += 7; p.s += 2; p.setMem('ordShopkeeper', true) },
+  },
+
+  {
+    id: 'ord_the_bench',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 68 && !G.mem?.ordBench,
+    text: `You sit on the bench by the road for an hour most mornings and this is not a decline, it is a post. Two dogs, the school run, the van that comes on Wednesdays, the woman who is always slightly late for whatever it is. You are keeping an accurate record that nobody has asked for. It is warm on the arm of the bench by half past nine.`,
+    choices: null,
+    effect: (p) => { p.m += 8; p.setMem('ordBench', true) },
+  },
 ]

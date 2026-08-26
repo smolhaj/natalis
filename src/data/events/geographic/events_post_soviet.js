@@ -147,7 +147,8 @@ export const POST_SOVIET_EVENTS = [
       G.flags.has('gulag_survivor') &&
       G.currentYear >= 1953 && G.currentYear <= 1958 &&
       !G.mem.psGulagRelease,
-    text: 'Stalin dies on March 5, 1953. The camp is informed by a guard who does not explain what it means. The amnesty comes in waves. Your paperwork is processed in 1954, or 1955. You are given a document that says you are released. You are not given transportation home. The nearest station is 400 kilometres. You do not have money for the train. The city you left is eight years in the past. The apartment is occupied by a different family. The friends who knew you have gone in various directions. Your wife is somewhere that a letter you sent reached and a letter you sent did not.',
+    text: 'A guard tells you Stalin is dead and does not say what that is supposed to mean for you. The paper comes eighteen months later and it says released and does not say how. The nearest station is four hundred kilometres away and there is no money for a ticket. When you reach the city there is another family in the apartment and they are decent about it and they do not move. You sent your wife eleven letters and you do not know which of them arrived.',
+    context: 'Stalin died on 5 March 1953. The amnesty that month covered mostly criminal prisoners; political releases came in waves through 1954-1956 and accelerated after Khrushchev\'s Secret Speech in February 1956. Released prisoners were issued documents but no transport, no housing claim and no restoration of employment, and many remained barred from the major cities.',
     choices: [
       {
         text: 'Go home, whatever is left of it.',

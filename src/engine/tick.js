@@ -776,7 +776,10 @@ export function buildG(state) {
 
 function applyWorldEvents(state) {
   let updated = { ...state }
-  const G = buildG(state)
+  // Rebuilt per event: G used to be computed once before the loop, so when two
+  // world events matched the same year, the second one's guard evaluated against
+  // state from before the first had applied.
+  let G = buildG(updated)
   for (const we of WORLD_EVENTS) {
     if (updated.worldEventsFired.has(we.id)) continue
     if (state.currentYear < we.years[0] || state.currentYear > we.years[1]) continue
@@ -802,6 +805,9 @@ function applyWorldEvents(state) {
     const narrativeText = typeof we.narrative === 'function' ? we.narrative(G) : we.narrative
     updated.log = [...updated.log, { age: updated.age, year: updated.currentYear, text: narrativeText, worldEventName: we.name, isKey: true, isWorld: true }]
     if (we.addFlags) updated.flags = [...new Set([...updated.flags, ...we.addFlags])]
+    // Rebuilt only when an event actually fires (rare), so a later event in the
+    // same year sees the flags and stats the earlier one just set.
+    G = buildG(updated)
   }
   return updated
 }

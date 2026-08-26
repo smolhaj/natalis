@@ -305,7 +305,7 @@ export const FAMILY_SILENCE_EVENTS = [
       G.flags.has('carries_family_silence') &&
       !G.mem?.fsAdultAsksDone &&
       G.age >= 26 && G.age <= 38,
-    text: 'You are old enough, now, to ask. One evening — at the kitchen table, or in a car, or over the phone — you bring it up directly. You say: I want to know what happened. There is a pause. Your parent says: "Why does it matter now?" You say it matters because it is part of where you come from. Another pause. Then they begin. The story is shorter than you expected, and longer than they intended, and does not end cleanly. You sit with it for days afterward.',
+    text: 'You are old enough, now, to ask. One evening at the kitchen table, with the plates still out, you bring it up directly. You say: I want to know what happened. There is a pause. Your parent says: "Why does it matter now?" You say it matters because it is part of where you come from. Another pause. Then they begin. The story is shorter than you expected, and longer than they intended, and does not end cleanly. You sit with it for days afterward.',
     choices: [
       {
         text: 'You listened to everything, and now you carry it',

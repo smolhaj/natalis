@@ -64,7 +64,8 @@ export const UKRAINE_DEPTH_EVENTS = [
       G.currentYear >= 1993 && G.currentYear <= 1997 &&
       G.age >= 16 &&
       !G.mem?.ukrDep1990s,
-    text: 'The karbovanets coupon. The currency issued in 1992 to replace the Soviet ruble — not a real currency, printed on cheap paper, worth less every week. In 1993 inflation runs at 10,000 percent. Your parents\' savings from forty years of work are worth nothing in six months. The factory where your father worked: closed. The pension: paid three months late, then paid in vouchers for goods that don\'t exist. The people who survive 1993-1995 in Ukraine do so through connections, through gardens, through selling personal possessions at the market on Sundays. The mafia is real. The men with tracksuits and mobile phones are real. The president is Kuchma and the country is officially democratic and what is actually happening is something else.',
+    text: 'The coupons are printed on paper thin enough to see through and they are worth less on Friday than they were on Monday. Forty years of your parents\' saving goes in about six months. The plant where your father worked has a chain on the gate and the pension arrives three months late and then arrives as vouchers for goods that are not in any shop. On Sundays you stand at the market with your mother\'s coat and the good cutlery laid out on a sheet.',
+    context: 'Ukraine issued the karbovanets coupon in 1992 to replace the Soviet rouble. Inflation reached roughly 10,000 percent in 1993, wiping out savings and pensions. Industrial output fell by more than half between 1991 and 1996. The hryvnia replaced the coupon in 1996 at 100,000 to one.',
     choices: [
       {
         text: 'You become one of the shuttle traders — buying in Poland or Turkey, selling at home.',
@@ -191,7 +192,8 @@ export const UKRAINE_DEPTH_EVENTS = [
       G.currentYear >= 2022 && G.currentYear <= 2024 &&
       G.age >= 14 &&
       !G.mem?.ukrDepKharkiv,
-    text: 'Kharkiv: 1.4 million people, Ukraine\'s second city, 40 kilometres from the Russian border. In the first days of the invasion the Russian forces expect to take the city quickly; it is historically Russian-speaking, it was the capital of Soviet Ukraine until 1934. It does not fall. The resistance in the streets, the territorial defense units with hunting rifles, the fact that Kharkiv identifies as Ukrainian despite the Russian it speaks. By April the city is being shelled from across the border — not a siege, a shelling. Apartment blocks, universities, markets. People move to the east of the city away from the north. Or they leave for Kyiv, for Poltava, for Poland. Or they go down to the metro and they stay there. The metro stations become the cities under the city.',
+    text: 'The city is forty kilometres from the border, which means the shells arrive before the alert does. Your flat faces north, so you have moved a mattress into the room that faces south and you sleep there now. At Universytet station there are camp beds along the platform and a woman who has organised the charging points into a rota. Nobody down there has stopped speaking Russian and nobody down there is confused about which country they are in.',
+    context: 'Kharkiv, Ukraine\'s second city with 1.4 million residents, lies about 40 kilometres from the Russian border and was the capital of Soviet Ukraine until 1934. Russian forces failed to take it in February 2022 and shelled it from across the border through the spring. Metro stations sheltered thousands of residents for months. The city is predominantly Russian-speaking.',
     choices: [
       {
         text: 'You go down to the metro and you stay.',
@@ -278,7 +280,8 @@ export const UKRAINE_DEPTH_EVENTS = [
       !G.mem?.ukrDepBasement &&
       !G.mem?.ukrDepMobilization &&
       !G.mem?.ukrDepKharkiv,
-    text: 'The air raid alert sounds on the phone. The sound is specific — you know it before you are fully awake. The basement: your building\'s basement, or the car park below the shopping centre, or the metro station, depending on where you are when it sounds. You bring: the go-bag you assembled in the first week (documents, power bank, water, two changes of clothes for the child). You wait. Sometimes twenty minutes. Sometimes two hours. Sometimes the all-clear sounds and you go back up and the electricity is off. The routine of war is mostly this: the alert, the descent, the waiting, the return. The extraordinary part is the other part — the strike that hits somewhere else, the photographs in the morning, the calculation of how far.',
+    text: 'The alert has a sound you recognise before you are properly awake. The bag has been by the door since the first week: documents, power bank, water, two changes of clothes for the child. Sometimes it is twenty minutes in the car park under the shopping centre and sometimes it is two hours, and when you come back up the electricity is off. The descending is not the hard part. The hard part is the morning, and the photographs, and working out how far away it was.',
+    context: 'Air raid alerts have sounded across Ukraine since February 2022, delivered by siren and by phone application, several times daily in front-line oblasts. Basements, underground car parks and metro stations serve as shelters. Strikes on the electricity grid from October 2022 produced rolling blackouts through successive winters.',
     choices: null,
     effect: (p) => {
       p.m -= 10

@@ -152,7 +152,7 @@ export const THAILAND_EVENTS = [
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Thailand' &&
-      (G.character.ethnicity?.id === 'karen' || G.character.ethnicity?.id === 'hmong' || G.character.ethnicity?.id === 'akha' || G.character.ethnicity?.id === 'thai_hilltribe') &&
+      G.character.ethnicity === 'hill_tribes' &&
       G.currentYear >= 1975 && G.currentYear <= 2015 &&
       G.age >= 12 && G.age <= 18 &&
       !G.mem.thaHilltribeStateless,
@@ -215,7 +215,7 @@ export const THAILAND_EVENTS = [
       G.age >= 14 &&
       !G.mem.thaDeepSouth,
     text: (G) => {
-      const isMalay = G.character.ethnicity?.id === 'thai_malay' || G.character.religion === 'muslim_sunni'
+      const isMalay = G.character.ethnicity === 'malay_thai' || G.character.religion === 'muslim_sunni'
       return isMalay
         ? 'Pattani, Yala, Narathiwat: the three southernmost provinces. Malay-speaking, Muslim, historically the Patani Sultanate until Bangkok annexed it in 1902. Since January 4, 2004 — when army weapons depots were raided in Narathiwat — the insurgency has killed more than seven thousand people. Your language is Jawi-inflected Malay, not Thai. Your school teaches Thai. The checkpoint outside the village is staffed by soldiers from Chiang Mai who do not speak Malay and who look at you with a particular expression you have learned to recognize.'
         : 'The deep south of Thailand: Pattani, Yala, Narathiwat. More than seven thousand dead since 2004 — a low-intensity insurgency that receives almost no international coverage. The soldiers stationed there rotate from other regions and few speak Malay; the local population is Malay-speaking Muslim; the schools teach Thai. Teachers have been specifically targeted — killed on the way to work. Some schools have closed. Most Thai people have formed their opinion of the south from a handful of headlines. You know one sentence more than that.'

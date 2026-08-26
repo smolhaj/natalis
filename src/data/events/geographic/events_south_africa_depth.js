@@ -16,7 +16,8 @@ export const SOUTH_AFRICA_DEPTH_EVENTS = [
       G.currentYear >= 1960 && G.currentYear <= 1962 &&
       G.age >= 15 &&
       !G.mem?.saSharpeville,
-    text: 'March 21, 1960. The Pan Africanist Congress has called for protests against the pass laws — people presenting themselves at police stations without their dompas, inviting arrest to overwhelm the system. Sharpeville, south of Johannesburg. The crowd of about 5,000 outside the police station is not armed. The police open fire. Sixty-nine people are killed, most of them shot in the back as they ran. The image: people lying on the ground where they fell. The ANC and PAC are banned the following week. The government declares a state of emergency. The strategy of non-violent protest inside South Africa is finished. Something else begins.',
+    text: 'The plan is that everybody leaves the dompas at home and presents themselves at the police station to be arrested, because there are not enough cells in the country for all of them. There are five thousand people outside the station at Sharpeville and nobody is armed. Then the firing starts and lasts about forty seconds. Sixty-nine people die and most of them are shot in the back. The following week both organisations are banned, and the argument about whether to stay non-violent is settled by other people, elsewhere.',
+    context: 'The Pan Africanist Congress called an anti-pass campaign for 21 March 1960 in which participants would present themselves for arrest without their reference books. Police at Sharpeville fired on an unarmed crowd, killing 69 and wounding about 180, most shot from behind. The ANC and PAC were banned on 8 April, a state of emergency was declared, and both organisations turned to armed struggle within eighteen months.',
     choices: [
       {
         text: 'The non-violent path is over. You understand this now.',

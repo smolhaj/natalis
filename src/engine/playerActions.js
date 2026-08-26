@@ -1378,72 +1378,8 @@ export function closeBusiness(state) {
 
 // ─── Fugitive system ─────────────────────────────────────────────────────────
 
-export function breakOut(state) {
-  // Called after a successful prison escape minigame
-  return {
-    ...state,
-    inPrison: false,
-    wanted: true,
-    wantedFor: state.wantedFor ?? 'escaped_conviction',
-    flags: [...new Set([...state.flags, 'escaped_prisoner'])],
-    log: [...state.log, { age: state.age, text: 'You slip through the gaps and escape from prison. You are now a fugitive.', isKey: true }]
-  }
-}
 
-export function assumeIdentity(state) {
-  const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
-  const mult = gdpMult[state.character?.country?.gdp] ?? 1.0
-  const cost = Math.round(8000 * mult)
-  if ((state.money ?? 0) < cost) {
-    return { ...state, log: [...state.log, { age: state.age, text: `You need $${cost.toLocaleString()} for forged documents.`, isKey: false }] }
-  }
-  if (state.flags.includes('assumed_identity')) {
-    return { ...state, log: [...state.log, { age: state.age, text: 'You are already living under an assumed identity.', isKey: false }] }
-  }
-  const c = state.character?.country
-  const g = state.character?.gender
-  const namePool = g === 'male' ? c?.namePool?.male : c?.namePool?.female
-  const fakeName = (pickFrom(namePool ?? ['Alex', 'Sam', 'Jordan'])) + ' ' + (pickFrom(c?.surnames ?? ['Smith', 'Jones']))
-  return {
-    ...state,
-    money: (state.money ?? 0) - cost,
-    assumedIdentity: { name: fakeName, adoptedAt: state.age },
-    flags: [...new Set([...state.flags, 'assumed_identity'])],
-    log: [...state.log, { age: state.age, text: `For $${cost.toLocaleString()} you obtain forged documents and become ${fakeName}. Your old identity is buried.`, isKey: true }]
-  }
-}
 
-export function goIllegal(state, destCountryName) {
-  const dest = COUNTRIES.find(c => c.name === destCountryName)
-  if (!dest) return state
-  const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
-  const mult = gdpMult[state.character?.country?.gdp] ?? 1.0
-  const fee = Math.round(randomBetween(8000, 20000) * mult)
-  if ((state.money ?? 0) < fee) {
-    return { ...state, log: [...state.log, { age: state.age, text: `The smuggler wants $${fee.toLocaleString()}. You can't afford it.`, isKey: false }] }
-  }
-  if (chance(0.30)) {
-    const added = 2
-    return {
-      ...state,
-      money: (state.money ?? 0) - fee,
-      inPrison: true,
-      prisonSentence: (state.prisonSentence ?? 0) + added,
-      wanted: false,
-      log: [...state.log, { age: state.age, text: `You pay $${fee.toLocaleString()} but border guards intercept you. Deported and sentenced to ${added} additional years.`, isKey: true }]
-    }
-  }
-  return {
-    ...state,
-    money: (state.money ?? 0) - fee,
-    character: { ...state.character, country: dest },
-    flags: [...new Set([...state.flags, 'emigrated', 'illegal_immigrant'])],
-    stats: { ...state.stats, happiness: clamp(state.stats.happiness + 5, 0, 100) },
-    log: [...state.log, { age: state.age, text: `You pay a smuggler $${fee.toLocaleString()} and slip across the border into ${destCountryName}. A dangerous new chapter begins.`, isKey: true }]
-  }
-}
-
-// ─── Prison activities ────────────────────────────────────────────────────────
 
 export function prisonWork(state) {
   if (!state.inPrison) return state
@@ -1779,3 +1715,10 @@ export function tickStocks(state) {
     log: newLogs,
   }
 }
+
+// NOTE: goIllegal / breakOut / assumeIdentity used to be duplicated here as well
+// as in the store. Nothing imported these copies — the UI wires to the store's
+// versions — and this file's goIllegal spread a new country over
+// `state.character`, which would have corrupted the frozen birth identity every
+// downstream model reads (world events, regime, mortality). Removed rather than
+// left as a trap; the store's implementations are the real ones.

@@ -68,7 +68,8 @@ export const POLAND_EVENTS = [
       G.currentYear >= 1980 && G.currentYear <= 1981 &&
       G.age >= 16 &&
       !G.mem?.polSolidarity,
-    text: 'August 1980. Gdańsk. The workers at the Lenin Shipyard go on strike. Anna Walentynowicz, a crane operator, has been fired. Lech Wałęsa climbs the gate. The demands are twenty-one points, including the right to independent trade unions. The strike spreads. The government negotiates. On August 31 it signs. Solidarność is legalized. Ten million members in fourteen months. A third of the country. The union is also something beyond a union — it is the accumulated demand of thirty-five years of Poland saying that something is not right here.',
+    text: 'They have sacked a crane operator five months from her pension and the yard stops over it. A man climbs the gate from the outside, which is the wrong direction, and that is the photograph. The list comes to twenty-one points and the eighth one is the one nobody expected them to keep. By the following autumn one Pole in three has a card in a drawer, and nobody in your building has said the word government in an ordinary tone of voice for months.',
+    context: 'The Lenin Shipyard in Gdansk struck in August 1980 over the dismissal of crane operator Anna Walentynowicz. Lech Walesa climbed the yard wall to join the strike and led the negotiations that produced the Gdansk Agreement of 31 August, whose first demand was the right to form independent trade unions. Solidarnosc was registered in November 1980 and reached about ten million members, roughly a third of Poland\'s adult population, within fourteen months.',
     choices: [
       {
         text: 'You join. This is the thing you have been waiting for without knowing you were waiting.',
@@ -95,7 +96,8 @@ export const POLAND_EVENTS = [
       G.currentYear >= 1981 && G.currentYear <= 1983 &&
       G.age >= 14 &&
       !G.mem?.polMartialLaw,
-    text: 'December 13, 1981. 6am. General Wojciech Jaruzelski appears on television in his uniform. Stan wojenny — martial law. Tanks in the streets. The phones cut. Solidarity declared illegal. The internments begin: ten thousand people in the next forty-eight hours, including Wałęsa. The border closed. The curfew. Jaruzelski says he is saving Poland from Soviet intervention. Whether this is true will be argued for decades. What is true: Solidarity goes underground, prints its newspapers in church basements, survives.',
+    text: 'The television at six in the morning is a general in uniform and nothing else on any channel. The telephone gives no tone at all and will not for weeks. There is a personnel carrier at the tram stop and the men on it are conscripts who look about nineteen. By Tuesday ten thousand people have been taken, including the man from the shipyard, and the printing goes on in a church basement in the Old Town with a duplicator somebody carried down two flights.',
+    context: 'General Wojciech Jaruzelski declared martial law on 13 December 1981, suspending Solidarnosc, cutting telephone lines, sealing the borders and imposing a curfew. About 10,000 people were interned within days, Walesa among them. Jaruzelski maintained he acted to forestall a Soviet invasion, a claim still disputed. Solidarnosc continued underground until its relegalisation in 1989.',
     choices: [
       {
         text: 'You participate in the underground — the bibuła, the hidden meetings, the church.',

@@ -158,7 +158,7 @@ export const LABOR_EVENTS = [
       !G.mem?.labOutcome &&
       (G.flags.has('lab_striking') || G.flags.has('lab_holdout')) &&
       G.karma > 55,
-    text: 'The agreement is announced on a Friday afternoon. The representative reads the terms out loud in the car park. The hourly rate is a figure. The extra leave is a number of days. The grievance procedure has teeth now. These are small specific things. They are also the things you went out for. The people around you are not celebrating exactly — it is more like a slow release, like a noise finally stopping.',
+    text: 'The agreement is announced on a Friday afternoon. The representative reads the terms out loud in the car park. The hourly rate is up eleven pence. The extra leave is three days. The grievance procedure has teeth now. Small things, and the exact things you went out for. The people around you are not celebrating exactly — it is more like a slow release, like a noise finally stopping.',
     choices: null,
     effect: (p) => {
       p.m += 16

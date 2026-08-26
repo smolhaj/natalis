@@ -146,7 +146,8 @@ const VENEZUELA_EVENTS = [
       G.currentYear >= 2014 && G.currentYear <= 2018 &&
       G.age >= 18 &&
       !G.mem?.ven_escasez,
-    text: 'The oil fell. By December 2014 it is below fifty dollars. PDVSA does not have foreign currency to import. The shelves begin to empty. Not all at once — sugar first, then milk, then flour, then medicines, then cooking oil, then diapers. The queue at the supermarket begins at four in the morning. Your ID card is registered to a day of the week for shopping. The bachaqueros — the black market resellers — arrive before the trucks. The CLAP bags come: government food boxes delivered monthly. You receive a CLAP bag or you do not receive a CLAP bag, and the receiving and not-receiving tracks who you are politically, where you live, how visible you are to the local party structure.',
+    text: 'Sugar goes first, then milk, then flour, then the tablets your mother takes, then cooking oil, then nappies. Your identity card gives you a day of the week and the queue for that day starts at four in the morning. The resellers are outside before the lorry is, and they are not standing in the queue. The government box comes monthly to some doors on your street and not to others, and everybody on the street knows exactly which doors and exactly why.',
+    context: 'Venezuelan oil fell below fifty dollars a barrel in December 2014 and PDVSA lost the foreign currency to fund imports. Supermarkets rationed access by the terminal digit of the national identity card. Bachaqueros resold scarce goods at black-market prices. From 2016 the CLAP programme distributed subsidised food boxes through local committees widely reported to be allocated along political lines.',
     choices: [
       {
         text: 'You manage. The CLAP bag, the informal economy, the family network — you navigate.',

@@ -70,7 +70,7 @@ export const TAIWAN_MALAYSIA_EVENTS = [
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Taiwan' &&
-      G.character.ethnicity?.id === 'waishengren' &&
+      G.character.ethnicity === 'waishengren' &&
       G.currentYear >= 1950 && G.currentYear <= 1975 &&
       G.age >= 15 &&
       !G.mem?.twnMainlander,
@@ -164,7 +164,7 @@ export const TAIWAN_MALAYSIA_EVENTS = [
       G.age >= 5 &&
       !G.mem?.mysMay13,
     text: (G) => {
-      const eth = G.character.ethnicity?.id || ''
+      const eth = G.character.ethnicity || ''
       if (eth === 'chinese_malaysian') {
         return 'May 13, 1969. After the opposition — supported heavily by the Chinese community — made gains in the federal election, violence erupts in Kuala Lumpur. Malay mobs attack Chinese businesses and homes. The government declares a state of emergency. The official death toll is 196; Chinese community leaders believe it was higher. You are Chinese in Malaysia in 1969 and the riots clarify something about the country that was always there but had not been stated this directly.'
       }
@@ -200,7 +200,7 @@ export const TAIWAN_MALAYSIA_EVENTS = [
       G.age >= 16 &&
       !G.mem?.mysNEP,
     text: (G) => {
-      const eth = G.character.ethnicity?.id || ''
+      const eth = G.character.ethnicity || ''
       if (eth === 'chinese_malaysian') {
         return 'The New Economic Policy. University places have reserved quotas for Bumiputera students — Malay and indigenous. You are Chinese. Your matriculation result qualifies you for the course you want; the quota means you do not get in. This is not a secret or a rumour — it is the policy, openly stated. Some Chinese families send children to private colleges, to Singapore, to Australia. Some study something else. The NEP has been in effect since 1971 and will remain in effect, under various names, for the rest of your life.'
       }

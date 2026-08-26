@@ -137,7 +137,7 @@ export const UGANDA_EVENTS = [
       G.character.country.name === 'Uganda' &&
       G.currentYear >= 2000 && G.currentYear <= 2025 &&
       G.age >= 18 && G.age <= 35 &&
-      (G.ruralUrban === 'urban' || G.ruralUrban === 'peri_urban') &&
+      G.ruralUrban === 'urban' &&
       !G.mem.ugaBodaBoda,
     text: 'The boda-boda: a motorcycle taxi that navigates the traffic, the mud roads, the gaps between bus stops. Kampala without boda-bodas is not Kampala. The economics work for young men with access to a bike — some own theirs, some pay the owner a daily fee and keep the difference. It is the informal economy\'s most visible institution and one of the leading causes of road deaths in the country. You are either riding one, driving one, or living in a city organized around them.',
     choices: null,

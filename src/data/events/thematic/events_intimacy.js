@@ -259,4 +259,26 @@ export const INTIMACY_EVENTS = [
     },
   },
 
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_dancing_badly',
+    phase: null,
+    weight: 3,
+    when: (G) => G.age >= 18 && G.age <= 40 && !G.mem?.ordDancing && Math.random() < 0.16,
+    text: `You are not a person who dances and at some point past one in the morning that stops being relevant. The floor is sticky. The song is not even good. Your body does something without consulting you and you go along with it for four minutes, and you are sweating, and you are grinning at someone you barely know who is also grinning.`,
+    choices: null,
+    effect: (p) => { p.m += 11; p.h += 2; p.lo += 1; p.setMem('ordDancing', true) },
+  },
+
+  {
+    id: 'ord_afternoon_in_bed',
+    phase: null,
+    weight: 3,
+    when: (G) => G.partner && (G.partner.relationshipQuality ?? 60) >= 55 && G.age >= 20 && G.age <= 60 && !G.mem?.ordAfternoonBed && Math.random() < 0.15,
+    text: `It is a Saturday and neither of you gets up. Light moves across the wall in a way you would not normally be present for. Nothing is discussed. At some point one of you says something stupid and the other one laughs with their face in the pillow, and it goes on being early for another hour.`,
+    choices: null,
+    effect: (p) => { p.m += 12; p.h += 3; p.updatePartnerRel(4); p.addPartnerMoment('the Saturday neither of you got up, and the light going across the wall'); p.setMem('ordAfternoonBed', true) },
+  },
 ]

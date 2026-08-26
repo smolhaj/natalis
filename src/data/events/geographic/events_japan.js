@@ -119,7 +119,8 @@ const JAPAN_EVENTS = [
       G.age >= 22 && G.age <= 40 &&
       G.career &&
       !G.mem?.jpn_salaryman,
-    text: 'You enter the company. The company and you will now be the same thing for the next forty years, or until one of you is no longer viable. You receive the company jacket, the company housing allowance, the company health insurance. The section chief drinks before you drink. The section chief goes home before you go home. The section chief\'s karaoke is your karaoke. The train home at midnight. The platform at six-fifteen AM. The hanami with the section chief in April where you appreciate the blossoms together in the correct way. This is the compact. The compact includes a pension and a retirement watch and a specific kind of exhaustion that has a word: karoshi.',
+    text: 'You are given the jacket, the housing allowance and the desk, and the arrangement is understood to run forty years. The section chief drinks first and leaves first and his karaoke is your karaoke. The 12:04 home, the 6:15 platform, and in April the blossoms with the section chief, appreciated in the correct manner. Your wife knows the shape of your week and has arranged the whole household around the parts of it you are not in.',
+    context: 'Japan\'s postwar large-firm employment model combined lifetime tenure, seniority pay, company housing and company welfare with an expectation of after-hours socialising with superiors. It covered roughly a third of the workforce at its peak and applied almost exclusively to men. It began unravelling after the asset bubble collapsed in 1991.',
     choices: [
       {
         text: 'You accept the compact. The security is real. So is everything else.',

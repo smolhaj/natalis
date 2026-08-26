@@ -109,7 +109,7 @@ export const ACTIVITY_CHOICE_EVENTS = [
     when: (G) =>
       G.flags.includes('musician_performing') &&
       !G.mem?.acFirstGig,
-    text: 'The venue is a room above a pub, or a community centre, or a friend\'s living room — it doesn\'t matter. The stage is whatever is in front of the chairs. You have been waiting for this to feel like you expected it to feel. It doesn\'t. It feels different, and better than you expected in a way that is harder to name.',
+    text: 'The venue is a room above a pub. The stage is the six feet of carpet in front of the chairs. You have been waiting for this to feel like you expected it to feel. It doesn\'t. It feels different, and better than you expected in a way that is harder to name.',
     choices: null,
     effect: (p) => { p.m += 12; p.s += 5; p.addFlag('musician_played_live'); p.setMem('acFirstGig', true) },
   },
@@ -370,4 +370,26 @@ export const ACTIVITY_CHOICE_EVENTS = [
     effect: (p) => { p.m += 14; p.karma += 6; p.setMem('acCreativePrivateLate', true) },
   },
 
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_hands_know_it',
+    phase: null,
+    weight: 3,
+    when: (G) => G.age >= 22 && G.age <= 65 && !G.mem?.ordHandsKnow && Math.random() < 0.14,
+    text: `The thing has been broken since before the last winter and today, for no reason, you take it apart on newspaper on the kitchen table. It is a washer. It costs almost nothing. You put it back together and it works, and it keeps working, and every time you use it for the next four years there is a small unearned pleasure in it that you never mention to anyone.`,
+    choices: null,
+    effect: (p) => { p.m += 8; p.e += 3; p.setMem('ordHandsKnow', true) },
+  },
+
+  {
+    id: 'ord_job_stops_being_hard',
+    phase: null,
+    weight: 3,
+    when: (G) => G.career && (G.career.level ?? 0) >= 1 && G.age >= 23 && G.age <= 45 && !G.mem?.ordJobEasy && Math.random() < 0.15,
+    text: `You notice on a Thursday that you have stopped rehearsing the morning in your head the night before. The thing that took you two hours in the first year takes twenty minutes and you do it while thinking about something else. Someone new asks you how to do it and you hear yourself explain it clearly, in order, without checking anything. You go and get a coffee and feel, briefly and privately, extremely competent.`,
+    choices: null,
+    effect: (p) => { p.m += 9; p.e += 4; p.s += 2; p.setMem('ordJobEasy', true) },
+  },
 ]

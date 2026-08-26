@@ -66,7 +66,8 @@ export const COLOMBIA_DEPTH_EVENTS = [
       G.currentYear >= 2007 && G.currentYear <= 2018 &&
       G.age >= 18 &&
       !G.mem?.colDepMedTransform,
-    text: `In 2003 Medellín had the highest murder rate in the world. In 2013 it won the Urban Land Institute's "Most Innovative City" award. The transformation is real and debated. The cable cars to the comunas where the sicarios came from. The escalators in Barrio Moravia — a neighbourhood built on a garbage dump — connecting the hillside to the city. The libraries. The cultural investment in the places the city had previously treated as disposable. The murder rate has fallen by 95 percent. Critics note: the fall was partly the paramilitaries taking over from the cartels, enforcing a violent order that the statistics counted as peace. Both things are true. The city rebuilt itself and also made arrangements.`,
+    text: 'The cable car goes up to the comuna in nine minutes and the walk used to take an hour. There are escalators up the hillside in Moravia, which was a rubbish dump when your father was young, and a library at the top built out of black stone. The murder rate is a twentieth of what it was the year you were born. Your uncle says the killing stopped because one set of men beat the other set and the escalators came afterwards, and both of you are right.',
+    context: 'Medellin had the highest homicide rate in the world in the early 1990s and won the Urban Land Institute\'s Innovative City of the Year award in 2013. The Metrocable lines, the Comuna 13 escalators and the Spanish Park library connected hillside settlements the city had previously ignored, and homicides fell by about 95 percent. Part of the decline followed the 2003 demobilisation of paramilitary blocs that imposed their own order on the comunas.',
     choices: [
       {
         text: 'The transformation is real. You live in it and you know what Medellín was.',
@@ -106,7 +107,8 @@ export const COLOMBIA_DEPTH_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 2016 &&
       G.age >= 18 && G.age <= 45 &&
       !G.mem?.colDepCocaFarmer,
-    text: `The choice is not between growing coca and not growing coca. The choice is between growing coca and having no income. In Putumayo, in Catatumbo, in the mountain valleys where the road is unpaved and the state is a rumour, coca is the crop that can be carried to market on mule-back — unlike yuca or corn, which rot before they reach a buyer. The buyers come to you. They weigh the harvest on scales that you do not own. The FARC taxes what you grow. The paramilitaries tax what you grow. The army comes with herbicide planes and fumigates the coca and also the food crops and also the river water. The programs for voluntary substitution offer you another crop and a government check that arrives six months late if it arrives.`,
+    text: 'The road is not paved and the yuca rots before it reaches anywhere it can be sold, and the coca goes out on a mule and keeps. The buyers come to you and they bring their own scales. The guerrilla takes a percentage of the harvest and the paramilitaries take a percentage of the harvest and the planes come and spray the coca and the plantain and the creek you drink from. The substitution programme offers a different crop and a payment that comes six months late when it comes.',
+    context: 'Coca is grown across Putumayo, Catatumbo, Narino and other regions with little road access, where perishable legal crops cannot reach market. Armed groups on all sides levied taxes on the harvest. Aerial glyphosate fumigation ran under Plan Colombia from 2000 until suspended in 2015 over health findings. The 2016 peace accord\'s voluntary substitution programme, PNIS, enrolled about 99,000 families and has been criticised for late and partial payments.',
     choices: [
       {
         text: 'You grow it. There is no other calculation that works.',

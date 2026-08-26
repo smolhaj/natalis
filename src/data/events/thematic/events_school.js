@@ -299,4 +299,26 @@ export const SCHOOL_EVENTS = [
     },
   },
 
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_best_at_one_thing',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.age >= 8 && G.age <= 11 && G.education?.enrolled !== false && !G.mem?.ordBestAtOne,
+    text: `It turns out you are the fastest in the class at long division. Not clever generally — fast at this one thing, for reasons nobody can explain, including you. The teacher starts using your name as the unit of measurement. For one term you walk into that room knowing exactly what you are for.`,
+    choices: null,
+    effect: (p) => { p.m += 8; p.e += 4; p.s += 2; p.setMem('ordBestAtOne', true) },
+  },
+
+  {
+    id: 'ord_laughing_fit_assembly',
+    phase: 'adolescence',
+    weight: 4,
+    when: (G) => G.age >= 12 && G.age <= 16 && !G.mem?.ordLaughingFit,
+    text: `Something happens during the assembly that is not objectively funny — a chair, a cough, one word said in the wrong register — and you and the person beside you cannot stop. You go through the whole sequence: holding it, losing it, holding it, the shoulders, the tears, the teacher's face. You are in trouble afterwards and it is completely worth it. You will be able to set each other off with one word for the next thirty years.`,
+    choices: null,
+    effect: (p) => { p.m += 12; p.s += 3; p.setMem('ordLaughingFit', true) },
+  },
 ]

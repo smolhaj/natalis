@@ -179,4 +179,26 @@ export const SEASONAL_EVENTS = [
     effect: (p) => { p.m += 6; p.karma += 5; p.setMem('seaRamadan', true) },
   },
 
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_first_warm_day',
+    phase: null,
+    weight: 3,
+    when: (G) => G.age >= 10 && !G.mem?.ordFirstWarmDay && Math.random() < 0.14,
+    text: `The first properly warm day arrives on a weekday and the entire settlement behaves differently. Doors are open that are never open. Somebody has brought a chair outside and is sitting in it doing nothing, in view of everyone, without embarrassment. You take your coat off outdoors for the first time since October and the air on your forearms is a physical event.`,
+    choices: null,
+    effect: (p) => { p.m += 8; p.h += 2; p.setMem('ordFirstWarmDay', true) },
+  },
+
+  {
+    id: 'ord_food_pleasure_late',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 58 && !G.mem?.ordFoodLate && Math.random() < 0.16,
+    text: `You eat the first good tomato of the year standing at the counter with salt on it and the juice going down your wrist. It is not nostalgia and it is not about anything. It is simply the best thing that will happen today and you are entirely present for the ninety seconds it lasts.`,
+    choices: null,
+    effect: (p) => { p.m += 9; p.h += 2; p.setMem('ordFoodLate', true) },
+  },
 ]

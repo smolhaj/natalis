@@ -10,13 +10,13 @@ export const FAME_KARMA_EVENTS = [
 
   {
     id: 'fame_recognized_street',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.fame > 20 &&
       !G.mem.fameRecognizedStreet &&
-      (G.phase === 'young_adult' || G.phase === 'midlife'),
-    text: 'You are at the market, or waiting for a bus, or carrying groceries — something ordinary — when a stranger calls your name. They know who you are. They have their phone out before you understand what is happening. You smile. It is not a real smile but it is close enough.',
+      G.age >= 18 && G.age <= 49,
+    text: 'You are at the market with a bag of onions in each hand when a stranger calls your name. They know who you are. They have their phone out before you understand what is happening. You smile. It is not a real smile but it is close enough.',
     choices: [
       {
         text: 'Take the photo. It is a small thing.',
@@ -196,7 +196,7 @@ export const FAME_KARMA_EVENTS = [
       G.fame >= 20 &&
       G.fame <= 45 &&
       !G.mem.fameSpecificCircle,
-    text: 'At a conference, or a festival, or an opening, you are surrounded by people who know your work in exact detail. They quote it back to you. Outside this room you are nobody in particular, and that remains true. But in this room, for this evening, you understand what it feels like to be someone\'s entire reference point for a thing they love.',
+    text: 'At the festival you are surrounded by people who know your work in exact detail. They quote it back to you. Outside this room you are nobody in particular, and that remains true. But in this room, for this evening, you understand what it feels like to be someone\'s entire reference point for a thing they love.',
     choices: null,
     effect: (p) => { p.m += 8; p.s += 4; p.karma += 2; p.setMem('fameSpecificCircle', true) },
   },
@@ -531,7 +531,7 @@ export const FAME_KARMA_EVENTS = [
       G.age >= 60 &&
       !G.mem.hobbyLateDiscovery &&
       Object.values(G.hobbies ?? {}).every(h => (h?.level ?? 0) <= 1),
-    text: 'You try something you have never tried: a ceramics class, or chess, or growing things from seed. You are bad at it in the way of someone who has not been bad at something new in decades. Your hands do not know what they are doing yet. This turns out to be exactly what you needed.',
+    text: 'You try something you have never tried: a ceramics class on Thursday evenings. You are bad at it in the way of someone who has not been bad at something new in decades. Your hands do not know what they are doing yet. This turns out to be exactly what you needed.',
     choices: null,
     effect: (p) => { p.m += 14; p.h += 3; p.e += 5; p.addFlag('late_hobby'); p.setMem('hobbyLateDiscovery', true) },
   },
@@ -555,7 +555,7 @@ export const FAME_KARMA_EVENTS = [
     weight: 2,
     when: (G) =>
       G.age >= 40 &&
-      (G.stats?.fitness ?? 50) < 50 &&
+      (G.fitness ?? 50) < 50 &&
       ((G.hobbies?.running?.level ?? 0) >= 1 || (G.hobbies?.martial_arts?.level ?? 0) >= 1) &&
       !G.mem.hobbyInjury,
     text: 'The injury is not dramatic — a wrong step, a small sound, a slow realization over the following days that something is genuinely wrong. The specialist says you can continue, with modifications. You discover that what you were doing with your body was also what you were doing with your mind, and that the modifications will touch both.',

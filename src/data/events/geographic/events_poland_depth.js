@@ -151,7 +151,8 @@ export const POLAND_DEPTH_EVENTS = [
       G.currentYear >= 1960 && G.currentYear <= 1980 &&
       G.age >= 18 &&
       !G.mem?.polDepNowaHuta,
-    text: 'Nowa Huta was designed as the model socialist city. Built outside Kraków from 1949: apartment blocks, the Lenin steelworks, a theatre, a department store, public squares. Deliberately built without a church — the first Polish city in a thousand years without a church. The workers who moved to Nowa Huta to work in the steelworks wanted a church. The state refused. The workers built one on a plot where the state had put up a sign saying "future site of school." They built the cross first and then the church around it. The battle over the cross — the state trying to remove it, the workers defending it — ran for years. In 1977, the Ark of the Lord Church is consecrated by Karol Wojtyła, Cardinal of Kraków. The following year he is Pope.',
+    text: 'The city was laid out with a steelworks, a theatre, a department store and no church, which had not happened in this country in a thousand years. The men who came for the steel jobs put up a cross on the plot where the sign said a school would go. The state took the cross down and the cross went back up, and this went on for years, in the evenings, after shifts. In 1977 the cardinal from Krakow consecrates the church that grew around it, and the year after that he is the pope.',
+    context: 'Nowa Huta was built from 1949 outside Krakow around the Lenin Steelworks as a model socialist city, deliberately without a church. Residents erected a cross on a designated plot in 1957 and defended it through repeated attempts at removal, including riots in April 1960. The Ark of the Lord church was consecrated by Cardinal Karol Wojtyla in 1977; he was elected Pope John Paul II the following year.',
     choices: null,
     effect: (p) => {
       p.m += 4

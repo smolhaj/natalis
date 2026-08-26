@@ -243,7 +243,8 @@ export const LEBANON_EVENTS = [
       G.currentYear >= 2019 && G.currentYear <= 2023 &&
       G.money > 500 &&
       !G.mem?.lbnBankFreeze,
-    text: 'The banks close for two weeks. When they reopen, you can withdraw two hundred dollars a month — in lira, at the official rate, which is not the rate the lira actually trades at. The savings you had are still there as a number on a screen. The number does not correspond to anything you can touch. Within a year the lira has lost ninety percent of its value. Your salary, paid in lira, now buys what it used to buy in a week. At the supermarket you check your phone before each item — the price may have changed since you arrived. The word for this, in the economics textbooks, is hyperinflation. The word does not describe what it feels like to watch your parents\' life savings become a number that means nothing.',
+    text: 'The banks shut for a fortnight and when they open again the limit is two hundred a month, paid out in lira at a rate that exists only inside the building. Your money is still there as a figure on a screen. In the supermarket you check the phone before each item because the shelf label may be from yesterday. Your father worked forty years for the number on that screen and it now buys a week of the life he was expecting.',
+    context: 'Lebanese banks imposed informal capital controls in October 2019, limiting withdrawals and converting dollar deposits at an official rate far below the market. The lira lost over ninety percent of its value and inflation exceeded 200 percent a year. The World Bank described the collapse as among the three most severe globally since the mid-nineteenth century. No deposit restitution law has been passed.',
     choices: null,
     effect: (p) => {
       p.wipeMoney(0.7)

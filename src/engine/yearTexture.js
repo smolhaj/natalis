@@ -3358,7 +3358,11 @@ function buildYearTexture(state, opts = {}) {
   // ─── CAREER × COUNTRY TEXTURE (~28% when working in specific contexts) ────────
   if (career && Math.random() < 0.28) {
     const field = career.field
-    const cc = state.currentCountry ?? state.character?.country?.name
+    // `currentCountry` is a country OBJECT and `character.country.name` a string,
+    // so this mixed fallback made every `cc === '...'` below always false once a
+    // game was running: the China-tech, US-healthcare and named-Gulf-finance
+    // career branches were dead.
+    const cc = (state.currentCountry ?? state.character?.country)?.name
     const arch = state.character?.country?.archetype
     const yr = currentYear
 

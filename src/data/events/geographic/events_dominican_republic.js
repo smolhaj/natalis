@@ -142,7 +142,7 @@ export const DOMINICAN_REPUBLIC_EVENTS = [
       G.age >= 25 &&
       !G.mem?.dr2013Stateless,
     text: (G) => {
-      const isAfroDominican = G.character.ethnicity?.id === 'afro_dominican'
+      const isAfroDominican = G.character.ethnicity === 'afro_dominican'
       return isAfroDominican
         ? 'The Constitutional Tribunal\'s ruling TC 168-13 retroactively strips citizenship from Dominicans of Haitian descent born since 1929. An estimated 200,000 people are rendered stateless overnight — born here, raised here, speaking Spanish, with Dominican identity documents that are now invalid. You know people this has happened to. The ruling has a particular quality: it is administrative rather than violent, but the administrative is a different kind of permanent. The inter-American human rights system will condemn it. The ruling stands.'
         : 'The Constitutional Tribunal\'s ruling TC 168-13 retroactively strips Dominican citizenship from people of Haitian descent born in the country since 1929. Two hundred thousand people lose their citizenship at once. They were born here, they went to school here, they have Dominican documents. The Inter-American Commission on Human Rights condemns it. There are protests from human rights organizations. Dominican public opinion is, on the whole, unmoved. The racial politics of this island — the long history of the country defining itself as not-Haitian, not-Black — has arrived in a court document with a case number.'

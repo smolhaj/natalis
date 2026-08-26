@@ -229,4 +229,26 @@ export const CAREER_LONGEVITY_EVENTS = [
     effect: null,
   },
 
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_the_one_they_ask',
+    phase: null,
+    weight: 3,
+    when: (G) => G.career && (G.career.level ?? 0) >= 3 && G.age >= 40 && G.age <= 68 && !G.mem?.ordTheyAsk && Math.random() < 0.15,
+    text: `Somebody two floors down has a problem and your name comes up, and they come to find you, and you solve it standing up in about four minutes. You do not know how you know. Twenty-two years of it is in your hands somewhere below the level of thinking. You go back to your desk and get on with something dull, and you are quietly pleased for the rest of the afternoon.`,
+    choices: null,
+    effect: (p) => { p.m += 9; p.e += 3; p.s += 3; p.setMem('ordTheyAsk', true) },
+  },
+
+  {
+    id: 'ord_still_good_at_it',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 62 && (G.career || G.retired) && !G.mem?.ordStillGood,
+    text: `You do the thing you spent your life doing, once, for someone who needed it done, and it is all still there. Slower in the hands and identical in the head. The person watching does not know enough to be impressed by the right part of it. You do not tell them which part. You put the tools away in the order they go in.`,
+    choices: null,
+    effect: (p) => { p.m += 10; p.e += 2; p.setMem('ordStillGood', true) },
+  },
 ]

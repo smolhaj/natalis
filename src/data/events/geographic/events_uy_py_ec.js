@@ -135,7 +135,7 @@ const UY_PY_EC_EVENTS = [
     weight: 4,
     when: (G) => G.character.country.name === 'Ecuador' && G.currentYear >= 1972 && G.currentYear <= 1990 && !G.flags.has('ecu_oil_generation'),
     text: (G) => {
-      const isIndigenous = G.character.ethnicity?.id === 'indigenous_ecuadorian'
+      const isIndigenous = G.character.ethnicity === 'indigenous_ecuadorian'
       const yr = G.currentYear
       return isIndigenous
         ? `The oil company built a road into the Oriente in ${yr <= 1975 ? '1972' : 'the 1970s'}. The road brought the oil company and it brought missionaries and it brought settlers and it brought disease, in that order or some other order that amounts to the same thing. The well that blew out left oil in the river for six months. The fish died. The children's skin changed. The company moved on when the well ran dry and left what it left.`

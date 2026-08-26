@@ -23,7 +23,8 @@ export const RUSSIA_DEPTH_EVENTS = [
       G.currentYear >= 1937 && G.currentYear <= 1939 &&
       G.age >= 5 && G.age <= 20 &&
       !G.mem?.ruDepGreatTerror,
-    text: `The knock comes at night. It almost always comes at night — 2am, 3am, the hour when the body is least defended. Someone in the building has been taken. You do not know the charge; no one knows the charge at first. The word "Article 58" circulates. Anti-Soviet activity. Terrorism. Sabotage. The charges are categories that expand to fit whoever needs to be inside them. The person taken may return in a year, or in ten years, or not at all. The family of the person taken receives no information. The neighbours continue as if nothing has happened because continuing is survival.`,
+    text: 'It is always at night, two or three in the morning, when a body is least able to argue with anything. The lift stops on a floor and everybody on the staircase knows which one. In the morning the door has a strip of paper across it and the mother is on the stairs with a parcel she will carry to the queue at Kresty and bring home again. Nobody in the building says the family\'s name out loud, and that is not cowardice exactly, it is the arrangement.',
+    context: 'During the Great Terror of 1937-38, roughly 750,000 people were executed and over a million sent to camps, under Article 58 of the criminal code covering anti-Soviet activity, terrorism and sabotage. Arrests were carried out at night by NKVD quota. Families were given no information and often no charge, and relatives of the arrested were themselves liable to deportation or exclusion from work and education.',
     choices: null,
     effect: (p) => {
       p.m -= 12
@@ -66,7 +67,8 @@ export const RUSSIA_DEPTH_EVENTS = [
       G.currentYear >= 1945 && G.currentYear <= 1980 &&
       G.age >= 5 && G.age <= 30 &&
       !G.mem?.ruDepKommunalka,
-    text: `The kommunalka: three families, or five families, or seven, sharing one apartment. One kitchen, one toilet, one hallway where the bicycles and the boots and the winter coats all coexist. You know whose day it is to clean the hallway. You know which shelf in the shared refrigerator is yours and you do not take from the other shelves. The family in the room to the left has a child who practises piano at hours that everyone has learned to tolerate. The family on the right is not speaking to your family this month, over the question of who used the last of the hot water on Tuesday. Privacy exists within the room. The room is shared by your entire family. This is Moscow, or Leningrad, or any Soviet city in any year since collectivisation.`,
+    text: 'Four families, one kitchen, one lavatory, and a hallway where every bicycle and every pair of winter boots in the apartment has an agreed position. Your shelf in the refrigerator is the second one and you do not touch the others. The boy on the left practises scales at an hour that everybody has decided to tolerate. The family on the right is not speaking to yours this month over the hot water on Tuesday. The door of your room is the only door in the world that is yours, and there are five of you behind it.',
+    context: 'Communal apartments were created by subdividing pre-revolutionary flats after 1918 and remained the normal urban housing form for decades; a majority of Leningrad residents still lived in them in the early 1960s. Khrushchev-era prefabricated blocks moved millions into single-family flats from 1957 onward, but kommunalki persisted in central Moscow and Leningrad into the post-Soviet period.',
     choices: null,
     effect: (p) => {
       p.e += 2

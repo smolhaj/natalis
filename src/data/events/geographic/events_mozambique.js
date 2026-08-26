@@ -16,7 +16,8 @@ export const MOZAMBIQUE_EVENTS = [
       G.currentYear >= 1975 && G.currentYear <= 1988 &&
       G.age >= 6 && G.age <= 16 &&
       !G.mem.mozFrelimo,
-    text: 'June 25, 1975. Mozambique is independent. FRELIMO — the Front for the Liberation of Mozambique — is the party that won the liberation war and is now the government and there is no other. Samora Machel is president. "A luta continua" — the struggle continues — is what he says and what the schools teach. The land is nationalised. The private schools and clinics are nationalised. The colonial Portuguese have mostly left. What they leave behind is a country with almost no trained doctors, almost no secondary-school teachers, a civil service that was built for extraction. The independence is real. The infrastructure it inherits is real.',
+    text: 'The flag goes up in June and at school you learn the new song and the phrase that ends every assembly. The Portuguese family that ran the shop on the corner left in April and took the fittings with them; the shop is a party office now. There is one doctor for the whole district and he is Cuban and does not speak Portuguese well. Your teacher this year is nineteen and finished school two years ago, and she is doing her best.',
+    context: 'Mozambique became independent on 25 June 1975 under FRELIMO, with Samora Machel as president. Most of the roughly 250,000 Portuguese settlers left within a year, taking or destroying equipment; the country was left with about 80 doctors and a literacy rate near ten percent. Land, schools and clinics were nationalised, and secondary-school leavers were deployed as teachers to keep schools open.',
     choices: null,
     effect: (p) => { p.e += 2; p.m += 4; p.r += 2; p.addFlag('mozambican_frelimo_generation'); p.setMem('mozFrelimo', true) },
   },

@@ -6,7 +6,7 @@
 
 const IS_GUATEMALAN = (G) => G.character.country?.name === 'Guatemala'
 const IS_MAYA = (G) =>
-  ['maya_kiche', 'maya_mam', 'maya_kaqchikel', 'maya_qeqchi', 'other_maya', 'xinca'].includes(G.character.ethnicity?.id)
+  ['maya_kiche', 'maya_mam', 'maya_kaqchikel', 'maya_qeqchi', 'other_maya', 'xinca'].includes(G.character.ethnicity)
 
 export const GUATEMALA_EVENTS = [
 

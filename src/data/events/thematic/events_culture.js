@@ -770,7 +770,7 @@ export const CULTURE_EVENTS = [
 
   {
     id: 'cult_minority_first_asked',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) => {
       if (G.mem?.cultMinorityFirstAsked) return false

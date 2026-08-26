@@ -859,4 +859,81 @@ export const TEXTURE_EVENTS = [
     effect: null,
   },
 
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_puddle_permission',
+    phase: 'early_childhood',
+    weight: 4,
+    when: (G) => G.age >= 3 && G.age <= 5 && !G.mem?.ordPuddle,
+    text: `There is water across the whole width of the path and an adult says the word fine in a tone that means you may. You go in with both feet at once. It comes over the top of the left shoe and is colder inside the sock than it looked from outside. You do it again, twice, in the same place, to see whether it stays true.`,
+    choices: null,
+    effect: (p) => { p.m += 8; p.h += 1; p.setMem('ordPuddle', true) },
+  },
+
+  {
+    id: 'ord_carried_upside_down',
+    phase: 'early_childhood',
+    weight: 4,
+    when: (G) => G.age >= 2 && G.age <= 5 && (G.parents?.father?.alive || (G.siblings ?? []).length > 0) && !G.mem?.ordUpsideDown,
+    text: `Someone picks you up by the ankles and the room inverts. The ceiling has a stain on it shaped like a country. Blood arrives in your face and your own laugh comes out of you at a pitch you have not heard before. When they set you down the floor is unreliable for a few seconds and you ask to go again.`,
+    choices: null,
+    effect: (p) => { p.m += 9; p.setMem('ordUpsideDown', true) },
+  },
+
+  {
+    id: 'ord_the_wrong_word',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.age >= 6 && G.age <= 10 && !G.mem?.ordWrongWord,
+    text: `You have been saying a word wrong for as long as you have been saying it. Someone corrects you at the table and the correction is so funny to everyone that nobody eats for a minute. For the rest of your life the family will use your version on purpose. You are being laughed at and you can tell the difference between this and the other kind.`,
+    choices: null,
+    effect: (p) => { p.m += 7; p.s += 2; p.setMem('ordWrongWord', true) },
+  },
+
+  {
+    id: 'ord_rain_on_the_roof',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.age >= 7 && G.age <= 12 && !G.mem?.ordRainRoof,
+    text: `The rain arrives all at once and the roof turns it into a sound with no gaps in it. Nobody can go anywhere. You lie on the floor with your feet up the wall and there is nothing at all to do, and it is not boring exactly, it is closer to being held. An adult in the next room says something to another adult and neither of them raises their voice.`,
+    choices: null,
+    effect: (p) => { p.m += 6; p.setMem('ordRainRoof', true) },
+  },
+
+  {
+    id: 'ord_summer_of_nothing',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) => G.age >= 13 && G.age <= 16 && !G.mem?.ordSummerNothing,
+    text: `The whole of one summer amounts to sitting on a wall. You are there most afternoons with two other people and the conversation does not go anywhere and does not need to. Someone brings a radio for a week and then stops bringing it. Years later this will be one of about four periods of your life you can enter again completely, and none of it was anything.`,
+    choices: null,
+    effect: (p) => { p.m += 6; p.s += 2; p.setMem('ordSummerNothing', true) },
+  },
+
+  {
+    id: 'ord_year_nothing_happened',
+    phase: null,
+    weight: 3,
+    when: (G) =>
+      G.age >= 26 && G.age <= 58 &&
+      G.stats.happiness >= 45 &&
+      !G.mem?.ordQuietYear &&
+      (G.currentYear - (G.mem?.lastMajorEvent_bereavement ?? 0)) >= 4 &&
+      Math.random() < 0.14,
+    text: `Nothing happens this year. No one dies, nothing breaks, the money is neither more nor less. You buy a chair. You get good at a route that takes eleven minutes. On a Sunday in the autumn you look up from what you are doing and register, with some surprise, that you are not waiting for anything.`,
+    choices: null,
+    effect: (p) => { p.m += 10; p.h += 2; p.setMem('ordQuietYear', true) },
+  },
+
+  {
+    id: 'ord_boring_tuesday',
+    phase: null,
+    weight: 3,
+    when: (G) => G.age >= 32 && G.age <= 62 && G.stats.happiness >= 40 && !G.mem?.ordBoringTuesday && Math.random() < 0.16,
+    text: `A Tuesday with nothing in it. You do the shopping, you put a wash on, you eat standing up because there is no reason not to. At eight in the evening you sit down and realise you have been mildly content since about eleven in the morning and had not thought to notice. You do not tell anyone about this because there is nothing to tell.`,
+    choices: null,
+    effect: (p) => { p.m += 7; p.setMem('ordBoringTuesday', true) },
+  },
 ]
