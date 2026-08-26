@@ -16,7 +16,7 @@ import { describe, it, expect } from 'vitest'
 import { runSimulation, DEFAULT_CONFIGS } from '../scripts/lib/sim.js'
 
 // One run, shared by every assertion: the simulation is the expensive part.
-const LIVES = Number(process.env.SIM_LIVES ?? 20)
+const LIVES = Number(process.env.SIM_LIVES ?? 32)
 let cached = null
 async function sim() {
   if (!cached) cached = await runSimulation({ lives: LIVES, configs: DEFAULT_CONFIGS, mode: 'active' })

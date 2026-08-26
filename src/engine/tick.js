@@ -2655,25 +2655,97 @@ export function resolveChoice(state, choiceIndex) {
 // events still fire but resolve themselves. The pick is not uniform: it leans
 // toward what this particular character, with these stats and this formative
 // desire, would plausibly do — so a passively-read life still coheres.
+// Flags that say which way this person has already jumped. Passive mode is the
+// game's purest expression of its own principle, and a character who answers
+// each year's question independently is not a person — they are a coin. What
+// makes a life read as one life is that the choice at fifty rhymes with the
+// choice at twenty.
+const DEFIANT_FLAGS = [
+  'refused_to_name', 'would_not_recant', 'took_it_alone', 'refused_to_serve',
+  'protected_source_at_cost', 'defended_the_land', 'activist', 'dissident_reader',
+  'dissident_writer', 'detained_at_protest', 'union_solidarity', 'strike_victory',
+]
+const YIELDING_FLAGS = [
+  'named_someone', 'signed_the_confession', 'gave_up_source', 'reported_late',
+  'lost_the_land', 'compromised', 'sold_out', 'made_peace_with_renting',
+]
+
+/** −1 (bends) to +1 (refuses), from what this character has already done. */
+function disposition(G) {
+  let d = 0
+  for (const f of DEFIANT_FLAGS) if (G.flags.has ? G.flags.has(f) : G.flags.includes(f)) d += 1
+  for (const f of YIELDING_FLAGS) if (G.flags.has ? G.flags.has(f) : G.flags.includes(f)) d -= 1
+  if (G.political_leaning === 'dissident') d += 1.5
+  else if (G.political_leaning === 'nationalist') d += 0.5
+  else if (G.political_leaning === 'apolitical') d -= 0.75
+  return Math.max(-1, Math.min(1, d / 3.5))
+}
+
 function scoreChoiceForCharacter(choice, G, index) {
   let score = 1
   const text = `${choice.text ?? ''} ${choice.tag ?? ''}`.toLowerCase()
   const s = G.stats ?? {}
+  const disp = disposition(G)
+  const dependants = (G.children?.length ?? 0) > 0 || !!G.partner
+
+  // A choice may DECLARE which way it goes, via tag: 'defiant' | 'yielding'.
+  // Inferring it from the choice text alone gets the hardest cases backwards:
+  // "Say nothing at all", under interrogation, is the defiant answer and the
+  // one that costs four years, and a keyword scan reads it as acquiescence.
+  // The keyword rules below stay as the fallback for the ~8,000 events written
+  // before this existed.
+  if (choice.tag === 'defiant' || choice.tag === 'yielding') {
+    const sign = choice.tag === 'defiant' ? 1 : -1
+    score *= 1 + sign * disp * 1.05
+    if (sign > 0) {
+      score *= 0.6 + (s.charisma ?? 50) / 100
+      if (G.desire === 'leave_mark' || G.desire === 'freedom') score *= 1.4
+      if (['military_dictatorship', 'single_party_communist', 'single_party_authoritarian', 'theocracy'].includes(G.regime)) score *= 0.6
+      if (dependants) score *= 0.75
+    } else if (dependants) score *= 1.2
+    return Math.max(0.05, score)
+  }
+
   if (/refuse|resist|argue|fight|confront|report|speak/.test(text)) {
     score *= 0.6 + (s.charisma ?? 50) / 100
     if (G.desire === 'leave_mark' || G.desire === 'freedom') score *= 1.5
     if (['military_dictatorship', 'single_party_communist', 'single_party_authoritarian', 'theocracy'].includes(G.regime)) score *= 0.55
+    // A person who has refused before refuses again, and a person who has
+    // already bent finds it easier to bend.
+    score *= 1 + disp * 1.15
+    // People with someone at home take fewer of these, which is most of how
+    // authoritarian states actually work.
+    if (dependants) score *= 0.75
   }
   if (/stay|remain|keep|accept|endure|say nothing|silent|nothing/.test(text)) {
     if (G.desire === 'safety' || G.desire === 'belong') score *= 1.5
+    score *= 1 - disp * 0.75
+    if (dependants) score *= 1.2
   }
   if (/leave|go|move|emigrate|abroad/.test(text)) {
     if (G.desire === 'freedom' || G.desire === 'prove_worth') score *= 1.4
     if (G.desire === 'belong') score *= 0.7
+    // Leaving is a young person's answer far more often than an old one's, and
+    // it costs money that a poor character does not have.
+    if ((G.age ?? 30) > 55) score *= 0.5
+    if ((G.money ?? 0) < 400) score *= 0.7
   }
   if (/study|learn|school|read|train/.test(text)) score *= 0.7 + (s.smarts ?? 50) / 100
   if (/pay|buy|spend|afford/.test(text) && (G.money ?? 0) < 500) score *= 0.35
-  if (/steal|cheat|lie|bribe/.test(text)) score *= (G.karma ?? 50) < 40 ? 1.4 : 0.6
+  if (/steal|cheat|lie|bribe/.test(text)) {
+    score *= (G.karma ?? 50) < 40 ? 1.4 : 0.6
+    // Desperation is a better predictor than character.
+    if ((G.money ?? 0) < 200) score *= 1.6
+  }
+  // Anything the body has to do gets harder with age and illness.
+  if (/run|climb|carry|lift|walk|march|physical|labour|labor/.test(text)) {
+    score *= 0.5 + (s.health ?? 50) / 100
+    if ((G.age ?? 30) > 60) score *= 0.6
+  }
+  // Someone already carrying a lot of regret reaches for the repair.
+  if (/apolog|make amends|reconcile|forgive|reach out|call|visit|tell them/.test(text)) {
+    score *= 1 + Math.max(0, ((G.regret ?? 0) - 40)) / 100
+  }
   return Math.max(0.05, score)
 }
 

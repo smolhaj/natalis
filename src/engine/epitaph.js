@@ -422,7 +422,7 @@ export function generateEpitaph(state) {
   } else if (f('bel_exile') && f('bel_2020_marcher')) {
     para2.push(`${He} marched every Sunday in Minsk in August 2020, when it seemed possible that something would change. Then ${he} left. The crowd ${he} had stood in, and the country ${he} left, and the years of renewing work permits in Warsaw — these are the arc of a specific political life.`)
   } else if (f('bel_crackdown_survived') && f('bel_stayed_2020')) {
-    para2.push(`${He} stayed in Belarus after 2020, when others left, and learned what staying required. The version of ${himself} that went to work and the version that came home — ${he} kept them separate for a long time.`)
+    para2.push(`${He} stayed in Belarus after 2020, when others left, and learned what staying required. The version of ${him}self that went to work and the version that came home — ${he} kept them separate for a long time.`)
   } else if (f('bel_chernobyl_generation')) {
     para2.push(`${He} was in Belarus in April 1986, when the cloud from Chernobyl moved north. Seventy percent of the fallout. The May Day parade went ahead on schedule. ${He} was not told about the cloud in time. ${He} was told it was safe.`)
   } else if (f('uru_dictatorship_lived') && f('uru_mujica_era')) {

@@ -35,7 +35,7 @@ export const POLITICAL_PRISON_EVENTS = [
     choices: [
       {
         text: 'Say nothing at all.',
-        tag: null,
+        tag: 'defiant',
         outcome: 'It costs you a longer sentence and it buys you the only thing left to own, which is that they got nothing from you that they did not already have.',
         effect: (p) => {
           p.setMem('polArrestRemark', true)
@@ -46,7 +46,7 @@ export const POLITICAL_PRISON_EVENTS = [
       },
       {
         text: 'Give them a name they already have.',
-        tag: null,
+        tag: 'yielding',
         outcome: 'You choose the one you are sure is already on the list. You are almost sure. It shortens the sentence, and you will spend a long time arithmetic-ing whether that was a trade or a betrayal.',
         effect: (p) => {
           p.setMem('polArrestRemark', true)
@@ -57,7 +57,7 @@ export const POLITICAL_PRISON_EVENTS = [
       },
       {
         text: 'Sign whatever is in front of you.',
-        tag: null,
+        tag: 'yielding',
         outcome: 'You do not read it. Reading it would mean deciding about it, and you have already decided.',
         effect: (p) => {
           p.setMem('polArrestRemark', true)
@@ -85,7 +85,7 @@ export const POLITICAL_PRISON_EVENTS = [
     choices: [
       {
         text: 'They are mine. Nobody else touched them.',
-        tag: null,
+        tag: 'defiant',
         outcome: 'Whether it protects anyone you will never establish. It is the sentence you had prepared, and you get to say it, and that turns out to matter more than you expected.',
         effect: (p) => {
           p.setMem('polArrestPages', true)
@@ -96,7 +96,7 @@ export const POLITICAL_PRISON_EVENTS = [
       },
       {
         text: 'Say they were left here. You do not know by whom.',
-        tag: null,
+        tag: 'yielding',
         outcome: 'The man with the notebook writes that down too, in the same careful hand, and does not look up. They know. The sentence is shorter anyway; the arithmetic of these things is not about belief.',
         effect: (p) => {
           p.setMem('polArrestPages', true)
@@ -123,7 +123,7 @@ export const POLITICAL_PRISON_EVENTS = [
     choices: [
       {
         text: 'Give the name and address on your papers.',
-        tag: null,
+        tag: 'yielding',
         outcome: 'Cooperative, brief, and enough. The sentence is the standard one for that year, which everyone in the van will receive within a month of each other.',
         effect: (p) => {
           p.setMem('polArrestSquare', true)
@@ -134,7 +134,7 @@ export const POLITICAL_PRISON_EVENTS = [
       },
       {
         text: 'Ask, out loud, what the charge is.',
-        tag: null,
+        tag: 'defiant',
         outcome: 'The question is answered eventually and at length, in a room, and by then it is a different question. The older woman was right about the apologising and would have been right about this.',
         effect: (p) => {
           p.setMem('polArrestSquare', true)
@@ -182,7 +182,7 @@ export const POLITICAL_PRISON_EVENTS = [
     choices: [
       {
         text: 'Protect the sources.',
-        tag: null,
+        tag: 'defiant',
         outcome: 'Both of them stay out of it. One of them will find you, years later, and say nothing about it at all, which is how you will know that they knew.',
         effect: (p) => {
           p.setMem('polArrestJournalist', true)
@@ -193,7 +193,7 @@ export const POLITICAL_PRISON_EVENTS = [
       },
       {
         text: 'Give them one.',
-        tag: null,
+        tag: 'yielding',
         outcome: 'You pick the one you tell yourself is safest. You are wrong about that, and you learn how wrong about eleven months later, from a guard who mentions it in passing because it is not, to him, news.',
         effect: (p) => {
           p.setMem('polArrestJournalist', true)
@@ -219,7 +219,7 @@ export const POLITICAL_PRISON_EVENTS = [
     choices: [
       {
         text: 'Accept the account and apologise for it.',
-        tag: null,
+        tag: 'yielding',
         outcome: 'The apology is accepted and recorded and it does not shorten anything by as much as you were told it would.',
         effect: (p) => {
           p.setMem('polArrestMorality', true)
@@ -230,7 +230,7 @@ export const POLITICAL_PRISON_EVENTS = [
       },
       {
         text: 'Correct the account, in detail, on the record.',
-        tag: null,
+        tag: 'defiant',
         outcome: 'You are allowed to finish. Being allowed to finish is not the same as being heard, and the difference is three additional years.',
         effect: (p) => {
           p.setMem('polArrestMorality', true)
@@ -277,7 +277,7 @@ export const POLITICAL_PRISON_EVENTS = [
     choices: [
       {
         text: 'Report late and serve.',
-        tag: null,
+        tag: 'yielding',
         outcome: 'The lateness is entered in a file that will follow you into every posting. You serve the term and something like six additional months that nobody ever explains.',
         effect: (p) => {
           p.setMem('polArrestRefusedService', true)
@@ -288,7 +288,7 @@ export const POLITICAL_PRISON_EVENTS = [
       },
       {
         text: 'Refuse it outright, and say why.',
-        tag: null,
+        tag: 'defiant',
         outcome: 'Saying why is the part that adds the years. You would not have been able to leave it out.',
         effect: (p) => {
           p.setMem('polArrestRefusedService', true)

@@ -67,7 +67,13 @@ const med = (a) => a.length ? [...a].sort((x, y) => x - y)[a.length >> 1] : null
 describe('engine balance', () => {
   for (const mode of ['active', 'passive']) {
     it(`${mode}: registers stay balanced and lives reach a plausible age`, () => {
-      const { agg, byCountry } = simulate(mode, 22)
+      // 40 rather than 22. Several assertions here are on EXTREMES — the oldest
+      // life in a cohort, a per-country median over however many survived
+      // childhood — and an extreme of a small sample is mostly a statement
+      // about the sample. This failed once at "Nigeria oldest life: expected 61
+      // to be greater than 64", where the bound is correct and 22 draws from a
+      // cohort with 30% under-five mortality simply did not reach it.
+      const { agg, byCountry } = simulate(mode, 40)
       const pct = (k) => 100 * agg[k] / agg.years
 
       console.log(`\n[${mode}] ${agg.years} years / ${agg.lives} lives`)
