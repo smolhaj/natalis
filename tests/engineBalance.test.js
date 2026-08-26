@@ -121,7 +121,16 @@ describe('engine balance', () => {
         // p25 of ~26, i.e. a genuinely wide distribution with a heavy young-adult
         // tail (malaria, typhoid, TB, untreated illness). That spread is correct
         // for the cohort, so a per-country sample median needs real headroom.
-        expect(m, `${c} median death age (survived childhood)`).toBeGreaterThan(32)
+        // Floor at 24, not 32. Measured at n=119 the Nigeria 1962 survivor
+        // distribution is median 51 with p25 at 27 — genuinely wide, with a
+        // heavy young-adult tail that is correct for the cohort. A floor of 32
+        // sits barely above that p25, which is far too tight for a median
+        // estimated from 40 draws: CI failed at 31 while a 160-life measurement
+        // of the same code gave 51. The pooled assertion above is the strict
+        // one; this is a per-country sanity bound, and it still fails loudly on
+        // the defect it was written for, where the median was 8 and no life
+        // passed 33.
+        expect(m, `${c} median death age (survived childhood)`).toBeGreaterThan(24)
         expect(m, `${c} median death age (survived childhood)`).toBeLessThan(97)
         expect(Math.max(...r.deaths), `${c} oldest life`).toBeGreaterThan(64)
       }
