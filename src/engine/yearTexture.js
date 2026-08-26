@@ -14758,6 +14758,18 @@ function buildYearTexture(state, opts = {}) {
     'People who have always had the vote treat election day as an errand. You have never once managed to.',
   ])
 
+  if (F.has('learning_was_the_life') && Math.random() < 0.16) return pick([
+    'The page is the same page it has been for thirty years and it is not the same page. People outside describe the arrangement in terms of money and exemptions. Neither word appears anywhere in what you actually do all day.',
+  ])
+
+  if (F.has('stayed_and_absorbed_it') && Math.random() < 0.15) return pick([
+    'The seat you are given at a simcha is a perfectly good seat. It is slightly to one side of where it would otherwise have been, and no one has ever said so.',
+  ])
+
+  if (F.has('left_the_neighbourhood') && Math.random() < 0.15) return pick([
+    'Nobody here knows. That is the point of here, and it is also the thing you occasionally miss — being among people for whom the decision meant something, even the ones who held it against you.',
+  ])
+
   // Everything below is universal fallback prose — true of any life anywhere.
   // Callers asking for specific texture only (the annual texture layer) stop here.
   if (opts.specificOnly) return null

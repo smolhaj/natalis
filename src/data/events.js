@@ -7195,7 +7195,7 @@ const BASE_EVENTS = [
   },
   {
     id: 'cz_aid_dependency',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) => G.character.country.archetype === 'conflict_zone' && G.age >= 12 && !G.mem.cz_aid,
     text: 'The white trucks come on Tuesdays. WFP, UNHCR, MSF — you know the logos before you know what the letters mean. The queue is orderly because everyone understands the cost of disrupting it. You have grown up knowing what a ration card looks like.',

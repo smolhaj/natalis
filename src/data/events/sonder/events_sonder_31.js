@@ -320,7 +320,7 @@ export const EVENTS_SONDER_31 = [
 
   {
     id: 'sonder_31_z',
-    phase: 'young_adult',
+    phase: 'midlife',
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 40 && !G.mem?.s31z,
     text: () => pick([

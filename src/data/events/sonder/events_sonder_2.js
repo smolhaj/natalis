@@ -218,7 +218,7 @@ export const EVENTS_SONDER_2 = [
 
   {
     id: 'sonder2_b_recovery',
-    phase: 'midlife',
+    phase: 'late_life',
     weight: 2,
     when: (G) => hasWeekend(G) && (!G.mem?.s2_brec &&
       G.age >= 50 && G.age <= 62),

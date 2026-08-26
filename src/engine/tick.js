@@ -1984,6 +1984,15 @@ export function tick(state) {
   // estranged-child, children-abroad and grandparent texture.
   if (s.children?.length) {
     s.children = s.children.map(c => ({ ...c, age: Math.max(0, s.age - (c.ageAtBirth ?? s.age)) }))
+
+    // `cared_for_children` gates the late-life grandchild and children-support
+    // beats, and was set NOWHERE — so one of those events could never fire and
+    // its inverse-guarded partner always did. Earned here instead: raising a
+    // child to adulthood while the relationship holds.
+    if (!s.flags.includes('cared_for_children') &&
+        s.children.some(c => (c.age ?? 0) >= 18 && (c.relationshipQuality ?? 0) >= 50)) {
+      s.flags = [...new Set([...s.flags, 'cared_for_children'])]
+    }
   }
 
   // Sibling aging

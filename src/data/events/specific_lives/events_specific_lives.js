@@ -1990,6 +1990,39 @@ export const SPECIFIC_LIFE_EVENTS = [
     effect: null,
   },
 
+  // Follow-through for sl_haredi_deferment. Both branches set a flag; neither
+  // had a downstream consequence, which is the follow-through-first rule
+  // inverted — the decision existed and then evaporated.
+  {
+    id: 'sl_haredi_learning_late',
+    phase: null,
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('haredi_learning_path') &&
+      G.age >= 38 &&
+      !G.mem?.sl_haredi_learn_late,
+    text: 'The deferment stopped being a deferment somewhere along the way and became simply the life. You have sons in the beis midrash now and the same argument is running in the newspapers with different names attached to it. What you cannot explain to anyone outside is that the learning was never an avoidance of something. It was the thing.',
+    context: 'Haredi men who remain in full-time study past their thirties are largely outside the formal labour market; roughly half of Haredi households in Israel live below the poverty line, and the community\'s internal account of that trade-off differs sharply from the national one.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_haredi_learn_late', true); p.m += 2; p.mo -= 400; p.addFlag('learning_was_the_life') },
+  },
+
+  {
+    id: 'sl_haredi_enlisted_after',
+    phase: null,
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('haredi_enlisted') &&
+      G.age >= 30 &&
+      !G.mem?.sl_haredi_enlist_after,
+    text: 'You are back in the neighbourhood and the neighbourhood has arranged itself around the fact without ever naming it. A shidduch that does not progress past the second meeting. A seat at a simcha that is perfectly polite and slightly to one side. Your mother still writes, and she is the only one who ever asks what the years were actually like.',
+    choices: [
+      { text: 'Stay, and let it settle.', outcome: 'It does settle, mostly, over about a decade. Mostly is the accurate word.', effect: (p) => { p.m -= 3; p.setMem('sl_haredi_enlist_after', true); p.addFlag('stayed_and_absorbed_it') } },
+      { text: 'Move to a mixed neighbourhood.', outcome: 'Nobody there knows what the uniform cost you, which is restful and is also a kind of erasure.', effect: (p) => { p.m += 4; p.s += 3; p.setMem('sl_haredi_enlist_after', true); p.addFlag('left_the_neighbourhood') } },
+    ],
+    effect: null,
+  },
+
   {
     id: 'sl_thai_monk_ordination',
     phase: 'young_adult',

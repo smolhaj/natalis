@@ -72,7 +72,7 @@ export const COUNTRIES = [
     surnames: ['Smith','Jones','Williams','Taylor','Brown','Davies','Evans','Wilson','Thomas','Roberts','Johnson','Walker','Wright','Robinson','Thompson','White','Hughes','Edwards','Green','Hall','Lewis','Harris','Clarke','Patel','Jackson','Wood','Turner','Martin','Cooper','Hill'],
     languages: ['English'],
     context: 'Class is embedded in every conversation, every accent, every postcode. The NHS means no one goes bankrupt from illness, but it also means long waits. Social mobility is real but slower than the national myth suggests.',
-    yearRange: [1930, 2005],
+    yearRange: [1920, 2005],
     regime: 'constitutional_monarchy',
     regimeHistory: [],
     religionWeights: { christian_protestant: 0.35, christian_catholic: 0.10, muslim_sunni: 0.05, hindu: 0.02, jewish: 0.005, secular: 0.40, atheist: 0.08 },

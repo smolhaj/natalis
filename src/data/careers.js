@@ -1,3 +1,30 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// A note on gating, because this went wrong once and cost the game its best arc.
+//
+// `gdpRequired` is compared against a country's flat national GDP tier. Setting
+// it to anything above 'any' does not make a profession rare — it deletes the
+// profession from that country entirely. Nigeria is tier 'low', so a
+// `gdpRequired: 'low_medium'` on doctor meant no Nigerian character could ever
+// be a doctor. India is 'low_medium', so `medium_high` on software_developer
+// meant no Indian software developer, in a game that ships an India IT-boom
+// world event and a call-centre arc. Every country on earth has doctors,
+// engineers, lawyers, electricians and teachers.
+//
+// Scarcity belongs in the places that model it honestly:
+//   • `requirements.education` — the degree you must actually finish
+//   • `requirements.minSmarts` — the ceiling you must actually clear
+//   • the cost of that education, charged in tick()
+//   • the GDP salary multiplier, which already pays a Lagos doctor Lagos wages
+//
+// So: `gdpRequired: 'any'` and `archetypeAvailable: 'all'` everywhere. The only
+// legitimate hard gate is `minYear` / `maxYear`, because a job that does not yet
+// exist in a year genuinely cannot be taken in that year.
+//
+// `requirements.field` is matched against `state.education.field`, whose only
+// possible values are 'healthcare' | 'business' | 'science' | 'arts' (university)
+// and 'electrician' | 'plumber' | 'construction' | 'IT' (vocational). Any other
+// string there makes the career permanently unreachable.
+// ─────────────────────────────────────────────────────────────────────────────
 export const CAREERS = [
   {
     id: 'teacher',
@@ -169,7 +196,7 @@ export const CAREERS = [
     ],
     requirements: { education: 'graduate', field: null, minSmarts: 70, minAge: 26 },
     archetypeAvailable: 'all',
-    gdpRequired: 'low_medium',
+    gdpRequired: 'any',
     promotionChance: 0.13,
     description: 'Practice medicine. Save lives. Carry the weight of it.',
     events: [
@@ -211,7 +238,7 @@ export const CAREERS = [
     ],
     requirements: { education: 'university', field: null, minSmarts: 60, minAge: 22 },
     archetypeAvailable: 'all',
-    gdpRequired: 'medium',
+    gdpRequired: 'any',
     promotionChance: 0.13,
     description: 'Build things that last.',
     events: [
@@ -253,8 +280,8 @@ export const CAREERS = [
       { title: 'Staff Engineer', salaryRange: [150000, 250000] },
     ],
     requirements: { education: 'university', field: null, minSmarts: 60, minAge: 21 },
-    archetypeAvailable: ['wealthy_west', 'wealthy_east', 'developing_urban'],
-    gdpRequired: 'medium_high',
+    archetypeAvailable: 'all',
+    gdpRequired: 'any',
     promotionChance: 0.16,
     description: 'Build software. Operate in the digital economy.',
     events: [
@@ -300,7 +327,7 @@ export const CAREERS = [
     ],
     requirements: { education: 'university', field: null, minSmarts: 70, minAge: 24 },
     archetypeAvailable: 'all',
-    gdpRequired: 'medium',
+    gdpRequired: 'any',
     promotionChance: 0.10,
     description: 'Navigate the law. Win or lose, you get paid.',
     events: [
@@ -822,7 +849,7 @@ export const CAREERS = [
     ],
     requirements: { education: 'university', field: null, minSmarts: 50, minAge: 22 },
     archetypeAvailable: 'all',
-    gdpRequired: 'low_medium',
+    gdpRequired: 'any',
     promotionChance: 0.12,
     description: 'Know where the money is. Who gains from knowing this.',
     events: [
@@ -1438,8 +1465,8 @@ export const CAREERS = [
       { title: 'Principal Psychotherapist', salaryRange: [90000, 140000] },
     ],
     requirements: { education: 'university', field: null, minSmarts: 55, minAge: 24 },
-    archetypeAvailable: ['wealthy_west', 'wealthy_east', 'developing_urban'],
-    gdpRequired: 'medium',
+    archetypeAvailable: 'all',
+    gdpRequired: 'any',
     promotionChance: 0.10,
     description: 'Help others untangle their minds.',
     events: [
@@ -1505,8 +1532,8 @@ export const CAREERS = [
       { title: 'Specialist / Practice Owner', salaryRange: [110000, 180000] },
     ],
     requirements: { education: 'university', field: null, minSmarts: 60, minAge: 24 },
-    archetypeAvailable: ['wealthy_west', 'wealthy_east', 'developing_urban', 'wealthy_gulf'],
-    gdpRequired: 'medium',
+    archetypeAvailable: 'all',
+    gdpRequired: 'any',
     promotionChance: 0.11,
     description: 'Medicine for those who cannot speak.',
     events: [
@@ -1572,8 +1599,8 @@ export const CAREERS = [
       { title: 'Chief Pilot', salaryRange: [180000, 280000] },
     ],
     requirements: { education: 'university', field: null, minSmarts: 60, minAge: 23 },
-    archetypeAvailable: ['wealthy_west', 'wealthy_east', 'developing_urban', 'wealthy_gulf'],
-    gdpRequired: 'high',
+    archetypeAvailable: 'all',
+    gdpRequired: 'any',
     promotionChance: 0.09,
     description: 'Command the skies.',
     events: [
@@ -1633,7 +1660,7 @@ export const CAREERS = [
     ],
     requirements: { education: 'university', field: null, minSmarts: 58, minAge: 24 },
     archetypeAvailable: 'all',
-    gdpRequired: 'medium',
+    gdpRequired: 'any',
     promotionChance: 0.10,
     description: 'Shape the spaces people live in.',
     events: [
@@ -1676,7 +1703,7 @@ export const CAREERS = [
     ],
     requirements: { education: null, field: null, minSmarts: 55, minAge: 18 },
     archetypeAvailable: 'all',
-    gdpRequired: 'low',
+    gdpRequired: 'any',
     promotionChance: 0.07,
     description: 'Turn experience into literature.',
     events: [
@@ -1750,8 +1777,8 @@ export const CAREERS = [
       { title: 'Mega Influencer', salaryRange: [180000, 1000000] },
     ],
     requirements: { education: null, field: null, minSmarts: 35, minAge: 14 },
-    archetypeAvailable: ['wealthy_west', 'wealthy_east', 'developing_urban'],
-    gdpRequired: 'low',
+    archetypeAvailable: 'all',
+    gdpRequired: 'any',
     promotionChance: 0.12,
     description: 'Build an audience. Build a life.',
     events: [
@@ -1817,8 +1844,8 @@ export const CAREERS = [
       { title: 'Practice Owner', salaryRange: [190000, 350000] },
     ],
     requirements: { education: 'university', field: null, minSmarts: 62, minAge: 24 },
-    archetypeAvailable: ['wealthy_west', 'wealthy_east', 'developing_urban', 'wealthy_gulf'],
-    gdpRequired: 'medium',
+    archetypeAvailable: 'all',
+    gdpRequired: 'any',
     promotionChance: 0.10,
     description: 'Care for what people hide behind their smile.',
     events: [
@@ -1861,7 +1888,7 @@ export const CAREERS = [
     ],
     requirements: { education: 'university', field: null, minSmarts: 58, minAge: 22 },
     archetypeAvailable: 'all',
-    gdpRequired: 'low',
+    gdpRequired: 'any',
     promotionChance: 0.10,
     description: 'The last checkpoint between prescription and patient.',
     events: [
@@ -1930,8 +1957,8 @@ export const CAREERS = [
       { title: 'Principal / AI Lead', salaryRange: [160000, 280000] },
     ],
     requirements: { education: 'university', field: null, minSmarts: 68, minAge: 22 },
-    archetypeAvailable: ['wealthy_west', 'wealthy_east', 'developing_urban'],
-    gdpRequired: 'medium',
+    archetypeAvailable: 'all',
+    gdpRequired: 'any',
     promotionChance: 0.13,
     description: 'Find signal in the noise.',
     events: [
@@ -1996,9 +2023,15 @@ export const CAREERS = [
       { title: 'Detective Inspector', salaryRange: [70000, 95000] },
       { title: 'Detective Chief Inspector', salaryRange: [90000, 130000] },
     ],
-    requirements: { education: null, field: 'law_enforcement', minSmarts: 50, minAge: 26 },
-    archetypeAvailable: ['wealthy_west', 'wealthy_east', 'developing_urban', 'post_soviet'],
-    gdpRequired: 'medium',
+    // requirements.field is matched against state.education.field, and the only
+    // values that field can ever hold are healthcare / business / science / arts
+    // (university) and electrician / plumber / construction / IT (vocational).
+    // 'law_enforcement' is a career field, not an education field, so gating on
+    // it made this whole career unreachable. Detective work follows service, not
+    // a degree — see the note in needsOtherFile about a previousCareerField gate.
+    requirements: { education: 'secondary', field: null, minSmarts: 50, minAge: 26 },
+    archetypeAvailable: 'all',
+    gdpRequired: 'any',
     promotionChance: 0.09,
     description: 'Find out what happened.',
     events: [
@@ -2065,7 +2098,7 @@ export const CAREERS = [
     ],
     requirements: { education: null, field: null, minSmarts: 40, minAge: 20 },
     archetypeAvailable: 'all',
-    gdpRequired: 'low',
+    gdpRequired: 'any',
     promotionChance: 0.14,
     description: 'Match people to places.',
     events: [
@@ -2110,7 +2143,7 @@ export const CAREERS = [
     ],
     requirements: { education: 'vocational', field: 'electrician', minSmarts: 40, minAge: 20 },
     archetypeAvailable: 'all',
-    gdpRequired: 'low',
+    gdpRequired: 'any',
     promotionChance: 0.12,
     description: 'Wire the world.',
     events: [
@@ -2152,7 +2185,7 @@ export const CAREERS = [
     ],
     requirements: { education: 'vocational', field: 'plumber', minSmarts: 38, minAge: 20 },
     archetypeAvailable: 'all',
-    gdpRequired: 'low',
+    gdpRequired: 'any',
     promotionChance: 0.12,
     description: 'Essential work nobody thinks about until it goes wrong.',
     events: [
@@ -2184,7 +2217,7 @@ export const CAREERS = [
     ],
     requirements: { education: 'vocational', field: 'construction', minSmarts: 35, minAge: 18 },
     archetypeAvailable: 'all',
-    gdpRequired: 'low',
+    gdpRequired: 'any',
     promotionChance: 0.11,
     description: 'Build the physical world.',
     events: [
@@ -2215,8 +2248,8 @@ export const CAREERS = [
       { title: 'IT Director', salaryRange: [90000, 160000] },
     ],
     requirements: { education: 'vocational', field: 'IT', minSmarts: 50, minAge: 20 },
-    archetypeAvailable: ['wealthy_west', 'wealthy_east', 'developing_urban', 'post_soviet'],
-    gdpRequired: 'medium',
+    archetypeAvailable: 'all',
+    gdpRequired: 'any',
     promotionChance: 0.13,
     description: 'Keep the systems running.',
     events: [
@@ -2245,9 +2278,10 @@ export const CAREERS = [
       { title: 'Elite Coach', salaryRange: [75000, 200000] },
       { title: 'National Coach', salaryRange: [180000, 600000] },
     ],
-    requirements: { education: null, field: 'sports', minSmarts: 40, minAge: 26 },
+    // 'sports' is not a settable education field either — same defect as detective.
+    requirements: { education: null, field: null, minSmarts: 40, minAge: 26 },
     archetypeAvailable: 'all',
-    gdpRequired: 'low',
+    gdpRequired: 'any',
     promotionChance: 0.10,
     description: 'Build athletes and people at the same time.',
     events: [
@@ -2290,7 +2324,7 @@ export const CAREERS = [
     ],
     requirements: { education: 'university', field: null, minSmarts: 72, minAge: 26 },
     archetypeAvailable: 'all',
-    gdpRequired: 'low',
+    gdpRequired: 'any',
     promotionChance: 0.08,
     description: 'Create and transmit knowledge.',
     events: [
@@ -2357,7 +2391,7 @@ export const CAREERS = [
     ],
     requirements: { education: 'university', field: null, minSmarts: 60, minAge: 22 },
     archetypeAvailable: 'all',
-    gdpRequired: 'low',
+    gdpRequired: 'any',
     promotionChance: 0.09,
     description: 'Measure what the planet is losing.',
     events: [
@@ -2423,8 +2457,8 @@ export const CAREERS = [
       { title: 'Clinic Director', salaryRange: [110000, 170000] },
     ],
     requirements: { education: 'university', field: null, minSmarts: 50, minAge: 22 },
-    archetypeAvailable: ['wealthy_west', 'wealthy_east', 'developing_urban', 'wealthy_gulf'],
-    gdpRequired: 'medium',
+    archetypeAvailable: 'all',
+    gdpRequired: 'any',
     promotionChance: 0.10,
     description: 'Rebuild what injury took.',
     events: [
