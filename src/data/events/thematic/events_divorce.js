@@ -75,7 +75,7 @@ export const DIVORCE_EVENTS = [
     when: (G) =>
       hasDivorced(G) &&
       !G.mem?.divLegalFired,
-    text: 'The divorce is a legal process. The legal process requires documentation of a life: the assets, the accounts, the property, the children\'s time, the debt. The lawyers translate the marriage into a ledger. The ledger is accurate and completely wrong simultaneously — it cannot account for the specific shape the two of you made together, the accumulated texture of the shared years. The judge signs the documents. The documents are filed.',
+    text: 'The divorce is a legal process. The legal process requires documentation of a life: the assets, the accounts, the property, the children\'s time, the debt. The lawyers translate the marriage into a ledger. The ledger is accurate and completely wrong simultaneously — it cannot account for the shape the two of you made together, the accumulated texture of the shared years. The judge signs the documents. The documents are filed.',
     choices: null,
     effect: (p) => { p.mo -= 2000; p.m -= 10; p.r += 8; p.addFlag('divorce_legal_done'); p.setMem('divLegalFired', true) },
   },
@@ -87,7 +87,7 @@ export const DIVORCE_EVENTS = [
     when: (G) =>
       hasDivorced(G) &&
       !G.mem?.divLegalFired,
-    text: 'The divorce is a legal process. The legal process requires documentation of a life: the assets, the accounts, the property, the children\'s time, the debt. The lawyers translate the marriage into a ledger. The ledger is accurate and completely wrong simultaneously — it cannot account for the specific shape the two of you made together, the accumulated texture of the shared years. The judge signs the documents. The documents are filed.',
+    text: 'The divorce is a legal process. The legal process requires documentation of a life: the assets, the accounts, the property, the children\'s time, the debt. The lawyers translate the marriage into a ledger. The ledger is accurate and completely wrong simultaneously — it cannot account for the shape the two of you made together, the accumulated texture of the shared years. The judge signs the documents. The documents are filed.',
     choices: null,
     effect: (p) => { p.mo -= 3500; p.m -= 10; p.r += 8; p.addFlag('divorce_legal_done'); p.setMem('divLegalFired', true) },
   },
@@ -186,7 +186,7 @@ export const DIVORCE_EVENTS = [
       !G.partner &&
       G.age <= 45 &&
       !G.mem?.divDatingFired,
-    text: 'Someone asks you out, or a friend suggests someone, or you create a profile on an app late at night and feel immediately strange about it. Dating after a marriage is different from dating before one. You know more — about yourself, about what a relationship actually requires. The knowing is useful and also makes the early meetings feel more procedural than they should. You are forty-something, or thirty-something, sitting across from a person who does not know the specific shape of the years you have had.',
+    text: 'You create a profile on an app late at night and feel strange about it immediately. Dating after a marriage is different from dating before one. You know more — about yourself, about what a relationship actually requires. The knowing is useful and also makes the early meetings feel more procedural than they should. You are sitting across from a person who does not know the shape of the years you have had.',
     choices: [
       {
         text: 'Try — the alternative is staying closed',

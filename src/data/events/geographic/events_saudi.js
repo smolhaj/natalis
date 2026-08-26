@@ -62,7 +62,7 @@ const SAUDI_EVENTS = [
 
   {
     id: 'sau_grand_mosque_1979',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Saudi Arabia' &&
@@ -78,7 +78,7 @@ const SAUDI_EVENTS = [
 
   {
     id: 'sau_mutaween',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Saudi Arabia' &&
@@ -112,14 +112,15 @@ const SAUDI_EVENTS = [
 
   {
     id: 'sau_gulf_war_1990',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Saudi Arabia' &&
       G.currentYear >= 1990 && G.currentYear <= 1992 &&
       G.age >= 15 &&
       !G.mem?.sau_gulf_war,
-    text: 'August 1990. Saddam Hussein invades Kuwait. King Fahd calls for American troops. Five hundred thousand US soldiers on Saudi soil. The religious establishment issues fatwas supporting the arrangement. Other voices argue that having non-Muslim troops on the Arabian peninsula — near Mecca, near Medina — is a desecration. Osama bin Laden, recently returned from Afghanistan, offered to defend the kingdom with his Arab veterans. The offer was rejected. He leaves for Sudan. The war is over in a hundred hours. The American bases remain for years. The argument about what was wrong about this stays much longer.',
+    text: 'In August there are American soldiers at the airbase outside the city and by the autumn there are half a million of them in the country. The senior scholars issue the ruling that permits it. At the mosque a younger preacher says the word desecration and by the following Friday he is not preaching. Your cousin argues both sides of it at dinner and neither side goes away. The fighting itself lasts a hundred hours; the bases stay for thirteen years.',
+    context: 'Iraq invaded Kuwait in August 1990 and King Fahd requested American military protection, eventually hosting some 500,000 US troops. The Council of Senior Scholars issued a fatwa permitting the deployment; the Sahwa movement of younger clerics opposed it and many were imprisoned in the crackdown that followed. Osama bin Laden\'s offer to defend the kingdom with Afghan veterans was refused and he left for Sudan. US forces withdrew from Saudi Arabia in 2003.',
     choices: [
       {
         text: 'The defense was necessary — Saddam was on the border.',
@@ -141,7 +142,7 @@ const SAUDI_EVENTS = [
 
   {
     id: 'sau_wasta',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Saudi Arabia' &&
@@ -205,14 +206,15 @@ const SAUDI_EVENTS = [
 
   {
     id: 'sau_khashoggi_2018',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Saudi Arabia' &&
       G.currentYear >= 2018 && G.currentYear <= 2020 &&
       G.age >= 20 &&
       !G.mem?.sau_khashoggi,
-    text: 'October 2, 2018. Jamal Khashoggi, Washington Post columnist, enters the Saudi consulate in Istanbul to obtain paperwork for his upcoming marriage. He does not come out. The Turkish authorities release recordings. The Saudi government\'s explanation changes five times over two weeks — he left, he died accidentally in a fight, rogue elements, an operation that went wrong. The CIA concludes that Crown Prince Mohammed bin Salman ordered the killing. You know people who knew him, or you don\'t, but you know that the message was intended for everyone: the category of people who write critically from outside is not a safe category. The WhatsApp messages stop. The group chats go quiet. Some columns are never written.',
+    text: 'He goes into the consulate in Istanbul for a paper he needs in order to get married, and he does not come out. The explanations arrive one after another over a fortnight and each replaces the one before it. On your phone the group that used to argue about everything goes quiet within a week, and then people start leaving it. You notice that you have begun composing your messages as though a third person were reading them, and that you did not decide to start doing that.',
+    context: 'Jamal Khashoggi, a Saudi journalist and Washington Post columnist, entered the Saudi consulate in Istanbul on 2 October 2018 and was killed inside. Saudi accounts changed repeatedly over the following two weeks. The US intelligence assessment released in 2021 concluded that Crown Prince Mohammed bin Salman approved the operation. Eight men were convicted in a closed Saudi trial; no senior official was charged.',
     choices: [
       {
         text: 'The silence is necessary — there is a family, a life, specific things to protect.',
@@ -234,7 +236,7 @@ const SAUDI_EVENTS = [
 
   {
     id: 'sau_vision_2030',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Saudi Arabia' &&

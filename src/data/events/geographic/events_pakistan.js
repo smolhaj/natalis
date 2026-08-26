@@ -6,7 +6,7 @@ export const PAKISTAN_EVENTS = [
 
   {
     id: 'pak_muhajir_karachi',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Pakistan' &&
@@ -21,7 +21,7 @@ export const PAKISTAN_EVENTS = [
 
   {
     id: 'pak_partition_memory',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Pakistan' &&
@@ -35,7 +35,7 @@ export const PAKISTAN_EVENTS = [
 
   {
     id: 'pak_1971_east_pakistan',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Pakistan' &&
@@ -63,7 +63,7 @@ export const PAKISTAN_EVENTS = [
 
   {
     id: 'pak_zia_islamization',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Pakistan' &&
@@ -77,7 +77,7 @@ export const PAKISTAN_EVENTS = [
 
   {
     id: 'pak_zia_female',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Pakistan' &&
@@ -93,7 +93,7 @@ export const PAKISTAN_EVENTS = [
 
   {
     id: 'pak_karachi_ethnic_violence',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Pakistan' &&
@@ -120,7 +120,7 @@ export const PAKISTAN_EVENTS = [
 
   {
     id: 'pak_nuclear_1998',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Pakistan' &&
@@ -134,7 +134,7 @@ export const PAKISTAN_EVENTS = [
 
   {
     id: 'pak_afghanistan_frontier',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Pakistan' &&
@@ -175,7 +175,7 @@ export const PAKISTAN_EVENTS = [
 
   {
     id: 'pak_benazir_assassination_2007',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Pakistan' &&
@@ -202,7 +202,7 @@ export const PAKISTAN_EVENTS = [
 
   {
     id: 'pak_aps_peshawar_2014',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Pakistan' &&
@@ -222,7 +222,7 @@ export const PAKISTAN_EVENTS = [
 
   {
     id: 'pak_blasphemy_fear',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Pakistan' &&

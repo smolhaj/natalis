@@ -43,7 +43,7 @@ export const FOLLOWTHROUGH_94_EVENTS = [
       G.flags.has('laos_hmong_return_era') &&
       G.age >= 55 &&
       !G.mem?.ft94HmongReturn,
-    text: 'The families who came back in 2009 are a generation that belongs to two places without fully belonging to either. The children who grew up in Huay Nam Khao camp are now adults who grew up in Laos after 2009. The ones who ended up in Minnesota or France or Australia represent a different branch. You know people from all three branches. The common thread is a specific knowledge about what it costs to be a Hmong who requires the protection of a state that has reasons to find Hmong protection inconvenient. The knowledge does not produce bitterness in everyone. In some it produces a specific kind of competence: they know how to manage without expecting much from the structures around them.',
+    text: 'The families who came back in 2009 are a generation that belongs to two places without fully belonging to either. The children who grew up in Huay Nam Khao camp are now adults who grew up in Laos after 2009. The ones who ended up in Minnesota or France or Australia represent a different branch. You know people from all three branches. The common thread is a knowledge about what it costs to be a Hmong who requires the protection of a state that has reasons to find Hmong protection inconvenient. The knowledge does not produce bitterness in everyone. In some it produces a kind of competence: they know how to manage without expecting much from the structures around them.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 2; p.setMem('ft94HmongReturn', true) },
   },

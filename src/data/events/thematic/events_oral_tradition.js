@@ -9,9 +9,9 @@
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
 const isOralContext = (G) =>
-  (G.character.archetype === 'subsaharan' ||
-   G.character.archetype === 'developing_unstable' ||
-   G.character.archetype === 'conflict_zone' ||
+  (G.archetype === 'subsaharan' ||
+   G.archetype === 'developing_unstable' ||
+   G.archetype === 'conflict_zone' ||
    G.ruralUrban === 'rural') &&
   G.stats.smarts < 70
 
@@ -147,10 +147,10 @@ export const ORAL_TRADITION_EVENTS = [
 
   {
     id: 'oral_violence_nearby',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
-      G.character.archetype === 'conflict_zone' &&
+      G.archetype === 'conflict_zone' &&
       G.age >= 13 && G.age <= 21 &&
       !G.mem?.oralViolenceNearby,
     text: `You hear about violence in the next district from the man who walked all night from there. He arrived at dawn and sat down in the compound without taking off his shoes. The adults went to him. Children were told to go inside again. What he said came to you through three people over three days: there were soldiers, or armed men who were not soldiers, or both. There was burning. The count of dead is uncertain because people who count them are also afraid of being counted. You understand that the uncertainty is not ignorance — it is what the event looks like from inside it.`,
@@ -173,14 +173,14 @@ export const ORAL_TRADITION_EVENTS = [
 
   {
     id: 'oral_independence_announced',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
-      G.character.archetype === 'subsaharan' &&
+      G.archetype === 'subsaharan' &&
       G.currentYear >= 1956 && G.currentYear <= 1975 &&
       G.age >= 5 && G.age <= 16 &&
       !G.mem?.oralIndependence,
-    text: `The teacher comes running into school in the middle of the morning. You have never seen a teacher run before. Something has happened in the capital — the radio said it. Independence. The country has a new name or the same name without the other name attached to it. The teacher is explaining something that requires words you don't fully have yet. The adults outside are gathering. Some of them are making a sound you have heard at weddings. You will understand the word "independence" better over the following years as what it meant arrives in stages — the new flag, the new money, the new officials who speak the same language your grandparents speak, and the things that don't change and the things that change too much.`,
+    text: `The teacher comes running into the schoolroom in the middle of the morning. You have never seen a teacher run. Something has happened in the capital and the radio said it: the country has the same name now without the other name attached in front. Outside, the adults are gathering and some of them are making the sound you have only heard at weddings. The word will arrive properly over the next ten years, in stages — the flag, the money, the officials who speak your grandmother's language.`,
     choices: null,
     effect: (p) => {
       p.m += 5
@@ -211,7 +211,7 @@ export const ORAL_TRADITION_EVENTS = [
 
   {
     id: 'oral_letter_from_city',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) =>
       isOralContext(G) &&
@@ -219,7 +219,7 @@ export const ORAL_TRADITION_EVENTS = [
       G.age >= 7 && G.age <= 16 &&
       G.parents?.father &&
       !G.mem?.oralLetterCity,
-    text: `A letter arrives from your father or uncle or older sibling who is in the city. The letter carrier — the man who also delivers for the post office — brings it on a Tuesday. Your mother holds it. If your mother cannot read, she waits for the teacher or the chief's secretary or someone who can read to come by, or she walks to them. The reading is public or semi-public: the person who reads the letter reads it aloud, and the people nearby hear what is in it. The letter from the city: the job is going well, or not well, the money is being sent, the city is not what was expected, he is thinking of them. What is not said in the letter is also information. He does not say when he is coming back.`,
+    text: `A letter comes from your father in the city, carried up on a Tuesday by the man who also does the post office run. Your mother holds it all afternoon and then walks it to the teacher, because the teacher reads. The reading happens in the open, aloud, and four people who are not family hear it: the job is steady, the money is coming, the city is not what he was told. He does not say when he is coming back. That part is heard by everyone too.`,
     choices: null,
     effect: (p) => {
       p.r += 4
@@ -255,7 +255,7 @@ export const ORAL_TRADITION_EVENTS = [
       isOralContext(G) &&
       G.age >= 18 && G.age <= 30 &&
       !G.mem?.oralDiseaseRumour,
-    text: `Something is killing people in the district to the north. No one agrees on what it is: the men who come through the market say it is a spirit. The health worker who comes to the village once a month says it sounds like cholera and the important things are the water and the hands. Your father-in-law says it is the strangers who came from the other side of the mountain. The woman who had it and recovered — who is now either immune or still dangerous, depending on who you ask — says it starts with a feeling in the stomach and then the water leaves the body faster than you can put it back. You manage your life around information that comes in five different versions. You identify which version comes from someone who was actually present. That version gets the most weight.`,
+    text: `Something is killing people in the district to the north. The men at the market say it is a spirit. The health worker who comes once a month says cholera, and says the water and the hands. The woman who had it and recovered says it begins as a feeling in the stomach and then the water leaves the body faster than you can put it back. You give her version the most weight, because she is the only one who was in the room.`,
     choices: null,
     effect: (p) => {
       p.h -= 3
@@ -285,13 +285,13 @@ export const ORAL_TRADITION_EVENTS = [
 
   {
     id: 'oral_soldiers_passed',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
-      (G.character.archetype === 'conflict_zone' || G.character.archetype === 'developing_unstable') &&
+      (G.archetype === 'conflict_zone' || G.archetype === 'developing_unstable') &&
       G.age >= 14 && G.age <= 25 &&
       !G.mem?.oralSoldiersPassed,
-    text: `Soldiers passed through. This is a sentence that can mean many things and you know from the faces of the adults which version it means. This time: they came, they asked for food, they took some of what they asked for and some of what they didn\'t ask for, and they moved on. No one was hurt. The adults say "no one was hurt" as a complete sentence, meaning it as good news, which requires knowing what the other versions look like. You know enough now to know what the other versions look like. You are old enough to understand that "no one was hurt this time" has the word "this time" in it even when no one says "this time."`,
+    text: `Soldiers passed through. It is a sentence that can mean six things and you read which one from the adults' faces before anyone speaks. This time they asked for food, took more than they asked for, and moved on. "No one was hurt," your uncle says, and says nothing after it, and means it as good news. You are old enough now to hear the words *this time* in a sentence that does not contain them.`,
     choices: null,
     effect: (p) => {
       p.m -= 6

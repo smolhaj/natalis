@@ -11,7 +11,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
 
   {
     id: 'ven_chavez_1998',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -44,7 +44,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
 
   {
     id: 'ven_barrio_adentro',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -64,7 +64,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
 
   {
     id: 'ven_oil_boom',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -91,7 +91,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
 
   {
     id: 'ven_dep_chavez_death',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -116,14 +116,15 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
 
   {
     id: 'ven_food_line',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
       G.currentYear >= 2015 && G.currentYear <= 2020 &&
       G.age >= 18 &&
       !G.mem?.venFoodLine,
-    text: 'The supermarket has a system now. You arrive before 5 a.m. to take a number. The number system means you do not have to stand in the queue — you can come back at 8 when it opens — but you have to be there before 5 to get a number low enough to enter before the shelves are empty. What is on the shelves changes by week. Last week: cornmeal, rice, cooking oil. This week: cornmeal, no rice, sugar that costs what used to be a week\'s salary. The woman ahead of you in the queue has a number from two days ago that she never used; the number is now worthless; she came back anyway because the cornmeal might still be there. You talk to her while you wait. This is one of the unexpected aspects of the queue: the conversation.',
+    text: 'You take a number before five in the morning so you can come back at eight low enough to get through the door before the shelves go. This week there is cornmeal, no rice, and sugar at what used to be a week\'s wages. The woman ahead of you is holding a number from Tuesday that is worth nothing now and she has come anyway. You talk. Nobody warned you that the queue would also be where the conversations happen.',
+    context: 'Venezuelan price controls and the collapse of import capacity produced chronic shortages from 2014. Supermarkets rationed entry by the last digit of an identity card and the state distributed subsidised boxes through the CLAP programme. Annual inflation passed one million percent in 2018 and roughly seven million Venezuelans left the country.',
     choices: [
       {
         text: 'You manage within it — the queue, the calculation, the conversation.',
@@ -143,7 +144,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
 
   {
     id: 'ven_2017_protest',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -170,7 +171,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
 
   {
     id: 'ven_hyperinflation',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -190,7 +191,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
 
   {
     id: 'ven_departure',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -224,7 +225,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
 
   {
     id: 'ven_colectivo',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -252,7 +253,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
 
   {
     id: 'ven_dollarization',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -271,7 +272,7 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
 
   {
     id: 'ven_clap',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -298,11 +299,11 @@ export const VENEZUELA_DEPTH_2_EVENTS = [
 
   {
     id: 'ven_migrant_colombia',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.has('ven_diaspora') &&
-      G.currentCountry === 'Colombia' &&
+      G.currentCountry?.name === 'Colombia' &&
       G.currentYear >= 2017 && G.currentYear <= 2024 &&
       G.age >= 18 &&
       !G.mem?.venMigrantColombia,

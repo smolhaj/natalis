@@ -4,6 +4,8 @@
 // Themes: the body at rest, work without witness, the small room,
 // threshold moments, what stays after people leave.
 
+import { place } from './_sonderGuards.js'
+
 export const EVENTS_SONDER_13 = [
 
   // ── THE BODY AT REST ─────────────────────────────────────────────────────────
@@ -18,39 +20,19 @@ export const EVENTS_SONDER_13 = [
     effect: (p) => { p.setMem('sonder13_body_rest_1', true) },
   },
 
-  {
-    id: 'sonder13_body_rest_2',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => !G.mem?.sonder13_body_rest_2,
-    text: `The chair has a specific place in the afternoon light. This is where you sit. The light changes at a specific rate and the chair accommodates a specific weight and the two of them together have made something that is not quite comfort and is more than furniture.`,
-    choices: null,
-    effect: (p) => { p.setMem('sonder13_body_rest_2', true) },
-  },
-
-  {
+{
     id: 'sonder13_sleeping_body',
     phase: 'midlife',
     weight: 2,
     when: (G) => !G.mem?.sonder13_sleeping_body,
-    text: `Your partner is asleep. You can see from here that they are deeply asleep — the quality of the breathing, the specific angle of the face. They are somewhere you cannot reach. You watch them for a moment that is longer than a glance but shorter than the moment that would be odd. Then you go back to what you were doing.`,
+    text: `Your partner is asleep. You can see from here that they are deeply asleep — the quality of the breathing, the angle of the face. They are somewhere you cannot reach. You watch them for a moment that is longer than a glance but shorter than the moment that would be odd. Then you go back to what you were doing.`,
     choices: null,
     effect: (p) => { p.setMem('sonder13_sleeping_body', true) },
   },
 
   // ── WORK WITHOUT WITNESS ─────────────────────────────────────────────────────
 
-  {
-    id: 'sonder13_work_unseen_1',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => !G.mem?.sonder13_work_unseen_1,
-    text: `You do the work carefully and correctly and no one sees you do it. This is most of the work. The quality goes into the thing rather than into the witness of the quality, and the thing is better for it, and you know the thing is better for it, which is its own information but not always sufficient information.`,
-    choices: null,
-    effect: (p) => { p.setMem('sonder13_work_unseen_1', true) },
-  },
-
-  {
+{
     id: 'sonder13_work_unseen_2',
     phase: 'midlife',
     weight: 2,
@@ -87,7 +69,7 @@ export const EVENTS_SONDER_13 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => !G.mem?.sonder13_room_2,
-    text: `The room has become yours in the way a rented room becomes yours — the specific placement of objects, the route from bed to door memorised in the dark, the smell that is the smell of this room and no other. When you leave it, you will leave this specific version of yourself in it.`,
+    text: `The room has become yours in the way a rented room becomes yours — the specific placement of objects, the route from bed to door memorised in the dark, the smell that is the smell of this room and no other. When you leave it, you will leave this version of yourself in it.`,
     choices: null,
     effect: (p) => { p.setMem('sonder13_room_2', true) },
   },
@@ -140,7 +122,7 @@ export const EVENTS_SONDER_13 = [
     id: 'sonder13_after_leaving_1',
     phase: 'midlife',
     weight: 2,
-    when: (G) => !G.mem?.sonder13_after_leaving_1,
+    when: (G) => place.isLiterate(G) && (!G.mem?.sonder13_after_leaving_1),
     text: `After they left you found the small things — the handwriting on a piece of paper, the object moved to a different shelf, the phrase you have started saying without noticing. People leave deposit in you in forms you do not always recognise as deposit until something jogs the recognition.`,
     choices: null,
     effect: (p) => { p.setMem('sonder13_after_leaving_1', true) },
@@ -151,7 +133,7 @@ export const EVENTS_SONDER_13 = [
     phase: 'late_life',
     weight: 2,
     when: (G) => !G.mem?.sonder13_after_leaving_2,
-    text: `The people who have been through your life are in it in specific ways. Not as memories exactly — more as modifications to how you see things, what you find funny, what you cannot abide, which silences you can sit in and which you cannot. You are the accumulation of every person who has sat in your kitchen.`,
+    text: `The people who have been through your life are in it in ways. Not as memories exactly — more as modifications to how you see things, what you find funny, what you cannot abide, which silences you can sit in and which you cannot. You are the accumulation of every person who has sat in your kitchen.`,
     choices: null,
     effect: (p) => { p.setMem('sonder13_after_leaving_2', true) },
   },
@@ -256,8 +238,8 @@ export const EVENTS_SONDER_13 = [
     id: 'sonder13_seasons_body',
     phase: 'midlife',
     weight: 2,
-    when: (G) => !G.mem?.sonder13_seasons_body,
-    text: `The body marks the seasons in ways the calendar does not. The specific weight of winter air, the way cold affects the joints differently at forty than it did at twenty, the particular tiredness that August produces. The body keeps a different record of the year than the year keeps of itself.`,
+    when: (G) => G.season === 'winter' && (!G.mem?.sonder13_seasons_body),
+    text: `The body marks the seasons in ways the calendar does not. The weight of winter air, the way cold affects the joints differently at forty than it did at twenty, the particular tiredness that August produces. The body keeps a different record of the year than the year keeps of itself.`,
     choices: null,
     effect: (p) => { p.setMem('sonder13_seasons_body', true) },
   },
@@ -268,6 +250,7 @@ export const EVENTS_SONDER_13 = [
     id: 'sonder13_stranger_1',
     phase: 'young_adult',
     weight: 2,
+    isGlimpse: true,
     when: (G) => !G.mem?.sonder13_stranger_1,
     text: `The person at the next table is reading something and laughing to themselves. Not a polite laugh — a real one, sudden, surprised. Someone wrote something that caught them exactly right and they are reading it in a café and you are briefly in the room with that catch, and then the moment passes and they are just a person reading and you are just a person at the next table.`,
     choices: null,
@@ -278,7 +261,8 @@ export const EVENTS_SONDER_13 = [
     id: 'sonder13_stranger_2',
     phase: 'midlife',
     weight: 2,
-    when: (G) => !G.mem?.sonder13_stranger_2,
+    isGlimpse: true,
+    when: (G) => place.hasPhone(G) && (!G.mem?.sonder13_stranger_2),
     text: `The man on the platform is checking his phone. On his face for a moment is something — you catch it in the second before he rearranges his face into the neutral expression people wear in public. The something was grief. Or it was good news about someone he loves. You cannot tell and you are not supposed to know and then the train arrives.`,
     choices: null,
     effect: (p) => { p.setMem('sonder13_stranger_2', true) },
@@ -333,7 +317,7 @@ export const EVENTS_SONDER_13 = [
     phase: 'midlife',
     weight: 2,
     when: (G) => !G.mem?.sonder13_hour_2,
-    text: `The hour before the house wakes up. You are the only one in it and the house is a different house — quieter, more itself, still carrying the specific silence of sleeping people. This is the hour you think clearly, or feel something without having to account for it. The hour ends when the first sound comes from upstairs.`,
+    text: `The hour before the house wakes up. You are the only one in it and the house is a different house — quieter, more itself, still carrying the silence of sleeping people. This is the hour you think clearly, or feel something without having to account for it. The hour ends when the first sound comes from upstairs.`,
     choices: null,
     effect: (p) => { p.setMem('sonder13_hour_2', true) },
   },
@@ -350,17 +334,7 @@ export const EVENTS_SONDER_13 = [
     effect: (p) => { p.setMem('sonder13_body_age_1', true) },
   },
 
-  {
-    id: 'sonder13_body_age_2',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => G.age >= 60 && !G.mem?.sonder13_body_age_2,
-    text: `You know exactly how the body is doing because the body has become informative in a way it was not when you were younger. Younger it was background. Now it is foreground. You receive regular dispatches from the various departments, some of which require action and some of which require only acknowledgement.`,
-    choices: null,
-    effect: (p) => { p.setMem('sonder13_body_age_2', true) },
-  },
-
-  // ── WHAT YOU CARRY ───────────────────────────────────────────────────────────
+// ── WHAT YOU CARRY ───────────────────────────────────────────────────────────
 
   {
     id: 'sonder13_carry_1',
@@ -377,7 +351,7 @@ export const EVENTS_SONDER_13 = [
     phase: 'late_life',
     weight: 2,
     when: (G) => !G.mem?.sonder13_carry_2,
-    text: `What you carry out of a long life: the specific things, not the general inventory. The sentence someone said in 1987 that you still think about. The smell of a particular room. The exact weight of a particular silence. Not the events — the texture of the events. The events become stories. The texture stays raw.`,
+    text: `What you carry out of a long life: the things, not the general inventory. The sentence someone said in 1987 that you still think about. The smell of a particular room. The exact weight of a particular silence. Not the events — the texture of the events. The events become stories. The texture stays raw.`,
     choices: null,
     effect: (p) => { p.setMem('sonder13_carry_2', true) },
   },

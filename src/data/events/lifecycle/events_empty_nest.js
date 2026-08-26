@@ -10,7 +10,7 @@ export const EMPTY_NEST_EVENTS = [
 
   {
     id: 'en_first_year',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.has('empty_nest') &&
@@ -46,7 +46,7 @@ export const EMPTY_NEST_EVENTS = [
 
   {
     id: 'en_partner_rediscovery',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.has('empty_nest') &&
@@ -84,7 +84,7 @@ export const EMPTY_NEST_EVENTS = [
 
   {
     id: 'en_solo_house',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('empty_nest') &&
@@ -105,7 +105,7 @@ export const EMPTY_NEST_EVENTS = [
 
   {
     id: 'en_the_room',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('empty_nest') &&

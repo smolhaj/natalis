@@ -159,7 +159,27 @@ const BIRTH_DISABILITY_EVENTS = [
 // Capital-D Deaf: community, language, identity — not just impairment.
 // ═══════════════════════════════════════════════════════════════════════════════
 
+// Deaf-of-Deaf households, fixed at birth so it never changes mid-life.
+const DEAF_HOUSEHOLD = (G) =>
+  (((G.character?.birthYear ?? 0) + (G.character?.firstName?.length ?? 0)) % 9) === 0
+
 const DEAF_ARC_EVENTS = [
+
+  // Roughly one Deaf child in ten is born to Deaf parents. Derived from birth
+  // data rather than rolled, so the household is fixed from the first year and
+  // the two openings below can never both fire.
+  {
+    id: 'dis_deaf_family_house',
+    phase: 'childhood',
+    weight: 999,
+    when: (G) =>
+      G.flags.has('born_deaf') &&
+      DEAF_HOUSEHOLD(G) &&
+      !G.mem?.disDeafWorldFired,
+    text: 'Your parents are Deaf. The language of your house is sign language. The world outside the house requires translation, which your parents do without comment, because they have always done it. You grow up knowing that there is the Deaf world and the hearing world, and you live in both, and the Deaf world is the one that feels like home.',
+    choices: null,
+    effect: (p) => { p.m += 4; p.s += 3; p.addFlag('deaf_childhood'); p.addFlag('deaf_family'); p.setMem('disDeafWorldFired', true) },
+  },
 
   {
     id: 'dis_deaf_world',
@@ -167,20 +187,16 @@ const DEAF_ARC_EVENTS = [
     weight: 999,
     when: (G) =>
       G.flags.has('born_deaf') &&
+      !DEAF_HOUSEHOLD(G) &&
       !G.mem?.disDeafWorldFired,
-    text: (G) => {
-      const parents = Object.values(G.parents ?? {})
-      const deafParents = G.flags.has('deaf_family')
-      if (deafParents) return 'Your parents are Deaf. The language of your house is sign language. The world outside the house requires translation, which your parents do without comment, because they have always done it. You grow up knowing that there is the Deaf world and the hearing world, and you live in both, and the Deaf world is the one that feels like home.'
-      return 'Your parents are hearing. They love you correctly and are also frightened, because the world they know is built entirely for hearing people and they are not sure how to prepare you for it. You are growing up in a house where you are the only person who experiences the world the way you do. You learn to read faces very early. You learn to be patient with people who don\'t know how to talk to you.'
-    },
+    text: 'Your parents are hearing. They love you correctly and are also frightened, because the world they know is built entirely for hearing people and they are not sure how to prepare you for it. You are growing up in a house where you are the only person who experiences the world the way you do. You learn to read faces very early. You learn to be patient with people who don\'t know how to talk to you.',
     choices: null,
     effect: (p) => { p.m -= 3; p.s += 3; p.addFlag('deaf_childhood'); p.setMem('disDeafWorldFired', true) },
   },
 
   {
     id: 'dis_cochlear_implant',
-    phase: 'childhood',
+    phase: null,
     weight: 8,
     when: (G) =>
       G.flags.has('born_deaf') &&
@@ -213,7 +229,7 @@ const DEAF_ARC_EVENTS = [
       G.flags.has('born_deaf') &&
       !G.flags.has('deaf_family') &&
       !G.mem?.disDeafCommFired,
-    text: 'The school for the Deaf, or the club, or the online community for BSL/ASL speakers — whatever the route, you find the others. The specific feeling of being in a room where the primary language is yours — where you do not need to ask anyone to face you when they speak, where the communication is complete rather than approximate — is not something you had a word for before you experienced it. You have a word for it now: home.',
+    text: 'The school for the Deaf, or the club, or the online community for BSL/ASL speakers — whatever the route, you find the others. The feeling of being in a room where the primary language is yours — where you do not need to ask anyone to face you when they speak, where the communication is complete rather than approximate — is not something you had a word for before you experienced it. You have a word for it now: home.',
     choices: null,
     effect: (p) => { p.m += 12; p.s += 5; p.addFlag('deaf_community_found'); p.setMem('disDeafCommFired', true) },
   },
@@ -253,26 +269,59 @@ const DEAF_ARC_EVENTS = [
 
 const ACQUIRED_DISABILITY_EVENTS = [
 
+  // The three ways a body changes mid-life. Each is its own moment with its own
+  // odds, and each stamps mem.acquiredDisabilityType, which the later events read.
   {
     id: 'dis_acquired_event',
-    phase: 'young_adult',
-    weight: 5,
-    when: (G) =>
-      G.flags.has('disability_acquired') &&
-      !G.mem?.disAcquiredFired,
-    text: (G) => {
-      const type = G.mem?.acquiredDisabilityType ?? 'accident'
-      if (type === 'accident') return 'The accident is specific and takes seconds. What comes after takes years. The hospital is the first chapter. Rehabilitation is the second. Understanding what the third chapter is — what the life looks like now, what it can contain, what it cannot — is a process that begins in the rehabilitation ward and does not fully end.'
-      if (type === 'progressive') return 'The diagnosis is for a condition that will progress. The progression has a pace that is unpredictable but directional. You have time. The time is also running. You begin making a set of decisions about what to do with both facts simultaneously.'
-      return 'The stroke happens on a Thursday. The recovery is partial, which is what most strokes produce — partial recovery. The word partial covers a range. You spend the first months understanding exactly where on that range you are.'
+    phase: null,
+    weight: 6,
+    when: (G) => {
+      if (G.flags.has('acquired_disability') || G.flags.has('born_with_disability')) return false
+      if (G.mem?.disAcquiredFired) return false
+      if (G.age < 14 || G.age > 62) return false
+      const exposed = ['labour', 'construction', 'agriculture', 'transport', 'military', 'mining'].includes(G.career?.field ?? '')
+        || G.flags.has('informal_economy') || G.archetype === 'conflict_zone'
+      return Math.random() < (exposed ? 0.011 : 0.004)
     },
+    text: 'The accident takes four seconds. What comes after takes years. The hospital is the first chapter. Rehabilitation is the second. Understanding what the third chapter is — what the life looks like now, what it can contain, what it cannot — is a process that begins in the rehabilitation ward and does not fully end.',
     choices: null,
-    effect: (p) => { p.h -= 20; p.m -= 15; p.addFlag('acquired_disability'); p.setMem('disAcquiredFired', true) },
+    effect: (p) => { p.h -= 20; p.m -= 15; p.addFlag('acquired_disability'); p.setMem('acquiredDisabilityType', 'accident'); p.setMem('disAcquiredFired', true) },
+  },
+
+  {
+    id: 'dis_acquired_progressive',
+    phase: null,
+    weight: 6,
+    when: (G) => {
+      if (G.flags.has('acquired_disability') || G.flags.has('born_with_disability')) return false
+      if (G.mem?.disAcquiredFired) return false
+      if (G.age < 22 || G.age > 52) return false
+      return Math.random() < 0.005
+    },
+    text: 'The neurologist uses the word progressive and then explains what it means, which is that the pace is unpredictable but the direction is not. You have time. The time is also running. You walk out into an afternoon that looks exactly like the one you walked in through, and you begin making decisions about both facts at once.',
+    choices: null,
+    effect: (p) => { p.h -= 14; p.m -= 14; p.addFlag('acquired_disability'); p.setMem('acquiredDisabilityType', 'progressive'); p.setMem('disAcquiredFired', true) },
+  },
+
+  {
+    id: 'dis_acquired_stroke',
+    phase: null,
+    weight: 6,
+    when: (G) => {
+      if (G.flags.has('acquired_disability') || G.flags.has('born_with_disability')) return false
+      if (G.mem?.disAcquiredFired) return false
+      if (G.age < 48) return false
+      const risk = (G.stats?.health ?? 60) < 50 || G.flags.has('smoker') || G.conditions?.some(c => c.id === 'hypertension' || c.id === 'diabetes')
+      return Math.random() < (risk ? 0.014 : 0.005)
+    },
+    text: 'The stroke happens on a Thursday. The recovery is partial, which is what most strokes produce — partial recovery. The word partial covers a range. You spend the first months working out exactly where on that range you are.',
+    choices: null,
+    effect: (p) => { p.h -= 22; p.m -= 15; p.addFlag('acquired_disability'); p.setMem('acquiredDisabilityType', 'stroke'); p.setMem('disAcquiredFired', true) },
   },
 
   {
     id: 'dis_acquired_rehabilitation',
-    phase: 'young_adult',
+    phase: null,
     weight: 8,
     when: (G) =>
       G.flags.has('acquired_disability') &&
@@ -284,7 +333,7 @@ const ACQUIRED_DISABILITY_EVENTS = [
 
   {
     id: 'dis_before_after_grief',
-    phase: 'young_adult',
+    phase: null,
     weight: 8,
     when: (G) =>
       G.flags.has('acquired_disability') &&
@@ -310,7 +359,7 @@ const ACQUIRED_DISABILITY_EVENTS = [
 
   {
     id: 'dis_new_normal',
-    phase: 'midlife',
+    phase: null,
     weight: 7,
     when: (G) =>
       G.flags.has('acquired_disability') &&
@@ -322,7 +371,7 @@ const ACQUIRED_DISABILITY_EVENTS = [
 
   {
     id: 'dis_progressive_later',
-    phase: 'midlife',
+    phase: null,
     weight: 6,
     when: (G) =>
       G.flags.has('acquired_disability') &&

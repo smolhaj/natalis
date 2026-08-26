@@ -1,5 +1,5 @@
 // events_business.js
-// Business arc events: growth, failure, pivotal decisions, and the specific texture
+// Business arc events: growth, failure, pivotal decisions, and the texture
 // of running something you built yourself. Gate on state.business existing.
 
 export const BUSINESS_EVENTS = [
@@ -129,7 +129,7 @@ export const BUSINESS_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => G.flags.has('entrepreneur') && G.age >= 24 && (G.money ?? 0) < 5000 && !G.mem.bizCashflow,
-    text: 'The invoices are real but unpaid. The expenses are real and immediate. The gap between them is thirty days, which is also the gap between surviving and not. You have sat in this specific chair, in this specific feeling, before. You know more now but not enough to make it less uncomfortable.',
+    text: 'The invoices are real but unpaid. The expenses are real and immediate. The gap between them is thirty days, which is also the gap between surviving and not. You have sat in this specific chair, in this feeling, before. You know more now but not enough to make it less uncomfortable.',
     choices: [
       {
         text: 'Take a short-term business loan — bridge the gap',
@@ -172,4 +172,49 @@ export const BUSINESS_EVENTS = [
     effect: null,
   },
 
+
+  // ── THE MEMO YOU KEPT ─────────────────────────────────────────────────────────
+  // Sets `corporate_scandal_covered`, which a journalist reopens fifteen years on.
+
+  {
+    id: 'biz_scandal_buried',
+    phase: null,
+    weight: 3,
+    when: (G) =>
+      G.career &&
+      (G.career.level ?? 0) >= 2 &&
+      G.age >= 28 && G.age <= 50 &&
+      ['business', 'finance', 'law', 'engineering', 'media'].includes(G.career?.field ?? '') &&
+      !G.flags.has('corporate_scandal_covered') &&
+      !G.mem?.bizScandalBuried &&
+      Math.random() < 0.08,
+    text: 'The figures in the second attachment do not match the figures in the first, and the difference is not a rounding error. The meeting to discuss it is scheduled for forty minutes and takes twelve. A revised version goes out that afternoon with a new file name. You print the original before it is taken down and you are not sure, at the time, why you do that.',
+    choices: [
+      {
+        text: 'Let it go out. Keep the printout.',
+        tag: null,
+        outcome: 'The quarter closes well. The printout goes into a folder at home, behind the tax paperwork, and stays there for fifteen years.',
+        effect: (p) => { p.mo += 6000; p.r += 12; p.karma -= 8; p.addFlag('corporate_scandal_covered'); p.setMem('bizScandalBuried', true) },
+      },
+      {
+        text: 'Put the discrepancy in writing to the board.',
+        tag: null,
+        outcome: 'The email goes at 6am. You are moved sideways within a quarter to a role with a longer title and less to do. You sleep well.',
+        effect: (p) => { p.m -= 4; p.karma += 10; p.w -= 4; p.addFlag('whistleblower_internal'); p.setMem('bizScandalBuried', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── ECHO: THE EMAIL AT 6AM ────────────────────────────────────────────────────
+
+  {
+    id: 'biz_whistleblower_echo',
+    phase: null,
+    weight: 2,
+    when: (G) => G.flags.has('whistleblower_internal') && G.age >= 42 && !G.mem?.bizWhistleEcho,
+    text: `The role they moved you into has a long title and about nine hours of actual work in it a week. You have been in it for six years. Occasionally someone junior is sent to you for a conversation about integrity, which is either a compliment or a use, and you have stopped needing to know which. You sleep through the night, every night, which was the deal.`,
+    choices: null,
+    effect: (p) => { p.m += 4; p.e += 2; p.karma += 3; p.setMem('bizWhistleEcho', true) },
+  },
 ]

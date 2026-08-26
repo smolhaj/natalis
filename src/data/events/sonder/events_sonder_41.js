@@ -1,6 +1,8 @@
 // events_sonder_41.js
 // Contemplative layer — 30 mem-gated glimpses.
 
+import { place } from './_sonderGuards.js'
+
 export const EVENTS_SONDER_41 = [
 
   {
@@ -53,22 +55,12 @@ export const EVENTS_SONDER_41 = [
     effect: (p) => { p.setMem('s41e', true) },
   },
 
-  {
-    id: 'sonder_41_f',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 30 && !G.mem?.s41f,
-    text: 'The last day of a job. You have packed the box of things from your desk. The badge. The coffee cup. The plant you kept alive for two years under fluorescent light. You carry it to the lift. The office looks the same. You have left it unchanged. It will close around the space you occupied in two weeks.',
-    choices: null,
-    effect: (p) => { p.setMem('s41f', true) },
-  },
-
-  {
+{
     id: 'sonder_41_g',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => G.age >= 13 && G.age <= 18 && !G.mem?.s41g,
-    text: 'The older sibling\'s music, the parent\'s music, the music on the radio that is nobody you know — and then the music that is yours. The specific year when the music your peers are listening to is different from any of those, and belongs to this year and this age and will not sound the same when you hear it at forty.',
+    when: (G) => place.hasRadio(G) && (G.age >= 13 && G.age <= 18 && !G.mem?.s41g),
+    text: 'The older sibling\'s music, the parent\'s music, the music on the radio that is nobody you know — and then the music that is yours. The year when the music your peers are listening to is different from any of those, and belongs to this year and this age and will not sound the same when you hear it at forty.',
     choices: null,
     effect: (p) => { p.m += 3; p.setMem('s41g', true) },
   },
@@ -77,27 +69,17 @@ export const EVENTS_SONDER_41 = [
     id: 'sonder_41_h',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 38 && !G.mem?.s41h,
+    when: (G) => place.isUrban(G) && (G.age >= 38 && !G.mem?.s41h),
     text: 'You notice that you have started crossing the road when you see a large group of teenagers coming toward you on the pavement. You do not remember when this started. You are trying to decide whether this is reasonable or whether it is the beginning of a relationship to youth that you do not want to have.',
     choices: null,
     effect: (p) => { p.setMem('s41h', true) },
   },
 
-  {
-    id: 'sonder_41_i',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => G.age >= 55 && !G.mem?.s41i,
-    text: 'The photograph on the wall that everyone else has stopped noticing. You notice it every time: the light in it, the way it was taken before anyone knew it would become the defining image of that period. Now it is a document. When it was taken it was just Tuesday.',
-    choices: null,
-    effect: (p) => { p.setMem('s41i', true) },
-  },
-
-  {
+{
     id: 'sonder_41_j',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 35 && !G.mem?.s41j,
+    when: (G) => place.hasFlown(G) && (G.age >= 35 && !G.mem?.s41j),
     text: 'The flight home. Not a specific flight — the pattern of them over years. The first time the city below resolves from altitude into the specific grid you know, and your body recognises it before your mind does. You are not sure when "home" became this particular place rather than the other one.',
     choices: null,
     effect: (p) => { p.m += 3; p.setMem('s41j', true) },
@@ -117,6 +99,7 @@ export const EVENTS_SONDER_41 = [
     id: 'sonder_41_l',
     phase: 'midlife',
     weight: 2,
+    isGlimpse: true,
     when: (G) => G.age >= 40 && !G.mem?.s41l,
     text: 'Someone much younger asks for your advice on something you were thinking about seriously when you were their age. The thing they are asking is the thing you spent three years on in your twenties and arrived at an imperfect answer to. You give them the answer. You watch them receive it with the same urgency you had when you were looking for it. You remember that the urgency was the point.',
     choices: null,
@@ -127,7 +110,7 @@ export const EVENTS_SONDER_41 = [
     id: 'sonder_41_m',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 60 && !G.mem?.s41m,
+    when: (G) => place.hasPhotographs(G) && (G.age >= 60 && !G.mem?.s41m),
     text: 'The news that someone from your past has died. Not someone you are still close to — someone you shared a particular years-long period of your life with and then lost contact with in the way people lose contact. Their face in your memory is from that period, which is thirty years ago. The person who died is someone else entirely: different weight, different hair, different life. You grieve the thirty-year-old photograph.',
     choices: null,
     effect: (p) => { p.r += 3; p.m -= 4; p.setMem('s41m', true) },
@@ -157,7 +140,8 @@ export const EVENTS_SONDER_41 = [
     id: 'sonder_41_p',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 32 && !G.mem?.s41p,
+    isGlimpse: true,
+    when: (G) => place.hasHealthcare(G) && (G.age >= 32 && !G.mem?.s41p),
     text: 'The person at the window. You are on a train, or in a waiting room, or at a gate. They are looking out at something outside. You wonder what they\'re looking at and whether they\'re seeing it or whether they\'re somewhere entirely else, as you sometimes are at windows.',
     choices: null,
     effect: (p) => { p.setMem('s41p', true) },
@@ -167,7 +151,7 @@ export const EVENTS_SONDER_41 = [
     id: 'sonder_41_q',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 58 && !G.mem?.s41q,
+    when: (G) => place.isLiterate(G) && (G.age >= 58 && !G.mem?.s41q),
     text: 'You find the letters from a period of your life when letter-writing was how you maintained relationships across distance. The handwriting is yours and not quite yours: the version of your hand from twenty years ago, less certain in some strokes, more elaborate in others. The person you are reading sounds familiar and like a stranger.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s41q', true) },
@@ -187,7 +171,7 @@ export const EVENTS_SONDER_41 = [
     id: 'sonder_41_s',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 30 && !G.mem?.s41s,
+    when: (G) => place.worksInOffice(G) && (G.age >= 30 && !G.mem?.s41s),
     text: 'The meeting you left feeling good about that led to nothing. The meeting you left feeling uncertain about that produced the best thing in the next two years. You have stopped trusting your immediate reading of meetings as a result. You read them anyway.',
     choices: null,
     effect: (p) => { p.setMem('s41s', true) },
@@ -198,7 +182,7 @@ export const EVENTS_SONDER_41 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => G.age >= 21 && !G.mem?.s41t,
-    text: 'You are very tired and there is still two hours to go. The specific quality of this tiredness — not sleepy, but the tiredness of sustained attention in a room full of people. You drink the water. You focus on one face. You get through the two hours. On the way home you stare out the window and your mind produces nothing.',
+    text: 'You are very tired and there is still two hours to go. The quality of this tiredness — not sleepy, but the tiredness of sustained attention in a room full of people. You drink the water. You focus on one face. You get through the two hours. On the way home you stare out the window and your mind produces nothing.',
     choices: null,
     effect: (p) => { p.setMem('s41t', true) },
   },
@@ -233,17 +217,7 @@ export const EVENTS_SONDER_41 = [
     effect: (p) => { p.setMem('s41w', true) },
   },
 
-  {
-    id: 'sonder_41_x',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => G.age >= 18 && !G.mem?.s41x,
-    text: 'You are on the phone to someone you have not spoken to in years. The first two minutes are the formal re-establishment — how are you, what have you been doing, the summary compression. After five minutes something shifts and you are talking the way you used to talk. For a moment the years between are negotiable.',
-    choices: null,
-    effect: (p) => { p.m += 4; p.setMem('s41x', true) },
-  },
-
-  {
+{
     id: 'sonder_41_y',
     phase: 'childhood',
     weight: 2,
@@ -277,7 +251,7 @@ export const EVENTS_SONDER_41 = [
     id: 'sonder_41_ab',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 30 && !G.mem?.s41ab,
+    when: (G) => place.hasTV(G) && (G.age >= 30 && !G.mem?.s41ab),
     text: 'You watch something on television about the city where you grew up. The camera shows the street, the market, the building you remember. The camera moves on. The city exists independently of your having grown up in it, which is obvious but occasionally still surprising.',
     choices: null,
     effect: (p) => { p.setMem('s41ab', true) },
@@ -298,7 +272,7 @@ export const EVENTS_SONDER_41 = [
     phase: 'midlife',
     weight: 2,
     when: (G) => G.age >= 42 && !G.mem?.s41ad,
-    text: 'You read something you wrote fifteen years ago. The thinking is good but the confidence is excessive in a specific way you recognize as the confidence of someone who didn\'t yet know what they didn\'t know. The content is not embarrassing. The certainty is. You hope you no longer do it. You are not sure.',
+    text: 'You read something you wrote fifteen years ago. The thinking is good but the confidence is excessive in a way you recognize as the confidence of someone who didn\'t yet know what they didn\'t know. The content is not embarrassing. The certainty is. You hope you no longer do it. You are not sure.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s41ad', true) },
   },

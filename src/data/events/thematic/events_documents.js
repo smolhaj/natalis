@@ -93,7 +93,7 @@ export const DOCUMENT_EVENTS = [
     phase: 'young_adult',
     weight: 4,
     when: (G) => (G.residencyStatus === 'refugee_status' || G.residencyStatus === 'undocumented') && G.age >= 18 && G.age <= 40 && !G.mem.docStateless,
-    text: 'At every border the question is the same: what document do you have? You have a document that is not a passport — a certificate of identity, a UNHCR card, a letter. The officer looks at it for a long time. Long enough that you learn to read the specific quality of the pause. This pause means it might work. That pause means it won\'t.',
+    text: 'At every border the question is the same: what document do you have? You have a document that is not a passport — a certificate of identity, a UNHCR card, a letter. The officer looks at it for a long time. Long enough that you learn to read the quality of the pause. This pause means it might work. That pause means it won\'t.',
     choices: [
       {
         text: 'You wait. Patience is also a skill you have been required to develop.',
@@ -115,13 +115,13 @@ export const DOCUMENT_EVENTS = [
     phase: 'midlife',
     weight: 3,
     when: (G) => G.flags.has('stateless_childhood') || G.flags.has('stateless_navigator') && !G.mem.docFirstPassport,
-    text: 'You have never had a passport. You have documents — various documents, over various years — but not a passport: the specific kind of document that is a country saying you are theirs. The window at the passport office is ordinary. You take the photograph and the processing fee and fill out the form and submit it and wait, and a booklet arrives in the post with your name on it and you sit with it for longer than the object probably merits.',
+    text: 'You have never had a passport. You have documents — various documents, over various years — but not a passport: the kind of document that is a country saying you are theirs. The window at the passport office is ordinary. You take the photograph and the processing fee and fill out the form and submit it and wait, and a booklet arrives in the post with your name on it and you sit with it for longer than the object probably merits.',
     effect: (p) => { p.m += 20; p.addFlag('first_passport_received'); p.setMem('docFirstPassport', true) },
   },
 
   {
     id: 'doc_stateless_marriage',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.flags.has('stateless_childhood') && G.partner !== null && G.age >= 22 && G.age <= 40 && !G.mem.docMarriage,
     text: 'You need a birth certificate to register a marriage. You don\'t have one — the original, not the late-registered approximation, not the UNHCR document. The registrar explains, not unkindly, what the requirements are. The requirements were written for people who have the documents the requirements require. You ask if there is a process for people who don\'t. There is a process. The process takes two years.',

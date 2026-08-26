@@ -1,8 +1,10 @@
 // events_sonder_39.js
 // Contemplative layer — 30 events.
 // Themes: the translation problem, what age teaches about time,
-// the specific weight of inherited objects, a city seen from above,
+// the weight of inherited objects, a city seen from above,
 // the conversation that should have happened.
+
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_39 = [
 
@@ -46,17 +48,7 @@ export const EVENTS_SONDER_39 = [
     effect: (p) => { p.e += 2; p.setMem('s39d', true) },
   },
 
-  {
-    id: 'sonder_39_e',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => !G.mem?.s39e,
-    text: 'The conversation you should have had has a specific shape in your memory: the table, the other person, the approximate hour, the thing you had been building to and then did not say. The conversation that happened instead went somewhere else and ended differently. You have replayed the first version often enough that it has the quality of memory even though it did not happen.',
-    choices: null,
-    effect: (p) => { p.r += 3; p.setMem('s39e', true) },
-  },
-
-  {
+{
     id: 'sonder_39_f',
     phase: 'childhood',
     weight: 2,
@@ -66,17 +58,7 @@ export const EVENTS_SONDER_39 = [
     effect: (p) => { p.m += 2; p.setMem('s39f', true) },
   },
 
-  {
-    id: 'sonder_39_g',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => !G.mem?.s39g,
-    text: 'The meeting ran long. You were late for something. What you were late for is not recoverable, but the specific frustration of the meeting that ran long is preserved in the body — the glance at the phone, the calculation of what was still possible. This memory is not important. It is extremely specific. These two things are not contradictory.',
-    choices: null,
-    effect: (p) => { p.setMem('s39g', true) },
-  },
-
-  {
+{
     id: 'sonder_39_h',
     phase: 'late_life',
     weight: 2,
@@ -86,17 +68,7 @@ export const EVENTS_SONDER_39 = [
     effect: (p) => { p.m += 3; p.setMem('s39h', true) },
   },
 
-  {
-    id: 'sonder_39_i',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => !G.mem?.s39i,
-    text: 'Your handwriting has changed. The handwriting you had at fifteen is available in old notebooks. The handwriting you have now is different from it in ways that are not entirely explicable by practice: something about the pressure, the slant, the shape of specific letters. Handwriting is the body\'s trace on the page. The trace changes as the body changes.',
-    choices: null,
-    effect: (p) => { p.setMem('s39i', true) },
-  },
-
-  {
+{
     id: 'sonder_39_j',
     phase: 'midlife',
     weight: 2,
@@ -140,7 +112,7 @@ export const EVENTS_SONDER_39 = [
     id: 'sonder_39_n',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => !G.mem?.s39n,
+    when: (G) => place.hasBooks(G) && (!G.mem?.s39n),
     text: 'You have read the same book at different ages and it was a different book each time. The words are the same. You changed. The book available to you at twenty-two is not the book available to you at forty because at forty you have different information about what the book is describing, which is to say about what has happened to people.',
     choices: null,
     effect: (p) => { p.e += 2; p.m += 2; p.setMem('s39n', true) },
@@ -171,22 +143,12 @@ export const EVENTS_SONDER_39 = [
     phase: 'late_life',
     weight: 2,
     when: (G) => G.age >= 55 && !G.mem?.s39q,
-    text: 'There is a younger person at work who reminds you of how you were at that age — the specific combination of ambition and unawareness, the certainty about things that will turn out to be more complicated. You do not tell them this. The information would not be useful. The finding-out is the education.',
+    text: 'There is a younger person at work who reminds you of how you were at that age — the combination of ambition and unawareness, the certainty about things that will turn out to be more complicated. You do not tell them this. The information would not be useful. The finding-out is the education.',
     choices: null,
     effect: (p) => { p.r += 2; p.m += 2; p.setMem('s39q', true) },
   },
 
-  {
-    id: 'sonder_39_r',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => !G.mem?.s39r,
-    text: 'The photograph you have of your parents when they were younger than you are now. They look like adults in it. They look nothing like what you understand adults to be from inside adulthood. They look like people who were trying, who were in the middle of something, who did not know what came next.',
-    choices: null,
-    effect: (p) => { p.m += 3; p.setMem('s39r', true) },
-  },
-
-  {
+{
     id: 'sonder_39_s',
     phase: 'midlife',
     weight: 2,
@@ -201,7 +163,7 @@ export const EVENTS_SONDER_39 = [
     phase: 'childhood',
     weight: 2,
     when: (G) => !G.mem?.s39t,
-    text: 'There was a summer — or a season, or a stretch of months — that lasted longer than any other equivalent period of your life. The time moved at a speed that is not available now. You could not tell you what made it slow. The slowness made the detail available: specific afternoons, specific light, the name of who was there.',
+    text: 'There was a summer — or a season, or a stretch of months — that lasted longer than any other equivalent period of your life. The time moved at a speed that is not available now. You could not tell you what made it slow. The slowness made the detail available: specific afternoons, light, the name of who was there.',
     choices: null,
     effect: (p) => { p.m += 3; p.setMem('s39t', true) },
   },
@@ -276,17 +238,7 @@ export const EVENTS_SONDER_39 = [
     effect: (p) => { p.r += 3; p.setMem('s39aa', true) },
   },
 
-  {
-    id: 'sonder_39_ab',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => !G.mem?.s39ab,
-    text: 'The song that was everywhere during a specific period and then went away. You have not thought about it in years and then it comes back — from a shop, from someone else\'s phone — and the period comes back with it: not the events but the texture, the emotional climate, the particular quality of those months in your life. The song is a compression of time that the brain stored against future access.',
-    choices: null,
-    effect: (p) => { p.m += 3; p.setMem('s39ab', true) },
-  },
-
-  {
+{
     id: 'sonder_39_ac',
     phase: 'childhood',
     weight: 2,

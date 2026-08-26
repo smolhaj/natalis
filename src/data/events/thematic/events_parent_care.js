@@ -10,7 +10,7 @@ export const PARENT_CARE_EVENTS = [
 
   {
     id: 'pc_first_sign',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem.pcFirstSign &&
@@ -44,7 +44,7 @@ export const PARENT_CARE_EVENTS = [
 
   {
     id: 'pc_conversation',
-    phase: 'midlife',
+    phase: 'late_life',
     weight: 3,
     when: (G) =>
       G.mem.pcFirstSign &&
@@ -78,7 +78,7 @@ export const PARENT_CARE_EVENTS = [
 
   {
     id: 'pc_decision',
-    phase: 'midlife',
+    phase: 'late_life',
     weight: 3,
     when: (G) =>
       G.mem.pcConversation &&
@@ -123,7 +123,7 @@ export const PARENT_CARE_EVENTS = [
 
   {
     id: 'pc_daily_reality',
-    phase: 'midlife',
+    phase: 'late_life',
     weight: 3,
     when: (G) =>
       G.mem.pcDecision &&
@@ -156,7 +156,7 @@ export const PARENT_CARE_EVENTS = [
 
   {
     id: 'pc_sibling_disagreement',
-    phase: 'midlife',
+    phase: 'late_life',
     weight: 3,
     when: (G) =>
       G.mem.pcConversation &&
@@ -196,7 +196,7 @@ export const PARENT_CARE_EVENTS = [
 
   {
     id: 'pc_bad_day',
-    phase: 'midlife',
+    phase: 'late_life',
     weight: 3,
     when: (G) =>
       G.mem.pcDecision &&
@@ -255,7 +255,7 @@ export const PARENT_CARE_EVENTS = [
       const name = parent?.name?.split(' ')[0] ?? 'your parent'
       const archetype = G.character.country.archetype
       if (['wealthy_west', 'post_soviet'].includes(archetype)) {
-        return `${name} is in the hospital now. The decision has been made to focus on comfort rather than intervention. You sit with them for four days. They sleep more than they are awake. The hours when they are awake matter differently than regular hours. The medical staff are kind in the specific way that people are kind when they do this every day.`
+        return `${name} is in the hospital now. The decision has been made to focus on comfort rather than intervention. You sit with them for four days. They sleep more than they are awake. The hours when they are awake matter differently than regular hours. The medical staff are kind in the way that people are kind when they do this every day.`
       }
       return `${name}\'s final weeks. You are with them. The extended family comes in shifts that would have been logistically impossible a generation ago but which, now, feel like the right and only way. The house is full of the wrong kind of busy. You are glad they are not alone.`
     },

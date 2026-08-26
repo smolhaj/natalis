@@ -135,7 +135,7 @@ export const CHILD_SOLDIER_EVENTS = [
       {
         text: 'Seek out people who survived the same — there is a language for it',
         tag: null,
-        outcome: 'The organisation for former child soldiers exists. The language is there. Being in a room with people who know the specific weight is not resolution. It is accompanied carrying.',
+        outcome: 'The organisation for former child soldiers exists. The language is there. Being in a room with people who know the weight is not resolution. It is accompanied carrying.',
         effect: (p) => { p.r -= 8; p.m += 6; p.karma += 5; p.addFlag('child_soldier_community'); p.setMem('csMoralMidFired', true) },
       },
       {

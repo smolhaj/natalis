@@ -18,7 +18,7 @@ export const IRAQ_DEPTH_EVENTS = [
 
   {
     id: 'irq_dep_yazidi_identity',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_YAZIDI(G) &&
@@ -37,7 +37,7 @@ export const IRAQ_DEPTH_EVENTS = [
 
   {
     id: 'irq_dep_lalish_pilgrimage',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_YAZIDI(G) &&
@@ -58,7 +58,7 @@ export const IRAQ_DEPTH_EVENTS = [
 
   {
     id: 'irq_dep_marsh_world',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_SHIA(G) &&
@@ -101,14 +101,15 @@ export const IRAQ_DEPTH_EVENTS = [
 
   {
     id: 'irq_dep_1991_uprising',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_SHIA(G) &&
       G.currentYear === 1991 &&
       G.age >= 15 && G.age <= 45 &&
       !G.mem?.irq1991Uprising,
-    text: `March 1991. The Gulf War has just ended. Saddam is weakened, his forces retreating from Kuwait. An uprising begins in Basra — spontaneous, angry, without central coordination. The south rises: Shia Iraqis taking government buildings, freeing political prisoners, turning on the Ba'ath party infrastructure that controlled every aspect of life. The American forces are twenty miles away, across the Euphrates. They do not intervene. George H.W. Bush had called on Iraqis to rise up, and they rose up, and the Americans watch. Saddam uses helicopter gunships — the ceasefire allowed them — and tanks. In two weeks the uprising is crushed. The mass graves of 1991 will be found after 2003.`,
+    text: 'In March the Ba\'ath office in your district is empty and the door is open and people are carrying files out into the street. For eight days the prisons are opened and men who have been gone for years walk home. The American armour sits across the Euphrates and does not move. Then the helicopters come, which the ceasefire had permitted them to keep, and by the end of the month the men who walked home have gone again.',
+    context: 'George H. W. Bush called on Iraqis to rise against Saddam Hussein as the Gulf War ended. Uprisings began in Basra in early March 1991 and spread across the Shia south and the Kurdish north. Coalition forces did not intervene, and the ceasefire terms permitted Iraq to fly helicopters, which were used against the rebels. Tens of thousands were killed; the mass graves were exhumed after 2003.',
     choices: null,
     effect: (p) => {
       p.m -= 14
@@ -122,7 +123,7 @@ export const IRAQ_DEPTH_EVENTS = [
 
   {
     id: 'irq_dep_sanctions_daily',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_IRAQ(G) &&
@@ -143,7 +144,7 @@ export const IRAQ_DEPTH_EVENTS = [
 
   {
     id: 'irq_dep_christian_before',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_CHRISTIAN(G) && IS_IRAQ(G) &&
@@ -162,7 +163,7 @@ export const IRAQ_DEPTH_EVENTS = [
 
   {
     id: 'irq_dep_christian_exodus',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_CHRISTIAN(G) && IS_IRAQ(G) &&
@@ -190,7 +191,7 @@ export const IRAQ_DEPTH_EVENTS = [
 
   {
     id: 'irq_dep_amman_diaspora',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_IRAQ(G) &&
@@ -212,7 +213,7 @@ export const IRAQ_DEPTH_EVENTS = [
 
   {
     id: 'irq_dep_kurdish_north_boom',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_KURDISH_IRAQ(G) &&

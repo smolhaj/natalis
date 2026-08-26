@@ -18,7 +18,7 @@ export const SUDAN_DEPTH_EVENTS = [
 
   {
     id: 'sdn_dep_two_niles',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_URBAN_SUDAN(G) &&
@@ -38,7 +38,7 @@ export const SUDAN_DEPTH_EVENTS = [
 
   {
     id: 'sdn_dep_haboob',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_SUDAN(G) &&
@@ -58,14 +58,15 @@ export const SUDAN_DEPTH_EVENTS = [
 
   {
     id: 'sdn_dep_nuba_bombing',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_NUBA(G) &&
       G.currentYear >= 1992 && G.currentYear <= 2005 &&
       G.age >= 14 && G.age <= 40 &&
       !G.mem?.sdnNubaB,
-    text: `The Nuba Mountains are in South Kordofan. The SPLA has support here. The government's response to the insurgency is systematic: Antonov bombers fly over civilian areas and drop barrel bombs. They fall on markets, on schools, on water sources. There is no air-raid warning system because no one anticipated the government would bomb its own people with enough regularity to need one. The crops are burned. The cattle are shot. The aid organisations are expelled in 1992 so that what is happening cannot be observed. Between 1992 and 2002 an estimated 200,000 Nuba die. The international press does not cover it. The word genocide is not applied.`,
+    text: 'You learn the engine note before you can see it, and the Antonov flies high and slow because nobody is shooting at it. It is not a bomb rack, it is a barrel rolled out of the back, so it lands where it lands: the market on Wednesday, the borehole in March, the schoolyard. There is no siren, so what you do instead is dig a hole beside the house and get into it. In 1992 they put the aid organisations on planes out, and after that nobody is left who would write any of it down.',
+    context: 'The Sudanese government fought the SPLA in the Nuba Mountains of South Kordofan from 1985, using Antonov transport aircraft to roll improvised barrel bombs onto civilian areas. Aid agencies were expelled in 1992 and the region sealed for a decade. An estimated 200,000 Nuba died between 1992 and 2002. The campaign received almost no international coverage and was never designated a genocide.',
     choices: [
       {
         text: 'You leave the mountains — toward Khartoum or SPLA-controlled territory.',
@@ -99,7 +100,7 @@ export const SUDAN_DEPTH_EVENTS = [
 
   {
     id: 'sdn_dep_ghost_house_dread',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_SUDAN(G) &&
@@ -121,7 +122,7 @@ export const SUDAN_DEPTH_EVENTS = [
 
   {
     id: 'sdn_dep_fur_land',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_FUR(G) &&
@@ -143,7 +144,7 @@ export const SUDAN_DEPTH_EVENTS = [
 
   {
     id: 'sdn_dep_masalit_life',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_MASALIT(G) &&
@@ -165,7 +166,7 @@ export const SUDAN_DEPTH_EVENTS = [
 
   {
     id: 'sdn_dep_transition_hope',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_SUDAN(G) &&
@@ -173,7 +174,8 @@ export const SUDAN_DEPTH_EVENTS = [
       G.age >= 18 &&
       G.flags.has('sudan_revolution_generation') &&
       !G.mem?.sdnTransition,
-    text: `The twenty-six months between Bashir's fall in April 2019 and the coup in October 2021 have a distinct quality you will remember as a specific period. The prime minister is a civilian — an economist who worked at the IMF and came back. There are women in the cabinet. The ghost houses begin to be officially investigated. The names of people who disappeared are read out in formal proceedings. Sudan is removed from the US list of state sponsors of terrorism. The IMF negotiates debt relief. The speed of change is not fast enough for the protesters and too fast for the military. You know now that the military was never genuinely sharing power. In the moment, there was something that was not false.`,
+    text: 'For twenty-six months the prime minister is a civilian economist who came back from abroad to take the job. There are women in the cabinet, and a commission that has begun writing down the addresses of the ghost houses and reading out the names of people who went into them. Your neighbour testifies about her brother in a room with a stenographer in it. It was never fast enough for the street and it was always too fast for the generals. You did not know yet that they were only waiting.',
+    context: 'Omar al-Bashir was removed in April 2019 after months of protest, and a joint civilian-military Sovereign Council took office with Abdalla Hamdok, a former UN economist, as prime minister. Sudan was removed from the US state sponsors of terrorism list in December 2020 and began IMF debt relief negotiations. The military seized full power on 25 October 2021.',
     choices: [
       {
         text: 'You invested in it — stayed, worked, built something for the new Sudan.',
@@ -206,13 +208,14 @@ export const SUDAN_DEPTH_EVENTS = [
 
   {
     id: 'sdn_dep_tea_ladies',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_SUDAN(G) &&
       G.age >= 18 && G.age <= 50 &&
       !G.mem?.sdnTeaLadies,
-    text: `The sittaat al-shay — the tea ladies — are on every street corner in Khartoum. A charcoal burner, a kettle, a low plastic table, a handful of glasses. They pour attaya — strong tea with mint, with milk, in a specific rhythm that is also a kind of ceremony. The tea ladies are almost always women. They are in the informal economy, unlicensed, paying informal taxes to the police in small daily payments. During the 2019 revolution, they became something else: they ran the sit-in. They cooked for the hundreds of thousands camping outside the military headquarters. They used their earnings and their networks to supply the protest. When the RSF moved on the camp on June 3, some of them died at their stations. The tea is not separate from the politics.`,
+    text: 'On the corner there is a charcoal burner, a kettle, a low plastic table and eight glasses, and she pays the policeman a small amount each morning to keep them there. She pours the attaya from a height, which is not for show, it is how it cools. In the spring the corner moves to the sit-in outside the army headquarters and she cooks for the people sleeping there out of her own takings. On the third of June the Rapid Support Forces come into the camp and she does not leave her burner.',
+    context: 'Khartoum\'s sittaat al-shay, unlicensed women tea sellers, are a fixture of the city\'s informal economy and pay daily informal levies to police. During the 2019 revolution they supplied and fed the sit-in outside the army general command. Security forces cleared the camp on 3 June 2019, killing more than a hundred people; several tea sellers were among the dead.',
     choices: null,
     effect: (p) => {
       p.m += 4
@@ -226,7 +229,7 @@ export const SUDAN_DEPTH_EVENTS = [
 
   {
     id: 'sdn_dep_arab_african',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_SUDAN(G) &&

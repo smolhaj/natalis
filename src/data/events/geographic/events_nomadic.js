@@ -23,7 +23,7 @@ export const NOMADIC_EVENTS = [
 
   {
     id: 'nom_maasai_national_park',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       (G.character.country.name === 'Kenya' || G.character.country.name === 'Tanzania') &&
@@ -143,7 +143,7 @@ export const NOMADIC_EVENTS = [
 
   {
     id: 'nom_mongol_dzud',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Mongolia' &&

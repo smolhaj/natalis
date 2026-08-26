@@ -9,21 +9,22 @@ export const MOZAMBIQUE_EVENTS = [
 
   {
     id: 'moz_frelimo_independence',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Mozambique' &&
       G.currentYear >= 1975 && G.currentYear <= 1988 &&
       G.age >= 6 && G.age <= 16 &&
       !G.mem.mozFrelimo,
-    text: 'June 25, 1975. Mozambique is independent. FRELIMO — the Front for the Liberation of Mozambique — is the party that won the liberation war and is now the government and there is no other. Samora Machel is president. "A luta continua" — the struggle continues — is what he says and what the schools teach. The land is nationalised. The private schools and clinics are nationalised. The colonial Portuguese have mostly left. What they leave behind is a country with almost no trained doctors, almost no secondary-school teachers, a civil service that was built for extraction. The independence is real. The infrastructure it inherits is real.',
+    text: 'The flag goes up in June and at school you learn the new song and the phrase that ends every assembly. The Portuguese family that ran the shop on the corner left in April and took the fittings with them; the shop is a party office now. There is one doctor for the whole district and he is Cuban and does not speak Portuguese well. Your teacher this year is nineteen and finished school two years ago, and she is doing her best.',
+    context: 'Mozambique became independent on 25 June 1975 under FRELIMO, with Samora Machel as president. Most of the roughly 250,000 Portuguese settlers left within a year, taking or destroying equipment; the country was left with about 80 doctors and a literacy rate near ten percent. Land, schools and clinics were nationalised, and secondary-school leavers were deployed as teachers to keep schools open.',
     choices: null,
     effect: (p) => { p.e += 2; p.m += 4; p.r += 2; p.addFlag('mozambican_frelimo_generation'); p.setMem('mozFrelimo', true) },
   },
 
   {
     id: 'moz_renamo_civil_war',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Mozambique' &&
@@ -50,7 +51,7 @@ export const MOZAMBIQUE_EVENTS = [
 
   {
     id: 'moz_machel_death_1986',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Mozambique' &&
@@ -64,7 +65,7 @@ export const MOZAMBIQUE_EVENTS = [
 
   {
     id: 'moz_peace_accords_1992',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Mozambique' &&
@@ -78,14 +79,15 @@ export const MOZAMBIQUE_EVENTS = [
 
   {
     id: 'moz_floods_2000',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Mozambique' &&
       G.currentYear === 2000 &&
       G.age >= 16 &&
       !G.mem.mozFloods,
-    text: 'February 2000. Cyclone Eline makes landfall. Then the rain doesn\'t stop. The Limpopo, the Save, the Zambezi overflow. Eight hundred people die. Half a million are displaced. Entire towns are underwater for weeks. A woman named Sophia Pedro gives birth to a daughter in a tree above the floodwaters — a helicopter rescue crew helps. The baby is named Rosita. The international cameras are there for that story. They are less there for the three months of recovery. The floods are not the worst thing that has happened in Mozambique. They arrive in a country that has not finished rebuilding from the last worst thing.',
+    text: 'The cyclone comes in February and then the rain does not stop and the Limpopo comes up over the road and keeps coming. For three weeks the town is a set of rooftops. On the television a woman gives birth in a tree and a helicopter takes her down, and the cameras are there for that and gone before the water is. Your family sleeps on the floor of the school with everyone else\'s family until April.',
+    context: 'Cyclone Eline made landfall in February 2000 and weeks of rain pushed the Limpopo, Save and Zambezi over their banks. About 800 people died and half a million were displaced. Sophia Pedro, winched from a tree by a South African air force crew after giving birth above the floodwater, named her daughter Rosita; the footage was broadcast worldwide.',
     choices: null,
     effect: (p) => { p.m -= 10; p.h -= 2; p.r += 7; p.addFlag('mozambican_floods_generation'); p.setMem('mozFloods', true) },
   },

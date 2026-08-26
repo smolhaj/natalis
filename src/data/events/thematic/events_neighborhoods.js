@@ -90,7 +90,7 @@ export const NEIGHBORHOOD_EVENTS = [
 
   {
     id: 'nbr_thin_walls',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     cooldown: 5,
     when: (G) =>
@@ -244,7 +244,7 @@ export const NEIGHBORHOOD_EVENTS = [
     weight: 2,
     cooldown: 5,
     when: (G) => G.neighborhoodTier === 'working_class' && G.age >= 8 && G.age <= 14,
-    text: 'The block is loud in a specific way: the football on concrete, the argument three floors up, the motorbike that won\'t start, the music from the bar that opens at noon. Your parents worked hard for this flat and it is better than what came before it. The noise is a fact, not a complaint.',
+    text: 'The block is loud in a way: the football on concrete, the argument three floors up, the motorbike that won\'t start, the music from the bar that opens at noon. Your parents worked hard for this flat and it is better than what came before it. The noise is a fact, not a complaint.',
     choices: null,
     effect: (p) => { p.m -= 2; p.e += 2 },
   },
@@ -256,7 +256,7 @@ export const NEIGHBORHOOD_EVENTS = [
     cooldown: 0,
     when: (G) =>
       (G.neighborhoodTier === 'middle_class' || G.neighborhoodTier === 'elite') &&
-      (G.flags.has('rural_to_urban') || G.flags.has('born_informal') || G.mem?.startedInformal) &&
+      (G.flags.has('rural_to_urban') || G.flags.has('informal_economy') || G.mem?.startedInformal) &&
       G.age >= 30 && !G.mem?.movingUpGuiltAck,
     text: (G) => {
       const origin = G.flags.has('rural_to_urban') ? 'the village' : 'the neighbourhood where you grew up'
@@ -343,4 +343,16 @@ export const NEIGHBORHOOD_EVENTS = [
     effect: (p) => { p.setMem('nbrGoodYearsAck', true); p.m += 5; p.r += 3 },
   },
 
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_street_in_summer',
+    phase: null,
+    weight: 3,
+    when: (G) => G.age >= 12 && G.age <= 70 && G.neighborhoodTier && !G.mem?.ordStreetSummer && Math.random() < 0.14,
+    text: `Somebody is getting a sofa up a stairwell and it has become a public matter. Four people are giving instructions and three of them are wrong. A window opens above and adds an opinion. When it finally goes through the door there is applause from the pavement, and the man with the sofa takes a small bow, and everyone goes back inside.`,
+    choices: null,
+    effect: (p) => { p.m += 8; p.s += 3; p.setMem('ordStreetSummer', true) },
+  },
 ]

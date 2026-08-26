@@ -10,7 +10,7 @@ export const CENTRAL_EUROPE_EVENTS = [
 
   {
     id: 'hun_1956_uprising_child',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Hungary' &&
@@ -43,7 +43,7 @@ export const CENTRAL_EUROPE_EVENTS = [
 
   {
     id: 'hun_1956_uprising_adult',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Hungary' &&
@@ -70,7 +70,7 @@ export const CENTRAL_EUROPE_EVENTS = [
 
   {
     id: 'hun_kadar_goulash',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Hungary' &&
@@ -97,7 +97,7 @@ export const CENTRAL_EUROPE_EVENTS = [
 
   {
     id: 'hun_border_1989',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Hungary' &&
@@ -159,7 +159,7 @@ export const CENTRAL_EUROPE_EVENTS = [
 
   {
     id: 'cze_normalization',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       (G.character.country.name === 'Czech Republic' ||
@@ -167,7 +167,8 @@ export const CENTRAL_EUROPE_EVENTS = [
       G.currentYear >= 1969 && G.currentYear <= 1989 &&
       G.age >= 16 &&
       !G.mem?.czeNormalization,
-    text: 'Normalization. The Czech word is normalizace — the task is to return things to normal after August 1968. Normal meaning: the Party in control, the reform communists expelled, the intellectuals transferred to manual jobs. A philosopher becomes a window cleaner. An economist drives a tram. The Party card determines where you work, where your children can study, whether you get the apartment. The deal is the same one Czechs have made since 1938: survive. The specific texture of normalization is that survival requires a kind of active collaboration that ordinary survival does not require. You sign things. You do not sign things. The difference matters.',
+    text: 'The philosopher who taught your cousin cleans windows on Narodni now and is polite when you pass him. The economist from the institute drives the number twenty-two tram. There is a paper to sign at work about August 1968 and what it was, and whether you sign it decides the apartment, and the school your daughter gets into, and the answer at the passport office. It is one sheet and one sentence. Everybody in the room knows exactly what it costs and exactly what it buys.',
+    context: 'Normalizace was the official term for the restoration of orthodox Communist rule after the 1968 invasion. About half a million people were expelled from the Party and barred from professional work; academics, journalists and reform Communists were reassigned to manual jobs. Employment, housing, university places for children and travel permits depended on a written affirmation of the correctness of the Warsaw Pact intervention.',
     choices: [
       {
         text: 'You sign what you need to sign. The real opinions stay in the kitchen, where everyone keeps the real opinions.',
@@ -187,7 +188,7 @@ export const CENTRAL_EUROPE_EVENTS = [
 
   {
     id: 'cze_charter_77',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       (G.character.country.name === 'Czech Republic' ||
@@ -195,7 +196,8 @@ export const CENTRAL_EUROPE_EVENTS = [
       G.currentYear >= 1977 && G.currentYear <= 1989 &&
       G.age >= 20 && G.age <= 55 &&
       !G.mem?.czeCharter,
-    text: 'Charter 77. A document. Three pages. It points out that Czechoslovakia has signed the Helsinki Accords guaranteeing specific human rights and that the government does not observe them. It is not a political program. It does not call for revolution. It says: the law says this, and this is not happening. Two hundred and forty-two people sign in January 1977. The signatories lose their jobs. Their children are denied university places. Their phones are disconnected. The document circulates as samizdat — typed copies, carbon paper, passed hand to hand. You have seen a copy.',
+    text: 'The copy that reaches you is the fourth carbon and the letters are grey and you have to guess at two words on the second page. It is three pages long and it asks for nothing except that the laws the state has already signed be applied. Two hundred and forty-two people put their names on it. Within the month a signatory you know is stoking a boiler for a living and his daughter has been told there is no place for her at the university.',
+    context: 'Charter 77 was published in January 1977 and observed that Czechoslovakia was not applying the human rights provisions of its own constitution or of the Helsinki Accords it had signed. Its 242 original signatories were expelled from their professions, had their children barred from university, were interrogated and in some cases imprisoned. Copies circulated as samizdat carbon typescript.',
     choices: [
       {
         text: 'You sign. You understand the costs and you sign.',
@@ -215,7 +217,7 @@ export const CENTRAL_EUROPE_EVENTS = [
 
   {
     id: 'cze_velvet_revolution',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Czech Republic' &&
@@ -248,7 +250,7 @@ export const CENTRAL_EUROPE_EVENTS = [
 
   {
     id: 'cze_lustration_reckoning',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Czech Republic' &&

@@ -8,7 +8,7 @@ export const FOLLOWTHROUGH_65_EVENTS = [
 
   {
     id: 'ft65_reeducation_midlife',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('vn_dep_reeducation_survivor') &&
@@ -36,7 +36,7 @@ export const FOLLOWTHROUGH_65_EVENTS = [
 
   {
     id: 'ft65_con_lai_young_adult',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('vn_dep_con_lai') &&
@@ -64,7 +64,7 @@ export const FOLLOWTHROUGH_65_EVENTS = [
 
   {
     id: 'ft65_doi_moi_midlife',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('vn_dep_doi_moi_generation') &&

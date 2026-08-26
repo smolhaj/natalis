@@ -3,7 +3,7 @@
 // The police officer exists in careers.js with one event (corruption).
 // These events add what that can't: the first time the job is what
 // the training said it would be, the first time it isn't, the
-// colleague you trust and the culture you don't, the specific weight
+// colleague you trust and the culture you don't, the weight
 // of holding authority in communities that have reason not to trust
 // the people who hold it.
 //
@@ -168,7 +168,7 @@ export const POLICE_ARC_EVENTS = [
       isPolice(G) &&
       G.age >= 40 &&
       !G.mem?.polWeightFired,
-    text: `The things you have seen in the course of the work have accumulated in a specific way. Not trauma in the clinical sense — or not only that — but a weight of exposure: the specific scenes, the specific faces, the specific decisions you made in the gap between procedure and situation. Some of these you have processed. Some have not been processed in ways you are aware of. The weight is part of the job and you have known this since the beginning, but knowing it at the beginning and knowing it at year fifteen are different kinds of knowing.`,
+    text: `The things you have seen in the course of the work have accumulated in a way. Not trauma in the clinical sense — or not only that — but a weight of exposure: the specific scenes, the specific faces, the specific decisions you made in the gap between procedure and situation. Some of these you have processed. Some have not been processed in ways you are aware of. The weight is part of the job and you have known this since the beginning, but knowing it at the beginning and knowing it at year fifteen are different kinds of knowing.`,
     choices: null,
     effect: (p) => {
       p.m -= 8
@@ -203,7 +203,7 @@ export const POLICE_ARC_EVENTS = [
       G.flags.has('police_career_weight') &&
       G.age >= 55 &&
       !G.mem?.polWeightEchoFired,
-    text: `The weight does not diminish. You have learned to carry it more efficiently, which is not the same as diminishing. At fifty-five you are better at the job than you were at thirty and also more tired in a specific way that the job produces, not the body. You do not talk about this in the terms available to you for talking about it, which are the department's terms and the union's terms and the terms of the public narrative about police work. The specific thing you mean does not fit those terms.`,
+    text: `The weight does not diminish. You have learned to carry it more efficiently, which is not the same as diminishing. At fifty-five you are better at the job than you were at thirty and also more tired in a way that the job produces, not the body. You do not talk about this in the terms available to you for talking about it, which are the department's terms and the union's terms and the terms of the public narrative about police work. The thing you mean does not fit those terms.`,
     choices: null,
     effect: (p) => {
       p.m -= 5

@@ -15,7 +15,7 @@ export const MOZAMBIQUE_DEPTH_EVENTS = [
 
   {
     id: 'moz_dep_aldeias_comunais',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_RURAL_MOZ(G) &&
@@ -55,7 +55,7 @@ export const MOZAMBIQUE_DEPTH_EVENTS = [
 
   {
     id: 'moz_dep_reeducacao',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_MOZ(G) &&
@@ -95,7 +95,7 @@ export const MOZAMBIQUE_DEPTH_EVENTS = [
 
   {
     id: 'moz_dep_landmine',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_RURAL_MOZ(G) &&
@@ -156,14 +156,15 @@ export const MOZAMBIQUE_DEPTH_EVENTS = [
 
   {
     id: 'moz_dep_cashew',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_RURAL_MOZ(G) &&
       G.currentYear >= 1994 && G.currentYear <= 2005 &&
       G.age >= 18 && G.age <= 40 &&
       !G.mem?.mozDepCashew,
-    text: `The cashew. Mozambique has millions of cashew trees, planted across the northern and central provinces, the basis of the rural economy for tens of thousands of families. Under FRELIMO's socialism, processing was done domestically — a state monopoly, but local employment, local value. The World Bank, as a condition of structural adjustment, required that export tariffs on raw cashews be removed. The argument was efficiency: raw nuts could be sold to India for processing and everyone would benefit from comparative advantage. The tariff was removed in 1995. Indian processing facilities, with much lower labour costs, took the raw nuts. The Mozambican processing factories — employing 10,000 workers, mostly women — closed within years. The cashew trees are still there. The value of the nut leaves.`,
+    text: 'The trees are still standing and they still bear, and the buyer at the road now pays for the raw nut and takes it away whole. The factory at the district town where your aunt worked for eleven years shut in the second year after the tariff went. Ten thousand women were employed shelling in this country and now the shelling happens somewhere else. You get paid for the nut and not for the work of opening it, and the difference between those two prices is the entire question.',
+    context: 'Mozambique had a domestic cashew processing industry employing around 10,000 workers, mostly women. As a condition of structural adjustment lending, the World Bank required removal of the export tariff on raw cashews, which took effect in 1995. Raw nuts were exported to lower-cost Indian processors and most Mozambican factories closed within a few years. The Bank\'s own later review conceded the reform\'s benefits to smallholders had been overstated.',
     choices: [
       {
         text: 'Your family grows cashews. The price for raw nuts is lower than it was for processed product.',
@@ -197,7 +198,7 @@ export const MOZAMBIQUE_DEPTH_EVENTS = [
 
   {
     id: 'moz_dep_maputo_boom',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_URBAN_MOZ(G) &&
@@ -218,14 +219,15 @@ export const MOZAMBIQUE_DEPTH_EVENTS = [
 
   {
     id: 'moz_dep_hidden_debt',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_MOZ(G) &&
       G.currentYear >= 2016 && G.currentYear <= 2022 &&
       G.age >= 25 &&
       !G.mem?.mozDepHiddenDebt,
-    text: `Between 2013 and 2014, the Mozambican government secretly contracted $2.2 billion in loans from international banks — Credit Suisse, VTB Bank — through three state-owned companies: ProIndicus, EMATUM, and Mozambique Asset Management. The stated purpose was maritime security and tuna fishing. The IMF and donor governments were not informed. When the loans were disclosed in 2016, the IMF suspended its program. Aid flows were cut. The metical collapsed. Interest payments consumed the budget. The loans could not be repaid. What happened to the money is disputed. Investigations pointed to kickbacks, arms deals, offshore accounts. The tuna fleet was mostly unused. This is the crisis that defines the economy during your working years.`,
+    text: 'The metical goes and keeps going and the price of bread doubles twice in a year. At the ministry the salaries come late, then later, then in halves. On the radio they explain that some loans were taken that nobody had been told about, for a tuna fleet, and the boats are tied up at Maputo with nothing on them. Your cousin at the port says four of them have not moved in three years and that the paint is coming off.',
+    context: 'Between 2013 and 2014 the Mozambican government secretly borrowed about $2.2 billion from Credit Suisse and VTB Bank through three state companies — ProIndicus, EMATUM and Mozambique Asset Management — nominally for maritime security and tuna fishing. The IMF and donors learned of the loans in 2016 and suspended support. The metical collapsed, aid was cut and interest consumed the budget. Investigations found kickbacks and offshore payments; most of the fleet was never used.',
     choices: [
       {
         text: 'You feel this in your salary, your savings, the price of imported goods. The corruption is abstract; its effects are not.',
@@ -259,7 +261,7 @@ export const MOZAMBIQUE_DEPTH_EVENTS = [
 
   {
     id: 'moz_dep_aids_orphan',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_MOZ(G) &&
@@ -300,7 +302,7 @@ export const MOZAMBIQUE_DEPTH_EVENTS = [
 
   {
     id: 'moz_dep_aids_orphan_adult',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_MOZ(G) &&

@@ -8,7 +8,7 @@ export const YEMEN_EVENTS = [
 
   {
     id: 'yem_saleh_era_childhood',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Yemen' &&
@@ -22,7 +22,7 @@ export const YEMEN_EVENTS = [
 
   {
     id: 'yem_unification_1990',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Yemen' &&
@@ -36,7 +36,7 @@ export const YEMEN_EVENTS = [
 
   {
     id: 'yem_1994_civil_war',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Yemen' &&
@@ -50,7 +50,7 @@ export const YEMEN_EVENTS = [
 
   {
     id: 'yem_arab_spring_2011',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Yemen' &&
@@ -64,7 +64,7 @@ export const YEMEN_EVENTS = [
 
   {
     id: 'yem_houthi_war_2015',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Yemen' &&

@@ -1,3 +1,35 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Prices are written in wealthy-tier dollars and must be localised before they
+// are charged. Salaries are already scaled by GDP tier at the point they are
+// paid (see gdpSalaryMult in tick.js: very_low earns 0.03 of the listed range),
+// so any price left flat is silently thirty times more expensive for a Malawian
+// character than for a German one. That is how a studio flat became unbuyable
+// for most of the world's lives.
+//
+// `localCost(base, gdpTier)` is the price side of that same curve. It does not
+// fall as steeply as wages, because that is true: imported goods, clinical care
+// and university fees do not get thirty times cheaper when wages do. Anything
+// carrying `scaleByGdp: true` should be charged through it.
+export const GDP_COST_MULT = {
+  very_high: 1.0,
+  high: 0.8,
+  medium_high: 0.55,
+  medium: 0.38,
+  low_medium: 0.22,
+  low: 0.14,
+  very_low: 0.09,
+}
+
+export function localCost(base, gdpTier) {
+  return Math.max(1, Math.round(base * (GDP_COST_MULT[gdpTier] ?? 1)))
+}
+
+// The country a character is actually living in, for effects that price
+// themselves. Emigrants pay the prices of where they are, not where they began.
+function liveGdp(p) {
+  return p?._state?.currentCountry?.gdp ?? p?._state?.character?.country?.gdp ?? 'very_high'
+}
+
 export const ACTIVITIES = {
   mind: [
     {
@@ -770,11 +802,31 @@ export const ACTIVITIES = {
     {
       id: 'lottery',
       name: 'Buy lottery tickets',
-      description: null,
+      description: 'A ticket a week, all year. The stake is what a ticket costs where you live.',
       minAge: 18,
       maxAge: null,
-      cost: 20,
-      effect: (p) => { const r = Math.random(); if (r < 0.001) { p.mo += 500000; p.m += 20; } else if (r < 0.05) { p.mo += 50; } else { p.m -= 1; } },
+      // cost 0 because the stake is charged inside the effect at local prices,
+      // the same pattern the casino activities below use. A flat $20 stake meant
+      // a year of Chadian wages for one ticket.
+      cost: 0,
+      // A real lottery returns roughly half of what it takes. This one used to
+      // return $482 on a $20 stake — 0.1% × $500,000 plus 4.9% × $50 — which made
+      // buying tickets the single most profitable action in the game. It now
+      // returns about 48%, and the jackpot is priced in local money: life-changing
+      // where you live, not a wire transfer from a richer country.
+      effect: (p) => {
+        const stake = localCost(20, liveGdp(p))
+        p.mo -= stake
+        const r = Math.random()
+        // The jackpot now sets `lottery_winner`, which is registered and has its
+        // follow-through in events/thematic/events_windfall.js — the week after,
+        // the asking, the work question, and the late accounting.
+        if (r < 0.000004) { p.mo += stake * 60000; p.m += 15; p.addFlag('lottery_winner') }
+        else if (r < 0.0004) { p.mo += stake * 200; p.m += 6 }
+        else if (r < 0.015) { p.mo += stake * 5 }
+        else if (r < 0.10) { p.mo += stake }
+        else { p.m -= 1 }
+      },
       condition: null,
       outcome: 'Statistically certain to disappoint. Emotionally impossible to stop.',
       prose: (G) => {
@@ -789,7 +841,7 @@ export const ACTIVITIES = {
       minAge: 18,
       maxAge: null,
       cost: 0,
-      effect: (p) => { const bet = 200; const r = Math.random(); if (r < 0.47) { p.mo += bet; p.m += 3; } else { p.mo -= bet; p.m -= 2; } },
+      effect: (p) => { const bet = localCost(200, liveGdp(p)); const r = Math.random(); if (r < 0.47) { p.mo += bet; p.m += 3; } else { p.mo -= bet; p.m -= 2; } },
       condition: null,
       outcome: 'The house edge is real and patient.',
       prose: (G) => 'The house edge is real and patient.',
@@ -801,7 +853,7 @@ export const ACTIVITIES = {
       minAge: 18,
       maxAge: null,
       cost: 0,
-      effect: (p) => { const r = Math.random(); if (r < 0.02) { p.mo += 2000; p.m += 8; } else if (r < 0.20) { p.mo += 50; } else { p.mo -= 100; p.m -= 1; } },
+      effect: (p) => { const unit = localCost(100, liveGdp(p)); const r = Math.random(); if (r < 0.02) { p.mo += unit * 20; p.m += 8; } else if (r < 0.20) { p.mo += Math.round(unit * 0.5); } else { p.mo -= unit; p.m -= 1; } },
       condition: null,
       outcome: 'The lights and sounds are engineered to keep you there.',
       prose: (G) => 'The lights and sounds are engineered to keep you there.',
@@ -813,7 +865,7 @@ export const ACTIVITIES = {
       minAge: 18,
       maxAge: null,
       cost: 0,
-      effect: (p) => { const r = Math.random(); if (r < 0.486) { p.mo += 300; p.m += 4; } else { p.mo -= 300; p.m -= 3; } },
+      effect: (p) => { const bet = localCost(300, liveGdp(p)); const r = Math.random(); if (r < 0.486) { p.mo += bet; p.m += 4; } else { p.mo -= bet; p.m -= 3; } },
       condition: null,
       outcome: 'The wheel has no memory.',
       prose: (G) => 'The wheel has no memory. This is the fact you are playing against.',

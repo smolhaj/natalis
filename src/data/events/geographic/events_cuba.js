@@ -26,7 +26,7 @@ const CUBA_EVENTS = [
 
   {
     id: 'cub_bay_of_pigs_1961',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) =>
       G.character.country.name === 'Cuba' &&
@@ -52,7 +52,7 @@ const CUBA_EVENTS = [
 
   {
     id: 'cub_mariel_1980',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Cuba' &&
@@ -78,7 +78,7 @@ const CUBA_EVENTS = [
 
   {
     id: 'cub_santeria_underground',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Cuba' &&
@@ -105,7 +105,7 @@ const CUBA_EVENTS = [
 
   {
     id: 'cub_raul_opening',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Cuba' &&
@@ -139,7 +139,7 @@ const CUBA_EVENTS = [
 
   {
     id: 'cub_obama_thaw_2014',
-    phase: 'late_life',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Cuba' &&
@@ -153,7 +153,7 @@ const CUBA_EVENTS = [
 
   {
     id: 'cub_july11_protests',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Cuba' &&

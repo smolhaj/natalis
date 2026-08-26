@@ -9,7 +9,7 @@ export const FOLLOWTHROUGH_64_EVENTS = [
 
   {
     id: 'ft64_ofw_family_midlife',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('ph_dep_ofw_family') &&
@@ -80,13 +80,13 @@ export const FOLLOWTHROUGH_64_EVENTS = [
 
   {
     id: 'ft64_seaman_midlife',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('ph_dep_seaman_family') &&
       G.age >= 35 && G.age <= 55 &&
       !G.mem?.ft64SeamanMidlife,
-    text: `The nine-month contracts made a life measured differently from lives measured in quarters or academic years. You know this measurement. The children grew in nine-month blocks while the parent was away. The homecoming was an event with a specific structure: the arrival, the shopping bags from Dubai or Rotterdam, the adjustment period before the house remembered how to have someone in it who had been at sea. You have been the parent or the child or the spouse inside this structure. All three have a specific weight.`,
+    text: `The nine-month contracts made a life measured differently from lives measured in quarters or academic years. You know this measurement. The children grew in nine-month blocks while the parent was away. The homecoming was an event with a specific structure: the arrival, the shopping bags from Dubai or Rotterdam, the adjustment period before the house remembered how to have someone in it who had been at sea. You have been the parent or the child or the spouse inside this structure. All three have a weight.`,
     choices: null,
     effect: (p) => { p.r += 5; p.m -= 3; p.setMem('ft64SeamanMidlife', true) },
   },
@@ -115,7 +115,7 @@ export const FOLLOWTHROUGH_64_EVENTS = [
       G.age >= 25 &&
       G.currentYear >= 2010 &&
       !G.mem?.ft64OndoyMidlife,
-    text: `Since Ondoy you note the weather differently. The PAGASA bulletins in September have a different register than they did before 2009. You know the elevation of your house. When the rainfall exceeds what feels right, you locate the route to the second floor or to the neighbours with the second floor. Tropical Storm Ondoy dropped a month of rain in six hours and the response went through social media and private bangkas because the official systems were not scaled for what happened. You carry the specific knowledge of what not being scaled for something looks like.`,
+    text: `Since Ondoy you note the weather differently. The PAGASA bulletins in September have a different register than they did before 2009. You know the elevation of your house. When the rainfall exceeds what feels right, you locate the route to the second floor or to the neighbours with the second floor. Tropical Storm Ondoy dropped a month of rain in six hours and the response went through social media and private bangkas because the official systems were not scaled for what happened. You carry the knowledge of what not being scaled for something looks like.`,
     choices: null,
     effect: (p) => { p.r += 5; p.e += 2; p.setMem('ft64OndoyMidlife', true) },
   },

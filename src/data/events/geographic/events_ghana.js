@@ -110,7 +110,7 @@ export const GHANA_EVENTS = [
 
   {
     id: 'gha_first_election',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_GHANAIAN(G) &&

@@ -63,7 +63,7 @@ export const MONGOLIA_DEPTH_EVENTS = [
 
   {
     id: 'mn_dep_buddhism_revival',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_MONGOLIA(G) &&

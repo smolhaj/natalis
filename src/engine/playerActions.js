@@ -1,9 +1,9 @@
 import { COUNTRIES } from '../data/countries'
 import { DESTINATIONS } from '../data/destinations'
 import { CAREERS } from '../data/careers'
-import { ACTIVITIES } from '../data/activities'
+import { ACTIVITIES, localCost } from '../data/activities'
 import { CRIMES } from '../data/crimes'
-import { PROPERTY_TYPES, VEHICLE_TYPES } from '../data/assets'
+import { PROPERTY_TYPES, VEHICLE_TYPES, localisePrice } from '../data/assets'
 import { ILLNESSES } from '../data/illnesses'
 import { PLACES, getPlacesForCountry, pickNeighborhoodTier, pickNamedNeighborhood, getRelocationCost } from '../data/places'
 import { randomBetween, pickFrom, clamp, chance } from '../utils/random'
@@ -426,7 +426,7 @@ export function applyActivity(state, activityId) {
 
   const proxy = buildEffectProxy(state)
   // Deduct actual money for activities with a dollar cost
-  if (activity.cost) proxy.mo -= activity.cost
+  if (activity.cost) proxy.mo -= localCost(activity.cost, gdpTierOf(state))
   activity.effect(proxy)
   let updated = applyProxy(state, proxy)
   updated = resolveProxyExtras(updated, proxy)
@@ -454,7 +454,8 @@ export function buyProperty(state, typeId) {
   if (state.age < 18) return state
   const type = PROPERTY_TYPES.find(t => t.id === typeId)
   if (!type) return state
-  const price = Math.round(randomBetween(type.priceRange[0], type.priceRange[1]))
+  // Property is a local good: a flat costs what flats cost where you live.
+  const price = localisePrice(Math.round(randomBetween(type.priceRange[0], type.priceRange[1])), gdpTierOf(state), 'local')
   const downPayment = Math.round(price * type.downPaymentRate)
   if ((state.money ?? 0) < downPayment) {
     return { ...state, log: [...state.log, { age: state.age, text: `You can't afford the down payment for a ${type.name}.`, isKey: false }] }
@@ -494,7 +495,8 @@ export function buyVehicle(state, typeId) {
   if (!state.licenceObtained && !bicycleTiers.includes(type.tier)) {
     return { ...state, log: [...state.log, { age: state.age, text: "You need a driving licence first.", isKey: false }] }
   }
-  const price = Math.round(randomBetween(type.priceRange[0], type.priceRange[1]))
+  // Vehicles are largely imported, so they do NOT scale down as far as housing.
+  const price = localisePrice(Math.round(randomBetween(type.priceRange[0], type.priceRange[1])), gdpTierOf(state), 'import')
   const displayName = type.make ? `${type.make} ${type.model}` : type.name
   if ((state.money ?? 0) < price) {
     return { ...state, log: [...state.log, { age: state.age, text: `You can't afford a ${displayName}.`, isKey: false }] }
@@ -609,15 +611,25 @@ export function schmoozeBoss(state) {
   }
 }
 
+// Prices are quoted in a wealthy-country frame throughout the data files.
+// Everything a character BUYS has to be converted into the economy they are
+// actually living in, or a studio flat costs a Lagos teacher forty years of
+// salary while the salary itself is already scaled down by GDP.
+function gdpTierOf(state) {
+  return (state.currentCountry ?? state.character?.country)?.gdp
+}
+
 // ─── Life transitions ─────────────────────────────────────────────────────────
 
 export function retire(state) {
-  if (!state.career && state.retired) return state
+  if (!state.career || state.retired) return state
   const pension = state.career ? Math.round(state.career.salary * 0.35) : 0
   return {
     ...state,
     career: null,
     retired: true,
+    // Recorded so tick() can actually pay it — the promise used to be prose only.
+    pensionAnnual: pension,
     stats: { ...state.stats, happiness: clamp(state.stats.happiness + 10, 0, 100) },
     log: [...state.log, { age: state.age, text: `You retire.${pension > 0 ? ` You'll receive approximately $${pension.toLocaleString()}/yr in pension.` : ''}`, isKey: true }],
   }
@@ -909,7 +921,9 @@ export function goClubbing(state) {
     actionsThisYear: state.actionsThisYear + 1,
     log: [...state.log, { age: state.age, text: `You spend the night out clubbing. Cost: $${cost}.${met ? ' You meet someone interesting.' : ''}`, isKey: false }],
   }
-  if (met) next = meetPotentialPartner({ ...next, actionsThisYear: next.actionsThisYear - 1 })
+  // Meeting someone does not refund the evening. This used to subtract the
+  // action back out before handing off, so a night out that worked was free.
+  if (met) next = meetPotentialPartner(next)
   return next
 }
 
@@ -1060,7 +1074,7 @@ export function goToRehab(state) {
   if (addictions.length === 0) {
     return { ...state, log: [...state.log, { age: state.age, text: "You don't have any active addictions to treat.", isKey: false }] }
   }
-  const cost = randomBetween(5000, 25000)
+  const cost = localCost(randomBetween(5000, 25000), gdpTierOf(state))
   if ((state.money ?? 0) < cost) {
     return { ...state, log: [...state.log, { age: state.age, text: `Rehab would cost about $${cost.toLocaleString()}. You can't afford it right now.`, isKey: false }] }
   }
@@ -1374,72 +1388,8 @@ export function closeBusiness(state) {
 
 // ─── Fugitive system ─────────────────────────────────────────────────────────
 
-export function breakOut(state) {
-  // Called after a successful prison escape minigame
-  return {
-    ...state,
-    inPrison: false,
-    wanted: true,
-    wantedFor: state.wantedFor ?? 'escaped_conviction',
-    flags: [...new Set([...state.flags, 'escaped_prisoner'])],
-    log: [...state.log, { age: state.age, text: 'You slip through the gaps and escape from prison. You are now a fugitive.', isKey: true }]
-  }
-}
 
-export function assumeIdentity(state) {
-  const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
-  const mult = gdpMult[state.character?.country?.gdp] ?? 1.0
-  const cost = Math.round(8000 * mult)
-  if ((state.money ?? 0) < cost) {
-    return { ...state, log: [...state.log, { age: state.age, text: `You need $${cost.toLocaleString()} for forged documents.`, isKey: false }] }
-  }
-  if (state.flags.includes('assumed_identity')) {
-    return { ...state, log: [...state.log, { age: state.age, text: 'You are already living under an assumed identity.', isKey: false }] }
-  }
-  const c = state.character?.country
-  const g = state.character?.gender
-  const namePool = g === 'male' ? c?.namePool?.male : c?.namePool?.female
-  const fakeName = (pickFrom(namePool ?? ['Alex', 'Sam', 'Jordan'])) + ' ' + (pickFrom(c?.surnames ?? ['Smith', 'Jones']))
-  return {
-    ...state,
-    money: (state.money ?? 0) - cost,
-    assumedIdentity: { name: fakeName, adoptedAt: state.age },
-    flags: [...new Set([...state.flags, 'assumed_identity'])],
-    log: [...state.log, { age: state.age, text: `For $${cost.toLocaleString()} you obtain forged documents and become ${fakeName}. Your old identity is buried.`, isKey: true }]
-  }
-}
 
-export function goIllegal(state, destCountryName) {
-  const dest = COUNTRIES.find(c => c.name === destCountryName)
-  if (!dest) return state
-  const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.2, low_medium: 0.1, low: 0.05, very_low: 0.025 }
-  const mult = gdpMult[state.character?.country?.gdp] ?? 1.0
-  const fee = Math.round(randomBetween(8000, 20000) * mult)
-  if ((state.money ?? 0) < fee) {
-    return { ...state, log: [...state.log, { age: state.age, text: `The smuggler wants $${fee.toLocaleString()}. You can't afford it.`, isKey: false }] }
-  }
-  if (chance(0.30)) {
-    const added = 2
-    return {
-      ...state,
-      money: (state.money ?? 0) - fee,
-      inPrison: true,
-      prisonSentence: (state.prisonSentence ?? 0) + added,
-      wanted: false,
-      log: [...state.log, { age: state.age, text: `You pay $${fee.toLocaleString()} but border guards intercept you. Deported and sentenced to ${added} additional years.`, isKey: true }]
-    }
-  }
-  return {
-    ...state,
-    money: (state.money ?? 0) - fee,
-    character: { ...state.character, country: dest },
-    flags: [...new Set([...state.flags, 'emigrated', 'illegal_immigrant'])],
-    stats: { ...state.stats, happiness: clamp(state.stats.happiness + 5, 0, 100) },
-    log: [...state.log, { age: state.age, text: `You pay a smuggler $${fee.toLocaleString()} and slip across the border into ${destCountryName}. A dangerous new chapter begins.`, isKey: true }]
-  }
-}
-
-// ─── Prison activities ────────────────────────────────────────────────────────
 
 export function prisonWork(state) {
   if (!state.inPrison) return state
@@ -1775,3 +1725,10 @@ export function tickStocks(state) {
     log: newLogs,
   }
 }
+
+// NOTE: goIllegal / breakOut / assumeIdentity used to be duplicated here as well
+// as in the store. Nothing imported these copies — the UI wires to the store's
+// versions — and this file's goIllegal spread a new country over
+// `state.character`, which would have corrupted the frozen birth identity every
+// downstream model reads (world events, regime, mortality). Removed rather than
+// left as a trap; the store's implementations are the real ones.

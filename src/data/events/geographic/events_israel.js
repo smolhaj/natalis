@@ -13,7 +13,7 @@
 
 const isIsraeli = (G) => G.currentCountry?.name === 'Israel'
 const isMizrahi = (G) =>
-  ['mizrahi_jewish', 'yemenite_jewish', 'moroccan_jewish', 'iraqi_jewish'].includes(G.character?.ethnicity)
+  G.character?.ethnicity === 'mizrahi_jewish'
 const isAshkenazi = (G) => G.character?.ethnicity === 'ashkenazi_jewish'
 const isEthiopian = (G) => G.character?.ethnicity === 'ethiopian_jewish'
 const isRussian = (G) => G.character?.ethnicity === 'russian_jewish_israel'
@@ -27,7 +27,7 @@ export const ISRAEL_EVENTS = [
 
   {
     id: 'il_founding_memory',
-    phase: 'childhood',
+    phase: null,
     weight: 8,
     when: (G) =>
       isIsraeli(G) &&
@@ -49,7 +49,7 @@ export const ISRAEL_EVENTS = [
 
   {
     id: 'il_mizrahi_maabara',
-    phase: 'childhood',
+    phase: null,
     weight: 7,
     when: (G) =>
       isIsraeli(G) &&
@@ -119,7 +119,7 @@ export const ISRAEL_EVENTS = [
 
   {
     id: 'il_yom_kippur_personal',
-    phase: 'young_adult',
+    phase: null,
     weight: 8,
     when: (G) =>
       isIsraeli(G) &&
@@ -149,7 +149,7 @@ export const ISRAEL_EVENTS = [
 
   {
     id: 'il_soviet_aliyah_arrival',
-    phase: 'young_adult',
+    phase: null,
     weight: 8,
     when: (G) =>
       isIsraeli(G) &&
@@ -179,7 +179,7 @@ export const ISRAEL_EVENTS = [
 
   {
     id: 'il_ethiopian_aliyah_arrival',
-    phase: 'young_adult',
+    phase: null,
     weight: 8,
     when: (G) =>
       isIsraeli(G) &&
@@ -213,7 +213,7 @@ export const ISRAEL_EVENTS = [
 
   {
     id: 'il_rabin_killed',
-    phase: 'young_adult',
+    phase: null,
     weight: 9,
     when: (G) =>
       isIsraeli(G) &&
@@ -242,7 +242,7 @@ export const ISRAEL_EVENTS = [
 
   {
     id: 'il_second_intifada_fear',
-    phase: 'young_adult',
+    phase: null,
     weight: 8,
     when: (G) =>
       isIsraeli(G) &&
@@ -272,7 +272,7 @@ export const ISRAEL_EVENTS = [
 
   {
     id: 'il_settlement_question',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       isIsraeli(G) &&
@@ -302,7 +302,7 @@ export const ISRAEL_EVENTS = [
 
   {
     id: 'il_arab_citizen_identity',
-    phase: 'adolescence',
+    phase: null,
     weight: 8,
     when: (G) =>
       isIsraeli(G) &&
@@ -332,7 +332,7 @@ export const ISRAEL_EVENTS = [
 
   {
     id: 'il_oct7_reckoning',
-    phase: 'midlife',
+    phase: null,
     weight: 9,
     when: (G) =>
       isIsraeli(G) &&
@@ -365,7 +365,7 @@ export const ISRAEL_EVENTS = [
 
   {
     id: 'il_post_oslo_despair',
-    phase: 'midlife',
+    phase: null,
     weight: 6,
     when: (G) =>
       isIsraeli(G) &&

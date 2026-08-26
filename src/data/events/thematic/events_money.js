@@ -65,7 +65,7 @@ export const MONEY_EVENTS = [
 
   {
     id: 'money_first_debt',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem?.firstDebtEvent &&
@@ -162,7 +162,7 @@ export const MONEY_EVENTS = [
 
   {
     id: 'money_counting_days',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.moneyCountingDays &&
@@ -174,4 +174,26 @@ export const MONEY_EVENTS = [
     effect: (p) => { p.m -= 6; p.h -= 3; p.addFlag('experienced_true_poverty'); p.setMem('moneyCountingDays', true) },
   },
 
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_first_wage_spent_badly',
+    phase: null,
+    weight: 3,
+    when: (G) => G.age >= 15 && G.age <= 22 && G.money > 40 && !G.mem?.ordWageSpent && Math.random() < 0.2,
+    text: `The money is yours in a way no money has been yours before, and you spend a serious proportion of it on something indefensible within four days. You know at the time that it is indefensible. That is a substantial part of the pleasure. You carry it home and put it somewhere it can be seen from the doorway.`,
+    choices: null,
+    effect: (p) => { p.m += 9; p.mo -= 30; p.setMem('ordWageSpent', true) },
+  },
+
+  {
+    id: 'ord_small_sum_sorted',
+    phase: null,
+    weight: 3,
+    when: (G) => G.age >= 30 && G.age <= 70 && !G.mem?.ordSumSorted && Math.random() < 0.13,
+    text: `You sit down with the papers on a Sunday morning, which you have been avoiding since March. It takes fifty minutes. Nothing in it is bad. You put the folder back on the shelf and stand there for a second looking at the shelf, and the feeling is not triumph, it is the much rarer thing of an ordinary matter being finished.`,
+    choices: null,
+    effect: (p) => { p.m += 7; p.e += 2; p.setMem('ordSumSorted', true) },
+  },
 ]

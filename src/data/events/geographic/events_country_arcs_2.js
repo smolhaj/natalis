@@ -176,7 +176,7 @@ export const COUNTRY_ARC_2_EVENTS = [
 
   {
     id: 'ca2_china_tiananmen_witness',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'China' &&
@@ -271,7 +271,7 @@ export const COUNTRY_ARC_2_EVENTS = [
 
   {
     id: 'ocp_sole_support',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'China' &&
@@ -298,7 +298,7 @@ export const COUNTRY_ARC_2_EVENTS = [
 
   {
     id: 'ocp_policy_lifted',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'China' &&
@@ -417,7 +417,7 @@ export const COUNTRY_ARC_2_EVENTS = [
     weight: 3,
     when: (G) =>
       G.character.country.name === 'United States' &&
-      (G.flags.includes('lgbtq') || G.flags.includes('out') || G.flags.includes('gay') || G.flags.includes('queer')) &&
+      (G.flags.includes('lgbtq') || G.flags.includes('lgbtq_identity') || G.flags.includes('out') || G.flags.includes('gay') || G.flags.includes('queer')) &&
       G.currentYear >= 1981 && G.currentYear <= 1995 &&
       !G.mem?.usaAids,
     text: 'The third funeral in eight months. Before this one there were two others. At the first funeral the family used a different word for the cause. The government has a number for deaths and does not have a response. ACT UP is in the streets. You know people in ACT UP. You have been to the vigils where names are read until the candles burn down. The Names Project is piecing together a quilt that is now larger than any room you have been in.',
@@ -797,7 +797,7 @@ export const COUNTRY_ARC_2_EVENTS = [
 
   {
     id: 'ca2_japan_tohoku_2011',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Japan' &&
@@ -824,7 +824,7 @@ export const COUNTRY_ARC_2_EVENTS = [
 
   {
     id: 'ca2_japan_nuclear_reckoning',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Japan' &&

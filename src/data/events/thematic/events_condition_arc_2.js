@@ -54,7 +54,7 @@ export const CONDITION_ARC_2_EVENTS = [
       const c = G.conditions.find(c => c.id === 'hiv')
       return !!c && G.currentYear >= 1981 && G.currentYear <= 1995 && G.age >= 16 && !G.mem?.condHivPreTreat
     },
-    text: `The virus is new enough that the hospital does not know what to do except isolate. The ward is quiet in a specific way. The people who come to visit wear things over their hands and faces that were not required for other wards. The information available — in pamphlets, from doctors — is threaded through with uncertainty: not yet, not confirmed, not established. The epidemic is being learned about in real time. You are in it in real time. There is no treatment yet. There may be.`,
+    text: `The virus is new enough that the hospital does not know what to do except isolate. The ward is quiet in a way. The people who come to visit wear things over their hands and faces that were not required for other wards. The information available — in pamphlets, from doctors — is threaded through with uncertainty: not yet, not confirmed, not established. The epidemic is being learned about in real time. You are in it in real time. There is no treatment yet. There may be.`,
     choices: null,
     effect: (p) => { p.m -= 15; p.r += 8; p.h -= 10; p.addFlag('hiv_disclosed'); p.setMem('condHivPreTreat', true) },
   },
@@ -105,7 +105,7 @@ export const CONDITION_ARC_2_EVENTS = [
       {
         text: 'Find a way. Borrow, go without something else, ask family.',
         tag: null,
-        outcome: 'You find the money. The cost of finding it is paid in other ways — relationships, time, the specific exhaustion of managing a disease in a system not built for you.',
+        outcome: 'You find the money. The cost of finding it is paid in other ways — relationships, time, the exhaustion of managing a disease in a system not built for you.',
         effect: (p) => { p.m -= 8; p.mo -= 400; p.h -= 2; p.setMem('condInsulinAccess', true) },
       },
       {

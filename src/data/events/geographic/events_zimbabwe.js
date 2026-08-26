@@ -12,7 +12,7 @@ export const ZIMBABWE_EVENTS = [
     when: (G) =>
       G.character.country.name === 'Zimbabwe' &&
       G.currentYear >= 2000 && G.currentYear <= 2005 &&
-      (G.ethnicity === 'white_zimbabwean' || G.flags.includes('white_zimbabwean')) &&
+      G.ethnicity === 'white_zimbabwe' &&
       !G.mem?.zimLandSeizure,
     text: 'The farm has been in the family for fifty years. The letter arrives telling you that it has been designated for resettlement under the Fast Track Land Reform Programme. Your workers — some of them were born here — ask what happens now. You have no answer. The police presence at the district office makes clear that contesting the designation is not advisable. Your father built the irrigation system. Your children were born in the house.',
     choices: [
@@ -38,7 +38,7 @@ export const ZIMBABWE_EVENTS = [
     when: (G) =>
       G.character.country.name === 'Zimbabwe' &&
       G.currentYear >= 2000 && G.currentYear <= 2008 &&
-      G.ethnicity !== 'white_zimbabwean' && !G.flags.includes('white_zimbabwean') &&
+      G.ethnicity !== 'white_zimbabwe' &&
       !G.mem?.zimLandReform,
     text: 'The land reform was announced as redistribution — the land taken from white farmers returned to the people it was taken from. In practice, the farms went to war veterans and ZANU-PF officials. Your family is not on the list. The commercial farms that fed the region are now unproductive, their irrigation abandoned, their equipment stripped. The maize that used to be in the market is not there anymore. The price of the maize that remains is something else.',
     choices: null,
@@ -148,7 +148,7 @@ export const ZIMBABWE_EVENTS = [
 
   {
     id: 'zim_mugabe_fall_2017',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Zimbabwe' &&
@@ -164,7 +164,7 @@ export const ZIMBABWE_EVENTS = [
 
   {
     id: 'zim_johannesburg_arrival',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('zim_diaspora') &&

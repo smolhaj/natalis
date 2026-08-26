@@ -13,10 +13,10 @@ const IS_SIERRA = (G) =>
   G.character.country?.name === 'Peru' && G.ruralUrban === 'rural'
 const IS_NIKKEI = (G) =>
   G.character.country?.name === 'Peru' &&
-  (G.character.ethnicity === 'nikkei' || G.character.ethnicity === 'japanese_peruvian')
+  G.character.ethnicity === 'nikkei'
 const IS_AFRO_PERUVIAN = (G) =>
   G.character.country?.name === 'Peru' &&
-  (G.character.ethnicity === 'afro_peruvian' || G.character.ethnicity === 'black')
+  G.character.ethnicity === 'afro_peruvian'
 
 export const PERU_DEPTH_EVENTS = [
 
@@ -66,7 +66,7 @@ export const PERU_DEPTH_EVENTS = [
 
   {
     id: 'per_dep_ayacucho_sendero',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_PERU(G) &&
@@ -89,7 +89,7 @@ export const PERU_DEPTH_EVENTS = [
 
   {
     id: 'per_dep_la_oroya',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_PERU(G) &&
@@ -129,7 +129,7 @@ export const PERU_DEPTH_EVENTS = [
 
   {
     id: 'per_dep_nikkei',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_NIKKEI(G) &&
@@ -167,7 +167,7 @@ export const PERU_DEPTH_EVENTS = [
 
   {
     id: 'per_dep_afro_peruvian',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_AFRO_PERUVIAN(G) &&
@@ -188,7 +188,7 @@ export const PERU_DEPTH_EVENTS = [
 
   {
     id: 'per_dep_vraem_coca',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_PERU(G) &&
@@ -229,14 +229,15 @@ export const PERU_DEPTH_EVENTS = [
 
   {
     id: 'per_dep_castillo_2021',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_PERU(G) &&
       G.currentYear >= 2021 && G.currentYear <= 2024 &&
       G.age >= 25 &&
       !G.mem?.perDepCastillo,
-    text: `Pedro Castillo wins the 2021 presidential election by less than forty-four thousand votes out of eighteen million cast. He is a rural teacher and union leader from Cajamarca, the first president in Peru's two-hundred-year history from the sierra campesino class. The Lima establishment treats his election as a catastrophe. The Peruvians who are not the Lima establishment treat it as the first time anyone like them has reached the presidency. His government collapses in eighteen months under corruption charges and constitutional crises of his own making. He is removed by Congress and arrested. Dina Boluarte, his former vice-president, takes over and orders the police to fire on protesters in the south. Sixty people are killed. The specific question of who Peru is for — the coast or the sierra, Lima or the rest — did not begin with Castillo and does not end with him.`,
+    text: 'He wins by forty-four thousand votes out of eighteen million, and he is a schoolteacher from Cajamarca who campaigned in the hat. In Lima the word people use is catastrophe. In your mother\'s town they put a photograph of him in the window of the pharmacy. Eighteen months later he is in a cell and the woman who replaced him has sent the police south, and there are sixty dead in Ayacucho and Juliaca. The question of who this country is for was not opened by him and it does not close with him.',
+    context: 'Pedro Castillo, a rural schoolteacher and union leader, won Peru\'s 2021 election by about 44,000 votes, the first president from the sierra campesino class in the country\'s history. He attempted to dissolve Congress in December 2022, was impeached and arrested. His vice-president Dina Boluarte succeeded him; security forces killed some sixty protesters in the southern regions during the weeks that followed.',
     choices: [
       {
         text: 'His election was real. That the establishment destroyed it does not make it not real.',

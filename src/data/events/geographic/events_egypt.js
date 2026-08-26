@@ -6,7 +6,7 @@ export const EGYPT_EVENTS = [
 
   {
     id: 'egy_nasser_dream',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Egypt' &&
@@ -20,7 +20,7 @@ export const EGYPT_EVENTS = [
 
   {
     id: 'egy_naksa_1967',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Egypt' &&
@@ -47,7 +47,7 @@ export const EGYPT_EVENTS = [
 
   {
     id: 'egy_sadat_infitah',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Egypt' &&
@@ -61,7 +61,7 @@ export const EGYPT_EVENTS = [
 
   {
     id: 'egy_mubarak_emergency',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Egypt' &&
@@ -75,21 +75,22 @@ export const EGYPT_EVENTS = [
 
   {
     id: 'egy_bread_riots_1977',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Egypt' &&
       G.currentYear === 1977 &&
       G.age >= 16 &&
       !G.mem.egyBread,
-    text: 'January 18, 1977. The government removes subsidies on bread and basic foods as part of IMF conditions. The price of bread doubles overnight. The streets fill. Seventy-nine people are killed. The army is deployed. Sadat re-imposes the subsidies two days later. The IMF conditions are quietly set aside. The event is called intifadat al-haita, the uprising of the thieves, by the government. The people who were in the streets call it something else: bread, honour, freedom. The government backed down. That fact is also a piece of information.',
+    text: 'The price of the baladi loaf doubles overnight in January and by the afternoon the street is full. It is not a party or a slogan, it is bread. Seventy-nine people are killed and the army is on the corniche by the second day. On the third day the subsidy is back and the government calls what happened the uprising of the thieves. Everybody who was in the street learned the same thing, which is that it can be made to stop.',
+    context: 'On 18 January 1977 the Egyptian government removed subsidies on bread and basic goods under IMF conditions. Protests spread across Egypt within hours, 79 people were killed and the army was deployed. Sadat restored the subsidies two days later and the IMF conditions were shelved. The government termed the events intifadat al-haramiyya, the uprising of the thieves.',
     choices: null,
     effect: (p) => { p.m -= 8; p.karma += 6; p.addFlag('egypt_bread_generation'); p.setMem('egyBread', true) },
   },
 
   {
     id: 'egy_tahrir_2011',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Egypt' &&
@@ -132,7 +133,7 @@ export const EGYPT_EVENTS = [
 
   {
     id: 'egy_wasta_career',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Egypt' &&
@@ -159,7 +160,7 @@ export const EGYPT_EVENTS = [
 
   {
     id: 'egy_gulf_contract_choice',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Egypt' &&
@@ -201,7 +202,7 @@ export const EGYPT_EVENTS = [
 
   {
     id: 'egy_coptic_navigation',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Egypt' &&

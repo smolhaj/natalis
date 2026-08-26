@@ -27,7 +27,7 @@ export const AID_WORKER_EVENTS = [
 
   {
     id: 'aw_entry_international',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country?.archetype === 'wealthy_west' &&
@@ -83,7 +83,7 @@ export const AID_WORKER_EVENTS = [
 
   {
     id: 'aw_salary_gap_local',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('ngo_local_staff') &&
@@ -111,7 +111,7 @@ export const AID_WORKER_EVENTS = [
 
   {
     id: 'aw_salary_gap_intl',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('aw_international_staff') &&
@@ -126,7 +126,7 @@ export const AID_WORKER_EVENTS = [
 
   {
     id: 'aw_caseload',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('ngo_worker') &&
@@ -156,7 +156,7 @@ export const AID_WORKER_EVENTS = [
 
   {
     id: 'aw_evacuation',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.has('ngo_worker') &&
@@ -169,7 +169,7 @@ export const AID_WORKER_EVENTS = [
     choices: null,
     effect: (p) => {
       p.m -= 20; p.r += 15; p.karma += 5;
-      p.addFlag(p.flags?.has?.('ngo_local_staff') ? 'aw_left_behind' : 'aw_evacuated_and_left');
+      p.addFlag(p.flags.includes('ngo_local_staff') ? 'aw_left_behind' : 'aw_evacuated_and_left');
       p.setMem('awEvacuation', true);
     },
   },
@@ -178,7 +178,7 @@ export const AID_WORKER_EVENTS = [
 
   {
     id: 'aw_funding_cut',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('ngo_worker') &&
@@ -246,7 +246,8 @@ export const AID_WORKER_EVENTS = [
       (G.flags.has('ngo_worker') || G.flags.has('ngo_local_staff')) &&
       G.age >= 60 &&
       !G.mem?.awReckoning,
-    text: 'The studies available now — on aid dependency, on the market distortions large NGO presences create, on the damage of expertise that rotates in and out faster than it can be localised — are thorough and not wrong. You read them. You also know things that are not in the studies: the families who had food in years when they otherwise would not have, the clinics that operated on supply chains your organisation maintained, the specific people whose children are alive because of specific interventions in specific moments that no indicator framework was designed to capture. Both things are true. You spent most of your working life trying to make the first set of things true without being responsible for the second. You are not sure how well you succeeded at either.',
+    text: 'You read the studies when they come out. They are thorough and they are not wrong. You also know the things that are not in them: the clinic that stayed open on a supply chain your office held together, the children who are thirty now because of a fortnight in 1997 that no indicator framework was built to see. Both are true at once and you have never found the sentence that holds them. You spent a career trying and you are not sure how you did.',
+    context: 'Research on aid dependency, NGO-driven labour-market distortion and the costs of rotating expatriate expertise became mainstream in the humanitarian sector from the late 1990s onward.',
     choices: null,
     effect: (p) => { p.e += 5; p.r += 5; p.m += 4; p.karma += 5; p.setMem('awReckoning', true) },
   },
@@ -261,7 +262,7 @@ export const AID_WORKER_EVENTS = [
       G.flags.has('aw_left_behind') &&
       G.age >= 55 &&
       !G.mem?.awLeftBehindEcho,
-    text: 'When people ask about the work — at dinner parties, in the way that people ask about things they find interesting from a comfortable distance — you tell the stories that are true and manageable: the families, the caseloads, the logistics of operating in difficult places. You do not often tell the story of standing at the gate and watching the vehicles leave. It is not that the story is too painful to tell. It is that telling it requires explaining too much that the listener does not have the context to hold: what it means that you stayed, what it meant that they left, the particular quality of a look back through a vehicle window when both people understand that the asymmetry is structural and neither of you designed it.',
+    text: 'When people ask about the work, you tell them the manageable ones: the caseloads, the logistics, the road that was only passable before eleven. You do not tell them about the gate and the vehicles. The problem is not that it hurts. The problem is that it would take twenty minutes of background before the last look through a rear window meant anything at all, and by then the plates would have been cleared.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 3; p.setMem('awLeftBehindEcho', true) },
   },
@@ -276,7 +277,7 @@ export const AID_WORKER_EVENTS = [
       G.flags.has('aw_evacuated_and_left') &&
       G.age >= 55 &&
       !G.mem?.awEvacuatedEcho,
-    text: 'There is a specific thing that happens when you tell people you worked in humanitarian aid for a long time. Their faces arrange themselves in a particular expression — admiration, something close to awe. You accept this. You also know that the thing the expression is responding to is not the full account. The full account includes the Tuesday afternoon when the security order came, and you packed a bag, and you got into a vehicle, and through the back window you watched your colleague standing at the gate. You have worked out, in the years since, that your colleague was fine — that staying was survivable. This helps. It does not change what you did.',
+    text: 'There is a thing that happens when you tell people you worked in humanitarian aid for a long time. Their faces arrange themselves in a particular expression — admiration, something close to awe. You accept this. You also know that the thing the expression is responding to is not the full account. The full account includes the Tuesday afternoon when the security order came, and you packed a bag, and you got into a vehicle, and through the back window you watched your colleague standing at the gate. You have worked out, in the years since, that your colleague was fine — that staying was survivable. This helps. It does not change what you did.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 3; p.karma += 3; p.setMem('awEvacuatedEcho', true) },
   },

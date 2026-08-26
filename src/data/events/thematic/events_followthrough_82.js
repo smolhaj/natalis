@@ -84,7 +84,7 @@ export const FOLLOWTHROUGH_82_EVENTS = [
 
   {
     id: 'ft82_chabola_apartment',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('spain_chabola_childhood') &&
@@ -109,7 +109,7 @@ export const FOLLOWTHROUGH_82_EVENTS = [
       G.currentYear >= 1990 &&
       G.age >= 55 &&
       !G.mem?.ft82ChabolaLate,
-    text: 'The neighbourhood where the barraca was is now something else: apartments, a market, a park. The transformation happened slowly and then all at once. You walk through it sometimes. Nothing you can identify as the specific thing that was there remains. The social elevator: your children went to university, which is what the wager was for. The wager paid off. The barraca is gone and its children are graduates and this is the intended outcome of the migration that felt, at the time, like pure risk.',
+    text: 'The neighbourhood where the barraca was is now something else: apartments, a market, a park. The transformation happened slowly and then all at once. You walk through it sometimes. Nothing you can identify as the thing that was there remains. The social elevator: your children went to university, which is what the wager was for. The wager paid off. The barraca is gone and its children are graduates and this is the intended outcome of the migration that felt, at the time, like pure risk.',
     choices: null,
     effect: (p) => {
       p.r += 4
@@ -209,7 +209,7 @@ export const FOLLOWTHROUGH_82_EVENTS = [
       G.currentYear >= 2010 &&
       G.age >= 55 &&
       !G.mem?.ft82FosaResult,
-    text: 'The result of the DNA analysis or the exhumation: a match, or not a match. If there is a match, the family now has the specific knowledge: the body is confirmed, the death is dated, the execution is documented. There is a ceremony, or there is not. The bones are reburied in the family plot, or they stay at the forensic facility pending further identification. The knowledge is different from the certainty that the grave is found. Both are different from the seventy years of not knowing. The archive closes in one sense and opens in another.',
+    text: 'The result of the DNA analysis or the exhumation: a match, or not a match. If there is a match, the family now has the knowledge: the body is confirmed, the death is dated, the execution is documented. There is a ceremony, or there is not. The bones are reburied in the family plot, or they stay at the forensic facility pending further identification. The knowledge is different from the certainty that the grave is found. Both are different from the seventy years of not knowing. The archive closes in one sense and opens in another.',
     choices: null,
     effect: (p) => {
       p.r += 5

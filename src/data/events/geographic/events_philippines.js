@@ -11,7 +11,7 @@ export const PHILIPPINES_EVENTS = [
 
   {
     id: 'ph_martial_law_1972',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Philippines' &&
@@ -38,7 +38,7 @@ export const PHILIPPINES_EVENTS = [
 
   {
     id: 'ph_aquino_assassination_1983',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Philippines' &&
@@ -57,7 +57,7 @@ export const PHILIPPINES_EVENTS = [
 
   {
     id: 'ph_edsa_1986',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Philippines' &&
@@ -84,7 +84,7 @@ export const PHILIPPINES_EVENTS = [
 
   {
     id: 'ph_post_edsa_disillusionment',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Philippines' &&
@@ -116,7 +116,7 @@ export const PHILIPPINES_EVENTS = [
 
   {
     id: 'ph_typhoon_season',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Philippines' &&
@@ -133,7 +133,7 @@ export const PHILIPPINES_EVENTS = [
 
   {
     id: 'ph_haiyan_2013',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Philippines' &&
@@ -164,7 +164,7 @@ export const PHILIPPINES_EVENTS = [
 
   {
     id: 'ph_dynasty_texture',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Philippines' &&
@@ -191,7 +191,7 @@ export const PHILIPPINES_EVENTS = [
 
   {
     id: 'ph_duterte_drug_war',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Philippines' &&
@@ -218,7 +218,7 @@ export const PHILIPPINES_EVENTS = [
 
   {
     id: 'ph_marcos_jr_return_2022',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Philippines' &&

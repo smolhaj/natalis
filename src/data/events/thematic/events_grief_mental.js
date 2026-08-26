@@ -17,6 +17,7 @@ export const GRIEF_MENTAL_EVENTS = [
     weight: 3,
     when: (G) =>
       ['subsaharan'].includes(G.character.country.archetype) &&
+      !G.religion?.startsWith('muslim') &&
       (G.mem.parentDied || G.flags.includes('bereaved')) &&
       !G.mem.funeral_type_shown,
     text: (G) => {
@@ -178,7 +179,7 @@ export const GRIEF_MENTAL_EVENTS = [
       }
       if (country.archetype === 'wealthy_west') {
         const decade = Math.floor((G.character.birthYear + 10) / 10) * 10
-        if (decade <= 1970) return 'A song from the sixties plays somewhere. Not even a song you particularly liked. But it belonged to the house you grew up in — it was in the background of Sundays, of your mother ironing, of the specific quality of afternoon light in that kitchen. The gap between then and now is not measurable in years.'
+        if (decade <= 1970) return 'A song from the sixties plays somewhere. Not even a song you particularly liked. But it belonged to the house you grew up in — it was in the background of Sundays, of your mother ironing, of the quality of afternoon light in that kitchen. The gap between then and now is not measurable in years.'
         if (decade <= 1980) return 'Something from the late seventies — a song that was on the radio during the years your parents were young adults, that you absorbed without knowing it. You hear it now and realise it does not belong to you at all. It belongs to them. To a time before you, which is now also a time after them.'
         return 'The song was a hit the year your parent died. You didn\'t know you\'d filed it that way. Now it surfaces — on a streaming playlist, in a shop — and your body knows before your mind does. You pause whatever you\'re doing and let it pass.'
       }
@@ -343,7 +344,7 @@ export const GRIEF_MENTAL_EVENTS = [
       if (isKorea) {
         return 'Hwabyung is the word for what happens when you suppress anger and grief long enough that it becomes something physical — a lump in the chest, fatigue, heat. It is recognized as a culture-bound syndrome in the DSM. You do not know this. You know that you cannot bring shame to your family by being unwell in this way. You perform wellness with great precision.'
       }
-      return 'In this context, mental illness carries a specific weight: it can affect employment prospects, marriage prospects, your family\'s reputation. You see a doctor once. The doctor is careful. You do not return.'
+      return 'In this context, mental illness carries a weight: it can affect employment prospects, marriage prospects, your family\'s reputation. You see a doctor once. The doctor is careful. You do not return.'
     },
     choices: [
       {
@@ -606,7 +607,7 @@ export const GRIEF_MENTAL_EVENTS = [
       G.age >= 68 &&
       G.friends.length > 0 &&
       !G.mem.grief_friends_gone,
-    text: 'The generation above you is gone — parents, aunts, uncles, teachers. Now the generation alongside you is beginning to go. The friend who knew you at twenty, who has the context for the person you were before you became this person, dies on a Tuesday. The phone call comes while you are making lunch. There is a specific loneliness to outliving the witnesses to your early life. The version of you that only they knew dies with them.',
+    text: 'The generation above you is gone — parents, aunts, uncles, teachers. Now the generation alongside you is beginning to go. The friend who knew you at twenty, who has the context for the person you were before you became this person, dies on a Tuesday. The phone call comes while you are making lunch. There is a loneliness to outliving the witnesses to your early life. The version of you that only they knew dies with them.',
     choices: null,
     effect: (p) => { p.m -= 12; p.r += 6; p.setMem('grief_friends_gone', true) },
   },
@@ -810,7 +811,7 @@ export const GRIEF_MENTAL_EVENTS = [
 
       if (country.name === 'Japan') {
         if (midChildhoodYear >= 1960 && midChildhoodYear <= 1975) {
-          return 'You find an old photograph and in the background there is a Showa-era television set, the small boxy kind, and a calendar on the wall advertising a rice brand that no longer exists. The photograph is of something else but your eyes go to the calendar. Your parent is in the photo. The specific quality of light in the room is the light of that decade. You are not able to explain to your children what it felt like to live inside that time.'
+          return 'You find an old photograph and in the background there is a Showa-era television set, the small boxy kind, and a calendar on the wall advertising a rice brand that no longer exists. The photograph is of something else but your eyes go to the calendar. Your parent is in the photo. The quality of light in the room is the light of that decade. You are not able to explain to your children what it felt like to live inside that time.'
         }
         return 'Your parent\'s handwriting is on a folded piece of paper inside an old book. The handwriting is very specific — a particular way of writing certain characters that you have not seen in years. You close the book and put it back.'
       }
@@ -821,7 +822,7 @@ export const GRIEF_MENTAL_EVENTS = [
         return 'There is a cloth — ankara, the pattern that was everywhere in the years of your childhood — that belonged to your mother. You don\'t wear it. You keep it folded in a drawer. You understand that you are keeping it because the smell, after all these years, is still slightly hers.'
       }
       if (country.name === 'Ireland') {
-        return 'There is a particular smell of turf smoke that belongs to the house you grew up in. You encounter it occasionally — a fireplace somewhere, an older house in the countryside — and the whole of the early years comes back at once: the kitchen table, the pattern of the wallpaper, the specific texture of the carpet in the hall. Memory lives in the nose. You have known this for a long time.'
+        return 'There is a particular smell of turf smoke that belongs to the house you grew up in. You encounter it occasionally — a fireplace somewhere, an older house in the countryside — and the whole of the early years comes back at once: the kitchen table, the pattern of the wallpaper, the texture of the carpet in the hall. Memory lives in the nose. You have known this for a long time.'
       }
       if (country.archetype === 'post_soviet') {
         if (midChildhoodYear >= 1960 && midChildhoodYear <= 1980) {

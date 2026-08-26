@@ -9,7 +9,7 @@ export const PARTNER_WANTS_EVENTS = [
 
   {
     id: 'pw_partner_wants_child',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     cooldown: 8,
     when: (G) => G.partner?.married && (G.children ?? []).length === 0 && G.age >= 26 && G.age <= 36 && (G.partner.relationshipQuality ?? 60) > 50,
@@ -39,7 +39,7 @@ export const PARTNER_WANTS_EVENTS = [
 
   {
     id: 'pw_partner_wants_move',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     cooldown: 10,
     when: (G) => G.partner?.married && G.age >= 24 && G.age <= 38 && (G.partner.relationshipQuality ?? 60) > 45,
@@ -145,7 +145,7 @@ export const PARTNER_WANTS_EVENTS = [
       {
         text: 'Yes.',
         tag: 'couples_therapy',
-        outcome: 'The first session is uncomfortable in the specific way that useful things often are.',
+        outcome: 'The first session is uncomfortable in the way that useful things often are.',
         effect: (p) => { p.m -= 3; p.updatePartnerRel(15); p.setMem('coupleTherapyOffered', true) },
       },
       {
@@ -160,7 +160,7 @@ export const PARTNER_WANTS_EVENTS = [
 
   {
     id: 'pw_partner_wants_meet_family',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     cooldown: 0,
     when: (G) => G.partner && !G.partner.married && G.age >= 20 && G.age <= 34 && (G.partner.relationshipQuality ?? 60) > 60 && !G.mem?.partnerMetFamily,
@@ -200,7 +200,7 @@ export const PARTNER_WANTS_EVENTS = [
       return pick([
         `${pn} says something small — a joke that lands, a comment so specific to your private world that you both laugh. This is the relationship at its best.`,
         `${pn} tells you, in a way they don't usually, that they are glad it was you. The sentence is simple. It does not require a response. You give one anyway.`,
-        `A quiet evening. ${pn} across the room doing something ordinary. You watch them without them knowing. The specific pleasure of being with someone you chose.`,
+        `A quiet evening. ${pn} across the room doing something ordinary. You watch them without them knowing. The pleasure of being with someone you chose.`,
       ])
     },
     choices: null,

@@ -17,7 +17,7 @@ export const MERCHANT_ARC_EVENTS = [
     when: (G) =>
       isMerchant(G) &&
       !G.mem?.merMarketFired,
-    text: `You know the market the way it takes years to know: not the prices — anyone can read those — but the rhythm under the prices. Which day the suppliers are hungry. Which buyer is overextended. Where the information is before it becomes price. This knowledge is not in any ledger; it accumulates in the specific way that market knowledge accumulates, through attention and error and the long slow process of learning how a particular trade breathes.`,
+    text: `You know the market the way it takes years to know: not the prices — anyone can read those — but the rhythm under the prices. Which day the suppliers are hungry. Which buyer is overextended. Where the information is before it becomes price. This knowledge is not in any ledger; it accumulates in the way that market knowledge accumulates, through attention and error and the long slow process of learning how a particular trade breathes.`,
     choices: null,
     effect: (p) => {
       p.m += 8
@@ -143,7 +143,7 @@ export const MERCHANT_ARC_EVENTS = [
       isMerchant(G) &&
       G.age >= 52 &&
       !G.mem?.merSuccessionFired,
-    text: `Who takes this over. This is the question that every merchant who has built something eventually faces. If there are children, the question is whether they want it and whether they have the specific knowledge that cannot be taught in advance of the work. If there are not children or the children are elsewhere, the question is different: do you sell it, find a successor, or close it. The market knowledge you have built does not transfer automatically.`,
+    text: `Who takes this over. This is the question that every merchant who has built something eventually faces. If there are children, the question is whether they want it and whether they have the knowledge that cannot be taught in advance of the work. If there are not children or the children are elsewhere, the question is different: do you sell it, find a successor, or close it. The market knowledge you have built does not transfer automatically.`,
     choices: null,
     effect: (p) => {
       p.m -= 4
@@ -178,7 +178,7 @@ export const MERCHANT_ARC_EVENTS = [
       isMerchant(G) &&
       G.age >= 60 &&
       !G.mem?.merLateFired,
-    text: `The accounting: you spent a career moving goods between people who had them and people who needed them, and you did this in markets that moved in ways you could sometimes anticipate and sometimes could not, and you built a specific knowledge of how a specific trade breathes that took twenty years to fully build and that cannot be replicated quickly. The good years and the bad years are both in the record. The protection you navigated. The market that shifted. You are still here. The trade is in some form still operating. The knowledge is yours and it is leaving the phase of active use.`,
+    text: `The accounting: you spent a career moving goods between people who had them and people who needed them, and you did this in markets that moved in ways you could sometimes anticipate and sometimes could not, and you built a knowledge of how a specific trade breathes that took twenty years to fully build and that cannot be replicated quickly. The good years and the bad years are both in the record. The protection you navigated. The market that shifted. You are still here. The trade is in some form still operating. The knowledge is yours and it is leaving the phase of active use.`,
     choices: null,
     effect: (p) => {
       p.m += 10

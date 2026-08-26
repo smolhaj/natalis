@@ -166,17 +166,39 @@ export const SEASONAL_EVENTS = [
 
   {
     id: 'sea_ramadan_texture',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.season === 'dry' &&
-      (G.religion === 'muslim' || G.religion === 'sunni' || G.religion === 'shia') &&
+      G.religion?.startsWith('muslim') &&
       ['developing_urban', 'developing_unstable', 'subsaharan', 'wealthy_gulf'].includes(G.character.country?.archetype) &&
       G.age >= 18 && G.age <= 40 &&
       !G.mem?.seaRamadan,
-    text: 'Ramadan. The days are long this year — the heat has arrived early. By afternoon the city has a particular quiet. Iftar: the moment when the fast breaks, the specific relief of it, the dates and water first. The meals are bigger than usual and eaten with people. The month has a texture that the rest of the year doesn\'t have.',
+    text: 'Ramadan. The days are long this year — the heat has arrived early. By afternoon the city has a particular quiet. Iftar: the moment when the fast breaks, the relief of it, the dates and water first. The meals are bigger than usual and eaten with people. The month has a texture that the rest of the year doesn\'t have.',
     choices: null,
     effect: (p) => { p.m += 6; p.karma += 5; p.setMem('seaRamadan', true) },
   },
 
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_first_warm_day',
+    phase: null,
+    weight: 3,
+    when: (G) => G.age >= 10 && !G.mem?.ordFirstWarmDay && Math.random() < 0.14,
+    text: `The first properly warm day arrives on a weekday and the entire settlement behaves differently. Doors are open that are never open. Somebody has brought a chair outside and is sitting in it doing nothing, in view of everyone, without embarrassment. You take your coat off outdoors for the first time since October and the air on your forearms is a physical event.`,
+    choices: null,
+    effect: (p) => { p.m += 8; p.h += 2; p.setMem('ordFirstWarmDay', true) },
+  },
+
+  {
+    id: 'ord_food_pleasure_late',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 58 && !G.mem?.ordFoodLate && Math.random() < 0.16,
+    text: `You eat the first good tomato of the year standing at the counter with salt on it and the juice going down your wrist. It is not nostalgia and it is not about anything. It is simply the best thing that will happen today and you are entirely present for the ninety seconds it lasts.`,
+    choices: null,
+    effect: (p) => { p.m += 9; p.h += 2; p.setMem('ordFoodLate', true) },
+  },
 ]

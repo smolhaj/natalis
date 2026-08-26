@@ -16,7 +16,7 @@ export const DRIVER_ARC_EVENTS = [
     when: (G) =>
       isDriver(G) &&
       !G.mem?.drvCityFired,
-    text: `You know the city in a specific way that most people who live in it do not. You know it by its traffic — not the map but the living system of the map, which routes breathe at what hours, where the signals are badly timed, where the shortcuts become shortcuts only in specific conditions. This knowledge is professional knowledge. You carry people across the city using it. The city is your material.`,
+    text: `You know the city in a way that most people who live in it do not. You know it by its traffic — not the map but the living system of the map, which routes breathe at what hours, where the signals are badly timed, where the shortcuts become shortcuts only in specific conditions. This knowledge is professional knowledge. You carry people across the city using it. The city is your material.`,
     choices: null,
     effect: (p) => {
       p.m += 8
@@ -143,7 +143,7 @@ export const DRIVER_ARC_EVENTS = [
       isDriver(G) &&
       G.age >= 60 &&
       !G.mem?.drvLateFired,
-    text: `The city is the city you know better than most people who live in it, and the knowledge is leaving the useful phase because the body is moving into the phase where the twelve-hour seat in the same posture is not what it used to be. You have carried people across this map for most of your working life. Some of them told you things in the back seat that they did not tell anyone else. The accident happened and you went back to work. The platform changed the work and you adapted. The back has opinions that have been accumulating for twenty years. The city still moves the way you know it moves, at the hours you know it moves, for the reasons you understand. This will be true for a while after you stop driving it.`,
+    text: `You know this city better than most of the people who live in it, and the knowledge is about to stop being useful, because twelve hours in the same seat is no longer something the back agrees to. You have carried strangers across this map for forty years. Some of them said things into the rear-view mirror they had not said to anyone. You still know which streets go wrong at ten past four and why. That will stay true for a while after you stop driving it.`,
     choices: null,
     effect: (p) => {
       p.m += 8

@@ -154,7 +154,7 @@ export const TECHNOLOGY_EVENTS = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => G.currentYear >= 2011 && G.currentYear <= 2018 && (developing(G) || poor(G)) && G.age >= 16 && G.wealthTier <= 2,
-    text: 'You are the first in your family to have a smartphone. Your mother asks you to show her how to video call your brother who is working abroad. You do. She sees his face on a screen for the first time in three years and covers her mouth. The phone has a specific weight after that.',
+    text: 'You are the first in your family to have a smartphone. Your mother asks you to show her how to video call your brother who is working abroad. You do. She sees his face on a screen for the first time in three years and covers her mouth. The phone has a weight after that.',
     choices: null,
     effect: (p) => { p.m += 15; p.e += 5; p.addFlag('has_smartphone') },
   },
@@ -162,7 +162,7 @@ export const TECHNOLOGY_EVENTS = [
   // ── SOCIAL MEDIA ─────────────────────────────────────────────────────────────
   {
     id: 'tech_social_media_arrives',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) => G.currentYear >= 2008 && G.currentYear <= 2013 && G.age >= 13 && G.age <= 22,
     text: 'A social network is where everyone is now. You make a profile. You add people. You learn that public life and private life are the same place now if you\'re not careful. You spend more time on it than you intend to. So does everyone.',
@@ -253,4 +253,16 @@ export const TECHNOLOGY_EVENTS = [
     effect: (p) => { p.mo += 1500; p.e += 5; p.w += 4; p.addFlag('mobile_business') },
   },
 
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_teaching_parent_the_device',
+    phase: null,
+    weight: 3,
+    when: (G) => G.currentYear >= 1998 && G.age >= 20 && G.age <= 55 && (G.parents?.mother?.alive || G.parents?.father?.alive) && !G.mem?.ordTeachDevice && Math.random() < 0.16,
+    text: `You are explaining the same three steps for the fourth time and your parent is writing them down on the back of an envelope in an order that will not work. Then they get it. Then they do it again unaided while narrating every step out loud to you. They are so pleased that you have to look at the floor for a second.`,
+    choices: null,
+    effect: (p) => { p.m += 9; p.s += 2; p.setMem('ordTeachDevice', true) },
+  },
 ]

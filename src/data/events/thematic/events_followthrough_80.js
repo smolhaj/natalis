@@ -171,7 +171,7 @@ export const FOLLOWTHROUGH_80_EVENTS = [
       G.currentYear >= 2023 &&
       G.age >= 30 &&
       !G.mem?.ft80PisOpp23,
-    text: 'October 2023. The Tusk coalition defeats PiS after eight years in government. The coalition wins more seats. PiS wins more votes. The constitution and the courts and the independent institutions are now the subject of a years-long argument about how to restore them without using the same methods the other side used. The restoration is harder than the dismantling. You follow it with the specific attention of someone who watched the dismantling and was told they were being alarmist.',
+    text: 'October 2023. The Tusk coalition defeats PiS after eight years in government. The coalition wins more seats. PiS wins more votes. The constitution and the courts and the independent institutions are now the subject of a years-long argument about how to restore them without using the same methods the other side used. The restoration is harder than the dismantling. You follow it with the attention of someone who watched the dismantling and was told they were being alarmist.',
     choices: null,
     effect: (p) => {
       p.m += 5

@@ -2,7 +2,9 @@
 // Contemplative layer — 30 events.
 // Themes: the quality of certain silences, what work teaches the hands,
 // the newspaper as archaeological layer, illness in someone else's body,
-// the specific light of childhood, what you didn't say when you could.
+// the light of childhood, what you didn't say when you could.
+
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_37 = [
 
@@ -30,7 +32,7 @@ export const EVENTS_SONDER_37 = [
     id: 'sonder_37_c',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 55 && !G.mem?.s37c,
+    when: (G) => place.isLiterate(G) && (G.age >= 55 && !G.mem?.s37c),
     text: 'An old newspaper: the advertisements for things that no longer exist, the headlines that were the crisis at the time and are now a footnote or are not in any index, the crossword someone filled in in pencil. The newspaper is an archaeological layer. You hold it and it is simultaneously very specific — this particular Tuesday — and very distant.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s37c', true) },
@@ -51,7 +53,7 @@ export const EVENTS_SONDER_37 = [
     phase: 'childhood',
     weight: 2,
     when: (G) => !G.mem?.s37e,
-    text: 'There is a specific quality to the light of the place where you were a child that other places do not have. Not better or worse. Specific. The angle of the afternoon sun on that wall. The particular way the shadows moved through that room. You cannot reproduce it because it was not the light itself but the light in relation to everything else that was there at that time.',
+    text: 'There is a quality to the light of the place where you were a child that other places do not have. Not better or worse. Specific. The angle of the afternoon sun on that wall. The particular way the shadows moved through that room. You cannot reproduce it because it was not the light itself but the light in relation to everything else that was there at that time.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s37e', true) },
   },
@@ -61,7 +63,7 @@ export const EVENTS_SONDER_37 = [
     phase: 'midlife',
     weight: 2,
     when: (G) => !G.mem?.s37f,
-    text: 'The thing you didn\'t say when you could have said it has a specific weight now that the opportunity is closed. Not necessarily regret. Something more precise than regret: the location of the exact moment, the person across the table, what you were about to say and didn\'t. You can locate it in your memory the way you locate a specific street.',
+    text: 'The thing you didn\'t say when you could have said it has a weight now that the opportunity is closed. Not necessarily regret. Something more precise than regret: the location of the exact moment, the person across the table, what you were about to say and didn\'t. You can locate it in your memory the way you locate a specific street.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s37f', true) },
   },
@@ -70,23 +72,13 @@ export const EVENTS_SONDER_37 = [
     id: 'sonder_37_g',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => !G.mem?.s37g,
+    when: (G) => G.season === 'winter' && (!G.mem?.s37g),
     text: 'The plant in the window that you have kept alive for three years has died. You don\'t know why. You have done nothing differently. The plant and you have been through the same winters and summers and the plant has not survived whatever this winter was. You are disproportionately sad about this and you know you are disproportionate and you are sad anyway.',
     choices: null,
     effect: (p) => { p.m -= 1; p.setMem('s37g', true) },
   },
 
-  {
-    id: 'sonder_37_h',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => !G.mem?.s37h,
-    text: 'The smell of rain on dry earth. The name for it is petrichor, which is a word most people learned much later than the smell. The smell was there before the word. You know it as a bodily thing, as something the nose knows before the brain categorizes it. It means something different in different climates: the specific relief of the first rain of the dry season is not the same smell as the smell of rain on a July sidewalk.',
-    choices: null,
-    effect: (p) => { p.m += 2; p.setMem('s37h', true) },
-  },
-
-  {
+{
     id: 'sonder_37_i',
     phase: 'young_adult',
     weight: 2,
@@ -96,17 +88,7 @@ export const EVENTS_SONDER_37 = [
     effect: (p) => { p.setMem('s37i', true) },
   },
 
-  {
-    id: 'sonder_37_j',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => !G.mem?.s37j,
-    text: 'The friend from a long time ago whose name comes up and you realise you have not thought of them in years. The realisation includes the slightly guilty calculation of whether that means something about the friendship. It doesn\'t mean anything specific. Attention moves. The memory is still available — specific moments, the sound of their voice — just not visited.',
-    choices: null,
-    effect: (p) => { p.setMem('s37j', true) },
-  },
-
-  {
+{
     id: 'sonder_37_k',
     phase: 'late_life',
     weight: 2,
@@ -140,6 +122,7 @@ export const EVENTS_SONDER_37 = [
     id: 'sonder_37_n',
     phase: 'young_adult',
     weight: 2,
+    isGlimpse: true,
     when: (G) => !G.mem?.s37n,
     text: 'The person crying on the train. Not loudly — trying to be small about it. No one is looking at them, which is the urban compact: we will not see your grief in public and you will not have to perform composure for us. The grief is there. The non-looking is also there. Both are correct.',
     choices: null,
@@ -150,7 +133,7 @@ export const EVENTS_SONDER_37 = [
     id: 'sonder_37_o',
     phase: 'midlife',
     weight: 2,
-    when: (G) => !G.mem?.s37o,
+    when: (G) => place.isLiterate(G) && (!G.mem?.s37o),
     text: 'You have kept a piece of paper for years without being able to articulate why. The paper has something on it — a calculation, an address, a few words in handwriting — that has seemed important each time you have been about to throw it away. You have not thrown it away. It is in the drawer with the other things you have not thrown away.',
     choices: null,
     effect: (p) => { p.setMem('s37o', true) },
@@ -161,7 +144,7 @@ export const EVENTS_SONDER_37 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => !G.mem?.s37p,
-    text: 'A song playing in a shop triggers something that takes several seconds to identify. The place it is from. The year it is from. The specific feeling of that year is available briefly — not the events of the year but the texture of being in that year, the emotional climate of it — and then the song ends and the texture goes.',
+    text: 'A song playing in a shop triggers something that takes several seconds to identify. The place it is from. The year it is from. The feeling of that year is available briefly — not the events of the year but the texture of being in that year, the emotional climate of it — and then the song ends and the texture goes.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s37p', true) },
   },
@@ -181,7 +164,7 @@ export const EVENTS_SONDER_37 = [
     phase: 'childhood',
     weight: 2,
     when: (G) => !G.mem?.s37r,
-    text: 'You learned to swim or you did not learn to swim and in one version you still remember the day it became possible — the specific moment the body understood buoyancy and acted on it before the mind did. In the other version you remember the edge of the water and the adults in the water and the gap between you and them.',
+    text: 'You learned to swim or you did not learn to swim and in one version you still remember the day it became possible — the moment the body understood buoyancy and acted on it before the mind did. In the other version you remember the edge of the water and the adults in the water and the gap between you and them.',
     choices: null,
     effect: (p) => { p.setMem('s37r', true) },
   },
@@ -221,7 +204,7 @@ export const EVENTS_SONDER_37 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => !G.mem?.s37v,
-    text: 'The specific pleasure of a meal you cooked well: not the eating but the state just before the eating, when the thing you were making has turned into the thing you intended and the kitchen has the smell of the effort. This particular pleasure is available without requiring anyone else.',
+    text: 'The pleasure of a meal you cooked well: not the eating but the state just before the eating, when the thing you were making has turned into the thing you intended and the kitchen has the smell of the effort. This particular pleasure is available without requiring anyone else.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s37v', true) },
   },
@@ -291,7 +274,7 @@ export const EVENTS_SONDER_37 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => !G.mem?.s37ac,
-    text: 'The first time you were in a room where everyone was older than you. The specific feeling of being the youngest person in a room: the watching-before-speaking, the sense that the conversation has a history you don\'t have access to, the calculation of when to enter. You eventually learned to enter. The calculation became faster.',
+    text: 'The first time you were in a room where everyone was older than you. The feeling of being the youngest person in a room: the watching-before-speaking, the sense that the conversation has a history you don\'t have access to, the calculation of when to enter. You eventually learned to enter. The calculation became faster.',
     choices: null,
     effect: (p) => { p.setMem('s37ac', true) },
   },
@@ -300,7 +283,7 @@ export const EVENTS_SONDER_37 = [
     id: 'sonder_37_ad',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 60 && !G.mem?.s37ad,
+    when: (G) => G.season === 'winter' && (G.age >= 60 && !G.mem?.s37ad),
     text: 'The garden in November: the things that died back, the things that will return, the things you are not sure about. The gardener\'s knowledge is different from other knowledge: it requires the winter to remain visible as what it is — not failure but the condition for what comes next. You know this. The knowing helps and does not help.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s37ad', true) },

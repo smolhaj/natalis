@@ -8,7 +8,7 @@ const IS_UYGHUR = (G) => G.character.ethnicity === 'uyghur'
 export const UYGHUR_EVENTS = [
   {
     id: 'uyg_ramadan_restricted',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) => IS_UYGHUR(G) && G.currentYear >= 2000 && G.currentYear <= 2016 && G.age >= 16 && !G.mem.uygRamadan,
     text: 'Government employees and students are prohibited from fasting during Ramadan. The announcement arrives via work unit memo. You fast at home, carefully. The colleague who doesn\'t know you well enough asks if you want lunch. You say yes.',

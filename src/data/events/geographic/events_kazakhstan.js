@@ -13,7 +13,7 @@ export const KAZAKHSTAN_EVENTS = [
 
   {
     id: 'kaz_language_question',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_KAZAKH(G) &&
@@ -41,7 +41,7 @@ export const KAZAKHSTAN_EVENTS = [
 
   {
     id: 'kaz_russian_coexistence',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_KAZAKH(G) &&
@@ -70,7 +70,7 @@ export const KAZAKHSTAN_EVENTS = [
 
   {
     id: 'kaz_nursultan_rename',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_KAZAKH(G) &&
@@ -86,7 +86,7 @@ export const KAZAKHSTAN_EVENTS = [
 
   {
     id: 'kaz_zhanaozen_2011',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_KAZAKH(G) &&
@@ -102,7 +102,7 @@ export const KAZAKHSTAN_EVENTS = [
 
   {
     id: 'kaz_nazarbayev_steps_down',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_KAZAKH(G) &&
@@ -118,7 +118,7 @@ export const KAZAKHSTAN_EVENTS = [
 
   {
     id: 'kaz_qantar_protests',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_KAZAKH(G) &&
@@ -162,7 +162,7 @@ export const KAZAKHSTAN_EVENTS = [
 
   {
     id: 'kaz_oil_contradiction',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_KAZAKH(G) &&
@@ -178,7 +178,7 @@ export const KAZAKHSTAN_EVENTS = [
 
   {
     id: 'kaz_steppe_memory',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_KAZAKH(G) &&

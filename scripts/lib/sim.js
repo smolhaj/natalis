@@ -1,0 +1,226 @@
+/**
+ * scripts/lib/sim.js
+ *
+ * Headless simulation harness — the only audit here that can see what the game
+ * actually does.
+ *
+ * Every static check in this directory reasons about whether content COULD
+ * fire. None of them can tell you that the contemplative layer is taking 70%
+ * of every life, that 14,808 lines of year texture reach 2% of years, or that
+ * a 1962 Nigerian dies at 8. Those are properties of the running engine and
+ * only appear when you run it. So this runs the real engine — the real store,
+ * the real tick, the real selector — over whole lives and reports what came
+ * out the other end.
+ *
+ * It is deliberately tolerant of an engine mid-change: a life that throws is
+ * recorded and the run continues, because a crash report is more useful than
+ * no numbers at all.
+ */
+
+import { registerResolveHooks } from './register.js'
+import { idIndex } from './corpus.js'
+
+registerResolveHooks()
+
+// The store writes saves on every age-up; in node there is no localStorage and
+// the whole run would die on the first year.
+function stubStorage() {
+  if (globalThis.localStorage) return
+  const mem = new Map()
+  globalThis.localStorage = {
+    getItem: k => (mem.has(k) ? mem.get(k) : null),
+    setItem: (k, v) => mem.set(k, String(v)),
+    removeItem: k => mem.delete(k),
+    clear: () => mem.clear(),
+  }
+}
+
+export const DEFAULT_CONFIGS = [
+  ['Nigeria', 1962],        // the life the whole project is named for
+  ['United States', 1950],
+  ['India', 1975],
+  ['Germany', 1970],
+  ['Japan', 1980],
+  ['Brazil', 1995],
+  ['Ethiopia', 1974],       // an entire country's content was unreachable
+  ['Kenya', 1985],
+  ['Russia', 1960],
+  ['Egypt', 1990],
+]
+
+/** Which authored body of work an event id came from. */
+export function moduleBucket(file) {
+  if (!file) return 'unlocated'
+  if (/\/geographic\//.test(file)) return 'geographic'
+  if (/\/specific_lives\//.test(file)) return 'specific_lives'
+  if (/\/sonder\//.test(file)) return 'sonder'
+  if (/followthrough/.test(file)) return 'followthrough'
+  if (/\/lifecycle\//.test(file)) return 'lifecycle'
+  if (/\/thematic\//.test(file)) return 'thematic'
+  if (/\/prison\//.test(file)) return 'prison'
+  if (/careers\.js$/.test(file)) return 'career'
+  if (/events\.js$/.test(file)) return 'base'
+  if (/^src\/engine\//.test(file)) return 'engine'
+  return 'other'
+}
+
+/** events_nigeria_depth.js → nigeria, so "distinct countries covered" is countable. */
+export function countrySlug(file) {
+  const m = file?.match(/events_([a-z_0-9]+)\.js$/)
+  if (!m) return null
+  return m[1].replace(/_depth(_\d+)?$/, '').replace(/_arcs?(_\d+)?$/, '').replace(/_\d+$/, '')
+}
+
+const quantile = (sorted, q) => {
+  if (!sorted.length) return null
+  const pos = (sorted.length - 1) * q
+  const lo = Math.floor(pos), hi = Math.ceil(pos)
+  return lo === hi ? sorted[lo] : Math.round(sorted[lo] + (sorted[hi] - sorted[lo]) * (pos - lo))
+}
+
+export async function runSimulation({
+  configs = DEFAULT_CONFIGS,
+  lives = 12,
+  mode = 'active',
+  maxYears = 110,
+  seedLabel = '',
+} = {}) {
+  stubStorage()
+  // The engine is under active change; a module that will not even load should
+  // be reported as one clear line, not as a stack trace from inside a harness.
+  let tick, resolveAutoEvent, resolveChoice, useGameStore
+  try {
+    ;({ tick, resolveAutoEvent, resolveChoice } = await import('../../src/engine/tick.js'))
+    ;({ useGameStore } = await import('../../src/store/gameStore.js'))
+  } catch (err) {
+    return {
+      fatal: `the engine could not be loaded: ${err.message}`,
+      mode, configs: [], totals: { lives: 0, years: 0, errors: [err.message] },
+      byBucket: new Map(), countriesSeen: new Set(), unlocated: new Map(), otherFiles: new Map(),
+      share: {}, per100Lives: {}, glimpsesPerLife: 0,
+    }
+  }
+  const index = idIndex()
+
+  const totals = {
+    lives: 0, years: 0, errors: [],
+    events: 0, contemplative: 0, anchored: 0, earned: 0, universal: 0,
+    choice: 0, glimpse: 0, texture: 0, mundane: 0, world: 0, headline: 0,
+    longestContemplativeRun: 0,
+  }
+  const byBucket = new Map()
+  const countriesSeen = new Set()
+  const unlocated = new Map()   // event id → times fired, for ids the index cannot place
+  const otherFiles = new Map()
+  const perConfig = []
+
+  for (const [countryName, birthYear] of configs) {
+    const rec = {
+      country: countryName, birthYear, lives: 0, years: 0,
+      deaths: [], survivedChildhood: [], under5: 0,
+      contemplative: 0, events: 0, texture: 0, errors: 0,
+      buckets: new Map(),
+    }
+    for (let i = 0; i < lives; i++) {
+      let s
+      try {
+        useGameStore.getState().startCuratedGame({ country: countryName, birthYear })
+        s = { ...useGameStore.getState(), mode }
+      } catch (err) {
+        totals.errors.push(`${countryName}/${birthYear}: startCuratedGame threw: ${err.message}`)
+        rec.errors++
+        continue
+      }
+      totals.lives++; rec.lives++
+      let run = 0
+
+      for (let y = 0; y < maxYears && !s.dead; y++) {
+        const before = s.log.length
+        try {
+          s = tick(s)
+          const ev = s.pendingEvent
+          if (ev) {
+            totals.events++; rec.events++
+            const register = ev.register ?? (ev.contemplative ? 'contemplative' : 'universal')
+            // 'contemplative' is counted once, below — incrementing it here too
+            // would report the layer at twice its real share.
+            if (register !== 'contemplative' && register in totals) totals[register]++
+            if (ev.contemplative || register === 'contemplative') {
+              totals.contemplative++; rec.contemplative++
+              run++
+              if (run > totals.longestContemplativeRun) totals.longestContemplativeRun = run
+            } else run = 0
+            if (ev.isGlimpse) totals.glimpse++
+            if (ev.choices?.length) totals.choice++
+
+            const loc = index.get(ev.id)
+            const bucket = moduleBucket(loc?.file)
+            // 'unlocated' is not a defect: illness events build their id at
+            // runtime (illness_diabetes_53), so no source line declares it.
+            if (bucket === 'unlocated') unlocated.set(ev.id, (unlocated.get(ev.id) ?? 0) + 1)
+            else if (bucket === 'other') otherFiles.set(loc.file, (otherFiles.get(loc.file) ?? 0) + 1)
+            byBucket.set(bucket, (byBucket.get(bucket) ?? 0) + 1)
+            rec.buckets.set(bucket, (rec.buckets.get(bucket) ?? 0) + 1)
+            if (bucket === 'geographic') {
+              const slug = countrySlug(loc?.file)
+              if (slug) countriesSeen.add(slug)
+            }
+
+            s = ev.isAutomatic || !ev.choices?.length
+              ? resolveAutoEvent(s)
+              : resolveChoice(s, Math.floor(Math.random() * ev.choices.length))
+            if (s.pendingEvent) s = { ...s, pendingEvent: null } // never stall the run
+          }
+          if (s.pendingMinigame) s = { ...s, pendingMinigame: null }
+          if (s.pendingTrial) {
+            useGameStore.setState(s)
+            useGameStore.getState().resolveTrial('none')
+            s = { ...useGameStore.getState(), mode }
+          }
+        } catch (err) {
+          totals.errors.push(`${countryName}/${birthYear} @age ${s.age}: ${err.message}`)
+          rec.errors++
+          break
+        }
+        totals.years++; rec.years++
+        for (const entry of s.log.slice(before)) {
+          if (entry.isTexture) { totals.texture++; rec.texture++ }
+          if (entry.isMundane) totals.mundane++
+          if (entry.isWorld) totals.world++
+          if (entry.isHeadline) totals.headline++
+        }
+      }
+      rec.deaths.push(s.age)
+      if (s.age < 5) rec.under5++
+      else rec.survivedChildhood.push(s.age)
+    }
+    const sorted = [...rec.deaths].sort((a, b) => a - b)
+    const adult = [...rec.survivedChildhood].sort((a, b) => a - b)
+    rec.medianDeathAge = quantile(sorted, 0.5)
+    rec.q1DeathAge = quantile(sorted, 0.25)
+    rec.q3DeathAge = quantile(sorted, 0.75)
+    rec.medianAdultDeathAge = quantile(adult, 0.5)
+    perConfig.push(rec)
+  }
+
+  const pct = k => (totals.years ? (100 * totals[k]) / totals.years : 0)
+  return {
+    fatal: null,
+    mode, seedLabel, configs: perConfig, totals, byBucket, countriesSeen, unlocated, otherFiles,
+    share: {
+      contemplative: pct('contemplative'),
+      anchored: pct('anchored'),
+      earned: pct('earned'),
+      universal: pct('universal'),
+      choice: pct('choice'),
+      texture: pct('texture'),
+      mundane: pct('mundane'),
+      anyEvent: pct('events'),
+      world: pct('world'),
+    },
+    per100Lives: Object.fromEntries(
+      [...byBucket].map(([k, v]) => [k, totals.lives ? Math.round((100 * v) / totals.lives) : 0])
+    ),
+    glimpsesPerLife: totals.lives ? totals.glimpse / totals.lives : 0,
+  }
+}

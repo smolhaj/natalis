@@ -69,7 +69,7 @@ export const SPORT_EVENTS = [
       if (['South Africa', 'Zimbabwe', 'Kenya'].includes(cn)) {
         return 'The game was a white sport for most of its history here — the club memberships, the provincial colours, the national team. It has opened. The history of its closure is still recent enough to be present in the room when you play. You play it anyway. What you make of it is your own.'
       }
-      return 'Cricket is summer. The whites, the crease, the specific sound of a well-timed drive. Some children love it immediately; others find it the longest afternoon of the week. You have already decided which you are.'
+      return 'Cricket is summer. The whites, the crease, the sound of a well-timed drive. Some children love it immediately; others find it the longest afternoon of the week. You have already decided which you are.'
     },
     choices: null,
     effect: (p) => {
@@ -119,7 +119,7 @@ export const SPORT_EVENTS = [
       const arch = G.character.country.archetype
       return (
         ['subsaharan', 'developing_urban'].includes(arch) &&
-        G.stats.fitness >= 60 &&
+        G.fitness >= 60 &&
         G.age >= 13 && G.age <= 17 &&
         G.flags.includes('football_childhood') &&
         !G.mem?.sptScoutArrives
@@ -194,7 +194,7 @@ export const SPORT_EVENTS = [
     text: (G) => {
       const cn = G.character.country.name
       if (SOUTH_ASIAN_CRICKET.includes(cn)) {
-        return 'The British brought cricket to the subcontinent as a game the colonisers played and the colonised were permitted to learn. The game took root and the colonisers left and the game stayed. Now India wins the World Cup and England comes here to play and loses. There is a specific satisfaction in this that does not require elaboration. The game was supposed to teach you something about yourself. It taught you something about them instead.'
+        return 'The British brought cricket to the subcontinent as a game the colonisers played and the colonised were permitted to learn. The game took root and the colonisers left and the game stayed. Now India wins the World Cup and England comes here to play and loses. There is a satisfaction in this that does not require elaboration. The game was supposed to teach you something about yourself. It taught you something about them instead.'
       }
       return 'Cricket here was a white sport for most of its history. The club memberships, the provincial colours, the national team. The sport has opened; the history of its closure is still close enough to be present. You play it anyway. What you make of it is your own.'
     },
@@ -211,7 +211,7 @@ export const SPORT_EVENTS = [
 
   {
     id: 'spt_world_cup_year',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     cooldown: 0,
     when: (G) => {
@@ -253,7 +253,7 @@ export const SPORT_EVENTS = [
 
   {
     id: 'spt_adult_league',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     cooldown: 0,
     when: (G) =>
@@ -330,7 +330,7 @@ export const SPORT_EVENTS = [
     text: (G) => {
       const cn = G.character.country.name
       if (SOUTH_ASIAN_CRICKET.includes(cn)) {
-        return 'From here the arc is long enough to see whole: the game came with the British, was learned under the British, was used to demonstrate things to the British, and now is played in front of billions while England qualifies for the knockout stages and goes home early. The specific pleasure of this has not diminished over decades. You do not have to explain it to anyone who grew up here.'
+        return 'From here the arc is long enough to see whole: the game came with the British, was learned under the British, was used to demonstrate things to the British, and now is played in front of billions while England qualifies for the knockout stages and goes home early. The pleasure of this has not diminished over decades. You do not have to explain it to anyone who grew up here.'
       }
       return 'You have watched the game change from what it was when you first played it. Who controls the money, who is on the posters, whose country wins the tournaments. The game that was supposed to belong to certain people no longer belongs to them in the same way. You notice this without quite knowing what to do with the noticing.'
     },
@@ -342,4 +342,26 @@ export const SPORT_EVENTS = [
     },
   },
 
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_swimming_where_you_shouldnt',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) => G.age >= 13 && G.age <= 17 && G.stats.health >= 45 && !G.mem?.ordSwim,
+    text: `The water is colder than anyone admits for the first ninety seconds and then it is not. There is a sign somewhere behind you that says something. Your body does the thing bodies do when they are seventeen and in water: everything works, nothing hurts, you can go under and stay under. Someone shouts your name from the bank and you do not answer, just to be underneath a while longer.`,
+    choices: null,
+    effect: (p) => { p.m += 10; p.h += 4; p.setMem('ordSwim', true) },
+  },
+
+  {
+    id: 'ord_sea_in_october',
+    phase: null,
+    weight: 3,
+    when: (G) => G.age >= 38 && G.age <= 70 && G.stats.health >= 40 && !G.mem?.ordSeaOctober && Math.random() < 0.14,
+    text: `You go in in October, which is a thing you started doing for no articulable reason. The cold takes the top of your head off for a count of ten and then hands you back a body that is entirely awake. You swim out as far as the second marker and turn over. On the way home you are hungry in a way you have not been hungry in years.`,
+    choices: null,
+    effect: (p) => { p.m += 11; p.h += 5; p.setMem('ordSeaOctober', true) },
+  },
 ]

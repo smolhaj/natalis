@@ -9,7 +9,7 @@ export const FOLLOWTHROUGH_61_EVENTS = [
 
   {
     id: 'ft61_imf_midlife',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('kr_dep_imf_generation') &&
@@ -37,7 +37,7 @@ export const FOLLOWTHROUGH_61_EVENTS = [
 
   {
     id: 'ft61_jeonse_midlife_reckoning',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('kr_dep_jeonse_generation') &&
@@ -65,7 +65,7 @@ export const FOLLOWTHROUGH_61_EVENTS = [
 
   {
     id: 'ft61_hell_joseon_midlife',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('kr_dep_hell_joseon') &&

@@ -62,7 +62,7 @@ export const CHILDREN_ARC_EVENTS = [
         return a >= 8 && a <= 14
       })
       const name = child?.name ?? 'Your child'
-      return `The teacher requests a meeting. She is kind about it, which is almost harder — the careful phrasing, the concern that has been accumulating for some time before you knew. ${name} is falling behind in reading. Not dramatically. Enough. You drive home with the specific silence of a problem you should have noticed earlier.`
+      return `The teacher requests a meeting. She is kind about it, which is almost harder — the careful phrasing, the concern that has been accumulating for some time before you knew. ${name} is falling behind in reading. Not dramatically. Enough. You drive home with the silence of a problem you should have noticed earlier.`
     },
     choices: [
       {
@@ -105,7 +105,7 @@ export const CHILDREN_ARC_EVENTS = [
         return a >= 17 && a <= 19
       })
       const name = child?.name ?? 'Your child'
-      return `The letter arrives, or the email, or the phone notification — the format has changed but the fact has not. ${name} got in. You stand in the kitchen with the news and feel something you cannot name cleanly: pride, and the cost of it, and the distance that is coming, and pride again.`
+      return `The letter arrives on a Thursday and sits on the hall table until she is home to open it. ${name} got in. You stand in the kitchen with the news and feel something you cannot name cleanly: pride, and the cost of it, and the distance that is coming, and pride again.`
     },
     choices: [
       {
@@ -402,7 +402,7 @@ export const CHILDREN_ARC_EVENTS = [
       {
         text: 'Stay in your position — you believe what you believe',
         tag: null,
-        outcome: 'They do not come home for months. The house is quiet with a specific quality of quiet.',
+        outcome: 'They do not come home for months. The house is quiet with a quality of quiet.',
         effect: (p) => { p.m -= 20; p.r += 18; p.karma -= 8; p.addFlag('child_came_out'); p.setMem('childComesOut', true) },
       },
     ],
@@ -991,7 +991,7 @@ export const CHILDREN_ARC_EVENTS = [
         return a >= 40
       })
       const name = child?.name ?? 'Your child'
-      return `${name} has started checking in differently. More frequently, and with a quality to the questions that is new — how are you eating, are you sleeping, have you seen the doctor. You recognize the posture because it is how you used to ask about them. The reversal is strange and, underneath the strangeness, a specific kind of love.`
+      return `${name} has started checking in differently. More frequently, and with a quality to the questions that is new — how are you eating, are you sleeping, have you seen the doctor. You recognize the posture because it is how you used to ask about them. The reversal is strange and, underneath the strangeness, a kind of love.`
     },
     choices: [
       {
@@ -1030,7 +1030,7 @@ export const CHILDREN_ARC_EVENTS = [
         return a >= 30 && a <= 55
       })
       const name = child?.name ?? 'Your child'
-      return `${name} has a diagnosis. The word lands differently when it is your child — regardless of their age, regardless of your age. You have been preparing for certain losses your whole adult life. This was not one of them. The wrong order of it is the specific thing. You do not know how to hold it correctly because there is no correct way.`
+      return `${name} has a diagnosis. The word lands differently when it is your child — regardless of their age, regardless of your age. You have been preparing for certain losses your whole adult life. This was not one of them. The wrong order of it is the thing. You do not know how to hold it correctly because there is no correct way.`
     },
     choices: [
       {
@@ -1317,7 +1317,7 @@ export const CHILDREN_ARC_EVENTS = [
       const name = child?.name?.split(' ')[0] ?? 'Your child'
       const q = child?.relationshipQuality ?? 60
       if (q >= 65) {
-        return `${name} is sixteen. There are parts of their life you are not part of — friends you have not met, conversations you will not hear. This is correct. You watch them from a small distance and feel the specific satisfaction of a person becoming themselves without requiring your permission.`
+        return `${name} is sixteen. There are parts of their life you are not part of — friends you have not met, conversations you will not hear. This is correct. You watch them from a small distance and feel the satisfaction of a person becoming themselves without requiring your permission.`
       }
       return `${name} is sixteen. The distance between you is real and it has been growing for two years. You tell yourself this is normal. You tell yourself they will come back when they are older. You hope you are right, and you do not know how to accelerate it.`
     },
@@ -1364,4 +1364,29 @@ export const CHILDREN_ARC_EVENTS = [
     effect: null,
   },
 
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_child_actually_funny',
+    phase: null,
+    weight: 3,
+    when: (G) => (G.children ?? []).length > 0 && G.age >= 28 && G.age <= 55 && !G.mem?.ordChildFunny && Math.random() < 0.18,
+    text: (G) => {
+      const c = (G.children ?? [])[0]?.name ?? 'your child'
+      return c + ` says something at dinner that is genuinely, structurally funny — not funny-because-a-child-said-it, funny. There is a pause while you work out whether they know. They do know. You laugh properly, the ugly kind, and they are delighted with themselves and file it away for use later. They will use it later.`
+    },
+    choices: null,
+    effect: (p) => { p.m += 11; p.updateChildRel(0, 5); p.setMem('ordChildFunny', true) },
+  },
+
+  {
+    id: 'ord_grandchild_absurd',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.flags.has('grandparent') && G.age >= 60 && !G.mem?.ordGrandAbsurd,
+    text: `The four-year-old has decided that you are a bus. This has rules, which are explained to you at length and are not negotiable. You are a bus for forty minutes. At the end of it you have a sore knee and you have been addressed exclusively as Driver, and you notice that you have not thought about anything else the entire time.`,
+    choices: null,
+    effect: (p) => { p.m += 12; p.h -= 1; p.setMem('ordGrandAbsurd', true) },
+  },
 ]

@@ -12,7 +12,7 @@ export const NORWAY_EVENTS = [
 
   {
     id: 'nor_wwii_occupation',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_NORWEGIAN(G) &&
@@ -33,7 +33,7 @@ export const NORWAY_EVENTS = [
 
   {
     id: 'nor_quisling_question',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_NORWEGIAN(G) &&
@@ -50,7 +50,7 @@ export const NORWAY_EVENTS = [
 
   {
     id: 'nor_liberation_1945',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_NORWEGIAN(G) &&
@@ -66,7 +66,7 @@ export const NORWAY_EVENTS = [
 
   {
     id: 'nor_oil_discovery',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_NORWEGIAN(G) &&
@@ -87,7 +87,7 @@ export const NORWAY_EVENTS = [
 
   {
     id: 'nor_eu_referendums',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_NORWEGIAN(G) &&
@@ -108,7 +108,7 @@ export const NORWAY_EVENTS = [
 
   {
     id: 'nor_july22',
-    phase: 'midlife',
+    phase: null,
     weight: 7,
     when: (G) =>
       IS_NORWEGIAN(G) &&

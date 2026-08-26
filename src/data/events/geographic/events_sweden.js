@@ -12,14 +12,15 @@ export const SWEDEN_EVENTS = [
 
   {
     id: 'swe_wwii_reckoning',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_SWEDISH(G) &&
       G.currentYear >= 1965 && G.currentYear <= 1995 &&
       G.age >= 35 &&
       !G.mem?.sweWWIIReckoning,
-    text: 'The post-war decades are spent settling the account. Sweden was not occupied; Sweden was neutral; Sweden also transited German troops through Swedish railways and sold Swedish iron to German industry for most of the war. The Danish and Norwegian neighbours had collaborators and resistance fighters and occupation. Sweden had the absence of all of that — which is a different kind of question, asked over different decades. The historians argue about whether neutrality was a moral achievement or a moral evasion. The Swedes argue about this too, mostly in books and television programmes, never in the way that countries argue about things they feel guilty about. There is something in the not-quite-guilt that characterises the conversation.',
+    text: 'There is a programme on the television about the iron ore and the transit trains and your father turns it off before the end, which he does not do with other programmes. The Norwegians up the road had an occupation and a resistance and people who were shot. Sweden had trains that ran on time through a country that was not at war. In this house the word is neutrality and the tone in which it is said is not quite the tone of a word you are proud of.',
+    context: 'Sweden remained formally neutral through the Second World War while supplying Germany with roughly a third of its iron ore and permitting the transit of German troops and materiel across Swedish railways to occupied Norway, including the Engelbrecht Division in 1941. Sweden also took in Danish Jews in 1943 and Norwegian and Baltic refugees. Public debate over whether neutrality was moral achievement or evasion has recurred since the 1960s.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 3; p.m -= 2; p.addFlag('swe_wwii_neutral_generation'); p.setMem('sweWWIIReckoning', true) },
   },
@@ -28,7 +29,7 @@ export const SWEDEN_EVENTS = [
 
   {
     id: 'swe_palme_assassination',
-    phase: 'midlife',
+    phase: null,
     weight: 7,
     when: (G) =>
       IS_SWEDISH(G) &&
@@ -49,7 +50,7 @@ export const SWEDEN_EVENTS = [
 
   {
     id: 'swe_1992_crisis',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_SWEDISH(G) &&
@@ -65,7 +66,7 @@ export const SWEDEN_EVENTS = [
 
   {
     id: 'swe_immigration_question',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_SWEDISH(G) &&
@@ -86,7 +87,7 @@ export const SWEDEN_EVENTS = [
 
   {
     id: 'swe_democrats_rise',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_SWEDISH(G) &&
@@ -110,7 +111,8 @@ export const SWEDEN_EVENTS = [
       G.age >= 50 &&
       G.flags.has('swe_palme_generation') &&
       !G.mem?.swePalmeResolved,
-    text: 'In June 2020, the chief prosecutor closes the case. The prime suspect is Stig Engström — "Skandia man" — an advertising executive who was at the scene and whose story has been examined and re-examined. He died in 2000. The case is closed because the prime suspect is dead and cannot be prosecuted. This means: no trial. No conviction. No confession. The case that defined the Swedish national psyche for thirty-four years ends not with an answer but with an administrative decision. The prosecutor says she is reasonably certain. Reasonable certainty, after thirty-four years, is the closure the country gets. You have spent much of your life with this open. Now it is closed in a way that does not feel finished.',
+    text: 'The prosecutor gives a press conference in June and names a man who died twenty years ago. He was an advertising executive who was on the street that night and told the police a version of it that never quite sat. There is no trial and no confession and the phrase the prosecutor uses is reasonably certain. You have had this open since you were young enough to have been standing in the snow outside the cinema yourself, and it has now been closed by an administrative decision.',
+    context: 'Olof Palme, Sweden\'s prime minister, was shot on Sveavagen in Stockholm on 28 February 1986 after leaving a cinema with his wife. In June 2020 chief prosecutor Krister Petersson closed the investigation, naming Stig Engstrom, the so-called Skandia man, as the principal suspect. Engstrom died in 2000, so no prosecution was possible.',
     choices: null,
     effect: (p) => { p.r += 8; p.m -= 5; p.e += 2; p.setMem('swePalmeResolved', true) },
   },

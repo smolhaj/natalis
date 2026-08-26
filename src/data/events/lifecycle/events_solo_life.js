@@ -56,7 +56,7 @@ export const SOLO_LIFE_EVENTS = [
   // The specific texture of living alone, well into adulthood.
   {
     id: 'sl_living_alone',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.partner &&
@@ -76,7 +76,7 @@ export const SOLO_LIFE_EVENTS = [
   // Mid-30s. The social landscape has reorganised itself.
   {
     id: 'sl_friends_coupled',
-    phase: 'young_adult',
+    phase: 'midlife',
     weight: 2,
     when: (G) =>
       !G.partner &&
@@ -145,7 +145,7 @@ export const SOLO_LIFE_EVENTS = [
   // Midlife. A minor illness makes something concrete.
   {
     id: 'sl_illness_question',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.partner &&
@@ -180,7 +180,7 @@ export const SOLO_LIFE_EVENTS = [
   // Late midlife. A significant occasion (birthday, holiday, anniversary) alone.
   {
     id: 'sl_occasion_alone',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.partner &&

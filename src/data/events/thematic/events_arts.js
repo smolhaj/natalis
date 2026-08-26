@@ -16,7 +16,7 @@ export const ARTS_EVENTS = [
       G.character.country.archetype === 'post_soviet' &&
       G.currentYear >= 1956 && G.currentYear <= 1988 &&
       G.age >= 18,
-    text: 'A friend passes you something without a title page. Carbon paper, the type faint, some pages uneven where the keys stuck. You hold it by the window because the light is better there. It is a novel, or an essay, or poems — the kind of thing that goes hand to hand because it cannot go any other way. You have until tomorrow evening to finish it and return it.',
+    text: 'A friend passes you something without a title page. Carbon paper, the type faint, some pages uneven where the keys stuck. You hold it by the window because the light is better there. It is a novel, and it goes hand to hand because it cannot go any other way. You have until tomorrow evening to finish it and return it.',
     choices: [
       {
         text: 'Read it through tonight',
@@ -73,7 +73,7 @@ export const ARTS_EVENTS = [
     when: (G) =>
       !G.mem?.artsJazzBebop &&
       G.character.country.name === 'United States' &&
-      (G.flags.has('black_american') || (G.ethnicity && G.ethnicity.toLowerCase().includes('black'))) &&
+      G.ethnicity === 'black_american' &&
       G.currentYear >= 1943 && G.currentYear <= 1965 &&
       G.career?.id === 'musician' &&
       G.age >= 18,
@@ -104,7 +104,7 @@ export const ARTS_EVENTS = [
     when: (G) =>
       !G.mem?.artsJazzJimCrow &&
       G.character.country.name === 'United States' &&
-      (G.flags.has('black_american') || (G.ethnicity && G.ethnicity.toLowerCase().includes('black'))) &&
+      G.ethnicity === 'black_american' &&
       G.currentYear >= 1930 && G.currentYear <= 1965 &&
       G.career?.id === 'musician' &&
       G.age >= 18,

@@ -16,7 +16,7 @@ export const THAILAND_DEPTH_EVENTS = [
 
   {
     id: 'tha_dep_1973',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Thailand' &&
@@ -65,7 +65,7 @@ export const THAILAND_DEPTH_EVENTS = [
       G.age >= 16 && G.age <= 30 &&
       G.ruralUrban === 'rural' &&
       !G.mem?.thaDepIsanMig,
-    text: pick([
+    text: () => pick([
       'Isan: the northeast, two-thirds of Thailand\'s area, a third of its population, the driest soil, the lowest wages. Your village is in Udon Thani or Roi Et or Buriram or Nakhon Ratchasima. The factory in Samut Prakan or the construction site in Bangkok pays four times what the rice paddy produces. The bus goes overnight. You sleep sitting up. You arrive at Mo Chit or the Eastern Bus Terminal before dawn. The city does not greet you; it absorbs you.',
       'The Isan migrant lives in two places simultaneously. The room in Bangkok is small and shared: six to a room, hot water in a bucket. The village in Isan is where the money goes: the remittance that built the concrete house, that sent the younger brother to school, that bought the plot of land that the family still farms. You call home on Sundays. You go home for Songkran and sometimes Loy Krathong. The city is where you work. Home is where you are from.',
     ]),
@@ -102,7 +102,7 @@ export const THAILAND_DEPTH_EVENTS = [
 
   {
     id: 'tha_dep_muay_thai',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Thailand' &&
@@ -144,14 +144,14 @@ export const THAILAND_DEPTH_EVENTS = [
 
   {
     id: 'tha_dep_merit_making',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Thailand' &&
       G.religion === 'buddhist' &&
       G.age >= 6 && G.age <= 16 &&
       !G.mem?.thaDepMerit,
-    text: pick([
+    text: () => pick([
       'Tam bun — making merit. The monks walk in single file before dawn with their lacquered alms bowls. Your mother wakes at five to prepare the rice, the sticky rice, the vegetables. The act of placing food in the bowl accumulates merit — a specific spiritual economy in which the intention to give and the giving are both tracked and both return. The spirit house in the courtyard has fresh garlands today: the san phra phum requires daily tending. The Buddhism and the animism are not distinct practices. They are one practice with different vocabularies.',
       'The lotus, the incense, the gold leaf you press onto the Buddha image: the daily texture of Thai Buddhist life is tactile and specific. The merit economy runs through everything — the temple fair, the funeral donation, the scholarship to a poor student. Your grandmother knows the merit value of each act the way she knows the price of market vegetables. Karma is an accounting system. Merit is the deposit.',
     ]),
@@ -168,7 +168,7 @@ export const THAILAND_DEPTH_EVENTS = [
 
   {
     id: 'tha_dep_songkran',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Thailand' &&
@@ -188,7 +188,7 @@ export const THAILAND_DEPTH_EVENTS = [
 
   {
     id: 'tha_dep_bar_economy',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Thailand' &&
@@ -229,7 +229,7 @@ export const THAILAND_DEPTH_EVENTS = [
 
   {
     id: 'tha_dep_royal_daily',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Thailand' &&
@@ -248,7 +248,7 @@ export const THAILAND_DEPTH_EVENTS = [
 
   {
     id: 'tha_dep_floods_2011',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Thailand' &&

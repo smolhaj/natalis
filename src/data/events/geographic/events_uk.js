@@ -6,7 +6,7 @@ export const UK_EVENTS = [
 
   {
     id: 'uk_miners_strike_1984',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'United Kingdom' &&
@@ -38,7 +38,7 @@ export const UK_EVENTS = [
 
   {
     id: 'uk_poll_tax_1990',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'United Kingdom' &&
@@ -65,7 +65,7 @@ export const UK_EVENTS = [
 
   {
     id: 'uk_iraq_war_2003',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'United Kingdom' &&
@@ -92,7 +92,7 @@ export const UK_EVENTS = [
 
   {
     id: 'uk_brexit_2016',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'United Kingdom' &&
@@ -119,7 +119,7 @@ export const UK_EVENTS = [
 
   {
     id: 'uk_grenfell_2017',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'United Kingdom' &&
@@ -146,7 +146,7 @@ export const UK_EVENTS = [
 
   {
     id: 'uk_windrush_scandal_2018',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'United Kingdom' &&
@@ -154,7 +154,7 @@ export const UK_EVENTS = [
       G.age >= 40 &&
       !G.mem?.ukWindrush,
     text: (G) => {
-      if (['afro_caribbean', 'black_british', 'west_indian'].includes(G.ethnicity)) {
+      if (G.ethnicity === 'black_british') {
         return 'You arrived legally, or your parents arrived legally, on the Windrush generation ships and those that followed. You have been in this country for thirty, forty, fifty years. The Home Office is now telling people — people like you, people you know — that they cannot prove their right to be here. Employment terminated. NHS treatment denied. Deportation notices. The Hostile Environment policy was designed to make life difficult for undocumented migrants; it has no mechanism for distinguishing between undocumented and documented once the documentation was lost. Your landing card was destroyed by the government in 2010.'
       }
       return 'The Windrush scandal: Caribbean-born British residents — some of whom have been here for decades, who paid taxes and worked and raised children here — are being told they cannot prove their right to remain. Employers are terminating them. The NHS is denying them treatment. Some are being deported to countries they left as children. The Hostile Environment policy was described as being for illegal migrants. These people are not illegal migrants. They are British.'
@@ -178,7 +178,7 @@ export const UK_EVENTS = [
 
   {
     id: 'uk_austerity_2010s',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'United Kingdom' &&
@@ -198,7 +198,7 @@ export const UK_EVENTS = [
 
   {
     id: 'uk_falklands_1982',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'United Kingdom' &&
@@ -225,7 +225,7 @@ export const UK_EVENTS = [
 
   {
     id: 'uk_77_bombings_2005',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'United Kingdom' &&
@@ -252,7 +252,7 @@ export const UK_EVENTS = [
 
   {
     id: 'uk_scottish_independence_2014',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'United Kingdom' &&

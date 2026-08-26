@@ -51,7 +51,7 @@ export const BOLIVIA_EVENTS = [
 
   {
     id: 'bol_banzer_era',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_BOL(G) &&
@@ -77,7 +77,7 @@ export const BOLIVIA_EVENTS = [
 
   {
     id: 'bol_hyperinflation_1985',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_BOL(G) &&
@@ -91,7 +91,7 @@ export const BOLIVIA_EVENTS = [
 
   {
     id: 'bol_coca_eradication',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_BOL(G) &&
@@ -117,7 +117,7 @@ export const BOLIVIA_EVENTS = [
 
   {
     id: 'bol_gas_war_2003',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_BOL(G) &&
@@ -143,7 +143,7 @@ export const BOLIVIA_EVENTS = [
 
   {
     id: 'bol_evo_election_2005',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_BOL(G) &&
@@ -169,7 +169,7 @@ export const BOLIVIA_EVENTS = [
 
   {
     id: 'bol_2019_crisis',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_BOL(G) &&

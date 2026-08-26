@@ -3,7 +3,7 @@
 // Ethiopian Orthodox fasting culture, coffee ceremony as social institution,
 // Addis Ababa construction boom 2010s. Never colonised — that pride runs through everything.
 
-const IS_ETHIOPIAN = (G) => G.currentCountry === 'Ethiopia'
+const IS_ETHIOPIAN = (G) => G.currentCountry?.name === 'Ethiopia'
 
 export const ETHIOPIA_EVENTS = [
 
@@ -11,7 +11,7 @@ export const ETHIOPIA_EVENTS = [
 
   {
     id: 'eth_red_terror_1977',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) => IS_ETHIOPIAN(G) && G.currentYear >= 1977 && G.currentYear <= 1979 && G.age >= 16 && G.age <= 40 && !G.mem.ethRedTerror,
     text: 'The kebele committee has a list. Men with rifles come at night. Your friend from the technical school — his father had said something, or his uncle was in the EPRP, or someone had marked his name for reasons not given — is not at school the next day. The proper word for what happened to him is not in the newspapers. Families who want the body returned must pay for the bullets.',
@@ -47,7 +47,7 @@ export const ETHIOPIA_EVENTS = [
 
   {
     id: 'eth_derg_fall_1991',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) => IS_ETHIOPIAN(G) && G.currentYear >= 1991 && G.currentYear <= 1992 && G.age >= 18 && !G.mem.ethDergFall,
     text: 'Mengistu is gone. He fled to Zimbabwe. The EPRDF fighters are in the city and some of them look like teenagers, which some of them are. People come into the street. What you feel is not quite happiness — it has been seventeen years — it is something more cautious, the specific sensation of a weight you had stopped noticing because it had been there so long.',
@@ -83,7 +83,7 @@ export const ETHIOPIA_EVENTS = [
 
   {
     id: 'eth_addis_growth_2010s',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) => IS_ETHIOPIAN(G) && G.currentYear >= 2010 && G.currentYear <= 2022 && G.age >= 25 && !G.mem.ethAddisGrowth,
     text: 'The light rail runs now, past construction sites that have been building for five years, past Chinese contractors eating lunch at noon, past the condominiums that are supposed to solve the housing problem and do not quite. The GDP growth figures are the envy of the continent. In the neighbourhood where you grew up, the rent has tripled. You know two families whose land was cleared for the new road.',
@@ -95,7 +95,7 @@ export const ETHIOPIA_EVENTS = [
 
   {
     id: 'eth_abiy_peace_2018',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) => IS_ETHIOPIAN(G) && G.currentYear >= 2018 && G.currentYear <= 2020 && G.age >= 18 && !G.mem.ethAbiyPeace,
     text: 'April 2018. Abiy Ahmed becomes prime minister at forty-one. He is Oromo, which has never happened. He releases political prisoners. He meets Isaias Afwerki of Eritrea in Asmara and ends the no-war-no-peace that has existed since the 1998-2000 border war. The border opens. Eritrean families separated for twenty years cross at Zalambessa and embrace on camera. In October 2019 Abiy wins the Nobel Peace Prize. The Ethiopian diaspora celebrates in Washington and London. In Addis, people argue about whether this is real or performed. It feels real enough.',
@@ -107,10 +107,11 @@ export const ETHIOPIA_EVENTS = [
 
   {
     id: 'eth_tigray_war_2020',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) => IS_ETHIOPIAN(G) && G.currentYear >= 2020 && G.currentYear <= 2022 && G.age >= 16 && !G.mem.ethTigray,
-    text: 'November 4, 2020. Abiy Ahmed orders the federal military into Tigray. The government calls it a law enforcement operation against the TPLF. The TPLF had dominated Ethiopia for twenty-seven years before Abiy — the old guard, the Tigray People\'s Liberation Front — and the conflict between them has been building since 2018. Within weeks the communications blackout is total: no independent journalists, no phone lines, no humanitarian access. What arrives is partial and delayed. By 2022, when the scale becomes legible, the estimates are 300,000 to 500,000 dead — one of the deadliest conflicts anywhere since World War Two. Eritrean troops fought alongside federal forces. Rape was used as a systematic weapon. This is the war fought by the man who won the Nobel Peace Prize.',
+    text: 'The phone lines go on the fourth of November and they stay gone. There is no bank, no internet, no bus north, and a cousin in Mekelle whose last message was about a wedding. On the state channel it is called a law enforcement operation. For two years you learn what is happening in the north from people who walked out of it, one account at a time, and none of the accounts agree about numbers and all of them agree about the rest.',
+    context: 'Federal forces entered Tigray on 4 November 2020 after years of deteriorating relations between Abiy Ahmed\'s government and the TPLF, which had dominated Ethiopian politics for the previous twenty-seven years. A near-total communications and humanitarian blockade held for most of two years. Estimates of the dead range from 300,000 to 600,000, making it among the deadliest conflicts since 1945. Eritrean troops fought alongside federal forces and sexual violence was documented as a systematic weapon. Abiy had received the Nobel Peace Prize in 2019.',
     choices: [
       {
         text: 'The TPLF dominated Ethiopia for a generation. The crackdown, whatever it became, started with a real grievance.',
@@ -130,7 +131,7 @@ export const ETHIOPIA_EVENTS = [
 
   {
     id: 'eth_pretoria_2022',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) => IS_ETHIOPIAN(G) && G.currentYear >= 2022 && G.currentYear <= 2025 && G.age >= 18 && G.flags.has('eth_tigray_witnessed') && !G.mem.ethPretoria,
     text: 'November 2022. The Pretoria peace agreement is signed. The war is over in the technical sense: the guns stop. The accounting is still in progress. 300,000 to 500,000 dead depending on whose methodology. Millions displaced. Starvation in Tigray during the blockade years. The peace does not bring the dead back or explain the full scope of what happened under the blackout. Abiy Ahmed retains the Nobel Peace Prize, which is awarded by the Norwegian Nobel Committee and cannot be revoked. You are living in the country that produced all of this in the span of four years.',

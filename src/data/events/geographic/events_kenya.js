@@ -3,7 +3,7 @@
 // state 1982–91, multiparty politics and ethnic patronage 1992+,
 // 2007–08 election violence, M-Pesa 2007+, Nairobi urban migration.
 
-const IS_KENYAN = (G) => G.currentCountry === 'Kenya'
+const IS_KENYAN = (G) => G.currentCountry?.name === 'Kenya'
 
 export const KENYA_EVENTS = [
 
@@ -11,7 +11,7 @@ export const KENYA_EVENTS = [
 
   {
     id: 'ken_harambee_call',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) => IS_KENYAN(G) && G.currentYear >= 1963 && G.currentYear <= 1995 && G.age >= 18 && !G.mem.kenHarambee,
     text: 'A harambee is called — for a school, a clinic, someone\'s hospital bill. The contribution is not optional in the way that optional usually means something. You give what you have. Your neighbour gives more than he has. This is how things get built here, and also how debts accumulate that no one names.',
@@ -23,7 +23,7 @@ export const KENYA_EVENTS = [
 
   {
     id: 'ken_moi_silence',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) => IS_KENYAN(G) && G.currentYear >= 1982 && G.currentYear <= 1991 && G.age >= 18 && !G.mem.kenMoiSilence,
     text: 'The party is KANU. There is only KANU. In the office, in the bar, in the minibus — you learn to read what someone is about to say before they say it, so you can redirect the conversation. The phrase used is "he is so keen." It means: he talks too much. You have learned not to be keen.',
@@ -71,7 +71,7 @@ export const KENYA_EVENTS = [
 
   {
     id: 'ken_post_election_2007',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) => IS_KENYAN(G) && G.currentYear >= 2007 && G.currentYear <= 2009 && G.age >= 18 && !G.mem.kenElection2007,
     text: 'The results are announced. In the three days that follow, over a thousand people die. You know someone who died in Kisumu. You know someone who joined the burning in Eldoret. You are watching the news from Nairobi, aware that the city is dividing along streets you have always known by other names. The Kibera toll is not on the news yet.',
@@ -95,7 +95,7 @@ export const KENYA_EVENTS = [
 
   {
     id: 'ken_mpesa_arrives',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) => IS_KENYAN(G) && G.currentYear >= 2007 && G.currentYear <= 2013 && G.age >= 18 && !G.mem.kenMpesa,
     text: 'M-Pesa starts. You can send money from your phone to your mother\'s phone in Kisii without a bank account, using an agent at the kiosk near the matatu stage. The first time it takes twenty minutes and works. The second time takes two minutes. The third time you do not think about it at all.',
@@ -173,7 +173,7 @@ export const KENYA_EVENTS = [
 
   {
     id: 'ken_maasai_tourist_economy',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => G.ethnicity === 'maasai' && ['Kenya', 'Tanzania'].includes(G.character.country.name) && G.currentYear >= 1990 && G.age >= 18 && G.age <= 45 && !G.mem.kenMaasaiTourist,
     text: 'The lodge at the reserve gate is hiring. The job is to stand at the entrance in full regalia and be photographed. The pay is 4,000 shillings a month plus accommodation. The tourists pay $5 to photograph you; the lodge keeps $4.50. Your grandmother\'s beadwork is on sale in the gift shop, labelled "Maasai craftwork — authentically sourced." The source is a factory in Nairobi.',

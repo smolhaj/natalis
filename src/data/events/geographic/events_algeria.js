@@ -13,7 +13,7 @@ export const ALGERIA_EVENTS = [
 
   {
     id: 'alg_decade_silence',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country?.name === 'Algeria' &&
@@ -41,7 +41,7 @@ export const ALGERIA_EVENTS = [
 
   {
     id: 'alg_exile_return',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country?.name === 'Algeria' &&
@@ -69,7 +69,7 @@ export const ALGERIA_EVENTS = [
 
   {
     id: 'alg_telling_children',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country?.name === 'Algeria' &&
@@ -120,7 +120,7 @@ export const ALGERIA_EVENTS = [
 
   {
     id: 'alg_election_night_1991',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country?.name === 'Algeria' &&

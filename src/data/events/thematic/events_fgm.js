@@ -49,7 +49,7 @@ export const FGM_EVENTS = [
 
   {
     id: 'fgm_adolescent_question',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) =>
       FEMALE(G) &&
@@ -83,7 +83,7 @@ export const FGM_EVENTS = [
 
   {
     id: 'fgm_medical_encounter',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       FEMALE(G) &&
@@ -136,7 +136,7 @@ export const FGM_EVENTS = [
       {
         text: 'You do not intervene. This is how the community works. She will survive it as you survived it.',
         tag: 'continue',
-        outcome: 'The ceremony happens. Your daughter recovers. The community remains intact. You carry a specific weight alongside the relief of having maintained your place in it.',
+        outcome: 'The ceremony happens. Your daughter recovers. The community remains intact. You carry a weight alongside the relief of having maintained your place in it.',
         effect: (p) => { p.r += 8; p.m -= 6; p.karma -= 6; p.addFlag('fgm_continued_cycle'); p.setMem('fgmDaughter', true) },
       },
     ],

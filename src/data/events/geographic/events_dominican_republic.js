@@ -11,7 +11,7 @@ export const DOMINICAN_REPUBLIC_EVENTS = [
 
   {
     id: 'dr_trujillo_childhood',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_DOMINICAN(G) &&
@@ -32,11 +32,11 @@ export const DOMINICAN_REPUBLIC_EVENTS = [
 
   {
     id: 'dr_parsley_massacre',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_DOMINICAN(G) &&
-      G.currentYear >= 1937 && G.currentYear <= 1939 &&
+      G.currentYear >= 1937 && G.currentYear <= 1975 &&
       G.age >= 14 &&
       !G.mem?.drParsleyMassacre,
     text: 'In October 1937, the army moved along the northwestern border with Haiti. The test, it is said, was to ask a person to say *perejil* — parsley. Haitians who could not roll the Spanish r were identified and killed. Between 17,000 and 35,000 Haitians and dark-skinned Dominicans were killed over several days. Trujillo paid Haiti\'s government an indemnity of $750,000 — about $21 per person — and the matter was handled diplomatically. The massacre is not discussed openly. What you know, you learned in pieces, from the way adults go quiet when the border region comes up, from the family members who do not talk about certain cousins on the other side.',
@@ -48,7 +48,7 @@ export const DOMINICAN_REPUBLIC_EVENTS = [
 
   {
     id: 'dr_mirabal_sisters',
-    phase: 'midlife',
+    phase: null,
     weight: 6,
     when: (G) =>
       IS_DOMINICAN(G) &&
@@ -69,7 +69,7 @@ export const DOMINICAN_REPUBLIC_EVENTS = [
 
   {
     id: 'dr_trujillo_killed',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_DOMINICAN(G) &&
@@ -85,7 +85,7 @@ export const DOMINICAN_REPUBLIC_EVENTS = [
 
   {
     id: 'dr_1965_intervention',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_DOMINICAN(G) &&
@@ -134,7 +134,7 @@ export const DOMINICAN_REPUBLIC_EVENTS = [
 
   {
     id: 'dr_2013_statelessness',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_DOMINICAN(G) &&
@@ -142,7 +142,7 @@ export const DOMINICAN_REPUBLIC_EVENTS = [
       G.age >= 25 &&
       !G.mem?.dr2013Stateless,
     text: (G) => {
-      const isAfroDominican = G.character.ethnicity?.id === 'afro_dominican'
+      const isAfroDominican = G.character.ethnicity === 'afro_dominican'
       return isAfroDominican
         ? 'The Constitutional Tribunal\'s ruling TC 168-13 retroactively strips citizenship from Dominicans of Haitian descent born since 1929. An estimated 200,000 people are rendered stateless overnight — born here, raised here, speaking Spanish, with Dominican identity documents that are now invalid. You know people this has happened to. The ruling has a particular quality: it is administrative rather than violent, but the administrative is a different kind of permanent. The inter-American human rights system will condemn it. The ruling stands.'
         : 'The Constitutional Tribunal\'s ruling TC 168-13 retroactively strips Dominican citizenship from people of Haitian descent born in the country since 1929. Two hundred thousand people lose their citizenship at once. They were born here, they went to school here, they have Dominican documents. The Inter-American Commission on Human Rights condemns it. There are protests from human rights organizations. Dominican public opinion is, on the whole, unmoved. The racial politics of this island — the long history of the country defining itself as not-Haitian, not-Black — has arrived in a court document with a case number.'

@@ -1,5 +1,5 @@
 // events_followthrough_49.js — BUILD 49 remaining: aid convoy event
-// Gates on famine_survivor flag. The specific texture of receiving international
+// Gates on famine_survivor flag. The texture of receiving international
 // aid: the queue, the categories, the forms, the indignity that coexists with
 // survival.
 

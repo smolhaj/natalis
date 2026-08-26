@@ -1,8 +1,35 @@
+// Large disasters kill or displace a small fraction of a national population.
+// Firing the full "you were in it" narration and its stat penalty at every
+// citizen of the country is wrong; so is dropping the event. This returns a
+// stable per-character answer to "were you physically in the zone?" — the same
+// answer every time it is asked for that character, so the narrative text and
+// the stat effect can never disagree with each other.
+function inDisasterZone(character, salt, percent) {
+  const s = `${character?.name ?? ''}|${character?.birthYear ?? 0}|${salt}`
+  let h = 7
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 100003
+  return h % 100 < percent
+}
+
+// The 'post_soviet' archetype in countries.js covers the whole former Eastern
+// Bloc — Poland, Hungary, Romania, Czechia, Slovakia, Bulgaria, Albania, Serbia,
+// Bosnia and Mongolia included — none of which were Soviet republics. Events
+// that narrate the dissolution of the USSR itself must gate on this list, not on
+// the archetype, or a Bosnian in 1991 is told their country ceased to exist.
+const SOVIET_SUCCESSOR_STATES = [
+  'Russia', 'Ukraine', 'Belarus', 'Estonia', 'Latvia', 'Lithuania',
+  'Georgia', 'Armenia', 'Azerbaijan', 'Kazakhstan', 'Uzbekistan',
+  'Kyrgyzstan', 'Turkmenistan', 'Tajikistan',
+]
+
 export const WORLD_EVENTS = [
   {
     id: 'soviet_collapse',
     name: 'Collapse of the Soviet Union',
-    years: [1991, 1993],
+    // The dissolution itself. The price liberalisation that followed is
+    // post_soviet_hyperinflation (1992–93); the privatisation is
+    // post_soviet_shock_therapy (1994–96). Three beats, not three penalties.
+    years: [1991, 1992],
     archetypes: ['post_soviet'],
     countries: null,
     narrative: 'The Soviet Union dissolves. Prices double, then double again, within weeks. The salary you were paid last month is no longer what it was worth. The economy your parents understood — the one with fixed prices and guaranteed jobs — no longer exists, and neither does the country.',
@@ -10,6 +37,7 @@ export const WORLD_EVENTS = [
     effect: (p) => { p.w -= 15; p.m -= 8; },
     addFlags: ['survived_soviet_collapse'],
     minAge: 0,
+    when: (G) => SOVIET_SUCCESSOR_STATES.includes(G.character.country?.name),
   },
   {
     id: 'venezuela_caracazo_1989',
@@ -50,18 +78,6 @@ export const WORLD_EVENTS = [
     context: 'The Chernobyl disaster contaminated 150,000 km² across Ukraine, Russia, and Belarus. Approximately 350,000 people were permanently evacuated. The Soviet government\'s delayed disclosure and systematic underreporting of health consequences continued for years; Ukraine did not have independent oversight until 1991. The exclusion zone around Chernobyl remains uninhabitable. The HBO series Chernobyl (2019) brought renewed attention to the liquidators\' experience.',
     effect: (p) => { p.h -= 12; p.addFlag('chernobyl_generation'); },
     addFlags: ['chernobyl_generation'],
-    minAge: 0,
-  },
-  {
-    id: 'rwandan_genocide',
-    name: 'Rwandan Genocide',
-    years: [1994, 1994],
-    archetypes: 'all',
-    countries: ['Rwanda'],
-    narrative: 'In one hundred days, nearly a million people are killed — not by armies at a distance but by neighbours, at checkpoints, with names on lists. The international community watches. The word genocide is debated in foreign capitals while the killing continues. The people who survive will spend the rest of their lives living next to the people who tried to kill them.',
-    context: 'Between April and July 1994, an estimated 500,000–800,000 Tutsi and moderate Hutu were killed in Rwanda — roughly 70% of the Tutsi population — organized by the Hutu Power government and carried out largely by civilian militias, the Interahamwe. The UN peacekeeping force already in the country was ordered not to intervene. France, which had supported the Hutu government, has been accused of complicity; a Rwandan inquiry in 2021 concluded France bore "heavy and overwhelming" responsibility. The gacaca community courts that followed processed more than 1.9 million cases between 2001 and 2012.',
-    effect: (p) => { p.h -= 15; p.m -= 20; p.addFlag('genocide_survivor'); },
-    addFlags: ['genocide_survivor', 'war_childhood'],
     minAge: 0,
   },
   {
@@ -169,13 +185,16 @@ export const WORLD_EVENTS = [
     id: 'asian_financial_crisis',
     name: '1997 Asian Financial Crisis',
     years: [1997, 1999],
+    // The country-specific adult telling is asian_financial_crisis_1997 (age 10+).
+    // This is the same crisis as a small child sees it, from inside the household.
     archetypes: ['wealthy_east', 'developing_urban'],
-    countries: ['South Korea', 'Indonesia', 'Thailand', 'Philippines', 'Vietnam'],
-    narrative: 'The baht goes first, then the rupiah, then the won. The savings your family held in the national currency are worth half what they were last month. Companies that existed for decades are gone over a weekend. The IMF arrives with conditions — cut public services, raise interest rates, open the markets — while people are already struggling.',
+    countries: ['South Korea', 'Indonesia', 'Thailand', 'Philippines', 'Malaysia'],
+    narrative: 'Your father comes home in the middle of the day and does not explain why. The car goes. Then the second bedroom is let to a cousin. Nobody uses the word crisis in front of you; what you get instead is a new rule about the lights, and rice with less on top of it, and adults who stop talking when you come into the room.',
     context: 'The 1997–98 Asian financial crisis began in Thailand in July 1997 when the baht collapsed after foreign currency reserves ran out. Currency crises spread to Indonesia, South Korea, Malaysia, and the Philippines. Indonesia\'s GDP fell 13.5% in 1998; South Korea\'s fell 5.5%; Indonesia\'s unemployment tripled. The IMF provided $40 billion in bailout packages conditional on austerity measures that critics argued deepened the recession. In Indonesia, the economic collapse triggered political crisis: Suharto resigned after 32 years in power. An estimated 24 million people across the region were pushed into poverty.',
-    effect: (p) => { p.w -= 12; p.m -= 7; },
+    effect: (p) => { p.w -= 8; p.m -= 7; },
     addFlags: [],
     minAge: 5,
+    maxAge: 9,
   },
   {
     id: 'financial_crisis_2008',
@@ -269,11 +288,12 @@ export const WORLD_EVENTS = [
     years: [2007, 2009],
     archetypes: 'all',
     countries: ['Zimbabwe'],
-    narrative: 'Prices double daily. The currency becomes worthless. Savings accumulated over a lifetime evaporate.',
-    context: 'Zimbabwe\'s hyperinflation — officially peaking at 89.7 sextillion percent per month in November 2008 — was caused by the Mugabe government printing money to fund land redistribution and military expenses. The seizure of white-owned farms from 2000 collapsed agricultural output and foreign currency earnings. The Zimbabwe dollar became worthless: prices doubled every day at the height of the crisis. The 100-trillion-dollar banknote was printed in January 2009 — insufficient to buy a bus ticket. Zimbabwe abandoned its currency in April 2009, adopting the US dollar and South African rand. Basic goods disappeared from shelves for months.',
-    effect: (p) => { p.w -= 20; p.m -= 10; },
+    narrative: 'The number on the note gets longer every few weeks. You are sent to the shop with a plastic bag of money and told to run, because by the afternoon the bag will not be enough. Your mother stops saying what things cost. She says instead: we will see what it is tomorrow.',
+    context: 'Zimbabwe\'s hyperinflation peaked in mid-November 2008 at an estimated 79.6 billion percent per month — 89.7 sextillion percent (8.97 × 10²²%) on an annualised basis, according to Steve Hanke\'s reconstruction of the price data. It was driven by the Mugabe government printing money to cover deficits and military spending after the seizure of commercial farms from 2000 collapsed agricultural output and foreign currency earnings. Prices doubled roughly every day at the peak. The 100-trillion-dollar banknote was printed in January 2009 and would not buy a bus ticket. Zimbabwe abandoned its currency in April 2009, adopting the US dollar and South African rand.',
+    effect: (p) => { p.w -= 8; p.m -= 6; },
     addFlags: ['hyperinflation_survivor'],
     minAge: 0,
+    maxAge: 9,
   },
   {
     id: 'venezuela_collapse',
@@ -379,10 +399,19 @@ export const WORLD_EVENTS = [
     years: [2004, 2005],
     archetypes: 'all',
     countries: ['Indonesia', 'Thailand', 'Sri Lanka'],
-    narrative: 'A wave comes with almost no warning. Entire coastal villages are gone in minutes. 230,000 people die.',
-    context: 'A 9.1-magnitude earthquake off the coast of Sumatra on December 26, 2004 generated a tsunami that struck 14 countries within hours. An estimated 227,898 people died — the deadliest tsunami in recorded history. Entire coastal communities in Aceh (Indonesia), Mullaitivu (Sri Lanka), and Khao Lak (Thailand) were destroyed. The international aid response — over $14 billion — was the largest ever assembled for a natural disaster. Early warning systems in the Indian Ocean were non-existent; a network was subsequently built. Aceh, where 170,000 died, had been under a military blockade due to a separatist conflict, complicating the aid response.',
-    effect: (p) => { p.h -= 12; p.m -= 18; p.w -= 14; p.addFlag('disaster_survivor'); },
-    addFlags: ['disaster_survivor', 'displaced'],
+    narrative: (G) => {
+      if (inDisasterZone(G.character, 'tsunami2004', 10)) {
+        return 'The sea goes out first. People walk down onto the exposed sand to look at the fish, because nobody here has been told what that means. Then it comes back at the height of a house and takes the road, the market, the mosque, the row of rooms where your family lived. Afterwards it is quiet in a way you have never heard, and there are notices nailed to trees with names on them.'
+      }
+      return 'A wave comes on the morning after Christmas with almost no warning at all. Entire coastal districts are gone in minutes — Aceh, Mullaitivu, Khao Lak. The number climbs all week on the radio and stops somewhere past two hundred thousand. Everyone you know is trying to reach someone on the coast. The lists of the missing are posted on walls and are still there months later, sun-bleached.'
+    },
+    context: 'A 9.1-magnitude earthquake off the coast of Sumatra on December 26, 2004 generated a tsunami that struck 14 countries within hours. An estimated 227,898 people died — the deadliest tsunami in recorded history. Entire coastal communities in Aceh (Indonesia), Mullaitivu (Sri Lanka), and Khao Lak (Thailand) were destroyed. The international aid response — over $14 billion — was the largest ever assembled for a natural disaster. Early warning systems in the Indian Ocean were non-existent; a network was subsequently built. Aceh, where some 130,000 died, had been under a military blockade because of a separatist conflict, which complicated the aid response; the disaster led directly to the 2005 Helsinki peace agreement that ended that war.',
+    effect: (p) => {
+      if (inDisasterZone(p._state?.character, 'tsunami2004', 10)) {
+        p.h -= 12; p.m -= 18; p.w -= 14; p.addFlag('disaster_survivor'); p.addFlag('displaced')
+      } else { p.m -= 7 }
+    },
+    addFlags: [],
     minAge: 0,
   },
   {
@@ -435,30 +464,6 @@ export const WORLD_EVENTS = [
     when: (G) => !G.flags.includes('oil_shock_generation'),
   },
   {
-    id: 'bangladesh_liberation_war',
-    name: 'Bangladesh Liberation War',
-    years: [1971, 1971],
-    archetypes: 'all',
-    countries: ['Bangladesh'],
-    narrative: 'Pakistani forces move into East Pakistan. Massacres follow. Three million die. Ten million flee to India. A new country is born in blood.',
-    context: 'Pakistan\'s Operation Searchlight began March 25, 1971, targeting Bengali Hindus, intellectuals, and Awami League supporters in East Pakistan. Estimates of the dead range from 300,000 to 3 million — the Pakistani government\'s own figure was 26,000. Ten million refugees fled to India. The Indian Army intervened militarily in December 1971; Pakistan surrendered December 16. Bangladesh was declared independent. Sheikh Mujibur Rahman, imprisoned in West Pakistan throughout the war, returned as first president. The Liberation War is commemorated as a founding trauma of the Bangladeshi nation; the International Crimes Tribunal has since prosecuted war criminals.',
-    effect: (p) => { p.h -= 15; p.m -= 20; p.w -= 10; p.addFlag('war_childhood'); },
-    addFlags: ['war_childhood', 'displaced', 'refugee'],
-    minAge: 0,
-  },
-  {
-    id: 'india_pakistan_partition',
-    name: 'India-Pakistan Partition',
-    years: [1947, 1948],
-    archetypes: 'all',
-    countries: ['India', 'Pakistan'],
-    narrative: 'The British leave. A line is drawn. Fourteen million people cross it in both directions. One million die in the violence that follows.',
-    context: 'The 1947 Partition of British India created two independent dominions — India and Pakistan — along religious lines drawn by barrister Cyril Radcliffe, who spent less than five weeks in the country before drawing boundaries through Punjab and Bengal. Between 10 and 20 million people were displaced in history\'s largest forced migration. Violence between Hindu, Muslim, and Sikh communities killed an estimated 200,000 to 2 million. The Partition severed families, communities, and trade networks that had existed for generations. Three major India-Pakistan wars followed in 1947, 1965, and 1971, and the Kashmir conflict remains unresolved.',
-    effect: (p) => { p.h -= 12; p.m -= 18; p.w -= 8; p.addFlag('displaced'); },
-    addFlags: ['displaced', 'refugee', 'war_childhood'],
-    minAge: 0,
-  },
-  {
     id: 'korean_war',
     name: 'Korean War',
     years: [1950, 1953],
@@ -474,25 +479,31 @@ export const WORLD_EVENTS = [
     id: 'ebola_west_africa',
     name: 'West African Ebola Epidemic',
     years: [2014, 2016],
-    archetypes: 'all',
-    countries: ['Nigeria', 'Senegal', 'Ghana'],
-    narrative: 'A hemorrhagic fever spreads across borders. Healthcare systems collapse under the strain. 11,000 die before it is contained.',
-    context: 'The 2014–16 West African Ebola outbreak began in Guinea\'s forest region in December 2013 and spread to Sierra Leone and Liberia — the largest Ebola outbreak in history, infecting 28,616 people and killing 11,310. The outbreak exposed catastrophic weaknesses in West African health systems: Sierra Leone had 136 doctors for 6 million people. MSF declared a public health emergency months before the WHO acted. The epidemic transformed global outbreak preparedness; it also demonstrated how quickly healthcare workers — the most exposed group — could be destroyed by a single pathogen.',
-    effect: (p) => { p.h -= 10; p.m -= 10; p.addFlag('ebola_survivor'); },
-    addFlags: [],
+    archetypes: null,
+    countries: ['Guinea', 'Sierra Leone'],
+    narrative: 'The clinic stops taking patients because the clinic is where people are catching it. Nobody shakes hands any more; nobody washes a body for burial. The burial teams come in plastic and take your dead away in a truck, and you are not permitted to see where. Schools shut for a year. The number that reaches you late, from a radio, is eleven thousand across three countries, and by then you already know several of them by name.',
+    context: 'The 2014–16 West African Ebola outbreak began in Guinea\'s forest region in December 2013 and spread through Sierra Leone and Liberia — the largest Ebola outbreak in history, with 28,616 cases and 11,310 deaths. Guinea recorded 3,814 cases and 2,544 deaths; Sierra Leone 14,124 cases and 3,956 deaths; Liberia 10,678 cases and 4,810 deaths. The outbreak exposed catastrophic weaknesses in health systems: Sierra Leone had roughly 136 doctors for six million people, and lost a tenth of its health workforce to the virus. Médecins Sans Frontières declared the outbreak out of control in June 2014; the WHO did not declare a public health emergency until August. Safe-burial rules, which forbade the washing and touching of the dead, collided directly with funeral practice and became one of the hardest parts of containment.',
+    effect: (p) => { p.h -= 10; p.m -= 12; p.addFlag('ebola_survivor'); },
+    addFlags: ['ebola_survivor'],
     minAge: 5,
   },
+
   {
-    id: 'nigerian_civil_war',
-    name: 'Nigerian Civil War (Biafra)',
-    years: [1967, 1970],
-    archetypes: 'all',
-    countries: ['Nigeria'],
-    narrative: 'Biafra declares independence. A blockade follows. Up to two million die of starvation. The photographs reach the world too late.',
-    context: 'The Republic of Biafra declared independence from Nigeria on May 30, 1967, following anti-Igbo pogroms in Northern Nigeria in 1966 that killed an estimated 30,000 people. The federal government\'s blockade caused a famine in which an estimated 500,000 to 2 million Biafrans died, mostly civilians, mostly children with kwashiorkor. Photographs and television footage made it one of the first humanitarian crises covered globally in real time; it transformed how international aid organisations operated. Biafra surrendered January 15, 1970. The post-war policy of "No victor, no vanquished" emphasised reconciliation over accountability.',
-    effect: (p) => { p.h -= 15; p.m -= 15; p.w -= 8; p.addFlag('hunger_childhood'); },
-    addFlags: ['hunger_childhood', 'war_childhood'],
-    minAge: 0,
+    id: 'ebola_containment_2014',
+    name: 'Ebola: The Outbreak That Was Stopped',
+    years: [2014, 2015],
+    archetypes: null,
+    countries: ['Nigeria', 'Senegal', 'Ghana'],
+    narrative: (G) => {
+      const cn = G.character.country.name
+      if (cn === 'Nigeria') return 'A man collapses off a flight from Monrovia and is admitted to a private hospital in Lagos. Within a week the word is everywhere, and so is the salt water: people are drinking it, bathing in it, because a text message said it works. Two people die of the salt. What actually happens is less visible — nine hundred contacts traced, every one of them visited daily for three weeks by people who have decided this will not become the thing everyone is expecting. Twenty cases. Eight deaths. In October the country is declared free of it.'
+      if (cn === 'Senegal') return 'One case. A student who drove up from Guinea and turned up at a hospital in Dakar. The borders close; the flights stop; for weeks the news is about a single man in a single ward. He recovers. Nobody else is infected. The country spends the rest of the year on a knife edge that never tips, and the not-tipping is the whole story.'
+      return 'Ghana never records a case. What Ghana has instead is the temperature scanner at Kotoka, the hand-washing bucket outside every shop door, the UN emergency mission that sets up its headquarters in Accra because Accra is the nearest place still functioning. The fear is real and the disease is somewhere else. You learn what a border looks like when it is being watched.'
+    },
+    context: 'While Guinea, Liberia and Sierra Leone lost more than eleven thousand people, three other West African states contained the virus almost entirely. Nigeria\'s outbreak began on 20 July 2014 when Patrick Sawyer, a Liberian-American official, collapsed at Lagos airport; Nigeria traced roughly 900 contacts, recorded 20 cases and 8 deaths, and was declared Ebola-free on 20 October 2014 — a response the WHO called "a piece of world-class epidemiological detective work." Senegal recorded a single imported case, who survived, and no onward transmission. Ghana never recorded a confirmed case at all, and hosted the headquarters of the UN Mission for Ebola Emergency Response in Accra. A false rumour that drinking or bathing in salt water prevented Ebola circulated by text message in Nigeria and killed at least two people.',
+    effect: (p) => { p.m -= 5; p.e += 2; },
+    addFlags: [],
+    minAge: 6,
   },
   {
     id: 'lebanese_civil_war',
@@ -532,6 +543,7 @@ export const WORLD_EVENTS = [
     addFlags: ['veteran'],
     minAge: 18,
     maxAge: 19,
+    when: (G) => G.character.gender === 'male',
   },
   {
     id: 'conscription_russia',
@@ -545,6 +557,7 @@ export const WORLD_EVENTS = [
     addFlags: ['veteran'],
     minAge: 18,
     maxAge: 19,
+    when: (G) => G.character.gender === 'male',
   },
   {
     id: 'conscription_norway',
@@ -553,12 +566,12 @@ export const WORLD_EVENTS = [
     archetypes: 'all',
     countries: ['Norway'],
     narrative: 'Military service is a national tradition here. A year of training, camaraderie, and learning to live without comfort.',
-    context: 'Norway has maintained mandatory military service since 1814, and since 2016 has been among the first countries to extend conscription to women on equal terms. Service lasts 12 months, followed by reserve training requirements. Norway\'s model is unusual in its transparency and consent-focus: conscripts receive substantial pay and benefits, and service is widely seen as a social leveling experience rather than a hardship. The system regularly ranks among the most positively regarded conscription structures globally. Norwegian military service is tied to NATO membership and a national identity grounded in collective defense.',
+    context: 'Norway has had constitutional conscription since 1814. Parliament voted in 2013 to extend it to women on equal terms; the law took effect in 2015 and the first mixed intake was called up in the summer of 2016, making Norway the first NATO member to conscript women. Service lasts around 12 months, followed by reserve training requirements. Norway\'s model is unusual in its transparency and consent-focus: conscripts receive substantial pay and benefits, and service is widely seen as a social leveling experience rather than a hardship. The system regularly ranks among the most positively regarded conscription structures globally. Norwegian military service is tied to NATO membership and a national identity grounded in collective defense.',
     effect: (p) => { p.m -= 2; p.h += 4; },
     addFlags: [],
     minAge: 18,
     maxAge: 19,
-    when: (G) => G.character.gender === 'male' || G.currentYear >= 2015,
+    when: (G) => G.character.gender === 'male' || G.currentYear >= 2016,
   },
   {
     id: 'us_medical_debt',
@@ -590,12 +603,25 @@ export const WORLD_EVENTS = [
     id: 'sahel_drought_1968',
     name: 'Sahel Drought',
     years: [1968, 1974],
-    archetypes: ['subsaharan'],
-    countries: ['Ethiopia', 'Nigeria', 'Kenya', 'Tanzania', 'Senegal', 'Uganda'],
-    narrative: 'The rains do not come. Then they do not come again. The fields produce little. The market prices rise. Children in the village look smaller than they should.',
-    context: 'The 1968–73 Sahel drought killed between 100,000 and 250,000 people across the band of countries from Senegal to Ethiopia. Six consecutive years of below-average rainfall collapsed pastoral and agricultural systems that had survived centuries of variability. The drought exposed how independence-era states had inherited colonial infrastructure designed for extraction, not food security. Millions of livestock died. The response from wealthier nations was slow; international food aid systems were not yet organised for rapid deployment. The drought accelerated urbanisation as rural populations moved toward cities, permanently changing regional settlement patterns.',
+    archetypes: null,
+    countries: ['Senegal', 'Mali', 'Niger', 'Burkina Faso', 'Chad', 'Nigeria'],
+    narrative: 'The rains do not come. Then they do not come again. The wells go down and the herd goes thin and then the herd is gone — sold, or dead on the road south. The millet in the granary is counted now rather than scooped. Children in the village look smaller than they should.',
+    context: 'The 1968–74 Sahel drought ran across the semi-arid belt south of the Sahara — Mauritania, Senegal, Mali, Upper Volta (now Burkina Faso), Niger, Chad and northern Nigeria — and killed an estimated 100,000 people directly, with far more dying of associated disease. Six consecutive years of below-average rainfall collapsed pastoral and agricultural systems that had survived centuries of variability; an estimated 3.5 million cattle died. The drought exposed how independence-era states had inherited colonial infrastructure designed for extraction, not food security. International food aid systems were not yet organised for rapid deployment, and the response was slow. The drought accelerated urbanisation as pastoralists moved permanently south toward cities, changing regional settlement patterns for good.',
     effect: (p) => { p.m -= 12; p.h -= 10; p.addFlag('drought_survivor'); },
     addFlags: ['drought_survivor'],
+    minAge: 3,
+    when: (G) => G.stats.wealth < 60,
+  },
+  {
+    id: 'ethiopia_wollo_famine_1973',
+    name: 'The Wollo Famine',
+    years: [1973, 1974],
+    archetypes: null,
+    countries: ['Ethiopia'],
+    narrative: 'The famine in Wollo and Tigray is denied for a year before it is filmed. When the film is shown — a British reporter walking through Korem — the palace is still holding banquets on the same evening news. Something breaks that cannot be repaired by admitting it late. Within months the Emperor who ruled for forty-four years is driven from the palace in a Volkswagen.',
+    context: 'The 1972–74 famine in Ethiopia\'s Wollo and Tigray provinces killed an estimated 40,000–200,000 people. Haile Selassie\'s government suppressed news of it for close to a year and continued to export grain. Jonathan Dimbleby\'s documentary "The Unknown Famine" (October 1973) intercut footage of the starving with footage of imperial banquets; the film was shown inside Ethiopia by the officers who deposed the Emperor and became a decisive instrument of the 1974 revolution. Haile Selassie was removed from the palace on 12 September 1974 and died in custody the following year. The Derg military junta that replaced him would preside over a far larger famine a decade later.',
+    effect: (p) => { p.h -= 14; p.m -= 12; p.w -= 8; p.addFlag('hunger_childhood'); },
+    addFlags: ['hunger_childhood', 'famine_survivor'],
     minAge: 3,
     when: (G) => G.stats.wealth < 60,
   },
@@ -603,10 +629,10 @@ export const WORLD_EVENTS = [
     id: 'sahel_drought_1984',
     name: 'Sahel Famine',
     years: [1984, 1985],
-    archetypes: ['subsaharan'],
-    countries: ['Ethiopia', 'Nigeria', 'Kenya', 'Tanzania', 'Senegal', 'Uganda'],
-    narrative: 'The drought is the worst in living memory. Camps fill. Photographs circulate in foreign newspapers. Strangers on other continents hold concerts and donate money. The food arrives, eventually. Not for everyone.',
-    context: 'The 1984–85 Ethiopian famine killed approximately 400,000–1 million people. Michael Buerk\'s BBC reports in October 1984 described "the closest thing to hell on earth," prompting Band Aid and Live Aid — the largest pop concerts in history to that point. UNICEF and relief agencies fed 7 million people. Less reported: the Ethiopian Derg government continued military offensives during the famine, using food access as a weapon against rebel-held areas. The famine affected not just Ethiopia but Sudan, Niger, Chad, and Mauritania. It catalysed the modern international humanitarian system and the norm of media-driven emergency response.',
+    archetypes: null,
+    countries: ['Senegal', 'Mali', 'Niger', 'Burkina Faso', 'Chad', 'Sudan', 'Nigeria'],
+    narrative: 'The second great drought inside twenty years. Camps form at the edge of towns that have no water to spare either. The photographs that circulate in foreign newspapers are of a country to the east of here, and the concert held on the other side of the world is named for that country, and the food that follows the concert is directed there. What arrives here arrives thinner and later, and not for everyone.',
+    context: 'The 1984–85 drought struck the entire Sahel — Mauritania, Senegal, Mali, Burkina Faso, Niger, Chad and Sudan — at the same time as the far more heavily reported famine in Ethiopia. Sudan\'s Darfur and Kordofan regions were among the worst affected; an estimated 250,000 people died there. Niger lost much of its livestock and a third of its cereal harvest. Because international attention and the Band Aid and Live Aid fundraising of 1984–85 were focused overwhelmingly on Ethiopia, relief to the western Sahel was slower and smaller in proportion to need — a pattern of media-directed humanitarian response that shaped the aid system for decades afterwards.',
     effect: (p) => { p.m -= 12; p.h -= 10; p.addFlag('drought_survivor'); },
     addFlags: ['drought_survivor'],
     minAge: 3,
@@ -614,16 +640,29 @@ export const WORLD_EVENTS = [
   },
   {
     id: 'sahel_drought_2010',
-    name: 'Sahel Drought',
+    name: 'Sahel Food Crisis',
     years: [2010, 2012],
-    archetypes: ['subsaharan'],
-    countries: ['Ethiopia', 'Nigeria', 'Kenya', 'Tanzania', 'Senegal', 'Uganda'],
-    narrative: 'The scientists call it climate-intensified. The word means little when the wells are dry. The rains arrive late again, and shorter than before. The cycle is no longer a cycle — it is a direction.',
-    context: 'The 2010–12 Sahel drought and East African food crisis put 13 million people at risk of starvation. Somalia\'s famine — the first formally declared famine in 25 years — killed over 260,000 people, more than half of them children under five. Scientists identified climate change as an intensifying factor, lengthening drought cycles and reducing predictability of rainfall patterns that farmers had adapted to over generations. The crisis coincided with high global food prices following the 2007–08 commodity shock. By 2010, the IPCC was projecting that sub-Saharan Africa would experience 2–4°C warming by 2100, with severe consequences for rain-fed agriculture.',
+    archetypes: null,
+    countries: ['Niger', 'Chad', 'Mali', 'Burkina Faso', 'Senegal', 'Nigeria'],
+    narrative: 'The scientists call it climate-intensified. The word means little when the wells are dry. The rains arrive late again, and shorter than before, and the lean season starts in March instead of June. The cycle is no longer a cycle — it is a direction.',
+    context: 'The 2010 Sahel food crisis left roughly 10 million people short of food across Niger, Chad, Mali and Burkina Faso after a failed 2009 rainy season; Niger alone had some 7 million people affected. A second crisis followed in 2012, compounded by the collapse of northern Mali and by high global grain prices. The Sahel is warming at around 1.5 times the global average rate, and the "lean season" between the exhaustion of one harvest and the arrival of the next has been lengthening. Repeated crises at shortening intervals leave households no time to rebuild herds or seed stocks between them.',
     effect: (p) => { p.m -= 12; p.h -= 10; p.addFlag('drought_survivor'); },
     addFlags: ['drought_survivor'],
     minAge: 3,
     when: (G) => G.stats.wealth < 60,
+  },
+  {
+    id: 'horn_of_africa_famine_2011',
+    name: 'Horn of Africa Famine',
+    years: [2011, 2012],
+    archetypes: null,
+    countries: ['Somalia', 'Kenya', 'Ethiopia'],
+    narrative: 'Two failed rainy seasons in a row, and then the roads fill with people walking toward the camps at Dadaab and Dolo Ado. The queue at the registration tent is measured in days. The UN uses the word famine in July, which it has not used for a quarter of a century, and the use of the word is itself the news. By the time it is spoken, half the people it describes are already dead.',
+    context: 'The 2011 Horn of Africa drought was the region\'s worst in sixty years. Famine was formally declared in southern Somalia in July 2011 — the first such declaration anywhere since 1984–85. A retrospective study by FEWS NET and FAO estimated 258,000 excess deaths in Somalia between October 2010 and April 2012, more than half of them children under five. The catastrophe was not caused by drought alone: al-Shabaab had expelled most international aid agencies from the areas it controlled, and US counter-terrorism rules made agencies fearful of operating there at all. More than 250,000 people crossed into Kenya and Ethiopia; Dadaab in northern Kenya briefly became one of the largest refugee settlements on earth.',
+    effect: (p) => { p.m -= 14; p.h -= 12; p.w -= 6; p.addFlag('drought_survivor'); },
+    addFlags: ['drought_survivor', 'famine_survivor'],
+    minAge: 3,
+    when: (G) => G.stats.wealth < 55,
   },
   {
     id: 'india_liberalisation',
@@ -655,7 +694,9 @@ export const WORLD_EVENTS = [
     id: 'tropical_cyclone',
     name: 'Devastating Cyclone',
     years: [1950, 2025],
-    archetypes: ['developing_unstable', 'subsaharan'],
+    // The country list is the real gate; an archetype filter here would silently
+    // exclude the Philippines (developing_urban) and Myanmar (conflict_zone).
+    archetypes: null,
     countries: ['Bangladesh', 'Philippines', 'Mozambique', 'Myanmar', 'Haiti'],
     narrative: 'The storm warning came one day before. The shelter held but the neighbourhood did not. Rebuilding takes years and the government aid arrives late and partial.',
     context: 'Tropical cyclones (called typhoons in the Pacific, hurricanes in the Atlantic) have intensified in severity as ocean temperatures rise. The countries most affected — Bangladesh, Philippines, Mozambique, Myanmar, Haiti — have contributed less than 1% of cumulative global carbon emissions. Cyclone Bhola (1970, Bangladesh) killed 300,000–500,000 people. Super Typhoon Haiyan (2013, Philippines) killed 7,300. Cyclone Idai (2019, Mozambique/Zimbabwe/Malawi) killed 1,300. A 2022 study found that climate change has roughly doubled the probability of catastrophic tropical cyclone intensification events.',
@@ -668,7 +709,9 @@ export const WORLD_EVENTS = [
     id: 'latin_america_coup',
     name: 'Military Coup',
     years: [1960, 1990],
-    archetypes: ['developing_unstable'],
+    // The country list is the real gate; an archetype filter here would silently
+    // exclude Chile and Argentina (both developing_urban) — the two marquee cases.
+    archetypes: null,
     countries: ['Chile', 'Argentina', 'Bolivia', 'Guatemala', 'Venezuela'],
     narrative: 'The radio is playing military music. That is how you know. No normal broadcast, just the march. The streets are quiet in ways that are not calm.',
     context: 'Between 1960 and 1990, Latin America experienced over 70 military coups or golpes de estado. The pattern was consistent: radio stations seized, curfew imposed, borders closed. The US backed or tolerated many of them under Cold War anti-communist rationale — Chile (1973), Argentina (1976), Bolivia (1971), Guatemala (1954), Uruguay (1973). Operation Condor coordinated South American military states to track, capture, and "disappear" political opponents across borders. An estimated 50,000–80,000 people were killed; 400,000 were imprisoned; hundreds of thousands went into exile. The term "disappeared" entered political language as a noun.',
@@ -680,7 +723,9 @@ export const WORLD_EVENTS = [
   {
     id: 'south_africa_post_apartheid',
     name: 'Post-Apartheid South Africa',
-    years: [1994, 2000],
+    // The election itself is narrated by post_apartheid_transition (under 18)
+    // and we_south_africa_1994_election (18+). This is the years after it.
+    years: [1996, 2000],
     archetypes: ['developing_urban'],
     countries: ['South Africa'],
     narrative: 'Mandela is president. The world is watching. Inside the country, the texture of daily life is changing in ways both dramatic and glacially slow. History is happening and so is Tuesday.',
@@ -727,8 +772,10 @@ export const WORLD_EVENTS = [
     context: 'The Great Proletarian Cultural Revolution (1966–76) was launched by Mao Zedong to reassert control by attacking "capitalist roaders" within the Communist Party. Red Guards — mobilised youth — ransacked homes, burned books, humiliated teachers in "struggle sessions," and sent millions of educated urban youth to rural areas for "re-education." An estimated 500,000 to 2 million people died in political violence; millions more were imprisoned or sent to labour camps. Schools and universities closed for years. The movement targeted China\'s cultural heritage — temples, art, classical texts — in what Mao called the destruction of the "Four Olds."',
     effect: (p) => { p.e -= 10; p.m -= 18; p.addFlag('learned_silence'); p.addFlag('cultural_revolution_generation'); },
     addFlags: ['learned_silence', 'cultural_revolution_generation'],
+    // The small child's view, from inside the household. Age 10+ gets
+    // cultural_revolution_china instead — the school, and what it teaches.
     minAge: 0,
-    when: (G) => !G.flags.includes('cultural_revolution_survived'),
+    maxAge: 9,
   },
   {
     id: 'berlin_wall_fall',
@@ -737,7 +784,7 @@ export const WORLD_EVENTS = [
     archetypes: 'all',
     countries: ['Germany'],
     narrative: 'The wall comes down. People are chipping at it with hammers and their hands. A city divided since before you were born becomes one city. You walk through the gap and it is just a street. It is also the most impossible thing you have ever seen.',
-    context: 'The Berlin Wall, built in 1961, divided East and West Germany for 28 years. On November 9, 1989, the East German government announced citizens could cross freely; crowds immediately overwhelmed the checkpoints. The wall was physically demolished over the following months. Its fall is considered the symbolic end of the Cold War. Germany was formally reunified on October 3, 1990.',
+    context: 'The Berlin Wall, thrown up overnight on 13 August 1961, divided East and West Berlin for 28 years; the fortified inner German border divided the two states. On November 9, 1989, the East German government announced citizens could cross freely; crowds immediately overwhelmed the checkpoints. The wall was physically demolished over the following months. Its fall is considered the symbolic end of the Cold War. Germany was formally reunified on October 3, 1990.',
     effect: (p) => { p.m += 15; p.addFlag('wall_generation'); },
     addFlags: ['wall_generation', 'lived_through_revolution'],
     minAge: 5,
@@ -761,7 +808,7 @@ export const WORLD_EVENTS = [
     archetypes: 'all',
     countries: ['China'],
     narrative: 'Britain returns Hong Kong. One country, two systems, the officials say. Families who left before the handover watch on television from Vancouver and Sydney. Those who stayed watch from rooftops. The uncertainty is the main weather.',
-    context: 'Britain leased Hong Kong from China in 1842 and 1898 (the New Territories on a 99-year lease). The handover on July 1, 1997 transferred sovereignty to the People\'s Republic under the "one country, two systems" framework negotiated in the 1984 Sino-British Joint Declaration, guaranteeing Hong Kong\'s legal autonomy until 2047. An estimated 500,000 people — mostly middle-class professionals — emigrated before 1997, primarily to Canada, Australia, and Britain. Those who remained faced uncertainty about which rights would be maintained. The National Security Law imposed in 2020 effectively ended the political autonomy framework.',
+    context: 'Britain took Hong Kong from China in three pieces: Hong Kong Island was ceded in perpetuity in 1842 under the Treaty of Nanking, Kowloon in 1860, and the New Territories — nine-tenths of the land area — on a 99-year lease signed in 1898 and expiring on 30 June 1997. It was that lease, not the ceded territory, that set the date; without the New Territories the rest was not viable, so Britain handed back the whole. The handover on July 1, 1997 transferred sovereignty to the People\'s Republic under the "one country, two systems" framework negotiated in the 1984 Sino-British Joint Declaration, guaranteeing Hong Kong\'s legal autonomy until 2047. An estimated 500,000 people — mostly middle-class professionals — emigrated before 1997, primarily to Canada, Australia, and Britain. Those who remained faced uncertainty about which rights would be maintained. The National Security Law imposed in 2020 effectively ended the political autonomy framework.',
     effect: (p) => { p.m -= 6; p.addFlag('handover_generation'); },
     addFlags: ['handover_generation'],
     minAge: 6,
@@ -783,7 +830,8 @@ export const WORLD_EVENTS = [
     name: 'Angolan Civil War',
     years: [1975, 2002],
     archetypes: 'all',
-    countries: ['Angola', 'Mozambique'],
+    // Mozambique has its own war and its own event; it does not belong here.
+    countries: ['Angola'],
     narrative: 'The war the world forgot is still happening. It began with independence and continued through Cold War proxy funding and continued beyond it. Landmines will outlast the ceasefire by decades.',
     context: 'Angola\'s civil war began immediately after independence from Portugal in November 1975, with the MPLA (backed by the USSR and Cuba) and UNITA (backed by the US and South Africa) fighting for control. Cold War proxy support — including 50,000 Cuban troops at peak — entrenched the conflict. An estimated 500,000 people died and 4 million were displaced over 27 years. UNITA leader Jonas Savimbi was killed in February 2002; a ceasefire followed within weeks. The country was left with an estimated 10–15 million landmines. Post-war oil revenues produced rapid GDP growth concentrated in Luanda, while most Angolans remained in poverty.',
     effect: (p) => { p.h -= 12; p.m -= 15; p.w -= 10; p.addFlag('war_childhood'); },
@@ -793,9 +841,11 @@ export const WORLD_EVENTS = [
   {
     id: 'nicaragua_contra_war',
     name: 'Nicaraguan Civil War',
-    years: [1979, 1990],
+    // 1979–80 is the revolution, narrated by nicaragua_sandinista_revolution.
+    // The Contra war proper began in 1981, run out of bases in Honduras.
+    years: [1981, 1990],
     archetypes: 'all',
-    countries: ['Nicaragua', 'Guatemala', 'El Salvador'],
+    countries: ['Nicaragua', 'Honduras'],
     narrative: 'The Sandinistas, the Contras, and American money. Villages are caught between forces that change meaning depending on who you ask. A generation comes of age in ambiguity and violence.',
     context: 'The FSLN (Sandinistas) overthrew the Somoza dictatorship in July 1979. The Reagan administration funded the Contra insurgency — anti-Sandinista militias operating from Honduras — through the CIA, continuing even after Congress banned direct funding (revealed in the 1986 Iran-Contra affair). An estimated 30,000–50,000 people died in the Contra war. The US also mined Nicaraguan harbours, an action the International Court of Justice ruled illegal in 1986. The Sandinistas lost elections in 1990. Daniel Ortega, the original Sandinista leader, returned to power in 2006 and had effectively established a new authoritarian system by 2018.',
     effect: (p) => { p.m -= 12; p.h -= 8; p.addFlag('war_childhood'); },
@@ -900,7 +950,9 @@ export const WORLD_EVENTS = [
     context: 'Brazil\'s Plano Real (June 1994) ended decades of hyperinflation by introducing a new currency (the real) anchored to the US dollar, supported by fiscal austerity and monetary policy coordination. Inflation fell from 46% per month to under 2%. The plan, designed by Finance Minister Fernando Henrique Cardoso (who subsequently won the 1994 presidency), was remarkable for succeeding where five previous stabilisation plans had failed. The stability enabled Brazilians to save, access credit, and plan economically for the first time in a generation. 20 million people joined the formal economy over the following decade.',
     effect: (p) => { p.w += 10; p.m += 6; p.addFlag('economic_stabilization'); },
     addFlags: ['economic_stabilization'],
+    // Age 8+ gets we_brazil_plano_real, the same month from an adult's side of it.
     minAge: 5,
+    maxAge: 7,
   },
   {
     id: 'brazil_hyperinflation',
@@ -917,7 +969,7 @@ export const WORLD_EVENTS = [
   {
     id: 'post_soviet_shock_therapy',
     name: 'Post-Soviet Shock Therapy',
-    years: [1992, 1996],
+    years: [1994, 1996],
     archetypes: ['post_soviet'],
     countries: null,
     narrative: 'State-owned enterprises are privatised overnight. A small number of people with the right connections acquire enormous assets at negligible prices. Everyone else watches their savings become worthless as prices are freed and inflation erupts. The word "oligarch" enters the language.',
@@ -970,7 +1022,7 @@ export const WORLD_EVENTS = [
     archetypes: 'all',
     countries: ['South Korea'],
     narrative: 'In one generation South Korea moves from subsistence agriculture to semiconductor fabrication. The chaebol corporations absorb millions. Education becomes an arms race. The country is unrecognisable from the one the previous generation was born into.',
-    context: 'South Korea\'s "Miracle on the Han River" transformed per capita GDP from $79 in 1960 to over $11,000 by 1995 — the fastest sustained development of any economy in history. The state-directed model channelled cheap credit to chaebol conglomerates (Samsung, Hyundai, LG, Daewoo) in exchange for export targets. Literacy rose from 22% in 1945 to near-universal by 1970. The growth required extreme labour discipline: strikes were suppressed; working weeks of 60+ hours were normal. The "compressed generation" experienced industrialisation, urbanisation, and the transition from dictatorship to democracy within a single lifetime.',
+    context: 'South Korea\'s "Miracle on the Han River" transformed per capita GDP from about $158 in 1960 — below Ghana\'s — to over $12,000 by 1995, the fastest sustained development of any economy in history. The state-directed model channelled cheap credit to chaebol conglomerates (Samsung, Hyundai, LG, Daewoo) in exchange for export targets. Literacy rose from 22% in 1945 to near-universal by 1970. The growth required extreme labour discipline: strikes were suppressed; working weeks of 60+ hours were normal. The "compressed generation" experienced industrialisation, urbanisation, and the transition from dictatorship to democracy within a single lifetime.',
     effect: (p) => { p.w += 10; p.e += 6; p.addFlag('korean_miracle_generation'); },
     addFlags: ['korean_miracle_generation'],
     minAge: 5,
@@ -1009,7 +1061,7 @@ export const WORLD_EVENTS = [
     archetypes: 'all',
     countries: ['Argentina'],
     narrative: 'The banks close on a Friday. When they reopen, the accounts are frozen — the government has converted dollar deposits to pesos at a rate decided overnight. People line up outside banks that will not open. Some bang on the shutters. The sound is the country\'s savings disappearing.',
-    context: 'Argentina\'s 2001 crisis ended a decade of convertibility — the peso pegged 1:1 to the dollar — combined with unsustainable debt of $132 billion. The corralito (December 1) froze bank accounts. December 19–20: the cacerolazos — middle-class Argentines banging pots in the streets, chanting "¡Que se vayan todos!" Five presidents occupied the Casa Rosada in twelve days. The pesificación (February 2002) converted all dollar deposits to pesos at 1:1, then the peso devalued to 3:1 — effectively destroying two-thirds of dollar savings overnight. Unemployment hit 25%; over 100,000 Argentines emigrated in 2002 alone.',
+    context: 'Argentina\'s 2001 crisis ended a decade of convertibility — the peso pegged 1:1 to the dollar — combined with unsustainable debt of $132 billion. The corralito (December 1) froze bank accounts. December 19–20: the cacerolazos — middle-class Argentines banging pots in the streets, chanting "¡Que se vayan todos!" Five presidents occupied the Casa Rosada in twelve days. The pesificación of February 2002 was asymmetric: dollar deposits were converted to pesos at 1.40 per dollar while dollar debts were converted at 1:1, and the peso then floated out to around 3:1 — so savers lost roughly two-thirds of the dollar value of their savings while borrowers were made whole. The Supreme Court upheld the conversion in 2004. Unemployment hit 25%; over 100,000 Argentines emigrated in 2002 alone.',
     effect: (p) => { p.w -= 18; p.mo -= p.mo * 0.30; p.m -= 12; p.addFlag('economic_collapse_survivor'); },
     addFlags: ['economic_collapse_survivor'],
     minAge: 10,
@@ -1029,7 +1081,8 @@ export const WORLD_EVENTS = [
   {
     id: 'gulf_oil_boom',
     name: 'Gulf Oil Boom',
-    years: [1970, 1985],
+    // 1973–75 is narrated by oil_shock_1973_gulf; this is the decade that followed.
+    years: [1976, 1985],
     archetypes: ['wealthy_gulf'],
     countries: null,
     narrative: 'The money arrives faster than the infrastructure to spend it. A country that had no paved roads in 1960 builds a six-lane highway to a city that is still mostly construction sites. Your father remembers fishing. Your children will not know what that word means in this context.',
@@ -1086,8 +1139,8 @@ export const WORLD_EVENTS = [
     years: [1968, 1969],
     archetypes: 'all',
     countries: ['Czech Republic', 'Slovakia'],
-    narrative: 'For eight months the newspapers say things that were not said before. The radio broadcasts what was forbidden. People use the word freedom in public. Then the tanks arrive from the east — two hundred thousand Soviet troops. The reformers are arrested or leave. What follows is called Normalization, which is the name given to removing everything that happened.',
-    context: 'Alexander Dubček\'s reform programme — "socialism with a human face" — relaxed censorship and proposed greater political freedom in early 1968. The Warsaw Pact invasion on August 20–21 deployed 500,000 troops from the USSR, Bulgaria, Hungary, Poland, and East Germany. 72 civilians died; thousands were arrested. Dubček was replaced; "Normalisation" reversed all reforms and purged reformers from every institution. Student Jan Palach burned himself to death in protest in January 1969. The Prague Spring became the symbol of the impossibility of reforming communism from within — a lesson absorbed by the Gorbachev generation two decades later.',
+    narrative: 'For eight months the newspapers say things that were not said before. The radio broadcasts what was forbidden. People use the word freedom in public. Then the tanks arrive from the east — a quarter of a million Warsaw Pact troops on the first night, half a million within weeks. The reformers are arrested or leave. What follows is called Normalization, which is the name given to removing everything that happened.',
+    context: 'Alexander Dubček\'s reform programme — "socialism with a human face" — relaxed censorship and proposed greater political freedom in early 1968. The Warsaw Pact invasion on the night of August 20–21 involved roughly 250,000 troops from the USSR, Poland, Hungary and Bulgaria, rising to about half a million; East German units were mobilised but ordered not to cross the border, a decision taken in Moscow with the memory of 1939 in mind. 137 Czechoslovaks were killed in the invasion and its immediate aftermath; thousands were arrested and some 300,000 emigrated. Dubček was replaced; "Normalisation" reversed all reforms and purged reformers from every institution. Student Jan Palach burned himself to death in protest in January 1969. The Prague Spring became the symbol of the impossibility of reforming communism from within — a lesson absorbed by the Gorbachev generation two decades later.',
     effect: (p) => { p.m -= 15; p.e += 5; p.addFlag('prague_spring_generation'); },
     addFlags: ['prague_spring_generation'],
     minAge: 5,
@@ -1123,8 +1176,8 @@ export const WORLD_EVENTS = [
     years: [1988, 1989],
     archetypes: 'all',
     countries: ['Armenia'],
-    narrative: 'December 7, 1988. At 11:41am, a 6.8 magnitude earthquake destroys the city of Spitak and heavily damages Leninakan. Twenty-five thousand people die. Hundreds of thousands are left homeless in winter. Soviet and international rescue teams dig for survivors for weeks. The earthquake strikes six days before Gorbachev is to speak at the UN about the new Soviet openness — he cuts his speech short and returns home.',
-    context: 'The 1988 Spitak earthquake was one of the deadliest in Soviet history. It occurred during the first stirrings of the Karabakh conflict, compounding humanitarian strain on the Armenian SSR. The earthquake exposed Soviet construction failures — pancake collapses of prefabricated buildings that should have withstood larger quakes — and the inadequacy of state emergency response.',
+    narrative: 'December 7, 1988. At 11:41am, a 6.8 magnitude earthquake destroys the city of Spitak and heavily damages Leninakan. Twenty-five thousand people die. Hundreds of thousands are left homeless in winter. Soviet and international rescue teams dig for survivors for weeks. It strikes in the small hours of New York time, on the same morning Gorbachev is at the United Nations announcing troop cuts to a standing ovation. He abandons the rest of the trip — Cuba, London — and flies home, and reaches Armenia three days later.',
+    context: 'The 1988 Spitak earthquake was one of the deadliest in Soviet history. It struck at 11:41am local time on 7 December 1988, hours after Mikhail Gorbachev addressed the UN General Assembly in New York announcing unilateral Soviet troop reductions in Eastern Europe. He cancelled the remainder of his itinerary, returned to Moscow, and visited the disaster zone on 10 December. It was the first time the Soviet Union formally accepted large-scale foreign humanitarian aid since the Second World War. It occurred during the first stirrings of the Karabakh conflict, compounding humanitarian strain on the Armenian SSR. The earthquake exposed Soviet construction failures — pancake collapses of prefabricated buildings that should have withstood larger quakes — and the inadequacy of state emergency response.',
     effect: (p) => { p.h -= 12; p.m -= 18; p.addFlag('arm_earthquake_survivor'); },
     addFlags: ['arm_earthquake_survivor'],
     minAge: 0,
@@ -1193,35 +1246,17 @@ export const WORLD_EVENTS = [
     when: (G) => G.age >= 15 && (G.flags.includes('lgbtq_identity') || G.flags.includes('lgbtq_out_family') || Math.random() < 0.4),
   },
   {
-    id: 'apartheid_daily',
-    name: 'Apartheid: Pass Book',
-    years: [1948, 1993],
-    archetypes: 'all',
-    countries: ['South Africa'],
-    narrative: 'The pass book must be carried at all times. Without it you cannot legally be in the city after dark, cannot take certain jobs, cannot live in certain areas. The book is checked at roadblocks, at building entrances, by police who can detain you on its absence. It is a document that defines what you are allowed to be.',
-    context: 'The pass system (influx control) controlled Black movement to urban areas. Black South Africans needed a passbook — the "dompas" — signed by an employer and local authority to live in any white-designated area. Between 1948 and 1986, 17.7 million people were prosecuted for pass law violations — more than one arrest per Black adult per year on average. Without a valid pass, a person could be arrested and "endorsed out" to a homeland they had never lived in. The passes were abolished in 1986, eight years before the end of apartheid. The system\'s purpose was to provide cheap Black labour to white industry while denying permanent urban residence rights.',
-    effect: (p) => { p.m -= 15; p.w -= 10; p.e -= 3; p.addFlag('apartheid_generation'); },
-    addFlags: ['apartheid_generation'],
-    minAge: 16,
-    when: (G) => !G.flags.includes('apartheid_privileged'),
-  },
-  {
     id: 'apartheid_privilege',
     name: 'Apartheid: White South Africa',
     years: [1948, 1993],
     archetypes: 'all',
     countries: ['South Africa'],
     narrative: 'You live in a country with separate beaches, separate schools, separate everything, and the separation advantages you. You are aware of this, somewhere. Most people do not discuss it in those terms. The word the system uses is development. The word others use for what you have is stolen.',
-    context: 'White South Africans under apartheid (1948–1994) lived in a materially advantaged segregated world: separate — and better funded — schools, hospitals, beaches, parks, and residential areas. Per capita government spending on white education was 3–10 times higher than on Black education in different eras. The Group Areas Act forced non-white populations into designated areas; the Bantu Education Act deliberately limited Black schooling. Many white South Africans experienced apartheid as simply the natural order of things — the ideology worked precisely by making the advantages invisible to its beneficiaries.',
+    context: 'White South Africans under apartheid (1948–1994) lived in a materially advantaged segregated world: separate — and better funded — schools, hospitals, beaches, parks, and residential areas. Per capita government spending on white education was 3–10 times higher than on Black education in different eras. The Group Areas Act forced non-white populations into designated areas; the Bantu Education Act deliberately limited Black schooling. Coloured and Indian South Africans were not beneficiaries of this system: they too were classified, removed under the Group Areas Act, and excluded from the franchise — Cape Coloured men were struck from the common voters\' roll in 1956. Many white South Africans experienced apartheid as simply the natural order of things — the ideology worked precisely by making the advantages invisible to its beneficiaries.',
     effect: (p) => { p.w += 8; p.e += 3; p.m -= 5; p.addFlag('apartheid_privileged'); },
     addFlags: ['apartheid_privileged'],
     minAge: 16,
-    when: (G) => {
-      const eg = G.character.country && G.character.country.ethnicGroups
-        ? G.character.country.ethnicGroups.find(e => e.id === G.character.ethnicity)
-        : null;
-      return eg ? eg.disadvantaged !== true : false;
-    },
+    when: (G) => G.character.ethnicity === 'white_south_african',
   },
 
   // ── CLIMATE & ENVIRONMENT ────────────────────────────────────────────────────
@@ -1252,15 +1287,16 @@ export const WORLD_EVENTS = [
   },
   {
     id: 'australian_bushfires',
-    name: 'Australian Black Summer Bushfires',
+    name: 'Black Summer: The Fire Front',
     years: [2019, 2020],
     archetypes: 'all',
     countries: ['Australia'],
-    narrative: 'The fires burn for months. Three billion animals die. The smoke turns the sky orange in cities a thousand kilometres away. Scientists call it a preview.',
-    context: 'Australia\'s 2019–20 "Black Summer" bushfires burned 18.6 million hectares — an area larger than Syria — between June 2019 and March 2020. An estimated 3 billion animals were killed or displaced. 34 people died directly; smoke inhalation caused an estimated 445 additional deaths and 4,000 hospitalisations. The fires were intensified by record heat (December 2019 was Australia\'s hottest month on record) and drought linked to climate change. Scott Morrison\'s government initially dismissed climate links. The fires accelerated Australian debate on climate policy and became a global symbol of climate emergency, particularly given Australia\'s high per-capita emissions and fossil fuel export economy.',
-    effect: (p) => { p.m -= 10; p.h -= 5; p.addFlag('witnessed_climate_change'); },
-    addFlags: ['witnessed_climate_change', 'disaster_survivor'],
+    narrative: 'The Fires Near Me app is open on the phone all day and the shape on it keeps changing. On the last day it is orange at eleven in the morning and the power is out and the plan is the beach, because the beach is the only thing that will not burn. Three billion animals die over the season. What comes back afterwards is not what was there — the ground recovers faster than the people on it.',
+    context: 'Australia\'s 2019–20 "Black Summer" bushfires burned about 18.6 million hectares between June 2019 and March 2020. An estimated 3 billion animals were killed or displaced, and around 3,000 homes were destroyed. Thirty-three people died directly, most of them residents and volunteer firefighters in New South Wales and Victoria; smoke inhalation was estimated to have caused a further 400-plus deaths and thousands of hospitalisations. The fires were intensified by record heat — December 2019 was Australia\'s hottest month on record — and by drought linked to climate change. Around 65,000 people were evacuated from the south coast of New South Wales and East Gippsland at the peak, including by naval vessel from Mallacoota.',
+    effect: (p) => { p.m -= 10; p.h -= 5; p.w -= 6; p.addFlag('witnessed_climate_change'); p.addFlag('disaster_survivor'); },
+    addFlags: [],
     minAge: 5,
+    when: (G) => G.ruralUrban !== 'urban' && inDisasterZone(G.character, 'blacksummer', 30),
   },
   {
     id: 'pakistan_floods_2022',
@@ -1268,10 +1304,20 @@ export const WORLD_EVENTS = [
     years: [2022, 2022],
     archetypes: 'all',
     countries: ['Pakistan'],
-    narrative: 'A third of the country is underwater. Thirty-three million people are affected. Scientists attribute the scale to climate change. Pakistan contributed less than one percent of global emissions. The word injustice is insufficient.',
+    narrative: (G) => {
+      if (G.ruralUrban === 'rural' || inDisasterZone(G.character, 'pakfloods2022', 20)) {
+        return 'The water arrives in August and does not go anywhere, because there is nowhere for it to go. The cotton is under it. The buffalo are under it. You live on the raised road for eleven weeks with everyone else from the village, and the mosquitoes come, and then the fevers. Scientists call it climate change. Pakistan has produced less than one percent of the world\'s emissions.'
+      }
+      return 'A third of the country is under water. Thirty-three million people are affected — more than the population of most countries. The relief appeals go out; the prices in the market climb through the autumn because the crop that fed the country is gone. Scientists attribute the scale to climate change. Pakistan contributed less than one percent of global emissions. The word injustice is insufficient.'
+    },
     context: 'Pakistan\'s 2022 floods, triggered by record monsoon rainfall and rapid glacial melt, submerged approximately one-third of the country\'s land area between June and October 2022. 1,739 people died; 33 million were affected; $30 billion in damage was sustained. Pakistan emits less than 1% of global greenhouse gases. UN Secretary-General António Guterres visited Sindh province and called it "a climate catastrophe" and "a monsoon on steroids." Pakistan\'s UN climate envoy Sherry Rehman used the crisis to argue for a "loss and damage" mechanism — compensation from high-emitting nations for climate-driven disasters. The 2022 UN climate conference (COP27) subsequently agreed in principle to such a fund.',
-    effect: (p) => { p.h -= 15; p.m -= 14; p.w -= 12; p.addFlag('disaster_survivor'); },
-    addFlags: ['disaster_survivor', 'displaced', 'witnessed_climate_change'],
+    effect: (p) => {
+      const c = p._state?.character
+      if (c?.ruralUrban === 'rural' || inDisasterZone(c, 'pakfloods2022', 20)) {
+        p.h -= 15; p.m -= 14; p.w -= 12; p.addFlag('disaster_survivor'); p.addFlag('displaced')
+      } else { p.m -= 6; p.w -= 5 }
+    },
+    addFlags: ['witnessed_climate_change'],
     minAge: 0,
   },
   {
@@ -1316,7 +1362,7 @@ export const WORLD_EVENTS = [
     years: [2022, 2022],
     archetypes: ['post_soviet'],
     countries: ['Kazakhstan'],
-    narrative: 'Fuel prices double on New Year\'s Day. Within four days, the largest protests in Kazakhstan\'s history spread from Zhanaozen to Almaty. President Tokayev calls in CSTO troops and orders security forces to shoot without warning. 238 people are killed. 10,000 are arrested. The internet goes dark for several days. The city of Nur-Sultan is renamed Astana.',
+    narrative: 'Fuel prices double on New Year\'s Day. Within four days, the largest protests in Kazakhstan\'s history spread from Zhanaozen to Almaty. President Tokayev calls in CSTO troops and orders security forces to shoot without warning. 238 people are killed. 10,000 are arrested. The internet goes dark for several days. Before the year is out the capital, renamed Nur-Sultan after Nazarbayev in 2019, is quietly called Astana again.',
     context: 'The Qantar (January) events began as protests against the lifting of subsidies on liquefied petroleum gas and escalated into a broader expression of anger at the Nazarbayev system. The CSTO intervention — the first in the organisation\'s history — involved troops from Russia, Belarus, Armenia, Kyrgyzstan and Tajikistan. Tokayev used the crisis to sideline Nazarbayev, arresting former security chief Karim Massimov (a Nazarbayev loyalist) on treason charges. Independent human rights organisations documented torture of detainees and extrajudicial killings. The true death toll remains disputed.',
     effect: (p) => { p.r += 9; p.m -= 7; p.addFlag('kaz_qantar_witness'); },
     addFlags: ['kaz_qantar_witness'],
@@ -1366,21 +1412,21 @@ export const WORLD_EVENTS = [
     years: [2005, 2006],
     archetypes: 'all',
     countries: ['United States'],
-    narrative: 'The levees break. New Orleans floods. Eighty percent of the city is underwater for weeks. The response reveals something about which lives the state considers expendable. It takes years to rebuild, and some things are not rebuilt.',
-    context: 'Hurricane Katrina made landfall on August 29, 2005. The flooding — caused primarily by the failure of flood control levees built and maintained by the US Army Corps of Engineers — killed 1,833 people and displaced over one million. The response exposed systematic failure: federal FEMA and state and local emergency management coordination collapsed. Studies found evacuation was far slower in Black and low-income neighbourhoods, and government aid distribution reflected similar disparities. The Lower Ninth Ward, a predominantly Black neighbourhood, was among the hardest hit and slowest to recover. By 2010, New Orleans\' population was still 100,000 below pre-Katrina levels.',
+    narrative: 'The levees break. Eighty percent of New Orleans is under water for weeks and the water comes east and west along the coast with it. There is no car in the family, so there is no evacuation; there is a roof, and then a bus, and then a floor in a stadium in another state. The response reveals something about which lives the state considers expendable. It takes years to rebuild, and some things are not rebuilt.',
+    context: 'Hurricane Katrina made landfall on the Gulf Coast on August 29, 2005. The flooding of New Orleans — caused primarily by the failure of flood-control levees built and maintained by the US Army Corps of Engineers — killed 1,392 people across the region and displaced over one million along the Louisiana and Mississippi coasts. The response exposed systematic failure: federal, state and local emergency coordination collapsed. Evacuation orders assumed car ownership; roughly a quarter of New Orleans households had no vehicle. The Lower Ninth Ward, a predominantly Black neighbourhood, was among the hardest hit and slowest to recover. Houston alone took in some 250,000 evacuees. By 2010, New Orleans\' population was still around 100,000 below pre-Katrina levels.',
     effect: (p) => { p.h -= 12; p.m -= 15; p.w -= 14; p.addFlag('disaster_survivor'); },
     addFlags: ['disaster_survivor', 'displaced'],
-    minAge: 0,
-    when: (G) => G.stats.wealth < 55,
+    minAge: 3,
+    when: (G) => G.stats.wealth < 55 && G.place?.region === 'South' && Math.random() < 0.05,
   },
   {
     id: 'european_heatwave_2003',
     name: 'European Heatwave',
     years: [2003, 2003],
-    archetypes: ['wealthy_west'],
-    countries: null,
-    narrative: 'Seventy thousand people die across Europe in August. Most are elderly, living alone, in cities not built for this temperature. Scientists call it a once-in-five-hundred-years event. They revise that estimate downward within a decade.',
-    context: 'The summer of 2003 brought the hottest temperatures recorded in Europe since at least 1540. France suffered the most severely: approximately 15,000 excess deaths in August alone, 70% of them people over 75. Total European death toll estimates range from 35,000 to 70,000. Most cities had no air conditioning; hospitals were overwhelmed; French mortuaries ran out of space. The crisis exposed how social isolation among elderly Europeans — living alone, in poorly ventilated apartments — created mass vulnerability. Climate scientists determined that human-caused climate change at least doubled the probability of such an event. It became a landmark in European climate adaptation policy.',
+    archetypes: null,
+    countries: ['France', 'Italy', 'Spain', 'Portugal', 'Germany', 'Netherlands', 'Belgium', 'Switzerland', 'United Kingdom'],
+    narrative: 'Seventy thousand people die across Europe over the summer. Most are elderly, living alone, in flats built to keep heat in. In August the city empties for the holidays and the people who cannot leave are the people least able to survive being left. Scientists call it a once-in-five-hundred-years event. They revise that estimate downward within a decade.',
+    context: 'The summer of 2003 brought the hottest temperatures recorded in Europe since at least 1540. France suffered the most severely: approximately 15,000 excess deaths in August alone, most of them people over 75, with the peak falling during the national holiday fortnight when families and doctors were away. Total European excess-death estimates range from 35,000 to 70,000 for the summer. Most homes had no air conditioning; hospitals were overwhelmed; a refrigerated warehouse outside Paris was used when the mortuaries filled. The crisis exposed how social isolation among elderly Europeans created mass vulnerability, and led France to build a national heat-alert plan. Climate scientists determined that human-caused climate change had at least doubled the probability of such an event.',
     effect: (p) => { p.h -= 6; p.m -= 5; p.addFlag('witnessed_climate_change'); },
     addFlags: ['witnessed_climate_change'],
     minAge: 0,
@@ -1390,8 +1436,8 @@ export const WORLD_EVENTS = [
     id: 'niger_river_drought',
     name: 'Sahel Climate Deterioration',
     years: [2000, 2025],
-    archetypes: ['subsaharan'],
-    countries: ['Nigeria', 'Niger', 'Mali', 'Senegal', 'Ethiopia', 'Kenya'],
+    archetypes: null,
+    countries: ['Nigeria', 'Niger', 'Mali', 'Senegal', 'Chad', 'Burkina Faso', 'Cameroon'],
     narrative: 'The rains are less reliable than they were. The lake that fed the fishing village is shrinking. Pastoralists and farmers compete for land that is producing less each year. Climate migration is what the researchers call it. You call it leaving.',
     context: 'Lake Chad, shared by Nigeria, Niger, Chad, and Cameroon, has shrunk by approximately 90% since the 1960s — from 25,000 km² to under 2,500 km² — due to climate change and water extraction for agriculture. The shrinkage has driven conflict between pastoralists and farmers over remaining arable land, contributed to food insecurity for 30 million people, and created conditions that armed groups including Boko Haram exploited for recruitment. The World Bank estimates that climate change could generate 216 million internal climate migrants in sub-Saharan Africa alone by 2050. The Sahel region is warming at 1.5 times the global average rate.',
     effect: (p) => { p.m -= 10; p.h -= 6; p.w -= 8; p.addFlag('witnessed_climate_change'); },
@@ -1410,10 +1456,11 @@ export const WORLD_EVENTS = [
     countries: ['India', 'Pakistan'],
     narrative: 'The line is drawn. Fourteen million people move in both directions. Around a million are killed in the violence that follows. Families are severed. Villages are renamed. A country that existed for centuries becomes two countries overnight, and the grief of it will be carried for generations.',
     context: 'Cyril Radcliffe, a barrister who had never been to India, drew the borders through Punjab and Bengal in less than five weeks. The line cut through communities that had coexisted across religious divides for generations. Between 200,000 and 2 million people were killed in the sectarian violence that followed; between 10 and 20 million were displaced. The wounds of Partition shaped India and Pakistan\'s politics for the remainder of the 20th century. Three wars between the two countries followed: 1947, 1965, and 1971. The Kashmir dispute remains unresolved and the two countries are nuclear-armed.',
-    effect: (p) => { p.m -= 20; p.h -= 10; p.addFlag('partition_survivor'); p.addFlag('displaced'); },
-    addFlags: ['partition_survivor', 'displaced', 'war_childhood'],
+    effect: (p) => { p.m -= 20; p.h -= 10; p.addFlag('partition_survivor'); },
+    addFlags: ['partition_survivor', 'war_childhood'],
     minAge: 0,
-    when: (G) => G.age <= 40,
+    // The families who actually crossed the line get partition_india_refugee instead.
+    when: (G) => G.age <= 40 && !inDisasterZone(G.character, 'partition1947', 22),
   },
 
   {
@@ -1424,24 +1471,23 @@ export const WORLD_EVENTS = [
     countries: ['India', 'Pakistan'],
     narrative: 'The column moves at night to avoid the militias on the road. You carry what you can. The village your grandparents built is now on the wrong side of a line that did not exist last year. The relatives who stayed are no longer reachable. You arrive somewhere that is supposed to be home. It is not home yet.',
     context: 'The 1947 Partition of British India into India and Pakistan displaced 10–20 million people — the largest mass migration in human history. Between 200,000 and 2 million people died in communal violence as Hindus and Sikhs fled to India and Muslims fled to Pakistan. The border — the Radcliffe Line, drawn in five weeks by a British lawyer who had never been to India — divided communities, farms, railway networks, and families overnight. The trauma was long suppressed in both countries; the 1947 Partition Archive (founded 2010) has collected over 10,000 oral testimonies. Partition created unresolved territorial disputes (Kashmir) that have shaped South Asian geopolitics for 75 years.',
-    effect: (p) => { p.m -= 25; p.h -= 15; p.w -= 10; p.addFlag('partition_refugee'); p.addFlag('lost_home'); },
-    addFlags: ['partition_refugee', 'lost_home'],
+    effect: (p) => { p.m -= 25; p.h -= 15; p.w -= 10; p.addFlag('partition_refugee'); p.addFlag('lost_home'); p.addFlag('displaced'); p.addFlag('refugee'); },
+    addFlags: ['partition_refugee', 'lost_home', 'war_childhood'],
     minAge: 0,
-    when: (G) => G.age <= 30 && !G.flags.includes('partition_survivor'),
+    when: (G) => G.age <= 40 && inDisasterZone(G.character, 'partition1947', 22),
   },
 
   {
     id: 'rwandan_genocide_aftermath',
     name: 'Rwanda: Aftermath',
-    years: [1994, 2000],
+    years: [1996, 2001],
     archetypes: 'all',
     countries: ['Rwanda'],
     narrative: 'Eight hundred thousand people were killed in a hundred days. Now the survivors live next to the survivors of those who did the killing. The gacaca courts process the cases. You give your testimony. The person who testified before you lost the same things you lost. The country is being asked to reconstitute itself from something that should not have been possible.',
-    context: 'The 1994 Rwandan genocide killed an estimated 500,000–800,000 Tutsi and moderate Hutu in 100 days — a killing rate faster than the Holocaust. The Gacaca community courts (2001–2012) processed approximately 1.2 million genocide cases at the village level, balancing accountability with social reintegration. Rwanda under Paul Kagame pursued aggressive "reconciliation" policies: ethnic identity categories were removed from ID cards; teaching genocide ideology was criminalised; and the country achieved some of the fastest economic growth in Africa. Critics noted that reconciliation was state-directed and dissent was suppressed; Rwanda\'s human rights record under Kagame remained problematic. The genocide reshaped international law on the "Responsibility to Protect."',
+    context: 'The 1994 Rwandan genocide killed an estimated 500,000–800,000 Tutsi and moderate Hutu in 100 days — a killing rate faster than the Holocaust. The Gacaca community courts (2001–2012) processed roughly 1.9 million cases at the village level, balancing accountability with social reintegration. Rwanda under Paul Kagame pursued aggressive "reconciliation" policies: ethnic identity categories were removed from ID cards; teaching genocide ideology was criminalised; and the country achieved some of the fastest economic growth in Africa. Critics noted that reconciliation was state-directed and dissent was suppressed; Rwanda\'s human rights record under Kagame remained problematic. The genocide reshaped international law on the "Responsibility to Protect."',
     effect: (p) => { p.m -= 18; p.r += 15; p.addFlag('genocide_survivor'); },
     addFlags: ['genocide_survivor', 'genocide_witness'],
     minAge: 5,
-    when: (G) => !G.flags.includes('rwandan_genocide'),
   },
 
   {
@@ -1451,7 +1497,7 @@ export const WORLD_EVENTS = [
     archetypes: 'all',
     countries: ['Rwanda'],
     narrative: 'The radio names the group you belong to as the enemy. The roadblocks go up in the night. Neighbors you have known your whole life are making decisions about you that you did not know they were capable of making. You hide. You run. The hundred days pass and the count that comes after is a number that will not fit inside ordinary language.',
-    context: 'Between April and July 1994, an estimated 500,000–800,000 Tutsi and moderate Hutu were killed in Rwanda — roughly 70% of the Tutsi population — in a genocide organized by the Hutu Power government and executed largely by civilian militias called the Interahamwe. The international community, including a UN peacekeeping force already present in the country, did not intervene.',
+    context: 'Between April and July 1994, an estimated 500,000–800,000 Tutsi and moderate Hutu were killed in Rwanda — roughly 70% of the Tutsi population — in a genocide organized by the Hutu Power government and executed largely by civilian militias called the Interahamwe. The killing was done overwhelmingly at close range, by neighbours, at roadblocks, from lists. The UN peacekeeping force already in the country was ordered not to intervene and was cut from 2,500 troops to 270; foreign governments avoided the word "genocide" precisely because using it would have obliged them to act. France, which had armed and trained the Hutu government, was found by a Rwandan inquiry in 2021 to bear "heavy and overwhelming" responsibility.',
     effect: (p) => { p.m -= 35; p.h -= 20; p.addFlag('genocide_survivor'); p.addFlag('tutsi_hidden'); },
     addFlags: ['genocide_survivor', 'tutsi_hidden', 'war_childhood'],
     minAge: 0,
@@ -1467,7 +1513,10 @@ export const WORLD_EVENTS = [
     context: 'South Africa\'s April 1994 election was the country\'s first with universal suffrage. Queues stretched for miles; 19.7 million votes were cast over two days; no significant violence occurred. The ANC won 62.6% under Nelson Mandela. The transition negotiated between 1990 and 1994 preserved existing property rights — meaning white economic control was largely undisturbed — while abolishing legal apartheid. The Truth and Reconciliation Commission offered amnesty in exchange for public testimony. Land reform, promised in the ANC\'s Freedom Charter, remained contentious: by 2019, white South Africans (8% of population) still owned approximately 72% of private farmland.',
     effect: (p) => { p.m += 12; p.addFlag('post_apartheid_generation'); },
     addFlags: ['post_apartheid_generation'],
+    // Those old enough to vote get we_south_africa_1994_election instead; this
+    // is the queue as a child standing in it with a parent sees it.
     minAge: 10,
+    maxAge: 17,
   },
 
   {
@@ -1477,8 +1526,8 @@ export const WORLD_EVENTS = [
     archetypes: 'all',
     countries: ['South Africa'],
     narrative: 'The pass book must be carried at all times. Failure to produce it means arrest. The book determines where you may live, where you may work, which train you may board. It is a document that describes your permitted life in a country you were born in.',
-    context: 'The apartheid pass system (influx control) required all Black South Africans to carry a reference book ("dompas") at all times. The book required an employer\'s signature, local authority permission, and proof of lawful residence. Between 1948 and 1986, 17.7 million people were prosecuted for pass law violations. Failure to produce a valid pass meant immediate arrest and possible "endorsement out" — forced removal to a Bantustan homeland the person may never have lived in. The passes were abolished in 1986, eight years before democratic elections. A separate event (apartheid_daily) covers the same system with different narrative framing — this event fires under stricter conditions.',
-    effect: (p) => { p.m -= 15; p.h -= 5; p.addFlag('apartheid_pass_book'); p.addFlag('systemic_discrimination'); },
+    context: 'The apartheid pass system (influx control) required all Black South Africans to carry a reference book ("dompas") at all times. The book required an employer\'s signature, local authority permission, and proof of lawful residence. Between 1948 and 1986, 17.7 million people were prosecuted for pass law violations — on average more than one arrest per Black adult per year. Failure to produce a valid pass meant immediate arrest and possible "endorsement out" — forced removal to a Bantustan homeland the person may never have lived in. Women were brought into the system in 1956, and the protest against it brought 20,000 of them to the Union Buildings in Pretoria that August. The passes were abolished in 1986, eight years before democratic elections. The system\'s purpose was to supply cheap Black labour to white industry while denying permanent urban residence rights.',
+    effect: (p) => { p.m -= 15; p.h -= 5; p.w -= 8; p.addFlag('apartheid_pass_book'); p.addFlag('systemic_discrimination'); p.addFlag('apartheid_generation'); },
     addFlags: ['apartheid_pass_book', 'systemic_discrimination'],
     minAge: 16,
     when: (G) => {
@@ -1494,7 +1543,9 @@ export const WORLD_EVENTS = [
     name: 'Yugoslav Wars: Civilian Experience',
     years: [1991, 1999],
     archetypes: 'all',
-    countries: ['Bosnia and Herzegovina', 'Croatia', 'Serbia', 'Kosovo', 'Slovenia', 'North Macedonia'],
+    // Serbia's telling is balkan_wars; Croatia, Slovenia, Kosovo and North
+    // Macedonia are not yet playable countries, so listing them here is inert.
+    countries: ['Bosnia and Herzegovina'],
     narrative: 'The shelling begins before you understand that the country you grew up in no longer exists. The neighbours you had are now across a front line. The city is besieged. You learn which streets are safe and which are not, and the knowledge changes the way you move through the world permanently. The ceasefire comes and goes and comes again. The Dayton Agreement is a document. What it does not contain is everything you lost.',
     context: 'The breakup of Yugoslavia (1991–2001) produced five wars and the worst atrocities in Europe since World War II. The Siege of Sarajevo lasted 1,425 days — the longest siege of a city in modern history. The Srebrenica massacre (July 1995) killed approximately 8,000 Bosniak men and boys in Europe\'s only genocide since the Holocaust, while Dutch UN peacekeepers stood by. The Dayton Agreement (November 1995) ended the Bosnian War but created a dysfunctional governing structure that entrenched ethnic divisions. An estimated 140,000 people died across all Yugoslav wars; 2.2 million were displaced. The International Criminal Tribunal for the former Yugoslavia prosecuted 161 people.',
     effect: (p) => { p.m -= 22; p.h -= 12; p.addFlag('yugoslav_war_survivor'); p.addFlag('war_childhood'); },
@@ -1505,7 +1556,8 @@ export const WORLD_EVENTS = [
   {
     id: 'iran_revolution_street',
     name: 'Iranian Revolution: Street Level',
-    years: [1979, 1982],
+    // iran_revolution narrates 1979–80; this is the consolidation that followed.
+    years: [1981, 1983],
     archetypes: 'all',
     countries: ['Iran'],
     narrative: 'The revolution happened and then the revolution changed. What you marched for and what arrived are different things with the same name. The dress codes come first, then the book burnings, then the names of people you know appearing on lists. The Islamic Republic is not what the Shah was. It is also not what you were promised.',
@@ -1519,7 +1571,7 @@ export const WORLD_EVENTS = [
   {
     id: 'korean_war_aftermath',
     name: 'Korean War Division',
-    years: [1953, 1960],
+    years: [1954, 1960],
     archetypes: 'all',
     countries: ['South Korea', 'North Korea'],
     narrative: 'The armistice is not a peace treaty. The country is divided along a line that separates families — relatives you cannot write to, a village that is now in another country. The division is understood to be temporary. It does not end in your lifetime.',
@@ -1538,9 +1590,9 @@ export const WORLD_EVENTS = [
     countries: ['China'],
     narrative: 'The Red Guards arrive at the school. The teachers are made to stand in front of the students. The books are burned in the courtyard — which ones, exactly, depends on who is in charge of the bonfire. You learn to say the right things in the right order. What you actually think is kept entirely separate and never written down.',
     context: 'Mao Zedong launched the Cultural Revolution in 1966 to reassert his authority by mobilising youth against "capitalist roaders" in the Party. Between 500,000 and 2 million people were killed; millions more were sent to rural labour camps ("re-education through labour"). Universities were closed for years. The movement ended with Mao\'s death in 1976 and the arrest of the Gang of Four.',
-    effect: (p) => { p.m -= 18; p.e -= 8; p.addFlag('cultural_revolution_survived'); p.addFlag('sent_down_generation'); },
+    effect: (p) => { p.m -= 18; p.e -= 8; p.addFlag('cultural_revolution_survived'); p.addFlag('sent_down_generation'); p.addFlag('cultural_revolution_generation'); },
     addFlags: ['cultural_revolution_survived'],
-    minAge: 5,
+    minAge: 10,
   },
 
   // ── BUILD 2: VIETNAM ARC ─────────────────────────────────────────────────────
@@ -1592,8 +1644,8 @@ export const WORLD_EVENTS = [
     years: [1975, 1975],
     archetypes: null,
     countries: ['Laos'],
-    narrative: 'December 2, 1975. The Pathet Lao formally abolishes the monarchy and proclaims the Lao People\'s Democratic Republic. The king abdicates. He and the royal family are sent to a re-education camp in the north, where they die. The Secret War — three hundred tons of bombs for every man, woman, and child — is over. The Hmong who fought for the CIA are now enemies of the state. Some will flee to Thailand and then to Minnesota. Some will stay in the highlands and calculate the distance between survival and loyalty for the rest of their lives.',
-    context: 'Laos was secretly bombed by the US from 1964-73 — more bomb tonnage than all of WWII combined — while being officially neutral. The CIA funded and organized the Royal Lao Army and the Hmong Secret Army under General Vang Pao. When the Pathet Lao took power in 1975, it sent former royal government officials and military officers to re-education camps (seminar camps) in the north. King Savang Vatthana died in a camp in 1978 or 1981 (unclear). Between 130,000 and 200,000 Hmong fled to Thailand.',
+    narrative: 'December 2, 1975. The Pathet Lao formally abolishes the monarchy and proclaims the Lao People\'s Democratic Republic. The king abdicates. He and the royal family are sent to a re-education camp in the north, where they die. The Secret War — nine years of it, a ton of bombs for every man, woman, and child in the country — is over. The Hmong who fought for the CIA are now enemies of the state. Some will flee to Thailand and then to Minnesota. Some will stay in the highlands and calculate the distance between survival and loyalty for the rest of their lives.',
+    context: 'Laos was secretly bombed by the US from 1964–73 while officially neutral: more than two million tonnes of ordnance across 580,000 sorties — more tonnage than the United States dropped on Germany and Japan combined during the Second World War, and roughly 0.8 tonnes for every person then living in Laos. Up to a third of it failed to detonate; some 50,000 Laotians have been killed or maimed by unexploded ordnance since 1964. The CIA funded and organized the Royal Lao Army and the Hmong Secret Army under General Vang Pao. When the Pathet Lao took power in 1975, it sent former royal government officials and military officers to re-education camps (seminar camps) in the north. King Savang Vatthana died in a camp in 1978 or 1981 (unclear). Between 130,000 and 200,000 Hmong fled to Thailand.',
     effect: (p) => { p.m -= 10; p.addFlag('laos_revolution_generation'); p.addFlag('decolonization_generation'); },
     addFlags: ['laos_revolution_generation', 'decolonization_generation'],
     minAge: 0,
@@ -1626,7 +1678,9 @@ export const WORLD_EVENTS = [
     effect: (p) => { p.m -= 8; p.addFlag('chechen_war_generation'); },
     addFlags: ['chechen_war_generation'],
     minAge: 10,
-    when: (G) => !G.character.country || G.character.country.name !== 'Chechnya',
+    // The war as it reached Russia: the conscripts, the mothers' committees.
+    // Chechens under the bombardment get chechen_war_first_lived instead.
+    when: (G) => G.character.ethnicity !== 'chechen',
   },
 
   {
@@ -1640,7 +1694,8 @@ export const WORLD_EVENTS = [
     effect: (p) => { p.m -= 22; p.h -= 12; p.w -= 10; p.addFlag('war_childhood'); p.addFlag('chechen_civilian'); },
     addFlags: ['war_childhood', 'chechen_civilian'],
     minAge: 0,
-    when: (G) => G.character.country?.name === 'Russia' && G.flags.includes('chechen_war_generation'),
+    // Grozny, not Moscow: only Chechens were under the shelling.
+    when: (G) => G.character.ethnicity === 'chechen',
   },
 
   {
@@ -1660,7 +1715,7 @@ export const WORLD_EVENTS = [
   {
     id: 'post_soviet_hyperinflation',
     name: 'Post-Soviet Hyperinflation',
-    years: [1992, 1994],
+    years: [1992, 1993],
     archetypes: ['post_soviet'],
     countries: null,
     narrative: 'The prices are written in chalk on a board at the market. By afternoon they have been changed. The money you received as a pension this morning buys half what it bought yesterday. Your parents\' savings account — the one they opened in 1971 and never touched — contains a number that no longer corresponds to anything you can purchase. The thing that was supposed to be security is paper.',
@@ -1668,7 +1723,8 @@ export const WORLD_EVENTS = [
     effect: (p) => { p.w -= 14; p.m -= 10; p.addFlag('savings_wiped_hyperinflation'); p.addFlag('hyperinflation_generation'); },
     addFlags: ['savings_wiped_hyperinflation', 'hyperinflation_generation'],
     minAge: 15,
-    when: (G) => !G.flags.includes('savings_wiped_hyperinflation') && !G.flags.includes('post_soviet_shock'),
+    when: (G) => SOVIET_SUCCESSOR_STATES.includes(G.character.country?.name) &&
+      !G.flags.includes('savings_wiped_hyperinflation') && !G.flags.includes('post_soviet_shock'),
   },
 
   {
@@ -1707,11 +1763,18 @@ export const WORLD_EVENTS = [
     years: [1933, 1933],
     archetypes: ['wealthy_west'],
     countries: ['Germany'],
-    narrative: 'The results come through on the radio. In the street the next morning nothing is visibly different. But the calculation you have been running privately for months has resolved. The NSDAP have forty-four percent. With their coalition partners it is enough. You think about the people you know who voted for them, and whether they understood what they were voting for, and whether that question matters now.',
-    context: 'The March 1933 Reichstag election was held five weeks after Hitler\'s appointment as Chancellor, under conditions of mass political intimidation. The SA patrolled polling stations. The NSDAP won 43.9% of the vote. The Enabling Act passed shortly after, giving Hitler dictatorial powers and formally ending the Weimar Republic. It was the last contested multi-party election in Germany until 1945.',
+    narrative: (G) => {
+      if (G.age < 18) {
+        return 'The men in brown are outside the school in the morning and outside the polling station in the afternoon, and everyone walks past them at the same measured pace, which is a thing you have never seen adults agree on without discussing. At home the radio is left on low. Nobody explains the numbers to you. You learn the result from how your father folds the newspaper and puts it under the chair instead of on the table.'
+      }
+      return 'The results come through on the radio. In the street the next morning nothing is visibly different. But the calculation you have been running privately for months has resolved. The NSDAP have forty-four percent. With their coalition partners it is enough. You think about the people you know who voted for them, and whether they understood what they were voting for, and whether that question matters now.'
+    },
+    context: 'The March 1933 Reichstag election was held five weeks after Hitler\'s appointment as Chancellor and six days after the Reichstag fire, under conditions of mass political intimidation: the Communist Party\'s campaign had been banned outright and its deputies arrested, and the SA patrolled polling stations. The NSDAP won 43.9% of the vote — short of a majority even so. The Enabling Act passed three weeks later, giving Hitler power to legislate without parliament and formally ending the Weimar Republic. It was the last contested multi-party election in Germany until 1949.',
     effect: (p) => { p.m -= 10; p.addFlag('witnessed_democracy_end'); },
     addFlags: ['witnessed_democracy_end'],
-    minAge: 18,
+    // Lowered from 18 so the event is reachable at all: with Germany's birth-year
+    // floor, no character can be an adult voter in March 1933.
+    minAge: 5,
     when: (G) => !G.flags.includes('witnessed_democracy_end'),
   },
 
@@ -1721,8 +1784,8 @@ export const WORLD_EVENTS = [
     years: [1948, 1948],
     archetypes: ['developing_urban'],
     countries: ['South Africa'],
-    narrative: 'The National Party wins on a platform of apartheid — separateness. For white South Africans the result is political. For Black, Coloured, and Indian South Africans — who could not vote — it is not a political result but an announcement: this is what the next forty-six years will look like.',
-    context: 'The 1948 South African general election was contested only by white voters under racial franchise laws. The National Party\'s victory under D.F. Malan began formal apartheid as government policy. The Population Registration Act, Group Areas Act, pass laws, and Bantu Education Act followed rapidly. The system remained in place until 1994.',
+    narrative: 'The National Party wins on a platform of apartheid — separateness. For white South Africans the result is political. For Black South Africans, who have no vote at all, and for the Coloured men of the Cape, who still have one and will keep it for eight more years, it is not a political result but an announcement: this is what the next forty-six years will look like.',
+    context: 'The 1948 South African general election was decided almost entirely by white voters, but the franchise was not yet uniformly white: Coloured men in the Cape Province remained on the common voters\' roll under the old Cape qualified franchise, and were only removed by the Separate Representation of Voters Act, forced through a packed Senate in 1956. Black voters in the Cape had already been struck from the common roll in 1936. The National Party won a parliamentary majority under D.F. Malan on a minority of the popular vote, helped by rural constituency weighting. The Population Registration Act, Group Areas Act, pass laws, and Bantu Education Act followed rapidly. The system remained in place until 1994.',
     effect: (p) => { p.m -= 8; p.addFlag('apartheid_era'); },
     addFlags: ['apartheid_era'],
     minAge: 14,
@@ -1749,7 +1812,7 @@ export const WORLD_EVENTS = [
     years: [1995, 1995],
     archetypes: ['wealthy_west'],
     countries: ['Canada'],
-    narrative: '49.4 percent. A hundred thousand votes in a province of seven million. The margin is indistinguishable from accident. You stay up to hear the concession speech and then the prime minister\'s relief, which looks too much like relief to be pride. The country that almost wasn\'t continues.',
+    narrative: '49.4 percent. Fifty-four thousand votes in a province of seven million — a margin thinner than the spoiled ballots. It is indistinguishable from accident. You stay up to hear the concession speech and then the prime minister\'s relief, which looks too much like relief to be pride. The country that almost wasn\'t continues.',
     context: 'The 1995 Quebec independence referendum returned a No vote of 50.58% to Yes 49.42% on a 93.5% turnout — the highest turnout of any Quebec election. The near-result reshaped Canadian politics, producing the Clarity Act (2000) which established conditions for any future secession vote. Sovereignty remains a live political question in Quebec.',
     effect: (p) => { p.m -= 4; p.addFlag('quebec_referendum_lived'); },
     addFlags: ['quebec_referendum_lived'],
@@ -1833,9 +1896,11 @@ export const WORLD_EVENTS = [
     countries: ['Guatemala'],
     narrative: 'Under General Ríos Montt\'s scorched earth campaign, the army destroys 626 indigenous Maya villages. The logic is counterinsurgency: eliminate the population that supports the guerrillas. 200,000 people die in Guatemala\'s 36-year civil war; 83% of them are Maya.',
     context: 'Guatemala\'s 1981–1983 scorched earth campaign under General Efraín Ríos Montt killed tens of thousands of Maya civilians in the western highlands. The 1999 UN-backed CEH (Commission for Historical Clarification) found that 93% of documented atrocities were committed by state and paramilitary forces and that these acts constituted genocide. In 2013, Ríos Montt was convicted of genocide by a Guatemalan court — the first time a former head of state was convicted of genocide in his own country\'s courts — before the conviction was overturned on procedural grounds.',
-    effect: (p) => { p.m -= 15; p.h -= 8; p.addFlag('genocide_survivor'); p.addFlag('war_childhood'); },
-    addFlags: ['genocide_survivor', 'war_childhood'],
+    effect: (p) => { p.m -= 15; p.h -= 8; p.addFlag('war_childhood'); },
+    addFlags: ['war_childhood'],
     minAge: 0,
+    // The highlands themselves are narrated by guatemala_mayan_genocide.
+    when: (G) => !(['maya_kiche', 'maya_mam', 'maya_kaqchikel', 'maya_qeqchi', 'other_maya'].includes(G.ethnicity) || G.ruralUrban === 'rural'),
   },
 
   {
@@ -1844,10 +1909,21 @@ export const WORLD_EVENTS = [
     years: [2010, 2010],
     archetypes: 'all',
     countries: ['Haiti'],
-    narrative: 'January 12, 2010. Magnitude 7.0. 220,000 people die and 1.5 million are displaced in a country of ten million. The Presidential Palace collapses. The parliament collapses. The main hospital collapses. International aid arrives in quantities that dwarf the country\'s GDP. The country does not recover to what it was.',
+    narrative: (G) => {
+      if (G.place?.region === 'Ouest' || inDisasterZone(G.character, 'haiti2010', 25)) {
+        return 'Thirty-five seconds, at ten to five in the afternoon. Then the dust, which stands over the city for hours and turns the light grey. People dig with hands and rebar through the night, calling names into concrete. You sleep in the street under a sheet for months afterwards. The tent city on the Champ de Mars is still there when your child starts school.'
+      }
+      return 'January 12, 2010. Magnitude 7.0, thirty seconds, twenty-five kilometres from Port-au-Prince. Two hundred thousand people die and a million and a half are displaced in a country of ten million. The Presidential Palace collapses. The parliament collapses. The main hospital collapses. Relatives arrive from the capital and stay. International aid arrives in quantities that dwarf the country\'s economy and does not, in the end, rebuild it.'
+    },
     context: 'The 2010 Haiti earthquake was the deadliest natural disaster in the Western Hemisphere in over two centuries. Beyond 220,000 dead and 300,000 injured, a subsequent cholera outbreak — introduced by UN peacekeeping troops, a fact the UN denied for years — killed an additional 10,000 people. Ten years later, $13 billion in international aid had been disbursed; a 2021 survey found that reconstruction was still incomplete and that 1.5 million Haitians remained in poverty-related food insecurity.',
-    effect: (p) => { p.h -= 20; p.m -= 18; p.w -= 12; p.addFlag('disaster_survivor'); p.addFlag('earthquake_survivor'); },
-    addFlags: ['disaster_survivor', 'earthquake_survivor'],
+    effect: (p) => {
+      const st = p._state
+      const place = st?.currentPlace ?? st?.character?.birthPlace
+      if (place?.region === 'Ouest' || inDisasterZone(st?.character, 'haiti2010', 25)) {
+        p.h -= 20; p.m -= 18; p.w -= 12; p.addFlag('disaster_survivor'); p.addFlag('earthquake_survivor')
+      } else { p.m -= 9; p.w -= 5 }
+    },
+    addFlags: [],
     minAge: 0,
   },
 
@@ -1857,7 +1933,11 @@ export const WORLD_EVENTS = [
     id: 'oil_shock_1973',
     name: '1973 Oil Shock',
     years: [1973, 1974],
-    archetypes: 'all',
+    // wealthy_west, wealthy_gulf and the developing world each have their own
+    // telling below; this is the one for everybody else, so the four do not
+    // stack. The Eastern Bloc is deliberately excluded: for a net oil exporter
+    // inside COMECON the 1973 shock was a windfall, not a queue at the pump.
+    archetypes: ['wealthy_east'],
     countries: null,
     narrative: 'OPEC announces an oil embargo. The price of oil quadruples in weeks. Petrol queues stretch around blocks. In some countries the government introduces odd-even rationing. The relationship between the world and the ground beneath it has changed.',
     context: 'The 1973 oil crisis began when OPEC members proclaimed an oil embargo against nations supporting Israel in the Yom Kippur War. Oil prices rose from $3 per barrel to $12. In the United States, the national speed limit was reduced to 55 mph; in the UK, television broadcasts ended at 10:30 pm to save electricity. The shock ended the postwar economic boom in Western countries and triggered stagflation — simultaneous inflation and unemployment — that lasted through the late 1970s. Oil-producing developing countries briefly accumulated unprecedented wealth.',
@@ -1877,33 +1957,6 @@ export const WORLD_EVENTS = [
     context: 'The 1973 OPEC oil embargo quadrupled oil prices globally, transforming the Gulf states\' finances overnight. Saudi Arabia\'s oil revenues rose from $4.3 billion in 1973 to $22.6 billion in 1974. Similar windfalls hit Kuwait, the UAE, Qatar, Iraq, and Iran. The petrodollar era funded massive infrastructure: airports, universities, hospitals, desalination plants, and highways were built within years. Foreign labour — initially Arab, then South and Southeast Asian — was imported at enormous scale. The wealth was not evenly distributed within Gulf societies: merchants and ruling families benefited most; Bedouin and rural populations were incorporated unevenly. The dependency on oil created the "resource curse" dynamics — delayed political development, weak non-oil sectors, and volatility tied to global commodity prices.',
     effect: (p) => { p.w += 15; p.mo += 2000; p.addFlag('oil_boom_generation'); },
     addFlags: ['oil_boom_generation'],
-    minAge: 0,
-  },
-
-  {
-    id: 'asian_financial_crisis_1997_initial',
-    name: '1997 Asian Financial Crisis',
-    years: [1997, 1999],
-    archetypes: ['wealthy_east', 'developing_urban'],
-    countries: ['Thailand', 'Indonesia', 'South Korea', 'Malaysia'],
-    narrative: 'The baht falls. Then the rupiah. Then the won. Currencies that seemed fixed suddenly are not. Savings denominated in local currency lose a third of their value in weeks. The IMF arrives with conditions: cut spending, raise interest rates, open markets — all at once, while people are already struggling.',
-    context: 'The 1997–98 Asian financial crisis began in Thailand in July 1997 when the baht was floated after running out of foreign reserves. Currency collapses spread to Indonesia, South Korea, Malaysia, and the Philippines. Indonesia\'s GDP fell 13.5% in 1998; South Korea\'s fell 5.5%. The IMF provided $40 billion in bailout packages with conditions of austerity and deregulation. In Indonesia, the crisis triggered political crisis: Suharto resigned after 32 years in power. An estimated 24 million people were pushed into poverty.',
-    effect: (p) => { p.w -= 12; p.m -= 10; p.wipeMoney(0.35); p.addFlag('asian_crisis_generation'); },
-    addFlags: ['asian_crisis_generation'],
-    minAge: 10,
-    when: (G) => !G.flags.includes('asian_crisis_generation'),
-  },
-
-  {
-    id: 'bangladesh_liberation_war_1971',
-    name: 'Bangladesh Liberation War',
-    years: [1971, 1971],
-    archetypes: 'all',
-    countries: ['Bangladesh'],
-    narrative: 'March 25th. Operation Searchlight begins at midnight. The army moves on the universities and the Hindu neighbourhoods first. Nine months of war follow before the Indian army crosses the border. Then — suddenly, improbably — it is over. A country has been born. The word for what happened to the people in between does not exist yet.',
-    context: 'Bangladesh\'s Liberation War followed the Pakistani military\'s attempt to suppress the Bengali nationalist movement that had won the 1970 elections. Operation Searchlight, launched on March 25, 1971, targeted Bengali intellectuals, students, police, and Hindu minorities. Estimates of those killed range from 300,000 to 3 million, making it one of the 20th century\'s most contested and underreported mass atrocities. The war ended December 16, 1971 after Indian military intervention. Bangladesh declared independence. Ten million refugees had fled to India during the conflict.',
-    effect: (p) => { p.h -= 12; p.m -= 15; p.addFlag('liberation_war_generation'); p.addFlag('war_childhood'); },
-    addFlags: ['liberation_war_generation'],
     minAge: 0,
   },
 
@@ -1956,7 +2009,7 @@ export const WORLD_EVENTS = [
     archetypes: 'all',
     countries: ['Ghana'],
     narrative: 'March 6. Kwame Nkrumah declares independence at midnight and the crowd shouts it back at him. The word travels by radio to villages that have no electricity. You hear it from someone who heard someone else say it. Whatever it means exactly is still being worked out. But something has changed.',
-    context: 'Ghana (formerly the Gold Coast) became the first sub-Saharan African colony to gain independence on March 6, 1957 under Kwame Nkrumah\'s Convention People\'s Party. Nkrumah\'s independence speech — "We have won independence. There is a new African in the world" — resonated across the continent. Ghana\'s independence triggered the cascade of African decolonisation: 17 more African nations gained independence in 1960 alone ("L\'Année de l\'Afrique"). Nkrumah promoted pan-Africanism and African unity, hosting liberation movements from across the continent. He was overthrown by a military coup in 1966 while abroad, with CIA involvement subsequently confirmed in declassified documents.',
+    context: 'Ghana (formerly the Gold Coast) became the first sub-Saharan African colony to gain independence on March 6, 1957 under Kwame Nkrumah\'s Convention People\'s Party. Nkrumah\'s midnight speech at the Old Polo Ground — "At long last, the battle has ended! And thus, Ghana, your beloved country, is free forever" — resonated across the continent. Ghana\'s independence triggered the cascade of African decolonisation: 17 more African nations gained independence in 1960 alone ("L\'Année de l\'Afrique"). Nkrumah promoted pan-Africanism and African unity, hosting liberation movements from across the continent. He was overthrown by a military coup in 1966 while abroad, with CIA involvement subsequently confirmed in declassified documents.',
     effect: (p) => { p.m += 15; p.karma += 5; p.addFlag('independence_generation'); p.addFlag('independence_ghana'); },
     addFlags: ['independence_generation', 'independence_ghana'],
     minAge: 0,
@@ -2024,7 +2077,7 @@ export const WORLD_EVENTS = [
     archetypes: 'all',
     countries: ['Kenya'],
     narrative: 'The British declare a state of emergency. The Mau Mau are fighting for land and freedom. The colonial government\'s response is systematic detention. You have to make choices about the oath, about silence, about which direction to face when the two sides are directly in front of you.',
-    context: 'The Mau Mau uprising (1952–1960) was a guerrilla war against British colonial rule in Kenya, primarily among the Kikuyu. The British response included mass detention — 1.5 million people were moved into 150 "protected villages." The Hola Camp massacre (1959), in which 11 detainees were beaten to death, caused a parliamentary crisis in Britain. Kenya gained independence in 1963. The British government paid £19.9 million in compensation to survivors in 2013 after losing a legal challenge, and acknowledged "torture and ill-treatment" in Kenyan detention camps.',
+    context: 'The Mau Mau uprising (1952–1960) was a guerrilla war against British colonial rule in Kenya, primarily among the Kikuyu. The British response included mass detention and forced resettlement: more than a million Kikuyu were moved into some 800 fortified "protected villages," and tens of thousands passed through a network of detention camps known as the Pipeline. The Hola Camp massacre (1959), in which 11 detainees were beaten to death, caused a parliamentary crisis in Britain. Kenya gained independence in 1963. The British government paid £19.9 million in compensation to survivors in 2013 after losing a legal challenge, and acknowledged "torture and ill-treatment" in Kenyan detention camps.',
     effect: (p) => { p.m -= 12; p.addFlag('mau_mau_generation'); p.addFlag('war_childhood'); },
     addFlags: ['mau_mau_generation'],
     minAge: 0,
@@ -2118,7 +2171,7 @@ export const WORLD_EVENTS = [
     archetypes: 'all',
     countries: ['Zimbabwe'],
     narrative: 'April 18. Zimbabwe becomes Zimbabwe. Mugabe speaks of reconciliation with the white minority. Bob Marley plays at the independence celebration. You believe it, or you are cautious, or you believe it and are cautious at the same time.',
-    context: 'Zimbabwe (formerly Rhodesia) gained independence on April 18, 1980 following the Lancaster House Agreement that ended the Bush War. Robert Mugabe\'s ZANU-PF won 57 of 80 seats in the independence election. Mugabe\'s first speeches promised reconciliation with the white minority (which constituted roughly 3% of the population but owned most productive farmland). Bob Marley performed at the independence celebrations — one of his last major concerts. The reconciliation lasted through the early 1980s; Gukurahundi (1982–87) — the massacre of 20,000 Ndebele civilians by the North Korean-trained Fifth Brigade — occurred simultaneously, largely suppressed from the reconciliation narrative. Land reform, deferred by Lancaster House, became increasingly central to Mugabe\'s politics after 1997.',
+    context: 'Zimbabwe (formerly Rhodesia) gained independence on April 18, 1980 following the Lancaster House Agreement that ended the Bush War. Robert Mugabe\'s ZANU-PF won 57 of 80 seats in the independence election. Mugabe\'s first speeches promised reconciliation with the white minority (which constituted roughly 3% of the population but owned most productive farmland). Bob Marley performed at the independence celebrations — one of his last major concerts. The reconciliation lasted through the early 1980s; Gukurahundi (1983–87) — the massacre of an estimated 20,000 Ndebele civilians in Matabeleland and the Midlands by the North Korean-trained Fifth Brigade — occurred simultaneously, largely suppressed from the reconciliation narrative. Land reform, deferred by Lancaster House, became increasingly central to Mugabe\'s politics after 1997.',
     effect: (p) => { p.m += 12; p.karma += 4; p.addFlag('independence_generation'); p.addFlag('independence_zimbabwe'); },
     addFlags: ['independence_generation', 'independence_zimbabwe'],
     minAge: 0,
@@ -2131,11 +2184,10 @@ export const WORLD_EVENTS = [
     archetypes: 'all',
     countries: ['Zimbabwe'],
     narrative: 'A loaf of bread costs what a car cost last month. You carry money in bags because a wallet isn\'t large enough. The central bank prints one-hundred-trillion-dollar notes. The word "trillion" loses its meaning. Prices change between when you enter a shop and when you reach the counter. The practical solution is to transact in US dollars or South African rand, which the government has declared illegal.',
-    context: 'Zimbabwe\'s hyperinflation peaked at an estimated 89.7 sextillion percent (8.97 × 10²²%) annually in November 2008, according to the Cato Institute. The Reserve Bank printed 100 trillion dollar banknotes. The inflation was caused by government printing to fund deficits after the land reform programme collapsed agricultural production. In 2009, the government suspended the Zimbabwean dollar and adopted a multi-currency system using US dollars and South African rand. The hyperinflation wiped out the savings of Zimbabwe\'s middle class and devastated pensions.',
+    context: 'Zimbabwe\'s hyperinflation peaked in mid-November 2008 at an estimated 79.6 billion percent per month — 89.7 sextillion percent (8.97 × 10²²%) annualised — on Steve Hanke\'s reconstruction of the price data. The Reserve Bank printed 100 trillion dollar banknotes. The inflation was caused by government printing to fund deficits after the land reform programme collapsed agricultural production. In 2009, the government suspended the Zimbabwean dollar and adopted a multi-currency system using US dollars and South African rand. The hyperinflation wiped out the savings of Zimbabwe\'s middle class and devastated pensions.',
     effect: (p) => { p.w -= 18; p.m -= 15; p.wipeMoney(0.9); p.addFlag('hyperinflation_generation'); p.addFlag('hyperinflation_survivor'); },
     addFlags: ['hyperinflation_generation'],
     minAge: 10,
-    when: (G) => !G.flags.includes('hyperinflation_generation'),
   },
 
   // ── OIL SHOCK 1973 — DEVELOPING WORLD ────────────────────────────────────
@@ -2190,11 +2242,18 @@ export const WORLD_EVENTS = [
     years: [1936, 1937],
     archetypes: 'all',
     countries: ['Spain'],
-    narrative: 'The anarchist unions — the CNT and the FAI — are running the factories in Barcelona. Not managed, not administered: run. Decisions made collectively, wages equalised, bosses gone. It is also a city at war with itself, with the fascists, and with other factions on the left who consider the anarchists a threat to discipline. The revolution and the war are happening simultaneously, and they are not the same project.',
+    narrative: (G) => {
+      if (G.age < 12) {
+        return 'The trams have been painted red and black and they are free now. Your mother goes to the same factory as before but comes home saying the word committee. Nobody is called señor any more; everyone is called compañero, including you, which is funny for about a week and then is simply what people are called. Men with rifles queue politely for bread.'
+      }
+      return 'The anarchist unions — the CNT and the FAI — are running the factories in Barcelona. Not managed, not administered: run. Decisions made collectively, wages equalised, bosses gone. It is also a city at war with itself, with the fascists, and with other factions on the left who consider the anarchists a threat to discipline. The revolution and the war are happening simultaneously, and they are not the same project.'
+    },
     context: 'Between July 1936 and May 1937, anarcho-syndicalist unions collectivised around 70% of Barcelona\'s industry, including transport, utilities, and most manufacturing. Workers\' committees replaced management. The experiment ended when the Republican government, backed by Soviet-aligned communists, moved to suppress anarchist militias in the May Days of 1937. George Orwell described this period in Homage to Catalonia. The collectivisations remain one of history\'s most significant experiments in worker self-management.',
     effect: (p) => { p.m += 5; p.karma += 8; p.s += 4; p.addFlag('civil_war_generation'); p.addFlag('anarchist_barcelona'); },
     addFlags: ['civil_war_generation', 'anarchist_barcelona'],
-    minAge: 12,
+    // Lowered from 12 so the event is reachable at all: with Spain's birth-year
+    // floor, no character can be 12 in 1936.
+    minAge: 6,
     when: (G) => !G.flags.includes('civil_war_generation'),
   },
 
@@ -2265,7 +2324,7 @@ export const WORLD_EVENTS = [
       return 'The currency has lost half its value since spring. The savings your family kept in the bank have not changed in number, but what they will buy has. The debt, taken in dollars, has doubled. The government is negotiating with the IMF and the IMF\'s terms are familiar to anyone who lived through structural adjustment: cut pensions, cut public employment, raise interest rates, open the market.'
     },
     context: 'The 1997-98 Asian financial crisis began with Thailand\'s decision to float the baht after currency speculators attacked it. Within months, contagion spread to Indonesia, Malaysia, South Korea, and the Philippines. Indonesia\'s GDP fell 13.5% in one year — a peacetime economic collapse comparable to the Great Depression. In Indonesia, the crisis triggered political violence against the ethnic Chinese community (May 1998 Jakarta riots) and the fall of Suharto after 32 years. South Korea\'s gold collection campaign raised $2.2 billion. The IMF\'s structural adjustment conditions — widely blamed for deepening the crisis — reshaped regional politics for a generation.',
-    effect: (p) => { p.w -= 12; p.mo -= 3000; p.m -= 10; p.addFlag('asian_crisis_generation'); },
+    effect: (p) => { p.w -= 12; p.wipeMoney(0.35); p.m -= 10; p.addFlag('asian_crisis_generation'); },
     addFlags: ['asian_crisis_generation'],
     minAge: 10,
     when: (G) => !G.flags.includes('asian_crisis_generation'),
@@ -2293,11 +2352,16 @@ export const WORLD_EVENTS = [
     years: [1961, 1961],
     archetypes: null,
     countries: ['DR Congo'],
-    narrative: 'The radio announces it on February 13th: Lumumba is dead. Shot, they say, while trying to escape. Nobody believes the escape story. The first prime minister of your independent country, who gave the speech at independence that made you feel the word "dignity" for the first time, has been killed five months into his tenure. The Belgians knew. The CIA knew. Mobutu knew. The word betrayal is too small for what has happened.',
-    context: 'Patrice Lumumba, the Democratic Republic of Congo\'s first democratically elected prime minister, was assassinated on January 17, 1961. Belgium and the CIA had both actively worked to remove him, fearing his nationalist and pan-Africanist politics. His death, announced publicly on February 13, became a defining moment for African independence movements. The Belgian parliament formally apologized in 2002. His assassination opened the way for Mobutu Sese Seko\'s 32-year kleptocracy.',
-    effect: (p) => { p.m -= 18; p.karma -= 5; p.addFlag('lumumba_generation'); p.setPolitical('dissident'); },
+    narrative: (G) => {
+      if (G.age < 10) {
+        return 'A name goes quiet in the house. It was said constantly for a year — on the radio, at the table, in the street — and then in February it is not said at all, or only in the other room, and you are sent outside. Years later you will be told which name it was and what happened to the man who had it, and you will already have known that something did.'
+      }
+      return 'The radio announces it on February 13th: Lumumba is dead. Shot, they say, while trying to escape. Nobody believes the escape story. The first prime minister of your independent country, who gave the speech at independence that made you feel the word "dignity" for the first time, has been killed five months into his tenure. The Belgians knew. The CIA knew. Mobutu knew. The word betrayal is too small for what has happened.'
+    },
+    context: 'Patrice Lumumba, the Democratic Republic of Congo\'s first democratically elected prime minister, was killed on 17 January 1961 near Élisabethville in Katanga, in the presence of Belgian officers; his body was dissolved in acid. Belgium and the CIA had both worked actively to remove him, fearing his nationalism and his approach to Moscow. His death was not announced until 13 February, with a fabricated story about villagers killing him after an escape. Mobutu Sese Seko, who had helped deliver him to Katanga, proclaimed him a national hero in 1966 and named a boulevard after him. A Belgian parliamentary commission accepted "moral responsibility" in 2001 and the state apologised in 2002; a single gold-capped tooth, all that remained, was returned to his family in 2022.',
+    effect: (p) => { p.m -= 14; p.karma -= 3; p.addFlag('lumumba_generation'); if ((p._state?.age ?? 0) >= 10) p.setPolitical('dissident'); },
     addFlags: ['lumumba_generation'],
-    minAge: 5,
+    minAge: 3,
     when: (G) => !G.flags.includes('lumumba_generation'),
   },
 
@@ -2305,15 +2369,20 @@ export const WORLD_EVENTS = [
 
   {
     id: 'bay_of_pigs_1961',
-    name: 'Bay of Pigs Invasion',
-    years: [1961, 1961],
+    name: 'Playa Girón',
+    years: [1961, 1962],
     archetypes: null,
     countries: ['Cuba'],
-    narrative: 'Fourteen hundred Cuban exiles, trained by the CIA, land on the southern coast. They are defeated in seventy-two hours. Castro broadcasts the victory personally. On the streets of Havana people are cheering — genuinely — because the country they chose is still the country they chose. The United States has tried and failed to take it back.',
-    context: 'The Bay of Pigs invasion of April 1961 was a CIA-organised attempt by Cuban exiles to overthrow Fidel Castro. The Kennedy administration cancelled planned air support at the last minute; the invasion force was quickly overwhelmed and captured. The defeat was a significant propaganda victory for Castro, cementing his domestic position and deepening the US-Cuba antagonism that would shape the next six decades.',
+    narrative: (G) => {
+      if (G.age < 10) {
+        return 'Men from the street go away with rifles for a few days and come back sunburnt and pleased with themselves, and there is a lot of talking about a swamp. Nobody explains it to you properly. What you take from it is the mood: something was supposed to happen to this island and it did not happen.'
+      }
+      return 'Fourteen hundred Cuban exiles, trained by the CIA, land at Playa Girón on the southern coast. They are finished in seventy-two hours. Castro broadcasts the victory personally. On the streets of Havana people are cheering — genuinely — because the country they chose is still the country they chose. The United States has tried and failed to take it back.'
+    },
+    context: 'The Bay of Pigs invasion of April 1961 was a CIA-organised attempt by Cuban exiles to overthrow Fidel Castro. The Kennedy administration cancelled planned air support at the last minute; the invasion force of about 1,400 was overwhelmed within three days and more than 1,100 were captured, later ransomed for $53 million in food and medicine. The defeat was a substantial propaganda victory for Castro, cementing his domestic position, pushing Cuba further toward the Soviet Union — and so toward the missile crisis eighteen months later — and deepening the US-Cuba antagonism that shaped the next six decades. Girón is commemorated in Cuba every year as the first defeat of imperialism in the Americas.',
     effect: (p) => { p.m += 6; p.addFlag('bay_of_pigs_generation'); },
     addFlags: ['bay_of_pigs_generation'],
-    minAge: 5,
+    minAge: 3,
     when: (G) => !G.flags.includes('bay_of_pigs_generation'),
   },
 
@@ -2380,11 +2449,16 @@ export const WORLD_EVENTS = [
     years: [1965, 1965],
     archetypes: null,
     countries: ['Singapore'],
-    narrative: 'August 9, 1965. Lee Kuan Yew appears on television with tears on his face — the only time the public ever sees him like this. He says Singapore has been expelled from the Malaysian Federation. The separation is a shock: no Singaporean voted for it, no independence movement built toward it. The island has no hinterland, no natural resources, no reliable water supply. The British bases are still here but will not be here forever. The question is whether a city-state of two million people can survive as a nation.',
+    narrative: (G) => {
+      if (G.age < 10) {
+        return 'The adults are watching the small television in the coffee shop and nobody is talking, which is not how the coffee shop usually is. A man on the screen is crying. Later you are told that this is the day the country started, and that the crying man is going to run it, and that neither of those facts was anybody\'s plan.'
+      }
+      return 'August 9, 1965. Lee Kuan Yew appears on television with tears on his face — the only time the public ever sees him like this. He says Singapore has been expelled from the Malaysian Federation. The separation is a shock: no Singaporean voted for it, no independence movement built toward it. The island has no hinterland, no natural resources, no reliable water supply. The British bases are still here but will not be here forever. The question is whether a city-state of two million people can survive as a nation.'
+    },
     context: 'Singapore was separated from Malaysia on August 9, 1965, a decision driven by racial and political tensions between the Malay-dominated federal government and Singapore\'s Chinese-majority PAP. Lee Kuan Yew, who had campaigned for merger, wept on television at the announcement. The PAP government then pursued an extraordinary economic development strategy: export-led manufacturing, strict labour discipline, housing through the HDB, education in English, and the transformation of a colonial trading port into a financial and technological hub. By 1990 Singapore had one of the highest per-capita incomes in Asia.',
     effect: (p) => { p.m -= 5; p.addFlag('sg_independence_witness'); },
     addFlags: ['sg_independence_witness'],
-    minAge: 5,
+    minAge: 3,
     when: (G) => !G.flags.has('sg_independence_witness'),
   },
 
@@ -2459,10 +2533,10 @@ export const WORLD_EVENTS = [
       }
       return 'You are too young to understand what the adults are saying in low voices. What you understand: the fear in your mother\'s face, the sounds at night that are not wind, the neighbours who left and did not come back. Later someone will tell you what year it was and what it meant. You will know before they finish.'
     },
-    context: 'The Bangladesh Liberation War lasted from March 25 to December 16, 1971. The Pakistani army\'s Operation Searchlight was a systematic campaign of mass killing, rape, and displacement targeting Bengali intellectuals, Hindus, and political opponents. Estimates of the death toll range from 300,000 to 3 million. India intervened militarily in December; Pakistan\'s forces surrendered on December 16, Bangladesh\'s Victory Day. The war produced 10 million refugees and created one of the world\'s newest nations.',
+    context: 'The Bangladesh Liberation War lasted from 25 March to 16 December 1971. It followed the Pakistani military\'s refusal to hand power to the Awami League, which had won an outright majority in the 1970 national elections. Operation Searchlight was a systematic campaign of mass killing, rape and displacement targeting Bengali intellectuals, students, police and Hindu minorities; Dhaka University was among its first targets. Estimates of the death toll range from 300,000 to 3 million — the Pakistani government\'s own inquiry put it at 26,000 — making it one of the twentieth century\'s most contested and underreported mass atrocities. Ten million refugees fled to India. India intervened militarily in December; Pakistan\'s forces surrendered on 16 December, now Bangladesh\'s Victory Day. Sheikh Mujibur Rahman, imprisoned in West Pakistan throughout the war, returned to lead the new state.',
     effect: (p) => {
-      if (p._state?.age >= 15) { p.m -= 18; p.h -= 10; p.addFlag('liberation_war_generation'); }
-      else { p.m -= 12; p.h -= 6; p.addFlag('liberation_war_generation'); }
+      if (p._state?.age >= 15) { p.m -= 18; p.h -= 10; p.addFlag('liberation_war_generation'); p.addFlag('war_childhood'); }
+      else { p.m -= 12; p.h -= 6; p.addFlag('liberation_war_generation'); p.addFlag('war_childhood'); }
     },
     addFlags: ['liberation_war_generation'],
     minAge: 0,
@@ -2477,14 +2551,14 @@ export const WORLD_EVENTS = [
     archetypes: 'all',
     countries: ['Australia'],
     narrative: (G) => {
-      if (G.character.ethnicity === 'aboriginal_australian') return null // handled by character event
+      if (G.character.ethnicity === 'aboriginal') return null // handled by character event
       return 'The High Court has found that Australia was not legally empty when the British arrived. Terra nullius — the legal fiction that underpinned two centuries of dispossession — is overturned. Eddie Mabo, a Torres Strait Islander, fought this case for a decade. He died four months before the decision. The ruling is narrow in law and vast in implication. The country will spend years arguing about what it means. The argument is not resolved.'
     },
     context: 'The Mabo v Queensland (No 2) decision of June 3, 1992 was a landmark ruling by Australia\'s High Court that recognised native title — the legal rights of Aboriginal and Torres Strait Islander peoples to their traditional lands. It overturned the doctrine of terra nullius ("land belonging to nobody") that had provided legal justification for the dispossession of Indigenous Australians since 1788. The Native Title Act 1993 followed. Eddie Koiki Mabo, a Meriam man from the Murray Islands, died of cancer in January 1992, four months before the decision bearing his name was handed down.',
     effect: (p) => { p.m += 3; p.e += 3; p.addFlag('mabo_generation'); },
     addFlags: ['mabo_generation'],
     minAge: 10,
-    when: (G) => G.character.ethnicity !== 'aboriginal_australian' && !G.flags.includes('mabo_generation'),
+    when: (G) => G.character.ethnicity !== 'aboriginal' && !G.flags.includes('mabo_generation'),
   },
 
   // ── STOLEN GENERATIONS APOLOGY 2008 (AUSTRALIA) ──────────────────────────
@@ -2495,14 +2569,14 @@ export const WORLD_EVENTS = [
     archetypes: 'all',
     countries: ['Australia'],
     narrative: (G) => {
-      if (G.character.ethnicity === 'aboriginal_australian') return null // handled by character event
+      if (G.character.ethnicity === 'aboriginal') return null // handled by character event
       return 'Prime Minister Rudd stands in Parliament and says: we are sorry. The words are: "for the laws and policies of successive Parliaments and governments that have inflicted profound grief, suffering and loss on these our fellow Australians." People in the public gallery are crying. People watching on television are crying. The apology does not return what was taken. It is also something that was not there yesterday and is there today. The country is processing something it has been not-quite-saying for a long time.'
     },
     context: 'On February 13, 2008, Australian Prime Minister Kevin Rudd delivered a formal apology to Aboriginal Australians, specifically to the Stolen Generations — Indigenous children forcibly removed from their families under government policies that operated from the late 19th century until 1970. An estimated 100,000 Aboriginal children were removed under these policies. The apology had been refused by Prime Minister John Howard for 11 years. It was watched by thousands of Aboriginal people gathered on the lawns outside Parliament House and televised nationally.',
     effect: (p) => { p.m += 4; p.e += 2; p.addFlag('apology_generation'); },
     addFlags: ['apology_generation'],
     minAge: 8,
-    when: (G) => G.character.ethnicity !== 'aboriginal_australian' && !G.flags.includes('apology_generation'),
+    when: (G) => G.character.ethnicity !== 'aboriginal' && !G.flags.includes('apology_generation'),
   },
 
   // ── PARIS AGREEMENT 2015 ─────────────────────────────────────────────────
@@ -2600,7 +2674,7 @@ export const WORLD_EVENTS = [
     name: 'Gulf Region Seasonal Uninhabitability',
     years: [2055, 2065],
     archetypes: null,
-    countries: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain', 'Oman'],
+    countries: ['UAE', 'Saudi Arabia', 'Kuwait', 'Qatar', 'Bahrain'],
     narrative: 'The summer wet-bulb temperature in the Gulf has crossed the threshold beyond which a human body cannot cool itself outdoors, even in shade, even with water. This is not a heat wave — heat waves end. This is the summer now. The cities were built around air conditioning, which is infrastructure that can be maintained; they were also built around outdoor workers, which is a category of person that can no longer safely work here between June and September. The reconfiguration of what is possible in this climate is underway.',
     context: 'Wet-bulb temperature (a combined measure of heat and humidity) above 35°C is fatal to humans after prolonged outdoor exposure regardless of activity level. IPCC reports project that wet-bulb temperatures above 35°C will become an annual occurrence across the Gulf region by mid-century under high-emissions scenarios. The UAE, Qatar, and Saudi Arabia have already recorded wet-bulb events above 30°C. Outdoor workers — primarily migrant laborers from South Asia — are disproportionately exposed.',
     effect: (p) => { p.h -= 8; p.m -= 10; p.addFlag('heat_stress_generation'); p.addFlag('climate_generation'); },
@@ -2665,8 +2739,12 @@ export const WORLD_EVENTS = [
       }
       return 'The civil war in the east has been running for two years. The photographs coming out — children with swollen stomachs, field hospitals in churches — have reached international newspapers and produced a new kind of response: emergency aid flows from strangers in Europe and America. The secession will not succeed. The question being argued is what the blockade has made of Nigeria\'s claim to unity.'
     },
-    context: 'The Nigerian Civil War (1967–70) followed the secession of the Eastern Region as the Republic of Biafra. The federal military government imposed a total blockade. Approximately 1–2 million Biafran civilians died from starvation and disease, making it one of the first televised humanitarian catastrophes and a formative event for the modern NGO movement (the founders of Médecins Sans Frontières were French doctors who served in Biafra). The war ended with federal forces entering Biafra\'s capital on 15 January 1970.',
-    effect: (p) => { p.m -= 8; p.h -= 3; },
+    context: 'The Republic of Biafra declared independence from Nigeria on 30 May 1967, after anti-Igbo pogroms in Northern Nigeria in 1966 killed an estimated 30,000 people and drove more than a million east. The federal military government imposed a total blockade. Approximately 500,000 to 2 million Biafran civilians died of starvation and disease — mostly children, mostly of kwashiorkor — making it one of the first televised humanitarian catastrophes and a formative event for the modern NGO movement: the founders of Médecins Sans Frontières were French doctors who had served in Biafra. Federal forces entered Biafra\'s capital on 15 January 1970. The post-war policy of "No victor, no vanquished" emphasised reconciliation over accountability.',
+    effect: (p) => {
+      if (p._state?.character?.ethnicity === 'igbo') {
+        p.m -= 15; p.h -= 14; p.w -= 8; p.addFlag('hunger_childhood'); p.addFlag('war_childhood'); p.addFlag('famine_survivor')
+      } else { p.m -= 8; p.h -= 3 }
+    },
     addFlags: [],
     minAge: 5,
   },
@@ -2703,8 +2781,9 @@ export const WORLD_EVENTS = [
     effect: (p) => { p.m -= 6; p.h -= 3; p.addFlag('civil_war_lived'); },
     addFlags: [],
     minAge: 0,
-    when: (G) => ['developing_unstable', 'conflict_zone', 'subsaharan'].includes(G.character.country?.archetype) &&
-      ['Angola', 'Namibia', 'Zambia', 'Zimbabwe', 'DR Congo'].includes(G.character.country?.name),
+    // Angola itself is narrated by angola_civil_war; this is the war as the
+    // neighbouring countries it spilled into experienced it.
+    when: (G) => ['Namibia', 'Zambia', 'Zimbabwe', 'DR Congo'].includes(G.character.country?.name),
   },
 
   // ── MOZAMBIQUE CIVIL WAR 1977–1992 ────────────────────────────────────────
@@ -2839,19 +2918,23 @@ export const WORLD_EVENTS = [
     archetypes: null,
     countries: ['Bangladesh'],
     narrative: (G) => {
-      if (G.age <= 12) {
+      const hit = inDisasterZone(G.character, 'bhola1970', 14) || G.ruralUrban === 'rural'
+      if (hit && G.age <= 12) {
         return 'The storm comes at night. The adults move the family to higher ground — the school building, the raised road — before the water follows. In the morning the water is still moving in directions it should not move. The count of what was lost takes longer than the water takes to recede. You are too young to understand the number. The adults understand it.'
       }
-      return 'The cyclone comes in from the Bay of Bengal on the night of November 12. The storm surge reaches six metres in the delta. The Pakistani government\'s response, when it comes, comes slowly — the supplies, the personnel, the acknowledgment. The death toll will be estimated at between 300,000 and 500,000. It is one of the deadliest natural disasters in recorded history. The government\'s inadequacy is noticed, and not forgotten.'
+      if (hit) {
+        return 'The cyclone comes in off the Bay of Bengal on the night of November 12. The surge reaches six metres across the delta islands and there is nothing between it and the huts but the dark. In the morning the char lands are scoured flat. The relief that comes from West Pakistan comes slowly — the supplies, the personnel, the acknowledgment — and its slowness is noticed, and not forgotten.'
+      }
+      return 'The cyclone crosses the delta on the night of November 12 and the news of it takes days to assemble. Between three and five hundred thousand dead: the deadliest storm ever recorded anywhere. In Dhaka people wait for the government in Islamabad to say something proportionate to the number. What it says is not proportionate. In the election a month later the Awami League takes all but two of East Pakistan\'s seats.'
     },
     context: 'The Bhola Cyclone struck East Pakistan (now Bangladesh) on 12 November 1970, killing an estimated 300,000–500,000 people — the deadliest tropical cyclone on record. The Pakistani central government\'s delayed and inadequate disaster response was a major factor in turning East Pakistani political discontent into a movement for independence. The Awami League\'s landslide election victory in December 1970 followed directly, leading to the Pakistani military crackdown and the 1971 Liberation War.',
     effect: (p) => {
-      p.m -= 15
-      p.h -= 8
-      p.r += 6
-      p.addFlag('bhola_survivor')
+      const c = p._state?.character
+      const hit = inDisasterZone(c, 'bhola1970', 14) || c?.ruralUrban === 'rural'
+      if (hit) { p.m -= 15; p.h -= 8; p.r += 6; p.addFlag('bhola_survivor') }
+      else { p.m -= 6; p.r += 4 }
     },
-    addFlags: ['bhola_survivor'],
+    addFlags: [],
     minAge: 0,
     when: null,
   },
@@ -2864,19 +2947,22 @@ export const WORLD_EVENTS = [
     archetypes: null,
     countries: ['China'],
     narrative: (G) => {
-      if (G.age <= 10) {
-        return 'The ground moves before the sound arrives — or the sound and the movement are the same thing. It lasts for seconds. What took years to build is not there anymore. Adults make decisions quickly, in the dark, without full information. You are held and moved. Later you will learn the number of dead. For now you only know what your street looks like now compared to yesterday.'
+      const near = G.place?.region === 'North China'
+      if (near && G.age <= 10) {
+        return 'The ground moves before the sound arrives — or the sound and the movement are the same thing. It lasts for seconds. Adults make decisions quickly, in the dark, without full information. You are carried outside and put down in the road, and everyone sleeps in the road for weeks afterwards, because nobody trusts a ceiling now. Later you will learn the number of dead. For now you only know what your street looks like compared to yesterday.'
       }
-      return 'The earthquake strikes at 3:42 in the morning, when the city is asleep. The city of one million is built on alluvial sediment that amplifies the shaking. Most of the buildings are unreinforced brick. They do not survive. 242,000 dead — the official figure. Other estimates are higher. The Chinese government initially refuses all foreign assistance, a political decision made in the middle of a humanitarian catastrophe. Rescue comes from within: soldiers arrive overland because roads are gone, and begin to dig.'
+      if (near) {
+        return 'It comes at 3:42 in the morning, when the city is asleep. In Beijing the buildings sway and the windows go and people spend the summer in shelters made of bedsheets and bamboo in the street. A hundred and eighty kilometres east, Tangshan is simply gone: a mining city of a million, built of unreinforced brick, on sediment that amplified the shaking. Soldiers go in overland because there are no roads left. The government refuses all foreign assistance.'
+      }
+      return 'The radio says there has been an earthquake in Hebei. It does not say how large. The number will not be published for three years, and when it is published it will be 242,000 — a city of a million, most of it brick, at 3:42 in the morning. The government has refused foreign aid. What reaches you now is a request from the work unit for blankets and quilts, and the understanding that you are not to speculate about the rest.'
     },
     context: 'The 1976 Tangshan earthquake measured 7.6 magnitude and killed at least 242,000 people — possibly over 650,000 by some estimates, though official figures were not released until 1979. It struck at 3:42am, when residents were asleep. Tangshan, an industrial coal-mining city, was built primarily of unreinforced brick. The Mao-era government initially refused international aid and suppressed reporting on the scale of the disaster. Rescue was conducted almost entirely by the People\'s Liberation Army. The earthquake occurred during the politically chaotic final months of the Cultural Revolution, weeks after the death of Premier Zhou Enlai and months before Mao Zedong\'s own death.',
     effect: (p) => {
-      p.m -= 18
-      p.h -= 10
-      p.r += 5
-      p.addFlag('tangshan_witness')
+      const near = (p._state?.currentPlace ?? p._state?.character?.birthPlace)?.region === 'North China'
+      if (near) { p.m -= 18; p.h -= 10; p.r += 5; p.addFlag('tangshan_witness') }
+      else { p.m -= 6; p.r += 2 }
     },
-    addFlags: ['tangshan_witness'],
+    addFlags: [],
     minAge: 0,
     maxAge: null,
     when: null,
@@ -2961,7 +3047,7 @@ export const WORLD_EVENTS = [
     addFlags: ['anfal_generation'],
     minAge: 5,
     maxAge: null,
-    when: (G) => G.character.ethnicity === 'kurdish_iraq' || G.character.ethnicity === 'kurdish',
+    when: (G) => G.character.ethnicity === 'kurdish_iraqi',
   },
 
   {
@@ -2970,10 +3056,20 @@ export const WORLD_EVENTS = [
     years: [2020, 2021],
     archetypes: null,
     countries: ['Lebanon'],
-    narrative: 'The explosion at the port takes seconds. The shockwave moves through the city at the speed of sound. Windows shatter across West Beirut — not in one building but in every building facing the water, simultaneously. You feel it before you understand it. The warehouse held 2,750 tonnes of ammonium nitrate, confiscated in 2014 and stored without safety measures for six years because every official who knew looked at the paperwork and decided it was someone else\'s problem. 218 dead. 6,500 injured. 300,000 displaced. The grain silos that absorbed some of the blast — grain that the country now cannot replace. The government that stored the material will not resign. Several ministers announce investigations into themselves.',
-    context: '4 August 2020. The explosion at Beirut\'s port was one of the largest non-nuclear explosions in history, equivalent to a 3.5-magnitude earthquake and felt in Cyprus 240km away. 2,750 tonnes of ammonium nitrate had been stored in Hangar 12 since 2013 after being confiscated from an abandoned cargo ship. Lebanese customs, judiciary, and security services had all been alerted to the danger over the years; none acted. The explosion destroyed the grain silos that held Lebanon\'s strategic food reserve. The Beirut port blast killed 218 people confirmed, left 300,000 homeless, and caused $15 billion in damage — in an economy that was already collapsing.',
-    effect: (p) => { p.m -= 20; p.h -= 10; p.addFlag('beirut_blast_survived'); },
-    addFlags: ['beirut_blast_survived'],
+    narrative: (G) => {
+      if (G.ruralUrban !== 'rural' || inDisasterZone(G.character, 'beirut2020', 15)) {
+        return 'The explosion at the port takes seconds. The shockwave moves through the city at the speed of sound. Windows shatter across Beirut — not in one building but in every building facing the water, simultaneously. You feel it before you understand it. The warehouse held 2,750 tonnes of ammonium nitrate, unloaded in 2014 and left there for six years because every official who knew looked at the paperwork and decided it was someone else\'s problem. Two hundred and eighteen dead. Six thousand five hundred injured. Three hundred thousand with no window, no door, no roof.'
+      }
+      return 'You feel it in the hills, forty kilometres away — a single low shove against the house, and then the phones. The port of Beirut is gone. Two thousand seven hundred and fifty tonnes of ammonium nitrate, unloaded from an abandoned ship in 2014 and left in a warehouse for six years. The grain silos that took the blast held the country\'s reserve. Nobody resigns. Several ministers announce investigations into themselves.'
+    },
+    context: '4 August 2020. The explosion at Beirut\'s port was one of the largest non-nuclear explosions ever recorded, equivalent to a magnitude 3.3 earthquake and heard in Cyprus 240km away. The 2,750 tonnes of ammonium nitrate had arrived on the impounded cargo ship Rhosus in November 2013 and were unloaded into Hangar 12 in October 2014. Lebanese customs officials, the judiciary and the security services were all warned repeatedly over the following six years; none acted. The explosion destroyed the grain silos holding Lebanon\'s strategic food reserve. It killed 218 people, injured about 6,500, left some 300,000 without habitable homes, and caused an estimated $15 billion in damage — in an economy that was already collapsing. The domestic investigation was repeatedly obstructed and, as of 2024, no senior official had stood trial.',
+    effect: (p) => {
+      const c = p._state?.character
+      if (c?.ruralUrban !== 'rural' || inDisasterZone(c, 'beirut2020', 15)) {
+        p.m -= 20; p.h -= 10; p.addFlag('beirut_blast_survived')
+      } else { p.m -= 9 }
+    },
+    addFlags: [],
     minAge: 0,
     maxAge: null,
     when: null,
@@ -2981,17 +3077,18 @@ export const WORLD_EVENTS = [
 
   {
     id: 'spanish_flu_1918_b',
-    name: 'Spanish Flu',
+    name: 'Spanish Flu: The Household',
     years: [1918, 1920],
     archetypes: 'all',
     countries: null,
+    // Age 1+ gets spanish_flu_1918, which narrates the pandemic itself. This is
+    // the same years for an infant: what was later told, not what was seen.
     minAge: 0,
-    maxAge: null,
-    narrative: 'A disease is moving through the country. It is being called influenza, though it is unlike any influenza anyone has seen. The second wave, in the autumn of 1918, kills within hours: the lungs fill. Fifty million people will die of it worldwide — more than the war that is ending at the same time. The funerals are discouraged. The newspapers in some countries are not allowed to report the numbers.',
+    maxAge: 0,
+    narrative: 'You will not remember any of it. What you will be given later is a list — an uncle, a neighbour, the woman who was to have been your godmother — and the fact that your mother did not go to the funerals because the funerals had been discouraged. The disease is called influenza and is unlike any influenza anyone has seen. Fifty million people die of it, more than the war ending at the same time, and the newspapers in most countries are not permitted to say so.',
     context: 'The 1918-19 influenza pandemic infected an estimated 500 million people globally — one third of the world\'s population. It killed between 50 and 100 million, disproportionately killing healthy adults aged 20-40 through an immune overresponse. Wartime censorship suppressed accurate reporting in many countries; Spain, which was neutral, reported freely, giving the pandemic its misleading name.',
     effect: (p) => { p.m -= 10; p.h -= 8 },
     addFlags: ['spanish_flu_generation'],
-    when: (G) => !G.flags.includes('flu_pandemic_survivor'),
   },
 
   {
@@ -3207,7 +3304,7 @@ export const WORLD_EVENTS = [
     years: [2019, 2020],
     archetypes: ['wealthy_west'],
     countries: ['Australia'],
-    narrative: 'The smoke reaches Sydney in November and doesn\'t leave. The sky turns orange. Eighteen million hectares burn — an area larger than England. A billion animals. Thirty-three people die in the fires; smoke-related deaths will be counted later in the hundreds. The images of kangaroos and koalas and the orange light over the harbour become what the world sees. What the country sees is the smoke, every day, for months.',
+    narrative: 'The smoke reaches Sydney in November and doesn\'t leave. The sky turns orange. Eighteen and a half million hectares burn. Three billion animals. Thirty-three people die in the fires; smoke-related deaths will be counted later in the hundreds. The images of the kangaroos and the orange light over the harbour become what the world sees. What the country sees is the smoke, every day, for months, and the P2 masks sold out in every chemist in the city.',
     context: 'The 2019–20 Australian bushfire season, known as the Black Summer, was catastrophically larger than any previously recorded. Climate scientists had warned for years that rising temperatures would lengthen and intensify fire seasons. Prime Minister Scott Morrison\'s government initially resisted calls to link the fires to climate change. The fires destroyed over 5,900 buildings, killed 33 people directly, and caused smoke-related deaths estimated at 417. The country\'s political conversation about climate policy changed significantly in the aftermath.',
     effect: (p) => { p.m -= 6; p.r += 4; p.addFlag('black_summer_witnessed') },
     addFlags: ['black_summer_witnessed'],
@@ -3251,7 +3348,7 @@ export const WORLD_EVENTS = [
     years: [1973, 1973],
     archetypes: 'all',
     countries: ['Uruguay'],
-    narrative: 'June 27, 1973. President Bordaberry dissolves parliament and transfers power to the military. There are no tanks in the main plaza. The parliament doors close and stay closed. Uruguay — South America\'s most stable democracy, universal suffrage since 1918, a welfare state since the early 1900s — enters twelve years of military rule with less spectacle than most coups.',
+    narrative: 'June 27, 1973. President Bordaberry dissolves parliament and transfers power to the military. There are no tanks in the main plaza. The parliament doors close and stay closed. Uruguay — South America\'s most stable democracy, universal male suffrage since 1918 and the vote for women since 1932, a welfare state since the early 1900s — enters twelve years of military rule with less spectacle than most coups.',
     context: 'The 1973 Uruguayan coup followed a period of Tupamaro guerrilla activity and economic crisis. Under military rule, Uruguay had the highest per-capita political prisoner rate in the world. An estimated 10,000 Uruguayans were detained; 200 were killed or disappeared. The Tupamaros leadership — including José Mujica — was held in isolation as "hostages" for years. Democracy was restored in 1985; the 1986 Ley de Caducidad gave amnesty to most military and police.',
     effect: (p) => { p.m -= 14; p.addFlag('uru_coup_1973'); },
     addFlags: ['uru_coup_1973'],
@@ -3277,7 +3374,7 @@ export const WORLD_EVENTS = [
     years: [1989, 1989],
     archetypes: 'all',
     countries: ['Paraguay'],
-    narrative: 'February 3, 1989. General Andrés Rodríguez launches a coup against Alfredo Stroessner, who has governed Paraguay since 1954. Stroessner is sent into exile in Brazil. After thirty-five years — the longest personal dictatorship in Latin American history — it ends in a single night. The Colorado Party that administered the regime remains in power.',
+    narrative: 'February 3, 1989. General Andrés Rodríguez launches a coup against Alfredo Stroessner, who has governed Paraguay since 1954. Stroessner is sent into exile in Brazil. After thirty-five years — the longest personal rule anywhere in South America — it ends in a single night. The Colorado Party that administered the regime remains in power.',
     context: 'The February 1989 coup was initiated by Rodríguez, Stroessner\'s son-in-law and commander of the First Army Corps. Stroessner had governed since 1954 through a combination of state patronage, the Colorado Party machine, and systematic repression. The coup was not a democratic transition — Rodríguez won the immediate election and the Colorado Party would continue to govern for another two decades. The Archive of Terror, discovered in 1992, documented the scope of Condor-era repression with four tonnes of documents found in a police station.',
     effect: (p) => { p.m += 8; p.addFlag('pry_stroessner_era'); },
     addFlags: ['pry_stroessner_era'],
@@ -3534,7 +3631,7 @@ export const WORLD_EVENTS = [
     years: [2003, 2004],
     archetypes: 'all',
     countries: ['Bolivia'],
-    narrative: 'In September–October 2003, protests erupt across Bolivia over a government plan to export natural gas — the second-largest reserves in South America — via a pipeline through Chile to a Pacific port. For Bolivians, routing the pipeline through Chile reopens the wound of the 1884 War of the Pacific, which cost Bolivia its coastal access. Indigenous Aymara communities in El Alto blockade roads. The army opens fire on protestors in the neighbourhood of Warisata. Sixty-seven people die. President Gonzalo Sánchez de Lozada, known as Goni, flees to Miami. The gas stays in Bolivian soil.',
+    narrative: 'In September–October 2003, protests erupt across Bolivia over a government plan to export natural gas — the second-largest reserves in South America — via a pipeline through Chile to a Pacific port. For Bolivians, routing the pipeline through Chile reopens the wound of the War of the Pacific — fought from 1879, settled by truce in 1884 — which cost Bolivia its coastal access. Indigenous Aymara communities in El Alto blockade roads. The army opens fire on protestors in the neighbourhood of Warisata. Sixty-seven people die. President Gonzalo Sánchez de Lozada, known as Goni, flees to Miami. The gas stays in Bolivian soil.',
     context: 'The Gas War was a turning point in Bolivian politics. It ended the political career of Goni — who had enacted the most radical privatisation programme in South America in the 1990s — and created the political conditions for the 2005 election of Evo Morales, the first indigenous president in Bolivian history. The movement also reflected deeper tensions between indigenous majority communities and a mestizo-white political class that had governed since independence. Cocalero union leader Morales had been building a political movement since the coca eradication campaigns of the 1990s.',
     effect: (p) => { p.m -= 6; p.addFlag('bol_gas_war_generation') },
     addFlags: ['bol_gas_war_generation'],
@@ -3565,7 +3662,7 @@ export const WORLD_EVENTS = [
     archetypes: 'all',
     countries: ['Iran'],
     narrative: 'On September 16, 2022, Mahsa Amini, a 22-year-old Kurdish-Iranian woman, dies in the custody of the Morality Police three days after being arrested for wearing her hijab incorrectly. Protests begin in her home city of Saqqez, then spread to every province in Iran. Women burn their headscarves in the streets. The slogan jin jiyan azadî — woman, life, freedom — appears on walls across the country. The crackdown is severe: more than 500 people killed in the first months, 18,000 arrested. The movement is the most sustained challenge to the Islamic Republic since the 1979 revolution.',
-    context: 'Mahsa (Jina) Amini was 22 years old when she died. The Morality Police, formally the Gasht-e Ershad, had been enforcing mandatory hijab since 1983. The 2022 uprising was distinct from previous protests in its explicitly feminist character and in the willingness of young Iranian women to lead it visibly, at personal risk. International attention was intense. The movement did not topple the government. Several of the women who had burned their headscarves publicly were sentenced to execution or long prison terms. The slogan jin jiyan azadî originates in Kurdish women\'s liberation movements.',
+    context: 'Mahsa (Jina) Amini was 22 years old when she died. Hijab has been compulsory in Iran since 1983; the Gasht-e Ershad, the patrol that arrested her, was established in 2005 to enforce it on the street. The 2022 uprising was distinct from previous protests in its explicitly feminist character and in the willingness of young Iranian women to lead it visibly, at personal risk. International attention was intense. The movement did not topple the government. Several of the women who had burned their headscarves publicly were sentenced to execution or long prison terms. The slogan jin jiyan azadî originates in Kurdish women\'s liberation movements.',
     effect: (p) => { p.m -= 6; p.karma += 6; p.addFlag('iran_woman_life_freedom_generation') },
     addFlags: ['iran_woman_life_freedom_generation'],
     minAge: 12,
@@ -3611,7 +3708,8 @@ export const WORLD_EVENTS = [
     effect: (p) => { p.h -= 4; p.m -= 10; p.addFlag('mexico_earthquake_1985_witness') },
     addFlags: ['mexico_earthquake_1985_witness'],
     minAge: 8,
-    when: (G) => !G.flags.has('mexico_earthquake_1985_witness') && !G.mem?.mex_1985_earthquake,
+    when: (G) => (G.place?.region === 'Valle de México' || G.ruralUrban === 'urban') &&
+      !G.flags.has('mexico_earthquake_1985_witness') && !G.mem?.mex_1985_earthquake,
   },
 
   {
@@ -3662,7 +3760,7 @@ export const WORLD_EVENTS = [
     years: [2015, 2015],
     archetypes: 'all',
     countries: ['Nepal'],
-    narrative: 'Saturday, April 25, 2015, at 11:56 in the morning: magnitude 7.8, epicentre near Gorkha. In Kathmandu, buildings collapse in seconds. The Dharahara tower, 170 years old, falls. The temples of Kathmandu Durbar Square, built over five centuries, are gone in two minutes. In Langtang valley, a rockslide buries the village. An avalanche sweeps Everest Base Camp. You count your people. Aftershocks continue for days. A 7.3 aftershock on May 12 kills two hundred more. The total dead reaches 9,000. Some 600,000 houses across the hill districts are destroyed or damaged. The reconstruction will take a decade.',
+    narrative: 'Saturday, April 25, 2015, at 11:56 in the morning: magnitude 7.8, epicentre near Gorkha. In Kathmandu, buildings collapse in seconds. The Dharahara tower, standing since 1832, falls. The temples of Kathmandu Durbar Square, built over five centuries, are gone in two minutes. In Langtang valley, a rockslide buries the village. An avalanche sweeps Everest Base Camp. You count your people. Aftershocks continue for days. A 7.3 aftershock on May 12 kills two hundred more. The total dead reaches 9,000. Some 600,000 houses across the hill districts are destroyed or damaged. The reconstruction will take a decade.',
     context: 'The 2015 Gorkha earthquake was Nepal\'s worst since 1934. The UNESCO World Heritage sites of Kathmandu Durbar Square, Patan Durbar Square, Boudhanath Stupa, and Changu Narayan were severely damaged or destroyed. The international relief effort was large but complicated by Nepal\'s limited infrastructure and by a subsequent Indian fuel blockade that delayed reconstruction supplies for months. Nepal lacked a functioning constitution at the time — the first constitution since 1990 was finally adopted in September 2015, four months after the quake.',
     effect: (p) => { p.h -= 6; p.m -= 12; p.addFlag('nepal_earthquake_generation') },
     addFlags: ['nepal_earthquake_generation'],

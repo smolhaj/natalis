@@ -107,7 +107,7 @@ export const CHINA_EVENTS = [
 
   {
     id: 'cn_gaokao',
-    phase: 'adolescence',
+    phase: null,
     weight: 10,
     when: (G) =>
       isChina(G) &&
@@ -177,7 +177,7 @@ export const CHINA_EVENTS = [
 
   {
     id: 'cn_tiananmen_personal',
-    phase: 'young_adult',
+    phase: null,
     weight: 9,
     when: (G) =>
       isChina(G) &&
@@ -236,7 +236,7 @@ export const CHINA_EVENTS = [
 
   {
     id: 'cn_first_private_business',
-    phase: 'young_adult',
+    phase: null,
     weight: 7,
     when: (G) =>
       isChina(G) &&
@@ -379,7 +379,7 @@ export const CHINA_EVENTS = [
 
   {
     id: 'cn_lying_flat',
-    phase: 'young_adult',
+    phase: null,
     weight: 7,
     when: (G) =>
       isChina(G) &&
@@ -439,7 +439,7 @@ export const CHINA_EVENTS = [
 
   {
     id: 'cn_great_leap_hunger',
-    phase: 'childhood',
+    phase: null,
     weight: 8,
     when: (G) =>
       isChina(G) &&
@@ -518,7 +518,7 @@ export const CHINA_EVENTS = [
 
   {
     id: 'cn_hukou_barrier',
-    phase: 'young_adult',
+    phase: null,
     weight: 7,
     when: (G) =>
       isChina(G) &&
@@ -546,7 +546,7 @@ export const CHINA_EVENTS = [
 
   {
     id: 'cn_reform_euphoria',
-    phase: 'midlife',
+    phase: null,
     weight: 6,
     when: (G) =>
       isChina(G) &&
@@ -574,7 +574,7 @@ export const CHINA_EVENTS = [
 
   {
     id: 'cn_996_burnout',
-    phase: 'young_adult',
+    phase: null,
     weight: 7,
     when: (G) =>
       isChina(G) &&
@@ -603,7 +603,7 @@ export const CHINA_EVENTS = [
 
   {
     id: 'cn_leftover_woman',
-    phase: 'young_adult',
+    phase: null,
     weight: 7,
     when: (G) =>
       isChina(G) &&
@@ -632,7 +632,7 @@ export const CHINA_EVENTS = [
 
   {
     id: 'cn_hui_experience',
-    phase: 'childhood',
+    phase: null,
     weight: 6,
     when: (G) =>
       isChina(G) &&
@@ -659,7 +659,7 @@ export const CHINA_EVENTS = [
 
   {
     id: 'cn_xi_tightening',
-    phase: 'midlife',
+    phase: null,
     weight: 6,
     when: (G) =>
       isChina(G) &&
@@ -689,7 +689,7 @@ export const CHINA_EVENTS = [
 
   {
     id: 'cn_sent_down_intellectual_echo',
-    phase: 'midlife',
+    phase: null,
     weight: 6,
     when: (G) =>
       isChina(G) &&
@@ -738,7 +738,7 @@ export const CHINA_EVENTS = [
 
   {
     id: 'cn_heihaizi_inspection',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       isChina(G) &&

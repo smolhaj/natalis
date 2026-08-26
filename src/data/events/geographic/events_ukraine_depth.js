@@ -15,14 +15,14 @@ export const UKRAINE_DEPTH_EVENTS = [
 
   {
     id: 'ukr_dep_chernobyl',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Ukraine' &&
       G.currentYear >= 1986 && G.currentYear <= 1990 &&
       G.age >= 8 &&
       !G.mem?.ukrDepChernobyl,
-    text: pick([
+    text: () => pick([
       'April 26, 1986, reactor four. The explosion is at 1:23 a.m. Pripyat does not evacuate for 36 hours — the Soviet state needs time to determine that the evacuation is necessary. When the buses finally come, residents are told to bring documents for three days. Most leave without photographs, without extra clothing, without anything that acknowledges what three days means. The Ferris wheel in Pripyat is still there. No one ever rides it again.',
       'The liquidators. 600,000 men across the Soviet Union sent to contain the reactor, clean the rooftops, build the sarcophagus. They receive medals. Some receive doses that are not measured accurately, or measured and not disclosed. The bonus pay is good. The paperwork afterward is complicated. Some of them are your age. Some of them are your uncles.',
     ]),
@@ -57,14 +57,15 @@ export const UKRAINE_DEPTH_EVENTS = [
 
   {
     id: 'ukr_dep_1990s_collapse',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Ukraine' &&
       G.currentYear >= 1993 && G.currentYear <= 1997 &&
       G.age >= 16 &&
       !G.mem?.ukrDep1990s,
-    text: 'The karbovanets coupon. The currency issued in 1992 to replace the Soviet ruble — not a real currency, printed on cheap paper, worth less every week. In 1993 inflation runs at 10,000 percent. Your parents\' savings from forty years of work are worth nothing in six months. The factory where your father worked: closed. The pension: paid three months late, then paid in vouchers for goods that don\'t exist. The people who survive 1993-1995 in Ukraine do so through connections, through gardens, through selling personal possessions at the market on Sundays. The mafia is real. The men with tracksuits and mobile phones are real. The president is Kuchma and the country is officially democratic and what is actually happening is something else.',
+    text: 'The coupons are printed on paper thin enough to see through and they are worth less on Friday than they were on Monday. Forty years of your parents\' saving goes in about six months. The plant where your father worked has a chain on the gate and the pension arrives three months late and then arrives as vouchers for goods that are not in any shop. On Sundays you stand at the market with your mother\'s coat and the good cutlery laid out on a sheet.',
+    context: 'Ukraine issued the karbovanets coupon in 1992 to replace the Soviet rouble. Inflation reached roughly 10,000 percent in 1993, wiping out savings and pensions. Industrial output fell by more than half between 1991 and 1996. The hryvnia replaced the coupon in 1996 at 100,000 to one.',
     choices: [
       {
         text: 'You become one of the shuttle traders — buying in Poland or Turkey, selling at home.',
@@ -99,14 +100,14 @@ export const UKRAINE_DEPTH_EVENTS = [
 
   {
     id: 'ukr_dep_soviet_identity',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Ukraine' &&
       G.currentYear >= 1960 && G.currentYear <= 1991 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.ukrDepSovietId,
-    text: pick([
+    text: () => pick([
       'You are Ukrainian and Soviet and both at once. The school is in Russian. The films are in Russian. The songs you know by heart are in Russian. The village your grandmother came from speaks Ukrainian, but that Ukrainian sounds old and rural — not the Ukrainian in the official newspaper, which is careful and bureaucratic, not the Ukrainian in the village, which is not for official use. You know who you are. The state has opinions about who you are that are different from your own.',
       'The Sixties: the shistdesiatnyky — the generation of writers, artists, intellectuals who pushed for Ukrainian culture in the Khrushchev thaw. Ivan Dziuba. Lina Kostenko. Vasyl Stus. What happened to them: Stus died in a Soviet camp in 1985. Dziuba was made to recant. Kostenko was silenced for twenty years. The state that silenced them is the state your career depends on. You know their names. You do not say them at work.',
     ]),
@@ -123,14 +124,15 @@ export const UKRAINE_DEPTH_EVENTS = [
 
   {
     id: 'ukr_dep_crimea_2014',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Ukraine' &&
       G.currentYear >= 2014 && G.currentYear <= 2015 &&
       G.age >= 16 &&
       !G.mem?.ukrDepCrimea,
-    text: 'February 27, 2014. Armed men without insignia — "polite people," the term that sticks — occupy the Crimean parliament building. A referendum is announced in ten days. The ballot has two options: join Russia, or restore the 1992 constitution (not: stay in Ukraine). The result is announced as 96.77 percent for Russia. The Crimean Tatars, who were deported by Stalin in 1944 and allowed to return in the 1990s, do not participate. Within weeks, Ukrainian civil servants must choose: stay and work for the new administration, or leave. Soldiers in Ukrainian bases must choose: defect or go. Property registers are transferred. The hryvnia stops working. The ruble arrives.',
+    text: 'The men who take the parliament building have no insignia on their uniforms and everybody calls them the polite people. The vote comes ten days later with two boxes on the paper and neither of them says stay. In April the cash machine gives roubles and the hryvnia in your pocket is a souvenir. Your cousin in the tax office has until the end of the month to sign the new contract or stop being a person with a job.',
+    context: 'Unmarked Russian troops seized the Crimean parliament on 27 February 2014. A referendum held on 16 March offered a choice between joining Russia and restoring the 1992 Crimean constitution, with no option to remain in Ukraine as it stood; the announced result was 96.77 percent for accession. The Crimean Tatar Mejlis boycotted it. Ukrainian officials and servicemen were required to take Russian citizenship or leave, and the rouble replaced the hryvnia within weeks.',
     choices: [
       {
         text: 'You stay in Crimea. This is where you are from.',
@@ -163,7 +165,7 @@ export const UKRAINE_DEPTH_EVENTS = [
 
   {
     id: 'ukr_dep_lviv_galicia',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Ukraine' &&
@@ -184,14 +186,15 @@ export const UKRAINE_DEPTH_EVENTS = [
 
   {
     id: 'ukr_dep_kharkiv_wartime',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Ukraine' &&
       G.currentYear >= 2022 && G.currentYear <= 2024 &&
       G.age >= 14 &&
       !G.mem?.ukrDepKharkiv,
-    text: 'Kharkiv: 1.4 million people, Ukraine\'s second city, 40 kilometres from the Russian border. In the first days of the invasion the Russian forces expect to take the city quickly; it is historically Russian-speaking, it was the capital of Soviet Ukraine until 1934. It does not fall. The resistance in the streets, the territorial defense units with hunting rifles, the fact that Kharkiv identifies as Ukrainian despite the Russian it speaks. By April the city is being shelled from across the border — not a siege, a shelling. Apartment blocks, universities, markets. People move to the east of the city away from the north. Or they leave for Kyiv, for Poltava, for Poland. Or they go down to the metro and they stay there. The metro stations become the cities under the city.',
+    text: 'The city is forty kilometres from the border, which means the shells arrive before the alert does. Your flat faces north, so you have moved a mattress into the room that faces south and you sleep there now. At Universytet station there are camp beds along the platform and a woman who has organised the charging points into a rota. Nobody down there has stopped speaking Russian and nobody down there is confused about which country they are in.',
+    context: 'Kharkiv, Ukraine\'s second city with 1.4 million residents, lies about 40 kilometres from the Russian border and was the capital of Soviet Ukraine until 1934. Russian forces failed to take it in February 2022 and shelled it from across the border through the spring. Metro stations sheltered thousands of residents for months. The city is predominantly Russian-speaking.',
     choices: [
       {
         text: 'You go down to the metro and you stay.',
@@ -226,7 +229,7 @@ export const UKRAINE_DEPTH_EVENTS = [
 
   {
     id: 'ukr_dep_mobilization_2022',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Ukraine' &&
@@ -234,7 +237,8 @@ export const UKRAINE_DEPTH_EVENTS = [
       G.character.gender === 'male' &&
       G.age >= 18 && G.age <= 60 &&
       !G.mem?.ukrDepMobilization,
-    text: 'Martial law. Men aged 18-60 are prohibited from leaving the country. At the border crossings in February and March 2022: the lines of cars, mostly women and children going west, and at the checkpoint the men being turned back. Some hide in trunks. Some cross the Tisza river into Romania by swimming in February — the water is four degrees. Some stay and do not try to leave. The territorial defense is accepting volunteers with no military background. The regular military is calling up reservists. You are of the age. The law says you cannot leave. What you do with that is yours.',
+    text: 'Martial law closes the border to men between eighteen and sixty on the second day. At the crossing there are queues of cars carrying women and children west and men walking back from the barrier towards the town. Somebody from your street swam the Tisza in February, when the water is four degrees, and somebody else from your street is at the recruitment office with no military background at all. You are the right age for both of those stories.',
+    context: 'Ukraine declared martial law on 24 February 2022 and barred most men aged 18 to 60 from leaving the country. Territorial defence units accepted volunteers without prior service while the regular army called up reservists. Border guards have reported thousands of illegal crossing attempts, including drownings in the Tisza river on the Romanian frontier.',
     choices: [
       {
         text: 'You report to the territorial defense. You have no military training but they are accepting everyone.',
@@ -269,7 +273,7 @@ export const UKRAINE_DEPTH_EVENTS = [
 
   {
     id: 'ukr_dep_basement_2022',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Ukraine' &&
@@ -278,7 +282,8 @@ export const UKRAINE_DEPTH_EVENTS = [
       !G.mem?.ukrDepBasement &&
       !G.mem?.ukrDepMobilization &&
       !G.mem?.ukrDepKharkiv,
-    text: 'The air raid alert sounds on the phone. The sound is specific — you know it before you are fully awake. The basement: your building\'s basement, or the car park below the shopping centre, or the metro station, depending on where you are when it sounds. You bring: the go-bag you assembled in the first week (documents, power bank, water, two changes of clothes for the child). You wait. Sometimes twenty minutes. Sometimes two hours. Sometimes the all-clear sounds and you go back up and the electricity is off. The routine of war is mostly this: the alert, the descent, the waiting, the return. The extraordinary part is the other part — the strike that hits somewhere else, the photographs in the morning, the calculation of how far.',
+    text: 'The alert has a sound you recognise before you are properly awake. The bag has been by the door since the first week: documents, power bank, water, two changes of clothes for the child. Sometimes it is twenty minutes in the car park under the shopping centre and sometimes it is two hours, and when you come back up the electricity is off. The descending is not the hard part. The hard part is the morning, and the photographs, and working out how far away it was.',
+    context: 'Air raid alerts have sounded across Ukraine since February 2022, delivered by siren and by phone application, several times daily in front-line oblasts. Basements, underground car parks and metro stations serve as shelters. Strikes on the electricity grid from October 2022 produced rolling blackouts through successive winters.',
     choices: null,
     effect: (p) => {
       p.m -= 10

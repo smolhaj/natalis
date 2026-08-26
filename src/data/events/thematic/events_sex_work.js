@@ -107,7 +107,7 @@ export const SEX_WORK_EVENTS = [
 
   {
     id: 'sw_entry_legalized',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       SW_LEGALIZED(G) &&
@@ -140,7 +140,7 @@ export const SEX_WORK_EVENTS = [
 
   {
     id: 'sw_daily_criminalized',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('sex_work_entry') &&
@@ -188,7 +188,7 @@ export const SEX_WORK_EVENTS = [
 
   {
     id: 'sw_regular_client',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('sex_work_entry') &&
@@ -205,7 +205,7 @@ export const SEX_WORK_EVENTS = [
 
   {
     id: 'sw_family_knows',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('sex_work_entry') &&
@@ -289,7 +289,7 @@ export const SEX_WORK_EVENTS = [
       G.flags.has('sex_work_entry') &&
       G.age >= 55 &&
       !G.mem?.swLateReckoning,
-    text: 'The years are the years they were. What you make of them now is different from what you made of them at thirty, which is different from what you made of them at forty-five. The work was work — in the sense that it paid, that it required skill, that it had its own social world and its own exhaustions and its own forms of expertise. It was also not only work. The specific loneliness of it — the one that was not about being alone but about what could not be said to anyone outside it — is something you no longer try to translate. Some experiences do not translate. That is not the same as saying they did not happen.',
+    text: 'The years are the years they were. What you make of them now is different from what you made of them at thirty, which is different from what you made of them at forty-five. The work was work — in the sense that it paid, that it required skill, that it had its own social world and its own exhaustions and its own forms of expertise. It was also not only work. The loneliness of it — the one that was not about being alone but about what could not be said to anyone outside it — is something you no longer try to translate. Some experiences do not translate. That is not the same as saying they did not happen.',
     choices: null,
     effect: (p) => { p.e += 4; p.r += 5; p.m += 3; p.setMem('swLateReckoning', true) },
   },

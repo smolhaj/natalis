@@ -12,7 +12,7 @@ export const PLACES_EVENTS = [
     phase: 'childhood',
     weight: 3,
     cooldown: 0,
-    when: (G) => (G.flags.has('war_childhood') || G.flags.has('civil_war_lived') || G.flags.has('conflict_zone_childhood'))
+    when: (G) => (G.flags.has('war_childhood') || G.flags.has('civil_war_lived') || G.flags.has('conflict_childhood'))
       && G.place && !G.mem?.familyWarMoveAck,
     text: (G) => `The family leaves ${G.place?.name ?? 'home'}. Not all at once — first the bags, then the goodbyes, then the road. You are young enough that the adults shield you from the reason and old enough to understand it anyway. The place you are going has a name. The place you are leaving will become the one you keep returning to in memory.`,
     choices: null,
@@ -263,7 +263,7 @@ export const PLACES_EVENTS = [
     phase: null,
     weight: 2,
     cooldown: 0,
-    when: (G) => (G.flags.has('bankruptcy') || G.flags.has('financial_ruin') || G.stats.wealth < 20) && G.neighborhoodTier === 'middle_class' && G.age >= 30 && !G.mem?.movingDownNbrAck,
+    when: (G) => (G.flags.has('bankrupt') || G.flags.has('financial_ruin') || G.stats.wealth < 20) && G.neighborhoodTier === 'middle_class' && G.age >= 30 && !G.mem?.movingDownNbrAck,
     text: (G) => {
       const old = G.neighborhood ?? 'where you were'
       return `The finances make ${old} impossible. The move to a cheaper place is practical. You do it without drama, because the drama is internal — the specific recalibration of who you thought you were becoming, now measured against where you actually are. The new street is fine. You just didn\'t expect to be here.`
@@ -319,7 +319,7 @@ export const PLACES_EVENTS = [
 
   {
     id: 'place_stranger_in_city',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     cooldown: 10,
     when: (G) => G.flags.has('emigrated') && G.age >= 20 && G.age <= 35,
@@ -388,4 +388,24 @@ export const PLACES_EVENTS = [
     effect: (p) => { p.m += 6; p.setMem('refugeeAddressAck', true) },
   },
 
+
+  // ── THE POSTING ───────────────────────────────────────────────────────────────
+  // Sets `parent_promotion`, which place_family_career_move reads a year or two later.
+
+  {
+    id: 'place_parent_posting',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) =>
+      G.age >= 6 && G.age <= 11 &&
+      (G.parents?.father?.alive || G.parents?.mother?.alive) &&
+      G.character?.familyStability !== 'unstable' &&
+      G.wealthTier >= 2 &&
+      !G.flags.has('parent_promotion') &&
+      !G.mem?.placeParentPosting &&
+      Math.random() < 0.09,
+    text: 'There is an envelope on the table at dinner that nobody opens while you are in the room. Afterwards your father says the word posting, then the word opportunity, then the name of a city. Your mother writes a figure on the back of the envelope and looks at it for a long time without saying anything. Nobody asks you.',
+    choices: null,
+    effect: (p) => { p.e += 2; p.m -= 2; p.addFlag('parent_promotion'); p.setMem('placeParentPosting', true) },
+  },
 ]

@@ -1,3 +1,16 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// NOT WIRED. Nothing in the app imports this module: no component, no store
+// action, and no call from tick(). It is kept because the writing and the
+// mechanics are real, but it is dormant, and its per-year functions are never
+// ticked, so any UI added on top would silently never advance.
+//
+// To wire it up you would need: (1) a store action per exported function,
+// (2) an entry point in ActivitiesPanel, (3) the relevant tick* call added to
+// tick() in src/engine/tick.js, and (4) its state fields added to INITIAL_STATE
+// in src/store/gameStore.js. Weigh that against the register question first —
+// an arcade layer pulls against the literary tone the rest of the game keeps.
+// ─────────────────────────────────────────────────────────────────────────────
+
 import { randomBetween, pickFrom, clamp, chance } from '../utils/random'
 
 // ─── Internal helpers ─────────────────────────────────────────────────────────

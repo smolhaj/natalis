@@ -40,7 +40,7 @@ export const INDONESIA_EVENTS = [
 
   {
     id: 'id98_telling_children',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.flags.has('jakarta_98_survived') && G.children.length > 0 && G.age >= 42 && !G.mem.id98ToldChildren,
     text: 'Your child has a school project on Indonesian history in 1998. They ask you about it at dinner. They have already read something online. They want to know what you saw.',

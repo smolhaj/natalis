@@ -8,7 +8,7 @@ export const NEPAL_EVENTS = [
 
   {
     id: 'nep_maoist_insurgency',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Nepal' &&
@@ -35,7 +35,7 @@ export const NEPAL_EVENTS = [
 
   {
     id: 'nep_royal_massacre_2001',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Nepal' &&
@@ -49,7 +49,7 @@ export const NEPAL_EVENTS = [
 
   {
     id: 'nep_republic_2006',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Nepal' &&
@@ -63,7 +63,7 @@ export const NEPAL_EVENTS = [
 
   {
     id: 'nep_gulf_migration',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Nepal' &&
@@ -91,7 +91,7 @@ export const NEPAL_EVENTS = [
 
   {
     id: 'nep_earthquake_2015',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Nepal' &&
@@ -118,7 +118,7 @@ export const NEPAL_EVENTS = [
 
   {
     id: 'nep_youth_exodus',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Nepal' &&

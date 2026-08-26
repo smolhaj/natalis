@@ -9,7 +9,7 @@ export const JAPAN_DEPTH_EVENTS = [
 
   {
     id: 'jpn_okinawa_battle_1945',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Japan' &&
@@ -37,7 +37,7 @@ export const JAPAN_DEPTH_EVENTS = [
 
   {
     id: 'jpn_occupation_constitution',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Japan' &&
@@ -64,7 +64,7 @@ export const JAPAN_DEPTH_EVENTS = [
 
   {
     id: 'jpn_karoshi',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Japan' &&
@@ -72,7 +72,8 @@ export const JAPAN_DEPTH_EVENTS = [
       G.career && G.career.field &&
       G.age >= 28 && G.age <= 55 &&
       !G.mem?.jpnKaroshi,
-    text: `Karoshi: death from overwork. The Japanese Labour Ministry officially recognises the category in 1987 after several high-profile deaths — an executive at a major company dies at twenty-three after six months of eighty-hour weeks; a bus driver dies of a stroke after having taken one day off in the previous year. The cases accumulate. The law sets a maximum of forty-five overtime hours per month. The actual average in your office or on your shift is different from the legal maximum. You know what seventy hours a week feels like in the body — the specific stupidity that comes from not sleeping, the quality of your thinking at 10 p.m. in an office that is still fully lit, the strange community of the people still there at 10 p.m. Nobody says the word "karoshi" about your situation. The word is for people who die.`,
+    text: 'The last train is at 12:04 and you know which carriage puts you nearest the stairs at your station. At ten the floor is still fully lit and there is a politeness at that hour that exists at no other. Your thinking after nine is worse and you produce more of it. The legal ceiling is forty-five overtime hours a month and nobody in this section has been under it since you arrived. The other word is on the news, and it is a word for people who die.',
+    context: 'Japan\'s Labour Ministry formally recognised karoshi — death from overwork, usually by stroke or heart attack — as a compensable category in 1987. Statutory overtime was capped at 45 hours a month, but the cap carried no penalty until the work-style reform legislation of 2018. Government surveys through the 2010s found roughly a fifth of firms with employees exceeding 80 overtime hours a month.',
     choices: [
       {
         text: 'You manage it. The hours are part of the contract that isn\'t written anywhere.',
@@ -92,14 +93,15 @@ export const JAPAN_DEPTH_EVENTS = [
 
   {
     id: 'jpn_kobe_earthquake_1995',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Japan' &&
       G.currentYear >= 1995 && G.currentYear <= 1996 &&
       G.age >= 10 &&
       !G.mem?.jpnKobe95,
-    text: 'January 17, 1995. 5:46 a.m. The Great Hanshin earthquake: 6.9 magnitude, epicentre in Awaji Island. Kobe. The elevated highway on its side. The wooden houses that had survived the war burning in the morning because the pipes broke and the fire spread block by block with no water to stop it. 6,434 dead. You remember where you were at 5:46 in the morning — in bed, or on the floor of a room that moved, or somewhere else in Japan watching the television show the helicopter footage of the expressway lying on its side. In the days after, ordinary citizens drove trucks of supplies and organised relief because the government moved slowly. The volunteer culture that emerged was called something new.',
+    text: 'It is quarter to six in the morning and the room moves in a way rooms are not supposed to move. On the television the elevated expressway is lying on its side with the road surface vertical. The wooden houses that came through the war burn all morning because the mains have gone and there is nothing to put on them. Within two days there are ordinary people driving vans of water down from Osaka, because they got there before anybody official did.',
+    context: 'The Great Hanshin earthquake struck at 5:46 a.m. on 17 January 1995 with a magnitude of 6.9 and its epicentre near Awaji Island. 6,434 people died, most in the collapse of older wooden housing, and post-quake fires spread unchecked because water mains had ruptured. The slow official response and the improvised civilian relief effort that filled the gap gave 1995 its name in Japan as the first year of the volunteer era.',
     choices: [
       {
         text: 'You were in Kobe or nearby. You were in the moving room.',
@@ -146,7 +148,7 @@ export const JAPAN_DEPTH_EVENTS = [
 
   {
     id: 'jpn_comfort_women_silence',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Japan' &&
@@ -220,7 +222,7 @@ export const JAPAN_DEPTH_EVENTS = [
 
   {
     id: 'jpn_women_ceiling',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Japan' &&
@@ -249,7 +251,7 @@ export const JAPAN_DEPTH_EVENTS = [
 
   {
     id: 'jpn_fukushima_evacuation',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Japan' &&

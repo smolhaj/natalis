@@ -1,6 +1,8 @@
 // events_sonder_40.js
 // Contemplative layer — 30 mem-gated glimpses.
 
+import { place } from './_sonderGuards.js'
+
 export const EVENTS_SONDER_40 = [
 
   {
@@ -27,7 +29,7 @@ export const EVENTS_SONDER_40 = [
     id: 'sonder_40_c',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 30 && !G.mem?.s40c,
+    when: (G) => place.hasPhone(G) && (G.age >= 30 && !G.mem?.s40c),
     text: 'The phone rings and you knew it would. A second before, without cause — just the knowledge, arriving from somewhere. You pick up. The thing happened that you somehow already knew had happened.',
     choices: null,
     effect: (p) => { p.setMem('s40c', true) },
@@ -47,7 +49,7 @@ export const EVENTS_SONDER_40 = [
     id: 'sonder_40_e',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 18 && !G.mem?.s40e,
+    when: (G) => place.hasBooks(G) && (G.age >= 18 && !G.mem?.s40e),
     text: 'You decide not to finish the book. This is rarer than it sounds — the habit of finishing has its own momentum. But you put it down on page 180 and do not pick it up again. The partial story settles into permanent incompleteness. It is not unpleasant.',
     choices: null,
     effect: (p) => { p.setMem('s40e', true) },
@@ -67,6 +69,7 @@ export const EVENTS_SONDER_40 = [
     id: 'sonder_40_g',
     phase: 'midlife',
     weight: 2,
+    isGlimpse: true,
     when: (G) => G.age >= 28 && !G.mem?.s40g,
     text: 'Someone else points out that you say the same phrase three times a day. You had not noticed. Now you notice every time, and it is slightly altered — the thing observed is not quite the same thing anymore. You wonder what else you do without noticing.',
     choices: null,
@@ -78,7 +81,7 @@ export const EVENTS_SONDER_40 = [
     phase: 'late_life',
     weight: 2,
     when: (G) => G.age >= 50 && !G.mem?.s40h,
-    text: 'The sound of that street at seven in the morning — the particular sound, not a general morning sound but the specific sound of that neighbourhood in that city at that hour. You are far from it now. The sound is still there, unchanged, in whatever part of you stores such things.',
+    text: 'The sound of that street at seven in the morning — the particular sound, not a general morning sound but the sound of that neighbourhood in that city at that hour. You are far from it now. The sound is still there, unchanged, in whatever part of you stores such things.',
     choices: null,
     effect: (p) => { p.setMem('s40h', true) },
   },
@@ -123,17 +126,7 @@ export const EVENTS_SONDER_40 = [
     effect: (p) => { p.setMem('s40l', true) },
   },
 
-  {
-    id: 'sonder_40_m',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 30 && !G.mem?.s40m,
-    text: 'You try to make the meal your mother made. You have the ingredients, you have watched it made, you know the approximate steps. What you make is recognizably the same dish. It does not taste the same. The variable is not recipe.',
-    choices: null,
-    effect: (p) => { p.m += 2; p.setMem('s40m', true) },
-  },
-
-  {
+{
     id: 'sonder_40_n',
     phase: 'midlife',
     weight: 2,
@@ -147,6 +140,7 @@ export const EVENTS_SONDER_40 = [
     id: 'sonder_40_o',
     phase: 'young_adult',
     weight: 2,
+    isGlimpse: true,
     when: (G) => G.age >= 20 && !G.mem?.s40o,
     text: 'Someone else\'s worry becomes your worry. They mention it once, as a passing thing — a health scare, a money problem, something at work — and it settles into you and keeps appearing. The concern is not yours but it lives in you with the same insistence.',
     choices: null,
@@ -157,7 +151,7 @@ export const EVENTS_SONDER_40 = [
     id: 'sonder_40_p',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 35 && !G.mem?.s40p,
+    when: (G) => place.hasBus(G) && (G.age >= 35 && !G.mem?.s40p),
     text: 'You remember the price of things from years ago with the same precision you remember faces. The bus fare. The cost of the flat share. The amount your first proper job paid per month. The numbers are exact. They do not mean what they meant.',
     choices: null,
     effect: (p) => { p.setMem('s40p', true) },
@@ -167,7 +161,7 @@ export const EVENTS_SONDER_40 = [
     id: 'sonder_40_q',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 22 && !G.mem?.s40q,
+    when: (G) => place.hasPhotographs(G) && (G.age >= 22 && !G.mem?.s40q),
     text: 'You are at a wedding and it is obvious from the way they talk to each other that it will not last. You say nothing. Nobody says anything. The day proceeds in its full expensive beauty and everyone smiles in the photographs.',
     choices: null,
     effect: (p) => { p.setMem('s40q', true) },
@@ -183,17 +177,7 @@ export const EVENTS_SONDER_40 = [
     effect: (p) => { p.setMem('s40r', true) },
   },
 
-  {
-    id: 'sonder_40_s',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => G.age >= 50 && !G.mem?.s40s,
-    text: 'Three in the morning. The specific quality of the wakefulness is different from any other hour — the mind that will not close, the house around you with its night sounds, the knowledge that you are the only one awake and that this is temporary. You have had this wakefulness before.',
-    choices: null,
-    effect: (p) => { p.setMem('s40s', true) },
-  },
-
-  {
+{
     id: 'sonder_40_t',
     phase: 'young_adult',
     weight: 2,
@@ -227,7 +211,7 @@ export const EVENTS_SONDER_40 = [
     id: 'sonder_40_w',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 35 && !G.mem?.s40w,
+    when: (G) => place.wentToSchool(G) && (G.age >= 35 && !G.mem?.s40w),
     text: 'You go back to the school. The corridor is the same. The smell is the same — floor polish and something institutional underneath. The scale of it has changed. The lockers that once seemed enormous are chest height. You do not belong here anymore and neither does the child you were.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s40w', true) },
@@ -267,7 +251,7 @@ export const EVENTS_SONDER_40 = [
     id: 'sonder_40_aa',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 35 && !G.mem?.s40aa,
+    when: (G) => place.hasBus(G) && (G.age >= 35 && !G.mem?.s40aa),
     text: 'The bus that goes through the old neighbourhood. You don\'t need to take it — there is a faster route — but occasionally you do. The stops are the same. The faces at each stop have been replaced. The replacement has been happening for longer than the faces you remember were there.',
     choices: null,
     effect: (p) => { p.setMem('s40aa', true) },
@@ -277,7 +261,7 @@ export const EVENTS_SONDER_40 = [
     id: 'sonder_40_ab',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 30 && !G.mem?.s40ab,
+    when: (G) => place.hasPhotographs(G) && (G.age >= 30 && !G.mem?.s40ab),
     text: 'Someone says "I thought of you when I saw this." They show you a small thing — a news story, an object, a photograph. The thing is right: they know what to connect you to. Being known precisely is rarer than it sounds.',
     choices: null,
     effect: (p) => { p.m += 4; p.setMem('s40ab', true) },

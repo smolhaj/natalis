@@ -19,7 +19,7 @@ export const FOLLOWTHROUGH_75_EVENTS = [
       G.flags.has('cub_missile_crisis_generation') &&
       G.age >= 50 &&
       !G.mem?.ft66MissileLateCuba,
-    text: 'You were on the island during the thirteen days. The Americans and Soviets negotiated over your island — which is to say they negotiated about it as though the million and a half Cubans on it were part of the strategic calculation rather than the people the calculation was about. Kennedy\'s speech, the photographs of the installations, the Soviet ships turning back. What you remember is the anti-aircraft battery at the edge of the town and the specific sound of Castro\'s broadcast voice in the evenings. The historians have written extensively about October 1962. They write about it from capitals. Your version is from inside the thing they are describing.',
+    text: 'You were on the island during the thirteen days. The Americans and Soviets negotiated over your island — which is to say they negotiated about it as though the million and a half Cubans on it were part of the strategic calculation rather than the people the calculation was about. Kennedy\'s speech, the photographs of the installations, the Soviet ships turning back. What you remember is the anti-aircraft battery at the edge of the town and the sound of Castro\'s broadcast voice in the evenings. The historians have written extensively about October 1962. They write about it from capitals. Your version is from inside the thing they are describing.',
     choices: null,
     effect: (p) => {
       p.r += 6
@@ -165,7 +165,7 @@ export const FOLLOWTHROUGH_75_EVENTS = [
       G.currentYear >= 2015 &&
       G.age >= 30 &&
       !G.mem?.ft66NollywoodMid,
-    text: 'Nollywood is now on Netflix. The films that were bought from roadside VCD sellers are on a streaming platform with 200 million subscribers. Genevieve Nnaji\'s "Lionheart" was the first. The production values have changed. The budgets have changed. What has not changed: the industry is still Nigerian in the specific way it has always been Nigerian, about the things Nigerian life is about, told from the inside. The audience is now global. The inside is still the inside. You watch the new ones with the same attention you gave the old ones and sometimes the films are the same film told with better lighting.',
+    text: 'Nollywood is now on Netflix. The films that were bought from roadside VCD sellers are on a streaming platform with 200 million subscribers. Genevieve Nnaji\'s "Lionheart" was the first. The production values have changed. The budgets have changed. What has not changed: the industry is still Nigerian in the way it has always been Nigerian, about the things Nigerian life is about, told from the inside. The audience is now global. The inside is still the inside. You watch the new ones with the same attention you gave the old ones and sometimes the films are the same film told with better lighting.',
     choices: null,
     effect: (p) => {
       p.m += 4

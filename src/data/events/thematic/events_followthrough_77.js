@@ -74,7 +74,7 @@ export const FOLLOWTHROUGH_77_EVENTS = [
       G.currentYear >= 2000 &&
       G.age >= 35 &&
       !G.mem?.ft77MartyrChildIdentity,
-    text: 'You are the age your father was in the photograph. This happens at some point to every child of a martyr — the convergence, the year when your age catches up with the image on the wall. He is younger than you now. The image does not update. You are older than he ever was. There is no language in the official commemoration for this specific thing.',
+    text: 'You are the age your father was in the photograph. This happens at some point to every child of a martyr — the convergence, the year when your age catches up with the image on the wall. He is younger than you now. The image does not update. You are older than he ever was. There is no language in the official commemoration for this thing.',
     choices: null,
     effect: (p) => {
       p.m -= 6

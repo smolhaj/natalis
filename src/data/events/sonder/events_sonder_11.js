@@ -3,6 +3,8 @@
 // WHAT YOU INHERIT (9), THE WINDOW (9)
 // All mem-gated single-fire, weight 2, no choices, no new flags.
 
+import { place } from './_sonderGuards.js'
+
 export const EVENTS_SONDER_11 = [
 
   // ══════════════════════════════════════════════════════════════════════════
@@ -29,22 +31,12 @@ export const EVENTS_SONDER_11 = [
     effect: (p) => { p.r += 3; p.setMem('s11ReturnCity', true) },
   },
 
-  {
-    id: 'sonder11_return_neighbourhood',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => G.age >= 55 && !G.mem?.s11ReturnNeighbour,
-    text: 'The neighbourhood has changed. Not beyond recognition — you recognise the bones of it, the slope of the street, the building that was always there. But the shops are different and the people are different and the specific smell of the neighbourhood in the evening — whatever combination of cooking and traffic and the particular trees — has shifted in some way you cannot isolate. You are not from here anymore in the way you used to be.',
-    choices: null,
-    effect: (p) => { p.r += 4; p.m += 1; p.setMem('s11ReturnNeighbour', true) },
-  },
-
-  {
+{
     id: 'sonder11_return_country',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.flags.has('emigrant') && G.age >= 35 && !G.mem?.s11ReturnCountry,
-    text: 'You go back to the country you left. The airport is the same airport. The exit from the airport is the same — the heat or the cold arriving immediately, the specific quality of the light. Something in the body relaxes that you did not know was tense. Something else tightens. The return is not the same as the staying would have been. It is its own thing, with its own texture, neither here nor there in a way that feels permanent now.',
+    when: (G) => place.hasFlown(G) && (G.flags.has('emigrant') && G.age >= 35 && !G.mem?.s11ReturnCountry),
+    text: 'You go back to the country you left. The airport is the same airport. The exit from the airport is the same — the heat or the cold arriving immediately, the quality of the light. Something in the body relaxes that you did not know was tense. Something else tightens. The return is not the same as the staying would have been. It is its own thing, with its own texture, neither here nor there in a way that feels permanent now.',
     choices: null,
     effect: (p) => { p.m += 4; p.r += 3; p.setMem('s11ReturnCountry', true) },
   },
@@ -53,7 +45,7 @@ export const EVENTS_SONDER_11 = [
     id: 'sonder11_return_school',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 35 && G.age <= 55 && !G.mem?.s11ReturnSchool,
+    when: (G) => place.wentToSchool(G) && (G.age >= 35 && G.age <= 55 && !G.mem?.s11ReturnSchool),
     text: 'The school looks smaller. The rooms where years happened are ordinary rooms. The bench you sat in every day for three years is a bench. You have the dim memory that those years felt immense while they were happening — the weeks slow as years — and the school was the container of that immensity. The container is just a building now.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s11ReturnSchool', true) },
@@ -118,7 +110,7 @@ export const EVENTS_SONDER_11 = [
     phase: 'midlife',
     weight: 2,
     when: (G) => G.age >= 38 && !G.mem?.s11AnimalChildDog,
-    text: 'You think about the dog from your childhood. Not the dog\'s death — you remember that too — but the specific texture of the dog\'s presence: where it chose to sleep, the weight of it against your legs on certain evenings, the particular thing it did that you imitated without noticing. The dog shaped the house in ways you are still understanding forty years later.',
+    text: 'You think about the dog from your childhood. Not the dog\'s death — you remember that too — but the texture of the dog\'s presence: where it chose to sleep, the weight of it against your legs on certain evenings, the particular thing it did that you imitated without noticing. The dog shaped the house in ways you are still understanding forty years later.',
     choices: null,
     effect: (p) => { p.m += 3; p.r += 2; p.setMem('s11AnimalChildDog', true) },
   },
@@ -197,17 +189,7 @@ export const EVENTS_SONDER_11 = [
   // WHAT YOU INHERIT
   // ══════════════════════════════════════════════════════════════════════════
 
-  {
-    id: 'sonder11_inherit_face',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 42 && !G.mem?.s11InheritFace,
-    text: 'In a mirror at the wrong angle, in a photograph taken without warning — you see your parent\'s face in yours. The resemblance was always there, probably. At some age it becomes unmistakable. Your face is no longer only your face; it is also the face of someone else, carried forward into a different time.',
-    choices: null,
-    effect: (p) => { p.r += 4; p.setMem('s11InheritFace', true) },
-  },
-
-  {
+{
     id: 'sonder11_inherit_phrase',
     phase: 'midlife',
     weight: 2,
@@ -227,22 +209,12 @@ export const EVENTS_SONDER_11 = [
     effect: (p) => { p.m -= 2; p.e += 2; p.r += 2; p.setMem('s11InheritWorry', true) },
   },
 
-  {
-    id: 'sonder11_inherit_object',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 40 && !G.mem?.s11InheritObj,
-    text: 'The object came to you from the dead. You didn\'t ask for it; it arrived among the other things that arrived, in a box, or handed over by a sibling, or simply left in the house when the house was cleared. You have been keeping it for years. You don\'t use it. You couldn\'t explain why you keep it except that it was theirs.',
-    choices: null,
-    effect: (p) => { p.r += 4; p.m += 2; p.setMem('s11InheritObj', true) },
-  },
-
-  {
+{
     id: 'sonder11_inherit_skill',
     phase: 'midlife',
     weight: 2,
     when: (G) => G.age >= 35 && !G.mem?.s11InheritSkill,
-    text: 'You can do something because they could do it and showed you. The teaching was incidental — not a lesson, just doing it with you alongside. You didn\'t know you were learning and they didn\'t make a thing of teaching. Now you do it the way they did it, with the same particular gestures, and the specific way of doing it is the inheritance.',
+    text: 'You can do something because they could do it and showed you. The teaching was incidental — not a lesson, just doing it with you alongside. You didn\'t know you were learning and they didn\'t make a thing of teaching. Now you do it the way they did it, with the same particular gestures, and the way of doing it is the inheritance.',
     choices: null,
     effect: (p) => { p.m += 3; p.r += 2; p.setMem('s11InheritSkill', true) },
   },
@@ -336,7 +308,7 @@ export const EVENTS_SONDER_11 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => G.age >= 18 && !G.mem?.s11WindowRain,
-    text: 'Rain on the window. Not the sound — though that too — but the specific way the drops gather and run. You have been watching this since childhood. The watching is not deliberate. Rain on glass does something to attention that makes you stop and look. You are not sure why. There is no reason. It has always been this way.',
+    text: 'Rain on the window. Not the sound — though that too — but the way the drops gather and run. You have been watching this since childhood. The watching is not deliberate. Rain on glass does something to attention that makes you stop and look. You are not sure why. There is no reason. It has always been this way.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s11WindowRain', true) },
   },
@@ -351,17 +323,7 @@ export const EVENTS_SONDER_11 = [
     effect: (p) => { p.r += 2; p.m += 1; p.setMem('s11WindowNew', true) },
   },
 
-  {
-    id: 'sonder11_window_winter',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => G.age >= 58 && !G.mem?.s11WindowWinter,
-    text: 'The window in winter. The light that comes through it is a winter light — lower, different quality, carrying less. You have been indoors more than you used to be. The window has become more important: the daily record of what is outside, whether anyone is on the street, what kind of cold it looks like, the specific colour of the sky in the early afternoon. The window is the eye the house keeps on the world.',
-    choices: null,
-    effect: (p) => { p.r += 3; p.m += 2; p.setMem('s11WindowWinter', true) },
-  },
-
-  {
+{
     id: 'sonder11_window_last',
     phase: 'late_life',
     weight: 2,

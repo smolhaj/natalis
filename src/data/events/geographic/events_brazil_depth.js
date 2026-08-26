@@ -16,13 +16,13 @@ export const BRAZIL_DEPTH_EVENTS = [
 
   {
     id: 'bra_dep_candomble',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
       G.age >= 6 && G.age <= 22 &&
       !G.mem?.braDepCandomble,
-    text: pick([
+    text: () => pick([
       'The terreiro is in the building behind your aunt\'s house, or three blocks from your school, or deep in the bairro where the floor is always swept. Candomblé came from Yoruba and Fon and Bantu traditions, brought by enslaved people who hid the orixás behind Catholic saints. Oxum is Our Lady of Conception. Xangô is Saint Jerome. The double identity is not hypocrisy — it is strategy that became theology. The celebration of the orixás is not separate from the rest of Brazilian religious life. It is inside it.',
       'The Catholic saint on the altar and the orixá in the same devotion: this is not a contradiction in the Brazil you grew up in. It is the syncresis that four hundred years of Catholic pressure and African resistance produced. Your grandmother keeps both. She explains neither. The coexistence is the explanation.',
     ]),
@@ -39,14 +39,14 @@ export const BRAZIL_DEPTH_EVENTS = [
 
   {
     id: 'bra_dep_carnaval',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
       G.age >= 12 && G.age <= 35 &&
       G.ruralUrban === 'urban' &&
       !G.mem?.braDepCarnaval,
-    text: pick([
+    text: () => pick([
       'Carnaval is not the same thing from inside the morro and from outside it. The Sambódromo is the television version. The morro has its own escolas de samba, its own enredos, the specific months of ensaio in the quadra. The bateria starts in October. By February the whole hill knows the samba-enredo by heart. You have known by heart the story of the slave rebellion or the quilombo or the orixá or the Amazon that the escola chose this year. When the escola enters the Sambódromo you know that the people who made it will not appear in the television coverage of the people who made it.',
       'The blocos de rua are the carnaval before the television carnaval: the band in the street, the truck of instruments, the crowd that expands to fill whatever street it finds itself in. In Salvador the trio elétrico carries the music on a truck and the crowd follows. In Recife the frevo is specific to the streets of Olinda in a way that cannot be exported. The carnaval that is sold to tourists is made from the carnaval that belongs to someone, which is still there behind the tourist version.',
     ]),
@@ -104,7 +104,7 @@ export const BRAZIL_DEPTH_EVENTS = [
 
   {
     id: 'bra_dep_baile_funk',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -126,7 +126,7 @@ export const BRAZIL_DEPTH_EVENTS = [
 
   {
     id: 'bra_dep_lava_jato',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -187,7 +187,7 @@ export const BRAZIL_DEPTH_EVENTS = [
 
   {
     id: 'bra_dep_quilombo',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -216,7 +216,7 @@ export const BRAZIL_DEPTH_EVENTS = [
       G.age >= 20 &&
       G.ruralUrban === 'rural' &&
       !G.mem?.braDepSoy,
-    text: pick([
+    text: () => pick([
       'The cerrado is being converted to soy at a rate that satellite photos make visible from space. The soy goes to China: Brazilian soy feeds Chinese pigs. The fazendeiro who plants soy in what was cerrado three years ago employs fewer workers per hectare than any other crop and more machinery per hectare than almost any other. You are on the agricultural frontier — Mato Grosso, Pará, the transitional zone — where the forest is the thing that is converted into money before it disappears.',
       'The logging road comes first. Then the cattle, clearing the brush. Then the soy, planted in what the cattle cleared. This is the sequence of deforestation: each step makes the next step easier and more profitable. The forest does not come back in the same generation. The carbon it was holding is in the atmosphere. The global temperature is the ledger that records it.',
     ]),

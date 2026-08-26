@@ -12,7 +12,7 @@ export const DENMARK_EVENTS = [
 
   {
     id: 'den_wwii_occupation',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_DANISH(G) &&
@@ -33,7 +33,7 @@ export const DENMARK_EVENTS = [
 
   {
     id: 'den_jewish_rescue',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) =>
       IS_DANISH(G) &&
@@ -54,7 +54,7 @@ export const DENMARK_EVENTS = [
 
   {
     id: 'den_liberation_1945',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_DANISH(G) &&
@@ -70,7 +70,7 @@ export const DENMARK_EVENTS = [
 
   {
     id: 'den_cartoon_crisis',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_DANISH(G) &&
@@ -78,7 +78,7 @@ export const DENMARK_EVENTS = [
       G.age >= 25 &&
       !G.mem?.denCartoonCrisis,
     text: (G) => {
-      const isMuslim = ['sunni_muslim', 'shia_muslim', 'sufi_muslim', 'muslim_secular'].includes(G.religion)
+      const isMuslim = G.religion?.startsWith('muslim')
       return isMuslim
         ? 'Jyllands-Posten published the twelve cartoons on September 30, 2005. The paper said it was a test of free speech. You experienced it as a test of something else: whether Danish Muslims were fully Danish, or were conditional members of Danish society whose religion was available for use as a prop in cultural arguments. The embassies burned in the Middle East and the Danish flags burned and you had not drawn those cartoons and had nothing to do with what they caused, and yet you were navigating the Danish Muslim question from the inside of it.'
         : 'Jyllands-Posten published twelve cartoons of the Prophet Muhammad on September 30, 2005. After months of diplomatic escalation, embassies burned in Beirut, Damascus, Tehran, and elsewhere. The Danish government said it could not and would not apologise for press freedom. The distinction between government endorsement and press freedom was not, in all the countries where the protests occurred, a familiar distinction. Denmark found itself at the centre of a global argument about the limits of speech, secularism, and the integration of Muslim minorities. You have a position on all of this. The position is more complicated than either side of the public argument acknowledged.'
@@ -91,7 +91,7 @@ export const DENMARK_EVENTS = [
 
   {
     id: 'den_immigration_policy',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_DANISH(G) &&
@@ -118,7 +118,8 @@ export const DENMARK_EVENTS = [
       IS_DANISH(G) &&
       G.age >= 60 &&
       !G.mem?.denLateReckoning,
-    text: 'Denmark has a specific national self-image: small, decent, well-organised, humanitarian. The country that rescued its Jews. The first country to legalise same-sex unions. The welfare state that actually works. This self-image is real in important ways and simplifies in others. The accommodation of the German occupation was also Denmark. The wartime collaboration and profiteering were also Denmark. The immigration restrictiveness — described by its defenders as integration realism and by its critics as institutionalised exclusion — is also Denmark. The cartoon crisis and the pride with which Denmark defended its press freedom, and the costs that the cartoon crisis imposed on Danish Muslims who had no part in the cartoons, was also Denmark. You have lived the whole self-image and you know it is both accurate and a partial picture. You are not sure this is different from any country, but you know it is true of yours.',
+    text: 'A young man at the family lunch says the word colonial about Denmark and your sister laughs at him, and you find that you do not. You think of the fishing boats to Sweden in 1943, which is the story you were raised inside of, and then of the factories that took German orders for five years. You think of the pharmacist in Norrebro whose windows went in over drawings he had nothing to do with. You do not think your country is worse than others. You have simply stopped being able to hold only the good half.',
+    context: 'Denmark\'s national self-image rests on the 1943 rescue of over 7,000 Danish Jews, early legalisation of same-sex partnerships in 1989, and a functioning welfare state. It coexists with five years of official cooperation with the German occupation and substantial wartime supply to Germany, with some of Europe\'s most restrictive immigration legislation, and with the aftermath of the 2005 Jyllands-Posten cartoons, whose costs fell largely on Danish Muslims.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 4; p.m += 2; p.karma += 3; p.setMem('denLateReckoning', true) },
   },
@@ -135,7 +136,8 @@ export const DENMARK_EVENTS = [
       G.currentYear >= 1990 &&
       G.age >= 55 &&
       !G.mem?.denRescueLate,
-    text: 'The rescue of Danish Jewry in 1943 has become the central moral fact of Danish wartime history — the thing that Denmark points to when the accommodation of the occupation comes up. The rescue was real and extraordinary. It also took place alongside three years of functioning cooperation with the occupying power. Both of these things are true and the relationship between them is complicated. The Danish historians who have written about the occupation in recent decades have had to negotiate the tension between the rescue as genuine moral achievement and the rescue as the thing that made the accommodation survivable to the national conscience. You have lived this tension from the inside of the country that holds it.',
+    text: 'A television crew comes to the harbour for the anniversary and interviews the man who owned the boat, who is ninety-one and says less than they wanted. You were seven and you remember the tarpaulin and the smell of fish under it. Nobody on the programme mentions the shipyard down the coast that took German orders for five years, and everybody watching it knows about the shipyard. Both things belong to the same three years and the same country. You have never worked out how to hold them in one sentence.',
+    context: 'In October 1943, warned of an imminent round-up, Danish civilians ferried over 7,000 Jews and around 700 non-Jewish relatives to neutral Sweden in fishing boats. The rescue took place during three years of official Danish cooperation with the German occupation, under which Danish industry and agriculture supplied Germany and the Danish government remained in office until August 1943. Danish historians have debated the relationship between the two since the 1970s.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 4; p.m -= 2; p.karma += 3; p.setMem('denRescueLate', true) },
   },

@@ -7,26 +7,18 @@
 
 // All weight 2, no choices, no new flags, single-fire via mem guard.
 
+import { place } from './_sonderGuards.js'
+
 export const EVENTS_SONDER_5 = [
 
   // ─── CHILDHOOD BODY MEMORY ────────────────────────────────────────────────────
 
-  {
-    id: 'sonder5_cb_school_floor',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 35 && !G.mem?.s5CbFloor,
-    text: 'There is something about the smell of a school corridor — the specific combination of floor polish and chalk dust and old wood or old concrete — that takes you back before you have time to stop it. Not to a particular day but to a state: being small in a large institution, uncertain whether you were in trouble, the sound of a teacher\'s footsteps in a hallway.',
-    choices: null,
-    effect: (p) => { p.m += 3; p.e += 2; p.setMem('s5CbFloor', true) },
-  },
-
-  {
+{
     id: 'sonder5_cb_illness',
     phase: 'midlife',
     weight: 2,
     when: (G) => G.age >= 30 && !G.mem?.s5CbIllness,
-    text: 'Being ill as a child had a specific quality that adult illness does not have: you were taken out of the normal world and put in a bed, and someone brought things to you, and time moved differently. You were not expected to be anywhere. The fever is unpleasant but the exemption is not. You think about this sometimes — that you have not been properly sick since childhood, not sick in the total way that relieved you of everything.',
+    text: 'Being ill as a child had a quality that adult illness does not have: you were taken out of the normal world and put in a bed, and someone brought things to you, and time moved differently. You were not expected to be anywhere. The fever is unpleasant but the exemption is not. You think about this sometimes — that you have not been properly sick since childhood, not sick in the total way that relieved you of everything.',
     choices: null,
     effect: (p) => { p.m += 4; p.setMem('s5CbIllness', true) },
   },
@@ -46,7 +38,7 @@ export const EVENTS_SONDER_5 = [
     phase: 'midlife',
     weight: 2,
     when: (G) => G.age >= 35 && !G.mem?.s5CbCar,
-    text: 'You fell asleep in the back of cars as a child in the specific way that children fall asleep — completely, without negotiation — and woke up being carried inside, or already in your bed without memory of the transfer. That particular falling asleep is gone. You have not experienced it since childhood. You did not notice it leave.',
+    text: 'You fell asleep in the back of cars as a child in the way that children fall asleep — completely, without negotiation — and woke up being carried inside, or already in your bed without memory of the transfer. That particular falling asleep is gone. You have not experienced it since childhood. You did not notice it leave.',
     choices: null,
     effect: (p) => { p.m += 3; p.setMem('s5CbCar', true) },
   },
@@ -65,7 +57,7 @@ export const EVENTS_SONDER_5 = [
     id: 'sonder5_cb_sound_home',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 38 && !G.mem?.s5CbSound,
+    when: (G) => place.hasRadio(G) && (G.age >= 38 && !G.mem?.s5CbSound),
     text: 'There is a sound that was the background of your childhood that you no longer hear — the specific pitch of the radio your parents left on, or the neighbour\'s generator, or the particular road noise of a street you grew up near. You hear something similar sometimes and the childhood arrives briefly, uninvited, complete.',
     choices: null,
     effect: (p) => { p.m += 4; p.r += 2; p.setMem('s5CbSound', true) },
@@ -85,7 +77,7 @@ export const EVENTS_SONDER_5 = [
     id: 'sonder5_cb_dark_fear',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 30 && !G.mem?.s5CbDark,
+    when: (G) => place.hasInternet(G) && (G.age >= 30 && !G.mem?.s5CbDark),
     text: 'There was something you were afraid of at night as a child — not a monster exactly, but a category of darkness or sound or a particular shape that a room made. You do not fear it now. But the body remembers: if you wake suddenly at three in the morning, there is still a half-second before the adult understanding comes online, and in that half-second you are six again and the darkness is the same darkness.',
     choices: null,
     effect: (p) => { p.m += 3; p.e += 2; p.setMem('s5CbDark', true) },
@@ -168,7 +160,7 @@ export const EVENTS_SONDER_5 = [
     phase: 'midlife',
     weight: 2,
     when: (G) => G.age >= 38 && !G.mem?.s5LangSilence,
-    text: 'You have learned the silences of the people close to you as carefully as their words. The specific silence that means discomfort. The one that means they are about to say something important. The one that means they have already decided and are waiting for you to figure it out. These silences carry as much as any sentence. You are fluent in them without ever having studied them.',
+    text: 'You have learned the silences of the people close to you as carefully as their words. The silence that means discomfort. The one that means they are about to say something important. The one that means they have already decided and are waiting for you to figure it out. These silences carry as much as any sentence. You are fluent in them without ever having studied them.',
     choices: null,
     effect: (p) => { p.m += 4; p.s += 3; p.e += 2; p.setMem('s5LangSilence', true) },
   },
@@ -190,7 +182,7 @@ export const EVENTS_SONDER_5 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => G.age >= 22 && !G.mem?.s5MoneyFirst,
-    text: 'The first time you had more money than you had ever had — it may not have been very much in absolute terms — there was a specific feeling that was not quite happiness. A kind of solidity. A sense that the ground had more substance. You have been trying to reproduce that feeling ever since and the reproduction is always slightly off, because the baseline has shifted.',
+    text: 'The first time you had more money than you had ever had — it may not have been very much in absolute terms — there was a feeling that was not quite happiness. A kind of solidity. A sense that the ground had more substance. You have been trying to reproduce that feeling ever since and the reproduction is always slightly off, because the baseline has shifted.',
     choices: null,
     effect: (p) => { p.m += 4; p.e += 3; p.setMem('s5MoneyFirst', true) },
   },
@@ -199,7 +191,7 @@ export const EVENTS_SONDER_5 = [
     id: 'sonder5_money_price_memory',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 40 && !G.mem?.s5MoneyPrice,
+    when: (G) => place.hasBus(G) && (G.age >= 40 && !G.mem?.s5MoneyPrice),
     text: 'You remember what things cost at a specific moment in your life — the price of bread, the bus fare, what a decent meal out cost — and you carry that number as a kind of psychological constant. Everything since is measured against it, even when the comparison no longer makes sense because the money itself has changed.',
     choices: null,
     effect: (p) => { p.e += 3; p.r += 2; p.setMem('s5MoneyPrice', true) },
@@ -219,7 +211,7 @@ export const EVENTS_SONDER_5 = [
     id: 'sonder5_money_count',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 35 && !G.mem?.s5MoneyCount,
+    when: (G) => place.hasBus(G) && (G.age >= 35 && !G.mem?.s5MoneyCount),
     text: 'At some point you stopped counting the cost of small things — the coffee, the bus ticket, the extra item you did not need — and you did not notice the moment it happened. Before, you knew to the unit. After, you know approximately. The transition happened somewhere in a year you were not paying attention to that kind of attention.',
     choices: null,
     effect: (p) => { p.e += 3; p.m += 2; p.setMem('s5MoneyCount', true) },
@@ -272,7 +264,7 @@ export const EVENTS_SONDER_5 = [
     phase: 'midlife',
     weight: 2,
     when: (G) => G.age >= 32 && !G.mem?.s5AnimalDog,
-    text: 'The dog died. This is a sentence that should not carry very much, and it does. The dog was a complete being — had preferences, had fears, recognised your face — and now it does not exist. You are navigating the specific grief of an animal death, which is real grief operating with the knowledge that you are not supposed to be this affected, which makes it worse.',
+    text: 'The dog died. This is a sentence that should not carry very much, and it does. The dog was a complete being — had preferences, had fears, recognised your face — and now it does not exist. You are navigating the grief of an animal death, which is real grief operating with the knowledge that you are not supposed to be this affected, which makes it worse.',
     choices: null,
     effect: (p) => { p.m -= 3; p.r += 2; p.karma += 3; p.setMem('s5AnimalDog', true) },
   },
@@ -312,7 +304,7 @@ export const EVENTS_SONDER_5 = [
     phase: 'midlife',
     weight: 2,
     when: (G) => G.ruralUrban !== 'urban' && G.age >= 30 && !G.mem?.s5AnimalLivestock,
-    text: 'An animal you had raised died or was slaughtered. You knew this was the purpose, or at least the outcome. The knowledge did not prevent the specific quality of the moment. You did what needed doing and you have not thought too carefully about what the moment contained.',
+    text: 'An animal you had raised died or was slaughtered. You knew this was the purpose, or at least the outcome. The knowledge did not prevent the quality of the moment. You did what needed doing and you have not thought too carefully about what the moment contained.',
     choices: null,
     effect: (p) => { p.m += 2; p.r += 3; p.e += 2; p.setMem('s5AnimalLivestock', true) },
   },
@@ -332,10 +324,10 @@ export const EVENTS_SONDER_5 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) =>
-      ['subsaharan', 'developing_urban', 'developing_unstable'].includes(G.character.archetype) &&
+      ['subsaharan', 'developing_urban', 'developing_unstable'].includes(G.archetype) &&
       G.age >= 20 &&
       !G.mem?.s5AnimalMosquito,
-    text: 'The mosquito net is the structure of sleep. You tuck it in at all four corners before you lie down. The sound of a mosquito inside the net — the high thin sound — is the sound of a specific kind of wakefulness: fully alert, listening for the location. In the morning sometimes there is a smear of blood on the white fabric where it landed. Not yours.',
+    text: 'The mosquito net is the structure of sleep. You tuck it in at all four corners before you lie down. The sound of a mosquito inside the net — the high thin sound — is the sound of a kind of wakefulness: fully alert, listening for the location. In the morning sometimes there is a smear of blood on the white fabric where it landed. Not yours.',
     choices: null,
     effect: (p) => { p.m += 2; p.e += 2; p.setMem('s5AnimalMosquito', true) },
   },
@@ -354,7 +346,7 @@ export const EVENTS_SONDER_5 = [
     id: 'sonder5_animal_garden',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 55 && !G.mem?.s5AnimalGarden,
+    when: (G) => G.season === 'spring' && (G.age >= 55 && !G.mem?.s5AnimalGarden),
     text: 'Something lives in the garden — a hedgehog, a lizard, a bird that nests in the same place every spring. You have come to regard this as a relationship, which you did not expect. You do not feed it. You do not interfere with it. But you notice it, and you notice its absence on the days it does not appear, and you are glad when it returns.',
     choices: null,
     effect: (p) => { p.m += 5; p.karma += 2; p.setMem('s5AnimalGarden', true) },

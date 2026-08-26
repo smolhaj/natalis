@@ -6,7 +6,7 @@ export const ITALY_EVENTS = [
 
   {
     id: 'it_miracolo_economico',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Italy' &&
@@ -33,7 +33,7 @@ export const ITALY_EVENTS = [
 
   {
     id: 'it_southern_emigration',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Italy' &&
@@ -99,7 +99,7 @@ export const ITALY_EVENTS = [
 
   {
     id: 'it_anni_di_piombo',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Italy' &&
@@ -135,7 +135,7 @@ export const ITALY_EVENTS = [
 
   {
     id: 'it_mani_pulite',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Italy' &&
@@ -162,7 +162,7 @@ export const ITALY_EVENTS = [
 
   {
     id: 'it_berlusconi_era',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Italy' &&
@@ -189,7 +189,7 @@ export const ITALY_EVENTS = [
 
   {
     id: 'it_precariato',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Italy' &&
@@ -216,7 +216,7 @@ export const ITALY_EVENTS = [
 
   {
     id: 'it_mediterranean_crossing',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Italy' &&

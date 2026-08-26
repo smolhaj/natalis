@@ -45,7 +45,7 @@ export const KOREA_EVENTS = [
 
   {
     id: 'kr_suneung_year',
-    phase: 'adolescence',
+    phase: null,
     weight: 9,
     when: (G) =>
       isSouthKorea(G) &&
@@ -85,7 +85,7 @@ export const KOREA_EVENTS = [
 
   {
     id: 'kr_gwangju_1980',
-    phase: 'young_adult',
+    phase: null,
     weight: 9,
     when: (G) =>
       isSouthKorea(G) &&
@@ -171,7 +171,7 @@ export const KOREA_EVENTS = [
 
   {
     id: 'kr_marriage_pressure',
-    phase: 'young_adult',
+    phase: null,
     weight: 7,
     when: (G) =>
       isSouthKorea(G) &&
@@ -203,7 +203,7 @@ export const KOREA_EVENTS = [
 
   {
     id: 'kr_hallyu_pride',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) =>
       isSouthKorea(G) &&
@@ -221,7 +221,7 @@ export const KOREA_EVENTS = [
 
   {
     id: 'kr_compressed_generation',
-    phase: 'midlife',
+    phase: null,
     weight: 6,
     when: (G) =>
       isSouthKorea(G) &&
@@ -253,7 +253,7 @@ export const KOREA_EVENTS = [
 
   {
     id: 'kr_park_development_bargain',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       isSouthKorea(G) &&
@@ -298,7 +298,7 @@ export const KOREA_EVENTS = [
 
   {
     id: 'kr_sampo_generation',
-    phase: 'young_adult',
+    phase: null,
     weight: 7,
     when: (G) =>
       isSouthKorea(G) &&
@@ -322,6 +322,128 @@ export const KOREA_EVENTS = [
       },
     ],
     effect: null,
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // THE THINNING — SOUTH KOREA 2030s–2060s
+  // The lowest fertility rate ever recorded in a peacetime state arrives as
+  // ordinary furniture: a closed school, an empty county, a machine that asks
+  // how you slept.
+  // ═══════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'kr_school_closes_thinning',
+    phase: null,
+    weight: 5,
+    when: (G) =>
+      isSouthKorea(G) &&
+      G.currentYear >= 2030 && G.currentYear <= 2065 &&
+      G.age >= 25 &&
+      !G.mem?.krSchoolCloses,
+    text: 'The elementary school you went to closes in February with eleven children in its final intake. They hold a ceremony in the yard and the principal reads the names of every graduating year back to 1961. The building is to become a care facility, which the district calls repurposing. You stand at the fence where the shoe lockers used to be visible through the window and you can see them still.',
+    context: 'South Korea’s total fertility rate fell to 0.72 in 2023, the lowest ever recorded for a country not at war. Over 3,800 schools closed between 1982 and 2023, most of them rural; from the 2030s the closures move into provincial cities and the outer districts of Seoul.',
+    choices: null,
+    effect: (p) => { p.m -= 6; p.r += 4; p.setMem('krSchoolCloses', true) },
+  },
+
+  {
+    id: 'kr_county_disappearing',
+    phase: null,
+    weight: 4,
+    when: (G) =>
+      isSouthKorea(G) &&
+      G.currentYear >= 2032 && G.currentYear <= 2070 &&
+      G.age >= 30 &&
+      G.ruralUrban !== 'urban' &&
+      !G.mem?.krCountyGone,
+    text: 'The county is on the list the ministry publishes each year — the places calculated to be at risk of vanishing. The bus that came four times a day comes twice. The pharmacy keeps two afternoons a week and the pharmacist drives in from the city for them. At the market the same six women set out the same trays and the youngest of them is sixty-one.',
+    context: 'South Korea’s Ministry of the Interior began publishing an annual list of 지방소멸 위험 지역 — regions at risk of local extinction — in 2016. By the mid-2020s roughly half of all local governments were on it, defined by the ratio of women aged 20–39 to residents over 65.',
+    choices: [
+      {
+        text: 'Stay. Somebody has to be the last one who knows the road names.',
+        tag: null,
+        outcome: 'You stay. The winters get quieter and the summers stay the same. You become, without applying for it, the person people telephone when they need to know what used to be where.',
+        effect: (p) => { p.m += 3; p.r += 5; p.karma += 3; p.setMem('krCountyGone', true) },
+      },
+      {
+        text: 'Go to the city while there is still something to sell.',
+        tag: null,
+        outcome: 'The house sells for less than the deposit on the flat you move into. You visit twice a year and then once and then at holidays only.',
+        effect: (p) => { p.mo += 9000; p.m -= 5; p.r += 6; p.setMem('krCountyGone', true) },
+      },
+    ],
+  },
+
+  {
+    id: 'kr_thin_conscription',
+    phase: null,
+    weight: 4,
+    when: (G) =>
+      isSouthKorea(G) &&
+      G.currentYear >= 2035 && G.currentYear <= 2060 &&
+      G.character.gender === 'male' &&
+      G.age >= 18 && G.age <= 26 &&
+      !G.mem?.krThinConscription,
+    text: 'The physical standards have been revised again and the grade that would have exempted your father passes you without discussion. There are not enough of you. The barracks holds a company in a building built for a battalion and the corridors carry sound the way an empty school does. The sergeant is forty-four and stays on because the army has stopped being able to replace him.',
+    context: 'South Korea’s annual cohort of conscription-age men falls from about 330,000 in the mid-2020s to under 200,000 by the 2040s. The military has repeatedly loosened physical grading criteria and extended non-commissioned officer careers to hold troop numbers near the 500,000 floor set by defence planning.',
+    choices: null,
+    effect: (p) => { p.h -= 4; p.m -= 3; p.addFlag('korea_military_served'); p.setMem('krThinConscription', true) },
+  },
+
+  {
+    id: 'kr_care_machine',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) =>
+      isSouthKorea(G) &&
+      G.currentYear >= 2035 &&
+      G.age >= 70 &&
+      !G.mem?.krCareMachine,
+    text: 'The district provides the unit free to households over seventy living alone. It reminds you about the blue tablet at eight and the white one at two, and every morning it asks whether you slept well. You have started answering it out loud. Once, in November, you told it something you have not told your daughter, and it said that it was glad you were feeling better.',
+    choices: [
+      {
+        text: 'Answer it every day. It is a voice in the room.',
+        tag: null,
+        outcome: 'You keep answering. It is not company and it is what is in the room, and you have arrived at an age where the difference is smaller than you once believed.',
+        effect: (p) => { p.m += 2; p.h += 2; p.r += 4; p.setMem('krCareMachine', true) },
+      },
+      {
+        text: 'Unplug it and go down to the community hall instead.',
+        tag: null,
+        outcome: 'There are nine of you at the hall and the youngest is sixty-eight. It is three afternoons a week and it is other people, and you sleep better on the days you go.',
+        effect: (p) => { p.m += 6; p.s += 3; p.setMem('krCareMachine', true) },
+      },
+    ],
+  },
+
+  {
+    id: 'kr_elderly_work_late',
+    phase: 'late_life',
+    weight: 4,
+    when: (G) =>
+      isSouthKorea(G) &&
+      G.currentYear >= 2030 &&
+      G.age >= 66 &&
+      G.money < 60000 &&
+      !G.mem?.krElderlyWork,
+    text: 'You are sixty-eight and you work. The security shift at the building runs twelve hours and the pension covers the management fee and the utilities and not the rest of it. On the stairwell landing you fold the flattened boxes the way the woman on the fourth floor taught you, and she is seventy-three. Your son sends money and you have told him twice that you do not need it.',
+    context: 'South Korea has the highest elderly poverty rate in the OECD, around 40 percent of over-65s. The national pension scheme began only in 1988, so the cohorts who built the country’s industrial economy retired with partial or no contribution histories.',
+    choices: null,
+    effect: (p) => { p.h -= 5; p.mo += 7000; p.r += 5; p.setMem('krElderlyWork', true) },
+  },
+
+  {
+    id: 'kr_unification_word_fades',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) =>
+      isSouthKorea(G) &&
+      G.currentYear >= 2040 &&
+      G.age >= 55 &&
+      !G.mem?.krUnificationFades,
+    text: 'The ministry still exists and the word has stopped appearing. In your school year there was a poster in the corridor with two hands and a peninsula; your grandchild has never been given the drawing exercise. On the news the north is covered the way a neighbouring country is covered. You notice that you no longer say the word either, and you cannot place the year you stopped.',
+    choices: null,
+    effect: (p) => { p.r += 5; p.m -= 3; p.addFlag('korean_division_generation'); p.setMem('krUnificationFades', true) },
   },
 
 ]

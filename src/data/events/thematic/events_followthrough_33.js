@@ -147,7 +147,7 @@ export const FOLLOWTHROUGH_33_EVENTS = [
       (G.flags.has('gha_first_voter') || G.flags.has('zambian_democracy_generation') || G.flags.has('senegal_democracy_generation')) &&
       G.age >= 60 &&
       !G.mem?.ft33FirstVoterLate,
-    text: 'You voted in the first genuinely competitive election your country held. You remember the specific feeling: the act of marking something, the line, the box, the sense that this small physical thing was connected to something larger. The elections since have been less charged — democracy has become normal, which is a kind of success that makes individual elections matter less. The first one mattered in a way the subsequent ones have not. You were there for the first one.',
+    text: 'You voted in the first genuinely competitive election your country held. You remember the feeling: the act of marking something, the line, the box, the sense that this small physical thing was connected to something larger. The elections since have been less charged — democracy has become normal, which is a kind of success that makes individual elections matter less. The first one mattered in a way the subsequent ones have not. You were there for the first one.',
     choices: null,
     effect: (p) => { p.m += 5; p.karma += 4; p.r += 3; p.setMem('ft33FirstVoterLate', true) },
   },

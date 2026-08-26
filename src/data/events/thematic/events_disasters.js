@@ -36,7 +36,7 @@ export const DISASTER_EVENTS = [
 
   {
     id: 'dis_bangladesh_bad_flood',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     cooldown: 0,
     when: (G) =>
@@ -171,7 +171,7 @@ export const DISASTER_EVENTS = [
 
   {
     id: 'dis_typhoon_bad_year',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     cooldown: 0,
     when: (G) =>

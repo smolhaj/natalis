@@ -262,4 +262,52 @@ export const ADOLESCENCE_EVENTS = [
     effect: null,
   },
 
+  // ── SELF-RECOGNITION: ORIENTATION ────────────────────────────────────────────
+  // Sets 'questioning_sexuality', which the era-specific legal-moment events in
+  // events_specific_lives.js (Section 28, the propaganda law, the debauchery law,
+  // 377, the AIDS years) key off. The trigger before the echo.
+
+  {
+    id: 'adol_questioning_recognition',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) =>
+      !G.mem.adolQuestioning &&
+      !G.flags.includes('lgbtq_identity') &&
+      !G.flags.includes('questioning_sexuality') &&
+      G.age >= 14 && G.age <= 16 &&
+      Math.random() < 0.09,
+    text: (G) => {
+      const yr = G.currentYear ?? 2000
+      if (G.lgbtqCriminalized || yr < 1970) {
+        return 'There is a person you look at longer than you look at anyone else, and the length of the looking is the part you cannot explain. You have heard the word for it only once, from a man on the radio using it about someone else, in a tone that closed the subject. There is no book in the house and no one to ask. You practise the ordinary conversations until they come out ordinary. Nothing about you changes except that you now know to watch yourself.'
+      }
+      if (yr < 1995) {
+        return 'A photograph in a magazine at the barber\'s, or a character in a film shown late, and your attention goes somewhere it has not gone before. You turn the page at the ordinary speed. Later you go back to the magazine when the room is empty and find the page again and look at it properly. The word for this exists — you have heard it in the corridor at school, always as an insult. You put the two things beside each other and do not join them yet.'
+      }
+      return 'You type the question into the search bar and then delete it before pressing return. You type it again a week later and press return. The results are a forum, a helpline number, a page written by someone who sounds about nineteen, and an advertisement for something unrelated. You read for two hours and clear the history afterwards out of a habit you did not know you had.'
+    },
+    choices: [
+      {
+        text: 'Sit with it. There is no hurry and nobody is asking.',
+        tag: null,
+        outcome: 'It stays where you put it. It does not get smaller, but it stops being an emergency.',
+        effect: (p) => { p.e += 3; p.m -= 2; p.addFlag('questioning_sexuality'); p.setMem('adolQuestioning', true) },
+      },
+      {
+        text: 'Test it — say it out loud once, to yourself, in an empty room',
+        tag: null,
+        outcome: 'Your own voice saying it is stranger than the thought was. You say it a second time and it is less strange.',
+        effect: (p) => { p.e += 2; p.m += 3; p.addFlag('questioning_sexuality'); p.setMem('adolQuestioning', true) },
+      },
+      {
+        text: 'Decide it is a phase and stop looking',
+        tag: null,
+        outcome: 'You are busy for a while, and being busy works. It comes back in a few years with the same face.',
+        effect: (p) => { p.m -= 4; p.r += 3; p.addFlag('questioning_sexuality'); p.setMem('adolQuestioning', true) },
+      },
+    ],
+    effect: null,
+  },
+
 ]

@@ -110,7 +110,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'rural_water_fetch',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       ruralDeveloping(G) &&
@@ -124,7 +124,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'rural_harvest_time',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       ruralDeveloping(G) &&
@@ -137,7 +137,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'rural_crop_failure',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       ruralDeveloping(G) &&
@@ -163,7 +163,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'rural_market_day_texture',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       ruralDeveloping(G) &&
@@ -179,7 +179,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'rural_first_electricity',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.ruralUrban === 'rural' &&
@@ -208,7 +208,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'rural_migration_temptation',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) =>
       ruralDeveloping(G) &&
@@ -234,14 +234,14 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'rural_seasonal_work',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       ruralDeveloping(G) &&
       G.age >= 18 && G.age <= 35 &&
       !G.flags.includes('seasonal_migrant') &&
       !G.flags.includes('left_for_city'),
-    text: 'During the dry season, when the field requires less, you go to the city for work. Construction, unloading at the market, whatever is available. You sleep in a room with seven other men from villages like yours. You send money home every two weeks. In three months you return. You do this for several years running. The city becomes familiar in the specific way of a place you know without belonging to.',
+    text: 'During the dry season, when the field requires less, you go to the city for work. Construction, unloading at the market, whatever is available. You sleep in a room with seven other men from villages like yours. You send money home every two weeks. In three months you return. You do this for several years running. The city becomes familiar in the way of a place you know without belonging to.',
     choices: null,
     effect: (p) => { p.mo += 200; p.s += 3; p.m -= 3; p.addFlag('seasonal_migrant') },
   },
@@ -262,7 +262,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'rural_remittance',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       ruralDeveloping(G) &&
@@ -278,7 +278,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'rural_traditional_medicine',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       ruralDeveloping(G) &&
@@ -303,7 +303,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'rural_arranged_marriage_pressure',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       ruralDeveloping(G) &&
@@ -330,7 +330,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'rural_land_inheritance',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       ruralDeveloping(G) &&
@@ -386,7 +386,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'era_depression_breadline',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) =>
       wealthyWest(G) &&
@@ -401,7 +401,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'era_rationing_wwii',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       wealthyWest(G) &&
@@ -415,7 +415,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'era_victory_day',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) =>
       wealthyWestOrSoviet(G) &&
@@ -428,7 +428,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'era_postwar_prosperity',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       wealthyWest(G) &&
@@ -456,7 +456,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'era_ice_box',
-    phase: 'early_childhood',
+    phase: null,
     weight: 2,
     when: (G) =>
       wealthyWest(G) &&
@@ -469,7 +469,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'era_cold_war_fear',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       wealthyWest(G) &&
@@ -557,7 +557,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'era_1950s_conformity',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       wealthyWest(G) &&
@@ -584,7 +584,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'era_domestic_service_wealthy',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.currentYear >= 1920 && G.currentYear <= 1960 &&
@@ -598,7 +598,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'era_domestic_service_working',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.currentYear >= 1920 && G.currentYear <= 1960 &&
@@ -612,7 +612,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'era_factory_town',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       ['wealthy_west', 'post_soviet'].includes(G.character.country.archetype) &&
@@ -626,7 +626,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'era_letter_writing',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.currentYear >= 1920 && G.currentYear <= 1960 &&
@@ -669,7 +669,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'career_political_difficulty',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.career &&
@@ -701,7 +701,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'career_passed_over',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.career &&
@@ -753,7 +753,7 @@ export const TEXTURE_EVENTS = [
 
   {
     id: 'career_laid_off',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.career &&
@@ -787,14 +787,14 @@ export const TEXTURE_EVENTS = [
       G.career &&
       G.age >= 55 && G.age <= 72 &&
       !G.flags.includes('career_last_day_done'),
-    text: 'You clear the desk. At the back of the bottom drawer there is a pen you have been looking for since the previous decade and a photograph from a work event whose occasion you no longer remember. Colleagues stop by during the day and say things that are warm and partly true. There is a cake. Someone makes a speech. You drive home at the usual time and the house is the same house and you sit in it for a while in the specific silence of an afternoon that used to belong to somewhere else.',
+    text: 'You clear the desk. At the back of the bottom drawer there is a pen you have been looking for since the previous decade and a photograph from a work event whose occasion you no longer remember. Colleagues stop by during the day and say things that are warm and partly true. There is a cake. Someone makes a speech. You drive home at the usual time and the house is the same house and you sit in it for a while in the silence of an afternoon that used to belong to somewhere else.',
     choices: null,
     effect: (p) => { p.m += 8; p.r += 10; p.addFlag('career_last_day_done') },
   },
 
   {
     id: 'career_younger_boss',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.career &&
@@ -827,7 +827,7 @@ export const TEXTURE_EVENTS = [
       G.age >= 50 && G.age <= 65 &&
       G.stats.smarts >= 55 &&
       !G.flags.includes('career_legacy_done'),
-    text: 'You are leading a project that you understand will outlast you at the organization — a system, a program, a building, a body of work that will carry forward after you are gone. There is a specific pleasure in this that is different from ordinary ambition. You are building for people who are not yet in the room. You find you care more about this than you expected, and less about the credit.',
+    text: 'You are leading a project that you understand will outlast you at the organization — a system, a program, a building, a body of work that will carry forward after you are gone. There is a pleasure in this that is different from ordinary ambition. You are building for people who are not yet in the room. You find you care more about this than you expected, and less about the credit.',
     choices: null,
     effect: (p) => { p.m += 12; p.e += 5; p.karma += 5; p.addFlag('built_legacy'); p.addFlag('career_legacy_done') },
   },
@@ -859,4 +859,81 @@ export const TEXTURE_EVENTS = [
     effect: null,
   },
 
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_puddle_permission',
+    phase: 'early_childhood',
+    weight: 4,
+    when: (G) => G.age >= 3 && G.age <= 5 && !G.mem?.ordPuddle,
+    text: `There is water across the whole width of the path and an adult says the word fine in a tone that means you may. You go in with both feet at once. It comes over the top of the left shoe and is colder inside the sock than it looked from outside. You do it again, twice, in the same place, to see whether it stays true.`,
+    choices: null,
+    effect: (p) => { p.m += 8; p.h += 1; p.setMem('ordPuddle', true) },
+  },
+
+  {
+    id: 'ord_carried_upside_down',
+    phase: 'early_childhood',
+    weight: 4,
+    when: (G) => G.age >= 2 && G.age <= 5 && (G.parents?.father?.alive || (G.siblings ?? []).length > 0) && !G.mem?.ordUpsideDown,
+    text: `Someone picks you up by the ankles and the room inverts. The ceiling has a stain on it shaped like a country. Blood arrives in your face and your own laugh comes out of you at a pitch you have not heard before. When they set you down the floor is unreliable for a few seconds and you ask to go again.`,
+    choices: null,
+    effect: (p) => { p.m += 9; p.setMem('ordUpsideDown', true) },
+  },
+
+  {
+    id: 'ord_the_wrong_word',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.age >= 6 && G.age <= 10 && !G.mem?.ordWrongWord,
+    text: `You have been saying a word wrong for as long as you have been saying it. Someone corrects you at the table and the correction is so funny to everyone that nobody eats for a minute. For the rest of your life the family will use your version on purpose. You are being laughed at and you can tell the difference between this and the other kind.`,
+    choices: null,
+    effect: (p) => { p.m += 7; p.s += 2; p.setMem('ordWrongWord', true) },
+  },
+
+  {
+    id: 'ord_rain_on_the_roof',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.age >= 7 && G.age <= 12 && !G.mem?.ordRainRoof,
+    text: `The rain arrives all at once and the roof turns it into a sound with no gaps in it. Nobody can go anywhere. You lie on the floor with your feet up the wall and there is nothing at all to do, and it is not boring exactly, it is closer to being held. An adult in the next room says something to another adult and neither of them raises their voice.`,
+    choices: null,
+    effect: (p) => { p.m += 6; p.setMem('ordRainRoof', true) },
+  },
+
+  {
+    id: 'ord_summer_of_nothing',
+    phase: 'adolescence',
+    weight: 3,
+    when: (G) => G.age >= 13 && G.age <= 16 && !G.mem?.ordSummerNothing,
+    text: `The whole of one summer amounts to sitting on a wall. You are there most afternoons with two other people and the conversation does not go anywhere and does not need to. Someone brings a radio for a week and then stops bringing it. Years later this will be one of about four periods of your life you can enter again completely, and none of it was anything.`,
+    choices: null,
+    effect: (p) => { p.m += 6; p.s += 2; p.setMem('ordSummerNothing', true) },
+  },
+
+  {
+    id: 'ord_year_nothing_happened',
+    phase: null,
+    weight: 3,
+    when: (G) =>
+      G.age >= 26 && G.age <= 58 &&
+      G.stats.happiness >= 45 &&
+      !G.mem?.ordQuietYear &&
+      (G.currentYear - (G.mem?.lastMajorEvent_bereavement ?? 0)) >= 4 &&
+      Math.random() < 0.14,
+    text: `Nothing happens this year. No one dies, nothing breaks, the money is neither more nor less. You buy a chair. You get good at a route that takes eleven minutes. On a Sunday in the autumn you look up from what you are doing and register, with some surprise, that you are not waiting for anything.`,
+    choices: null,
+    effect: (p) => { p.m += 10; p.h += 2; p.setMem('ordQuietYear', true) },
+  },
+
+  {
+    id: 'ord_boring_tuesday',
+    phase: null,
+    weight: 3,
+    when: (G) => G.age >= 32 && G.age <= 62 && G.stats.happiness >= 40 && !G.mem?.ordBoringTuesday && Math.random() < 0.16,
+    text: `A Tuesday with nothing in it. You do the shopping, you put a wash on, you eat standing up because there is no reason not to. At eight in the evening you sit down and realise you have been mildly content since about eleven in the morning and had not thought to notice. You do not tell anyone about this because there is nothing to tell.`,
+    choices: null,
+    effect: (p) => { p.m += 7; p.setMem('ordBoringTuesday', true) },
+  },
 ]

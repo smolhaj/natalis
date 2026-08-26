@@ -150,7 +150,11 @@ export function generateIdentityCard(state) {
     interior.push(desireMap[desire])
   } else {
     // Fallback: earned insight from flags
-    if (F.has('lost_faith') || F.has('apostasy')) {
+    if (F.has('quiet_integrity')) {
+      interior.push('You held something back that they wanted, in a room with a radiator and a calendar, and no record of it exists anywhere but in you.')
+    } else if (F.has('sentence_in_proportion')) {
+      interior.push('The years they took stopped being the whole of it somewhere along the way. You could never say exactly when.')
+    } else if (F.has('lost_faith') || F.has('apostasy')) {
       interior.push('You left your faith behind. The shape it occupied is still there.')
     } else if (F.has('faith_deepened') || F.has('religion_returned')) {
       interior.push('Your faith has become more important, not less, as you have gotten older.')
@@ -173,7 +177,7 @@ export function generateIdentityCard(state) {
   if (interior.length < 3) {
     if (partner) {
       const q = partner.relationshipQuality ?? 60
-      const pn = partner.name.split(' ')[0]
+      const pn = partner.name?.split(' ')[0]
       if (q > 85 && (partner.years ?? 0) > 10) {
         interior.push(`What you have built with ${pn} is the kind of thing people mean when they say they got lucky.`)
       } else if (q < 32 && partner.married) {
@@ -181,7 +185,7 @@ export function generateIdentityCard(state) {
       }
     } else if ((children ?? []).length > 0) {
       const closeChild = (children ?? []).find(c => c.age >= 16 && (c.relationshipQuality ?? 50) > 82)
-      if (closeChild) interior.push(`${closeChild.name.split(' ')[0]} is someone you genuinely like. That is not automatic between parents and children.`)
+      if (closeChild) interior.push(`${closeChild.name?.split(' ')[0]} is someone you genuinely like. That is not automatic between parents and children.`)
     }
   }
 

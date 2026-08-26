@@ -11,7 +11,7 @@ export const TUNISIA_EVENTS = [
 
   {
     id: 'tun_code_personal_status',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Tunisia' &&
@@ -25,7 +25,7 @@ export const TUNISIA_EVENTS = [
 
   {
     id: 'tun_ben_ali_state',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Tunisia' &&
@@ -52,7 +52,7 @@ export const TUNISIA_EVENTS = [
 
   {
     id: 'tun_bouazizi_revolution_2011',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Tunisia' &&
@@ -79,7 +79,7 @@ export const TUNISIA_EVENTS = [
 
   {
     id: 'tun_democratic_transition',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Tunisia' &&
@@ -93,7 +93,7 @@ export const TUNISIA_EVENTS = [
 
   {
     id: 'tun_saied_coup_2021',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Tunisia' &&
@@ -120,7 +120,7 @@ export const TUNISIA_EVENTS = [
 
   {
     id: 'tun_economic_interior',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Tunisia' &&

@@ -139,7 +139,7 @@ export const SCHOOL_EVENTS = [
       G.flags.includes('scholarship_student') &&
       G.age >= 13 && G.age <= 17 &&
       !G.mem?.schScholarshipLunch,
-    text: 'The uniform fits differently on you than it does on the others — you cannot say how exactly, but you know it. The lunch table is the most legible version of the gap: what they carry in their bags, the names of the places they visited during the school break, the specific vocabulary of people who have never had to think about money. You are here on merit. You are also, clearly, from somewhere else.',
+    text: 'The uniform fits differently on you than it does on the others — you cannot say how exactly, but you know it. The lunch table is the most legible version of the gap: what they carry in their bags, the names of the places they visited during the school break, the vocabulary of people who have never had to think about money. You are here on merit. You are also, clearly, from somewhere else.',
     choices: null,
     effect: (p) => {
       p.m -= 4
@@ -158,7 +158,7 @@ export const SCHOOL_EVENTS = [
       G.flags.includes('scholarship_student') &&
       G.age >= 20 && G.age <= 30 &&
       !G.mem?.schScholarshipPayoff,
-    text: 'The doors that opened were real. The network, the credential, the specific quality of opportunity — you would not have reached most of it from the school you were zoned for. You are aware of the contingency: one exam, one letter, one family that let you go. You carry this differently than the people beside you who assumed these doors would open.',
+    text: 'The doors that opened were real. The network, the credential, the quality of opportunity — you would not have reached most of it from the school you were zoned for. You are aware of the contingency: one exam, one letter, one family that let you go. You carry this differently than the people beside you who assumed these doors would open.',
     choices: null,
     effect: (p) => {
       p.e += 3
@@ -247,7 +247,7 @@ export const SCHOOL_EVENTS = [
     text: (G) => {
       const arch = G.character.country.archetype
       if (arch === 'wealthy_east') {
-        return `The exam that determines your university placement, your career, and by extension the shape of your life is in three days. Everything before this was preparation. The hall holds four hundred students and the silence in it is a specific kind of pressure.`
+        return `The exam that determines your university placement, your career, and by extension the shape of your life is in three days. Everything before this was preparation. The hall holds four hundred students and the silence in it is a kind of pressure.`
       }
       if (arch === 'post_soviet') {
         return `The national exam determines everything: which institute, which profession, which city. People have bribed for places. Your family could not. You sit down with what you know.`
@@ -299,4 +299,26 @@ export const SCHOOL_EVENTS = [
     },
   },
 
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_best_at_one_thing',
+    phase: 'childhood',
+    weight: 3,
+    when: (G) => G.age >= 8 && G.age <= 11 && G.education?.enrolled !== false && !G.mem?.ordBestAtOne,
+    text: `It turns out you are the fastest in the class at long division. Not clever generally — fast at this one thing, for reasons nobody can explain, including you. The teacher starts using your name as the unit of measurement. For one term you walk into that room knowing exactly what you are for.`,
+    choices: null,
+    effect: (p) => { p.m += 8; p.e += 4; p.s += 2; p.setMem('ordBestAtOne', true) },
+  },
+
+  {
+    id: 'ord_laughing_fit_assembly',
+    phase: 'adolescence',
+    weight: 4,
+    when: (G) => G.age >= 12 && G.age <= 16 && !G.mem?.ordLaughingFit,
+    text: `Something happens during the assembly that is not objectively funny — a chair, a cough, one word said in the wrong register — and you and the person beside you cannot stop. You go through the whole sequence: holding it, losing it, holding it, the shoulders, the tears, the teacher's face. You are in trouble afterwards and it is completely worth it. You will be able to set each other off with one word for the next thirty years.`,
+    choices: null,
+    effect: (p) => { p.m += 12; p.s += 3; p.setMem('ordLaughingFit', true) },
+  },
 ]

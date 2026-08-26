@@ -3,7 +3,7 @@ export const SOUTH_SOUTH_EVENTS = [
 
   {
     id: 'ss_bangladesh_malaysia_recruit',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country?.name === 'Bangladesh' &&
@@ -94,7 +94,7 @@ export const SOUTH_SOUTH_EVENTS = [
 
   {
     id: 'ss_zim_sa_arrival',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country?.name === 'Zimbabwe' &&
@@ -173,7 +173,7 @@ export const SOUTH_SOUTH_EVENTS = [
 
   {
     id: 'ss_ghana_libya',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country?.name === 'Ghana' &&
@@ -214,7 +214,7 @@ export const SOUTH_SOUTH_EVENTS = [
 
   {
     id: 'ss_gulag_arrest',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country?.name === 'Russia' &&
@@ -256,7 +256,7 @@ export const SOUTH_SOUTH_EVENTS = [
       G.flags.has('gulag_survivor') &&
       G.age >= 60 &&
       !G.mem?.ssGulagLate,
-    text: `It is not talked about. The specific silence around it is itself information — its shape, its weight, what it replaces in conversation. Your children know something happened; they don't know what. The not-knowing protects them in ways that no longer apply, and continues anyway from habit. You have chosen the silence too. You chose it for them and now cannot remember when you chose it for yourself.`,
+    text: `It is not talked about. The silence around it is itself information — its shape, its weight, what it replaces in conversation. Your children know something happened; they don't know what. The not-knowing protects them in ways that no longer apply, and continues anyway from habit. You have chosen the silence too. You chose it for them and now cannot remember when you chose it for yourself.`,
     choices: null,
     effect: (p) => {
       p.r += 6;
@@ -270,7 +270,7 @@ export const SOUTH_SOUTH_EVENTS = [
 
   {
     id: 'ss_apartheid_pass_arrest',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country?.name === 'South Africa' &&

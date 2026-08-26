@@ -10,7 +10,7 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'gr_junta_announcement',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Greece' &&
@@ -37,7 +37,7 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'gr_junta_culture',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Greece' &&
@@ -91,7 +91,7 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'gr_junta_fall_1974',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Greece' &&
@@ -119,7 +119,7 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'gr_debt_crisis_2010',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Greece' &&
@@ -148,14 +148,15 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'gr_civil_war_memory',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Greece' &&
       G.currentYear >= 1945 && G.currentYear <= 1965 &&
       G.age >= 6 && G.age <= 16 &&
       !G.mem?.grCivilWar,
-    text: 'The Civil War ended in 1949 but it did not end in the family. The division between those who fought for the government and those who fought for the Communists ran through villages, through extended families, sometimes through a single household. You are growing up in its aftermath. A relative who was on the losing side: there are things they cannot say, things they cannot do, lists their names are on. Your father does not speak to his brother. There is a word for this — to be "nationally-minded" or to be "of the left" — but in the family the word is not spoken, only practiced. The Civil War killed more Greeks than the German occupation. The Germans are discussed. The Civil War is not.',
+    text: 'Your father has a brother in a village forty kilometres away and they have not spoken since before you were born. At the town hall there is a certificate some people need and others are refused, and everyone knows which family gets which. Nobody says the word in the house. They only say he was on the other side, and they say it about the war that is discussed, not about the one that is not.',
+    context: 'The Greek Civil War of 1946-1949 killed more Greeks than the German occupation and divided villages and families between government forces and the Communist-led Democratic Army. Defeated leftists faced imprisonment, internal exile, and exclusion from public employment. The certificate of national loyalty, the pistopoiitiko koinonikon fronimaton, was required for state jobs, passports and university places until 1974.',
     choices: [
       {
         text: 'Your family was on the winning side. The silence is the silence of what winning required.',
@@ -177,7 +178,7 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'gr_oxi_2015',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Greece' &&
@@ -206,7 +207,7 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'gr_brain_drain_2010s',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Greece' &&
@@ -266,7 +267,7 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'pt_estado_novo_texture',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Portugal' &&
@@ -321,7 +322,7 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'pt_carnation_revolution',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Portugal' &&
@@ -354,7 +355,7 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'pt_retornados',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Portugal' &&
@@ -381,7 +382,7 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'pt_eu_accession',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Portugal' &&
@@ -395,7 +396,7 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'pt_geracao_rasca_2011',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Portugal' &&
@@ -422,7 +423,7 @@ export const GREECE_PORTUGAL_EVENTS = [
 
   {
     id: 'pt_troika_lived',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Portugal' &&

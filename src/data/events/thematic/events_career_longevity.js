@@ -3,7 +3,7 @@
 // What it feels like after 15–25 years in a field. Not the early arc
 // (events_career_arcs.js) or specific professions (doctor_arc, etc.) but the
 // universal texture of sustained expertise: the change in register, the cost of
-// mastery, the moment the field changes around you, the specific grief of
+// mastery, the moment the field changes around you, the grief of
 // a skill made obsolete. For anyone who has been doing the same thing
 // for long enough to have an opinion about how it has changed.
 
@@ -43,7 +43,7 @@ export const CAREER_LONGEVITY_EVENTS = [
 
   {
     id: 'cl_field_changed',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.career &&
@@ -86,7 +86,7 @@ export const CAREER_LONGEVITY_EVENTS = [
 
   {
     id: 'cl_obsolescence_signal',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.career &&
@@ -114,13 +114,13 @@ export const CAREER_LONGEVITY_EVENTS = [
 
   {
     id: 'cl_mastery_grief',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.career?.level >= 3 &&
       G.age >= 44 && G.age <= 58 &&
       !G.mem?.clMasteryGrief,
-    text: pick([
+    text: () => pick([
       `There was a time when the work surprised you constantly. You would finish a task and not quite know how you had done it — you had extended yourself, reached for something, and sometimes it came. That is mostly gone now. The work is good, consistently good, and consistently is the word that replaced the other thing. The consistency is real. The other thing was also real. They could not coexist.`,
       `You cannot access beginner's mind from here. The literature on expertise calls this the curse of knowledge: the more you know a domain, the less you can see what it was like not to know it, which means you have become worse at certain kinds of understanding even as you have become better at everything else. The trade was not optional. You made it by practicing.`,
     ]),
@@ -132,13 +132,13 @@ export const CAREER_LONGEVITY_EVENTS = [
 
   {
     id: 'cl_staying_question',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.career &&
       G.age >= 42 && G.age <= 55 &&
       !G.mem?.clStayingQuestion,
-    text: `The question comes around every few years and this time it is more serious than the others: do you stay in this field. Not because you are doing badly — you are doing well. Not because another field has called — nothing specific has. But the body of work you have produced is large enough to see, and what you see is a specific thing you have been building, and you are not sure the thing you have been building is the thing you wanted to build. The question is structural. The answer will have consequences.`,
+    text: `The question comes around every few years and this time it is more serious than the others: do you stay in this field. Not because you are doing badly — you are doing well. Not because another field has called — nothing specific has. But the body of work you have produced is large enough to see, and what you see is a thing you have been building, and you are not sure the thing you have been building is the thing you wanted to build. The question is structural. The answer will have consequences.`,
     choices: [
       {
         text: 'You stay. The work is yours. The years in it are not transferable.',
@@ -229,4 +229,26 @@ export const CAREER_LONGEVITY_EVENTS = [
     effect: null,
   },
 
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_the_one_they_ask',
+    phase: null,
+    weight: 3,
+    when: (G) => G.career && (G.career.level ?? 0) >= 3 && G.age >= 40 && G.age <= 68 && !G.mem?.ordTheyAsk && Math.random() < 0.15,
+    text: `Somebody two floors down has a problem and your name comes up, and they come to find you, and you solve it standing up in about four minutes. You do not know how you know. Twenty-two years of it is in your hands somewhere below the level of thinking. You go back to your desk and get on with something dull, and you are quietly pleased for the rest of the afternoon.`,
+    choices: null,
+    effect: (p) => { p.m += 9; p.e += 3; p.s += 3; p.setMem('ordTheyAsk', true) },
+  },
+
+  {
+    id: 'ord_still_good_at_it',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 62 && (G.career || G.retired) && !G.mem?.ordStillGood,
+    text: `You do the thing you spent your life doing, once, for someone who needed it done, and it is all still there. Slower in the hands and identical in the head. The person watching does not know enough to be impressed by the right part of it. You do not tell them which part. You put the tools away in the order they go in.`,
+    choices: null,
+    effect: (p) => { p.m += 10; p.e += 2; p.setMem('ordStillGood', true) },
+  },
 ]

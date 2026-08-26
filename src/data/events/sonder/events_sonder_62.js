@@ -1,6 +1,8 @@
 // Sonder module 62 — 30 contemplative events
 // Weight 2, null choices, all mem-gated. Universal human texture.
 
+import { place } from './_sonderGuards.js'
+
 export const EVENTS_SONDER_62 = [
 
   {
@@ -27,7 +29,7 @@ export const EVENTS_SONDER_62 = [
     id: 'sonder_62_c',
     phase: 'late_life',
     weight: 2,
-    when: (G) => !G.mem?.s62c,
+    when: (G) => place.isLiterate(G) && (!G.mem?.s62c),
     text: 'The handwriting on the envelope is your mother\'s handwriting and your mother has been dead for eleven years. The envelope is old — you found it in a box — and the handwriting is exactly as you remember it, which is to say more familiar than your own handwriting, since you do not often see your own handwriting from the outside.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s62c', true) },
@@ -47,7 +49,7 @@ export const EVENTS_SONDER_62 = [
     id: 'sonder_62_e',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => !G.mem?.s62e,
+    when: (G) => place.wentToSchool(G) && (!G.mem?.s62e),
     text: 'The map of the world that hung in the classroom placed your country near the center. Every map places something near the center. The centering felt like information. It was also a choice someone made before you were old enough to know choices were being made.',
     choices: null,
     effect: (p) => { p.e += 2; p.setMem('s62e', true) },
@@ -57,7 +59,7 @@ export const EVENTS_SONDER_62 = [
     id: 'sonder_62_f',
     phase: 'midlife',
     weight: 2,
-    when: (G) => !G.mem?.s62f,
+    when: (G) => place.worksInOffice(G) && (!G.mem?.s62f),
     text: 'Your colleague mentioned offhand a difficulty she has been managing for two years. You did not know. You have seen her every working day for two years. You did not know. The information she carried through those two years of daily proximity was not visible in the daily proximity.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s62f', true) },
@@ -127,23 +129,13 @@ export const EVENTS_SONDER_62 = [
     id: 'sonder_62_m',
     phase: 'midlife',
     weight: 2,
-    when: (G) => !G.mem?.s62m,
+    when: (G) => place.hasPhotographs(G) && (!G.mem?.s62m),
     text: 'The version of you that exists in the stories your parent tells about you is not wrong, exactly. It emphasizes different things. The person in those stories is related to you in the way that a photograph taken from one angle is related to the person photographed from all angles.',
     choices: null,
     effect: (p) => { p.setMem('s62m', true) },
   },
 
-  {
-    id: 'sonder_62_n',
-    phase: 'childhood',
-    weight: 2,
-    when: (G) => !G.mem?.s62n,
-    text: 'The smell of a particular classroom — chalk dust, the particular wood of the desks, something that came through the window in autumn — is retrievable in full from certain other smells that have no connection to the classroom. The retrieval is automatic. The classroom is there before you decide to go back to it.',
-    choices: null,
-    effect: (p) => { p.m += 2; p.setMem('s62n', true) },
-  },
-
-  {
+{
     id: 'sonder_62_o',
     phase: 'midlife',
     weight: 2,
@@ -157,6 +149,7 @@ export const EVENTS_SONDER_62 = [
     id: 'sonder_62_p',
     phase: 'young_adult',
     weight: 2,
+    isGlimpse: true,
     when: (G) => !G.mem?.s62p,
     text: 'The person at the table next to you at the café has been speaking quietly for forty minutes. You have not been listening but you have registered the rhythm of the conversation — the pauses, the tone shifts, the long quiet in the middle where something was decided or not decided. You do not know their language. You read the rhythm anyway.',
     choices: null,
@@ -177,7 +170,7 @@ export const EVENTS_SONDER_62 = [
     id: 'sonder_62_r',
     phase: 'midlife',
     weight: 2,
-    when: (G) => !G.mem?.s62r,
+    when: (G) => place.worksInOffice(G) && (!G.mem?.s62r),
     text: 'The meeting that was scheduled for Thursday was moved to the following Tuesday and you experienced a relief out of proportion to the rescheduling. The relief told you something about the meeting you had not been telling yourself.',
     choices: null,
     effect: (p) => { p.setMem('s62r', true) },
@@ -187,7 +180,7 @@ export const EVENTS_SONDER_62 = [
     id: 'sonder_62_s',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => !G.mem?.s62s,
+    when: (G) => place.wentToSchool(G) && (!G.mem?.s62s),
     text: 'The books that mattered to you at fourteen were not the books that were supposed to matter to you at fourteen. The ones that were supposed to matter sat on the shelf. The ones that mattered were taken to a different room and read in a way that felt like the books were speaking directly into the part of you that the school day did not reach.',
     choices: null,
     effect: (p) => { p.m += 3; p.e += 2; p.setMem('s62s', true) },
@@ -227,7 +220,7 @@ export const EVENTS_SONDER_62 = [
     id: 'sonder_62_w',
     phase: 'midlife',
     weight: 2,
-    when: (G) => !G.mem?.s62w,
+    when: (G) => place.isLiterate(G) && (!G.mem?.s62w),
     text: 'Your handwriting is your father\'s handwriting. You noticed this for the first time on a form you filled out and had to read back, and the reading back felt like something other than reading your own handwriting. The shape of the letters was not yours first.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s62w', true) },
@@ -247,27 +240,18 @@ export const EVENTS_SONDER_62 = [
     id: 'sonder_62_y',
     phase: 'midlife',
     weight: 2,
+    isGlimpse: true,
     when: (G) => !G.mem?.s62y,
     text: 'The person who apologized to you after ten years apologized for something you had mostly forgiven and were not expecting the apology for. The apology moved the thing slightly. You are not sure in which direction. The forgiveness had already settled and the apology unsettled it slightly, then it settled again, differently.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s62y', true) },
   },
 
-  {
-    id: 'sonder_62_z',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => !G.mem?.s62z,
-    text: 'The habit of checking before you leave — the door, the gas, the window — is the same check your mother made. You watched her make it. You absorbed the sequence without being taught the sequence. The inheritance of small anxieties is also a form of inheritance.',
-    choices: null,
-    effect: (p) => { p.m += 2; p.setMem('s62z', true) },
-  },
-
-  {
+{
     id: 'sonder_62_aa',
     phase: 'childhood',
     weight: 2,
-    when: (G) => !G.mem?.s62aa,
+    when: (G) => G.season === 'summer' && (!G.mem?.s62aa),
     text: 'There was a summer that felt longer than summers do now. You know why it felt longer — the days were not subdivided the same way, the obligations were different, the clock was more porous. Knowing why it felt longer does not make current summers feel the same way.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s62aa', true) },
@@ -297,7 +281,7 @@ export const EVENTS_SONDER_62 = [
     id: 'sonder_62_ad',
     phase: 'late_life',
     weight: 2,
-    when: (G) => !G.mem?.s62ad,
+    when: (G) => G.season === 'spring' && (!G.mem?.s62ad),
     text: 'The neighbor you waved at for twenty years died last spring. You did not know her name, which you now consider a failure of some kind, or a feature of a particular kind of city life, or both. The wave was real. The not knowing the name was also real. The wave is over and you find you notice its absence.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s62ad', true) },

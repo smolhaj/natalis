@@ -6,7 +6,7 @@ export const SINGAPORE_DEPTH_EVENTS = [
 
   {
     id: 'sg_dep_coldstore_1963',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country?.name === 'Singapore' &&
@@ -35,7 +35,7 @@ export const SINGAPORE_DEPTH_EVENTS = [
 
   {
     id: 'sg_dep_nantah_closure_1980',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country?.name === 'Singapore' &&
@@ -52,7 +52,7 @@ export const SINGAPORE_DEPTH_EVENTS = [
 
   {
     id: 'sg_dep_spectrum_1987',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country?.name === 'Singapore' &&
@@ -98,10 +98,10 @@ export const SINGAPORE_DEPTH_EVENTS = [
 
   {
     id: 'sg_dep_migrant_worker',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
-      G.currentCountry === 'Singapore' &&
+      G.currentCountry?.name === 'Singapore' &&
       G.character.country?.name !== 'Singapore' &&
       G.currentYear >= 2000 &&
       G.age >= 18 && G.age <= 45 &&
@@ -158,7 +158,7 @@ export const SINGAPORE_DEPTH_EVENTS = [
 
   {
     id: 'sg_dep_377a_repeal_2022',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country?.name === 'Singapore' &&

@@ -29,7 +29,7 @@ export const HONDURAS_EVENTS = [
 
   {
     id: 'hon_battalion_316',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_HONDURAN(G) &&
@@ -45,7 +45,7 @@ export const HONDURAS_EVENTS = [
 
   {
     id: 'hon_contra_base',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_HONDURAN(G) &&
@@ -61,7 +61,7 @@ export const HONDURAS_EVENTS = [
 
   {
     id: 'hon_hurricane_mitch',
-    phase: 'midlife',
+    phase: null,
     weight: 6,
     when: (G) =>
       IS_HONDURAN(G) &&
@@ -77,7 +77,7 @@ export const HONDURAS_EVENTS = [
 
   {
     id: 'hon_zelaya_coup',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_HONDURAN(G) &&
@@ -101,7 +101,7 @@ export const HONDURAS_EVENTS = [
       G.age >= 20 &&
       !G.mem?.honBerta,
     text: (G) => {
-      const isIndigenous = ['indigenous_lenca', 'garifuna_honduran', 'miskito_honduran'].includes(G.character.ethnicity?.id)
+      const isIndigenous = ['indigenous_lenca', 'garifuna_honduran', 'miskito_honduran'].includes(G.character.ethnicity)
       return isIndigenous
         ? 'Berta Cáceres was Lenca. She founded COPINH — the Civic Council of Popular and Indigenous Organisations of Honduras — and spent fifteen years stopping the Agua Zarca dam that would have diverted the Gualcarque River, sacred to the Lenca people. She received the Goldman Environmental Prize in 2015. On March 2, 2016, she was shot in her home in La Esperanza. The men who killed her were connected to the Desarrollos Energéticos company that was building the dam. You know her name. You know what it cost.'
         : 'Berta Cáceres, the Lenca activist who won the Goldman Environmental Prize and stopped the Agua Zarca dam on the Gualcarque River, is shot in her home on March 2, 2016. The intellectual authors of the murder are later found to include executives of the company that was building the dam. Honduras is the most dangerous country in the world for environmental activists. The awards her killers knew about did not protect her.'
@@ -114,7 +114,7 @@ export const HONDURAS_EVENTS = [
 
   {
     id: 'hon_gang_territory_2010s',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_HONDURAN(G) &&

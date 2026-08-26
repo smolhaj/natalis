@@ -30,7 +30,7 @@ export const UZBEKISTAN_EVENTS = [
 
   {
     id: 'uzb_alphabet_generation',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_UZBEK(G) &&
@@ -46,7 +46,7 @@ export const UZBEKISTAN_EVENTS = [
 
   {
     id: 'uzb_mahalla_system',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_UZBEK(G) &&
@@ -74,7 +74,7 @@ export const UZBEKISTAN_EVENTS = [
 
   {
     id: 'uzb_faith_crackdown',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_UZBEK(G) &&
@@ -103,14 +103,15 @@ export const UZBEKISTAN_EVENTS = [
 
   {
     id: 'uzb_andijan_2005',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_UZBEK(G) &&
       G.currentYear >= 2005 && G.currentYear <= 2007 &&
       G.age >= 18 &&
       !G.mem?.uzbAndijan,
-    text: 'On May 13, 2005, in Andijan: soldiers open fire on protesters in the square. The government says Islamic terrorists stormed an armory; witnesses describe a crowd of traders, families, people who had come out to see what was happening. The official death toll is 187. Uzbek human rights organisations count between 500 and 750. The city is sealed. Journalists are expelled. The European Union issues a statement. Karimov expels the US military from Karshi-Khanabad. Russia and China support the government\'s account. Within weeks, the story is off the front pages elsewhere. Inside Uzbekistan, the story was never on the front pages. You know what you know from sources you do not name.',
+    text: 'On the thirteenth of May the square in Andijan is full of traders and families who came out to see what the noise was, and then the soldiers fire into it. The government counts a hundred and eighty-seven and says they were terrorists. The road in is closed for a week and the journalists are put on planes. Nobody at your workplace mentions the name of the city. What you know, you know from a man who was there, and you do not say his name either.',
+    context: 'Uzbek troops opened fire on a crowd in Andijan on 13 May 2005 after an armed group stormed a prison. The official death toll was 187; Uzbek human rights organisations counted between 500 and 750. The city was sealed and foreign journalists expelled. President Karimov evicted the United States from the Karshi-Khanabad airbase after Western criticism; Russia and China endorsed the government\'s account.',
     choices: null,
     effect: (p) => { p.r += 9; p.m -= 6; p.e += 3; p.addFlag('uzb_andijan_witness'); p.setMem('uzbAndijan', true) },
   },
@@ -119,7 +120,7 @@ export const UZBEKISTAN_EVENTS = [
 
   {
     id: 'uzb_labour_russia',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_UZBEK(G) &&
@@ -147,7 +148,7 @@ export const UZBEKISTAN_EVENTS = [
 
   {
     id: 'uzb_fergana_borders',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_UZBEK(G) &&
@@ -164,7 +165,7 @@ export const UZBEKISTAN_EVENTS = [
 
   {
     id: 'uzb_karimov_death',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_UZBEK(G) &&
@@ -180,7 +181,7 @@ export const UZBEKISTAN_EVENTS = [
 
   {
     id: 'uzb_mirziyoyev_opening',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_UZBEK(G) &&
@@ -215,7 +216,8 @@ export const UZBEKISTAN_EVENTS = [
       IS_UZBEK(G) &&
       G.age >= 60 &&
       !G.mem?.uzbLate,
-    text: 'You have lived inside the Soviet project, the independence moment, the Karimov consolidation, and whatever comes after. The Registan is still there. The Aral Sea is not. The language you learned in school is now in an alphabet that was not the alphabet you learned it in. Three scripts in one lifetime is a specific kind of cultural dislocation that does not have an entry in the standard accounts of what the twentieth century did to people. You know it from the inside. The cotton still grows in the fields where the Syr Darya\'s tributaries used to flow. The dust from the exposed sea bottom still reaches you on certain days in a certain wind. You have outlasted the systems that formed you. This is something.',
+    text: 'You learned the alphabet three times: Arabic from your grandmother, then Cyrillic at school, then the Latin one they brought in when you were already old. The Registan is where it always was. The sea is a hundred kilometres from where the sea was, and on certain days in a certain wind the salt off the dry bed reaches the washing on your line. The cotton still comes up in fields that the river no longer feeds. You have outlived every system that made you.',
+    context: 'Uzbek has been written in Arabic, Latin, Cyrillic and Latin script again across the twentieth century, with the final change legislated in 1993. Soviet irrigation for cotton diverted the Amu Darya and Syr Darya, and the Aral Sea lost about ninety percent of its volume; salt and pesticide dust from the exposed seabed is carried hundreds of kilometres by wind.',
     choices: null,
     effect: (p) => { p.m += 6; p.r += 7; p.karma += 4; p.e += 4; p.addFlag('uzb_testigo_generation'); p.setMem('uzbLate', true) },
   },

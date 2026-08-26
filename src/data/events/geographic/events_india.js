@@ -9,7 +9,7 @@ export const INDIA_EVENTS = [
 
   {
     id: 'ind_emergency_1975',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'India' &&
@@ -36,7 +36,7 @@ export const INDIA_EVENTS = [
 
   {
     id: 'ind_1984_sikh_massacre',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'India' &&
@@ -63,7 +63,7 @@ export const INDIA_EVENTS = [
 
   {
     id: 'ind_liberalization_1991',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'India' &&
@@ -90,7 +90,7 @@ export const INDIA_EVENTS = [
 
   {
     id: 'ind_babri_masjid_1992',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'India' &&
@@ -117,7 +117,7 @@ export const INDIA_EVENTS = [
 
   {
     id: 'ind_gujarat_2002',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'India' &&
@@ -145,7 +145,7 @@ export const INDIA_EVENTS = [
 
   {
     id: 'ind_demonetization_2016',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'India' &&
@@ -172,7 +172,7 @@ export const INDIA_EVENTS = [
 
   {
     id: 'ind_caa_protests_2019',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'India' &&
@@ -180,7 +180,7 @@ export const INDIA_EVENTS = [
       G.age >= 16 &&
       !G.mem?.indCAA,
     text: (G) => {
-      if (G.religion === 'muslim') return 'December 2019. The Citizenship Amendment Act makes religion an explicit criterion for citizenship for the first time in Indian law — offering fast-track status to Hindus, Sikhs, Buddhists, and Christians from neighbouring countries, not Muslims. The National Register of Citizens in Assam already left out nearly two million people, most of them poor and unable to produce papers proving they were Indian. The logical extension of NRC + CAA is visible. Shaheen Bagh begins: women sitting on a road in Delhi, day after day, through January and February. You understand what they are sitting against.'
+      if (G.religion?.startsWith('muslim')) return 'December 2019. The Citizenship Amendment Act makes religion an explicit criterion for citizenship for the first time in Indian law — offering fast-track status to Hindus, Sikhs, Buddhists, and Christians from neighbouring countries, not Muslims. The National Register of Citizens in Assam already left out nearly two million people, most of them poor and unable to produce papers proving they were Indian. The logical extension of NRC + CAA is visible. Shaheen Bagh begins: women sitting on a road in Delhi, day after day, through January and February. You understand what they are sitting against.'
       return 'December 2019. The Citizenship Amendment Act, the National Register of Citizens, Shaheen Bagh — women sitting on a road in Delhi for a hundred days through winter. The Delhi riots in February 2020 come after the police are visibly absent from Muslim neighbourhoods. How you understand the sequence depends partly on which India you live in.'
     },
     choices: [
@@ -202,7 +202,7 @@ export const INDIA_EVENTS = [
 
   {
     id: 'ind_farmers_protest_2020',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'India' &&
@@ -233,7 +233,7 @@ export const INDIA_EVENTS = [
 
   {
     id: 'ind_partition_family_memory',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'India' &&
@@ -248,7 +248,7 @@ export const INDIA_EVENTS = [
 
   {
     id: 'ind_partition_colony',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'India' &&

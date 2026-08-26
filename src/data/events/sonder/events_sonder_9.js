@@ -3,6 +3,8 @@
 // MONEY AND WANT (9), FRIENDSHIP OVER TIME (9)
 // All mem-gated single-fire, weight 2, no choices, no new flags.
 
+import { place } from './_sonderGuards.js'
+
 export const EVENTS_SONDER_9 = [
 
   // ══════════════════════════════════════════════════════════════════════════
@@ -53,8 +55,8 @@ export const EVENTS_SONDER_9 = [
     id: 'sonder9_child_memory_school',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 35 && !G.mem?.s9ChildSchool,
-    text: 'The school you attended probably looks different now. The classroom had a specific smell, specific light, the sound of it at certain times of the afternoon. You cannot reconstruct it exactly. Pieces of it surface in dreams sometimes, reconfigured into impossible architectures that are still recognisably that school.',
+    when: (G) => place.wentToSchool(G) && (G.age >= 35 && !G.mem?.s9ChildSchool),
+    text: 'The school you attended probably looks different now. The classroom had a smell, light, the sound of it at certain times of the afternoon. You cannot reconstruct it exactly. Pieces of it surface in dreams sometimes, reconfigured into impossible architectures that are still recognisably that school.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s9ChildSchool', true) },
   },
@@ -123,17 +125,7 @@ export const EVENTS_SONDER_9 = [
     effect: (p) => { p.m += 2; p.setMem('s9LangMotherTongue', true) },
   },
 
-  {
-    id: 'sonder9_lang_phrase_inherited',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 35 && !G.mem?.s9LangPhrase,
-    text: 'You have started using a phrase your parent used. You noticed it first as a stranger in your mouth — this is something they said, not you — and then as something you apparently say now. The line between inheriting and choosing is not clear in language.',
-    choices: null,
-    effect: (p) => { p.r += 3; p.m += 2; p.setMem('s9LangPhrase', true) },
-  },
-
-  {
+{
     id: 'sonder9_lang_name',
     phase: 'childhood',
     weight: 2,
@@ -147,7 +139,7 @@ export const EVENTS_SONDER_9 = [
     id: 'sonder9_lang_silence',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 35 && !G.mem?.s9LangSilence,
+    when: (G) => place.hasWeekend(G) && (G.age >= 35 && !G.mem?.s9LangSilence),
     text: 'There are things you do not have words for. Not complicated things — simple states that resist language. The feeling at dusk in a specific season. The particular quality of a Saturday morning. The state just after something ends. You live in these wordless moments more than the worded ones.',
     choices: null,
     effect: (p) => { p.m += 2; p.e += 1; p.setMem('s9LangSilence', true) },
@@ -167,7 +159,7 @@ export const EVENTS_SONDER_9 = [
     id: 'sonder9_lang_reading',
     phase: 'childhood',
     weight: 2,
-    when: (G) => G.age >= 9 && G.age <= 16 && !G.mem?.s9LangReading,
+    when: (G) => place.hasBooks(G) && (G.age >= 9 && G.age <= 16 && !G.mem?.s9LangReading),
     text: 'You learned to read and then it was transparent — you stopped seeing the letters and saw the meaning instead. You cannot fully remember the transition. At some point the individual marks on the page became words and then the words became invisible and only what they pointed to remained. Learning to read is one of the few things you cannot fully remember having done.',
     choices: null,
     effect: (p) => { p.e += 2; p.setMem('s9LangReading', true) },
@@ -177,7 +169,7 @@ export const EVENTS_SONDER_9 = [
     id: 'sonder9_lang_formal',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 20 && G.age <= 35 && !G.mem?.s9LangFormal,
+    when: (G) => place.isLiterate(G) && (G.age >= 20 && G.age <= 35 && !G.mem?.s9LangFormal),
     text: 'You have a formal version of how you speak that you deploy for specific situations — official documents, doctors, people with authority. The formal version is recognisably you and also not entirely you. You switch into it without deciding to. The switch is one of the small performances of being a person in a society.',
     choices: null,
     effect: (p) => { p.s += 1; p.setMem('s9LangFormal', true) },
@@ -202,7 +194,7 @@ export const EVENTS_SONDER_9 = [
     phase: 'adolescence',
     weight: 2,
     when: (G) => G.age >= 14 && G.age <= 22 && !G.mem?.s9MoneyFirstEarned,
-    text: 'The first money you earned yourself was different from money given to you. The specific weight of it — what it cost in time and effort and humility to produce — was information about the relationship between work and value that no description had conveyed. You spent it on something you no longer remember and the fact of having earned it is what stayed.',
+    text: 'The first money you earned yourself was different from money given to you. The weight of it — what it cost in time and effort and humility to produce — was information about the relationship between work and value that no description had conveyed. You spent it on something you no longer remember and the fact of having earned it is what stayed.',
     choices: null,
     effect: (p) => { p.m += 4; p.setMem('s9MoneyFirstEarned', true) },
   },
@@ -212,7 +204,7 @@ export const EVENTS_SONDER_9 = [
     phase: 'childhood',
     weight: 2,
     when: (G) => G.age >= 8 && G.age <= 16 && !G.mem?.s9MoneyWant,
-    text: 'There was something you wanted very badly and could not have because of money. The wanting had a specific texture — you can still produce it if you try. The object itself has long since ceased to matter. The shape of the wanting stayed.',
+    text: 'There was something you wanted very badly and could not have because of money. The wanting had a texture — you can still produce it if you try. The object itself has long since ceased to matter. The shape of the wanting stayed.',
     choices: null,
     effect: (p) => { p.m -= 2; p.setMem('s9MoneyWant', true) },
   },
@@ -262,7 +254,7 @@ export const EVENTS_SONDER_9 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) => G.age >= 20 && G.age <= 45 && !G.mem?.s9MoneyDebt,
-    text: 'Debt is a different kind of weight from other weights. The specific feeling of owing money — the way it changes the texture of ordinary days, the amount of cognitive space it occupies — is information about the relationship between freedom and financial obligation that is only available from the inside.',
+    text: 'Debt is a different kind of weight from other weights. The feeling of owing money — the way it changes the texture of ordinary days, the amount of cognitive space it occupies — is information about the relationship between freedom and financial obligation that is only available from the inside.',
     choices: null,
     effect: (p) => { p.m -= 3; p.setMem('s9MoneyDebt', true) },
   },
@@ -356,7 +348,7 @@ export const EVENTS_SONDER_9 = [
     phase: 'late_life',
     weight: 2,
     when: (G) => G.age >= 60 && !G.mem?.s9FriendDead,
-    text: 'You have lost friends now. The specific weight of a friend\'s death is different from a parent\'s death or a partner\'s death — it is the loss of someone who knew you from the outside, who held a perspective on you that no one in your family had, who chose you without obligation. This is not replaceable.',
+    text: 'You have lost friends now. The weight of a friend\'s death is different from a parent\'s death or a partner\'s death — it is the loss of someone who knew you from the outside, who held a perspective on you that no one in your family had, who chose you without obligation. This is not replaceable.',
     choices: null,
     effect: (p) => { p.r += 5; p.m -= 4; p.setMem('s9FriendDead', true) },
   },

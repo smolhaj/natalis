@@ -14,7 +14,7 @@ export const TURKEY_DEPTH_EVENTS = [
 
   {
     id: 'trk_dep_1980_coup',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_TURKEY(G) &&
@@ -35,7 +35,7 @@ export const TURKEY_DEPTH_EVENTS = [
 
   {
     id: 'trk_dep_alevi_identity',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_ALEVI(G) &&
@@ -54,7 +54,7 @@ export const TURKEY_DEPTH_EVENTS = [
 
   {
     id: 'trk_dep_sivas_massacre',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_ALEVI(G) &&
@@ -97,14 +97,15 @@ export const TURKEY_DEPTH_EVENTS = [
 
   {
     id: 'trk_dep_gezi_2013',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_TURKEY(G) &&
       G.currentYear === 2013 &&
       G.age >= 16 && G.age <= 40 &&
       !G.mem?.trkGezi,
-    text: `May 27, 2013. The sit-in to protect Gezi Park from a shopping-mall project is small — thirty people, tents, trees. The police move in with tear gas at 5am. By evening the protest is in Taksim Square and growing. By the weekend it is in eighty cities. The specific Istanbul image: the woman in the red dress, tear gas at close range from a policeman — the photograph travels everywhere. What begins as an environmental protest becomes something else: a referendum on ten years of the AKP government, on the pace of change, on who gets to decide what a city looks like. The government calls the protesters looters. The protesters call each other by what they are: teachers, doctors, Kemalists, anarchists, Kurds, LGBT activists, football fan groups. The coalition is temporary. So is the moment.`,
+    text: 'It begins with thirty people and some tents around trees. The gas comes at five in the morning and by the evening it is Taksim and by the weekend it is eighty cities. In the square there are football supporters handing out lemon juice to lawyers, and a table where three women are marking a map of the pharmacies still open. Somebody has written on the hoarding that this is not about the trees, and then underneath, in another hand, that it is also about the trees.',
+    context: 'The Gezi Park sit-in against a shopping development on Taksim Square began on 27 May 2013 and was cleared by police with tear gas on 31 May, after which protests spread to some eighty Turkish cities and drew an estimated 3.5 million participants. Eleven people died. The photograph of a woman in a red dress being gassed at close range became its defining image.',
     choices: [
       {
         text: 'Go to the square. Be in it.',
@@ -132,7 +133,8 @@ export const TURKEY_DEPTH_EVENTS = [
       G.currentYear === 2016 &&
       G.age >= 14 &&
       !G.mem?.trk2016Coup,
-    text: `The night of July 15, 2016. Fighter jets over Ankara. Tanks on the Bosphorus Bridge. The parliament building is bombed. At 11:30pm Erdoğan appears on CNN Türk via FaceTime — FaceTime, from his phone — and calls on citizens to go to the squares, to the airports, to the streets. The mosques broadcast the ezan — the call to prayer — at midnight, in the middle of the night, not for prayer but to call people out. By 3am the coup is failing. The soldiers on the bridge are surrendering. What comes after is the purge: 150,000 detained or dismissed, the state of emergency. The night has been documented, argued over, contested. You were in Turkey when it happened and you know what it felt like in real time.`,
+    text: 'There are jets low over the city at an hour when there are no jets. Just before midnight the president is on a journalist\'s telephone held up to a studio camera, telling everyone to go out into the streets. Then the mosques give the ezan at midnight, all of them at once, and it is not for prayer. Your neighbour goes down to the avenue in his slippers. By three in the morning it is over, and by the following week the dismissals have begun.',
+    context: 'On the night of 15 July 2016 a faction of the Turkish armed forces attempted a coup: jets bombed the parliament in Ankara and tanks closed the Bosphorus bridge. President Erdogan appeared via FaceTime on CNN Turk and called people into the streets, and mosques broadcast the ezan through the night. About 250 people died. Roughly 150,000 public employees were dismissed or detained under the two-year state of emergency that followed.',
     choices: null,
     effect: (p) => {
       p.m -= 10
@@ -146,7 +148,7 @@ export const TURKEY_DEPTH_EVENTS = [
 
   {
     id: 'trk_dep_headscarf_divide',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_TURKEY(G) &&
@@ -167,7 +169,7 @@ export const TURKEY_DEPTH_EVENTS = [
 
   {
     id: 'trk_dep_hemşehri',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_TURKEY(G) &&
@@ -196,7 +198,8 @@ export const TURKEY_DEPTH_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 2020 &&
       G.age >= 20 && G.age <= 28 &&
       !G.mem?.trkMilitary,
-    text: `The conscription letter arrives. Twelve months — or eighteen months, or twenty-four months, depending on the decade and your education level — in the army. The posting is assigned: somewhere in the southeast if your cohort is unlucky, somewhere more comfortable if not. In the southeast in the 1990s the unlucky posting means the PKK conflict, checkpoint rotations, the specific weight of a rifle at night. Everywhere the service means the barracks, the hierarchy, the particular texture of collective male life under strict authority. You emerge from it with a certificate that employers and families understand, with a cohort who went through it with you, with a body that was shaped by it. In Turkey a man who has not done military service is not fully a man in the public imagination. This is understood before it is articulated.`,
+    text: 'The letter comes and the posting is drawn like a lottery: the coast if you are lucky, the southeast if you are not. In the southeast at night the rifle has a specific weight that it does not have in the daytime. You come back with a certificate that every employer and every prospective mother-in-law understands on sight. Nobody in your family ever says out loud that a man who has not done it is not quite a man, and everybody proceeds as though they had.',
+    context: 'Turkish military service has been compulsory for men since 1927, running between six and twenty-four months depending on period and education level. Postings during the 1984-1999 phase of the PKK conflict frequently sent conscripts to the southeast. The discharge certificate is routinely requested by employers, and paid exemption schemes have been offered periodically since 1999.',
     choices: null,
     effect: (p) => {
       p.e += 2

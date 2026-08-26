@@ -61,7 +61,7 @@ export const FOLLOWTHROUGH_59_EVENTS = [
       G.flags.has('ru_dep_kommunalka_generation') &&
       G.age >= 55 &&
       !G.mem?.ft59KommunalkaLate,
-    text: `The kommunalka — you think about it sometimes as a specific texture that no longer exists in the city. The shared kitchen, the roster on the wall for cleaning, the families in their rooms. People who grew up in them and people who did not understand each other about something that could not be described. Not nostalgia exactly. More like: that life produced a specific knowledge of other people, an intimacy that was not chosen, that shaped how you understand proximity and obligation. You are not sure the apartment building with one family per door produces the same knowledge. You did not choose the kommunalka. The knowledge it gave you was not chosen either.`,
+    text: `The kommunalka — you think about it sometimes as a texture that no longer exists in the city. The shared kitchen, the roster on the wall for cleaning, the families in their rooms. People who grew up in them and people who did not understand each other about something that could not be described. Not nostalgia exactly. More like: that life produced a knowledge of other people, an intimacy that was not chosen, that shaped how you understand proximity and obligation. You are not sure the apartment building with one family per door produces the same knowledge. You did not choose the kommunalka. The knowledge it gave you was not chosen either.`,
     choices: null,
     effect: (p) => { p.r += 3; p.m += 2; p.setMem('ft59KommunalkaLate', true) },
   },
@@ -123,7 +123,7 @@ export const FOLLOWTHROUGH_59_EVENTS = [
       G.currentYear >= 2001 && G.currentYear <= 2010 &&
       G.age >= 25 &&
       !G.mem?.ft59_1990sPutinOrder,
-    text: `The Putin decade: a wage that arrives, a supermarket with things in it, a city where the kiosks have been replaced by proper shops. The word is "stability." You remember the previous decade well enough to understand what stability means by contrast. The specific quality of the 2000s is that they are not the 1990s. That is most of what is meant. The things given up for the stability are harder to specify — the press freedom, the opposition parties, the courts — because you also remember what press freedom and opposition parties looked like in the 1990s, and that memory makes the loss less clean.`,
+    text: `The Putin decade: a wage that arrives, a supermarket with things in it, a city where the kiosks have been replaced by proper shops. The word is "stability." You remember the previous decade well enough to understand what stability means by contrast. The quality of the 2000s is that they are not the 1990s. That is most of what is meant. The things given up for the stability are harder to specify — the press freedom, the opposition parties, the courts — because you also remember what press freedom and opposition parties looked like in the 1990s, and that memory makes the loss less clean.`,
     choices: null,
     effect: (p) => { p.r += 4; p.m += 2; p.setMem('ft59_1990sPutinOrder', true) },
   },

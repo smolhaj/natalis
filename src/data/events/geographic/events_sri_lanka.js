@@ -94,7 +94,7 @@ export const SRI_LANKA_EVENTS = [
 
   {
     id: 'slk_jaffna_childhood',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) => IS_TAMIL(G) && IS_SRI_LANKA(G) && G.currentYear >= 1985 && G.currentYear <= 2000 && G.age >= 6 && G.age <= 16 && !G.mem.slkJaffnaChild,
     text: 'The school has a schedule now that accounts for shelling. Classes stop when the sound is certain; resume when it\'s uncertain. You learn which sound means how far. You learn this the way children learn anything — by repetition, by watching adults, by the specific calibration of their stillness. In Jaffna in the nineties, the electricity comes at intervals and the library has books that stop at 1982 and you study by kerosene because the exam still happens.',

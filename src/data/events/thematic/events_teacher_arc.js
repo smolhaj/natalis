@@ -84,7 +84,7 @@ export const TEACHER_ARC_EVENTS = [
       G.flags.has('teacher_that_student') &&
       G.age >= 35 &&
       !G.mem?.tchLetterFired,
-    text: 'The letter arrives, or the message, or the person appears at the back of a room. The student who was difficult, the one you spent the extra time on fifteen years ago — they have located you to say what students rarely say at the time: that it mattered. What you did mattered. The specific thing you said in the specific moment. They have carried it for fifteen years and wanted you to know. You had forgotten the moment. They had not.',
+    text: 'The letter arrives, or the message, or the person appears at the back of a room. The student who was difficult, the one you spent the extra time on fifteen years ago — they have located you to say what students rarely say at the time: that it mattered. What you did mattered. The thing you said in the moment. They have carried it for fifteen years and wanted you to know. You had forgotten the moment. They had not.',
     choices: null,
     effect: (p) => { p.m += 18; p.r -= 8; p.addFlag('teacher_letter_received'); p.setMem('tchLetterFired', true); p.legacy += 8 },
   },

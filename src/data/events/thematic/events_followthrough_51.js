@@ -17,7 +17,7 @@ export const FOLLOWTHROUGH_51_EVENTS = [
       G.currentYear - G.mem.famine_memoryYear >= 20 &&
       G.age >= 35 &&
       !G.mem?.ft51FamineMemory20,
-    text: `Twenty years is long enough to have mostly forgotten. Long enough to live somewhere with full shelves and take the full shelves as a baseline. Then there is a moment — someone scraping half their dinner into the bin without pausing, or bread going stale on the counter, or the unremarkable way the restaurant replaces the basket and you watch the old bread go without ceremony — and the body knows before the mind does. Not grief exactly. A specific kind of witnessing.`,
+    text: `Twenty years is long enough to have mostly forgotten. Long enough to live somewhere with full shelves and take the full shelves as a baseline. Then there is a moment — someone scraping half their dinner into the bin without pausing, or bread going stale on the counter, or the unremarkable way the restaurant replaces the basket and you watch the old bread go without ceremony — and the body knows before the mind does. Not grief exactly. A kind of witnessing.`,
     choices: [
       {
         text: 'You say nothing. The response to it lives in you rather than in any conversation.',
@@ -113,7 +113,7 @@ export const FOLLOWTHROUGH_51_EVENTS = [
       G.currentYear - G.mem.experienced_racismYear >= 15 &&
       G.age >= 35 &&
       !G.mem?.ft51RacismAccum15,
-    text: `Fifteen years of navigating specific rooms in a specific way. You are good at it. You have learned to read the pause, the question behind the question, the warmth that is not quite warmth, the rooms that are open and the rooms that are technically open. The skill is real. The effort required to have it is not something anyone asked about or would easily understand.`,
+    text: `Fifteen years of navigating specific rooms in a way. You are good at it. You have learned to read the pause, the question behind the question, the warmth that is not quite warmth, the rooms that are open and the rooms that are technically open. The skill is real. The effort required to have it is not something anyone asked about or would easily understand.`,
     choices: [
       {
         text: 'You have learned not to let it show. The mask is so practiced it almost feels like your face.',
@@ -212,7 +212,7 @@ export const FOLLOWTHROUGH_51_EVENTS = [
       G.currentYear - G.mem.chernobyl_liquidatorYear >= 10 &&
       G.age >= 30 &&
       !G.mem?.ft51Chernobyl10,
-    text: `The liquidator's certificate entitles you to a small pension supplement and some medical monitoring. The doctor who does the monitoring looks at the numbers and says something noncommittal and makes a note. You have learned to read the note in the expression rather than the words. The state has a specific way of acknowledging a debt without paying it. The certificate is the acknowledgement. The pension supplement is a rounding error.`,
+    text: `The liquidator's certificate entitles you to a small pension supplement and some medical monitoring. The doctor who does the monitoring looks at the numbers and says something noncommittal and makes a note. You have learned to read the note in the expression rather than the words. The state has a way of acknowledging a debt without paying it. The certificate is the acknowledgement. The pension supplement is a rounding error.`,
     choices: [
       {
         text: 'You keep going to the appointments. The monitoring is a form of witness even if it changes nothing.',
@@ -288,7 +288,7 @@ export const FOLLOWTHROUGH_51_EVENTS = [
       G.currentYear - G.mem.music_privateYear >= 10 &&
       G.age >= 30 &&
       !G.mem?.ft51MusicPrivate10,
-    text: `For ten years you have played music that no one else has heard. There is a specific kind of freedom in that. There is also a specific kind of wondering. Not ambition exactly — the performing life is something else and you have mostly made your peace with not having it. Just the occasional thought: if this had gone somewhere, where would it have gone? The thought doesn't resolve. You play anyway.`,
+    text: `For ten years you have played music that no one else has heard. There is a kind of freedom in that. There is also a kind of wondering. Not ambition exactly — the performing life is something else and you have mostly made your peace with not having it. Just the occasional thought: if this had gone somewhere, where would it have gone? The thought doesn't resolve. You play anyway.`,
     choices: null,
     effect: (p) => {
       p.m += 4

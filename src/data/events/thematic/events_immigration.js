@@ -87,7 +87,7 @@ export const IMMIGRATION_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => (G.residencyStatus === 'asylum_seeker' || G.residencyStatus === 'refugee_status') && G.age >= 18 && !G.flags.includes('asylum_interview_done'),
-    text: 'The caseworker across the table takes notes on a laptop. She has done this many times. You have not. Your story — which is entirely true — must be told in a specific shape, with dates and named officials and documented proof of things that happened in the middle of the night with no witnesses and no cameras. You tell it. She types. She thanks you. You walk out into a grey afternoon and do not know what just happened.',
+    text: 'The caseworker across the table takes notes on a laptop. She has done this many times. You have not. Your story — which is entirely true — must be told in a shape, with dates and named officials and documented proof of things that happened in the middle of the night with no witnesses and no cameras. You tell it. She types. She thanks you. You walk out into a grey afternoon and do not know what just happened.',
     choices: [
       { text: 'Tell it plainly and completely', tag: null, outcome: 'The account is consistent. The gaps are explained honestly. You can do no more.', effect: (p) => { p.m -= 15; p.r += 5; p.addFlag('asylum_interview_done') } },
       { text: 'Tailor the account to what you think they want to hear', tag: null, outcome: 'The shape is right. Whether it matches the original documents is a question that will resurface.', effect: (p) => { p.m -= 12; p.r += 8; p.karma -= 5; p.addFlag('asylum_interview_done') } },
@@ -254,7 +254,7 @@ export const IMMIGRATION_EVENTS = [
     text: 'You have a lawyer — a duty lawyer, who has met you once. The hearing room is small. A judge reads a summary of your case from a file. You are given time to speak. You have been in this country for six years. You pay taxes, or you did when you could. You have people here. You say these things. The judge takes notes.',
     choices: [
       { text: 'Make the strongest case you can — every detail matters', tag: null, outcome: 'The hearing is continued to a second date. There is no resolution. But there is more time, and time has its uses.', effect: (p) => { p.m -= 15; p.r += 8; p.e += 3; p.addFlag('deportation_hearing_done') } },
-      { text: 'Accept the outcome — you are exhausted and have no more fight left', tag: null, outcome: 'The order is signed. You have fourteen days. You spend them in a specific kind of grief that has no name in either of your languages.', effect: (p) => { p.m -= 25; p.r += 18; p.addFlag('deportation_hearing_done'); p.addFlag('deportation_ordered') } },
+      { text: 'Accept the outcome — you are exhausted and have no more fight left', tag: null, outcome: 'The order is signed. You have fourteen days. You spend them in a kind of grief that has no name in either of your languages.', effect: (p) => { p.m -= 25; p.r += 18; p.addFlag('deportation_hearing_done'); p.addFlag('deportation_ordered') } },
     ],
     effect: null,
   },
@@ -299,7 +299,7 @@ export const IMMIGRATION_EVENTS = [
     phase: 'midlife',
     weight: 2,
     when: (G) => (G.residencyStatus === 'permanent_resident' || G.residencyStatus === 'citizen') && G.flags.includes('emigrated') && G.age >= 40,
-    text: 'You live in two languages and belong completely to neither. In the first language you have the vocabulary for childhood, for grief, for the names of plants your grandmother grew. In the second you have the language for work, for bureaucracy, for the life you built. The gap between them is not a deficit. You have come to understand it as a specific kind of depth that people who only have one language cannot quite access.',
+    text: 'You live in two languages and belong completely to neither. In the first language you have the vocabulary for childhood, for grief, for the names of plants your grandmother grew. In the second you have the language for work, for bureaucracy, for the life you built. The gap between them is not a deficit. You have come to understand it as a kind of depth that people who only have one language cannot quite access.',
     choices: null,
     effect: (p) => { p.m += 8; p.e += 5; p.r += 5; p.addFlag('bilingual_integration') },
   },
@@ -519,9 +519,40 @@ export const IMMIGRATION_EVENTS = [
       G.mem?.resettlementArrival &&
       !G.mem?.resettlementAnniversary &&
       G.age >= 19,
-    text: 'One year. You have a flat and a job and a transit pass and a bank account and a phone plan and a medical card. A year ago you had none of these things and could not have explained how to get them. You have not become a different person. You have become the same person with a different set of tools and a different city behind your eyes. The counting of the specific things you now have is a private ceremony that nobody sees.',
+    text: 'One year. You have a flat and a job and a transit pass and a bank account and a phone plan and a medical card. A year ago you had none of these things and could not have explained how to get them. You have not become a different person. You have become the same person with a different set of tools and a different city behind your eyes. The counting of the things you now have is a private ceremony that nobody sees.',
     choices: null,
     effect: (p) => { p.m += 14; p.r -= 12; p.addFlag('resettlement_established'); p.setMem('resettlementAnniversary', true) },
   },
 
+
+  // ── KURDISH DEPARTURE FOR EUROPE ──────────────────────────────────────────────
+  // Sets `kurd_europe_diaspora`, which the Kurdish arc calls back on at 40+.
+
+  {
+    id: 'imm_kurdish_to_europe',
+    phase: null,
+    weight: 4,
+    when: (G) =>
+      ['kurdish', 'kurdish_iraqi', 'kurdish_syria', 'kurd_iranian'].includes(G.ethnicity) &&
+      G.currentYear >= 1965 && G.currentYear <= 2005 &&
+      G.age >= 17 && G.age <= 40 &&
+      !G.flags.has('kurd_europe_diaspora') &&
+      !G.mem?.immKurdEurope,
+    text: 'The bus goes from the eastern towns to Istanbul and the plane goes from Istanbul to Düsseldorf, and there is a cousin in Cologne who has a room and knows which factory is hiring. Your mother packs bulgur and a wool blanket you will not need. Nobody in the family uses the word leaving; they use the word working. At the airport your father shakes your hand instead of embracing you and then embraces you.',
+    choices: [
+      {
+        text: 'Go. Send money back.',
+        tag: null,
+        outcome: 'The room in Cologne has one window and a shared kitchen. The first transfer home goes out in the fifth week. It is more than your father earned in a season.',
+        effect: (p) => { p.mo += 2500; p.m -= 6; p.r += 6; p.addFlag('kurd_europe_diaspora'); p.addFlag('emigrated'); p.setResidency('work_visa'); p.setMem('immKurdEurope', true) },
+      },
+      {
+        text: 'Stay. The house needs someone in it.',
+        tag: null,
+        outcome: 'You stay. The cousin writes twice in the first year and then at longer intervals. The room in Cologne goes to someone else from the same street.',
+        effect: (p) => { p.m -= 4; p.r += 8; p.addFlag('stayed_behind'); p.setMem('immKurdEurope', true) },
+      },
+    ],
+    effect: null,
+  },
 ]

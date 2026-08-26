@@ -9,7 +9,7 @@ export const INTIMACY_EVENTS = [
 
   {
     id: 'int_liberation_wave',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -28,7 +28,7 @@ export const INTIMACY_EVENTS = [
 
   {
     id: 'int_liberation_reckoning',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.includes('liberation_generation') &&
@@ -47,7 +47,7 @@ export const INTIMACY_EVENTS = [
 
   {
     id: 'int_long_marriage_shift',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.partner &&
@@ -69,7 +69,7 @@ export const INTIMACY_EVENTS = [
 
   {
     id: 'int_affair_temptation',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.partner &&
@@ -158,7 +158,7 @@ export const INTIMACY_EVENTS = [
 
   {
     id: 'int_late_love_arrives',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.includes('late_love_seeking') &&
@@ -189,7 +189,7 @@ export const INTIMACY_EVENTS = [
         !G.mem?.intCultureUnnamed
       )
     },
-    text: 'In the language you grew up with, the vocabulary for this is not exactly absent — but it is not for speaking aloud. What happens between people is private in a specific way: not like a secret, but like weather. Everyone knows it is there. No one describes it directly. You have lived your whole life in this silence and it does not feel like deprivation. It is simply how the thing is held.',
+    text: 'In the language you grew up with, the vocabulary for this is not exactly absent — but it is not for speaking aloud. What happens between people is private in a way: not like a secret, but like weather. Everyone knows it is there. No one describes it directly. You have lived your whole life in this silence and it does not feel like deprivation. It is simply how the thing is held.',
     choices: null,
     effect: (p) => {
       p.setMem('intCultureUnnamed', true)
@@ -259,4 +259,26 @@ export const INTIMACY_EVENTS = [
     },
   },
 
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_dancing_badly',
+    phase: null,
+    weight: 3,
+    when: (G) => G.age >= 18 && G.age <= 40 && !G.mem?.ordDancing && Math.random() < 0.16,
+    text: `You are not a person who dances and at some point past one in the morning that stops being relevant. The floor is sticky. The song is not even good. Your body does something without consulting you and you go along with it for four minutes, and you are sweating, and you are grinning at someone you barely know who is also grinning.`,
+    choices: null,
+    effect: (p) => { p.m += 11; p.h += 2; p.lo += 1; p.setMem('ordDancing', true) },
+  },
+
+  {
+    id: 'ord_afternoon_in_bed',
+    phase: null,
+    weight: 3,
+    when: (G) => G.partner && (G.partner.relationshipQuality ?? 60) >= 55 && G.age >= 20 && G.age <= 60 && !G.mem?.ordAfternoonBed && Math.random() < 0.15,
+    text: `It is a Saturday and neither of you gets up. Light moves across the wall in a way you would not normally be present for. Nothing is discussed. At some point one of you says something stupid and the other one laughs with their face in the pillow, and it goes on being early for another hour.`,
+    choices: null,
+    effect: (p) => { p.m += 12; p.h += 3; p.updatePartnerRel(4); p.addPartnerMoment('the Saturday neither of you got up, and the light going across the wall'); p.setMem('ordAfternoonBed', true) },
+  },
 ]

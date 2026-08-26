@@ -143,7 +143,7 @@ export const CAREER_REGIME_EVENTS = [
     when: (G) => G.career?.field === 'military' && G.age >= 18 && G.age <= 28 && (
       G.currentYear >= 2001 || ['conflict_zone', 'developing_unstable', 'subsaharan'].includes(G.character.country.archetype)
     ),
-    text: 'The orders arrive on a Thursday. You are shipping out in three weeks. The name of the place is one you have heard on the news in a way that has a specific quality — the way names of places acquire weight. You call your family. You do not say the things you mean to say.',
+    text: 'The orders arrive on a Thursday. You are shipping out in three weeks. The name of the place is one you have heard on the news in a way that has a quality — the way names of places acquire weight. You call your family. You do not say the things you mean to say.',
     choices: [
       { text: 'Go without complaint. It\'s what you signed up for.', tag: null, outcome: 'You pack your kit on a Sunday night and do not look at the room when you leave.', effect: (p) => { p.m -= 8; p.addFlag('deployment_orders'); p.addFlag('military_service') } },
       { text: 'Request a transfer or delay through official channels', tag: null, outcome: 'The request is denied. You go anyway. The attempt is on your record.', effect: (p) => { p.m -= 10; p.r += 5; p.addFlag('deployment_orders'); p.addFlag('military_service') } },
@@ -197,7 +197,7 @@ export const CAREER_REGIME_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => G.career?.field === 'education' && (G.regime === 'single_party_communist' || G.regime === 'military_dictatorship') && G.age >= 22,
-    text: 'The curriculum says certain things about history. You know some of them are wrong — not approximately wrong, but designed to be wrong. A student asks a question that shows she is starting to reason for herself. You give the approved answer. You go home and sit with the specific feeling this produces.',
+    text: 'The curriculum says certain things about history. You know some of them are wrong — not approximately wrong, but designed to be wrong. A student asks a question that shows she is starting to reason for herself. You give the approved answer. You go home and sit with the feeling this produces.',
     choices: [
       { text: 'Teach the official curriculum. Your job, your family.', tag: null, outcome: 'You teach what you are told. The best students learn to read your silences.', effect: (p) => { p.m -= 12; p.r += 10; p.addFlag('taught_false_curriculum'); p.addFlag('double_consciousness') } },
       { text: 'Find small ways to show students how to think for themselves', tag: null, outcome: 'You assign questions without answers. You teach method instead of conclusion. It is slow and deniable. It is something.', effect: (p) => { p.m -= 6; p.e += 5; p.addFlag('quiet_resistance'); p.addFlag('independent_thinker') } },
@@ -530,4 +530,89 @@ export const CAREER_REGIME_EVENTS = [
     effect: null,
   },
 
+
+  // ── LOYALTY, AND THE REPORT ───────────────────────────────────────────────────
+  // Two flags — `chose_loyalty` and `reported_someone` — that follow-through
+  // events call back on in midlife. Both are set here, in the room, in the year.
+
+  {
+    id: 'creg_loyalty_over_truth',
+    phase: null,
+    weight: 3,
+    when: (G) =>
+      G.career &&
+      G.age >= 24 && G.age <= 48 &&
+      !G.flags.has('chose_loyalty') &&
+      !G.mem?.cregLoyaltyChoice &&
+      Math.random() < 0.10,
+    text: 'The inquiry is internal and polite. You are asked, in a room with three other people and a jug of water, whether you were aware of what your colleague signed off on. You were aware. He has covered for you twice, once when it mattered. The question is put again, more slowly, and the pause before your answer is long enough that everyone hears it.',
+    choices: [
+      {
+        text: 'Say you were not aware.',
+        tag: null,
+        outcome: 'The inquiry moves on. He never mentions it, which means either he does not know or he does. You go back to your desk and open a spreadsheet.',
+        effect: (p) => { p.m -= 6; p.r += 10; p.karma -= 6; p.addFlag('chose_loyalty'); p.setMem('cregLoyaltyChoice', true) },
+      },
+      {
+        text: 'Say what you know.',
+        tag: null,
+        outcome: 'You say it in one sentence and the room changes temperature. He is gone within the month. You keep the job and lose four people who used to eat lunch with you.',
+        effect: (p) => { p.m -= 8; p.karma += 8; p.s -= 6; p.addFlag('told_the_truth_at_cost'); p.setMem('cregLoyaltyChoice', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  {
+    id: 'creg_the_report_you_filed',
+    phase: null,
+    weight: 3,
+    when: (G) =>
+      repressiveRegime(G) &&
+      G.age >= 20 && G.age <= 50 &&
+      !G.flags.has('reported_someone') &&
+      !G.mem?.cregReportFiled &&
+      Math.random() < 0.09,
+    text: (G) => {
+      const who = G.career ? 'a man at work' : 'a neighbour on the second floor'
+      return `You are asked, without it being a question, to write down what ${who} said at the gathering. The form has three lines and a place for your name. Declining is also an answer and everyone in the building understands that. You are given the form to take home, which is the part that is designed to work.`
+    },
+    choices: [
+      {
+        text: 'Fill in the three lines.',
+        tag: null,
+        outcome: 'You write the smallest true thing you can and hand it in on Tuesday. He is not at the gathering the following month. Nobody says anything about it, then or ever.',
+        effect: (p) => { p.m -= 10; p.r += 14; p.karma -= 10; p.addFlag('reported_someone'); p.setMem('cregReportFiled', true) },
+      },
+      {
+        text: 'Return the form blank.',
+        tag: null,
+        outcome: 'You hand it back and say you did not hear anything. The man who takes it does not look up. Your name is now written somewhere on a different list.',
+        effect: (p) => { p.m -= 6; p.karma += 6; p.addFlag('refused_to_inform'); p.setMem('cregReportFiled', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── ECHOES OF THE ROOM ────────────────────────────────────────────────────────
+
+  {
+    id: 'creg_truth_cost_echo',
+    phase: null,
+    weight: 2,
+    when: (G) => G.flags.has('told_the_truth_at_cost') && G.age >= 40 && !G.mem?.cregTruthEcho,
+    text: `Four people stopped eating lunch with you and none of them ever said why, and it has been eleven years. You do not regret the sentence. You have simply learned what it costs to be the person who says the sentence, which is not remorse and is not comfortable either. When your own name comes up for something now, someone always pauses first.`,
+    choices: null,
+    effect: (p) => { p.r += 4; p.e += 3; p.karma += 2; p.setMem('cregTruthEcho', true) },
+  },
+
+  {
+    id: 'creg_refused_inform_echo',
+    phase: null,
+    weight: 2,
+    when: (G) => G.flags.has('refused_to_inform') && G.age >= 35 && !G.mem?.cregRefusedEcho,
+    text: `You are passed over again and there is no letter explaining it, because there never is. The list your name went onto is not a document anyone will ever show you. You have made your peace with the arithmetic: a career that stops at a certain floor, and a blank form handed back across a desk in a year you can still name exactly.`,
+    choices: null,
+    effect: (p) => { p.m -= 4; p.w -= 3; p.karma += 4; p.setMem('cregRefusedEcho', true) },
+  },
 ]

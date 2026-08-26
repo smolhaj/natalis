@@ -7,7 +7,7 @@ export const MEMORY_LAYER_EVENTS = [
 
   {
     id: 'mem_layer_father_hands',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('lost_parent_father') &&
@@ -17,7 +17,7 @@ export const MEMORY_LAYER_EVENTS = [
       G.currentYear - (G.mem?.lost_parent_fatherYear ?? 0) >= 8,
     text: (G) => {
       const yearsAgo = G.currentYear - (G.mem?.lost_parent_fatherYear ?? G.currentYear - 12)
-      return `You are doing something ordinary — opening a jar, folding a newspaper — and you notice your own hands. Your father had hands like these. You had not thought about that in years and then it comes back fully, the specific shape of them, the way he held things. He has been dead for ${yearsAgo} years. The memory arrives without warning and without sadness exactly, or not only sadness — something more compound than that.`
+      return `You are doing something ordinary — opening a jar, folding a newspaper — and you notice your own hands. Your father had hands like these. You had not thought about that in years and then it comes back fully, the flat wide thumbnails, the way he held a cup by the rim. He has been dead for ${yearsAgo} years. The memory arrives without warning and without sadness exactly, or not only sadness — something more compound than that.`
     },
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('memLayerFatherHands', true) },
@@ -25,7 +25,7 @@ export const MEMORY_LAYER_EVENTS = [
 
   {
     id: 'mem_layer_mother_voice',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('lost_parent_mother') &&
@@ -43,7 +43,7 @@ export const MEMORY_LAYER_EVENTS = [
 
   {
     id: 'mem_layer_emigration_smell',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('emigrated') &&
@@ -68,14 +68,14 @@ export const MEMORY_LAYER_EVENTS = [
       G.flags.has('famine_memory') &&
       G.age >= 55 &&
       !G.mem?.memLayerFamineSpecific,
-    text: 'A dish you make now — one you make without thinking — you trace it back. The substitutions. The thing you ate because that was what there was. The specific texture of necessity. The dish is not the same dish anymore but the path from there to here is continuous and you know it.',
+    text: 'A dish you make now — one you make without thinking — you trace it back. The substitutions. The thing you ate because that was what there was. The texture of necessity. The dish is not the same dish anymore but the path from there to here is continuous and you know it.',
     choices: null,
     effect: (p) => { p.r += 5; p.setMem('memLayerFamineSpecific', true) },
   },
 
   {
     id: 'mem_layer_first_love_revisited',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('first_love_over') &&
@@ -108,7 +108,7 @@ export const MEMORY_LAYER_EVENTS = [
 
   {
     id: 'mem_layer_cancer_scare',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('cancer_survivor') &&
@@ -129,7 +129,7 @@ export const MEMORY_LAYER_EVENTS = [
     phase: 'midlife',
     weight: 2,
     when: (G) =>
-      (G.flags.has('refugee_status') || G.flags.has('displaced_childhood')) &&
+      (G.flags.has('refugee_status') || G.flags.has('displaced')) &&
       G.age >= 40 && G.age <= 58 &&
       !G.mem?.memLayerBorder,
     text: 'In a queue — bank, airport, it does not matter — you notice the particular way you hold your documents. Prepared. Alert. The queue is routine and you know it and your hands do not know it. The body remembers the queue where it mattered. The body keeps its own records.',
@@ -139,7 +139,7 @@ export const MEMORY_LAYER_EVENTS = [
 
   {
     id: 'mem_layer_boarding_school_night',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('boarding_school') &&
@@ -152,7 +152,7 @@ export const MEMORY_LAYER_EVENTS = [
 
   {
     id: 'mem_layer_failure_returns',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('knows_failure') &&
@@ -185,7 +185,7 @@ export const MEMORY_LAYER_EVENTS = [
 
   {
     id: 'mem_layer_divorce_settlement',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('divorced') &&
@@ -200,7 +200,7 @@ export const MEMORY_LAYER_EVENTS = [
 
   {
     id: 'mem_layer_war_childhood_smell',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('war_childhood') &&

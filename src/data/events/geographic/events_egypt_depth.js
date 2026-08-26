@@ -15,7 +15,7 @@ export const EGYPT_DEPTH_EVENTS = [
 
   {
     id: 'egy_october_war_1973',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_EGYPTIAN(G) &&
@@ -53,14 +53,15 @@ export const EGYPT_DEPTH_EVENTS = [
 
   {
     id: 'egy_camp_david_1978',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_EGYPTIAN(G) &&
       G.currentYear >= 1977 && G.currentYear <= 1982 &&
       G.age >= 18 &&
       !G.mem?.egyCampDavid,
-    text: `November 1977. Sadat goes to Jerusalem. He speaks to the Knesset. He says there will be no more war between Egypt and Israel. In 1978 he signs the Camp David Accords with Begin and Carter. In 1979, the peace treaty. Egypt gets Sinai back. Egypt is suspended from the Arab League. The Arab League moves its headquarters from Cairo to Tunis. The countries that fought with Egypt in 1948, 1956, 1967, 1973 — the countries of pan-Arab solidarity — treat the peace as a betrayal. Egypt's isolation is nearly total. Then, in October 1981, at the military parade commemorating the crossing of the canal, three soldiers from the parade jump from the vehicles and fire on the reviewing stand. Sadat is killed. The Nobel Peace Prize that Sadat and Begin shared in 1978 is on the record. Sadat's assassination is also on the record.`,
+    text: 'Your father does not turn the radio off for three days. Sadat lands in Tel Aviv and the men in the coffeehouse on the corner stop playing tawla to argue, and the argument is still going in April. In the summer the Arab League moves out of Cairo and the building on the corniche stands with its shutters closed. A cousin who fought at the canal in 1973 will not say the word peace out loud, and will not say anything against it either.',
+    context: 'Sadat addressed the Knesset in November 1977, signed the Camp David Accords with Begin and Carter in 1978 and the peace treaty in 1979. Egypt recovered Sinai and was suspended from the Arab League, whose headquarters moved from Cairo to Tunis. Sadat and Begin shared the 1978 Nobel Peace Prize. In October 1981 soldiers taking part in the parade marking the canal crossing fired on the reviewing stand and killed him.',
     choices: [
       {
         text: `The peace was the right decision. Four wars in thirty years. The Sinai is back.`,
@@ -92,7 +93,7 @@ export const EGYPT_DEPTH_EVENTS = [
 
   {
     id: 'egy_sisi_2013',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_EGYPTIAN(G) &&
@@ -132,7 +133,7 @@ export const EGYPT_DEPTH_EVENTS = [
 
   {
     id: 'egy_cairo_density',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_EGYPTIAN(G) &&
@@ -174,14 +175,15 @@ export const EGYPT_DEPTH_EVENTS = [
 
   {
     id: 'egy_pound_flotation_2016',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_EGYPTIAN(G) &&
       G.currentYear === 2016 &&
       G.age >= 20 &&
       !G.mem?.egyPound,
-    text: `November 3, 2016. The Central Bank of Egypt floats the pound. It was trading at 8.8 to the dollar. The next morning it opens at 13. By the end of the month it is 19. The IMF loan, which requires the float, is $12 billion over three years. Fuel subsidies are reduced. Electricity prices increase in stages. The logic of the reform is that the parallel market was already pricing the pound at the new rate; now the official rate has caught up with reality. The experience of the reform is: everything that you buy that has any imported component is suddenly 60% more expensive. The government says this is temporary. You calculate what 60% means in your household.`,
+    text: 'On the third of November the pound is eight and a half to the dollar and by the end of the month it is nineteen. The cooking oil goes first, then your mother\'s tablets, then the school shoes. The man at the kiosk has stopped writing prices on the boxes and tells you the number when you ask for it. You do the arithmetic on the back of a receipt at the kitchen table and then you do it again, because the first answer looked wrong.',
+    context: 'The Central Bank of Egypt floated the pound on 3 November 2016 as a condition of a $12 billion IMF programme; it fell from 8.8 to about 19 to the dollar within a month. Fuel subsidies were cut and electricity tariffs raised in stages. Anything with an imported component rose roughly 60 percent.',
     choices: null,
     effect: (p) => {
       p.m -= 10
@@ -196,7 +198,7 @@ export const EGYPT_DEPTH_EVENTS = [
 
   {
     id: 'egy_nile_gerd_anxiety',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_EGYPTIAN(G) &&

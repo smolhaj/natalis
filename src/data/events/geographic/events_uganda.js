@@ -8,7 +8,7 @@ export const UGANDA_EVENTS = [
 
   {
     id: 'uga_amin_era',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Uganda' &&
@@ -40,7 +40,7 @@ export const UGANDA_EVENTS = [
     when: (G) =>
       G.character.country.name === 'Uganda' &&
       G.currentYear === 1972 &&
-      (G.character.ethnicity === 'asian' || G.character.ethnicity === 'asian_ugandan' || G.character.ethnicity === 'south_asian') &&
+      G.character.ethnicity === 'asian_ugandan' &&
       !G.mem.ugaAsianExpulsion,
     text: 'August 4, 1972. Idi Amin announces that Uganda\'s Asian population — some 60,000 people, most of them British citizens or British Protected Persons, many whose families have been in East Africa for three generations — have 90 days to leave. The businesses, the properties, the savings accounts are to be handed over under the policy he calls "Africanisation." Your family has built a duka, a trading business, a network of relationships that took decades. You have 90 days.',
     choices: null,
@@ -49,7 +49,7 @@ export const UGANDA_EVENTS = [
 
   {
     id: 'uga_slim_disease',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Uganda' &&
@@ -63,7 +63,7 @@ export const UGANDA_EVENTS = [
 
   {
     id: 'uga_museveni_liberation_1986',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Uganda' &&
@@ -77,7 +77,7 @@ export const UGANDA_EVENTS = [
 
   {
     id: 'uga_lra_northern',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Uganda' &&
@@ -104,7 +104,7 @@ export const UGANDA_EVENTS = [
 
   {
     id: 'uga_museveni_consolidation',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Uganda' &&
@@ -131,13 +131,13 @@ export const UGANDA_EVENTS = [
 
   {
     id: 'uga_boda_boda_city',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Uganda' &&
       G.currentYear >= 2000 && G.currentYear <= 2025 &&
       G.age >= 18 && G.age <= 35 &&
-      (G.ruralUrban === 'urban' || G.ruralUrban === 'peri_urban') &&
+      G.ruralUrban === 'urban' &&
       !G.mem.ugaBodaBoda,
     text: 'The boda-boda: a motorcycle taxi that navigates the traffic, the mud roads, the gaps between bus stops. Kampala without boda-bodas is not Kampala. The economics work for young men with access to a bike — some own theirs, some pay the owner a daily fee and keep the difference. It is the informal economy\'s most visible institution and one of the leading causes of road deaths in the country. You are either riding one, driving one, or living in a city organized around them.',
     choices: null,

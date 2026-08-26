@@ -294,7 +294,7 @@ export const WEALTH_SYSTEM_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => G.partner?.engaged && !G.mem?.mahrSet &&
-      ['muslim', 'muslim_sunni', 'muslim_shia'].includes(G.religion ?? G.character?.religion) &&
+      (G.religion ?? G.character?.religion ?? '').startsWith('muslim') &&
       G.character?.gender === 'male',
     text: 'The nikah requires a mahr — a gift from you to your wife, hers unconditionally, stated in the contract. It is not symbolic. The sheikh explains that it is her financial security, her right, independent of anything that comes after.',
     choices: [
@@ -352,7 +352,7 @@ export const WEALTH_SYSTEM_EVENTS = [
       {
         text: 'Find a workaround — informal arrangement with a trusted woman',
         tag: null,
-        outcome: 'You manage. Informally, quietly, with the specific knowledge that this can be revoked.',
+        outcome: 'You manage. Informally, quietly, with the knowledge that this can be revoked.',
         effect: (p) => { p.m -= 3; p.e += 2; p.setMem('genderFinanceRestricted', true); p.addFlag('gender_financial_constraint') },
       },
     ],

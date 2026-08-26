@@ -3,6 +3,8 @@
 // Four registers: non-Western sensory texture, body in time, relational drift, weight of time.
 // All mem-gated via setMem() to fire once per life. No new flags needed.
 
+import { place } from './_sonderGuards.js'
+
 export const EVENTS_SONDER_2 = [
 
   // ──────────────────────────────────────────────────────────────────────────
@@ -40,9 +42,8 @@ export const EVENTS_SONDER_2 = [
     id: 'sonder2_monsoon',
     phase: 'childhood',
     weight: 2,
-    when: (G) =>
-      !G.mem?.s2_mon &&
-      ['India', 'Bangladesh', 'Pakistan', 'Sri Lanka', 'Myanmar', 'Vietnam', 'Indonesia', 'Philippines', 'Cambodia', 'Thailand', 'Laos', 'Nepal'].includes(G.character.country.name),
+    when: (G) => (G.season === 'wet' || place.isMonsoonCountry(G)) && (!G.mem?.s2_mon &&
+      ['India', 'Bangladesh', 'Pakistan', 'Sri Lanka', 'Myanmar', 'Vietnam', 'Indonesia', 'Philippines', 'Cambodia', 'Thailand', 'Laos', 'Nepal'].includes(G.character.country.name)),
     text: 'The first rain of the monsoon is not like other rain. It comes with a smell before the drops — something released from the earth — and then the sound on the roof, which is also the sound of relief. Everyone says it the same way: it has come.',
     choices: null,
     effect: (p) => { p.setMem('s2_mon', true); p.m += 2 },
@@ -52,11 +53,10 @@ export const EVENTS_SONDER_2 = [
     id: 'sonder2_power_cut',
     phase: 'young_adult',
     weight: 2,
-    when: (G) =>
-      !G.mem?.s2_pw &&
+    when: (G) => place.hasElectricity(G) && (!G.mem?.s2_pw &&
       (G.character.country.archetype === 'developing_urban' ||
        G.character.country.archetype === 'developing_unstable' ||
-       G.character.country.archetype === 'subsaharan'),
+       G.character.country.archetype === 'subsaharan')),
     text: 'Power cut at three in the afternoon. The fans go still and the heat that was moving becomes heat that sits. You know where the torch is. You know which food to eat first. The adaptation is so complete you notice it only when someone else is panicking.',
     choices: null,
     effect: (p) => { p.setMem('s2_pw', true) },
@@ -79,10 +79,9 @@ export const EVENTS_SONDER_2 = [
     id: 'sonder2_traffic',
     phase: 'young_adult',
     weight: 2,
-    when: (G) =>
-      !G.mem?.s2_traf &&
+    when: (G) => place.isUrban(G) && (!G.mem?.s2_traf &&
       (G.character.country.archetype === 'developing_urban' ||
-       G.character.country.archetype === 'developing_unstable'),
+       G.character.country.archetype === 'developing_unstable')),
     text: 'The traffic at this hour is not an obstacle. It is the city\'s circulatory system and you are in it, moving at its own rhythm. The driver ahead knows exactly when to cut across. You know it too. The foreigner who arrived last year has not learned it yet. You can tell by watching.',
     choices: null,
     effect: (p) => { p.setMem('s2_traf', true) },
@@ -94,7 +93,7 @@ export const EVENTS_SONDER_2 = [
     weight: 2,
     when: (G) =>
       !G.mem?.s2_adhan &&
-      (G.religion === 'muslim' ||
+      (G.religion?.startsWith('muslim') ||
        ['Nigeria', 'Senegal', 'Mali', 'Morocco', 'Algeria', 'Tunisia', 'Egypt', 'Jordan', 'Lebanon', 'Iran', 'Pakistan', 'Bangladesh', 'Indonesia', 'Turkey', 'Saudi Arabia', 'UAE', 'Yemen', 'Sudan', 'Libya'].includes(G.character.country.name)),
     text: 'The evening call to prayer is the signal that changes what the day is. Before it: one kind of time. After it: another. You never decided to feel this. It arrived with the air of the particular city and settled into the body.',
     choices: null,
@@ -115,20 +114,7 @@ export const EVENTS_SONDER_2 = [
     effect: (p) => { p.setMem('s2_compound', true) },
   },
 
-  {
-    id: 'sonder2_queue',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) =>
-      !G.mem?.s2_queue &&
-      (G.character.country.archetype === 'post_soviet' ||
-       G.character.country.archetype === 'developing_unstable'),
-    text: 'The queue is long. No one in it seems surprised. There is a particular patience that long queues produce in people who have stood in them since childhood — not resignation, something more practised than that. The time fills itself.',
-    choices: null,
-    effect: (p) => { p.setMem('s2_queue', true) },
-  },
-
-  {
+{
     id: 'sonder2_dust_season',
     phase: 'young_adult',
     weight: 2,
@@ -158,9 +144,8 @@ export const EVENTS_SONDER_2 = [
     id: 'sonder2_winter',
     phase: 'childhood',
     weight: 2,
-    when: (G) =>
-      !G.mem?.s2_winter &&
-      G.character.country.archetype === 'post_soviet',
+    when: (G) => G.season === 'winter' && (!G.mem?.s2_winter &&
+      G.character.country.archetype === 'post_soviet'),
     text: 'The cold arrives and the city reorganises itself around it. The padded coats, the hats pulled low, the specific technique for opening a frozen car door. You have known this winter your whole life. You know it in your hands before you think it.',
     choices: null,
     effect: (p) => { p.setMem('s2_winter', true) },
@@ -233,11 +218,10 @@ export const EVENTS_SONDER_2 = [
 
   {
     id: 'sonder2_b_recovery',
-    phase: 'midlife',
+    phase: 'late_life',
     weight: 2,
-    when: (G) =>
-      !G.mem?.s2_brec &&
-      G.age >= 50 && G.age <= 62,
+    when: (G) => place.hasWeekend(G) && (!G.mem?.s2_brec &&
+      G.age >= 50 && G.age <= 62),
     text: 'Recovery time. That is the category that has changed most. The same Saturday as five years ago requires a different Sunday. You have adjusted your expectations, which is either wisdom or defeat, and you are not entirely sure which.',
     choices: null,
     effect: (p) => { p.setMem('s2_brec', true) },
@@ -247,9 +231,8 @@ export const EVENTS_SONDER_2 = [
     id: 'sonder2_b_handwriting',
     phase: 'midlife',
     weight: 2,
-    when: (G) =>
-      !G.mem?.s2_bhw &&
-      G.age >= 38 && G.age <= 50,
+    when: (G) => place.isLiterate(G) && (!G.mem?.s2_bhw &&
+      G.age >= 38 && G.age <= 50),
     text: 'Your handwriting has changed. You noticed it on a card you wrote this year — something has shifted in the size, the slant. The pen in the hand is different than it was at thirty. You are not sure if you like the new version.',
     choices: null,
     effect: (p) => { p.setMem('s2_bhw', true) },
@@ -337,11 +320,10 @@ export const EVENTS_SONDER_2 = [
     id: 'sonder2_d_work_friend',
     phase: 'midlife',
     weight: 2,
-    when: (G) =>
-      !G.mem?.s2_dwf &&
+    when: (G) => place.worksInOffice(G) && (!G.mem?.s2_dwf &&
       G.age >= 32 &&
-      G.career?.id,
-    text: 'The colleague you were going to have coffee with after you both left that job. The message that was drafted and not sent, the specific moment it became difficult enough that it didn\'t happen. That was three years ago. The window is probably still open. It has developed a frame now.',
+      G.career?.id),
+    text: 'The colleague you were going to have coffee with after you both left that job. The message that was drafted and not sent, the moment it became difficult enough that it didn\'t happen. That was three years ago. The window is probably still open. It has developed a frame now.',
     choices: null,
     effect: (p) => { p.setMem('s2_dwf', true) },
   },
@@ -375,11 +357,10 @@ export const EVENTS_SONDER_2 = [
     id: 'sonder2_d_parent_voice',
     phase: 'midlife',
     weight: 2,
-    when: (G) =>
-      !G.mem?.s2_dpv &&
+    when: (G) => place.hasPhone(G) && (!G.mem?.s2_dpv &&
       G.flags.includes('lost_parent') &&
-      G.age >= 35,
-    text: 'You can still hear how they answered the phone. The specific tone — slightly more formal before they recognised the voice, then the change. That voice was a constant for forty years. You hear it now only in memory, which is less reliable each year.',
+      G.age >= 35),
+    text: 'You can still hear how they answered the phone. The tone — slightly more formal before they recognised the voice, then the change. That voice was a constant for forty years. You hear it now only in memory, which is less reliable each year.',
     choices: null,
     effect: (p) => { p.setMem('s2_dpv', true) },
   },
@@ -403,7 +384,7 @@ export const EVENTS_SONDER_2 = [
     when: (G) =>
       !G.mem?.s2_dsp &&
       G.age >= 24,
-    text: 'You have specific people for specific things now. One for the work problems. One for the family ones. One for the evenings when nothing is wrong and you just want company. They don\'t know each other. You contain all of them simultaneously.',
+    text: 'You have specific people for things now. One for the work problems. One for the family ones. One for the evenings when nothing is wrong and you just want company. They don\'t know each other. You contain all of them simultaneously.',
     choices: null,
     effect: (p) => { p.setMem('s2_dsp', true) },
   },
@@ -438,19 +419,7 @@ export const EVENTS_SONDER_2 = [
     effect: (p) => { p.setMem('s2_tdec', true) },
   },
 
-  {
-    id: 'sonder2_t_photo',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) =>
-      !G.mem?.s2_tph &&
-      G.age >= 37,
-    text: 'A photograph from fifteen years ago. The person in it was young in ways you could not see at the time. Confident and unfinished. You recognise the clothes. The face is not quite yours yet, which from here is something between tender and strange.',
-    choices: null,
-    effect: (p) => { p.setMem('s2_tph', true) },
-  },
-
-  {
+{
     id: 'sonder2_t_mother_longer',
     phase: 'late_life',
     weight: 2,

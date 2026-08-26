@@ -168,7 +168,7 @@ const ACADEMIA_EVENTS = [
       if (a === 'developing_urban' || a === 'subsaharan') {
         return 'The funding is inadequate and the infrastructure unreliable, but you are doing the work. Your supervisor has connections and limited time for you; you learn by watching and by failing. The research is good. You know it is good. Whether the system will recognise it is a separate question.'
       }
-      return 'The PhD is a specific kind of poverty — educated and structurally dependent and paid not enough to live on without supplementing. Your supervisor is brilliant and rarely available. You learn more from your peers than from any formal instruction. The work is yours in a way nothing will be again.'
+      return 'The PhD is a kind of poverty — educated and structurally dependent and paid not enough to live on without supplementing. Your supervisor is brilliant and rarely available. You learn more from your peers than from any formal instruction. The work is yours in a way nothing will be again.'
     },
     effect: (p) => { p.m -= 8; p.e += 10; p.h -= 4; p.setMem('acadPhdGrindDone', true) },
     choices: null,
@@ -210,7 +210,7 @@ const ACADEMIA_EVENTS = [
 
   {
     id: 'acad_defining_student',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.career?.id === 'academic' &&
@@ -266,7 +266,7 @@ const ACADEMIA_EVENTS = [
 
   {
     id: 'acad_burnout_sabbatical',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.career?.id === 'academic' &&
@@ -424,7 +424,7 @@ const SOLDIER_EVENTS = [
       const isHighConflict = conflictRisk > 0.2
 
       if (isHighConflict) {
-        return 'The deployment is to an active zone. The briefings prepared you for the logistics of it. They did not prepare you for the specific texture of moving through a place where the ordinary people are just trying to continue. You are carrying a weapon in a neighbourhood market. The children look at the weapon and then at you. You have no way to explain yourself to them that would help anything.'
+        return 'The deployment is to an active zone. The briefings prepared you for the logistics of it. They did not prepare you for the texture of moving through a place where the ordinary people are just trying to continue. You are carrying a weapon in a neighbourhood market. The children look at the weapon and then at you. You have no way to explain yourself to them that would help anything.'
       }
       // USA Gulf War / Afghanistan / Iraq framing
       if (country === 'United States' && yr >= 2001) {
@@ -465,7 +465,7 @@ const SOLDIER_EVENTS = [
 
   {
     id: 'sold_family_distance',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.career?.id === 'soldier' &&
@@ -536,7 +536,7 @@ const SOLDIER_EVENTS = [
       (G.flags.has('combat_veteran') || G.flags.has('unprocessed_service')) &&
       G.age >= 32 && G.age <= 55 &&
       !G.mem?.soldNightmaresDone,
-    text: 'Years later, the mind revisits. Not always at night; sometimes in a specific kind of light, or a particular sound. You function normally around it — this is not the catastrophic version. It is a room in the house of yourself that is always slightly lit.',
+    text: 'Years later, the mind revisits. Not always at night; sometimes in a kind of light, or a particular sound. You function normally around it — this is not the catastrophic version. It is a room in the house of yourself that is always slightly lit.',
     choices: [
       {
         text: 'Get proper help — twenty years of managing alone is enough',

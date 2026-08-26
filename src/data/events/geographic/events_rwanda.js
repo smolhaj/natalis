@@ -29,7 +29,7 @@ const RWANDA_EVENTS = [
 
   {
     id: 'rwa_habyarimana_childhood',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Rwanda' &&
@@ -50,7 +50,7 @@ const RWANDA_EVENTS = [
 
   {
     id: 'rwa_radio_mille_collines',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Rwanda' &&
@@ -126,7 +126,7 @@ const RWANDA_EVENTS = [
 
   {
     id: 'rwa_goma_camps',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Rwanda' &&
@@ -156,7 +156,7 @@ const RWANDA_EVENTS = [
 
   {
     id: 'rwa_gacaca_courts',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Rwanda' &&
@@ -191,14 +191,15 @@ const RWANDA_EVENTS = [
 
   {
     id: 'rwa_kagame_era',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Rwanda' &&
       G.currentYear >= 2000 && G.currentYear <= 2022 &&
       G.age >= 25 &&
       !G.mem?.rwa_kagame,
-    text: 'Kigali is one of the cleanest cities in Africa. Plastic bags are banned and enforced. Every last Saturday of the month is umuganda — community service, mandatory for all. GDP is growing eight percent a year. Infant mortality is down seventy percent from 1994. The genocide memorial is open; school children go on class trips. In public life you do not say Hutu or Tutsi. The constitution says so. The party says so. The journalists who have been arrested, the opposition leaders who have died in unclear circumstances, the election results that arrive in the nineties — these are also part of the country. You navigate this like any double grammar. Both things are real. They are the same country.',
+    text: 'There is no plastic bag anywhere in Kigali and the last Saturday of the month you are out with a hoe on the roadside like everyone else, because umuganda is not optional. The children go to the memorial on a school trip and come back quiet. Nobody at the office says Hutu or Tutsi, and this is the law and also a habit that has gone deeper than law. A journalist you used to read stopped publishing four years ago and nobody at the table asks where he went.',
+    context: 'Rwanda under Paul Kagame has recorded roughly eight percent annual GDP growth, a seventy percent fall in infant mortality since 1994, and among the lowest urban crime rates in Africa. Umuganda, mandatory community service, falls on the last Saturday of each month. Ethnic identification is prohibited in public life. Opposition figures have been imprisoned or died in unexplained circumstances and presidential results are routinely returned above ninety percent.',
     choices: [
       {
         text: 'What has been rebuilt from 1994 is real. What it required can be accounted for separately.',

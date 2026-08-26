@@ -204,4 +204,19 @@ export const SIBLING_EVENTS = [
     effect: (p) => { p.m -= 20; p.r += 12; p.addFlag('sibling_died'); p.setMem('sibLateDeath', true) },
   },
 
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_sibling_impression',
+    phase: null,
+    weight: 3,
+    when: (G) => (G.siblings ?? []).some(s => s.alive) && G.age >= 20 && !G.mem?.ordSibImpression && Math.random() < 0.16,
+    text: (G) => {
+      const s = (G.siblings ?? []).find(x => x.alive)
+      return (s?.name ?? 'Your sibling') + ` does the impression of your mother saying the thing she says, and it is close enough to be illegal. You go first, then they go, and then neither of you can stop for a while. Nobody else in the world has the material. It is the single most reliable thing between you and it will still work when you are both eighty.`
+    },
+    choices: null,
+    effect: (p) => { p.m += 10; p.s += 2; p.setMem('ordSibImpression', true) },
+  },
 ]

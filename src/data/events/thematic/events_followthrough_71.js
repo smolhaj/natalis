@@ -7,7 +7,7 @@ export const FOLLOWTHROUGH_71_EVENTS = [
 
   {
     id: 'ft71_estate_tamil_worker',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('slk_estate_tamil_generation') &&
@@ -70,7 +70,7 @@ export const FOLLOWTHROUGH_71_EVENTS = [
       G.currentYear >= 2010 &&
       G.age >= 30 &&
       !G.mem?.ft71ColomboPostWar,
-    text: 'The checkpoints are gone after 2009. The road from Colombo 3 to the city centre is clear. This should feel like something has changed and it does feel like something has changed but not the thing you expected. The question of what the city is without the war has to be answered now. The restaurants are full. The hotels are new. The accountability process has not happened. There is a specific quality to prosperity that is built on an unexamined foundation.',
+    text: 'The checkpoints are gone after 2009. The road from Colombo 3 to the city centre is clear. This should feel like something has changed and it does feel like something has changed but not the thing you expected. The question of what the city is without the war has to be answered now. The restaurants are full. The hotels are new. The accountability process has not happened. There is a quality to prosperity that is built on an unexamined foundation.',
     choices: null,
     effect: (p) => {
       p.r += 4

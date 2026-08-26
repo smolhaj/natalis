@@ -1,7 +1,7 @@
 // BUILD 17 — The religious institution from inside
 // The priest in rural Ireland. The Buddhist monk in Cambodia before and after the Khmer Rouge.
 // The imam under Suharto. The yeshiva student in Jerusalem.
-// Not faith as crisis — the specific experience of holding an institution,
+// Not faith as crisis — the experience of holding an institution,
 // exercising power, knowing what the institution has done.
 
 const IS_CLERGY = (G) => G.career?.id === 'clergy'
@@ -128,7 +128,7 @@ export const CLERGY_EVENTS = [
     phase: 'midlife',
     weight: 3,
     when: (G) => IS_BUDDHIST_CAMBODIA(G) && G.flags.has('khmer_rouge_survivor') && G.currentYear >= 1979 && G.currentYear <= 1995 && !G.mem.cleRebuild,
-    text: 'After 1979 the monasteries begin to reopen. There are almost no senior monks — most were killed. You are among the few who survived who can re-ordain others. Young men come to you who have grown up with no religious institution at all, in a country that tried to make religion impossible. You teach what you know. There is a specific solemnity to rebuilding from almost nothing.',
+    text: 'After 1979 the monasteries begin to reopen. There are almost no senior monks — most were killed. You are among the few who survived who can re-ordain others. Young men come to you who have grown up with no religious institution at all, in a country that tried to make religion impossible. You teach what you know. There is a solemnity to rebuilding from almost nothing.',
     effect: (p) => { p.m += 15; p.karma += 15; p.addFlag('rebuilt_institution'); p.setMem('cleRebuild', true) },
   },
 
@@ -162,7 +162,7 @@ export const CLERGY_EVENTS = [
     id: 'cle_yeshiva_compact',
     phase: 'young_adult',
     weight: 3,
-    when: (G) => IS_ISRAEL(G) && (G.religion === 'jewish_orthodox' || G.religion?.includes('jewish')) && G.currentYear >= 1955 && G.currentYear <= 1990 && G.age >= 18 && G.age <= 25 && !G.mem.cleYeshiva,
+    when: (G) => IS_ISRAEL(G) && G.religion === 'jewish' && G.currentYear >= 1955 && G.currentYear <= 1990 && G.age >= 18 && G.age <= 25 && !G.mem.cleYeshiva,
     text: 'Ben-Gurion made a compact with the Orthodox rabbis in 1947: full-time yeshiva students would be exempt from military service. There are four hundred exemptions originally granted; by the time you are studying there are tens of thousands. You study Torah. Your secular neighbour has gone to the army for three years. The compact that protects your study is not fully comfortable, but you did not design it.',
     choices: [
       {

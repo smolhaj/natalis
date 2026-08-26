@@ -29,7 +29,7 @@ export const SYRIA_EVENTS = [
 
   {
     id: 'sy_hama_1982',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       IS_SYRIAN(G) &&
@@ -55,7 +55,7 @@ export const SYRIA_EVENTS = [
 
   {
     id: 'sy_damascus_spring',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_SYRIAN(G) &&
@@ -84,7 +84,7 @@ export const SYRIA_EVENTS = [
 
   {
     id: 'sy_march_2011',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_SYRIAN(G) &&

@@ -74,6 +74,7 @@ import {
   relocate,
   buildG,
   resolveAutoEvent as applyAutoEventEffect,
+  getCountryRegime,
 } from '../engine/gameEngine'
 import { COUNTRIES } from '../data/countries'
 import { CRIMES } from '../data/crimes'
@@ -81,10 +82,32 @@ import { CRIMES } from '../data/crimes'
 const SLOT_KEYS = ['natalis_v1', 'natalis_v2', 'natalis_v3']
 const META_KEYS = ['natalis_meta_0', 'natalis_meta_1', 'natalis_meta_2']
 
+// Save format version. Bump when a change would make an older save load wrong
+// (not merely incomplete — Zustand's shallow merge over INITIAL_STATE already
+// backfills newly added top-level fields). Each migration below takes a save
+// from version N to N+1, so an old save is walked forward one step at a time
+// rather than silently loading with the wrong shape.
+const SAVE_VERSION = 2
+
+const SAVE_MIGRATIONS = {
+  // v1 → v2: the contemplative rate limiter moved from an id-prefix test
+  // (mem.lastSonderYear) to module membership (mem.lastContemplativeYear), and
+  // lives gained an explicit mode. Saves written before this carry neither.
+  1: (save) => ({
+    ...save,
+    mode: save.mode ?? 'active',
+    mem: {
+      ...(save.mem ?? {}),
+      lastContemplativeYear: save.mem?.lastContemplativeYear ?? save.mem?.lastSonderYear ?? 0,
+    },
+  }),
+}
+
 function serializeState(state) {
   try {
     return JSON.stringify({
       ...state,
+      saveVersion: SAVE_VERSION,
       usedEventMap: [...(state.usedEventMap ?? new Map()).entries()],
       worldEventsFired: [...(state.worldEventsFired ?? new Set()).values()],
       // Functions can't be serialized — clear these; they'll be re-derived on next ageUp
@@ -97,12 +120,20 @@ function serializeState(state) {
 
 function deserializeState(raw) {
   try {
-    const parsed = JSON.parse(raw)
+    let parsed = JSON.parse(raw)
+    // Saves written before versioning existed are v1 by definition.
+    let v = parsed.saveVersion ?? 1
+    while (v < SAVE_VERSION && SAVE_MIGRATIONS[v]) {
+      parsed = SAVE_MIGRATIONS[v](parsed)
+      v += 1
+    }
+    parsed.saveVersion = SAVE_VERSION
     parsed.usedEventMap = new Map(parsed.usedEventMap ?? [])
     parsed.worldEventsFired = new Set(parsed.worldEventsFired ?? [])
     parsed.queue = parsed.queue ?? []
     parsed.pendingEvent = parsed.pendingEvent ?? null
     parsed.pendingMinigame = parsed.pendingMinigame ?? null
+    parsed.mode = parsed.mode === 'passive' ? 'passive' : 'active'
     return parsed
   } catch { return null }
 }
@@ -168,6 +199,13 @@ function deriveInitialMem(flags) {
 
 const INITIAL_STATE = {
   screen: 'title',
+  // 'active'  — you steer the life: choices, activities, career moves, risk.
+  // 'passive' — you read it: the character makes their own choices and the
+  //             years arrive on their own. Same simulation, same content; only
+  //             the surface differs. See getNextEvent's REGISTER_SHARES and
+  //             pickChoiceAutomatically in src/engine/tick.js.
+  mode: 'active',
+  saveVersion: SAVE_VERSION,
   birthYearMode: 'random',
   character: null,
   religion: null,
@@ -292,12 +330,12 @@ export const useGameStore = create((set, get) => ({
 
   goToBirth: () => {
     const character = createCharacter()
-    set({ ...INITIAL_STATE, screen: 'birth', character })
+    set({ ...INITIAL_STATE, mode: get().mode, screen: 'birth', character })
   },
 
   goToCuratedBirth: () => {
     const character = createCharacter()
-    set({ ...INITIAL_STATE, screen: 'curated_birth', character })
+    set({ ...INITIAL_STATE, mode: get().mode, screen: 'curated_birth', character })
   },
 
   startCuratedGame: (overrides) => {
@@ -408,6 +446,10 @@ export const useGameStore = create((set, get) => ({
       const updatedChar = createCharacter({ country: countryName })
       return { character: { ...updatedChar, country } }
     }),
+
+  // Passive vs active is a property of the run, chosen before birth and fixed
+  // for that life — switching mid-life would change what the character is.
+  setMode: (mode) => set({ mode: mode === 'passive' ? 'passive' : 'active' }),
 
   // ── Game start ──────────────────────────────────────────────────────────────
 
@@ -892,55 +934,91 @@ export const useGameStore = create((set, get) => ({
 
   studyHarder: () => {
     const state = get()
-    if (state.dead) return
+    if (state.dead || state.pendingEvent) return
+    // Every action-consuming move respects the yearly budget. Only two of
+    // these used to, so relationships, performance and happiness could be
+    // maxed by repeat-clicking and the budget meant nothing.
+    if ((state.actionsThisYear ?? 0) >= state.maxActionsPerYear) return
     set(studyHarder(state))
   },
 
   goToMovies: () => {
     const state = get()
-    if (state.dead) return
+    if (state.dead || state.pendingEvent) return
+    // Every action-consuming move respects the yearly budget. Only two of
+    // these used to, so relationships, performance and happiness could be
+    // maxed by repeat-clicking and the budget meant nothing.
+    if ((state.actionsThisYear ?? 0) >= state.maxActionsPerYear) return
     set(goToMovies(state))
   },
 
   goClubbing: () => {
     const state = get()
-    if (state.dead) return
+    if (state.dead || state.pendingEvent) return
+    // Every action-consuming move respects the yearly budget. Only two of
+    // these used to, so relationships, performance and happiness could be
+    // maxed by repeat-clicking and the budget meant nothing.
+    if ((state.actionsThisYear ?? 0) >= state.maxActionsPerYear) return
     set(goClubbing(state))
   },
 
   goShopping: (category) => {
     const state = get()
-    if (state.dead) return
+    if (state.dead || state.pendingEvent) return
+    // Every action-consuming move respects the yearly budget. Only two of
+    // these used to, so relationships, performance and happiness could be
+    // maxed by repeat-clicking and the budget meant nothing.
+    if ((state.actionsThisYear ?? 0) >= state.maxActionsPerYear) return
     set(goShopping(state, category))
   },
 
   visitSalonSpa: (service) => {
     const state = get()
-    if (state.dead) return
+    if (state.dead || state.pendingEvent) return
+    // Every action-consuming move respects the yearly budget. Only two of
+    // these used to, so relationships, performance and happiness could be
+    // maxed by repeat-clicking and the budget meant nothing.
+    if ((state.actionsThisYear ?? 0) >= state.maxActionsPerYear) return
     set(visitSalonSpa(state, service))
   },
 
   postSocialMedia: () => {
     const state = get()
-    if (state.dead) return
+    if (state.dead || state.pendingEvent) return
+    // Every action-consuming move respects the yearly budget. Only two of
+    // these used to, so relationships, performance and happiness could be
+    // maxed by repeat-clicking and the budget meant nothing.
+    if ((state.actionsThisYear ?? 0) >= state.maxActionsPerYear) return
     set(postSocialMedia(state))
   },
 
   promoteSocialMedia: () => {
     const state = get()
-    if (state.dead) return
+    if (state.dead || state.pendingEvent) return
+    // Every action-consuming move respects the yearly budget. Only two of
+    // these used to, so relationships, performance and happiness could be
+    // maxed by repeat-clicking and the budget meant nothing.
+    if ((state.actionsThisYear ?? 0) >= state.maxActionsPerYear) return
     set(promoteSocialMedia(state))
   },
 
   betOnHorses: (horseIdx, betAmount) => {
     const state = get()
-    if (state.dead) return
+    if (state.dead || state.pendingEvent) return
+    // Every action-consuming move respects the yearly budget. Only two of
+    // these used to, so relationships, performance and happiness could be
+    // maxed by repeat-clicking and the budget meant nothing.
+    if ((state.actionsThisYear ?? 0) >= state.maxActionsPerYear) return
     set(betOnHorses(state, horseIdx, betAmount))
   },
 
   goToRehab: () => {
     const state = get()
-    if (state.dead) return
+    if (state.dead || state.pendingEvent) return
+    // Every action-consuming move respects the yearly budget. Only two of
+    // these used to, so relationships, performance and happiness could be
+    // maxed by repeat-clicking and the budget meant nothing.
+    if ((state.actionsThisYear ?? 0) >= state.maxActionsPerYear) return
     set(goToRehab(state))
   },
 
@@ -952,19 +1030,31 @@ export const useGameStore = create((set, get) => ({
 
   practiceMartalArts: (discipline) => {
     const state = get()
-    if (state.dead) return
+    if (state.dead || state.pendingEvent) return
+    // Every action-consuming move respects the yearly budget. Only two of
+    // these used to, so relationships, performance and happiness could be
+    // maxed by repeat-clicking and the budget meant nothing.
+    if ((state.actionsThisYear ?? 0) >= state.maxActionsPerYear) return
     set(practiceMartalArts(state, discipline))
   },
 
   obtainLicense: (licType) => {
     const state = get()
-    if (state.dead) return
+    if (state.dead || state.pendingEvent) return
+    // Every action-consuming move respects the yearly budget. Only two of
+    // these used to, so relationships, performance and happiness could be
+    // maxed by repeat-clicking and the budget meant nothing.
+    if ((state.actionsThisYear ?? 0) >= state.maxActionsPerYear) return
     set(obtainLicense(state, licType))
   },
 
   interactWithFriend: (friendIdx, action) => {
     const state = get()
-    if (state.dead) return
+    if (state.dead || state.pendingEvent) return
+    // Every action-consuming move respects the yearly budget. Only two of
+    // these used to, so relationships, performance and happiness could be
+    // maxed by repeat-clicking and the budget meant nothing.
+    if ((state.actionsThisYear ?? 0) >= state.maxActionsPerYear) return
     set(interactWithFriend(state, friendIdx, action))
   },
 
@@ -991,7 +1081,11 @@ export const useGameStore = create((set, get) => ({
 
   bookTrip: (destinationId) => {
     const state = get()
-    if (state.dead) return
+    if (state.dead || state.pendingEvent) return
+    // Every action-consuming move respects the yearly budget. Only two of
+    // these used to, so relationships, performance and happiness could be
+    // maxed by repeat-clicking and the budget meant nothing.
+    if ((state.actionsThisYear ?? 0) >= state.maxActionsPerYear) return
     set(bookTrip(state, destinationId))
   },
 
@@ -999,17 +1093,29 @@ export const useGameStore = create((set, get) => ({
 
   startBusiness: (typeId) => {
     const state = get()
-    if (state.dead) return
+    if (state.dead || state.pendingEvent) return
+    // Every action-consuming move respects the yearly budget. Only two of
+    // these used to, so relationships, performance and happiness could be
+    // maxed by repeat-clicking and the budget meant nothing.
+    if ((state.actionsThisYear ?? 0) >= state.maxActionsPerYear) return
     set(startBusiness(state, typeId))
   },
   manageBusiness: () => {
     const state = get()
-    if (state.dead) return
+    if (state.dead || state.pendingEvent) return
+    // Every action-consuming move respects the yearly budget. Only two of
+    // these used to, so relationships, performance and happiness could be
+    // maxed by repeat-clicking and the budget meant nothing.
+    if ((state.actionsThisYear ?? 0) >= state.maxActionsPerYear) return
     set(manageBusiness(state))
   },
   hireEmployee: () => {
     const state = get()
-    if (state.dead) return
+    if (state.dead || state.pendingEvent) return
+    // Every action-consuming move respects the yearly budget. Only two of
+    // these used to, so relationships, performance and happiness could be
+    // maxed by repeat-clicking and the budget meant nothing.
+    if ((state.actionsThisYear ?? 0) >= state.maxActionsPerYear) return
     set(hireEmployee(state))
   },
   closeBusiness: () => {
@@ -1020,11 +1126,11 @@ export const useGameStore = create((set, get) => ({
 
   // ── Prison activities ────────────────────────────────────────────────────────
 
-  doPrisonWork: () => { const s = get(); if (!s.dead) set(prisonWork(s)) },
+  doPrisonWork: () => { const s = get(); if (s.dead || s.pendingEvent || (s.actionsThisYear ?? 0) >= s.maxActionsPerYear) return; set(prisonWork(s)) },
   doPrisonCry: () => { const s = get(); if (!s.dead) set(prisonCry(s)) },
-  doPrisonConjugalVisit: () => { const s = get(); if (!s.dead) set(prisonConjugalVisit(s)) },
-  doPrisonBribeGuard: () => { const s = get(); if (!s.dead) set(prisonBribeGuard(s)) },
-  doPrisonStartRiot: () => { const s = get(); if (!s.dead) set(prisonStartRiot(s)) },
+  doPrisonConjugalVisit: () => { const s = get(); if (s.dead || s.pendingEvent || (s.actionsThisYear ?? 0) >= s.maxActionsPerYear) return; set(prisonConjugalVisit(s)) },
+  doPrisonBribeGuard: () => { const s = get(); if (s.dead || s.pendingEvent || (s.actionsThisYear ?? 0) >= s.maxActionsPerYear) return; set(prisonBribeGuard(s)) },
+  doPrisonStartRiot: () => { const s = get(); if (s.dead || s.pendingEvent || (s.actionsThisYear ?? 0) >= s.maxActionsPerYear) return; set(prisonStartRiot(s)) },
 
   // ── Trial resolution ────────────────────────────────────────────────────────
 
@@ -1033,7 +1139,11 @@ export const useGameStore = create((set, get) => ({
     if (!state.pendingTrial) return
     const { sentence, crimeName, lawyerCosts, crimeCategory } = state.pendingTrial
     // Legal quality by regime: democracy/constitutional = 1.0, authoritarian = 0.5, theocracy = 0.4, dictatorship = 0.35
-    const regime = state.currentCountry?.regime ?? state.character?.country?.regime ?? 'democracy'
+    // Regime AT THE TIME, not the country's starting regime — otherwise an
+    // Iranian tried in 2005 gets constitutional-monarchy courts, because Iran's
+    // base regime predates 1979. Every country with a regimeHistory was wrong
+    // for part of its timeline.
+    const regime = getCountryRegime(state.currentCountry ?? state.character?.country, state.currentYear) ?? 'democracy'
     const legalQuality = { democracy: 1.0, federal_republic: 0.95, parliamentary_republic: 0.95, constitutional_monarchy: 0.9, single_party_communist: 0.45, single_party_authoritarian: 0.4, military_dictatorship: 0.35, theocracy: 0.38, absolute_monarchy: 0.5 }[regime] ?? 0.7
     const cost = lawyerCosts?.[lawyerTier] ?? 0
     if ((state.money ?? 0) < cost) {
@@ -1180,6 +1290,6 @@ export const useGameStore = create((set, get) => ({
 
   startNewLife: () => {
     const character = createCharacter()
-    set({ ...INITIAL_STATE, screen: 'birth', character })
+    set({ ...INITIAL_STATE, mode: get().mode, screen: 'birth', character })
   },
 }))

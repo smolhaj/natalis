@@ -691,8 +691,18 @@ export const RIBBONS = [
     id: 'the_resettled_refugee',
     name: 'The Refugee Who Arrived',
     description: 'After years in the camp, the papers came. You arrived in a country that was not yours and made it yours anyway.',
-    condition: (G) => G.flags.includes('resettlement_established'),
-    priority: 78,
+    // Was the identical guard to 'the_resettled' at priority 72, which meant the
+    // general ribbon could never be awarded to anyone. 'resettlement_established'
+    // has two setters: the camp route in events_crosscutting.js, which requires
+    // grew_up_in_camp or camp_born, and the ordinary route in
+    // events_immigration.js, which does not. This ribbon is the camp one — that
+    // is what its own description says — so it now asks for the camp.
+    condition: (G) => G.flags.includes('resettlement_established') && (G.flags.includes('grew_up_in_camp') || G.flags.includes('camp_born')),
+    // Priority sits above 'the_camp_child' (88), which asks only for
+    // grew_up_in_camp and would otherwise take every life this one describes.
+    // The camp child who never got out keeps that ribbon; the one who did gets
+    // this one, which is the longer arc and the truer end of it.
+    priority: 89,
     color: 'blue',
   },
   {
@@ -771,7 +781,11 @@ export const RIBBONS = [
     id: 'the_red_guard',
     name: 'The Red Guard',
     description: 'You were young and you believed. What you did in that belief is something you have lived with for the rest of your life.',
-    condition: (G) => G.flags.includes('red_guard_joined'),
+    // 'red_guard_joined' is set nowhere in the codebase, so this ribbon could
+    // never be awarded. The Cultural Revolution arc records the same life through
+    // the flag 'red_guard_era' and the memory key 'chinaRedGuard'
+    // (events_country_arcs_2.js) and 'red_guard' (events_historical.js).
+    condition: (G) => G.flags.includes('red_guard_era') || G.mem?.chinaRedGuard === true || G.mem?.red_guard === true,
     priority: 80,
     color: 'red',
   },
@@ -787,7 +801,12 @@ export const RIBBONS = [
     id: 'the_liberation_war',
     name: 'Born in the Liberation War',
     description: 'You came into the world during nine months of war. The country that emerged from it exists partly because you were born into it.',
-    condition: (G) => G.flags.includes('bng_liberation_generation'),
+    // Was gated on 'bng_liberation_generation', which is identical to
+    // 'victory_day' at priority 82 — so this ribbon could never be awarded. It
+    // was also the wrong flag for its own prose: the event that sets it requires
+    // age 15 or over in 1971, so nobody holding it was born during the war. This
+    // is a birth-year ribbon and now reads as one.
+    condition: (G) => G.character?.country?.name === 'Bangladesh' && G.character?.birthYear >= 1971 && G.character?.birthYear <= 1972,
     priority: 78,
     color: 'blue',
   },
@@ -1380,10 +1399,14 @@ export const RIBBONS = [
     color: 'gold',
   },
   {
-    id: 'the_jakarta_survivor',
+    // Was a second ribbon with the id and condition of 'the_jakarta_survivor'
+    // above (priority 88), so it could never be reached — a duplicate id and a
+    // duplicate guard. Re-pointed at the other half of that year: the person who
+    // was in the country for the fall of Suharto without being the one hunted.
+    id: 'the_reformasi_witness',
     name: 'May 1998',
-    description: 'You were in Jakarta when the city burned. You counted people you could not reach.',
-    condition: (G) => G.flags.includes('jakarta_98_survived'),
+    description: 'You were in the city when it burned. You were not the one they were looking for, and you counted people you could not reach.',
+    condition: (G) => G.flags.includes('reformasi_generation') && G.character?.country?.name === 'Indonesia' && !G.flags.includes('jakarta_98_survived'),
     priority: 78,
     color: 'red',
   },

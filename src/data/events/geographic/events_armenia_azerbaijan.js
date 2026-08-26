@@ -8,7 +8,7 @@ const ARMENIA_AZ_EVENTS = [
 
   {
     id: 'arm_genocide_memory',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) => G.character.country.name === 'Armenia' && G.age >= 7 && G.age <= 16 && G.currentYear <= 1990 && !G.flags.has('arm_genocide_memory_bearer'),
     text: (G) => {
@@ -116,7 +116,7 @@ const ARMENIA_AZ_EVENTS = [
 
   {
     id: 'arm_velvet_2018',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) => G.character.country.name === 'Armenia' && G.currentYear === 2018 && G.age >= 18 && !G.flags.has('arm_velvet_revolution'),
     text: 'April 2018. Nikol Pashinyan walks from Gyumri to Yerevan. He is thin and wears the same clothes every day. The crowds that follow him get larger. By the time he reaches Republic Square, something is happening that has not happened before in Armenia: a leader who has no money, no family name, no army behind him, and people are following him anyway. The old prime minister resigns. You stand in the square and you hear people laughing.',

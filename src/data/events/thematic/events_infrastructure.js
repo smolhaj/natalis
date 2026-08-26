@@ -322,4 +322,26 @@ export const INFRASTRUCTURE_EVENTS = [
       },
     ],
   },
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_bureaucratic_farce',
+    phase: null,
+    weight: 3,
+    when: (G) => G.age >= 20 && G.age <= 60 && !G.mem?.ordBureauFarce && Math.random() < 0.15,
+    text: `Window four sends you to window seven, which sends you back to window four, which is now a different person who requires the form that window seven has retained. By the third circuit you and the man behind you in the queue have become allies with a shared sense of humour about it. When you finally get the stamp it is applied without ceremony in under two seconds. Outside, you and the man shake hands like veterans.`,
+    choices: null,
+    effect: (p) => { p.m += 5; p.s += 3; p.e += 2; p.setMem('ordBureauFarce', true) },
+  },
+
+  {
+    id: 'ord_power_cut_candles',
+    phase: null,
+    weight: 3,
+    when: (G) => G.age >= 8 && G.age <= 70 && ['developing_urban', 'developing_unstable', 'subsaharan', 'post_soviet'].includes(G.archetype) && !G.mem?.ordPowerCutGood && Math.random() < 0.16,
+    text: `The power goes at eight and for once nobody is annoyed. Candles come out of the drawer they live in. Somebody's phone is at forty percent and is declared communal property. In the dark the conversation goes somewhere it does not go under a bulb, and when the lights come back on at eleven there is a small collective groan.`,
+    choices: null,
+    effect: (p) => { p.m += 8; p.s += 2; p.setMem('ordPowerCutGood', true) },
+  },
 ]

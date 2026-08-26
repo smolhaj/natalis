@@ -9,7 +9,7 @@
 const IS_NEPAL = (G) => G.character.country?.name === 'Nepal'
 const IS_HILL_ETHNIC = (G) =>
   IS_NEPAL(G) &&
-  ['gurung', 'magar', 'rai', 'limbu', 'tamang'].includes(G.character.ethnicity)
+  ['magar', 'tamang'].includes(G.character.ethnicity)
 const IS_DALIT_NEPAL = (G) =>
   IS_NEPAL(G) && G.character.ethnicity === 'dalit_nepal'
 const IS_THARU = (G) =>
@@ -23,7 +23,7 @@ export const NEPAL_DEPTH_EVENTS = [
 
   {
     id: 'nep_dep_gurkha_recruitment',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_HILL_ETHNIC(G) &&
@@ -133,7 +133,8 @@ export const NEPAL_DEPTH_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 2003 &&
       G.age >= 16 && G.age <= 30 &&
       !G.mem?.nepDepKamaiya,
-    text: `The Kamaiya system: bonded agricultural labor in the Terai lowlands. A Tharu family takes a loan from a landlord — for a wedding, a medical emergency, a bad harvest — and the debt is repaid in labor. The adult male works the landlord's fields. The debt accumulates interest. The labor does not repay it faster than the interest grows. The system is hereditary: the son inherits the debt. Nepal legally abolished the Kamaiya system in 2000, freeing 18,000 people formally. The freedom arrived without land or credit or alternative employment for most of them. The landlords who owned the debt-labor did not disappear. The freed Kamaiyas were now free to be landless in the Terai.`,
+    text: 'Your grandfather borrowed for a wedding and your father worked the fields against it and now you work the fields against it. The interest is counted once a year at the landlord\'s house and the number at the end is always larger than the number at the start. In 2000 a man comes to the village and reads out that the arrangement is abolished. You are free that afternoon, and also without land, without credit, and living on ground that belongs to the same family.',
+    context: 'The Kamaiya system bound Tharu families in Nepal\'s western Terai to landlords through inherited agricultural debt. The government abolished it in July 2000 and freed roughly 18,000 households, but most received no land, credit or alternative work, and many settled in informal camps or returned to the same landlords under different arrangements. Related bonded systems for women and girls, Kamlari and Haliya, persisted afterwards.',
     choices: [
       {
         text: 'You are freed. The freedom is real. The alternatives are still being determined.',
@@ -167,7 +168,7 @@ export const NEPAL_DEPTH_EVENTS = [
 
   {
     id: 'nep_dep_porter',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_NEPAL(G) &&
@@ -208,7 +209,7 @@ export const NEPAL_DEPTH_EVENTS = [
 
   {
     id: 'nep_dep_remittance_child',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_NEPAL(G) &&
@@ -249,7 +250,7 @@ export const NEPAL_DEPTH_EVENTS = [
 
   {
     id: 'nep_dep_remittance_adult',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_NEPAL(G) &&
@@ -290,7 +291,7 @@ export const NEPAL_DEPTH_EVENTS = [
 
   {
     id: 'nep_dep_kumari',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) =>
       IS_NEWAR(G) &&

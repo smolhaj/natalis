@@ -9,7 +9,7 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_parent_call',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.flags.includes('orphan') &&
@@ -46,7 +46,7 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_parent_admin',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.includes('lost_parent') &&
@@ -59,7 +59,7 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_parent_funeral',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.includes('lost_parent') &&
@@ -67,12 +67,12 @@ export const GRIEF_EVENTS = [
       !G.mem.griefParentFuneral,
     text: (G) => {
       const arch = G.character.country.archetype
-      if (arch === 'subsaharan') {
+      if (G.religion?.startsWith('muslim')) {
+        return 'The burial happens within twenty-four hours, as it must. There is no time to prepare — only to do. You wash, you wrap, you say the prayers. The speed of it is both correct and brutal. By evening your parent is in the ground and you are sitting in a room full of people reciting Quran.'
+      } else if (arch === 'subsaharan') {
         return 'The funeral is three days. There is food and music and a crowd of people from your parent\'s whole life. Women from the church sing in rotation. Children run between the adults. The grief is communal — *ubuntu*, the understanding that a person is a person through other people, which means their loss is also communal — in a way that exhausts and holds you simultaneously.'
       } else if (G.character.country.name === 'Japan') {
         return 'The ceremony is precise and unhurried. Incense. White. The attendants in black moving with a kind of choreographed quiet. You are not encouraged to weep openly. You carry the grief with the same posture as everyone else: straight-backed, present, inside.'
-      } else if (G.religion === 'muslim') {
-        return 'The burial happens within twenty-four hours, as it must. There is no time to prepare — only to do. You wash, you wrap, you say the prayers. The speed of it is both correct and brutal. By evening your parent is in the ground and you are sitting in a room full of people reciting Quran.'
       } else {
         return 'The service is in the church where your parent was married. People you have not seen in years come out of an old geography of your parent\'s life. At the reception, someone says they look just like you. You stand with a plate of food and do not eat it.'
       }
@@ -83,7 +83,7 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_parent_month_after',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.mem.griefParentFuneral &&
@@ -109,7 +109,7 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_parent_belongings',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.mem.griefParentMonthAfter &&
@@ -134,7 +134,7 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_parent_anniversary',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.mem.griefParentBelongings &&
@@ -152,7 +152,7 @@ export const GRIEF_EVENTS = [
       G.mem.griefParentFuneral &&
       !G.mem.griefParentYearsLater &&
       G.age >= 55,
-    text: 'Years. A smell — the specific soap, or the particular food, or the quality of light on a late afternoon in autumn — and they are completely present for a moment, with all their specificity, and then not. You have learned to let this arrive without managing it. The loss is old now. It has a different weight.',
+    text: 'Years. A smell — the coal-tar soap they kept by the kitchen sink — and they are completely present for a moment, and then not. You have learned to let this arrive without managing it. The loss is old now. It has a different weight.',
     choices: null,
     effect: (p) => { p.m += 3; p.r -= 5; p.setMem('griefParentYearsLater', true) },
   },
@@ -247,7 +247,7 @@ export const GRIEF_EVENTS = [
       !G.partner &&
       !G.mem.griefPartnerDating &&
       G.age >= 50,
-    text: 'Someone suggests — gently, carefully — that you might consider meeting people. They are not wrong that you are lonely. The question you cannot resolve is whether going on a date is a betrayal, and the answer you arrive at eventually is: they would not have wanted this for you, this specific kind of alone. You make the profile. You feel guilty. You go on the date.',
+    text: 'Someone suggests — gently, carefully — that you might consider meeting people. They are not wrong that you are lonely. The question you cannot resolve is whether going on a date is a betrayal, and the answer you arrive at eventually is: they would not have wanted this for you, this kind of alone. You make the profile. You feel guilty. You go on the date.',
     choices: [
       {
         text: 'Give it a real chance',
@@ -269,7 +269,7 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_miscarriage_loss',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.partner &&
@@ -297,7 +297,7 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_child_young_death',
-    phase: 'midlife',
+    phase: null,
     weight: 1,
     when: (G) =>
       G.children && G.children.length > 0 &&
@@ -352,7 +352,7 @@ export const GRIEF_EVENTS = [
       Math.random() < 0.04,
     text: (G) => {
       const sib = G.siblings[0]
-      return `${sib?.name ?? 'Your sibling'} dies suddenly. An accident, or a diagnosis that moved faster than expected. They are the same age as you — or younger — and that is the specific thing you cannot stop returning to.`
+      return `${sib?.name ?? 'Your sibling'} dies suddenly. An accident, or a diagnosis that moved faster than expected. They are the same age as you — or younger — and that is the thing you cannot stop returning to.`
     },
     choices: null,
     effect: (p) => { p.m -= 22; p.r += 12; p.addFlag('lost_sibling'); p.setMem('griefSiblingCall', true) },
@@ -418,7 +418,7 @@ export const GRIEF_EVENTS = [
 
   {
     id: 'grief_friend_suicide',
-    phase: 'young_adult',
+    phase: null,
     weight: 1,
     when: (G) =>
       G.friends && G.friends.length > 0 &&
@@ -427,7 +427,7 @@ export const GRIEF_EVENTS = [
       Math.random() < 0.03,
     text: (G) => {
       const friend = G.friends[0]
-      return `${friend?.name ?? 'Your friend'} dies by suicide. The grief has a specific texture — the looking back, the reconstructing, the question of what you missed and whether it was missable. People say you could not have known. You spend years understanding what that means and does not mean.`
+      return `${friend?.name ?? 'Your friend'} dies by suicide. The grief has a texture — the looking back, the reconstructing, the question of what you missed and whether it was missable. People say you could not have known. You spend years understanding what that means and does not mean.`
     },
     choices: [
       {

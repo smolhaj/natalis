@@ -48,7 +48,7 @@ const COLOMBIA_EVENTS = [
 
   {
     id: 'col_la_violencia_rural',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Colombia' &&
@@ -113,7 +113,7 @@ const COLOMBIA_EVENTS = [
 
   {
     id: 'col_cartel_medellin',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Colombia' &&
@@ -135,7 +135,7 @@ const COLOMBIA_EVENTS = [
 
   {
     id: 'col_paramilitares',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Colombia' &&
@@ -187,7 +187,7 @@ const COLOMBIA_EVENTS = [
 
   {
     id: 'col_paz_santos',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Colombia' &&
@@ -221,7 +221,7 @@ const COLOMBIA_EVENTS = [
 
   {
     id: 'col_paro_2021',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Colombia' &&

@@ -231,7 +231,7 @@ export const CONFLICT_CHILDHOOD_EVENTS = [
     phase: 'adolescence',
     weight: 3,
     when: (G) => inConflict(G) && G.age >= 13 && G.age <= 17,
-    text: 'When you talk to people online or meet someone at a border crossing or arrive somewhere new, you make an edit. You leave out the checkpoint story. You do not mention the specific sound. You give a version that is true but does not have the weight that the actual version carries. You are not sure if this is protection or performance.',
+    text: 'When you talk to people online or meet someone at a border crossing or arrive somewhere new, you make an edit. You leave out the checkpoint story. You do not mention the sound. You give a version that is true but does not have the weight that the actual version carries. You are not sure if this is protection or performance.',
     choices: [
       { text: 'Keep the edit. Not everyone deserves the whole story.', tag: null, outcome: 'You learn to carry two versions of yourself. The gap between them is work you do every day.', effect: (p) => { p.m -= 5; p.r += 5; p.s += 5; p.addFlag('performs_normalcy'); p.addFlag('double_consciousness') } },
       { text: 'Tell the truth to someone who asks the right way', tag: null, outcome: 'The person who hears it sits very still. Then they ask one careful question. This is not nothing.', effect: (p) => { p.m += 6; p.r -= 3; p.addFlag('told_the_truth_once') } },

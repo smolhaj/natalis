@@ -27,7 +27,7 @@ const IRAQ_EVENTS = [
 
   {
     id: 'irq_baath_childhood',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Iraq' &&
@@ -48,7 +48,7 @@ const IRAQ_EVENTS = [
 
   {
     id: 'irq_iran_iraq_war',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) =>
       G.character.country.name === 'Iraq' &&
@@ -82,7 +82,7 @@ const IRAQ_EVENTS = [
 
   {
     id: 'irq_sanctions_1990s',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Iraq' &&
@@ -111,7 +111,7 @@ const IRAQ_EVENTS = [
 
   {
     id: 'irq_2003_invasion',
-    phase: 'midlife',
+    phase: null,
     weight: 6,
     when: (G) =>
       G.character.country.name === 'Iraq' &&
@@ -140,7 +140,7 @@ const IRAQ_EVENTS = [
 
   {
     id: 'irq_sectarian_war',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Iraq' &&
@@ -179,7 +179,7 @@ const IRAQ_EVENTS = [
 
   {
     id: 'irq_isis_mosul',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Iraq' &&
@@ -230,7 +230,7 @@ const IRAQ_EVENTS = [
 
   {
     id: 'irq_tishreen_2019',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Iraq' &&

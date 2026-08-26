@@ -13,14 +13,15 @@ export const CZECH_REPUBLIC_EVENTS = [
 
   {
     id: 'cze_victorious_february_1948',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_CZECH(G) &&
       G.currentYear === 1948 &&
       G.age >= 16 &&
       !G.mem?.czeFebruary48,
-    text: 'Únor — February. The Communist Party has been the largest party since 1946. In February 1948 it moves: the non-Communist ministers resign in protest over police appointments, expecting this will force new elections. Instead, Gottwald calls a workers\' militia into Prague and accepts the resignations. The Social Democrats collapse into the Party. Beneš signs the new government and resigns. Within weeks the Foreign Minister Masaryk is found dead below his bathroom window. The official version is suicide. The country that survived the Nazis and the occupation has become a people\'s democracy of a particular kind, governed from Moscow. There was no referendum. The February in which this happened is called Victorious.',
+    text: 'The non-Communist ministers resign in February expecting it to force an election, and instead the militia comes into Prague with rifles from the factories. Benes signs the list they bring him and then he resigns as well. In March the foreign minister is found in the courtyard below his bathroom window and the finding is suicide. There is no vote about any of it. The month gets a name in the newspapers and the name is Victorious February.',
+    context: 'The Communist Party had been the largest in Czechoslovakia since the 1946 election. Twelve non-Communist ministers resigned on 20 February 1948 over police appointments; Klement Gottwald mobilised the People\'s Militia, President Benes accepted the resignations and appointed a Communist-dominated government. Foreign minister Jan Masaryk was found dead beneath his window on 10 March; the death was ruled suicide and re-investigated as murder in 2004.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 7; p.e += 3; p.addFlag('cze_communist_takeover_generation'); p.setMem('czeFebruary48', true) },
   },
@@ -29,7 +30,7 @@ export const CZECH_REPUBLIC_EVENTS = [
 
   {
     id: 'cze_slansky_trial',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_CZECH(G) &&
@@ -45,7 +46,7 @@ export const CZECH_REPUBLIC_EVENTS = [
 
   {
     id: 'cze_prague_spring',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) =>
       IS_CZECH(G) &&
@@ -66,7 +67,7 @@ export const CZECH_REPUBLIC_EVENTS = [
 
   {
     id: 'cze_invasion_august_1968',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) =>
       IS_CZECH(G) &&
@@ -74,7 +75,8 @@ export const CZECH_REPUBLIC_EVENTS = [
       G.age >= 14 &&
       G.flags.has('cze_prague_spring_generation') &&
       !G.mem?.czeAugust68,
-    text: 'August 20, 1968. Two thousand tanks from the Soviet Union, Poland, Hungary, Bulgaria, and East Germany. Five hundred thousand troops. They come at night. Dubček is arrested and flown to Moscow. The radio stations stay on air until the troops arrive at the door. A student turns on his tape recorder and holds it to the loudspeaker. The broadcasts are: this is an occupation, we have done nothing to deserve this, please do not resist. The Prague Spring lasts seven months. The tanks take one night. What follows is called normalization. You know now what the next twenty years will look like.',
+    text: 'They come at night and by morning there is a tank at the end of Vinohradska with its engine running. The radio stays on until the soldiers reach the door, and what it says is that this is an occupation, that nothing was done to deserve it, and that nobody should resist. A student on your landing holds a tape recorder up against the speaker so that it will exist afterwards. Seven months of the one thing, and one night of the other.',
+    context: 'On the night of 20-21 August 1968 roughly 500,000 Warsaw Pact troops and 2,000 tanks from the USSR, Poland, Hungary, Bulgaria and East Germany entered Czechoslovakia. Alexander Dubcek was arrested and flown to Moscow. Czechoslovak Radio broadcast from its Vinohradska studios until troops reached the building. The twenty years of enforced conformity that followed were officially termed normalisation.',
     choices: [
       {
         text: 'You stand in front of a tank. You are not alone.',
@@ -96,7 +98,7 @@ export const CZECH_REPUBLIC_EVENTS = [
 
   {
     id: 'cze_emigration_1968',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_CZECH(G) &&
@@ -126,7 +128,7 @@ export const CZECH_REPUBLIC_EVENTS = [
 
   {
     id: 'cze_havel_president',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_CZECH(G) &&
@@ -142,7 +144,7 @@ export const CZECH_REPUBLIC_EVENTS = [
 
   {
     id: 'cze_velvet_divorce',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_CZECH(G) &&
@@ -158,7 +160,7 @@ export const CZECH_REPUBLIC_EVENTS = [
 
   {
     id: 'cze_eu_accession_2004',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_CZECH(G) &&

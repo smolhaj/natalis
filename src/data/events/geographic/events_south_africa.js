@@ -7,7 +7,7 @@ export const SOUTH_AFRICA_EVENTS = [
 
   {
     id: 'sa_soweto_1976',
-    phase: 'adolescence',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'South Africa' &&
@@ -15,7 +15,8 @@ export const SOUTH_AFRICA_EVENTS = [
       G.currentYear >= 1976 && G.currentYear <= 1978 &&
       G.age >= 10 && G.age <= 20 &&
       !G.mem?.saSoweto76,
-    text: 'June 16, 1976. Soweto. The march begins at Morris Isaacson High School — students, most of them fifteen and sixteen years old, protesting the decree that half their subjects must be taught in Afrikaans, the language of the apartheid government. The police open fire. Hector Pieterson is thirteen years old when he is shot. Sam Nzima\'s photograph of him being carried — the image that goes around the world. By the end of the day two students are dead. By the end of the year, more than six hundred. The uprising spreads to other townships across the country. The government does not grant the demand immediately, but the Afrikaans instruction decree is quietly dropped the following year.',
+    text: 'They tell you half your subjects will now be taught in Afrikaans, which is not your language and is not the teachers\' language either. On the sixteenth you walk from Morris Isaacson with a placard made from a cardboard box, and the column is mostly fifteen and sixteen year olds and it is a fine cold morning. The police are at the corner of Vilakazi Street. A boy of thirteen is carried past you in another boy\'s arms and somebody takes the photograph that the whole world will see by Friday.',
+    context: 'On 16 June 1976 students in Soweto marched against a decree requiring half of secondary instruction to be in Afrikaans. Police opened fire; Hector Pieterson, aged 13, was among the first killed, and Sam Nzima\'s photograph of him being carried by Mbuyisa Makhubo became the defining image of apartheid abroad. Protests spread nationwide and more than 600 people, most of them students, were killed within the year. The Afrikaans instruction requirement was withdrawn in 1979.',
     choices: [
       {
         text: 'You are in the march. You are the age of the students in the march.',
@@ -35,7 +36,7 @@ export const SOUTH_AFRICA_EVENTS = [
 
   {
     id: 'sa_mandela_release_1990',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'South Africa' &&
@@ -63,7 +64,7 @@ export const SOUTH_AFRICA_EVENTS = [
 
   {
     id: 'sa_state_capture',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'South Africa' &&
@@ -90,7 +91,7 @@ export const SOUTH_AFRICA_EVENTS = [
 
   {
     id: 'sa_white_emigration',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'South Africa' &&

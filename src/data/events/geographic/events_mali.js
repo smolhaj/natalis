@@ -27,7 +27,7 @@ export const MALI_EVENTS = [
 
   {
     id: 'mli_cotton_economy',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_MALIAN(G) &&
@@ -56,7 +56,7 @@ export const MALI_EVENTS = [
 
   {
     id: 'mli_traore_era',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_MALIAN(G) &&
@@ -84,7 +84,7 @@ export const MALI_EVENTS = [
 
   {
     id: 'mli_revolution_1991',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_MALIAN(G) &&
@@ -112,7 +112,7 @@ export const MALI_EVENTS = [
 
   {
     id: 'mli_tuareg_question',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_MALIAN(G) &&
@@ -140,7 +140,7 @@ export const MALI_EVENTS = [
 
   {
     id: 'mli_coup_2012',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_MALIAN(G) &&

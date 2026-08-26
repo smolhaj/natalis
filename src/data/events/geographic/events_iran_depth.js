@@ -16,14 +16,14 @@ export const IRAN_DEPTH_EVENTS = [
 
   {
     id: 'irn_dep_revolution_childhood',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Iran' &&
       G.currentYear >= 1979 && G.currentYear <= 1983 &&
       G.age >= 5 && G.age <= 14 &&
       !G.mem?.irnDepRevChildhood,
-    text: pick([
+    text: () => pick([
       'The school uniform changes. Girls who were not covering before cover now. The textbooks arrive with pages glued together — the wrong pages, the old-regime pages. The teacher is someone you do not recognise from last year. The teacher explains the revolution. The revolution is the correct thing. The school explains this in the same tone that the school used to explain the Shah was the correct thing. You are old enough to notice the tone is the same. You are not old enough to say this.',
       'The komiteh — the revolutionary committee — has an office on your street now. The men inside decide which music is allowed and which is not. The neighbour who had wine at dinner no longer has wine at dinner, or has it without the lights on. The New Year\'s party your mother used to organise: the music, the dancing, the mixed company. This year the party is smaller and quieter and ends earlier. Nobody says why. Everyone understands why.',
     ]),
@@ -101,7 +101,7 @@ export const IRAN_DEPTH_EVENTS = [
 
   {
     id: 'irn_dep_martyr_child',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Iran' &&
@@ -123,14 +123,14 @@ export const IRAN_DEPTH_EVENTS = [
 
   {
     id: 'irn_dep_nowruz',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Iran' &&
       G.currentYear >= 1980 && G.currentYear <= 2020 &&
       G.age >= 15 && G.age <= 45 &&
       !G.mem?.irnDepNowruz,
-    text: pick([
+    text: () => pick([
       'Nowruz: the Persian New Year, tied to the vernal equinox, 2,500 years old and not Islamic. The Islamic Republic has complicated feelings about Nowruz — it predates Islam, it is Zoroastrian in origin, and it is universally celebrated by Iranians regardless of piety. The state never abolished it. The state tried to reduce it. Every year the families lay out the haft-sin table — the seven items beginning with S — and recite from Hafiz and eat fish and rice and give children money in new banknotes. The ancient feast refuses to become smaller than itself.',
       'Chaharshanbe Suri: the fire festival the Wednesday before Nowruz. People jump over fires in the street — a pre-Islamic ritual, the fire burning away the old year. The Islamic Republic has discouraged it repeatedly. Every year in the week before Nowruz the fires go in the streets anyway. The authorities issue statements. The fires go anyway. You jump the fire. You say the old words: your redness to me, my paleness to you — give me your warmth and take my sickness.',
     ]),
@@ -148,14 +148,15 @@ export const IRAN_DEPTH_EVENTS = [
 
   {
     id: 'irn_dep_1988_executions',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Iran' &&
       G.currentYear >= 1988 && G.currentYear <= 1992 &&
       G.age >= 18 &&
       !G.mem?.irnDep1988,
-    text: 'In the summer of 1988, following a secret fatwa from Khomeini, political prisoners across Iran are executed. The number is disputed — estimates range from 3,000 to 5,000. They are members of Mojahedin-e Khalq and leftist groups who refused to recant their beliefs. The executions happen without trial, without family notification. Families who come to visit are told their relative has been transferred. When the executions are finished, the families receive a bag of belongings. Some receive a location — a mass grave outside the city. This is not public knowledge in Iran. The families who know, know. The families who know do not speak of it publicly. You know because someone you know is in the bag of belongings.',
+    text: 'The visits stop in July and the answer at the gate is that he has been transferred. In the autumn they give your aunt a bag: a shirt, a watch, a pair of glasses, and a slip of paper with the name of a place outside the city where the ground has been recently turned. Nobody is told a number and nobody is told a charge. Your aunt keeps the watch in the drawer with the documents and does not wear it and does not speak about any of it outside the house.',
+    context: 'Following a secret order from Khomeini in the summer of 1988, political prisoners across Iran — chiefly members of the Mojahedin-e Khalq and leftist organisations — were executed after brief interrogations by panels later known as death commissions. Estimates run from 3,000 to 5,000 dead. Families were not notified, bodies were buried in unmarked plots such as Khavaran, and public discussion of the killings remains prohibited.',
     choices: null,
     effect: (p) => {
       p.m -= 14
@@ -213,7 +214,7 @@ export const IRAN_DEPTH_EVENTS = [
 
   {
     id: 'irn_dep_nuclear_pride',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Iran' &&
@@ -252,7 +253,7 @@ export const IRAN_DEPTH_EVENTS = [
 
   {
     id: 'irn_dep_post_2022_leaving',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Iran' &&

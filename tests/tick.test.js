@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { tick, checkPromotion, askForRaise } from '../src/engine/tick.js'
 import { makeState, makeAdultState, makeCountry } from './helpers.js'
+import { EVENTS } from '../src/data/events.js'
 
 // ─── tick() — main game loop ──────────────────────────────────────────────────
 
@@ -71,7 +72,7 @@ describe('tick', () => {
     expect(hasPhaseEntry).toBe(true)
   })
 
-  it('prison increments prisonSentence tracking and reduces happiness', () => {
+  it('prison advances the sentence and narrates the year', () => {
     const state = makeState({
       age: 25,
       inPrison: true,
@@ -79,7 +80,19 @@ describe('tick', () => {
       stats: { happiness: 60, health: 60, smarts: 50, looks: 50, charisma: 50, wealth: 50 },
     })
     const next = tick(state)
-    expect(next.stats.happiness).toBeLessThanOrEqual(state.stats.happiness)
+    expect(next.prisonSentence).toBe(4)
+    // A prison year must produce narrative — either an event to answer or a line
+    // in the log. It used to produce only "Another year behind bars", because the
+    // in-prison pool requires `prisonOk: true` and no event in the game set it.
+    const producedProse = next.pendingEvent != null || next.log.length > state.log.length
+    expect(producedProse).toBe(true)
+  })
+
+  it('the in-prison pool is not empty', () => {
+    // Regression: getNextEvent filters the in-prison pool to `prisonOk === true`.
+    // For most of the project's life, zero events declared it.
+    const prisonable = EVENTS.filter(e => e.prisonOk === true)
+    expect(prisonable.length).toBeGreaterThan(8)
   })
 
   it('adds salary to money when career is active', () => {

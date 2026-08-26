@@ -7,7 +7,7 @@ export const SPAIN_DEPTH_EVENTS = [
 
   {
     id: 'es_dep_posguerra_rojo',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Spain' &&
@@ -34,7 +34,7 @@ export const SPAIN_DEPTH_EVENTS = [
 
   {
     id: 'es_dep_clandestinity',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Spain' &&
@@ -61,7 +61,7 @@ export const SPAIN_DEPTH_EVENTS = [
 
   {
     id: 'es_dep_chabolas',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Spain' &&
@@ -88,7 +88,7 @@ export const SPAIN_DEPTH_EVENTS = [
 
   {
     id: 'es_dep_carrero_blanco',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Spain' &&
@@ -102,7 +102,7 @@ export const SPAIN_DEPTH_EVENTS = [
 
   {
     id: 'es_dep_pacto_olvido',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Spain' &&
@@ -130,7 +130,7 @@ export const SPAIN_DEPTH_EVENTS = [
 
   {
     id: 'es_dep_ley_peligrosidad',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Spain' &&
@@ -180,7 +180,7 @@ export const SPAIN_DEPTH_EVENTS = [
 
   {
     id: 'es_dep_matrimonio_igualitario',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Spain' &&

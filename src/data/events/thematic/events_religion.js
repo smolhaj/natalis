@@ -29,7 +29,7 @@ export const RELIGION_EVENTS = [
 
   {
     id: 'rel_protestant_born_again',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) => ['christian_protestant'].includes(G.religion) && G.age >= 14 && G.age <= 22 && ['subsaharan', 'developing_urban', 'developing_unstable'].includes(G.character.country.archetype) && !G.mem?.born_again,
     text: 'At a revival meeting, the pastor calls people forward. The music is overwhelming. Something cracks open in your chest that you didn\'t know was sealed shut.',
@@ -211,7 +211,7 @@ export const RELIGION_EVENTS = [
 
   {
     id: 'rel_muslim_hajj',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) => ['muslim_sunni', 'muslim_shia'].includes(G.religion) && G.age >= 30 && G.age <= 60 && !G.mem?.hajj && G.money > 5000,
     text: 'You have saved for years. The fifth pillar. Your name goes on the list, and when the confirmation comes, your hands are not steady. Two million Muslims converging from every country on earth — the same five days, the same sequence: Mecca, then Mina on the 8th of Dhul Hijjah, then the plain of Arafat where you stand from noon until sunset and ask for what you cannot ask anywhere else. Then Muzdalifah under an open sky, sleeping on stones, collecting pebbles for the stoning at Jamarat. The body does not forgive this easily. The soul is another matter.',
@@ -284,7 +284,7 @@ export const RELIGION_EVENTS = [
 
   {
     id: 'rel_jewish_antisemitism',
-    phase: 'adolescence',
+    phase: null,
     weight: 6,
     when: (G) => G.religion === 'jewish' && G.age >= 12 && G.age <= 22 && !G.mem?.antisemitism,
     text: (G) => `Someone at school discovers you\'re Jewish. The jokes start — small ones at first, then not small. ${G.character.country.archetype === 'post_soviet' ? 'Eastern Europe has not forgotten its old suspicions.' : 'You thought this country was different.'}`,
@@ -297,7 +297,7 @@ export const RELIGION_EVENTS = [
 
   {
     id: 'rel_jewish_holocaust_memory',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) => G.religion === 'jewish' && G.character.birthYear > 1945 && G.age >= 8 && G.age <= 16 && !G.mem?.holocaust_memory,
     text: 'A grandparent or older relative tells you about the war. Or they don\'t tell you — their silence says it instead. Either way, you understand that your being here is not certain. It was contingent. It was survived.',
@@ -332,7 +332,7 @@ export const RELIGION_EVENTS = [
 
   {
     id: 'rel_hindu_caste_dharma',
-    phase: 'childhood',
+    phase: null,
     weight: 6,
     when: (G) => G.religion === 'hindu' && G.casteSystem && G.age >= 8 && G.age <= 16 && !G.mem?.caste_dharma,
     text: (G) => {
@@ -434,7 +434,7 @@ export const RELIGION_EVENTS = [
 
   {
     id: 'rel_atheist_family_clash',
-    phase: 'adolescence',
+    phase: null,
     weight: 6,
     when: (G) => ['secular', 'atheist'].includes(G.religion) && G.age >= 14 && G.age <= 22 && !G.mem?.atheist_family_clash && ['subsaharan', 'developing_urban', 'developing_unstable', 'post_soviet', 'conflict_zone', 'wealthy_gulf'].includes(G.character.country.archetype),
     text: 'You tell your family you don\'t believe anymore. The silence that follows is its own kind of sound. Your mother looks as though you have said something that cannot be unsaid.',
@@ -526,7 +526,7 @@ export const RELIGION_EVENTS = [
 
   {
     id: 'rel_ramadan_minority_country',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) => ['muslim_sunni', 'muslim_shia'].includes(G.religion) &&
       G.character.country.archetype === 'wealthy_west' &&

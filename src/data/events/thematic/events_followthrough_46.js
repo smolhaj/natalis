@@ -83,7 +83,7 @@ export const FOLLOWTHROUGH_46_EVENTS = [
       G.age >= 55 &&
       G.currentYear >= 1985 &&
       !G.mem?.ft46JamIndep,
-    text: 'August 6, 1962. The flag went up and the Union Jack came down and you remember how it felt to be present for that — a specific pride that belonged to a specific day. What the country did with independence is what the country did: the garrison constituencies that turned Kingston neighbourhoods into armed political camps, the exodus that sent a quarter of the island to London and Brooklyn and Toronto. The flag is still flying. What it flies over is a more complicated answer than anything the flags promised that day.',
+    text: 'August 6, 1962. The flag went up and the Union Jack came down and you remember how it felt to be present for that — a pride that belonged to a specific day. What the country did with independence is what the country did: the garrison constituencies that turned Kingston neighbourhoods into armed political camps, the exodus that sent a quarter of the island to London and Brooklyn and Toronto. The flag is still flying. What it flies over is a more complicated answer than anything the flags promised that day.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 3; p.m -= 2; p.setMem('ft46JamIndep', true) },
   },
@@ -211,7 +211,7 @@ export const FOLLOWTHROUGH_46_EVENTS = [
       G.age >= 55 &&
       G.currentYear >= 2005 &&
       !G.mem?.ft46MobutuFall,
-    text: 'Mobutu left Kinshasa on May 16, 1997, and died in Morocco three months later. Kabila renamed the country back to the Democratic Republic of Congo and the Second Congo War began seventeen months after the first one ended. The specific arithmetic of DRC history is this: the war that ended Mobutu killed some; the war that followed it killed four million people, mostly from disease and hunger. You have lived inside this arithmetic long enough to know that the international community documented all of it and responded with missions and reports. You are still here.',
+    text: 'Mobutu left Kinshasa on May 16, 1997, and died in Morocco three months later. Kabila renamed the country back to the Democratic Republic of Congo and the Second Congo War began seventeen months after the first one ended. The arithmetic of DRC history is this: the war that ended Mobutu killed some; the war that followed it killed four million people, mostly from disease and hunger. You have lived inside this arithmetic long enough to know that the international community documented all of it and responded with missions and reports. You are still here.',
     choices: null,
     effect: (p) => { p.r += 7; p.e += 3; p.m -= 4; p.setMem('ft46MobutuFall', true) },
   },

@@ -16,7 +16,7 @@ export const PHILIPPINES_DEPTH_2_EVENTS = [
 
   {
     id: 'ph_dep_bpo_shift',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Philippines' &&
@@ -24,7 +24,7 @@ export const PHILIPPINES_DEPTH_2_EVENTS = [
       G.age >= 18 && G.age <= 35 &&
       G.ruralUrban === 'urban' &&
       !G.mem?.phDepBPO,
-    text: pick([
+    text: () => pick([
       'The call center is open while Manila sleeps. Your shift starts at 10pm and runs to 7am, synchronized to US time zones. You answer as "David" or "Jessica" — the American name they gave you for the account — and you speak in the flat, slightly-midwest accent you have trained yourself to produce without thinking about it. The salary is three times what most jobs here pay. The cost is the body clock, the sunlight you do not see on workdays, the social life that runs on a different schedule from your friends who work days.',
       'The BPO industry is the backbone of what keeps the economy moving in a particular direction. You are a college graduate working a night shift speaking American English about problems you do not have. The product you are selling or supporting or explaining is one you have never used. The customer you are speaking to does not know where you are. You are very good at this. You have been doing it for four years. You are beginning to think about how long you will do it.',
     ]),
@@ -42,7 +42,7 @@ export const PHILIPPINES_DEPTH_2_EVENTS = [
 
   {
     id: 'ph_dep_fiesta',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Philippines' &&
@@ -62,7 +62,7 @@ export const PHILIPPINES_DEPTH_2_EVENTS = [
 
   {
     id: 'ph_dep_basketball',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Philippines' &&
@@ -110,7 +110,7 @@ export const PHILIPPINES_DEPTH_2_EVENTS = [
       G.character.country.name === 'Philippines' &&
       G.currentYear >= 1970 &&
       G.age >= 16 &&
-      (G.ethnicity === 'moro' || G.ethnicity === 'tausug' || G.ethnicity === 'maranao' ||
+      (G.ethnicity === 'moro' ||
        G.character?.religion?.startsWith('muslim') || G.character?.birthReligion?.startsWith('muslim')) &&
       !G.mem?.phDepMoro,
     text: 'The Bangsamoro — the Moro nation — has been in armed conflict with the Manila government since the 1970s. The MNLF, then the MILF, then the splinter groups. The Moro people are Muslim in a Catholic country and Malay in a state whose elite identifies differently, and the conflict is about land and autonomy and the specific history of the Moro homeland that was never surrendered. You live in this conflict not as a combatant necessarily but as someone whose community is defined by it: the checkpoint, the relative who went to the mountains, the school that was built with foreign money that arrived because the conflict had made international news. In 2019, the Bangsamoro Organic Law creates an autonomous region. The law does not settle everything. Nothing settles everything.',
@@ -145,7 +145,7 @@ export const PHILIPPINES_DEPTH_2_EVENTS = [
 
   {
     id: 'ph_dep_hacienda',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Philippines' &&
@@ -187,7 +187,7 @@ export const PHILIPPINES_DEPTH_2_EVENTS = [
 
   {
     id: 'ph_dep_jeepney_b',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Philippines' &&
@@ -252,7 +252,7 @@ export const PHILIPPINES_DEPTH_2_EVENTS = [
 
   {
     id: 'ph_dep_ofw_calculus',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Philippines' &&

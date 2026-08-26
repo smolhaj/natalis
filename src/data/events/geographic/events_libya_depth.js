@@ -16,7 +16,7 @@ export const LIBYA_DEPTH_EVENTS = [
 
   {
     id: 'lby_dep_berber_identity',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_BERBER(G) &&
@@ -37,7 +37,7 @@ export const LIBYA_DEPTH_EVENTS = [
 
   {
     id: 'lby_dep_green_book_school',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_LIBYA(G) &&
@@ -58,7 +58,7 @@ export const LIBYA_DEPTH_EVENTS = [
 
   {
     id: 'lby_dep_1986_bombing',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_LIBYA(G) &&
@@ -102,7 +102,7 @@ export const LIBYA_DEPTH_EVENTS = [
 
   {
     id: 'lby_dep_benghazi_identity',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_LIBYA(G) &&
@@ -123,7 +123,7 @@ export const LIBYA_DEPTH_EVENTS = [
 
   {
     id: 'lby_dep_migration_hub',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_LIBYA(G) &&
@@ -144,7 +144,7 @@ export const LIBYA_DEPTH_EVENTS = [
 
   {
     id: 'lby_dep_pan_africa',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       IS_LIBYA(G) &&
@@ -164,7 +164,7 @@ export const LIBYA_DEPTH_EVENTS = [
 
   {
     id: 'lby_dep_fezzan',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_LIBYA(G) &&

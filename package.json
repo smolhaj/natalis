@@ -10,7 +10,11 @@
     "check-flags": "node scripts/check-flags.js",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "check-events": "node scripts/check-events.js",
+    "sim": "node scripts/sim.js",
+    "test:fast": "vitest run --exclude \"**/engineBalance.test.js\" --exclude \"**/engineRobustness.test.js\" --exclude \"**/simulation.test.js\"",
+    "test:sim": "vitest run tests/engineBalance.test.js tests/engineRobustness.test.js tests/simulation.test.js"
   },
   "dependencies": {
     "react": "^18.3.1",

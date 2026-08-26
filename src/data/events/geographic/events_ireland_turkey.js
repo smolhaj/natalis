@@ -37,7 +37,7 @@ export const IRELAND_TURKEY_EVENTS = [
 
   {
     id: 'ire_troubles_border',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Ireland' &&
@@ -51,7 +51,7 @@ export const IRELAND_TURKEY_EVENTS = [
 
   {
     id: 'ire_celtic_tiger',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Ireland' &&
@@ -78,7 +78,7 @@ export const IRELAND_TURKEY_EVENTS = [
 
   {
     id: 'ire_crash_2008',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Ireland' &&
@@ -105,7 +105,7 @@ export const IRELAND_TURKEY_EVENTS = [
 
   {
     id: 'ire_church_collapse',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Ireland' &&
@@ -123,7 +123,7 @@ export const IRELAND_TURKEY_EVENTS = [
 
   {
     id: 'tur_coup_1980',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Turkey' &&
@@ -150,7 +150,7 @@ export const IRELAND_TURKEY_EVENTS = [
 
   {
     id: 'tur_secularism_tension',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Turkey' &&
@@ -177,7 +177,7 @@ export const IRELAND_TURKEY_EVENTS = [
 
   {
     id: 'tur_earthquake_1999',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Turkey' &&
@@ -191,7 +191,7 @@ export const IRELAND_TURKEY_EVENTS = [
 
   {
     id: 'tur_erdogan_arc',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Turkey' &&
@@ -218,7 +218,7 @@ export const IRELAND_TURKEY_EVENTS = [
 
   {
     id: 'tur_armenian_silence',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Turkey' &&
@@ -232,7 +232,7 @@ export const IRELAND_TURKEY_EVENTS = [
 
   {
     id: 'tur_economic_miracle_2000s',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Turkey' &&

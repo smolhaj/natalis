@@ -134,7 +134,7 @@ export const LABOR_EVENTS = [
     weight: 4,
     when: (G) =>
       !G.mem?.labOutcome &&
-      (G.flags.has('lab_striking') || G.flags.has('lab_three_months')) &&
+      (G.flags.has('lab_striking') || G.flags.has('lab_holdout')) &&
       !G.flags.has('lab_won'),
     text: 'The return is on a Monday. You go in through the main entrance, past where the line was. The desks are where the desks were. The work is the same. The conditions are the same. The person you manage to make eye contact with across the floor is someone who crossed the line three months ago. Neither of you speaks about it. You pick up where you left off in the way that means you did not pick up where you left off at all.',
     choices: null,
@@ -157,8 +157,8 @@ export const LABOR_EVENTS = [
     when: (G) =>
       !G.mem?.labOutcome &&
       (G.flags.has('lab_striking') || G.flags.has('lab_holdout')) &&
-      G.stats.karma > 55,
-    text: 'The agreement is announced on a Friday afternoon. The representative reads the terms out loud in the car park. The hourly rate is a figure. The extra leave is a number of days. The grievance procedure has teeth now. These are small specific things. They are also the specific things you went out for. The people around you are not celebrating exactly — it is more like a slow release, like a noise finally stopping.',
+      G.karma > 55,
+    text: 'The agreement is announced on a Friday afternoon. The representative reads the terms out loud in the car park. The hourly rate is up eleven pence. The extra leave is three days. The grievance procedure has teeth now. Small things, and the exact things you went out for. The people around you are not celebrating exactly — it is more like a slow release, like a noise finally stopping.',
     choices: null,
     effect: (p) => {
       p.m += 16
@@ -248,7 +248,7 @@ export const LABOR_EVENTS = [
       {
         text: 'Ask them privately what they actually need',
         tag: null,
-        outcome: 'You ask. They tell you. What they need is smaller than a confrontation and more specific. You can do the specific thing.',
+        outcome: 'You ask. They tell you. What they need is smaller than a confrontation and more specific. You can do the thing.',
         effect: (p) => { p.karma += 6; p.s += 5; p.m += 5; p.addFlag('solidarity_proven'); p.setMem('labSolidarity', true) },
       },
     ],
@@ -265,7 +265,7 @@ export const LABOR_EVENTS = [
       !G.mem?.labFirstBoss &&
       G.career &&
       G.age >= 18 && G.age <= 24,
-    text: 'Your first boss is not a monster. They are a person with power over your income, which is a specific kind of relationship that requires a specific kind of literacy. They have preferences about when you speak and when you don\'t. They have ways of communicating that are not the ways they say they communicate. The work itself is one thing. Managing this person is another. Nobody told you the second part was part of the job.',
+    text: 'Your first boss is not a monster. They are a person with power over your income, which is a kind of relationship that requires a kind of literacy. They have preferences about when you speak and when you don\'t. They have ways of communicating that are not the ways they say they communicate. The work itself is one thing. Managing this person is another. Nobody told you the second part was part of the job.',
     choices: [
       {
         text: 'Learn to read them — the skill is worth having',

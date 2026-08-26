@@ -9,7 +9,7 @@ export const SOCIETY_EVENTS = [
 
   {
     id: 'womens_vote_first',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) => {
       if (G.character.gender !== 'female') return false
@@ -138,7 +138,7 @@ export const SOCIETY_EVENTS = [
 
   {
     id: 'womens_credit_rights',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) => {
       if (G.character.gender !== 'female') return false
@@ -170,7 +170,7 @@ export const SOCIETY_EVENTS = [
 
   {
     id: 'contraception_available',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) => {
       if (G.character.gender !== 'female') return false
@@ -202,7 +202,7 @@ export const SOCIETY_EVENTS = [
 
   {
     id: 'abortion_legal',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => {
       if (G.character.gender !== 'female') return false
@@ -235,7 +235,7 @@ export const SOCIETY_EVENTS = [
 
   {
     id: 'women_enter_workforce_wartime',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -277,7 +277,7 @@ export const SOCIETY_EVENTS = [
 
   {
     id: 'womens_equal_pay_law',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => {
       if (G.character.gender !== 'female') return false
@@ -385,7 +385,7 @@ export const SOCIETY_EVENTS = [
 
   {
     id: 'womens_divorce_rights',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) => {
       if (G.character.gender !== 'female') return false
@@ -435,7 +435,7 @@ export const SOCIETY_EVENTS = [
 
   {
     id: 'healthcare_uninsured_bill',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'United States' &&
@@ -538,7 +538,7 @@ export const SOCIETY_EVENTS = [
 
   {
     id: 'mental_health_stigma_era',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.currentYear < 1990 &&
@@ -556,7 +556,7 @@ export const SOCIETY_EVENTS = [
 
   {
     id: 'mental_health_modern',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.currentYear >= 2000 &&
@@ -654,7 +654,7 @@ export const SOCIETY_EVENTS = [
 
   {
     id: 'language_punished_school',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) => {
       if (G.age < 6 || G.age > 14) return false
@@ -769,7 +769,7 @@ export const SOCIETY_EVENTS = [
 
   {
     id: 'reclaiming_language',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.age >= 30 && G.age <= 55 &&
@@ -789,7 +789,7 @@ export const SOCIETY_EVENTS = [
 
   {
     id: 'which_name',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) =>
       ['subsaharan', 'developing_urban', 'developing_unstable'].includes(G.character.country.archetype) &&
@@ -811,7 +811,7 @@ export const SOCIETY_EVENTS = [
     weight: 3,
     when: (G) =>
       G.age >= 18 && G.age <= 35 &&
-      (G.flags.includes('emigrated') || G.flags.includes('ethnic_minority')) &&
+      (G.flags.includes('emigrated') || G.character.country.ethnicGroups?.find(g => g.id === G.ethnicity)?.disadvantaged) &&
       !G.mem?.accent_navigation,
     text: 'The way you say certain words identifies where you are from in a way that closes some doors before you open them. You practice saying them differently. Sometimes you succeed. It costs something each time.',
     choices: null,
@@ -913,7 +913,7 @@ export const SOCIETY_EVENTS = [
       G.currentYear >= 1948 && G.currentYear <= 1994 &&
       G.age >= 16 &&
       !G.mem?.apartheid_healthcare &&
-      (G.flags.includes('ethnic_minority') || G.flags.includes('disadvantaged_ethnicity')),
+      ['black_south_african', 'coloured_south_african', 'indian_south_african'].includes(G.ethnicity),
     text: 'The hospital has separate entrances. Separate wards. You are directed to a wing that is less equipped and more crowded. The nurse who treats you is competent and overworked. The doctor is rarely here. You understand this is not an accident.',
     choices: null,
     effect: (p) => {
@@ -965,7 +965,7 @@ export const SOCIETY_EVENTS = [
 
   {
     id: 'language_independence_restoration',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) => {
       if (G.age < 16) return false

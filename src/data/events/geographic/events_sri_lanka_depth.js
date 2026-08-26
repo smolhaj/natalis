@@ -15,7 +15,7 @@ export const SRI_LANKA_DEPTH_EVENTS = [
 
   {
     id: 'slk_dep_tsunami',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Sri Lanka' &&
@@ -56,7 +56,7 @@ export const SRI_LANKA_DEPTH_EVENTS = [
 
   {
     id: 'slk_dep_estate_tamil',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Sri Lanka' &&
@@ -86,7 +86,7 @@ export const SRI_LANKA_DEPTH_EVENTS = [
       G.currentYear >= 2004 &&
       G.age >= 18 &&
       !G.mem?.slkDepBuddhistNat,
-    text: pick([
+    text: () => pick([
       'The Jathika Hela Urumaya — nine monks in parliament in 2004, the first time monks ran as candidates. The robes in the chamber. The argument is that the Sinhalese Buddhist civilisation requires protection in ways that secular politics cannot provide. The anti-Muslim violence in Kandy in 2018 — the temples, the saffron in the crowd. You are Buddhist, as your family has been for generations. What some monks are doing with the teachings is something you are still deciding how to name.',
       'The official theology is that Sri Lanka is the island entrusted with the preservation of the Dhamma — the Buddha himself is supposed to have visited three times. This is not scripture for your grandmother; it is geography. The idea that Tamils are a threat to this preservation was not always the mainstream Buddhist position. The BBS and the JHU have made it mainstream in specific decades. You inherited the faith and not necessarily the political form it has taken.',
     ]),
@@ -121,7 +121,7 @@ export const SRI_LANKA_DEPTH_EVENTS = [
 
   {
     id: 'slk_dep_mullivaikkal',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Sri Lanka' &&
@@ -161,7 +161,7 @@ export const SRI_LANKA_DEPTH_EVENTS = [
 
   {
     id: 'slk_dep_rajapaksa',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Sri Lanka' &&
@@ -182,7 +182,7 @@ export const SRI_LANKA_DEPTH_EVENTS = [
 
   {
     id: 'slk_dep_easter_sunday',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Sri Lanka' &&
@@ -203,7 +203,7 @@ export const SRI_LANKA_DEPTH_EVENTS = [
 
   {
     id: 'slk_dep_colombo_checkpoints',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Sri Lanka' &&

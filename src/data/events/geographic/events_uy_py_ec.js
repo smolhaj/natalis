@@ -61,10 +61,11 @@ const UY_PY_EC_EVENTS = [
 
   {
     id: 'uru_mujica_presidency',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
-    when: (G) => G.character.country.name === 'Uruguay' && G.currentYear >= 2010 && G.currentYear <= 2015 && !G.flags.has('uru_mujica_era'),
-    text: 'The president of Uruguay lives in a farmhouse outside Montevideo and drives a 1987 Volkswagen Beetle. He donates 90 percent of his salary to charitable causes, leaving himself the equivalent of a teacher\'s wage. His name is José Mujica. He spent fourteen years in prison under the dictatorship, much of it in a hole in the ground. Under his presidency: marijuana legalized and state-regulated. Abortion legalized. Same-sex marriage legalized. He says in interviews: I am not poor. Poor people are those who only work to try to maintain an expensive lifestyle. I do not have time for that. The foreigners write about this as if it is eccentric. To you it makes a specific kind of sense.',
+    when: (G) => G.character.country.name === 'Uruguay' && G.currentYear >= 2010 && G.currentYear <= 2015 && G.age >= 12 && !G.flags.has('uru_mujica_era'),
+    text: 'The president lives out on the smallholding with the dogs and drives the same 1987 Beetle to work. He keeps a teacher\'s wage from the salary and gives the rest away, and he says in an interview that he is not poor, that poor is when you work only to keep an expensive life going. The foreign correspondents write about him the way you would write about a curiosity. To you he sounds like your uncle, and your uncle has been saying it for forty years.',
+    context: 'Jose Mujica, a former Tupamaro guerrilla who spent fourteen years in prison under the dictatorship, much of it in solitary confinement at the bottom of a well, was president of Uruguay from 2010 to 2015. He donated about ninety percent of his salary and lived on his farm outside Montevideo. His government legalised same-sex marriage, abortion, and a state-regulated cannabis market.',
     choices: null,
     effect: (p) => { p.m += 8; p.karma += 5; p.addFlag('uru_mujica_era'); },
   },
@@ -108,7 +109,7 @@ const UY_PY_EC_EVENTS = [
 
   {
     id: 'pry_triple_alliance_memory',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) => G.character.country.name === 'Paraguay' && G.currentYear >= 1940 && G.currentYear <= 1980 && G.age >= 8 && G.age <= 16 && !G.flags.has('pry_triple_alliance_memory'),
     text: 'The war. 1864 to 1870. Paraguay against Brazil, Argentina, and Uruguay at the same time. For five years. The teacher says: sixty percent of the population died. Some say seventy. After the war, four women for every man. After the war, the country was reorganized by the surviving women. You learn this and feel something that does not have a clean name in Spanish or Guaraní — the grief and the pride are the same feeling. We were nearly destroyed. We are still here.',
@@ -134,7 +135,7 @@ const UY_PY_EC_EVENTS = [
     weight: 4,
     when: (G) => G.character.country.name === 'Ecuador' && G.currentYear >= 1972 && G.currentYear <= 1990 && !G.flags.has('ecu_oil_generation'),
     text: (G) => {
-      const isIndigenous = G.character.ethnicity?.id === 'indigenous_ecuadorian'
+      const isIndigenous = G.character.ethnicity === 'indigenous_ecuadorian'
       const yr = G.currentYear
       return isIndigenous
         ? `The oil company built a road into the Oriente in ${yr <= 1975 ? '1972' : 'the 1970s'}. The road brought the oil company and it brought missionaries and it brought settlers and it brought disease, in that order or some other order that amounts to the same thing. The well that blew out left oil in the river for six months. The fish died. The children's skin changed. The company moved on when the well ran dry and left what it left.`

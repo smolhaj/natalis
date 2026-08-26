@@ -13,7 +13,7 @@ export const TAJIKISTAN_EVENTS = [
 
   {
     id: 'taj_soviet_dushanbe',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_TAJIK(G) &&
@@ -29,7 +29,7 @@ export const TAJIKISTAN_EVENTS = [
 
   {
     id: 'taj_civil_war_begins',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) =>
       IS_TAJIK(G) &&
@@ -57,7 +57,7 @@ export const TAJIKISTAN_EVENTS = [
 
   {
     id: 'taj_peace_1997',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_TAJIK(G) &&
@@ -74,7 +74,7 @@ export const TAJIKISTAN_EVENTS = [
 
   {
     id: 'taj_russia_migration',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_TAJIK(G) &&
@@ -103,7 +103,7 @@ export const TAJIKISTAN_EVENTS = [
 
   {
     id: 'taj_leader_of_nation',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_TAJIK(G) &&
@@ -119,7 +119,7 @@ export const TAJIKISTAN_EVENTS = [
 
   {
     id: 'taj_pamiri_identity',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_PAMIRI(G) &&
@@ -147,7 +147,7 @@ export const TAJIKISTAN_EVENTS = [
 
   {
     id: 'taj_gbao_2022',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_TAJIK(G) &&
@@ -175,7 +175,7 @@ export const TAJIKISTAN_EVENTS = [
 
   {
     id: 'taj_rogun_dam',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_TAJIK(G) &&
@@ -191,7 +191,7 @@ export const TAJIKISTAN_EVENTS = [
 
   {
     id: 'taj_remittance_life',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_TAJIK(G) &&

@@ -30,7 +30,7 @@ export const ECUADOR_EVENTS = [
     weight: 5,
     when: (G) =>
       IS_ECUADORIAN(G) &&
-      G.character.ethnicity?.id === 'indigenous_ecuadorian' &&
+      G.character.ethnicity === 'indigenous_ecuadorian' &&
       G.age >= 7 && G.age <= 13 &&
       !G.mem?.ecuSchoolQuechua,
     text: 'At home the language is Quechua. At school it is Spanish or nothing — the teacher says Quechua is for the market, for grandmothers, for people who want to stay poor. You are learning two things simultaneously: Spanish for the school, and the understanding that your home language is considered lesser. You become careful about which words you use in which rooms. This is not a choice. This is an adaptation that happens to children before they are old enough to name what is being taken.',
@@ -42,7 +42,7 @@ export const ECUADOR_EVENTS = [
 
   {
     id: 'ecu_military_dictatorship',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_ECUADORIAN(G) &&
@@ -93,7 +93,7 @@ export const ECUADOR_EVENTS = [
 
   {
     id: 'ecu_spain_wave',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_ECUADORIAN(G) &&
@@ -125,7 +125,7 @@ export const ECUADOR_EVENTS = [
 
   {
     id: 'ecu_correa_revolution',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_ECUADORIAN(G) &&

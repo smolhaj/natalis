@@ -15,11 +15,11 @@ const FEMALE = (G) => G.character.gender === 'female'
 export const WATER_INFRA_EVENTS = [
 
   // ── THE DRY SEASON ────────────────────────────────────────────────────────────
-  // Annual, brutal, and entirely predictable. The specific knowledge of thirst.
+  // Annual, brutal, and entirely predictable. The knowledge of thirst.
 
   {
     id: 'wi_dry_season',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       RURAL_LOW_GDP(G) &&
@@ -38,7 +38,7 @@ export const WATER_INFRA_EVENTS = [
 
   {
     id: 'wi_electrification',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       RURAL_LOW_GDP(G) &&
@@ -57,7 +57,7 @@ export const WATER_INFRA_EVENTS = [
 
   {
     id: 'wi_pump_committee',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       RURAL_LOW_GDP(G) &&
@@ -87,7 +87,7 @@ export const WATER_INFRA_EVENTS = [
 
   {
     id: 'wi_water_walk_adult',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       RURAL_LOW_GDP(G) &&
@@ -107,7 +107,7 @@ export const WATER_INFRA_EVENTS = [
 
   {
     id: 'wi_cochabamba_water_war',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country?.name === 'Bolivia' &&

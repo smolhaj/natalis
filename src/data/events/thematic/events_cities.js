@@ -283,7 +283,7 @@ export const CITY_EVENTS = [
       G.birthPlace?.id !== 'mx_mexico_city' &&
       !G.mem?.chilangoMoment,
     text: () =>
-      `You are not from here. You are from somewhere with a specific quality of silence, a specific kind of food, a specific speed. Mexico City has not asked you to forget this. It has simply made it less and less available — replaced it with the city's noise, its food, its pace. One morning you realize you have started complaining about people from the provinces who don't know how to ride the metro. You have become what you arrived to.`,
+      `You are not from here. You are from somewhere with a quality of silence, a kind of food, a specific speed. Mexico City has not asked you to forget this. It has simply made it less and less available — replaced it with the city's noise, its food, its pace. One morning you realize you have started complaining about people from the provinces who don't know how to ride the metro. You have become what you arrived to.`,
     choices: null,
     effect: (p) => { p.m += 3; p.s += 3; p.addFlag('became_chilango'); p.setMem('chilangoMoment', true) },
   },

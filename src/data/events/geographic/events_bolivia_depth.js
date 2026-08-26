@@ -22,7 +22,7 @@ export const BOLIVIA_DEPTH_EVENTS = [
 
   {
     id: 'bol_dep_che_1967',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_BOL(G) &&
@@ -48,7 +48,7 @@ export const BOLIVIA_DEPTH_EVENTS = [
 
   {
     id: 'bol_dep_potosi_colonial',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_BOL(G) &&
@@ -62,7 +62,7 @@ export const BOLIVIA_DEPTH_EVENTS = [
 
   {
     id: 'bol_dep_cholita_pollera',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_BOL(G) &&
@@ -76,7 +76,7 @@ export const BOLIVIA_DEPTH_EVENTS = [
 
   {
     id: 'bol_dep_lithium_debate',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_BOL(G) &&
@@ -102,7 +102,7 @@ export const BOLIVIA_DEPTH_EVENTS = [
 
   {
     id: 'bol_dep_tipnis_road',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_BOL(G) &&
@@ -141,7 +141,7 @@ export const BOLIVIA_DEPTH_EVENTS = [
 
   {
     id: 'bol_dep_maritime_icj',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_BOL(G) &&

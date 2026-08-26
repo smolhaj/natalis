@@ -329,7 +329,7 @@ export const DECOLONISATION_EVENTS = [
 
   {
     id: 'dc_imf_debt_generation',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem?.dcDebtGen &&

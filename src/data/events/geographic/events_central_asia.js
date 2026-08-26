@@ -35,7 +35,7 @@ export const CENTRAL_ASIA_EVENTS = [
 
   {
     id: 'cas_kazakh_famine',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) => IS_KAZAKH(G) && G.currentYear >= 1931 && G.currentYear <= 1933 && G.age >= 4 && !G.mem.casFamine,
     text: 'The Kazakhs call it Asharshylyk — the great hunger. The grain quota is enforced while people are dying. The communal livestock has been slaughtered or collectivised. Your family begins to move — on foot, toward the Chinese border, toward Uzbekistan, anywhere. Not everyone who leaves arrives. One in three Kazakhs will die in these two years. You are not yet a statistic.',
@@ -53,7 +53,7 @@ export const CENTRAL_ASIA_EVENTS = [
 
   {
     id: 'cas_aral_sea',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => (IS_UZBEK(G) || IS_KAZAKH(G)) && G.currentYear >= 1970 && G.currentYear <= 2010 && G.age >= 16 && G.age <= 35 && !G.mem.casAral,
     text: 'Your grandfather fished the Aral Sea. The town of Muynak was a port; now it is sixty kilometres from the shoreline and ship hulls rust in the sand where the water was. The cotton irrigation diverted the rivers and the sea has been shrinking since before you were born. You are watching the disappearance of something enormous in slow motion, the way you only notice a change when you have been away and come back.',
@@ -62,7 +62,7 @@ export const CENTRAL_ASIA_EVENTS = [
 
   {
     id: 'cas_kyrgyz_1991',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) => IS_KYRGYZ(G) && G.currentYear >= 1991 && G.currentYear <= 1995 && G.age >= 18 && !G.mem.casKyrgyz91,
     text: 'Moscow stops sending money in August 1991. The subsidies that paid for the factory, the clinic, the pension, the price of bread — all of it was Moscow\'s money, and Moscow has other problems. You are in Bishkek. Your salary arrives three months late in a currency that has lost most of its value. The factory down the road closes. The workers are not formally fired; they simply stop being paid and eventually stop coming in.',
@@ -84,7 +84,7 @@ export const CENTRAL_ASIA_EVENTS = [
 
   {
     id: 'cas_kazakh_oil_boom',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) => IS_KAZAKH(G) && G.currentYear >= 2000 && G.currentYear <= 2015 && G.age >= 30 && !G.mem.casOil,
     text: 'The oil money changes the city. Astana — a new capital built in the steppe, renamed from Akmola, being renamed again for the president — is rising. The architecture is ambitious beyond what the scale of the country suggests. The money is real. So is the absence of the institutions that would normally manage it.',
@@ -106,7 +106,7 @@ export const CENTRAL_ASIA_EVENTS = [
 
   {
     id: 'cas_tulip_revolution',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => IS_KYRGYZ(G) && G.currentYear >= 2005 && G.currentYear <= 2006 && G.age >= 18 && !G.mem.casTulip,
     text: 'The results of the parliamentary election are announced. The south of the country does not accept them. Within days the presidential palace is stormed. Akayev flies to Russia. This is the Tulip Revolution — named for a flower, though tulips were not involved. You watch this from wherever you are watching it.',
@@ -128,7 +128,7 @@ export const CENTRAL_ASIA_EVENTS = [
 
   {
     id: 'cas_post_soviet_islam',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => IS_CENTRAL_ASIA(G) && G.religion?.includes('muslim') && G.currentYear >= 1991 && G.currentYear <= 2010 && G.age >= 16 && !G.mem.casIslam,
     text: 'The mosques that were warehouses are mosques again. For seventy years the Soviet system did not eradicate Islam — it pushed it into the kitchen, into the language, into the things said at funerals. Now it is returning to the public space and there are different ideas about what it should look like when it arrives.',
@@ -150,7 +150,7 @@ export const CENTRAL_ASIA_EVENTS = [
 
   {
     id: 'cas_uzbek_harvest_adult',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => IS_UZBEK(G) && G.career !== null && G.currentYear >= 2000 && G.currentYear <= 2020 && G.age >= 25 && !G.mem.casHarvestAdult,
     text: 'The school year still stops in September for the cotton harvest. You are a teacher now. In September you take your class to the fields. The ILO has issued reports; the reports are noted and filed. Your students pick cotton with their hands. You count the rows.',
@@ -183,7 +183,7 @@ export const CENTRAL_ASIA_EVENTS = [
 
   {
     id: 'taj_civil_war_1992',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) => IS_TAJIK(G) && G.currentYear >= 1992 && G.currentYear <= 1997 && G.age >= 16 && !G.mem?.tajCivilWar,
     text: 'The war is between the government — backed by Russia and Uzbekistan — and the United Tajik Opposition: a coalition of Islamists, democrats, and regionalists that should not work but does, briefly, because the enemy is the same. The road from Dushanbe to your village has become a line that changes hands. The word from cousins in the south is that the Kulyabis are moving. The regional militias are the armies now. The state has dissolved into who has a Kalashnikov and who gave it to them.',
@@ -205,7 +205,7 @@ export const CENTRAL_ASIA_EVENTS = [
 
   {
     id: 'taj_russian_departure',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => IS_TAJIK(G) && G.currentYear >= 1992 && G.currentYear <= 1996 && G.age >= 16 && !G.mem?.tajRussians,
     text: 'The Russian and German-Jewish population — engineers, teachers, the doctor who has been at the clinic for twenty years — have been leaving since before the war started. The mathematician from the university who taught topology for three decades catches a flight to Moscow with two suitcases. The clinic is understaffed. The boilers in the factories are attended by people who are learning as they go. The Soviet-era expertise that made this place function at a certain level is on a plane out of Dushanbe, and what replaces it will take a generation to build.',
@@ -215,7 +215,7 @@ export const CENTRAL_ASIA_EVENTS = [
 
   {
     id: 'ca_taj_peace_1997',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) => IS_TAJIK(G) && G.currentYear >= 1997 && G.currentYear <= 2000 && G.age >= 25 && G.flags.some(f => f === 'tajik_civil_war_generation') && !G.mem?.tajPeace,
     text: 'The General Agreement on the Establishment of Peace: the United Tajik Opposition commanders come in from the mountains and the government integrates some of them into the security forces. This is called reconciliation. What it means in practice is that the men who gave orders for certain things are now wearing uniforms and attending functions at the Presidential Palace. Fifty thousand people are dead. You do not say the number out loud.',
@@ -225,7 +225,7 @@ export const CENTRAL_ASIA_EVENTS = [
 
   {
     id: 'taj_remittance_economy',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) => IS_TAJIK(G) && G.currentYear >= 2002 && G.currentYear <= 2020 && G.age >= 25 && !G.mem?.tajRemittance,
     text: 'Your son is in Moscow. Your brother is in Moscow. A third of the adult men in the region are in Moscow. They build apartment blocks there and the money comes back by phone transfer and Western Union. It is thirty to forty percent of the country\'s GDP, this money that arrives from construction sites and markets in Russia. It is also what keeps the wheat flour on the table. The dependency is total and nobody says total.',
@@ -249,7 +249,7 @@ export const CENTRAL_ASIA_EVENTS = [
 
   {
     id: 'tkm_niyazov_cult',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) => IS_TURKMEN(G) && G.currentYear >= 1992 && G.currentYear <= 2006 && G.age >= 6 && G.age <= 18 && !G.mem?.tkmNiyazov,
     text: 'The school day begins with the Ruhnama: the spiritual book written by Saparmurat Niyazov, the president who renamed himself Turkmenbashi — Father of all Turkmen. The month of January is now Turkmenbashi. The month of April is named after his mother. The giant golden statue of him on top of the Neutrality Arch rotates to always face the sun. You know the Ruhnama passages by heart. You know the penalties for not knowing them. You have never discussed what you actually think about any of this.',
@@ -259,7 +259,7 @@ export const CENTRAL_ASIA_EVENTS = [
 
   {
     id: 'tkm_gas_wealth_invisible',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) => IS_TURKMEN(G) && G.currentYear >= 1995 && G.currentYear <= 2020 && G.age >= 18 && !G.mem?.tkmGas,
     text: 'Turkmenistan is the fourth largest natural gas reserves in the world. The gas wealth builds the white marble capital and the president\'s palace and the fountains in the desert. The subsidies mean energy is nearly free. The food subsidies mean the state keeps prices low. What the state does not build is an independent press, an independent judiciary, an independent anything. You know roughly what your country is worth in the ground. The correlation between that number and the state of the hospital your family uses is something you have learned not to say out loud.',

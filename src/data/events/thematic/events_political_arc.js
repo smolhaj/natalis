@@ -19,7 +19,7 @@ export const POLITICAL_ARC_EVENTS = [
       AUTHORITARIAN_REGIMES.includes(G.regime) &&
       G.age >= 28 && G.age <= 50 &&
       !G.mem?.polLeftNoted,
-    text: 'You become aware, not from anything direct, that you have been noted. Not arrested. Not visited. But someone at the office said something that could only have been passed along. A question came at a meeting that implied a reading of your file. The specific shape of it: nothing you can point to, nothing you can deny, and nothing that stops. You recalibrate what you say, where you say it, and to whom. You become fluent in a second language that consists entirely of things you do not say.',
+    text: 'You become aware, not from anything direct, that you have been noted. Not arrested. Not visited. But someone at the office said something that could only have been passed along. A question came at a meeting that implied a reading of your file. The shape of it: nothing you can point to, nothing you can deny, and nothing that stops. You recalibrate what you say, where you say it, and to whom. You become fluent in a second language that consists entirely of things you do not say.',
     choices: null,
     effect: (p) => {
       p.m -= 12; p.e += 5; p.s -= 4;
@@ -48,7 +48,7 @@ export const POLITICAL_ARC_EVENTS = [
 
   {
     id: 'pol_left_1980s_rightward_shift',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.political_leaning === 'left' &&
@@ -75,7 +75,7 @@ export const POLITICAL_ARC_EVENTS = [
       G.currentYear >= 1950 && G.currentYear <= 1985 &&
       G.age >= 18 && G.age <= 32 &&
       !G.mem?.polNatNewFlag,
-    text: 'The flag has existed for fewer years than you have. The anthem was composed when you were a child. Nationalism in an old country is a conversation with a long history; nationalism here is something you are building while living inside it. There is a specific quality to loving a country that is still deciding what it is — the pride has no settled object yet, the vision of what the country should become is still being argued in every newspaper, every cabinet meeting, every conversation between people who agree about independence and disagree about everything else. You are a nationalist who does not yet know the full shape of what you are nationalist about. This will matter later.',
+    text: 'The flag has existed for fewer years than you have. The anthem was composed when you were a child. Nationalism in an old country is a conversation with a long history; nationalism here is something you are building while living inside it. There is a quality to loving a country that is still deciding what it is — the pride has no settled object yet, the vision of what the country should become is still being argued in every newspaper, every cabinet meeting, every conversation between people who agree about independence and disagree about everything else. You are a nationalist who does not yet know the full shape of what you are nationalist about. This will matter later.',
     choices: null,
     effect: (p) => {
       p.m += 8; p.s += 4; p.karma += 3;
@@ -113,7 +113,7 @@ export const POLITICAL_ARC_EVENTS = [
 
   {
     id: 'pol_centre_no_place',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.political_leaning === 'centre' &&
@@ -178,7 +178,7 @@ export const POLITICAL_ARC_EVENTS = [
 
   {
     id: 'pol_nationalist_abroad',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.political_leaning === 'nationalist' &&

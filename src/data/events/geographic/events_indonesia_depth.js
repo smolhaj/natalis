@@ -8,7 +8,7 @@ export const INDONESIA_DEPTH_EVENTS = [
 
   {
     id: 'id_1965_purge',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Indonesia' &&
@@ -16,7 +16,8 @@ export const INDONESIA_DEPTH_EVENTS = [
       G.age >= 16 &&
       G.ethnicity !== 'chinese_indonesian' &&
       !G.mem?.id1965Purge,
-    text: 'October 1965. The September 30th Movement — a coup attempt by a faction of the military — is blamed on the PKI, the Indonesian Communist Party. What follows is not an investigation: it is a purge. Over the next six months, between 500,000 and one million Indonesians are killed. The army provides the lists; local militias do much of the killing. In East Java and Bali the rivers carry bodies. The PKI had three million members and tens of millions of affiliated workers, farmers, teachers. The category "communist" expands to include anyone someone wants to eliminate. You are not safe because you are not communist. You are safe because you are not on a list.',
+    text: 'The lists come from the army and the men who come to the door are from three streets away. Your neighbour taught at the school and belonged to a teachers\' union and that is enough of a category. In November the boatmen at Kediri stop going out because of what is in the river. Nobody asks you what you believe. Whether you are alive in March depends on whether your name was written on a piece of paper by somebody who had a reason.',
+    context: 'After the killing of six generals on 30 September 1965, the army under Suharto blamed the Indonesian Communist Party, then the world\'s third largest with about three million members. Between 500,000 and one million people were killed over the following months, chiefly in Central and East Java and Bali, with the army supplying lists and civilian and religious militias carrying out much of the killing. No perpetrator has been prosecuted.',
     choices: [
       {
         text: 'Someone in your family was taken.',
@@ -36,7 +37,7 @@ export const INDONESIA_DEPTH_EVENTS = [
 
   {
     id: 'id_new_order_silence',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Indonesia' &&
@@ -51,7 +52,7 @@ export const INDONESIA_DEPTH_EVENTS = [
 
   {
     id: 'id_bali_bombing_2002',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Indonesia' &&
@@ -78,7 +79,7 @@ export const INDONESIA_DEPTH_EVENTS = [
 
   {
     id: 'id_tsunami_2004',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Indonesia' &&
@@ -106,7 +107,7 @@ export const INDONESIA_DEPTH_EVENTS = [
 
   {
     id: 'id_transmigration',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Indonesia' &&

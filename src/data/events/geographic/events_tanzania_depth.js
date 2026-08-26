@@ -15,7 +15,7 @@ export const TANZANIA_DEPTH_EVENTS = [
 
   {
     id: 'tan_zanzibar_revolution',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_TANZANIA(G) &&
@@ -54,7 +54,7 @@ export const TANZANIA_DEPTH_EVENTS = [
 
   {
     id: 'tan_uganda_war_1978',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_TANZANIA(G) &&
@@ -75,7 +75,7 @@ export const TANZANIA_DEPTH_EVENTS = [
 
   {
     id: 'tan_tazara_railway',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_TANZANIA(G) &&
@@ -96,7 +96,7 @@ export const TANZANIA_DEPTH_EVENTS = [
 
   {
     id: 'tan_aids_epidemic',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_TANZANIA(G) &&
@@ -136,7 +136,7 @@ export const TANZANIA_DEPTH_EVENTS = [
 
   {
     id: 'tan_gold_mining',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_TANZANIA(G) &&
@@ -174,14 +174,15 @@ export const TANZANIA_DEPTH_EVENTS = [
 
   {
     id: 'tan_magufuli_era',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_TANZANIA(G) &&
       G.currentYear >= 2015 && G.currentYear <= 2021 &&
       G.age >= 18 &&
       !G.mem?.tanMagufuli,
-    text: `John Pombe Magufuli wins the 2015 election. He is called *Tingatinga* — the Bulldozer — for his infrastructure push and for his willingness to fire officials publicly and immediately. He cancels the independence anniversary celebration and organises a national clean-up day instead. He cuts official travel budgets. He is popular. He is also increasingly authoritarian — opposition politicians arrested, journalists prosecuted, homosexuality enforced as criminal. When COVID-19 arrives in 2020, he declares Tanzania COVID-free, cancels testing, and says the virus can be cured with prayer, ginger, and steam. He refuses vaccines. In March 2021, the government announces he has died, at sixty-one, of heart failure. The announcement is careful not to specify when he became ill.`,
+    text: 'He cancels the independence day parade and puts the country to work sweeping the streets instead, and he is there with a broom on the television. He sacks a hospital director on camera. People at the bus stand call him the Bulldozer and mean it warmly, and the newspaper that ran the other story last month is not on the stand. In 2020 he says the country is free of the virus and that steam and prayer will hold. In March they announce he is dead of heart failure.',
+    context: 'John Magufuli was president of Tanzania from 2015 until his death in March 2021. He cut government spending, replaced the independence anniversary with a national clean-up day and dismissed officials publicly, while opposition figures were arrested, newspapers suspended and prosecutions for homosexuality increased. He declared Tanzania free of COVID-19 in June 2020, halted testing and reporting, and rejected vaccines. Officials attributed his death to heart failure; opposition figures said he had contracted the virus.',
     choices: [
       {
         text: `The development was real. The roads. The clean cities. You saw what the Bulldozer was moving.`,
@@ -212,7 +213,7 @@ export const TANZANIA_DEPTH_EVENTS = [
 
   {
     id: 'tan_zanzibar_identity',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_TANZANIA(G) &&

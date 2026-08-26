@@ -13,7 +13,7 @@ export const GREECE_DEPTH_EVENTS = [
 
   {
     id: 'gr_prosfyges_family',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_GREEK(G) &&
@@ -35,11 +35,11 @@ export const GREECE_DEPTH_EVENTS = [
 
   {
     id: 'gr_oxi_1940',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_GREEK(G) &&
-      G.currentYear === 1940 &&
+      G.currentYear >= 1940 && G.currentYear <= 1941 &&
       G.age >= 16 &&
       !G.mem?.grOxi,
     text: 'October 28, 1940. Mussolini\'s ultimatum to Greece demands the right to occupy strategic positions inside the country. Metaxas — himself a dictator, himself not a democrat — says no. *Oxi.* The Italian army crosses from Albania into the mountains of Epirus and the Greek army, vastly smaller and far less equipped, pushes them back. Through November and December, Greek forces advance into Albania in temperatures that freeze the rifles. You know what the no means, and you know that the no was said, and you know that it holds — for now. The occupation comes later. The *Oxi* stands.',
@@ -64,7 +64,7 @@ export const GREECE_DEPTH_EVENTS = [
 
   {
     id: 'gr_katochi',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_GREEK(G) &&
@@ -90,7 +90,7 @@ export const GREECE_DEPTH_EVENTS = [
 
   {
     id: 'gr_elas_resistance',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_GREEK(G) &&
@@ -126,7 +126,7 @@ export const GREECE_DEPTH_EVENTS = [
 
   {
     id: 'gr_civil_war',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_GREEK(G) &&
@@ -161,7 +161,7 @@ export const GREECE_DEPTH_EVENTS = [
 
   {
     id: 'gr_frouriko',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_GREEK(G) &&
@@ -191,7 +191,7 @@ export const GREECE_DEPTH_EVENTS = [
 
   {
     id: 'gr_economic_miracle',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_GREEK(G) &&
@@ -207,7 +207,7 @@ export const GREECE_DEPTH_EVENTS = [
 
   {
     id: 'gr_gastarbeiter',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_GREEK(G) &&

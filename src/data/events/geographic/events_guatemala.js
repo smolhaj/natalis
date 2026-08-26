@@ -6,7 +6,7 @@
 
 const IS_GUATEMALAN = (G) => G.character.country?.name === 'Guatemala'
 const IS_MAYA = (G) =>
-  ['maya_kiche', 'maya_mam', 'maya_kaqchikel', 'maya_qeqchi', 'other_maya', 'xinca'].includes(G.character.ethnicity?.id)
+  ['maya_kiche', 'maya_mam', 'maya_kaqchikel', 'maya_qeqchi', 'other_maya', 'xinca'].includes(G.character.ethnicity)
 
 export const GUATEMALA_EVENTS = [
 
@@ -30,7 +30,7 @@ export const GUATEMALA_EVENTS = [
 
   {
     id: 'gua_1954_coup',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_GUATEMALAN(G) &&
@@ -51,7 +51,7 @@ export const GUATEMALA_EVENTS = [
 
   {
     id: 'gua_scorched_earth',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_GUATEMALAN(G) &&
@@ -66,7 +66,9 @@ export const GUATEMALA_EVENTS = [
     },
     choices: null,
     effect: (p) => {
-      const isMaya = IS_MAYA(p)
+      // (was: `const isMaya = IS_MAYA(p)` — IS_MAYA expects G and reads
+      // G.character, which the proxy does not have, so this threw. The value was
+      // never used either; the branching it belonged to lives in text(G) above.)
       p.m -= 16
       p.r += 10
       p.h -= 4
@@ -79,7 +81,7 @@ export const GUATEMALA_EVENTS = [
 
   {
     id: 'gua_modelo_village',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_GUATEMALAN(G) &&
@@ -96,7 +98,7 @@ export const GUATEMALA_EVENTS = [
 
   {
     id: 'gua_menchu_prize',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_GUATEMALAN(G) &&
@@ -117,7 +119,7 @@ export const GUATEMALA_EVENTS = [
 
   {
     id: 'gua_peace_accords_1996',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_GUATEMALAN(G) &&

@@ -115,7 +115,7 @@ export const RELATIONSHIP_CROSSOVER_EVENTS = [
 
   {
     id: 'rcp_widowed_career_what_for',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     cooldown: 0,
     when: (G) =>

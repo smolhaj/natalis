@@ -375,7 +375,7 @@ export const ROMANCE_ARC_EVENTS = [
 
   {
     id: 'romance_partner_illness_early',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.partner &&
@@ -384,7 +384,7 @@ export const ROMANCE_ARC_EVENTS = [
       G.age >= 40 && G.age <= 58 &&
       !G.mem?.romancePartnerIllnessEarly,
     text: (G) =>
-      `${G.partner?.name ?? 'Your partner'} receives a diagnosis that is not immediately terminal but is not minor. The next several months involve appointments and waiting rooms and the specific competence that crisis requires. The marriage becomes a different kind of partnership — practical, close, more honest than it has been in a while.`,
+      `${G.partner?.name ?? 'Your partner'} receives a diagnosis that is not immediately terminal but is not minor. The next several months involve appointments and waiting rooms and the competence that crisis requires. The marriage becomes a different kind of partnership — practical, close, more honest than it has been in a while.`,
     choices: [
       {
         text: 'Step fully into the caretaking role',
@@ -435,4 +435,60 @@ export const ROMANCE_ARC_EVENTS = [
     effect: (p) => { p.m += 8; p.partnerRel(5); p.setMem('romanceSeparateInterests', true) },
   },
 
+
+  // ── THE DISTANCE ──────────────────────────────────────────────────────────────
+  // Sets `long_distance_relationship`, read by the letters layer and later arcs.
+
+  {
+    id: 'romance_long_distance_begins',
+    phase: null,
+    weight: 3,
+    when: (G) =>
+      G.partner && !G.partner.married &&
+      G.age >= 18 && G.age <= 34 &&
+      !G.flags.has('long_distance_relationship') &&
+      !G.mem?.romanceLongDistance &&
+      Math.random() < 0.12,
+    text: (G) => {
+      const pname = G.partner?.name ?? 'they'
+      return `${pname} takes the job in the other city. You help carry boxes down a stairwell and neither of you says the arithmetic out loud: four hours by bus, one weekend in three, however long this lasts. At the station you both keep saying practical things about tickets. The train goes when it says it will go.`
+    },
+    choices: [
+      {
+        text: 'Agree on a rhythm and hold to it.',
+        tag: null,
+        outcome: 'Sunday nights become a fixed thing. The distance turns out to be survivable in the way that scheduled things are survivable.',
+        effect: (p) => { p.m -= 3; p.e += 3; p.updatePartnerRel(3); p.addFlag('long_distance_relationship'); p.setMem('romanceLongDistance', true) },
+      },
+      {
+        text: 'Leave it open. Neither of you wants a rule.',
+        tag: null,
+        outcome: 'Some weeks you speak every day. Some weeks you do not, and the not-speaking starts to have a meaning neither of you named.',
+        effect: (p) => { p.m -= 6; p.r += 3; p.updatePartnerRel(-4); p.addFlag('long_distance_relationship'); p.setMem('romanceLongDistance', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_household_running_joke',
+    phase: null,
+    weight: 3,
+    when: (G) => G.partner && (G.partner.relationshipQuality ?? 60) >= 50 && G.age >= 25 && !G.mem?.ordRunningJoke && Math.random() < 0.15,
+    text: `A misunderstanding about a jar of something, six years ago, has become a fixed institution. Neither of you can remember the original facts. It gets deployed roughly twice a month, always in the same three words, always at the same moment, and it works every single time. Guests do not understand it and you do not explain it.`,
+    choices: null,
+    effect: (p) => { p.m += 9; p.updatePartnerRel(3); p.addPartnerMoment('the jar joke, six years old and still working'); p.setMem('ordRunningJoke', true) },
+  },
+
+  {
+    id: 'ord_first_meal_own_place',
+    phase: null,
+    weight: 3,
+    when: (G) => G.age >= 18 && G.age <= 30 && !G.mem?.ordFirstMeal && (G.career || G.partner || G.age >= 21) && Math.random() < 0.16,
+    text: `You cook the first thing in your own kitchen and it is not good. The pan is wrong, there is too much of one thing, and you eat it out of the pan sitting on the floor because the chairs have not arrived. Through the wall someone is watching television at a volume that will annoy you within a fortnight. Tonight you sit there with the pan on your knees and you are entirely pleased with yourself.`,
+    choices: null,
+    effect: (p) => { p.m += 10; p.e += 2; p.setMem('ordFirstMeal', true) },
+  },
 ]

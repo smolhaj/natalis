@@ -13,7 +13,7 @@ export const FOLLOWTHROUGH_56_EVENTS = [
 
   {
     id: 'ft56_sib_emigrated_years_later',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.siblings && G.siblings.length > 0 &&
@@ -248,7 +248,7 @@ export const FOLLOWTHROUGH_56_EVENTS = [
 
   {
     id: 'ft56_sib_caretaking',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.siblings && G.siblings.length > 0 &&

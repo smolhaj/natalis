@@ -84,7 +84,7 @@ export const CAREER_WEALTH_EVENTS = [
 
   {
     id: 'career_twenty_year_reflection',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem.careerTwentyYear &&
@@ -330,7 +330,7 @@ export const CAREER_WEALTH_EVENTS = [
 
   {
     id: 'rural_urban_family_crisis_pull',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem.ruralUrbanFamilyCrisis &&
@@ -357,4 +357,50 @@ export const CAREER_WEALTH_EVENTS = [
     effect: null,
   },
 
+
+  // ── THE THING YOU DIDN'T TAKE ─────────────────────────────────────────────────
+  // Sets `turned_down_opportunity`, which returns at 35+ as a parallel life.
+
+  {
+    id: 'career_offer_declined',
+    phase: null,
+    weight: 3,
+    when: (G) =>
+      G.career &&
+      G.age >= 24 && G.age <= 44 &&
+      !G.flags.has('turned_down_opportunity') &&
+      !G.mem?.careerOfferDeclined &&
+      Math.random() < 0.10,
+    text: (G) => {
+      const anchor = G.partner ? 'your partner has just started something here' : 'your mother is not well and it is your turn'
+      return `The offer is real and it is in another country. More money, a title, a department that does the work you said you wanted to do when you were twenty-two. It comes in the same month that ${anchor}. You have eleven days. You spend nine of them not deciding.`
+    },
+    choices: [
+      {
+        text: 'Turn it down. Stay.',
+        tag: null,
+        outcome: 'You write the email in four lines. They reply warmly within an hour, which somehow makes it worse. You go to work on Monday and the office looks exactly the same.',
+        effect: (p) => { p.m -= 6; p.r += 8; p.addFlag('turned_down_opportunity'); p.setMem('careerOfferDeclined', true) },
+      },
+      {
+        text: 'Take it.',
+        tag: null,
+        outcome: 'You take it. The first six months are harder than anyone told you and you would still do it again.',
+        effect: (p) => { p.mo += 12000; p.w += 6; p.m -= 3; p.addFlag('career_took_the_leap'); p.setMem('careerOfferDeclined', true) },
+      },
+    ],
+    effect: null,
+  },
+
+  // ── ECHO: THE ONE YOU TOOK ────────────────────────────────────────────────────
+
+  {
+    id: 'career_took_leap_echo',
+    phase: null,
+    weight: 2,
+    when: (G) => G.flags.has('career_took_the_leap') && G.age >= 42 && !G.mem?.careerLeapEcho,
+    text: `You still describe it as the year you left, as though it were one decision rather than about forty. The first winter there was genuinely bad and you have stopped mentioning that part. What you have instead is a set of colleagues who knew you only after, and who would not recognise the person who spent nine days not deciding.`,
+    choices: null,
+    effect: (p) => { p.m += 5; p.e += 3; p.r -= 3; p.setMem('careerLeapEcho', true) },
+  },
 ]

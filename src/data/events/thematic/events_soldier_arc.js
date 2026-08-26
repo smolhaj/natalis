@@ -26,7 +26,7 @@ export const SOLDIER_ARC_EVENTS = [
 
   {
     id: 'sol_deployment_orders',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) => IS_MILITARY(G) && DEPLOYMENT_CONTEXT(G) && G.age >= 18 && G.age <= 35 && !G.mem.solDeployed,
     text: 'The orders come through in the morning. You know the place name from news reports. It looked different in news reports than it does in the briefing, and different again in the briefing than it will look when you arrive. You have been trained for this. Training and the actual thing are related but not the same.',
@@ -51,7 +51,7 @@ export const SOLDIER_ARC_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => G.flags.has('deployed_to_conflict') && !G.mem.solFirstWeek,
-    text: 'The first week: the heat, the smell that does not match anything you can name, the specific weight of carrying what you carry, the way your body recalibrates its sense of safe and not-safe. You learn the route to the latrine in the dark. You learn the specific sound of the particular vehicles that mean something. You learn which hours are quieter than others.',
+    text: 'The first week: the heat, the smell that does not match anything you can name, the weight of carrying what you carry, the way your body recalibrates its sense of safe and not-safe. You learn the route to the latrine in the dark. You learn the sound of the particular vehicles that mean something. You learn which hours are quieter than others.',
     effect: (p) => { p.h -= 4; p.addFlag('combat_veteran'); p.setMem('solFirstWeek', true) },
   },
 
@@ -100,7 +100,7 @@ export const SOLDIER_ARC_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => G.flags.has('returned_veteran') && G.age >= 20 && !G.mem.solSleep,
-    text: 'Two years after returning, you still don\'t sleep through. This is not unusual. The people around you don\'t know it\'s not unusual. The specific thing that wakes you is not always the same thing. You get up and sit in the kitchen until your body decides it\'s done. You do not describe this to anyone who hasn\'t done it.',
+    text: 'Two years after returning, you still don\'t sleep through. This is not unusual. The people around you don\'t know it\'s not unusual. The thing that wakes you is not always the same thing. You get up and sit in the kitchen until your body decides it\'s done. You do not describe this to anyone who hasn\'t done it.',
     choices: [
       {
         text: 'Talk to someone — a doctor, a therapist, another veteran.',
@@ -131,7 +131,7 @@ export const SOLDIER_ARC_EVENTS = [
     phase: 'midlife',
     weight: 2,
     when: (G) => G.flags.has('returned_veteran') && G.age >= 35 && !G.mem.solRecognition,
-    text: 'You meet another veteran at a function — not organised, just a chance disclosure. The conversation is different from other conversations. You don\'t have to explain certain things. You don\'t have to perform the short answer. The specific relief of talking to someone who already knows.',
+    text: 'You meet another veteran at a function — not organised, just a chance disclosure. The conversation is different from other conversations. You don\'t have to explain certain things. You don\'t have to perform the short answer. The relief of talking to someone who already knows.',
     effect: (p) => { p.m += 10; p.karma += 4; p.addFlag('veteran_solidarity'); p.setMem('solRecognition', true) },
   },
 
@@ -141,7 +141,7 @@ export const SOLDIER_ARC_EVENTS = [
     weight: 2,
     cooldown: 10,
     when: (G) => G.flags.has('returned_veteran') && G.age >= 35,
-    text: 'There is a date in the year. The date means something. You sometimes forget, consciously, and your body doesn\'t. You notice you\'re irritable in the days before. You notice the specific quality of light. You notice things that aren\'t connected but that you file in the same place.',
+    text: 'There is a date in the year. The date means something. You sometimes forget, consciously, and your body doesn\'t. You notice you\'re irritable in the days before. You notice the quality of light. You notice things that aren\'t connected but that you file in the same place.',
     effect: (p) => { p.m -= 8; p.h -= 2 },
   },
 

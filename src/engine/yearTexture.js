@@ -1,8 +1,12 @@
-import { FlagSet, getPhase, TRAIT_PROSE } from './character'
+import { FlagSet, getPhase, TRAIT_PROSE, deriveSeason, getCountryRegime } from './character'
 import { buildMundaneLayer } from './mundaneLayer'
 import { pickFrom } from '../utils/random'
 
-function buildYearTexture(state) {
+// `opts.specificOnly` returns null instead of falling through to the universal
+// phase pools — used when the year already has an event and we only want the
+// memory / condition / place / season layers to speak if they have something
+// specific to say about THIS life.
+function buildYearTexture(state, opts = {}) {
   const F = new FlagSet(state.flags ?? [])
   const { partner, children, age, currentYear, mem, career, residencyStatus, yearsAbroad, desire, political_leaning } = state
   const phase = getPhase(age)
@@ -1434,7 +1438,7 @@ function buildYearTexture(state) {
 
   if (partner) {
     const q = partner.relationshipQuality ?? 60
-    const pn = partner.name.split(' ')[0]
+    const pn = partner.name?.split(' ')[0]
     const moments = state.mem?.partnerMoments ?? []
     const yrs = partner.years ?? 0
 
@@ -1563,7 +1567,7 @@ function buildYearTexture(state) {
 
   const estrangedChild = (children ?? []).find(c => c.age >= 18 && (c.relationshipQuality ?? 50) < 32)
   if (estrangedChild) {
-    const cn = estrangedChild.name.split(' ')[0]
+    const cn = estrangedChild.name?.split(' ')[0]
     if (phase === 'late_life') return pick([
       `${cn} does not call. You have stopped expecting the call and started expecting to have to manage not expecting it.`,
       `There is a version of your family that would include ${cn}. You carry that version into your late years. It is not light.`,
@@ -1582,16 +1586,16 @@ function buildYearTexture(state) {
   if (phase === 'late_life' && (children ?? []).length > 0) {
     const aboadChildren = (children ?? []).filter(c => c.age >= 18 && (c.relationshipQuality ?? 50) >= 50)
     if (aboadChildren.length > 0 && F.has('children_abroad_separation')) {
-      const cn = aboadChildren[0].name.split(' ')[0]
+      const cn = aboadChildren[0].name?.split(' ')[0]
       return pick([
         `${cn} calls on Sunday. You have learned to hold an entire week of things to say compressed into the duration of a phone call.`,
         `The grandchildren exist on a screen. You know their voices before you know the weight of them.',`,
-        `The distance between you and ${aboadChildren[0].name.split(' ')[0]} is in kilometres and in the specific things that don't arrive over video call.`,
+        `The distance between you and ${aboadChildren[0].name?.split(' ')[0]} is in kilometres and in the specific things that don't arrive over video call.`,
       ])
     }
     const closeChildren = (children ?? []).filter(c => c.age >= 18 && (c.relationshipQuality ?? 50) >= 70)
     if (closeChildren.length > 0) {
-      const cn = closeChildren[0].name.split(' ')[0]
+      const cn = closeChildren[0].name?.split(' ')[0]
       if (Math.random() < 0.3) return pick([
         `${cn} visits on Sunday. You have stopped pretending you don't count the Sundays.`,
         `The relationship with ${cn} in these years is the longest conversation you have ever had with anyone. It contains everything.`,
@@ -1613,7 +1617,7 @@ function buildYearTexture(state) {
     const sibs = state.siblings ?? []
     const closeSib = sibs.find(s => s.alive && (s.relationshipQuality ?? 50) >= 68)
     if (closeSib && (phase === 'midlife' || phase === 'late_life') && Math.random() < 0.18) {
-      const sn = closeSib.name.split(' ')[0]
+      const sn = closeSib.name?.split(' ')[0]
       if (phase === 'late_life') return pick([
         `${sn} is one of the few people who knew you before you became the person you are. There is a specific relief in not having to explain your origins.`,
         `You and ${sn} speak on the phone with the ease of people who have been having the same conversation, in different forms, for decades.`,
@@ -1629,7 +1633,7 @@ function buildYearTexture(state) {
     }
     const deadSib = sibs.find(s => !s.alive)
     if (deadSib && F.has('lost_sibling') && phase === 'late_life' && Math.random() < 0.15) {
-      const sn = deadSib.name.split(' ')[0]
+      const sn = deadSib.name?.split(' ')[0]
       return pick([
         `You are one of the people who remember ${sn} as they were. That becomes, in time, a responsibility you did not ask for.`,
         `${sn} would have been ${age + Math.abs(deadSib.ageDiff ?? 0)} this year. You note it and move through it.`,
@@ -1772,7 +1776,7 @@ function buildYearTexture(state) {
         ? 'The CV does not adequately represent the person who wrote it. This is always true and feels especially true when you are trying to find work.'
         : 'You have not found the thing yet. You are in the finding-the-thing phase.',
       partner
-        ? `${partner.name.split(' ')[0]} is working. You are not. You are learning how to hold that without it becoming about something it is not about.`
+        ? `${partner.name?.split(' ')[0]} is working. You are not. You are learning how to hold that without it becoming about something it is not about.`
         : 'The days have a gap in them that the work used to fill. You are filling it with the search and with other things.',
     ])
   }
@@ -3354,7 +3358,11 @@ function buildYearTexture(state) {
   // ─── CAREER × COUNTRY TEXTURE (~28% when working in specific contexts) ────────
   if (career && Math.random() < 0.28) {
     const field = career.field
-    const cc = state.currentCountry ?? state.character?.country?.name
+    // `currentCountry` is a country OBJECT and `character.country.name` a string,
+    // so this mixed fallback made every `cc === '...'` below always false once a
+    // game was running: the China-tech, US-healthcare and named-Gulf-finance
+    // career branches were dead.
+    const cc = (state.currentCountry ?? state.character?.country)?.name
     const arch = state.character?.country?.archetype
     const yr = currentYear
 
@@ -4005,7 +4013,7 @@ function buildYearTexture(state) {
       'The number is large enough that you avoid saying it out loud. The avoidance has its own cost.',
       'The debt is structural — the kind that shapes every financial decision for a decade.',
       partner
-        ? `You and ${partner.name.split(' ')[0]} know the number. The number is between you in every conversation about the future.`
+        ? `You and ${partner.name?.split(' ')[0]} know the number. The number is between you in every conversation about the future.`
         : 'The amount owed determines what is possible. You have built your life around that constraint.',
     ])
 
@@ -4020,7 +4028,7 @@ function buildYearTexture(state) {
       `The ${ownedHome.type ?? 'house'} is paid off. That is a fact that took decades to become true.`,
       'You own where you live, outright. The patience that required is the whole story.',
       partner
-        ? `You and ${partner.name.split(' ')[0]} own the house free and clear. That is what decades of payments accumulate into.`
+        ? `You and ${partner.name?.split(' ')[0]} own the house free and clear. That is what decades of payments accumulate into.`
         : 'You own it. The papers are in the drawer. That took a long time.',
     ])
 
@@ -4299,7 +4307,7 @@ function buildYearTexture(state) {
         : 'The body tried, more than once. The trying and the not-arriving are both part of what the year carries.',
     'A due date passed without arriving. You still know which month. That knowledge doesn\'t require summoning — it arrives on its own.',
     partner
-      ? `You and ${partner.name.split(' ')[0]} are different for it. Not worse than you might have been. Different.`
+      ? `You and ${partner.name?.split(' ')[0]} are different for it. Not worse than you might have been. Different.`
       : 'You processed most of it without much support. That was the circumstance. The circumstance shaped things in ways you are still accounting for.',
     phase === 'late_life'
       ? 'The grief was real and most people around you never knew. That was the arrangement: you carried it in private, and that arrangement has never fully ended.'
@@ -4312,7 +4320,7 @@ function buildYearTexture(state) {
         ? 'There was a pregnancy that didn\'t continue. It is part of the map of your life. You know where it sits.'
         : 'The loss was real, even without a name for it, even without a ceremony. You know what you lost.',
     partner
-      ? `You told ${partner.name.split(' ')[0]} first. That conversation is part of what you are made of now.`
+      ? `You told ${partner.name?.split(' ')[0]} first. That conversation is part of what you are made of now.`
       : 'You processed it largely alone, not entirely by choice. You learned what the private version of that grief requires.',
     phase === 'midlife'
       ? 'You have made something of your life since then. The loss is still in the architecture.'
@@ -5715,7 +5723,7 @@ function buildYearTexture(state) {
     if (mem.widowedYear && yrsAgo(mem.widowedYear) >= 2 && yrsAgo(mem.widowedYear) <= 12) {
       const n = yrsAgo(mem.widowedYear)
       return pick([
-        `${n === 2 ? 'Two' : n === 3 ? 'Three' : n} years since ${state.partner ? state.partner.name.split(' ')[0] : 'them'}. The house still holds the shape of two people.`,
+        `${n === 2 ? 'Two' : n === 3 ? 'Three' : n} years since ${state.partner ? state.partner.name?.split(' ')[0] : 'them'}. The house still holds the shape of two people.`,
         `You have learned to do the things that used to be shared. You are still learning.',`,
       ])
     }
@@ -13529,7 +13537,7 @@ function buildYearTexture(state) {
         ? 'The retirement has settled into something. Not the absence of work — something with its own texture. You are in it.'
         : 'The first year of retirement was strange. You are somewhere past the first year now.',
       partner
-        ? `You and ${partner.name.split(' ')[0]} are in each other's space in a new way. You are negotiating the hours together that were previously filled by the separate going-away.`
+        ? `You and ${partner.name?.split(' ')[0]} are in each other's space in a new way. You are negotiating the hours together that were previously filled by the separate going-away.`
         : 'The days have a shape that is yours to set. You are still setting it.',
       career
         ? `The ${career.title} years are behind you now. You look at younger people doing what you did and you recognise something in how they carry it.`
@@ -13547,7 +13555,7 @@ function buildYearTexture(state) {
       'The world has changed so many times that you have stopped being surprised by the next change.',
       'Your body is not what you have. It is what you are negotiating with.',
       'You are one of the last people who remember certain things. You are aware of this.',
-      partner ? `You and ${partner.name.split(' ')[0]} are still here. After all of this, still here.` : 'You have made it this far alone. That required something. You are not entirely sure what.',
+      partner ? `You and ${partner.name?.split(' ')[0]} are still here. After all of this, still here.` : 'You have made it this far alone. That required something. You are not entirely sure what.',
       'The life has been longer than you expected. That is a gift with its own weight.',
       'Some mornings are better than others. The others are still mornings.',
     ])
@@ -13646,7 +13654,7 @@ function buildYearTexture(state) {
       'You know what you do not want more clearly than what you do want. That is also a form of navigation.',
       'The body is yours in a way that is new — it goes where you take it, which is everywhere, which will not always be the case.',
       partner
-        ? `${partner.name.split(' ')[0]} is in this. What you are building, you are building with them. That is specific and good and not without complication.`
+        ? `${partner.name?.split(' ')[0]} is in this. What you are building, you are building with them. That is specific and good and not without complication.`
         : 'You are doing this alone, which has its freedoms and its specific loneliness, both of which are clearest at night.',
       'The things you believed at seventeen are being revised. Some will survive the revision. You are not sure yet which ones.',
       'You have a life now — rent, a key, a door that closes — and the life is yours. You are still getting used to that.',
@@ -14579,6 +14587,221 @@ function buildYearTexture(state) {
       : 'The loss travels in the family differently than it appears in books. In books it is statistics. In the family it is what your grandmother said when anyone mentioned a certain city, which she never visited again.',
   ])
 
+  // ─── NEW FLAG TEXTURE (BUILD 5 / 11 / 17 additions) ──────────────────────────
+
+  if (F.has('bengal_famine_generation') && Math.random() < 0.22) return pick([
+    'There are specific years when hunger was not hunger in the ordinary sense — it was a presence, physical and political at once. The newspapers did not use the word for it. You know which years those were.',
+    phase === 'late_life'
+      ? 'The 1943 famine is in the history books now. The historians argue about the causes: wartime requisitioning, policy failure, Churchill. You know what the pumpkin leaves tasted like. Those are different kinds of knowledge.'
+      : 'Some things you learned at an age before you had the words for them. You have the words now. The things themselves are still there.',
+    'The wartime censors called it a food crisis. What it was is what it was. You were inside it.',
+  ])
+
+  if (F.has('post_gulag') && Math.random() < 0.22) return pick([
+    'Free and prohibited from being in the places where your life was. That was the specific shape of release: the paper, the rule, the 101 kilometres. Technically at liberty.',
+    phase === 'late_life'
+      ? 'Decades since the release. The prohibition lifted, the city eventually reachable, the apartment long since occupied by strangers. None of the facts of what happened to you have changed. Only the legal status of your access to them.'
+      : 'The rehabilitation comes later, in documents. The documents do not contain what was inside the camp. You know what was inside the camp.',
+    'Released without transport. Released without money. Released without documentation permitting you to be where your family was. Released.',
+  ])
+
+  if (F.has('interpreter_endangered') && Math.random() < 0.2) return pick([
+    'Visible on both sides. That was the position — not chosen but structural. The foreign forces defined one side. The presence of your name on the list defined the other.',
+    phase === 'late_life'
+      ? 'You made it through. The route was difficult. The people who processed the visa application in the country you interpreted for were thorough and slow. Both things remain true.'
+      : 'Your name on a list you did not put it on. The visa category that could help you with a four-year waiting list. The gap between those two facts was the shape of the problem.',
+    'The work was precise. The risk attached to the precision was not abstract.',
+  ])
+
+  // ─── SEASONAL / WEATHER TEXTURE ──────────────────────────────────────────────
+  // Atmospheric only — no stat effects, no flags. Gate on country + season.
+
+  const countryName = (state.currentCountry ?? state.character?.country)?.name ?? ''
+  const season = deriveSeason(state)
+
+  if ((countryName === 'Nigeria' || countryName === 'Ghana' || countryName === 'Senegal') && Math.random() < 0.22) {
+    if (season === 'dry') return pick([
+      'The harmattan has come down from the Sahara. A fine red dust settles on every surface — the dashboard, the collar, the rim of a glass left out overnight. Your skin is tight. The sky is the colour of old paper.',
+      'Harmattan mornings: visibility half a kilometre, the sun a pale disc, the air carrying a mineral smell that is not unpleasant. The cold at six in the morning surprises people who have not been here in December before.',
+      'The dry season has locked in. The grass is the colour of straw now. Women carry buckets further. The standpipes produce a thinner stream.',
+    ])
+    if (season === 'wet') return pick([
+      'The rains have arrived. The first one after the long dry: people stand in doorways watching the street flood, not unhappy about it. The smell of it hitting hot tarmac is specific and seasonal.',
+      'The rains are here and everything that needs water is drinking it. The mosquitoes are also here. Both things are true simultaneously.',
+    ])
+  }
+
+  if ((countryName === 'Bangladesh' || countryName === 'India') && Math.random() < 0.22) {
+    if (season === 'wet') return pick([
+      'The monsoon has been six weeks late. People are counting. The farmers know it in their bodies before the meteorologists say it officially. Now it is here: the tank overflows, the road becomes a river, and no one complains.',
+      'Monsoon: the sound of it on a corrugated iron roof is the loudest thing. Conversation stops. You wait it out. After, a brief and absolute silence before the birds.',
+      'The rains are early this year. The mangoes were not finished.',
+    ])
+    if (season === 'dry') return pick([
+      'Pre-monsoon: the heat has a specific quality in April and May, a weight in the air that the rest of the year does not have. You know to wait.',
+    ])
+  }
+
+  if ((countryName === 'Russia' || countryName === 'Ukraine' || countryName === 'Belarus' || countryName === 'Poland') && Math.random() < 0.22) {
+    if (season === 'winter') return pick([
+      'January: the cold has its own quality here — not a degree of cold but a different physical state. The snow on the pavement has been walked into a hard grey tile. Your breath is a short flag.',
+      'February is the inside of the winter — the month when it has been cold long enough that you have stopped noticing and have simply restructured your life around it. The days are short. The tea is hot. You are managing.',
+      'The heating in this building is municipal. When the city turns it on, you have heat. When it turns it off, the decision has already been made. This is the arrangement.',
+    ])
+    if (season === 'summer') return pick([
+      'The city is restless with the light in June. Parks are full. The dachas are occupied. There is a sense that this particular abundance is temporary and everyone knows it.',
+    ])
+  }
+
+  if ((countryName === 'Australia' || countryName === 'New Zealand' || countryName === 'South Africa') && Math.random() < 0.22) {
+    if (season === 'summer') return pick([
+      'January: summer in the southern hemisphere. The heat comes early in the morning and does not apologise. The sky is a particular shade of blue that requires specific light to produce.',
+      'Christmas in summer: the dissonance of tinsel and heat, carols about snow in thirty-eight-degree weather. A specific local absurdity accepted as ordinary.',
+    ])
+    if (season === 'winter') return pick([
+      'June in the southern hemisphere: the light is lower now, more horizontal, coming through windows at angles it does not manage in summer. The days are shorter than people from elsewhere expect.',
+    ])
+  }
+
+  if ((countryName === 'Japan' || countryName === 'South Korea') && Math.random() < 0.25) {
+    if (season === 'spring') return pick([
+      'Cherry blossom: the specific two weeks when the trees are in full bloom and then drop. People plan around it — the parks full at noon on a weekday. The brevity is the point.',
+      'Hanami: the blossoms giving their two weeks of total attention. You have been watching this since childhood. The attention it produces is still warranted.',
+    ])
+    if (season === 'summer') return pick([
+      'The rainy season before summer: heavy warm rain for six weeks. The mould, the humidity, the feeling of stepping outside into air that is already wet.',
+    ])
+  }
+
+  if ((countryName === 'Norway' || countryName === 'Sweden' || countryName === 'Finland') && Math.random() < 0.25) {
+    if (season === 'winter') return pick([
+      'The polar night: the sun does not rise today. People have adapted — lamps with specific wavelengths, walks at noon in the thin blue light, the indoor life that is a second culture.',
+      'February: the long tunnel of the Nordic winter. The candles are lit. The coffee is hot. People have been perfecting indoor comfort out of necessity for generations.',
+    ])
+    if (season === 'summer') return pick([
+      'The midnight sun: it does not get dark tonight. The light stays, pale and horizontal, well past midnight. Sleep is an exercise in curtains and the agreement to rest even without dark.',
+    ])
+  }
+
+  // ─── PRISON RESIDUE ──────────────────────────────────────────────────────────
+  // What a sentence leaves behind, years and decades after release. Written
+  // alongside the prison layer (src/data/events/prison/) rather than after it.
+
+  if (F.has('unreachable_friendship') && Math.random() < 0.18) return pick([
+    'You would not recognise them now and they would not recognise you. That is not the difficulty. The difficulty is that there is no address, no surname you are sure of, no way to find out whether they are alive.',
+    'Two men, a rectangle, a direction everyone walked. You never asked what they had done and they never asked you. It remains one of the more honest arrangements you have been part of.',
+  ])
+
+  if (F.has('political_network') && Math.random() < 0.18) return pick([
+    'A name in a newspaper that you knew first as a voice through a wall. He is described as a figure. He was a man who could not sleep and talked all night about a printing press.',
+    'The state put all of you in one building, which is the last thing it should have done. You have been in touch with three of them since. Two of them are still doing it.',
+  ])
+
+  if (F.has('practised_explanation') && Math.random() < 0.18) return pick([
+    'The gap in the years comes up again, and you reach for the version that suits the room. You have got so good at this that you no longer notice choosing.',
+    'A form with dates on it. You know exactly which line will draw the question, and you have the sentence ready before anyone asks.',
+  ])
+
+  if (F.has('unspoken_between_us') && Math.random() < 0.16) return pick([
+    'It has become the subject nobody goes near, and the not-going-near is now a larger object in the room than the subject was.',
+    'Everyone is careful in a way that would be indistinguishable from ease if you did not know what it was.',
+  ])
+
+  if (F.has('said_the_thing') && Math.random() < 0.16) return pick([
+    'You said it and it went badly and then it was said. Things have been slightly easier since, in a way nobody has acknowledged out loud.',
+  ])
+
+  if (F.has('education_continued') && Math.random() < 0.16) return pick([
+    'Another course, another folder. Nobody in this room knows where the first one was taken, and the work is the same work.',
+  ])
+
+  if (F.has('left_the_life') && Math.random() < 0.18) return pick([
+    'You still see him in the shop sometimes. He is perfectly pleasant. The pleasantness is the whole of the message and you have learned to receive it and keep walking.',
+    'Cutting it off cost more than staying would have. You have never once regretted the arithmetic.',
+  ])
+
+  if (F.has('prison_cut_off') && Math.random() < 0.16) return pick([
+    'You told them not to come. You meant it as a kindness and it was about sixty percent a kindness, and you have never worked out what the other forty was.',
+  ])
+
+  if (F.has('told_child_truth') && Math.random() < 0.16) return pick([
+    'They know the whole of it. There was a bad hour and then a quality of directness between you that most families never get near.',
+  ])
+
+  if (F.has('short_version_given') && Math.random() < 0.16) return pick([
+    'They have the short version. You can see them holding it, turning it over, waiting until they are old enough to ask for the rest.',
+  ])
+
+  if ((F.has('prison_quiet') || F.has('prison_alone')) && Math.random() < 0.14) return pick([
+    'You are still difficult to notice in a room, which was a survival skill and has become a personality.',
+  ])
+
+  if (F.has('prison_connected') && Math.random() < 0.14) return pick([
+    'You read rooms fast. Who defers to whom, who is performing, where the actual authority sits. You learned it somewhere specific and it has never stopped being useful.',
+  ])
+
+  if ((F.has('prison_marked') || F.has('prison_told_truth')) && Math.random() < 0.14) return pick([
+    'You told the truth in a room designed for a different kind of answer. It did not help. You would do it again, which is either integrity or stubbornness.',
+  ])
+
+  if (F.has('quiet_integrity') && Math.random() < 0.16) return pick([
+    'Nobody has ever known about it and nobody ever will. You have stopped experiencing that as a loss.',
+    'There is a fact about yourself that you established once, under conditions you would not choose, and have never had to test again.',
+  ])
+
+  if (F.has('sentence_in_proportion') && Math.random() < 0.16) return pick([
+    'You can say the number of years out loud now without the sentence rearranging itself around them.',
+  ])
+
+  if (F.has('voted_first_time_free') && Math.random() < 0.18) return pick([
+    'You still remember the weight of the ballot the first time it counted. Not the result — the paper, and the queue, and how ordinary everyone was being about it.',
+    'People who have always had the vote treat election day as an errand. You have never once managed to.',
+  ])
+
+  if (F.has('learning_was_the_life') && Math.random() < 0.16) return pick([
+    'The page is the same page it has been for thirty years and it is not the same page. People outside describe the arrangement in terms of money and exemptions. Neither word appears anywhere in what you actually do all day.',
+  ])
+
+  if (F.has('stayed_and_absorbed_it') && Math.random() < 0.15) return pick([
+    'The seat you are given at a simcha is a perfectly good seat. It is slightly to one side of where it would otherwise have been, and no one has ever said so.',
+  ])
+
+  if (F.has('left_the_neighbourhood') && Math.random() < 0.15) return pick([
+    'Nobody here knows. That is the point of here, and it is also the thing you occasionally miss — being among people for whom the decision meant something, even the ones who held it against you.',
+  ])
+
+  // ─── WINDFALL RESIDUE ────────────────────────────────────────────────────────
+  // What an unearned sum leaves in a life long after the sum itself is ordinary.
+
+  if (F.has('windfall_kept_quiet') && Math.random() < 0.16) return pick([
+    'Nobody at work knows. You have got good at the small deflections — the car explained as a relative\'s, the holiday underplayed by a week and a country.',
+    'The secret is not heavy in the way secrets are supposed to be. It is more like a room in the house you do not go into, which is nonetheless part of the floor plan.',
+  ])
+
+  if (F.has('windfall_gave_it_away') && Math.random() < 0.16) return pick([
+    'You do the arithmetic occasionally, not out of regret. It went where it was always going to go. What surprises you is how little of it is remembered as having come from you.',
+  ])
+
+  if (F.has('windfall_became_the_judge') && Math.random() < 0.16) return pick([
+    'A story arrives with a request folded inside it and you are already assessing before they reach the end. You did not want to be the person who assesses. You have not worked out how to stop.',
+  ])
+
+  if (F.has('windfall_refused') && Math.random() < 0.16) return pick([
+    'Two people stopped calling. You have been over it enough times to know that one of them was owed better, and that knowing has not changed anything you would do.',
+  ])
+
+  if (F.has('windfall_work_optional') && Math.random() < 0.14) return pick([
+    'You could stop. You are aware of this every morning, which turns out to be a different way of going to work rather than an easier one.',
+  ])
+
+  if (F.has('windfall_in_proportion') && Math.random() < 0.15) return pick([
+    'Someone brings it up again, decades on, as the thing that happened to you. You have had a whole life since, and most of it had nothing to do with it.',
+  ])
+
+  // Everything below is universal fallback prose — true of any life anywhere.
+  // Callers asking for specific texture only (the annual texture layer) stop here.
+  if (opts.specificOnly) return null
+
   // ─── PHASE-STRATIFIED UNIVERSAL FALLBACK ─────────────────────────────────────
   // Three-layer prose: universal human texture + life-phase + the unremarkable
   // fabric of existence. Each phase has its own pool before the generic catchall.
@@ -14691,102 +14914,6 @@ function buildYearTexture(state) {
     'You have outlived the versions of yourself that were going to do certain things. They are gone and what they were going to do went with them, and this is fine.',
     'There are people who knew you in your thirties who would not recognise the life you are living now. You find this interesting rather than sad.',
   ])
-
-  // ─── NEW FLAG TEXTURE (BUILD 5 / 11 / 17 additions) ──────────────────────────
-
-  if (F.has('bengal_famine_generation') && Math.random() < 0.22) return pick([
-    'There are specific years when hunger was not hunger in the ordinary sense — it was a presence, physical and political at once. The newspapers did not use the word for it. You know which years those were.',
-    phase === 'late_life'
-      ? 'The 1943 famine is in the history books now. The historians argue about the causes: wartime requisitioning, policy failure, Churchill. You know what the pumpkin leaves tasted like. Those are different kinds of knowledge.'
-      : 'Some things you learned at an age before you had the words for them. You have the words now. The things themselves are still there.',
-    'The wartime censors called it a food crisis. What it was is what it was. You were inside it.',
-  ])
-
-  if (F.has('post_gulag') && Math.random() < 0.22) return pick([
-    'Free and prohibited from being in the places where your life was. That was the specific shape of release: the paper, the rule, the 101 kilometres. Technically at liberty.',
-    phase === 'late_life'
-      ? 'Decades since the release. The prohibition lifted, the city eventually reachable, the apartment long since occupied by strangers. None of the facts of what happened to you have changed. Only the legal status of your access to them.'
-      : 'The rehabilitation comes later, in documents. The documents do not contain what was inside the camp. You know what was inside the camp.',
-    'Released without transport. Released without money. Released without documentation permitting you to be where your family was. Released.',
-  ])
-
-  if (F.has('interpreter_endangered') && Math.random() < 0.2) return pick([
-    'Visible on both sides. That was the position — not chosen but structural. The foreign forces defined one side. The presence of your name on the list defined the other.',
-    phase === 'late_life'
-      ? 'You made it through. The route was difficult. The people who processed the visa application in the country you interpreted for were thorough and slow. Both things remain true.'
-      : 'Your name on a list you did not put it on. The visa category that could help you with a four-year waiting list. The gap between those two facts was the shape of the problem.',
-    'The work was precise. The risk attached to the precision was not abstract.',
-  ])
-
-  // ─── SEASONAL / WEATHER TEXTURE ──────────────────────────────────────────────
-  // Atmospheric only — no stat effects, no flags. Gate on country + season.
-
-  const countryName = G.character?.country?.name ?? ''
-  const season = G.season
-
-  if ((countryName === 'Nigeria' || countryName === 'Ghana' || countryName === 'Senegal') && Math.random() < 0.22) {
-    if (season === 'dry') return pick([
-      'The harmattan has come down from the Sahara. A fine red dust settles on every surface — the dashboard, the collar, the rim of a glass left out overnight. Your skin is tight. The sky is the colour of old paper.',
-      'Harmattan mornings: visibility half a kilometre, the sun a pale disc, the air carrying a mineral smell that is not unpleasant. The cold at six in the morning surprises people who have not been here in December before.',
-      'The dry season has locked in. The grass is the colour of straw now. Women carry buckets further. The standpipes produce a thinner stream.',
-    ])
-    if (season === 'wet') return pick([
-      'The rains have arrived. The first one after the long dry: people stand in doorways watching the street flood, not unhappy about it. The smell of it hitting hot tarmac is specific and seasonal.',
-      'The rains are here and everything that needs water is drinking it. The mosquitoes are also here. Both things are true simultaneously.',
-    ])
-  }
-
-  if ((countryName === 'Bangladesh' || countryName === 'India') && Math.random() < 0.22) {
-    if (season === 'wet') return pick([
-      'The monsoon has been six weeks late. People are counting. The farmers know it in their bodies before the meteorologists say it officially. Now it is here: the tank overflows, the road becomes a river, and no one complains.',
-      'Monsoon: the sound of it on a corrugated iron roof is the loudest thing. Conversation stops. You wait it out. After, a brief and absolute silence before the birds.',
-      'The rains are early this year. The mangoes were not finished.',
-    ])
-    if (season === 'dry') return pick([
-      'Pre-monsoon: the heat has a specific quality in April and May, a weight in the air that the rest of the year does not have. You know to wait.',
-    ])
-  }
-
-  if ((countryName === 'Russia' || countryName === 'Ukraine' || countryName === 'Belarus' || countryName === 'Poland') && Math.random() < 0.22) {
-    if (season === 'winter') return pick([
-      'January: the cold has its own quality here — not a degree of cold but a different physical state. The snow on the pavement has been walked into a hard grey tile. Your breath is a short flag.',
-      'February is the inside of the winter — the month when it has been cold long enough that you have stopped noticing and have simply restructured your life around it. The days are short. The tea is hot. You are managing.',
-      'The heating in this building is municipal. When the city turns it on, you have heat. When it turns it off, the decision has already been made. This is the arrangement.',
-    ])
-    if (season === 'summer') return pick([
-      'The city is restless with the light in June. Parks are full. The dachas are occupied. There is a sense that this particular abundance is temporary and everyone knows it.',
-    ])
-  }
-
-  if ((countryName === 'Australia' || countryName === 'New Zealand' || countryName === 'South Africa') && Math.random() < 0.22) {
-    if (season === 'summer') return pick([
-      'January: summer in the southern hemisphere. The heat comes early in the morning and does not apologise. The sky is a particular shade of blue that requires specific light to produce.',
-      'Christmas in summer: the dissonance of tinsel and heat, carols about snow in thirty-eight-degree weather. A specific local absurdity accepted as ordinary.',
-    ])
-    if (season === 'winter') return pick([
-      'June in the southern hemisphere: the light is lower now, more horizontal, coming through windows at angles it does not manage in summer. The days are shorter than people from elsewhere expect.',
-    ])
-  }
-
-  if ((countryName === 'Japan' || countryName === 'South Korea') && Math.random() < 0.25) {
-    if (season === 'spring') return pick([
-      'Cherry blossom: the specific two weeks when the trees are in full bloom and then drop. People plan around it — the parks full at noon on a weekday. The brevity is the point.',
-      'Hanami: the blossoms giving their two weeks of total attention. You have been watching this since childhood. The attention it produces is still warranted.',
-    ])
-    if (season === 'summer') return pick([
-      'The rainy season before summer: heavy warm rain for six weeks. The mould, the humidity, the feeling of stepping outside into air that is already wet.',
-    ])
-  }
-
-  if ((countryName === 'Norway' || countryName === 'Sweden' || countryName === 'Finland') && Math.random() < 0.25) {
-    if (season === 'winter') return pick([
-      'The polar night: the sun does not rise today. People have adapted — lamps with specific wavelengths, walks at noon in the thin blue light, the indoor life that is a second culture.',
-      'February: the long tunnel of the Nordic winter. The candles are lit. The coffee is hot. People have been perfecting indoor comfort out of necessity for generations.',
-    ])
-    if (season === 'summer') return pick([
-      'The midnight sun: it does not get dark tonight. The light stays, pale and horizontal, well past midnight. Sleep is an exercise in curtains and the agreement to rest even without dark.',
-    ])
-  }
 
   // ─── FINAL GENERIC FALLBACK ───────────────────────────────────────────────────
   return pick([

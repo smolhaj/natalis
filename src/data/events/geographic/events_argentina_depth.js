@@ -17,14 +17,14 @@ export const ARGENTINA_DEPTH_EVENTS = [
 
   {
     id: 'arg_dep_peronism_early',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Argentina' &&
       G.currentYear >= 1945 && G.currentYear <= 1955 &&
       G.age >= 16 &&
       !G.mem?.argDepPeronEarly,
-    text: pick([
+    text: () => pick([
       'October 17, 1945: the descamisados — the shirtless ones — march on Plaza de Mayo to demand Perón\'s release from prison. The working class of Buenos Aires has a face and a voice for the first time that official Argentina can see it. The oligarchy does not call it a face. The oligarchy calls it a horde. You are in the square, or your parents are in the square, and the word descamisado goes from insult to identity in a single afternoon.',
       'Eva Perón. The actress from the provinces who became the president\'s wife and then became something the republic had no category for. She ran the social welfare ministry. She built hospitals. She gave women the vote in 1947. The descamisados called her Santa Evita. The oligarchy called her other things. When she died in 1952, at thirty-three, the state of mourning was unprecedented: the body embalmed, the queue outside the Ministry of Labour a kilometre long for days.',
     ]),
@@ -61,7 +61,7 @@ export const ARGENTINA_DEPTH_EVENTS = [
 
   {
     id: 'arg_dep_bombing_1955',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Argentina' &&
@@ -82,14 +82,14 @@ export const ARGENTINA_DEPTH_EVENTS = [
 
   {
     id: 'arg_dep_ba_texture',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Argentina' &&
       G.currentYear >= 1960 && G.currentYear <= 2010 &&
       G.age >= 18 && G.age <= 45 &&
       !G.mem?.argDepBATexture,
-    text: pick([
+    text: () => pick([
       'Argentina has more psychoanalysts per capita than any country on earth. The Buenos Aires phone book, at its peak, lists forty thousand. The couch is not luxury here — it is infrastructure. The city has a relationship with interiority, with the examined life, with the speaking of what cannot be spoken in other ways, that is different from the rest of the continent. You begin analysis in your twenties. The analyst\'s consulting room is a specific room in a specific Buenos Aires building, and the particular quality of the silence inside it will follow you.',
       'The tango. Not the tango of the tourist shows and the tango lessons — the social tango, the milonga on a Thursday night in a rented hall in Boedo or San Telmo, the music that begins slowly and everyone knows what it means. The embrace is a conversation. The conversation has a grammar that you learn over years: the walk, the pause, the weight transfer, the chest leading. The milonga is where the city meets itself in the dark and says things it cannot say in the light.',
     ]),
@@ -107,7 +107,7 @@ export const ARGENTINA_DEPTH_EVENTS = [
 
   {
     id: 'arg_dep_amia_1994',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Argentina' &&
@@ -171,7 +171,7 @@ export const ARGENTINA_DEPTH_EVENTS = [
 
   {
     id: 'arg_dep_hyperinflation_1989',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Argentina' &&
@@ -193,7 +193,7 @@ export const ARGENTINA_DEPTH_EVENTS = [
 
   {
     id: 'arg_dep_kirchner_trials',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Argentina' &&
@@ -215,7 +215,7 @@ export const ARGENTINA_DEPTH_EVENTS = [
 
   {
     id: 'arg_dep_exile_return',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Argentina' &&

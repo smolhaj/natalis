@@ -17,7 +17,8 @@ export const IVORY_COAST_DEPTH_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 2005 &&
       G.age >= 8 && G.age <= 14 &&
       !G.flags.has('ci_cocoa_child_labor'),
-    text: 'The school year ends in June and in July the fields need clearing. Your father does not phrase it as a choice. The machete is heavier than you expected. The pods hang at a height that requires you to stretch. You work beside the adults — some of them boys from Burkina Faso who crossed the border to work, who have no families within two hundred kilometers, who sleep in the farm shed. They are children and they are also workers. You are also a child and also a worker. The distinction between what you are supposed to be at your age and what you are in July does not get discussed. The distinction exists. You feel it in the difference between July and September, when the school uniform comes back out.',
+    text: 'School ends in June and in July the fields need clearing, and your father does not phrase it as a question. The machete is heavier than it looks and the pods hang at a height that makes you stretch for every one. Two of the boys working the row beside you came down from Burkina and sleep in the shed and have no family within two hundred kilometres. In September the uniform comes back out of the cupboard and you notice the difference in your own hands.',
+    context: 'Cote d\'Ivoire produces roughly forty percent of the world\'s cocoa. An estimated 800,000 children work on Ivorian cocoa farms, most of them on family holdings during school holidays; a smaller number are trafficked or migrate unaccompanied from Burkina Faso and Mali. The industry\'s 2001 Harkin-Engel Protocol set a deadline to end the worst forms of child labour that has been repeatedly extended.',
     choices: null,
     effect: (p) => { p.m -= 6; p.h -= 3; p.e += 2; p.addFlag('ci_cocoa_child_labor') },
   },
@@ -39,7 +40,7 @@ export const IVORY_COAST_DEPTH_EVENTS = [
 
   {
     id: 'ci_dep_basilica',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_IVORIAN(G) &&
@@ -53,7 +54,7 @@ export const IVORY_COAST_DEPTH_EVENTS = [
 
   {
     id: 'ci_dep_dozo',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_IVORIAN(G) &&
@@ -67,14 +68,15 @@ export const IVORY_COAST_DEPTH_EVENTS = [
 
   {
     id: 'ci_dep_cfa',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_IVORIAN(G) &&
       G.age >= 20 && G.age <= 35 &&
       (G.career?.field === 'finance' || G.career?.field === 'government' || G.stats?.smarts >= 60) &&
       !G.flags.has('ci_cfa_awareness'),
-    text: 'The CFA franc is guaranteed by France. The exchange rate is fixed. Fifty percent of foreign exchange reserves are held at the Banque de France. Interest rates are set in Frankfurt by the European Central Bank. The arrangement was negotiated at independence in 1960 and modified but not fundamentally changed since. You encounter this system the first time you try to understand why monetary policy here is different from monetary policy in Ghana or Nigeria, which also border you but manage their own currencies. The stability the CFA provides is real. The degree to which the stability is managed elsewhere is also real. Both things are taught separately. You learn to hold them together.',
+    text: 'You are at the counter changing money for a trip and the rate to the euro is the same number it was the last time and the time before. Somebody at work explains that half the reserves sit in an account in Paris and the rate is set where the euro is set. Your cousin in Accra deals with a currency that moves every week and he envies you for about a minute a year. Both things they taught you about this are true and neither of them was taught in the same lesson.',
+    context: 'The West African CFA franc was pegged to the French franc from 1945 and to the euro since 1999, with convertibility guaranteed by the French Treasury. Member states were required to deposit fifty percent of foreign reserves with the Banque de France until 2019, when the requirement was ended and the currency renamed the eco in principle. Monetary policy remains anchored to the European Central Bank\'s rate.',
     choices: null,
     effect: (p) => { p.e += 4; p.r += 2; p.addFlag('ci_cfa_awareness') },
   },
@@ -113,7 +115,7 @@ export const IVORY_COAST_DEPTH_EVENTS = [
 
   {
     id: 'ci_dep_licorne',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_IVORIAN(G) &&

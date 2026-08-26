@@ -13,7 +13,7 @@ export const IRELAND_DEPTH_EVENTS = [
 
   {
     id: 'ire_famine_shadow',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_IRISH(G) &&
@@ -35,14 +35,15 @@ export const IRELAND_DEPTH_EVENTS = [
 
   {
     id: 'ire_easter_rising',
-    phase: 'adolescence',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_IRISH(G) &&
-      G.currentYear >= 1916 && G.currentYear <= 1928 &&
-      G.age >= 12 &&
+      G.currentYear >= 1966 && G.currentYear <= 1967 &&
+      G.age >= 8 &&
       !G.mem?.ireEasterRising,
-    text: 'Easter Monday, April 24, 1916. The General Post Office on Sackville Street. Patrick Pearse reads a proclamation outside. Within a week, the Rising is suppressed. Fifteen leaders are executed by firing squad over ten days — slowly enough that public opinion in Ireland shifts. The rising was initially unpopular; the executions make it something else. By 1918, Sinn Féin wins 73 of 105 Irish seats in the Westminster election and the War of Independence begins. The treaty in 1921 gives twenty-six counties a Free State and leaves six in the United Kingdom. Your country has become something — a partial thing, contested from the first. The executions produced it. The treaty defined its edges.',
+    text: 'Easter 1966. The men who were inside the GPO walk down O\'Connell Street in overcoats, old now, fewer of them than the last time they were counted. All week the television has been running the Rising each evening at the hour the news would be. In March somebody took the top off Nelson\'s Pillar with explosive and nobody in this house says they are sorry about it. Your father points at a man in the third row and says he was inside, and then says nothing else about him for the rest of the day.',
+    context: 'The Easter Rising began on 24 April 1916 and was suppressed within a week; fifteen of its leaders were executed by firing squad over ten days, which turned a largely unpopular insurrection into the founding event of the state. Sinn Féin took 73 of Ireland\'s 105 Westminster seats in 1918 and the War of Independence followed. The 1921 Treaty gave twenty-six counties a Free State and left six in the United Kingdom. The 1966 golden jubilee was the largest public commemoration the state had staged; Nelson\'s Pillar on O\'Connell Street was destroyed by a bomb that March.',
     choices: null,
     effect: (p) => { p.m += 8; p.e += 4; p.r += 3; p.addFlag('ire_rising_generation'); p.setMem('ireEasterRising', true) },
   },
@@ -51,14 +52,15 @@ export const IRELAND_DEPTH_EVENTS = [
 
   {
     id: 'ire_civil_war_wound',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_IRISH(G) &&
       G.currentYear >= 1922 && G.currentYear <= 1945 &&
       G.age >= 14 &&
       !G.mem?.ireCivilWar,
-    text: 'The Treaty split everything that the War of Independence had made. Pro-Treaty and Anti-Treaty: Collins versus de Valera. The men who had fought together were shooting each other by summer 1922. Seventy-seven Anti-Treaty prisoners were officially executed — more than the British executed in the Rising. Thousands died. The war lasted eleven months. Its conclusion was not a resolution, only a ceasing. The two sides became Fianna Fáil and Fine Gael, and for the next seventy years Irish politics will be defined not by left and right but by which side of the Civil War your grandfather was on. The wound does not have a name in this house. It is simply the reason we do not speak to the Murphys down the road.',
+    text: 'The men who were in the same column two years ago are shooting at each other by the summer, and the Free State executes seventy-seven of them, which is more than the British managed. It is over inside a year and nothing about it is settled. Your grandfather did not go to the funerals on the other side and that fact is available at every wake for the rest of the century. In this house the thing has no name. It is only the reason nobody speaks to the Murphys down the road.',
+    context: 'The Anglo-Irish Treaty of December 1921 split the independence movement between pro-Treaty and anti-Treaty factions and produced a civil war from June 1922 to May 1923. The Free State executed seventy-seven anti-Treaty prisoners, more than the British executed after the Rising. The two sides became Fine Gael and Fianna Fail, and Irish party politics was organised around Civil War allegiance rather than left and right for most of the following century.',
     choices: [
       {
         text: 'Your family backed the Treaty. The Free State is the possible thing, not the perfect thing.',
@@ -80,14 +82,15 @@ export const IRELAND_DEPTH_EVENTS = [
 
   {
     id: 'ire_emergency',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_IRISH(G) &&
       G.currentYear >= 1939 && G.currentYear <= 1946 &&
       G.age >= 14 &&
       !G.mem?.ireEmergency,
-    text: 'Ireland calls the war "the Emergency." Neutrality: de Valera\'s position. The logic is partition — Ireland will not fight for a king who governs part of Irish territory. Britain cuts off fuel supplies in 1941, which reduces some areas to a subsistence economy. Turf replaces coal. Rationing covers everything. The bread is poor quality. The bicycle is the primary transport. Meanwhile: a hundred and sixty thousand Irish people volunteer or emigrate to serve in the Allied forces anyway, individually, without government support. At night, you can hear the BBC on the wireless if you turn the dial in a direction the government has not encouraged. What the BBC says and what the newspapers say are not the same account of the same war.',
+    text: 'They call it the Emergency, which is what you call a war you are not in. There is no coal after 1941 so it is turf, wet turf, and the bread is grey and the bicycle is how anyone gets anywhere. Two of your cousins are in Britain in uniform and it is not discussed at the table. At night you can find the BBC on the wireless if you move the dial in a direction that is not encouraged, and what it says about the war is not what the newspaper says.',
+    context: 'Ireland remained neutral throughout the Second World War, a period officially designated the Emergency, on the grounds that it would not fight for a crown still governing six of its counties. Britain cut coal and fuel supplies in 1941 and rationing was severe. Around 70,000 people from the Irish state nonetheless volunteered for the British forces, individually and without state support; those who deserted the Irish army to do so were barred from public employment until a 2013 pardon.',
     choices: null,
     effect: (p) => { p.m -= 6; p.h -= 3; p.e += 4; p.addFlag('ire_emergency_generation'); p.setMem('ireEmergency', true) },
   },
@@ -134,11 +137,11 @@ export const IRELAND_DEPTH_EVENTS = [
 
   {
     id: 'ire_lgbtq_decrim',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_IRISH(G) &&
-      G.flags.has('lgbtq') &&
+      (G.flags.has('lgbtq') || G.flags.has('lgbtq_identity')) &&
       G.currentYear >= 1993 && G.currentYear <= 2000 &&
       G.age >= 18 &&
       !G.mem?.ireLgbtqDecrim,
@@ -167,7 +170,7 @@ export const IRELAND_DEPTH_EVENTS = [
 
   {
     id: 'ire_repeal_eighth',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_IRISH(G) &&
@@ -175,7 +178,8 @@ export const IRELAND_DEPTH_EVENTS = [
       G.currentYear >= 2018 &&
       G.age >= 22 &&
       !G.mem?.ireRepealEighth,
-    text: 'May 25, 2018. The Eighth Amendment — which gave equal right to life to the unborn and the pregnant woman, and which meant abortion was illegal in virtually all circumstances — is repealed by referendum. 66.4 percent in favour. The campaign was four years of photographs and testimonies: the women who went to England (twelve a day, every day, for thirty-five years), the women who ordered pills online, the women who died of conditions that could not be medically managed because of the legal risk to the clinical team. Savita Halappanavar\'s photograph above the polling stations. The words *her body her choice* on the jumpers of the canvassers in the rain. The count. The percentage. The minister for health crying at the microphone. The enormous ordinariness of being, finally, in a country that trusts women with their own bodies.',
+    text: 'The count comes in on the Saturday and it is two to one, and it is two to one in nearly every constituency, including the ones nobody had counted on. Somebody has taped a photograph of a young woman above the door of the polling station and people touch it on the way in. Your mother, who has never once discussed any of this, says a single sentence in the kitchen about a girl she knew at school in 1979. Then she fills the kettle and says nothing else.',
+    context: 'The Eighth Amendment, adopted in 1983, gave the unborn an equal right to life with the pregnant woman and made abortion illegal in almost all circumstances. It was repealed by referendum on 25 May 2018 with 66.4 percent in favour. Roughly nine women a day travelled from Ireland to Britain for terminations across the intervening thirty-five years. Savita Halappanavar died of sepsis in Galway in 2012 after being refused a termination, and her photograph became the campaign\'s central image.',
     choices: null,
     effect: (p) => { p.m += 9; p.karma += 6; p.r += 3; p.addFlag('ire_repeal_generation'); p.setMem('ireRepealEighth', true) },
   },

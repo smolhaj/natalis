@@ -71,7 +71,7 @@ export const FOLLOWTHROUGH_31_EVENTS = [
       G.flags.has('taj_gbao_witness') &&
       G.age >= 50 &&
       !G.mem?.ft31PamiriGbao,
-    text: 'The May 2022 operation in GBAO is in the body in the way that remembered violence is — not as a sequence of events but as a set of associations: the sound of a particular vehicle, the timing of something, the specific quality of a silence that means something specific. The Pamiri community continues. The continuity is its own form of statement. You are part of the continuity, which means the statement includes you.',
+    text: 'The May 2022 operation in GBAO is in the body in the way that remembered violence is — not as a sequence of events but as a set of associations: the sound of a particular vehicle, the timing of something, the quality of a silence that means something specific. The Pamiri community continues. The continuity is its own form of statement. You are part of the continuity, which means the statement includes you.',
     choices: null,
     effect: (p) => { p.r += 8; p.m += 4; p.karma += 5; p.e += 3; p.setMem('ft31PamiriGbao', true) },
   },
@@ -138,7 +138,7 @@ export const FOLLOWTHROUGH_31_EVENTS = [
       G.flags.has('uzb_silk_road_identity') &&
       G.age >= 60 &&
       !G.mem?.ft31SilkRoad,
-    text: 'The Registan is a UNESCO World Heritage Site and gets several hundred thousand tourists per year now. People come from Germany, from Japan, from South Korea to photograph the tiles and the arches. You have watched your city become a destination — have watched the thing you grew up beside become something people cross the world to see. There is a specific kind of pride in this and a specific kind of dislocation. The tiles are the same tiles.',
+    text: 'The Registan is a UNESCO World Heritage Site and gets several hundred thousand tourists per year now. People come from Germany, from Japan, from South Korea to photograph the tiles and the arches. You have watched your city become a destination — have watched the thing you grew up beside become something people cross the world to see. There is a kind of pride in this and a kind of dislocation. The tiles are the same tiles.',
     choices: null,
     effect: (p) => { p.m += 5; p.r += 4; p.karma += 3; p.setMem('ft31SilkRoad', true) },
   },

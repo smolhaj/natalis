@@ -16,7 +16,7 @@ export const POLAND_DEPTH_EVENTS = [
 
   {
     id: 'pol_dep_katyn',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Poland' &&
@@ -57,14 +57,14 @@ export const POLAND_DEPTH_EVENTS = [
 
   {
     id: 'pol_dep_warsaw_uprising',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Poland' &&
       G.currentYear >= 1944 && G.currentYear <= 1960 &&
       G.age >= 5 && G.age <= 18 &&
       !G.mem?.polDepUprisingChild,
-    text: pick([
+    text: () => pick([
       'August 1, 1944. The Warsaw Uprising begins. The Home Army — the Armia Krajowa — rises against the German occupation. The Soviets are across the Vistula, close enough to hear the fighting. They stop and wait. For sixty-three days the AK holds parts of Warsaw while the Soviets wait and the Allies argue about supply lines. In October, the city surrenders. The Germans then systematically burn what remains. Two hundred thousand dead. 85 percent of Warsaw destroyed, building by building, street by street. You are small enough that what you know of it is what the adults say in the specific register adults use when the children are listening.',
       'The Powstanie Warszawskie: your parents\' generation\'s wound. Sixty-three days. The losses are in the faces of everyone you know who was old enough to be there — the particular blankness that arrives when August 1 is mentioned, the way conversations stop and then restart. You inherit the wound secondhand, which is its own shape of carrying it.',
     ]),
@@ -80,7 +80,7 @@ export const POLAND_DEPTH_EVENTS = [
 
   {
     id: 'pol_dep_warsaw_uprising_adult',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Poland' &&
@@ -123,7 +123,7 @@ export const POLAND_DEPTH_EVENTS = [
 
   {
     id: 'pol_dep_kresy_family',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Poland' &&
@@ -144,14 +144,15 @@ export const POLAND_DEPTH_EVENTS = [
 
   {
     id: 'pol_dep_nowa_huta',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Poland' &&
       G.currentYear >= 1960 && G.currentYear <= 1980 &&
       G.age >= 18 &&
       !G.mem?.polDepNowaHuta,
-    text: 'Nowa Huta was designed as the model socialist city. Built outside Kraków from 1949: apartment blocks, the Lenin steelworks, a theatre, a department store, public squares. Deliberately built without a church — the first Polish city in a thousand years without a church. The workers who moved to Nowa Huta to work in the steelworks wanted a church. The state refused. The workers built one on a plot where the state had put up a sign saying "future site of school." They built the cross first and then the church around it. The battle over the cross — the state trying to remove it, the workers defending it — ran for years. In 1977, the Ark of the Lord Church is consecrated by Karol Wojtyła, Cardinal of Kraków. The following year he is Pope.',
+    text: 'The city was laid out with a steelworks, a theatre, a department store and no church, which had not happened in this country in a thousand years. The men who came for the steel jobs put up a cross on the plot where the sign said a school would go. The state took the cross down and the cross went back up, and this went on for years, in the evenings, after shifts. In 1977 the cardinal from Krakow consecrates the church that grew around it, and the year after that he is the pope.',
+    context: 'Nowa Huta was built from 1949 outside Krakow around the Lenin Steelworks as a model socialist city, deliberately without a church. Residents erected a cross on a designated plot in 1957 and defended it through repeated attempts at removal, including riots in April 1960. The Ark of the Lord church was consecrated by Cardinal Karol Wojtyla in 1977; he was elected Pope John Paul II the following year.',
     choices: null,
     effect: (p) => {
       p.m += 4
@@ -167,7 +168,7 @@ export const POLAND_DEPTH_EVENTS = [
 
   {
     id: 'pol_dep_jedwabne',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Poland' &&
@@ -206,7 +207,7 @@ export const POLAND_DEPTH_EVENTS = [
 
   {
     id: 'pol_dep_pis_era',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Poland' &&
@@ -246,7 +247,7 @@ export const POLAND_DEPTH_EVENTS = [
 
   {
     id: 'pol_dep_uk_emigrant',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Poland' &&
@@ -288,7 +289,7 @@ export const POLAND_DEPTH_EVENTS = [
 
   {
     id: 'pol_dep_smolensk_conspiracy',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Poland' &&

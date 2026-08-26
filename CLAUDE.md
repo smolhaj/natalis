@@ -83,7 +83,7 @@ Key state fields:
 - `conditions`: `[{ id, severity: 'mild'|'moderate'|'severe', diagnosedYear, managed: bool }]` — chronic conditions; passive annual drain on health/happiness based on severity × managed status
 - `currentProject`: `{ type: 'writing'|'running'|'music'|'art'|'business', startYear, phase: 'early'|'middle'|'late'|'established'|'abandoned', name: string|null }` — slow-burn personal project, auto-detected from flags in `tick()`, advances phase by elapsed years. Surfaced in year texture prose; gates `events_project_arc.js` milestone events.
 
-### Life Phases (`src/engine/gameEngine.js: getPhase`)
+### Life Phases (`src/engine/character.js: getPhase`)
 
 ```
 early_childhood  ≤ 5
@@ -95,6 +95,54 @@ late_life        50+
 ```
 
 **IMPORTANT**: Never use `phase: 'adult'` — it is not a valid phase and will silently prevent events from ever firing.
+
+### Modes (`state.mode`)
+
+Every run is either **active** ("Inhabit") or **passive** ("Witness"), chosen on the
+title screen and fixed for that life. Same simulation, same content, same event
+pool — only the surface differs.
+
+- **active** — the player answers choice events, spends the yearly action budget,
+  takes careers and risks. The activities panel, crime and minigames are present.
+- **passive** — the life goes as it goes. Choice events still fire, but the
+  *character* answers them (`pickChoiceAutomatically` in `tick.js`, which weights
+  the options by stats, desire and regime rather than picking uniformly), and the
+  year resolves in one beat. The activities panel, action budget and crime
+  surface are hidden; the only verb is Age Up.
+
+Passive mode is the purest expression of the Sonder Principle, and it is also a
+correctness contract: a life that nobody steers must still reach a plausible age
+and a full arc. If passive medians drift, the simulation is wrong, not the mode.
+
+### Event Selection (`src/engine/tick.js: getNextEvent`)
+
+The corpus is ~8,000 events, ~2,275 of which are universal contemplative
+observations with very broad guards. Drawing from one flat weighted pool let that
+layer take ~70% of every life while the country-, era- and identity-specific
+events written around it fired a handful of times per *hundred* lives — the exact
+inversion of "specificity over coverage".
+
+Selection therefore draws a **register** first, then an event within it. Every
+event is classified once, lazily, in `src/data/events.js`:
+
+- `event.contemplative` — set by SOURCE MODULE (the 66 `events/sonder/*` files),
+  never by id prefix. The id convention drifted across those modules
+  (`sonder_`, `sonder12_`, `sdr30_`, `s14_`, `son15_`, `mundane_`), so the old
+  `startsWith('sonder_')` test missed 46% of the pool.
+- `event.register` — `anchored` (guard reads place, era or identity), `earned`
+  (guard reads what has already happened to this character), `universal`, or
+  `contemplative`. Derived from the guard's own source text.
+- `event.anchored` — place/era-keyed, including inside the contemplative layer,
+  where it earns a 3× weight so quiet years stay grounded in a real place.
+- `event.isGlimpse` — stranger glimpses, scheduled on their own ~decade cadence
+  instead of competing for weight against 8,000 other events.
+
+`REGISTER_SHARES` reserves a share of every year for each register, so adding
+content to one register can never statistically bury another. Contemplative
+events are additionally rate-limited to one every `CONTEMPLATIVE_COOLDOWN` years.
+
+**When you add events, add them to a register that is thin, not one that is
+already full.** Run `npm run sim` (or `tests/zsim.test.js`) to see the live mix.
 
 ### Event System
 
@@ -199,11 +247,37 @@ When a crime attempt is caught (via `attemptCrime()`), instead of immediately go
 
 Legal quality scales by regime: democracies have fair courts (1.0×), military dictatorships are stacked (0.35×). Lawyer fees scale by country GDP.
 
-### Partner Lifecycle (`src/engine/gameEngine.js: tickPartner`)
+### Partner Lifecycle (`src/engine/tick.js: tickPartner`)
 
 Called each year via `advanceYear`. Partner ages +1/year. At age 75+ there's a death probability (increases with age). On death: partner removed, `widowed` or `lost_partner` flags set, death logged in lifeLog. Relationship quality drifts ±1 per year.
 
 ---
+
+## The Simulation Contract
+
+Three rules the engine must keep, each of which was broken and is now enforced by
+`tests/` and by simulation:
+
+**Health is not a ratchet.** `healthCeiling(state)` sets a plateau from age, the
+healthcare of the country the character *actually lives in*, fitness and chronic
+conditions; health drifts toward it each year. A shock still hurts and a chronic
+condition still lowers the plateau permanently, but a life nobody intervenes in
+does not walk to zero. Before this, a passively-read 1962 Nigerian life had a
+median death age of **8**; it is now ~66 with ~29% under-5 mortality, which is
+what the historical record actually says.
+
+**Where you live is where you live.** `liveCountry(state)` — not the frozen
+birth country — drives salary, promotion pay, healthcare mortality, illness risk,
+the poverty premium, career availability and which world events reach you.
+Emigration used to change the prose and nothing else. A world event may set
+`followsEmigrant: true` to reach the diaspora as news from home.
+
+**Prose layers are layers, not fallbacks.** `buildYearTexture` is called every
+year with `{ specificOnly: true }`: it speaks when the memory, grief, condition,
+project, place or season layers have something specific to say about *this* life,
+and `buildMundaneLayer` fills the years when they do not. It used to be reachable
+only when the event pool came back empty — which, with ~2,000 broadly-guarded
+contemplative events, meant ~2% of years.
 
 ## The Immersion Principle
 
@@ -231,15 +305,47 @@ Generic events are a last resort. Specific events — ones that could only fire 
 
 ## Current State
 
-145 countries, 255 world events, 463+ event modules (~7,550+ events), 2672 registered flags, 379 ribbons. **0 orphaned, 0 partial flags.** Run `npm run check-flags` to verify.
+146 countries, 251 world events, 7,936 character events (2,127 of them the
+contemplative sonder layer, 156 stranger glimpses, 16 prison-only), 2,735
+registered flags, 377 ribbons. **0 orphaned, 0 partial flags.**
 
-**Codebase refactor (PR #105)**: Events reorganized into subdirectories under `src/data/events/`: `geographic/` (country-specific), `thematic/` (cross-cutting arcs), `lifecycle/` (phase-specific), `sonder/` (contemplative layer), `specific_lives/` (extreme specificity), `followthrough/` (all followthroughs consolidated). `gameEngine.js` split into 5 focused modules. `flags.js` split into 6 category files.
+Verify with:
 
-**PR #104**: `events_specific_lives.js` — 221 micro-specific events targeting one-of-a-kind life circumstances (Dalit water pump, 1943 Leningrad ration card, maquiladora night shift, Stasi file retrieval, etc.).
+```
+npm run build          # must pass
+npm test               # 240+ tests, including the simulation guardrails
+npm run check-flags    # 2735 covered / 0 partial / 0 orphaned
+npm run check-events   # reachability audits: dead guards, enum domains, phase and year windows
+npm run sim            # firing-rate report — what ACTUALLY fires, per 100 lives
+```
 
-**PRs #107–122**: Extended MODE A/B/C depth sprint — 66 sonder modules total (~1,980+ contemplative events); 50+ geographic depth arcs added (most countries now have a `_depth.js` companion); followthrough_30.js through followthrough_95.js (66 files); deep career arcs for 15+ professions; new lifecycle arcs (body, empty nest, grandparent, inheritance); letters, memory layer, oral tradition, seasonal, and roads-not-taken registers; events_followthrough_all.js (consolidated 317 followthrough events from the 29 original files).
+### The 2026 systems rebuild
 
-**Consequence/consistency audit (PR #131+)**: Systematic sweep for events that could never fire or fired incorrectly. Fixed: a duplicate event id that silently blocked one of two Venezuela Chávez-death narrations; `G.r`/`G.currentNeighborhoodTier`/`G.gdp` guard typos that made three events either dead or wrongly-scoped; `'USA'` vs `'United States'` and `'Wales'` (not a playable country — rerouted to a new `welsh_british` ethnic group under United Kingdom) naming bugs; and, most significantly, two entirely dead career-gated arcs — `events_business.js` (9 events) checked a nonexistent `entrepreneur` career instead of the `entrepreneur` *flag* actually set by `startBusiness()`, and `events_interpreter_arc.js` (7 events) checked a career that was simply never added to `careers.js` (added it). Also added 24 countries (Djibouti, Sierra Leone, Chad, Niger, Togo, Benin, Central African Republic, Qatar, Bahrain, Kuwait, Belgium, Switzerland, Bulgaria, Slovakia, Papua New Guinea, Samoa, Kiribati, Tuvalu, Marshall Islands, Maldives, Barbados, Guyana, Belize, Puerto Rico) that were referenced by existing events but never defined in `countries.js`, recovering ~10 more previously-unreachable events. `npm run check-flags` now reports 0 orphaned, 0 partial across all 2672 registered flags.
+An external audit found that the authored corpus was reaching players as roughly
+70% generic contemplation, and that none of it was visible to `check-flags`,
+which audits whether flags are textually set rather than whether code can run.
+Four faults sat between the library and the screen; all four are fixed and all
+four now have a test that fails if they return.
+
+| | before | after |
+|---|---|---|
+| contemplative share of a life | ~70% | 18.8% |
+| place/era/identity-anchored events | ~0.4% | 35.2% |
+| `buildYearTexture` reachability | ~2% of years | 59.7% |
+| stranger glimpses per life | 0.3 | 6.2 |
+| longest unbroken contemplative run | 19-21 years | 2 |
+| Nigeria 1962 median death age | 8 | 60s |
+
+Beyond those: parent death set no flag at all (21+ consumers, zero setters);
+events were consumed at display rather than resolution, so closing the tab ate
+them; 732 events froze one prose variant per app session; the in-prison pool
+required a `prisonOk` field no event set; emigration changed the prose and
+nothing else; literacy was a modern snapshot applied to mid-century births; and
+birth country was uniform across the roster, so 17% of lives began somewhere with
+almost no content.
+
+**The lesson worth keeping: measure what fires, not what exists.** Every failure
+above was invisible to a green flag audit. `npm run sim` is the counter-check.
 
 - Full event system descriptions and coverage history: `docs/codebase-state.md`
 - Full BUILD-by-BUILD roadmap and MICRO-EVENT DESIGN PRINCIPLE: `docs/roadmap.md`

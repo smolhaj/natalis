@@ -11,10 +11,7 @@
 const IS_MYANMAR = (G) => G.character.country?.name === 'Myanmar'
 const IS_ETHNIC_MINORITY = (G) =>
   G.character.country?.name === 'Myanmar' &&
-  (G.character.ethnicity === 'karen' || G.character.ethnicity === 'kachin' ||
-   G.character.ethnicity === 'shan' || G.character.ethnicity === 'chin' ||
-   G.character.ethnicity === 'karenni' || G.character.ethnicity === 'mon' ||
-   G.character.ethnicity === 'rakhine')
+  ['karen', 'kachin', 'shan', 'chin', 'rakhine'].includes(G.character.ethnicity)
 
 export const MYANMAR_DEPTH_EVENTS = [
 
@@ -22,7 +19,7 @@ export const MYANMAR_DEPTH_EVENTS = [
 
   {
     id: 'mya_dep_ethnic_civil_war',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_ETHNIC_MINORITY(G) &&
@@ -64,7 +61,7 @@ export const MYANMAR_DEPTH_EVENTS = [
 
   {
     id: 'mya_dep_1990_election',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_MYANMAR(G) &&
@@ -103,7 +100,7 @@ export const MYANMAR_DEPTH_EVENTS = [
 
   {
     id: 'mya_dep_jade_miner',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_MYANMAR(G) &&
@@ -144,14 +141,15 @@ export const MYANMAR_DEPTH_EVENTS = [
 
   {
     id: 'mya_dep_vcr_culture',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_MYANMAR(G) &&
       G.currentYear >= 1985 && G.currentYear <= 2005 &&
       G.age >= 12 && G.age <= 25 &&
       !G.mem?.myaDepVcr,
-    text: `The Press Scrutiny and Registration Division reviewed every publication before it was printed and every film before it was shown. The approved films were approved films. What was not approved was available anyway, through the channels that censorship always generates: the VCR, the copied tape, the video parlour with the curtain over the door. Jackie Chan. Bollywood. The kung fu film where everyone dies. The world outside Burma arrived on magnetic tape in a plastic case, copies of copies, the colour degraded from the third generation of dubbing, the subtitles in Burmese handwritten and photographed onto the tape. You watched the world through this format and formed your picture of it accordingly. The picture was incomplete in specific ways that shaped what you expected when you eventually encountered the original.`,
+    text: 'The video parlour is a room behind a curtain with benches and a television on a crate, and the tape is a copy of a copy of a copy. The colours have gone brown and the subtitles were hand-lettered on paper and filmed over the picture. It is Jackie Chan, or a Hindi film with the songs left in, or an American film in which everything is enormous. You build your idea of the outside world out of this. Years later you find out which parts of it were the tape.',
+    context: 'Myanmar\'s Press Scrutiny and Registration Division vetted every publication and film before release from 1962 until 2012. Smuggled and repeatedly duplicated VHS tapes, shown in unlicensed video parlours, carried Hong Kong, Indian and American films to audiences across the country through the 1980s and 1990s. Subtitles were commonly hand-lettered and re-filmed onto the copy.',
     choices: null,
     effect: (p) => {
       p.e += 2
@@ -165,7 +163,7 @@ export const MYANMAR_DEPTH_EVENTS = [
 
   {
     id: 'mya_dep_chin_hills',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_MYANMAR(G) &&
@@ -187,7 +185,7 @@ export const MYANMAR_DEPTH_EVENTS = [
 
   {
     id: 'mya_dep_spring_revolution',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_MYANMAR(G) &&
@@ -231,7 +229,7 @@ export const MYANMAR_DEPTH_EVENTS = [
 
   {
     id: 'mya_dep_1990_echo',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       IS_MYANMAR(G) &&

@@ -17,7 +17,8 @@ export const NAMIBIA_DEPTH_EVENTS = [
       G.ethnicity !== 'white_namibian' &&
       G.age >= 18 && G.age <= 30 &&
       !G.flags.has('nam_swanla_generation'),
-    text: 'The South West Africa Native Labour Association recruits at the communal area office. The contract is for eighteen months. You sign — a thumbprint if you cannot sign — and are transported to Tsumeb or Rosh Pinah or Consolidated Diamond Mines. Your family stays behind. The contract forbids them from accompanying you. You live in a compound. You cannot leave the compound without a pass. The work is deep in the earth or in the heat of the processing plant and the wages are paid in a currency that buys less in the compound store than it would elsewhere. Eighteen months. Then you go home. Then you sign again, because the communal land cannot support the family alone and because the mine is what there is.',
+    text: 'You put your thumb on the form at the labour office and eighteen months later you put it on another one. The lorry takes you to Tsumeb and there is a man on the compound gate and you cannot go out of it without a paper. Your wife cannot come; the contract says so in a line the clerk reads too quickly to follow. The store inside sells at compound prices and the wage was set with that in mind. At the end of the eighteen months you sign again.',
+    context: 'The South West Africa Native Labour Association, established in 1943, held a monopoly on recruiting African contract labour for Namibia\'s mines and farms. Workers signed for twelve to eighteen months, were graded by physical examination, housed in single-sex compounds and forbidden to bring families or change employer. The system was a central grievance of the 1971-72 general strike that involved some 20,000 contract workers.',
     choices: null,
     effect: (p) => { p.m -= 8; p.h -= 4; p.e += 2; p.addFlag('nam_swanla_generation') },
   },
@@ -75,14 +76,15 @@ export const NAMIBIA_DEPTH_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 1989 &&
       G.age >= 18 && G.age <= 25 &&
       !G.flags.has('nam_border_war_generation'),
-    text: 'The SADF conscripts you at eighteen. The Border War: Operation Savannah, Operation Protea, the counterinsurgency operations in the Caprivi and north of the Cutline. The enemy in the bush is SWAPO, which is also an abbreviation for the people who live in this country alongside you and went north rather than wait. The military says what you are doing. The military does not say what the people you are fighting are doing and why. You are nineteen. The bush at night. The specific discomfort of a position you were put in before you were old enough to have an opinion about it. Some of the men you serve with understand what they are defending. Some have not been asked to think about it. You are among both types, in foxholes in the dark.',
+    text: 'They call you up at eighteen and you are north of the Cutline before the year turns. The bush at night has a sound you learn to sort into three kinds: wind, animal, man. The briefing says SWAPO and does not mention that SWAPO is also the surname of a boy who worked on your father\'s farm and went north instead of waiting. Some of the men in the trench have thought about this and some have been careful not to. You are nineteen and you are both.',
+    context: 'South Africa administered South West Africa and conscripted its white male residents into the SADF. The Border War (1966-1989) was fought against SWAPO\'s People\'s Liberation Army of Namibia across the north of the territory and into southern Angola, including Operation Savannah in 1975 and Operation Protea in 1981. Namibia became independent in 1990 with SWAPO as its governing party.',
     choices: null,
     effect: (p) => { p.m -= 7; p.r += 6; p.e += 2; p.addFlag('nam_border_war_generation') },
   },
 
   {
     id: 'nam_dep_walvis_bay',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_NAMIBIAN(G) &&
@@ -96,7 +98,7 @@ export const NAMIBIA_DEPTH_EVENTS = [
 
   {
     id: 'nam_dep_independence_1990',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_NAMIBIAN(G) &&
@@ -126,7 +128,7 @@ export const NAMIBIA_DEPTH_EVENTS = [
 
   {
     id: 'nam_dep_german_community',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_NAMIBIAN(G) &&

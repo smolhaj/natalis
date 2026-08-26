@@ -16,7 +16,7 @@ export const INDIGENOUS_EVENTS = [
     phase: 'childhood',
     weight: 8,
     when: (G) =>
-      G.character.ethnicity === 'aboriginal_australian' &&
+      G.character.ethnicity === 'aboriginal' &&
       G.currentYear >= 1910 && G.currentYear <= 1970 &&
       G.age >= 4 && G.age <= 12 &&
       !G.mem?.stolenGen,
@@ -50,7 +50,7 @@ export const INDIGENOUS_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) =>
-      G.character.ethnicity === 'aboriginal_australian' &&
+      G.character.ethnicity === 'aboriginal' &&
       G.currentYear >= 1950 &&
       G.age >= 8 &&
       !G.mem?.countryConnection,
@@ -64,7 +64,7 @@ export const INDIGENOUS_EVENTS = [
     phase: null,
     weight: 4,
     when: (G) =>
-      G.character.ethnicity === 'aboriginal_australian' &&
+      G.character.ethnicity === 'aboriginal' &&
       G.currentYear >= 1992 && G.currentYear <= 1995 &&
       !G.mem?.maboPersonal,
     text: 'The High Court has found that terra nullius — the legal fiction that this land was empty when the British arrived — was always false. Your family has been here for sixty thousand years. The law has just acknowledged that you were here. The acknowledgment sits in your mouth strangely. You were here before the law, and you will be here after it, and what the law decides about that feels like something that is about you but does not quite reach you.',
@@ -77,7 +77,7 @@ export const INDIGENOUS_EVENTS = [
     phase: 'midlife',
     weight: 4,
     when: (G) =>
-      G.character.ethnicity === 'aboriginal_australian' &&
+      G.character.ethnicity === 'aboriginal' &&
       G.currentYear >= 2008 && G.currentYear <= 2010 &&
       !G.mem?.apologyPersonal,
     text: 'The Prime Minister stands in Parliament and says: we are sorry. The word sorry. It is said. People around you are weeping. You are not sure what you feel — something more complicated than joy and less complete than relief. He says: for the laws and policies of successive Parliaments and governments that have inflicted profound grief, suffering and loss. He names the Stolen Generations. Your grandmother was one of them. She has been dead for four years and did not hear this. You are hearing it for her, and it is too late, and it is also something.',
@@ -90,7 +90,7 @@ export const INDIGENOUS_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) =>
-      G.character.ethnicity === 'aboriginal_australian' &&
+      G.character.ethnicity === 'aboriginal' &&
       G.currentYear >= 1970 &&
       !G.mem?.culturalReclaim,
     text: 'There is a movement to reclaim language, ceremony, land rights. You have been cautious about it — the white institutions that co-opt it, the debates inside the community about authenticity. But there is a moment at a gathering when a song is sung that your grandmother used to hum without knowing the words to, and you understand that reclamation is not about purity, it is about continuation.',
@@ -233,7 +233,7 @@ export const INDIGENOUS_EVENTS = [
 
   {
     id: 'ind_canada_sixties_scoop',
-    phase: 'childhood',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.ethnicity === 'first_nations' &&
@@ -415,7 +415,7 @@ export const INDIGENOUS_EVENTS = [
     phase: null,
     weight: 2,
     when: (G) =>
-      ['aboriginal_australian', 'indigenous_american', 'first_nations', 'maori',
+      ['aboriginal', 'indigenous_american', 'first_nations', 'maori',
        'amazonian_indigenous_pe', 'indigenous_mexican'].includes(G.character.ethnicity) &&
       G.currentYear >= 2000 &&
       !G.mem?.landAckComplexity,
@@ -451,7 +451,7 @@ export const INDIGENOUS_EVENTS = [
 
   {
     id: 'ind_sami_reindeer_migration',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.ethnicity === 'sami' &&
@@ -466,7 +466,7 @@ export const INDIGENOUS_EVENTS = [
 
   {
     id: 'ind_sami_alta',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.ethnicity === 'sami' &&
@@ -509,7 +509,7 @@ export const INDIGENOUS_EVENTS = [
 
   {
     id: 'ind_sami_hidden_identity',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.ethnicity === 'sami' &&
@@ -567,7 +567,7 @@ export const INDIGENOUS_EVENTS = [
         return 'The language came back, partially. Enough to speak to your grandchildren in — a sentence here, the names of things, the specific word for the weather that Northern Sami has and Norwegian does not. It did not come back the way it was. It came back the way things come back: changed by the years it was gone, arriving as a living thing that has been through something rather than the preserved thing you thought you were recovering.'
       }
       if (G.flags.has('sami_boarding_survivor')) {
-        return 'What the boarding school took from you can be calculated and the calculation is not short. The language is the most visible item on the list — the direct line to the grandmother, the naming systems for animals and weather and terrain that have no equivalent. But there are things on the list that are harder to name: the specific way of knowing a landscape that requires the right words, and the relationship to time that the Sami calendar encodes. You carry what you retained. You know what you did not retain.'
+        return 'What the boarding school took from you can be calculated and the calculation is not short. The language is the most visible item on the list — the direct line to the grandmother, the naming systems for animals and weather and terrain that have no equivalent. But there are things on the list that are harder to name: the way of knowing a landscape that requires the right words, and the relationship to time that the Sami calendar encodes. You carry what you retained. You know what you did not retain.'
       }
       return 'You are what you are, in the way the twentieth century made it possible and impossible to be. The Parliament exists now. The language has legal status. Your grandchildren are learning it in school, imperfectly but in school. What the century did cannot be undone by these things. What the century did also did not end here — it ended differently than it began.'
     },
@@ -603,7 +603,7 @@ export const INDIGENOUS_EVENTS = [
 
   {
     id: 'ind_amazon_garimpo_arrives',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       ['amazonian_indigenous_pe', 'indigenous_brazilian', 'indigenous_colombian'].includes(G.character.ethnicity) &&
@@ -632,21 +632,21 @@ export const INDIGENOUS_EVENTS = [
 
   {
     id: 'ind_amazon_smoke_horizon',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       ['amazonian_indigenous_pe', 'indigenous_brazilian', 'indigenous_colombian'].includes(G.character.ethnicity) &&
       G.age >= 16 && G.age <= 40 &&
       G.currentYear >= 1975 &&
       !G.mem?.amazonSmoke,
-    text: 'The smoke has been on the horizon every dry season for years now, but this year it is different — closer, and accompanied by the specific sound of chainsaw machinery that carries further than you expected. The farmers and cattle ranchers move in after the loggers clear. The forest that has been there since before your grandmother\'s grandmother becomes pasture in one dry season. The word for what is happening — desmatamento, deforestación, deforestation — is a word from outside the forest, which already tells you something.',
+    text: 'The smoke has been on the horizon every dry season for years now, but this year it is different — closer, and accompanied by the sound of chainsaw machinery that carries further than you expected. The farmers and cattle ranchers move in after the loggers clear. The forest that has been there since before your grandmother\'s grandmother becomes pasture in one dry season. The word for what is happening — desmatamento, deforestación, deforestation — is a word from outside the forest, which already tells you something.',
     choices: null,
     effect: (p) => { p.m -= 10; p.h -= 4; p.addFlag('amazon_deforestation_witness'); p.setMem('amazonSmoke', true); },
   },
 
   {
     id: 'ind_amazon_funai_demarcation',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.ethnicity === 'indigenous_brazilian' &&
@@ -682,7 +682,7 @@ export const INDIGENOUS_EVENTS = [
 
   {
     id: 'ind_amazon_bagua_2009',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.ethnicity === 'amazonian_indigenous_pe' &&
@@ -739,7 +739,7 @@ export const INDIGENOUS_EVENTS = [
 
   {
     id: 'ind_amazon_passing_knowledge',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       ['amazonian_indigenous_pe', 'indigenous_brazilian', 'indigenous_colombian'].includes(G.character.ethnicity) &&

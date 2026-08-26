@@ -16,14 +16,15 @@ export const RUSSIA_DEPTH_EVENTS = [
 
   {
     id: 'ru_dep_great_terror',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_RUSSIA(G) &&
       G.currentYear >= 1937 && G.currentYear <= 1939 &&
       G.age >= 5 && G.age <= 20 &&
       !G.mem?.ruDepGreatTerror,
-    text: `The knock comes at night. It almost always comes at night — 2am, 3am, the hour when the body is least defended. Someone in the building has been taken. You do not know the charge; no one knows the charge at first. The word "Article 58" circulates. Anti-Soviet activity. Terrorism. Sabotage. The charges are categories that expand to fit whoever needs to be inside them. The person taken may return in a year, or in ten years, or not at all. The family of the person taken receives no information. The neighbours continue as if nothing has happened because continuing is survival.`,
+    text: 'It is always at night, two or three in the morning, when a body is least able to argue with anything. The lift stops on a floor and everybody on the staircase knows which one. In the morning the door has a strip of paper across it and the mother is on the stairs with a parcel she will carry to the queue at Kresty and bring home again. Nobody in the building says the family\'s name out loud, and that is not cowardice exactly, it is the arrangement.',
+    context: 'During the Great Terror of 1937-38, roughly 750,000 people were executed and over a million sent to camps, under Article 58 of the criminal code covering anti-Soviet activity, terrorism and sabotage. Arrests were carried out at night by NKVD quota. Families were given no information and often no charge, and relatives of the arrested were themselves liable to deportation or exclusion from work and education.',
     choices: null,
     effect: (p) => {
       p.m -= 12
@@ -35,7 +36,7 @@ export const RUSSIA_DEPTH_EVENTS = [
 
   {
     id: 'ru_dep_family_arrest',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_RUSSIA(G) &&
@@ -58,7 +59,7 @@ export const RUSSIA_DEPTH_EVENTS = [
 
   {
     id: 'ru_dep_kommunalka',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_RUSSIA(G) &&
@@ -66,7 +67,8 @@ export const RUSSIA_DEPTH_EVENTS = [
       G.currentYear >= 1945 && G.currentYear <= 1980 &&
       G.age >= 5 && G.age <= 30 &&
       !G.mem?.ruDepKommunalka,
-    text: `The kommunalka: three families, or five families, or seven, sharing one apartment. One kitchen, one toilet, one hallway where the bicycles and the boots and the winter coats all coexist. You know whose day it is to clean the hallway. You know which shelf in the shared refrigerator is yours and you do not take from the other shelves. The family in the room to the left has a child who practises piano at hours that everyone has learned to tolerate. The family on the right is not speaking to your family this month, over the question of who used the last of the hot water on Tuesday. Privacy exists within the room. The room is shared by your entire family. This is Moscow, or Leningrad, or any Soviet city in any year since collectivisation.`,
+    text: 'Four families, one kitchen, one lavatory, and a hallway where every bicycle and every pair of winter boots has an agreed position. Your shelf in the refrigerator is the second one and you do not touch the others. The boy on the left practises scales at an hour everybody has decided to tolerate. The family on the right is not speaking to yours this month over the hot water on Tuesday. Your door is the only door in the world that is yours, and there are five of you behind it.',
+    context: 'Communal apartments were created by subdividing pre-revolutionary flats after 1918 and remained the normal urban housing form for decades; a majority of Leningrad residents still lived in them in the early 1960s. Khrushchev-era prefabricated blocks moved millions into single-family flats from 1957 onward, but kommunalki persisted in central Moscow and Leningrad into the post-Soviet period.',
     choices: null,
     effect: (p) => {
       p.e += 2
@@ -108,7 +110,7 @@ export const RUSSIA_DEPTH_EVENTS = [
 
   {
     id: 'ru_dep_blat_system',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_RUSSIA(G) &&
@@ -127,7 +129,7 @@ export const RUSSIA_DEPTH_EVENTS = [
 
   {
     id: 'ru_dep_deficit',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_RUSSIA(G) &&
@@ -187,7 +189,7 @@ export const RUSSIA_DEPTH_EVENTS = [
 
   {
     id: 'ru_dep_chechnya_war',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_RUSSIA(G) &&
@@ -195,7 +197,8 @@ export const RUSSIA_DEPTH_EVENTS = [
       G.currentYear >= 1994 && G.currentYear <= 1997 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.ruDepChechnya,
-    text: `The contract: you sign because the contract money is real money in 1994, which is not true of most salaries. Or you are conscripted and you do not sign anything. Grozny in December 1994: a city of 400,000 people, urban combat, the Maykop Brigade — a mechanised unit from a different era sent into an environment that requires a different era's training. The official Russian military casualties are published months later than they happen. The mothers in black at Pushkin Square, carrying photographs — the Soldiers' Mothers Committee. They negotiate body releases directly when the army does not. You go, or you know someone who goes. Grozny falls in 1995. Fighting continues. The Khasavyurt accord of 1996 is signed. The war has not ended so much as suspended.`,
+    text: 'You sign because the contract money is real, which in 1994 is not something anybody can say about a salary. Grozny in December is a city of four hundred thousand people and you go into it in an armoured column built for a different kind of war. The numbers come out months after the men do. At Pushkin Square the mothers stand with photographs and negotiate for the bodies themselves, because the army will not.',
+    context: 'Russian forces entered Grozny on 31 December 1994 and the Maykop Brigade was destroyed in the first days of street fighting. Official casualty figures were released long after the events and were widely disputed. The Union of Soldiers\' Mothers Committees negotiated body recoveries and prisoner exchanges directly with Chechen commanders. Grozny fell in 1995 and the Khasavyurt accord suspended the war in 1996.',
     choices: null,
     effect: (p) => {
       p.m -= 8
@@ -210,7 +213,7 @@ export const RUSSIA_DEPTH_EVENTS = [
 
   {
     id: 'ru_dep_propiska',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       IS_RUSSIA(G) &&

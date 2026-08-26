@@ -17,7 +17,7 @@ export const ZAMBIA_DEPTH_EVENTS = [
 
   {
     id: 'zmb_dep_tonga_kariba',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_TONGA(G) &&
@@ -80,7 +80,7 @@ export const ZAMBIA_DEPTH_EVENTS = [
 
   {
     id: 'zmb_dep_copper_closure',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_ZAMBIA(G) &&
@@ -88,7 +88,8 @@ export const ZAMBIA_DEPTH_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 2010 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.zmbDepCopperClosure,
-    text: `Luanshya. Mufulira. Konkola. The mine closed or was privatised at a fraction of its value to a buyer who cut the workforce and maintained neither the housing nor the infrastructure the company town had provided. The clinic is still there and is understaffed. The housing is still there and is deteriorating. The infrastructure was never meant to run without the company maintaining it. The second generation — your generation — grew up in what the company town becomes after the company: a place with the infrastructure of prosperity and the economy of poverty. ZCCM is gone. The mine is owned by a consortium from somewhere else. The wages for the remaining miners are lower than they were.`,
+    text: 'The mine went to a buyer from somewhere else for less than the housing alone was worth, and two thirds of the jobs went in the first year. The clinic is open and has one nurse. The company used to keep the roads and the water and the football ground, and now nobody keeps them. You grew up in a town built to a standard it can no longer pay for, and the men still going down are on less than your father was on in 1988.',
+    context: 'Zambia nationalised the Copperbelt mines as ZCCM in 1970 and privatised them between 1997 and 2000 under IMF and World Bank conditions, at valuations widely criticised as far below asset value. Company towns such as Luanshya, Mufulira and Konkola lost their housing, health and infrastructure subsidies with the sale. Copperbelt employment fell from about 62,000 to under 20,000.',
     choices: [
       {
         text: 'You find work in what remains — the privatised mine, the informal trade, the connections.',
@@ -119,7 +120,7 @@ export const ZAMBIA_DEPTH_EVENTS = [
 
   {
     id: 'zmb_dep_aids_orphan',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_ZAMBIA(G) &&
@@ -160,7 +161,7 @@ export const ZAMBIA_DEPTH_EVENTS = [
 
   {
     id: 'zmb_dep_aids_orphan_adult',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_ZAMBIA(G) &&
@@ -181,7 +182,7 @@ export const ZAMBIA_DEPTH_EVENTS = [
 
   {
     id: 'zmb_dep_compound_lusaka',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_ZAMBIA(G) &&
@@ -203,7 +204,7 @@ export const ZAMBIA_DEPTH_EVENTS = [
 
   {
     id: 'zmb_dep_mealie_crisis',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_ZAMBIA(G) &&
@@ -243,7 +244,7 @@ export const ZAMBIA_DEPTH_EVENTS = [
 
   {
     id: 'zmb_dep_chinese_copper',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_ZAMBIA(G) &&

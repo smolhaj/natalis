@@ -1,6 +1,6 @@
 // events_local.js — Local significance arc (BUILD 30)
 //
-// Small renown: the specific texture of being someone who matters
+// Small renown: the texture of being someone who matters
 // within a radius of five kilometres, not nationally.
 // Fires for any archetype; gated on karma, career-field, and emerging community trust.
 // Distinct from the fame system — local_hero accumulates through acts of presence,
@@ -12,7 +12,7 @@ export const LOCAL_EVENTS = [
 
   {
     id: 'loc_first_recognition',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 23 && G.age <= 38
       && G.karma >= 55
@@ -26,7 +26,7 @@ export const LOCAL_EVENTS = [
 
   {
     id: 'loc_teacher_recognition',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) => G.career?.field === 'education'
       && G.age >= 30 && G.age <= 55
@@ -38,7 +38,7 @@ export const LOCAL_EVENTS = [
 
   {
     id: 'loc_health_worker_recognition',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) => G.career?.field === 'healthcare'
       && G.age >= 30 && G.age <= 55
@@ -52,7 +52,7 @@ export const LOCAL_EVENTS = [
 
   {
     id: 'loc_trusted_with_problems',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) => G.flags.has('local_hero')
       && G.age >= 35 && G.age <= 60
@@ -93,7 +93,7 @@ export const LOCAL_EVENTS = [
 
   {
     id: 'loc_small_victory',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) => G.flags.has('local_hero')
       && G.age >= 30 && G.age <= 55
@@ -119,7 +119,7 @@ export const LOCAL_EVENTS = [
 
   {
     id: 'loc_the_coach',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.flags.has('local_hero')
       && G.age >= 28 && G.age <= 52
@@ -146,7 +146,7 @@ export const LOCAL_EVENTS = [
 
   {
     id: 'loc_memory_keeper',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.flags.has('local_hero')
       && G.age >= 42 && G.age <= 65
@@ -159,7 +159,7 @@ export const LOCAL_EVENTS = [
 
   {
     id: 'loc_formal_role',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.flags.has('local_achievement')
       && G.age >= 40 && G.age <= 60
@@ -220,4 +220,26 @@ export const LOCAL_EVENTS = [
     effect: (p) => { p.m += 8; p.karma += 5; p.legacy += 5; p.setMem('loc_transmitted_noted', true); },
   },
 
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_known_by_the_shopkeeper',
+    phase: null,
+    weight: 3,
+    when: (G) => G.age >= 24 && !G.mem?.ordShopkeeper && Math.random() < 0.14,
+    text: `The man in the shop has started getting your thing down before you reach the counter. Neither of you has ever asked the other's name and this is not going to change. Today he says something about the weather that is slightly too well constructed to be about the weather, and you both enjoy it. You smile the whole way to the corner.`,
+    choices: null,
+    effect: (p) => { p.m += 7; p.s += 2; p.setMem('ordShopkeeper', true) },
+  },
+
+  {
+    id: 'ord_the_bench',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 68 && !G.mem?.ordBench,
+    text: `You sit on the bench by the road for an hour most mornings and this is not a decline, it is a post. Two dogs, the school run, the van that comes on Wednesdays, the woman who is always slightly late for whatever it is. You are keeping an accurate record that nobody has asked for. It is warm on the arm of the bench by half past nine.`,
+    choices: null,
+    effect: (p) => { p.m += 8; p.setMem('ordBench', true) },
+  },
 ]

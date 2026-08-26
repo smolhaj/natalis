@@ -8,7 +8,7 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
 
   {
     id: 'afg_taliban_kabul_1996',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Afghanistan' &&
@@ -41,7 +41,7 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
 
   {
     id: 'afg_education_revoked',
-    phase: 'adolescence',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Afghanistan' &&
@@ -49,7 +49,8 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
       G.currentYear >= 1996 && G.currentYear <= 2001 &&
       G.age >= 8 && G.age <= 18 &&
       !G.mem?.afgEducRevoked,
-    text: 'Your teacher was a woman named Afsana. She had taught here for nine years. On the morning after the Taliban\'s decree she does not come to school. The girls who arrive at the gate are turned away by a man you have not seen before. There is no announcement. No letter. You wait two weeks before accepting that the school is not going to reopen for you. The boys\' school on the next street opens again after two weeks. Afsana, you hear later, has started a secret school in her home — seven girls crammed into a back room, textbooks hidden under cloth. If the Taliban discover it the punishment is severe. You know where she lives.',
+    text: 'Afsana has taught in that room for nine years and on the Tuesday she is not there. A man you have not seen before stands at the gate and does not explain, only moves his hand. There is no letter and no announcement, and you keep walking down at eight for two more weeks anyway. The boys\' school on the next street opens again. In November someone tells you Afsana has seven girls in her back room with the books under a cloth, and tells you where she lives.',
+    context: 'The Taliban closed girls\' schools and barred women from most employment after taking Kabul in September 1996. Underground home schools operated throughout the period at serious risk to teachers and families. Girls\' education resumed after 2001; secondary schooling for girls was suspended again in March 2022 and university education in December 2022.',
     choices: [
       {
         text: 'You go to Afsana\'s house. You will learn in secret.',
@@ -69,7 +70,7 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
 
   {
     id: 'afg_2001_fall_of_kabul',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Afghanistan' &&
@@ -94,7 +95,7 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
 
   {
     id: 'afg_reconstruction_years',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Afghanistan' &&
@@ -122,7 +123,7 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
 
   {
     id: 'afg_interpreter_nato',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Afghanistan' &&
@@ -151,7 +152,7 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
 
   {
     id: 'afg_women_career_2013',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Afghanistan' &&
@@ -173,7 +174,7 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
 
   {
     id: 'afg_2021_collapse',
-    phase: 'young_adult',
+    phase: null,
     weight: 6,
     when: (G) =>
       G.character.country.name === 'Afghanistan' &&
@@ -210,7 +211,7 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
 
   {
     id: 'afg_2021_diaspora_watch',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('emigrated') &&
@@ -231,7 +232,7 @@ export const AFGHANISTAN_DEPTH_EVENTS = [
 
   {
     id: 'afg_living_under_new_taliban',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Afghanistan' &&

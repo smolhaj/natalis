@@ -62,7 +62,7 @@ export const FOLLOWTHROUGH_55_EVENTS = [
 
   {
     id: 'ft55_regret_midlife_high',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.age >= 38 && G.age <= 55 &&
@@ -234,7 +234,7 @@ export const FOLLOWTHROUGH_55_EVENTS = [
       G.regret >= 20 &&
       (!G.parents?.father?.alive || !G.parents?.mother?.alive) &&
       !G.mem?.ft55RegretParent,
-    text: `One of the persistent textures of late-life regret is the parent-shaped one — the conversations that did not happen before they died, the things that were said in arguments that were never retracted, the version of your relationship that was improving when it ended. These regrets have a specific quality: they cannot be closed. The relationship is in the past tense now. What you do with that is an internal project rather than an interpersonal one.`,
+    text: `One of the persistent textures of late-life regret is the parent-shaped one — the conversations that did not happen before they died, the things that were said in arguments that were never retracted, the version of your relationship that was improving when it ended. These regrets have a quality: they cannot be closed. The relationship is in the past tense now. What you do with that is an internal project rather than an interpersonal one.`,
     choices: [
       {
         text: 'Let what was good stand. The relationship was real even with what it lacked.',

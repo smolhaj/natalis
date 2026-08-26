@@ -36,7 +36,7 @@ export function buildMundaneLayer(state) {
   const isHindu = religion === 'hindu'
   const isBuddhist = religion === 'buddhist'
   const isJewish = religion === 'jewish'
-  const isFolk = religion === 'folk' || religion === 'traditional'
+  const isFolk = religion === 'folk_religion'
   const isWealthy = ['very_high', 'high', 'medium_high'].includes(gdp)
   const isPoor = ['very_low', 'low'].includes(gdp)
   const isWorkingClass = ['low_medium', 'medium'].includes(gdp)
@@ -49,7 +49,9 @@ export function buildMundaneLayer(state) {
   const isDeveloping = ['developing_urban', 'developing_unstable', 'subsaharan', 'conflict_zone'].includes(arch)
   const isPostSoviet = arch === 'post_soviet'
   const desire = state.desire ?? null
-  const currentCn = state.currentCountry ?? cn
+  // Same object-vs-string mix as yearTexture had: currentCountry is an object,
+  // `cn` a name, so `currentCn === cn` and every `currentCn === 'X'` was false.
+  const currentCn = (state.currentCountry?.name ?? cn)
 
   const pool = []
   const add = (...items) => pool.push(...items)

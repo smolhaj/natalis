@@ -6,11 +6,11 @@ export const AUSTRALIA_DEPTH_EVENTS = [
 
   {
     id: 'aus_dep_stolen_generations_removed',
-    phase: 'early_childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Australia' &&
-      G.ethnicity === 'indigenous_australian' &&
+      G.ethnicity === 'aboriginal' &&
       G.currentYear >= 1910 && G.currentYear <= 1970 &&
       G.age >= 3 && G.age <= 9 &&
       !G.mem?.ausStolen,
@@ -36,7 +36,7 @@ export const AUSTRALIA_DEPTH_EVENTS = [
 
   {
     id: 'aus_dep_ten_pound_pom_arrival',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Australia' &&
@@ -66,11 +66,11 @@ export const AUSTRALIA_DEPTH_EVENTS = [
 
   {
     id: 'aus_dep_referendum_1967_counted',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Australia' &&
-      G.ethnicity === 'indigenous_australian' &&
+      G.ethnicity === 'aboriginal' &&
       G.currentYear >= 1967 && G.currentYear <= 1970 &&
       G.age >= 18 &&
       !G.mem?.ausRef67,
@@ -83,7 +83,7 @@ export const AUSTRALIA_DEPTH_EVENTS = [
 
   {
     id: 'aus_dep_mardi_gras_1978',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Australia' &&
@@ -113,7 +113,7 @@ export const AUSTRALIA_DEPTH_EVENTS = [
 
   {
     id: 'aus_dep_cronulla_2005_riots',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Australia' &&
@@ -175,7 +175,7 @@ export const AUSTRALIA_DEPTH_EVENTS = [
 
   {
     id: 'aus_dep_voice_2023',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Australia' &&

@@ -25,7 +25,7 @@ export const NEW_ZEALAND_EVENTS = [
 
   {
     id: 'nz_springbok_tour_1981',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_NZ(G) &&
@@ -51,7 +51,7 @@ export const NEW_ZEALAND_EVENTS = [
 
   {
     id: 'nz_rainbow_warrior_1985',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_NZ(G) &&
@@ -65,7 +65,7 @@ export const NEW_ZEALAND_EVENTS = [
 
   {
     id: 'nz_rogernomics',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_NZ(G) &&
@@ -91,7 +91,7 @@ export const NEW_ZEALAND_EVENTS = [
 
   {
     id: 'nz_nuclear_free_declaration',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_NZ(G) &&
@@ -105,7 +105,7 @@ export const NEW_ZEALAND_EVENTS = [
 
   {
     id: 'nz_brain_drain',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_NZ(G) &&
@@ -131,7 +131,7 @@ export const NEW_ZEALAND_EVENTS = [
 
   {
     id: 'nz_christchurch_earthquake_2011',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_NZ(G) &&
@@ -145,7 +145,7 @@ export const NEW_ZEALAND_EVENTS = [
 
   {
     id: 'nz_christchurch_attack_2019',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_NZ(G) &&

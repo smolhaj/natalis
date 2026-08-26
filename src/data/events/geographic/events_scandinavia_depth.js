@@ -13,14 +13,15 @@ export const SCANDINAVIA_DEPTH_EVENTS = [
 
   {
     id: 'no_1942_deportation',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_NORWEGIAN(G) &&
       G.currentYear >= 1942 && G.currentYear <= 1945 &&
       G.age >= 14 &&
       !G.mem?.no1942Deportation,
-    text: 'November 26, 1942. The SS *Donau* departs Oslo harbour with 532 Jewish prisoners — men, women, children — arrested in nationwide raids the night before. The arrests were carried out primarily by Norwegian police, acting under NS government orders. A total of 773 Norwegian Jews will be deported to Auschwitz and other camps during the occupation. Thirty-four will survive. The operation was German in design and Norwegian in execution. This is the sentence that will occupy Norway for decades: not only that the Germans did it, but that Norwegians did it. Some Norwegians hid families, warned them, helped them cross to Sweden. The majority neither helped nor informed. What you know of this, and what was said and not said about it in the years after, is part of how the country has had to understand itself.',
+    text: 'The men who come for the family in the flat below are not German. They are police from the station on the corner, and one of them nods at your mother in the stairwell because he knows her. In the morning the door is sealed and the milk is still on the step. Your father says nothing about it at supper and nothing about it afterwards. Some people in this town drove families to the Swedish border that same month, and some watched from a window, and you do not always know which is which.',
+    context: 'On 26 November 1942 the SS Donau sailed from Oslo with 532 Jewish prisoners arrested in nationwide raids carried out chiefly by Norwegian police under Nasjonal Samling orders. In total 773 Norwegian Jews were deported; 34 survived. Others were hidden or helped across the Swedish border by Norwegian civilians. The Norwegian state formally apologised and paid restitution in 1999.',
     choices: null,
     effect: (p) => { p.m -= 14; p.karma += 5; p.r += 8; p.addFlag('no_1942_witness'); p.setMem('no1942Deportation', true) },
   },
@@ -29,7 +30,7 @@ export const SCANDINAVIA_DEPTH_EVENTS = [
 
   {
     id: 'fin_continuation_war',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       IS_FINNISH(G) &&
@@ -51,14 +52,15 @@ export const SCANDINAVIA_DEPTH_EVENTS = [
 
   {
     id: 'fin_finlandization',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_FINNISH(G) &&
       G.currentYear >= 1955 && G.currentYear <= 1989 &&
       G.age >= 25 &&
       !G.mem?.finFinlandization,
-    text: 'The word *Finnlandisierung* — Finlandization — was coined by West Germans to describe the strategic accommodation a small country makes to survive next to a large one. Finland does not join NATO. Finland does not join the Warsaw Pact. Finland maintains careful relations with Moscow: censoring books that might offend the Kremlin, avoiding foreign policy positions the Soviet Union would object to, electing presidents partly on the basis of Moscow\'s assessment of their acceptability. President Kekkonen governs for twenty-five years partly because he is trusted in Moscow. The arrangement is not said aloud as such. It is practiced as the obvious thing, the thing that goes without saying, because what it prevents — the Hungarian scenario, the Czech scenario — is also obvious. You live in a country that is free in the ways it is permitted to be free, and the permission has a geographical address.',
+    text: 'The book is published everywhere else and the shop here does not have it and the shop does not say why. On the news the phrasing about the eastern neighbour is careful in a way you can hear. The same president is elected again, and everyone understands the part of the reason that is never printed. Nobody at your table calls this an arrangement. It is simply how a small country next to a large one goes about not becoming Hungary.',
+    context: 'Finland stayed out of both NATO and the Warsaw Pact and maintained the 1948 Treaty of Friendship, Cooperation and Mutual Assistance with the Soviet Union. Publishers and broadcasters practised self-censorship on Soviet subjects and some books were withdrawn. Urho Kekkonen was president from 1956 to 1982, his standing in Moscow an unstated factor in successive elections. West German commentators coined Finnlandisierung for the arrangement. Finland joined NATO in 2023.',
     choices: [
       {
         text: 'The arrangement is the price of survival. You make the trade without liking it.',
@@ -106,10 +108,11 @@ export const SCANDINAVIA_DEPTH_EVENTS = [
     weight: 3,
     when: (G) =>
       IS_FINNISH(G) &&
-      G.character.ethnicity?.id === 'finlandssvenska' &&
+      G.character.ethnicity === 'swedish_finnish' &&
       G.age >= 12 && G.age <= 20 &&
       !G.mem?.finSwedishSpeaker,
-    text: 'You are among the five percent — the Swedish-speaking Finns, finlandssvenskar, the community that has been in Finland since the Middle Ages when the country was part of Sweden. Constitutionally bilingual, with Swedish as a protected language, with Swedish-medium schools and institutions. The constitution protects this. The majority doesn\'t always feel its protection as a natural thing. You navigate: Swedish at home, Finnish at the market and the schoolyard and in the wider country. The two languages in you are not in conflict — you speak both — but the question of which one you are is asked more often than you ask it of yourself. *Finlandssvensk* is the word you use. It is specific. It is not Swedish-Swedish, not Finnish-Finnish. It is its own thing, which is the thing you are.',
+    text: 'At home it is Swedish and at the shop it is Finnish and you have never had to think about the moment you switch. At school the other children say the word for you as though it were slightly funny, which is not the same as unkind. The forms from the municipality come in both languages and the Finnish column is on the left. There is a word for what you are and it is neither of the two obvious ones.',
+    context: 'About five percent of Finns are Swedish-speaking, a community present since Finland formed part of the Swedish realm. Finland is constitutionally bilingual, with Swedish-medium schools, broadcasting and municipal services. Finlandssvensk names an identity distinct from both Finnish-speaking Finns and Swedes of Sweden.',
     choices: null,
     effect: (p) => { p.e += 4; p.r += 3; p.addFlag('fin_swedish_minority'); p.setMem('finSwedishSpeaker', true) },
   },
@@ -118,7 +121,7 @@ export const SCANDINAVIA_DEPTH_EVENTS = [
 
   {
     id: 'fin_reparations_industry',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_FINNISH(G) &&

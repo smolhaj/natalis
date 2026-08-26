@@ -112,7 +112,7 @@ const ADDICTION_BOTTOM = [
       G.flags.has('addiction_consequences') &&
       !G.flags.has('in_recovery') &&
       !G.mem?.addBottomFired,
-    text: 'There is a moment — not always dramatic, sometimes just a morning — where the accounting is complete and undeniable. What you have spent. What you have lost. What you are. The moment has a specific quality: the usual defences are not available. The rationalizations are not loading. You are sitting in what is actually true, without the buffer. Rock bottom is not a place. It is this specific quality of clarity.',
+    text: 'There is a moment — not always dramatic, sometimes just a morning — where the accounting is complete and undeniable. What you have spent. What you have lost. What you are. The moment has a quality: the usual defences are not available. The rationalizations are not loading. You are sitting in what is actually true, without the buffer. Rock bottom is not a place. It is this quality of clarity.',
     choices: [
       {
         text: 'Ask for help',
@@ -139,12 +139,12 @@ const ADDICTION_BOTTOM = [
       G.flags.has('addiction_spiral') &&
       !G.flags.has('in_recovery') &&
       !G.mem?.addOverdoseFired,
-    text: 'You wake up in a hospital. Or someone wakes you up — the details are fragmented in the specific way that extreme events fragment. What is clear is that you are alive and that you were not certain to be alive and that someone made the call that brought the people who made sure you were alive. The doctor uses a word. The word is overdose. You already knew the word. The word is now in your record.',
+    text: 'You wake up in a hospital. Or someone wakes you up — the details are fragmented in the way that extreme events fragment. What is clear is that you are alive and that you were not certain to be alive and that someone made the call that brought the people who made sure you were alive. The doctor uses a word. The word is overdose. You already knew the word. The word is now in your record.',
     choices: [
       {
         text: 'This is the end of it — this is where you stop',
         tag: null,
-        outcome: 'The decision made from a hospital bed in the hour after an overdose is not the same as a resolution made in ordinary conditions. It has a specific weight. You use the weight.',
+        outcome: 'The decision made from a hospital bed in the hour after an overdose is not the same as a resolution made in ordinary conditions. It has a weight. You use the weight.',
         effect: (p) => { p.h -= 15; p.m -= 10; p.addFlag('addiction_overdose_survived'); p.addFlag('addiction_first_recovery_attempt'); p.setMem('addOverdoseFired', true) },
       },
       {
@@ -224,7 +224,7 @@ const ADDICTION_RECOVERY = [
       G.flags.has('early_recovery') &&
       !G.flags.has('sobriety') &&
       !G.mem?.addRelapseFired,
-    text: 'The relapse happens at a specific moment you could describe precisely. It is not a collapse — it is a decision that happens in about four seconds, in which the recovery is abandoned and the using begins again. The four seconds are long enough to be a choice. The choice is made. This is the hardest thing about relapse: it was possible not to. That fact does not make it easier. It makes it worse.',
+    text: 'The relapse happens at a moment you could describe precisely. It is not a collapse — it is a decision that happens in about four seconds, in which the recovery is abandoned and the using begins again. The four seconds are long enough to be a choice. The choice is made. This is the hardest thing about relapse: it was possible not to. That fact does not make it easier. It makes it worse.',
     choices: [
       {
         text: 'Go back to the programme — the relapse is not the end',
@@ -251,7 +251,7 @@ const ADDICTION_RECOVERY = [
       !G.flags.has('sobriety') &&
       G.age >= 28 &&
       !G.mem?.addSobrietyFired,
-    text: 'A year. Then two. Then five. The sobriety is not absence — it is presence, a different kind, that requires maintenance. The meetings are part of the week. The sponsor relationship is a specific kind of friendship. You are not who you were before the addiction and not who you were during it. You are a third thing. The third thing is functional and yours.',
+    text: 'A year. Then two. Then five. The sobriety is not absence — it is presence, a different kind, that requires maintenance. The meetings are part of the week. The sponsor relationship is a kind of friendship. You are not who you were before the addiction and not who you were during it. You are a third thing. The third thing is functional and yours.',
     choices: null,
     effect: (p) => { p.h += 10; p.m += 10; p.addFlag('sobriety'); p.addFlag('addiction_recovered'); p.setMem('addSobrietyFired', true) },
   },
@@ -276,7 +276,7 @@ const ADDICTION_RECOVERY = [
     when: (G) =>
       G.flags.has('sobriety') &&
       !G.mem?.addCarryingFired,
-    text: 'Someone in your family or your circle is where you were. You can see it precisely — the timing, the patterns, the explanations, the specific quality of the not-looking. You know what it costs to say something. You also know what it costs not to.',
+    text: 'Someone in your family or your circle is where you were. You can see it precisely — the timing, the patterns, the explanations, the quality of the not-looking. You know what it costs to say something. You also know what it costs not to.',
     choices: [
       {
         text: 'Say something — you know how to do this',

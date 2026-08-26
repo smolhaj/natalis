@@ -50,7 +50,7 @@ export const FOLLOWTHROUGH_88_EVENTS = [
     weight: 3,
     when: (G) =>
       G.flags.has('sg_migrant_worker_sg') &&
-      G.currentCountry === 'Singapore' &&
+      G.currentCountry?.name === 'Singapore' &&
       G.currentYear >= 2020 && G.currentYear <= 2022 &&
       G.age >= 18 &&
       !G.mem?.ft88CovidDorms,

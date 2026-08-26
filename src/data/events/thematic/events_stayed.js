@@ -1,6 +1,6 @@
 // events_stayed.js
 // BUILD 23 — The Diaspora Who Didn't Leave
-// The specific experience of staying in a country being emptied by emigration.
+// The experience of staying in a country being emptied by emigration.
 // Not passive — a weight. The relationships with those who went, the country mid-exodus,
 // the question of whether the choice was right.
 

@@ -28,7 +28,7 @@ export const ROADS_NOT_TAKEN_EVENTS = [
       !G.flags.has('emigrated') &&
       G.age >= 40 && G.age <= 52 &&
       !G.mem?.rntStayed,
-    text: 'They are back for a visit — the ones who left when you could have. Successful, in a foreign way, carrying the small signs of a different country in their clothes and their complaints. You chose here. Everything you have is connected to that choice: the family, the career, the specific texture of this city in every season. You would not undo it. But you sit with the information of what left would have meant, for an evening, and then you go home.',
+    text: 'They are back for a visit — the ones who left when you could have. Successful, in a foreign way, carrying the small signs of a different country in their clothes and their complaints. You chose here. Everything you have is connected to that choice: the family, the career, the texture of this city in every season. You would not undo it. But you sit with the information of what left would have meant, for an evening, and then you go home.',
     choices: null,
     effect: (p) => { p.r += 5; p.setMem('rntStayed', true) },
   },
@@ -51,7 +51,7 @@ export const ROADS_NOT_TAKEN_EVENTS = [
 
   {
     id: 'rnt_affair_not_taken',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('affair_not_taken') &&
@@ -78,7 +78,7 @@ export const ROADS_NOT_TAKEN_EVENTS = [
 
   {
     id: 'rnt_lost_faith_ceremony',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('lost_faith') &&
@@ -123,7 +123,7 @@ export const ROADS_NOT_TAKEN_EVENTS = [
 
   {
     id: 'rnt_political_disengaged_40',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.political_leaning === null &&

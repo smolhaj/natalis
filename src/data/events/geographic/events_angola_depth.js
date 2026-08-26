@@ -18,7 +18,7 @@ export const ANGOLA_DEPTH_EVENTS = [
 
   {
     id: 'ang_dep_musseque_life',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_URBAN_ANGOLA(G) &&
@@ -40,7 +40,7 @@ export const ANGOLA_DEPTH_EVENTS = [
 
   {
     id: 'ang_dep_retornados_1975',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_ANGOLA(G) &&
@@ -61,7 +61,7 @@ export const ANGOLA_DEPTH_EVENTS = [
 
   {
     id: 'ang_dep_ovimbundu_displacement',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_OVIMBUNDU(G) &&
@@ -102,7 +102,7 @@ export const ANGOLA_DEPTH_EVENTS = [
 
   {
     id: 'ang_dep_mestizo_socialism',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_ANGOLA(G) &&
@@ -124,7 +124,7 @@ export const ANGOLA_DEPTH_EVENTS = [
 
   {
     id: 'ang_dep_cuban_presence',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_ANGOLA(G) &&
@@ -145,7 +145,7 @@ export const ANGOLA_DEPTH_EVENTS = [
 
   {
     id: 'ang_dep_child_soldier_demob',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_ANGOLA(G) &&
@@ -187,7 +187,7 @@ export const ANGOLA_DEPTH_EVENTS = [
 
   {
     id: 'ang_dep_demining',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_RURAL_ANGOLA(G) &&
@@ -208,7 +208,7 @@ export const ANGOLA_DEPTH_EVENTS = [
 
   {
     id: 'ang_dep_luanda_inequality',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_URBAN_ANGOLA(G) &&

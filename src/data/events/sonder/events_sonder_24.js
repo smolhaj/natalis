@@ -10,6 +10,8 @@
 // the smell of an old classroom, certain roads, what the news was, the
 // small ceremony, the last year you didn't think about your health.
 
+import { place } from './_sonderGuards.js'
+
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
 export const EVENTS_SONDER_24 = [
@@ -116,7 +118,7 @@ export const EVENTS_SONDER_24 = [
     id: 'sdr24_photograph_leaves_out',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 35 && !G.mem?.sdr24Photo,
+    when: (G) => place.hasPhotographs(G) && (G.age >= 35 && !G.mem?.sdr24Photo),
     text: () => pick([
       'The photograph from that year shows the occasion. Everything that was happening that was not the occasion is not in it.',
       'You look happy in the picture. You were not unhappy. The two things are not the same and the photograph cannot hold both.',
@@ -189,7 +191,7 @@ export const EVENTS_SONDER_24 = [
     when: (G) => G.age >= 30 && !G.mem?.sdr24DoorSound,
     text: () => pick([
       'You knew who was home by the sound of the door. The weight of a hand on a handle is personal. You still know this.',
-      'The door of the apartment is a specific sound and you can hear it from anywhere in the building and know immediately whether it is yours.',
+      'The door of the apartment is a sound and you can hear it from anywhere in the building and know immediately whether it is yours.',
       'In the old house the third stair had a particular sound. You can hear it exactly. The stair is probably still there.',
     ]),
     choices: null,
@@ -214,7 +216,7 @@ export const EVENTS_SONDER_24 = [
     id: 'sdr24_what_winter_taught',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 55 && !G.mem?.sdr24Winter,
+    when: (G) => G.season === 'winter' && (G.age >= 55 && !G.mem?.sdr24Winter),
     text: () => pick([
       'Winter is a teacher you return to. What it teaches — slowness, the value of warmth, the way darkness forces a different kind of attention — you could not have learned in summer.',
       'The winters you have lived through vary enormously. The worst ones have specific dates. The best ones have mornings you can still reproduce.',
@@ -312,7 +314,7 @@ export const EVENTS_SONDER_24 = [
     id: 'sdr24_classroom_smell',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 35 && !G.mem?.sdr24ClassroomSmell,
+    when: (G) => place.wentToSchool(G) && (G.age >= 35 && !G.mem?.sdr24ClassroomSmell),
     text: () => pick([
       'The smell of chalk and particular cleaning chemicals and old wood — the smell of a classroom — arrived from somewhere and you were, briefly, nine years old.',
       'Walking into the school for your child\'s event and the smell was the smell, unchanged in thirty years, and thirty years was nothing for a moment.',
@@ -330,7 +332,7 @@ export const EVENTS_SONDER_24 = [
     text: () => pick([
       'There are roads you have driven so many times that the hands do it without the mind. The hands know every curve. The mind can be elsewhere.',
       'The road you took every day for ten years you could still drive in the dark, though you moved away and the road has probably changed.',
-      'A road has its own personality after enough trips. The specific quality of its light at a certain hour, the bend where something happened once.',
+      'A road has its own personality after enough trips. The quality of its light at a certain hour, the bend where something happened once.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr24Roads', true) },
@@ -382,11 +384,11 @@ export const EVENTS_SONDER_24 = [
     id: 'sdr24_other_light',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 28 && !G.mem?.sdr24OtherLight,
+    when: (G) => place.hasElectricity(G) && (G.age >= 28 && !G.mem?.sdr24OtherLight),
     text: () => pick([
       'The light on in the apartment across the street, 11pm. Someone is still awake over there. The light is the only evidence of an entire life going on simultaneously.',
       'Walking past a window and the inside of someone\'s evening: a television, a lamp, a figure. The complete unknowability of what that evening is.',
-      'The lit window: the simplest version of the thought that other people\'s lives are full from the inside. That specific fullness, in that specific apartment, you will never know.',
+      'The lit window: the simplest version of the thought that other people\'s lives are full from the inside. That fullness, in that specific apartment, you will never know.',
     ]),
     choices: null,
     effect: (p) => { p.setMem('sdr24OtherLight', true) },

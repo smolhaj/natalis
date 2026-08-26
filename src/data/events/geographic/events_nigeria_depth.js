@@ -4,8 +4,8 @@
 // Nollywood and Afrobeats as cultural assertion, church/mosque culture.
 
 const IS_NIGERIA = (G) => G.character.country?.name === 'Nigeria'
-const IS_SOUTH = (G) => IS_NIGERIA(G) && G.character.ethnicity !== 'fulani_hausa'
-const IS_NORTH = (G) => IS_NIGERIA(G) && G.character.ethnicity === 'fulani_hausa'
+const IS_SOUTH = (G) => IS_NIGERIA(G) && ['yoruba', 'igbo', 'ijaw', 'other_nigerian'].includes(G.character.ethnicity)
+const IS_NORTH = (G) => IS_NIGERIA(G) && ['hausa_fulani', 'kanuri'].includes(G.character.ethnicity)
 const IS_LAGOS = (G) => IS_NIGERIA(G) && G.ruralUrban === 'urban' && G.currentYear >= 1970
 
 export const NIGERIA_DEPTH_EVENTS = [
@@ -14,7 +14,7 @@ export const NIGERIA_DEPTH_EVENTS = [
 
   {
     id: 'nga_dep_nepa',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_NIGERIA(G) &&
@@ -32,7 +32,7 @@ export const NIGERIA_DEPTH_EVENTS = [
 
   {
     id: 'nga_dep_generator_economy',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_NIGERIA(G) &&
@@ -53,7 +53,7 @@ export const NIGERIA_DEPTH_EVENTS = [
 
   {
     id: 'nga_dep_waec_jamb',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_NIGERIA(G) &&
@@ -81,7 +81,7 @@ export const NIGERIA_DEPTH_EVENTS = [
 
   {
     id: 'nga_dep_go_slow',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_LAGOS(G) &&
@@ -102,7 +102,7 @@ export const NIGERIA_DEPTH_EVENTS = [
 
   {
     id: 'nga_dep_nollywood',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_NIGERIA(G) &&
@@ -123,7 +123,7 @@ export const NIGERIA_DEPTH_EVENTS = [
 
   {
     id: 'nga_dep_endsars',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_NIGERIA(G) &&
@@ -151,7 +151,7 @@ export const NIGERIA_DEPTH_EVENTS = [
 
   {
     id: 'nga_dep_japa',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_NIGERIA(G) &&
@@ -179,7 +179,7 @@ export const NIGERIA_DEPTH_EVENTS = [
 
   {
     id: 'nga_dep_pentecostal',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_SOUTH(G) &&
@@ -187,7 +187,8 @@ export const NIGERIA_DEPTH_EVENTS = [
       G.currentYear >= 1985 &&
       G.age >= 8 && G.age <= 18 &&
       !G.mem?.ngaDepPentecostal,
-    text: `Sunday: the church that takes the whole morning and half the afternoon. The megachurch or the local assembly or the mountain of fire or the RCCG parish or the Winners' Chapel. The pastor who is also a prophet. The prayer that has a specific vocabulary — "in the name of Jesus," "blood of Jesus," "I come against," "fire." The miracle testimonies and the thanksgiving testimonies and the testimony about the exam result and the testimony about the business deal. Your parents tithe ten percent. The church has a school, a hospital, a television station, a security company. The church in Nigeria is not just a place of worship — it is infrastructure.`,
+    text: 'Sunday takes the whole morning and half the afternoon and there is a bus that comes for the people on your street. The pastor is also a prophet and the prayers have their own vocabulary, and by nine you can say all of it without being taught. Your parents put ten percent in the envelope before anything else comes out of the pay. The church has a school and a clinic and a television station, and when your uncle needs a job it is the church that finds him one.',
+    context: 'Pentecostal and charismatic Christianity expanded rapidly in southern Nigeria from the 1980s, with the Redeemed Christian Church of God, Winners\' Chapel and Mountain of Fire among the largest ministries. Tithing at ten percent is standard practice. The major churches operate universities, hospitals, banks, broadcasters and employment networks, functioning as parallel social infrastructure.',
     choices: null,
     effect: (p) => {
       p.s += 2
@@ -195,6 +196,96 @@ export const NIGERIA_DEPTH_EVENTS = [
       p.addFlag('nga_dep_pentecostal_generation')
       p.setMem('ngaDepPentecostal', true)
     },
+  },
+
+  // ── NIGERIA 2030s–2060s ───────────────────────────────────────────────────
+  // The generator falls silent, the harmattan stops arriving, Lagos keeps
+  // arriving, and the ones who left start coming back with foreign children.
+
+  {
+    id: 'nga_dep_solar_after_nepa',
+    phase: null,
+    weight: 5,
+    when: (G) =>
+      IS_NIGERIA(G) &&
+      G.currentYear >= 2030 && G.currentYear <= 2060 &&
+      G.age >= 20 &&
+      !G.mem?.ngaSolarSilence,
+    text: 'The panels go up on the roof in April and the inverter sits in the corridor humming at a pitch you have to stand still to hear. The first evening the light comes on without the generator you all look at the bulb rather than at each other. The jerrican for the diesel stays behind the door for two more years before anybody throws it out. Your mother says she does not trust a light that does not cost anything.',
+    context: 'Nigeria’s grid delivered roughly 4,000 megawatts for over 200 million people through the 2010s and 2020s, and households ran an estimated 40 million small generators. Off-grid solar-plus-battery systems fell below the lifetime cost of petrol generation during the 2020s, and the federal Energy Transition Plan targets universal access by 2030.',
+    choices: null,
+    effect: (p) => { p.m += 6; p.h += 3; p.mo -= 1200; p.setMem('ngaSolarSilence', true) },
+  },
+
+  {
+    id: 'nga_dep_lagos_thirty_million',
+    phase: null,
+    weight: 4,
+    when: (G) =>
+      IS_LAGOS(G) &&
+      G.currentYear >= 2032 && G.currentYear <= 2065 &&
+      G.age >= 25 &&
+      !G.mem?.ngaLagosThirty,
+    text: 'The estate where your uncle kept goats has nine towers on it and a gate with a boom and a man in a jacket. You take the rail line that was a rumour for twenty years and it runs, mostly, and the go-slow has moved to the roads that feed it. On the ride you count four cranes and lose count at the fifth. Nobody in the carriage is from Lagos and everybody in the carriage is from Lagos.',
+    context: 'Lagos grew from about 1.4 million people in 1970 to roughly 16 million by 2020, and UN projections put it near 30 million by 2050 — potentially the largest city on earth. The Blue and Red Line rail corridors opened in 2023 and 2024 after two decades of construction.',
+    choices: null,
+    effect: (p) => { p.m += 3; p.e += 3; p.r += 3; p.setMem('ngaLagosThirty', true) },
+  },
+
+  {
+    id: 'nga_dep_harmattan_missing',
+    phase: null,
+    weight: 4,
+    when: (G) =>
+      IS_NIGERIA(G) &&
+      G.currentYear >= 2035 && G.currentYear <= 2065 &&
+      G.age >= 18 &&
+      !G.mem?.ngaHarmattanMissing,
+    text: 'The harmattan is late and then it is thin and then, the third year, it does not arrive at all. In December the air stays wet and the mangoes come early and wrong. Your grandmother used to rub shea butter on your legs against the cracking and you have not needed it in four seasons. The old men outside the mosque argue about which year the dust last came properly, and no two of them agree.',
+    context: 'The harmattan — dry Saharan air moving south between November and March — has shortened and weakened across West Africa as Sahel rainfall patterns shift. Northern Nigeria warmed roughly 1.5°C over the twentieth century, faster than the global average, and projections put parts of the north above survivable wet-bulb thresholds for periods of the century’s second half.',
+    choices: null,
+    effect: (p) => { p.h -= 4; p.m -= 3; p.addFlag('witnessed_climate_change'); p.addFlag('climate_generation'); p.setMem('ngaHarmattanMissing', true) },
+  },
+
+  {
+    id: 'nga_dep_japa_children_visit',
+    phase: null,
+    weight: 4,
+    when: (G) =>
+      IS_NIGERIA(G) &&
+      G.currentYear >= 2035 && G.currentYear <= 2065 &&
+      G.age >= 45 &&
+      !G.mem?.ngaJapaChildren,
+    text: 'Your brother’s children come for three weeks in August and they call you aunty in an accent that arrives a half-second late. They do not eat the pepper. They take photographs of the road and of the woman selling agbalumo and of the church, and they are careful, the way people are careful in a house they are visiting. On the last night the youngest asks you to say her name properly, twice, and writes it down.',
+    choices: [
+      {
+        text: 'Teach her the name and the four sentences that go with it.',
+        tag: null,
+        outcome: 'She practises it at the airport and gets it right on the third attempt. She sends you a voice note in October with the sentences in it, and one of them is wrong, and you keep it anyway.',
+        effect: (p) => { p.m += 7; p.karma += 4; p.setMem('ngaJapaChildren', true) },
+      },
+      {
+        text: 'Say it once and let it go. They have their own country.',
+        tag: null,
+        outcome: 'They fly on the Sunday. You wash the plates they used and put them back in the cupboard they came from, and the house is the size it was before.',
+        effect: (p) => { p.m -= 5; p.r += 6; p.addFlag('nga_dep_japa_generation'); p.setMem('ngaJapaChildren', true) },
+      },
+    ],
+  },
+
+  {
+    id: 'nga_dep_last_cash',
+    phase: null,
+    weight: 3,
+    when: (G) =>
+      IS_NIGERIA(G) &&
+      G.currentYear >= 2030 && G.currentYear <= 2055 &&
+      G.age >= 25 &&
+      !G.mem?.ngaLastCash,
+    text: 'The woman at the roasted corn will not take the note. She turns her phone around so you can see the code and waits while you find it, and the whole transaction is four seconds and no hands. You still keep folded naira in the inside pocket for the danfo conductor and for the church basket and for your mother, who does not have the app and will not be getting it. The notes in there have gone soft as cloth.',
+    context: 'Nigeria’s eNaira launched in 2021 as one of the first central bank digital currencies, and the cash-swap crisis of early 2023 pushed tens of millions of people onto transfer apps in a matter of weeks. Mobile-money and instant-transfer volumes have grown faster in Nigeria than anywhere else in Africa outside Kenya.',
+    choices: null,
+    effect: (p) => { p.e += 3; p.r += 3; p.setMem('ngaLastCash', true) },
   },
 
 ]

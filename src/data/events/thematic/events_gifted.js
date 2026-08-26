@@ -685,7 +685,7 @@ const EXTRAORDINARY_MUSICAL_EVENTS = [
       !G.mem?.giftMusicLateFired,
     text: (G) => {
       if (G.flags.has('gift_rekindled') && !G.flags.has('acclaimed_musician')) return 'A documentary maker finds recordings from thirty years ago — the recordings you made when you had no label, when the recording was done on a borrowed machine in someone\'s living room. They put them on a streaming platform with a short essay about what they represent. The response is not large but it is from exactly the right people.'
-      return 'Late recognition has its own texture. The prize arrives when the work it honours is twenty years in the past. You accept it with genuine warmth and the specific feeling of receiving something in the wrong decade.'
+      return 'Late recognition has its own texture. The prize arrives when the work it honours is twenty years in the past. You accept it with genuine warmth and the feeling of receiving something in the wrong decade.'
     },
     choices: null,
     effect: (p) => { p.m += 8; p.karma += 5; p.addFlag('gift_passed_on'); p.setMem('giftMusicLateFired', true) },
@@ -720,7 +720,7 @@ const EXTRAORDINARY_ARTISTIC_EVENTS = [
 
   {
     id: 'gift_art_major_prize',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.flags.has('born_gifted_artistic') &&
@@ -780,7 +780,7 @@ const EXTRAORDINARY_LINGUISTIC_EVENTS = [
 
   {
     id: 'gift_literary_prize',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.flags.has('born_gifted_linguistic') &&
@@ -877,7 +877,7 @@ const ACT6_EVENTS = [
       if (type === 'musical') return `${target.charAt(0).toUpperCase() + target.slice(1)} hums a melody without thinking and it is more complex than it should be for someone their age. You hear it. You are the only person in the room who hears what it is.`
       if (type === 'athletic') return `You watch ${target} run — not in a race, just across a yard — and the mechanics are exactly what you spent ten years trying to learn. The body already knows it.`
       if (type === 'artistic') return `You find a drawing ${target} made and left somewhere. It is not childlike in the way that most children\'s drawings are childlike. There is something in the composition that shouldn\'t be there yet.`
-      return `${target.charAt(0).toUpperCase() + target.slice(1)} writes something — a story, an essay, a message — and the phrasing is unusual in a way that makes you put it down and pick it back up. You recognise the specific quality. You know what it means.`
+      return `${target.charAt(0).toUpperCase() + target.slice(1)} writes something — a story, an essay, a message — and the phrasing is unusual in a way that makes you put it down and pick it back up. You recognise the quality. You know what it means.`
     },
     choices: [
       {
@@ -924,7 +924,7 @@ const ACT7_EVENTS = [
       if (hasSuppressed && isUSA && hasRacism) return 'You are old enough that the anger has settled into something more like clarity. You know exactly what you were and what you were not permitted to be. These are separate things. They have not stopped being separate.'
       if (hasSuppressed) return 'The inventory is specific: the gift was real, the path was blocked, the alternative life you built is also real. These coexist. You have mostly made peace with the coexistence. Mostly.'
       if (hasRekindled) return 'Late in life you did the thing you were made for — not in the way you would have if the path had been clear, but in the way available to someone who came to it late and sideways. It turns out that is also a kind of path. You would not have chosen it. But it was yours.'
-      return 'The gift shaped the life whether or not it was ever fully used. You can see this now. The specific way you move through a problem, the things you notice, the moments when you are most alive — all of it traces back. The gift was always the gift. What the world made of it was a different question.'
+      return 'The gift shaped the life whether or not it was ever fully used. You can see this now. The way you move through a problem, the things you notice, the moments when you are most alive — all of it traces back. The gift was always the gift. What the world made of it was a different question.'
     },
     choices: null,
     effect: (p) => { p.m += 6; p.addFlag('gift_late_accounting'); p.setMem('giftLateFired', true) },
@@ -942,7 +942,7 @@ const ACT7_EVENTS = [
     text: (G) => {
       const type = giftType(G)
       if (type === 'intellectual') return 'A former student emails to say they got the position. They credit you — not in the thank-you-for-everything way, but specifically, in terms of what they learned in a particular conversation years ago. You remember the conversation. You didn\'t know they were taking notes.'
-      if (type === 'musical') return 'You hear something on the radio and it takes you four bars to realise it\'s the technique you spent a year teaching. The voice is not yours — it\'s theirs, completely theirs. But the specific thing you showed them is in there, grown into something you couldn\'t have predicted.'
+      if (type === 'musical') return 'You hear something on the radio and it takes you four bars to realise it\'s the technique you spent a year teaching. The voice is not yours — it\'s theirs, completely theirs. But the thing you showed them is in there, grown into something you couldn\'t have predicted.'
       if (type === 'athletic') return 'One of the kids you trained is competing at a level you barely reached. You watch the footage and recognise the correction you gave in the first month — a small thing, a weight distribution, something that looked trivial. It is in their body now. It will be in their body for the rest of their life.'
       if (type === 'artistic') return 'You are shown a piece of work by someone who doesn\'t know you — a student, a young artist, someone who found something you made years ago. The influence is clear. Not imitation — the thing that influence actually is when it works, which is using what you\'ve learned to make something the teacher couldn\'t have made.'
       return 'A book is dedicated to you. The dedication is spare — just your name, and the year you first gave them a red pen. The book is better than anything you\'ve written. This is the right order of things.'

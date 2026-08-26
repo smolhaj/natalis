@@ -6,7 +6,7 @@ export const CANADA_EVENTS = [
 
   {
     id: 'can_october_crisis_1970',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Canada' &&
@@ -36,7 +36,7 @@ export const CANADA_EVENTS = [
 
   {
     id: 'can_charter_1982',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Canada' &&
@@ -63,7 +63,7 @@ export const CANADA_EVENTS = [
 
   {
     id: 'can_meech_lake_1990',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Canada' &&
@@ -82,7 +82,7 @@ export const CANADA_EVENTS = [
 
   {
     id: 'can_quebec_referendum_1995',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Canada' &&
@@ -135,7 +135,7 @@ export const CANADA_EVENTS = [
 
   {
     id: 'can_trc_calls_to_action_2015',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Canada' &&
@@ -163,7 +163,7 @@ export const CANADA_EVENTS = [
 
   {
     id: 'can_chinese_head_tax',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Canada' &&
@@ -191,7 +191,7 @@ export const CANADA_EVENTS = [
 
   {
     id: 'can_housing_affordability',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Canada' &&

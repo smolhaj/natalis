@@ -36,14 +36,15 @@ export const RUSSIA_EVENTS = [
 
   {
     id: 'ru_beslan_2004',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Russia' &&
       G.currentYear >= 2004 && G.currentYear <= 2006 &&
       G.age >= 10 &&
       !G.mem?.ruBeslan,
-    text: 'September 1, 2004. School Number One, Beslan, North Ossetia. Chechen separatists take more than 1,100 hostages — children, parents, teachers, coming for the first day of school. Three days. The gymnasium. The heat of the August bodies. The negotiations that do not produce anything. On September 3, explosions inside the building and the security forces rush in and the children run through gunfire across a field toward the houses across the road. Three hundred and thirty-four dead. A hundred and eighty-six of them children. The numbers that were official and the numbers that were not were different. You watch it on the television for three days and then the school year begins somewhere else and you send your children.',
+    text: 'It is the first of September, so the children carry flowers in to the school. For three days the television shows the same low building and the same field in front of it. On the third day the roof goes and the children come out across the field in their underwear because of the heat inside, some running, some being carried. Two weeks later you take your own child to the gate and stand there longer than you need to.',
+    context: 'On 1 September 2004 armed Chechen separatists seized School Number One in Beslan, North Ossetia, taking over 1,100 hostages on the first day of the school year. The siege ended on 3 September with explosions and a chaotic assault. 334 people died, 186 of them children. Official and independent accounts of the ending diverged, and the parents\' committee spent years contesting the state\'s version.',
     choices: null,
     effect: (p) => {
       p.m -= 8
@@ -55,7 +56,7 @@ export const RUSSIA_EVENTS = [
 
   {
     id: 'ru_bolotnaya_2011',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Russia' &&
@@ -88,7 +89,7 @@ export const RUSSIA_EVENTS = [
 
   {
     id: 'ru_1991_coup_collapse',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Russia' &&
@@ -115,7 +116,7 @@ export const RUSSIA_EVENTS = [
 
   {
     id: 'ru_putin_stability_bargain',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Russia' &&

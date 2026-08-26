@@ -12,7 +12,7 @@ export const VIETNAM_DEPTH_EVENTS = [
 
   {
     id: 'vn_dep_reeducation_aftermath',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       isVietnam(G) &&
@@ -42,7 +42,7 @@ export const VIETNAM_DEPTH_EVENTS = [
 
   {
     id: 'vn_dep_con_lai',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       isVietnam(G) &&
@@ -71,7 +71,7 @@ export const VIETNAM_DEPTH_EVENTS = [
 
   {
     id: 'vn_dep_doi_moi',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       isVietnam(G) &&
@@ -98,7 +98,7 @@ export const VIETNAM_DEPTH_EVENTS = [
 
   {
     id: 'vn_dep_cafe_culture',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       isVietnam(G) &&
@@ -115,7 +115,7 @@ export const VIETNAM_DEPTH_EVENTS = [
 
   {
     id: 'vn_dep_north_south',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       isVietnam(G) &&
@@ -144,7 +144,7 @@ export const VIETNAM_DEPTH_EVENTS = [
 
   {
     id: 'vn_dep_uxo',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       isVietnam(G) &&
@@ -160,7 +160,7 @@ export const VIETNAM_DEPTH_EVENTS = [
 
   {
     id: 'vn_dep_viet_kieu_return',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       isVietnam(G) &&
@@ -189,7 +189,7 @@ export const VIETNAM_DEPTH_EVENTS = [
 
   {
     id: 'vn_dep_youth_league',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       isVietnam(G) &&
@@ -218,7 +218,7 @@ export const VIETNAM_DEPTH_EVENTS = [
 
   {
     id: 'vn_dep_agent_orange',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       isVietnam(G) &&

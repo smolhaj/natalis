@@ -12,7 +12,7 @@ const isChristian = (G) =>
   ['christian_maronite', 'christian_orthodox', 'christian_catholic'].includes(G.religion)
 
 const isMuslimOrDruze = (G) =>
-  ['sunni', 'shia', 'druze', 'alawi'].includes(G.religion)
+  ['muslim_sunni', 'muslim_shia', 'muslim_druze', 'muslim_alawi'].includes(G.religion)
 
 export const LEBANON_EVENTS = [
 
@@ -63,7 +63,7 @@ export const LEBANON_EVENTS = [
 
   {
     id: 'lbn_mountain_summer',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       isLebanon(G) &&
@@ -144,7 +144,7 @@ export const LEBANON_EVENTS = [
 
   {
     id: 'lbn_solidere_belief',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       isLebanon(G) &&
@@ -165,7 +165,7 @@ export const LEBANON_EVENTS = [
 
   {
     id: 'lbn_diaspora_watching',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       isLebanon(G) &&
@@ -192,7 +192,8 @@ export const LEBANON_EVENTS = [
       G.flags.includes('emigrated') &&
       G.currentYear >= 2020 && G.currentYear <= 2022 &&
       !G.mem?.lbnExplosionPhone,
-    text: 'The video arrives on your phone at 6:08 PM. Your cousin sent it without a message. You watch it once: the flash at the port, the silence of the two seconds before the shockwave, then every window in the frame going inward at once. You watch it again. You call your mother. The call does not connect. You call your sister. The call does not connect. You call your aunt and she picks up on the fourth ring, crying but not hurt, and you say things in Arabic that you have not said in years and hold the phone against your face for a long time after she hangs up. The city you left is still there. The city you left is not there.',
+    text: 'The video arrives at eight minutes past six with no message attached. The flash at the port, then two seconds of nothing, then every window in the frame going inward at once. Your mother does not pick up. Your sister does not pick up. Your aunt answers on the fourth ring, crying and not hurt, and you say things to her in Arabic that you have not said in years and keep the phone against your face long after she has hung up.',
+    context: 'On 4 August 2020, 2,750 tonnes of ammonium nitrate stored at the port of Beirut detonated, killing at least 218 people, injuring 7,000, and leaving 300,000 without habitable housing. The blast was felt in Cyprus. No senior official has been convicted; the domestic investigation has been repeatedly suspended by legal challenges from the officials it named.',
     choices: null,
     effect: (p) => {
       p.m -= 20
@@ -242,7 +243,8 @@ export const LEBANON_EVENTS = [
       G.currentYear >= 2019 && G.currentYear <= 2023 &&
       G.money > 500 &&
       !G.mem?.lbnBankFreeze,
-    text: 'The banks close for two weeks. When they reopen, you can withdraw two hundred dollars a month — in lira, at the official rate, which is not the rate the lira actually trades at. The savings you had are still there as a number on a screen. The number does not correspond to anything you can touch. Within a year the lira has lost ninety percent of its value. Your salary, paid in lira, now buys what it used to buy in a week. At the supermarket you check your phone before each item — the price may have changed since you arrived. The word for this, in the economics textbooks, is hyperinflation. The word does not describe what it feels like to watch your parents\' life savings become a number that means nothing.',
+    text: 'The banks shut for a fortnight and when they open again the limit is two hundred a month, paid out in lira at a rate that exists only inside the building. Your money is still there as a figure on a screen. In the supermarket you check the phone before each item because the shelf label may be from yesterday. Your father worked forty years for the number on that screen and it now buys a week of the life he was expecting.',
+    context: 'Lebanese banks imposed informal capital controls in October 2019, limiting withdrawals and converting dollar deposits at an official rate far below the market. The lira lost over ninety percent of its value and inflation exceeded 200 percent a year. The World Bank described the collapse as among the three most severe globally since the mid-nineteenth century. No deposit restitution law has been passed.',
     choices: null,
     effect: (p) => {
       p.wipeMoney(0.7)
@@ -277,14 +279,15 @@ export const LEBANON_EVENTS = [
 
   {
     id: 'lbn_lira_decade_later',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       isLebanon(G) &&
       G.flags.includes('lira_collapse_lived') &&
       G.age >= 35 &&
       !G.mem?.lbnLiraDecadeLater,
-    text: 'Someone younger asks you to explain what happened to the banks in 2019. You try. You say: the lira lost ninety percent of its value in two years. They nod. The number does not reach them the way the number reached you, because they did not have the before. The before is what made the number mean something. You say: imagine you had saved for ten years and then one morning the savings still existed but they could no longer buy anything. They say: that\'s insane. You say: yes. You do not say: and the people responsible are still in government. They already know.',
+    text: 'Somebody younger asks you to explain what happened with the banks, and you give them the figure and they nod at it. The figure does not land, because they never had the before, and the before is the whole of what the figure means. You try again: imagine ten years of saving still sitting there in the account and buying nothing at all. They say that is insane and you say yes. You do not say that the men responsible are still in the building, because they know that part already.',
+    context: 'Lebanese banks froze depositor access in October 2019 and the lira lost over ninety percent of its value. No deposit restitution law has passed and no senior banking or political figure has been prosecuted. The World Bank has called the collapse a deliberate depression.',
     choices: null,
     effect: (p) => {
       p.m -= 6
@@ -298,7 +301,7 @@ export const LEBANON_EVENTS = [
 
   {
     id: 'lbn_stairwell_echo',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       isLebanon(G) &&

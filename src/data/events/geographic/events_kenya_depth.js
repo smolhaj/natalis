@@ -12,7 +12,7 @@ export const KENYA_DEPTH_EVENTS = [
 
   {
     id: 'ken_dep_matatu',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       isNairobi(G) &&
@@ -42,7 +42,7 @@ export const KENYA_DEPTH_EVENTS = [
 
   {
     id: 'ken_dep_westgate',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       isNairobi(G) &&
@@ -58,7 +58,7 @@ export const KENYA_DEPTH_EVENTS = [
 
   {
     id: 'ken_dep_runner',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       isKenya(G) &&
@@ -102,7 +102,7 @@ export const KENYA_DEPTH_EVENTS = [
 
   {
     id: 'ken_dep_kibera',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       isNairobi(G) &&
@@ -135,7 +135,7 @@ export const KENYA_DEPTH_EVENTS = [
 
   {
     id: 'ken_dep_diaspora_nurse',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       isKenya(G) &&
@@ -165,7 +165,7 @@ export const KENYA_DEPTH_EVENTS = [
 
   {
     id: 'ken_dep_tribal_arithmetic',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       isKenya(G) &&
@@ -181,7 +181,7 @@ export const KENYA_DEPTH_EVENTS = [
 
   {
     id: 'ken_dep_mpesa_life',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       isKenya(G) &&

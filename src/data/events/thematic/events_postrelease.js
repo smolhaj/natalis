@@ -57,7 +57,7 @@ export const POSTRELEASE_EVENTS = [
 
   {
     id: 'pr_job_application',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     cooldown: 3,
     when: (G) =>
@@ -242,7 +242,7 @@ export const POSTRELEASE_EVENTS = [
       !G.inPrison,
     text: (G) => {
       const hasFamily = G.parents?.mother?.alive || G.parents?.father?.alive || G.siblings.length > 0
-      if (!hasFamily) return 'The people who were there are not all still there. Some moved. Some stopped writing. The absence has a specific shape: not a loss but a subtraction that happened slowly enough that it isn\'t called grief.'
+      if (!hasFamily) return 'The people who were there are not all still there. Some moved. Some stopped writing. The absence has a shape: not a loss but a subtraction that happened slowly enough that it isn\'t called grief.'
       return 'You sit at the same table you have sat at your whole life. The people across it are the same people. The person sitting in your chair is different, though, and everyone pretends they cannot see it. This is mercy and avoidance simultaneously.'
     },
     choices: [

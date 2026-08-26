@@ -7,7 +7,7 @@
 
 const IS_KURDISH_TR = (G) => G.character.ethnicity === 'kurdish' && G.character.country?.name === 'Turkey'
 const IS_KURDISH_SY = (G) => G.character.ethnicity === 'kurdish_syria' && G.character.country?.name === 'Syria'
-const IS_KURDISH_ANY = (G) => G.character.ethnicity === 'kurdish' || G.character.ethnicity === 'kurdish_syria' || G.character.ethnicity === 'kurdish_iraq'
+const IS_KURDISH_ANY = (G) => G.character.ethnicity === 'kurdish' || G.character.ethnicity === 'kurdish_syria' || G.character.ethnicity === 'kurdish_iraqi'
 
 export const KURDISH_EVENTS = [
 
@@ -33,7 +33,7 @@ export const KURDISH_EVENTS = [
 
   {
     id: 'kurd_diaspora_question',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.flags.has('kurd_europe_diaspora') && G.age >= 40 && !G.mem.kurdDiasporaQ,
     text: 'A cousin in Diyarbakır says it is different now. Phones have Kurdish apps. There is a Kurdish channel on the television. He says you should come back. You have been in Cologne for fifteen years. Your children speak German better than Turkish and Turkish better than Kurdish.',

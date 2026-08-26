@@ -369,10 +369,10 @@ export const CHILD_DEATH_ARC_EVENTS = [
       const ageNow = Math.max(25, Math.min(45, childAge))
 
       if (isInfant) {
-        return `They would be ${ageNow} now. You have been imagining them for decades — growing up in a form that has no actual basis in fact, only in what you saw in the first weeks. The way they turned their head. The specific grip. You built a person in your imagination from those weeks and you have been carrying that person through your whole adult life. They are not a stranger to you. They are the most specific imaginary person you know. You do not know if they would have been happy. You know they would have been loved.`
+        return `They would be ${ageNow} now. You have been building them for decades out of almost nothing: the way they turned their head, the grip on your finger, three weeks of evidence. The person you built is not a stranger. You have carried them through an entire adult life and you have no idea whether they would have been happy. You know they would have been loved.`
       }
 
-      return `They would be ${ageNow} now. You have watched the children of your friends and your siblings become adults — get jobs, have relationships, become parents themselves — and you have run a parallel track alongside those lives: what their version might have looked like. You know enough of who they were to have a real guess. Not a fantasy — an extrapolation. The books they loved. The thing they were stubborn about. The particular way they looked at something that confused them. You carried all of this and constructed a person from it. The person they didn't become is someone you know.`
+      return `They would be ${ageNow} now. You have watched your friends' children take jobs and have children of their own, and beside all of it you have run a second track. It is not a fantasy; it is extrapolation, built from the books they loved and the one argument they would never let go of. You know what their face did when something confused them. The person they didn't become is someone you know.`
     },
     choices: [
       {
@@ -411,7 +411,7 @@ export const CHILD_DEATH_ARC_EVENTS = [
     text: (G) => {
       const isInfant = G.flags.includes('lost_child_infant')
       if (isInfant) {
-        return 'The thing you never got to say. Parents talk about this differently: the first words you planned, the things you would have told them about the world, the question of what you would have been to them. You did not get long enough for them to know you. You knew them. That asymmetry has a specific texture.'
+        return 'The thing you never got to say. Parents talk about this differently: the first words you planned, the things you would have told them about the world, the question of what you would have been to them. You did not get long enough for them to know you. You knew them. That asymmetry has a texture.'
       }
       return 'There is a thing you never said to them. Not a dramatic omission — just an ordinary thing: the thing you were going to say next time, or at the right moment, or when they were older and you thought they could understand it. The right time did not arrive. You carry the unsaid thing the way you carry everything else: not as a wound you keep reopening, but as an understanding of how many things are contingent, how much depends on next time.'
     },

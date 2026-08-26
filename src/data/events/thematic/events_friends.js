@@ -103,7 +103,7 @@ export const FRIEND_EVENTS = [
       {
         text: 'Be fully present — this is what friendship is for',
         tag: null,
-        outcome: 'You are available through months of it. The friendship deepens in the specific way crisis allows.',
+        outcome: 'You are available through months of it. The friendship deepens in the way crisis allows.',
         effect: (p) => { p.m += 5; p.karma += 5; p.updateFriendRel(0, 15); p.setMem('friendDivorce', true) },
       },
       {
@@ -236,4 +236,39 @@ export const FRIEND_EVENTS = [
     effect: (p) => { p.m -= 18; p.r += 10; p.updateFriendRel(0, -100); p.addFlag('friend_died'); p.setMem('friendDeathLate', true) },
   },
 
+
+  // ── FELT ORDINARINESS ─────────────────────────────────────────────────────────
+
+  {
+    id: 'ord_day_wasted_well',
+    phase: null,
+    weight: 3,
+    when: (G) => (G.friends ?? []).length > 0 && G.age >= 17 && G.age <= 40 && !G.mem?.ordDayWasted && Math.random() < 0.18,
+    text: (G) => {
+      const f = (G.friends ?? [])[0]?.name ?? 'your friend'
+      return `You meet ` + f + ` at eleven with a plan and abandon the plan by noon. The day goes: a bench, a long argument about something neither of you cares about, chips, a shop you go into for no reason, more sitting. You get home at seven having achieved nothing whatsoever. It is the best day you will have for about four months.`
+    },
+    choices: null,
+    effect: (p) => { p.m += 11; p.s += 3; p.setMem('ordDayWasted', true) },
+  },
+
+  {
+    id: 'ord_friend_no_catchup',
+    phase: null,
+    weight: 3,
+    when: (G) => (G.friends ?? []).some(f => (f.quality ?? 50) > 60) && G.age >= 40 && !G.mem?.ordNoCatchup && Math.random() < 0.18,
+    text: `You see them for the first time in two years and there is no catching up. They start a sentence in the middle, as though the last conversation had a comma at the end of it. Nobody performs how well they are doing. At one point you are both laughing at a thing that would take an hour to explain to anyone else, and you do not have to explain it.`,
+    choices: null,
+    effect: (p) => { p.m += 12; p.s += 2; p.setMem('ordNoCatchup', true) },
+  },
+
+  {
+    id: 'ord_laughing_with_contemporary',
+    phase: 'late_life',
+    weight: 3,
+    when: (G) => G.age >= 66 && (G.friends ?? []).length > 0 && !G.mem?.ordOldLaugh,
+    text: `The two of you have known each other since before either of you had opinions. Most of the conversation now is complaint, delivered as competition, and it is very funny. They do the impression of the man who used to run the depot. You laugh until you have to hold the arm of the chair, and it hurts somewhere in the ribs, and that is fine.`,
+    choices: null,
+    effect: (p) => { p.m += 13; p.h += 2; p.setMem('ordOldLaugh', true) },
+  },
 ]
