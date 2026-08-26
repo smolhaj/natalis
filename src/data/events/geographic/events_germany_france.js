@@ -72,7 +72,7 @@ export const GERMANY_FRANCE_EVENTS = [
       G.character.country.name === 'Germany' &&
       G.currentYear >= 1975 && G.currentYear <= 2005 &&
       G.age >= 13 && G.age <= 20 &&
-      G.ethnicity === 'turkish' &&
+      G.ethnicity === 'turkish_german' &&
       !G.mem?.gerTurkishGerman,
     text: 'You were born in Germany or you came young enough that Germany is your first language. At school you are Turkish. In Turkey, when the family visits, you are German. The categories do not have a slot for what you actually are. The German passport application asks about Abstammung — ancestry. The question is not about where you were born. The question is about who you descend from.',
     choices: [
@@ -186,7 +186,7 @@ export const GERMANY_FRANCE_EVENTS = [
       G.character.country.name === 'Germany' &&
       G.currentYear >= 2011 && G.currentYear <= 2016 &&
       G.age >= 18 &&
-      (G.ethnicity === 'turkish' || G.ethnicity === 'greek') &&
+      G.ethnicity === 'turkish_german' &&
       !G.mem?.gerNSU,
     text: 'November 2011. Two members of the Nationalsozialistischer Untergrund — the NSU — die in Zwickau and a third turns herself in. The files reveal what they did from 2000 to 2011: nine Turkish-German and one Greek-German small business owners murdered across Germany. Two police officers killed. Fourteen bank robberies. In the decade between the first murder and this discovery, the police investigation was focused on the victims\' families — drug connections, protection rackets, "honour killings." The police nickname for the murders was Dönermorde. "Kebab murders." Your community buried nine of their own while the state investigated the bereaved. The Verfassungsschutz files related to the NSU were ordered shredded the week after the story broke.',
     choices: [

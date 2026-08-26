@@ -590,6 +590,64 @@ export async function auditWorldEventScope() {
 
 // ── Runner ────────────────────────────────────────────────────────────────────
 
+// ── 6. Identity-in-country cross audit ────────────────────────────────────────
+
+/**
+ * An ethnicity or religion literal must exist in the country the guard REQUIRES,
+ * not merely somewhere in countries.js.
+ *
+ * The enum audit above checks each literal against the global set of ids, which
+ * is the right question for a guard that names no country and the wrong one for
+ * a guard that does. `dalit` is a real ethnicGroupsofIndia id, so
+ *
+ *     G.character.country.name === 'Nepal' && G.ethnicity === 'dalit'
+ *
+ * passes the global check and can still never fire, because Nepal's id for the
+ * same population is `dalit_nepal`. Every guard of that shape is authored
+ * content aimed at a person the generator cannot produce.
+ */
+export async function auditIdentityInCountry() {
+  const { allCharacterEvents, WORLD_EVENTS } = await loadCorpus()
+  const V = await vocab()
+  const findings = []
+
+  const CHECKS = [
+    { prop: '(?:\\bG\\b\\s*\\.|\\.)\\s*ethnicity', name: 'ethnicity', by: V.ethnicByCountry, what: 'ethnicGroups' },
+    { prop: '(?:\\bG\\b\\s*\\.|\\.)\\s*religion', name: 'religion', by: V.religionByCountry, what: 'religionWeights' },
+  ]
+
+  const scan = (e) => {
+    const src = stripComments(fnSource(e.when))
+    if (!src) return
+    const required = [...countriesInGuard(src).required].filter(n => V.countryNames.has(n))
+    if (required.length === 0) return
+    const where = locate(e.id)
+
+    for (const c of CHECKS) {
+      const positives = literalsComparedTo(src, c.prop).filter(l => !negativeOp(l.op))
+      if (positives.length === 0) continue
+      // A guard may offer several alternatives; only flag when NONE is possible.
+      const anyPossible = positives.some(l => required.some(n => c.by.get(n)?.has(l.value)))
+      if (anyPossible) continue
+      const values = [...new Set(positives.map(l => l.value))]
+      const suggestions = []
+      for (const n of required) {
+        for (const id of c.by.get(n) ?? []) {
+          if (values.some(v => id.includes(v) || v.includes(id))) suggestions.push(`${n}: '${id}'`)
+        }
+      }
+      findings.push(finding(ERR, `${c.name}-not-in-country`, e.id, where,
+        `guard requires ${required.map(n => `'${n}'`).join(' or ')} and ${c.name} ` +
+        `${values.map(v => `'${v}'`).join(' or ')}, but no required country has that in its ${c.what}` +
+        (suggestions.length ? ` — did you mean ${[...new Set(suggestions)].join(', ')}?` : '')))
+    }
+  }
+
+  for (const e of allCharacterEvents) scan(e)
+  for (const we of WORLD_EVENTS) scan(we)
+  return findings
+}
+
 export const AUDITS = [
   ['reverse-flags', 'flags a guard requires that nothing sets', auditReverseFlags],
   ['enum-domains', 'string literals compared against an enum they are not in', auditEnumDomains],
@@ -597,6 +655,7 @@ export const AUDITS = [
   ['phase-reach', 'phases whose age band the guard cannot reach', auditPhaseReachability],
   ['year-windows', 'year windows no living character can be inside', auditYearWindows],
   ['world-scope', 'world events scoped out of their own countries', auditWorldEventScope],
+  ['identity-country', 'identity literals absent from the country the guard requires', auditIdentityInCountry],
 ]
 
 export async function runAllAudits(only = null) {

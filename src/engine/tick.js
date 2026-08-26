@@ -607,6 +607,14 @@ function eventWeight(e, G, desire, leaning) {
   // Inside the contemplative layer, prefer observations that are anchored to
   // this place and era — the "place and era texture" layer of the quiet year.
   if (e.contemplative && e.anchored) w *= 3
+  // Reaching a character who satisfies a four- or five-dimension guard is the
+  // whole point of having written it. Without this, an event needing a Dalit
+  // girl in rural India in a named decade competes on equal terms with every
+  // event needing only "India", and loses, because there are hundreds of those.
+  else if (!e.contemplative) {
+    const spec = e.specificity ?? 0
+    if (spec > 2) w *= 1 + 0.9 * (spec - 2)
+  }
   return w
 }
 

@@ -4,6 +4,30 @@
  */
 export const IDENTITY_FLAGS = {
 
+  tibetan_exile_family: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Born into the Tibetan exile community in India — Dharamsala, the settlements, a childhood inside a country that is not the country your family talks about.',
+    intent: 'event',
+    notes: 'Seeded at birth by deriveGenerationalFlags for Indian characters born from 1959. Consumed by sl_tibetan_dharamsala_childhood.',
+  },
+
+  japanese_american: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Japanese American — the Issei generation in Hawaii and on the coast, and the families removed to the camps in 1942.',
+    intent: 'event',
+    notes: 'Seeded at birth by deriveGenerationalFlags for asian_american US characters. Consumed by sl_japanese_hawaii_issei and sl_japanese_american_internment.',
+  },
+
+  hmong_american: {
+    weight: 'moderate',
+    category: 'identity',
+    description: 'Hmong American — resettled after the Secret War in Laos, largely to Minnesota and California, into a winter nobody had described.',
+    intent: 'event',
+    notes: 'Seeded at birth by deriveGenerationalFlags for asian_american US characters born from 1970. Consumed by sl_hmong_refugee_minnesota.',
+  },
+
   experienced_racism: {
     weight: 'major',
     category: 'trauma',

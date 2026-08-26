@@ -9000,11 +9000,40 @@ const EARNED_PROBE = /\bflags\b|\bmem\b|\bcareer\b|\bpartner\b|\bchildren\b|\bpa
 // ~180ms of module-load time on desktop, and only the events that actually
 // reach a candidate pool ever need it. Each event is scanned at most once and
 // the answer is cached on the event object.
+// How many INDEPENDENT things a guard demands of the character.
+//
+// The register system reserves 40% of every year for anchored events, but inside
+// that bucket a guard reading only "you are in India" competes on equal terms
+// with one reading "you are a Dalit girl in rural India between 1980 and 1995",
+// and there are far more of the former. The result is that the rarest identities
+// in the game — the ones the corpus's most specific writing was aimed at — draw
+// generic content about their country instead of the content written for them.
+// A character who satisfies a five-dimension guard is exactly the character that
+// guard was written for, so the match itself should carry weight.
+const SPECIFICITY_PROBES = [
+  /currentCountry|character\s*\.\s*country|\bcountries\b/,          // a named place
+  /ethnicity|casteSystem|\breligion\b/,                             // who you are
+  /character\s*\.\s*gender|\bgender\b/,                            // gendered experience
+  /currentYear|birthYear/,                                          // a dated window
+  /ruralUrban|currentPlace|[Nn]eighborhood/,                        // where within the place
+]
+
+export function guardSpecificity(e) {
+  if (e.specificity !== undefined) return e.specificity
+  let src = ''
+  try { if (typeof e.when === 'function') src = Function.prototype.toString.call(e.when) } catch (_) { src = '' }
+  let n = 0
+  for (const probe of SPECIFICITY_PROBES) if (probe.test(src)) n++
+  e.specificity = n
+  return n
+}
+
 export function classifyEvent(e) {
   if (e.register !== undefined) return e
   let src = ''
   try { if (typeof e.when === 'function') src = Function.prototype.toString.call(e.when) } catch (_) { src = '' }
   e.anchored = ANCHOR_PROBE.test(src) || ANCHOR_HELPER_PROBE.test(src)
+  guardSpecificity(e)
   if (e.contemplative) e.register = 'contemplative'
   else if (e.anchored) e.register = 'anchored'
   else if (EARNED_PROBE.test(src)) e.register = 'earned'
