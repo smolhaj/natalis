@@ -86,8 +86,20 @@ export async function runSimulation({
   seedLabel = '',
 } = {}) {
   stubStorage()
-  const { tick, resolveAutoEvent, resolveChoice } = await import('../../src/engine/tick.js')
-  const { useGameStore } = await import('../../src/store/gameStore.js')
+  // The engine is under active change; a module that will not even load should
+  // be reported as one clear line, not as a stack trace from inside a harness.
+  let tick, resolveAutoEvent, resolveChoice, useGameStore
+  try {
+    ;({ tick, resolveAutoEvent, resolveChoice } = await import('../../src/engine/tick.js'))
+    ;({ useGameStore } = await import('../../src/store/gameStore.js'))
+  } catch (err) {
+    return {
+      fatal: `the engine could not be loaded: ${err.message}`,
+      mode, configs: [], totals: { lives: 0, years: 0, errors: [err.message] },
+      byBucket: new Map(), countriesSeen: new Set(), unlocated: new Map(), otherFiles: new Map(),
+      share: {}, per100Lives: {}, glimpsesPerLife: 0,
+    }
+  }
   const index = idIndex()
 
   const totals = {
@@ -193,6 +205,7 @@ export async function runSimulation({
 
   const pct = k => (totals.years ? (100 * totals[k]) / totals.years : 0)
   return {
+    fatal: null,
     mode, seedLabel, configs: perConfig, totals, byBucket, countriesSeen, unlocated, otherFiles,
     share: {
       contemplative: pct('contemplative'),

@@ -2792,7 +2792,7 @@ export const SPECIFIC_LIFE_EVENTS = [
     phase: 'adolescence',
     weight: 2,
     when: (G) =>
-      ['Samoa', 'American Samoa', 'New Zealand', 'Australia'].includes(G.character.country.name) &&
+      ['Samoa', 'Samoa', 'New Zealand', 'Australia'].includes(G.character.country.name) &&
       G.character.gender === 'male' &&
       G.age >= 13 && G.age <= 18 &&
       !G.mem?.sl_samoa_faf,
@@ -3860,7 +3860,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.character.country.name === 'United States' &&
       G.currentYear >= 1984 && G.currentYear <= 1996 &&
       G.age >= 22 && G.age <= 40 &&
-      G.flags.includes('lgbtq') &&
+      (G.flags.includes('lgbtq') || G.flags.includes('lgbtq_identity')) &&
       !G.mem?.sl_aids_grief,
     text: 'You told the ward you were his cousin and the nurse wrote cousin on the sheet without looking up, which was the whole of the mercy available. The obituary in the county paper said after a long illness, listed his mother, his father and a sister in Ohio, and did not list you. You agreed to that in a corridor in exchange for being allowed in the room, and you would agree to it again. You still have the ward\'s visiting card with cousin on it in the book by the bed.',
     context: 'Before hospital visiting rules changed and before any legal recognition of same-sex partners, partners were routinely excluded from AIDS wards, funerals and obituaries by next of kin. Over 100,000 Americans had died of AIDS by 1990.',

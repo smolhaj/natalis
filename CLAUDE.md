@@ -305,15 +305,47 @@ Generic events are a last resort. Specific events — ones that could only fire 
 
 ## Current State
 
-145 countries, 255 world events, 463+ event modules (~7,550+ events), 2672 registered flags, 379 ribbons. **0 orphaned, 0 partial flags.** Run `npm run check-flags` to verify.
+146 countries, 251 world events, 7,936 character events (2,127 of them the
+contemplative sonder layer, 156 stranger glimpses, 16 prison-only), 2,735
+registered flags, 377 ribbons. **0 orphaned, 0 partial flags.**
 
-**Codebase refactor (PR #105)**: Events reorganized into subdirectories under `src/data/events/`: `geographic/` (country-specific), `thematic/` (cross-cutting arcs), `lifecycle/` (phase-specific), `sonder/` (contemplative layer), `specific_lives/` (extreme specificity), `followthrough/` (all followthroughs consolidated). `gameEngine.js` split into 5 focused modules. `flags.js` split into 6 category files.
+Verify with:
 
-**PR #104**: `events_specific_lives.js` — 221 micro-specific events targeting one-of-a-kind life circumstances (Dalit water pump, 1943 Leningrad ration card, maquiladora night shift, Stasi file retrieval, etc.).
+```
+npm run build          # must pass
+npm test               # 240+ tests, including the simulation guardrails
+npm run check-flags    # 2735 covered / 0 partial / 0 orphaned
+npm run check-events   # reachability audits: dead guards, enum domains, phase and year windows
+npm run sim            # firing-rate report — what ACTUALLY fires, per 100 lives
+```
 
-**PRs #107–122**: Extended MODE A/B/C depth sprint — 66 sonder modules total (~1,980+ contemplative events); 50+ geographic depth arcs added (most countries now have a `_depth.js` companion); followthrough_30.js through followthrough_95.js (66 files); deep career arcs for 15+ professions; new lifecycle arcs (body, empty nest, grandparent, inheritance); letters, memory layer, oral tradition, seasonal, and roads-not-taken registers; events_followthrough_all.js (consolidated 317 followthrough events from the 29 original files).
+### The 2026 systems rebuild
 
-**Consequence/consistency audit (PR #131+)**: Systematic sweep for events that could never fire or fired incorrectly. Fixed: a duplicate event id that silently blocked one of two Venezuela Chávez-death narrations; `G.r`/`G.currentNeighborhoodTier`/`G.gdp` guard typos that made three events either dead or wrongly-scoped; `'USA'` vs `'United States'` and `'Wales'` (not a playable country — rerouted to a new `welsh_british` ethnic group under United Kingdom) naming bugs; and, most significantly, two entirely dead career-gated arcs — `events_business.js` (9 events) checked a nonexistent `entrepreneur` career instead of the `entrepreneur` *flag* actually set by `startBusiness()`, and `events_interpreter_arc.js` (7 events) checked a career that was simply never added to `careers.js` (added it). Also added 24 countries (Djibouti, Sierra Leone, Chad, Niger, Togo, Benin, Central African Republic, Qatar, Bahrain, Kuwait, Belgium, Switzerland, Bulgaria, Slovakia, Papua New Guinea, Samoa, Kiribati, Tuvalu, Marshall Islands, Maldives, Barbados, Guyana, Belize, Puerto Rico) that were referenced by existing events but never defined in `countries.js`, recovering ~10 more previously-unreachable events. `npm run check-flags` now reports 0 orphaned, 0 partial across all 2672 registered flags.
+An external audit found that the authored corpus was reaching players as roughly
+70% generic contemplation, and that none of it was visible to `check-flags`,
+which audits whether flags are textually set rather than whether code can run.
+Four faults sat between the library and the screen; all four are fixed and all
+four now have a test that fails if they return.
+
+| | before | after |
+|---|---|---|
+| contemplative share of a life | ~70% | 18.8% |
+| place/era/identity-anchored events | ~0.4% | 35.2% |
+| `buildYearTexture` reachability | ~2% of years | 59.7% |
+| stranger glimpses per life | 0.3 | 6.2 |
+| longest unbroken contemplative run | 19-21 years | 2 |
+| Nigeria 1962 median death age | 8 | 60s |
+
+Beyond those: parent death set no flag at all (21+ consumers, zero setters);
+events were consumed at display rather than resolution, so closing the tab ate
+them; 732 events froze one prose variant per app session; the in-prison pool
+required a `prisonOk` field no event set; emigration changed the prose and
+nothing else; literacy was a modern snapshot applied to mid-century births; and
+birth country was uniform across the roster, so 17% of lives began somewhere with
+almost no content.
+
+**The lesson worth keeping: measure what fires, not what exists.** Every failure
+above was invisible to a green flag audit. `npm run sim` is the counter-check.
 
 - Full event system descriptions and coverage history: `docs/codebase-state.md`
 - Full BUILD-by-BUILD roadmap and MICRO-EVENT DESIGN PRINCIPLE: `docs/roadmap.md`

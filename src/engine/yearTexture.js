@@ -14770,6 +14770,34 @@ function buildYearTexture(state, opts = {}) {
     'Nobody here knows. That is the point of here, and it is also the thing you occasionally miss — being among people for whom the decision meant something, even the ones who held it against you.',
   ])
 
+  // ─── WINDFALL RESIDUE ────────────────────────────────────────────────────────
+  // What an unearned sum leaves in a life long after the sum itself is ordinary.
+
+  if (F.has('windfall_kept_quiet') && Math.random() < 0.16) return pick([
+    'Nobody at work knows. You have got good at the small deflections — the car explained as a relative\'s, the holiday underplayed by a week and a country.',
+    'The secret is not heavy in the way secrets are supposed to be. It is more like a room in the house you do not go into, which is nonetheless part of the floor plan.',
+  ])
+
+  if (F.has('windfall_gave_it_away') && Math.random() < 0.16) return pick([
+    'You do the arithmetic occasionally, not out of regret. It went where it was always going to go. What surprises you is how little of it is remembered as having come from you.',
+  ])
+
+  if (F.has('windfall_became_the_judge') && Math.random() < 0.16) return pick([
+    'A story arrives with a request folded inside it and you are already assessing before they reach the end. You did not want to be the person who assesses. You have not worked out how to stop.',
+  ])
+
+  if (F.has('windfall_refused') && Math.random() < 0.16) return pick([
+    'Two people stopped calling. You have been over it enough times to know that one of them was owed better, and that knowing has not changed anything you would do.',
+  ])
+
+  if (F.has('windfall_work_optional') && Math.random() < 0.14) return pick([
+    'You could stop. You are aware of this every morning, which turns out to be a different way of going to work rather than an easier one.',
+  ])
+
+  if (F.has('windfall_in_proportion') && Math.random() < 0.15) return pick([
+    'Someone brings it up again, decades on, as the thing that happened to you. You have had a whole life since, and most of it had nothing to do with it.',
+  ])
+
   // Everything below is universal fallback prose — true of any life anywhere.
   // Callers asking for specific texture only (the annual texture layer) stop here.
   if (opts.specificOnly) return null

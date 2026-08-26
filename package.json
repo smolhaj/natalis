@@ -10,7 +10,9 @@
     "check-flags": "node scripts/check-flags.js",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "check-events": "node scripts/check-events.js",
+    "sim": "node scripts/sim.js"
   },
   "dependencies": {
     "react": "^18.3.1",

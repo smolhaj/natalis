@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react'
 import { useGameStore } from '../store/gameStore'
 import { ACTIVITIES } from '../data/activities'
 import { DESTINATIONS } from '../data/destinations'
-import { CRIMES } from '../data/crimes'
+import { CRIMES, VIOLENT_TARGETS, HOMICIDE_METHODS, crimePayout } from '../data/crimes'
 import { COUNTRIES } from '../data/countries'
 import { PROPERTY_TYPES, VEHICLE_TYPES } from '../data/assets'
-import { getAvailableCareers, dropOutOfSchool, BUSINESS_TYPES, getAvailableBusinessTypes, getPhase } from '../engine/gameEngine'
+import { getAvailableCareers, dropOutOfSchool, BUSINESS_TYPES, getAvailableBusinessTypes, getPhase, buildPendingTrial } from '../engine/gameEngine'
 import { CAREERS } from '../data/careers'
 
 const TOP_CATEGORIES = [
@@ -883,7 +883,7 @@ export default function ActivitiesPanel({ onClose }) {
                   if (tier === 'bicycle') return true
                   if (tier === 'watercraft') return hasLicence
                   return hasLicence
-                }).filter(t => !t.minYear || (state.currentYear ?? 2000) >= t.minYear)
+                }).filter(t => (!t.minYear || (state.currentYear ?? 2000) >= t.minYear) && (!t.maxYear || (state.currentYear ?? 2000) <= t.maxYear))
                 if (tierVehicles.length === 0) return null
                 return (
                   <div key={tier}>
@@ -969,38 +969,12 @@ export default function ActivitiesPanel({ onClose }) {
       }
 
       case 'crime': {
-        // ── Stranger victim archetypes (assault + murder) ────────────────────
-        // detectionMod: additive to base murder detection; arrestMod: additive to base arrest risk for assault
-        const STRANGER_VICTIMS = [
-          { label: 'A drunk person',        key: 'stranger_drunk',       emoji: '🍺', detectionMod: -0.07, arrestMod: -0.08, desc: 'Stumbling and oblivious.' },
-          { label: 'A homeless person',     key: 'stranger_homeless',    emoji: '🏚️', detectionMod: -0.09, arrestMod: -0.10, desc: 'Unlikely anyone will notice.' },
-          { label: 'A vagrant',             key: 'stranger_vagrant',     emoji: '🧳', detectionMod: -0.08, arrestMod: -0.09, desc: 'No fixed address. No witnesses.' },
-          { label: 'A sex worker',          key: 'stranger_sexworker',   emoji: '💋', detectionMod: -0.04, arrestMod: -0.05, desc: 'Isolated and vulnerable.' },
-          { label: 'A drug dealer',         key: 'stranger_dealer',      emoji: '💊', detectionMod: -0.03, arrestMod: -0.04, desc: 'Nobody asks questions in that world.' },
-          { label: 'A tourist',             key: 'stranger_tourist',     emoji: '📷', detectionMod: +0.06, arrestMod: +0.07, desc: 'Their disappearance will be noticed.' },
-          { label: 'A jogger',              key: 'stranger_jogger',      emoji: '🏃', detectionMod: +0.05, arrestMod: +0.06, desc: 'Their absence will be reported quickly.' },
-          { label: 'An elderly person',     key: 'stranger_elderly',     emoji: '👴', detectionMod: +0.03, arrestMod: +0.00, desc: 'Frail. Extremely bad for your karma.' },
-          { label: 'A businessman',         key: 'stranger_businessman', emoji: '💼', detectionMod: +0.10, arrestMod: +0.12, desc: 'High-profile. Expect a serious investigation.' },
-          { label: 'A biker',               key: 'stranger_biker',       emoji: '🏍️', detectionMod: -0.02, arrestMod: -0.03, desc: 'Rough crowd — they sort their own.' },
-          { label: 'A street performer',    key: 'stranger_performer',   emoji: '🎭', detectionMod: +0.04, arrestMod: +0.04, desc: 'Surrounded by crowds normally.' },
-          { label: 'A random stranger',     key: 'stranger_random',      emoji: '👤', detectionMod:  0.00, arrestMod:  0.00, desc: 'Unknown risk profile.' },
-        ]
-
-        // Murder method detection rates (chance of being caught AFTER a successful kill)
-        const MURDER_METHODS = [
-          { name: 'Push Down Stairs',  detection: 0.12 },
-          { name: 'Push Off Cliff',    detection: 0.12 },
-          { name: 'Scare to Death',    detection: 0.05 },
-          { name: 'Drown',             detection: 0.22 },
-          { name: 'Elephant Laxative', detection: 0.22 },
-          { name: 'Poison',            detection: 0.28 },
-          { name: 'Hire a Hitman',     detection: 0.30 },
-          { name: 'Electrocute',       detection: 0.32 },
-          { name: 'Set on Fire',       detection: 0.38 },
-          { name: 'Strangle Them',     detection: 0.42 },
-          { name: 'Fastball to Head',  detection: 0.52 },
-          { name: 'Drive-by Shooting', detection: 0.55 },
-        ]
+        // Victim archetypes and homicide methods now live in src/data/crimes.js.
+        // The copies that used to sit here carried the emoji-and-punchline register
+        // ("A homeless person 🏚️ — Unlikely anyone will notice", "Elephant Laxative")
+        // that the rest of the game does not use for anything else it takes seriously.
+        const STRANGER_VICTIMS = VIOLENT_TARGETS
+        const MURDER_METHODS = HOMICIDE_METHODS
 
         const calcSentence = (c) => {
           if (!c?.sentence) return 1
@@ -1057,10 +1031,14 @@ export default function ActivitiesPanel({ onClose }) {
                     onFailure: {
                       outcome: `Caught. Arrested for ${assaultCrime.name}.`,
                       effect: (s) => {
+                        // Arrested, not sentenced. Going straight to a cell here
+                        // skipped the trial system entirely — the lawyer tiers and
+                        // the regime's legal quality never applied to minigame crimes.
                         const sent = calcSentence(assaultCrime)
-                        return { ...s, inPrison: sent > 0, prisonSentence: sent, actionsThisYear: (s.actionsThisYear ?? 0) + 1,
+                        return { ...s, actionsThisYear: (s.actionsThisYear ?? 0) + 1,
+                          pendingTrial: sent > 0 ? buildPendingTrial(s, assaultCrime, sent) : null,
                           criminalRecord: [...(s.criminalRecord ?? []), { crime: assaultCrime.criminalRecordEntry, age: s.age, category: 'violent' }],
-                          log: [...(s.log ?? []), { age: s.age, text: `Arrested for ${assaultCrime.name}. Sentenced to ${sent} year${sent !== 1 ? 's' : ''}.`, isKey: true }] }
+                          log: [...(s.log ?? []), { age: s.age, text: `You are arrested for ${assaultCrime.name.toLowerCase()}.`, isKey: true }] }
                       },
                     },
                   })
@@ -1092,15 +1070,16 @@ export default function ActivitiesPanel({ onClose }) {
                       effect: (s) => {
                         if (Math.random() < adjustedRisk) {
                           const sent = calcSentence(assaultCrime)
-                          return { ...s, inPrison: sent > 0, prisonSentence: sent, actionsThisYear: (s.actionsThisYear ?? 0) + 1,
+                          return { ...s, actionsThisYear: (s.actionsThisYear ?? 0) + 1,
+                            pendingTrial: sent > 0 && assaultCrime ? buildPendingTrial(s, assaultCrime, sent) : null,
                             criminalRecord: [...(s.criminalRecord ?? []), { crime: assaultCrime?.criminalRecordEntry ?? 'Assault', age: s.age, category: 'violent' }],
-                            log: [...(s.log ?? []), { age: s.age, text: `Arrested for ${assaultCrime?.name}. Sentenced to ${calcSentence(assaultCrime)} year(s).`, isKey: true }] }
+                            log: [...(s.log ?? []), { age: s.age, text: `You are arrested for ${(assaultCrime?.name ?? 'assault').toLowerCase()}.`, isKey: true }] }
                         }
                         return { ...s, stats: { ...s.stats, health: Math.max(0, s.stats.health - 15) }, actionsThisYear: (s.actionsThisYear ?? 0) + 1, log: [...(s.log ?? []), { age: s.age, text: `You get beaten by ${v.label.toLowerCase()}.`, isKey: false }] }
                       },
                     },
                   })
-                }} title={`${v.emoji} ${v.label}`} subtitle={v.desc} cost={`Arrest risk: ${Math.round(Math.max(0.05, (assaultCrime?.arrestRisk ?? 0.4) + v.arrestMod) * 100)}%`} />
+                }} title={v.label} subtitle={v.desc} cost={`Arrest risk: ${Math.round(Math.max(0.05, (assaultCrime?.arrestRisk ?? 0.4) + v.arrestMod) * 100)}%`} />
               ))}
             </>
           )
@@ -1118,7 +1097,7 @@ export default function ActivitiesPanel({ onClose }) {
             ...((state.exPartners ?? []).filter(e => e.alive !== false).map((e, i) => ({ label: `${e.name} (Ex)`, key: `ex_${i}`, idx: i }))),
           ]
           const strangerVictimsForMurder = STRANGER_VICTIMS.map(v => ({
-            label: `${v.label} (Stranger)`, key: v.key, isStranger: true, detectionMod: v.detectionMod, emoji: v.emoji, desc: v.desc,
+            label: `${v.label} (Stranger)`, key: v.key, isStranger: true, detectionMod: v.detectionMod, desc: v.desc,
           }))
           return (
             <>
@@ -1134,7 +1113,7 @@ export default function ActivitiesPanel({ onClose }) {
               <p className="text-natalis-muted text-xs uppercase tracking-wider px-1 pt-3 py-1 mb-1">Strangers</p>
               {strangerVictimsForMurder.map(v => (
                 <Btn key={v.key} danger onClick={() => { setMurderVictim(v); setMurderStep('method') }}
-                  title={`${v.emoji} ${v.label}`}
+                  title={v.label}
                   subtitle={v.desc}
                 />
               ))}
@@ -1193,12 +1172,13 @@ export default function ActivitiesPanel({ onClose }) {
                         outcome: `Your attempt fails. Arrested for attempted murder.`,
                         effect: (s) => ({
                           ...s,
-                          inPrison: failSentence > 0,
-                          prisonSentence: failSentence,
                           actionsThisYear: (s.actionsThisYear ?? 0) + 1,
                           karma: Math.max(0, (s.karma ?? 50) - 20),
+                          pendingTrial: failSentence > 0
+                            ? buildPendingTrial(s, { name: 'Attempted murder', category: 'violent' }, failSentence)
+                            : null,
                           criminalRecord: [...(s.criminalRecord ?? []), { crime: 'Attempted murder', age: s.age, category: 'violent' }],
-                          log: [...(s.log ?? []), { age: s.age, text: `Arrested for attempted murder. Sentenced to ${failSentence} years.`, isKey: true }],
+                          log: [...(s.log ?? []), { age: s.age, text: 'You are arrested for attempted murder.', isKey: true }],
                         }),
                       },
                     })
@@ -1224,7 +1204,7 @@ export default function ActivitiesPanel({ onClose }) {
               return (
                 <Btn key="murder" disabled={noActions} danger
                   onClick={() => setMurderStep('victim')}
-                  title="🔪 Murder"
+                  title="Murder"
                   subtitle="Choose your target and method. Getting away with it is not guaranteed."
                   cost="Varies by method"
                 />
@@ -1234,7 +1214,7 @@ export default function ActivitiesPanel({ onClose }) {
               return (
                 <Btn key={crime.id} disabled={noActions} danger
                   onClick={() => { setAssaultCrimeId(crime.id); setAssaultStep('victim') }}
-                  title={`🥊 ${crime.name}`}
+                  title={crime.name}
                   subtitle={crime.description}
                   cost={`Arrest risk: ${Math.round(crime.arrestRisk * 100)}%`}
                 />
@@ -1249,7 +1229,7 @@ export default function ActivitiesPanel({ onClose }) {
                     outcome: crime.minigame.successOutcome ?? 'You pull it off.',
                     effect: (s) => {
                       const next = { ...s }
-                      next.money = (next.money ?? 0) + (crime.incomeEstimate ?? 0)
+                      next.money = (next.money ?? 0) + crimePayout(crime.incomeEstimate ?? 0, (state.currentCountry ?? state.character?.country)?.gdp)
                       next.karma = Math.max(0, (next.karma ?? 50) + (crime.minigame.karmaHit ?? -8))
                       next.flags = [...new Set([...next.flags, ...(crime.addFlag ? [crime.addFlag] : [])])]
                       next.actionsThisYear = (next.actionsThisYear ?? 0) + 1
@@ -1263,11 +1243,10 @@ export default function ActivitiesPanel({ onClose }) {
                       const sentence = calcSentence(crime)
                       return {
                         ...s,
-                        inPrison: sentence > 0,
-                        prisonSentence: sentence,
                         actionsThisYear: (s.actionsThisYear ?? 0) + 1,
+                        pendingTrial: sentence > 0 ? buildPendingTrial(s, crime, sentence) : null,
                         criminalRecord: [...(s.criminalRecord ?? []), { crime: crime.criminalRecordEntry ?? crime.name, age: s.age, category: crime.category ?? 'other' }],
-                        log: [...(s.log ?? []), { age: s.age, text: `Arrested for ${crime.name}. Sentenced to ${sentence} year${sentence !== 1 ? 's' : ''}.`, isKey: true }],
+                        log: [...(s.log ?? []), { age: s.age, text: `You are arrested for ${crime.name.toLowerCase()}.`, isKey: true }],
                       }
                     },
                   },
@@ -1279,7 +1258,7 @@ export default function ActivitiesPanel({ onClose }) {
             return (
               <Btn key={crime.id} disabled={noActions || !canAfford}
                 onClick={handleCrime}
-                title={`${crime.minigame ? '🎮 ' : ''}${crime.name}`}
+                title={crime.name}
                 subtitle={crime.description}
                 cost={`Arrest risk: ${Math.round(crime.arrestRisk * 100)}%`}
                 danger />
@@ -1309,8 +1288,8 @@ export default function ActivitiesPanel({ onClose }) {
           if (career.minYear && state.currentYear < career.minYear) return false
           if (career.maxYear && state.currentYear > career.maxYear) return false
           if (career.requirements.minSmarts && state.stats.smarts < career.requirements.minSmarts) return false
-          if (career.gdpRequired && career.gdpRequired !== 'any' && gdpOrder.indexOf(state.character.country.gdp) < gdpOrder.indexOf(career.gdpRequired)) return false
-          if (Array.isArray(career.archetypeAvailable) && !career.archetypeAvailable.includes(state.character.country.archetype)) return false
+          if (career.gdpRequired && career.gdpRequired !== 'any' && gdpOrder.indexOf((state.currentCountry ?? state.character.country).gdp) < gdpOrder.indexOf(career.gdpRequired)) return false
+          if (Array.isArray(career.archetypeAvailable) && !career.archetypeAvailable.includes((state.currentCountry ?? state.character.country).archetype)) return false
           if (career.requirements.flags && !career.requirements.flags.some(f => state.flags.includes(f))) return false
           // Only include if the blocker is education level
           const reqEduIdx = eduOrder.indexOf(career.requirements.education)

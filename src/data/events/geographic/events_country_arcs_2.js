@@ -417,7 +417,7 @@ export const COUNTRY_ARC_2_EVENTS = [
     weight: 3,
     when: (G) =>
       G.character.country.name === 'United States' &&
-      (G.flags.includes('lgbtq') || G.flags.includes('out') || G.flags.includes('gay') || G.flags.includes('queer')) &&
+      (G.flags.includes('lgbtq') || G.flags.includes('lgbtq_identity') || G.flags.includes('out') || G.flags.includes('gay') || G.flags.includes('queer')) &&
       G.currentYear >= 1981 && G.currentYear <= 1995 &&
       !G.mem?.usaAids,
     text: 'The third funeral in eight months. Before this one there were two others. At the first funeral the family used a different word for the cause. The government has a number for deaths and does not have a response. ACT UP is in the streets. You know people in ACT UP. You have been to the vigils where names are read until the candles burn down. The Names Project is piecing together a quilt that is now larger than any room you have been in.',

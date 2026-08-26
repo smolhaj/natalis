@@ -6,6 +6,7 @@ import { CAREERS } from '../data/careers'
 import { CRIMES } from '../data/crimes'
 import { PROPERTY_TYPES, VEHICLE_TYPES } from '../data/assets'
 import { ILLNESSES } from '../data/illnesses'
+import { localCost } from '../data/activities'
 import { LIFE_SKELETON_EVENTS } from '../data/events/lifecycle/events_life_skeleton'
 import { PLACES, pickNeighborhoodTier, pickNamedNeighborhood } from '../data/places'
 import { HEADLINES } from '../data/headlines'
@@ -45,6 +46,24 @@ function applyProxy(state, proxy) {
   const legacy  = clamp((state.legacy ?? 0) + (proxy.legacy ?? 0), 0, 100)
   const flags   = [...new Set(proxy.flags)]
   return { ...state, stats, regret, money, karma, fame, legacy, flags, mem: proxy.mem }
+}
+
+// Being caught means going to trial, not straight to a cell. Exported because
+// the activities panel's minigame crimes used to jail the player directly, which
+// skipped the entire lawyer/regime/verdict system — the thing that makes the
+// legal quality of a country legible from inside a life.
+export function buildPendingTrial(state, crime, sentence) {
+  // Lawyer fees scale to the economy the character is actually living in.
+  const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.18, low_medium: 0.08, low: 0.04, very_low: 0.02 }
+  const mult = gdpMult[liveCountry(state)?.gdp] ?? 1.0
+  const midFee = Math.round(clamp(2500 * mult, 100, 25000) / 100) * 100
+  const topFee = Math.round(clamp(15000 * mult, 500, 150000) / 500) * 500
+  return {
+    crimeName: crime.name,
+    crimeCategory: crime.category,
+    sentence,
+    lawyerCosts: { none: 0, mid: midFee, top: topFee },
+  }
 }
 
 // ─── Where the character actually lives ───────────────────────────────────────
@@ -1243,19 +1262,7 @@ export function attemptCrime(state, crimeId) {
     const flagToAdd = useNewFormat ? (crime.flagsAdded?.[0] ?? null) : crime.addFlag
     if (flagToAdd) updated.flags = [...new Set([...updated.flags, flagToAdd])]
     updated.log = [...updated.log, { age: state.age, text: `You are arrested for ${crime.name.toLowerCase()}.`, isKey: true }]
-    if (sentence > 0) {
-      // Scale lawyer fees by country GDP
-      const gdpMult = { very_high: 1.0, high: 0.65, medium_high: 0.4, medium: 0.18, low_medium: 0.08, low: 0.04, very_low: 0.02 }
-      const mult = gdpMult[updated.character?.country?.gdp] ?? 1.0
-      const midFee  = Math.round(clamp(2500  * mult, 100, 25000) / 100) * 100
-      const topFee  = Math.round(clamp(15000 * mult, 500, 150000) / 500) * 500
-      updated.pendingTrial = {
-        crimeName: crime.name,
-        crimeCategory: crime.category,
-        sentence,
-        lawyerCosts: { none: 0, mid: midFee, top: topFee },
-      }
-    }
+    if (sentence > 0) updated.pendingTrial = buildPendingTrial(updated, crime, sentence)
   } else {
     const proxy = buildEffectProxy(updated)
     if (useNewFormat) crime.effect(proxy)
@@ -1541,11 +1548,15 @@ function tickFame(state) {
 function checkIllnessRisk(state) {
   let updated = state
   for (const illness of ILLNESSES) {
-    const { minAge, maxAge: maxA, flagRequired, riskFactors } = illness.triggerConditions
+    const { minAge, maxAge: maxA, minYear, maxYear: maxY, flagRequired, riskFactors } = illness.triggerConditions
     if (state.flags.includes(illness.flag)) continue
     if (state.flags.includes(`${illness.id}_diagnosed`)) continue
     if (minAge && state.age < minAge) continue
     if (maxA && state.age > maxA) continue
+    // Era gate. Without it HIV/AIDS could be diagnosed in 1950, decades before
+    // the illness had a name — the data carried minYear, nothing enforced it.
+    if (minYear && state.currentYear < minYear) continue
+    if (maxY && state.currentYear > maxY) continue
     if (flagRequired && !state.flags.includes(flagRequired)) continue
 
     let prob = 0.002
@@ -1657,7 +1668,10 @@ function tickEnrollment(state) {
 
   if (type === 'university') {
     if (!s.flags.includes('scholarship_won')) {
-      const tuition = { healthcare: 12000, business: 9000, science: 10000, arts: 7000, general: 8000 }[field] ?? 8000
+      // Tuition was flat worldwide while salaries scale down to 0.03, so a
+      // degree cost a Lagos family what it costs a Boston one.
+      const baseTuition = { healthcare: 12000, business: 9000, science: 10000, arts: 7000, general: 8000 }[field] ?? 8000
+      const tuition = localCost(baseTuition, liveCountry(s)?.gdp)
       s.money = Math.max(0, (s.money ?? 0) - tuition)
     }
     s.gpa = Math.min(4.0, parseFloat(((s.gpa ?? 2.5) + randomBetween(-5, 10) / 100).toFixed(2)))

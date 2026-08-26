@@ -1,9 +1,9 @@
 import { COUNTRIES } from '../data/countries'
 import { DESTINATIONS } from '../data/destinations'
 import { CAREERS } from '../data/careers'
-import { ACTIVITIES } from '../data/activities'
+import { ACTIVITIES, localCost } from '../data/activities'
 import { CRIMES } from '../data/crimes'
-import { PROPERTY_TYPES, VEHICLE_TYPES } from '../data/assets'
+import { PROPERTY_TYPES, VEHICLE_TYPES, localisePrice } from '../data/assets'
 import { ILLNESSES } from '../data/illnesses'
 import { PLACES, getPlacesForCountry, pickNeighborhoodTier, pickNamedNeighborhood, getRelocationCost } from '../data/places'
 import { randomBetween, pickFrom, clamp, chance } from '../utils/random'
@@ -426,7 +426,7 @@ export function applyActivity(state, activityId) {
 
   const proxy = buildEffectProxy(state)
   // Deduct actual money for activities with a dollar cost
-  if (activity.cost) proxy.mo -= activity.cost
+  if (activity.cost) proxy.mo -= localCost(activity.cost, gdpTierOf(state))
   activity.effect(proxy)
   let updated = applyProxy(state, proxy)
   updated = resolveProxyExtras(updated, proxy)
@@ -454,7 +454,8 @@ export function buyProperty(state, typeId) {
   if (state.age < 18) return state
   const type = PROPERTY_TYPES.find(t => t.id === typeId)
   if (!type) return state
-  const price = Math.round(randomBetween(type.priceRange[0], type.priceRange[1]))
+  // Property is a local good: a flat costs what flats cost where you live.
+  const price = localisePrice(Math.round(randomBetween(type.priceRange[0], type.priceRange[1])), gdpTierOf(state), 'local')
   const downPayment = Math.round(price * type.downPaymentRate)
   if ((state.money ?? 0) < downPayment) {
     return { ...state, log: [...state.log, { age: state.age, text: `You can't afford the down payment for a ${type.name}.`, isKey: false }] }
@@ -494,7 +495,8 @@ export function buyVehicle(state, typeId) {
   if (!state.licenceObtained && !bicycleTiers.includes(type.tier)) {
     return { ...state, log: [...state.log, { age: state.age, text: "You need a driving licence first.", isKey: false }] }
   }
-  const price = Math.round(randomBetween(type.priceRange[0], type.priceRange[1]))
+  // Vehicles are largely imported, so they do NOT scale down as far as housing.
+  const price = localisePrice(Math.round(randomBetween(type.priceRange[0], type.priceRange[1])), gdpTierOf(state), 'import')
   const displayName = type.make ? `${type.make} ${type.model}` : type.name
   if ((state.money ?? 0) < price) {
     return { ...state, log: [...state.log, { age: state.age, text: `You can't afford a ${displayName}.`, isKey: false }] }
@@ -607,6 +609,14 @@ export function schmoozeBoss(state) {
     ...state,
     log: [...state.log, { age: state.age, text: `The schmoozing reads as transparent. No ground gained.`, isKey: false }],
   }
+}
+
+// Prices are quoted in a wealthy-country frame throughout the data files.
+// Everything a character BUYS has to be converted into the economy they are
+// actually living in, or a studio flat costs a Lagos teacher forty years of
+// salary while the salary itself is already scaled down by GDP.
+function gdpTierOf(state) {
+  return (state.currentCountry ?? state.character?.country)?.gdp
 }
 
 // ─── Life transitions ─────────────────────────────────────────────────────────
@@ -1064,7 +1074,7 @@ export function goToRehab(state) {
   if (addictions.length === 0) {
     return { ...state, log: [...state.log, { age: state.age, text: "You don't have any active addictions to treat.", isKey: false }] }
   }
-  const cost = randomBetween(5000, 25000)
+  const cost = localCost(randomBetween(5000, 25000), gdpTierOf(state))
   if ((state.money ?? 0) < cost) {
     return { ...state, log: [...state.log, { age: state.age, text: `Rehab would cost about $${cost.toLocaleString()}. You can't afford it right now.`, isKey: false }] }
   }

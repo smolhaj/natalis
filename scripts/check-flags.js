@@ -11,6 +11,14 @@
  *   npm run check-flags -- --weight=major  filter by weight (major | moderate | minor)
  *   npm run check-flags -- --unregistered  all unregistered flags sorted by frequency
  *   npm run check-flags -- --world         world-event flags specifically
+ *   npm run check-flags -- --reachability  ALSO run the reachability audits
+ *
+ * Scope note: this script audits one direction only — that every registered
+ * flag is set somewhere and consumed the way its intent promises. It answered
+ * that with "2672 covered, 0 orphaned, 0 partial" while an entire country's
+ * content, the retirement arc and the grief after a parent's death were
+ * unreachable, because textual presence is not reachability. The other
+ * direction lives in scripts/check-events.js.
  */
 
 import { readFileSync, readdirSync, statSync } from 'fs'
@@ -288,5 +296,23 @@ if (!showWorld && !showUnreg) {
     }
   }
   console.log(`\nRun ${CYN('npm run check-flags -- --unregistered')} to see all ${allSetFlags.size} flags set in source.`)
-  console.log(`Run ${CYN('npm run check-flags -- --world')} to audit world-event flag coverage.\n`)
+  console.log(`Run ${CYN('npm run check-flags -- --world')} to audit world-event flag coverage.`)
+  console.log(`Run ${CYN('node scripts/check-events.js')} for the reachability audits this script cannot see.`)
+  console.log(`Run ${CYN('node scripts/sim.js')} for what actually fires in a played life.\n`)
+}
+
+// ── Reachability audits (opt-in) ─────────────────────────────────────────────
+// Kept behind a flag because they import the whole ~7,550-event corpus, which
+// costs ~10s. The standalone runner is scripts/check-events.js.
+if (argv.includes('--reachability')) {
+  const { runAllAudits } = await import('./lib/audits.js')
+  console.log(`\n${B('REACHABILITY')} — can the engine actually reach this content\n`)
+  let errors = 0
+  for (const { name, description, findings } of await runAllAudits()) {
+    const e = findings.filter(f => f.level === 'error').length
+    const w = findings.filter(f => f.level === 'warn').length
+    errors += e
+    console.log(`  ${e ? RED('✗') : GRN('✓')} ${name.padEnd(16)} ${e ? RED(e + ' errors') : GRN('0 errors')}  ${w ? YEL(w + ' warnings') : DIM('0 warnings')}  ${DIM(description)}`)
+  }
+  console.log(`\n  ${errors ? RED(errors + ' unreachable') : GRN('nothing unreachable')} — ${CYN('node scripts/check-events.js')} for detail\n`)
 }

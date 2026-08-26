@@ -92,7 +92,7 @@ export const EVENTS_SONDER_6 = [
     phase: 'childhood',
     weight: 2,
     when: (G) =>
-      ['Nigeria', 'Ghana', 'Senegal', 'Mali', 'Burkina Faso', 'Guinea', 'Niger', 'Côte d\'Ivoire', 'Cameroon', 'Chad'].includes(G.character.country?.name) &&
+      ['Nigeria', 'Ghana', 'Senegal', 'Mali', 'Burkina Faso', 'Guinea', 'Niger', 'Ivory Coast', 'Cameroon', 'Chad'].includes(G.character.country?.name) &&
       !G.mem?.s6WeatherHarmattan,
     text: 'The harmattan has been blowing for a week. The air is dry enough to crack lips by morning. Everything has a fine coat of Sahara on it — the windowsill, the leaves, the inside of your nose. The sky is the colour of milk. This is December, which elsewhere means cold. Here it means dust and dry and the particular chapping around the eyes.',
     choices: null,

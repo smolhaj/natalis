@@ -63,6 +63,7 @@ export {
   askForRaise,
   quitJob,
   attemptCrime,
+  buildPendingTrial,
   tick,
   resolveChoice,
   resolveAutoEvent,

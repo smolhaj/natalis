@@ -20,6 +20,9 @@ const LIVES = Number(process.env.SIM_LIVES ?? 20)
 let cached = null
 async function sim() {
   if (!cached) cached = await runSimulation({ lives: LIVES, configs: DEFAULT_CONFIGS, mode: 'active' })
+  // An engine that will not load is reported as one readable line rather than a
+  // stack trace from inside the harness.
+  if (cached.fatal) throw new Error(cached.fatal)
   return cached
 }
 

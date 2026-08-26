@@ -141,7 +141,7 @@ export const IRELAND_DEPTH_EVENTS = [
     weight: 4,
     when: (G) =>
       IS_IRISH(G) &&
-      G.flags.has('lgbtq') &&
+      (G.flags.has('lgbtq') || G.flags.has('lgbtq_identity')) &&
       G.currentYear >= 1993 && G.currentYear <= 2000 &&
       G.age >= 18 &&
       !G.mem?.ireLgbtqDecrim,

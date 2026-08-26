@@ -11,7 +11,7 @@ const WATER_WALK_COUNTRIES = new Set([
   'Nigeria', 'Kenya', 'Tanzania', 'Uganda', 'Ethiopia', 'Ghana',
   'Cameroon', 'Zambia', 'Mozambique', 'Malawi', 'Rwanda', 'Guinea',
   'Burkina Faso', 'Mali', 'Niger', 'Senegal', 'Bangladesh', 'Nepal',
-  'Cambodia', 'Myanmar', 'Sudan', 'South Sudan', 'DRC',
+  'Cambodia', 'Myanmar', 'Sudan', 'DRC',
 ])
 
 const VILLAGE_RADIO_COUNTRIES = new Set([
@@ -722,7 +722,7 @@ export const RURAL_TEXTURE_EVENTS = [
       G.place?.type === 'rural' &&
       (G.currentCountry?.name === 'Kenya' || G.currentCountry?.name === 'Tanzania' ||
        G.currentCountry?.name === 'Uganda' || G.currentCountry?.name === 'Ethiopia' ||
-       G.currentCountry?.name === 'Sudan' || G.currentCountry?.name === 'South Sudan') &&
+       G.currentCountry?.name === 'Sudan') &&
       G.currentYear >= 1950 && G.currentYear <= 2000,
     text: (G) => {
       const cn = G.currentCountry?.name
