@@ -1,0 +1,109 @@
+{
+  "//": [
+    "Known-open reachability errors, as of the August 2026 studio audit.",
+    "Each entry is authored content the engine cannot currently reach. They are",
+    "listed here so CI can fail on NEW unreachable content without failing on the",
+    "backlog. Fix one, delete its line — a stale entry is reported (loudly) but",
+    "does not fail the build, so the queue can be worked down without coordination."
+  ],
+  "entries": [
+    {
+      "audit": "enum-domains",
+      "code": "country-object-vs-string",
+      "id": "ft88_migrant_worker_covid_dorms",
+      "where": "src/data/events/thematic/events_followthrough_88.js:48",
+      "message": "compares currentCountry directly to 'Singapore' — that is always false; use G.currentCountry?.name === 'Singapore'"
+    },
+    {
+      "audit": "enum-domains",
+      "code": "unknown-country",
+      "id": "rural_eastafrica_cattle",
+      "where": "src/data/events/thematic/events_rural_texture.js:717",
+      "message": "guard names country 'South Sudan', which does not exist in countries.js"
+    },
+    {
+      "audit": "enum-domains",
+      "code": "unknown-country",
+      "id": "sl_samoan_fa_afafine",
+      "where": "src/data/events/specific_lives/events_specific_lives.js:2791",
+      "message": "guard names country 'American Samoa', which does not exist in countries.js"
+    },
+    {
+      "audit": "enum-domains",
+      "code": "unknown-country",
+      "id": "sonder6_weather_harmattan",
+      "where": "src/data/events/sonder/events_sonder_6.js:91",
+      "message": "guard names country 'Côte d'Ivoire', which does not exist in countries.js"
+    },
+    {
+      "audit": "enum-domains",
+      "code": "unknown-religion",
+      "id": "sl_ramadan_poor_cairo",
+      "where": "src/data/events/specific_lives/events_specific_lives.js:616",
+      "message": "compares religion === 'muslim', which is not a known religionWeights key in countries.js — the guard can never pass"
+    },
+    {
+      "audit": "g-properties",
+      "code": "unknown-g-prop",
+      "id": "sonder7_food_market_negotiation",
+      "where": "src/data/events/sonder/events_sonder_7.js:93",
+      "message": "guard reads character.archetype — always undefined; archetype is G.archetype (or character.country.archetype)"
+    },
+    {
+      "audit": "g-properties",
+      "code": "unknown-g-prop",
+      "id": "sonder7_street_power_out",
+      "where": "src/data/events/sonder/events_sonder_7.js:304",
+      "message": "guard reads character.archetype — always undefined; archetype is G.archetype (or character.country.archetype)"
+    },
+    {
+      "audit": "reverse-flags",
+      "code": "flag-never-set",
+      "id": "adol2_diaspora_identity",
+      "where": "src/data/events/lifecycle/events_adolescence_2.js:292",
+      "message": "guard requires flag 'second_gen_immigrant' and nothing in the codebase sets it — 1 guard can never pass: adol2_diaspora_identity"
+    },
+    {
+      "audit": "reverse-flags",
+      "code": "flag-never-set",
+      "id": "ang_dep_child_soldier_demob",
+      "where": "src/data/events/geographic/events_angola_depth.js:147",
+      "message": "guard requires flag 'child_soldier_recruited' and nothing in the codebase sets it — 1 guard can never pass: ang_dep_child_soldier_demob"
+    },
+    {
+      "audit": "reverse-flags",
+      "code": "flag-never-set",
+      "id": "health_refusing_treatment",
+      "where": "src/data/events/lifecycle/events_late_life.js:767",
+      "message": "guard requires flag 'faith_deepened' and nothing in the codebase sets it — 1 guard can never pass: health_refusing_treatment"
+    },
+    {
+      "audit": "reverse-flags",
+      "code": "flag-never-set",
+      "id": "ire_lgbtq_decrim",
+      "where": "src/data/events/geographic/events_ireland_depth.js:139",
+      "message": "guard requires flag 'lgbtq' and nothing in the codebase sets it — 2 guards can never pass: ire_lgbtq_decrim, sl_aids_grief_partner"
+    },
+    {
+      "audit": "year-windows",
+      "code": "year-window-unreachable",
+      "id": "womens_suffrage_france_delayed",
+      "where": "src/data/events/thematic/events_society.js:928",
+      "message": "guard needs year 1944-1946 at age ≥18, but no required country can supply anyone then: France [1948-2110]"
+    },
+    {
+      "audit": "year-windows",
+      "code": "year-window-unreachable",
+      "id": "womens_vote_nz_first",
+      "where": "src/data/events/thematic/events_society.js:68",
+      "message": "guard needs year 1893-1895 at age ≥18, but no required country can supply anyone then: New Zealand [1948-2110]"
+    },
+    {
+      "audit": "year-windows",
+      "code": "year-window-unreachable",
+      "id": "womens_vote_suffragette_violence",
+      "where": "src/data/events/thematic/events_society.js:90",
+      "message": "guard needs year 1910-1914 at age ≥18, but no required country can supply anyone then: United Kingdom [1938-2110]"
+    }
+  ]
+}

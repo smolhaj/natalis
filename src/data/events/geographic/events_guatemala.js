@@ -66,7 +66,9 @@ export const GUATEMALA_EVENTS = [
     },
     choices: null,
     effect: (p) => {
-      const isMaya = IS_MAYA(p)
+      // (was: `const isMaya = IS_MAYA(p)` — IS_MAYA expects G and reads
+      // G.character, which the proxy does not have, so this threw. The value was
+      // never used either; the branching it belonged to lives in text(G) above.)
       p.m -= 16
       p.r += 10
       p.h -= 4
