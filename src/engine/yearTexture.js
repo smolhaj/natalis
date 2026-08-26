@@ -14753,6 +14753,22 @@ function buildYearTexture(state, opts = {}) {
     'You can say the number of years out loud now without the sentence rearranging itself around them.',
   ])
 
+  if (F.has('suffrage_inheritance_passed_on') && Math.random() < 0.16) return pick([
+    'You have started telling it the way it was told to you, with the same pause before the number, and you no longer know whether the number is right.',
+    'One of them asked, last year, whether it was really true. You said yes. You have never checked.',
+  ])
+
+  if (F.has('suffrage_inheritance_kept') && Math.random() < 0.15) return pick([
+    'Election day is an errand. You do the errand. You have never once been able to make it only an errand.',
+    'The booth is a curtain and a shelf and a pencil on a string, and it takes eleven seconds, and somebody was fed through a tube for it.',
+  ])
+
+  if (F.has('suffrage_inheritance') && Math.random() < 0.12) return pick([
+    'You can still see the drawer. The buttons, and the ribbon underneath them, purple and white and green.',
+    'The story gets shorter each time you hear it. By now it is mostly the number and the length of the roll.',
+    'She said what changed first was what a girl could imagine wanting. You did not understand that for another twenty years.',
+  ])
+
   if (F.has('voted_first_time_free') && Math.random() < 0.18) return pick([
     'You still remember the weight of the ballot the first time it counted. Not the result — the paper, and the queue, and how ordinary everyone was being about it.',
     'People who have always had the vote treat election day as an errand. You have never once managed to.',

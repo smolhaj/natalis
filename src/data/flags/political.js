@@ -4,6 +4,30 @@
  */
 export const POLITICAL_FLAGS = {
 
+  suffrage_inheritance: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Told, as a girl, that a woman in the family was there when women got the vote — the 1893 petition roll unrolled down the floor of the New Zealand House, the Holloway hunger-strike medal in the button drawer, a mother voting for the first time at forty-one in 1945.',
+    intent: 'both',
+    notes: 'Set by womens_vote_nz_first, womens_vote_suffragette_violence, womens_suffrage_france_delayed. Followed by suffrage_inheritance_first_vote and suffrage_inheritance_told_forward, plus year texture.',
+  },
+
+  suffrage_inheritance_kept: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Voted for the first time carrying that inheritance, and found the act ordinary — which was what it had cost somebody to make it.',
+    intent: 'year_texture',
+    notes: 'Set by suffrage_inheritance_first_vote.',
+  },
+
+  suffrage_inheritance_passed_on: {
+    weight: 'moderate',
+    category: 'political',
+    description: 'Told the family suffrage story forward to your own children, hearing your grandmother\'s pause in your own voice.',
+    intent: 'year_texture',
+    notes: 'Set by suffrage_inheritance_told_forward.',
+  },
+
   soweto_generation: {
     weight: 'major',
     category: 'historical',

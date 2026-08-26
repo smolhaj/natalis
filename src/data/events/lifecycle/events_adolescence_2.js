@@ -294,7 +294,8 @@ export const ADOLESCENCE_2_EVENTS = [
     weight: 3,
     cooldown: 0,
     when: (G) =>
-      G.flags.has('second_gen_immigrant') &&
+      G.flags.has('emigrated') &&
+      G.currentCountry?.name !== G.character?.country?.name &&
       G.age >= 13 && G.age <= 17 &&
       !G.mem?.adol2Diaspora,
     text: (G) => {
@@ -359,7 +360,7 @@ export const ADOLESCENCE_2_EVENTS = [
     weight: 2,
     cooldown: 0,
     when: (G) =>
-      G.religion && G.religion !== 'none' && G.religion !== 'atheist' &&
+      G.religion && !['secular', 'atheist'].includes(G.religion) &&
       G.age >= 14 && G.age <= 17 &&
       !G.mem?.adol2FaithDoubt,
     text: (G) => {

@@ -151,7 +151,7 @@ export const ANGOLA_DEPTH_EVENTS = [
       IS_ANGOLA(G) &&
       G.currentYear >= 2002 && G.currentYear <= 2007 &&
       G.age >= 14 && G.age <= 24 &&
-      G.flags.has('child_soldier_recruited') &&
+      G.flags.has('child_soldier_taken') &&
       !G.mem?.angDemob,
     text: `The war is over. The UNICEF demobilisation camps run transit programmes — disarmament, counselling, family tracing, vocational training. You are processed through the system: the gun goes into a pile, the uniform is replaced with civilian clothes, a social worker asks you questions that have no good answers. The family tracing unit sometimes finds family. Sometimes it finds graves. Sometimes it finds nothing. The war that recruited you at — what age? — is over on paper. What it left in you is not on paper.`,
     choices: [

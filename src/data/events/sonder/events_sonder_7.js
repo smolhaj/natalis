@@ -94,7 +94,7 @@ export const EVENTS_SONDER_7 = [
     phase: 'midlife',
     weight: 2,
     when: (G) =>
-      G.ruralUrban !== 'urban' || ['developing_urban', 'developing_unstable', 'subsaharan', 'conflict_zone'].includes(G.character?.archetype) &&
+      G.ruralUrban !== 'urban' || ['developing_urban', 'developing_unstable', 'subsaharan', 'conflict_zone'].includes(G.archetype) &&
       G.age >= 25 &&
       !G.mem?.s7FoodMarket,
     text: 'The price is not the price. This is understood by both parties. You name what you will pay; she names what she will accept; the final number is somewhere between them and was always going to be somewhere between them. The negotiation is social as much as economic — to not negotiate would be an insult to the process, a refusal of the form. You have been doing this since you were old enough to be sent to the market alone.',
@@ -172,7 +172,7 @@ export const EVENTS_SONDER_7 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) =>
-      G.religion !== 'none' &&
+      !['secular', 'atheist'].includes(G.religion) &&
       G.age >= 18 &&
       !G.mem?.s7RitualPrayer,
     text: 'The prayer has been said enough times that the words arrive before the intention. This is not failure of faith — it is what practice becomes. The words arrive and the intention follows, or it does not, and you are in the habit of saying them regardless. You have decided this is acceptable. You have met people who find this troubling and people who find it the whole point.',
@@ -198,7 +198,7 @@ export const EVENTS_SONDER_7 = [
     weight: 2,
     when: (G) =>
       G.age >= 8 && G.age <= 14 &&
-      G.religion !== 'none' &&
+      !['secular', 'atheist'].includes(G.religion) &&
       !G.mem?.s7RitualWeekly,
     text: 'Once a week the family goes. You do not always want to go. The wanting is not the point — the going is the point. The room smells like a particular kind of old, or incense, or whatever the community uses to mark that this space is different from the spaces outside it. You have been sitting in this room since before you can remember. That is also what this room is: the earliest thing.',
     choices: null,
@@ -224,7 +224,7 @@ export const EVENTS_SONDER_7 = [
     weight: 2,
     when: (G) =>
       G.age >= 10 && G.age <= 14 &&
-      G.religion !== 'none' &&
+      !['secular', 'atheist'].includes(G.religion) &&
       !G.mem?.s7RitualFirst,
     text: 'There is a ceremony for when you are old enough. You have been preparing for months. The ceremony lasts for a specific time and follows its order. Afterward there is food and relatives you rarely see. Everyone tells you that you are grown now. You are not grown. But you have passed through a form that says you are, and the form is real even if the feeling will take years.',
     choices: null,
@@ -236,7 +236,7 @@ export const EVENTS_SONDER_7 = [
     phase: 'late_life',
     weight: 2,
     when: (G) =>
-      G.religion !== 'none' &&
+      !['secular', 'atheist'].includes(G.religion) &&
       G.age >= 55 &&
       !G.mem?.s7RitualPilgrimage,
     text: 'You go somewhere you always meant to go. The place is sacred in the tradition you were raised in, or the tradition you arrived at, or both. The journey is the point as much as the destination — this is what pilgrimages have always said and you understand it differently now that you are making one. The place itself is smaller than you imagined. This is also standard, and also does not diminish it.',
@@ -304,7 +304,7 @@ export const EVENTS_SONDER_7 = [
     id: 'sonder7_street_power_out',
     phase: 'midlife',
     weight: 2,
-    when: (G) => place.hasRadio(G) && (['developing_urban', 'developing_unstable', 'subsaharan', 'conflict_zone', 'post_soviet'].includes(G.character?.archetype) &&
+    when: (G) => place.hasRadio(G) && (['developing_urban', 'developing_unstable', 'subsaharan', 'conflict_zone', 'post_soviet'].includes(G.archetype) &&
       G.age >= 25 &&
       !G.mem?.s7StreetPowerOut),
     text: 'The power goes out and the street rearranges itself. People come outside who were not outside. Candles appear in windows. The street is quieter and also more present to itself — the sounds that the electricity masked come back: insects, wind, distant conversation, a radio running on batteries. You have lived through enough power cuts that you know what to do and what to do without. The cut is an inconvenience. It is also, briefly, a different kind of evening.',

@@ -618,7 +618,7 @@ export const SPECIFIC_LIFE_EVENTS = [
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Egypt' &&
-      ['muslim', 'muslim_sunni'].includes(G.religion) &&
+      ['muslim_sunni', 'muslim_sufi'].includes(G.religion) &&
       G.money < 800 &&
       G.age >= 16 && G.age <= 45 &&
       !G.mem?.sl_ramadan_cai,
