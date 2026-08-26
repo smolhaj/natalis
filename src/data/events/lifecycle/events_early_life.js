@@ -688,4 +688,42 @@ export const EARLY_LIFE_EVENTS = [
     effect: null,
   },
 
+  // ── SELF-RECOGNITION ARRIVING LATE ───────────────────────────────────────────
+  // The same flag as adol_questioning_recognition, for lives where the
+  // adolescence had no room for the question.
+
+  {
+    id: 'ya_questioning_late',
+    phase: 'young_adult',
+    weight: 3,
+    when: (G) =>
+      !G.mem.yaQuestioningLate &&
+      !G.mem.adolQuestioning &&
+      !G.flags.includes('lgbtq_identity') &&
+      !G.flags.includes('questioning_sexuality') &&
+      G.age >= 19 && G.age <= 24 &&
+      Math.random() < 0.09,
+    text: (G) => {
+      if (G.lgbtqCriminalized) {
+        return 'The city is large enough that nobody from home is in it. You are introduced to someone at a gathering in a flat with the curtains shut, and the introduction is careful in a way you understand before anyone explains it. Nothing happens. You go back the next month and nothing happens again. What has happened is that you now know a room exists, and that you went to it twice.'
+      }
+      return 'It arrives while you are doing something else — waiting for a kettle, halfway through a sentence about somebody else entirely. You have been arranging your life around an assumption you never made on purpose. Nobody in the room notices anything. You finish the sentence and the kettle boils and you carry the thought to work with you for the rest of the week.'
+    },
+    choices: [
+      {
+        text: 'Tell one person',
+        tag: null,
+        outcome: 'They take it well, or well enough. Having said it once, you cannot go back to not having said it, which is what you wanted.',
+        effect: (p) => { p.m += 5; p.s += 2; p.addFlag('questioning_sexuality'); p.setMem('yaQuestioningLate', true) },
+      },
+      {
+        text: 'Tell no one and let it settle',
+        tag: null,
+        outcome: 'You keep it for a few years. It keeps well. The keeping costs something you do not itemise until later.',
+        effect: (p) => { p.e += 3; p.m -= 3; p.r += 3; p.addFlag('questioning_sexuality'); p.setMem('yaQuestioningLate', true) },
+      },
+    ],
+    effect: null,
+  },
+
 ]

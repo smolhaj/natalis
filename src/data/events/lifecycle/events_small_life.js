@@ -386,11 +386,40 @@ export const SMALL_LIFE_EVENTS = [
     phase: 'midlife',
     weight: 2,
     cooldown: 0,
-    when: (G) => !G.flags.has('emigrated') && G.flags.has('had_emigration_opportunity') &&
+    when: (G) => !G.flags.has('emigrated') &&
+      (G.flags.has('chose_to_stay') || G.flags.has('stayed_behind') ||
+       G.flags.has('had_emigration_opportunity')) &&
       G.age >= 35 && !G.mem?.stayedCallbackAck,
     text: 'The people who left have built lives somewhere else. You can see it — the photos, the visits home, the accumulation of a life in a different country. You stayed. You made something here. You are not sure yet whether this is called wisdom or inertia, and you have stopped needing to decide.',
     choices: null,
     effect: (p) => { p.r += 3; p.karma += 4; p.setMem('stayedCallbackAck', true) },
+  },
+
+  {
+    id: 'sl_leave_stable_job',
+    phase: null,
+    weight: 2,
+    when: (G) =>
+      G.career &&
+      G.age >= 26 && G.age <= 52 &&
+      !G.flags.has('left_stable_job') &&
+      !G.mem?.leftStableJobAsked,
+    text: 'The job is not bad. That is the difficulty with it. The pay arrives on the same date every month, the people are reasonable, and you can see the next fifteen years of it from where you are standing. Someone at a table outside a café asks what you actually want to do and you answer too quickly, which tells you the answer has been ready for a while.',
+    choices: [
+      {
+        text: 'Hand in the notice',
+        tag: null,
+        outcome: 'A month of goodwill, a leaving card, and then a Monday morning with nothing in it. You had not thought about the Mondays.',
+        effect: (p) => { p.m += 6; p.mo -= 2000; p.w -= 4; p.addFlag('left_stable_job'); p.setMem('leftStableJobYear', p._state.currentYear); p.setMem('leftStableJobAsked', true) },
+      },
+      {
+        text: 'Stay. The date the pay arrives is not nothing.',
+        tag: null,
+        outcome: 'You put it away. It comes back at intervals, in the same words, from the same table.',
+        effect: (p) => { p.m -= 3; p.r += 4; p.setMem('leftStableJobAsked', true) },
+      },
+    ],
+    effect: null,
   },
 
   {

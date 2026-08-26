@@ -11,6 +11,16 @@
 //   F. Pre-1940 texture (colonial, pre-electricity, the first industrials)
 //   G. 2000s–2020s specific losses (the world after the promise)
 
+// A character counts as questioning if the LGBTQ arc has named it, if an
+// earlier event recorded the attraction, or if the recognition event in
+// events_adolescence.js fired. One predicate so the era events stay readable.
+const QUESTIONING = (G) =>
+  G.flags.includes('questioning_sexuality') ||
+  G.flags.includes('lgbtq_identity') ||
+  G.flags.includes('same_sex_attracted') ||
+  G.flags.includes('lgbtq_secret_relationship') ||
+  G.flags.includes('out')
+
 export const SPECIFIC_LIFE_EVENTS = [
 
   // ══════════════════════════════════════════════════════════════════════════
@@ -821,7 +831,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.character.country.name === 'Philippines' &&
       G.age >= 18 && G.age <= 60 &&
       G.currentYear >= 2014 && G.currentYear <= 2019 &&
-      G.flags.includes('typhoon_bad_year') &&
+      (G.flags.includes('haiyan_survivor') || G.flags.includes('disaster_survivor')) &&
       !G.mem?.sl_haiyan_after,
     text: 'The international aid came for six months and then found the next disaster. The USAID tents are still up in some places, faded from blue to grey. Your house was not rebuilt by the government programme — you were on the wrong list, or the list was wrong, or the programme ended. You rebuilt most of it yourself with money borrowed from a cousin in Riyadh. The roof is corrugated iron, same as before. Different sheets. The typhoon season begins in June.',
     choices: null,
@@ -939,7 +949,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.character.gender === 'male' &&
       G.currentYear >= 1988 && G.currentYear <= 2003 &&
       G.age >= 13 && G.age <= 18 &&
-      G.flags.includes('questioning_sexuality') &&
+      QUESTIONING(G) &&
       !G.mem?.sl_s28,
     text: 'Section 28 says the local authority shall not intentionally promote homosexuality or publish material with the intention of promoting homosexuality as a pretended family relationship. You found this in the library. The librarian is a woman you have always liked. She saw you reading it and said nothing and put another book on the shelf beside you. You read the first paragraph of that one too.',
     choices: null,
@@ -954,7 +964,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.character.country.name === 'Russia' &&
       G.currentYear >= 2013 &&
       G.age >= 18 && G.age <= 35 &&
-      G.flags.includes('questioning_sexuality') &&
+      QUESTIONING(G) &&
       !G.mem?.sl_ru_prop,
     text: 'The law against gay propaganda to minors passed in June. You are not a minor. The law does not apply to you technically. The effect of the law is not technical. Your friends from the club have stopped posting. One has left for Amsterdam. You delete the photos from your phone not because you are afraid of the specific law but because the specific law clarifies what was already true: you are in a country that has decided.',
     choices: [
@@ -982,7 +992,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.character.country.name === 'Egypt' &&
       G.currentYear >= 2001 &&
       G.age >= 18 && G.age <= 35 &&
-      G.flags.includes('questioning_sexuality') &&
+      QUESTIONING(G) &&
       !G.mem?.sl_eg_lgbtq,
     text: 'The Queen Boat raid — fifty-two men arrested on a Nile cruise ship — happened before you were old enough to go to such places, but the name of the boat has circulated in the city\'s private knowledge ever since. There is no law against what you are. There is a debauchery law, which has the same effect with different paperwork. You know three people who know this from experience.',
     choices: null,
@@ -997,7 +1007,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.character.country.name === 'India' &&
       G.currentYear >= 2018 &&
       G.age >= 18 && G.age <= 40 &&
-      G.flags.includes('questioning_sexuality') &&
+      QUESTIONING(G) &&
       !G.mem?.sl_in_377,
     text: 'Section 377 has been struck down by the Supreme Court. You heard about it on your phone in the middle of a workday. You did not cry at your desk but it was close. The law had been there your entire conscious life — a thing that named you criminal without needing to arrest you. And now it is struck down. The country has said, officially, that you exist. That sentence is smaller than it sounds and larger than anything.',
     choices: null,
@@ -1013,7 +1023,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.character.gender === 'male' &&
       G.currentYear >= 1983 && G.currentYear <= 1996 &&
       G.age >= 20 && G.age <= 35 &&
-      G.flags.includes('questioning_sexuality') &&
+      QUESTIONING(G) &&
       !G.mem?.sl_us_aids_gen,
     text: 'The ones you know who have died. You count them sometimes and stop counting. The number is not a number a generation should know. The disease arrived with a specific moral freight attached to it — the administration would not say the word for years — and you watched the community build the infrastructure of care that the government did not. The buddy system. The phone trees. The hospice that was an apartment. The funerals that happened too often for February.',
     choices: null,
@@ -1878,14 +1888,27 @@ export const SPECIFIC_LIFE_EVENTS = [
   // ══════════════════════════════════════════════════════════════════════════
 
   {
-    id: 'sl_amish_rumspringa',
-    phase: 'adolescence',
+    id: 'sl_plain_community_child',
+    phase: 'childhood',
     weight: 3,
     when: (G) =>
       G.character.country.name === 'United States' &&
       G.religion === 'christian_protestant' &&
       G.ruralUrban === 'rural' &&
-      G.stats.smarts >= 30 && G.stats.smarts <= 60 &&
+      G.age === 9 &&
+      Math.random() < 0.04 &&
+      !G.mem?.sl_plain_child,
+    text: 'School ends after the eighth grade for everyone here, so you already know the shape of the years ahead of you. The buggy is put away in the shed and the horse is yours to feed before breakfast. The Ordnung is not written down anywhere you have seen; it is what the bishop says and what the district has agreed, and it covers the width of a hat brim and whether a tractor may be used in the field but not on the road. English is what you speak to the man at the hardware store. At home it is Deitsch.',
+    choices: null,
+    effect: (p) => { p.setMem('sl_plain_child', true); p.e += 2; p.s += 2; p.addFlag('plain_community_born') },
+  },
+
+  {
+    id: 'sl_amish_rumspringa',
+    phase: 'adolescence',
+    weight: 4,
+    when: (G) =>
+      G.flags.includes('plain_community_born') &&
       G.age >= 16 && G.age <= 20 &&
       !G.mem?.sl_amish_rum,
     text: 'Rumspringa means running around. The community allows you to go and see the world during this period before you are baptised, because the church holds that you should choose it knowing what you are choosing against. You have gone and seen: the electricity, the cars, the phones, the music that comes through headphones. You are now required to decide. The decision is not between the world and the community — it is between being known in one place, completely, and being unknown in a larger one.',
@@ -1923,16 +1946,46 @@ export const SPECIFIC_LIFE_EVENTS = [
   {
     id: 'sl_hasidic_education',
     phase: 'childhood',
-    weight: 3,
+    weight: 4,
     when: (G) =>
       ['Israel', 'United States', 'Belgium', 'United Kingdom'].includes(G.character.country.name) &&
       G.religion === 'jewish' &&
       G.currentYear >= 1950 &&
-      G.age >= 6 && G.age <= 14 &&
+      G.age >= 7 && G.age <= 8 &&
+      Math.random() < 0.07 &&
       !G.mem?.sl_hasid_ed,
     text: 'The yeshiva teaches Talmud from six in the morning. The secular subjects — the ones the government requires — occupy two hours in the afternoon and are taught with a quality of attention that makes clear they are not the point. You are eight and you are learning to argue with Rashi\'s commentary on a passage that was old when Rashi wrote about it. The argumentation is rigorous and ancient and in a language that is not spoken on any street in the city outside these walls.',
     choices: null,
-    effect: (p) => { p.setMem('sl_hasid_ed', true); p.e += 3; p.s += 2 },
+    effect: (p) => { p.setMem('sl_hasid_ed', true); p.e += 3; p.s += 2; p.addFlag('haredi_family') },
+  },
+
+  {
+    id: 'sl_haredi_deferment',
+    phase: null,
+    weight: 3,
+    when: (G) =>
+      G.flags.includes('haredi_family') &&
+      G.character.country.name === 'Israel' &&
+      G.character.gender === 'male' &&
+      G.age >= 18 && G.age <= 24 &&
+      !G.mem?.sl_haredi_defer,
+    text: 'Your deferment holds as long as you are learning, and only as long as you are learning. The form is signed by the rosh yeshiva and stamped and filed, and it says that Torah is your occupation. Boys you went to primary school with are in uniform at the central bus station on Sunday nights with their kit bags. You are in the beis midrash at the same hour with a Gemara open, which is either the harder thing or the easier one depending on who in the country is describing it.',
+    context: 'Israel exempted full-time yeshiva students from conscription from 1948. The number of deferments grew from roughly 400 a year to tens of thousands, and the arrangement has been struck down and relegislated repeatedly since the 1998 Rubinstein ruling.',
+    choices: [
+      {
+        text: 'Keep learning. This is the life you were raised into.',
+        tag: null,
+        outcome: 'The days have a shape older than the state that is arguing about them. The argument continues without you in it.',
+        effect: (p) => { p.e += 5; p.m += 3; p.addFlag('haredi_learning_path'); p.setMem('sl_haredi_defer', true) },
+      },
+      {
+        text: 'Enlist. The Nahal Haredi battalion exists for men like you.',
+        tag: null,
+        outcome: 'Kosher kitchens, no women in the unit, a rabbi attached to the company. Your neighbourhood does not entirely forgive it. Your mother writes every week.',
+        effect: (p) => { p.h += 4; p.s += 4; p.m -= 4; p.addFlag('haredi_enlisted'); p.setMem('sl_haredi_defer', true) },
+      },
+    ],
+    effect: null,
   },
 
   {
@@ -3922,7 +3975,9 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.ruralUrban === 'urban' &&
       G.currentYear >= 1996 && G.currentYear <= 2010 &&
       G.age >= 20 && G.age <= 40 &&
-      G.flags.includes('musician') &&
+      (G.career?.id === 'musician' || G.currentProject?.type === 'music' ||
+       (G.hobbies?.music ?? 0) >= 20 || G.flags.includes('musician_performing') ||
+       G.flags.includes('performed_music')) &&
       !G.mem?.sl_drc_music_war,
     text: 'The rumba continues. This is the specific thing about Kinshasa: the war is in the east, the militia is in the east, the UN peacekeepers are in the east, and in Kinshasa the rumba continues because the rumba has always continued through everything. You play guitar at the open-air venue in the Matonge neighbourhood and the set is three hours and the crowd is three hundred people and the three hundred people need the three hours more than they need anything you could say about the political situation, which everyone already knows the political situation. The music is not denial. The music is the thing that is not the war. Both are necessary.',
     choices: null,
@@ -3960,9 +4015,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.character.country.name === 'Armenia' &&
       G.currentYear >= 2023 && G.currentYear <= 2025 &&
       G.age >= 30 && G.age <= 65 &&
-      G.flags.includes('karabakh_generation') &&
       !G.mem?.sl_karabakh_2023,
-    text: 'In September 2023, over one hundred thousand ethnic Armenians left Nagorno-Karabakh in seventy-two hours. The corridor through which they left was the Lachin corridor. The cars were backed up for forty kilometres. People abandoned cars when the fuel ran out and walked. You are watching this on a phone in Yerevan and the people in the cars are your relatives or are people who are your relatives\' relatives and the convoy is moving and then not moving for hours. The oldest population in the world — Armenians have been in Karabakh since the fifth century — crossed the border in three days. By October the territory was empty of Armenians.',
+    text: 'In September 2023, over one hundred thousand ethnic Armenians left Nagorno-Karabakh in seventy-two hours. The corridor through which they left was the Lachin corridor. The cars were backed up for forty kilometres. People abandoned cars when the fuel ran out and walked. You are watching this on a phone in Yerevan and the people in the cars are your relatives or are people who are your relatives\' relatives and the convoy is moving and then not moving for hours. Armenians have been in Karabakh since the fifth century. They crossed the border in three days. By October the territory was empty of Armenians.',
     choices: null,
     effect: (p) => { p.setMem('sl_karabakh_2023', true); p.m -= 12; p.r += 8; p.addFlag('witnessed_ethnic_cleansing') },
   },

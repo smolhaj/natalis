@@ -332,7 +332,7 @@ export const EVENTS_SONDER_5 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) =>
-      ['subsaharan', 'developing_urban', 'developing_unstable'].includes(G.character.archetype) &&
+      ['subsaharan', 'developing_urban', 'developing_unstable'].includes(G.archetype) &&
       G.age >= 20 &&
       !G.mem?.s5AnimalMosquito,
     text: 'The mosquito net is the structure of sleep. You tuck it in at all four corners before you lie down. The sound of a mosquito inside the net — the high thin sound — is the sound of a specific kind of wakefulness: fully alert, listening for the location. In the morning sometimes there is a smear of blood on the white fabric where it landed. Not yours.',

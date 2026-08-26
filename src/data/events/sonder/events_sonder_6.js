@@ -34,7 +34,7 @@ export const EVENTS_SONDER_6 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) =>
-      ['subsaharan', 'developing_urban', 'developing_unstable', 'post_soviet'].includes(G.character.archetype) &&
+      ['subsaharan', 'developing_urban', 'developing_unstable', 'post_soviet'].includes(G.archetype) &&
       !G.mem?.s6NightCut,
     text: 'The power went out at midnight. You know it by the sudden end of the fan, the way the dark became a different quality of dark. You lie in the heat and listen to the neighbourhood recalibrate — a generator starting somewhere, a dog, the settling. You have slept through worse. You will sleep through this.',
     choices: null,
@@ -146,7 +146,7 @@ export const EVENTS_SONDER_6 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) =>
-      ['subsaharan', 'developing_urban', 'developing_unstable', 'wealthy_gulf'].includes(G.character.archetype) &&
+      ['subsaharan', 'developing_urban', 'developing_unstable', 'wealthy_gulf'].includes(G.archetype) &&
       !G.mem?.s6WeatherHeat,
     text: 'Three in the afternoon. The heat has been building since ten and is now at the place where movement becomes a deliberate choice. The shade is not cool but it is something. The city, in this hour, has slowed. The people who can, sit. The people who cannot, work. You have learned the difference between these two categories and which one you occupy.',
     choices: null,
@@ -158,7 +158,7 @@ export const EVENTS_SONDER_6 = [
     phase: 'childhood',
     weight: 2,
     when: (G) =>
-      ['wealthy_west'].includes(G.character.archetype) &&
+      ['wealthy_west'].includes(G.archetype) &&
       !['Nigeria', 'Ghana', 'Kenya', 'Ethiopia', 'South Africa', 'Egypt', 'Morocco'].includes(G.character.country?.name) &&
       !G.mem?.s6WeatherWinter,
     text: 'The short days of January. By four in the afternoon it is dark. This is the version of dark that is not alarming but is draining — the dark that means another evening in, the dark that means the year has not properly started yet. You have grown up knowing that spring is a fact that will arrive. This is different from hoping it will.',
@@ -171,7 +171,7 @@ export const EVENTS_SONDER_6 = [
     phase: 'childhood',
     weight: 2,
     when: (G) =>
-      ['subsaharan', 'developing_unstable'].includes(G.character.archetype) &&
+      ['subsaharan', 'developing_unstable'].includes(G.archetype) &&
       G.ruralUrban !== 'urban' &&
       !G.mem?.s6WeatherRains,
     text: 'The rains came on Thursday. You can smell it in the soil all the way from the house — the earth opening to it. By Sunday the road is impassable and the river is another colour. This is both the good thing and the difficult thing about the rains: they are what the crops need and also what cuts you off. The year turns on this.',
@@ -196,7 +196,7 @@ export const EVENTS_SONDER_6 = [
     weight: 2,
     when: (G) =>
       G.ruralUrban !== 'urban' &&
-      ['subsaharan', 'developing_unstable', 'developing_urban'].includes(G.character.archetype) &&
+      ['subsaharan', 'developing_unstable', 'developing_urban'].includes(G.archetype) &&
       !G.mem?.s6WeatherDrought,
     text: 'The rains did not come when they should have. You know the exact date by which they are supposed to arrive and it passed. You watched the sky for a week. The soil is cracking from the top. The farmers discuss it in the way people discuss things that have happened before and will happen again — with knowledge rather than surprise, which does not make it less serious.',
     choices: null,
@@ -208,7 +208,7 @@ export const EVENTS_SONDER_6 = [
     phase: 'midlife',
     weight: 2,
     when: (G) =>
-      ['wealthy_west', 'post_soviet', 'wealthy_east'].includes(G.character.archetype) &&
+      ['wealthy_west', 'post_soviet', 'wealthy_east'].includes(G.archetype) &&
       !G.mem?.s6WeatherAutumn,
     text: 'The leaves turn in a sequence you have memorised over decades: first the birches, then the maples, then the oaks which hold longest. You have watched this happen every year of your life in this place and it has never become unremarkable. It may be that some things are designed to remain remarkable. This might be one of them.',
     choices: null,
@@ -275,7 +275,7 @@ export const EVENTS_SONDER_6 = [
     weight: 2,
     when: (G) =>
       G.ruralUrban !== 'urban' &&
-      ['subsaharan', 'developing_urban', 'developing_unstable'].includes(G.character.archetype) &&
+      ['subsaharan', 'developing_urban', 'developing_unstable'].includes(G.archetype) &&
       !G.mem?.s6WorkMarket,
     text: 'Market day. You are set up before six. The arrangement of what you are selling is not arbitrary — you know from experience which placement sells and which does not, which items go at eye level and which below. The first customer is always the reference point for the day. The first transaction at a good price means something different than the first at a bad one.',
     choices: null,
@@ -331,7 +331,7 @@ export const EVENTS_SONDER_6 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) =>
-      ['developing_urban', 'developing_unstable', 'subsaharan', 'post_soviet'].includes(G.character.archetype) &&
+      ['developing_urban', 'developing_unstable', 'subsaharan', 'post_soviet'].includes(G.archetype) &&
       !G.mem?.s6WaitGovt,
     text: 'The government office opens at nine. You arrived at eight. The person at the counter has a quality of stillness that is not peace but the management of circumstances they did not design. You have brought every document you were told to bring. You will be told you are missing one. This is not a deviation from the system. This is the system.',
     choices: null,
@@ -363,7 +363,7 @@ export const EVENTS_SONDER_6 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) =>
-      ['developing_unstable', 'conflict_zone', 'subsaharan'].includes(G.character.archetype) &&
+      ['developing_unstable', 'conflict_zone', 'subsaharan'].includes(G.archetype) &&
       !G.mem?.s6WaitBorder,
     text: 'The border crossing. You have your documents. The guards have your documents. The guard with your documents is doing something at the desk that is not looking at your documents. This is a particular form of waiting: the kind where the outcome is uncertain and making it seem uncertain is itself the message. You wait in the way people wait when they have learned not to show what they are thinking.',
     choices: null,

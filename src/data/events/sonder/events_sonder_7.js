@@ -439,7 +439,7 @@ export const EVENTS_SONDER_7 = [
     phase: 'childhood',
     weight: 2,
     when: (G) =>
-      (G.religion === 'islam_sunni' || G.religion === 'islam_shia' || G.religion === 'islam_sufi') &&
+      (G.religion?.startsWith('muslim')) &&
       G.age >= 6 && G.age <= 14 &&
       !G.mem?.s7SoundAdhan,
     text: 'The adhan comes five times a day and you have heard it since before you could count. It is background; it is structure. You know the hours by it without checking the clock. Some days it is sound and some days it is meaning and some days it is both. Today it is both. You stop what you are doing and you do not move for a moment, which is its own kind of response.',
