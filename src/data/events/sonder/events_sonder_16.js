@@ -9,7 +9,7 @@
 //
 // All weight 2, mem-gated, no choices, minimal stat effects.
 
-import { hasHealthcare, hasPhone, hasWeekend, isLiterate } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -21,7 +21,7 @@ export const EVENTS_SONDER_16 = [
     id: 's16_phone_call_ending',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasPhone(G) && (G.age >= 18 && G.age <= 40 && !G.mem?.s16PhoneCallEnding),
+    when: (G) => place.hasPhone(G) && (G.age >= 18 && G.age <= 40 && !G.mem?.s16PhoneCallEnding),
     text: () => pick([
       `At the end of a telephone call there is a particular small performance: the wind-down, the mutual signal that it is ending, the false goodbyes before the real one. You have done this thousands of times and it has never become easy — the goodbye is always slightly awkward, always faintly asymmetrical, always concluded by someone hanging up first.`,
       `You say goodbye on the phone and then wait a half-second to make sure the call has ended before you speak. This is a habit from the era of uncertain connections, of lines that did not always terminate cleanly. The habit has outlasted the technology that produced it.`,
@@ -50,7 +50,7 @@ export const EVENTS_SONDER_16 = [
     id: 's16_handwriting_of_the_dead',
     phase: 'midlife',
     weight: 2,
-    when: (G) => isLiterate(G) && (G.age >= 40 &&
+    when: (G) => place.isLiterate(G) && (G.age >= 40 &&
       (G.flags.has('lost_parent') || G.flags.has('friend_died')) &&
       !G.mem?.s16HandwritingDead),
     text: () => pick([
@@ -100,7 +100,7 @@ export const EVENTS_SONDER_16 = [
     id: 's16_sunday_afternoon',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasWeekend(G) && (G.age >= 20 && !G.mem?.s16SundayAfternoon),
+    when: (G) => place.hasWeekend(G) && (G.age >= 20 && !G.mem?.s16SundayAfternoon),
     text: () => pick([
       `Sunday afternoon has a quality that no other time of the week has. The particular light of it, the particular sense of time running toward something — the week's resumption — without having reached it yet. You have spent many hours in this light without knowing what to do with them, which may be exactly what Sunday afternoon is for.`,
       `Three o'clock on Sunday. The day's plans, if there were any, have been completed or abandoned. What remains is an afternoon with no particular shape. You have never managed to fill this time with anything that feels adequate to it. The feeling of Sunday at three is its own complete experience.`,
@@ -116,7 +116,7 @@ export const EVENTS_SONDER_16 = [
     id: 's16_census_name',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => isLiterate(G) && (G.age >= 18 && G.age <= 40 &&
+    when: (G) => place.isLiterate(G) && (G.age >= 18 && G.age <= 40 &&
       !G.mem?.s16CensusName),
     text: () => pick([
       `On official forms you are a category. The category is accurate and also reductive — it covers you and does not cover you simultaneously. The bureaucracy does not have a field for the particular quality of what you are. It has the nearest available box, which you check.`,
@@ -182,7 +182,7 @@ export const EVENTS_SONDER_16 = [
     id: 's16_clocks',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasPhone(G) && (G.age >= 38 && !G.mem?.s16Clocks),
+    when: (G) => place.hasPhone(G) && (G.age >= 38 && !G.mem?.s16Clocks),
     text: () => pick([
       `At some point you started knowing what time it is without checking. Not exactly — within fifteen minutes, which is close enough for most purposes. The body has a clock. You did not install it. It simply arrived, or revealed itself, at an age when you started to notice the passage of time as something you were inside of rather than watching.`,
       `You check the time less than you used to and know it more. The phone that once answered this question constantly has become less necessary. You are not sure when this happened. The clock in your body is quieter and more accurate than the clock you used to consult.`,
@@ -212,7 +212,7 @@ export const EVENTS_SONDER_16 = [
     id: 's16_numbers_you_know',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasHealthcare(G) && (G.age >= 22 && !G.mem?.s16NumbersYouKnow),
+    when: (G) => place.hasHealthcare(G) && (G.age >= 22 && !G.mem?.s16NumbersYouKnow),
     text: () => pick([
       `You still know telephone numbers that no longer connect to anyone — a home number from childhood, a number from a relationship that ended, a number you dialed so many times the muscle memory is in your fingers before the mind has decided. These numbers will die with you. You are the last place they live.`,
       `Your own phone number is the number you know least well. You have to look it up. But the number of the first apartment, the number of the doctor you saw as a child, the number of a person you have not spoken to in fifteen years — these you have.`,

@@ -4,7 +4,7 @@
 // the newspaper as archaeological layer, illness in someone else's body,
 // the light of childhood, what you didn't say when you could.
 
-import { isLiterate } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_37 = [
 
@@ -32,7 +32,7 @@ export const EVENTS_SONDER_37 = [
     id: 'sonder_37_c',
     phase: 'late_life',
     weight: 2,
-    when: (G) => isLiterate(G) && (G.age >= 55 && !G.mem?.s37c),
+    when: (G) => place.isLiterate(G) && (G.age >= 55 && !G.mem?.s37c),
     text: 'An old newspaper: the advertisements for things that no longer exist, the headlines that were the crisis at the time and are now a footnote or are not in any index, the crossword someone filled in in pencil. The newspaper is an archaeological layer. You hold it and it is simultaneously very specific — this particular Tuesday — and very distant.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s37c', true) },
@@ -133,7 +133,7 @@ export const EVENTS_SONDER_37 = [
     id: 'sonder_37_o',
     phase: 'midlife',
     weight: 2,
-    when: (G) => isLiterate(G) && (!G.mem?.s37o),
+    when: (G) => place.isLiterate(G) && (!G.mem?.s37o),
     text: 'You have kept a piece of paper for years without being able to articulate why. The paper has something on it — a calculation, an address, a few words in handwriting — that has seemed important each time you have been about to throw it away. You have not thrown it away. It is in the drawer with the other things you have not thrown away.',
     choices: null,
     effect: (p) => { p.setMem('s37o', true) },

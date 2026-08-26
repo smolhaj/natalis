@@ -3,7 +3,7 @@
 // Four registers: non-Western sensory texture, body in time, relational drift, weight of time.
 // All mem-gated via setMem() to fire once per life. No new flags needed.
 
-import { hasElectricity, hasPhone, hasWeekend, isLiterate, isMonsoonCountry, isUrban, worksInOffice } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_2 = [
 
@@ -42,7 +42,7 @@ export const EVENTS_SONDER_2 = [
     id: 'sonder2_monsoon',
     phase: 'childhood',
     weight: 2,
-    when: (G) => (G.season === 'wet' || isMonsoonCountry(G)) && (!G.mem?.s2_mon &&
+    when: (G) => (G.season === 'wet' || place.isMonsoonCountry(G)) && (!G.mem?.s2_mon &&
       ['India', 'Bangladesh', 'Pakistan', 'Sri Lanka', 'Myanmar', 'Vietnam', 'Indonesia', 'Philippines', 'Cambodia', 'Thailand', 'Laos', 'Nepal'].includes(G.character.country.name)),
     text: 'The first rain of the monsoon is not like other rain. It comes with a smell before the drops — something released from the earth — and then the sound on the roof, which is also the sound of relief. Everyone says it the same way: it has come.',
     choices: null,
@@ -53,7 +53,7 @@ export const EVENTS_SONDER_2 = [
     id: 'sonder2_power_cut',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasElectricity(G) && (!G.mem?.s2_pw &&
+    when: (G) => place.hasElectricity(G) && (!G.mem?.s2_pw &&
       (G.character.country.archetype === 'developing_urban' ||
        G.character.country.archetype === 'developing_unstable' ||
        G.character.country.archetype === 'subsaharan')),
@@ -79,7 +79,7 @@ export const EVENTS_SONDER_2 = [
     id: 'sonder2_traffic',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => isUrban(G) && (!G.mem?.s2_traf &&
+    when: (G) => place.isUrban(G) && (!G.mem?.s2_traf &&
       (G.character.country.archetype === 'developing_urban' ||
        G.character.country.archetype === 'developing_unstable')),
     text: 'The traffic at this hour is not an obstacle. It is the city\'s circulatory system and you are in it, moving at its own rhythm. The driver ahead knows exactly when to cut across. You know it too. The foreigner who arrived last year has not learned it yet. You can tell by watching.',
@@ -220,7 +220,7 @@ export const EVENTS_SONDER_2 = [
     id: 'sonder2_b_recovery',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasWeekend(G) && (!G.mem?.s2_brec &&
+    when: (G) => place.hasWeekend(G) && (!G.mem?.s2_brec &&
       G.age >= 50 && G.age <= 62),
     text: 'Recovery time. That is the category that has changed most. The same Saturday as five years ago requires a different Sunday. You have adjusted your expectations, which is either wisdom or defeat, and you are not entirely sure which.',
     choices: null,
@@ -231,7 +231,7 @@ export const EVENTS_SONDER_2 = [
     id: 'sonder2_b_handwriting',
     phase: 'midlife',
     weight: 2,
-    when: (G) => isLiterate(G) && (!G.mem?.s2_bhw &&
+    when: (G) => place.isLiterate(G) && (!G.mem?.s2_bhw &&
       G.age >= 38 && G.age <= 50),
     text: 'Your handwriting has changed. You noticed it on a card you wrote this year — something has shifted in the size, the slant. The pen in the hand is different than it was at thirty. You are not sure if you like the new version.',
     choices: null,
@@ -320,7 +320,7 @@ export const EVENTS_SONDER_2 = [
     id: 'sonder2_d_work_friend',
     phase: 'midlife',
     weight: 2,
-    when: (G) => worksInOffice(G) && (!G.mem?.s2_dwf &&
+    when: (G) => place.worksInOffice(G) && (!G.mem?.s2_dwf &&
       G.age >= 32 &&
       G.career?.id),
     text: 'The colleague you were going to have coffee with after you both left that job. The message that was drafted and not sent, the moment it became difficult enough that it didn\'t happen. That was three years ago. The window is probably still open. It has developed a frame now.',
@@ -357,7 +357,7 @@ export const EVENTS_SONDER_2 = [
     id: 'sonder2_d_parent_voice',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasPhone(G) && (!G.mem?.s2_dpv &&
+    when: (G) => place.hasPhone(G) && (!G.mem?.s2_dpv &&
       G.flags.includes('lost_parent') &&
       G.age >= 35),
     text: 'You can still hear how they answered the phone. The tone — slightly more formal before they recognised the voice, then the change. That voice was a constant for forty years. You hear it now only in memory, which is less reliable each year.',

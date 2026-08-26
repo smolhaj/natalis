@@ -1,7 +1,7 @@
 // events_sonder_42.js
 // Contemplative layer — 30 mem-gated glimpses.
 
-import { hasCafe, hasPhotographs, isLiterate } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_42 = [
 
@@ -29,7 +29,7 @@ export const EVENTS_SONDER_42 = [
     id: 'sonder_42_d',
     phase: 'midlife',
     weight: 2,
-    when: (G) => isLiterate(G) && (G.age >= 38 && !G.mem?.s42d),
+    when: (G) => place.isLiterate(G) && (G.age >= 38 && !G.mem?.s42d),
     text: 'You have read the same paper since your twenties and it has changed. Not all at once — over years. The tone, the assumptions it makes about who is reading it, what it considers worth reporting. You are not sure whether it changed or you did. Both is probably right. The relationship with a newspaper is longer than most relationships.',
     choices: null,
     effect: (p) => { p.setMem('s42d', true) },
@@ -59,7 +59,7 @@ export const EVENTS_SONDER_42 = [
     id: 'sonder_42_g',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasCafe(G) && (G.age >= 20 && !G.mem?.s42g),
+    when: (G) => place.hasCafe(G) && (G.age >= 20 && !G.mem?.s42g),
     text: 'A meal cost more than you can afford. You are in a restaurant and you ordered wrong and you are sitting with the number, calculating, and what you feel is not quite regret and not quite pleasure: something between the two, the feeling of having spent what you should not, and having eaten well.',
     choices: null,
     effect: (p) => { p.setMem('s42g', true) },
@@ -100,7 +100,7 @@ export const EVENTS_SONDER_42 = [
     phase: 'midlife',
     weight: 2,
     isGlimpse: true,
-    when: (G) => hasCafe(G) && (G.age >= 40 && !G.mem?.s42k),
+    when: (G) => place.hasCafe(G) && (G.age >= 40 && !G.mem?.s42k),
     text: 'You see a couple arguing quietly in a restaurant. You cannot hear the words. The body language is legible: the angle of the shoulder, the eye that won\'t hold the other\'s eye. You have been inside that conversation. You recognise it from the outside with the same precision.',
     choices: null,
     effect: (p) => { p.setMem('s42k', true) },
@@ -140,7 +140,7 @@ export const EVENTS_SONDER_42 = [
     id: 'sonder_42_o',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (G.age >= 30 && !G.mem?.s42o),
+    when: (G) => place.hasPhotographs(G) && (G.age >= 30 && !G.mem?.s42o),
     text: 'There is a photograph from a party you barely remember. You are in it, clearly happy, with people whose names you have to work to recall. The happiness in the photograph is real — you can see it. The event has not survived as memory. The evidence of your having been happy at it is in the photograph and nowhere else.',
     choices: null,
     effect: (p) => { p.setMem('s42o', true) },

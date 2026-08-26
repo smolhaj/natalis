@@ -4,7 +4,7 @@
 // the object that survives everything, language in the mind, working late,
 // the village you left or didn't leave, memory made of smell.
 
-import { hasCar, hasPhotographs, isLiterate, isUrban, worksInOffice } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -40,7 +40,7 @@ export const EVENTS_SONDER_44 = [
     id: 'sonder_44_e',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (G.age >= 38 && G.age <= 55 && !G.mem?.s34e),
+    when: (G) => place.hasPhotographs(G) && (G.age >= 38 && G.age <= 55 && !G.mem?.s34e),
     text: () => pick([
       'There is an object in your home that has moved with you through every place you have lived. You don\'t always notice it but it\'s always there. If someone asked you to explain its significance you would not be able to explain it completely. The significance is partly that it survived everything.',
       'The thing about photographs from twenty years ago is not the faces — it\'s the objects in the background. The furniture that is gone. The wallpaper. The clothing that places the image in a year. The background tells you more about the year than the face does, because the face tried to present itself and the background didn\'t.',
@@ -53,7 +53,7 @@ export const EVENTS_SONDER_44 = [
     id: 'sonder_44_f',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => worksInOffice(G) && (G.age >= 24 && G.age <= 36 && !G.mem?.s34f),
+    when: (G) => place.worksInOffice(G) && (G.age >= 24 && G.age <= 36 && !G.mem?.s34f),
     text: () => pick([
       'You are working late. Not because you have to, tonight, but because the work is in a particular state that makes it hard to stop — the problem is almost solved, the document is almost finished. You notice you have been here four hours past when you thought you\'d leave. The office or the workspace is quiet. This version of concentration, of being alone with the almost-finished thing, has a texture.',
       'The commute has become so familiar that you no longer have memories of it. You arrive. There is no narrative of arriving — just the before and the after. This is true of things you do every day: the automatic makes no deposit in memory.',
@@ -92,7 +92,7 @@ export const EVENTS_SONDER_44 = [
     id: 'sonder_44_i',
     phase: 'midlife',
     weight: 2,
-    when: (G) => worksInOffice(G) && (G.age >= 42 && G.age <= 55 && !G.mem?.s34i),
+    when: (G) => place.worksInOffice(G) && (G.age >= 42 && G.age <= 55 && !G.mem?.s34i),
     text: () => pick([
       'You have become someone\'s memory of who they were when they knew you. You understand this when you run into a person from twenty years ago and see yourself in their eyes as you were then: a person who no longer exists but still exists, apparently, in this person\'s archive. You find this alarming and comforting in equal measure.',
       'The younger colleague does something the way you used to do it ten years ago, when you thought you were doing it right. You watch them. You do not say: that\'s what I did, and here is what I learned. You do not say anything. You let them learn it the way you learned it.',
@@ -118,7 +118,7 @@ export const EVENTS_SONDER_44 = [
     id: 'sonder_44_k',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => isUrban(G) && (G.age >= 20 && G.age <= 30 && !G.mem?.s34k),
+    when: (G) => place.isUrban(G) && (G.age >= 20 && G.age <= 30 && !G.mem?.s34k),
     text: () => pick([
       'You are calling home less often. Not because anything changed — not because of a fight or a decision — but because life expands around you and the call that was going to happen today gets moved to tomorrow, and then it\'s been two weeks. The two weeks become the new interval. You notice this without reversing it.',
       'The apartment is the first place that is only yours. Everything in it was chosen by you. The aesthetic it expresses is yours, for the first time in your life. You are learning what you like from looking at what you chose.',
@@ -235,7 +235,7 @@ export const EVENTS_SONDER_44 = [
     id: 'sonder_44_v',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => isLiterate(G) && (G.age >= 18 && G.age <= 28 && !G.mem?.s34v),
+    when: (G) => place.isLiterate(G) && (G.age >= 18 && G.age <= 28 && !G.mem?.s34v),
     text: () => pick([
       'You are in a new place and you do not have the years of context that tell you what this neighbourhood sounds like at night, what the weather does in March, which shop is reliable. You are relearning a city from the beginning. The relearning is slow. It is also interesting in a way that familiarity will eventually replace.',
       'You have been reading the newspaper — or the feed, or whatever it is — for long enough to notice that some things recur. The recurrence is not a good sign but it is information. You are learning the grammar of the news, which is different from the content of the news.',
@@ -287,7 +287,7 @@ export const EVENTS_SONDER_44 = [
     id: 'sonder_44_z',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasCar(G) && (G.age >= 36 && G.age <= 48 && !G.mem?.s34z),
+    when: (G) => place.hasCar(G) && (G.age >= 36 && G.age <= 48 && !G.mem?.s34z),
     text: () => pick([
       'You drove past the house you grew up in. You don\'t know why. It was not on the way to where you were going. Someone else lives there now. The colour of the door has been changed. The garden is different. The specifics of what it meant to you live in a room that is now someone else\'s kitchen.',
       'A smell. That\'s all — a smell from somewhere, from someone passing on a street, from an open door, and you are immediately somewhere else. Not metaphorically somewhere else. You are ten, or eight, or thirteen, and the density of that time is available. Then it goes. Memory is mostly unavailable. This is the exception.',

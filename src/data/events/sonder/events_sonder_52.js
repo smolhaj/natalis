@@ -1,6 +1,6 @@
 // events_sonder_52.js — contemplative layer, weight 2, all mem-gated
 
-import { hasBooks, hasPhotographs, hasSupermarket } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_52 = [
 
@@ -58,7 +58,7 @@ export const EVENTS_SONDER_52 = [
     id: 'sonder_52_g',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasSupermarket(G) && (!G.mem?.s52g),
+    when: (G) => place.hasSupermarket(G) && (!G.mem?.s52g),
     text: 'Money you did not have. Not the dramatic version — not destitution — but the texture of being young and not having enough: the calculation at the checkout, the invitation you declined, the thing you wanted that you bought a month later when the calculation had shifted. The not-having was not permanent. It was permanent enough to shape how you think about money, which is more permanent than the not-having itself.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s52g', true) },
@@ -98,7 +98,7 @@ export const EVENTS_SONDER_52 = [
     id: 'sonder_52_k',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (!G.mem?.s52k),
+    when: (G) => place.hasPhotographs(G) && (!G.mem?.s52k),
     text: 'A group of friends defined a period and then dissolved. Not through any rupture — through the ordinary dispersal: different schools, different cities, the slow reduction in contact that ends in the occasional message and then the occasional liking of a photograph. The group that was the entire social world for three years. It becomes the kind of past that is warm and sealed and not quite revisitable. You would not want to reopen it. You also carry it.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s52k', true) },
@@ -228,7 +228,7 @@ export const EVENTS_SONDER_52 = [
     id: 'sonder_52_aa',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => hasBooks(G) && (!G.mem?.s52aa),
+    when: (G) => place.hasBooks(G) && (!G.mem?.s52aa),
     text: 'A book reorganized something. Not necessarily a great book by any external measure. The book that arrived at the right moment and rearranged the furniture of a question you were carrying. Before the book and after the book you think about the question differently. The rearrangement was produced by the encounter between the book and the particular moment you were in when you read it. The book alone would not have produced it.',
     choices: null,
     effect: (p) => { p.e += 3; p.m += 2; p.setMem('s52aa', true) },

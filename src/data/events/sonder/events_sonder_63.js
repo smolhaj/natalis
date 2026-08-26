@@ -1,7 +1,7 @@
 // Sonder module 63 — 30 contemplative events
 // Weight 2, null choices, all mem-gated. Universal human texture.
 
-import { hasCar, hasHealthcare, worksInOffice } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_63 = [
 
@@ -79,7 +79,7 @@ export const EVENTS_SONDER_63 = [
     id: 'sonder_63_j',
     phase: 'midlife',
     weight: 2,
-    when: (G) => worksInOffice(G) && (!G.mem?.s63j),
+    when: (G) => place.worksInOffice(G) && (!G.mem?.s63j),
     text: 'Two hours of meeting contained forty minutes of actual work. Everyone in the meeting knew this. No one said so during the meeting. There is a social contract around meetings that is separate from the practical function of meetings. You have been honoring it for years.',
     choices: null,
     effect: (p) => { p.setMem('s63j', true) },
@@ -89,7 +89,7 @@ export const EVENTS_SONDER_63 = [
     id: 'sonder_63_k',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasCar(G) && (!G.mem?.s63k),
+    when: (G) => place.hasCar(G) && (!G.mem?.s63k),
     text: 'Six other passengers, in the car, overnight. You did not speak to any of them. You arrived at the same destination at the same time with the same night of parallel sleep behind you. You went in six different directions at the station. Whatever they were traveling toward, you did not know, and they did not know yours.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s63k', true) },
@@ -109,7 +109,7 @@ export const EVENTS_SONDER_63 = [
     id: 'sonder_63_m',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasHealthcare(G) && (!G.mem?.s63m),
+    when: (G) => place.hasHealthcare(G) && (!G.mem?.s63m),
     text: 'The doctor is younger than your oldest child. The dentist is younger than that. The pharmacist looks like a person who has recently finished a degree. You are in the system now as a patient in a way that is different from before, and the people who manage you in that system are getting progressively younger without doing anything intentional to achieve this.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s63m', true) },

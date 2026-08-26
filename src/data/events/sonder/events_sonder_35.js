@@ -5,7 +5,7 @@
 // the friend who became someone else, the smell of old paper,
 // the thing that fixes itself overnight.
 
-import { hasBooks, hasBus, hasCafe, hasRadio } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -28,7 +28,7 @@ export const EVENTS_SONDER_35 = [
     id: 'sonder35_book_unfinished',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasBooks(G) && (!G.mem?.s35BookUnfinished),
+    when: (G) => place.hasBooks(G) && (!G.mem?.s35BookUnfinished),
     text: () => pick([
       'A book you started and put down and intend to finish. The book has been in this state for longer than it would take to finish it. You know roughly where you stopped. The book sits in the exact position where you left it, accumulating the specific meaning of unfinished things.',
       'There is a book on your shelf that has a bookmark in it at the page where you stopped years ago. You have moved the book through several homes. The bookmark has not moved. You will finish the book. The finishing is not urgent. The intention is.',
@@ -106,7 +106,7 @@ export const EVENTS_SONDER_35 = [
     id: 'sonder35_the_bus_passenger',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasBus(G) && (!G.mem?.s35BusPassenger),
+    when: (G) => place.hasBus(G) && (!G.mem?.s35BusPassenger),
     text: () => pick([
       'The person across from you on the bus: asleep, or looking out the window at whatever the window offered. A face you will not see again, in transit, between its own two points. The face had a expression — not a performed expression, but a transit expression, the face a face makes when it thinks it is unobserved.',
       'On the bus or train or tram: the other passengers each going between their two points, each with the complete interior life that the word "passenger" does not contain. You are also a passenger, also containing it. The containment is universal and invisible.',
@@ -158,7 +158,7 @@ export const EVENTS_SONDER_35 = [
     id: 'sonder35_the_object_at_the_table',
     phase: 'childhood',
     weight: 2,
-    when: (G) => hasRadio(G) && (!G.mem?.s35ObjectAtTable),
+    when: (G) => place.hasRadio(G) && (!G.mem?.s35ObjectAtTable),
     text: () => pick([
       'At the table where you grew up: a specific object that was always there. A salt shaker, a fruit bowl, a radio, a cloth that was replaced by the same cloth. The object was not remarkable. It was there every morning. Its presence was the texture of ordinary life and you noticed it only when it was gone.',
       'The house you grew up in had objects that were permanent — always in the same place, always the same function, always the same relationship to the people around the table. You did not register them as specific until they were not there anymore, and then the absence was its own kind of presence.',
@@ -314,7 +314,7 @@ export const EVENTS_SONDER_35 = [
     id: 'sonder35_the_corner_table',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasCafe(G) && (!G.mem?.s35CornerTable),
+    when: (G) => place.hasCafe(G) && (!G.mem?.s35CornerTable),
     text: () => pick([
       'The corner table in the cafe or restaurant — the one with the wall on two sides, the view of the room, the relative quiet. You have learned to ask for it when it is available. The preference is not snobbery. It is about where the attention goes when you are in a room: the wall holds you in and the view of the room gives you something to look at without being looked at.',
       'There is a configuration of furniture in a public space that you prefer: the specific geometry of the seated position relative to the door, the window, the rest of the room. You have this preference without having formally decided it. It arrived gradually from accumulated experience of what worked.',

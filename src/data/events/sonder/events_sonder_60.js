@@ -1,7 +1,7 @@
 // Sonder module 60 — 30 contemplative events
 // Weight 2, null choices, all mem-gated. Universal human texture.
 
-import { hasBooks, hasBus, isLiterate } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_60 = [
 
@@ -9,7 +9,7 @@ export const EVENTS_SONDER_60 = [
     id: 'sonder_60_a',
     phase: 'midlife',
     weight: 2,
-    when: (G) => isLiterate(G) && (!G.mem?.s60a),
+    when: (G) => place.isLiterate(G) && (!G.mem?.s60a),
     text: 'The handwriting on the envelope is from someone who has been dead for years. For a moment before you process what you are looking at, you think the letter arrived today.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s60a', true) },
@@ -89,7 +89,7 @@ export const EVENTS_SONDER_60 = [
     id: 'sonder_60_j',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasBooks(G) && (!G.mem?.s60j),
+    when: (G) => place.hasBooks(G) && (!G.mem?.s60j),
     text: 'You finished the book and set it down and sat for a while doing nothing. This happens rarely. You are aware it happened and that you are aware of it happening, which is already too much awareness.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s60j', true) },
@@ -209,7 +209,7 @@ export const EVENTS_SONDER_60 = [
     id: 'sonder_60_w',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasBus(G) && (!G.mem?.s60w),
+    when: (G) => place.hasBus(G) && (!G.mem?.s60w),
     text: 'The news arrived during something ordinary — washing up, or walking to the bus — and you finished the ordinary thing before letting it in. The gap between the news and your response was about thirty seconds. You still think about that gap.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s60w', true) },

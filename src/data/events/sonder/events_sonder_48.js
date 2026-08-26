@@ -1,6 +1,6 @@
 // events_sonder_48.js — contemplative layer, weight 2, all mem-gated
 
-import { hasCafe, hasPhotographs, wentToSchool, worksInOffice } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_48 = [
 
@@ -18,7 +18,7 @@ export const EVENTS_SONDER_48 = [
     id: 'sonder_48_b',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasCafe(G) && (!G.mem?.s48b),
+    when: (G) => place.hasCafe(G) && (!G.mem?.s48b),
     text: 'You recognise the restaurant because of the pattern on the awning, which is the same pattern it had forty years ago. The restaurant is different inside — different tables, different smells, different owners. The awning remained. You stand outside for a moment longer than necessary. The awning does not know you were ever here.',
     choices: null,
     effect: (p) => { p.setMem('s48b', true) },
@@ -69,7 +69,7 @@ export const EVENTS_SONDER_48 = [
     phase: 'adolescence',
     weight: 2,
     isGlimpse: true,
-    when: (G) => wentToSchool(G) && (!G.mem?.s48i),
+    when: (G) => place.wentToSchool(G) && (!G.mem?.s48i),
     text: 'Someone at school today said something that you will still remember in thirty years. You don\'t know this yet. To you it is just a sentence that someone said in the hallway, a throwaway remark that landed differently than the speaker intended. The sentence has already begun the work of becoming permanent. You don\'t feel it happening.',
     choices: null,
     effect: (p) => { p.setMem('s48i', true) },
@@ -201,7 +201,7 @@ export const EVENTS_SONDER_48 = [
     id: 'sonder_48_w',
     phase: 'midlife',
     weight: 2,
-    when: (G) => worksInOffice(G) && (!G.mem?.s48w),
+    when: (G) => place.worksInOffice(G) && (!G.mem?.s48w),
     text: 'The meeting runs long and the window behind the speaker is the sky at different stages of afternoon, and you track the sky more than you track the speaker without deciding to. The sky is doing something with the light. The meeting resolves a minor thing. The sky has done something you cannot repeat because the angle won\'t be the same tomorrow.',
     choices: null,
     effect: (p) => { p.setMem('s48w', true) },
@@ -252,7 +252,7 @@ export const EVENTS_SONDER_48 = [
     id: 'sonder_48_ab',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (!G.mem?.s48ab),
+    when: (G) => place.hasPhotographs(G) && (!G.mem?.s48ab),
     text: 'The photograph your friend takes of the meal before eating it. The moment between the food arriving and the eating of it, suspended. You do not take photographs of food. You notice that you don\'t and that this is a choice, made without consciously making it, about which category of things is worth recording. Your friend\'s category is different. The food grows cold equally.',
     choices: null,
     effect: (p) => { p.setMem('s48ab', true) },
@@ -272,7 +272,7 @@ export const EVENTS_SONDER_48 = [
     id: 'sonder_48_ad',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasCafe(G) && (!G.mem?.s48ad),
+    when: (G) => place.hasCafe(G) && (!G.mem?.s48ad),
     text: 'At a certain age you stop reading the menu looking for what sounds best and start reading it knowing roughly what you will order. The order happens before the decision happens. There was a time when the menu was a genuine question. You remember that time without particularly wanting it back. This is different from resignation. It might be efficiency. The distinction matters to you more than it probably should.',
     choices: null,
     effect: (p) => { p.setMem('s48ad', true) },

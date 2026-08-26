@@ -4,7 +4,7 @@
 // the neighbourhood over decades, the conversation you almost didn't have,
 // learning something new late, cooking from memory, retirement as a concept.
 
-import { hasBooks, hasFormalJob, hasPhone, wentToSchool, worksInOffice } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -27,7 +27,7 @@ export const EVENTS_SONDER_45 = [
     id: 'sonder_45_c',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasFormalJob(G) && (G.age >= 62 && !G.mem?.s35c),
+    when: (G) => place.hasFormalJob(G) && (G.age >= 62 && !G.mem?.s35c),
     text: () => pick([
       'Retirement is a concept that arrived suddenly as a date and is now a condition. The condition is not what you expected when the date was far away. What you expected was rest. What arrived was: the structure is gone and the structure is what the day was organized around and without it the day is open in a way that requires a different organization than you have previously needed to build.',
       'You are learning what your body can do at this age that it could not do at fifty. There are some things. Patience, in the literal physical sense — you can wait in a chair for a long time without needing to be doing something else. This is not nothing. This is not the same as the things that have gone away.',
@@ -53,7 +53,7 @@ export const EVENTS_SONDER_45 = [
     id: 'sonder_45_e',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasPhone(G) && (G.age >= 24 && G.age <= 34 && !G.mem?.s35e),
+    when: (G) => place.hasPhone(G) && (G.age >= 24 && G.age <= 34 && !G.mem?.s35e),
     text: () => pick([
       'The phone call you almost didn\'t make. The one you had been putting off for a week and then made on a Tuesday because you were passing through the station and had twenty minutes. What came out of it was the conversation you needed to have been having for two years. You were making it out of convenience and it turned into something else. You still think about it.',
       'You have a skill now that you did not have three years ago. Not a professional skill — something else: how to navigate a kind of difficult conversation, or how to cook one particular thing, or how to tell when a situation is about to get worse before it shows external signs of getting worse. You learned it from the situation that required it.',
@@ -92,7 +92,7 @@ export const EVENTS_SONDER_45 = [
     id: 'sonder_45_h',
     phase: 'midlife',
     weight: 2,
-    when: (G) => worksInOffice(G) && (G.age >= 44 && G.age <= 58 && !G.mem?.s35h),
+    when: (G) => place.worksInOffice(G) && (G.age >= 44 && G.age <= 58 && !G.mem?.s35h),
     text: () => pick([
       'You are learning something new at this age. Not for professional development — something you chose because you wanted to: an instrument, a language, a physical skill. The learning at forty-seven is different from the learning at nineteen: slower, more frustrating, and also something else — you know why you\'re doing it, which you often didn\'t at nineteen. The knowing why is a different kind of attention than the learning itself.',
       'The commute you have been doing for eleven years and the thing you notice today that you have never noticed in eleven years. A mural on a wall you have passed a thousand times. A business you have never registered. The infrastructure of familiarity, and then suddenly a gap in it.',
@@ -222,7 +222,7 @@ export const EVENTS_SONDER_45 = [
     id: 'sonder_45_s',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => worksInOffice(G) && (G.age >= 28 && G.age <= 38 && !G.mem?.s35s),
+    when: (G) => place.worksInOffice(G) && (G.age >= 28 && G.age <= 38 && !G.mem?.s35s),
     text: () => pick([
       'The season in a different country. You expected to adjust and you have adjusted but the seasonal expectation — the light, the temperature, the smell of a month — has not adjusted entirely. Your body is still calibrated to the original place. You feel this at odd moments: a scent in the air that belongs somewhere else.',
       'You have done this enough times — the meeting, the negotiation, the application, the interview — that you know the shape of it. Not comfortable, exactly, but familiar. The familiarity reduces the cost of it. The cost is still nonzero but it used to be higher.',
@@ -326,7 +326,7 @@ export const EVENTS_SONDER_45 = [
     id: 'sonder_45_aa',
     phase: 'midlife',
     weight: 2,
-    when: (G) => wentToSchool(G) && (G.age >= 40 && G.age <= 52 && !G.mem?.s35aa),
+    when: (G) => place.wentToSchool(G) && (G.age >= 40 && G.age <= 52 && !G.mem?.s35aa),
     text: () => pick([
       'The recurring dream. Not always the same dream — the same category of dream: the one where you are in the school you went to forty years ago and it is enormous and you can\'t find the exit, or the one where you have a test you have not prepared for, or the one where you can\'t run fast enough. The dream is not about the school or the test. The dream is about the feeling, which is available at any age.',
       'A place from your childhood has been demolished. You find out from a photograph someone posts. The place was not important in the way that famous places are important. It was important in the way that specific places in childhood are important: it was the place, and being the place was the whole of what it needed to be.',
@@ -339,7 +339,7 @@ export const EVENTS_SONDER_45 = [
     id: 'sonder_45_ab',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasBooks(G) && (G.age >= 65 && G.age <= 77 && !G.mem?.s35ab),
+    when: (G) => place.hasBooks(G) && (G.age >= 65 && G.age <= 77 && !G.mem?.s35ab),
     text: () => pick([
       'You still have most of your faculties. You think about this sometimes, in the way you think about the weather when it is good: aware of it, grateful without having to say so, aware also that the awareness is partly an awareness of the alternative.',
       'Someone is reading a book you read fifty years ago and asks you what you thought of it. You remember what you thought of it. You have also changed enough since then that what you thought of it is partially historical information about a person who no longer exists and partially still continuous with your current reading of it. The book is the same book. The reader is not the same reader.',

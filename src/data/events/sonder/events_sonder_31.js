@@ -1,6 +1,6 @@
 // events_sonder_31.js — contemplative prose layer, weight 2, no choices, no new flags
 
-import { hasBus, hasLeisure, hasPhotographs, isLiterate, wentToSchool, worksInOffice } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -75,7 +75,7 @@ export const EVENTS_SONDER_31 = [
     id: 'sonder_31_f',
     phase: 'late_life',
     weight: 2,
-    when: (G) => isLiterate(G) && (G.age >= 55 && G.age <= 70 && !G.mem?.s31f),
+    when: (G) => place.isLiterate(G) && (G.age >= 55 && G.age <= 70 && !G.mem?.s31f),
     text: () => pick([
       'The pleasure of knowing a subject well enough that you no longer have to prove you know it. The ease that comes after the long period of proving.',
       'Your handwriting has changed over the decades in ways you did not decide. You sign your name the same way you have signed it for forty years and then look at the signature and find it slightly foreign, as if someone else is doing the signing.',
@@ -101,7 +101,7 @@ export const EVENTS_SONDER_31 = [
     id: 'sonder_31_h',
     phase: 'childhood',
     weight: 2,
-    when: (G) => wentToSchool(G) && (G.age >= 7 && G.age <= 12 && !G.mem?.s31h),
+    when: (G) => place.wentToSchool(G) && (G.age >= 7 && G.age <= 12 && !G.mem?.s31h),
     text: () => pick([
       'The gap between who you are at school and who you are at home. You cross from one into the other every day and the crossing is so habitual you have stopped noticing it requires a change.',
       'Someone told you something important and then changed the subject and you have been thinking about what they said ever since, with no way to return to it.',
@@ -127,7 +127,7 @@ export const EVENTS_SONDER_31 = [
     id: 'sonder_31_j',
     phase: 'midlife',
     weight: 2,
-    when: (G) => worksInOffice(G) && (G.age >= 40 && G.age <= 55 && !G.mem?.s31j),
+    when: (G) => place.worksInOffice(G) && (G.age >= 40 && G.age <= 55 && !G.mem?.s31j),
     text: () => pick([
       'The meeting you were in where everyone said what they thought was expected of them and nothing that was true. You left and stood outside for a moment before continuing. The moment was the whole of it.',
       'The object in your house that has moved from apartment to apartment, city to city, and is still where you put it after the last move. It has outlasted several versions of your life.',
@@ -140,7 +140,7 @@ export const EVENTS_SONDER_31 = [
     id: 'sonder_31_k',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (G.age >= 24 && G.age <= 38 && !G.mem?.s31k),
+    when: (G) => place.hasPhotographs(G) && (G.age >= 24 && G.age <= 38 && !G.mem?.s31k),
     text: () => pick([
       'The photo of yourself from ten years ago that you encounter unexpectedly. The person looking out from it knew nothing that you know now. They did not look like someone who didn\'t know it.',
       'The meal you have been making for years — the dish whose quantities you know without measuring, that you make when the people it belongs to are gathered. It tastes like what it is.',
@@ -231,7 +231,7 @@ export const EVENTS_SONDER_31 = [
     id: 'sonder_31_s',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasBus(G) && (G.age >= 28 && G.age <= 42 && !G.mem?.s31s),
+    when: (G) => place.hasBus(G) && (G.age >= 28 && G.age <= 42 && !G.mem?.s31s),
     text: () => pick([
       'The birthday that passes without the usual ceremony. You let it. The fact of another year is recorded only by you and by the number, quietly.',
       'The sleep that came on the train or the bus and you arrived somewhere unexpected. The disorientation of a place that is both familiar and briefly, before full wakefulness, not.',
@@ -335,7 +335,7 @@ export const EVENTS_SONDER_31 = [
     id: 'sonder_31_aa',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasLeisure(G) && (G.age >= 63 && G.age <= 75 && !G.mem?.s31aa),
+    when: (G) => place.hasLeisure(G) && (G.age >= 63 && G.age <= 75 && !G.mem?.s31aa),
     text: () => pick([
       'The question someone asks you that you have never been asked before. At this age, the new question is rare. When it comes it is welcome in a way.',
       'The morning with nothing required of it. The full morning and no obligation. You are still learning what to do with this. The obligation was not nothing — it organised the hours.',

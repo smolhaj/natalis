@@ -1,6 +1,6 @@
 // events_sonder_57.js — contemplative layer, weight 2, all mem-gated
 
-import { hasBus, hasCafe, hasHealthcare, isUrban, wentToSchool, worksInOffice } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_57 = [
 
@@ -18,7 +18,7 @@ export const EVENTS_SONDER_57 = [
     id: 'sonder_57_b',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasHealthcare(G) && (G.age >= 65 && !G.mem?.s57b),
+    when: (G) => place.hasHealthcare(G) && (G.age >= 65 && !G.mem?.s57b),
     text: 'Your doctor is younger than your oldest child. You register this in the appointment without saying anything about it. You answer the questions about your habits. The doctor nods in a way that is both professional and very young.',
     choices: null,
     effect: (p) => { p.setMem('s57b', true) },
@@ -78,7 +78,7 @@ export const EVENTS_SONDER_57 = [
     id: 'sonder_57_h',
     phase: 'midlife',
     weight: 2,
-    when: (G) => worksInOffice(G) && (G.age >= 40 && G.age <= 52 && !G.mem?.s57h),
+    when: (G) => place.worksInOffice(G) && (G.age >= 40 && G.age <= 52 && !G.mem?.s57h),
     text: 'It was resolved, eventually, by everyone in the room getting tired of the disagreement at the same time. The resolution was not principled. It was fatigue. The outcome was the same as if it had been principled, which is the thing you cannot tell the meeting about.',
     choices: null,
     effect: (p) => { p.setMem('s57h', true) },
@@ -88,7 +88,7 @@ export const EVENTS_SONDER_57 = [
     id: 'sonder_57_i',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => wentToSchool(G) && (G.age >= 14 && G.age <= 17 && !G.mem?.s57i),
+    when: (G) => place.wentToSchool(G) && (G.age >= 14 && G.age <= 17 && !G.mem?.s57i),
     text: 'School corridors had a geography — who stands where, the unwritten topology of the social arrangement that everyone knows and no one discusses. You navigate it every day. You wonder if this is what adulthood is like. It is not what adulthood is like. It is also not entirely unlike it.',
     choices: null,
     effect: (p) => { p.setMem('s57i', true) },
@@ -98,7 +98,7 @@ export const EVENTS_SONDER_57 = [
     id: 'sonder_57_j',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasCafe(G) && (G.age >= 68 && !G.mem?.s57j),
+    when: (G) => place.hasCafe(G) && (G.age >= 68 && !G.mem?.s57j),
     text: 'You have begun, without deciding to, to say goodbye to places. The park you will not go back to. The restaurant that is about to close. The street where the building came down. The goodbyes are quiet and unannounced. Only you know they are goodbyes.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s57j', true) },
@@ -158,7 +158,7 @@ export const EVENTS_SONDER_57 = [
     id: 'sonder_57_q',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasBus(G) && (G.age >= 36 && G.age <= 48 && !G.mem?.s57q),
+    when: (G) => place.hasBus(G) && (G.age >= 36 && G.age <= 48 && !G.mem?.s57q),
     text: 'The morning when you are running late and every light is red and the bus is pulling away as you arrive and you stand on the pavement in the cold and understand that you are going to be late and that being late is the worst thing that will happen today and that today is a good day by any accounting.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s57q', true) },
@@ -259,7 +259,7 @@ export const EVENTS_SONDER_57 = [
     id: 'sonder_57_ac',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => isUrban(G) && (G.age >= 20 && G.age <= 29 && !G.mem?.s57ac),
+    when: (G) => place.isUrban(G) && (G.age >= 20 && G.age <= 29 && !G.mem?.s57ac),
     text: 'The city reveals itself slowly — the neighbourhood you did not know about, the shortcut that takes twenty minutes off the commute, the place where the good bakery is. You have been here for two years. There is still city you have not learned. There will always be city you have not learned.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s57ac', true) },

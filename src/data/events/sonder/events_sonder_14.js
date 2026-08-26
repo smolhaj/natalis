@@ -7,7 +7,7 @@
 //
 // All weight 2, mem-gated, no choices, minimal stat effects.
 
-import { hasElectricity, hasPhone, hasPhotographs, isLiterate } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -51,7 +51,7 @@ export const EVENTS_SONDER_14 = [
     id: 's14_object_outlives',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasElectricity(G) && (G.age >= 60 && !G.mem?.s14ObjectOutlives),
+    when: (G) => place.hasElectricity(G) && (G.age >= 60 && !G.mem?.s14ObjectOutlives),
     text: `There are objects in the house that are older than the house. The table was your grandmother's. The lamp was bought in another city in a year when you were someone slightly different from who you are now and it has survived two moves. Objects accumulate a history that is not their history — they absorb the rooms they've been in, the hands that have moved them, the light conditions of the apartments where they have been present. The table does not remember being your grandmother's. It was simply always there.`,
     choices: null,
     effect: (p) => { p.setMem('s14ObjectOutlives', true) },
@@ -71,7 +71,7 @@ export const EVENTS_SONDER_14 = [
     id: 's14_the_photograph_in_a_drawer',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (G.age >= 40 && !G.mem?.s14PhotoInDrawer),
+    when: (G) => place.hasPhotographs(G) && (G.age >= 40 && !G.mem?.s14PhotoInDrawer),
     text: `There is a photograph that is not on display. It is in a drawer or at the bottom of a box. The reason it is not on display is not something you have articulated to anyone — it is simply that it has always been in the drawer. The photograph shows people who were real and specific and who are now older or dead or in another country or estranged, and looking at it requires calibrating between what they were at the time of the photograph and what they became afterward. The drawer is the right place for it.`,
     choices: null,
     effect: (p) => { p.setMem('s14PhotoInDrawer', true) },
@@ -233,7 +233,7 @@ export const EVENTS_SONDER_14 = [
     id: 's14_the_handwriting',
     phase: 'late_life',
     weight: 2,
-    when: (G) => isLiterate(G) && (G.age >= 58 && Object.values(G.parents ?? {}).some(p => !p.alive) && !G.mem?.s14Handwriting),
+    when: (G) => place.isLiterate(G) && (G.age >= 58 && Object.values(G.parents ?? {}).some(p => !p.alive) && !G.mem?.s14Handwriting),
     text: `There is a piece of paper somewhere — a card, a note, a list — in handwriting that is your parent's. You still recognise it immediately. Handwriting is one of the ways people persist after they are gone: a specific physical gesture, trained and habitual, expressing them in the moment of making the letter. The note itself may be trivial — a shopping list, a birthday card message. The handwriting is not trivial. It is them specifically, making a mark.`,
     choices: null,
     effect: (p) => { p.m += 4; p.setMem('s14Handwriting', true) },
@@ -266,7 +266,7 @@ export const EVENTS_SONDER_14 = [
     phase: 'midlife',
     weight: 2,
     isGlimpse: true,
-    when: (G) => hasPhone(G) && (G.age >= 35 && !G.mem?.s14StrangerTrain),
+    when: (G) => place.hasPhone(G) && (G.age >= 35 && !G.mem?.s14StrangerTrain),
     text: `The woman across from you on the train today. She is doing something ordinary — reading, looking at her phone, looking at nothing in particular — and you observe, without meaning to, that she is at a specific moment in her life. You do not know what the moment is. But you can read the particular quality of attention she is giving to the nothing she is looking at — slightly inward, slightly away — and infer that something has recently happened, or is about to happen, or is being processed. You arrive at your stop and she continues.`,
     choices: null,
     effect: (p) => { p.setMem('s14StrangerTrain', true) },

@@ -5,7 +5,7 @@
 // who fixed things, the letter you kept, the year the city changed,
 // what you notice on the last visit.
 
-import { hasClock, hasPhone, hasPhotographs, wentToSchool } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_38 = [
 
@@ -33,7 +33,7 @@ export const EVENTS_SONDER_38 = [
     id: 'sonder_38_e',
     phase: 'childhood',
     weight: 2,
-    when: (G) => hasClock(G) && (!G.mem?.s38e),
+    when: (G) => place.hasClock(G) && (!G.mem?.s38e),
     text: 'There was a person who fixed things. The broken chair, the bicycle, the clock. You watched the fixing without fully understanding it, and what you retained was not the technique but the attitude: the patience with the object that was not cooperating, the willingness to stay inside the problem until it resolved. You still think of this person when something needs fixing.',
     choices: null,
     effect: (p) => { p.e += 2; p.m += 2; p.setMem('s38e', true) },
@@ -103,7 +103,7 @@ export const EVENTS_SONDER_38 = [
     id: 'sonder_38_l',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasPhone(G) && (!G.mem?.s38l),
+    when: (G) => place.hasPhone(G) && (!G.mem?.s38l),
     text: 'The train is late and you are on the platform with an hour. You have your phone and you don\'t use it. You stand or sit and you watch the platform do what platforms do. This is the hour you did not plan for and did not spend on anything and remember with something like gratitude, which is strange because nothing happened in it.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s38l', true) },
@@ -123,7 +123,7 @@ export const EVENTS_SONDER_38 = [
     id: 'sonder_38_n',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (G.age >= 60 && !G.mem?.s38n),
+    when: (G) => place.hasPhotographs(G) && (G.age >= 60 && !G.mem?.s38n),
     text: 'The face you have now is the face that photographs you did not like, as a young person, predicted. The version of yourself you saw in photographs at thirty was not how you thought you looked. Now you see photographs of yourself at thirty and understand: that was accurate, and it was fine, and you were wrong about what fine looked like.',
     choices: null,
     effect: (p) => { p.r += 2; p.m += 2; p.setMem('s38n', true) },
@@ -133,7 +133,7 @@ export const EVENTS_SONDER_38 = [
     id: 'sonder_38_o',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => wentToSchool(G) && (!G.mem?.s38o),
+    when: (G) => place.wentToSchool(G) && (!G.mem?.s38o),
     text: 'The dream that repeats. Not always the same dream but recognisably the same situation — the building you can\'t navigate, the exam you didn\'t prepare for, the city you know but can\'t find the exit from. The dream uses your own footage to make something that has nothing to do with the original footage. You know the dream by the feeling it leaves, which precedes the content.',
     choices: null,
     effect: (p) => { p.setMem('s38o', true) },
@@ -183,7 +183,7 @@ export const EVENTS_SONDER_38 = [
     id: 'sonder_38_v',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (!G.mem?.s38v),
+    when: (G) => place.hasPhotographs(G) && (!G.mem?.s38v),
     text: 'The haircut you had at seventeen that you thought was a mistake and that photographs show was not a mistake. This is not about the hair. It is about the accuracy of your self-assessment at seventeen, which was poor in ways that took another decade to identify. The specific error about the hair is a sample of a larger error you were making about yourself at the time.',
     choices: null,
     effect: (p) => { p.e += 2; p.setMem('s38v', true) },

@@ -4,7 +4,7 @@
 // the voice, the weight of an empty room, what prayer sounds like
 // from outside, the hour before the news, the body's private archive.
 
-import { hasBus, hasElectricity, hasMobile, hasPhone, hasPhotographs, isLiterate, isRural } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_46 = [
 
@@ -22,7 +22,7 @@ export const EVENTS_SONDER_46 = [
     id: 'sonder_46_b',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasPhone(G) && (!G.mem?.s36b),
+    when: (G) => place.hasPhone(G) && (!G.mem?.s36b),
     text: 'The voice of someone on the phone from far away is slightly different from their voice in the room. You have been talking to them for years and you know both versions. The phone voice is thinner. It contains the distance as a frequency. When you see them again in person the voice is deeper than you had been remembering and you understand that the phone has been giving you a diminished version of them for however long this has been going on.',
     choices: null,
     effect: (p) => { p.setMem('s36b', true) },
@@ -72,7 +72,7 @@ export const EVENTS_SONDER_46 = [
     id: 'sonder_46_g',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasMobile(G) && (!G.mem?.s36g),
+    when: (G) => place.hasMobile(G) && (!G.mem?.s36g),
     text: 'The map of your city in your head is not the same as the map of your city in the phone. The phone map is accurate. Your map is layered: where things were before they changed, where the route was before the new road, where the person who lived at this address lived before they moved. You navigate by both maps simultaneously without deciding to.',
     choices: null,
     effect: (p) => { p.e += 1; p.setMem('s36g', true) },
@@ -82,7 +82,7 @@ export const EVENTS_SONDER_46 = [
     id: 'sonder_46_h',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (G.age >= 55 && !G.mem?.s36h),
+    when: (G) => place.hasPhotographs(G) && (G.age >= 55 && !G.mem?.s36h),
     text: 'The body has a private archive that the mind does not have full access to. A gesture you make that you did not know you made — someone shows you a photograph and there it is, the angle of the wrist, the position of the head. Your mother made that gesture. Or you made it first and she learned it from you. The archive has no clear filing system and no known origin date.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s36h', true) },
@@ -102,7 +102,7 @@ export const EVENTS_SONDER_46 = [
     id: 'sonder_46_k',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => isLiterate(G) && (!G.mem?.s36k),
+    when: (G) => place.isLiterate(G) && (!G.mem?.s36k),
     text: 'Waiting at a border. The booth, the officer, the specific power of the desk between you. The question about the purpose of your trip, which you answer in the language that will be accepted, which may or may not be your first language. The stamp. The line behind you. The countries stack up in the passport like a record of where you were permitted. You are permitted now. You go through.',
     choices: null,
     effect: (p) => { p.setMem('s36k', true) },
@@ -132,7 +132,7 @@ export const EVENTS_SONDER_46 = [
     id: 'sonder_46_n',
     phase: 'midlife',
     weight: 2,
-    when: (G) => isRural(G) && (!G.mem?.s36n),
+    when: (G) => place.isRural(G) && (!G.mem?.s36n),
     text: 'The window seat on a train you have taken many times. The landscape outside is familiar and also always slightly different — different light, different season, different state of the crops or the buildings going up or the ones coming down. You look out the window with the attention you give to something you know well enough that you can see what has changed.',
     choices: null,
     effect: (p) => { p.setMem('s36n', true) },
@@ -162,7 +162,7 @@ export const EVENTS_SONDER_46 = [
     id: 'sonder_46_q',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasElectricity(G) && (!G.mem?.s36q),
+    when: (G) => place.hasElectricity(G) && (!G.mem?.s36q),
     text: 'When the electricity goes out at night the darkness is complete. You know the room by touch and by the sound of your own movement — the distance to the wall, the location of the furniture, the number of steps to the door. The body knows this without the body having been asked to learn it. You learned it by living here, which is different from learning it deliberately.',
     choices: null,
     effect: (p) => { p.setMem('s36q', true) },
@@ -242,7 +242,7 @@ export const EVENTS_SONDER_46 = [
     id: 'sonder_46_z',
     phase: 'midlife',
     weight: 2,
-    when: (G) => isLiterate(G) && (!G.mem?.s36z),
+    when: (G) => place.isLiterate(G) && (!G.mem?.s36z),
     text: 'The handwriting in the margin of a book you bought secondhand. The person had opinions that are now visible to you without permission. The ink is faded or is not faded. The opinions are wrong or are not wrong. The person who wrote them is now unknown to you in a way that feels close — you have their thoughts but not their name, and the thoughts are not general, they are specific, they were written to be read by whoever had the next occasion to read them, which is now you.',
     choices: null,
     effect: (p) => { p.e += 1; p.setMem('s36z', true) },
@@ -262,7 +262,7 @@ export const EVENTS_SONDER_46 = [
     id: 'sonder_46_ab',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasBus(G) && (!G.mem?.s36ab),
+    when: (G) => place.hasBus(G) && (!G.mem?.s36ab),
     text: 'The bus you take every morning stops at the same stops in the same order and the people who board at each stop are recognisable without being known. The man with the newspaper at the third stop. The woman with the child at the fifth. The boy with the school bag who runs for it at the eighth and usually makes it. You have never spoken to any of them. They are the furniture of your morning.',
     choices: null,
     effect: (p) => { p.setMem('s36ab', true) },

@@ -4,7 +4,7 @@
 // hands and what they hold, threshold moments, debt and owing, what children inherit,
 // what the body knows, the photograph not taken, the second language.
 
-import { hasPhotographs, isLiterate, worksInOffice } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -60,7 +60,7 @@ export const EVENTS_SONDER_15 = [
     id: 'son15_the_commute_years',
     phase: 'midlife',
     weight: 2,
-    when: (G) => worksInOffice(G) && (G.age >= 35 && G.age <= 55 && G.career && !G.mem?.son15CommuteYears),
+    when: (G) => place.worksInOffice(G) && (G.age >= 35 && G.age <= 55 && G.career && !G.mem?.son15CommuteYears),
     text: () => pick([
       `You have spent years in transit between the place where you sleep and the place where you work. The time in between has a quality — neither place, neither thing. You have read there, slept there, thought things there that you did not think anywhere else. The commute is where a portion of your life actually happened.`,
       `You know this route so well that your body navigates it without your permission. You have looked up to find yourself at the station without any memory of walking from the bus. The route is in the body now, not in the mind.`,
@@ -76,7 +76,7 @@ export const EVENTS_SONDER_15 = [
     id: 'son15_the_queue',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => isLiterate(G) && (G.age >= 18 && G.age <= 35 && !G.mem?.son15Queue),
+    when: (G) => place.isLiterate(G) && (G.age >= 18 && G.age <= 35 && !G.mem?.son15Queue),
     text: () => pick([
       `The queue moves at its own pace. The pace is the pace of the counter, not of the people waiting. Everyone in the queue knows this. The adjustment you make is to the queue's pace, not the other way around.`,
       `You fill out the form. The form has a section for information you do not have. You find the information. You return. The form has changed. This is not unusual.`,
@@ -90,7 +90,7 @@ export const EVENTS_SONDER_15 = [
     id: 'son15_the_stamp',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => isLiterate(G) && (G.age >= 20 && G.age <= 40 && !G.mem?.son15Stamp),
+    when: (G) => place.isLiterate(G) && (G.age >= 20 && G.age <= 40 && !G.mem?.son15Stamp),
     text: () => pick([
       `The document requires a stamp. This is not a metaphor. There is an actual stamp, in an office, held by a specific person, that makes the document valid. You find the office. The person with the stamp is not there today.`,
       `You have been told it is processed. Then you are told it has not been received. Then you are told it was received but not processed. The information changes without the document moving. You note this and continue.`,
@@ -256,7 +256,7 @@ export const EVENTS_SONDER_15 = [
     id: 'son15_moment_not_photographed',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (G.age >= 35 && !G.mem?.son15NotPhotographed),
+    when: (G) => place.hasPhotographs(G) && (G.age >= 35 && !G.mem?.son15NotPhotographed),
     text: () => pick([
       `You did not take a photograph at the moment when a photograph would have been most accurate. What the place looked like. What the light was doing. The face of the person at the moment before it changed. The image is in memory only, which is not the same as having it.`,
       `The ones you wish you had taken: a list that grew quietly over years. A room you lived in. A face before. A light on a specific afternoon. The camera was somewhere else or you didn't think of it or you thought the moment would recur. The moment did not recur.`,
@@ -270,7 +270,7 @@ export const EVENTS_SONDER_15 = [
     id: 'son15_the_photo_that_exists',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (G.age >= 60 && !G.mem?.son15PhotoExists),
+    when: (G) => place.hasPhotographs(G) && (G.age >= 60 && !G.mem?.son15PhotoExists),
     text: () => pick([
       `You find a photograph of yourself at an age you can barely remember being. The face is yours and also not yours — the same features arranged differently, the skin a different texture, the posture of someone who has not yet accumulated the things that modify a posture. You look at it for a while.`,
       `There is a photograph from a period you don't talk about much. The faces in it are in their twenties. Some of them you are still in contact with. Some of them you have lost track of. One of them is dead. The photograph has no sense of all this.`,

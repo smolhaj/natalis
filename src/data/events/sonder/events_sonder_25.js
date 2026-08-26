@@ -5,7 +5,7 @@
 // the window at work, internal narrative of beginning, what the children know that you don't,
 // the birthday without ceremony, medical vocabulary entering a life, and more.
 
-import { hasCar, hasPhone, hasPhotographs, isLiterate, worksInOffice } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -53,7 +53,7 @@ export const EVENTS_SONDER_25 = [
     id: 'sdr25_handwriting',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => isLiterate(G) && (!G.mem?.sdr25Handwriting),
+    when: (G) => place.isLiterate(G) && (!G.mem?.sdr25Handwriting),
     text: () => pick([
       'Your handwriting is nothing like what you were taught. The loops went away. The letters got faster and smaller. You can still read it. No one else easily can.',
       'There is a version of your handwriting that existed before screens — careful, practiced, the version that appeared in formal documents. You cannot reliably produce it anymore.',
@@ -325,7 +325,7 @@ export const EVENTS_SONDER_25 = [
     id: 'sdr25_colleague_gone',
     phase: 'midlife',
     weight: 2,
-    when: (G) => worksInOffice(G) && (!G.mem?.sdr25ColleagueGone),
+    when: (G) => place.worksInOffice(G) && (!G.mem?.sdr25ColleagueGone),
     text: () => pick([
       'There are people you spent years of your days with — five or eight or twelve years, five days a week, the majority of your waking hours — who you have not seen since you left that job. The intimacy is strange in retrospect.',
       'You knew a colleague\'s coffee order, their children\'s names, what they sounded like when they were stressed, the quality of their work, their ambitions — and then you both moved on and they are now a distant memory in someone else\'s life.',
@@ -359,7 +359,7 @@ export const EVENTS_SONDER_25 = [
     id: 'sdr25_age_on_loved_ones',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (G.age >= 38 && !G.mem?.sdr25AgeLoved),
+    when: (G) => place.hasPhotographs(G) && (G.age >= 38 && !G.mem?.sdr25AgeLoved),
     text: () => pick([
       'The face of someone you love, aging: you watch it closely enough that you do not notice the increments. Then a photograph from five years ago. The increment is there in the photograph.',
       'You see people you love changing over time in a way you cannot see yourself changing. The aging that is invisible to the self is visible to others. They have the same view of you.',
@@ -444,7 +444,7 @@ export const EVENTS_SONDER_25 = [
     id: 'sdr25_call_that_changed',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasPhone(G) && (!G.mem?.sdr25CallChanged),
+    when: (G) => place.hasPhone(G) && (!G.mem?.sdr25CallChanged),
     text: () => pick([
       'There is a phone call you received that changed the period that followed it. Not the news exactly — the phone call as a physical event: where you were, what you were doing, the moment before you answered.',
       'The call comes and then there is a before and after. You know exactly where you were standing. You might still remember what the light was doing.',
@@ -461,7 +461,7 @@ export const EVENTS_SONDER_25 = [
     id: 'sdr25_car_gone',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasCar(G) && (G.age >= 35 && !G.mem?.sdr25CarGone),
+    when: (G) => place.hasCar(G) && (G.age >= 35 && !G.mem?.sdr25CarGone),
     text: () => pick([
       'There was a vehicle you drove for years — knew the handling, the sounds that meant things, the specific resistance of the wheel. Then it was gone, and the next one took time to feel like a known quantity.',
       'You remember a specific vehicle from a specific period: where it went, what was heard on the radio in it, who was in the passenger seat. It is a container for that period as much as a car.',

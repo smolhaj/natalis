@@ -1,6 +1,6 @@
 // events_sonder_51.js — contemplative layer, weight 2, all mem-gated
 
-import { hasHealthcare, hasPhotographs, hasRunningWater, isUrban, worksInOffice } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_51 = [
 
@@ -8,7 +8,7 @@ export const EVENTS_SONDER_51 = [
     id: 'sonder_51_a',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (!G.mem?.s51a),
+    when: (G) => place.hasPhotographs(G) && (!G.mem?.s51a),
     text: 'A photograph that was always on the wall is gone. You do not remember who took it down or when. The wall has a slightly different colour in that rectangle. You notice this on a random Tuesday and stand in front of it for a moment. The photograph is not lost — it is somewhere in a box. The wall has the record of how long it was there.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s51a', true) },
@@ -88,7 +88,7 @@ export const EVENTS_SONDER_51 = [
     id: 'sonder_51_m',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasHealthcare(G) && (!G.mem?.s51m),
+    when: (G) => place.hasHealthcare(G) && (!G.mem?.s51m),
     text: 'A diagnosis explains things. Not a good diagnosis, but an explanatory one — the reason for the thing that has been happening, named and categorized and given a treatment pathway. The naming is something. Before the name it was only the fact. The name does not change the fact but it changes your relationship to the fact.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s51m', true) },
@@ -118,7 +118,7 @@ export const EVENTS_SONDER_51 = [
     id: 'sonder_51_p',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => isUrban(G) && (!G.mem?.s51p),
+    when: (G) => place.isUrban(G) && (!G.mem?.s51p),
     text: 'In rain, at night, the city: the reflections on the wet pavement, the particular way the lights scatter, the reduced population on the street that makes it feel like a different city from the daytime city. You have come to prefer cities in rain at night for reasons you cannot fully articulate. Something about the way the rain makes the surfaces luminous and the streets less occupied.',
     choices: null,
     effect: (p) => { p.setMem('s51p', true) },
@@ -128,7 +128,7 @@ export const EVENTS_SONDER_51 = [
     id: 'sonder_51_q',
     phase: 'midlife',
     weight: 2,
-    when: (G) => worksInOffice(G) && (!G.mem?.s51q),
+    when: (G) => place.worksInOffice(G) && (!G.mem?.s51q),
     text: 'Someone retires and is never mentioned again. They were a presence in the office for fifteen years. Their retirement party was attended. Their leaving created a small reorganization. Six months later their name comes up and people have to think for a moment before they remember. You note this. You note that you will also eventually be the person people have to think for a moment about.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s51q', true) },
@@ -138,7 +138,7 @@ export const EVENTS_SONDER_51 = [
     id: 'sonder_51_r',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasRunningWater(G) && (!G.mem?.s51r),
+    when: (G) => place.hasRunningWater(G) && (!G.mem?.s51r),
     text: 'You know this place well enough to navigate it without sight — the stairs in the dark, the path to the bathroom at 3am, the kitchen in the early morning before the light is on. The body has mapped this space. The map is accurate. The navigation happens before the awareness of navigating.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s51r', true) },

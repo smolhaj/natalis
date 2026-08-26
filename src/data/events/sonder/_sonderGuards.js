@@ -159,3 +159,22 @@ export const hasPhotographs = (G) =>
   isRich(G) ? G.currentYear >= 1925
     : isUrban(G) ? G.currentYear >= 1950
       : G.currentYear >= 1970
+
+// ── The namespace the events actually call ───────────────────────────────────
+// Guards read `place.hasElectricity(G)` rather than a bare `hasElectricity(G)`
+// because that is what the predicate is: a fact about the place and era this
+// character is living in, not a fact about people. It also keeps the guard
+// self-describing to the engine's register classifier, which reads guard source
+// to decide whether an event is anchored to a particular life or floats free of
+// one — a bare helper name tells it nothing.
+export const place = {
+  isRich, isPoor, isUrban, isRural,
+  hasElectricity, hasRunningWater, hasAppliances,
+  hasPhone, hasMobile, hasInternet, hasRadio, hasTV,
+  hasCar, hasMetro, hasElevator, hasFlown, hasBus,
+  hasSupermarket, hasBank, worksInOffice, hasCinema,
+  isLiterate, wentToSchool, hasBooks,
+  isColdCountry, isMonsoonCountry, isHotCountry,
+  hasHealthcare, hasFormalJob, hasHousingMarket, hasLeisureTravel,
+  hasCafe, hasOwnRoom, hasClock, hasWeekend, hasLeisure, hasPhotographs,
+}

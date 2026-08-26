@@ -1,7 +1,7 @@
 // Sonder module 62 — 30 contemplative events
 // Weight 2, null choices, all mem-gated. Universal human texture.
 
-import { hasPhotographs, isLiterate, wentToSchool, worksInOffice } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_62 = [
 
@@ -29,7 +29,7 @@ export const EVENTS_SONDER_62 = [
     id: 'sonder_62_c',
     phase: 'late_life',
     weight: 2,
-    when: (G) => isLiterate(G) && (!G.mem?.s62c),
+    when: (G) => place.isLiterate(G) && (!G.mem?.s62c),
     text: 'The handwriting on the envelope is your mother\'s handwriting and your mother has been dead for eleven years. The envelope is old — you found it in a box — and the handwriting is exactly as you remember it, which is to say more familiar than your own handwriting, since you do not often see your own handwriting from the outside.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s62c', true) },
@@ -49,7 +49,7 @@ export const EVENTS_SONDER_62 = [
     id: 'sonder_62_e',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => wentToSchool(G) && (!G.mem?.s62e),
+    when: (G) => place.wentToSchool(G) && (!G.mem?.s62e),
     text: 'The map of the world that hung in the classroom placed your country near the center. Every map places something near the center. The centering felt like information. It was also a choice someone made before you were old enough to know choices were being made.',
     choices: null,
     effect: (p) => { p.e += 2; p.setMem('s62e', true) },
@@ -59,7 +59,7 @@ export const EVENTS_SONDER_62 = [
     id: 'sonder_62_f',
     phase: 'midlife',
     weight: 2,
-    when: (G) => worksInOffice(G) && (!G.mem?.s62f),
+    when: (G) => place.worksInOffice(G) && (!G.mem?.s62f),
     text: 'Your colleague mentioned offhand a difficulty she has been managing for two years. You did not know. You have seen her every working day for two years. You did not know. The information she carried through those two years of daily proximity was not visible in the daily proximity.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s62f', true) },
@@ -129,7 +129,7 @@ export const EVENTS_SONDER_62 = [
     id: 'sonder_62_m',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (!G.mem?.s62m),
+    when: (G) => place.hasPhotographs(G) && (!G.mem?.s62m),
     text: 'The version of you that exists in the stories your parent tells about you is not wrong, exactly. It emphasizes different things. The person in those stories is related to you in the way that a photograph taken from one angle is related to the person photographed from all angles.',
     choices: null,
     effect: (p) => { p.setMem('s62m', true) },
@@ -170,7 +170,7 @@ export const EVENTS_SONDER_62 = [
     id: 'sonder_62_r',
     phase: 'midlife',
     weight: 2,
-    when: (G) => worksInOffice(G) && (!G.mem?.s62r),
+    when: (G) => place.worksInOffice(G) && (!G.mem?.s62r),
     text: 'The meeting that was scheduled for Thursday was moved to the following Tuesday and you experienced a relief out of proportion to the rescheduling. The relief told you something about the meeting you had not been telling yourself.',
     choices: null,
     effect: (p) => { p.setMem('s62r', true) },
@@ -180,7 +180,7 @@ export const EVENTS_SONDER_62 = [
     id: 'sonder_62_s',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => wentToSchool(G) && (!G.mem?.s62s),
+    when: (G) => place.wentToSchool(G) && (!G.mem?.s62s),
     text: 'The books that mattered to you at fourteen were not the books that were supposed to matter to you at fourteen. The ones that were supposed to matter sat on the shelf. The ones that mattered were taken to a different room and read in a way that felt like the books were speaking directly into the part of you that the school day did not reach.',
     choices: null,
     effect: (p) => { p.m += 3; p.e += 2; p.setMem('s62s', true) },
@@ -220,7 +220,7 @@ export const EVENTS_SONDER_62 = [
     id: 'sonder_62_w',
     phase: 'midlife',
     weight: 2,
-    when: (G) => isLiterate(G) && (!G.mem?.s62w),
+    when: (G) => place.isLiterate(G) && (!G.mem?.s62w),
     text: 'Your handwriting is your father\'s handwriting. You noticed this for the first time on a form you filled out and had to read back, and the reading back felt like something other than reading your own handwriting. The shape of the letters was not yours first.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s62w', true) },

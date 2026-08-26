@@ -6,7 +6,7 @@
 //   LATE-LIFE TEXTURE — what the day looks like when the structure is gone
 // All mem-gated to fire once. Weight 2. No new flags. Minimal effects.
 
-import { hasCar, hasElectricity, hasFormalJob, hasPhone, hasWeekend, isLiterate } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_3 = [
 
@@ -63,7 +63,7 @@ export const EVENTS_SONDER_3 = [
     id: 'sonder3_the_form',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => isLiterate(G) && (!G.mem?.s3_theForm &&
+    when: (G) => place.isLiterate(G) && (!G.mem?.s3_theForm &&
       (G.residencyStatus === 'work_visa' ||
        G.residencyStatus === 'permanent_resident' ||
        G.residencyStatus === 'asylum_seeker' ||
@@ -139,7 +139,7 @@ export const EVENTS_SONDER_3 = [
     id: 'sonder3_the_apology_you_never_made',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasCar(G) && (!G.mem?.s3_apologyNever && G.age >= 38),
+    when: (G) => place.hasCar(G) && (!G.mem?.s3_apologyNever && G.age >= 38),
     text: 'There is someone you have not apologised to. The person, the thing. It was years ago — long enough that reopening it would require explaining the context, which is almost as bad as the original thing. You have thought about it in idle moments, driving or lying awake. The moment when it might have been natural to say it has passed. You carry it as a small weight, not debilitating, just present.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s3_apologyNever', true) },
@@ -274,7 +274,7 @@ export const EVENTS_SONDER_3 = [
     id: 'sonder3_the_phone_call_after',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasPhone(G) && (!G.mem?.s3_callAfter &&
+    when: (G) => place.hasPhone(G) && (!G.mem?.s3_callAfter &&
       G.flags.has('emigrated') &&
       Object.values(G.parents ?? {}).some(p => p.alive)),
     text: 'After you hang up, the silence is specific. Not empty — it has the shape of the conversation that just ended, the voice that was just there, the time zone you were talking across. You sit with it for a moment. The person is still alive; the call went well; nothing is wrong. The silence is just the distance, asserting itself after having been briefly annulled.',
@@ -317,7 +317,7 @@ export const EVENTS_SONDER_3 = [
     id: 'sonder3_the_morning_ritual_retired',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasFormalJob(G) && (!G.mem?.s3_mornRetired &&
+    when: (G) => place.hasFormalJob(G) && (!G.mem?.s3_mornRetired &&
       G.age >= 63 &&
       (G.career === null || G.flags.has('retired'))),
     text: 'The alarm is not set. You wake at the same time anyway, which is its own joke. The morning has a different texture without the specific urgency of somewhere to be by a certain hour. You notice the light differently. You have time for the kind of noticing that used to happen only on holidays. This is not the retirement you imagined — it is slower and more domestic — but the light in the morning is something you had been meaning to see for years.',
@@ -340,7 +340,7 @@ export const EVENTS_SONDER_3 = [
     id: 'sonder3_other_peoples_grandchildren',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasWeekend(G) && (!G.mem?.s3_othersGrand &&
+    when: (G) => place.hasWeekend(G) && (!G.mem?.s3_othersGrand &&
       G.age >= 65 &&
       G.children?.length === 0),
     text: 'You know several children who are not yours. The children of people you know, or the children of neighbours, or the children who are always in the square on a Saturday morning. You watch them with the particular attention of someone who has time to watch and no immediate stake. There is something pleasant about it and something adjacent to loss. You have learned not to distinguish too finely between the two.',
@@ -418,7 +418,7 @@ export const EVENTS_SONDER_3 = [
     id: 'sonder3_light_from_upstairs',
     phase: 'young_adult',
     weight: 1,
-    when: (G) => hasElectricity(G) && (!G.mem?.s3_lightUpstair),
+    when: (G) => place.hasElectricity(G) && (!G.mem?.s3_lightUpstair),
     text: 'A light on in the apartment above you, or across the street, late at night. Someone is awake. You do not know why — working, unable to sleep, reading, sitting with something — but the light is on and someone is in it. You notice it from where you are. You have a brief, complete sense of the person in the light without knowing anything about them. Then you go back to whatever you were doing.',
     choices: null,
     effect: (p) => { p.e += 1; p.setMem('s3_lightUpstair', true) },

@@ -7,7 +7,7 @@
 
 // All weight 2, no choices, no new flags, single-fire via mem guard.
 
-import { hasBus, hasInternet, hasRadio } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_5 = [
 
@@ -57,7 +57,7 @@ export const EVENTS_SONDER_5 = [
     id: 'sonder5_cb_sound_home',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasRadio(G) && (G.age >= 38 && !G.mem?.s5CbSound),
+    when: (G) => place.hasRadio(G) && (G.age >= 38 && !G.mem?.s5CbSound),
     text: 'There is a sound that was the background of your childhood that you no longer hear — the specific pitch of the radio your parents left on, or the neighbour\'s generator, or the particular road noise of a street you grew up near. You hear something similar sometimes and the childhood arrives briefly, uninvited, complete.',
     choices: null,
     effect: (p) => { p.m += 4; p.r += 2; p.setMem('s5CbSound', true) },
@@ -77,7 +77,7 @@ export const EVENTS_SONDER_5 = [
     id: 'sonder5_cb_dark_fear',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasInternet(G) && (G.age >= 30 && !G.mem?.s5CbDark),
+    when: (G) => place.hasInternet(G) && (G.age >= 30 && !G.mem?.s5CbDark),
     text: 'There was something you were afraid of at night as a child — not a monster exactly, but a category of darkness or sound or a particular shape that a room made. You do not fear it now. But the body remembers: if you wake suddenly at three in the morning, there is still a half-second before the adult understanding comes online, and in that half-second you are six again and the darkness is the same darkness.',
     choices: null,
     effect: (p) => { p.m += 3; p.e += 2; p.setMem('s5CbDark', true) },
@@ -191,7 +191,7 @@ export const EVENTS_SONDER_5 = [
     id: 'sonder5_money_price_memory',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasBus(G) && (G.age >= 40 && !G.mem?.s5MoneyPrice),
+    when: (G) => place.hasBus(G) && (G.age >= 40 && !G.mem?.s5MoneyPrice),
     text: 'You remember what things cost at a specific moment in your life — the price of bread, the bus fare, what a decent meal out cost — and you carry that number as a kind of psychological constant. Everything since is measured against it, even when the comparison no longer makes sense because the money itself has changed.',
     choices: null,
     effect: (p) => { p.e += 3; p.r += 2; p.setMem('s5MoneyPrice', true) },
@@ -211,7 +211,7 @@ export const EVENTS_SONDER_5 = [
     id: 'sonder5_money_count',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasBus(G) && (G.age >= 35 && !G.mem?.s5MoneyCount),
+    when: (G) => place.hasBus(G) && (G.age >= 35 && !G.mem?.s5MoneyCount),
     text: 'At some point you stopped counting the cost of small things — the coffee, the bus ticket, the extra item you did not need — and you did not notice the moment it happened. Before, you knew to the unit. After, you know approximately. The transition happened somewhere in a year you were not paying attention to that kind of attention.',
     choices: null,
     effect: (p) => { p.e += 3; p.m += 2; p.setMem('s5MoneyCount', true) },

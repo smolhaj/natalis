@@ -1,7 +1,7 @@
 // Sonder module 66 — 30 contemplative events
 // Weight 2, null choices, all mem-gated. Universal human texture.
 
-import { hasElectricity, hasHealthcare, hasInternet, isUrban, wentToSchool, worksInOffice } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_66 = [
 
@@ -19,7 +19,7 @@ export const EVENTS_SONDER_66 = [
     id: 'sonder_66_c',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => isUrban(G) && (!G.mem?.s66c),
+    when: (G) => place.isUrban(G) && (!G.mem?.s66c),
     text: 'Living alone for the first time, the place had a sound at night — the pipes, the neighbors, the street at certain hours. You slept through it after two weeks. But the first two weeks you listened to the building and learned it the way you would learn a new person: attending to what it did when it thought no one was watching.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s66c', true) },
@@ -29,7 +29,7 @@ export const EVENTS_SONDER_66 = [
     id: 'sonder_66_d',
     phase: 'midlife',
     weight: 2,
-    when: (G) => worksInOffice(G) && (!G.mem?.s66d),
+    when: (G) => place.worksInOffice(G) && (!G.mem?.s66d),
     text: 'Ten years alongside the same person, and they know a version of you your family does not. Not a better version. A version shaped by the particular demands of the work and the particular audience of the workplace. You are not performing at work. You are also not fully yourself.',
     choices: null,
     effect: (p) => { p.setMem('s66d', true) },
@@ -59,7 +59,7 @@ export const EVENTS_SONDER_66 = [
     id: 'sonder_66_h',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasElectricity(G) && (!G.mem?.s66h),
+    when: (G) => place.hasElectricity(G) && (!G.mem?.s66h),
     text: 'The house — or the apartment, or the room — has absorbed years of your particular way of living: where things land when you put them down, which light switch gets touched first, the corner where things accumulate that should probably go somewhere but have been here so long they are part of the room. A stranger would see clutter. You see the biography of your habits.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s66h', true) },
@@ -120,7 +120,7 @@ export const EVENTS_SONDER_66 = [
     id: 'sonder_66_o',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasHealthcare(G) && (!G.mem?.s66o),
+    when: (G) => place.hasHealthcare(G) && (!G.mem?.s66o),
     text: 'Hospitals have become a more familiar environment than you wanted them to be. The waiting rooms. The forms. The difference between a doctor who sees the chart and a doctor who sees the person who brought the chart. You have learned to distinguish them quickly. This is a skill that costs something to develop.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s66o', true) },
@@ -130,7 +130,7 @@ export const EVENTS_SONDER_66 = [
     id: 'sonder_66_p',
     phase: 'midlife',
     weight: 2,
-    when: (G) => worksInOffice(G) && (!G.mem?.s66p),
+    when: (G) => place.worksInOffice(G) && (!G.mem?.s66p),
     text: 'Across the street, one window of the office building is lit at two in the morning: someone is there. You do not know what they are doing. The knowing-that-they-are-there without knowing anything else is a pure form of sonder — the full weight of another life, compressed into a single lit rectangle.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s66p', true) },
@@ -150,7 +150,7 @@ export const EVENTS_SONDER_66 = [
     id: 'sonder_66_r',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasInternet(G) && (!G.mem?.s66r),
+    when: (G) => place.hasInternet(G) && (!G.mem?.s66r),
     text: 'Something has sat in your drafts for six months and is not waiting to be sent. It is waiting to be deleted. You have not deleted it because deleting it is a decision and sending it was also a decision and you are still avoiding both decisions simultaneously, which takes very little energy once you stop noticing the folder exists.',
     choices: null,
     effect: (p) => { p.setMem('s66r', true) },
@@ -220,7 +220,7 @@ export const EVENTS_SONDER_66 = [
     id: 'sonder_66_y',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => wentToSchool(G) && (!G.mem?.s66y),
+    when: (G) => place.wentToSchool(G) && (!G.mem?.s66y),
     text: 'Everyone inside the school could read its social map, and nobody outside it could. The rules about who could sit where, who could speak to whom, which combinations were permitted and which were social violations — these were never written and were known by everyone. The rules changed without announcement and the fact of the change was itself communicated through the social map.',
     choices: null,
     effect: (p) => { p.setMem('s66y', true) },

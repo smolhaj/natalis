@@ -11,7 +11,7 @@
 //
 // All weight 2, mem-gated, no choices, minimal stat effects.
 
-import { hasBooks, hasHealthcare, hasInternet, hasPhotographs, hasTV, hasWeekend } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -59,7 +59,7 @@ export const EVENTS_SONDER_18 = [
     id: 's18_unsent_letter',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasInternet(G) && (G.age >= 32 && G.age <= 65 && !G.mem?.s18UnsentLetter),
+    when: (G) => place.hasInternet(G) && (G.age >= 32 && G.age <= 65 && !G.mem?.s18UnsentLetter),
     text: () => pick([
       `There is a letter — or an email, or a draft message, or a conversation you have rehearsed — that you have not sent. The person it is addressed to is someone you know or once knew. The letter exists in a completed form in your head, in the order of its sentences, with the exact word in the second paragraph that you have decided on and then reconsidered. The unsending is not a decision you made. It is a decision you are making continuously, in the way that inaction is also a choice.`,
       `The message exists in full. You have written it in your head enough times to have a final draft. The final draft begins with a sentence you have revised into something exact and then revised again because exact felt too much like a demand. There is a person who would receive this message. They do not know it exists. You are not certain what sending it would produce and you are not certain the uncertainty is the reason you haven't.`,
@@ -229,7 +229,7 @@ export const EVENTS_SONDER_18 = [
     id: 's18_free_afternoon',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasBooks(G) && (G.age >= 35 && G.age <= 65 &&
+    when: (G) => place.hasBooks(G) && (G.age >= 35 && G.age <= 65 &&
       !G.mem?.s18FreeAfternoon),
     text: () => pick([
       `An afternoon arrives with nothing required of it. Not a holiday — a holiday has the obligation of being enjoyed. Just an afternoon, unexpectedly cleared, in which you can do anything or nothing. The first hour is strange: the habit of purpose is strong enough that the absence of purpose feels like something is wrong. Then something releases. You move through the afternoon at the speed of the afternoon itself, which is different from the speed you move through afternoons that have a schedule.`,
@@ -245,7 +245,7 @@ export const EVENTS_SONDER_18 = [
     id: 's18_hospital_street',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasHealthcare(G) && (G.age >= 32 &&
+    when: (G) => place.hasHealthcare(G) && (G.age >= 32 &&
       (G.flags.has('lost_parent_father') || G.flags.has('lost_parent_mother') || G.flags.has('lost_partner') || G.flags.has('friend_died')) &&
       !G.mem?.s18HospitalStreet),
     text: () => pick([
@@ -262,7 +262,7 @@ export const EVENTS_SONDER_18 = [
     id: 's18_radio_sickness',
     phase: 'childhood',
     weight: 2,
-    when: (G) => hasTV(G) && (G.age >= 8 && G.age <= 18 && !G.mem?.s18RadioSickness),
+    when: (G) => place.hasTV(G) && (G.age >= 8 && G.age <= 18 && !G.mem?.s18RadioSickness),
     text: () => pick([
       `When someone in the house was sick, the radio stayed on at a low volume. Not for information — for company, or because silence in a sick room has its own quality that the radio softened. The specific programs you associate with illness: the ones that ran in the afternoon, the voices with the particular cadence of afternoon broadcasting. You cannot hear that program or that station without the association arriving, the stillness of a house with someone sick in it.`,
       `The sound of the house when someone was ill: the particular quiet that is not silence but the suspension of normal noise. Someone moving carefully. The specific low volume of the television or radio that had been adjusted for a sick person. The smell of a particular medicine. These were the textures of childhood illness — your own or someone else's — and they reconstitute themselves completely when they arrive uninvited.`,
@@ -313,7 +313,7 @@ export const EVENTS_SONDER_18 = [
     id: 's18_photo_when_happy',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (G.age >= 55 && !G.mem?.s18PhotoHappy),
+    when: (G) => place.hasPhotographs(G) && (G.age >= 55 && !G.mem?.s18PhotoHappy),
     text: () => pick([
       `The photograph is from a time you were happy — genuinely, unreservedly, without knowing that was what it was. You were not performing happiness for the camera. The camera caught it incidentally, alongside the event. The person in the photograph has not yet experienced several things that the person looking at the photograph has experienced. The person in the photograph is also, unmistakeably, you. This is both evident and, at a certain angle, extraordinary.`,
       `In the photograph you are laughing at something that happened before the photograph was taken, the residue of it still in your face. The photographer caught the aftermath of a moment, not the moment itself. You cannot remember what the moment was. The face in the photograph knows, or knew, and the knowing has not been transferred to the version of you who is looking at it now.`,
@@ -328,7 +328,7 @@ export const EVENTS_SONDER_18 = [
     id: 's18_waiting_room',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasHealthcare(G) && (G.age >= 40 && !G.mem?.s18WaitingRoom),
+    when: (G) => place.hasHealthcare(G) && (G.age >= 40 && !G.mem?.s18WaitingRoom),
     text: () => pick([
       `The waiting room is a kind of place. Not an unpleasant place necessarily, but a place with its own gravity: the particular weight of waiting, the magazines that are too old to be current and too new to be interesting, the other people who are also waiting and whose reasons for waiting are not your business but are legible anyway in small ways. The waiting room is where the ordinary machinery of bureaucracy and medicine and administration becomes most visible to the people it serves.`,
       `In the waiting room you are in a position that almost never occurs elsewhere: you are with strangers who share a situation but not an identity. Something has brought you all here and something will take you somewhere else. The conversation that sometimes starts in a waiting room — the brief, honest conversation that happens between strangers who have been placed in the same uncertain position — is one of the more honest conversations of adult life.`,
@@ -373,7 +373,7 @@ export const EVENTS_SONDER_18 = [
     id: 's18_body_holds',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (G.age >= 40 && !G.mem?.s18BodyHolds),
+    when: (G) => place.hasPhotographs(G) && (G.age >= 40 && !G.mem?.s18BodyHolds),
     text: () => pick([
       `The body has been keeping records you did not authorise. The position you automatically adopt in a tense conversation — the one your parents adopted, the one you recognised with a delay of several years. The physical response to a kind of authority. The way your hands move when you are thinking. These are not behaviours you chose. They are things the body learned and stored in a region that decision-making cannot reach, and they were there before you noticed them.`,
       `There are physical habits you inherited without knowing: the way you fold your arms, which is the way your father folded his arms. The gesture you make when you are uncertain, which you recognise in photographs of people you are descended from. The body is the oldest part of the inheritance, and it passes things forward in a form that does not have to declare itself at the border.`,
@@ -388,7 +388,7 @@ export const EVENTS_SONDER_18 = [
     id: 's18_sunday_evening',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasWeekend(G) && (G.age >= 20 && G.age <= 60 && !G.mem?.s18SundayEvening),
+    when: (G) => place.hasWeekend(G) && (G.age >= 20 && G.age <= 60 && !G.mem?.s18SundayEvening),
     text: () => pick([
       `Sunday evening has a quality that distinguishes it from all other evenings: the quality of the week approaching, the window closing on whatever the weekend permitted. The quality has been with you since school, when Sunday evening meant the end of the interval between obligations. It has modified slightly as an adult but has not disappeared. The week arrives at the same time each week and the Sunday evening knowledge of it is older than almost anything else you know.`,
       `The dimming light of Sunday evening. The feeling that arrives around five or six o'clock on a Sunday when the weekend recedes into what remains of it and the week appears ahead. This feeling was first learned as a child and has never fully updated. The adult week is different from the school week. The Sunday evening feeling does not know this.`,

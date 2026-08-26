@@ -5,7 +5,7 @@
 // the doctor said once, the bus you almost didn't get on, the specific
 // colour of a particular afternoon.
 
-import { hasBooks, hasCafe, hasCinema, hasFlown, hasHealthcare, hasPhone, hasPhotographs } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -15,7 +15,7 @@ export const EVENTS_SONDER_36 = [
     id: 'sonder36_ruined_photograph',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (!G.mem?.s36RuinedPhotograph),
+    when: (G) => place.hasPhotographs(G) && (!G.mem?.s36RuinedPhotograph),
     text: () => pick([
       'There is a photograph that got ruined — water damage, or a hard drive that died, or a fire that took a box of things. The photographs that were lost are more present in memory now than the ones that survive. The surviving photographs are accurate about surfaces. The lost ones are the ones the memory has edited into something specific and irreplaceable.',
       'A photograph you know you had and no longer have: the specific image, the moment it caught, the people in it at the ages they were. The loss of the photograph didn\'t take the memory — it changed the relationship between the memory and its evidence. Now the memory is the only version.',
@@ -54,7 +54,7 @@ export const EVENTS_SONDER_36 = [
     id: 'sonder36_what_the_doctor_said',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasHealthcare(G) && (G.age >= 35 && !G.mem?.s36DoctorSaid),
+    when: (G) => place.hasHealthcare(G) && (G.age >= 35 && !G.mem?.s36DoctorSaid),
     text: () => pick([
       'Something a doctor said once, in passing, that stayed. Not a diagnosis — a remark, a number they mentioned, an observation about how something looked. The remark was offhand from their side of the conversation. It has not been offhand from yours. You have thought about it in the weeks since and in the months since.',
       'The doctor said something that required a decision and you made the decision and now you live with the decision. The decision was made on incomplete information, as all decisions are. The living with it is different from the making of it — longer, quieter, ongoing.',
@@ -67,7 +67,7 @@ export const EVENTS_SONDER_36 = [
     id: 'sonder36_bus_almost_missed',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasFlown(G) && (!G.mem?.s36BusAlmostMissed),
+    when: (G) => place.hasFlown(G) && (!G.mem?.s36BusAlmostMissed),
     text: () => pick([
       'A bus you almost didn\'t get on. If you had not caught it, the afternoon would have been different — you would have been somewhere else when the thing happened, or the conversation would not have happened. The bus was there when you arrived. The world arranged itself in that order. You don\'t think about it often. When you do, the contingency of it is vertiginous.',
       'The small transport coincidence that changed the shape of something: the bus that came as you arrived, the train that was delayed and then wasn\'t, the plane that was full and then had a seat. The world does this constantly. You notice it only when the outcome is legible as important.',
@@ -158,7 +158,7 @@ export const EVENTS_SONDER_36 = [
     id: 'sonder36_the_time_alone',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasCafe(G) && (!G.mem?.s36TimeAlone),
+    when: (G) => place.hasCafe(G) && (!G.mem?.s36TimeAlone),
     text: () => pick([
       'The hours you spend alone that are not lonely: the particular quality of a Saturday morning when the rest of the house is out or quiet, the walk that has no destination, the afternoon in the cafe where you brought nothing to do. Solitude that is chosen is different from solitude that is imposed. You know both and have a relationship with each.',
       'Being alone in a place that belongs to you: the room or the house, the quiet that is yours, the freedom to move around the space without consideration for anyone else\'s trajectory. The alone that is a resource rather than a condition. You have learned to treat it as a resource.',
@@ -171,7 +171,7 @@ export const EVENTS_SONDER_36 = [
     id: 'sonder36_the_sentence_returned',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasBooks(G) && (!G.mem?.s36SentenceReturned),
+    when: (G) => place.hasBooks(G) && (!G.mem?.s36SentenceReturned),
     text: () => pick([
       'A sentence you read years ago that has returned to you at intervals since — not a famous line, not a quotation anyone would recognise, just a sentence from a book or a letter or a conversation that hit a particular note and stayed. You have thought about why it stayed. The thinking has not resolved it. The sentence stays anyway.',
       'The words that stayed from a book you read long ago: not the story, not the plot, not the theme — one sentence, or part of one, that the rest of the book has faded around. The sentence is still live. It comes back in situations that are relevant to it and sometimes in situations that are not.',
@@ -262,7 +262,7 @@ export const EVENTS_SONDER_36 = [
     id: 'sonder36_the_number_you_still_know',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasPhone(G) && (!G.mem?.s36NumberStillKnow),
+    when: (G) => place.hasPhone(G) && (!G.mem?.s36NumberStillKnow),
     text: () => pick([
       'A phone number you still know by heart for a phone that no longer exists at that number — your parents\' number, a childhood friend\'s number, a number you dialled so many times the sequence is in your fingers before your mind registers it. You will carry the number after the number has no use. The carrying is automatic.',
       'A number memorised from a time when memorising numbers was necessary: dialled enough times to be in the hands, callable without looking at the page. The number may still work or may not. The memory of it is complete. The completeness is a small record of how much time you spent dialling it.',
@@ -275,7 +275,7 @@ export const EVENTS_SONDER_36 = [
     id: 'sonder36_what_you_overheard',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasCafe(G) && (!G.mem?.s36Overheard),
+    when: (G) => place.hasCafe(G) && (!G.mem?.s36Overheard),
     text: () => pick([
       'A conversation you overheard between strangers: a fragment of a sentence, a tone that made the content clear without all the words, a name said with a particular inflection. The fragment was not yours and you carried it home anyway. It was a piece of someone else\'s story, delivered by accident.',
       'The overheard conversation on the bus or in the cafe or through a wall: not enough to understand the full situation, but enough to feel the shape of it. Someone was going through something. The going-through was audible even when the words were not completely clear.',
@@ -301,7 +301,7 @@ export const EVENTS_SONDER_36 = [
     id: 'sonder36_the_price_of_things',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasCinema(G) && (G.age >= 55 && !G.mem?.s36PriceOfThings),
+    when: (G) => place.hasCinema(G) && (G.age >= 55 && !G.mem?.s36PriceOfThings),
     text: () => pick([
       'The price of things when you were twenty versus now. Not a complaint — an observation. A loaf of bread, a bus fare, a cinema ticket. The numbers have changed more than feels real. The amounts that felt large then feel small now. The amounts that feel large now would have been impossible then. The scale shifts and you live inside the shifting scale.',
       'You remember the price of things from decades ago with precision that surprises you — you know what a coffee cost, what a pair of shoes cost, what rent cost. The memory of prices is a kind of economic autobiography. The memory is accurate because the prices once required real decisions.',

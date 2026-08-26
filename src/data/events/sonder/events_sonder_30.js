@@ -2,7 +2,7 @@
 // Contemplative layer: the return of a season, the thing you carry without knowing,
 // the face before mirrors, the argument that ended, small acts witnessed.
 
-import { hasElectricity, isColdCountry, isLiterate } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -96,7 +96,7 @@ export const EVENTS_SONDER_30 = [
     id: 'sdr30_the_window_in_winter',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 10 && isColdCountry(G) && !G.mem?.sdr30WindowWinter,
+    when: (G) => G.age >= 10 && place.isColdCountry(G) && !G.mem?.sdr30WindowWinter,
     text: () => pick([
       'Rain on the window while you are inside and warm. The pleasure of being on the right side of it — not because being outside in rain is bad, but because being inside when there is rain outside is its own thing, a shelter that announces itself.',
       'The condensation on the window in the cold. You traced something in it when you were a child. You do not remember what. The practice of tracing something in window condensation is older than you and will outlast you.',
@@ -138,7 +138,7 @@ export const EVENTS_SONDER_30 = [
     id: 'sdr30_the_handwriting',
     phase: 'late_life',
     weight: 2,
-    when: (G) => isLiterate(G) && (G.age >= 50 && !G.mem?.sdr30Handwriting),
+    when: (G) => place.isLiterate(G) && (G.age >= 50 && !G.mem?.sdr30Handwriting),
     text: () => pick([
       'You found something written in someone\'s handwriting. Not typed — handwritten, in the particular way their hand moved on paper. The handwriting is more specific than a photograph somehow. You knew immediately whose it was. This is what they looked like holding a pen.',
       'Your own handwriting from twenty years ago: recognisably yours, somewhat different. The letters were formed with more deliberateness then, or with less, depending on the time. The hand changes over decades. The change is too slow to notice directly.',
@@ -166,7 +166,7 @@ export const EVENTS_SONDER_30 = [
     id: 'sdr30_the_light_at_home',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 18 && hasElectricity(G) && !G.mem?.sdr30LightAtHome,
+    when: (G) => G.age >= 18 && place.hasElectricity(G) && !G.mem?.sdr30LightAtHome,
     text: () => pick([
       'The particular light of this house at this time of day — afternoon in winter, morning in summer, whatever combination this is. You know this light. It is specific to this house at this hour. Elsewhere it is different. Here it is this.',
       'When you come home and the light is already on inside, which means someone is in there. Or no light is on, and the house is waiting. The light in the window is information before it is anything else.',

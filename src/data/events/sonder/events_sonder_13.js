@@ -4,7 +4,7 @@
 // Themes: the body at rest, work without witness, the small room,
 // threshold moments, what stays after people leave.
 
-import { hasPhone, isLiterate } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_13 = [
 
@@ -122,7 +122,7 @@ export const EVENTS_SONDER_13 = [
     id: 'sonder13_after_leaving_1',
     phase: 'midlife',
     weight: 2,
-    when: (G) => isLiterate(G) && (!G.mem?.sonder13_after_leaving_1),
+    when: (G) => place.isLiterate(G) && (!G.mem?.sonder13_after_leaving_1),
     text: `After they left you found the small things — the handwriting on a piece of paper, the object moved to a different shelf, the phrase you have started saying without noticing. People leave deposit in you in forms you do not always recognise as deposit until something jogs the recognition.`,
     choices: null,
     effect: (p) => { p.setMem('sonder13_after_leaving_1', true) },
@@ -262,7 +262,7 @@ export const EVENTS_SONDER_13 = [
     phase: 'midlife',
     weight: 2,
     isGlimpse: true,
-    when: (G) => hasPhone(G) && (!G.mem?.sonder13_stranger_2),
+    when: (G) => place.hasPhone(G) && (!G.mem?.sonder13_stranger_2),
     text: `The man on the platform is checking his phone. On his face for a moment is something — you catch it in the second before he rearranges his face into the neutral expression people wear in public. The something was grief. Or it was good news about someone he loves. You cannot tell and you are not supposed to know and then the train arrives.`,
     choices: null,
     effect: (p) => { p.setMem('sonder13_stranger_2', true) },

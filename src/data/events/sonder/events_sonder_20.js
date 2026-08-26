@@ -5,7 +5,7 @@
 // of languages left, the moment before sleep, what infrastructure sounds like,
 // the stranger in the photograph, the skill you no longer use.
 
-import { hasElectricity, hasPhotographs, hasRunningWater, worksInOffice } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -92,7 +92,7 @@ export const EVENTS_SONDER_20 = [
     id: 'sonder20_colleague_competence',
     phase: 'midlife',
     weight: 2,
-    when: (G) => worksInOffice(G) && (G.career &&
+    when: (G) => place.worksInOffice(G) && (G.career &&
       !G.mem?.s20ColleagueCompetence),
     text: 'There is a colleague who is good in a way that goes unremarked — not extraordinary, not someone who gets mentioned, just someone who does their part with a steadiness that makes the whole thing work. You notice them. The noticing is private. You wonder if anyone notices the same thing about you.',
     choices: null,
@@ -150,7 +150,7 @@ export const EVENTS_SONDER_20 = [
     id: 'sonder20_power_cut_dark',
     phase: 'childhood',
     weight: 2,
-    when: (G) => hasElectricity(G) && (['subsaharan', 'developing_urban', 'developing_unstable', 'conflict_zone'].includes(G.character.country?.archetype) &&
+    when: (G) => place.hasElectricity(G) && (['subsaharan', 'developing_urban', 'developing_unstable', 'conflict_zone'].includes(G.character.country?.archetype) &&
       !G.mem?.s20PowerCutDark),
     text: () => pick([
       'The lights go and the night goes darker than city nights usually go. There is a second of everyone adjusting. Candles appear from the same drawer they are always in. The routine of the power cut is practiced and efficient.',
@@ -165,7 +165,7 @@ export const EVENTS_SONDER_20 = [
     id: 'sonder20_water_in_pipes',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasRunningWater(G) && (['wealthy_west', 'wealthy_east'].includes(G.character.country?.archetype) &&
+    when: (G) => place.hasRunningWater(G) && (['wealthy_west', 'wealthy_east'].includes(G.character.country?.archetype) &&
       !G.mem?.s20WaterInPipes),
     text: 'The water arrives when the tap is turned on. You have always known this and will die without fully appreciating it, which is perhaps the correct relationship to have with infrastructure: to assume it so completely that its absence would be shocking. Billions of people experience the shock regularly. You do not.',
     choices: null,
@@ -178,7 +178,7 @@ export const EVENTS_SONDER_20 = [
     id: 'sonder20_group_photo',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (G.age >= 38 &&
+    when: (G) => place.hasPhotographs(G) && (G.age >= 38 &&
       !G.mem?.s20GroupPhoto),
     text: 'A group photograph from years ago. The people in it have dispersed into separate futures — different cities, some dead, some estranged, some still present but different in ways the photograph doesn\'t predict. You were all in the same room. That was real. The room is the past.',
     choices: null,

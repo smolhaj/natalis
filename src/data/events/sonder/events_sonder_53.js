@@ -1,6 +1,6 @@
 // events_sonder_53.js — contemplative layer, weight 2, all mem-gated
 
-import { hasBooks, hasHealthcare, hasInternet, hasLeisure, hasPhotographs, worksInOffice } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_53 = [
 
@@ -68,7 +68,7 @@ export const EVENTS_SONDER_53 = [
     id: 'sonder_53_g',
     phase: 'midlife',
     weight: 2,
-    when: (G) => worksInOffice(G) && (!G.mem?.s53g),
+    when: (G) => place.worksInOffice(G) && (!G.mem?.s53g),
     text: 'Halfway through, you understand the decision was made before anyone sat down and the meeting is for show. The tell was in the room layout, or in the sequence of speakers, or in the document that was circulated in advance. The decision was made elsewhere, by fewer people, and you are in the meeting to receive it dressed as a consultation. You have stopped being surprised by this. The stopping being surprised is either wisdom or accommodation and you are not certain which.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s53g', true) },
@@ -118,7 +118,7 @@ export const EVENTS_SONDER_53 = [
     id: 'sonder_53_m',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasHealthcare(G) && (!G.mem?.s53m),
+    when: (G) => place.hasHealthcare(G) && (!G.mem?.s53m),
     text: 'Years of the same appointment with the same person: the doctor, the dentist, the accountant, the mechanic. You have accumulated a shared history that has no name for itself. They know things about you that are specific and practical. You know things about them — the family, the change in their face over years — that are similarly specific and practical. The relationship is not friendship and is not purely transactional. It is the kind of relationship that does not have a word.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s53m', true) },
@@ -138,7 +138,7 @@ export const EVENTS_SONDER_53 = [
     id: 'sonder_53_o',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => hasLeisure(G) && (!G.mem?.s53o),
+    when: (G) => place.hasLeisure(G) && (!G.mem?.s53o),
     text: 'Alone in the city for the first time — not lost, not in danger, alone in the sense of having an afternoon with no obligation and no companion and a city in which to spend it. The discovery that this is possible. The discovery that you can navigate the city on your own time and your own logic. The afternoon is small and formative. The self that emerges from it is slightly more a self than the self that went into it.',
     choices: null,
     effect: (p) => { p.m += 3; p.s += 2; p.setMem('s53o', true) },
@@ -148,7 +148,7 @@ export const EVENTS_SONDER_53 = [
     id: 'sonder_53_p',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (!G.mem?.s53p),
+    when: (G) => place.hasPhotographs(G) && (!G.mem?.s53p),
     text: 'You do not recognise yourself immediately in the photograph. The person in the photograph is clearly you. You do not recognize them for a fraction of a second. The recognition arrives and in the gap between the image and the recognition there is a brief encounter with yourself as a stranger — the face that others see, the body that is yours as a fact and also yours as an image that can be seen by others and not immediately claimed.',
     choices: null,
     effect: (p) => { p.r += 4; p.setMem('s53p', true) },
@@ -219,7 +219,7 @@ export const EVENTS_SONDER_53 = [
     phase: 'late_life',
     weight: 2,
     isGlimpse: true,
-    when: (G) => hasPhotographs(G) && (!G.mem?.s53w),
+    when: (G) => place.hasPhotographs(G) && (!G.mem?.s53w),
     text: 'Someone is in almost every photograph from a certain period and is now completely absent from your life. Not a conflict — the ordinary drift. The photographs show them in your kitchen, at your table, in the group at the event. You have not spoken in eight years. The photographs document a period of closeness that ended so gradually you cannot place the ending. The ending is visible now only in the archive.',
     choices: null,
     effect: (p) => { p.r += 5; p.setMem('s53w', true) },
@@ -229,7 +229,7 @@ export const EVENTS_SONDER_53 = [
     id: 'sonder_53_x',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasInternet(G) && (!G.mem?.s53x),
+    when: (G) => place.hasInternet(G) && (!G.mem?.s53x),
     text: 'You did not answer it, and then it was too late to answer. Not a difficult email — an email that required a response that you kept not writing. Time passed. The moment for writing it as a reply passed. Writing it now would require acknowledging the gap, which makes it harder. You have thought about this email more than you would have spent writing it. The unwritten reply is its own correspondence.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s53x', true) },
@@ -239,7 +239,7 @@ export const EVENTS_SONDER_53 = [
     id: 'sonder_53_y',
     phase: 'childhood',
     weight: 2,
-    when: (G) => hasBooks(G) && (!G.mem?.s53y),
+    when: (G) => place.hasBooks(G) && (!G.mem?.s53y),
     text: 'A book that was too old for you, and you read it anyway. You did not understand parts of it. You understood enough. The understanding that arrived through the parts you did not fully grasp: a different kind of understanding, accessed not through comprehension but through the texture of the language and the emotional weight of what you couldn\'t fully account for. The books that were too old for you shaped you more than the books that were exactly right.',
     choices: null,
     effect: (p) => { p.e += 3; p.setMem('s53y', true) },

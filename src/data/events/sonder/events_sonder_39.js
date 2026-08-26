@@ -4,7 +4,7 @@
 // the weight of inherited objects, a city seen from above,
 // the conversation that should have happened.
 
-import { hasBooks } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_39 = [
 
@@ -112,7 +112,7 @@ export const EVENTS_SONDER_39 = [
     id: 'sonder_39_n',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasBooks(G) && (!G.mem?.s39n),
+    when: (G) => place.hasBooks(G) && (!G.mem?.s39n),
     text: 'You have read the same book at different ages and it was a different book each time. The words are the same. You changed. The book available to you at twenty-two is not the book available to you at forty because at forty you have different information about what the book is describing, which is to say about what has happened to people.',
     choices: null,
     effect: (p) => { p.e += 2; p.m += 2; p.setMem('s39n', true) },

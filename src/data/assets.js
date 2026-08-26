@@ -1,3 +1,49 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Every price in this file is written in wealthy-tier dollars and must be
+// localised before it is charged or displayed. Salaries are scaled by GDP tier
+// where they are paid — a very_low-tier character earns 0.03 of a listed salary
+// range — so a flat $55,000 studio flat is not merely expensive in Malawi, it is
+// thirty-three times a laborer's entire annual income. Home ownership was
+// arithmetically impossible for most of the lives this game simulates.
+//
+// Two curves, because they are genuinely different things:
+//
+//   GDP_PRICE_MULT   land, housing, locally made goods. Falls steeply with
+//                    wages, though not as steeply — housing costs more relative
+//                    to income in poor cities, not less, and that is the point.
+//
+//   GDP_IMPORT_MULT  cars, motorcycles, boats. Barely falls at all. A shipped
+//                    engine costs what a shipped engine costs; a used Corolla in
+//                    Lagos is priced in the same world market as one in Lisbon.
+//                    A car staying expensive against a small wage is not a bug.
+//
+// Each item carries `priceClass: 'local' | 'imported'`. Charge through
+// `localisePrice(basePrice, gdpTier, priceClass)`.
+export const GDP_PRICE_MULT = {
+  very_high: 1.0,
+  high: 0.8,
+  medium_high: 0.55,
+  medium: 0.38,
+  low_medium: 0.22,
+  low: 0.14,
+  very_low: 0.09,
+}
+
+export const GDP_IMPORT_MULT = {
+  very_high: 1.0,
+  high: 0.95,
+  medium_high: 0.9,
+  medium: 0.85,
+  low_medium: 0.82,
+  low: 0.8,
+  very_low: 0.8,
+}
+
+export function localisePrice(basePrice, gdpTier, priceClass = 'local') {
+  const table = priceClass === 'imported' ? GDP_IMPORT_MULT : GDP_PRICE_MULT
+  return Math.max(1, Math.round(basePrice * (table[gdpTier] ?? 1)))
+}
+
 export const PROPERTY_TYPES = [
   {
     id: 'studio_flat',
@@ -7,6 +53,7 @@ export const PROPERTY_TYPES = [
     annualMaintenance: 1200,
     appreciationRate: 0.03,
     downPaymentRate: 0.10,
+    priceClass: 'local',
     description: 'A compact single-room apartment. Functional, affordable, and entirely yours.',
   },
   {
@@ -17,6 +64,7 @@ export const PROPERTY_TYPES = [
     annualMaintenance: 2400,
     appreciationRate: 0.04,
     downPaymentRate: 0.10,
+    priceClass: 'local',
     description: 'A multi-room flat in a shared building. A solid first step onto the property ladder.',
   },
   {
@@ -27,6 +75,7 @@ export const PROPERTY_TYPES = [
     annualMaintenance: 4500,
     appreciationRate: 0.04,
     downPaymentRate: 0.15,
+    priceClass: 'local',
     description: 'A narrow house sharing walls with neighbours. More space, a small garden, a real front door.',
   },
   {
@@ -37,6 +86,7 @@ export const PROPERTY_TYPES = [
     annualMaintenance: 7500,
     appreciationRate: 0.045,
     downPaymentRate: 0.20,
+    priceClass: 'local',
     description: 'A freestanding family home with a garden on all sides. Space and privacy in equal measure.',
   },
   {
@@ -47,6 +97,7 @@ export const PROPERTY_TYPES = [
     annualMaintenance: 38000,
     appreciationRate: 0.05,
     downPaymentRate: 0.25,
+    priceClass: 'local',
     description: 'An estate-scale property with grounds, staff quarters, and more rooms than you will ever use.',
   },
   {
@@ -57,6 +108,7 @@ export const PROPERTY_TYPES = [
     annualMaintenance: 18000,
     appreciationRate: 0.055,
     downPaymentRate: 0.20,
+    priceClass: 'local',
     description: 'A home on the water. Salt air, sunsets, and an annual battle against the elements.',
   },
   {
@@ -67,6 +119,7 @@ export const PROPERTY_TYPES = [
     annualMaintenance: 9000,
     appreciationRate: 0.025,
     downPaymentRate: 0.20,
+    priceClass: 'local',
     description: 'A rural property with land. Quiet, demanding, and far from everything.',
   },
   {
@@ -77,6 +130,7 @@ export const PROPERTY_TYPES = [
     annualMaintenance: 28000,
     appreciationRate: 0.05,
     downPaymentRate: 0.25,
+    priceClass: 'local',
     description: 'The top floor. City views from every window, a private terrace, and a service charge that never stops.',
   },
   {
@@ -87,6 +141,7 @@ export const PROPERTY_TYPES = [
     annualMaintenance: 22000,
     appreciationRate: 0.035,
     downPaymentRate: 0.20,
+    priceClass: 'local',
     description: 'A mountain retreat. Empty for nine months and perfect for three.',
   },
 ];
@@ -104,6 +159,7 @@ export const VEHICLE_TYPES = [
     priceRange: [350, 950],
     annualMaintenance: 60,
     depreciationRate: 0.10,
+    priceClass: 'local',
     description: 'Upright geometry, puncture-resistant tyres, a rack for your bag. Gets you there without drama.',
   },
   {
@@ -115,6 +171,8 @@ export const VEHICLE_TYPES = [
     priceRange: [700, 2800],
     annualMaintenance: 90,
     depreciationRate: 0.12,
+    priceClass: 'local',
+    minYear: 1981,
     description: 'Built for trails. Capable of roads. More bike than most people need, which is part of the appeal.',
   },
   {
@@ -126,6 +184,7 @@ export const VEHICLE_TYPES = [
     priceRange: [900, 5000],
     annualMaintenance: 110,
     depreciationRate: 0.11,
+    priceClass: 'local',
     description: 'Carbon frame, narrow tyres, drop bars. Speed at the cost of comfort and every road imperfection.',
   },
   {
@@ -137,10 +196,54 @@ export const VEHICLE_TYPES = [
     priceRange: [1400, 4500],
     annualMaintenance: 150,
     depreciationRate: 0.14,
+    priceClass: 'local',
+    minYear: 2005,
     description: 'Pedal-assisted. You still have to pedal — but the hills become suggestions.',
   },
 
   // ── MOTORCYCLES ────────────────────────────────────────────────────────────
+  // The nameplates below are dated, which left every motorcycle tier empty
+  // before 1957 and left the two-wheelers that most of the world actually rode
+  // out of the game entirely. These three are the vehicles that were there.
+  {
+    id: 'moto_royal_enfield_bullet',
+    tier: 'motorcycle',
+    name: 'Royal Enfield Bullet',
+    make: 'Royal Enfield', model: 'Bullet 350',
+    basePrice: 4200,
+    priceRange: [1800, 6000],
+    annualMaintenance: 400,
+    depreciationRate: 0.06,
+    priceClass: 'imported',
+    minYear: 1932,
+    description: 'A single cylinder with a beat you can hear from the end of the street. Built almost unchanged for eighty years, and repairable by anyone with a spanner.',
+  },
+  {
+    id: 'moto_vespa',
+    tier: 'motorcycle',
+    name: 'Vespa Scooter',
+    make: 'Piaggio', model: 'Vespa 150',
+    basePrice: 3400,
+    priceRange: [1200, 5200],
+    annualMaintenance: 260,
+    depreciationRate: 0.09,
+    priceClass: 'imported',
+    minYear: 1946,
+    description: 'Steel body, small wheels, a step-through frame you can ride in a skirt or a suit. The first vehicle most families in Europe could actually afford.',
+  },
+  {
+    id: 'moto_honda_super_cub',
+    tier: 'motorcycle',
+    name: 'Honda Super Cub',
+    make: 'Honda', model: 'Super Cub C50',
+    basePrice: 2400,
+    priceRange: [900, 3600],
+    annualMaintenance: 180,
+    depreciationRate: 0.10,
+    priceClass: 'imported',
+    minYear: 1958,
+    description: 'Fifty cubic centimetres, a plastic leg shield, and a rear rack that will carry three people or a week of stock. More of these have been built than any other motor vehicle on earth.',
+  },
   {
     id: 'moto_honda_cb500',
     tier: 'motorcycle',
@@ -150,6 +253,8 @@ export const VEHICLE_TYPES = [
     priceRange: [5500, 8800],
     annualMaintenance: 700,
     depreciationRate: 0.13,
+    priceClass: 'imported',
+    minYear: 1971,
     description: 'Honda\'s workhorse middleweight. Practical, reliable, and deeply unremarkable in the best possible way.',
   },
   {
@@ -161,6 +266,8 @@ export const VEHICLE_TYPES = [
     priceRange: [6500, 10500],
     annualMaintenance: 750,
     depreciationRate: 0.13,
+    priceClass: 'imported',
+    minYear: 1984,
     description: 'Parallel-twin engine, sporty lines, enough power to keep pace. The sensible choice for someone with slightly unsensible instincts.',
   },
   {
@@ -172,6 +279,8 @@ export const VEHICLE_TYPES = [
     priceRange: [8500, 13000],
     annualMaintenance: 900,
     depreciationRate: 0.13,
+    priceClass: 'imported',
+    minYear: 2013,
     description: 'A torquey three-cylinder in a lightweight frame. Described as a "hooligan bike" by people who own them.',
   },
   {
@@ -183,6 +292,8 @@ export const VEHICLE_TYPES = [
     priceRange: [12000, 17500],
     annualMaintenance: 1400,
     depreciationRate: 0.14,
+    priceClass: 'imported',
+    minYear: 1993,
     description: 'Italian engineering with Italian maintenance costs. People stare at it whether you want them to or not.',
   },
   {
@@ -194,6 +305,8 @@ export const VEHICLE_TYPES = [
     priceRange: [14000, 20000],
     annualMaintenance: 1600,
     depreciationRate: 0.11,
+    priceClass: 'imported',
+    minYear: 1957,
     description: 'The Revolution Max engine in a classic silhouette. Loud. Heavy. Exactly what people picture when they picture a Harley.',
   },
   {
@@ -205,10 +318,71 @@ export const VEHICLE_TYPES = [
     priceRange: [17000, 25000],
     annualMaintenance: 1800,
     depreciationRate: 0.10,
+    priceClass: 'imported',
+    minYear: 1980,
     description: 'The most popular adventure bike in the world. Half the owners never take it off-road. That is also fine.',
   },
 
   // ── USED CARS ────────────────────────────────────────────────────────────────
+  // The four below carried whole countries for decades, and their absence meant
+  // no character anywhere could own a car before 1968. maxYear marks the end of
+  // production; it is inert until the availability filter reads it.
+  {
+    id: 'car_used_vw_beetle',
+    tier: 'used_car',
+    name: 'Used Volkswagen Beetle',
+    make: 'Volkswagen', model: 'Beetle',
+    basePrice: 6500,
+    priceRange: [2200, 11000],
+    annualMaintenance: 800,
+    depreciationRate: 0.08,
+    priceClass: 'imported',
+    minYear: 1950,
+    maxYear: 2004,
+    description: 'Air-cooled, rear-engined, no radiator to freeze. The heater never works properly and the engine note is audible three streets away.',
+  },
+  {
+    id: 'car_used_peugeot_404',
+    tier: 'used_car',
+    name: 'Used Peugeot 404',
+    make: 'Peugeot', model: '404',
+    basePrice: 5800,
+    priceRange: [1800, 9500],
+    annualMaintenance: 900,
+    depreciationRate: 0.09,
+    priceClass: 'imported',
+    minYear: 1962,
+    maxYear: 1995,
+    description: 'Assembled in Nigeria, Kenya and Argentina as well as France. Long suspension travel, a boot that takes a market run, and a body that forgives an unpaved road.',
+  },
+  {
+    id: 'car_used_hindustan_ambassador',
+    tier: 'used_car',
+    name: 'Used Hindustan Ambassador',
+    make: 'Hindustan', model: 'Ambassador',
+    basePrice: 4500,
+    priceRange: [1500, 8000],
+    annualMaintenance: 850,
+    depreciationRate: 0.08,
+    priceClass: 'local',
+    minYear: 1958,
+    maxYear: 2014,
+    description: 'A bench seat wide enough for three, a column shift, and a shape that did not change for fifty years. Half of them are taxis and the other half belong to someone in government.',
+  },
+  {
+    id: 'car_used_lada_2101',
+    tier: 'used_car',
+    name: 'Used Lada 2101',
+    make: 'Lada', model: '2101 Zhiguli',
+    basePrice: 4200,
+    priceRange: [1400, 7500],
+    annualMaintenance: 750,
+    depreciationRate: 0.09,
+    priceClass: 'local',
+    minYear: 1972,
+    maxYear: 2012,
+    description: 'A Fiat 124 rebuilt for bad roads and cold starts, with thicker steel and a hand crank in the boot. The waiting list was measured in years.',
+  },
   {
     id: 'car_used_honda_civic',
     tier: 'used_car',
@@ -218,6 +392,8 @@ export const VEHICLE_TYPES = [
     priceRange: [7500, 17000],
     annualMaintenance: 1200,
     depreciationRate: 0.12,
+    priceClass: 'imported',
+    minYear: 1976,
     description: 'Reliable, boring, and nearly indestructible. A sensible choice made by millions of sensible people.',
   },
   {
@@ -229,6 +405,8 @@ export const VEHICLE_TYPES = [
     priceRange: [8000, 17500],
     annualMaintenance: 1100,
     depreciationRate: 0.11,
+    priceClass: 'imported',
+    minYear: 1970,
     description: 'The best-selling car in history, for reasons that have nothing to do with excitement.',
   },
   {
@@ -240,6 +418,8 @@ export const VEHICLE_TYPES = [
     priceRange: [6500, 15500],
     annualMaintenance: 1600,
     depreciationRate: 0.14,
+    priceClass: 'imported',
+    minYear: 1978,
     description: 'The European benchmark for a compact hatch. More expensive to maintain than it looks. It always costs more to maintain than it looks.',
   },
   {
@@ -251,6 +431,8 @@ export const VEHICLE_TYPES = [
     priceRange: [9000, 19000],
     annualMaintenance: 1800,
     depreciationRate: 0.16,
+    priceClass: 'imported',
+    minYear: 1968,
     description: 'The American muscle aesthetic without the insurance and fuel costs of the V8. Still turns heads at lights.',
   },
   {
@@ -262,6 +444,8 @@ export const VEHICLE_TYPES = [
     priceRange: [6500, 15000],
     annualMaintenance: 1100,
     depreciationRate: 0.12,
+    priceClass: 'imported',
+    minYear: 2007,
     description: 'Better to drive than any car in its class has a right to be. Mazda quietly delivers every time.',
   },
   {
@@ -273,6 +457,8 @@ export const VEHICLE_TYPES = [
     priceRange: [9000, 19000],
     annualMaintenance: 1400,
     depreciationRate: 0.12,
+    priceClass: 'imported',
+    minYear: 1998,
     description: 'AWD, roof rails, and slightly muddy carpets. The car of dog owners, hikers, and people who like options.',
   },
 
@@ -286,6 +472,8 @@ export const VEHICLE_TYPES = [
     priceRange: [23000, 30000],
     annualMaintenance: 1300,
     depreciationRate: 0.16,
+    priceClass: 'imported',
+    minYear: 1972,
     description: 'The new generation. Sharper styling, more tech, same reliable engine underneath.',
   },
   {
@@ -297,6 +485,8 @@ export const VEHICLE_TYPES = [
     priceRange: [26000, 36000],
     annualMaintenance: 1200,
     depreciationRate: 0.14,
+    priceClass: 'imported',
+    minYear: 1982,
     description: 'Mid-size, comfortable, utterly dependable. The car your parents would choose, and for good reason.',
   },
   {
@@ -308,6 +498,8 @@ export const VEHICLE_TYPES = [
     priceRange: [36000, 50000],
     annualMaintenance: 2200,
     depreciationRate: 0.17,
+    priceClass: 'imported',
+    minYear: 1965,
     description: 'Five litres, eight cylinders, an exhaust note the neighbours will learn to distinguish by ear.',
   },
   {
@@ -319,6 +511,8 @@ export const VEHICLE_TYPES = [
     priceRange: [32000, 42000],
     annualMaintenance: 2000,
     depreciationRate: 0.16,
+    priceClass: 'imported',
+    minYear: 1976,
     description: 'The hot hatch that defined hot hatches. Plaid seats, red brake callipers, 35 years of refinement.',
   },
   {
@@ -330,6 +524,8 @@ export const VEHICLE_TYPES = [
     priceRange: [34000, 55000],
     annualMaintenance: 2400,
     depreciationRate: 0.12,
+    priceClass: 'imported',
+    minYear: 1986,
     description: 'Removable doors, a fold-down windscreen, and the ability to go almost anywhere. It also vibrates on the highway at 70mph.',
   },
   {
@@ -341,6 +537,8 @@ export const VEHICLE_TYPES = [
     priceRange: [38000, 52000],
     annualMaintenance: 900,
     depreciationRate: 0.18,
+    priceClass: 'imported',
+    minYear: 2017,
     description: 'The EV benchmark. No dealerships, over-the-air updates, and that giant touchscreen that controls everything.',
     minYear: 2017,
   },
@@ -353,6 +551,8 @@ export const VEHICLE_TYPES = [
     priceRange: [28000, 38000],
     annualMaintenance: 1300,
     depreciationRate: 0.14,
+    priceClass: 'imported',
+    minYear: 2012,
     description: 'A compact SUV that drives like a car should. Premium feel without the premium price.',
   },
 
@@ -366,6 +566,8 @@ export const VEHICLE_TYPES = [
     priceRange: [48000, 70000],
     annualMaintenance: 4500,
     depreciationRate: 0.16,
+    priceClass: 'imported',
+    minYear: 1975,
     description: 'The benchmark sports saloon. Rear-wheel drive, a precise steering rack, and a badge that communicates the right things.',
   },
   {
@@ -377,6 +579,8 @@ export const VEHICLE_TYPES = [
     priceRange: [52000, 75000],
     annualMaintenance: 5000,
     depreciationRate: 0.16,
+    priceClass: 'imported',
+    minYear: 1993,
     description: 'The cabin quality is the argument. Soft leather, ambient lighting, a level of quiet that feels earned.',
   },
   {
@@ -388,6 +592,8 @@ export const VEHICLE_TYPES = [
     priceRange: [58000, 85000],
     annualMaintenance: 5500,
     depreciationRate: 0.15,
+    priceClass: 'imported',
+    minYear: 1994,
     description: 'Quattro AWD, Virtual Cockpit, a restrained exterior that lets the interior do the talking.',
   },
   {
@@ -399,6 +605,8 @@ export const VEHICLE_TYPES = [
     priceRange: [65000, 94000],
     annualMaintenance: 6000,
     depreciationRate: 0.15,
+    priceClass: 'imported',
+    minYear: 1972,
     description: 'The 5 Series has defined executive saloons for four decades. It does everything well, effortlessly.',
   },
   {
@@ -410,6 +618,8 @@ export const VEHICLE_TYPES = [
     priceRange: [72000, 110000],
     annualMaintenance: 8500,
     depreciationRate: 0.14,
+    priceClass: 'imported',
+    minYear: 2014,
     description: 'A Porsche you can actually use every day. Handles like sports car, carries four adults, costs like a Porsche.',
   },
   {
@@ -421,6 +631,8 @@ export const VEHICLE_TYPES = [
     priceRange: [105000, 165000],
     annualMaintenance: 12000,
     depreciationRate: 0.14,
+    priceClass: 'imported',
+    minYear: 1972,
     description: 'The best car in the world, according to Mercedes. Hard to argue otherwise. The back seat is the point.',
   },
   {
@@ -432,6 +644,8 @@ export const VEHICLE_TYPES = [
     priceRange: [120000, 200000],
     annualMaintenance: 16000,
     depreciationRate: 0.17,
+    priceClass: 'imported',
+    minYear: 1970,
     description: 'Arrived at school in one. Arrived at a black-tie event in the same one. The universally accepted statement car.',
   },
   {
@@ -443,6 +657,8 @@ export const VEHICLE_TYPES = [
     priceRange: [88000, 135000],
     annualMaintenance: 1800,
     depreciationRate: 0.18,
+    priceClass: 'imported',
+    minYear: 2012,
     description: 'Zero to 60 in under two seconds, from a four-door sedan. The future arrived and it\'s slightly too fast.',
     minYear: 2012,
   },
@@ -457,6 +673,8 @@ export const VEHICLE_TYPES = [
     priceRange: [185000, 265000],
     annualMaintenance: 18000,
     depreciationRate: 0.09,
+    priceClass: 'imported',
+    minYear: 1975,
     description: 'The 911 is the original. The Turbo S is the argument that it is also the best. Rear-engined, all-wheel drive, somehow still perfect.',
   },
   {
@@ -468,6 +686,8 @@ export const VEHICLE_TYPES = [
     priceRange: [250000, 380000],
     annualMaintenance: 28000,
     depreciationRate: 0.08,
+    priceClass: 'imported',
+    minYear: 2015,
     description: 'A turbocharged mid-engine Ferrari. The noise it makes going through a tunnel cannot be adequately described in text.',
   },
   {
@@ -479,6 +699,8 @@ export const VEHICLE_TYPES = [
     priceRange: [240000, 340000],
     annualMaintenance: 30000,
     depreciationRate: 0.09,
+    priceClass: 'imported',
+    minYear: 2014,
     description: 'The design is essentially an argument. Five litres, ten cylinders, a driving position that makes you feel chosen.',
   },
   {
@@ -490,6 +712,8 @@ export const VEHICLE_TYPES = [
     priceRange: [290000, 410000],
     annualMaintenance: 35000,
     depreciationRate: 0.10,
+    priceClass: 'imported',
+    minYear: 2017,
     description: 'Dihedral doors, a carbon fibre tub, a twin-turbo V8 that redefines your relationship with speed.',
   },
   {
@@ -501,6 +725,8 @@ export const VEHICLE_TYPES = [
     priceRange: [520000, 720000],
     annualMaintenance: 50000,
     depreciationRate: 0.07,
+    priceClass: 'imported',
+    minYear: 2020,
     description: 'Ferrari\'s hybrid hypercar. 1000 horsepower from a plug-in V8 hybrid. It costs what a house costs.',
   },
   {
@@ -512,6 +738,8 @@ export const VEHICLE_TYPES = [
     priceRange: [2800000, 3800000],
     annualMaintenance: 500000,
     depreciationRate: 0.04,
+    priceClass: 'imported',
+    minYear: 2016,
     description: 'A 1,500-horsepower W16 engine. A top speed electronically limited to 261 mph. The tires must be replaced every 9,000 miles at $42,000 a set.',
   },
 
@@ -525,6 +753,8 @@ export const VEHICLE_TYPES = [
     priceRange: [28000, 120000],
     annualMaintenance: 6000,
     depreciationRate: 0.12,
+    priceClass: 'imported',
+    minYear: 1960,
     description: 'A weekend boat. The lake, the river, the estuary. Slow enough for conversation, fast enough for spray.',
   },
   {
@@ -536,6 +766,7 @@ export const VEHICLE_TYPES = [
     priceRange: [80000, 350000],
     annualMaintenance: 18000,
     depreciationRate: 0.07,
+    priceClass: 'imported',
     description: 'Wind-powered, and patient. A sailboat requires skill, time, and a certain tolerance for salt in everything.',
   },
   {
@@ -547,6 +778,8 @@ export const VEHICLE_TYPES = [
     priceRange: [650000, 4500000],
     annualMaintenance: 90000,
     depreciationRate: 0.08,
+    priceClass: 'imported',
+    minYear: 1960,
     description: 'The two best days of a yacht owner\'s life: the day they buy it and the day they sell it. Everything in between is also good.',
   },
   {
@@ -558,6 +791,8 @@ export const VEHICLE_TYPES = [
     priceRange: [8000000, 80000000],
     annualMaintenance: 3000000,
     depreciationRate: 0.05,
+    priceClass: 'imported',
+    minYear: 1980,
     description: 'A crew of twenty, a helipad, a submarine bay. This is no longer transportation. This is infrastructure.',
   },
 ];

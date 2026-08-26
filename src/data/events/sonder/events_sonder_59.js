@@ -1,6 +1,6 @@
 // events_sonder_59.js — contemplative layer, weight 2, all mem-gated
 
-import { hasHealthcare, hasHousingMarket, hasMobile, hasPhotographs, hasRadio, worksInOffice } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_59 = [
 
@@ -68,7 +68,7 @@ export const EVENTS_SONDER_59 = [
     id: 'sonder_59_g',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasMobile(G) && (G.age >= 36 && G.age <= 52 && !G.mem?.s59g),
+    when: (G) => place.hasMobile(G) && (G.age >= 36 && G.age <= 52 && !G.mem?.s59g),
     text: 'You composed it and deleted it. You got through the whole sentence — sometimes two — and then you read it back and saw something in it that made you delete it. The person you were going to send it to does not know it was composed. What you deleted was true. Sending it would have started a different conversation, and you have decided, for reasons you cannot fully articulate, that this is not the moment for that conversation.',
     choices: null,
     effect: (p) => { p.setMem('s59g', true) },
@@ -78,7 +78,7 @@ export const EVENTS_SONDER_59 = [
     id: 'sonder_59_h',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasHousingMarket(G) && (G.age >= 24 && G.age <= 32 && !G.mem?.s59h),
+    when: (G) => place.hasHousingMarket(G) && (G.age >= 24 && G.age <= 32 && !G.mem?.s59h),
     text: 'Whoever owned the flat: the relationship is transactional and also strangely intimate — you pay them money every month; they have a key; they can enter, technically, with notice. The flat is yours while also not being yours. The relationship ends when you leave and you never think about the landlord again, and presumably they do not think about you.',
     choices: null,
     effect: (p) => { p.setMem('s59h', true) },
@@ -98,7 +98,7 @@ export const EVENTS_SONDER_59 = [
     id: 'sonder_59_j',
     phase: 'midlife',
     weight: 2,
-    when: (G) => worksInOffice(G) && (G.age >= 42 && G.age <= 58 && !G.mem?.s59j),
+    when: (G) => place.worksInOffice(G) && (G.age >= 42 && G.age <= 58 && !G.mem?.s59j),
     text: 'You chaired it once and did not want to chair it again; someone else always chairs it, and for them it is apparently not what it was for you. You wonder sometimes what it would be like to be the person who does not mind chairing the meeting. You cannot access that interiority. They chair the meeting every time. They seem fine.',
     choices: null,
     effect: (p) => { p.setMem('s59j', true) },
@@ -168,7 +168,7 @@ export const EVENTS_SONDER_59 = [
     id: 'sonder_59_q',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (G.age >= 40 && !G.mem?.s59q),
+    when: (G) => place.hasPhotographs(G) && (G.age >= 40 && !G.mem?.s59q),
     text: 'Someone took a photograph of you and you did not know it was being taken. You see it later and you recognise yourself but not the self you usually see in the mirror — this one is in motion, or facing slightly away, or caught in the expression that happens between the expressions you use for other people. The unposed face. You find it hard to say whether this one is more or less true than the posed version. Both are yours.',
     choices: null,
     effect: (p) => { p.setMem('s59q', true) },
@@ -178,7 +178,7 @@ export const EVENTS_SONDER_59 = [
     id: 'sonder_59_r',
     phase: 'childhood',
     weight: 2,
-    when: (G) => hasRadio(G) && (G.age >= 9 && G.age <= 14 && !G.mem?.s59r),
+    when: (G) => place.hasRadio(G) && (G.age >= 9 && G.age <= 14 && !G.mem?.s59r),
     text: 'A long journey by car: the window, the changing landscape, the radio that faded in and out, the game you invented to pass the time that only worked in the car. The family is contained in the car for hours. The containment is its own texture — the arguments that are minor because there is nowhere to go, the silences that are fine because everyone is looking at the same road.',
     choices: null,
     effect: (p) => { p.m += 3; p.setMem('s59r', true) },
@@ -279,7 +279,7 @@ export const EVENTS_SONDER_59 = [
     id: 'sonder_59_ad',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasHealthcare(G) && (G.age >= 44 && !G.mem?.s59ad),
+    when: (G) => place.hasHealthcare(G) && (G.age >= 44 && !G.mem?.s59ad),
     text: 'Three years of the same bus, and the other people who were also taking it every day: not friends, but people who knew each other in the silent register of shared routine. The man who always sat in the same seat. The woman who read a physical newspaper into the early 2010s. The particular light at the stop near the hospital. You can see the route in your head twenty years later. The people on it are alive somewhere or they are not.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s59ad', true) },

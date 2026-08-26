@@ -3,7 +3,7 @@
 // WHAT YOU INHERIT (9), THE WINDOW (9)
 // All mem-gated single-fire, weight 2, no choices, no new flags.
 
-import { hasFlown, wentToSchool } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_11 = [
 
@@ -35,7 +35,7 @@ export const EVENTS_SONDER_11 = [
     id: 'sonder11_return_country',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasFlown(G) && (G.flags.has('emigrant') && G.age >= 35 && !G.mem?.s11ReturnCountry),
+    when: (G) => place.hasFlown(G) && (G.flags.has('emigrant') && G.age >= 35 && !G.mem?.s11ReturnCountry),
     text: 'You go back to the country you left. The airport is the same airport. The exit from the airport is the same — the heat or the cold arriving immediately, the quality of the light. Something in the body relaxes that you did not know was tense. Something else tightens. The return is not the same as the staying would have been. It is its own thing, with its own texture, neither here nor there in a way that feels permanent now.',
     choices: null,
     effect: (p) => { p.m += 4; p.r += 3; p.setMem('s11ReturnCountry', true) },
@@ -45,7 +45,7 @@ export const EVENTS_SONDER_11 = [
     id: 'sonder11_return_school',
     phase: 'midlife',
     weight: 2,
-    when: (G) => wentToSchool(G) && (G.age >= 35 && G.age <= 55 && !G.mem?.s11ReturnSchool),
+    when: (G) => place.wentToSchool(G) && (G.age >= 35 && G.age <= 55 && !G.mem?.s11ReturnSchool),
     text: 'The school looks smaller. The rooms where years happened are ordinary rooms. The bench you sat in every day for three years is a bench. You have the dim memory that those years felt immense while they were happening — the weeks slow as years — and the school was the container of that immensity. The container is just a building now.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s11ReturnSchool', true) },

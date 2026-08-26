@@ -1,6 +1,6 @@
 // events_sonder_56.js — contemplative layer, weight 2, all mem-gated
 
-import { hasBooks, hasElectricity, isUrban, wentToSchool } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_56 = [
 
@@ -18,7 +18,7 @@ export const EVENTS_SONDER_56 = [
     id: 'sonder_56_b',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasElectricity(G) && (G.age >= 55 && !G.mem?.s56b),
+    when: (G) => place.hasElectricity(G) && (G.age >= 55 && !G.mem?.s56b),
     text: 'The noise of a city at four in the morning — reduced to its constituent parts: the distant truck, the one lit window, the bird that has the time wrong. You are awake for no reason and the city is almost legible in a way it is not when it is full.',
     choices: null,
     effect: (p) => { p.setMem('s56b', true) },
@@ -58,7 +58,7 @@ export const EVENTS_SONDER_56 = [
     id: 'sonder_56_f',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => isUrban(G) && (G.age >= 24 && G.age <= 32 && !G.mem?.s56f),
+    when: (G) => place.isUrban(G) && (G.age >= 24 && G.age <= 32 && !G.mem?.s56f),
     text: 'The apartment is the right size for a person who has not yet accumulated things. You do not think of it as insufficient. You will remember it later as the period of the right-sized life.',
     choices: null,
     effect: (p) => { p.setMem('s56f', true) },
@@ -79,7 +79,7 @@ export const EVENTS_SONDER_56 = [
     phase: 'adolescence',
     weight: 2,
     isGlimpse: true,
-    when: (G) => wentToSchool(G) && (G.age >= 14 && G.age <= 17 && !G.mem?.s56i),
+    when: (G) => place.wentToSchool(G) && (G.age >= 14 && G.age <= 17 && !G.mem?.s56i),
     text: 'There is a person at school who has noticed you in a way that has changed the texture of every day. You are not sure they know they have done this. You are not sure you could explain it.',
     choices: null,
     effect: (p) => { p.setMem('s56i', true) },
@@ -119,7 +119,7 @@ export const EVENTS_SONDER_56 = [
     id: 'sonder_56_m',
     phase: 'childhood',
     weight: 2,
-    when: (G) => hasElectricity(G) && (G.age >= 7 && G.age <= 12 && !G.mem?.s56m),
+    when: (G) => place.hasElectricity(G) && (G.age >= 7 && G.age <= 12 && !G.mem?.s56m),
     text: 'The sound of a particular house at night: the pipes, the particular creak, the way the refrigerator hums. These are sounds you will be able to reproduce in your mind thirty years later with perfect fidelity, though you will not know you remember them until you hear something similar.',
     choices: null,
     effect: (p) => { p.setMem('s56m', true) },
@@ -150,7 +150,7 @@ export const EVENTS_SONDER_56 = [
     phase: 'midlife',
     weight: 2,
     isGlimpse: true,
-    when: (G) => hasBooks(G) && (G.age >= 36 && G.age <= 48 && !G.mem?.s56q),
+    when: (G) => place.hasBooks(G) && (G.age >= 36 && G.age <= 48 && !G.mem?.s56q),
     text: 'A stranger on a train is reading the same book you read at twenty-three. The book changed something for you. The stranger is on the page where you remember being changed. You do not speak. You watch them turn the page.',
     choices: null,
     effect: (p) => { p.setMem('s56q', true) },
@@ -190,7 +190,7 @@ export const EVENTS_SONDER_56 = [
     id: 'sonder_56_w',
     phase: 'childhood',
     weight: 2,
-    when: (G) => hasBooks(G) && (G.age >= 9 && G.age <= 13 && !G.mem?.s56w),
+    when: (G) => place.hasBooks(G) && (G.age >= 9 && G.age <= 13 && !G.mem?.s56w),
     text: 'The book you find in the house that is for adults — not forbidden, just not yours — and read in the gap between what it was written for and what you make of it at eleven. The making is partial. The partial is still an opening.',
     choices: null,
     effect: (p) => { p.e += 2; p.setMem('s56w', true) },

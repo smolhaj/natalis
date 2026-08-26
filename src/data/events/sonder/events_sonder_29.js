@@ -3,7 +3,7 @@
 // without the mind, the person you used to be, gratitude without occasion,
 // the unasked question, things that still exist.
 
-import { hasCar, hasElectricity, isUrban } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -139,7 +139,7 @@ export const EVENTS_SONDER_29 = [
     id: 'sdr29_stranger_window',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 14 && isUrban(G) && hasElectricity(G) && G.ruralUrban === 'urban' && !G.mem?.sdr29StrangerWindow,
+    when: (G) => G.age >= 14 && place.isUrban(G) && place.hasElectricity(G) && G.ruralUrban === 'urban' && !G.mem?.sdr29StrangerWindow,
     text: `A light is on in the apartment across the way. Not unusual — it is evening, people are at home. But someone is moving inside: a shape, a silhouette, a person doing whatever they do in the evenings. They do not know you are watching. You are not watching, exactly. Your eyes went there and the life inside briefly registered. They are in their version of this hour. You are in yours. The window contains both.`,
     choices: null,
     effect: (p) => { p.setMem('sdr29StrangerWindow', true) },
@@ -289,7 +289,7 @@ export const EVENTS_SONDER_29 = [
     id: 'sdr29_the_night_drive',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 18 && hasCar(G) && !G.mem?.sdr29NightDrive,
+    when: (G) => G.age >= 18 && place.hasCar(G) && !G.mem?.sdr29NightDrive,
     text: () => pick([
       'Driving or riding at night when the roads are different — emptier, the lights making everything specific. The city at 2am is not the city at noon. Both are real. The night version is the one people see less and remember longer.',
       'A long journey in the dark: the window, the reflections, the other passengers asleep. Outside: towns you pass through without stopping, lights that mean other lives going about their business at this hour.',

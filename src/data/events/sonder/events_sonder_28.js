@@ -2,7 +2,7 @@
 // Contemplative layer: the things you did not plan, repetition and time,
 // the quality of attention, small recognitions, thresholds, end-of-day light.
 
-import { isColdCountry } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -362,7 +362,7 @@ export const EVENTS_SONDER_28 = [
     id: 'sdr28_winter_morning',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 12 && isColdCountry(G) && !G.mem?.sdr28WinterMorning,
+    when: (G) => G.age >= 12 && place.isColdCountry(G) && !G.mem?.sdr28WinterMorning,
     text: () => pick([
       'A winter morning when the light comes late and thin. Getting up before the light makes the day feel front-heavy — all effort at the start, the light arriving as a kind of confirmation after the fact.',
       'The cold in the room before the heat comes on. You know this cold. Every winter it is the same negotiation with yourself about getting out of the blankets. You always do. The moment of it never gets easier.',

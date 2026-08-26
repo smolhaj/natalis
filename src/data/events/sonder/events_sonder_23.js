@@ -2,7 +2,7 @@
 // Contemplative layer: the felt texture of ordinary life.
 // Weight 2, mem-gated, no choices, no new flags.
 
-import { hasHealthcare } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -237,7 +237,7 @@ export const EVENTS_SONDER_23 = [
     id: 'sdr23_the_appointment_kept',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasHealthcare(G) && (G.age >= 30 && G.age <= 65 && !G.mem?.sdr23AppointmentKept),
+    when: (G) => place.hasHealthcare(G) && (G.age >= 30 && G.age <= 65 && !G.mem?.sdr23AppointmentKept),
     text: () => pick([
       `You keep the appointment you didn't want to keep. You get there and it is fine, or not fine, but either way the kept appointment is better than the avoidance would have been. The version of the thing you were dreading is almost always less bad than the anticipation. Almost always.`,
       `You are on time. This took more effort than anyone present is aware of. The effort is invisible because punctuality is invisible — the only visible version of effort around time is lateness. The timeliness is its own quiet achievement of organisation and will. No one remarks on it.`,

@@ -1,7 +1,7 @@
 // events_sonder_40.js
 // Contemplative layer — 30 mem-gated glimpses.
 
-import { hasBooks, hasBus, hasPhone, hasPhotographs, wentToSchool } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_40 = [
 
@@ -29,7 +29,7 @@ export const EVENTS_SONDER_40 = [
     id: 'sonder_40_c',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasPhone(G) && (G.age >= 30 && !G.mem?.s40c),
+    when: (G) => place.hasPhone(G) && (G.age >= 30 && !G.mem?.s40c),
     text: 'The phone rings and you knew it would. A second before, without cause — just the knowledge, arriving from somewhere. You pick up. The thing happened that you somehow already knew had happened.',
     choices: null,
     effect: (p) => { p.setMem('s40c', true) },
@@ -49,7 +49,7 @@ export const EVENTS_SONDER_40 = [
     id: 'sonder_40_e',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasBooks(G) && (G.age >= 18 && !G.mem?.s40e),
+    when: (G) => place.hasBooks(G) && (G.age >= 18 && !G.mem?.s40e),
     text: 'You decide not to finish the book. This is rarer than it sounds — the habit of finishing has its own momentum. But you put it down on page 180 and do not pick it up again. The partial story settles into permanent incompleteness. It is not unpleasant.',
     choices: null,
     effect: (p) => { p.setMem('s40e', true) },
@@ -151,7 +151,7 @@ export const EVENTS_SONDER_40 = [
     id: 'sonder_40_p',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasBus(G) && (G.age >= 35 && !G.mem?.s40p),
+    when: (G) => place.hasBus(G) && (G.age >= 35 && !G.mem?.s40p),
     text: 'You remember the price of things from years ago with the same precision you remember faces. The bus fare. The cost of the flat share. The amount your first proper job paid per month. The numbers are exact. They do not mean what they meant.',
     choices: null,
     effect: (p) => { p.setMem('s40p', true) },
@@ -161,7 +161,7 @@ export const EVENTS_SONDER_40 = [
     id: 'sonder_40_q',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (G.age >= 22 && !G.mem?.s40q),
+    when: (G) => place.hasPhotographs(G) && (G.age >= 22 && !G.mem?.s40q),
     text: 'You are at a wedding and it is obvious from the way they talk to each other that it will not last. You say nothing. Nobody says anything. The day proceeds in its full expensive beauty and everyone smiles in the photographs.',
     choices: null,
     effect: (p) => { p.setMem('s40q', true) },
@@ -211,7 +211,7 @@ export const EVENTS_SONDER_40 = [
     id: 'sonder_40_w',
     phase: 'midlife',
     weight: 2,
-    when: (G) => wentToSchool(G) && (G.age >= 35 && !G.mem?.s40w),
+    when: (G) => place.wentToSchool(G) && (G.age >= 35 && !G.mem?.s40w),
     text: 'You go back to the school. The corridor is the same. The smell is the same — floor polish and something institutional underneath. The scale of it has changed. The lockers that once seemed enormous are chest height. You do not belong here anymore and neither does the child you were.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s40w', true) },
@@ -251,7 +251,7 @@ export const EVENTS_SONDER_40 = [
     id: 'sonder_40_aa',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasBus(G) && (G.age >= 35 && !G.mem?.s40aa),
+    when: (G) => place.hasBus(G) && (G.age >= 35 && !G.mem?.s40aa),
     text: 'The bus that goes through the old neighbourhood. You don\'t need to take it — there is a faster route — but occasionally you do. The stops are the same. The faces at each stop have been replaced. The replacement has been happening for longer than the faces you remember were there.',
     choices: null,
     effect: (p) => { p.setMem('s40aa', true) },
@@ -261,7 +261,7 @@ export const EVENTS_SONDER_40 = [
     id: 'sonder_40_ab',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (G.age >= 30 && !G.mem?.s40ab),
+    when: (G) => place.hasPhotographs(G) && (G.age >= 30 && !G.mem?.s40ab),
     text: 'Someone says "I thought of you when I saw this." They show you a small thing — a news story, an object, a photograph. The thing is right: they know what to connect you to. Being known precisely is rarer than it sounds.',
     choices: null,
     effect: (p) => { p.m += 4; p.setMem('s40ab', true) },

@@ -6,7 +6,7 @@
 // THE BODY IN WEATHER (9): seasonal texture
 // All mem-gated single-fire, weight 2, no choices, no new flags, minimal effects.
 
-import { hasFormalJob, isColdCountry, isLiterate, worksInOffice } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_4 = [
 
@@ -154,7 +154,7 @@ export const EVENTS_SONDER_4 = [
     id: 'sonder4_the_colleague_coffee',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => worksInOffice(G) && (!G.mem?.s4_colCoffee && G.age >= 22 && G.career),
+    when: (G) => place.worksInOffice(G) && (!G.mem?.s4_colCoffee && G.age >= 22 && G.career),
     text: 'There is a colleague you get coffee with. Not a friend, exactly — or maybe a friend, but a kind of friend that only exists in the context of this building, this floor, this particular hour. The conversation is easy and contained. If either of you left, you would not stay in touch, probably. This seems fine to both of you. The coffee is good. The hour is good.',
     choices: null,
     effect: (p) => { p.m += 4; p.s += 2; p.setMem('s4_colCoffee', true) },
@@ -236,7 +236,7 @@ export const EVENTS_SONDER_4 = [
     id: 'sonder4_the_long_tenure',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasFormalJob(G) && (!G.mem?.s4_longTenure && G.age >= 55 && G.career),
+    when: (G) => place.hasFormalJob(G) && (!G.mem?.s4_longTenure && G.age >= 55 && G.career),
     text: 'You have worked here for a long time. Long enough that you remember the building before the renovation. Long enough that the people who trained you are retired. Long enough that the work is different from what it was when you started, and you are the person who remembers what it was. The institutional memory of this place is partly you.',
     choices: null,
     effect: (p) => { p.m += 5; p.e += 3; p.karma += 3; p.setMem('s4_longTenure', true) },
@@ -270,7 +270,7 @@ export const EVENTS_SONDER_4 = [
     id: 'sonder4_parents_handwriting',
     phase: 'late_life',
     weight: 2,
-    when: (G) => isLiterate(G) && (!G.mem?.s4_handwriting && G.age >= 55),
+    when: (G) => place.isLiterate(G) && (!G.mem?.s4_handwriting && G.age >= 55),
     text: 'You find something your mother or father wrote. A note, a list, a letter. The handwriting is so specific that you are not prepared for it. The person who made those particular marks on paper: you know their handwriting better than you know most things. You sit with it for a while. It is just a note. It is not just a note.',
     choices: null,
     effect: (p) => { p.m += 6; p.r += 4; p.setMem('s4_handwriting', true) },
@@ -310,7 +310,7 @@ export const EVENTS_SONDER_4 = [
     id: 'sonder4_the_grade_report',
     phase: 'late_life',
     weight: 2,
-    when: (G) => isLiterate(G) && (!G.mem?.s4_gradeReport && G.age >= 60),
+    when: (G) => place.isLiterate(G) && (!G.mem?.s4_gradeReport && G.age >= 60),
     text: 'You find a school report card — yours, from decades ago. The marks are surprising in some way — better or worse than you remember thinking you were. The teacher\'s comment is a sentence about a child you can only partly access now. The handwriting is careful. The teacher believed the sentence was worth writing. You were a child who received this sentence and you are now someone old enough to hold it from the outside.',
     choices: null,
     effect: (p) => { p.m += 5; p.r += 3; p.e += 2; p.setMem('s4_gradeReport', true) },
@@ -411,7 +411,7 @@ export const EVENTS_SONDER_4 = [
     id: 'sonder4_first_snow',
     phase: 'childhood',
     weight: 2,
-    when: (G) => isColdCountry(G) && (!G.mem?.s4_firstSnow &&
+    when: (G) => place.isColdCountry(G) && (!G.mem?.s4_firstSnow &&
       G.age >= 4 && G.age <= 12 &&
       (G.character.country?.region === 'Europe' ||
        G.character.country?.region === 'Central Asia' ||

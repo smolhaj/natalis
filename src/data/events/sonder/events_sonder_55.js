@@ -1,6 +1,6 @@
 // events_sonder_55.js — contemplative layer, weight 2, all mem-gated
 
-import { hasCar, hasFormalJob, hasPhotographs, hasSupermarket, isLiterate } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_55 = [
 
@@ -38,7 +38,7 @@ export const EVENTS_SONDER_55 = [
     id: 'sonder_55_d',
     phase: 'late_life',
     weight: 2,
-    when: (G) => isLiterate(G) && (!G.mem?.s55d),
+    when: (G) => place.isLiterate(G) && (!G.mem?.s55d),
     text: 'You find something you wrote when you were young — a letter, a diary entry, notes from a course you once took. The handwriting is yours but the person is not, quite. The concerns are not the concerns you have now. The thing you were most afraid of is not the thing you would now most fear. You read it the way you read a document from a country you once lived in: recognizing the language, not entirely recognizing the place.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s55d', true) },
@@ -68,7 +68,7 @@ export const EVENTS_SONDER_55 = [
     id: 'sonder_55_h',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (!G.mem?.s55h),
+    when: (G) => place.hasPhotographs(G) && (!G.mem?.s55h),
     text: 'Your body learns something you did not teach it. A gesture, a posture, a way of holding your head when you are thinking. You see it in a photograph or a reflection and recognize it as your mother\'s gesture, your father\'s posture. The inheritance operates below the level of imitation. You did not decide to do this. The body decided to carry forward what the body observed.',
     choices: null,
     effect: (p) => { p.setMem('s55h', true) },
@@ -198,7 +198,7 @@ export const EVENTS_SONDER_55 = [
     id: 'sonder_55_u',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasCar(G) && (!G.mem?.s55u),
+    when: (G) => place.hasCar(G) && (!G.mem?.s55u),
     text: 'A room where something important happened — the waiting room, the kitchen, the office, the car on a particular road. You pass through a room like it now and the original room is present in the new one, just behind it. The event that happened there is not what you remember most vividly. You remember the room: the light, the arrangement of objects, the sound. Rooms hold events differently than memory does.',
     choices: null,
     effect: (p) => { p.setMem('s55u', true) },
@@ -208,7 +208,7 @@ export const EVENTS_SONDER_55 = [
     id: 'sonder_55_v',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasSupermarket(G) && (!G.mem?.s55v),
+    when: (G) => place.hasSupermarket(G) && (!G.mem?.s55v),
     text: 'Someone at the bus stop or the bank or the checkout told you something personal — not because you asked, not because you seemed like someone who wanted to know, but because they needed to say it to someone and you were there. You received it. You did not know what to do with it. You still remember it. They do not remember you.',
     choices: null,
     effect: (p) => { p.setMem('s55v', true) },
@@ -278,7 +278,7 @@ export const EVENTS_SONDER_55 = [
     id: 'sonder_55_ac',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasFormalJob(G) && (!G.mem?.s55ac),
+    when: (G) => place.hasFormalJob(G) && (!G.mem?.s55ac),
     text: 'Responsibility arrived before you were ready for it. The promotion, the assignment, the trust placed in you by someone who believed you could do this. You were not sure you could do this. You did it. Not perfectly — with the particular imperfection of someone who is learning while doing the thing they are supposed to have already learned. This is most of how responsibility works.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s55ac', true) },

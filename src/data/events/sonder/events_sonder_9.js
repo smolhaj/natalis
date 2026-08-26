@@ -3,7 +3,7 @@
 // MONEY AND WANT (9), FRIENDSHIP OVER TIME (9)
 // All mem-gated single-fire, weight 2, no choices, no new flags.
 
-import { hasBooks, hasWeekend, isLiterate, wentToSchool } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_9 = [
 
@@ -55,7 +55,7 @@ export const EVENTS_SONDER_9 = [
     id: 'sonder9_child_memory_school',
     phase: 'midlife',
     weight: 2,
-    when: (G) => wentToSchool(G) && (G.age >= 35 && !G.mem?.s9ChildSchool),
+    when: (G) => place.wentToSchool(G) && (G.age >= 35 && !G.mem?.s9ChildSchool),
     text: 'The school you attended probably looks different now. The classroom had a smell, light, the sound of it at certain times of the afternoon. You cannot reconstruct it exactly. Pieces of it surface in dreams sometimes, reconfigured into impossible architectures that are still recognisably that school.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s9ChildSchool', true) },
@@ -139,7 +139,7 @@ export const EVENTS_SONDER_9 = [
     id: 'sonder9_lang_silence',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasWeekend(G) && (G.age >= 35 && !G.mem?.s9LangSilence),
+    when: (G) => place.hasWeekend(G) && (G.age >= 35 && !G.mem?.s9LangSilence),
     text: 'There are things you do not have words for. Not complicated things — simple states that resist language. The feeling at dusk in a specific season. The particular quality of a Saturday morning. The state just after something ends. You live in these wordless moments more than the worded ones.',
     choices: null,
     effect: (p) => { p.m += 2; p.e += 1; p.setMem('s9LangSilence', true) },
@@ -159,7 +159,7 @@ export const EVENTS_SONDER_9 = [
     id: 'sonder9_lang_reading',
     phase: 'childhood',
     weight: 2,
-    when: (G) => hasBooks(G) && (G.age >= 9 && G.age <= 16 && !G.mem?.s9LangReading),
+    when: (G) => place.hasBooks(G) && (G.age >= 9 && G.age <= 16 && !G.mem?.s9LangReading),
     text: 'You learned to read and then it was transparent — you stopped seeing the letters and saw the meaning instead. You cannot fully remember the transition. At some point the individual marks on the page became words and then the words became invisible and only what they pointed to remained. Learning to read is one of the few things you cannot fully remember having done.',
     choices: null,
     effect: (p) => { p.e += 2; p.setMem('s9LangReading', true) },
@@ -169,7 +169,7 @@ export const EVENTS_SONDER_9 = [
     id: 'sonder9_lang_formal',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => isLiterate(G) && (G.age >= 20 && G.age <= 35 && !G.mem?.s9LangFormal),
+    when: (G) => place.isLiterate(G) && (G.age >= 20 && G.age <= 35 && !G.mem?.s9LangFormal),
     text: 'You have a formal version of how you speak that you deploy for specific situations — official documents, doctors, people with authority. The formal version is recognisably you and also not entirely you. You switch into it without deciding to. The switch is one of the small performances of being a person in a society.',
     choices: null,
     effect: (p) => { p.s += 1; p.setMem('s9LangFormal', true) },

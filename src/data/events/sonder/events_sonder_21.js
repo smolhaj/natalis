@@ -4,7 +4,7 @@
 // a house during illness, objects that outlive their owners, the weight
 // of Sunday, the person who almost spoke, the bus home late, your own handwriting.
 
-import { hasFormalJob, hasWeekend, isLiterate } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -16,7 +16,7 @@ export const EVENTS_SONDER_21 = [
     id: 'sonder21_government_office',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => isLiterate(G) && (!G.mem?.s21GovOffice),
+    when: (G) => place.isLiterate(G) && (!G.mem?.s21GovOffice),
     text: 'The form requires several documents and the documents require a form that refers to the first form. The person at the window has been explaining this for years and explains it without impatience, which is its own kind of endurance. You leave and come back with the correct sequence. This is what bureaucracy is: a system that requires you to understand it before it will process you.',
     choices: null,
     effect: (p) => { p.setMem('s21GovOffice', true) },
@@ -132,7 +132,7 @@ export const EVENTS_SONDER_21 = [
     id: 'sonder21_sunday',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasWeekend(G) && (!G.mem?.s21Sunday),
+    when: (G) => place.hasWeekend(G) && (!G.mem?.s21Sunday),
     text: () => pick([
       'Sunday has a different texture than Saturday. Saturday is the escape from the week. Sunday is the preparation for the next week that arrives at a specific hour — the hour when the week begins to cast its shadow over the rest of the day. You can feel it arriving.',
       'The Sunday of childhood was a thing with sounds and smells — the food that was made on Sunday, the visit that happened on Sunday, the particular rhythm of a day that had a shape other days didn\'t.',
@@ -387,7 +387,7 @@ export const EVENTS_SONDER_21 = [
     id: 'sonder21_year_in_sentence',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasFormalJob(G) && (G.age >= 60 &&
+    when: (G) => place.hasFormalJob(G) && (G.age >= 60 &&
       !G.mem?.s21YearInSentence),
     text: 'You have lived enough years to know that most of them reduce to a sentence when you tell them. A good year, a hard year, the year of the move, the year of the death, the year of the promotion. The sentence is not the year. The year was twelve months of days. But the sentence is what survives. You are making sentences out of years now.',
     choices: null,

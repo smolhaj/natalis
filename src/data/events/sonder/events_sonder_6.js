@@ -3,7 +3,7 @@
 // THE BODY AT WORK (9), WAITING (9)
 // All mem-gated, weight 2, no choices, no new flags, minimal stat effects
 
-import { hasFormalJob, hasHealthcare, hasRunningWater, isColdCountry, isLiterate, isMonsoonCountry } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_6 = [
 
@@ -103,7 +103,7 @@ export const EVENTS_SONDER_6 = [
     id: 'sonder6_weather_monsoon',
     phase: 'childhood',
     weight: 2,
-    when: (G) => (G.season === 'wet' || isMonsoonCountry(G)) && (['India', 'Bangladesh', 'Pakistan', 'Nepal', 'Myanmar', 'Thailand', 'Vietnam', 'Cambodia', 'Indonesia', 'Philippines', 'Sri Lanka'].includes(G.character.country?.name) &&
+    when: (G) => (G.season === 'wet' || place.isMonsoonCountry(G)) && (['India', 'Bangladesh', 'Pakistan', 'Nepal', 'Myanmar', 'Thailand', 'Vietnam', 'Cambodia', 'Indonesia', 'Philippines', 'Sri Lanka'].includes(G.character.country?.name) &&
       !G.mem?.s6WeatherMonsoon),
     text: 'June and the monsoon has arrived. The rain comes in sheets and does not stop and does not stop. The smell before the first rain — petrichor, the word you will learn later — is something you will recognise for the rest of your life as the smell of the year beginning again. The streets become rivers. The mango trees are very green.',
     choices: null,
@@ -114,7 +114,7 @@ export const EVENTS_SONDER_6 = [
     id: 'sonder6_weather_snow_first',
     phase: 'childhood',
     weight: 2,
-    when: (G) => isColdCountry(G) && (['Russia', 'Ukraine', 'Poland', 'Belarus', 'Kazakhstan', 'Mongolia', 'North Korea', 'China', 'Canada', 'Germany', 'Czech Republic', 'Hungary', 'Romania', 'Serbia'].includes(G.character.country?.name) &&
+    when: (G) => place.isColdCountry(G) && (['Russia', 'Ukraine', 'Poland', 'Belarus', 'Kazakhstan', 'Mongolia', 'North Korea', 'China', 'Canada', 'Germany', 'Czech Republic', 'Hungary', 'Romania', 'Serbia'].includes(G.character.country?.name) &&
       !G.mem?.s6WeatherSnow),
     text: 'The first snow of the year. You watched from the window as it started — the change in light that came before it, the first flakes tentative. By morning the world is a version of itself with all its edges rounded. You went outside before anyone else and left the first footprints, which felt briefly like a kind of ownership.',
     choices: null,
@@ -213,7 +213,7 @@ export const EVENTS_SONDER_6 = [
     id: 'sonder6_work_first_day_job',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasRunningWater(G) && (G.career?.id && G.age >= 18 && G.age <= 28 && !G.mem?.s6WorkFirstDay),
+    when: (G) => place.hasRunningWater(G) && (G.career?.id && G.age >= 18 && G.age <= 28 && !G.mem?.s6WorkFirstDay),
     text: 'The first week of the first real job. Everything has a procedure you do not know yet. The bathroom, the key, the way to address the person above you. By the end of the first week you know some of these things and the others you learn by watching, which is the oldest system. You are still mostly performing competence rather than having it. You are not sure yet when that will change.',
     choices: null,
     effect: (p) => { p.e += 2; p.setMem('s6WorkFirstDay', true) },
@@ -276,7 +276,7 @@ export const EVENTS_SONDER_6 = [
     id: 'sonder6_work_last',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasFormalJob(G) && (G.age >= 60 && !G.mem?.s6WorkLast),
+    when: (G) => place.hasFormalJob(G) && (G.age >= 60 && !G.mem?.s6WorkLast),
     text: 'There is a day that will be the last time you do the particular physical thing that has been your life\'s work. You will not know it is the last time when it happens — retirement or incapacity or just the day you stopped. Somewhere in the past, already, you have done this thing for the final time. It is in the past. The hands that did it are these hands.',
     choices: null,
     effect: (p) => { p.r += 4; p.m += 2; p.setMem('s6WorkLast', true) },
@@ -334,7 +334,7 @@ export const EVENTS_SONDER_6 = [
     id: 'sonder6_wait_results',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => isLiterate(G) && (G.age >= 14 && G.age <= 19 && !G.mem?.s6WaitResults),
+    when: (G) => place.isLiterate(G) && (G.age >= 14 && G.age <= 19 && !G.mem?.s6WaitResults),
     text: 'Exam results. You know them or you don\'t; the knowing is in the envelope or on the board and you are not there yet. What you feel in this interval is not suspense but the weight of consequence — the understanding that what is about to be revealed will shape what comes next in ways you cannot yet see and cannot prevent.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s6WaitResults', true) },
@@ -344,7 +344,7 @@ export const EVENTS_SONDER_6 = [
     id: 'sonder6_wait_late_life',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasHealthcare(G) && (G.age >= 62 && !G.mem?.s6WaitLate),
+    when: (G) => place.hasHealthcare(G) && (G.age >= 62 && !G.mem?.s6WaitLate),
     text: 'There is more waiting now than there was. The doctor\'s appointment. The test results. The letter that takes three weeks. You have waited through your whole life — queues, hospitals, news, outcomes — but the waiting of late life has a different quality: you know more of what you are waiting for, and you know that some of what you are waiting for cannot be waited away.',
     choices: null,
     effect: (p) => { p.r += 4; p.m += 2; p.setMem('s6WaitLate', true) },

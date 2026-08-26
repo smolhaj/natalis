@@ -13,7 +13,7 @@
 //
 // All weight 2, mem-gated, no choices, minimal stat effects.
 
-import { hasBooks, hasCafe, hasFlown, hasHealthcare, hasInternet, hasLeisureTravel, hasPhotographs, hasWeekend } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -25,7 +25,7 @@ export const EVENTS_SONDER_19 = [
     id: 's19_overheard_argument',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasCafe(G) && (G.age >= 18 && G.age <= 60 && !G.mem?.s19OverheardArgument),
+    when: (G) => place.hasCafe(G) && (G.age >= 18 && G.age <= 60 && !G.mem?.s19OverheardArgument),
     text: () => pick([
       `The argument happening in the next room, or through the wall, or at the table adjacent in the restaurant. You are not involved and cannot fully hear it — enough to understand the category, not enough to understand the content. The intimacy of an overheard argument between people you cannot see: the tone of each voice, the rhythm of who speaks when, the quality of the silence after the longest speech. You are an accidental witness to something that is not about you and is briefly about you anyway, because you are there.`,
       `The argument through the wall. You know from the voices that it is the couple next door and you know from the rhythm that it is not a new argument. You cannot make out the words. The texture — the specific escalation and the specific withdrawal and the specific long silence — is legible without the content. You have been on the other side of a wall like this. Someone in another room heard that rhythm without the words.`,
@@ -55,7 +55,7 @@ export const EVENTS_SONDER_19 = [
     id: 's19_passing_through',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasFlown(G) && (G.age >= 18 && G.age <= 55 && !G.mem?.s19PassingThrough),
+    when: (G) => place.hasFlown(G) && (G.age >= 18 && G.age <= 55 && !G.mem?.s19PassingThrough),
     text: () => pick([
       `The places you passed through on the way to somewhere else: the train station of a city you did not visit properly, the town where you stopped for fuel and ate something at the roadside and left, the airport terminal in a country you spent six hours in. You have a very thin knowledge of these places — the quality of the light at that hour, the sound of one place you stood, the face of one person you interacted with. This is not knowledge of the place. It is the record of a crossing.`,
       `In transit, you went through a place that people live in. People were going to work. A market was open. A school let out. You moved through it on your way to somewhere else and saw a cross-section of a life that is continuing after you left. The place has not changed because you passed through it. The passing is an event in your history that is not an event in the history of the place.`,
@@ -147,7 +147,7 @@ export const EVENTS_SONDER_19 = [
     id: 's19_family_table',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasLeisureTravel(G) && (G.age >= 32 && !G.mem?.s19FamilyTable),
+    when: (G) => place.hasLeisureTravel(G) && (G.age >= 32 && !G.mem?.s19FamilyTable),
     text: () => pick([
       `The table where your family ate. The specific seating arrangement that was never declared and was never changed. Your place, which was your place because it had always been your place — you cannot identify the moment it became yours. The objects that were always on the table during meals: the salt in its specific container, the thing that held the napkins, the worn patch on the surface at a certain end. You sat at that table for so many meals that the arrangement of it is one of the most precisely remembered spaces you know.`,
       `The meals at the table. Not the significant ones — not the birthday dinners or the holiday feasts — but the ordinary ones, the evening meal repeated across a thousand evenings with the ordinary conversation and the ordinary news and the way each person at the table was present. Those meals were the daily reassertion of the family as a unit. They felt ordinary because they were ordinary. Their absence is the thing that makes the ordinary visible.`,
@@ -162,7 +162,7 @@ export const EVENTS_SONDER_19 = [
     id: 's19_voice_gone',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (G.age >= 50 &&
+    when: (G) => place.hasPhotographs(G) && (G.age >= 50 &&
       (G.flags.has('lost_parent_father') || G.flags.has('lost_parent_mother') || G.flags.has('lost_partner') || G.flags.has('friend_died')) &&
       !G.mem?.s19VoiceGone),
     text: () => pick([
@@ -275,7 +275,7 @@ export const EVENTS_SONDER_19 = [
     id: 's19_library_feeling',
     phase: 'childhood',
     weight: 2,
-    when: (G) => hasBooks(G) && (G.age >= 8 && G.age <= 22 && !G.mem?.s19LibraryFeeling),
+    when: (G) => place.hasBooks(G) && (G.age >= 8 && G.age <= 22 && !G.mem?.s19LibraryFeeling),
     text: () => pick([
       `The feeling of a public library: a place that contains more than you can read in a lifetime, organised in a system you have partially learned to navigate, where the expectation is not that you will read everything but that you are free to read anything. The library is one of the stranger institutions of civic life — a building full of things that are free for the taking, on condition that you bring them back. The trust on which this rests is mostly honoured.`,
       `The library in your town or your school or your neighbourhood. The smell of it, which is the smell of paper and controlled air and a kind of quiet. You learned early to navigate the system — the numbers on the spines, the way the sections divided — and the navigation was one of the first intellectual skills you acquired that was genuinely useful. You can still navigate it. The system has not changed. You have grown taller than the shelves you first learned on.`,
@@ -310,7 +310,7 @@ export const EVENTS_SONDER_19 = [
     id: 's19_sunday_morning',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasWeekend(G) && (G.age >= 28 && G.age <= 60 && !G.mem?.s19SundayMorning),
+    when: (G) => place.hasWeekend(G) && (G.age >= 28 && G.age <= 60 && !G.mem?.s19SundayMorning),
     text: () => pick([
       `Sunday morning has a light that is specific to Sunday morning — lighter than a Monday, slower than a Saturday. The street is quieter than other mornings. The absence of the weekday urgency produces a particular quality of time. You have known this quality all your adult life. It varies by the circumstances — a Sunday morning when you have nowhere to be is different from a Sunday morning when you have somewhere to be at noon — but the baseline quality persists regardless of what fills it.`,
       `The Sunday morning sounds: the neighbourhood at a slower frequency. The shops that are closed. The particular quality of a street when most of the people on it are not going to work. Somewhere there are bells, or there are not bells, but the expectation of bells is part of the texture regardless. You have spent hundreds of Sunday mornings in this specific slightly-slower time. The Sunday morning of your childhood and the Sunday morning of now are the same phenomenon at different ages.`,
@@ -411,7 +411,7 @@ export const EVENTS_SONDER_19 = [
     id: 's19_boredom_produces',
     phase: 'childhood',
     weight: 2,
-    when: (G) => hasInternet(G) && (G.age >= 8 && G.age <= 16 && !G.mem?.s19BoredomProduces),
+    when: (G) => place.hasInternet(G) && (G.age >= 8 && G.age <= 16 && !G.mem?.s19BoredomProduces),
     text: () => pick([
       `The specific boredom of childhood that was not scheduled away. The summer afternoon with no program, the rainy day with nothing arranged, the long stretch of time that required you to find something to do with it or remain in the boredom. What the boredom produced: the invented games, the elaborate structures built from available materials, the stories that had to exist because there was nothing else to do with the afternoon. The boredom was the condition that produced the invention.`,
       `Before the screen was always available, boredom lasted long enough to become something else. Not something better necessarily — just something different. The imagination found its way in through the gap that boredom opened. The gap is harder to access now. The gap was not comfortable. The gap was also where certain things were learned that the absence of the gap has made less common.`,
@@ -426,7 +426,7 @@ export const EVENTS_SONDER_19 = [
     id: 's19_hospital_ward_night',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasHealthcare(G) && (G.age >= 35 &&
+    when: (G) => place.hasHealthcare(G) && (G.age >= 35 &&
       (G.flags.has('cancer_survivor') || G.flags.has('lost_parent_father') || G.flags.has('lost_parent_mother') || G.flags.has('lost_partner')) &&
       !G.mem?.s19HospitalWardNight),
     text: () => pick([

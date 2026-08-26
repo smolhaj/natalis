@@ -1,6 +1,6 @@
 // events_sonder_43.js — contemplative prose layer, weight 2, no choices, no new flags
 
-import { hasBooks, hasHealthcare, isLiterate, isUrban, worksInOffice } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -23,7 +23,7 @@ export const EVENTS_SONDER_43 = [
     id: 'sonder_43_b',
     phase: 'midlife',
     weight: 2,
-    when: (G) => isLiterate(G) && (G.age >= 40 && G.age <= 55 && !G.mem?.s33b),
+    when: (G) => place.isLiterate(G) && (G.age >= 40 && G.age <= 55 && !G.mem?.s33b),
     text: () => pick([
       'At the back of the wardrobe are clothes you are not going to wear again and have not yet decided about. The category: things you cannot quite release, held in a space between the present and a past self who fits into them.',
       'Your handwriting has changed. Compared to letters from twenty years ago — the slope is different, the letters more compressed. You do not remember the change happening. It just became this, at some point, without announcement.',
@@ -153,7 +153,7 @@ export const EVENTS_SONDER_43 = [
     id: 'sonder_43_m',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => isUrban(G) && (G.age >= 18 && G.age <= 26 && !G.mem?.s33m),
+    when: (G) => place.isUrban(G) && (G.age >= 18 && G.age <= 26 && !G.mem?.s33m),
     text: () => pick([
       'Living alone, the first time. The specific freedom and the loneliness, which were not opposites. The sound of the apartment when you came home to it. Learning the difference between alone-and-fine and alone-and-not-fine, and that they could be in the same evening.',
       'When you first arrived, the city. The feeling of newness that fades so quickly — the streets you had to concentrate to navigate, the landmarks you used as reference points. Within six months you stopped seeing them. Within a year they were invisible.',
@@ -166,7 +166,7 @@ export const EVENTS_SONDER_43 = [
     id: 'sonder_43_n',
     phase: 'midlife',
     weight: 2,
-    when: (G) => worksInOffice(G) && (G.age >= 45 && G.age <= 60 && !G.mem?.s33n),
+    when: (G) => place.worksInOffice(G) && (G.age >= 45 && G.age <= 60 && !G.mem?.s33n),
     text: () => pick([
       'You stopped assuming you would live forever. Not a dramatic moment — not a diagnosis or an accident. Just a Tuesday when you understood, without melodrama, that your years are finite and countable. The strangeness is that it changed less than you expected.',
       'A meeting was called because of you; the problem was you; the people in the room had decided something before you arrived. You understood this from the arrangement of the chairs. You have been in the other position — the one deciding before the meeting. The symmetry is uncomfortable.',
@@ -192,7 +192,7 @@ export const EVENTS_SONDER_43 = [
     id: 'sonder_43_p',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasHealthcare(G) && (G.age >= 63 && !G.mem?.s33p),
+    when: (G) => place.hasHealthcare(G) && (G.age >= 63 && !G.mem?.s33p),
     text: () => pick([
       'The stranger glimpsed through a window across a courtyard: a woman putting on an earring, a man standing very still looking at the floor, a child doing homework at a kitchen table at ten p.m. Their entire life is invisible to you except this thirty-second window, which you have now. They do not know you are watching.',
       'Names come to you now that did not come to you then. The year your mother died: you remember the room but not the name of the nurse who held your hand in the corridor. Now, inexplicably, the name arrives. Maureen. You have no idea why it comes now and not then.',
@@ -231,7 +231,7 @@ export const EVENTS_SONDER_43 = [
     id: 'sonder_43_s',
     phase: 'childhood',
     weight: 2,
-    when: (G) => hasBooks(G) && (G.age >= 6 && G.age <= 11 && !G.mem?.s33s),
+    when: (G) => place.hasBooks(G) && (G.age >= 6 && G.age <= 11 && !G.mem?.s33s),
     text: () => pick([
       'A toy, or a book, or a game was everything to you for one year, and you have not thought about it since. The intensity of that attachment — the way it occupied imagination entirely — has nothing to do with how long it lasted.',
       'Adults kept information from you. Some of it you found out later and it explained things. Some of it you never found out and it remains a gap — the version of an event you assembled from what you were allowed to know.',

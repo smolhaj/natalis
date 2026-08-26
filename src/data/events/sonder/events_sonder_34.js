@@ -5,7 +5,7 @@
 // the word you mispronounced for years, the road you always meant to take,
 // the sound of an empty house, what the hands remember.
 
-import { hasElectricity, hasPhotographs, hasTV, isUrban } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -93,7 +93,7 @@ export const EVENTS_SONDER_34 = [
     id: 'sonder34_empty_house_sound',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasElectricity(G) && (!G.mem?.s34EmptyHouseSound),
+    when: (G) => place.hasElectricity(G) && (!G.mem?.s34EmptyHouseSound),
     text: () => pick([
       'An empty house sounds different from a house with people in it. The difference is not absence of voice — it is something structural, the way the building sits with its own sounds when no one is there to cover them. The settling, the refrigerator, the thing that ticks for no obvious reason. You know which sounds are yours.',
       'Coming home to an empty house has a quality that coming home to a full house does not. The quality is not simply loneliness, though loneliness can be inside it. It is also a kind of belonging — the house recognising you as the one it has been waiting for.',
@@ -145,7 +145,7 @@ export const EVENTS_SONDER_34 = [
     id: 'sonder34_window_across_the_way',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasTV(G) && (!G.mem?.s34WindowAcross),
+    when: (G) => place.hasTV(G) && (!G.mem?.s34WindowAcross),
     text: () => pick([
       'From your window you can see a window in the building across the way. The light in it goes on and off at intervals that suggest a life with its own schedule, its own reasons for being awake at eleven or midnight or two. You know nothing about the life. You have watched the light for a long time.',
       'The lighted window across the way: someone in it, or the light left on, or a television. The window is not yours and the life behind it is not yours and the ordinary miracle of another specific life going on behind a specific window has become ordinary enough that you only sometimes notice it.',
@@ -249,7 +249,7 @@ export const EVENTS_SONDER_34 = [
     id: 'sonder34_the_photograph_not_taken',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (!G.mem?.s34PhotographNotTaken),
+    when: (G) => place.hasPhotographs(G) && (!G.mem?.s34PhotographNotTaken),
     text: () => pick([
       'There are moments you decided not to photograph because you wanted to be in them without the camera between you and them. The moments are not documented. Whether the decision was right — whether being present was better than having the record — you cannot evaluate because you cannot compare the two versions of what happened.',
       'The photograph you did not take is always the more vivid one in memory, which is partly because memory has nothing to compete with. The photographs you took are accurate about specific surfaces. The things you did not photograph are the ones the memory renders in full.',
@@ -275,7 +275,7 @@ export const EVENTS_SONDER_34 = [
     id: 'sonder34_the_route_by_heart',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => isUrban(G) && (!G.mem?.s34RouteByHeart),
+    when: (G) => place.isUrban(G) && (!G.mem?.s34RouteByHeart),
     text: () => pick([
       'There is a route you know so well that you can travel it without looking, the body navigating by accumulated repetition. You have walked or driven or taken transit this way so many times that the route is in your feet or your hands or your sense of duration. When you finally pay attention to it, it looks slightly different from the route you have been travelling in your mind.',
       'The walk you have taken so many times: the uneven pavement at one corner, the smell from the bakery that appears three-quarters of the way, the turn that comes earlier than it seems like it should. The route is a different kind of knowledge from directions. You could not describe it but your body would not get lost.',

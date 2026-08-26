@@ -6,7 +6,7 @@
 // not taken, and the body becoming a record.
 // Weight 2, mem-gated, no choices, no new flags.
 
-import { hasFormalJob, hasPhotographs, isLiterate } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -74,7 +74,7 @@ export const EVENTS_SONDER_27 = [
     id: 'sdr27_peer_age',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (G.age >= 40 && !G.mem?.sdr27PeerAge),
+    when: (G) => place.hasPhotographs(G) && (G.age >= 40 && !G.mem?.sdr27PeerAge),
     text: () => pick([
       'An old friend, someone you have known since you were both young, and the face is the face you know but it has done things over the decades that faces do. You are seeing your own age in theirs — which is a more legible version of a thing that is harder to see in the mirror, which shows you only the one angle.',
       'A photograph from a reunion, a gathering, an event where the people you grew up with are all in the same room. The photograph lands differently than the event did. In the photograph you can see all of you at once, see what has happened to all of those faces, see your own face in the company of the others. It takes a moment.',
@@ -118,7 +118,7 @@ export const EVENTS_SONDER_27 = [
     id: 'sdr27_object_outlives',
     phase: 'late_life',
     weight: 2,
-    when: (G) => isLiterate(G) && (G.age >= 55 && !G.mem?.sdr27ObjectOutlives),
+    when: (G) => place.isLiterate(G) && (G.age >= 55 && !G.mem?.sdr27ObjectOutlives),
     text: () => pick([
       'The objects will outlive you. This is normal and always has been — the furniture, the photographs, the books with your handwriting in the margins. They will exist in a room after you no longer do. Someone will decide what to keep and what to let go. The choosing is a form of interpretation. You do not get to supervise it.',
       'You are thinking about what to do with the things that matter. Not practically — practically is understood — but what they will mean to whoever receives them, whether the meaning is transferable, whether the object carries the history or only carries the physical form of it. The second option is more likely. This is not a tragedy. It is the nature of objects.',
@@ -148,7 +148,7 @@ export const EVENTS_SONDER_27 = [
     id: 'sdr27_career_end_approaching',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasFormalJob(G) && (G.career && G.age >= 58 && !G.mem?.sdr27CareerEndApproach),
+    when: (G) => place.hasFormalJob(G) && (G.career && G.age >= 58 && !G.mem?.sdr27CareerEndApproach),
     text: () => pick([
       'The retirement is approaching in the way that things you have not quite looked at directly approach — visible in the peripheral vision for some time before you turn toward them. A number of years. A date. A conversation with HR that has to happen. The work that has been the structure of most of your waking hours will end, and what will fill that structure is not yet established.',
       'New people are coming into the field with knowledge you do not have and approaches you find interesting and sometimes baffling. You are one of the experienced people now. The balance of what you give and receive has shifted over a career in the way that careers shift. The end of the career is visible.',
@@ -207,7 +207,7 @@ export const EVENTS_SONDER_27 = [
     id: 'sdr27_no_photo',
     phase: null,
     weight: 2,
-    when: (G) => hasPhotographs(G) && (G.age >= 25 && !G.mem?.sdr27NoPhoto),
+    when: (G) => place.hasPhotographs(G) && (G.age >= 25 && !G.mem?.sdr27NoPhoto),
     text: () => pick([
       'The moment you didn\'t photograph. The light, the arrangement, the face — all of it was there and you were there and you didn\'t take the photograph because you were in it too completely to step outside it for the picture. The moment is gone. The memory is there and is not the same as the photograph would have been, which is the reason you didn\'t take it.',
       'The photograph you wish you had: a specific moment from years ago, before the phone was the camera was always in your pocket. The moment exists clearly in memory and is losing definition around the edges the way all memories do without a photograph to anchor them. You remember the room and the people and less and less of the specific detail.',

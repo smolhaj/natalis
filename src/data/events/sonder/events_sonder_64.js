@@ -1,7 +1,7 @@
 // Sonder module 64 — 30 contemplative events
 // Weight 2, null choices, all mem-gated. Universal human texture.
 
-import { hasPhone, isColdCountry } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_64 = [
 
@@ -20,7 +20,7 @@ export const EVENTS_SONDER_64 = [
     phase: 'late_life',
     weight: 2,
     isGlimpse: true,
-    when: (G) => hasPhone(G) && (!G.mem?.s64b),
+    when: (G) => place.hasPhone(G) && (!G.mem?.s64b),
     text: 'At the next table someone is laughing at something on their phone. The laugh is real and private and has nothing to do with you and is still briefly pleasant to be near. Unearned proximity to other people\'s joy is a small resource.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s64b', true) },
@@ -130,7 +130,7 @@ export const EVENTS_SONDER_64 = [
     id: 'sonder_64_n',
     phase: 'childhood',
     weight: 2,
-    when: (G) => isColdCountry(G) && (!G.mem?.s64n),
+    when: (G) => place.isColdCountry(G) && (!G.mem?.s64n),
     text: 'The first time you saw the ocean — or the first time you saw snow, or the first time you were in a city much larger than your own — the scale of it produced something that was not wonder and was not fear but was both at the same time, before the two separated into individual feelings.',
     choices: null,
     effect: (p) => { p.m += 3; p.setMem('s64n', true) },

@@ -1,7 +1,7 @@
 // Sonder module 61 — 30 contemplative events
 // Weight 2, null choices, all mem-gated. Universal human texture.
 
-import { isUrban } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_61 = [
 
@@ -59,7 +59,7 @@ export const EVENTS_SONDER_61 = [
     id: 'sonder_61_f',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => isUrban(G) && (!G.mem?.s61f),
+    when: (G) => place.isUrban(G) && (!G.mem?.s61f),
     text: 'The walk home after the bad news took forty minutes. You remember the street more precisely than you remember what was said. The tree with the yellow leaves at the corner. The smell of something frying in a window. The pavement.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s61f', true) },

@@ -1,6 +1,6 @@
 // events_sonder_33.js — contemplative prose layer, weight 2, no choices, no new flags
 
-import { hasBooks, hasPhone, hasPhotographs, hasWeekend, isLiterate, worksInOffice } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -10,7 +10,7 @@ export const EVENTS_SONDER_33 = [
     id: 'sonder_33_a',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => isLiterate(G) && (G.age >= 20 && G.age <= 32 && !G.mem?.s33a),
+    when: (G) => place.isLiterate(G) && (G.age >= 20 && G.age <= 32 && !G.mem?.s33a),
     text: () => pick([
       'You wrote it and did not send it. You reread it once and understood what you actually meant, and then you did not send it, but you kept what you understood.',
       'Someone else in the queue has been waiting longer than you have. You wonder about the thing they are waiting for. The queue moves.',
@@ -23,7 +23,7 @@ export const EVENTS_SONDER_33 = [
     id: 'sonder_33_b',
     phase: 'midlife',
     weight: 2,
-    when: (G) => worksInOffice(G) && (G.age >= 40 && G.age <= 54 && !G.mem?.s33b),
+    when: (G) => place.worksInOffice(G) && (G.age >= 40 && G.age <= 54 && !G.mem?.s33b),
     text: () => pick([
       'The recurring sensation of having forgotten something important, followed by the knowledge that you have not — that this is just a feeling the morning produces.',
       'A decade alongside the same person and you still do not know them well. The knowledge of their professional self is complete. The rest of them is entirely unknown to you.',
@@ -101,7 +101,7 @@ export const EVENTS_SONDER_33 = [
     id: 'sonder_33_j',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasBooks(G) && (G.age >= 36 && G.age <= 50 && !G.mem?.s33j),
+    when: (G) => place.hasBooks(G) && (G.age >= 36 && G.age <= 50 && !G.mem?.s33j),
     text: () => pick([
       'You reach for something and then do not need it. The reflex that outlasted its original purpose. The hand that knows where something used to be.',
       'A book has been on the shelf unread for fifteen years and you could reach for it now. You look at it. You put it back. The time for that book is not this week.',
@@ -179,7 +179,7 @@ export const EVENTS_SONDER_33 = [
     id: 'sonder_33_r',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => hasBooks(G) && (G.age >= 15 && G.age <= 20 && !G.mem?.s33r),
+    when: (G) => place.hasBooks(G) && (G.age >= 15 && G.age <= 20 && !G.mem?.s33r),
     text: () => pick([
       'You are reading and the reading is going into a place that is not quite memory and not quite imagination. The book is doing something to you. Later you will not be able to explain what.',
       'At one moment you trusted an adult more than you trusted your parents. The adult probably does not know this. The moment was real.',
@@ -218,7 +218,7 @@ export const EVENTS_SONDER_33 = [
     id: 'sonder_33_u',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasWeekend(G) && (G.age >= 42 && G.age <= 56 && !G.mem?.s33u),
+    when: (G) => place.hasWeekend(G) && (G.age >= 42 && G.age <= 56 && !G.mem?.s33u),
     text: () => pick([
       'An evening you did not plan became the evening you remember. No event. Just the light and the people and the conversation that went longer than anyone expected.',
       'Your household has a small ceremony — the way Sunday morning works, the particular thing you do before a journey, the routine that is more than a routine. It is not a ritual because no one named it. It is a ritual.',
@@ -257,7 +257,7 @@ export const EVENTS_SONDER_33 = [
     id: 'sonder_33_x',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasPhotographs(G) && (G.age >= 48 && G.age <= 62 && !G.mem?.s33x),
+    when: (G) => place.hasPhotographs(G) && (G.age >= 48 && G.age <= 62 && !G.mem?.s33x),
     text: () => pick([
       'The photograph from the year that turned out to be the last year before everything changed. No one in the photograph knew this. Everyone is just standing there, in the year, not yet knowing.',
       'You have repaired something — a relationship, an object, a habit — that you thought was broken beyond repair. The repair required longer than you expected and is less perfect than new. It holds.',
@@ -270,7 +270,7 @@ export const EVENTS_SONDER_33 = [
     id: 'sonder_33_y',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasPhone(G) && (G.age >= 26 && G.age <= 38 && !G.mem?.s33y),
+    when: (G) => place.hasPhone(G) && (G.age >= 26 && G.age <= 38 && !G.mem?.s33y),
     text: () => pick([
       'The voice on the phone that sounds exactly like the person you were expecting and is not that person. The disorientation of a fraction of a second.',
       'You are good at something that you did not try to become good at. It developed while you were attending to other things. You have been doing it for so long the goodness at it is just part of you now.',
@@ -296,7 +296,7 @@ export const EVENTS_SONDER_33 = [
     id: 'sonder_33_aa',
     phase: 'midlife',
     weight: 2,
-    when: (G) => worksInOffice(G) && (G.age >= 34 && G.age <= 48 && !G.mem?.s33aa),
+    when: (G) => place.worksInOffice(G) && (G.age >= 34 && G.age <= 48 && !G.mem?.s33aa),
     text: () => pick([
       'The stranger whose face you have seen every week for two years — on the same commute, in the same coffee shop — and with whom you have never exchanged more than a nod. A kind of intimacy without introduction.',
       'A child asked something you could not answer and you have been thinking about it since. It was a simple question. You did not have the answer. You still do not.',

@@ -6,7 +6,7 @@
 //   SOUND AND MUSIC — ambient sound, the songs that date a year
 // All mem-gated to fire once. Weight 2. No new flags. Minimal effects.
 
-import { hasCafe, hasRadio } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_7 = [
 
@@ -82,7 +82,7 @@ export const EVENTS_SONDER_7 = [
     id: 'sonder7_food_smell_of_home',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasCafe(G) && (G.age >= 22 && G.age <= 40 &&
+    when: (G) => place.hasCafe(G) && (G.age >= 22 && G.age <= 40 &&
       !G.mem?.s7FoodSmellHome),
     text: 'You are somewhere — a restaurant, a market, someone else\'s kitchen — and the smell is exactly the smell of your childhood home. Not similar. Exactly. You stop. People move around you. The smell lasts for a moment and then you are in the present again, holding whatever you were holding, having been somewhere else for three seconds without leaving.',
     choices: null,
@@ -106,7 +106,7 @@ export const EVENTS_SONDER_7 = [
     id: 'sonder7_food_first_restaurant',
     phase: 'childhood',
     weight: 2,
-    when: (G) => hasCafe(G) && (G.age >= 8 && G.age <= 13 &&
+    when: (G) => place.hasCafe(G) && (G.age >= 8 && G.age <= 13 &&
       !G.mem?.s7FoodRestaurant),
     text: 'The first time in a restaurant you are uncertain about the order of things. Someone else brings the food. You are allowed to choose from a page. You do not choose the cheapest thing because you have been told you can choose what you want, but you choose the second cheapest because you cannot fully believe it. The food arrives and it is good. You do not fully relax until you are back outside.',
     choices: null,
@@ -304,7 +304,7 @@ export const EVENTS_SONDER_7 = [
     id: 'sonder7_street_power_out',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasRadio(G) && (['developing_urban', 'developing_unstable', 'subsaharan', 'conflict_zone', 'post_soviet'].includes(G.character?.archetype) &&
+    when: (G) => place.hasRadio(G) && (['developing_urban', 'developing_unstable', 'subsaharan', 'conflict_zone', 'post_soviet'].includes(G.character?.archetype) &&
       G.age >= 25 &&
       !G.mem?.s7StreetPowerOut),
     text: 'The power goes out and the street rearranges itself. People come outside who were not outside. Candles appear in windows. The street is quieter and also more present to itself — the sounds that the electricity masked come back: insects, wind, distant conversation, a radio running on batteries. You have lived through enough power cuts that you know what to do and what to do without. The cut is an inconvenience. It is also, briefly, a different kind of evening.',
@@ -374,7 +374,7 @@ export const EVENTS_SONDER_7 = [
     id: 'sonder7_sound_dated_by_song',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasRadio(G) && (G.age >= 35 &&
+    when: (G) => place.hasRadio(G) && (G.age >= 35 &&
       !G.mem?.s7SoundDated),
     text: 'A song comes on — a shop, a passing car, a radio someone has on in another room — and you are immediately a different age, in a different year, in a specific afternoon you had not thought of in a long time. The memory is not summoned by thinking but by the song arriving before your defences could be organised. This is how music stores time differently from photographs: you do not look at it. It comes in through the part of you that was open.',
     choices: null,

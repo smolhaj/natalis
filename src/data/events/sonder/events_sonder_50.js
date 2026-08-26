@@ -1,6 +1,6 @@
 // events_sonder_50.js — contemplative layer, weight 2, all mem-gated
 
-import { hasCafe, hasTV, wentToSchool, worksInOffice } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_50 = [
 
@@ -28,7 +28,7 @@ export const EVENTS_SONDER_50 = [
     id: 'sonder_50_d',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => wentToSchool(G) && (!G.mem?.s50d),
+    when: (G) => place.wentToSchool(G) && (!G.mem?.s50d),
     text: 'A subject at school seems to have nothing to do with you and then, one afternoon, seems to have been about you all along. You don\'t know what changed. The material didn\'t change. You are not sure if something in the material reached you or if something in you reached the material.',
     choices: null,
     effect: (p) => { p.e += 2; p.setMem('s50d', true) },
@@ -58,7 +58,7 @@ export const EVENTS_SONDER_50 = [
     id: 'sonder_50_i',
     phase: 'midlife',
     weight: 2,
-    when: (G) => worksInOffice(G) && (!G.mem?.s50i),
+    when: (G) => place.worksInOffice(G) && (!G.mem?.s50i),
     text: 'Someone never speaks in meetings and then, when they do, says the thing everyone else was circling. The observation is exact. The meeting shifts. They go back to not speaking. You are not sure whether they prefer the silence or have simply learned that speaking once with precision costs less than speaking often with less.',
     choices: null,
     effect: (p) => { p.setMem('s50i', true) },
@@ -98,7 +98,7 @@ export const EVENTS_SONDER_50 = [
     id: 'sonder_50_n',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasTV(G) && (!G.mem?.s50n),
+    when: (G) => place.hasTV(G) && (!G.mem?.s50n),
     text: 'You remember a programme from childhood clearly and cannot verify any of it. You remember it with specificity — the colours, a phrase, the feeling of watching it in a particular room. No record of it seems to exist. Either the memory is composed, or it existed and did not survive, or it exists and you are searching for it incorrectly. The memory is equally clear in all three versions.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s50n', true) },
@@ -198,7 +198,7 @@ export const EVENTS_SONDER_50 = [
     id: 'sonder_50_y',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasCafe(G) && (!G.mem?.s50y),
+    when: (G) => place.hasCafe(G) && (!G.mem?.s50y),
     text: 'A place you went to for years has closed. Not a significant restaurant — a practical one, a reliable one, one that you did not appreciate as a specific place until it stopped being there. The specific soup. The specific table by the window. The specific price that you knew. The building is now something else.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s50y', true) },
@@ -218,7 +218,7 @@ export const EVENTS_SONDER_50 = [
     id: 'sonder_50_ab',
     phase: 'childhood',
     weight: 2,
-    when: (G) => hasTV(G) && (!G.mem?.s50ab),
+    when: (G) => place.hasTV(G) && (!G.mem?.s50ab),
     text: 'Being ill as a child had its own weather — the particular texture of days that are outside normal days. The permission to lie on the sofa. The different light. The television at unusual hours. The body that is unwell and also in a container of slight exemption from the usual requirements. You are not glad to be ill but you notice the register of it.',
     choices: null,
     effect: (p) => { p.setMem('s50ab', true) },

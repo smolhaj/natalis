@@ -1,6 +1,6 @@
 // events_sonder_49.js — contemplative layer, weight 2, all mem-gated
 
-import { hasBooks, hasBus, hasHealthcare, wentToSchool, worksInOffice } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_49 = [
 
@@ -48,7 +48,7 @@ export const EVENTS_SONDER_49 = [
     id: 'sonder_49_e',
     phase: 'childhood',
     weight: 2,
-    when: (G) => wentToSchool(G) && (!G.mem?.s49e),
+    when: (G) => place.wentToSchool(G) && (!G.mem?.s49e),
     text: 'The adult who takes you seriously when the other adults don\'t — not your parents, not your teacher, a person at the edge of your life who treats what you say as something worth responding to. You remember them specifically. They probably do not know what they did.',
     choices: null,
     effect: (p) => { p.m += 3; p.e += 2; p.setMem('s49e', true) },
@@ -68,7 +68,7 @@ export const EVENTS_SONDER_49 = [
     id: 'sonder_49_g',
     phase: 'midlife',
     weight: 2,
-    when: (G) => worksInOffice(G) && (!G.mem?.s49g),
+    when: (G) => place.worksInOffice(G) && (!G.mem?.s49g),
     text: 'The thing you almost said in the meeting but didn\'t. It would have been right. You thought it through quickly — the room, the people in it, what would follow from saying it — and chose silence. Walking home you say it out loud to yourself, to the empty street, where it sounds exactly as right as it would have sounded in the room. The room is behind you.',
     choices: null,
     effect: (p) => { p.setMem('s49g', true) },
@@ -158,7 +158,7 @@ export const EVENTS_SONDER_49 = [
     id: 'sonder_49_p',
     phase: 'late_life',
     weight: 2,
-    when: (G) => hasHealthcare(G) && (!G.mem?.s49p),
+    when: (G) => place.hasHealthcare(G) && (!G.mem?.s49p),
     text: 'The disease your generation gets: not all of you, but enough that it has a pattern. The specific one. The one the doctor treats as routine because it is routine at your age, but which is not routine to you because you are the one who has it. The statistics are about populations. You are inside the statistic.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s49p', true) },
@@ -178,7 +178,7 @@ export const EVENTS_SONDER_49 = [
     id: 'sonder_49_r',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => hasBooks(G) && (!G.mem?.s49r),
+    when: (G) => place.hasBooks(G) && (!G.mem?.s49r),
     text: 'The book you read at exactly the right age. Not the right book for reading in general — the right book for the thing you were in the middle of at that specific moment. Someone gave it to you or you found it by accident. The book knew something you didn\'t know you needed to know yet.',
     choices: null,
     effect: (p) => { p.e += 3; p.setMem('s49r', true) },
@@ -239,7 +239,7 @@ export const EVENTS_SONDER_49 = [
     phase: 'midlife',
     weight: 2,
     isGlimpse: true,
-    when: (G) => hasBus(G) && (!G.mem?.s49y),
+    when: (G) => place.hasBus(G) && (!G.mem?.s49y),
     text: 'The stranger on the bus who falls asleep and whose head tilts against your shoulder. You do not move. You are not sure why you do not move — whether it is kindness, or whether movement would cost more attention than staying still. They wake at their stop, apologise, leave. You have held a stranger\'s sleep for twelve minutes.',
     choices: null,
     effect: (p) => { p.karma += 2; p.setMem('s49y', true) },

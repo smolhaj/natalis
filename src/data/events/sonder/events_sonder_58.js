@@ -1,6 +1,6 @@
 // events_sonder_58.js — contemplative layer, weight 2, all mem-gated
 
-import { hasBooks, hasHealthcare } from './_sonderGuards.js'
+import { place } from './_sonderGuards.js'
 
 export const EVENTS_SONDER_58 = [
 
@@ -118,7 +118,7 @@ export const EVENTS_SONDER_58 = [
     id: 'sonder_58_o',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasHealthcare(G) && (G.age >= 38 && G.age <= 54 && !G.mem?.s58o),
+    when: (G) => place.hasHealthcare(G) && (G.age >= 38 && G.age <= 54 && !G.mem?.s58o),
     text: 'The appointment you have been moving forward for two years: the dentist, the dermatologist, the financial advisor, the difficult conversation. You move it because you are busy and then because the original urgency has faded and then because moving it has become its own habit. One day you will stop moving it. You know this. The appointment waits on the calendar like something you have agreed to feel guilty about.',
     choices: null,
     effect: (p) => { p.setMem('s58o', true) },
@@ -158,7 +158,7 @@ export const EVENTS_SONDER_58 = [
     id: 'sonder_58_t',
     phase: 'midlife',
     weight: 2,
-    when: (G) => hasBooks(G) && (G.age >= 36 && G.age <= 50 && !G.mem?.s58t),
+    when: (G) => place.hasBooks(G) && (G.age >= 36 && G.age <= 50 && !G.mem?.s58t),
     text: 'You have been meaning to finish it for seven years. You know what happens — you have looked at the last chapter. What you cannot do is read from where you stopped in chapter eight, because chapter eight requires a state of mind that existed in the year you put it down, and the state of mind and the year are both gone. The book is still on the shelf. You mean to go back to it. This means something about you that you would rather not examine.',
     choices: null,
     effect: (p) => { p.setMem('s58t', true) },
