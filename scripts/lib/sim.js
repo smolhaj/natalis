@@ -88,10 +88,11 @@ export async function runSimulation({
   stubStorage()
   // The engine is under active change; a module that will not even load should
   // be reported as one clear line, not as a stack trace from inside a harness.
-  let tick, resolveAutoEvent, resolveChoice, useGameStore
+  let tick, resolveAutoEvent, resolveChoice, useGameStore, classifyEvent
   try {
     ;({ tick, resolveAutoEvent, resolveChoice } = await import('../../src/engine/tick.js'))
     ;({ useGameStore } = await import('../../src/store/gameStore.js'))
+    ;({ classifyEvent } = await import('../../src/data/events.js'))
   } catch (err) {
     return {
       fatal: `the engine could not be loaded: ${err.message}`,
@@ -141,6 +142,14 @@ export async function runSimulation({
           const ev = s.pendingEvent
           if (ev) {
             totals.events++; rec.events++
+            // Classify before reading the register. Events reached through the
+            // QUEUE return from getNextEvent before the pool is classified, and
+            // so do the ones built at runtime (illness_diabetes_53, the parole
+            // event, anything injected by a choice). Defaulting those to
+            // 'universal' reported the generic register at 15% of every year
+            // when a direct count of fired events puts it at 3.8% — the report
+            // was measuring its own blind spot.
+            classifyEvent(ev)
             const register = ev.register ?? (ev.contemplative ? 'contemplative' : 'universal')
             // 'contemplative' is counted once, below — incrementing it here too
             // would report the layer at twice its real share.

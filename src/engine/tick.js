@@ -737,11 +737,31 @@ export function getNextEvent(state) {
   const shares = REGISTER_SHARES[state.mode === 'passive' ? 'passive' : 'active']
   const live = Object.keys(buckets).filter(k => buckets[k].length > 0)
   if (live.length === 0) return null
-  const totalShare = live.reduce((s, k) => s + shares[k], 0)
+
+  // Renormalise over the registers that actually have something eligible — but
+  // never into `universal`. Contemplative is on a three-year cooldown and the
+  // anchored and earned buckets genuinely empty out in early childhood or in a
+  // life that has not accumulated much yet, and a flat renormalisation handed
+  // all of that reserved share to the one register whose entire definition is
+  // "could fire for anyone". There are 90 such events against ~7,950, and they
+  // were taking 15% of every year against a 6% target. Universal keeps its
+  // nominal share and no more; the remainder goes to the specific registers.
+  const others = live.filter(k => k !== 'universal')
+  const weights = {}
+  if (others.length === 0) {
+    weights.universal = 1
+  } else {
+    const uni = live.includes('universal') ? shares.universal : 0
+    const rest = others.reduce((sum, k) => sum + shares[k], 0)
+    const scale = rest > 0 ? (1 - uni) / rest : 0
+    for (const k of others) weights[k] = shares[k] * scale
+    if (uni > 0) weights.universal = uni
+  }
+  const totalShare = Object.values(weights).reduce((a, b) => a + b, 0)
   let r = Math.random() * totalShare
   let chosen = live[live.length - 1]
-  for (const k of live) {
-    r -= shares[k]
+  for (const k of Object.keys(weights)) {
+    r -= weights[k]
     if (r <= 0) { chosen = k; break }
   }
 
