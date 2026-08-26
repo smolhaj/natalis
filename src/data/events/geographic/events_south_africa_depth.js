@@ -45,7 +45,7 @@ export const SOUTH_AFRICA_DEPTH_EVENTS = [
       G.currentYear >= 1952 && G.currentYear <= 1985 &&
       G.age >= 16 &&
       !G.mem?.saPassBook,
-    text: 'The book is a hundred pages and it lives against your chest, in the inside pocket, because a hip pocket can be picked. On Monday the queue at the pass office starts forming at four in the morning and you are in it before the sun. The clerk does not look up while he speaks to you, and the stamp he brings down decides whether Johannesburg is a place you live in or a place you have been found in. Every three months you lose a day of factory wages to this. You have never mentioned it to your supervisor because there is nothing about it to say.',
+    text: 'The book is a hundred pages and it lives against your chest, in the inside pocket, because a hip pocket can be picked. On Monday the queue at the pass office begins forming at four in the morning. The clerk does not look up while he speaks, and the stamp he brings down decides whether Johannesburg is a place you live in or a place you have been found in. Every three months you lose a day of factory wages to this. You have never mentioned it to your supervisor because there is nothing about it to say.',
     context: 'The Natives (Abolition of Passes and Co-ordination of Documents) Act of 1952 required every Black South African over sixteen to carry a reference book recording employment, tax, and permission to be in an urban area. Being found without it was an arrestable offence; roughly 250,000 people a year were prosecuted under the pass laws at their peak. The books were abolished in 1986.',
     choices: null,
     effect: (p) => {

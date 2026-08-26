@@ -67,7 +67,7 @@ export const BODY_ARC_EVENTS = [
 
   {
     id: 'body_arc_3am',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.age >= 43 && G.age <= 54 &&
@@ -85,7 +85,7 @@ export const BODY_ARC_EVENTS = [
 
   {
     id: 'body_arc_tired',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.age >= 46 && G.age <= 56 &&
@@ -103,7 +103,7 @@ export const BODY_ARC_EVENTS = [
 
   {
     id: 'body_arc_joints',
-    phase: 'midlife',
+    phase: 'late_life',
     weight: 3,
     when: (G) =>
       G.age >= 50 && G.age <= 60 &&

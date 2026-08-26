@@ -65,7 +65,7 @@ export const SUDAN_DEPTH_EVENTS = [
       G.currentYear >= 1992 && G.currentYear <= 2005 &&
       G.age >= 14 && G.age <= 40 &&
       !G.mem?.sdnNubaB,
-    text: 'You learn the engine note before you can see it, and the Antonov flies high and slow because nobody is shooting at it. It is not a bomb rack, it is a barrel rolled out of the back, so it lands where it lands: the market on Wednesday, the borehole in March, the schoolyard. There is no siren, so the thing you do instead is dig a hole beside the house and go into it. In 1992 they put the aid organisations on planes out, and after that there is nobody left who would write any of it down.',
+    text: 'You learn the engine note before you can see it, and the Antonov flies high and slow because nobody is shooting at it. It is not a bomb rack, it is a barrel rolled out of the back, so it lands where it lands: the market on Wednesday, the borehole in March, the schoolyard. There is no siren, so what you do instead is dig a hole beside the house and get into it. In 1992 they put the aid organisations on planes out, and after that nobody is left who would write any of it down.',
     context: 'The Sudanese government fought the SPLA in the Nuba Mountains of South Kordofan from 1985, using Antonov transport aircraft to roll improvised barrel bombs onto civilian areas. Aid agencies were expelled in 1992 and the region sealed for a decade. An estimated 200,000 Nuba died between 1992 and 2002. The campaign received almost no international coverage and was never designated a genocide.',
     choices: [
       {
@@ -214,7 +214,7 @@ export const SUDAN_DEPTH_EVENTS = [
       IS_SUDAN(G) &&
       G.age >= 18 && G.age <= 50 &&
       !G.mem?.sdnTeaLadies,
-    text: 'On the corner there is a charcoal burner, a kettle, a low plastic table and eight glasses, and the woman who owns them pays the policeman a small amount every morning so that she can keep them there. She pours the attaya from a height, which is not for show, it is how it cools. In the spring the corner moves to the sit-in outside the army headquarters and she cooks for the people sleeping there out of her own takings. On the third of June the Rapid Support Forces come into the camp and she does not leave her burner.',
+    text: 'On the corner there is a charcoal burner, a kettle, a low plastic table and eight glasses, and she pays the policeman a small amount each morning to keep them there. She pours the attaya from a height, which is not for show, it is how it cools. In the spring the corner moves to the sit-in outside the army headquarters and she cooks for the people sleeping there out of her own takings. On the third of June the Rapid Support Forces come into the camp and she does not leave her burner.',
     context: 'Khartoum\'s sittaat al-shay, unlicensed women tea sellers, are a fixture of the city\'s informal economy and pay daily informal levies to police. During the 2019 revolution they supplied and fed the sit-in outside the army general command. Security forces cleared the camp on 3 June 2019, killing more than a hundred people; several tea sellers were among the dead.',
     choices: null,
     effect: (p) => {

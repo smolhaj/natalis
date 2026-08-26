@@ -127,7 +127,7 @@ export const NORTH_KOREA_DEPTH_EVENTS = [
       IS_DPRK(G) &&
       G.flags.has('dprk_hanawon_complete') &&
       !G.flags.has('dprk_south_korea_adjustment'),
-    text: 'You get four words into a sentence before the vowels give you away and the other person\'s face does the small thing it does. Most people are kind. One or two are curious in a way that turns you into an exhibit, and one man at the office introduces you to visitors by where you are from. The variety in the shop you adjusted to inside a year. It is the quantity you have not adjusted to, the refrigerated aisle running longer than the room you grew up in, and you still stop in front of it.',
+    text: 'You get four words into a sentence before the vowels give you away and the other person\'s face does the small thing it does. Most people are kind. One or two are curious in a way that turns you into an exhibit. The variety in the shop you adjusted to inside a year. It is the quantity you have not adjusted to, the refrigerated aisle running longer than the room you grew up in, and you still stop in front of it.',
     context: 'North Korean arrivals in South Korea spend about twelve weeks at the Hanawon resettlement centre before being placed in housing with a resettlement grant and a police liaison. Roughly 34,000 have arrived since 1998. Northern accent and vocabulary are widely recognisable, and surveys have consistently found high rates of unemployment, underemployment and reported discrimination among resettled defectors.',
     choices: null,
     effect: (p) => { p.m -= 5; p.e += 5; p.r += 4; p.addFlag('dprk_south_korea_adjustment') },

@@ -20,7 +20,7 @@ export const SCANDINAVIA_DEPTH_EVENTS = [
       G.currentYear >= 1942 && G.currentYear <= 1945 &&
       G.age >= 14 &&
       !G.mem?.no1942Deportation,
-    text: 'The men who come for the family in the flat below are not German. They are police from the station on the corner, and one of them nods at your mother in the stairwell because he knows her. In the morning the door is sealed and the milk is still on the step. Your father says nothing about it at supper and nothing about it for the rest of his life. There are people in this town who drove families to the border that same month, and there are people who watched from a window, and you do not always know which is which.',
+    text: 'The men who come for the family in the flat below are not German. They are police from the station on the corner, and one of them nods at your mother in the stairwell because he knows her. In the morning the door is sealed and the milk is still on the step. Your father says nothing about it at supper and nothing about it afterwards. Some people in this town drove families to the Swedish border that same month, and some watched from a window, and you do not always know which is which.',
     context: 'On 26 November 1942 the SS Donau sailed from Oslo with 532 Jewish prisoners arrested in nationwide raids carried out chiefly by Norwegian police under Nasjonal Samling orders. In total 773 Norwegian Jews were deported; 34 survived. Others were hidden or helped across the Swedish border by Norwegian civilians. The Norwegian state formally apologised and paid restitution in 1999.',
     choices: null,
     effect: (p) => { p.m -= 14; p.karma += 5; p.r += 8; p.addFlag('no_1942_witness'); p.setMem('no1942Deportation', true) },

@@ -604,7 +604,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 // ── OUT (LGBTQ openly living) ─────────────────────────────────────────────
   {
     id: 'ft3_out_ordinary_life',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       (G.flags.has('out') || G.flags.has('lgbtq_outed_at_work') || G.flags.has('lgbtq_out_to_friend')) &&
@@ -618,7 +618,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
   // ── IN_RECOVERY milestone ─────────────────────────────────────────────────
   {
     id: 'ft3_recovery_one_year',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('in_recovery') &&
@@ -647,7 +647,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
   // ── FAITH_CRISIS / QUESTIONED_FAITH resolution ───────────────────────────
   {
     id: 'ft3_faith_settled',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       (G.flags.has('faith_crisis') || G.flags.has('questioned_faith')) &&
@@ -723,7 +723,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
   // ── INTEGRITY / PRINCIPLED — midlife career test ──────────────────────────
   {
     id: 'ft3_integrity_tested',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       (G.flags.has('integrity') || G.flags.has('principled')) &&
@@ -1752,7 +1752,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ft8_art_drawer_choice',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.includes('art_in_drawer') &&
@@ -2715,7 +2715,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ft11_interrupted_career',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('interrupted_career') &&
@@ -3087,7 +3087,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ft11_desire_leave_mark',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.desire === 'leave_mark' &&
@@ -3113,7 +3113,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ft11_desire_redemption',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.desire === 'redemption' &&
@@ -3144,7 +3144,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ft11_military_reunion',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('military_service') &&
@@ -3196,7 +3196,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ft11_lost_home_return',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('lost_home') &&
@@ -3498,7 +3498,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'yeshiva_secular_translation',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) => G.flags.includes('yeshiva_trained') && G.age >= 24 && G.age <= 40 && !G.flags.includes('yeshiva_secular_bridge'),
     text: 'A colleague asks where your way of arguing comes from — the habit of holding a problem from multiple angles at once, looking for the question underneath the question, refusing to let a contradiction go unexamined. You say: where I was trained. They ask: where was that? You say it. They are surprised, or they are not surprised, depending on who they are.',
@@ -3561,7 +3561,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'kurd_europe_return_question',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) => G.flags.includes('kurd_europe_diaspora') && G.age >= 35 && G.age <= 58 && !G.flags.includes('kurd_europe_question_faced'),
     text: 'The question comes up at the community association. Some people have gone back — the village is there or rebuilt or something is there. The political conditions have changed or appear to have changed. Someone has returned and written about it. Someone else tried and came back. You have the question now and it will not stop being the question.',
@@ -5574,7 +5574,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ftw26_black_tax_midlife',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) => G.flags.has('black_tax_contributor') && G.age >= 38 && G.age <= 55 && !G.mem?.ftw26BlackTaxMidlife,
     text: 'The arithmetic of what you have sent home over fifteen years — school fees, hospital bills, the roof that needed replacing, the cousin who needed a deposit for a job in the city, the mother\'s medicine. You have never written it down. If you wrote it down you would see a figure that explains exactly why your savings look the way they do. You have not written it down because the family did not ask you to choose. They asked you to help. You helped. The arithmetic is not a complaint. It is just a fact you carry.',
@@ -5642,7 +5642,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ftw26_foster_care_identity',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => G.flags.has('foster_care') && G.age >= 22 && G.age <= 34 && !G.mem?.ftw26FosterIdentity,
     text: 'The question of where you are from is not a simple one. The place where you grew up is real. The people who raised you are real. The gap between those facts and the word "family" is also real, and it sits differently on different days. Sometimes you are entirely fine. Sometimes you are at a table where everyone is related in a way that is not your way, and you feel it as a specific variety of alone that is hard to explain to someone who has not felt it.',
@@ -5694,7 +5694,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ft27_white_zim_exile_settle',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('white_zimbabwean_exile') &&
@@ -5723,7 +5723,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ft27_white_zim_stayed_midlife',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('white_zimbabwean_stayed') &&
@@ -5824,7 +5824,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ft27_moneylender_ongoing',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('moneylender_debt') &&
@@ -5854,7 +5854,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ft27_gold_inherited_crisis',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('gold_inherited') &&
@@ -5942,7 +5942,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
 
   {
     id: 'ft28_addiction_supported_echo',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('addiction_family_supported') &&

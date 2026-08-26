@@ -59,7 +59,7 @@ export const MENOPAUSE_EVENTS = [
 
   {
     id: 'meno_main_experience',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -103,7 +103,7 @@ export const MENOPAUSE_EVENTS = [
 
   {
     id: 'meno_workplace_invisibility',
-    phase: 'midlife',
+    phase: 'late_life',
     weight: 4,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -147,7 +147,7 @@ export const MENOPAUSE_EVENTS = [
 
   {
     id: 'meno_elder_status_gained',
-    phase: 'midlife',
+    phase: 'late_life',
     weight: 5,
     when: (G) =>
       G.character.gender === 'female' &&
@@ -171,7 +171,7 @@ export const MENOPAUSE_EVENTS = [
 
   {
     id: 'meno_post_reflection',
-    phase: 'midlife',
+    phase: 'late_life',
     weight: 4,
     when: (G) =>
       G.character.gender === 'female' &&

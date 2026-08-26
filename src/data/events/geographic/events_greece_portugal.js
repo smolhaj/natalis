@@ -155,7 +155,8 @@ export const GREECE_PORTUGAL_EVENTS = [
       G.currentYear >= 1945 && G.currentYear <= 1965 &&
       G.age >= 6 && G.age <= 16 &&
       !G.mem?.grCivilWar,
-    text: 'The Civil War ended in 1949 but it did not end in the family. The division between those who fought for the government and those who fought for the Communists ran through villages, through extended families, sometimes through a single household. You are growing up in its aftermath. A relative who was on the losing side: there are things they cannot say, things they cannot do, lists their names are on. Your father does not speak to his brother. There is a word for this — to be "nationally-minded" or to be "of the left" — but in the family the word is not spoken, only practiced. The Civil War killed more Greeks than the German occupation. The Germans are discussed. The Civil War is not.',
+    text: 'Your father has a brother in a village forty kilometres away and they have not spoken since before you were born. At the town hall there is a certificate some people need and others are refused, and everyone knows which family gets which. Nobody says the word in the house. They only say he was on the other side, and they say it about the war that is discussed, not about the one that is not.',
+    context: 'The Greek Civil War of 1946-1949 killed more Greeks than the German occupation and divided villages and families between government forces and the Communist-led Democratic Army. Defeated leftists faced imprisonment, internal exile, and exclusion from public employment. The certificate of national loyalty, the pistopoiitiko koinonikon fronimaton, was required for state jobs, passports and university places until 1974.',
     choices: [
       {
         text: 'Your family was on the winning side. The silence is the silence of what winning required.',

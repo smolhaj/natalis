@@ -187,7 +187,8 @@ export const NIGERIA_DEPTH_EVENTS = [
       G.currentYear >= 1985 &&
       G.age >= 8 && G.age <= 18 &&
       !G.mem?.ngaDepPentecostal,
-    text: `Sunday: the church that takes the whole morning and half the afternoon. The megachurch or the local assembly or the mountain of fire or the RCCG parish or the Winners' Chapel. The pastor who is also a prophet. The prayer that has a specific vocabulary — "in the name of Jesus," "blood of Jesus," "I come against," "fire." The miracle testimonies and the thanksgiving testimonies and the testimony about the exam result and the testimony about the business deal. Your parents tithe ten percent. The church has a school, a hospital, a television station, a security company. The church in Nigeria is not just a place of worship — it is infrastructure.`,
+    text: 'Sunday takes the whole morning and half the afternoon and there is a bus that comes for the people on your street. The pastor is also a prophet and the prayers have their own vocabulary, and by nine you can say all of it without being taught. Your parents put ten percent in the envelope before anything else comes out of the pay. The church has a school and a clinic and a television station, and when your uncle needs a job it is the church that finds him one.',
+    context: 'Pentecostal and charismatic Christianity expanded rapidly in southern Nigeria from the 1980s, with the Redeemed Christian Church of God, Winners\' Chapel and Mountain of Fire among the largest ministries. Tithing at ten percent is standard practice. The major churches operate universities, hospitals, banks, broadcasters and employment networks, functioning as parallel social infrastructure.',
     choices: null,
     effect: (p) => {
       p.s += 2

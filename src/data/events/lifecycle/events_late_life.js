@@ -9,7 +9,7 @@ export const LATE_LIFE_EVENTS = [
 
   {
     id: 'retire_voluntary',
-    phase: 'midlife',
+    phase: 'late_life',
     weight: 3,
     when: (G) =>
       G.career &&
@@ -37,7 +37,7 @@ export const LATE_LIFE_EVENTS = [
 
   {
     id: 'retire_forced',
-    phase: 'midlife',
+    phase: 'late_life',
     weight: 3,
     when: (G) =>
       G.career &&
@@ -70,7 +70,7 @@ export const LATE_LIFE_EVENTS = [
 
   {
     id: 'retire_gradual',
-    phase: 'midlife',
+    phase: 'late_life',
     weight: 3,
     when: (G) =>
       G.career &&
@@ -268,7 +268,7 @@ export const LATE_LIFE_EVENTS = [
 
   {
     id: 'grandchild_born',
-    phase: 'late_life',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.children && G.children.length > 0 &&
@@ -794,7 +794,7 @@ export const LATE_LIFE_EVENTS = [
 
   {
     id: 'retire_pension_decision',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.career &&
@@ -904,7 +904,7 @@ export const LATE_LIFE_EVENTS = [
 
   {
     id: 'll_the_knee',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.kneeEvent &&

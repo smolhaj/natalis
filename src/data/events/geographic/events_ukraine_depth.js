@@ -131,7 +131,8 @@ export const UKRAINE_DEPTH_EVENTS = [
       G.currentYear >= 2014 && G.currentYear <= 2015 &&
       G.age >= 16 &&
       !G.mem?.ukrDepCrimea,
-    text: 'February 27, 2014. Armed men without insignia — "polite people," the term that sticks — occupy the Crimean parliament building. A referendum is announced in ten days. The ballot has two options: join Russia, or restore the 1992 constitution (not: stay in Ukraine). The result is announced as 96.77 percent for Russia. The Crimean Tatars, who were deported by Stalin in 1944 and allowed to return in the 1990s, do not participate. Within weeks, Ukrainian civil servants must choose: stay and work for the new administration, or leave. Soldiers in Ukrainian bases must choose: defect or go. Property registers are transferred. The hryvnia stops working. The ruble arrives.',
+    text: 'The men who take the parliament building have no insignia on their uniforms and everybody calls them the polite people. The vote comes ten days later with two boxes on the paper and neither of them says stay. In April the cash machine gives roubles and the hryvnia in your pocket is a souvenir. Your cousin in the tax office has until the end of the month to sign the new contract or stop being a person with a job.',
+    context: 'Unmarked Russian troops seized the Crimean parliament on 27 February 2014. A referendum held on 16 March offered a choice between joining Russia and restoring the 1992 Crimean constitution, with no option to remain in Ukraine as it stood; the announced result was 96.77 percent for accession. The Crimean Tatar Mejlis boycotted it. Ukrainian officials and servicemen were required to take Russian citizenship or leave, and the rouble replaced the hryvnia within weeks.',
     choices: [
       {
         text: 'You stay in Crimea. This is where you are from.',
@@ -236,7 +237,8 @@ export const UKRAINE_DEPTH_EVENTS = [
       G.character.gender === 'male' &&
       G.age >= 18 && G.age <= 60 &&
       !G.mem?.ukrDepMobilization,
-    text: 'Martial law. Men aged 18-60 are prohibited from leaving the country. At the border crossings in February and March 2022: the lines of cars, mostly women and children going west, and at the checkpoint the men being turned back. Some hide in trunks. Some cross the Tisza river into Romania by swimming in February — the water is four degrees. Some stay and do not try to leave. The territorial defense is accepting volunteers with no military background. The regular military is calling up reservists. You are of the age. The law says you cannot leave. What you do with that is yours.',
+    text: 'Martial law closes the border to men between eighteen and sixty on the second day. At the crossing there are queues of cars carrying women and children west and men walking back from the barrier towards the town. Somebody from your street swam the Tisza in February, when the water is four degrees, and somebody else from your street is at the recruitment office with no military background at all. You are the right age for both of those stories.',
+    context: 'Ukraine declared martial law on 24 February 2022 and barred most men aged 18 to 60 from leaving the country. Territorial defence units accepted volunteers without prior service while the regular army called up reservists. Border guards have reported thousands of illegal crossing attempts, including drownings in the Tisza river on the Romanian frontier.',
     choices: [
       {
         text: 'You report to the territorial defense. You have no military training but they are accepting everyone.',

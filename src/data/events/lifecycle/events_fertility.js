@@ -8,7 +8,7 @@ export const FERTILITY_EVENTS = [
 
   {
     id: 'fertility_miscarriage',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem.fertilityMiscarriage &&
@@ -37,7 +37,7 @@ export const FERTILITY_EVENTS = [
 
   {
     id: 'fertility_miscarriage_late',
-    phase: 'young_adult',
+    phase: 'midlife',
     weight: 2,
     when: (G) =>
       !G.mem.fertilityMiscarriageLate &&
@@ -68,7 +68,7 @@ export const FERTILITY_EVENTS = [
 
   {
     id: 'fertility_ivf_consideration',
-    phase: 'young_adult',
+    phase: 'midlife',
     weight: 2,
     when: (G) =>
       !G.mem.fertilityIvfConsideration &&
@@ -129,7 +129,7 @@ export const FERTILITY_EVENTS = [
 
   {
     id: 'fertility_traditional_remedy',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem.fertilityTraditionalRemedy &&
@@ -162,7 +162,7 @@ export const FERTILITY_EVENTS = [
 
   {
     id: 'fertility_childless_choice',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem.fertilityChildlessChoice &&
@@ -204,7 +204,7 @@ export const FERTILITY_EVENTS = [
 
   {
     id: 'fertility_late_pregnancy',
-    phase: 'young_adult',
+    phase: 'midlife',
     weight: 2,
     when: (G) =>
       !G.mem.fertilityLatePregnancy &&

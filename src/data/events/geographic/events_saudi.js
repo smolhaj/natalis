@@ -213,7 +213,8 @@ const SAUDI_EVENTS = [
       G.currentYear >= 2018 && G.currentYear <= 2020 &&
       G.age >= 20 &&
       !G.mem?.sau_khashoggi,
-    text: 'October 2, 2018. Jamal Khashoggi, Washington Post columnist, enters the Saudi consulate in Istanbul to obtain paperwork for his upcoming marriage. He does not come out. The Turkish authorities release recordings. The Saudi government\'s explanation changes five times over two weeks — he left, he died accidentally in a fight, rogue elements, an operation that went wrong. The CIA concludes that Crown Prince Mohammed bin Salman ordered the killing. You know people who knew him, or you don\'t, but you know that the message was intended for everyone: the category of people who write critically from outside is not a safe category. The WhatsApp messages stop. The group chats go quiet. Some columns are never written.',
+    text: 'He goes into the consulate in Istanbul for a paper he needs in order to get married, and he does not come out. The explanations arrive one after another over a fortnight and each replaces the one before it. On your phone the group that used to argue about everything goes quiet within a week, and then people start leaving it. You notice that you have begun composing your messages as though a third person were reading them, and that you did not decide to start doing that.',
+    context: 'Jamal Khashoggi, a Saudi journalist and Washington Post columnist, entered the Saudi consulate in Istanbul on 2 October 2018 and was killed inside. Saudi accounts changed repeatedly over the following two weeks. The US intelligence assessment released in 2021 concluded that Crown Prince Mohammed bin Salman approved the operation. Eight men were convicted in a closed Saudi trial; no senior official was charged.',
     choices: [
       {
         text: 'The silence is necessary — there is a family, a life, specific things to protect.',

@@ -75,7 +75,8 @@ export const IVORY_COAST_DEPTH_EVENTS = [
       G.age >= 20 && G.age <= 35 &&
       (G.career?.field === 'finance' || G.career?.field === 'government' || G.stats?.smarts >= 60) &&
       !G.flags.has('ci_cfa_awareness'),
-    text: 'The CFA franc is guaranteed by France. The exchange rate is fixed. Fifty percent of foreign exchange reserves are held at the Banque de France. Interest rates are set in Frankfurt by the European Central Bank. The arrangement was negotiated at independence in 1960 and modified but not fundamentally changed since. You encounter this system the first time you try to understand why monetary policy here is different from monetary policy in Ghana or Nigeria, which also border you but manage their own currencies. The stability the CFA provides is real. The degree to which the stability is managed elsewhere is also real. Both things are taught separately. You learn to hold them together.',
+    text: 'You are at the counter changing money for a trip and the rate to the euro is the same number it was the last time and the time before. Somebody at work explains that half the reserves sit in an account in Paris and the rate is set where the euro is set. Your cousin in Accra deals with a currency that moves every week and he envies you for about a minute a year. Both things they taught you about this are true and neither of them was taught in the same lesson.',
+    context: 'The West African CFA franc was pegged to the French franc from 1945 and to the euro since 1999, with convertibility guaranteed by the French Treasury. Member states were required to deposit fifty percent of foreign reserves with the Banque de France until 2019, when the requirement was ended and the currency renamed the eco in principle. Monetary policy remains anchored to the European Central Bank\'s rate.',
     choices: null,
     effect: (p) => { p.e += 4; p.r += 2; p.addFlag('ci_cfa_awareness') },
   },

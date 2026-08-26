@@ -67,7 +67,7 @@ export const RUSSIA_DEPTH_EVENTS = [
       G.currentYear >= 1945 && G.currentYear <= 1980 &&
       G.age >= 5 && G.age <= 30 &&
       !G.mem?.ruDepKommunalka,
-    text: 'Four families, one kitchen, one lavatory, and a hallway where every bicycle and every pair of winter boots in the apartment has an agreed position. Your shelf in the refrigerator is the second one and you do not touch the others. The boy on the left practises scales at an hour that everybody has decided to tolerate. The family on the right is not speaking to yours this month over the hot water on Tuesday. The door of your room is the only door in the world that is yours, and there are five of you behind it.',
+    text: 'Four families, one kitchen, one lavatory, and a hallway where every bicycle and every pair of winter boots has an agreed position. Your shelf in the refrigerator is the second one and you do not touch the others. The boy on the left practises scales at an hour everybody has decided to tolerate. The family on the right is not speaking to yours this month over the hot water on Tuesday. Your door is the only door in the world that is yours, and there are five of you behind it.',
     context: 'Communal apartments were created by subdividing pre-revolutionary flats after 1918 and remained the normal urban housing form for decades; a majority of Leningrad residents still lived in them in the early 1960s. Khrushchev-era prefabricated blocks moved millions into single-family flats from 1957 onward, but kommunalki persisted in central Moscow and Leningrad into the post-Soviet period.',
     choices: null,
     effect: (p) => {

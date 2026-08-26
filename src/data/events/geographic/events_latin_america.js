@@ -1273,13 +1273,15 @@ export const LATIN_AMERICA_EVENTS = [
 
   {
     id: 'la_hai_earthquake_2010',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
       G.character.country.name === 'Haiti' &&
       G.currentYear === 2010 &&
+      G.age >= 8 &&
       !G.mem?.hai_earthquake_2010,
-    text: 'January 12, 2010. 4:53 pm. Magnitude 7.0, epicentre 25 kilometres from Port-au-Prince. Two hundred and twenty thousand people die. One and a half million are displaced in a country of ten million. The Presidential Palace collapses. The parliament collapses. The main hospital collapses. International aid arrives in quantities that dwarf the country\'s GDP. You are alive. Most of the people near you are alive. This is not certain for the first hour.',
+    text: 'It is ten to five in the afternoon and the sound comes before the movement does. Thirty-five seconds. The cathedral is down, the palace is down with its domes lying sideways in the garden, the nursing school is down with the students inside. For the first hour you do not know about anyone, and the not knowing is worse than most of what comes after it. That night everybody sleeps outside because nobody will go back through a doorway.',
+    context: 'The 12 January 2010 earthquake struck at 4:53 p.m. with a magnitude of 7.0, its epicentre 25 kilometres from Port-au-Prince. Estimates of the dead range from 100,000 to 316,000, with 1.5 million displaced in a country of ten million. The presidential palace, parliament, cathedral and the main hospital collapsed. Pledged international aid exceeded Haiti\'s annual GDP.',
     choices: [
       {
         text: 'Find your family first',

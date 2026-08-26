@@ -198,7 +198,8 @@ export const TURKEY_DEPTH_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 2020 &&
       G.age >= 20 && G.age <= 28 &&
       !G.mem?.trkMilitary,
-    text: `The conscription letter arrives. Twelve months — or eighteen months, or twenty-four months, depending on the decade and your education level — in the army. The posting is assigned: somewhere in the southeast if your cohort is unlucky, somewhere more comfortable if not. In the southeast in the 1990s the unlucky posting means the PKK conflict, checkpoint rotations, the specific weight of a rifle at night. Everywhere the service means the barracks, the hierarchy, the particular texture of collective male life under strict authority. You emerge from it with a certificate that employers and families understand, with a cohort who went through it with you, with a body that was shaped by it. In Turkey a man who has not done military service is not fully a man in the public imagination. This is understood before it is articulated.`,
+    text: 'The letter comes and the posting is drawn like a lottery: the coast if you are lucky, the southeast if you are not. In the southeast at night the rifle has a specific weight that it does not have in the daytime. You come back with a certificate that every employer and every prospective mother-in-law understands on sight. Nobody in your family ever says out loud that a man who has not done it is not quite a man, and everybody proceeds as though they had.',
+    context: 'Turkish military service has been compulsory for men since 1927, running between six and twenty-four months depending on period and education level. Postings during the 1984-1999 phase of the PKK conflict frequently sent conscripts to the southeast. The discharge certificate is routinely requested by employers, and paid exemption schemes have been offered periodically since 1999.',
     choices: null,
     effect: (p) => {
       p.e += 2

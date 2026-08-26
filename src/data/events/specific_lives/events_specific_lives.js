@@ -80,7 +80,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_colombia_strat',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Colombia' &&
@@ -113,7 +113,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_widow_india_rules',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'India' &&
@@ -129,7 +129,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_iran_hijab_colleague',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Iran' &&
@@ -197,7 +197,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_romanian_decree_woman',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Romania' &&
@@ -212,7 +212,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_saudi_guardian_permission',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Saudi Arabia' &&
@@ -254,7 +254,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_china_daughter_one_child',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'China' &&
@@ -270,7 +270,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_maquila_body',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Mexico' &&
@@ -290,7 +290,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_dhaka_garment_floor',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Bangladesh' &&
@@ -317,7 +317,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_copperbelt_miner',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Zambia' &&
@@ -331,7 +331,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_uae_construction_heat',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       (G.character.country.archetype === 'wealthy_gulf' ||
@@ -347,7 +347,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_domestic_gulf_worker',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.includes('ofw_gulf') &&
@@ -361,7 +361,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_sugarcane_brazil',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -376,7 +376,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_china_996_worker',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'China' &&
@@ -417,7 +417,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_uk_foodbank',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'United Kingdom' &&
@@ -436,7 +436,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_coptic_church_permit',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Egypt' &&
@@ -463,7 +463,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_hazara_checkpoint',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Afghanistan' &&
@@ -477,7 +477,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_karen_displacement',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Myanmar' &&
@@ -504,7 +504,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_karen_camp_years',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.includes('karen_displaced') &&
@@ -517,7 +517,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_soviet_jew_emigration',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.archetype === 'post_soviet' &&
@@ -544,7 +544,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_igbo_after_66',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Nigeria' &&
@@ -571,7 +571,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_christian_pakistan_blasphemy',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Pakistan' &&
@@ -586,7 +586,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_shia_sunni_context',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.religion === 'muslim_shia' &&
@@ -604,7 +604,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_ramadan_poor_cairo',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Egypt' &&
@@ -619,7 +619,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_orthodox_christmas_secret',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.archetype === 'post_soviet' &&
@@ -648,7 +648,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_evangelical_tithe_brazil',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -662,7 +662,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_yoruba_dual_faith',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Nigeria' &&
@@ -696,7 +696,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_colonial_hut_tax',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.archetype === 'subsaharan' &&
@@ -710,7 +710,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_partition_village_split',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       ['India', 'Pakistan'].includes(G.character.country.name) &&
@@ -724,7 +724,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_dust_bowl_farm',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'United States' &&
@@ -769,7 +769,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_early_industrial_body',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.archetype === 'wealthy_west' &&
@@ -788,7 +788,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_venezuela_professional_collapse',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -815,7 +815,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_philippines_typhoon_after',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Philippines' &&
@@ -830,7 +830,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_us_opioid_town',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'United States' &&
@@ -845,7 +845,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_zimbabwe_second_collapse',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Zimbabwe' &&
@@ -859,7 +859,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_sa_loadshedding',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'South Africa' &&
@@ -873,7 +873,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_china_zero_covid',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'China' &&
@@ -899,7 +899,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_uk_austerity_library',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'United Kingdom' &&
@@ -913,7 +913,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_syria_returned',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Syria' &&
@@ -948,7 +948,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_russia_gay_propaganda',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Russia' &&
@@ -976,7 +976,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_egypt_lgbtq_crackdown',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Egypt' &&
@@ -991,7 +991,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_india_377_repeal',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'India' &&
@@ -1006,7 +1006,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_us_aids_generation',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'United States' &&
@@ -1069,7 +1069,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_smallholder_green_revolution',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       ['India', 'Mexico', 'Philippines', 'Indonesia', 'Pakistan'].includes(G.character.country.name) &&
@@ -1131,7 +1131,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_second_gen_holocaust',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       ['Germany', 'Poland', 'Hungary', 'Romania', 'France', 'Netherlands', 'Israel'].includes(G.character.country.name) &&
@@ -1146,7 +1146,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_hiroshima_second_gen',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Japan' &&
@@ -1270,7 +1270,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_berlin_wall_day',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Germany' &&
@@ -1284,7 +1284,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_india_partition_train',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       ['India', 'Pakistan'].includes(G.character.country.name) &&
@@ -1298,7 +1298,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_chile_1973_morning',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Chile' &&
@@ -1325,7 +1325,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_chernobyl_liquidator',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       ['Ukraine', 'Russia', 'Belarus'].includes(G.character.country.name) &&
@@ -1340,7 +1340,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_iran_1979_revolution_educated',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Iran' &&
@@ -1368,7 +1368,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_apartheid_pass_book',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'South Africa' &&
@@ -1430,7 +1430,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_class_betrayal',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.includes('first_gen_graduate') &&
@@ -1478,7 +1478,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_soviet_domestic_queue',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.archetype === 'post_soviet' &&
@@ -1522,7 +1522,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_nigeria_market_woman',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Nigeria' &&
@@ -1633,7 +1633,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_kazakh_russified_generation',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Kazakhstan' &&
@@ -1647,7 +1647,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_arabic_dialect_social',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       ['Egypt', 'Morocco', 'Algeria', 'Tunisia', 'Lebanon', 'Syria', 'Jordan', 'Iraq'].includes(G.character.country.name) &&
@@ -1736,7 +1736,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_rohingya_nameless',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Myanmar' &&
@@ -1767,7 +1767,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_hong_kong_handover',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'China' &&
@@ -1782,7 +1782,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_rwanda_gacaca_witness',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Rwanda' &&
@@ -1796,7 +1796,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_brazil_favela_pacification',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Brazil' &&
@@ -1816,7 +1816,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_mali_cotton_body',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Mali' &&
@@ -1830,7 +1830,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_vietnam_rice_paddy',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Vietnam' &&
@@ -1860,7 +1860,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_kenya_tea_picker',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Kenya' &&
@@ -1956,7 +1956,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_uk_nhs_birth',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'United Kingdom' &&
@@ -1972,7 +1972,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_nigeria_hospital_cost',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Nigeria' &&
@@ -1999,7 +1999,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_cuba_double_standard_health',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Cuba' &&
@@ -2017,7 +2017,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_windrush_arrival',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'United Kingdom' &&
@@ -2032,7 +2032,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_vietnamese_boat_arrival',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Vietnam' &&
@@ -2047,7 +2047,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_mexican_bracero',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Mexico' &&
@@ -2062,7 +2062,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_german_gastarbeiter_stayed',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Germany' &&
@@ -2141,7 +2141,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_east_germany_stasi_informer',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Germany' &&
@@ -2185,7 +2185,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_apartheid_homeland',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'South Africa' &&
@@ -2423,7 +2423,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_black_uk_professional',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'United Kingdom' &&
@@ -2455,7 +2455,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_hiv_africa_treatment',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       ['South Africa', 'Zimbabwe', 'Zambia', 'Uganda', 'Kenya', 'Tanzania', 'Nigeria', 'Ethiopia'].includes(G.character.country.name) &&
@@ -2581,7 +2581,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_soviet_punitive_psychiatry',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Russia' &&
@@ -2630,7 +2630,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_tibetan_self_immolation_witness',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       (G.character.country.name === 'India' || G.character.country.name === 'China') &&
@@ -2664,7 +2664,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_sindhi_hindu_refugee',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'India' &&
@@ -2716,7 +2716,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_drc_cobalt_miner',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'DR Congo' &&
@@ -2731,7 +2731,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_bolivian_tin_miner_lung',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Bolivia' &&
@@ -2746,7 +2746,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_niger_delta_oil_community',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Nigeria' &&
@@ -2765,7 +2765,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_soviet_woman_scientist',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Russia' &&
@@ -2782,7 +2782,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_wartime_factory_woman_uk',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'United Kingdom' &&
@@ -2902,7 +2902,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_japan_herbivore_men',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Japan' &&
@@ -2917,7 +2917,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_south_korea_sampo_generation',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'South Korea' &&
@@ -2932,7 +2932,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_greek_crisis_doctor_leaves',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Greece' &&
@@ -2961,7 +2961,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_uk_generation_rent',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'United Kingdom' &&
@@ -2996,7 +2996,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_us_cold_war_nuclear_family',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'United States' &&
@@ -3011,7 +3011,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_chile_exile_europe',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       ['Germany', 'Sweden', 'France', 'Netherlands', 'United Kingdom'].includes(G.character.country.name) &&
@@ -3064,7 +3064,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_hijra_initiation',
-    phase: 'adolescence',
+    phase: null,
     weight: 2,
     when: (G) =>
       ['India', 'Pakistan', 'Bangladesh'].includes(G.character.country.name) &&
@@ -3079,7 +3079,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_hijra_blessing_work',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.includes('hijra_community') &&
@@ -3111,7 +3111,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_bangladesh_cyclone_annual',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Bangladesh' &&
@@ -3130,7 +3130,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_japanese_hawaii_issei',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'United States' &&
@@ -3145,7 +3145,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_japanese_american_internment',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'United States' &&
@@ -3179,7 +3179,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_nigeria_pentecostal_adult',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Nigeria' &&
@@ -3225,7 +3225,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_uyghur_disappeared_family',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'China' &&
@@ -3258,7 +3258,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_small_island_brain_drain',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       ['Barbados', 'Trinidad and Tobago', 'Jamaica', 'Guyana', 'Belize'].includes(G.character.country.name) &&
@@ -3343,7 +3343,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_rwanda_gacaca_witness_2',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Rwanda' &&
@@ -3362,7 +3362,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_pacific_climate_rising_sea',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       ['Kiribati', 'Tuvalu', 'Marshall Islands', 'Maldives', 'Fiji'].includes(G.character.country.name) &&
@@ -3408,7 +3408,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_roma_adult_europe',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.includes('eviction_cycle_childhood') &&
@@ -3441,7 +3441,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_korean_adoptee_return',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.includes('transracial_adoptee') &&
@@ -3505,7 +3505,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_irish_traveller_sedentarisation',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Ireland' &&
@@ -3524,7 +3524,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_aceh_tsunami_2004',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Indonesia' &&
@@ -3539,7 +3539,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_aceh_tsunami_reconstruction',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.includes('tsunami_survivor') &&
@@ -3577,7 +3577,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_kenya_matatu_generation',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Kenya' &&
@@ -3633,7 +3633,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_saudi_driving_ban',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Saudi Arabia' &&
@@ -3648,7 +3648,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_saudi_driving_ban_lifted',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.includes('driving_ban_lived') &&
@@ -3667,7 +3667,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_venezuela_doctor_leaves',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Venezuela' &&
@@ -3699,7 +3699,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_albanian_blood_feud',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Albania' &&
@@ -3718,7 +3718,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_indonesia_transmigrant',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Indonesia' &&
@@ -3737,7 +3737,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_aids_grief_partner',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'United States' &&
@@ -3756,7 +3756,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_mongolia_dzud_winter',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Mongolia' &&
@@ -3775,7 +3775,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_cyprus_1974_displacement',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Cyprus' &&
@@ -3807,7 +3807,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_east_timor_resistance',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'East Timor' &&
@@ -3858,7 +3858,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_maya_language_revival',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Guatemala' &&
@@ -3877,7 +3877,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_car_diamond_digger',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'Central African Republic' &&
@@ -3896,7 +3896,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_burundian_refugee_tanzania',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Tanzania' &&
@@ -3915,7 +3915,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_drc_musician_war',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.character.country.name === 'DR Congo' &&
@@ -3935,7 +3935,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_mapuche_water_rights',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Chile' &&
@@ -3954,7 +3954,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_karabakh_exodus_2023',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Armenia' &&
@@ -3973,7 +3973,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_zimbabwe_white_farmer_seizure',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Zimbabwe' &&

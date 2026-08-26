@@ -89,7 +89,7 @@ export const IRELAND_DEPTH_EVENTS = [
       G.currentYear >= 1939 && G.currentYear <= 1946 &&
       G.age >= 14 &&
       !G.mem?.ireEmergency,
-    text: 'They call it the Emergency, which is what you call a war you are not in. There is no coal after 1941 so it is turf, wet turf, and the bread is grey and the bicycle is how everyone gets anywhere. Two of your cousins are in Britain in uniform and it is not discussed at the table. At night you can find the BBC on the wireless if you move the dial in a direction that is not encouraged, and what it says about the war and what the Independent says about the war are not the same war.',
+    text: 'They call it the Emergency, which is what you call a war you are not in. There is no coal after 1941 so it is turf, wet turf, and the bread is grey and the bicycle is how anyone gets anywhere. Two of your cousins are in Britain in uniform and it is not discussed at the table. At night you can find the BBC on the wireless if you move the dial in a direction that is not encouraged, and what it says about the war is not what the newspaper says.',
     context: 'Ireland remained neutral throughout the Second World War, a period officially designated the Emergency, on the grounds that it would not fight for a crown still governing six of its counties. Britain cut coal and fuel supplies in 1941 and rationing was severe. Around 70,000 people from the Irish state nonetheless volunteered for the British forces, individually and without state support; those who deserted the Irish army to do so were barred from public employment until a 2013 pardon.',
     choices: null,
     effect: (p) => { p.m -= 6; p.h -= 3; p.e += 4; p.addFlag('ire_emergency_generation'); p.setMem('ireEmergency', true) },

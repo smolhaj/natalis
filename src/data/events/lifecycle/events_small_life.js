@@ -409,7 +409,7 @@ export const SMALL_LIFE_EVENTS = [
 
   {
     id: 'sl_the_garden',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem?.gardenStarted &&
@@ -472,7 +472,7 @@ export const SMALL_LIFE_EVENTS = [
 
   {
     id: 'sl_good_neighbour',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       !G.mem?.goodNeighbour &&
@@ -484,7 +484,7 @@ export const SMALL_LIFE_EVENTS = [
 
   {
     id: 'sl_neighbour_fence',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.neighbourFence &&
@@ -514,7 +514,7 @@ export const SMALL_LIFE_EVENTS = [
 
   {
     id: 'sl_neighbour_informer',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.neighbourInformer &&

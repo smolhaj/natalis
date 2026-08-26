@@ -17,7 +17,7 @@ export const NAMIBIA_DEPTH_EVENTS = [
       G.ethnicity !== 'white_namibian' &&
       G.age >= 18 && G.age <= 30 &&
       !G.flags.has('nam_swanla_generation'),
-    text: 'You put your thumb on the form at the labour office and eighteen months later you put it on another one. The lorry takes you to Tsumeb and the compound gate has a man at it and you cannot go out of it without a paper. Your wife cannot come; the contract says so in a line the clerk reads out too quickly to follow. The store inside the compound sells at compound prices and the wage was calculated with that in mind. The land at home cannot feed everyone, so at the end of the eighteen months you sign again.',
+    text: 'You put your thumb on the form at the labour office and eighteen months later you put it on another one. The lorry takes you to Tsumeb and there is a man on the compound gate and you cannot go out of it without a paper. Your wife cannot come; the contract says so in a line the clerk reads too quickly to follow. The store inside sells at compound prices and the wage was set with that in mind. At the end of the eighteen months you sign again.',
     context: 'The South West Africa Native Labour Association, established in 1943, held a monopoly on recruiting African contract labour for Namibia\'s mines and farms. Workers signed for twelve to eighteen months, were graded by physical examination, housed in single-sex compounds and forbidden to bring families or change employer. The system was a central grievance of the 1971-72 general strike that involved some 20,000 contract workers.',
     choices: null,
     effect: (p) => { p.m -= 8; p.h -= 4; p.e += 2; p.addFlag('nam_swanla_generation') },

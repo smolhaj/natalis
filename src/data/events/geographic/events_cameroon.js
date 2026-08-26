@@ -126,7 +126,10 @@ export const CAMEROON_EVENTS = [
         text: 'You are Anglophone. The strike was legitimate. What followed was not anticipated.',
         tag: 'Anglophone',
         outcome: 'The strike was about judges and teachers. It became something else before anyone had decided it should. The lawyers who went on strike are now living with what the strike became.',
-        effect: (p) => { p.m -= 12; p.r += 8; IS_ANGLOPHONE(G) ? p.addFlag('anglophone_crisis_inside') : null; p.addFlag('anglophone_crisis_witness'); p.setMem('cmrStrike2016', true); },
+        // Effects receive only the proxy — this used to call IS_ANGLOPHONE(G)
+        // and threw for anyone who picked it. Choosing this option is the
+        // declaration of position, so the flag is unconditional here.
+        effect: (p) => { p.m -= 12; p.r += 8; p.addFlag('anglophone_crisis_inside'); p.addFlag('anglophone_crisis_witness'); p.setMem('cmrStrike2016', true); },
       },
       {
         text: 'You are Francophone. The crisis is in the northwest and southwest. You watch from the south.',

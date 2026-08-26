@@ -113,7 +113,7 @@ export const CUBA_DEPTH_EVENTS = [
       G.currentYear >= 1999 && G.currentYear <= 2001 &&
       G.age >= 18 &&
       !G.mem?.cubDepElian,
-    text: 'The boy is five and they find him on an inner tube in the Straits, and his mother is not found. For seven months his face is on the front of Granma and on a placard in the plaza, and there is a rally in your town on a Thursday afternoon that you are not required to attend and attend. Then the photograph from Miami: the agent in the doorway, the closet, the rifle, the child. Somebody in your building says quietly that a boy has been used by everybody who touched him, and nobody argues.',
+    text: 'The boy is five and they find him on an inner tube in the Straits, and his mother is not found. For seven months his face is on the front of Granma and on a placard in the plaza. Then the photograph from Miami: the agent in the doorway, the closet, the rifle, the child. Somebody in your building says quietly that a boy has been used by everybody who touched him, and nobody argues.',
     context: 'Elian Gonzalez was rescued off Florida in November 1999 after his mother drowned attempting the crossing. His Miami relatives contested his father\'s claim for eight months. US federal agents removed him from the house in an armed dawn raid in April 2000, producing one of the decade\'s most reproduced news photographs, and he was returned to Cuba in June.',
     choices: null,
     effect: (p) => {

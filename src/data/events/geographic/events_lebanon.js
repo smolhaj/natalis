@@ -279,14 +279,15 @@ export const LEBANON_EVENTS = [
 
   {
     id: 'lbn_lira_decade_later',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
       isLebanon(G) &&
       G.flags.includes('lira_collapse_lived') &&
       G.age >= 35 &&
       !G.mem?.lbnLiraDecadeLater,
-    text: 'Someone younger asks you to explain what happened to the banks in 2019. You try. You say: the lira lost ninety percent of its value in two years. They nod. The number does not reach them the way the number reached you, because they did not have the before. The before is what made the number mean something. You say: imagine you had saved for ten years and then one morning the savings still existed but they could no longer buy anything. They say: that\'s insane. You say: yes. You do not say: and the people responsible are still in government. They already know.',
+    text: 'Somebody younger asks you to explain what happened with the banks, and you give them the figure and they nod at it. The figure does not land, because they never had the before, and the before is the whole of what the figure means. You try again: imagine ten years of saving still sitting there in the account and buying nothing at all. They say that is insane and you say yes. You do not say that the men responsible are still in the building, because they know that part already.',
+    context: 'Lebanese banks froze depositor access in October 2019 and the lira lost over ninety percent of its value. No deposit restitution law has passed and no senior banking or political figure has been prosecuted. The World Bank has called the collapse a deliberate depression.',
     choices: null,
     effect: (p) => {
       p.m -= 6
