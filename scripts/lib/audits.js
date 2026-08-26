@@ -139,44 +139,91 @@ export function countriesInGuard(src) {
 
 // ── 1. Reverse flag audit ─────────────────────────────────────────────────────
 
-/** Every flag any mechanism in the codebase can actually set. */
+/**
+ * Reads a balanced bracket region starting at `open`, so a flag literal buried
+ * inside `flags: [...new Set([...(next.flags ?? []), 'x'])]` is still found.
+ * Regexes stop at the first inner `]`; the corpus is full of inner `]`.
+ */
+function balancedRegion(text, open) {
+  const CLOSE = { '[': ']', '(': ')', '{': '}' }
+  const stack = [text[open]]
+  for (let i = open + 1; i < text.length && i < open + 4000; i++) {
+    const ch = text[i]
+    if (ch === '[' || ch === '(' || ch === '{') stack.push(ch)
+    else if (ch === ']' || ch === ')' || ch === '}') {
+      if (CLOSE[stack[stack.length - 1]] !== ch) return text.slice(open, i + 1)
+      stack.pop()
+      if (stack.length === 0) return text.slice(open, i + 1)
+    }
+  }
+  return text.slice(open, open + 4000)
+}
+
+/**
+ * Every flag any mechanism in the codebase can actually set.
+ *
+ * Returns a lookup rather than a bare Map because some flags are composed at
+ * runtime — `lost_parent_${which}`, `${illness.id}_diagnosed` — and a literal-
+ * only scan reports the grief arc as unreachable when it is not. Templates
+ * become patterns; a flag matching one counts as set.
+ */
 export function collectSetFlags() {
-  const set = new Map() // flag → Set<file>
+  const literal = new Map()   // flag → Set<file>
+  const dynamic = []          // { pattern: RegExp, source, file }
+
   const add = (flag, rel) => {
     if (!flag) return
-    if (!set.has(flag)) set.set(flag, new Set())
-    set.get(flag).add(rel)
+    if (!literal.has(flag)) literal.set(flag, new Set())
+    literal.get(flag).add(rel)
   }
-  const literals = (block, rel) => {
-    for (const m of block.matchAll(/['"]([A-Za-z_0-9]+)['"]/g)) add(m[1], rel)
+  const addTemplate = (raw, rel) => {
+    const body = raw.slice(1, -1)
+    if (!body.includes('${')) { add(body, rel); return }
+    const pattern = new RegExp('^' + body
+      .split(/\$\{[^}]*\}/)
+      .map(part => part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+      .join('[A-Za-z_0-9]+') + '$')
+    dynamic.push({ pattern, source: body, file: rel })
+  }
+  const harvest = (block, rel) => {
+    for (const m of block.matchAll(/'([A-Za-z_0-9]+)'|"([A-Za-z_0-9]+)"/g)) add(m[1] ?? m[2], rel)
+    for (const m of block.matchAll(/`[^`]*`/g)) addTemplate(m[0], rel)
   }
 
   for (const { rel, content } of sourceFiles()) {
-    // p.addFlag('x')
-    for (const m of content.matchAll(/addFlag\(\s*['"]([A-Za-z_0-9]+)['"]/g)) add(m[1], rel)
-    // addFlags: ['x', 'y']   /   flagsAdded: ['x']
-    for (const m of content.matchAll(/(?:addFlags|flagsAdded)\s*:\s*\[([^\]]*)\]/g)) literals(m[1], rel)
-    // flags.push('x')  — including the birth-time pushes in character.js
-    for (const m of content.matchAll(/flags\s*\.\s*push\(([^)]*)\)/g)) {
-      literals(m[1], rel)
-      // flags.push(GIFT_TYPES[i]) — the literals live in a const array above it,
+    // p.addFlag('x') / p.addFlag(`x_${y}`)
+    for (const m of content.matchAll(/addFlag\s*\(/g)) {
+      harvest(balancedRegion(content, m.index + m[0].length - 1), rel)
+    }
+    // flags.push(...) — including the birth-time pushes in character.js
+    for (const m of content.matchAll(/flags\s*\.\s*push\s*\(/g)) {
+      const block = balancedRegion(content, m.index + m[0].length - 1)
+      harvest(block, rel)
+      // flags.push(GIFT_TYPES[i]) — the literals live in a const array above,
       // which is exactly how the five born_gifted_* flags are set.
-      for (const ident of m[1].matchAll(/\b([A-Z][A-Z_0-9]{2,}|[a-z][\w$]*)\b/g)) {
-        const decl = content.match(new RegExp(`(?:const|let|var)\\s+${ident[1]}\\s*=\\s*\\[([\\s\\S]*?)\\]`))
-        if (decl) literals(decl[1], rel)
+      // Only const-style names, so `flags.push(f)` cannot vacuum up an
+      // unrelated local array and hide a genuinely unset flag.
+      for (const ident of block.matchAll(/\b([A-Z][A-Z_0-9]{2,}|[A-Za-z_$][\w$]*(?:[Ff]lags?|TYPES))\b/g)) {
+        const decl = content.match(new RegExp(`(?:const|let|var)\\s+${ident[1]}\\s*=\\s*\\[`))
+        if (decl) harvest(balancedRegion(content, decl.index + decl[0].length - 1), rel)
       }
     }
-    // flags: [...state.flags, 'x']  and  [...new Set([...s.flags, 'x'])]
-    for (const m of content.matchAll(/flags\s*(?::|=)\s*\[[\s\S]{0,400}?\]\s*[,;)\n}]/g)) {
-      if (/\.\.\./.test(m[0])) literals(m[0], rel)
+    // flags: [ ... ]  /  flags = [ ... ]  /  addFlags: [...]  /  flagsAdded: [...]
+    for (const m of content.matchAll(/(?:flags|addFlags|flagsAdded)\s*(?::|=)\s*\[/g)) {
+      harvest(balancedRegion(content, m.index + m[0].length - 1), rel)
     }
-    for (const m of content.matchAll(/new Set\(\s*\[\s*\.\.\.[^\]]*\]/g)) literals(m[0], rel)
     // choice.tag becomes a flag verbatim in resolveChoice()
     for (const m of content.matchAll(/\btag\s*:\s*['"]([A-Za-z_0-9]+)['"]/g)) add(m[1], rel)
-    // Data-file fields consumed by the engine as flags
+    // Data-file fields the engine consumes as flags
     for (const m of content.matchAll(/\b(?:addFlag|flag|survivorFlag|addictionFlag|setsFlag|grantsFlag)\s*:\s*['"]([A-Za-z_0-9]+)['"]/g)) add(m[1], rel)
   }
-  return set
+
+  return {
+    literal, dynamic,
+    size: literal.size,
+    has: (flag) => literal.has(flag) || dynamic.some(d => d.pattern.test(flag)),
+    setBy: (flag) => literal.get(flag) ?? new Set(dynamic.filter(d => d.pattern.test(flag)).map(d => d.file)),
+  }
 }
 
 /**
