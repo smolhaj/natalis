@@ -1,6 +1,8 @@
 // Sonder module 61 — 30 contemplative events
 // Weight 2, null choices, all mem-gated. Universal human texture.
 
+import { isUrban } from './_sonderGuards.js'
+
 export const EVENTS_SONDER_61 = [
 
   {
@@ -17,7 +19,7 @@ export const EVENTS_SONDER_61 = [
     id: 'sonder_61_b',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => !G.mem?.s61b,
+    when: (G) => G.season === 'summer' && (!G.mem?.s61b),
     text: 'The summer you lived in a city you did not know well was the summer you learned how to be somewhere alone. The skill transferred. You use it still.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s61b', true) },
@@ -57,7 +59,7 @@ export const EVENTS_SONDER_61 = [
     id: 'sonder_61_f',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => !G.mem?.s61f,
+    when: (G) => isUrban(G) && (!G.mem?.s61f),
     text: 'The walk home after the bad news took forty minutes. You remember the street more precisely than you remember what was said. The tree with the yellow leaves at the corner. The smell of something frying in a window. The pavement.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s61f', true) },
@@ -173,17 +175,7 @@ export const EVENTS_SONDER_61 = [
     effect: (p) => { p.r += 3; p.setMem('s61q', true) },
   },
 
-  {
-    id: 'sonder_61_r',
-    phase: 'adolescence',
-    weight: 2,
-    when: (G) => !G.mem?.s61r,
-    text: 'The music that was playing during a particular month has made that month retrievable in ways that memory alone could not manage. You cannot hear the song without also being fifteen, in that room, in that particular difficulty.',
-    choices: null,
-    effect: (p) => { p.m += 2; p.setMem('s61r', true) },
-  },
-
-  {
+{
     id: 'sonder_61_s',
     phase: 'midlife',
     weight: 2,
@@ -233,17 +225,7 @@ export const EVENTS_SONDER_61 = [
     effect: (p) => { p.setMem('s61w', true) },
   },
 
-  {
-    id: 'sonder_61_x',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => !G.mem?.s61x,
-    text: 'The friendship that mattered most in that period was not the one you would have listed if asked. The one you would have listed faded. The one you did not mention is still there.',
-    choices: null,
-    effect: (p) => { p.m += 2; p.setMem('s61x', true) },
-  },
-
-  {
+{
     id: 'sonder_61_y',
     phase: 'midlife',
     weight: 2,
@@ -263,17 +245,7 @@ export const EVENTS_SONDER_61 = [
     effect: (p) => { p.r += 3; p.e += 2; p.setMem('s61z', true) },
   },
 
-  {
-    id: 'sonder_61_aa',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => !G.mem?.s61aa,
-    text: 'The neighbor whose schedule you know without trying — the light on at six, the car leaving at seven-fifteen, the return at six-forty-five — has not appeared for four days. You have not asked anyone about this. You are not sure what your concern entitles you to.',
-    choices: null,
-    effect: (p) => { p.setMem('s61aa', true) },
-  },
-
-  {
+{
     id: 'sonder_61_ab',
     phase: 'childhood',
     weight: 2,

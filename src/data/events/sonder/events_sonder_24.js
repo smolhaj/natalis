@@ -10,6 +10,8 @@
 // the smell of an old classroom, certain roads, what the news was, the
 // small ceremony, the last year you didn't think about your health.
 
+import { hasElectricity, hasPhotographs, wentToSchool } from './_sonderGuards.js'
+
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
 export const EVENTS_SONDER_24 = [
@@ -116,7 +118,7 @@ export const EVENTS_SONDER_24 = [
     id: 'sdr24_photograph_leaves_out',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 35 && !G.mem?.sdr24Photo,
+    when: (G) => hasPhotographs(G) && (G.age >= 35 && !G.mem?.sdr24Photo),
     text: () => pick([
       'The photograph from that year shows the occasion. Everything that was happening that was not the occasion is not in it.',
       'You look happy in the picture. You were not unhappy. The two things are not the same and the photograph cannot hold both.',
@@ -214,7 +216,7 @@ export const EVENTS_SONDER_24 = [
     id: 'sdr24_what_winter_taught',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 55 && !G.mem?.sdr24Winter,
+    when: (G) => G.season === 'winter' && (G.age >= 55 && !G.mem?.sdr24Winter),
     text: () => pick([
       'Winter is a teacher you return to. What it teaches — slowness, the value of warmth, the way darkness forces a different kind of attention — you could not have learned in summer.',
       'The winters you have lived through vary enormously. The worst ones have specific dates. The best ones have mornings you can still reproduce.',
@@ -312,7 +314,7 @@ export const EVENTS_SONDER_24 = [
     id: 'sdr24_classroom_smell',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 35 && !G.mem?.sdr24ClassroomSmell,
+    when: (G) => wentToSchool(G) && (G.age >= 35 && !G.mem?.sdr24ClassroomSmell),
     text: () => pick([
       'The smell of chalk and particular cleaning chemicals and old wood — the smell of a classroom — arrived from somewhere and you were, briefly, nine years old.',
       'Walking into the school for your child\'s event and the smell was the smell, unchanged in thirty years, and thirty years was nothing for a moment.',
@@ -382,7 +384,7 @@ export const EVENTS_SONDER_24 = [
     id: 'sdr24_other_light',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 28 && !G.mem?.sdr24OtherLight,
+    when: (G) => hasElectricity(G) && (G.age >= 28 && !G.mem?.sdr24OtherLight),
     text: () => pick([
       'The light on in the apartment across the street, 11pm. Someone is still awake over there. The light is the only evidence of an entire life going on simultaneously.',
       'Walking past a window and the inside of someone\'s evening: a television, a lamp, a figure. The complete unknowability of what that evening is.',

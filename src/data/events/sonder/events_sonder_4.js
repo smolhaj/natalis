@@ -6,6 +6,8 @@
 // THE BODY IN WEATHER (9): seasonal texture
 // All mem-gated single-fire, weight 2, no choices, no new flags, minimal effects.
 
+import { hasFormalJob, isColdCountry, isLiterate, worksInOffice } from './_sonderGuards.js'
+
 export const EVENTS_SONDER_4 = [
 
   // ═══════════════════════════════════════════════════════════════════════════
@@ -152,7 +154,7 @@ export const EVENTS_SONDER_4 = [
     id: 'sonder4_the_colleague_coffee',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => !G.mem?.s4_colCoffee && G.age >= 22 && G.career,
+    when: (G) => worksInOffice(G) && (!G.mem?.s4_colCoffee && G.age >= 22 && G.career),
     text: 'There is a colleague you get coffee with. Not a friend, exactly — or maybe a friend, but a specific kind of friend that only exists in the context of this building, this floor, this particular hour. The conversation is easy and contained. If either of you left, you would not stay in touch, probably. This seems fine to both of you. The coffee is good. The hour is good.',
     choices: null,
     effect: (p) => { p.m += 4; p.s += 2; p.setMem('s4_colCoffee', true) },
@@ -234,7 +236,7 @@ export const EVENTS_SONDER_4 = [
     id: 'sonder4_the_long_tenure',
     phase: 'late_life',
     weight: 2,
-    when: (G) => !G.mem?.s4_longTenure && G.age >= 55 && G.career,
+    when: (G) => hasFormalJob(G) && (!G.mem?.s4_longTenure && G.age >= 55 && G.career),
     text: 'You have worked here for a long time. Long enough that you remember the building before the renovation. Long enough that the people who trained you are retired. Long enough that the work is different from what it was when you started, and you are the person who remembers what it was. The institutional memory of this place is partly you.',
     choices: null,
     effect: (p) => { p.m += 5; p.e += 3; p.karma += 3; p.setMem('s4_longTenure', true) },
@@ -264,21 +266,11 @@ export const EVENTS_SONDER_4 = [
     effect: (p) => { p.m += 6; p.setMem('s4_smellHome', true) },
   },
 
-  {
-    id: 'sonder4_the_photograph',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => !G.mem?.s4_oldPhoto && G.age >= 30,
-    text: 'There is a photograph from before you were the age you are now. You are in it. You do not quite recognise yourself — the posture is different, or the face, or the way you are standing next to whoever is standing next to you. You were trying to look a certain way. The way you were trying to look is visible. You were younger than you thought you were.',
-    choices: null,
-    effect: (p) => { p.m += 4; p.r += 2; p.setMem('s4_oldPhoto', true) },
-  },
-
-  {
+{
     id: 'sonder4_parents_handwriting',
     phase: 'late_life',
     weight: 2,
-    when: (G) => !G.mem?.s4_handwriting && G.age >= 55,
+    when: (G) => isLiterate(G) && (!G.mem?.s4_handwriting && G.age >= 55),
     text: 'You find something your mother or father wrote. A note, a list, a letter. The handwriting is so specific that you are not prepared for it. The person who made those particular marks on paper: you know their handwriting better than you know most things. You sit with it for a while. It is just a note. It is not just a note.',
     choices: null,
     effect: (p) => { p.m += 6; p.r += 4; p.setMem('s4_handwriting', true) },
@@ -314,21 +306,11 @@ export const EVENTS_SONDER_4 = [
     effect: (p) => { p.m += 4; p.setMem('s4_scar', true) },
   },
 
-  {
-    id: 'sonder4_the_song_from_before',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => !G.mem?.s4_oldSong && G.age >= 22,
-    text: 'You hear a song from before — from the specific time when you heard it constantly and now cannot recall between hearings. The song lands differently than you expected. Something in the chord sequence or the particular quality of the voice carries the temperature of the year you first heard it. The year comes back around the song. They are apparently inseparable.',
-    choices: null,
-    effect: (p) => { p.m += 5; p.r += 2; p.setMem('s4_oldSong', true) },
-  },
-
-  {
+{
     id: 'sonder4_the_grade_report',
     phase: 'late_life',
     weight: 2,
-    when: (G) => !G.mem?.s4_gradeReport && G.age >= 60,
+    when: (G) => isLiterate(G) && (!G.mem?.s4_gradeReport && G.age >= 60),
     text: 'You find a school report card — yours, from decades ago. The marks are surprising in some way — better or worse than you remember thinking you were. The teacher\'s comment is a sentence about a child you can only partly access now. The handwriting is careful. The teacher believed the sentence was worth writing. You were a child who received this sentence and you are now someone old enough to hold it from the outside.',
     choices: null,
     effect: (p) => { p.m += 5; p.r += 3; p.e += 2; p.setMem('s4_gradeReport', true) },
@@ -342,13 +324,12 @@ export const EVENTS_SONDER_4 = [
     id: 'sonder4_first_cold_day',
     phase: 'childhood',
     weight: 2,
-    when: (G) =>
-      !G.mem?.s4_firstCold &&
+    when: (G) => G.season === 'winter' && (!G.mem?.s4_firstCold &&
       G.age >= 5 && G.age <= 14 &&
       (G.character.country?.region === 'Europe' ||
        G.character.country?.region === 'North America' ||
        G.character.country?.region === 'Central Asia' ||
-       G.character.country?.name === 'Russia'),
+       G.character.country?.name === 'Russia')),
     text: 'The first cold day of autumn. The coat that has been at the back of the cupboard comes out and smells of last winter. The cold has a quality the summer doesn\'t — it asks more of you. You walk differently in the cold. You are more aware of where you are going.',
     choices: null,
     effect: (p) => { p.m += 3; p.setMem('s4_firstCold', true) },
@@ -375,8 +356,7 @@ export const EVENTS_SONDER_4 = [
     id: 'sonder4_heat_afternoon',
     phase: 'childhood',
     weight: 2,
-    when: (G) =>
-      !G.mem?.s4_heatAfternoon &&
+    when: (G) => G.season === 'summer' && (!G.mem?.s4_heatAfternoon &&
       G.age >= 6 && G.age <= 16 &&
       (G.character.country?.archetype === 'wealthy_gulf' ||
        G.character.country?.archetype === 'developing_unstable' ||
@@ -384,7 +364,7 @@ export const EVENTS_SONDER_4 = [
        G.character.country?.name === 'Egypt' ||
        G.character.country?.name === 'Sudan' ||
        G.character.country?.name === 'Algeria' ||
-       G.character.country?.name === 'Tunisia'),
+       G.character.country?.name === 'Tunisia')),
     text: 'The afternoon in summer is not for being outside. The city empties. The shutters are closed against the light. The dogs find shade. The streets are a different color in the heat — the light is flat and everything is still. You have learned to sleep in the afternoon. This is the kind of knowledge that is purely physical.',
     choices: null,
     effect: (p) => { p.m += 4; p.setMem('s4_heatAfternoon', true) },
@@ -394,8 +374,7 @@ export const EVENTS_SONDER_4 = [
     id: 'sonder4_winter_dark',
     phase: 'adolescence',
     weight: 2,
-    when: (G) =>
-      !G.mem?.s4_winterDark &&
+    when: (G) => G.season === 'winter' && (!G.mem?.s4_winterDark &&
       G.age >= 13 && G.age <= 19 &&
       (G.character.country?.name === 'Norway' ||
        G.character.country?.name === 'Sweden' ||
@@ -403,7 +382,7 @@ export const EVENTS_SONDER_4 = [
        G.character.country?.name === 'Russia' ||
        G.character.country?.name === 'Estonia' ||
        G.character.country?.name === 'Latvia' ||
-       G.character.country?.name === 'Lithuania'),
+       G.character.country?.name === 'Lithuania')),
     text: 'December: the sun rises at nine and sets at three. You go to school in the dark and come home in the dark. The middle of the day has a particular quality — the pale light through the window at noon, the sense that day is a brief guest who will not stay. You are used to this. The body adapts to the dark and comes alive again in March in a way that makes you understand, every year, what the winter cost.',
     choices: null,
     effect: (p) => { p.m += 3; p.r += 2; p.setMem('s4_winterDark', true) },
@@ -432,15 +411,14 @@ export const EVENTS_SONDER_4 = [
     id: 'sonder4_first_snow',
     phase: 'childhood',
     weight: 2,
-    when: (G) =>
-      !G.mem?.s4_firstSnow &&
+    when: (G) => isColdCountry(G) && (!G.mem?.s4_firstSnow &&
       G.age >= 4 && G.age <= 12 &&
       (G.character.country?.region === 'Europe' ||
        G.character.country?.region === 'Central Asia' ||
        G.character.country?.name === 'Russia' ||
        G.character.country?.name === 'China' ||
        G.character.country?.name === 'South Korea' ||
-       G.character.country?.name === 'Japan'),
+       G.character.country?.name === 'Japan')),
     text: 'The snow falls and you are at the window. The accumulation on the sill, the changed sound of everything outside, the particular grey-white light that comes up from the ground rather than down from the sky. You put your hand out the window and catch some. The cold is clean. You know that the morning will be different and you want it to be morning.',
     choices: null,
     effect: (p) => { p.m += 6; p.setMem('s4_firstSnow', true) },
@@ -450,7 +428,7 @@ export const EVENTS_SONDER_4 = [
     id: 'sonder4_old_body_cold',
     phase: 'late_life',
     weight: 2,
-    when: (G) => !G.mem?.s4_oldBodyCold && G.age >= 65,
+    when: (G) => G.season === 'winter' && (!G.mem?.s4_oldBodyCold && G.age >= 65),
     text: 'The cold is worse than it used to be. Not in the abstract — concretely, specifically. The hands that used to manage a winter morning now require gloves earlier than they did. The internal thermostat has changed. You put on a sweater at temperatures that ten years ago were fine. This is information about the body\'s age, which you did not need the cold to tell you but which the cold tells you anyway, annually.',
     choices: null,
     effect: (p) => { p.r += 3; p.h -= 2; p.setMem('s4_oldBodyCold', true) },

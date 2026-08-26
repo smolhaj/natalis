@@ -4,31 +4,19 @@
 // a house during illness, objects that outlive their owners, the specific weight
 // of Sunday, the person who almost spoke, the bus home late, your own handwriting.
 
+import { hasFormalJob, hasWeekend, isLiterate } from './_sonderGuards.js'
+
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
 export const EVENTS_SONDER_21 = [
 
   // ── INSTITUTIONAL WAITING ROOMS ───────────────────────────────────────────
 
-  {
-    id: 'sonder21_waiting_room',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => !G.mem?.s21WaitingRoom,
-    text: () => pick([
-      'The waiting room has a specific quality. The chairs are arranged for waiting rather than for comfort, which is a distinction that institutional designers understand. The magazines are old. Everyone here is managing something.',
-      'You have been in enough waiting rooms to know the particular silence of them. Not quiet exactly — there are sounds — but a silence of purpose suspended. Everyone is waiting for their name.',
-      'The waiting room of the hospital or the office or the station where the queue is managed by a number. The specific flatness of this light. This specific quality of time measured in other people\'s names being called.',
-    ]),
-    choices: null,
-    effect: (p) => { p.setMem('s21WaitingRoom', true) },
-  },
-
-  {
+{
     id: 'sonder21_government_office',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => !G.mem?.s21GovOffice,
+    when: (G) => isLiterate(G) && (!G.mem?.s21GovOffice),
     text: 'The form requires several documents and the documents require a form that refers to the first form. The person at the window has been explaining this for years and explains it without impatience, which is its own kind of endurance. You leave and come back with the correct sequence. This is what bureaucracy is: a system that requires you to understand it before it will process you.',
     choices: null,
     effect: (p) => { p.setMem('s21GovOffice', true) },
@@ -40,7 +28,7 @@ export const EVENTS_SONDER_21 = [
     id: 'sonder21_winter_light',
     phase: 'midlife',
     weight: 2,
-    when: (G) => !G.mem?.s21WinterLight,
+    when: (G) => G.season === 'winter' && (!G.mem?.s21WinterLight),
     text: () => pick([
       'The winter light here is low and brief. By four in the afternoon it is gone and the evening starts without ceremony. You have adapted to this. The adaptation is unconscious — the day restructures itself around the shorter window of light the way a schedule restructures around an early meeting.',
       'The angle of the winter light in the late afternoon makes certain surfaces glow briefly before the day ends. You stop in front of one. There is nothing to do with this. You just noticed it.',
@@ -54,7 +42,7 @@ export const EVENTS_SONDER_21 = [
     id: 'sonder21_summer_afternoon',
     phase: 'childhood',
     weight: 2,
-    when: (G) => !G.mem?.s21SummerAfternoon,
+    when: (G) => G.season === 'summer' && (!G.mem?.s21SummerAfternoon),
     text: () => pick([
       'The long summer afternoon in childhood had a quality that adult time doesn\'t. Not longer — the clock was the same — but differently proportioned. An afternoon was an enormous amount of time. You filled it with things that required no outcome.',
       'The specific quality of summer afternoon light coming through the shutters or the curtains or the leaves. The pattern it made. The fact that you noticed it then and have not forgotten it entirely.',
@@ -144,7 +132,7 @@ export const EVENTS_SONDER_21 = [
     id: 'sonder21_sunday',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => !G.mem?.s21Sunday,
+    when: (G) => hasWeekend(G) && (!G.mem?.s21Sunday),
     text: () => pick([
       'Sunday has a different texture than Saturday. Saturday is the escape from the week. Sunday is the preparation for the next week that arrives at a specific hour — the hour when the week begins to cast its shadow over the rest of the day. You can feel it arriving.',
       'The Sunday of childhood was a specific thing with specific sounds and smells — the food that was made on Sunday, the visit that happened on Sunday, the particular rhythm of a day that had a shape other days didn\'t.',
@@ -190,23 +178,7 @@ export const EVENTS_SONDER_21 = [
 
   // ── YOUR OWN HANDWRITING ──────────────────────────────────────────────────
 
-  {
-    id: 'sonder21_own_handwriting',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) =>
-      G.age >= 35 &&
-      !G.mem?.s21Handwriting,
-    text: () => pick([
-      'Your handwriting on a note you wrote earlier in the week. The specific character of it — the letters that have always been that way, the word you always abbreviate the same way. You recognize yourself in it. It is the most direct evidence of your continued existence: the mark of the hand on paper.',
-      'An old note in your own handwriting. The date is from years ago. The handwriting is yours but from before — the slight difference in how you formed certain letters then. You recognize it and don\'t entirely recognize it.',
-      'The list you made in your handwriting. It is not remarkable to you as an artifact, but it would be recognizable as yours to anyone who knew you. Your handwriting is as distinctive as a face. You don\'t see it that way; you just use it.',
-    ]),
-    choices: null,
-    effect: (p) => { p.setMem('s21Handwriting', true) },
-  },
-
-  // ── THE THING THAT CALMS YOU ──────────────────────────────────────────────
+// ── THE THING THAT CALMS YOU ──────────────────────────────────────────────
 
   {
     id: 'sonder21_calming_thing',
@@ -415,9 +387,8 @@ export const EVENTS_SONDER_21 = [
     id: 'sonder21_year_in_sentence',
     phase: 'late_life',
     weight: 2,
-    when: (G) =>
-      G.age >= 60 &&
-      !G.mem?.s21YearInSentence,
+    when: (G) => hasFormalJob(G) && (G.age >= 60 &&
+      !G.mem?.s21YearInSentence),
     text: 'You have lived enough years to know that most of them reduce to a sentence when you tell them. A good year, a hard year, the year of the move, the year of the death, the year of the promotion. The sentence is not the year. The year was twelve months of days. But the sentence is what survives. You are making sentences out of years now.',
     choices: null,
     effect: (p) => { p.setMem('s21YearInSentence', true) },

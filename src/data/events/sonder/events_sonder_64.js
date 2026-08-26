@@ -1,6 +1,8 @@
 // Sonder module 64 — 30 contemplative events
 // Weight 2, null choices, all mem-gated. Universal human texture.
 
+import { hasPhone, isColdCountry } from './_sonderGuards.js'
+
 export const EVENTS_SONDER_64 = [
 
   {
@@ -17,7 +19,7 @@ export const EVENTS_SONDER_64 = [
     id: 'sonder_64_b',
     phase: 'late_life',
     weight: 2,
-    when: (G) => !G.mem?.s64b,
+    when: (G) => hasPhone(G) && (!G.mem?.s64b),
     text: 'The person at the next table in the café is laughing at something on their phone. The laugh is real and private and has nothing to do with you and is still briefly pleasant to be near. Unearned proximity to other people\'s joy is a small resource.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s64b', true) },
@@ -33,17 +35,7 @@ export const EVENTS_SONDER_64 = [
     effect: (p) => { p.m += 2; p.setMem('s64c', true) },
   },
 
-  {
-    id: 'sonder_64_d',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => !G.mem?.s64d,
-    text: 'The meeting that was described in advance as productive was not productive. The meeting that was described as a formality contained the actual decision. You have learned to attend the formalities more carefully than the substantive sessions.',
-    choices: null,
-    effect: (p) => { p.e += 2; p.setMem('s64d', true) },
-  },
-
-  {
+{
     id: 'sonder_64_e',
     phase: 'childhood',
     weight: 2,
@@ -137,7 +129,7 @@ export const EVENTS_SONDER_64 = [
     id: 'sonder_64_n',
     phase: 'childhood',
     weight: 2,
-    when: (G) => !G.mem?.s64n,
+    when: (G) => isColdCountry(G) && (!G.mem?.s64n),
     text: 'The first time you saw the ocean — or the first time you saw snow, or the first time you were in a city much larger than your own — the scale of it produced something that was not wonder and was not fear but was both at the same time, before the two separated into individual feelings.',
     choices: null,
     effect: (p) => { p.m += 3; p.setMem('s64n', true) },
@@ -173,17 +165,7 @@ export const EVENTS_SONDER_64 = [
     effect: (p) => { p.m += 2; p.setMem('s64q', true) },
   },
 
-  {
-    id: 'sonder_64_r',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => !G.mem?.s64r,
-    text: 'Your handwriting has changed. The change happened gradually and you did not notice it until you compared something written recently to something written ten years ago. The handwriting from ten years ago is recognizably yours. It is also slightly different. You changed your handwriting without deciding to.',
-    choices: null,
-    effect: (p) => { p.setMem('s64r', true) },
-  },
-
-  {
+{
     id: 'sonder_64_s',
     phase: 'adolescence',
     weight: 2,

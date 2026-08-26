@@ -3,6 +3,8 @@
 // WEATHER AND SEASONS (9), LATE LIFE TEXTURE (9)
 // All mem-gated single-fire, weight 2, no choices, no new flags.
 
+import { hasElectricity, hasHealthcare, hasPhotographs, hasWeekend, isUrban } from './_sonderGuards.js'
+
 export const EVENTS_SONDER_8 = [
 
   // ══════════════════════════════════════════════════════════════════════════
@@ -13,7 +15,7 @@ export const EVENTS_SONDER_8 = [
     id: 'sonder8_work_monday',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.career && G.age >= 22 && !G.mem?.s8WorkMonday,
+    when: (G) => hasWeekend(G) && (G.career && G.age >= 22 && !G.mem?.s8WorkMonday),
     text: 'Monday again. You have done this enough times now that Monday has a texture that is different from the other days — not worse, exactly, just specific. The specific weight of the beginning of the same week.',
     choices: null,
     effect: (p) => { p.m -= 1; p.setMem('s8WorkMonday', true) },
@@ -59,17 +61,7 @@ export const EVENTS_SONDER_8 = [
     effect: (p) => { p.m += 4; p.setMem('s8WorkUnexpMeaning', true) },
   },
 
-  {
-    id: 'sonder8_work_the_commute',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => G.career && G.age >= 22 && G.age <= 45 && !G.mem?.s8WorkCommute,
-    text: 'The commute is a kind of daily transition that you barely notice anymore. At some point it became part of the day rather than the thing before the day. You know which stop to look up at. You know which bend in the road means five minutes more.',
-    choices: null,
-    effect: (p) => { p.setMem('s8WorkCommute', true) },
-  },
-
-  {
+{
     id: 'sonder8_work_recognition',
     phase: 'midlife',
     weight: 2,
@@ -143,21 +135,11 @@ export const EVENTS_SONDER_8 = [
     effect: (p) => { p.r += 3; p.m -= 2; p.setMem('s8HomeClearing', true) },
   },
 
-  {
-    id: 'sonder8_home_light',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 35 && !G.mem?.s8HomeLight,
-    text: 'There is a time of day when the light in this room is specific — a particular angle that makes the ordinary things look briefly different. You have noticed it for years and every time it registers as something you should pay more attention to.',
-    choices: null,
-    effect: (p) => { p.m += 2; p.setMem('s8HomeLight', true) },
-  },
-
-  {
+{
     id: 'sonder8_home_moved',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 20 && G.age <= 40 && !G.mem?.s8HomeMoved,
+    when: (G) => hasElectricity(G) && (G.age >= 20 && G.age <= 40 && !G.mem?.s8HomeMoved),
     text: 'The new place takes a while to feel like somewhere you live. The muscle memory of the old place persists for weeks — reaching for the light switch in the wrong direction, expecting a step that isn\'t there. The body knows an address.',
     choices: null,
     effect: (p) => { p.m -= 2; p.setMem('s8HomeMoved', true) },
@@ -177,7 +159,7 @@ export const EVENTS_SONDER_8 = [
     id: 'sonder8_home_photograph',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 40 && !G.mem?.s8HomePhotograph,
+    when: (G) => hasPhotographs(G) && (G.age >= 40 && !G.mem?.s8HomePhotograph),
     text: 'There is a photograph on the wall that you stopped seeing years ago. A visitor looks at it and asks about it and you explain and as you explain you see the photograph again — the people in it, the moment it was, the distance between then and now.',
     choices: null,
     effect: (p) => { p.r += 3; p.m += 2; p.setMem('s8HomePhotograph', true) },
@@ -221,7 +203,7 @@ export const EVENTS_SONDER_8 = [
     id: 'sonder8_weather_drought',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 30 && !G.mem?.s8WeatherDrought,
+    when: (G) => G.season === 'dry' && (G.age >= 30 && !G.mem?.s8WeatherDrought),
     text: 'The dry season extends further than usual. The ground is the colour of nothing. People in the market talk about it the way they talk about other things that are happening and that no one can do anything about. You carry your water carefully.',
     choices: null,
     effect: (p) => { p.h -= 1; p.setMem('s8WeatherDrought', true) },
@@ -315,7 +297,7 @@ export const EVENTS_SONDER_8 = [
     id: 'sonder8_late_doctor_regular',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 60 && !G.mem?.s8LateDoctorReg,
+    when: (G) => hasHealthcare(G) && (G.age >= 60 && !G.mem?.s8LateDoctorReg),
     text: 'You see the doctor regularly now in a way you did not before. The appointments have a specific texture: the waiting room, the numbers, the questions you now know to ask. Your body has become something you manage rather than something you simply inhabit.',
     choices: null,
     effect: (p) => { p.h += 1; p.r += 2; p.setMem('s8LateDoctorReg', true) },
@@ -341,17 +323,7 @@ export const EVENTS_SONDER_8 = [
     effect: (p) => { p.m += 4; p.karma += 2; p.setMem('s8LateTheDecade', true) },
   },
 
-  {
-    id: 'sonder8_late_music_year',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => G.age >= 62 && !G.mem?.s8LateMusicYear,
-    text: 'You hear a song from a specific year of your life and the year arrives. Not memory exactly — something more physical than that. The year lands in your body briefly and then the song ends and you are here again.',
-    choices: null,
-    effect: (p) => { p.m += 3; p.r += 2; p.setMem('s8LateMusicYear', true) },
-  },
-
-  {
+{
     id: 'sonder8_late_grandchild_clock',
     phase: 'late_life',
     weight: 2,
@@ -378,7 +350,7 @@ export const EVENTS_SONDER_8 = [
     id: 'sonder8_late_morning_window',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 70 && !G.mem?.s8LateMorningWindow,
+    when: (G) => isUrban(G) && (G.age >= 70 && !G.mem?.s8LateMorningWindow),
     text: 'In the morning you sit by the window for longer than you used to. You are not doing anything in particular. You are watching what is outside: the street, or the garden, or the courtyard, or the wall — whatever is there. This is a thing you now do that you did not used to do, and you do not mind it.',
     choices: null,
     effect: (p) => { p.m += 3; p.setMem('s8LateMorningWindow', true) },

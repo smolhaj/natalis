@@ -1,5 +1,7 @@
 // events_sonder_47.js — contemplative prose layer, weight 2, no choices, no new flags
 
+import { hasBooks, hasHousingMarket, hasPhotographs, isUrban, wentToSchool, worksInOffice } from './_sonderGuards.js'
+
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
 export const EVENTS_SONDER_47 = [
@@ -56,24 +58,11 @@ export const EVENTS_SONDER_47 = [
     effect: (p) => { p.setMem('s47d', true) },
   },
 
-  {
-    id: 'sonder_47_e',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => !G.mem?.s47e,
-    text: () => pick([
-      'The category you put yourself into and the category others put you into are different. You move between them depending on who is asking. The translation is mostly effortless and mostly invisible and occasionally exhausting.',
-      'A song from a specific year that you have not heard since that year. When it comes on — in a shop, from a passing car — the year comes back not as memory but as atmosphere: the temperature, the light, the precise quality of what it was to be that age.',
-    ]),
-    choices: null,
-    effect: (p) => { p.setMem('s47e', true) },
-  },
-
-  {
+{
     id: 'sonder_47_f',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => !G.mem?.s47f,
+    when: (G) => hasHousingMarket(G) && (!G.mem?.s47f),
     text: () => pick([
       'The landlord\'s smell. The particular smell of someone else\'s home that permeates the place you are renting, that you have learned to stop noticing, that you sometimes catch again as though for the first time.',
       'Reading a book and reaching the part where you cannot tell if you read this before or only think you did. The text is familiar but differently familiar from how familiar the book is. Possibly you read it in a dream.',
@@ -138,7 +127,7 @@ export const EVENTS_SONDER_47 = [
     id: 'sonder_47_k',
     phase: 'midlife',
     weight: 2,
-    when: (G) => !G.mem?.s47k,
+    when: (G) => hasPhotographs(G) && (!G.mem?.s47k),
     text: () => pick([
       'You realise you have been saying "recently" about an event that happened eight years ago. The recalibration of what "recently" means is one of the things no one warns you about.',
       'The photograph where you look happier than you remember being. Either the photograph is wrong or the memory is wrong. They cannot both be right. You have no way to check.',
@@ -177,7 +166,7 @@ export const EVENTS_SONDER_47 = [
     id: 'sonder_47_n',
     phase: 'childhood',
     weight: 2,
-    when: (G) => !G.mem?.s47n,
+    when: (G) => wentToSchool(G) && (!G.mem?.s47n),
     text: () => pick([
       'The smell of a specific classroom at a specific hour of a specific season that you could not describe but would recognise instantly, and which has come back to you once, unexpectedly, in a completely different building, and been gone before you could name it.',
       'The adult whose authority you respected and whose private life you never wondered about. Looking back, they must have had one. At the time there was no inside-the-school and outside-the-school for them — they simply existed as teachers exist, fully formed, without childhood.',
@@ -190,7 +179,7 @@ export const EVENTS_SONDER_47 = [
     id: 'sonder_47_o',
     phase: 'midlife',
     weight: 2,
-    when: (G) => !G.mem?.s47o,
+    when: (G) => worksInOffice(G) && (!G.mem?.s47o),
     text: () => pick([
       'The meeting you did not go to that turned out to matter, and the meeting you did go to that turned out not to. Both felt the same from the outside at the time. The difference was only visible afterward.',
       'You are trying to be kind and you can tell the kindness is landing as something else. You are not sure what. You finish the sentence and let it land however it lands.',
@@ -229,7 +218,7 @@ export const EVENTS_SONDER_47 = [
     id: 'sonder_47_r',
     phase: 'midlife',
     weight: 2,
-    when: (G) => !G.mem?.s47r,
+    when: (G) => isUrban(G) && (!G.mem?.s47r),
     text: () => pick([
       'The street you can walk blindfolded — every crack, every change in pavement texture, the place where the hedge overhangs into the path. You have walked this street enough times that the walking has become something other than walking.',
       'You correct someone gently and they take it badly and you spend the rest of the day wondering if the correction was worth making. The mathematics of this never simplify: the cost of correcting, the cost of not correcting, and neither amount is the same as the other.',
@@ -346,7 +335,7 @@ export const EVENTS_SONDER_47 = [
     id: 'sonder_47_aa',
     phase: 'midlife',
     weight: 2,
-    when: (G) => !G.mem?.s47aa,
+    when: (G) => hasBooks(G) && (!G.mem?.s47aa),
     text: () => pick([
       'The meal eaten alone that you did not expect to enjoy and enjoyed. The table for one. The book propped against the glass. The specific, slightly guilty pleasure of eating exactly what you want at exactly your own pace.',
       'You have been carrying an opinion for years and today, without any precipitating event, it shifts. Not all the way. Just enough that you notice it is no longer the same opinion it was this morning. This happens without drama and without announcement.',

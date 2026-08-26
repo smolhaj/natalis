@@ -1,13 +1,15 @@
 // Sonder module 60 — 30 contemplative events
 // Weight 2, null choices, all mem-gated. Universal human texture.
 
+import { hasBooks, hasBus, isLiterate } from './_sonderGuards.js'
+
 export const EVENTS_SONDER_60 = [
 
   {
     id: 'sonder_60_a',
     phase: 'midlife',
     weight: 2,
-    when: (G) => !G.mem?.s60a,
+    when: (G) => isLiterate(G) && (!G.mem?.s60a),
     text: 'The handwriting on the envelope is from someone who has been dead for years. For a moment before you process what you are looking at, you think the letter arrived today.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s60a', true) },
@@ -43,17 +45,7 @@ export const EVENTS_SONDER_60 = [
     effect: (p) => { p.r += 2; p.setMem('s60d', true) },
   },
 
-  {
-    id: 'sonder_60_e',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => !G.mem?.s60e,
-    text: 'The argument you rehearsed on the walk to the meeting was not the argument you needed. The actual conversation required something you had not prepared. This keeps happening.',
-    choices: null,
-    effect: (p) => { p.setMem('s60e', true) },
-  },
-
-  {
+{
     id: 'sonder_60_f',
     phase: 'midlife',
     weight: 2,
@@ -97,7 +89,7 @@ export const EVENTS_SONDER_60 = [
     id: 'sonder_60_j',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => !G.mem?.s60j,
+    when: (G) => hasBooks(G) && (!G.mem?.s60j),
     text: 'You finished the book and set it down and sat for a while doing nothing. This happens rarely. You are aware it happened and that you are aware of it happening, which is already too much awareness.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s60j', true) },
@@ -123,17 +115,7 @@ export const EVENTS_SONDER_60 = [
     effect: (p) => { p.setMem('s60l', true) },
   },
 
-  {
-    id: 'sonder_60_m',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => !G.mem?.s60m,
-    text: 'The photograph of you at that age — you have seen it recently, someone found it — shows a person who looks uncertain about something. You cannot remember being uncertain about that particular thing. The uncertainty must have resolved itself.',
-    choices: null,
-    effect: (p) => { p.setMem('s60m', true) },
-  },
-
-  {
+{
     id: 'sonder_60_n',
     phase: 'midlife',
     weight: 2,
@@ -227,7 +209,7 @@ export const EVENTS_SONDER_60 = [
     id: 'sonder_60_w',
     phase: 'midlife',
     weight: 2,
-    when: (G) => !G.mem?.s60w,
+    when: (G) => hasBus(G) && (!G.mem?.s60w),
     text: 'The news arrived during something ordinary — washing up, or walking to the bus — and you finished the ordinary thing before letting it in. The gap between the news and your response was about thirty seconds. You still think about that gap.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s60w', true) },
@@ -283,17 +265,7 @@ export const EVENTS_SONDER_60 = [
     effect: (p) => { p.r += 2; p.setMem('s60ab', true) },
   },
 
-  {
-    id: 'sonder_60_ac',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => !G.mem?.s60ac,
-    text: 'The light in the apartment across the way goes on at the same time every morning. You have never seen the person who turns it on. They have a schedule. They are consistent. You find this, for reasons you cannot fully explain, reassuring.',
-    choices: null,
-    effect: (p) => { p.m += 2; p.setMem('s60ac', true) },
-  },
-
-  {
+{
     id: 'sonder_60_ad',
     phase: 'midlife',
     weight: 2,

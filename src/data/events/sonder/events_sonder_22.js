@@ -2,6 +2,8 @@
 // Contemplative layer: moments of ordinary life that produce the sonder feeling.
 // Weight 2, mem-gated, no choices, no new flags.
 
+import { hasHealthcare, hasPhone, hasPhotographs, worksInOffice } from './_sonderGuards.js'
+
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
 export const EVENTS_SONDER_22 = [
@@ -10,7 +12,7 @@ export const EVENTS_SONDER_22 = [
     id: 'sdr22_the_long_meeting',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 22 && G.age <= 40 && !G.mem?.sdr22LongMeeting,
+    when: (G) => worksInOffice(G) && (G.age >= 22 && G.age <= 40 && !G.mem?.sdr22LongMeeting),
     text: () => pick([
       `The meeting has been going for an hour and a half and you are not in it anymore. You are watching the speaker's mouth and hearing sounds. The legal pad in front of you has a small drawing of a window in the bottom corner. You do not remember making it.`,
       `Somewhere in the third hour of the meeting someone has started to cry, quietly, and no one is acknowledging it, and the presenter continues. The fluorescent light above the crying person flickers once and then holds.`,
@@ -66,7 +68,7 @@ export const EVENTS_SONDER_22 = [
     id: 'sdr22_the_new_colleague',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 30 && G.age <= 55 && !G.mem?.sdr22NewColleague,
+    when: (G) => worksInOffice(G) && (G.age >= 30 && G.age <= 55 && !G.mem?.sdr22NewColleague),
     text: () => pick([
       `The new colleague is twenty-three and doesn't know who certain people are. Names you assumed everyone knew. Bands. A politician who seemed important. The absence in the new colleague is not ignorance — they simply weren't there yet. The world was already full of things before they arrived.`,
       `There is a new person at work who has the energy of someone who still believes this job could become something. You remember having that. You don't remember when you stopped.`,
@@ -80,7 +82,7 @@ export const EVENTS_SONDER_22 = [
     id: 'sdr22_the_phone_call',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 18 && G.age <= 40 && !G.mem?.sdr22PhoneCall,
+    when: (G) => hasPhone(G) && (G.age >= 18 && G.age <= 40 && !G.mem?.sdr22PhoneCall),
     text: () => pick([
       `You are on the phone with your mother. She is telling you something that is not the thing she is actually trying to say. You have learned to hear the thing beneath the thing. This is a skill no one taught you and you have no name for.`,
       `The phone call from home always comes at a specific time. You know the time. You have arranged your Sundays around it without deciding to. It has become the structure of the week.`,
@@ -94,7 +96,7 @@ export const EVENTS_SONDER_22 = [
     id: 'sdr22_the_waiting_room_2',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 35 && G.age <= 65 && !G.mem?.sdr22WaitingRoom2,
+    when: (G) => hasHealthcare(G) && (G.age >= 35 && G.age <= 65 && !G.mem?.sdr22WaitingRoom2),
     text: () => pick([
       `The waiting room for the result. Other people are also waiting. Each of them is inside something no one else in the room knows about. You can see from the way they hold their phones that several of them are not reading what is on the screen.`,
       `You have read the same paragraph in the waiting room magazine four times. It is about a kitchen renovation. You know it is not registering. You read it a fifth time.`,
@@ -262,7 +264,7 @@ export const EVENTS_SONDER_22 = [
     id: 'sdr22_the_hospital_corridor',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 35 && G.age <= 70 && !G.mem?.sdr22HospitalCorridor,
+    when: (G) => hasHealthcare(G) && (G.age >= 35 && G.age <= 70 && !G.mem?.sdr22HospitalCorridor),
     text: () => pick([
       `The hospital corridor at two in the morning: people in various states of waiting, the specific quality of fluorescent light at this hour, the sound of wheels on linoleum. Everyone here is inside something. The corridor connects all of them without making them the same.`,
       `You have learned the specific geography of this ward. The good chair by the window. The vending machine that works. The nurse who explains things properly. This is knowledge you didn't want to acquire.`,
@@ -318,7 +320,7 @@ export const EVENTS_SONDER_22 = [
     id: 'sdr22_the_photograph_again',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 55 && G.age <= 80 && !G.mem?.sdr22PhotographAgain,
+    when: (G) => hasPhotographs(G) && (G.age >= 55 && G.age <= 80 && !G.mem?.sdr22PhotographAgain),
     text: () => pick([
       `A photograph from thirty years ago: the people in it, the arrangement of their faces, the occasion you can barely recover. One of the people in it is dead. One moved somewhere and is effectively gone. One you see every few years. One is you, and the version of you in the photograph is unaware of everything that's coming.`,
       `You cannot place the year the photograph was taken by looking at it. You can narrow it down by the hairstyle, the clothes, the particular quality of the light. The year is in there. It requires reading.`,

@@ -1,27 +1,16 @@
 // events_sonder_32.js — contemplative prose layer, weight 2, no choices, no new flags
 
+import { hasBooks, hasBus, hasFormalJob, hasPhotographs, worksInOffice } from './_sonderGuards.js'
+
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
 export const EVENTS_SONDER_32 = [
 
-  {
-    id: 'sonder_32_a',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => G.age >= 20 && G.age <= 30 && !G.mem?.s32a,
-    text: () => pick([
-      'The train that you almost did not catch. You have thought about what would have happened if you had missed it. The answer is: something different would have happened. Beyond that, you do not know.',
-      'The period when everything seemed possible and you did not recognise it as a period. It had the feeling of a permanent state. Later you understood it was a period.',
-    ]),
-    choices: null,
-    effect: (p) => { p.setMem('s32a', true) },
-  },
-
-  {
+{
     id: 'sonder_32_b',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 38 && G.age <= 52 && !G.mem?.s32b,
+    when: (G) => hasBus(G) && (G.age >= 38 && G.age <= 52 && !G.mem?.s32b),
     text: () => pick([
       'The child who looked at you on the bus today and then looked away. You were, for a moment, a stranger in the ordinary sense — someone with a face and a coat and no story attached.',
       'The sentence you said that was wrong and you knew it was wrong the moment it left your mouth. The room absorbed it. No one corrected you. You have been correcting it internally since.',
@@ -73,7 +62,7 @@ export const EVENTS_SONDER_32 = [
     id: 'sonder_32_f',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => G.age >= 14 && G.age <= 18 && !G.mem?.s32f,
+    when: (G) => hasBus(G) && (G.age >= 14 && G.age <= 18 && !G.mem?.s32f),
     text: () => pick([
       'The person you are at the back of the bus and the person you are at the front of the class. The distance between them is navigated daily and without ceremony.',
       'You have a sense that something large is coming. You cannot name it or locate it. The sense is there when you wake and there when you sleep and you have learned to live inside it.',
@@ -82,24 +71,11 @@ export const EVENTS_SONDER_32 = [
     effect: (p) => { p.setMem('s32f', true) },
   },
 
-  {
-    id: 'sonder_32_g',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 42 && G.age <= 56 && !G.mem?.s32g,
-    text: () => pick([
-      'The way your parent did something — the gesture, the phrase, the particular way of handling a situation — that you found yourself doing last week without deciding to.',
-      'The garden or the balcony plant or the single succulent on the windowsill: something alive that you are responsible for. The specific relationship of noticing whether something is alive.',
-    ]),
-    choices: null,
-    effect: (p) => { p.setMem('s32g', true) },
-  },
-
-  {
+{
     id: 'sonder_32_h',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 68 && !G.mem?.s32h,
+    when: (G) => hasPhotographs(G) && (G.age >= 68 && !G.mem?.s32h),
     text: () => pick([
       'The photograph album that no one will look at after you are gone. The people in it have names only you can supply. When you are gone the photographs will become pictures of strangers.',
       'The body remembers things the mind has forgotten. The skill that comes back without having been practised. The route the hands know without instruction.',
@@ -112,7 +88,7 @@ export const EVENTS_SONDER_32 = [
     id: 'sonder_32_i',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 28 && G.age <= 42 && !G.mem?.s32i,
+    when: (G) => worksInOffice(G) && (G.age >= 28 && G.age <= 42 && !G.mem?.s32i),
     text: () => pick([
       'The meeting between two people at the table across from you. You cannot hear them but you can see what the conversation is. Something is being decided. You hope it goes the way the quieter one wants.',
       'The list you made of things to do and then did not make again because the list-making had become the thing you were doing instead of the things on the list.',
@@ -151,7 +127,7 @@ export const EVENTS_SONDER_32 = [
     id: 'sonder_32_l',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 58 && G.age <= 72 && !G.mem?.s32l,
+    when: (G) => hasFormalJob(G) && (G.age >= 58 && G.age <= 72 && !G.mem?.s32l),
     text: () => pick([
       'The retirement of the body from certain activities has been gradual. Not a cliff. A slow negotiation where you learned what was no longer available and adjusted without ceremony.',
       'The season you waited for and when it arrived it was what you expected and also briefly better than expected, and then it ended, and then you waited for it again.',
@@ -203,7 +179,7 @@ export const EVENTS_SONDER_32 = [
     id: 'sonder_32_p',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => G.age >= 13 && G.age <= 17 && !G.mem?.s32p,
+    when: (G) => hasBooks(G) && (G.age >= 13 && G.age <= 17 && !G.mem?.s32p),
     text: () => pick([
       'The book that mattered so much you cannot remember what your life was before reading it. The book did not change you — it named something that was already there. That was why it mattered.',
       'The teacher who did not notice you and the teacher who did. Both were teaching the same subject. The difference between them was not the subject.',
@@ -255,7 +231,7 @@ export const EVENTS_SONDER_32 = [
     id: 'sonder_32_t',
     phase: 'childhood',
     weight: 2,
-    when: (G) => G.age >= 8 && G.age <= 14 && !G.mem?.s32t,
+    when: (G) => G.season === 'summer' && (G.age >= 8 && G.age <= 14 && !G.mem?.s32t),
     text: () => pick([
       'The object you made with your hands that was not perfect and which was yours. The imperfection was part of what made it yours.',
       'The way the day felt the last time before it ended — the last summer of being young in a particular way, the last year before school changed. The feeling only visible in retrospect.',
@@ -264,20 +240,7 @@ export const EVENTS_SONDER_32 = [
     effect: (p) => { p.setMem('s32t', true) },
   },
 
-  {
-    id: 'sonder_32_u',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 40 && G.age <= 54 && !G.mem?.s32u,
-    text: () => pick([
-      'The colleagues who know your professional self but not the other one. The other one would surprise some of them. You are curious, occasionally, what they imagine.',
-      'The habit of reading the room before entering it. You do this so automatically you would not have named it as a skill until someone said they could not do it, and you realised that you have been doing it for twenty years.',
-    ]),
-    choices: null,
-    effect: (p) => { p.setMem('s32u', true) },
-  },
-
-  {
+{
     id: 'sonder_32_v',
     phase: 'young_adult',
     weight: 2,
@@ -303,20 +266,7 @@ export const EVENTS_SONDER_32 = [
     effect: (p) => { p.setMem('s32w', true) },
   },
 
-  {
-    id: 'sonder_32_x',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 48 && G.age <= 60 && !G.mem?.s32x,
-    text: () => pick([
-      'The night you stayed up for a reason that seemed important and in the morning was still important but differently. Sleep changes the importance of things slightly. You have started to rely on this.',
-      'The sound of rain on a different kind of roof — the tin roof of childhood, the tile roof of adulthood, the specific drumming of weather on whatever material you are living under. Rain sounds different depending on where you are inside.',
-    ]),
-    choices: null,
-    effect: (p) => { p.setMem('s32x', true) },
-  },
-
-  {
+{
     id: 'sonder_32_y',
     phase: 'young_adult',
     weight: 2,
@@ -333,7 +283,7 @@ export const EVENTS_SONDER_32 = [
     id: 'sonder_32_z',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 60 && G.age <= 74 && !G.mem?.s32z,
+    when: (G) => hasBooks(G) && (G.age >= 60 && G.age <= 74 && !G.mem?.s32z),
     text: () => pick([
       'The recurring pleasure that has not diminished: the morning coffee, the book before bed, the conversation with a particular person. Some pleasures do not run out. You have located yours.',
       'The news that someone you knew long ago has died. The distance between that person and your present life was large. The death still reaches across it. That is something about how grief works.',

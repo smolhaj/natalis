@@ -1287,7 +1287,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear === 1989 &&
       G.age >= 18 && G.age <= 40 &&
       !G.mem?.sl_wall_fall,
-    text: 'The news came on the television and then came again on the radio and then you went outside because staying inside seemed wrong. People were at Bornholmer Strasse, at Checkpoint Charlie, at the Brandenburg Gate. People had hammers. The Wall had been there your entire life — a fact of the city you had stopped seeing the way you stopped seeing the furniture. And now it was coming down. The friends who came across in the following days had a different quality of attention: they looked at things the way people look at things they have been told about but not been permitted to see.',
+    text: 'Schabowski says it on the television at seven and nobody in the room is sure he meant to. You put your coat on and go to Bornholmer Strasse because staying in seems wrong, and by eleven the barrier is up and nobody has given an order. A man beside you is hitting the concrete with a claw hammer he has clearly brought from a kitchen drawer. The friends who come across in the days after look at the shops the way you look at things you have only been told about.',
+    context: 'Günter Schabowski announced the new travel regulations at a press conference on 9 November 1989, stating in error that they took effect immediately. The Bornholmer Strasse crossing opened first, at around 23:30, when officers acted without orders.',
     choices: null,
     effect: (p) => { p.setMem('sl_wall_fall', true); p.m += 8; p.e += 2 },
   },
@@ -1799,7 +1800,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 2001 && G.currentYear <= 2012 &&
       G.age >= 25 && G.age <= 55 &&
       !G.mem?.sl_rwa_gacaca,
-    text: 'The gacaca court meets under a tree. The man who is testifying about what happened to your neighbour in 1994 is sitting twenty metres from the man he is testifying about. The man he is testifying about is required to be here. Rwanda has decided that justice in this case means community courts, truth-telling, reduced sentences in exchange for confession. You are required to be here too, as a witness. What you witnessed in 1994 is not the same as what is happening under the tree. You are learning what justice means when it is designed for a situation where everyone is already present.',
+    text: 'The court sits under the tree by the road and the man giving evidence and the man he is giving evidence about are twenty metres apart on the same grass. You are called as a witness and you say what you saw at the crossroads on the fourteenth of April. Both of them will walk back along this road afterwards, and so will you. The judge writes it down in a school exercise book with a red cover.',
+    context: 'Rwanda\'s gacaca courts operated from 2002 to 2012, trying around 1.9 million cases before elected lay judges in open-air hearings. Attendance was compulsory for adults in the community.',
     choices: null,
     effect: (p) => { p.setMem('sl_rwa_gacaca', true); p.m -= 4; p.e += 3; p.karma += 3 },
   },
@@ -2108,7 +2110,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1942 && G.currentYear <= 1964 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.sl_mex_bracero,
-    text: 'The Bracero Program gives you a contract and a work permit and a bed in a barrack in California and wages that are three times what you could earn at home. The contract runs for six weeks. At the end of six weeks you go back. The arrangement assumes you will go back. The arrangement is correct — most do. The money you send home is visible in the village: the tin roof, the school fees, the remittance economy that the village runs on. The visible thing does not include the barrack, the contractor\'s accounting, the way the wage is deducted for the bus to the field.',
+    text: 'The contract is six weeks in the lettuce at Salinas and a bed in a barrack with forty-one others. Ten percent comes off the top for a savings fund you are told you will collect in Mexico, and the bus to the field comes off as well, and the meals. The tin roof goes on your mother\'s house in November and the whole village sees the roof. Nobody in the village has seen the deduction slip, which you keep folded in your document wallet.',
+    context: 'The Bracero Program ran from 1942 to 1964 and issued 4.6 million contracts. Ten percent of wages was withheld for a Mexican savings fund most workers never received; litigation over it continued into the 2000s.',
     choices: null,
     effect: (p) => { p.setMem('sl_mex_bracero', true); p.mo += 3000; p.h -= 3; p.addFlag('bracero_generation') },
   },
@@ -2263,7 +2266,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1992 &&
       G.age >= 40 &&
       !G.mem?.sl_stasi_opened,
-    text: 'The Gauck Authority is opening the files. Anyone can request their own file. Some of the people you worked with have requested theirs and your name appears in it. You know this because one of them told you, quietly, in a car park in the middle of the afternoon. You have not requested your own file. The file exists regardless of whether you read it. Your name is in it as a source. The person you reported on spent eight months in a Stasi detention facility. You knew, when you reported, that reporting had consequences. You chose not to know what the consequences were.',
+    text: 'Marta tells you in a car park at two in the afternoon, standing by the boot of her car, that she has read hers and your name is in it. She does not raise her voice and she does not stay long. You have not applied for your own and you are not going to. Konrad did eight months in Hohenschönhausen after the thing you wrote in 1983, and you have known his address for six years without going.',
+    context: 'The Stasi Records Authority opened the files to individual applicants from January 1992. Around 3.5 million people have applied. The Ministry ran roughly 174,000 unofficial collaborators, and files routinely named informants to those they had reported on.',
     choices: [
       {
         text: 'Request your own file. See the full record.',
@@ -2438,7 +2442,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 65 &&
       G.children?.length > 0 &&
       !G.mem?.sl_ll_farm_hand,
-    text: 'The land transfer is a legal process that takes eight months and costs money you did not expect to spend and involves a surveyor who cannot find the boundary stones your grandfather put in, which are precisely where your grandfather said they would be. The document at the end says what has been true for forty years: this land is yours and now it is theirs. Your son does not plan to farm it. He plans to rent it. You understand the economics of his decision. You hold the document and think about the economics of your grandfather\'s decision and your father\'s decision and yours. The decisions accumulated into this moment, which is also an ending.',
+    text: 'The surveyor cannot find the boundary stones and you walk him to all four of them in under an hour, because your grandfather put them where he said he had. Eight months and a fee you had not budgeted for, and the paper at the end says what has been true since 1961. Your son will rent it out to the co-operative, which is the correct decision and which you have told him is the correct decision. You put the deed in the drawer with the others and go out to shut the gate.',
     choices: null,
     effect: (p) => { p.setMem('sl_ll_farm_hand', true); p.m += 2; p.r += 8; p.addFlag('land_transferred') },
   },
@@ -2580,7 +2584,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1930 && G.currentYear <= 1978 &&
       G.age >= 6 && G.age <= 12 &&
       !G.mem?.sl_native_board,
-    text: 'The school is a federal Indian boarding school five hundred miles from the reservation and you were taken there by the agency on a bus that stopped at six other reservations before yours. The rules: no Indian language, no Indian clothes, no Indian names. Your name is now Robert. The school has a marching band and a football team and a curriculum designed to prepare you for assimilation into a labour market that will not fully accept you regardless. You learn to read. You learn to be Robert. The cost of the reading and the cost of being Robert arrive at different speeds.',
+    text: 'The bus stops at six other agencies before yours and takes two days. They cut your hair in a room with a drain in the floor and give you the name Robert, which is on the list next to your number. Speaking the language costs you a meal the first time and the strap the second. You learn to read in eleven months, which the superintendent writes down as a success, and it is one.',
+    context: 'US federal Indian boarding schools operated from 1819; over 400 have been documented. A 2022 Interior Department investigation identified over 500 child deaths at 19 schools, with the total expected to rise into the thousands. Children were renamed, forbidden their languages and subjected to corporal punishment.',
     choices: null,
     effect: (p) => { p.setMem('sl_native_board', true); p.e += 5; p.m -= 10; p.s -= 3; p.addFlag('boarding_school_indigenous') },
   },
@@ -2777,7 +2782,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 16 && G.age <= 35 &&
       G.stats.wealth <= 25 &&
       !G.mem?.sl_drc_cobalt,
-    text: 'The cobalt mine in the Katanga is called artisanal, which means you dig it by hand with a pick and a sack and no machinery and no protective equipment and no employment contract. The company that sells the cobalt is not called artisanal. The battery in the phone of the person who bought the battery that contains this cobalt is not called artisanal either. You earn between one and three dollars a day depending on what you find. The mine is not safe. Everyone in the mine knows the mine is not safe. The alternative to the mine, in this town, in this year, is worse than the mine.',
+    text: 'The pit is nine metres and the sides are held by nothing. You fill the sack, carry it up the notched pole, and the buyer at the roadside pays between one and three dollars depending on the grade off a hand-held reader. Your cousin was in the shaft at Kasulo when the ground came down in November and there was no equipment in the town to get to him. You went back on the Monday because the alternative in this town this year is worse than the pit.',
+    context: 'The DRC supplies roughly 70 percent of the world\'s cobalt. Artisanal diggers, estimated at 150,000 to 200,000 including children, work unsupported pits without equipment or contracts and supply an estimated 15 to 30 percent of national output.',
     choices: null,
     effect: (p) => { p.setMem('sl_drc_cobalt', true); p.h -= 6; p.mo += 600; p.addFlag('artisanal_miner') },
   },
@@ -2792,7 +2798,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1950 && G.currentYear <= 2000 &&
       G.age >= 35 && G.age <= 55 &&
       !G.mem?.sl_bol_lung,
-    text: 'The diagnosis is silicosis and the doctor says it in a tone that is not hopeful, which tells you everything the word itself doesn\'t. Silicosis is what happens when you breathe rock dust for twenty years in a Potosí tin mine. The Potosí tin mines have been producing silicosis since before the word silicosis existed — the Spanish colonial records called it "the miner\'s disease" and the miner\'s disease was also what killed your father. You are forty-one. The doctor says to stop working in the mine. What the doctor does not say is how a man in Potosí stops working in the mine.',
+    text: 'The doctor at the Caja says silicosis and then says you should stop going into the mine, and does not say anything after that. You are forty-one. Your father was thirty-nine when the same word was used about him by a different doctor in the same building. On Friday you buy the coca and the dynamite at the stall by the entrance the way you have every Friday since you were sixteen, and on Monday you go in.',
+    context: 'Silicosis from rock dust has been endemic in the Potosí mines since the colonial period. Life expectancy for cooperative miners is commonly reported at 40 to 50 years. Miners buy their own explosives and equipment at stalls outside the mine entrances.',
     choices: null,
     effect: (p) => { p.setMem('sl_bol_lung', true); p.h -= 15; p.m -= 6; p.addCondition('silicosis', 'moderate') },
   },
@@ -2807,7 +2814,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1980 && G.currentYear <= 2020 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.sl_niger_delta,
-    text: 'The creek behind the village has oil in it. It has had oil in it since the spill in 1983, which was not cleaned up because the cleanup that was done was the official cleanup that documented the cleanup rather than the cleanup that removed the oil. The fishing is reduced. The soil is reduced. The company that spilled the oil has a community development fund that built a school with a roof that leaks and then built a health clinic with no doctor and then built a road that ends before the market. You are the generation that has grown up beside an oil industry that extracts from the land you live on and deposits the money somewhere you are not.',
+    text: 'There is a rainbow film on the creek behind the village that has been there since before you were born. The company built a school with a roof that leaks over the back two rows, a clinic that has never had a doctor in it, and a road that stops four hundred metres short of the market. Your grandfather fished this water and your father fished it for a while. You buy frozen fish from Port Harcourt at the junction, brought in by lorry, from a country that exports two million barrels a day.',
+    context: 'Between 9 and 13 million barrels of oil are estimated to have been spilled in the Niger Delta since 1958. The 2011 UNEP assessment of Ogoniland found drinking water with benzene at 900 times WHO guidelines and estimated cleanup would take 25 to 30 years.',
     choices: null,
     effect: (p) => { p.setMem('sl_niger_delta', true); p.m -= 5; p.h -= 3; p.e += 3; p.addFlag('extraction_community') },
   },
@@ -2843,7 +2851,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1940 && G.currentYear <= 1946 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.sl_uk_factory_w,
-    text: 'The factory makes Spitfire parts and the shift is ten hours and you are good at it. You are better at it than the man who had this job before the war, which is not something anyone says officially. The wage is less than the man\'s wage by three shillings, which you know because Mary in assembly told you. The foreman says you\'re a natural. The men coming back from the fronts in 1945 are given their jobs back, which is the law, and you go back to the house, which is not the law but is what happens. You are a natural. You were not kept.',
+    text: 'The shift is ten hours on Spitfire wing sections and you are quicker at it than the man who held the bench before the war. Mary in assembly tells you what his rate was and yours is three shillings under it. The foreman says you are a natural, twice, in front of people. In 1945 the men come back and the law gives them their benches, and you go home, which is not the law but is what happens.',
+    context: 'The 1941 National Service Act conscripted women aged 20 to 30 into war work. Women in munitions were typically paid 50 to 75 percent of the male rate. The Restoration of Pre-War Practices Act 1942 guaranteed returning men their former jobs; most women in engineering left the industry by 1946.',
     choices: null,
     effect: (p) => { p.setMem('sl_uk_factory_w', true); p.e += 3; p.m -= 4; p.r += 6; p.addFlag('wartime_labour_displaced') },
   },
@@ -2879,7 +2888,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 18 && G.age <= 30 &&
       G.religion === 'jewish' &&
       !G.mem?.sl_kibbutz_2gen,
-    text: 'Your parents founded the kibbutz — or rather, your parents\' generation founded it, when founding kibbutzim was what you did if you were a young Zionist in 1948 and you believed in collective ownership and socialist labour and children raised in communal children\'s houses. You were raised in the communal children\'s house. The communal children\'s house is now being disbanded because it turned out that many of the people who chose collective ownership wanted their children to sleep in the same house as them, which is not a small thing to discover about yourself forty years into an experiment. The kibbutz is privatising. Your parents are disappointed. You are, carefully, relieved.',
+    text: 'You slept in the children\'s house until you were eighteen, in a room with five others and a metapelet who was not your mother. The children\'s house closed in the nineties because it turned out that most of the founders wanted their children in the same building as themselves, which is a difficult thing to discover forty years into an experiment. The dining hall now takes payment and the houses have been assigned to families. Your father says the word privatisation the way other people say a diagnosis, and you agree with him out loud.',
+    context: 'Communal children\'s houses, in which kibbutz children slept apart from their parents, were standard until the 1970s-90s. From the 1980s debt crisis onward most kibbutzim privatised: differential salaries, assigned housing and paid dining halls. Fewer than 30 of about 270 kibbutzim remain fully collective.',
     choices: null,
     effect: (p) => { p.setMem('sl_kibbutz_2gen', true); p.m += 3; p.e += 3; p.r += 4; p.addFlag('kibbutz_privatisation_generation') },
   },
@@ -2944,7 +2954,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 13 && G.age <= 18 &&
       G.ruralUrban === 'urban' &&
       !G.mem?.sl_sarajevo_siege,
-    text: 'The siege of Sarajevo lasts 1,425 days. You are thirteen when it begins and sixteen when it ends, which means your adolescence is inside the siege. You go to school in the basement of the school building because the classrooms have windows and the windows are sniper angles. You do homework by candlelight because the power is off. The teachers come even when it is dangerous to come, which is most days. There is a girl you like. There is music you listen to on a battery radio. There are things that are normal inside the siege that will be strange to explain to anyone who was not here. You will spend the rest of your life having to explain.',
+    text: 'You are thirteen when it starts and sixteen when it stops, so the whole of it happens inside the part of your life that was going to be something else. Class is in the basement because the classrooms have windows and the windows are angles. The teachers come, most days, which is not required of them. There is a girl and there is a battery radio and there is a way of crossing Vojvode Putnika at a particular speed, and you will spend your adult life failing to explain how ordinary all three of those things were.',
+    context: 'The siege of Sarajevo ran from April 1992 to February 1996, 1,425 days, the longest siege of a capital in modern warfare. Around 11,500 people were killed, over 1,600 of them children. Schools operated in basements and stairwells throughout.',
     choices: null,
     effect: (p) => { p.setMem('sl_sarajevo_siege', true); p.m -= 10; p.e += 4; p.r += 6; p.addFlag('siege_adolescence') },
   },
@@ -2963,7 +2974,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 2000 && G.currentYear <= 2020 &&
       G.age >= 20 && G.age <= 35 &&
       !G.mem?.sl_jp_herbivore,
-    text: 'The word the media uses for men like you is sōshoku-kei, herbivore men — men who are not aggressive about career, not aggressive about dating, not interested in the lifetime employment and the company loyalty and the two hours of mandatory drinking with superiors that your father\'s generation understood as masculinity. The word is used by commentators as a diagnosis. You use it as a description of a rational response to an economy that will not give you what it gave your father regardless of how aggressive you are. The lifetime employment tracks are closed. The housing is unaffordable. The herbivore is not a failure of ambition. It is a response to a specific set of available options.',
+    text: 'The word on the morning programme is sōshoku-kei, herbivore, said by a man in a suit as though naming a condition. You have a contract that renews in March, a bicycle, and a room with a window that faces the station. Your father did thirty-eight years at the same company and two hours of drinking with his section chief every Friday for most of them. You have run the numbers on the lifetime-employment track and it is not on offer, and the commentators call this a lack of appetite.',
+    context: 'Sōshoku-kei danshi entered Japanese usage around 2006. Non-regular employment rose from around 20 percent of the workforce in 1990 to nearly 40 percent, and lifetime-employment tracks contracted sharply for those graduating after the bubble.',
     choices: null,
     effect: (p) => { p.setMem('sl_jp_herbivore', true); p.m += 2; p.e += 3; p.addFlag('precariat_generation') },
   },
@@ -2978,7 +2990,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 22 && G.age <= 35 &&
       G.stats.smarts >= 60 &&
       !G.mem?.sl_kr_sampo,
-    text: 'Sampo means giving up. The sampo generation is the generation that has given up three things: dating, marriage, and children. The next generation gave up two more: home ownership and employment with benefits. The five-renunciation generation. The education system said: study. The economy said: the jobs you studied for are not available. The housing market said: the city you studied in is not affordable. The marriage market said: marriage requires income and housing and stability. The combination is not a personal failure of ambition. It is a closing of doors that the previous generation walked through when the doors were open. You are the person who arrived when they closed.',
+    text: 'Sampo means the three renunciations: dating, marriage, children. Your cohort added two more and the papers gave it a new number. You studied the thing you were told to study and you are working the job that exists, which is on contract and renewed in March. Your mother asks about grandchildren in the same tone every Chuseok and you give the same answer. The doors your parents walked through were open when they reached them.',
+    context: 'The sampo generation - three renunciations - entered Korean usage around 2011. The term expanded to opo (five, adding home ownership and stable employment) and further. Youth employment is heavily concentrated in non-regular contracts, and Korea\'s fertility rate fell below 0.8 in 2022, the lowest recorded anywhere.',
     choices: null,
     effect: (p) => { p.setMem('sl_kr_sampo', true); p.m -= 4; p.e += 3; p.r += 5; p.addFlag('sampo_generation') },
   },
@@ -3023,7 +3036,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.stats.wealth <= 45 &&
       G.career?.field !== 'finance' &&
       !G.mem?.sl_uk_gen_rent,
-    text: 'The house your parents bought in 1987 for fifty thousand pounds is now worth six hundred and fifty thousand pounds, which is the result of a policy environment that treated housing as an asset class rather than a place to live. You earn adequately. You cannot buy. The deposit required is the amount your parents paid for the house. You rent. Your rent is higher than a mortgage payment would be for the same property. The people who own the property you rent bought it with a mortgage. The mortgage is now paid by you. This is not a mystery. This is arithmetic. You are doing the arithmetic in your thirties and finding it both clarifying and enraging.',
+    text: 'Your parents bought the house in 1987 for fifty thousand and it is worth six hundred and fifty now, and your father says the market has been kind. The deposit you need is the price of the whole house then. Your rent is two hundred a month more than the mortgage on the flat would be, and it goes to a man who bought it in 2004 and has never seen the boiler. You are thirty-four and you do this arithmetic on the bus and it comes out the same every time.',
+    context: 'UK house prices rose roughly thirteenfold between 1987 and 2024 while median wages rose about fourfold. The proportion of 25-34 year olds owning their home fell from 67 percent in 1991 to under 40 percent by the 2020s.',
     choices: null,
     effect: (p) => { p.setMem('sl_uk_gen_rent', true); p.m -= 4; p.e += 3; p.r += 4; p.addFlag('generation_rent') },
   },
@@ -3092,7 +3106,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 6 && G.age <= 14 &&
       G.ruralUrban === 'urban' &&
       !G.mem?.sl_viet_reedu,
-    text: 'Your father went to the re-education camp in 1975. The camp is called a re-education camp, which is the official name for the detention of South Vietnamese military officers and government employees and civil servants and anyone else the new government determined required political re-education. He has been there for three years. You write him letters that take two months to arrive. He writes back in careful language that you understand is the language of someone being monitored. The letters are not the letters he would write if no one were reading them. You know this. He knows you know this. The letters continue.',
+    text: 'The letters take two months and come back written in a language that is not how your father talks. He asks after the health of the family and describes the weather and says the work is instructive. You write back in the same register, which you learned to do without anyone teaching you. He knows that you know. Three years, and neither of you has broken it once.',
+    context: 'After April 1975 an estimated 300,000 to 1 million South Vietnamese officers, officials and professionals were sent to re-education camps, most for one to three years and some for over a decade. Correspondence was censored.',
     choices: null,
     effect: (p) => { p.setMem('sl_viet_reedu', true); p.m -= 8; p.e += 3; p.r += 5; p.addFlag('reeducation_camp_family') },
   },
@@ -3106,7 +3121,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.character.country.name === 'Vietnam' &&
       G.age >= 14 && G.age <= 20 &&
       !G.mem?.sl_viet_reedu_return,
-    text: 'Your father came home from the re-education camp when you were fourteen. He was there for seven years. The person who came home is your father but the seven years are inside him in a way that he does not describe and that you can see without him describing. He is thin in a particular way. He speaks carefully in a way that does not stop when the officials are not present. The careful speaking has become permanent. You sit across from him at the dinner table and try to find the father who wrote the monitored letters in the person who is now here, who is careful, who is thin, who is home.',
+    text: 'He comes back after seven years and he is thin in a way that is not only about food. He speaks carefully, and the careful speaking does not stop when there is nobody in the room who needs to hear it. You are fourteen and you sit across the table trying to find the man who wrote the monitored letters in the man who is now passing you the rice. He asks about your school in the same voice he would use for anything.',
     choices: null,
     effect: (p) => { p.setMem('sl_viet_reedu_return', true); p.m -= 4; p.e += 3; p.r += 6 },
   },
@@ -3125,7 +3140,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1960 && G.currentYear <= 2020 &&
       G.age >= 14 && G.age <= 22 &&
       !G.mem?.sl_hijra_init,
-    text: 'The hijra community found you, or you found them, or both — the finding is mutual when the person who is found has been visible in ways they did not intend. The guru is a woman of perhaps fifty and she knows what you are before you have said it and she says it in the language that is used inside the community, which is not Hindi or Urdu or Bengali but the argot that hijras use among themselves, which has been passed down inside the community for as long as there has been a community, which is a very long time. The initiation is a ceremony and a commitment. What it opens: belonging. What it closes: most employment in the formal economy, most family acceptance, most futures the society considers normal. Both things are real.',
+    text: 'The guru is about fifty and knows what you are before you have said anything, and says it in the argot the community uses among itself, which is not Hindi or Urdu or Bengali. The ceremony takes place in a room above a shop with eleven people present and food afterwards. What it opens is a house, a name, a place at a table, and a person who will bury you. What it closes is most formal employment, most of your family, and the version of a future the rest of the city considers ordinary.',
+    context: 'Hijra communities in South Asia are organised into guru-chela households with their own initiation rites and an argot, Hijra Farsi. India\'s Supreme Court recognised a third gender in NALSA v. Union of India in 2014, but formal-sector employment remains largely closed and begging, sex work and badhai blessings remain the principal livelihoods.',
     choices: null,
     effect: (p) => { p.setMem('sl_hijra_init', true); p.s += 5; p.m += 3; p.mo -= 500; p.addFlag('hijra_community') },
   },
@@ -3157,7 +3173,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.ruralUrban === 'rural' &&
       G.age >= 4 && G.age <= 12 &&
       !G.mem?.sl_bng_bhola,
-    text: 'The Bhola cyclone of November 1970 kills between three hundred thousand and five hundred thousand people. The number is imprecise because the counting in the delta is imprecise and because the government in West Pakistan was slow to respond and the slowness of the response became one of the facts that led to the independence of Bangladesh the following year. You are in the delta when the cyclone comes. The water comes from the sea through the mangroves and through the streets at a speed and a depth that is not water the way you know water — it is the sea, which is a different thing. You survive. The number of people you know who do not survive is a number you carry.',
+    text: 'The water comes through the mangroves at night and it is not water the way you know water, it is the sea, which is a different thing and moves differently. You go up the mango tree behind the house with your brother and hold on until it is light. Afterwards the relief does not come for eleven days and the men who come are counting, not helping. You know the number of people from your village who are not there, and you have never told anyone that you know it exactly.',
+    context: 'The Bhola cyclone of November 1970 killed between 300,000 and 500,000 people, the deadliest tropical cyclone on record. West Pakistan\'s slow response was a direct grievance in the 1971 independence war.',
     choices: null,
     effect: (p) => { p.setMem('sl_bng_bhola', true); p.m -= 12; p.h -= 4; p.r += 8; p.addFlag('cyclone_survivor') },
   },
@@ -3191,7 +3208,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1900 && G.currentYear <= 1924 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.sl_jp_hawaii,
-    text: 'The labor contract brought you to the sugarcane fields of Maui from Hiroshima prefecture in 1910, which was two years before the Meiji Emperor died and the country you came from became a different country. The plantation has barracks organised by ethnic origin — Filipino barracks, Puerto Rican barracks, Japanese barracks — and the pay is different by ethnic origin too, which is a system that the plantation operators consider rational and the workers consider something else. The Japanese workers have a word: issei, first generation. You are issei. Your children, if you have them here, will be nisei. The generations are already named. The country is already organising you into a category.',
+    text: 'The contract brought you from Hiroshima prefecture to the cane on Maui in 1910 and the barracks are set out by nationality, Japanese here, Filipino there, Portuguese by the road. The rate per day is different by barrack and everybody knows every rate. The luna rides between the rows and does not dismount. There is already a word for what you are, issei, and a word waiting for the children you have not had yet.',
+    context: 'Hawaii\'s sugar plantations recruited by nationality and paid differential wages by ethnicity to discourage combined organising. Around 200,000 Japanese arrived between 1885 and 1924. The 1920 strike was the first in which Japanese and Filipino workers organised jointly.',
     choices: null,
     effect: (p) => { p.setMem('sl_jp_hawaii', true); p.h -= 3; p.mo += 1500; p.addFlag('issei_generation') },
   },
@@ -3206,7 +3224,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1942 && G.currentYear <= 1945 &&
       G.age >= 18 && G.age <= 50 &&
       !G.mem?.sl_ja_intern,
-    text: 'Executive Order 9066 requires you to report to the assembly centre. You are American. You were born in California. You speak English without an accent. None of these things affect the application of the order. The assembly centre is at the fairgrounds and then the internment camp is in the desert — one of ten camps for a hundred and twenty thousand Japanese Americans, two-thirds of whom are citizens. You sell the truck for what you can get in three days, which is less than it is worth. The camp has a tar-paper barrack and a mess hall and a school. You get out in 1945 and find someone else is in the house.',
+    text: 'You have three days and the notice is nailed to the telephone pole at the end of the street with your family number on it. You sell the truck for a quarter of what it is worth to a man who waits at the gate while you sign. The barrack at the camp is tar paper on pine and the wind comes through the floor, and there is a school, and you graduate from it in the desert. In 1945 you go back to the house and another family answers the door.',
+    context: 'Executive Order 9066, signed in February 1942, led to the incarceration of around 120,000 people of Japanese ancestry, two-thirds of them US citizens, in ten camps. Families were given days to dispose of property. The Civil Liberties Act of 1988 issued a formal apology and 20,000 dollars to each surviving detainee.',
     choices: null,
     effect: (p) => { p.setMem('sl_ja_intern', true); p.m -= 12; p.mo -= 3000; p.h -= 4; p.addFlag('japanese_american_internment') },
   },
@@ -3225,7 +3244,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1985 && G.currentYear <= 2010 &&
       G.age >= 6 && G.age <= 14 &&
       !G.mem?.sl_ng_pent_child,
-    text: 'Sunday is eight hours: morning service, children\'s church, afternoon service, evening prayer. The church is a warehouse that has been made into something more than a warehouse by the congregation\'s attention — the painted walls, the sound system, the ushers in their white gloves who know your family\'s tithe level and who seat you accordingly. You grow up knowing that breakthrough is coming and that faith is the mechanism and that the breakthrough of your family is tied to the breakthrough of the pastor\'s vision, which is tied to the building fund. The building fund is mentioned every Sunday. The building has been under construction for twelve years. The faith is genuine. Both things are true.',
+    text: 'Sunday is eight hours: morning service, children\'s church, afternoon service, evening prayer. The usher in white gloves knows your family\'s tithe band and seats you accordingly, three rows from the back on the left. The building fund is announced every week and the building has been going up for twelve years and the reinforcing rods on the second floor have gone orange with rust. You know all the words to everything and you have never once been bored.',
     choices: null,
     effect: (p) => { p.setMem('sl_ng_pent_child', true); p.s += 3; p.m += 2; p.e += 2; p.addFlag('pentecostal_childhood') },
   },
@@ -3286,7 +3305,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 2017 && G.currentYear <= 2025 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.sl_uyg_family,
-    text: 'Your uncle stopped answering his phone in August 2017. Your aunt\'s messages stopped in September. The official description for where they likely are is "vocational training centre." You do not attempt to find out officially because the people who have attempted to find out officially have sometimes also stopped answering their phones. You are in Ürümqi. You have a job. You go to work. You go home. You have learned not to keep the Quran where it can be seen, not to keep a prayer mat where it can be seen, not to use certain apps, not to call certain numbers. The learning took several months. The practice is now automatic.',
+    text: 'Your uncle stopped answering in August and your aunt\'s messages stopped in September. You do not ask anyone officially, because the people who ask officially sometimes stop answering too. The Quran is not in the house and the prayer mat is not in the house and there are four numbers you do not call from your own phone. It took about three months to learn and you no longer notice yourself doing it.',
+    context: 'From 2017 an estimated one million or more Uyghurs and other Turkic Muslims were held in facilities the Chinese government describes as vocational training centres. Possession of religious materials, contact with relatives abroad and use of certain applications were among the behaviours flagged by the regional surveillance system.',
     choices: null,
     effect: (p) => { p.setMem('sl_uyg_family', true); p.m -= 15; p.h -= 4; p.addFlag('uyghur_suppression_lived') },
   },
@@ -3319,7 +3339,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 20 && G.age <= 35 &&
       G.stats.smarts >= 60 &&
       !G.mem?.sl_carib_leave,
-    text: 'The scholarship that takes you to the university in England or Canada is an achievement and a departure and both of these things are understood clearly by everyone who sees you off at the airport. The departure is the shape that achievement takes in a small island. The people who do not leave — who build things here, who run the clinics and the schools and the civil service — are also achieving, but the achievement that is most legible to the outside world is the departure. You are leaving. The people staying are your cousins. You will send remittances. They will vote in the elections that determine the future of the country you left. Both of you are contributing to the same small place in different ways that are not symmetrical.',
+    text: 'Half the village is at the airport and your aunt has brought food for a flight that serves food. The scholarship is to England or to Canada and everyone at the barrier understands both halves of what it is. Your cousin, who came second in the same examination and is staying, carries your bag to the desk. You will send money back and he will vote in elections about the place you both come from.',
+    context: 'Several Caribbean and Pacific states have lost over 50 percent of their tertiary-educated population to emigration, among the highest rates in the world. Remittances exceed 20 percent of GDP in some of them.',
     choices: [
       {
         text: 'Go. The island cannot contain what you want to build.',
@@ -3351,7 +3372,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 6 && G.age <= 14 &&
       G.flags.includes('experienced_discrimination') &&
       !G.mem?.sl_sa_pencil,
-    text: 'The Population Registration Act classifies everyone into White, Coloured, Indian, or Native. The Classification Board, when cases are disputed, uses the pencil test: a pencil is put in the hair. If the hair holds the pencil, the person is classified Coloured or Native. If the pencil falls out, the person may be classified White. Your family\'s classification has been disputed. Your grandmother went to one side of this test. Your grandfather went to the other. The classification determines which school you attend, which bus you take, which hospital you go to, whether the person you love can marry you. A pencil in hair decides this. The decision is the law.',
+    text: 'The clerk puts the pencil in your hair and asks you to shake your head. It stays. Your grandmother passed this test in 1953 and your grandfather did not, and the two of them lived in the same house for forty years on either side of a line drawn through it. The classification on the card decides your school, your bus, your hospital and who you are permitted to marry.',
+    context: 'The Population Registration Act of 1950 classified every South African as White, Coloured, Indian or Native. Disputed cases went to a Classification Board that used physical tests, the pencil test among them. Reclassification split families; the Prohibition of Mixed Marriages Act made cross-classification marriage illegal until 1985.',
     choices: null,
     effect: (p) => { p.setMem('sl_sa_pencil', true); p.m -= 8; p.e += 3; p.addFlag('coloured_classification') },
   },
@@ -3366,7 +3388,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 2005 &&
       G.age >= 30 && G.age <= 50 &&
       !G.mem?.sl_sa_col_mid,
-    text: 'The new South Africa is non-racial in its constitution. The constitution does not undo the classification in the bodies of the people who were classified. You spent your childhood on the Coloured side of lines — Coloured schools, Coloured hospitals, Coloured bus seats — and now the lines are gone officially and the geography of the city still remembers them in which neighbourhoods were built where and who was allowed to own what and where the wealth is. You are in your forties. You are not sure what the new category is, or whether you want one. The pencil test is not the law anymore. You still remember which way your grandmother\'s pencil fell.',
+    text: 'The constitution is non-racial and the map of the city is not. You still catch yourself checking which side of Voortrekker Road you are on. At the school gate the forms have a box for population group, for the equity statistics, and you tick the same box you were assigned at six years old. Your grandmother\'s pencil fell out and your grandfather\'s did not, and you know which way each of them went and so does everybody at the family table.',
     choices: null,
     effect: (p) => { p.setMem('sl_sa_col_mid', true); p.e += 3; p.m += 2; p.r += 5 },
   },
@@ -3404,7 +3426,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 25 && G.age <= 55 &&
       G.flags.includes('genocide_survivor') &&
       !G.mem?.sl_rw_gacaca,
-    text: 'The gacaca court meets in the open air, which is traditional for Rwandan justice. The man who killed your uncle is in the row across from you. He stood up and said what he did, which is what the gacaca system requires — confession, detail, truth — in exchange for reduced sentence. You are required to listen. The state has decided this is justice. You are sitting in the open air listening to the detail of what happened to your uncle from the mouth of the man who did it, and you do not know yet whether this is better or worse than not knowing the detail. It is different from not knowing the detail. You can say that much.',
+    text: 'The court meets on the grass under the tree by the road and there are plastic chairs for the judges and a bench for everyone else. The man who killed your uncle stands up and says the date, the place, the tool and the order in which it happened, because the system requires the detail in exchange for the reduced sentence. You are required to listen and you listen. Afterwards you walk home on the same road he walks home on, forty metres behind him, and neither of you changes pace.',
+    context: 'Rwanda\'s gacaca courts tried roughly 1.9 million cases between 2002 and 2012 in open-air community hearings. Confession with full detail earned substantial sentence reductions. Survivors and perpetrators typically returned to the same hills afterwards.',
     choices: null,
     effect: (p) => { p.setMem('sl_rw_gacaca', true); p.m -= 6; p.e += 3; p.r += 8; p.addFlag('gacaca_witness') },
   },
@@ -3487,7 +3510,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 6 && G.age <= 14 &&
       G.flags.includes('adopted') &&
       !G.mem?.sl_kor_adopt_child,
-    text: 'You came from Korea at four months and have no memory of it. What you have is a folder with the adoption agency paperwork, a photograph of a woman the agency says is your birth mother, and a name that was your name for four months and then became your middle name, which no one uses. You are the only Korean person in your school. You are also not Korean in any way you can access — you do not speak the language, you do not know the food except from the restaurant your parents take you to twice a year as a form of cultural connection that you are not sure is working. You are from here. The question of what else you are is one you are beginning to sit with.',
+    text: 'The folder has the agency paperwork, a photograph of a woman in a corridor, and a name that was yours for four months and is now your middle name, which nobody uses. You are the only Korean person at the school and you are also not Korean in any way you can reach. Twice a year your parents take you to the restaurant on the ring road and order for the table and ask whether it tastes like home, kindly, meaning it well. You say yes, because the alternative is a conversation you do not have the words for at nine.',
+    context: 'Around 200,000 Korean children were placed for overseas adoption from the 1950s, the largest such programme in history. Most went to the United States and Scandinavia. Korea\'s Truth and Reconciliation Commission began investigating falsified adoption records in 2022.',
     choices: null,
     effect: (p) => { p.setMem('sl_kor_adopt_child', true); p.e += 2; p.m -= 2; p.addFlag('transracial_adoptee') },
   },
@@ -3566,7 +3590,7 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 2010 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.sl_ire_trav_settle,
-    text: 'The council house is a two-bedroom in Ballyfermot and the council has decided that the settled house is better for you than the road, which the council decided based on what is better for the settled community rather than what is better for you. The house is warm and has a kitchen and has a door that locks. Your mother finds the locked door unfamiliar and keeps opening it to see outside. Your father parks the trailer in the garden because the garden is the outside part. The neighbours on both sides have called the council about the trailer. You are in a house that is a solution to a problem you were not asked to define.',
+    text: 'The house in Ballyfermot has two bedrooms, a kitchen, and a door that locks. Your mother keeps opening the door to see out, and then closing it, several times an evening. Your father has the trailer up on blocks in the back garden because the garden is the part that is outside. Both neighbours have rung the council about it and the man from the council has been out twice and stood looking at it with his hands behind his back.',
     choices: null,
     effect: (p) => { p.setMem('sl_ire_trav_settle', true); p.m -= 4; p.h += 2; p.r += 5; p.addFlag('forced_sedentarisation') },
   },
@@ -3585,7 +3609,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 18 && G.age <= 50 &&
       G.ruralUrban === 'urban' &&
       !G.mem?.sl_aceh_tsunami,
-    text: 'The wave comes from the sea on December 26, 2004, at seven fifty-eight in the morning, which is the information that arrived as you would have been making breakfast or walking to the market. The 2004 Indian Ocean tsunami kills two hundred and twenty-seven thousand people in fourteen countries. In Banda Aceh alone the number is sixty-one thousand. The number is so large it becomes a number and stops being people before you have finished counting. What the number does not contain is the specific morning, the specific house, the specific absence of the specific people who were in it. What you lost is specific. The number is not.',
+    text: 'It is two minutes to eight and you are at the pump behind the house. The sea comes up the street and it does not look like the sea, it looks like the ground moving. Afterwards the number they give on the radio is sixty-one thousand for Banda Aceh, and you find you cannot hold a number that size in your head for more than a second at a time. What you can hold is the doorway, and the pump, and where each of them was standing.',
+    context: 'The 2004 Indian Ocean earthquake struck at 07:58 local time on 26 December. Around 227,000 people died across fourteen countries, roughly 170,000 of them in Aceh, where the wave reached 30 metres in places.',
     choices: null,
     effect: (p) => { p.setMem('sl_aceh_tsunami', true); p.m -= 14; p.h -= 5; p.r += 8; p.addFlag('tsunami_survivor') },
   },
@@ -3600,7 +3625,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 2006 && G.currentYear <= 2015 &&
       G.age >= 25 && G.age <= 55 &&
       !G.mem?.sl_aceh_reconstruct,
-    text: 'The reconstruction came quickly because the world was watching — the NGOs, the foreign governments, the cameras, the money that flowed in the two years after. The town that was rebuilt is not the town that was. The houses are on different footprints. The streets are in different places. The mosque was rebuilt exactly as it was, which is one decision that the community made about what stays. In ten years you have rebuilt more or less everything that can be rebuilt. What cannot be rebuilt is not a building. You have rebuilt the buildings and held the other thing in a place that is not quite grief anymore and not quite over.',
+    text: 'The new road does not follow the old road and you still take the turn where the old one was and have to double back. The houses are on different footprints, so you cannot say to anyone this is where we lived, only approximately here. The mosque was put back exactly as it was, to the tile, which is the one thing the community decided together and did not argue about. Ten years on there is nothing left to rebuild and you still count the doorways when you walk to the market.',
+    context: 'The 2004 Indian Ocean tsunami killed around 170,000 people in Aceh. Reconstruction was funded by roughly 7 billion dollars in international aid, and the Baiturrahman Grand Mosque, which survived, became the emblem of the recovery.',
     choices: null,
     effect: (p) => { p.setMem('sl_aceh_reconstruct', true); p.m += 3; p.e += 2; p.r += 5 },
   },
@@ -3619,7 +3645,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1978 && G.currentYear <= 2000 &&
       G.age >= 5 && G.age <= 14 &&
       !G.mem?.sl_hmong_minn,
-    text: 'The camp in Thailand was Ban Vinai and before that was Laos and before that was the Secret War in which the CIA recruited the Hmong to fight on the American side against the Pathet Lao, a fact that was secret for many years and has since become less secret but did not change the outcome for the people in the camp. The camp had a hundred and forty thousand people when you were four. Minnesota has the largest Hmong population outside Southeast Asia because the Lutheran social services organisations in Minnesota agreed to sponsor the resettlement. You arrive in Minneapolis in January. It is fifteen below zero. The snow is nothing like anything in Laos.',
+    text: 'You are four in Ban Vinai and there are a hundred and forty thousand people in it. The Lutherans in Minnesota agree to sponsor the family and you land in Minneapolis in January. It is fifteen below and the man who meets you at the airport has brought coats in four sizes and gets all four wrong. Your father, who guided American aircrew out of Laos for six years, spends the drive looking out at the snow and saying nothing.',
+    context: 'The CIA recruited around 30,000 Hmong in Laos from 1961 for the Secret War. After 1975 roughly a third of the Hmong population fled. Minnesota now has the largest Hmong community outside Southeast Asia, largely through Lutheran and Catholic resettlement sponsorship.',
     choices: null,
     effect: (p) => { p.setMem('sl_hmong_minn', true); p.m -= 4; p.e += 3; p.h -= 2; p.addFlag('hmong_resettlement') },
   },
@@ -3657,7 +3684,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1957 && G.currentYear <= 1980 &&
       G.age >= 6 && G.age <= 14 &&
       !G.mem?.sl_chech_deport,
-    text: 'Your grandparents were deported from Chechnya to Kazakhstan in 1944. February 23, which was the Day of the Soviet Army, was the day Stalin ordered the deportation of the entire Chechen and Ingush population — four hundred and ninety thousand people — for alleged collaboration with the Germans. The deportation was carried out in three days. Your grandparents lost three children to the winter in the cattle cars and the first Kazakh winter. They returned to Chechnya in 1957 after Khrushchev\'s amnesty. They do not speak about the cattle cars except in oblique references that you have learned to read. The oblique references are your inheritance.',
+    text: 'Your grandmother will not have the twenty-third of February marked in the house, and the calendar in the kitchen has that square left blank every year, which she does herself with a pen. She lost three children between the cattle car and the first Kazakh winter and has never given you a number or a name. Once, peeling potatoes, she said the word Karaganda and then said nothing for the rest of the afternoon. That is the whole of what has been handed to you and you have handed it on intact.',
+    context: 'On 23 February 1944, the Day of the Red Army, Stalin ordered the deportation of the entire Chechen and Ingush population, around 490,000 people, to Central Asia. It was executed in under a week; roughly a quarter died within five years. Return was permitted after 1957.',
     choices: null,
     effect: (p) => { p.setMem('sl_chech_deport', true); p.e += 3; p.r += 6; p.m -= 3; p.addFlag('chechen_deportation_memory') },
   },
@@ -3675,7 +3703,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1987 && G.currentYear <= 1993 &&
       G.age >= 6 && G.age <= 14 &&
       !G.mem?.sl_pal_intifada1,
-    text: 'The First Intifada begins in 1987 in Jabaliya refugee camp with a traffic accident and spreads from the camp to the streets of Gaza and the West Bank in six days. You are eight. What the Intifada looks like from eight is: the school is closed, then open, then closed by military order. The stones on the road after the night. The men in your family speaking in the kitchen after the women and children are supposed to be asleep. The flag that someone put on the roof of the school and that was taken down and put back up. The flag is illegal. The putting-it-back is an act that requires a decision you observe people making.',
+    text: 'You are eight and the school is closed, then open, then closed by military order posted on the gate. There are stones on the road in the morning that were not there at night and nobody explains who put them there. The men talk in the kitchen after you are supposed to be asleep and you have learned to hear through a door without appearing to. Somebody puts the flag back on the school roof for the third time and you watch, from the street, the moment the decision to climb gets made.',
+    context: 'The First Intifada began in December 1987 in Jabaliya refugee camp. Displaying the Palestinian flag was illegal in the occupied territories until 1993, and school closures by military order were routine, with West Bank universities shut for years at a time.',
     choices: null,
     effect: (p) => { p.setMem('sl_pal_intifada1', true); p.m -= 5; p.e += 4; p.addFlag('intifada_generation') },
   },
@@ -3694,7 +3723,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 2018 &&
       G.age >= 18 && G.age <= 45 &&
       !G.mem?.sl_sa_driving,
-    text: 'The driving ban for women means that to go anywhere you need a mahram — a male guardian who accompanies you or a driver who is hired to take you. The driver is an expense. The mahram is a family arrangement. You have a job at a hospital and the job is forty minutes from your house and the drive to the job costs a quarter of your salary and the driver has to be scheduled in advance and when the driver cancels you call in late to a job where you are needed. You are a medical professional. The country needs medical professionals. The country also needs you to not drive. The two things are both official policies of the same country simultaneously.',
+    text: 'The driver costs a quarter of your salary and has to be booked the night before. He cancels on a Tuesday and you telephone the ward to say you will be late, and the ward needs you, and everyone involved understands the arithmetic. You are a nurse in a country that is short of nurses and cannot get to the hospital by yourself. Your brother, who is nineteen and works nowhere, holds the licence.',
+    context: 'Saudi Arabia was the only country to prohibit women from driving, formally from 1990 until the ban was lifted in June 2018. Male guardianship rules governed travel, employment and medical consent for decades; several activists who campaigned against the driving ban were detained in 2018.',
     choices: null,
     effect: (p) => { p.setMem('sl_sa_driving', true); p.m -= 4; p.e += 3; p.mo -= 1500; p.addFlag('driving_ban_lived') },
   },
@@ -3760,7 +3790,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 6 && G.age <= 16 &&
       G.ruralUrban === 'rural' &&
       !G.mem?.sl_alb_feud,
-    text: 'The Kanun of Lekë Dukagjini is the set of customary laws that govern blood feuds in northern Albania, which were suppressed under communism and which returned after 1991 when the state collapsed and the communities needed some system. The blood feud involves your family because of something that happened between your grandfather and a man in the neighbouring village in 1992. What it means practically is that your father cannot leave the house, because the Kanun requires the other family to kill a man from your family and your father is a man from your family. He has been inside the house for six years. You bring him his meals. The men from the reconciliation organisations have visited twice. The other family has not agreed to gjakmarrja forgiveness.',
+    text: 'Your father has not been outside the door in six years. The Kanun requires the other family to take a man from yours, and he is the man, so the rule is the walls. You carry his food up at one and again at seven, and he asks about the road and the neighbours and never about the other house. The reconciliation men have come twice with a priest and a notebook and gone away again both times.',
+    context: 'The Kanun of Lekë Dukagjini, a body of customary northern Albanian law, was suppressed under Hoxha and revived after the state collapse of 1991. Reconciliation organisations estimate that hundreds of families have confined themselves indoors under besa self-isolation, some for decades.',
     choices: null,
     effect: (p) => { p.setMem('sl_alb_feud', true); p.m -= 10; p.e += 3; p.addFlag('blood_feud_family') },
   },
@@ -3798,7 +3829,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 22 && G.age <= 40 &&
       G.flags.includes('lgbtq') &&
       !G.mem?.sl_aids_grief,
-    text: 'Michael died in October 1989. The hospital allowed you in because you said you were his cousin, which was a lie that the nurses accepted with a specific quality of deliberate not-asking, which was a small mercy inside a system that in some hospitals did not allow this lie to be accepted. The obituary in the suburban newspaper said he died after a long illness and listed the family members he was survived by and did not list you, which is the agreement his family required and which you made because the alternative was to be removed from the room in his final days. You made the agreement. You were in the room. The room and the obituary are both real.',
+    text: 'You told the ward you were his cousin and the nurse wrote cousin on the sheet without looking up, which was the whole of the mercy available. The obituary in the county paper said after a long illness, listed his mother, his father and a sister in Ohio, and did not list you. You agreed to that in a corridor in exchange for being allowed in the room, and you would agree to it again. You still have the ward\'s visiting card with cousin on it in the book by the bed.',
+    context: 'Before hospital visiting rules changed and before any legal recognition of same-sex partners, partners were routinely excluded from AIDS wards, funerals and obituaries by next of kin. Over 100,000 Americans had died of AIDS by 1990.',
     choices: null,
     effect: (p) => { p.setMem('sl_aids_grief', true); p.m -= 15; p.r += 8; p.addFlag('aids_generation_witness') },
   },
@@ -3817,7 +3849,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1999 && G.currentYear <= 2012 &&
       G.age >= 18 && G.age <= 45 &&
       !G.mem?.sl_mong_dzud,
-    text: 'The dzud is the combination of summer drought and winter extreme cold that kills the livestock. The dzud of 2010 kills eight point five million animals — a quarter of the national herd. Your family loses sixty percent of the sheep and forty percent of the horses in February. What this means economically is that the nomadic herd that was the family wealth for three generations is reduced to an insufficient number in one season. The government provides some emergency fodder. The emergency fodder arrives in March. The animals that survive to March are the ones that survive. The count after the thaw is a different number than the count before the dzud began.',
+    text: 'By February the sheep are going down in the night and you are dragging them clear of the fold in the morning so the others do not stand on them. The emergency fodder arrives in March, which is after February. Your father counts what is left twice and then a third time and does not say the number aloud. Three generations of the herd, and what is standing in the spring will fit in one fold.',
+    context: 'A dzud is a summer drought followed by an extreme winter. The 2009-10 dzud killed 8.5 million head of livestock, roughly a quarter of Mongolia\'s national herd, and drove tens of thousands of herding families into the ger districts of Ulaanbaatar.',
     choices: null,
     effect: (p) => { p.setMem('sl_mong_dzud', true); p.m -= 10; p.mo -= 5000; p.h -= 3; p.addFlag('dzud_survivor') },
   },
@@ -3835,7 +3868,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1974 && G.currentYear <= 1978 &&
       G.age >= 18 && G.age <= 45 &&
       !G.mem?.sl_cy_1974,
-    text: 'The Turkish military operation of July 1974 takes place over three days and divides the island into Turkish-controlled north and Greek-controlled south with a UN buffer zone between them. You are from Kyrenia, which is in the north. You have three days to leave. What you can carry in three days from a house is not the house. The Turkish-Cypriot neighbour family you have known since childhood is also leaving — south to north — and you watch them leave as they watch you leave and neither family knows what to say to the other because what happened to both of you was done by governments neither of you elected. You have not been back to Kyrenia. The checkpoint opened in 2003. You have not crossed it.',
+    text: 'You have three days and the road out of Kyrenia is one lane in each direction with everything in the country on it. What a house is cannot be carried in three days, so you take the deeds, the photographs, and a tin of coffee. The Mehmet family from the end of the lane are loading a van to go the other way and neither household says anything, because there is nothing that either could say. The checkpoint opened in 2003 and you have not crossed it.',
+    context: 'The Turkish intervention of July and August 1974 partitioned Cyprus. Roughly 160,000 Greek Cypriots moved south and 50,000 Turkish Cypriots moved north. The Green Line crossings opened in April 2003.',
     choices: null,
     effect: (p) => { p.setMem('sl_cy_1974', true); p.m -= 10; p.r += 8; p.addFlag('cyprus_displaced') },
   },
@@ -3919,7 +3953,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1996 && G.currentYear <= 2020 &&
       G.age >= 18 && G.age <= 40 &&
       !G.mem?.sl_guat_lang,
-    text: 'The peace accords of 1996 ended the civil war and included recognition of Maya rights and languages. The recognition is in the text of the accords. The text of the accords is one thing. The schoolbooks are still mostly in Spanish. The teachers in most towns are trained in Spanish. The Maya languages were what the army targeted in the scorched earth campaigns — burning the villages where they were spoken was partly burning the language. You are twenty-two and you are learning Kaqchikel formally for the first time, which is also the language your grandmother speaks at home and has spoken your whole life, which means you are learning your grandmother\'s language in a classroom. The classroom is where the peace accords sent it.',
+    text: 'You are twenty-two and you are learning Kaqchikel in a classroom on a Tuesday evening from a workbook with numbered exercises. Your grandmother has spoken it in the kitchen for eighty years and has never seen it written down. She asks what you are studying and you tell her, and she laughs for a long time, and then she corrects your vowels. The army burned the villages where it was spoken and burning the villages was part of the point.',
+    context: 'Guatemala\'s 1996 peace accords recognised Maya languages and rights. The 1980s scorched-earth campaigns destroyed over 600 villages, mostly Maya, and a UN-backed commission found the state responsible for acts of genocide. Bilingual schooling remains limited and most instruction is in Spanish.',
     choices: null,
     effect: (p) => { p.setMem('sl_guat_lang', true); p.e += 4; p.s += 3; p.m += 3; p.addFlag('indigenous_language_reclaimed') },
   },
@@ -3938,7 +3973,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.age >= 18 && G.age <= 40 &&
       G.stats.wealth <= 20 &&
       !G.mem?.sl_car_diamond,
-    text: 'The diamond mining in Sangha-Mbaéré is artisanal, which means your tools are a shovel and a sieve and the body that operates them. You wash gravel in the river and look for the stone that catches the light differently from the other stones. When you find one, which is not every day or every week, you take it to the negociant who gives you a price and the price is a fraction of what the negociant will get from the buyer and the buyer will get from the market in Antwerp where the stone will be certified and sold to someone who will wear it. The chain is long. You are at the beginning of the chain. The beginning of the chain is the mud.',
+    text: 'The tools are a shovel, a sieve and your back, and the work is standing in the river turning gravel until a stone catches the light in a way the other stones do not. It happens perhaps twice a month. The negociant at the crossroads has a loupe and a scale and gives you a figure, and you take it, because there is nobody else at the crossroads. The stone goes to Bangui, then Antwerp, then a shop with a doorman.',
+    context: 'Artisanal mining employs an estimated 400,000 people in the Central African Republic. Diggers typically receive under 10 percent of the eventual export value. CAR diamonds were placed under Kimberley Process embargo from 2013, driving much of the trade through neighbouring countries.',
     choices: null,
     effect: (p) => { p.setMem('sl_car_diamond', true); p.h -= 4; p.mo += 800; p.addFlag('artisanal_miner') },
   },
@@ -3979,7 +4015,7 @@ export const SPECIFIC_LIFE_EVENTS = [
        (G.hobbies?.music ?? 0) >= 20 || G.flags.includes('musician_performing') ||
        G.flags.includes('performed_music')) &&
       !G.mem?.sl_drc_music_war,
-    text: 'The rumba continues. This is the specific thing about Kinshasa: the war is in the east, the militia is in the east, the UN peacekeepers are in the east, and in Kinshasa the rumba continues because the rumba has always continued through everything. You play guitar at the open-air venue in the Matonge neighbourhood and the set is three hours and the crowd is three hundred people and the three hundred people need the three hours more than they need anything you could say about the political situation, which everyone already knows the political situation. The music is not denial. The music is the thing that is not the war. Both are necessary.',
+    text: 'The war is in the east and the set is three hours and the two facts do not touch each other in Matonge on a Friday. The venue is a yard with a wall around it and three hundred people in it and a generator behind the stage that you tune above. Nobody has asked you to say anything about the situation, because everybody in the yard already knows the situation. You play until two and the crowd goes home along streets where the power is out.',
     choices: null,
     effect: (p) => { p.setMem('sl_drc_music_war', true); p.m += 5; p.s += 3; p.karma += 3; p.addFlag('art_through_conflict') },
   },
@@ -3998,7 +4034,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 1990 && G.currentYear <= 2025 &&
       G.age >= 18 && G.age <= 45 &&
       !G.mem?.sl_mapuche_water,
-    text: 'The Water Code of 1981, which Pinochet signed, treats water as private property that can be bought and sold separate from the land. The river that runs through the Mapuche territory your family has occupied for generations was given a legal water right under the code and the legal water right was acquired by the forestry company that also planted eucalyptus on the hillsides, which lowered the water table. The river that was always there is now lower and sometimes in summer there is not enough. The legal right to the river belongs to the forestry company. The community continues to use the river because the river is there and has always been there and the community was there before the code. The code and the community are in tension. The tension continues.',
+    text: 'The river is lower every January and by February it is stones in places you swam. The forestry company holds the paper right to the water and also planted the eucalyptus on the ridge that drinks it, and both facts are legal and were legal before you were born. Your family has taken water from this river for longer than the country has had a water code. You keep taking it, and nobody has yet come up the track to say otherwise.',
+    context: 'Chile\'s 1981 Water Code, enacted under Pinochet, made water rights private property tradable separately from land. Rights were granted free and in perpetuity to first applicants, largely forestry, mining and agribusiness. Eucalyptus and pine plantations in the Araucanía have been linked to falling water tables in Mapuche communities.',
     choices: null,
     effect: (p) => { p.setMem('sl_mapuche_water', true); p.m -= 5; p.e += 3; p.addFlag('indigenous_land_rights') },
   },
@@ -4016,7 +4053,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 2023 && G.currentYear <= 2025 &&
       G.age >= 30 && G.age <= 65 &&
       !G.mem?.sl_karabakh_2023,
-    text: 'In September 2023, over one hundred thousand ethnic Armenians left Nagorno-Karabakh in seventy-two hours. The corridor through which they left was the Lachin corridor. The cars were backed up for forty kilometres. People abandoned cars when the fuel ran out and walked. You are watching this on a phone in Yerevan and the people in the cars are your relatives or are people who are your relatives\' relatives and the convoy is moving and then not moving for hours. Armenians have been in Karabakh since the fifth century. They crossed the border in three days. By October the territory was empty of Armenians.',
+    text: 'You are following it on a phone in a kitchen in Yerevan and the blue dot that is your cousin\'s car has not moved for four hours. The Lachin corridor is one road and there are one hundred thousand people on it. People leave the cars where the fuel runs out and walk, and the line of abandoned cars is its own thing on the map. By the second week of October there is nobody left to leave, and the dot arrives, and you drive to Goris to collect them.',
+    context: 'Azerbaijan\'s offensive of 19 September 2023 ended the self-declared Republic of Artsakh in one day. Over 100,000 ethnic Armenians, virtually the entire population, left through the Lachin corridor within a week. Armenians had lived in Karabakh since at least the fifth century.',
     choices: null,
     effect: (p) => { p.setMem('sl_karabakh_2023', true); p.m -= 12; p.r += 8; p.addFlag('witnessed_ethnic_cleansing') },
   },
@@ -4035,7 +4073,8 @@ export const SPECIFIC_LIFE_EVENTS = [
       G.currentYear >= 2000 && G.currentYear <= 2008 &&
       G.age >= 35 && G.age <= 65 &&
       !G.mem?.sl_zim_farm_seiz,
-    text: 'The letter from the Lands Ministry arrives in March 2001. The farm has been in your family since 1922, which is eighty years, which is longer than Zimbabwe has been Zimbabwe. The letter says the farm is being designated for resettlement. You have three months. What three months means for a working farm — the tobacco crop that is already in the ground, the animals, the workers who have been here for twenty years and whose own housing is on the land — is something the letter does not address. Three months is the legal period. The farm is the legal vehicle for the redistribution of land that was acquired by colonists and should not have been acquired by colonists. Both of these things are true. You have three months.',
+    text: 'The letter from the Lands Ministry gives you three months and the tobacco is already in the ground. It does not mention the twenty-one men who live on the farm with their families, whose housing is also on the land, and whom the letter does not name. Your grandfather took the title in 1922 by a process the letter does not mention either. You read it twice standing in the yard and then go and tell Josiah, who has known for a week.',
+    context: 'Zimbabwe\'s fast-track land reform from 2000 redistributed around 4,000 commercial farms, most acquired under colonial-era legislation that reserved the best land for white settlers. An estimated 200,000 farm workers lost both jobs and housing and were largely excluded from resettlement.',
     choices: null,
     effect: (p) => { p.setMem('sl_zim_farm_seiz', true); p.m -= 12; p.mo -= 15000; p.addFlag('land_dispossessed') },
   },

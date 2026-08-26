@@ -759,13 +759,13 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('found_meaning') &&
       G.age >= 68 &&
       !G.mem?.ft3_meaning_tested,
-    text: 'The meaning you found — whenever it was, however it arrived — is now being tested by a body that is slower, by a world that has changed around you, by the specific diminishment that late life carries. You have a framework. The question is whether the framework holds when the circumstances that produced it are gone.',
+    text: 'The framework held for thirty years and it was built for a body that could get up the stairs without planning the stairs. You sit in the chair by the window because the chair by the window is where you can see the road. The thing you used to say to other people about purpose, you have started saying to yourself, and hearing how it sounds.',
     choices: [
       {
         text: 'It holds',
         tag: null,
         outcome: 'The meaning was never the circumstances. You understood that before. You understand it again now.',
-        effect: (p) => { p.m += 8; p.r -= 6; p.setMem('ft3_meaning_tested', true); },
+        effect: (p) => { p.m -= 4; p.e += 3; p.r += 3; p.setMem('ft3MeaningTested', true) },
         inject: null,
       },
       {
@@ -809,13 +809,13 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('caste_discrimination') &&
       G.career &&
       G.age >= 22,
-    text: 'You put your name on the application. The shortlist comes back without it. A colleague — from the right family — is on it. This is not the first time. You have learned to read the result before it arrives. The question you have not answered is what to do with what you know.',
+    text: 'Your name goes on the application and the shortlist comes back with Menon on it instead, who joined two years after you and whose uncle plays tennis with the director on Sundays. You congratulate him in the corridor and mean most of it. At home you tell your wife it was a strong field. She asks which field, and you do not answer, and she does not ask again.',
     choices: [
       {
         text: 'Name it — challenge the shortlist formally',
         tag: null,
         outcome: 'The challenge goes nowhere official. It changes the temperature in the room permanently.',
-        effect: (p) => { p.m -= 6; p.karma += 8; p.e += 3; },
+        effect: (p) => { p.r += 5; p.m -= 5; p.e += 2; p.setMem('ft4CasteCeiling', true) },
       },
       {
         text: 'Build around it — find another route',
@@ -1093,9 +1093,9 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('censored_journalist') &&
       G.age >= 40 &&
       !G.mem?.ft5CensoredJournalist,
-    text: 'The story you did not run is still a story. Someone ran a version of it eventually — less complete, less sourced, years later when the cost was lower. Reading it you see all the gaps where your version would have been better. You are not sure whether feeling this is vanity or principle or both.',
+    text: 'Somebody runs it eleven years later, thinner, with two of the four names and none of the documents. You read it twice on the phone standing up. The folder is still in the cupboard in a box with tax returns, and the tape in it is a format nothing in the house can play. You do not tell your wife you have read the piece.',
     choices: null,
-    effect: (p) => { p.r += 5; p.e += 3; p.setMem('ft5CensoredJournalist', true); },
+    effect: (p) => { p.r += 5; p.m -= 4; p.e += 2; p.setMem('ft5CensoredStory', true) },
   },
 
   // ── INTIMIDATED INTO SILENCE ─────────────────────────────────────────────────
@@ -2164,13 +2164,9 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       (G.flags.has('experienced_miscarriage') || G.flags.has('multiple_miscarriage')) &&
       G.age >= 62 &&
       !G.mem?.ft9MiscarriageLate,
-    text: 'The grief has changed shape over the years. It is not the same grief it was at the time — it was acute then, and what it is now is something quieter and more settled. You do not talk about it much. It lives in you as a kind of knowledge about what lives can hold.',
+    text: 'It would have been thirty this year. You do not mark it and you have never told anyone that you know the date without looking. A woman at work mentions hers in a corridor, in passing, the way you might mention a train, and you find you have stopped walking. You say the thing that is useful and then you go and stand outside for a minute.',
     choices: null,
-    effect: (p) => {
-      p.m += 3
-      p.r -= 2
-      p.setMem('ft9MiscarriageLate', true)
-    },
+    effect: (p) => { p.m -= 3; p.r += 3; p.e += 2; p.setMem('ft9MiscarriageLateEcho', true) },
   },
 
   // ── SIBLING ESTRANGEMENT ─────────────────────────────────────────────────────
@@ -2296,13 +2292,9 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.siblings.length === 0 &&
       G.age >= 65 &&
       !G.mem?.ft9LostSibLastOne,
-    text: 'You are the last one. All the siblings gone now. There is no one left who shared the early years with you from the inside — who was in the house, at the table, in the back of the car. The things you remember together no longer have another witness. You are the only version of the story that remains.',
+    text: 'You are the last one. There is a story about a dog and a broken gate that only worked when your sister told the second half of it, and now it is a story about a dog. Nobody left can be asked whether the kitchen wall was green or whether you are remembering somebody else\'s kitchen. At your grandson\'s birthday you tell them the version you have and they laugh in the right place, which is not the same as being corrected.',
     choices: null,
-    effect: (p) => {
-      p.m -= 8
-      p.r += 6
-      p.setMem('ft9LostSibLastOne', true)
-    },
+    effect: (p) => { p.m -= 6; p.r += 5; p.setMem('ft9LostSiblingLast', true) },
   },
 
 // ============================================================
@@ -2539,13 +2531,9 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('intellectual_target_reckoned') &&
       !G.mem?.ft10IntellectualTargetLate &&
       G.age >= 60,
-    text: 'A student finds you. They are writing a thesis on the cultural production of the 1990s — the work that survived the decade, the writers who didn\'t. They ask careful questions. You are surprised by how much you remember and how specifically you remember it. Not the fear, exactly, which has faded to something you can look at. The specific objects: which window you worked beside, the generator noise, the hours you kept. You talk for two hours. The student types everything. You feel, afterward, something you don\'t have a word for — not healing, not resolution, something more like being a record that has been read.',
+    text: 'The student has a recorder and a list of questions in a ring binder and asks about the period as though it were a period. You find you remember the generator\'s pitch, and which window you worked beside, and that you kept the hours you kept because the electricity came back at eleven. Two hours later she thanks you and asks whether she may come again. You say yes, and after she has gone you sit in the same chair for a while without turning the light on.',
     choices: null,
-    effect: (p) => {
-      p.m += 8
-      p.karma += 10
-      p.setMem('ft10IntellectualTargetLate', true)
-    },
+    effect: (p) => { p.m += 3; p.e += 3; p.r -= 3; p.setMem('ft10IntellectualLate', true) },
   },
 
   // ── DECENNIE_NOIRE_MEMORY: echo in daily life ──────────────────────────────
@@ -2759,9 +2747,9 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     phase: 'midlife',
     weight: 2,
     when: (G) => G.flags.has('debt_restructured') && G.age >= 40 && !G.mem?.ft11DebtRestructured,
-    text: 'You make the payment on the first of the month. You have not been late once since the restructuring. The bank calls this discipline. You understand it differently: when you have lived inside a situation with no margin, the habits you build to protect the one small choice that remains are the most persistent habits of your life.',
+    text: 'The payment goes out on the first, before anything else, before the electricity. You have not missed one since the restructuring and you keep the confirmations in a folder you do not need to keep. The man at the bank used the word discipline once, approvingly, and you thanked him. What it actually is: the one decision left that was still yours, made again every month on purpose.',
     choices: null,
-    effect: (p) => { p.m += 5; p.e += 2; p.setMem('ft11DebtRestructured', true) },
+    effect: (p) => { p.e += 3; p.w += 2; p.m += 2; p.setMem('ft11DebtDiscipline', true) },
   },
 
   // ── MEDICAL_DEBT [moderate/economic] ──────────────────────────────────────────
@@ -3204,13 +3192,13 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('lost_home') &&
       G.age >= 35 && G.age <= 65 &&
       !G.mem?.ft11LostHomeReturn,
-    text: 'You pass through the neighbourhood, or the street, or you hear specific news of the place and find yourself looking it up. The building is still there or it isn\'t. If it\'s still there, it looks different in the way that things look different when they no longer have anything to do with you. If it isn\'t, there is something else there now, which is its own specific thing to feel.',
+    text: 'You take the turning without deciding to. The building is there, with a different door and a satellite dish on the balcony that was yours, and someone has put a bicycle where the bins used to go. You stand across the road for the length of one cigarette without smoking it. A woman comes out with a child and locks the door in the way that says she has locked it ten thousand times.',
     choices: [
       {
         text: 'Go closer. Walk through it.',
         tag: null,
         outcome: 'The sensory memory is more complete than the visual one. A smell, a particular quality of light, something about the acoustics of that street. You stay longer than you intended.',
-        effect: (p) => { p.m -= 6; p.r += 6; p.karma += 3; p.setMem('ft11LostHomeReturn', true) },
+        effect: (p) => { p.m -= 4; p.r += 4; p.e += 2; p.setMem('ft11LostHomeReturn', true) },
       },
       {
         text: 'Look from a distance. That\'s enough.',
@@ -3372,13 +3360,13 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       !G.flags.has('desire_leave_mark_fulfilled') &&
       !G.flags.has('famous') &&
       !G.mem.ft12LeaveMark,
-    text: 'What you wanted was to make something that would outlast you. A work, a child, a thing in the world that would exist after you stopped existing. You made things. Some of them persist. Whether they will persist past the point where anyone who knew you is also gone — this is the question the desire was always really asking, and it is a question that cannot be answered in your lifetime by design.',
+    text: 'You wanted to leave something. You have: a hedge you planted in 1988 that is now taller than the house, two children, and a filing cabinet of work with your name on the spine of some of it. Your grandson asks what the hedge is called and you tell him hornbeam and he says it twice to remember it. That is the whole of the transaction, and you have thought about it every day since.',
     choices: [
       {
         text: 'What you made is enough.',
         tag: null,
         outcome: 'The mark is in the record. What happens to the record is not yours to determine.',
-        effect: (p) => { p.m += 4; p.karma += 5; p.setMem('ft12LeaveMark', true) },
+        effect: (p) => { p.m += 3; p.r += 3; p.e += 2; p.setMem('ft12LeaveMarkUnlived', true) },
       },
       {
         text: 'You wanted more than what you made.',
@@ -3566,13 +3554,13 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) => G.flags.includes('kurd_europe_diaspora') && G.age >= 35 && G.age <= 58 && !G.flags.includes('kurd_europe_question_faced'),
-    text: 'The question comes up at the community association. Some people have gone back — the village is there or rebuilt or something is there. The political conditions have changed or appear to have changed. Someone has returned and written about it. Someone else tried and came back. You have the question now and it will not stop being the question.',
+    text: 'At the association someone puts a phone on the table with a video of the village: a new road, a mast on the ridge, a house with a blue door that is not your family\'s blue door. Two people have gone back. One has come back from going back and does not talk about why. Your daughter, who was born in Cologne, says the village looks nice, and asks whether they have wifi.',
     choices: [
       {
         text: 'Begin making plans to return.',
         tag: 'return',
         outcome: 'The process is long and the outcome is uncertain and you are doing it anyway. Whatever the village is now, you need to see it.',
-        effect: (p) => { p.addFlag('kurd_europe_question_faced'); p.addFlag('kurd_return_planning'); p.m += 3; },
+        effect: (p) => { p.r += 4; p.m -= 2; p.e += 2; p.setMem('kurdEuropeReturnQ', true) },
       },
       {
         text: 'Stay with the life built here.',
@@ -3904,13 +3892,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.currentYear >= 1995 &&
       G.age >= 30 &&
       !G.mem?.ft14ManiPuliteAfter,
-    text: 'The Clean Hands investigation destroyed the First Republic and produced Berlusconi. The magistrates who conducted it became famous and then some of them were investigated. The tangenti system — the systematic corruption — was dismantled at the level of the parties that organized it. The corruption reorganized at a different level. The Italy that emerged from Mani Pulite is not the Italy that went in, and whether the change was improvement is the argument that is still running.',
+    text: 'Di Pietro was on the news every evening for two years and your father would not have the volume turned down during it. The party your family had voted for since the war stopped existing while you were at university. Now the tender for the bypass goes to a consortium nobody has heard of and the local paper runs it on page seven. Your father died before the second half of it, which you have decided to be glad about.',
+    context: 'The Mani Pulite investigation from 1992 implicated over 5,000 people and destroyed the Christian Democrat and Socialist parties. Antonio Di Pietro became the public face of it. Silvio Berlusconi entered politics in 1994.',
     choices: null,
-    effect: (p) => {
-      p.r += 4
-      p.e += 4
-      p.setMem('ft14ManiPuliteAfter', true)
-    },
+    effect: (p) => { p.e += 3; p.r += 3; p.m -= 2; p.setMem('ft14ManiPuliteAfter', true) },
   },
 
   {
@@ -3941,14 +3926,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.currentYear >= 2010 &&
       G.age >= 55 &&
       !G.mem?.ft14ShockTherapyVindication,
-    text: 'Poland did not enter recession in 2009. The only major European economy that didn\'t. The motorways are built. Warsaw looks like a Western European city. The GDP per capita has grown faster than any EU country for twenty years. The price was paid in the early nineties. You were there when the price was paid. The people in the new Warsaw coffee shops were not there. They live in the country that the price bought, and they do not know the price, which is neither their fault nor yours. The price was real. The country is also real.',
+    text: 'The tram to work runs on rails that were relaid in 2011 and the stop has a screen that tells you the truth about when the next one is coming. In 1991 you queued for meat and the shop had one kind. At the table your daughter\'s boyfriend explains that the nineties were an avoidable act of ideological violence, and he is not entirely wrong, and you pass him the bread.',
+    context: 'The Balcerowicz Plan of January 1990 removed price controls and subsidies overnight. Unemployment rose from near zero to 16 percent and industrial output fell by a quarter. Poland was the only EU economy not to enter recession in 2009.',
     choices: null,
-    effect: (p) => {
-      p.m += 5
-      p.r += 4
-      p.karma += 3
-      p.setMem('ft14ShockTherapyVindication', true)
-    },
+    effect: (p) => { p.e += 3; p.r += 3; p.w += 1; p.setMem('ft14ShockTherapyVind', true) },
   },
 
 // ============================================================
@@ -3991,14 +3972,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('karoshi_adjacent') &&
       G.age >= 55 &&
       !G.mem?.ft15KaroshiLate,
-    text: 'His name was Nakamura. He died at his desk in November. The official cause was cardiac arrest. The real cause was the 3,000 hours of overtime he had logged that year, which came out in the labor inspection, which found the company in violation, which resulted in a fine that was smaller than his annual salary had been. His wife received a karoshi certification from the Labor Standards Inspection Office. The certification acknowledges what the employer denied for eighteen months. You worked the same hours. You are here. He is not. The difference between the two of you is not virtue.',
+    text: 'Nakamura\'s desk was cleared on the Monday and somebody\'s monitor was moved onto it by Wednesday. His wife got the certification eighteen months later, after the inspection, and the fine came to less than what he had been paid in a year. You logged the same hours he did that autumn. At the memorial you stood at the back, and afterwards you went to the office because there was a deadline.',
+    context: 'Karoshi - death from overwork - is a recognised cause under Japanese labour law, requiring certification from a Labour Standards Inspection Office. Recognised cases number in the hundreds annually; the standard threshold is around 80 to 100 hours of monthly overtime.',
     choices: null,
-    effect: (p) => {
-      p.r += 6
-      p.m -= 4
-      p.karma += 3
-      p.setMem('ft15KaroshiLate', true)
-    },
+    effect: (p) => { p.m -= 6; p.h -= 3; p.r += 6; p.setMem('ft15KaroshiLate', true) },
   },
 
   {
@@ -4093,14 +4070,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('minamata_disease') &&
       G.age >= 60 &&
       !G.mem?.ft15MinamataLate,
-    text: 'The cats that ran into the sea in the 1950s were the first sign, before the symptoms appeared in the people of Minamata. Chisso factory. Methylmercury. The company denied it for twelve years. The disease was named after the bay in 1956 and the company continued to discharge mercury until 1968. The courts found in favor of the plaintiffs in 1973. Chisso continued to operate. The third-generation effects are being documented now — children of children of people who ate the fish. The mercury entered the food chain and stayed. The third generation did not eat the fish. They carry what the fish carried into the people who were their grandparents.',
+    text: 'Your mother stopped buying from the bay in 1958 and never said why, and you ate what was on the table before that. Your hands are fine. Your daughter\'s hands are fine. Your granddaughter has a tremor the paediatrician calls idiopathic and a form to fill in that asks about the family\'s residence in the 1950s. You fill it in. You put the postcode of the house in the row nearest the water, which is still standing.',
+    context: 'Chisso Corporation discharged methylmercury into Minamata Bay from 1932 to 1968. Cats convulsing and running into the sea were the first sign. The disease was named in 1956; the company denied responsibility until the 1973 court judgment. Congenital and later-generation effects are still being documented.',
     choices: null,
-    effect: (p) => {
-      p.r += 5
-      p.karma += 4
-      p.h -= 3
-      p.setMem('ft15MinamataLate', true)
-    },
+    effect: (p) => { p.m -= 6; p.h -= 2; p.r += 5; p.setMem('ft15MinamataLate', true) },
   },
 
   {
@@ -4155,14 +4128,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('plano_real_generation') &&
       G.age >= 55 &&
       !G.mem?.ft15PlanoRealLate,
-    text: 'The first week of stable prices. July 1994. The padeiro stopped changing the bread price between morning and afternoon. The supermarket price tag stayed the same on Tuesday as it had been on Monday. You had been shopping with mental calculations for so long — by how much will this be more expensive at the register than on the shelf — that the first week without that calculation felt wrong. Like waiting for a sound that doesn\'t come. Brazil\'s inflation rate was 2,477% in 1993. It was 22% in 1995 and continued to fall. The decade of hyperinflation taught a set of habits that outlasted the inflation. Some of those habits you still have.',
+    text: 'The padeiro stopped putting the new price on the board at noon, and by the Thursday you noticed that you had stopped doing the arithmetic between the shelf and the till. It felt like waiting for a sound that did not come. You still buy rice four kilos at a time and you still know the price of everything in the trolley to the centavo before the woman scans it. Your son thinks this is a personality trait.',
+    context: 'The Plano Real launched in July 1994. Brazilian inflation was 2,477 percent in 1993 and 22 percent by 1995. During the hyperinflation years supermarkets repriced goods on the shelf, sometimes twice a day.',
     choices: null,
-    effect: (p) => {
-      p.m += 5
-      p.e += 3
-      p.r += 2
-      p.setMem('ft15PlanoRealLate', true)
-    },
+    effect: (p) => { p.e += 3; p.m += 3; p.w += 1; p.setMem('ft15PlanoRealLate', true) },
   },
 
   {
@@ -4464,14 +4433,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('decree_779_generation') &&
       G.age >= 55 &&
       !G.mem?.ft18Decree779Late,
-    text: 'Decree 779 ran for twenty-three years — from 1966 to December 1989. Twelve thousand women died from illegal procedures in those twenty-three years. The number is the one that was officially researched; the actual number may be higher. The children born under the decree — the decreţei, as they are called — are now in their forties and fifties. Some of them were placed in the orphanages. Some of them grew up with mothers who had not planned for them. You were one of the women counting weeks. You made the decisions the decree forced you to make. The decree is gone. The decisions are in you.',
+    text: 'You counted weeks for twenty-three years and you can still do the arithmetic without a calendar. The gynaecologist\'s appointments were quarterly and a woman from the factory came with you, which was the arrangement. Your youngest was born in 1985 and is in Milan now and calls on Sundays. She has never asked why she is eleven years younger than her brother and you have never worked out how you would begin.',
+    context: 'Romania\'s Decree 770 of 1966 banned abortion and contraception for most women. An estimated 10,000 to 12,000 women died from illegal procedures before its repeal in December 1989. Workplace gynaecological checks were compulsory. The generation born under it is known as the decreței.',
     choices: null,
-    effect: (p) => {
-      p.r += 6
-      p.karma += 5
-      p.m += 3
-      p.setMem('ft18Decree779Late', true)
-    },
+    effect: (p) => { p.r += 6; p.m -= 4; p.h -= 2; p.setMem('ft18Decree779Late', true) },
   },
 
   {
@@ -4520,14 +4485,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('doi_moi_generation') &&
       G.age >= 55 &&
       !G.mem?.ft18DoiMoiLate,
-    text: 'The Đổi Mới reforms — 1986, renovation. The moment Vietnam shifted from central planning toward a market economy while the Communist Party stayed in power. GDP growth averaging 7 percent for twenty years after. Poverty falling from 60 percent to 10 percent by 2010. The Ho Chi Minh City skyline, the motorbikes, the foreign investment, the coffee chains. You were in the country for the transition — old enough to remember the ration coupon and young enough to have a bank account after. Vietnam\'s economic miracle is not in the newspapers the way China\'s is. It happened anyway.',
+    text: 'You still have a ration coupon in the drawer with the old ID, soft as cloth from the folding. The alley you grew up in has a bubble tea place at the end of it and the traffic starts at half five in the morning. Your daughter transfers you money from an app and asks why you will not use the card. You tell her the truth, which is that you like to count it.',
+    context: 'The Đổi Mới reforms began in 1986. Growth averaged around 7 percent for two decades and the poverty rate fell from roughly 60 percent to under 10 percent by 2010, while the Communist Party retained a monopoly on political power.',
     choices: null,
-    effect: (p) => {
-      p.m += 5
-      p.e += 3
-      p.r += 2
-      p.setMem('ft18DoiMoiLate', true)
-    },
+    effect: (p) => { p.m += 4; p.e += 2; p.w += 2; p.setMem('ft18DoiMoiLate', true) },
   },
 
   {
@@ -4827,9 +4788,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('georgian_war_2008') &&
       G.age >= 55 &&
       !G.mem?.ft21War2008Late,
-    text: 'The Tagliavini Report — the EU fact-finding mission — concluded that Georgia started the military confrontation and that Russia\'s response was disproportionate and illegal under international law. Both sentences are in the same report and refer to the same five days. What five days in August 2008 produced is the status quo: South Ossetia and Abkhazia outside Georgian control, the Russian military presence, and the Georgian insistence that this is temporary, which is an insistence that has now run for fifteen years.',
+    text: 'The administrative boundary line moved again in the night and now the Kavtiskhevi man\'s orchard is on the other side of it, with a green sign and a wire. He comes into the shop and tells everyone the number of metres. Nobody argues with the number. Your nephew was nineteen in August and does not go to Gori for anything, not even the market, and has never given a reason.',
+    context: 'The 2008 Russo-Georgian war lasted five days. The EU\'s Tagliavini Report found that Georgia began the military confrontation and that Russia\'s response was disproportionate and illegal. Russian forces have periodically moved the South Ossetian administrative boundary fencing further into Georgian-controlled territory, a practice known as borderisation.',
     choices: null,
-    effect: (p) => { p.r += 5; p.e += 3; p.m -= 3; p.setMem('ft21War2008Late', true); },
+    effect: (p) => { p.r += 4; p.m -= 3; p.e += 2; p.setMem('ft21War2008Late', true) },
   },
 
   {
@@ -4913,9 +4875,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     phase: 'late_life',
     weight: 3,
     when: (G) => G.flags.has('azr_karabakh_idp') && G.flags.has('azr_karabakh_return_2023') && G.age >= 50 && !G.mem.ft22_idp_return_done,
-    text: 'You went back. The mulberry tree was there. The house was not what you remembered — the walls had been repainted, then abandoned, then used as something else, then abandoned again. Your children came with you the second time. Your son stood in the yard and said: so this is it. You did not know how to explain thirty years of holding a deed, a photograph, a map in your head. You said: yes. This is it. You planted something in the yard, though you are not sure yet if you will stay.',
+    text: 'The mulberry tree was there. The house had been repainted by somebody, then used for something, then left, and there is a doorframe with three sets of height marks on it and none of them are yours. Your son stands in the yard and says so this is it. You say yes, this is it, and go and put a fig cutting in by the wall, and you do not say whether you are staying.',
+    context: 'Around 700,000 Azerbaijanis were displaced from Nagorno-Karabakh and the surrounding districts in the 1991-94 war. Following the 2020 war and the 2023 offensive, the government began a return programme to the recovered territories, much of which requires demining first.',
     choices: null,
-    effect: (p) => { p.m += 5; p.r += 6; p.setMem('ft22_idp_return_done', true); },
+    effect: (p) => { p.m += 4; p.r += 5; p.e += 2; p.setMem('ft22AzrIdpReturn', true) },
   },
 
   {
@@ -4978,9 +4941,9 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('authoritarian_veteran') &&
       G.age >= 62 &&
       !G.mem?.ft23AuthVetLate,
-    text: 'When you think about the years under that system, you count the things you did not say and the things you did. You chose compliance more than once. You chose it for reasons that still seem like reasons. The world you live in now does not require those choices. You are still sorting out which habits were responses to that world and which became you.',
+    text: 'You still lower your voice at the word for the ministry, in a country that does not have one and in a language most of the room does not speak. Your son-in-law leaves letters unopened on the hall table for days and it takes something out of you every time you walk past them. In 1979 you signed a thing at work and you can still see the pen. You have never told anybody, including the people who signed the same thing.',
     choices: null,
-    effect: (p) => { p.e += 4; p.r += 4; p.setMem('ft23AuthVetLate', true) },
+    effect: (p) => { p.r += 5; p.m -= 3; p.e += 2; p.setMem('ft23AuthVeteranLate', true) },
   },
 
   // ── PAID BRIBE ───────────────────────────────────────────────────────────────
@@ -5104,9 +5067,9 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     when: (G) =>
       G.flags.has('sibling_reconciled') &&
       !G.mem?.ft23SibReconciled,
-    text: 'The reconciliation happened. You said what needed to be said, or most of it. The relationship since has been careful at the edges but present. You see them at the right occasions. There are things you don\'t discuss, which is different from not being able to discuss them — more like choosing the same conversation you always have, which is a kind of love.',
+    text: 'You see each other at the occasions and it is fine, and afterwards you both say it was nice. There is a year neither of you refers to, and a conversation about a car that you have now had perhaps forty times and will have again at Easter. She rings on your birthday, in the evening, always after eight. You have started ringing on hers.',
     choices: null,
-    effect: (p) => { p.m += 8; p.setMem('ft23SibReconciled', true) },
+    effect: (p) => { p.m += 5; p.s += 2; p.r -= 2; p.setMem('ft23SiblingSettled', true) },
   },
 
   // ── EARTHQUAKE SURVIVOR ──────────────────────────────────────────────────────
@@ -5450,9 +5413,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.currentYear >= 2027 &&
       G.age >= 50 &&
       !G.mem?.ft25ZanLate,
-    text: 'Five years on, or more, from September 2022 and the streets and the slogan. The Islamic Republic is still there. Mahsa Amini is still dead. The people who were killed in the crackdown are still dead. The generation that stood in the streets is older — some in prison, some in exile, some still in Iran doing the smaller daily acts of refusal that do not make headlines but accumulate. What the uprising meant, whether it was a beginning or a pivot point whose meaning is still unresolved, is a question that the years have not yet answered. You know what it felt like to be in it. That knowledge is separate from the outcome.',
+    text: 'The hairdresser on Vali-e Asr has a back room now and you go there, and so does everybody\'s mother. Nobody says the slogan out loud any more but the girl who does the colour has the three words tattooed inside her wrist where a sleeve covers it. Your cousin\'s boy has been in Evin for two years and the family visits go on as normal, on the same day, with the same bag. On the anniversary you do not go anywhere, and neither does anyone else, and the streets that day are noticeably empty.',
+    context: 'Mahsa Jina Amini died in custody in September 2022 after arrest by the morality police. The Woman, Life, Freedom protests spread to over a hundred cities; at least 500 people were killed and around 20,000 detained. Compulsory hijab enforcement continues unevenly.',
     choices: null,
-    effect: (p) => { p.r += 7; p.karma += 5; p.setMem('ft25ZanLate', true) },
+    effect: (p) => { p.m -= 5; p.karma += 4; p.r += 4; p.setMem('ft25ZanZendegiLate', true) },
   },
 
   // ── SUDAN REVOLUTION GENERATION — AFTER THE 2023 WAR ────────────────────────
@@ -5467,9 +5431,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.currentYear >= 2024 &&
       G.age >= 45 &&
       !G.mem?.ft25SdnRevWar,
-    text: 'You were at the sit-in when Bashir fell. You know what the singing sounded like. You know who was next to you in the crowd and where they are now — some still in Khartoum, some in Egypt, some in the country\'s interior, one or two in the ground. The 2023 war was fought between the same factions that spent the transition pretending to share it. What you stood for in 2019 was not what they were fighting over. That distinction matters to you. You are not sure it matters to history.',
+    text: 'You still have the whistle from the sit-in in the tin on the shelf. Of the eleven people in your group chat, four are in Cairo, three do not answer, and one you buried. Someone changed the group name to the name of a street in Khartoum that no longer has buildings on it. Nobody has left the chat.',
+    context: 'The April 2019 sit-in outside army headquarters brought down Omar al-Bashir. The 3 June massacre killed over a hundred protesters. War between the army and the Rapid Support Forces - the two factions that had shared the transitional government - broke out in April 2023.',
     choices: null,
-    effect: (p) => { p.r += 9; p.m -= 4; p.karma += 4; p.setMem('ft25SdnRevWar', true) },
+    effect: (p) => { p.m -= 6; p.karma += 4; p.r += 4; p.setMem('ft25SdnRevAfterWar', true) },
   },
 
 // ============================================================
@@ -5547,8 +5512,8 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     phase: 'late_life',
     weight: 3,
     when: (G) => G.flags.has('black_tax_contributor') && G.age >= 58 && !G.mem?.ftw26BlackTaxLate,
-    text: 'Your niece graduated last year. Your younger brother runs his own business. The roof got replaced properly in 2011 and has not leaked since. The accounting, if you did it, would show that the money you sent back built things that lasted — an education here, a foundation there, a generation that did not start as far back as you did. This is not the story of sacrifice. It is the story of how wealth is actually built in communities that cannot rely on inheritance: one person at a time, in the middle of their working life, sending money home.',
-    effect: (p) => { p.m += 6; p.karma += 3; p.setMem('ftw26BlackTaxLate', true); },
+    text: 'The roof went on in 2011 and it has not leaked since, and you have never seen it in the rain. Your niece sends a photograph of herself in the graduation gown standing in front of the house. Your brother\'s shop is on the corner and has your father\'s name over the door, which nobody discussed. The transfer goes out on the twenty-eighth and you have never once had a month where you did not send it.',
+    effect: (p) => { p.m += 5; p.karma += 4; p.w -= 2; p.setMem('ftw26BlackTaxLate', true) },
   },
 
   // ── ARRANGED MARRIAGE ───────────────────────────────────────────────────────
@@ -5582,8 +5547,9 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     phase: 'late_life',
     weight: 3,
     when: (G) => G.flags.has('partition_generation') && G.age >= 60 && !G.mem?.ftw26PartitionLate,
-    text: 'The country that was taken apart and the country that was made: you have lived on one side of the line long enough that your children do not feel it as a wound. For them it is history. For you it is the specific street in the specific city where your grandparents\' house was, on the other side, and the way your mother said the name of that city in a different register than she used for anything else.',
-    effect: (p) => { p.r += 5; p.m -= 4; p.e += 2; p.setMem('ftw26PartitionLate', true); },
+    text: 'Your mother said the name of the city with a different vowel than she used for anywhere else, and you have never been able to reproduce it. There is a brass water jug on the shelf that came across in 1947 in a bundle, and your daughter uses it for flowers. She asked once where it was from and accepted the answer and did not ask a second question. You have the visa forms downloaded and have not filled them in.',
+    context: 'The 1947 partition of British India displaced 15 million people and killed between 200,000 and 2 million. Cross-border visas between India and Pakistan remain restricted, city-specific and difficult to obtain.',
+    effect: (p) => { p.r += 4; p.m -= 2; p.e += 2; p.setMem('ftw26PartitionLate', true) },
   },
 
   // ── FOSTER CARE ─────────────────────────────────────────────────────────────
@@ -5680,9 +5646,9 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('white_zimbabwean_stayed') &&
       G.age >= 35 && G.age <= 65 &&
       !G.mem?.ft27ZimStayedMid,
-    text: 'You stayed. The farm is gone — sold or seized, depending on the year and the offer — but you are here. The country you are living in is different from the country you grew up in in ways that are structural and ongoing. Your children\'s futures look different from what you imagined when they were born. Some of the people you knew left. Some stayed and then left. You are one of the ones who stayed and stayed. You have reasons for this that you have explained to various people and that are true and that are also not the whole truth.',
+    text: 'The Ndebele word for the thorn tree at the gate is the first word you learned and you have never known the English one. You bank in rand and buy diesel in cash and your son does his schooling online from a room with a generator outside the window. At the club the ones who are leaving tell you their dates and you say you will come and see them off, and you do. On the way back the road has the same three potholes it has had since 2004 and you take them in the same order.',
     choices: null,
-    effect: (p) => { p.r += 7; p.e += 3; p.setMem('ft27ZimStayedMid', true) },
+    effect: (p) => { p.r += 4; p.m += 2; p.h -= 1; p.setMem('ft27ZimStayedMid', true) },
   },
 
   // ── SOUTH AFRICA: FREEDOM DAY LATE WITNESS ───────────────────────────────────
@@ -5730,9 +5696,9 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.partner &&
       G.age >= 32 &&
       !G.mem?.ft27DowryEcho,
-    text: 'The dowry was paid the year you married. The number — the gold, or the cash, or the combination — is part of the family memory, recalled at certain moments: a financial difficulty that could have been lessened if the reserves had not been paid out, or a moment of family pride when the payment is remembered as evidence of what your family was worth. The transaction that preceded the marriage sits underneath it, not visibly, but there.',
+    text: 'The figure is never said but everyone in both families can produce it. When the hospital wanted money in 2009 your mother mentioned, once, in a room with four people in it, what had gone out the year you married. Nobody responded and the subject moved on. At your niece\'s wedding your aunt says your family did things properly, and looks at you when she says it.',
     choices: null,
-    effect: (p) => { p.r += 4; p.e += 3; p.setMem('ft27DowryEcho', true) },
+    effect: (p) => { p.e += 2; p.m -= 2; p.r += 3; p.setMem('ft27DowryEcho', true) },
   },
 
   // ── LOBOLA PAID: THE ONGOING FAMILY RELATIONSHIP ─────────────────────────────
@@ -5748,9 +5714,9 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.partner &&
       G.age >= 30 &&
       !G.mem?.ft27LobolaFamily,
-    text: 'The lobola negotiations created a relationship between families that is still active. Your wife\'s family — the relationship to them is not only the normal in-law relationship but a specific economic and social relationship that the lobola payment formalised. You know what you paid. They know what they received. The number is not public but it is known. What it means is renegotiated silently at every interaction between the families.',
+    text: 'You know the number and her father knows the number and neither of you has said it aloud in twenty years. At the funeral the seating was arranged without discussion and you were put where you were put. When your own daughter\'s negotiations open, your wife\'s brother is the one who speaks for your side, which is correct, and you sit and say nothing for four hours.',
     choices: null,
-    effect: (p) => { p.r += 4; p.s += 2; p.e += 2; p.setMem('ft27LobolaFamily', true) },
+    effect: (p) => { p.e += 3; p.m += 2; p.s += 2; p.setMem('ft27LobolaFamily', true) },
   },
 
   // ── MAHR PAID: LATE RECKONING ────────────────────────────────────────────────
@@ -5916,13 +5882,13 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('addiction_family_isolated') &&
       G.age >= 55 &&
       !G.mem?.ft28AddIsoLate,
-    text: 'You held on alone — not ready to involve strangers in what felt like a private catastrophe. The holding had a cost that accumulated over years in ways you only fully see now. The specific exhaustion of being the only person who knows. The ways it contracted what you could bring to other relationships. There are resources that exist for this situation that you did not use. This is not self-blame. It is accurate accounting.',
+    text: 'There was a helpline number on a card in the doctor\'s waiting room for nine years and you read it every time and never wrote it down. You did it alone because it was nobody\'s business, and it took what it took. Your daughter mentions a group that meets at the community centre on Wednesdays, carefully, the way you mention a thing you have practised mentioning. You say you will think about it, and this time you write down the day.',
     choices: [
       {
         text: 'It was the only way you knew how.',
         tag: 'accept',
         outcome: 'You did what you knew how to do. The cost was what it was.',
-        effect: (p) => { p.r += 6; p.m += 3; p.e += 3; p.setMem('ft28AddIsoLate', true) },
+        effect: (p) => { p.m += 3; p.r += 4; p.h += 2; p.setMem('ft28AddictionIsolatedLate', true) },
       },
       {
         text: 'You wish someone had told you that asking for help was possible.',
@@ -6043,9 +6009,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('ci_cocoa_farmer') &&
       G.currentYear >= 2010 &&
       !G.mem?.ciCocoaLate,
-    text: 'You have been growing cocoa for thirty or forty years. Ivory Coast produces a third of the world\'s chocolate. A bar of chocolate in a European supermarket costs two euros. The cocoa in it was worth seven cents when it left your farm. The price was set in London. The research from the European universities says child labour is endemic in the cocoa supply chain. You know which children work in the cocoa. You know what the alternative was. The accounting that appears in the European newspapers and the accounting you do in your own head use the same numbers to reach different conclusions.',
+    text: 'The buyer\'s scale is in the back of a pickup and the price is read off a phone, and the figure comes from London by way of two men you have never met. Your son does the pods after school in the dry season because there is nobody else and the crop does not wait. A woman with a clipboard came through the village asking about children and the work, and you answered her questions accurately. She wrote it down and got back into the vehicle.',
+    context: 'Côte d\'Ivoire and Ghana produce around 60 percent of the world\'s cocoa. Farmers receive roughly 6 percent of the retail price of a chocolate bar. Surveys estimate over 1.5 million children work on West African cocoa farms, most on family smallholdings.',
     choices: null,
-    effect: (p) => { p.r += 7; p.e += 2; p.addFlag('ci_cocoa_accounting'); p.setMem('ciCocoaLate', true); },
+    effect: (p) => { p.r += 4; p.e += 3; p.m -= 3; p.setMem('ciCocoaAccounting', true) },
   },
 
   // ── SAHEL REGIONAL CROSS-ARC ─────────────────────────────────────────────────
@@ -6060,9 +6027,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
        G.flags.includes('burkina_coup_2022') ||
        G.flags.includes('ci_election_crisis_witness')) &&
       !G.mem?.sahelRegionalLate,
-    text: 'The Sahel crisis has moved through the region like a season that doesn\'t end. Mali, then Burkina Faso, then the edges of Ivory Coast. The jihadist groups that took Timbuktu in 2012 are in villages in central Burkina now. Coups in Mali (twice), Burkina (twice), Guinea, Sudan. The French expelled from Mali and Burkina. Wagner Group in their place. The UN missions reduced or withdrawn. You have watched the map change and the names change and the logic stay the same: armed groups, failing states, civilian populations in the middle. The region you grew up in and the region you are old in are not the same region.',
+    text: 'The road south that your father drove for the cattle has a checkpoint on it now that is manned by men in a uniform you do not recognise, and the flag on the pole at the district office has been changed twice in four years. The bus still runs but leaves at four in the morning so as to be through by ten. Your grandson asks which side the men at the checkpoint are on and you tell him it does not matter, keep your hands where they can see them, answer in the local language.',
+    context: 'Since the 2012 collapse in northern Mali, the Sahel has seen coups in Mali, Burkina Faso, Guinea and Niger, the expulsion of French forces, the arrival of Russian contractors, and the spread of armed groups from the north into Burkina Faso and the coastal states.',
     choices: null,
-    effect: (p) => { p.r += 8; p.e += 3; p.m -= 5; p.addFlag('sahel_long_arc_witness'); p.setMem('sahelRegionalLate', true); },
+    effect: (p) => { p.r += 5; p.m -= 4; p.e += 2; p.setMem('sahelRegionalLate', true) },
   },
 
   // ── TUAREG SETTLED: LATE IDENTITY RETURN ─────────────────────────────────────
@@ -6075,7 +6043,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('tuareg_settled') &&
       G.currentYear >= 2010 &&
       !G.mem?.tuaregSettledLate,
-    text: 'You go north for a funeral and the road is a road now, tarred as far as the checkpoint. Your cousin\'s sons keep two hundred goats and a solar panel and a phone that works in three places along the wadi. They ask what the city is like and you describe your office. Nobody asks whether you would come back, which is its own kind of answer, and you sleep badly outside because you have forgotten how much noise the animals make.',
+    text: 'You go north for a funeral and the road is a road now, tarred as far as the checkpoint. Your cousin\'s sons keep two hundred goats and a solar panel and a phone that works in three places along the wadi. They ask what the city is like and you describe your office. Nobody asks whether you would come back. You sleep badly outside because you had forgotten how much noise the animals make at night.',
     context: 'The 2012 MNLA uprising declared the independent state of Azawad in northern Mali before being displaced by jihadist groups. Successive droughts from 1973 pushed much of the Tuareg population into settled towns and cities.',
     choices: null,
     effect: (p) => { p.r += 5; p.m -= 2; p.e += 2; p.addFlag('tuareg_settled_reckoned'); p.setMem('tuaregSettledLate', true) },
@@ -6092,9 +6060,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('anglophone_cameroonian') &&
       G.currentYear >= 2020 &&
       !G.mem?.cmrAngloLate,
-    text: 'The Anglophone regions\' grievances were, in 2016, about judges and teachers. The government\'s response made them about much more. You have now watched this for years. The schools that have been closed — some continuously since 2016 — have produced a generation of children in the northwest and southwest who are functionally illiterate. The armed groups that were meant to be a pressure tactic are now a set of factions fighting each other as much as the government. Biya has not visited the regions. No peace framework has been proposed that both sides accepted. The arithmetic of the cabinet ministers has not changed.',
+    text: 'The school at Bamenda has been shut since 2016 and the compound has a tree growing through the assembly ground. Your sister\'s children are seventeen and fifteen and read at the level they reached at nine. You taught them what you could at the table for three years and then stopped, because you had run out of what you knew. The ministry sends the examination timetable every year and it arrives on time.',
+    context: 'Cameroon\'s Anglophone crisis has closed schools across the North-West and South-West regions since 2016, affecting an estimated 700,000 children. Paul Biya, president since 1982, has not visited the regions during the conflict.',
     choices: null,
-    effect: (p) => { p.r += 8; p.e += 3; p.addFlag('anglophone_long_witness'); p.setMem('cmrAngloLate', true); },
+    effect: (p) => { p.r += 5; p.m -= 5; p.e += 1; p.setMem('cmrAnglophoneLate', true) },
   },
 
   {

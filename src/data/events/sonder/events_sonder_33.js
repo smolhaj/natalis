@@ -1,5 +1,7 @@
 // events_sonder_33.js — contemplative prose layer, weight 2, no choices, no new flags
 
+import { hasBooks, hasPhone, hasPhotographs, hasWeekend, isLiterate, worksInOffice } from './_sonderGuards.js'
+
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
 export const EVENTS_SONDER_33 = [
@@ -8,7 +10,7 @@ export const EVENTS_SONDER_33 = [
     id: 'sonder_33_a',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 20 && G.age <= 32 && !G.mem?.s33a,
+    when: (G) => isLiterate(G) && (G.age >= 20 && G.age <= 32 && !G.mem?.s33a),
     text: () => pick([
       'The letter you wrote that you did not send. You reread it once and understood what you actually meant, and then you did not send it, but you kept what you understood.',
       'The other person in the queue who has been waiting longer than you have. You wonder about the thing they are waiting for. The queue moves.',
@@ -21,7 +23,7 @@ export const EVENTS_SONDER_33 = [
     id: 'sonder_33_b',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 40 && G.age <= 54 && !G.mem?.s33b,
+    when: (G) => worksInOffice(G) && (G.age >= 40 && G.age <= 54 && !G.mem?.s33b),
     text: () => pick([
       'The recurring sensation of having forgotten something important, followed by the knowledge that you have not — that this is just a feeling the morning produces.',
       'The colleague you have worked alongside for a decade and still do not know well. The knowledge of their professional self is complete. The rest of them is entirely unknown to you.',
@@ -30,20 +32,7 @@ export const EVENTS_SONDER_33 = [
     effect: (p) => { p.setMem('s33b', true) },
   },
 
-  {
-    id: 'sonder_33_c',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => G.age >= 63 && !G.mem?.s33c,
-    text: () => pick([
-      'The light through a window at a particular angle that you have seen before, in a different house, in a different decade. The light does not know this. You carry the comparison.',
-      'The year you did not think would be significant and which turned out to be the year everything changed. In retrospect the signs were there. In the year itself the signs were invisible.',
-    ]),
-    choices: null,
-    effect: (p) => { p.setMem('s33c', true) },
-  },
-
-  {
+{
     id: 'sonder_33_d',
     phase: 'childhood',
     weight: 2,
@@ -82,20 +71,7 @@ export const EVENTS_SONDER_33 = [
     effect: (p) => { p.setMem('s33f', true) },
   },
 
-  {
-    id: 'sonder_33_g',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 44 && G.age <= 58 && !G.mem?.s33g,
-    text: () => pick([
-      'The friend who has known you for twenty-five years. The version of you they know includes people and places and decisions that no one in your current life has any access to. They are a kind of archive.',
-      'You are still carrying something from a conversation ten years ago that the other person has certainly forgotten. The sentence is still in you, doing its work.',
-    ]),
-    choices: null,
-    effect: (p) => { p.setMem('s33g', true) },
-  },
-
-  {
+{
     id: 'sonder_33_h',
     phase: 'late_life',
     weight: 2,
@@ -125,7 +101,7 @@ export const EVENTS_SONDER_33 = [
     id: 'sonder_33_j',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 36 && G.age <= 50 && !G.mem?.s33j,
+    when: (G) => hasBooks(G) && (G.age >= 36 && G.age <= 50 && !G.mem?.s33j),
     text: () => pick([
       'The object you reach for and then do not need. The reflex that outlasted its original purpose. The hand that knows where something used to be.',
       'The book on the shelf you have not read in fifteen years that you could reach for now. You look at it. You put it back. The time for that book is not this week.',
@@ -134,33 +110,7 @@ export const EVENTS_SONDER_33 = [
     effect: (p) => { p.setMem('s33j', true) },
   },
 
-  {
-    id: 'sonder_33_k',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => G.age >= 60 && G.age <= 74 && !G.mem?.s33k,
-    text: () => pick([
-      'The neighbourhood that has changed around you while you stayed in it. You are one of the long-term residents now. The new arrivals do not know the neighbourhood you know.',
-      'The pleasure you no longer have to apologise for. The music you listen to at full volume in an empty house, or the food you make only for yourself, or the afternoon you spend exactly as you choose.',
-    ]),
-    choices: null,
-    effect: (p) => { p.setMem('s33k', true) },
-  },
-
-  {
-    id: 'sonder_33_l',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => G.age >= 22 && G.age <= 34 && !G.mem?.s33l,
-    text: () => pick([
-      'The version of the story you tell yourself about why you made the choices you made. The story is mostly true. Some of the true parts are not in the story.',
-      'The city at 6am before the streets fill: the cleaners, the delivery vans, the person running before the day begins. A city is not one thing. This is one of its forms.',
-    ]),
-    choices: null,
-    effect: (p) => { p.setMem('s33l', true) },
-  },
-
-  {
+{
     id: 'sonder_33_m',
     phase: 'midlife',
     weight: 2,
@@ -229,7 +179,7 @@ export const EVENTS_SONDER_33 = [
     id: 'sonder_33_r',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => G.age >= 15 && G.age <= 20 && !G.mem?.s33r,
+    when: (G) => hasBooks(G) && (G.age >= 15 && G.age <= 20 && !G.mem?.s33r),
     text: () => pick([
       'You are reading and the reading is going into a place that is not quite memory and not quite imagination. The book is doing something to you. Later you will not be able to explain what.',
       'The adult you trusted more than your parents at a particular moment. The adult probably does not know this. The moment was real.',
@@ -268,7 +218,7 @@ export const EVENTS_SONDER_33 = [
     id: 'sonder_33_u',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 42 && G.age <= 56 && !G.mem?.s33u,
+    when: (G) => hasWeekend(G) && (G.age >= 42 && G.age <= 56 && !G.mem?.s33u),
     text: () => pick([
       'The evening you did not plan that became the evening you remember. No event. Just the specific light and the specific people and the conversation that went longer than anyone expected.',
       'The small ceremony your household has — the way Sunday morning works, the particular thing you do before a journey, the routine that is more than a routine. It is not a ritual because no one named it. It is a ritual.',
@@ -307,7 +257,7 @@ export const EVENTS_SONDER_33 = [
     id: 'sonder_33_x',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 48 && G.age <= 62 && !G.mem?.s33x,
+    when: (G) => hasPhotographs(G) && (G.age >= 48 && G.age <= 62 && !G.mem?.s33x),
     text: () => pick([
       'The photograph from the year that turned out to be the last year before everything changed. No one in the photograph knew this. Everyone is just standing there, in the year, not yet knowing.',
       'You have repaired something — a relationship, an object, a habit — that you thought was broken beyond repair. The repair required longer than you expected and is less perfect than new. It holds.',
@@ -320,7 +270,7 @@ export const EVENTS_SONDER_33 = [
     id: 'sonder_33_y',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 26 && G.age <= 38 && !G.mem?.s33y,
+    when: (G) => hasPhone(G) && (G.age >= 26 && G.age <= 38 && !G.mem?.s33y),
     text: () => pick([
       'The voice on the phone that sounds exactly like the person you were expecting and is not that person. The disorientation of a fraction of a second.',
       'You are good at something that you did not try to become good at. It developed while you were attending to other things. You have been doing it for so long the goodness at it is just part of you now.',
@@ -346,7 +296,7 @@ export const EVENTS_SONDER_33 = [
     id: 'sonder_33_aa',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 34 && G.age <= 48 && !G.mem?.s33aa,
+    when: (G) => worksInOffice(G) && (G.age >= 34 && G.age <= 48 && !G.mem?.s33aa),
     text: () => pick([
       'The stranger whose face you have seen every week for two years — on the same commute, in the same coffee shop — and with whom you have never exchanged more than a nod. A kind of intimacy without introduction.',
       'The question the child asked that you could not answer and which you have been thinking about since. It was a simple question. You did not have the answer. You still do not.',

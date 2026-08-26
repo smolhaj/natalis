@@ -6,6 +6,8 @@
 //   SOUND AND MUSIC — ambient sound, the songs that date a year
 // All mem-gated to fire once. Weight 2. No new flags. Minimal effects.
 
+import { hasCafe, hasRadio } from './_sonderGuards.js'
+
 export const EVENTS_SONDER_7 = [
 
   // ──────────────────────────────────────────────────────────────────────────
@@ -80,9 +82,8 @@ export const EVENTS_SONDER_7 = [
     id: 'sonder7_food_smell_of_home',
     phase: 'young_adult',
     weight: 2,
-    when: (G) =>
-      G.age >= 22 && G.age <= 40 &&
-      !G.mem?.s7FoodSmellHome,
+    when: (G) => hasCafe(G) && (G.age >= 22 && G.age <= 40 &&
+      !G.mem?.s7FoodSmellHome),
     text: 'You are somewhere — a restaurant, a market, someone else\'s kitchen — and the smell is exactly the smell of your childhood home. Not similar. Exactly. You stop. People move around you. The smell lasts for a moment and then you are in the present again, holding whatever you were holding, having been somewhere else for three seconds without leaving.',
     choices: null,
     effect: (p) => { p.m += 2; p.r += 1; p.setMem('s7FoodSmellHome', true) },
@@ -105,9 +106,8 @@ export const EVENTS_SONDER_7 = [
     id: 'sonder7_food_first_restaurant',
     phase: 'childhood',
     weight: 2,
-    when: (G) =>
-      G.age >= 8 && G.age <= 13 &&
-      !G.mem?.s7FoodRestaurant,
+    when: (G) => hasCafe(G) && (G.age >= 8 && G.age <= 13 &&
+      !G.mem?.s7FoodRestaurant),
     text: 'The first time in a restaurant you are uncertain about the order of things. Someone else brings the food. You are allowed to choose from a page. You do not choose the cheapest thing because you have been told you can choose what you want, but you choose the second cheapest because you cannot fully believe it. The food arrives and it is good. You do not fully relax until you are back outside.',
     choices: null,
     effect: (p) => { p.m += 2; p.e += 1; p.setMem('s7FoodRestaurant', true) },
@@ -135,9 +135,8 @@ export const EVENTS_SONDER_7 = [
     id: 'sonder7_ritual_wedding_guest',
     phase: 'young_adult',
     weight: 2,
-    when: (G) =>
-      G.age >= 22 && G.age <= 35 &&
-      !G.mem?.s7RitualWedding,
+    when: (G) => !['secular', 'atheist'].includes(G.religion) && (G.age >= 22 && G.age <= 35 &&
+      !G.mem?.s7RitualWedding),
     text: 'You are a guest at a wedding. The ceremony is in the form it always takes in this community and you know when to sit and when to stand. You watch the couple trying to be present in a moment that everyone around them is photographing. They will spend years with the photographs rather than the memory. You do not know if this is new or if it was always this way and the photographs are just more literal now.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s7RitualWedding', true) },
@@ -301,39 +300,13 @@ export const EVENTS_SONDER_7 = [
     effect: (p) => { p.m += 2; p.e += 1; p.setMem('s7StreetMarketDay', true) },
   },
 
-  {
-    id: 'sonder7_street_commute_body',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) =>
-      G.career &&
-      G.age >= 30 && G.age <= 55 &&
-      !G.mem?.s7StreetCommute,
-    text: 'Your body knows the commute. It knows when to stand, which side to move to, when the delay is normal and when it isn\'t. The route has been walked or ridden enough times that it does not require attention. Your mind goes elsewhere while your body navigates. When the route changes — a closure, a detour — you notice how deep the body\'s expectation was. You are briefly lost somewhere you have been ten thousand times.',
-    choices: null,
-    effect: (p) => { p.e += 1; p.setMem('s7StreetCommute', true) },
-  },
-
-  {
-    id: 'sonder7_street_neighbour',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) =>
-      G.age >= 20 && G.age <= 40 &&
-      !G.mem?.s7StreetNeighbour,
-    text: 'You know your neighbour well enough to greet but not to visit. You know the hours they keep and the sound their door makes and roughly what they look like in the morning. You have developed a courtesy that is calibrated to exactly this distance — warm enough to be civil, not so warm as to create an obligation. The calibration took about three months and you do not think about it.',
-    choices: null,
-    effect: (p) => { p.s += 1; p.setMem('s7StreetNeighbour', true) },
-  },
-
-  {
+{
     id: 'sonder7_street_power_out',
     phase: 'midlife',
     weight: 2,
-    when: (G) =>
-      ['developing_urban', 'developing_unstable', 'subsaharan', 'conflict_zone', 'post_soviet'].includes(G.character?.archetype) &&
+    when: (G) => hasRadio(G) && (['developing_urban', 'developing_unstable', 'subsaharan', 'conflict_zone', 'post_soviet'].includes(G.character?.archetype) &&
       G.age >= 25 &&
-      !G.mem?.s7StreetPowerOut,
+      !G.mem?.s7StreetPowerOut),
     text: 'The power goes out and the street rearranges itself. People come outside who were not outside. Candles appear in windows. The street is quieter and also more present to itself — the sounds that the electricity masked come back: insects, wind, distant conversation, a radio running on batteries. You have lived through enough power cuts that you know what to do and what to do without. The cut is an inconvenience. It is also, briefly, a different kind of evening.',
     choices: null,
     effect: (p) => { p.e += 1; p.setMem('s7StreetPowerOut', true) },
@@ -400,9 +373,8 @@ export const EVENTS_SONDER_7 = [
     id: 'sonder7_sound_dated_by_song',
     phase: 'midlife',
     weight: 2,
-    when: (G) =>
-      G.age >= 35 &&
-      !G.mem?.s7SoundDated,
+    when: (G) => hasRadio(G) && (G.age >= 35 &&
+      !G.mem?.s7SoundDated),
     text: 'A song comes on — a shop, a passing car, a radio someone has on in another room — and you are immediately a different age, in a different year, in a specific afternoon you had not thought of in a long time. The memory is not summoned by thinking but by the song arriving before your defences could be organised. This is how music stores time differently from photographs: you do not look at it. It comes in through the part of you that was open.',
     choices: null,
     effect: (p) => { p.m += 2; p.r += 2; p.setMem('s7SoundDated', true) },

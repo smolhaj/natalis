@@ -1,5 +1,7 @@
 // events_sonder_50.js — contemplative layer, weight 2, all mem-gated
 
+import { hasCafe, hasTV, wentToSchool, worksInOffice } from './_sonderGuards.js'
+
 export const EVENTS_SONDER_50 = [
 
   {
@@ -22,37 +24,17 @@ export const EVENTS_SONDER_50 = [
     effect: (p) => { p.r += 2; p.setMem('s50b', true) },
   },
 
-  {
-    id: 'sonder_50_c',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => !G.mem?.s50c,
-    text: 'The city at 6am before the work begins — the specific quality of those hours when the city is technically open but not yet at full pressure. The coffee shop that is already running. The delivery van. The person walking a dog. You are part of this early version of the city and you feel something about it that you don\'t feel about the same city at noon.',
-    choices: null,
-    effect: (p) => { p.setMem('s50c', true) },
-  },
-
-  {
+{
     id: 'sonder_50_d',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => !G.mem?.s50d,
+    when: (G) => wentToSchool(G) && (!G.mem?.s50d),
     text: 'The subject at school that seems like it has nothing to do with you and then, one afternoon, seems like it was always about you. You don\'t know what changed. The material didn\'t change. You are not sure if something in the material reached you or if something in you reached the material.',
     choices: null,
     effect: (p) => { p.e += 2; p.setMem('s50d', true) },
   },
 
-  {
-    id: 'sonder_50_e',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => !G.mem?.s50e,
-    text: 'The meeting that was supposed to be difficult turns out to be easy, and the meeting that was supposed to be easy turns out to be difficult. You have long since stopped predicting which will be which. You go to each meeting and find out.',
-    choices: null,
-    effect: (p) => { p.setMem('s50e', true) },
-  },
-
-  {
+{
     id: 'sonder_50_f',
     phase: 'childhood',
     weight: 2,
@@ -62,17 +44,7 @@ export const EVENTS_SONDER_50 = [
     effect: (p) => { p.setMem('s50f', true) },
   },
 
-  {
-    id: 'sonder_50_g',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => !G.mem?.s50g,
-    text: 'The photograph from before the loss. Everyone in it is present in it and not yet absent. You know what comes next for each of them. The photograph does not know this. The photograph is from a time when none of you did.',
-    choices: null,
-    effect: (p) => { p.r += 4; p.m -= 2; p.setMem('s50g', true) },
-  },
-
-  {
+{
     id: 'sonder_50_h',
     phase: 'young_adult',
     weight: 2,
@@ -86,7 +58,7 @@ export const EVENTS_SONDER_50 = [
     id: 'sonder_50_i',
     phase: 'midlife',
     weight: 2,
-    when: (G) => !G.mem?.s50i,
+    when: (G) => worksInOffice(G) && (!G.mem?.s50i),
     text: 'The colleague who does not speak in meetings and then, when they do speak, says the thing that everyone else was circling. The observation is exact. The meeting shifts. They go back to not speaking. You are not sure whether they prefer the silence or have simply learned that speaking once with precision costs less than speaking often with less.',
     choices: null,
     effect: (p) => { p.setMem('s50i', true) },
@@ -122,21 +94,11 @@ export const EVENTS_SONDER_50 = [
     effect: (p) => { p.e += 2; p.setMem('s50l', true) },
   },
 
-  {
-    id: 'sonder_50_m',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => !G.mem?.s50m,
-    text: 'The letter you did not send. You wrote it. The writing was the point — to reach the thing in words, to know what you thought by seeing it on the page. The sending would have made it about the other person and the writing was about something else. The letter is somewhere. You are not sure where.',
-    choices: null,
-    effect: (p) => { p.r += 2; p.setMem('s50m', true) },
-  },
-
-  {
+{
     id: 'sonder_50_n',
     phase: 'late_life',
     weight: 2,
-    when: (G) => !G.mem?.s50n,
+    when: (G) => hasTV(G) && (!G.mem?.s50n),
     text: 'The television programme from childhood that you remember clearly and cannot verify. You remember it with specificity — the colours, a phrase, the feeling of watching it in a particular room. No record of it seems to exist. Either the memory is composed, or it existed and did not survive, or it exists and you are searching for it incorrectly. The memory is equally clear in all three versions.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s50n', true) },
@@ -222,17 +184,7 @@ export const EVENTS_SONDER_50 = [
     effect: (p) => { p.m += 3; p.setMem('s50v', true) },
   },
 
-  {
-    id: 'sonder_50_w',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => !G.mem?.s50w,
-    text: 'The habit that formed in a period of your life that has since ended, that you still carry without the period that gave rise to it. The walk at a certain hour. The way you make coffee. The particular route through the market. The reason for the habit dissolved years ago. The habit remained. You are a sediment of previous conditions.',
-    choices: null,
-    effect: (p) => { p.r += 3; p.setMem('s50w', true) },
-  },
-
-  {
+{
     id: 'sonder_50_x',
     phase: 'adolescence',
     weight: 2,
@@ -246,7 +198,7 @@ export const EVENTS_SONDER_50 = [
     id: 'sonder_50_y',
     phase: 'midlife',
     weight: 2,
-    when: (G) => !G.mem?.s50y,
+    when: (G) => hasCafe(G) && (!G.mem?.s50y),
     text: 'The restaurant you went to for years that has closed. Not a significant restaurant — a practical one, a reliable one, one that you did not appreciate as a specific place until it stopped being there. The specific soup. The specific table by the window. The specific price that you knew. The building is now something else.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s50y', true) },
@@ -262,37 +214,17 @@ export const EVENTS_SONDER_50 = [
     effect: (p) => { p.karma += 2; p.setMem('s50z', true) },
   },
 
-  {
-    id: 'sonder_50_aa',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => !G.mem?.s50aa,
-    text: 'The decade that contained the most change — you can identify it now from the outside. At the time it was simply life at speed. Now, seen across the distance, you can see it as a unit: the decade when the shape of your life changed more than any other decade. It did not feel like a unit from inside it.',
-    choices: null,
-    effect: (p) => { p.r += 3; p.setMem('s50aa', true) },
-  },
-
-  {
+{
     id: 'sonder_50_ab',
     phase: 'childhood',
     weight: 2,
-    when: (G) => !G.mem?.s50ab,
+    when: (G) => hasTV(G) && (!G.mem?.s50ab),
     text: 'The specific quality of being ill as a child — the particular texture of days that are outside normal days. The permission to lie on the sofa. The different light. The television at unusual hours. The body that is unwell and also in a container of slight exemption from the usual requirements. You are not glad to be ill but you notice the specific register of it.',
     choices: null,
     effect: (p) => { p.setMem('s50ab', true) },
   },
 
-  {
-    id: 'sonder_50_ac',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => !G.mem?.s50ac,
-    text: 'You find an old list in your handwriting. The handwriting is yours but slightly different — a version of your handwriting from before. The items on the list are completed or abandoned or no longer relevant. A few are illegible. One item you do not remember writing at all. The list is from a version of your life whose daily concerns are now opaque.',
-    choices: null,
-    effect: (p) => { p.r += 3; p.setMem('s50ac', true) },
-  },
-
-  {
+{
     id: 'sonder_50_ad',
     phase: 'late_life',
     weight: 2,

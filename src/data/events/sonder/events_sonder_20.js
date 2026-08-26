@@ -5,6 +5,8 @@
 // of languages left, the moment before sleep, what infrastructure sounds like,
 // the stranger in the photograph, the skill you no longer use.
 
+import { hasElectricity, hasPhotographs, hasRunningWater, worksInOffice } from './_sonderGuards.js'
+
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
 export const EVENTS_SONDER_20 = [
@@ -90,9 +92,8 @@ export const EVENTS_SONDER_20 = [
     id: 'sonder20_colleague_competence',
     phase: 'midlife',
     weight: 2,
-    when: (G) =>
-      G.career &&
-      !G.mem?.s20ColleagueCompetence,
+    when: (G) => worksInOffice(G) && (G.career &&
+      !G.mem?.s20ColleagueCompetence),
     text: 'There is a colleague who is good in a way that goes unremarked — not extraordinary, not someone who gets mentioned, just someone who does their part with a steadiness that makes the whole thing work. You notice them. The noticing is private. You wonder if anyone notices the same thing about you.',
     choices: null,
     effect: (p) => { p.setMem('s20ColleagueCompetence', true) },
@@ -143,27 +144,14 @@ export const EVENTS_SONDER_20 = [
     effect: (p) => { p.setMem('s20BeforeSleep', true) },
   },
 
-  {
-    id: 'sonder20_woken_at_3am',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) =>
-      G.age >= 38 &&
-      !G.mem?.s20Woken3am,
-    text: 'Three in the morning and you are awake. Nothing specific woke you. The body does this now and you have mostly accepted it. You lie there and let the thoughts arrive and leave and eventually the light shifts and you are asleep again. This is just what this hour is at this age.',
-    choices: null,
-    effect: (p) => { p.setMem('s20Woken3am', true) },
-  },
-
-  // ── INFRASTRUCTURE SOUNDS ─────────────────────────────────────────────────
+// ── INFRASTRUCTURE SOUNDS ─────────────────────────────────────────────────
 
   {
     id: 'sonder20_power_cut_dark',
     phase: 'childhood',
     weight: 2,
-    when: (G) =>
-      ['subsaharan', 'developing_urban', 'developing_unstable', 'conflict_zone'].includes(G.character.country?.archetype) &&
-      !G.mem?.s20PowerCutDark,
+    when: (G) => hasElectricity(G) && (['subsaharan', 'developing_urban', 'developing_unstable', 'conflict_zone'].includes(G.character.country?.archetype) &&
+      !G.mem?.s20PowerCutDark),
     text: () => pick([
       'The lights go and the night goes darker than city nights usually go. There is a second of everyone adjusting. Candles appear from the same drawer they are always in. The routine of the power cut is practiced and efficient.',
       'The generator kicks in three seconds after the grid fails. You have counted those three seconds your whole life. The count is automatic. The darkness between the grid and the generator is three seconds and then ordinary life resumes.',
@@ -177,51 +165,21 @@ export const EVENTS_SONDER_20 = [
     id: 'sonder20_water_in_pipes',
     phase: 'young_adult',
     weight: 2,
-    when: (G) =>
-      ['wealthy_west', 'wealthy_east'].includes(G.character.country?.archetype) &&
-      !G.mem?.s20WaterInPipes,
+    when: (G) => hasRunningWater(G) && (['wealthy_west', 'wealthy_east'].includes(G.character.country?.archetype) &&
+      !G.mem?.s20WaterInPipes),
     text: 'The water arrives when the tap is turned on. You have always known this and will die without fully appreciating it, which is perhaps the correct relationship to have with infrastructure: to assume it so completely that its absence would be shocking. Billions of people experience the shock regularly. You do not.',
     choices: null,
     effect: (p) => { p.setMem('s20WaterInPipes', true) },
   },
 
-  {
-    id: 'sonder20_commute_sound',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) =>
-      G.ruralUrban === 'urban' &&
-      !G.mem?.s20CommuteSound,
-    text: 'The commute has its own sound and you have stopped hearing it. The specific frequencies of this train on this track, or this road at this hour, are the sound of the day starting and have been for long enough that they are invisible. The first time you heard them they were interesting. Now they are just the transition from one state to another.',
-    choices: null,
-    effect: (p) => { p.setMem('s20CommuteSound', true) },
-  },
+// ── THE STRANGER IN THE PHOTOGRAPH ───────────────────────────────────────
 
-  // ── THE STRANGER IN THE PHOTOGRAPH ───────────────────────────────────────
-
-  {
-    id: 'sonder20_old_photograph',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) =>
-      G.age >= 55 &&
-      !G.mem?.s20OldPhotograph,
-    text: () => pick([
-      'A photograph from when you were young. You look at the face in it. The face is yours and is not quite yours — the expression you have in photographs from that time, the specific way you held yourself then. The person in the photograph does not know anything that has happened since. They look directly at the camera. They are waiting.',
-      'There is a photograph from years ago and in the background — in the background, just barely visible — there is someone you no longer remember. They were at the same event. They were clearly someone\'s friend. They have since lived an entire life that happened without your knowledge.',
-      'You look very young in the old photograph. That is not surprising. What is surprising is that the person in it doesn\'t look young to themselves — you remember being that age and feeling continuous with the present you, not separate from it. The photograph makes the gap visible in a way the living of it didn\'t.',
-    ]),
-    choices: null,
-    effect: (p) => { p.setMem('s20OldPhotograph', true) },
-  },
-
-  {
+{
     id: 'sonder20_group_photo',
     phase: 'midlife',
     weight: 2,
-    when: (G) =>
-      G.age >= 38 &&
-      !G.mem?.s20GroupPhoto,
+    when: (G) => hasPhotographs(G) && (G.age >= 38 &&
+      !G.mem?.s20GroupPhoto),
     text: 'A group photograph from years ago. The people in it have dispersed into separate futures — different cities, some dead, some estranged, some still present but different in ways the photograph doesn\'t predict. You were all in the same room. That was real. The room is the past.',
     choices: null,
     effect: (p) => { p.setMem('s20GroupPhoto', true) },

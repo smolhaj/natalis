@@ -13,6 +13,8 @@
 //
 // All weight 2, mem-gated, no choices, minimal stat effects.
 
+import { hasBooks, hasCafe, hasFlown, hasHealthcare, hasInternet, hasLeisureTravel, hasPhotographs, hasWeekend } from './_sonderGuards.js'
+
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
 export const EVENTS_SONDER_19 = [
@@ -23,7 +25,7 @@ export const EVENTS_SONDER_19 = [
     id: 's19_overheard_argument',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 18 && G.age <= 60 && !G.mem?.s19OverheardArgument,
+    when: (G) => hasCafe(G) && (G.age >= 18 && G.age <= 60 && !G.mem?.s19OverheardArgument),
     text: () => pick([
       `The argument happening in the next room, or through the wall, or at the table adjacent in the restaurant. You are not involved and cannot fully hear it — enough to understand the category, not enough to understand the content. The specific intimacy of an overheard argument between people you cannot see: the tone of each voice, the rhythm of who speaks when, the quality of the silence after the longest speech. You are an accidental witness to something that is not about you and is briefly about you anyway, because you are there.`,
       `The argument through the wall. You know from the voices that it is the couple next door and you know from the rhythm that it is not a new argument. You cannot make out the words. The texture — the specific escalation and the specific withdrawal and the specific long silence — is legible without the content. You have been on the other side of a wall like this. Someone in another room heard that rhythm without the words.`,
@@ -53,7 +55,7 @@ export const EVENTS_SONDER_19 = [
     id: 's19_passing_through',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 18 && G.age <= 55 && !G.mem?.s19PassingThrough,
+    when: (G) => hasFlown(G) && (G.age >= 18 && G.age <= 55 && !G.mem?.s19PassingThrough),
     text: () => pick([
       `The places you passed through on the way to somewhere else: the train station of a city you did not visit properly, the town where you stopped for fuel and ate something at the roadside and left, the airport terminal in a country you spent six hours in. You have a very thin knowledge of these places — the quality of the light at that hour, the sound of one place you stood, the face of one person you interacted with. This is not knowledge of the place. It is the record of a crossing.`,
       `In transit, you went through a place that people live in. People were going to work. A market was open. A school let out. You moved through it on your way to somewhere else and saw a cross-section of a life that is continuing after you left. The place has not changed because you passed through it. The passing is an event in your history that is not an event in the history of the place.`,
@@ -68,7 +70,7 @@ export const EVENTS_SONDER_19 = [
     id: 's19_garden',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 35 && G.age <= 70 && !G.mem?.s19Garden,
+    when: (G) => G.season === 'autumn' && (G.age >= 35 && G.age <= 70 && !G.mem?.s19Garden),
     text: () => pick([
       `The garden teaches the same lesson in each season, which is the lesson of timing. The seed that goes in at the wrong week fails. The plant that needs more water than you gave it fails quietly, without announcement, over several days. The thing you did in autumn is still in the ground in spring. The garden is a very slow feedback mechanism that requires patience and attention over the full year, and it is one of the few systems in adult life that cannot be rushed.`,
       `The garden — even a very small one, even a set of containers on a balcony — is a commitment to the future in a specific way. You put something in the ground that will not be what it is going to be for months. The care you give now will express itself later, when you are a different person from the person who put it in. The garden operates on a timetable that is not yours to set.`,
@@ -94,20 +96,7 @@ export const EVENTS_SONDER_19 = [
 
   // ── RAIN FROM INSIDE ──────────────────────────────────────────────────────
 
-  {
-    id: 's19_rain_inside',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 28 && !G.mem?.s19RainInside,
-    text: () => pick([
-      `Rain seen from inside — from a window, in the specific warmth and stillness of the interior while the water works on the glass. The specific pleasure of this is ancient and does not require explanation: being in the protected place while the unprotected world manages as it can. You have been on both sides of this more times than you can count. Today you are inside. The pleasure is not diminished by knowing it is ordinary.`,
-      `The window in rain. The specific pattern the drops make on glass before they merge and run. The sound, which is different depending on what the rain lands on: the roof, the leaves, the concrete of the street, the metal of the drain. You know the specific sound of rain in this place from inside, which is different from the sound in other places you have lived. You know the rain of several places by sound without knowing you memorised it.`,
-    ]),
-    choices: null,
-    effect: (p) => { p.m += 2; p.setMem('s19RainInside', true) },
-  },
-
-  // ── WORK NO ONE SEES ─────────────────────────────────────────────────────
+// ── WORK NO ONE SEES ─────────────────────────────────────────────────────
 
   {
     id: 's19_unseen_work',
@@ -158,7 +147,7 @@ export const EVENTS_SONDER_19 = [
     id: 's19_family_table',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 32 && !G.mem?.s19FamilyTable,
+    when: (G) => hasLeisureTravel(G) && (G.age >= 32 && !G.mem?.s19FamilyTable),
     text: () => pick([
       `The table where your family ate. The specific seating arrangement that was never declared and was never changed. Your place, which was your place because it had always been your place — you cannot identify the moment it became yours. The objects that were always on the table during meals: the salt in its specific container, the thing that held the napkins, the worn patch on the surface at a certain end. You sat at that table for so many meals that the specific arrangement of it is one of the most precisely remembered spaces you know.`,
       `The meals at the table. Not the significant ones — not the birthday dinners or the holiday feasts — but the ordinary ones, the evening meal repeated across a thousand evenings with the ordinary conversation and the ordinary news and the specific way each person at the table was present. Those meals were the daily reassertion of the family as a unit. They felt ordinary because they were ordinary. Their absence is the thing that makes the ordinary visible.`,
@@ -173,10 +162,9 @@ export const EVENTS_SONDER_19 = [
     id: 's19_voice_gone',
     phase: 'late_life',
     weight: 2,
-    when: (G) =>
-      G.age >= 50 &&
+    when: (G) => hasPhotographs(G) && (G.age >= 50 &&
       (G.flags.has('lost_parent_father') || G.flags.has('lost_parent_mother') || G.flags.has('lost_partner') || G.flags.has('friend_died')) &&
-      !G.mem?.s19VoiceGone,
+      !G.mem?.s19VoiceGone),
     text: () => pick([
       `There is a specific voice you can no longer hear. You know what it sounded like. You know the particular cadence, the specific laugh, the way the voice went when it was unsure or when it was certain or when it was telling a story it had told before. The voice existed in recordings, occasionally — a voicemail you kept longer than was practical, a video someone made at a celebration. The recording is not the voice. The recording is a record of the voice. The voice is what you carry in memory, and memory is what it always is: real and unreliable and the only version you have.`,
       `The voice you can no longer hear is in the category of specific irreversible things. The face in a photograph can be updated in your imagination — you can age it or soften it or make it more exact. The voice in memory is fixed at the moment it last updated, which was when you last heard it. You cannot hear what it would sound like now. What you have is what you heard, which is something and not enough.`,
@@ -287,7 +275,7 @@ export const EVENTS_SONDER_19 = [
     id: 's19_library_feeling',
     phase: 'childhood',
     weight: 2,
-    when: (G) => G.age >= 8 && G.age <= 22 && !G.mem?.s19LibraryFeeling,
+    when: (G) => hasBooks(G) && (G.age >= 8 && G.age <= 22 && !G.mem?.s19LibraryFeeling),
     text: () => pick([
       `The specific feeling of a public library: a place that contains more than you can read in a lifetime, organised in a system you have partially learned to navigate, where the expectation is not that you will read everything but that you are free to read anything. The library is one of the stranger institutions of civic life — a building full of things that are free for the taking, on condition that you bring them back. The trust on which this rests is mostly honoured.`,
       `The library in your town or your school or your neighbourhood. The specific smell of it, which is the smell of paper and controlled air and a specific kind of quiet. You learned early to navigate the system — the numbers on the spines, the way the sections divided — and the navigation was one of the first intellectual skills you acquired that was genuinely useful. You can still navigate it. The system has not changed. You have grown taller than the shelves you first learned on.`,
@@ -316,30 +304,13 @@ export const EVENTS_SONDER_19 = [
 
   // ── WHAT THE COMMUTE TAUGHT ───────────────────────────────────────────────
 
-  {
-    id: 's19_commute_taught',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) =>
-      G.career &&
-      G.ruralUrban === 'urban' &&
-      G.age >= 22 && G.age <= 50 &&
-      !G.mem?.s19CommuteTaught,
-    text: () => pick([
-      `The commute teaches patience and people-watching and the management of small discomfort. It teaches the specific face of a city at the hour when it is going to work — a different population, moving in a different register, carrying the morning's particular quality of compressed intention. The commute is time that is neither home nor work, and it belongs to you in a way that neither home nor work fully does. What you did in that time — the reading, the looking out the window, the thinking that had no particular destination — was a form of private time inside a shared space.`,
-      `Years of the same commute. The face of it in winter and the face of it in summer. The delay that became familiar and the specific irritation it produced that became familiar and then subsided into a texture of the journey rather than an event in the journey. The commute was not productive time in the way the workday was productive time. Something else happened in it. You are not sure what to call what happened in it except that it was yours.`,
-    ]),
-    choices: null,
-    effect: (p) => { p.e += 1; p.setMem('s19CommuteTaught', true) },
-  },
-
-  // ── THE SPECIFIC QUALITY OF A SUNDAY MORNING ─────────────────────────────
+// ── THE SPECIFIC QUALITY OF A SUNDAY MORNING ─────────────────────────────
 
   {
     id: 's19_sunday_morning',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 28 && G.age <= 60 && !G.mem?.s19SundayMorning,
+    when: (G) => hasWeekend(G) && (G.age >= 28 && G.age <= 60 && !G.mem?.s19SundayMorning),
     text: () => pick([
       `Sunday morning has a light that is specific to Sunday morning — lighter than a Monday, slower than a Saturday. The street is quieter than other mornings. The absence of the weekday urgency produces a particular quality of time. You have known this quality all your adult life. It varies by the circumstances — a Sunday morning when you have nowhere to be is different from a Sunday morning when you have somewhere to be at noon — but the baseline quality persists regardless of what fills it.`,
       `The Sunday morning sounds: the neighbourhood at a slower frequency. The shops that are closed. The particular quality of a street when most of the people on it are not going to work. Somewhere there are bells, or there are not bells, but the expectation of bells is part of the texture regardless. You have spent hundreds of Sunday mornings in this specific slightly-slower time. The Sunday morning of your childhood and the Sunday morning of now are the same phenomenon at different ages.`,
@@ -401,20 +372,7 @@ export const EVENTS_SONDER_19 = [
 
   // ── THE SPECIFIC SILENCE AFTER A CALL ────────────────────────────────────
 
-  {
-    id: 's19_silence_after_call',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 30 && !G.mem?.s19SilenceAfterCall,
-    text: () => pick([
-      `The specific silence after a phone call with someone you love and rarely speak to. The call lasted as long as it lasted and covered what it covered and ended with the particular awkwardness or naturalness of endings. Then the phone is down and the room is quiet. The conversation continues in your head for a few minutes without the other person present: the things you should have asked, the things they said that are still being processed. Then that too fades and the room returns to being the room.`,
-      `The conversation with the parent or sibling or old friend you speak to rarely and at length when you do. After the call, the quality of the ordinary room has changed slightly. The people in the conversation are in the room briefly, in the way that conversations carry people into the space where they happened. Then the room reasserts itself and the conversation is in the past and the room is the room again.`,
-    ]),
-    choices: null,
-    effect: (p) => { p.m += 2; p.setMem('s19SilenceAfterCall', true) },
-  },
-
-  // ── THE FACE YOU CANNOT PLACE ─────────────────────────────────────────────
+// ── THE FACE YOU CANNOT PLACE ─────────────────────────────────────────────
 
   {
     id: 's19_unplaced_face',
@@ -453,7 +411,7 @@ export const EVENTS_SONDER_19 = [
     id: 's19_boredom_produces',
     phase: 'childhood',
     weight: 2,
-    when: (G) => G.age >= 8 && G.age <= 16 && !G.mem?.s19BoredomProduces,
+    when: (G) => hasInternet(G) && (G.age >= 8 && G.age <= 16 && !G.mem?.s19BoredomProduces),
     text: () => pick([
       `The specific boredom of childhood that was not scheduled away. The summer afternoon with no program, the rainy day with nothing arranged, the long stretch of time that required you to find something to do with it or remain in the boredom. What the boredom produced: the invented games, the elaborate structures built from available materials, the stories that had to exist because there was nothing else to do with the afternoon. The boredom was the condition that produced the invention.`,
       `Before the screen was always available, boredom lasted long enough to become something else. Not something better necessarily — just something different. The imagination found its way in through the gap that boredom opened. The gap is harder to access now. The gap was not comfortable. The gap was also where certain things were learned that the absence of the gap has made less common.`,
@@ -468,10 +426,9 @@ export const EVENTS_SONDER_19 = [
     id: 's19_hospital_ward_night',
     phase: 'midlife',
     weight: 2,
-    when: (G) =>
-      G.age >= 35 &&
+    when: (G) => hasHealthcare(G) && (G.age >= 35 &&
       (G.flags.has('cancer_survivor') || G.flags.has('lost_parent_father') || G.flags.has('lost_parent_mother') || G.flags.has('lost_partner')) &&
-      !G.mem?.s19HospitalWardNight,
+      !G.mem?.s19HospitalWardNight),
     text: () => pick([
       `The hospital ward at night is a different place from the ward during visiting hours. The corridors dim to a different level. The sounds change: the machinery that was background becomes audible, the specific sounds of a place that is not sleeping but is doing its work at a reduced pace. The night staff move in a different register. You have been in a hospital ward at night — as a patient or as a visitor sitting through it — and the quality of the hours between two and five in the morning in a medical ward is a specific knowledge that doesn't translate to any other context.`,
       `Two in the morning in the ward. The light from the corridor coming under the door. The sound of the monitoring equipment at a specific frequency. The night nurse checking something. The quality of the other beds, which you know without looking. This hour in this place is a specific hour in a specific place that has no equivalent elsewhere. You know it because you were in it. The knowledge is not transferable. It is the record of a specific night.`,

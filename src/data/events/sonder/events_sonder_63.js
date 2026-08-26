@@ -1,6 +1,8 @@
 // Sonder module 63 — 30 contemplative events
 // Weight 2, null choices, all mem-gated. Universal human texture.
 
+import { hasCar, hasHealthcare, worksInOffice } from './_sonderGuards.js'
+
 export const EVENTS_SONDER_63 = [
 
   {
@@ -23,27 +25,7 @@ export const EVENTS_SONDER_63 = [
     effect: (p) => { p.r += 2; p.setMem('s63b', true) },
   },
 
-  {
-    id: 'sonder_63_c',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => !G.mem?.s63c,
-    text: 'The friend who always knew what to say when you didn\'t has not been in your life for six years. You think of her at moments when you don\'t know what to say. The thought does not produce what her presence would have produced. It produces only the thought of her.',
-    choices: null,
-    effect: (p) => { p.m -= 2; p.setMem('s63c', true) },
-  },
-
-  {
-    id: 'sonder_63_d',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => !G.mem?.s63d,
-    text: 'The photograph of you at twenty-three is on the shelf. You do not recognize yourself in it as much as you expected to. The person in it is familiar the way a very close relative is familiar — clearly related but not identical. Some specific thing about the mouth.',
-    choices: null,
-    effect: (p) => { p.r += 2; p.setMem('s63d', true) },
-  },
-
-  {
+{
     id: 'sonder_63_e',
     phase: 'childhood',
     weight: 2,
@@ -97,7 +79,7 @@ export const EVENTS_SONDER_63 = [
     id: 'sonder_63_j',
     phase: 'midlife',
     weight: 2,
-    when: (G) => !G.mem?.s63j,
+    when: (G) => worksInOffice(G) && (!G.mem?.s63j),
     text: 'The work meeting that lasted two hours contained forty minutes of actual work. Everyone in the meeting knew this. No one said so during the meeting. There is a social contract around meetings that is separate from the practical function of meetings. You have been honoring it for years.',
     choices: null,
     effect: (p) => { p.setMem('s63j', true) },
@@ -107,7 +89,7 @@ export const EVENTS_SONDER_63 = [
     id: 'sonder_63_k',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => !G.mem?.s63k,
+    when: (G) => hasCar(G) && (!G.mem?.s63k),
     text: 'The overnight train had six other passengers in the car. You did not speak to any of them. You arrived at the same destination at the same time with the same night of parallel sleep behind you. You went in six different directions at the station. Whatever they were traveling toward, you did not know, and they did not know yours.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s63k', true) },
@@ -127,7 +109,7 @@ export const EVENTS_SONDER_63 = [
     id: 'sonder_63_m',
     phase: 'late_life',
     weight: 2,
-    when: (G) => !G.mem?.s63m,
+    when: (G) => hasHealthcare(G) && (!G.mem?.s63m),
     text: 'The doctor is younger than your oldest child. The dentist is younger than that. The pharmacist looks like a person who has recently finished a degree. You are in the system now as a patient in a way that is different from before, and the people who manage you in that system are getting progressively younger without doing anything intentional to achieve this.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s63m', true) },
@@ -291,16 +273,6 @@ export const EVENTS_SONDER_63 = [
     text: 'The emotion you cannot name is a compound of at least three things that have words and one thing that doesn\'t. The three that have words are not the primary ingredient. The thing without a word is. You have been carrying it for the length of this year without having a way to set it down because you cannot name what you\'d be setting down.',
     choices: null,
     effect: (p) => { p.m -= 2; p.r += 2; p.setMem('s63ac', true) },
-  },
-
-  {
-    id: 'sonder_63_ad',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => !G.mem?.s63ad,
-    text: 'The city has been changing so long that you can no longer tell the difference between the city changing and the city being what it has always been. Both things are happening. The building that is new has been there for fifteen years, which means it is no longer new but it is still the building that was not there before.',
-    choices: null,
-    effect: (p) => { p.r += 2; p.setMem('s63ad', true) },
   },
 
 ]

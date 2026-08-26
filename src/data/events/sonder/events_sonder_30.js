@@ -2,7 +2,7 @@
 // Contemplative layer: the return of a season, the thing you carry without knowing,
 // the face before mirrors, the argument that ended, small acts witnessed.
 
-import { hasElectricity, isColdCountry } from './_sonderGuards.js'
+import { hasElectricity, isColdCountry, isLiterate } from './_sonderGuards.js'
 
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -138,7 +138,7 @@ export const EVENTS_SONDER_30 = [
     id: 'sdr30_the_handwriting',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 50 && !G.mem?.sdr30Handwriting,
+    when: (G) => isLiterate(G) && (G.age >= 50 && !G.mem?.sdr30Handwriting),
     text: () => pick([
       'You found something written in someone\'s handwriting. Not typed — handwritten, in the particular way their hand moved on paper. The handwriting is more specific than a photograph somehow. You knew immediately whose it was. This is what they looked like holding a pen.',
       'Your own handwriting from twenty years ago: recognisably yours, somewhat different. The letters were formed with more deliberateness then, or with less, depending on the time. The hand changes over decades. The change is too slow to notice directly.',
@@ -302,25 +302,11 @@ export const EVENTS_SONDER_30 = [
     effect: (p) => { p.setMem('sdr30BodyEffort', true) },
   },
 
-  {
-    id: 'sdr30_the_letter_received',
-    phase: null,
-    weight: 2,
-    when: (G) => G.age >= 25 && !G.mem?.sdr30LetterReceived,
-    text: () => pick([
-      'A letter arrived. Not a bill, not an official document — something someone wrote and put in an envelope and addressed to you specifically. The existence of this is rarer than it used to be. You kept it. Most letters you have kept are from a particular era when letters were common.',
-      'Someone wrote you something longer than a message — an email, a letter, a note — that required them to sit with their thoughts about you for long enough to write them down. You read it more than once. Some of what they said was right. Some was not. All of it was theirs.',
-      'You found a letter someone wrote you years ago. You remember receiving it. You do not remember it as precisely as the rereading reminded you. The reading reminded you what was happening then and what they understood about it, which was different from what you understood at the time.',
-    ]),
-    choices: null,
-    effect: (p) => { p.m += 2; p.setMem('sdr30LetterReceived', true) },
-  },
-
-  {
+{
     id: 'sdr30_the_late_sun',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 12 && !G.mem?.sdr30LateSun,
+    when: (G) => G.season === 'summer' && (G.age >= 12 && !G.mem?.sdr30LateSun),
     text: () => pick([
       'The sun in the late afternoon in summer: the shadows getting long, the light getting low and warm, the specific quality of this hour that people have always known and always named. The late-afternoon light is the same everywhere and specific to each place.',
       'A long summer evening when the light simply will not go. The sky has been doing something beautiful for an hour and it is still doing it. You noticed. You will not necessarily remember having noticed. The sky continues.',

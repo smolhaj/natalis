@@ -3,23 +3,15 @@
 // THE BODY AT WORK (9), WAITING (9)
 // All mem-gated, weight 2, no choices, no new flags, minimal stat effects
 
+import { hasFormalJob, hasHealthcare, hasRunningWater, isColdCountry, isLiterate, isMonsoonCountry } from './_sonderGuards.js'
+
 export const EVENTS_SONDER_6 = [
 
   // ─── NIGHT AND SLEEP ──────────────────────────────────────────────────────────
   // What happens in the hours between sleep and waking — the particular quality
   // of night that no one else is awake to witness
 
-  {
-    id: 'sonder6_night_3am',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 30 && G.age <= 55 && !G.mem?.s6Night3am,
-    text: 'Three in the morning and you are awake for no reason you can name. The house is its night-self: different sounds, different quality of dark. You lie still and take inventory of what is worrying you. The inventory is the same one it always is at this hour, just in a different order.',
-    choices: null,
-    effect: (p) => { p.r += 2; p.setMem('s6Night3am', true) },
-  },
-
-  {
+{
     id: 'sonder6_night_child_sleeping',
     phase: 'midlife',
     weight: 2,
@@ -81,17 +73,7 @@ export const EVENTS_SONDER_6 = [
     effect: (p) => { p.r += 2; p.setMem('s6NightWorry', true) },
   },
 
-  {
-    id: 'sonder6_night_city',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => G.ruralUrban === 'urban' && G.age >= 20 && !G.mem?.s6NightCity,
-    text: 'The city at night is a different city. The noise is lower but not gone — a siren somewhere, the particular rumble of a truck on the ring road, the city\'s machinery that does not sleep. You have lived in the city long enough that the night sounds are as familiar as the day sounds. They register as ordinary, which is a kind of belonging.',
-    choices: null,
-    effect: (p) => { p.m += 2; p.setMem('s6NightCity', true) },
-  },
-
-  {
+{
     id: 'sonder6_night_rural',
     phase: 'childhood',
     weight: 2,
@@ -121,9 +103,8 @@ export const EVENTS_SONDER_6 = [
     id: 'sonder6_weather_monsoon',
     phase: 'childhood',
     weight: 2,
-    when: (G) =>
-      ['India', 'Bangladesh', 'Pakistan', 'Nepal', 'Myanmar', 'Thailand', 'Vietnam', 'Cambodia', 'Indonesia', 'Philippines', 'Sri Lanka'].includes(G.character.country?.name) &&
-      !G.mem?.s6WeatherMonsoon,
+    when: (G) => (G.season === 'wet' || isMonsoonCountry(G)) && (['India', 'Bangladesh', 'Pakistan', 'Nepal', 'Myanmar', 'Thailand', 'Vietnam', 'Cambodia', 'Indonesia', 'Philippines', 'Sri Lanka'].includes(G.character.country?.name) &&
+      !G.mem?.s6WeatherMonsoon),
     text: 'June and the monsoon has arrived. The rain comes in sheets and does not stop and does not stop. The smell before the first rain — petrichor, the word you will learn later — is something you will recognise for the rest of your life as the smell of the year beginning again. The streets become rivers. The mango trees are very green.',
     choices: null,
     effect: (p) => { p.m += 3; p.setMem('s6WeatherMonsoon', true) },
@@ -133,9 +114,8 @@ export const EVENTS_SONDER_6 = [
     id: 'sonder6_weather_snow_first',
     phase: 'childhood',
     weight: 2,
-    when: (G) =>
-      ['Russia', 'Ukraine', 'Poland', 'Belarus', 'Kazakhstan', 'Mongolia', 'North Korea', 'China', 'Canada', 'Germany', 'Czech Republic', 'Hungary', 'Romania', 'Serbia'].includes(G.character.country?.name) &&
-      !G.mem?.s6WeatherSnow,
+    when: (G) => isColdCountry(G) && (['Russia', 'Ukraine', 'Poland', 'Belarus', 'Kazakhstan', 'Mongolia', 'North Korea', 'China', 'Canada', 'Germany', 'Czech Republic', 'Hungary', 'Romania', 'Serbia'].includes(G.character.country?.name) &&
+      !G.mem?.s6WeatherSnow),
     text: 'The first snow of the year. You watched from the window as it started — the change in light that came before it, the first flakes tentative. By morning the world is a version of itself with all its edges rounded. You went outside before anyone else and left the first footprints, which felt briefly like a kind of ownership.',
     choices: null,
     effect: (p) => { p.m += 4; p.setMem('s6WeatherSnow', true) },
@@ -233,7 +213,7 @@ export const EVENTS_SONDER_6 = [
     id: 'sonder6_work_first_day_job',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.career?.id && G.age >= 18 && G.age <= 28 && !G.mem?.s6WorkFirstDay,
+    when: (G) => hasRunningWater(G) && (G.career?.id && G.age >= 18 && G.age <= 28 && !G.mem?.s6WorkFirstDay),
     text: 'The first week of the first real job. Everything has a procedure you do not know yet. The bathroom, the key, the way to address the person above you. By the end of the first week you know some of these things and the others you learn by watching, which is the oldest system. You are still mostly performing competence rather than having it. You are not sure yet when that will change.',
     choices: null,
     effect: (p) => { p.e += 2; p.setMem('s6WorkFirstDay', true) },
@@ -296,37 +276,17 @@ export const EVENTS_SONDER_6 = [
     id: 'sonder6_work_last',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 60 && !G.mem?.s6WorkLast,
+    when: (G) => hasFormalJob(G) && (G.age >= 60 && !G.mem?.s6WorkLast),
     text: 'There is a day that will be the last time you do the particular physical thing that has been your life\'s work. You will not know it is the last time when it happens — retirement or incapacity or just the day you stopped. Somewhere in the past, already, you have done this thing for the final time. It is in the past. The hands that did it are these hands.',
     choices: null,
     effect: (p) => { p.r += 4; p.m += 2; p.setMem('s6WorkLast', true) },
   },
 
-  {
-    id: 'sonder6_work_commute',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.ruralUrban === 'urban' && G.career?.id && G.age >= 30 && G.age <= 55 && !G.mem?.s6WorkCommute,
-    text: 'The commute has become a kind of body memory. The timing of the train, the specific pillar you stand next to, the way your body positions itself before the doors open. You have stopped experiencing this as experience. It is simply what happens in the gap between home and work. This is, in its way, a kind of peace.',
-    choices: null,
-    effect: (p) => { p.m += 2; p.setMem('s6WorkCommute', true) },
-  },
-
-  // ─── WAITING ─────────────────────────────────────────────────────────────────
+// ─── WAITING ─────────────────────────────────────────────────────────────────
   // Queues, hospitals, government offices, delays — the texture of time
   // that is someone else's to allocate
 
-  {
-    id: 'sonder6_wait_hospital',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 30 && !G.mem?.s6WaitHospital,
-    text: 'The hospital waiting room. The numbers are called in an order that does not correspond to when you arrived. You have been here two hours. The television in the corner is showing something with the sound off. The person next to you is asleep sitting up, which seems like the correct response. You consider what it is you are worrying about, here, waiting, and whether it is the right thing to be worrying about.',
-    choices: null,
-    effect: (p) => { p.r += 2; p.setMem('s6WaitHospital', true) },
-  },
-
-  {
+{
     id: 'sonder6_wait_government_office',
     phase: 'young_adult',
     weight: 2,
@@ -338,27 +298,7 @@ export const EVENTS_SONDER_6 = [
     effect: (p) => { p.r += 3; p.setMem('s6WaitGovt', true) },
   },
 
-  {
-    id: 'sonder6_wait_queue',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => !G.mem?.s6WaitQueue,
-    text: 'The queue stretches to the corner. You join the back of it. The people ahead of you have their own calculations running — how long this will take, whether what is at the front is worth the time, whether the person who just walked to the front is going to get away with it. Queue etiquette is a theory of fairness. The theory does not always hold.',
-    choices: null,
-    effect: (p) => { p.setMem('s6WaitQueue', true) },
-  },
-
-  {
-    id: 'sonder6_wait_delay',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => G.age >= 20 && !G.mem?.s6WaitDelay,
-    text: 'The train is delayed. No announcement, just the board changing from a time to a dash. You find a seat on the platform bench. Someone beside you is eating something that has a strong smell. The people standing look at their phones. The people sitting look at the track. You are thinking about what you are about to arrive at — the meeting, the appointment, the person — and whether the delay will matter.',
-    choices: null,
-    effect: (p) => { p.setMem('s6WaitDelay', true) },
-  },
-
-  {
+{
     id: 'sonder6_wait_border',
     phase: 'young_adult',
     weight: 2,
@@ -394,7 +334,7 @@ export const EVENTS_SONDER_6 = [
     id: 'sonder6_wait_results',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => G.age >= 14 && G.age <= 19 && !G.mem?.s6WaitResults,
+    when: (G) => isLiterate(G) && (G.age >= 14 && G.age <= 19 && !G.mem?.s6WaitResults),
     text: 'Exam results. You know them or you don\'t; the knowing is in the envelope or on the board and you are not there yet. What you feel in this interval is not suspense but the specific weight of consequence — the understanding that what is about to be revealed will shape what comes next in ways you cannot yet see and cannot prevent.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s6WaitResults', true) },
@@ -404,7 +344,7 @@ export const EVENTS_SONDER_6 = [
     id: 'sonder6_wait_late_life',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 62 && !G.mem?.s6WaitLate,
+    when: (G) => hasHealthcare(G) && (G.age >= 62 && !G.mem?.s6WaitLate),
     text: 'There is more waiting now than there was. The doctor\'s appointment. The test results. The letter that takes three weeks. You have waited through your whole life — queues, hospitals, news, outcomes — but the waiting of late life has a different quality: you know more of what you are waiting for, and you know that some of what you are waiting for cannot be waited away.',
     choices: null,
     effect: (p) => { p.r += 4; p.m += 2; p.setMem('s6WaitLate', true) },

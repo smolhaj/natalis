@@ -4,6 +4,8 @@
 // the newspaper as archaeological layer, illness in someone else's body,
 // the specific light of childhood, what you didn't say when you could.
 
+import { isLiterate } from './_sonderGuards.js'
+
 export const EVENTS_SONDER_37 = [
 
   {
@@ -30,7 +32,7 @@ export const EVENTS_SONDER_37 = [
     id: 'sonder_37_c',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 55 && !G.mem?.s37c,
+    when: (G) => isLiterate(G) && (G.age >= 55 && !G.mem?.s37c),
     text: 'An old newspaper: the advertisements for things that no longer exist, the headlines that were the crisis at the time and are now a footnote or are not in any index, the crossword someone filled in in pencil. The newspaper is an archaeological layer. You hold it and it is simultaneously very specific — this particular Tuesday — and very distant.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s37c', true) },
@@ -70,23 +72,13 @@ export const EVENTS_SONDER_37 = [
     id: 'sonder_37_g',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => !G.mem?.s37g,
+    when: (G) => G.season === 'winter' && (!G.mem?.s37g),
     text: 'The plant in the window that you have kept alive for three years has died. You don\'t know why. You have done nothing differently. The plant and you have been through the same winters and summers and the plant has not survived whatever this winter was. You are disproportionately sad about this and you know you are disproportionate and you are sad anyway.',
     choices: null,
     effect: (p) => { p.m -= 1; p.setMem('s37g', true) },
   },
 
-  {
-    id: 'sonder_37_h',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => !G.mem?.s37h,
-    text: 'The smell of rain on dry earth. The name for it is petrichor, which is a word most people learned much later than the smell. The smell was there before the word. You know it as a bodily thing, as something the nose knows before the brain categorizes it. It means something different in different climates: the specific relief of the first rain of the dry season is not the same smell as the smell of rain on a July sidewalk.',
-    choices: null,
-    effect: (p) => { p.m += 2; p.setMem('s37h', true) },
-  },
-
-  {
+{
     id: 'sonder_37_i',
     phase: 'young_adult',
     weight: 2,
@@ -96,17 +88,7 @@ export const EVENTS_SONDER_37 = [
     effect: (p) => { p.setMem('s37i', true) },
   },
 
-  {
-    id: 'sonder_37_j',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => !G.mem?.s37j,
-    text: 'The friend from a long time ago whose name comes up and you realise you have not thought of them in years. The realisation includes the slightly guilty calculation of whether that means something about the friendship. It doesn\'t mean anything specific. Attention moves. The memory is still available — specific moments, the sound of their voice — just not visited.',
-    choices: null,
-    effect: (p) => { p.setMem('s37j', true) },
-  },
-
-  {
+{
     id: 'sonder_37_k',
     phase: 'late_life',
     weight: 2,
@@ -150,7 +132,7 @@ export const EVENTS_SONDER_37 = [
     id: 'sonder_37_o',
     phase: 'midlife',
     weight: 2,
-    when: (G) => !G.mem?.s37o,
+    when: (G) => isLiterate(G) && (!G.mem?.s37o),
     text: 'You have kept a piece of paper for years without being able to articulate why. The paper has something on it — a calculation, an address, a few words in handwriting — that has seemed important each time you have been about to throw it away. You have not thrown it away. It is in the drawer with the other things you have not thrown away.',
     choices: null,
     effect: (p) => { p.setMem('s37o', true) },
@@ -300,7 +282,7 @@ export const EVENTS_SONDER_37 = [
     id: 'sonder_37_ad',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 60 && !G.mem?.s37ad,
+    when: (G) => G.season === 'winter' && (G.age >= 60 && !G.mem?.s37ad),
     text: 'The garden in November: the things that died back, the things that will return, the things you are not sure about. The gardener\'s knowledge is different from other knowledge: it requires the winter to remain visible as what it is — not failure but the condition for what comes next. You know this. The knowing helps and does not help.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s37ad', true) },

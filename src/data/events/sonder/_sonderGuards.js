@@ -107,3 +107,55 @@ export const isMonsoonCountry = (G) => MONSOON_COUNTRIES.includes(G.currentCount
 // The tropics and the Sahel: heat as a governing fact rather than a season.
 export const isHotCountry = (G) =>
   ['subsaharan', 'wealthy_gulf'].includes(G.archetype) || isMonsoonCountry(G)
+
+// ── Institutions, goods, and time that are not universal ─────────────────────
+// A hospital, a named diagnosis, an appointment at an hour.
+export const hasHealthcare = (G) =>
+  isRich(G) ? G.currentYear >= 1930
+    : isUrban(G) ? G.currentYear >= 1965
+      : G.currentYear >= 1990
+
+// A wage, a payslip, a promotion, a pension: the formal-employment life.
+export const hasFormalJob = (G) => !!G.career && G.currentYear >= 1920
+
+// Rent, a landlord, a lease — a housing market rather than a family compound.
+export const hasHousingMarket = (G) =>
+  isUrban(G) && G.currentYear >= (isRich(G) ? 1930 : 1975)
+
+export const hasLeisureTravel = (G) =>
+  G.wealthTier >= 3 && G.currentYear >= (isRich(G) ? 1955 : 1990)
+
+// Books in the house, a library card, a novel read for its own sake.
+export const hasBooks = (G) =>
+  G.literate !== false && (isRich(G) ? G.currentYear >= 1920 : G.currentYear >= 1960)
+
+// Eating a meal you did not cook, in a room built for the purpose.
+export const hasCafe = (G) => isUrban(G) && G.wealthTier >= 2
+
+// A room, or a dwelling, that belongs to you alone.
+export const hasOwnRoom = (G) => isUrban(G) && G.wealthTier >= 2
+
+// A bus: municipal transport on a timetable.
+export const hasBus = (G) =>
+  isUrban(G) && G.currentYear >= (isRich(G) ? 1925 : 1955)
+
+// A clock in the house, and the habit of consulting it.
+export const hasClock = (G) =>
+  isRich(G) ? G.currentYear >= 1900
+    : isUrban(G) ? G.currentYear >= 1930
+      : G.currentYear >= 1960
+
+// The weekend as a unit of time — an industrial invention, not a human constant.
+export const hasWeekend = (G) =>
+  !!G.career && G.currentYear >= (isRich(G) ? 1930 : 1970)
+
+// An afternoon with nothing required of it. Not available to everyone.
+export const hasLeisure = (G) => G.wealthTier >= 2 && !G.inPrison
+
+// A photograph of your own childhood is not a human constant. Cameras reached
+// households in the West between the wars, most cities by the 1950s, and much
+// of the countryside only once film was cheap.
+export const hasPhotographs = (G) =>
+  isRich(G) ? G.currentYear >= 1925
+    : isUrban(G) ? G.currentYear >= 1950
+      : G.currentYear >= 1970

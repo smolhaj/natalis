@@ -1,5 +1,7 @@
 // events_sonder_56.js — contemplative layer, weight 2, all mem-gated
 
+import { hasBooks, hasElectricity, isUrban, wentToSchool } from './_sonderGuards.js'
+
 export const EVENTS_SONDER_56 = [
 
   {
@@ -16,7 +18,7 @@ export const EVENTS_SONDER_56 = [
     id: 'sonder_56_b',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 55 && !G.mem?.s56b,
+    when: (G) => hasElectricity(G) && (G.age >= 55 && !G.mem?.s56b),
     text: 'The noise of a city at four in the morning — reduced to its constituent parts: the distant truck, the one lit window, the bird that has the time wrong. You are awake for no reason and the city is almost legible in a way it is not when it is full.',
     choices: null,
     effect: (p) => { p.setMem('s56b', true) },
@@ -56,23 +58,13 @@ export const EVENTS_SONDER_56 = [
     id: 'sonder_56_f',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 24 && G.age <= 32 && !G.mem?.s56f,
+    when: (G) => isUrban(G) && (G.age >= 24 && G.age <= 32 && !G.mem?.s56f),
     text: 'The apartment is the right size for a person who has not yet accumulated things. You do not think of it as insufficient. You will remember it later as the period of the right-sized life.',
     choices: null,
     effect: (p) => { p.setMem('s56f', true) },
   },
 
-  {
-    id: 'sonder_56_g',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => G.age >= 60 && !G.mem?.s56g,
-    text: 'The friend who moved away and stayed away. You exchange messages at significant intervals — birthdays, deaths, large things. The friendship is preserved in amber. You are not sure it is still friendship in the operating sense. You are not sure this matters.',
-    choices: null,
-    effect: (p) => { p.setMem('s56g', true) },
-  },
-
-  {
+{
     id: 'sonder_56_h',
     phase: 'midlife',
     weight: 2,
@@ -86,7 +78,7 @@ export const EVENTS_SONDER_56 = [
     id: 'sonder_56_i',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => G.age >= 14 && G.age <= 17 && !G.mem?.s56i,
+    when: (G) => wentToSchool(G) && (G.age >= 14 && G.age <= 17 && !G.mem?.s56i),
     text: 'There is a person at school who has noticed you in a way that has changed the texture of every day. You are not sure they know they have done this. You are not sure you could explain it.',
     choices: null,
     effect: (p) => { p.setMem('s56i', true) },
@@ -126,23 +118,13 @@ export const EVENTS_SONDER_56 = [
     id: 'sonder_56_m',
     phase: 'childhood',
     weight: 2,
-    when: (G) => G.age >= 7 && G.age <= 12 && !G.mem?.s56m,
+    when: (G) => hasElectricity(G) && (G.age >= 7 && G.age <= 12 && !G.mem?.s56m),
     text: 'The sound of a particular house at night: the pipes, the particular creak, the way the refrigerator hums. These are sounds you will be able to reproduce in your mind thirty years later with perfect fidelity, though you will not know you remember them until you hear something similar.',
     choices: null,
     effect: (p) => { p.setMem('s56m', true) },
   },
 
-  {
-    id: 'sonder_56_n',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 45 && G.age <= 58 && !G.mem?.s56n,
-    text: 'You stop mid-sentence because you cannot find the word. Not a complex word — a common one. The word returns in thirty seconds but the thirty seconds is new, and you note it.',
-    choices: null,
-    effect: (p) => { p.setMem('s56n', true) },
-  },
-
-  {
+{
     id: 'sonder_56_o',
     phase: 'young_adult',
     weight: 2,
@@ -166,7 +148,7 @@ export const EVENTS_SONDER_56 = [
     id: 'sonder_56_q',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 36 && G.age <= 48 && !G.mem?.s56q,
+    when: (G) => hasBooks(G) && (G.age >= 36 && G.age <= 48 && !G.mem?.s56q),
     text: 'A stranger on a train is reading the same book you read at twenty-three. The book changed something for you. The stranger is on the page where you remember being changed. You do not speak. You watch them turn the page.',
     choices: null,
     effect: (p) => { p.setMem('s56q', true) },
@@ -182,17 +164,7 @@ export const EVENTS_SONDER_56 = [
     effect: (p) => { p.setMem('s56r', true) },
   },
 
-  {
-    id: 'sonder_56_s',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 44 && !G.mem?.s56s,
-    text: 'The colleague who knows all the same things you know, who has been at the desk beside yours for seven years. You have had the same conversation about the same problem more times than you can count. This is what most of a working life is. This is not diminished by being most of it.',
-    choices: null,
-    effect: (p) => { p.setMem('s56s', true) },
-  },
-
-  {
+{
     id: 'sonder_56_t',
     phase: 'late_life',
     weight: 2,
@@ -212,37 +184,17 @@ export const EVENTS_SONDER_56 = [
     effect: (p) => { p.setMem('s56u', true) },
   },
 
-  {
-    id: 'sonder_56_v',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 40 && G.age <= 50 && !G.mem?.s56v,
-    text: 'You have started doing the thing your parent did — the gesture, the phrase, the particular way of reacting to difficulty — without any decision to do it. It arrived on its own. You are not sure whether to be unsettled or reassured.',
-    choices: null,
-    effect: (p) => { p.setMem('s56v', true) },
-  },
-
-  {
+{
     id: 'sonder_56_w',
     phase: 'childhood',
     weight: 2,
-    when: (G) => G.age >= 9 && G.age <= 13 && !G.mem?.s56w,
+    when: (G) => hasBooks(G) && (G.age >= 9 && G.age <= 13 && !G.mem?.s56w),
     text: 'The book you find in the house that is for adults — not forbidden, just not yours — and read in the gap between what it was written for and what you make of it at eleven. The making is partial. The partial is still an opening.',
     choices: null,
     effect: (p) => { p.e += 2; p.setMem('s56w', true) },
   },
 
-  {
-    id: 'sonder_56_x',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => G.age >= 62 && !G.mem?.s56x,
-    text: 'Someone shows you a photograph you are in but do not remember being taken. The person you are in the photograph is younger, thinner, holding something you no longer own, standing somewhere you can now only approximately place. You are in it. It is not you.',
-    choices: null,
-    effect: (p) => { p.r += 3; p.setMem('s56x', true) },
-  },
-
-  {
+{
     id: 'sonder_56_y',
     phase: 'midlife',
     weight: 2,
@@ -272,17 +224,7 @@ export const EVENTS_SONDER_56 = [
     effect: (p) => { p.m += 3; p.setMem('s56aa', true) },
   },
 
-  {
-    id: 'sonder_56_ab',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 48 && !G.mem?.s56ab,
-    text: 'The habit you broke ten years ago that you find yourself almost performing today — the old reach for the cigarette, the drink, the particular coping — and then do not perform. The not-performing is not easy. It is easier than it was. The gap between the two is the decade.',
-    choices: null,
-    effect: (p) => { p.m += 2; p.setMem('s56ab', true) },
-  },
-
-  {
+{
     id: 'sonder_56_ac',
     phase: 'young_adult',
     weight: 2,

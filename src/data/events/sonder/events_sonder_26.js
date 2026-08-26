@@ -5,6 +5,8 @@
 // the animal at the edge of the day, the long friendship, and the hours no one sees.
 // Weight 2, mem-gated, no choices, no new flags.
 
+import { hasBooks, hasElectricity, hasHealthcare, hasMetro, hasPhone, hasPhotographs, isLiterate, isRural, wentToSchool } from './_sonderGuards.js'
+
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
 export const EVENTS_SONDER_26 = [
@@ -15,7 +17,7 @@ export const EVENTS_SONDER_26 = [
     id: 'sdr26_queue_number',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 20 && !G.mem?.sdr26QueueNumber,
+    when: (G) => isLiterate(G) && (G.age >= 20 && !G.mem?.sdr26QueueNumber),
     text: () => pick([
       'You take a number from the machine and find a seat and watch the numbers on the board. The number you hold is higher than you hoped. There is nothing to do but wait. You watch the other people with their numbers doing the same watching. The room has the specific stillness of a shared waiting that no one chose.',
       'The form asks for things you have to look up: the account number from a document at home, the date of an event you did not think you would need to remember exactly. You fill in what you know and leave a blank and hope the blank will not be the thing that sends it back.',
@@ -28,7 +30,7 @@ export const EVENTS_SONDER_26 = [
     id: 'sdr26_official_window',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 18 && !G.mem?.sdr26OfficialWindow,
+    when: (G) => isLiterate(G) && (G.age >= 18 && !G.mem?.sdr26OfficialWindow),
     text: () => pick([
       'The official behind the window has seen this form many times. You can tell. The way they handle it — the specific economy of where they place the stamp, the pause before they sign — is the movement of someone who has done this enough times that the form no longer has information in it, only procedure.',
       'You explain the situation for the second time. The person you are explaining it to is the third person you have explained it to. The situation is not complicated. The path through the system to handle it, however, was not designed for situations like it, and so it keeps arriving at a wall.',
@@ -41,7 +43,7 @@ export const EVENTS_SONDER_26 = [
     id: 'sdr26_expired_document',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 25 && !G.mem?.sdr26ExpiredDoc,
+    when: (G) => isLiterate(G) && (G.age >= 25 && !G.mem?.sdr26ExpiredDoc),
     text: () => pick([
       'The document is expired by a month. A month is nothing. A month is also exactly what the system requires to be there in order to count. You are ushered back with instructions on how to renew it. The instructions involve other documents.',
       'The stamp in the passport is from a country that no longer uses that name. Whether the stamp is still valid is a question that different officials have answered differently, and you have learned to present it to officials who look like they prefer to say yes.',
@@ -56,7 +58,7 @@ export const EVENTS_SONDER_26 = [
     id: 'sdr26_bus_long_route',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 14 && !G.mem?.sdr26BusLong,
+    when: (G) => hasPhone(G) && (G.age >= 14 && !G.mem?.sdr26BusLong),
     text: () => pick([
       'The long bus is the one you take when there is no faster way. An hour, sometimes more. You know the route well enough to know when to look up: the market district, the bridge with the view, the place where the road passes close enough to the river to see it. The rest of the time you watch the other passengers or look at nothing.',
       'A woman near the front of the bus is on the phone for the entire journey. You have learned, without intending to, that her sister is getting married and the venue is not what anyone wanted and the dress alterations are not finished. You know this family. They do not know you.',
@@ -69,7 +71,7 @@ export const EVENTS_SONDER_26 = [
     id: 'sdr26_train_carriage',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 16 && !G.mem?.sdr26TrainCarriage,
+    when: (G) => hasMetro(G) && (G.age >= 16 && !G.mem?.sdr26TrainCarriage),
     text: () => pick([
       'The overnight train. You share the compartment with three people you will never see again. By morning you have not spoken a full sentence to any of them, but you know their sleeping sounds, the way one of them reaches for water at 2am, the particular weight of the silence at the station stop where two of them get off and the compartment is suddenly mostly yours.',
       'The metro at rush hour: the specific negotiation of space, the unspoken etiquette of where the eyes go, the moment a seat opens and the calculation — visible on three faces — of who is nearest, who is most entitled, who will move for it. Most of the time people get this right without speaking.',
@@ -110,7 +112,7 @@ export const EVENTS_SONDER_26 = [
     id: 'sdr26_return_smell',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 22 && !G.mem?.sdr26ReturnSmell,
+    when: (G) => isRural(G) && (G.age >= 22 && !G.mem?.sdr26ReturnSmell),
     text: () => pick([
       'Before you know where you are — before you have made sense of the light or the sounds — there is the smell of the place. Something specific: the wood of the staircase, the specific dampness of the soil after rain here, the cooking from next door. Memory is faster through that channel than through any other.',
       'You have been back many times. Each return is less of a return — the gap between the place and the memory has closed, the two now closer to the same thing. This is either a loss or a kind of integration. You have not decided which.',
@@ -151,7 +153,7 @@ export const EVENTS_SONDER_26 = [
     id: 'sdr26_reading_glasses',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 42 && !G.mem?.sdr26ReadingGlasses,
+    when: (G) => hasBooks(G) && (G.age >= 42 && !G.mem?.sdr26ReadingGlasses),
     text: () => pick([
       'The small print is where it started. The menu at arm\'s length, then a bit further. The optician explains the word for it — the focusing muscle loses elasticity at a predictable rate — and gives you lenses for reading. You carry them now the way people carry keys. They are just something you need.',
       'You find a pair of glasses on the counter and put them on to read something and the text comes clear and you have to think for a moment about whether these are yours. They are. This is how integrated they have become.',
@@ -207,7 +209,7 @@ export const EVENTS_SONDER_26 = [
     id: 'sdr26_hospital_light',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 18 && !G.mem?.sdr26HospitalLight,
+    when: (G) => hasHealthcare(G) && (G.age >= 18 && !G.mem?.sdr26HospitalLight),
     text: () => pick([
       'Hospitals have their own light — a fluorescent quality that is neither day nor night, that makes the hour ambiguous and flattens everything. You have been here enough times to recognise the light before you remember where you are. It is the light of waiting and of not knowing, and it is the same in hospitals everywhere you have been.',
       'The corridor between the wards. The squeak of shoes on the linoleum. The particular trolley sound. A specific smell — the antiseptic, the meals trolley, something chemical beneath both. The body recognises hospital as a category before the mind processes the specifics. You are here again.',
@@ -220,7 +222,7 @@ export const EVENTS_SONDER_26 = [
     id: 'sdr26_school_building_again',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 28 && !G.mem?.sdr26SchoolBuildingAgain,
+    when: (G) => wentToSchool(G) && (G.age >= 28 && !G.mem?.sdr26SchoolBuildingAgain),
     text: () => pick([
       'You are in a school building — for a child\'s event, for some other reason — and the smell is the same smell. The wooden floors, the chalk-dust residue even in rooms that haven\'t used chalk in years, the particular acoustic of a corridor. You are in this building now and also briefly, involuntarily, in the other one.',
       'The chairs in the school hall are the same design as the chairs in the school hall of the school you attended. The same design, possibly the same chairs. Thirty years of children have sat in them and they are still making the same sound on the floor.',
@@ -291,7 +293,7 @@ export const EVENTS_SONDER_26 = [
     id: 'sdr26_late_alone',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 18 && !G.mem?.sdr26LateAlone,
+    when: (G) => hasElectricity(G) && (G.age >= 18 && !G.mem?.sdr26LateAlone),
     text: () => pick([
       'The hour after everyone else is asleep belongs to you in a way that other hours do not. You do not always use it for anything. Sometimes you sit in it. The house makes its own sounds in this hour — settling, the refrigerator cycling, the heating adjusting to the drop in temperature. You know all of them.',
       'An hour of doing nothing in particular: not resting, not working, not waiting for something. Just — the afternoon moving through the window, the sounds from outside, your own thoughts going where they go. Nothing is required of you in this hour. This is rarer than it sounds.',
@@ -333,7 +335,7 @@ export const EVENTS_SONDER_26 = [
     id: 'sdr26_old_paper',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 28 && !G.mem?.sdr26OldPaper,
+    when: (G) => isLiterate(G) && (G.age >= 28 && !G.mem?.sdr26OldPaper),
     text: () => pick([
       'An envelope of old documents: a birth certificate, a letter in a handwriting you don\'t recognise, a photograph of people you can mostly identify. The paper is a specific weight that new paper is not — the compressed time of it, the fact that it has survived. Someone kept it. You keep it.',
       'The certificate is yellowed at the edges and signed by an official whose name means nothing to you now. But it names a date and a place and a relationship, and the naming still works — the information still transfers across the distance between then and now.',
@@ -346,7 +348,7 @@ export const EVENTS_SONDER_26 = [
     id: 'sdr26_id_photo',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 20 && !G.mem?.sdr26IdPhoto,
+    when: (G) => hasPhotographs(G) && (G.age >= 20 && !G.mem?.sdr26IdPhoto),
     text: () => pick([
       'The photograph in the identity document is from some years ago. You do not look like that anymore. The official looks at the photograph and looks at you and makes the adjustment mentally and you both proceed. This happens every time.',
       'The old passport. You go through it: the stamps from a decade of movement, some of them from countries that have since changed. The visa that took three months to get. The entry stamp from the country you were most nervous about entering. A small archive of past thresholds.',

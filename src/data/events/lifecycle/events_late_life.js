@@ -772,7 +772,7 @@ export const LATE_LIFE_EVENTS = [
       G.flags.includes('faith_deepened') &&
       G.age >= 68 &&
       G.stats.health < 50,
-    text: 'The doctor outlines the treatment. You listen to the whole of it. Then you tell him that you will not be doing it. He asks if you have understood the prognosis. You tell him that you have. He asks if there is someone he can speak to. You tell him that you are the someone. He does not argue further. You walk out into an afternoon that is very ordinary and very bright.',
+    text: 'The doctor goes through the whole of it, the cycles and the percentages and the two weeks in three you would spend feeling as though you had been poisoned, which you would have been. You tell him you will not be doing it. He asks whether there is someone he can speak to, and you tell him that you are the someone. He writes something and does not argue, and you go out into an afternoon that is very ordinary and very bright.',
     choices: [
       {
         text: 'Hold the decision',
@@ -1108,7 +1108,7 @@ export const LATE_LIFE_EVENTS = [
     when: (G) =>
       G.age >= 78 &&
       !G.mem?.elder_obsolescence,
-    text: 'The specific kind of knowledge you hold — accumulated over decades, tested, refined — has been displaced in ways that are difficult to argue with. Not replaced: the knowledge is still correct. But the world no longer needs it in the form you hold it. The young people around you are not wrong in what they know. You are not wrong in what you know. The two things no longer connect. This is the particular obsolescence that comes for everyone eventually, and it has arrived for you.',
+    text: 'The young technician asks you to move so he can get at the panel, politely, the way you would move a chair. You could tell him what that machine sounded like in 1978 when it was about to go, and he would listen, and it would not be useful to him. Nothing you know is wrong. There is simply no longer anywhere to put it down.',
     choices: null,
     effect: (p) => { p.m -= 8; p.r += 10; p.setMem('elder_obsolescence', true); p.addFlag('elder_obsolete'); },
   },

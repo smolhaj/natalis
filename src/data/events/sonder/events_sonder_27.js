@@ -6,6 +6,8 @@
 // not taken, and the body becoming a record.
 // Weight 2, mem-gated, no choices, no new flags.
 
+import { hasFormalJob, hasPhotographs, isLiterate } from './_sonderGuards.js'
+
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
 export const EVENTS_SONDER_27 = [
@@ -16,7 +18,7 @@ export const EVENTS_SONDER_27 = [
     id: 'sdr27_faith_habit',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 25 && !G.mem?.sdr27FaithHabit,
+    when: (G) => !['secular', 'atheist'].includes(G.religion) && (G.age >= 25 && !G.mem?.sdr27FaithHabit),
     text: () => pick([
       'You light the candle or say the prayer or make the gesture that your family made before you, and what you believe while doing it is complicated and not what you were told to believe, but the doing of it is something. Not performance — something closer to continuity. You are keeping the form while the content inside it does its own slower work.',
       'The fast is kept the way it has always been kept — hunger as a discipline, as a reminder, as something that connects you to a longer sequence of people who did the same thing in the same calendar position. What you think about God while fasting is not the same as what you thought at fourteen. The fast remains.',
@@ -29,7 +31,7 @@ export const EVENTS_SONDER_27 = [
     id: 'sdr27_prayer_in_crisis',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 20 && !G.mem?.sdr27PrayerCrisis,
+    when: (G) => !['secular', 'atheist'].includes(G.religion) && (G.age >= 20 && !G.mem?.sdr27PrayerCrisis),
     text: () => pick([
       'In the worst of it you pray. Whether you believe in the specific efficacy of praying to the specific entity you are praying to is a question for a time when the worst is over. Right now you are doing what the body knows to do when the situation is beyond what the mind can hold.',
       'You are not sure you believe. You find yourself in an attitude of prayer anyway — not at the designated times, not in the designated way, but in the car or in the corridor outside the hospital room. The gesture is available when you need it. The theology is a later question.',
@@ -72,7 +74,7 @@ export const EVENTS_SONDER_27 = [
     id: 'sdr27_peer_age',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 40 && !G.mem?.sdr27PeerAge,
+    when: (G) => hasPhotographs(G) && (G.age >= 40 && !G.mem?.sdr27PeerAge),
     text: () => pick([
       'An old friend, someone you have known since you were both young, and the face is the face you know but it has done things over the decades that faces do. You are seeing your own age in theirs — which is a more legible version of a thing that is harder to see in the mirror, which shows you only the one angle.',
       'A photograph from a reunion, a gathering, an event where the people you grew up with are all in the same room. The photograph lands differently than the event did. In the photograph you can see all of you at once, see what has happened to all of those faces, see your own face in the company of the others. It takes a moment.',
@@ -116,7 +118,7 @@ export const EVENTS_SONDER_27 = [
     id: 'sdr27_object_outlives',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 55 && !G.mem?.sdr27ObjectOutlives,
+    when: (G) => isLiterate(G) && (G.age >= 55 && !G.mem?.sdr27ObjectOutlives),
     text: () => pick([
       'The objects will outlive you. This is normal and always has been — the furniture, the photographs, the books with your handwriting in the margins. They will exist in a room after you no longer do. Someone will decide what to keep and what to let go. The choosing is a form of interpretation. You do not get to supervise it.',
       'You are thinking about what to do with the things that matter. Not practically — practically is understood — but what they will mean to whoever receives them, whether the meaning is transferable, whether the object carries the history or only carries the physical form of it. The second option is more likely. This is not a tragedy. It is the nature of objects.',
@@ -146,7 +148,7 @@ export const EVENTS_SONDER_27 = [
     id: 'sdr27_career_end_approaching',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.career && G.age >= 58 && !G.mem?.sdr27CareerEndApproach,
+    when: (G) => hasFormalJob(G) && (G.career && G.age >= 58 && !G.mem?.sdr27CareerEndApproach),
     text: () => pick([
       'The retirement is approaching in the way that things you have not quite looked at directly approach — visible in the peripheral vision for some time before you turn toward them. A number of years. A date. A conversation with HR that has to happen. The work that has been the structure of most of your waking hours will end, and what will fill that structure is not yet established.',
       'New people are coming into the field with knowledge you do not have and approaches you find interesting and sometimes baffling. You are one of the experienced people now. The balance of what you give and receive has shifted over a career in the way that careers shift. The end of the career is visible.',
@@ -205,7 +207,7 @@ export const EVENTS_SONDER_27 = [
     id: 'sdr27_no_photo',
     phase: null,
     weight: 2,
-    when: (G) => G.age >= 25 && !G.mem?.sdr27NoPhoto,
+    when: (G) => hasPhotographs(G) && (G.age >= 25 && !G.mem?.sdr27NoPhoto),
     text: () => pick([
       'The moment you didn\'t photograph. The light, the arrangement, the face — all of it was there and you were there and you didn\'t take the photograph because you were in it too completely to step outside it for the picture. The moment is gone. The memory is there and is not the same as the photograph would have been, which is the reason you didn\'t take it.',
       'The photograph you wish you had: a specific moment from years ago, before the phone was the camera was always in your pocket. The moment exists clearly in memory and is losing definition around the edges the way all memories do without a photograph to anchor them. You remember the room and the people and less and less of the specific detail.',
@@ -261,35 +263,9 @@ export const EVENTS_SONDER_27 = [
 
   // ── THE NIGHT OF BAD SLEEP ────────────────────────────────────────────────────
 
-  {
-    id: 'sdr27_bad_sleep_night',
-    phase: null,
-    weight: 2,
-    when: (G) => G.age >= 20 && !G.mem?.sdr27BadSleepNight,
-    text: () => pick([
-      'The 3am interval when the mind reverses direction and starts moving toward something that isn\'t fear exactly but is something adjacent — a low-grade audit of everything, a revisitation of things that were fine in the afternoon and are not fine at 3am. You lie still and wait for it to pass. It passes. The morning arrives and the audit results in daylight are different.',
-      'Awake at a time when being awake has no useful purpose. The house is asleep. The street is nearly empty. The quality of this hour — the specific silence that is not the same as daytime silence — is something you have become familiar with. You are learning its topography without intending to.',
-    ]),
-    choices: null,
-    effect: (p) => { p.setMem('sdr27BadSleepNight', true) },
-  },
+// ── STRANGER GLIMPSES ─────────────────────────────────────────────────────────
 
-  // ── STRANGER GLIMPSES ─────────────────────────────────────────────────────────
-
-  {
-    id: 'sdr27_window_across',
-    phase: null,
-    weight: 2,
-    when: (G) => G.ruralUrban === 'urban' && G.age >= 18 && !G.mem?.sdr27WindowAcross,
-    text: () => pick([
-      'The window across the street: a woman at a table, moving papers, looking at something you can\'t see. She has been there a while. You have been aware of her in the peripheral way you are aware of the lit window without attending to it. For a moment you attend to it. Then you return to your own room.',
-      'The lit apartment above yours: movement visible through the ceiling, footsteps, a chair moving, a conversation whose words don\'t reach you, only the rhythm. Someone is up there living whatever they are living. It is completely mundane and you have no access to it and this is the definition of something.',
-    ]),
-    choices: null,
-    effect: (p) => { p.setMem('sdr27WindowAcross', true) },
-  },
-
-  {
+{
     id: 'sdr27_old_couple',
     phase: null,
     weight: 2,

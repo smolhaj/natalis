@@ -1,19 +1,11 @@
 // events_sonder_42.js
 // Contemplative layer — 30 mem-gated glimpses.
 
+import { hasCafe, hasPhotographs, isLiterate } from './_sonderGuards.js'
+
 export const EVENTS_SONDER_42 = [
 
-  {
-    id: 'sonder_42_a',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => G.age >= 60 && !G.mem?.s42a,
-    text: 'The word in your language for the particular quality of light in the late afternoon of autumn. Other languages have words for other things you have no word for. You have lived inside this light and this word your whole life without noticing that not everyone has it.',
-    choices: null,
-    effect: (p) => { p.m += 2; p.setMem('s42a', true) },
-  },
-
-  {
+{
     id: 'sonder_42_b',
     phase: 'midlife',
     weight: 2,
@@ -37,7 +29,7 @@ export const EVENTS_SONDER_42 = [
     id: 'sonder_42_d',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 38 && !G.mem?.s42d,
+    when: (G) => isLiterate(G) && (G.age >= 38 && !G.mem?.s42d),
     text: 'The newspaper you have been reading since your twenties has changed. Not all at once — over years. The tone, the assumptions it makes about who is reading it, what it considers worth reporting. You are not sure whether it changed or you did. Both is probably right. The relationship with a newspaper is longer than most relationships.',
     choices: null,
     effect: (p) => { p.setMem('s42d', true) },
@@ -67,7 +59,7 @@ export const EVENTS_SONDER_42 = [
     id: 'sonder_42_g',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 20 && !G.mem?.s42g,
+    when: (G) => hasCafe(G) && (G.age >= 20 && !G.mem?.s42g),
     text: 'The meal that cost more than you can afford. You are in a restaurant and you ordered wrong and you are sitting with the number, calculating, and what you feel is not quite regret and not quite pleasure: something between the two, the feeling of having spent what you should not, and having eaten well.',
     choices: null,
     effect: (p) => { p.setMem('s42g', true) },
@@ -107,7 +99,7 @@ export const EVENTS_SONDER_42 = [
     id: 'sonder_42_k',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 40 && !G.mem?.s42k,
+    when: (G) => hasCafe(G) && (G.age >= 40 && !G.mem?.s42k),
     text: 'You see a couple arguing quietly in a restaurant. You cannot hear the words. The body language is legible: the angle of the shoulder, the eye that won\'t hold the other\'s eye. You have been inside that conversation. You recognise it from the outside with the same precision.',
     choices: null,
     effect: (p) => { p.setMem('s42k', true) },
@@ -147,7 +139,7 @@ export const EVENTS_SONDER_42 = [
     id: 'sonder_42_o',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 30 && !G.mem?.s42o,
+    when: (G) => hasPhotographs(G) && (G.age >= 30 && !G.mem?.s42o),
     text: 'The photo from a party you barely remember. You are in it, clearly happy, with people whose names you have to work to recall. The happiness in the photograph is real — you can see it. The event has not survived as memory. The evidence of your having been happy at it is in the photograph and nowhere else.',
     choices: null,
     effect: (p) => { p.setMem('s42o', true) },
@@ -173,17 +165,7 @@ export const EVENTS_SONDER_42 = [
     effect: (p) => { p.m += 2; p.setMem('s42q', true) },
   },
 
-  {
-    id: 'sonder_42_r',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 38 && !G.mem?.s42r,
-    text: 'The colleague who left the job three years ago. You have not kept in touch. You thought you would. In the moment of leaving the contact information was exchanged, the intention was genuine. The intention did not convert into the action. You see their name occasionally in a professional context. Something is resolved and something is incomplete.',
-    choices: null,
-    effect: (p) => { p.setMem('s42r', true) },
-  },
-
-  {
+{
     id: 'sonder_42_s',
     phase: 'childhood',
     weight: 2,
@@ -193,17 +175,7 @@ export const EVENTS_SONDER_42 = [
     effect: (p) => { p.s += 2; p.setMem('s42s', true) },
   },
 
-  {
-    id: 'sonder_42_t',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 35 && !G.mem?.s42t,
-    text: 'The street you have walked down so many times that you walk it without seeing it. Then one day something is different — a shop has closed, a new one opened, a building is being torn down — and the street appears again, fully visible, a thing that has been changing while you were not watching.',
-    choices: null,
-    effect: (p) => { p.setMem('s42t', true) },
-  },
-
-  {
+{
     id: 'sonder_42_u',
     phase: 'young_adult',
     weight: 2,
@@ -233,17 +205,7 @@ export const EVENTS_SONDER_42 = [
     effect: (p) => { p.r += 3; p.setMem('s42w', true) },
   },
 
-  {
-    id: 'sonder_42_x',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => G.age >= 20 && !G.mem?.s42x,
-    text: 'The letter you wrote but did not send. Or the email. Or the message you drafted and closed without sending. These accumulate: the not-sent communications form their own archive. Sometimes you send them later. Usually you don\'t. The recipient never knows about the draft.',
-    choices: null,
-    effect: (p) => { p.setMem('s42x', true) },
-  },
-
-  {
+{
     id: 'sonder_42_y',
     phase: 'midlife',
     weight: 2,

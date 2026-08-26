@@ -3,17 +3,7 @@
 
 export const EVENTS_SONDER_65 = [
 
-  {
-    id: 'sonder_65_a',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => !G.mem?.s65a,
-    text: 'The word you keep almost saying — the one you start and redirect before it comes out — is a word you stopped saying because of a specific reaction you received once. You do not always remember the reaction. You remember the redirect. It has become automatic.',
-    choices: null,
-    effect: (p) => { p.setMem('s65a', true) },
-  },
-
-  {
+{
     id: 'sonder_65_b',
     phase: 'late_life',
     weight: 2,
@@ -23,17 +13,7 @@ export const EVENTS_SONDER_65 = [
     effect: (p) => { p.m += 2; p.setMem('s65b', true) },
   },
 
-  {
-    id: 'sonder_65_c',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => !G.mem?.s65c,
-    text: 'The conversation that ended badly ended badly because neither person said the thing they actually meant. Both said adjacent things. The adjacent things were wrong in ways that the actual things would not have been. You know this now. The conversation has been over for years.',
-    choices: null,
-    effect: (p) => { p.r += 2; p.setMem('s65c', true) },
-  },
-
-  {
+{
     id: 'sonder_65_d',
     phase: 'midlife',
     weight: 2,
@@ -73,17 +53,7 @@ export const EVENTS_SONDER_65 = [
     effect: (p) => { p.setMem('s65g', true) },
   },
 
-  {
-    id: 'sonder_65_h',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => !G.mem?.s65h,
-    text: 'The city felt different at three in the morning than it did at any other hour. The streets that during the day belonged to the commercial were empty and briefly yours. You walked through them on the nights you stayed too late somewhere and felt a brief ownership that was really just the absence of competition.',
-    choices: null,
-    effect: (p) => { p.m += 2; p.setMem('s65h', true) },
-  },
-
-  {
+{
     id: 'sonder_65_i',
     phase: 'midlife',
     weight: 2,
@@ -123,17 +93,7 @@ export const EVENTS_SONDER_65 = [
     effect: (p) => { p.setMem('s65l', true) },
   },
 
-  {
-    id: 'sonder_65_m',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => !G.mem?.s65m,
-    text: 'The friend who knew you best at twenty-two would find you legible now. The core is the same. The strategies you have developed around the core are different. Some of the strategies are improvements. Some are accommodations that you have stopped questioning.',
-    choices: null,
-    effect: (p) => { p.setMem('s65m', true) },
-  },
-
-  {
+{
     id: 'sonder_65_n',
     phase: 'childhood',
     weight: 2,
@@ -163,17 +123,7 @@ export const EVENTS_SONDER_65 = [
     effect: (p) => { p.r += 2; p.setMem('s65p', true) },
   },
 
-  {
-    id: 'sonder_65_q',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => !G.mem?.s65q,
-    text: 'The letter you almost sent — the one you drafted and read again and decided not to send — had the real thing in it. The conversation you had instead had a version of the real thing. The version was careful. The letter had been less careful and more true. You do not know what the letter would have done. It is in a drawer or is not in a drawer anymore.',
-    choices: null,
-    effect: (p) => { p.r += 2; p.setMem('s65q', true) },
-  },
-
-  {
+{
     id: 'sonder_65_r',
     phase: 'midlife',
     weight: 2,
@@ -203,17 +153,7 @@ export const EVENTS_SONDER_65 = [
     effect: (p) => { p.m += 2; p.setMem('s65t', true) },
   },
 
-  {
-    id: 'sonder_65_u',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => !G.mem?.s65u,
-    text: 'The object that has traveled with you through every move is an object whose primary purpose ended years ago. It is still in the category of things you bring. Its presence in the new place is a kind of continuity that does not require acknowledgment to function.',
-    choices: null,
-    effect: (p) => { p.m += 2; p.setMem('s65u', true) },
-  },
-
-  {
+{
     id: 'sonder_65_v',
     phase: 'young_adult',
     weight: 2,

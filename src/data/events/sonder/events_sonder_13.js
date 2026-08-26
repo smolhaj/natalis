@@ -4,6 +4,8 @@
 // Themes: the body at rest, work without witness, the small room,
 // threshold moments, what stays after people leave.
 
+import { hasPhone, isLiterate } from './_sonderGuards.js'
+
 export const EVENTS_SONDER_13 = [
 
   // ── THE BODY AT REST ─────────────────────────────────────────────────────────
@@ -18,17 +20,7 @@ export const EVENTS_SONDER_13 = [
     effect: (p) => { p.setMem('sonder13_body_rest_1', true) },
   },
 
-  {
-    id: 'sonder13_body_rest_2',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => !G.mem?.sonder13_body_rest_2,
-    text: `The chair has a specific place in the afternoon light. This is where you sit. The light changes at a specific rate and the chair accommodates a specific weight and the two of them together have made something that is not quite comfort and is more than furniture.`,
-    choices: null,
-    effect: (p) => { p.setMem('sonder13_body_rest_2', true) },
-  },
-
-  {
+{
     id: 'sonder13_sleeping_body',
     phase: 'midlife',
     weight: 2,
@@ -40,17 +32,7 @@ export const EVENTS_SONDER_13 = [
 
   // ── WORK WITHOUT WITNESS ─────────────────────────────────────────────────────
 
-  {
-    id: 'sonder13_work_unseen_1',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => !G.mem?.sonder13_work_unseen_1,
-    text: `You do the work carefully and correctly and no one sees you do it. This is most of the work. The quality goes into the thing rather than into the witness of the quality, and the thing is better for it, and you know the thing is better for it, which is its own information but not always sufficient information.`,
-    choices: null,
-    effect: (p) => { p.setMem('sonder13_work_unseen_1', true) },
-  },
-
-  {
+{
     id: 'sonder13_work_unseen_2',
     phase: 'midlife',
     weight: 2,
@@ -140,7 +122,7 @@ export const EVENTS_SONDER_13 = [
     id: 'sonder13_after_leaving_1',
     phase: 'midlife',
     weight: 2,
-    when: (G) => !G.mem?.sonder13_after_leaving_1,
+    when: (G) => isLiterate(G) && (!G.mem?.sonder13_after_leaving_1),
     text: `After they left you found the small things — the handwriting on a piece of paper, the object moved to a different shelf, the phrase you have started saying without noticing. People leave deposit in you in forms you do not always recognise as deposit until something jogs the recognition.`,
     choices: null,
     effect: (p) => { p.setMem('sonder13_after_leaving_1', true) },
@@ -256,7 +238,7 @@ export const EVENTS_SONDER_13 = [
     id: 'sonder13_seasons_body',
     phase: 'midlife',
     weight: 2,
-    when: (G) => !G.mem?.sonder13_seasons_body,
+    when: (G) => G.season === 'winter' && (!G.mem?.sonder13_seasons_body),
     text: `The body marks the seasons in ways the calendar does not. The specific weight of winter air, the way cold affects the joints differently at forty than it did at twenty, the particular tiredness that August produces. The body keeps a different record of the year than the year keeps of itself.`,
     choices: null,
     effect: (p) => { p.setMem('sonder13_seasons_body', true) },
@@ -278,7 +260,7 @@ export const EVENTS_SONDER_13 = [
     id: 'sonder13_stranger_2',
     phase: 'midlife',
     weight: 2,
-    when: (G) => !G.mem?.sonder13_stranger_2,
+    when: (G) => hasPhone(G) && (!G.mem?.sonder13_stranger_2),
     text: `The man on the platform is checking his phone. On his face for a moment is something — you catch it in the second before he rearranges his face into the neutral expression people wear in public. The something was grief. Or it was good news about someone he loves. You cannot tell and you are not supposed to know and then the train arrives.`,
     choices: null,
     effect: (p) => { p.setMem('sonder13_stranger_2', true) },
@@ -350,17 +332,7 @@ export const EVENTS_SONDER_13 = [
     effect: (p) => { p.setMem('sonder13_body_age_1', true) },
   },
 
-  {
-    id: 'sonder13_body_age_2',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => G.age >= 60 && !G.mem?.sonder13_body_age_2,
-    text: `You know exactly how the body is doing because the body has become informative in a way it was not when you were younger. Younger it was background. Now it is foreground. You receive regular dispatches from the various departments, some of which require action and some of which require only acknowledgement.`,
-    choices: null,
-    effect: (p) => { p.setMem('sonder13_body_age_2', true) },
-  },
-
-  // ── WHAT YOU CARRY ───────────────────────────────────────────────────────────
+// ── WHAT YOU CARRY ───────────────────────────────────────────────────────────
 
   {
     id: 'sonder13_carry_1',

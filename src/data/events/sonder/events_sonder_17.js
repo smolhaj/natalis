@@ -10,6 +10,8 @@
 //
 // All weight 2, mem-gated, no choices, minimal stat effects.
 
+import { hasBank, hasBooks, hasBus, hasFormalJob, hasPhotographs, hasWeekend, worksInOffice } from './_sonderGuards.js'
+
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
 export const EVENTS_SONDER_17 = [
@@ -20,7 +22,7 @@ export const EVENTS_SONDER_17 = [
     id: 's17_envelope_in_drawer',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 35 && !G.mem?.s17EnvelopeDrawer,
+    when: (G) => hasBank(G) && (G.age >= 35 && !G.mem?.s17EnvelopeDrawer),
     text: () => pick([
       `There is a particular way of keeping money that is neither a bank account nor a wallet: the envelope in the drawer, the cash in the tin behind the rice, the specific small amount kept in reserve against an emergency that is not defined but understood. This practice was inherited from someone who did not trust banks, or lived somewhere the bank could not be trusted, or learned that the envelope was the thing that was still there when other things were not. You keep it now without always knowing why.`,
       `Your grandmother kept money in a place nobody was supposed to know, which everyone knew. The practice was inherited from someone who had learned that visible wealth was taxed in specific ways that invisible wealth was not. The tin. The specific corner of the specific drawer. The knowledge is transmitted without the lesson being named.`,
@@ -69,10 +71,9 @@ export const EVENTS_SONDER_17 = [
     id: 's17_public_library',
     phase: 'childhood',
     weight: 2,
-    when: (G) =>
-      G.age >= 8 && G.age <= 18 &&
+    when: (G) => hasFormalJob(G) && (G.age >= 8 && G.age <= 18 &&
       G.character.country?.archetype !== 'conflict_zone' &&
-      !G.mem?.s17PublicLibrary,
+      !G.mem?.s17PublicLibrary),
     text: () => pick([
       `The public library of your childhood had a specific smell — paper, dust, a faint industrial carpet, the specific quiet that is not silence but the sound of multiple people being silent simultaneously. You were allowed to take home seven books at a time, or three, or an unlimited number — this varied — and you took as many as you could carry. The library was the first place that implied you could have whatever you could read, which was a different relationship with abundance than any other institution offered.`,
       `The library was public, which meant it was everyone's, which meant on Saturday mornings it was full of everyone: the retired men reading newspapers they had not paid for, the mothers with small children in the section that had low shelves, the teenagers at computers. You were in the section for your age for a while and then you were in the adult section and the transition was not marked, you simply walked over one day and stayed. Nobody stopped you. This was also a thing the library did.`,
@@ -87,7 +88,7 @@ export const EVENTS_SONDER_17 = [
     id: 's17_reading_when',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 18 && !G.mem?.s17ReadingWhen,
+    when: (G) => hasBooks(G) && (G.age >= 18 && !G.mem?.s17ReadingWhen),
     text: () => pick([
       `You can tell you where you were and what you were reading when certain things happened. The two are linked by the accident of simultaneity — the book has nothing to do with the event, but the event interrupted the book, or the book was in your hands when the news arrived, and now the two are associated permanently. Reading and history, personal and large-scale, entangled in memory by coincidence.`,
       `There is a book you cannot finish rereading because you read it first during a specific period of your life and the book now summons that period without asking permission. The book is not about that period. The period is what you were in when you read it. The association is not voluntary but it is permanent.`,
@@ -119,7 +120,7 @@ export const EVENTS_SONDER_17 = [
     id: 's17_the_bus',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 18 && G.age <= 40 && !G.mem?.s17TheBus,
+    when: (G) => hasBus(G) && (G.age >= 18 && G.age <= 40 && !G.mem?.s17TheBus),
     text: () => pick([
       `The bus is a particular social form. Strangers in forced proximity, the etiquette of not acknowledging the proximity, the specific way people distribute themselves when the bus is empty versus when it fills. You have taken buses for years and watched the distribution: the window seats fill first, the aisle seats second, the middle seat last. The middle seat is almost always last. This is universal.`,
       `You spent years of your life on buses — the commute, the journey between cities, the long overnight route that got you somewhere cheaper than the train. The specific quality of time on a bus is different from other kinds of transit time: the landscape is visible, the pace is slow enough to watch it, and you have nothing to do but sit in it. This turns out to be rare.`,
@@ -181,7 +182,7 @@ export const EVENTS_SONDER_17 = [
     id: 's17_photograph_stranger',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 32 && !G.mem?.s17PhotographStranger,
+    when: (G) => hasPhotographs(G) && (G.age >= 32 && !G.mem?.s17PhotographStranger),
     text: () => pick([
       `You come across a photograph of someone you do not recognise — in an old album, in a box that belonged to a grandparent, in the lining of something bought secondhand. The photograph is specific: a face, a moment, a light. The person in it is real and their life was full and you will never know anything about it. The photograph is the entire record of this person that you will ever have. You sit with it for a moment.`,
       `The photographs that survive are not the most important moments. They are the moments someone happened to have a camera. The archive of any life is therefore accidentally assembled — what's in it reflects the availability of recording equipment and the memory of pointing it. Most of what happened left no image.`,
@@ -192,20 +193,7 @@ export const EVENTS_SONDER_17 = [
 
   // ── THE WAITING ROOM ──────────────────────────────────────────────────────
 
-  {
-    id: 's17_waiting_room',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 30 && !G.mem?.s17WaitingRoom,
-    text: () => pick([
-      `The waiting room is a specific democratic space: everyone here is waiting for something they did not choose to wait for, in a room that was not designed for comfort but for order. The chairs face the same direction. The magazines are three months old. The other people are also sitting with whatever they are sitting with. For the duration of the wait you are temporarily in the same category as everyone else here, which is the category of people who are not where they would rather be.`,
-      `You have a specific relationship with the waiting room based on the kind of waiting you have done in them. The hospital waiting room. The government office. The lawyer's anteroom. Each has its own quality of time — the hospital slowest, the government office with a specific texture of bureaucratic suspension. The object you use to wait — the phone, the book, the staring at nothing — has remained roughly the same across all of them.`,
-    ]),
-    choices: null,
-    effect: (p) => { p.setMem('s17WaitingRoom', true) },
-  },
-
-  // ── OBJECTS OF VERY OLD PEOPLE ────────────────────────────────────────────
+// ── OBJECTS OF VERY OLD PEOPLE ────────────────────────────────────────────
 
   {
     id: 's17_objects_old_people',
@@ -244,7 +232,7 @@ export const EVENTS_SONDER_17 = [
     id: 's17_commute_partner',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 30 && G.age <= 55 && !G.mem?.s17CommutePartner,
+    when: (G) => worksInOffice(G) && (G.age >= 30 && G.age <= 55 && !G.mem?.s17CommutePartner),
     text: () => pick([
       `On the commute you see the same people every day without speaking to them. You have reached the level of familiarity where you would notice their absence — a specific face at a specific time is part of the texture of the morning — but you have never exchanged names. You know their schedule, their preferred spot, their approximate life stage from their appearance. This is not friendship. It is something without a word.`,
       `There is someone from the old commute — the job you left years ago — who you saw every day for three years and then never saw again. The commute was the entire context of the acquaintance. Without the commute, there was nothing. You think of them occasionally, in the way you think of people who existed in one specific context of your life and have since returned to being strangers.`,
@@ -387,7 +375,7 @@ export const EVENTS_SONDER_17 = [
     id: 's17_small_ceremony',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 32 && !G.mem?.s17SmallCeremony,
+    when: (G) => hasWeekend(G) && (G.age >= 32 && !G.mem?.s17SmallCeremony),
     text: () => pick([
       `You have developed, without intending to, small rituals: the specific order in which you make coffee, the way you prepare for a particular kind of work, the sequence of a Sunday morning. These are not superstitions. They are something more modest — the body's preference for a path that has already been cleared, the comfort of an action that is also a form of maintenance.`,
       `The ritual that marks nothing: the cup in the specific place, the window opened in the specific order, the phrase said to the specific animal or plant or empty room. No one taught you this. It arrived. It has been present now for long enough to be as much yours as anything else.`,

@@ -1,18 +1,10 @@
 // events_sonder_52.js — contemplative layer, weight 2, all mem-gated
 
+import { hasBooks, hasPhotographs, hasSupermarket } from './_sonderGuards.js'
+
 export const EVENTS_SONDER_52 = [
 
-  {
-    id: 'sonder_52_a',
-    phase: 'childhood',
-    weight: 2,
-    when: (G) => !G.mem?.s52a,
-    text: 'The smell of a particular room that is gone now. Not the house — the smell of that specific room, which was the particular combination of the wood and the light and whatever they used to clean the floor and the season it was. You have not thought about it in years. Something in the air of a day brings it back entirely, without warning, as a full sensory re-entry into a room that no longer exists in that form.',
-    choices: null,
-    effect: (p) => { p.r += 2; p.setMem('s52a', true) },
-  },
-
-  {
+{
     id: 'sonder_52_b',
     phase: 'young_adult',
     weight: 2,
@@ -66,7 +58,7 @@ export const EVENTS_SONDER_52 = [
     id: 'sonder_52_g',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => !G.mem?.s52g,
+    when: (G) => hasSupermarket(G) && (!G.mem?.s52g),
     text: 'The money you did not have. Not the dramatic version — not destitution — but the specific texture of being young and not having enough: the calculation at the checkout, the invitation you declined, the thing you wanted that you bought a month later when the calculation had shifted. The not-having was not permanent. It was permanent enough to shape how you think about money, which is more permanent than the not-having itself.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s52g', true) },
@@ -106,7 +98,7 @@ export const EVENTS_SONDER_52 = [
     id: 'sonder_52_k',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => !G.mem?.s52k,
+    when: (G) => hasPhotographs(G) && (!G.mem?.s52k),
     text: 'The group of friends that defined a period and then dissolved. Not through any rupture — through the ordinary dispersal: different schools, different cities, the slow reduction in contact that ends in the occasional message and then the occasional liking of a photograph. The group that was the entire social world for three years. It becomes the kind of past that is warm and sealed and not quite revisitable. You would not want to reopen it. You also carry it.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s52k', true) },
@@ -122,17 +114,7 @@ export const EVENTS_SONDER_52 = [
     effect: (p) => { p.m += 3; p.r += 2; p.setMem('s52l', true) },
   },
 
-  {
-    id: 'sonder_52_m',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => !G.mem?.s52m,
-    text: 'The habit that has lasted forty years. You no longer remember acquiring it. It is simply what you do at this time or in this context, automatic, prior to intention. It may be completely neutral — the cup on the left side, the window you always open first, the particular order you do things in the morning. The habit is older than most of your relationships. It will outlast some of them.',
-    choices: null,
-    effect: (p) => { p.r += 3; p.setMem('s52m', true) },
-  },
-
-  {
+{
     id: 'sonder_52_n',
     phase: 'childhood',
     weight: 2,
@@ -152,17 +134,7 @@ export const EVENTS_SONDER_52 = [
     effect: (p) => { p.m += 3; p.setMem('s52o', true) },
   },
 
-  {
-    id: 'sonder_52_p',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => !G.mem?.s52p,
-    text: 'The city you lived in for two or three years that still feels partly yours. You left for reasons that made sense at the time. The city continued without you. You know its particular grid and its particular light and the specific neighbourhood that became yours and the café and the street that had the good market. Returning now you navigate it faster than people who have lived there for ten years. The city is not yours and you know it better than the people for whom it is.',
-    choices: null,
-    effect: (p) => { p.r += 3; p.setMem('s52p', true) },
-  },
-
-  {
+{
     id: 'sonder_52_q',
     phase: 'late_life',
     weight: 2,
@@ -182,17 +154,7 @@ export const EVENTS_SONDER_52 = [
     effect: (p) => { p.e += 2; p.setMem('s52r', true) },
   },
 
-  {
-    id: 'sonder_52_s',
-    phase: 'adolescence',
-    weight: 2,
-    when: (G) => !G.mem?.s52s,
-    text: 'The music that was the soundtrack to a particular summer. Not a great summer necessarily — simply a specific one that had a specific song attached to it by the radio and the frequency of encounter. The song was everywhere for three months and then was gone. It comes on now and returns not the music but the air of that summer: the specific quality of being that age in that season with those particular preoccupations. Music retrieves the texture, not the event.',
-    choices: null,
-    effect: (p) => { p.r += 3; p.setMem('s52s', true) },
-  },
-
-  {
+{
     id: 'sonder_52_t',
     phase: 'young_adult',
     weight: 2,
@@ -266,23 +228,13 @@ export const EVENTS_SONDER_52 = [
     id: 'sonder_52_aa',
     phase: 'adolescence',
     weight: 2,
-    when: (G) => !G.mem?.s52aa,
+    when: (G) => hasBooks(G) && (!G.mem?.s52aa),
     text: 'The book that reorganized something. Not necessarily a great book by any external measure. The book that arrived at the right moment and rearranged the furniture of a question you were carrying. Before the book and after the book you think about the question differently. The rearrangement was produced by the encounter between the book and the particular moment you were in when you read it. The book alone would not have produced it.',
     choices: null,
     effect: (p) => { p.e += 3; p.m += 2; p.setMem('s52aa', true) },
   },
 
-  {
-    id: 'sonder_52_ab',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => !G.mem?.s52ab,
-    text: 'The letter you did not send. It was written, or nearly written, or composed entirely in your head. The sending would have changed something and you decided not to send it, or you lost your nerve, or the moment passed. You do not regret not sending it, exactly. You carry it as one of the paths that was available and was not taken, a road that branches off from where you actually went and leads somewhere you did not go.',
-    choices: null,
-    effect: (p) => { p.r += 4; p.setMem('s52ab', true) },
-  },
-
-  {
+{
     id: 'sonder_52_ac',
     phase: 'late_life',
     weight: 2,

@@ -9,6 +9,8 @@
 //
 // All weight 2, mem-gated, no choices, minimal stat effects.
 
+import { hasHealthcare, hasPhone, hasWeekend, isLiterate } from './_sonderGuards.js'
+
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
 export const EVENTS_SONDER_16 = [
@@ -19,7 +21,7 @@ export const EVENTS_SONDER_16 = [
     id: 's16_phone_call_ending',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 18 && G.age <= 40 && !G.mem?.s16PhoneCallEnding,
+    when: (G) => hasPhone(G) && (G.age >= 18 && G.age <= 40 && !G.mem?.s16PhoneCallEnding),
     text: () => pick([
       `At the end of a telephone call there is a particular small performance: the wind-down, the mutual signal that it is ending, the false goodbyes before the real one. You have done this thousands of times and it has never become easy — the goodbye is always slightly awkward, always faintly asymmetrical, always concluded by someone hanging up first.`,
       `You say goodbye on the phone and then wait a half-second to make sure the call has ended before you speak. This is a habit from the era of uncertain connections, of lines that did not always terminate cleanly. The habit has outlasted the technology that produced it.`,
@@ -48,10 +50,9 @@ export const EVENTS_SONDER_16 = [
     id: 's16_handwriting_of_the_dead',
     phase: 'midlife',
     weight: 2,
-    when: (G) =>
-      G.age >= 40 &&
+    when: (G) => isLiterate(G) && (G.age >= 40 &&
       (G.flags.has('lost_parent') || G.flags.has('friend_died')) &&
-      !G.mem?.s16HandwritingDead,
+      !G.mem?.s16HandwritingDead),
     text: () => pick([
       `You find a note in their handwriting — a grocery list, a card, something unremarkable at the time of writing and now entirely remarkable. The handwriting is more their presence than the photograph. The photograph captures an exterior. The handwriting is them making a decision about where to place their pen.`,
       `The handwriting survives. A note stuck to the back of something, a name in the front of a book. You know this handwriting better than you realised — you have been reading it your entire life, and it is only now that you can see what it cost them to write, the specific way the pen went down.`,
@@ -61,20 +62,7 @@ export const EVENTS_SONDER_16 = [
     effect: (p) => { p.r += 3; p.setMem('s16HandwritingDead', true) },
   },
 
-  {
-    id: 's16_own_handwriting',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 35 && !G.mem?.s16OwnHandwriting,
-    text: () => pick([
-      `You rarely write by hand anymore and when you do it surprises you — the way the pen sits in your fingers, the specific look of letters formed by hand, the fact that your handwriting is still yours and has not changed in twenty years. The hand remembers what the mind has largely delegated to keyboards.`,
-      `You sign something and look at your signature and think: this is the mark I make. You have made it thousands of times. It remains personal in a way that typed text never is — something that is specifically and only you, irreducible.`,
-    ]),
-    choices: null,
-    effect: (p) => { p.setMem('s16OwnHandwriting', true) },
-  },
-
-  // ── THE RECURRING DREAM ───────────────────────────────────────────────────────
+// ── THE RECURRING DREAM ───────────────────────────────────────────────────────
 
   {
     id: 's16_recurring_dream',
@@ -112,7 +100,7 @@ export const EVENTS_SONDER_16 = [
     id: 's16_sunday_afternoon',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 20 && !G.mem?.s16SundayAfternoon,
+    when: (G) => hasWeekend(G) && (G.age >= 20 && !G.mem?.s16SundayAfternoon),
     text: () => pick([
       `Sunday afternoon has a specific quality that no other time of the week has. The particular light of it, the particular sense of time running toward something — the week's resumption — without having reached it yet. You have spent many hours in this light without knowing what to do with them, which may be exactly what Sunday afternoon is for.`,
       `Three o'clock on Sunday. The day's plans, if there were any, have been completed or abandoned. What remains is an afternoon with no particular shape. You have never managed to fill this time with anything that feels adequate to it. The feeling of Sunday at three is its own complete experience.`,
@@ -128,9 +116,8 @@ export const EVENTS_SONDER_16 = [
     id: 's16_census_name',
     phase: 'young_adult',
     weight: 2,
-    when: (G) =>
-      G.age >= 18 && G.age <= 40 &&
-      !G.mem?.s16CensusName,
+    when: (G) => isLiterate(G) && (G.age >= 18 && G.age <= 40 &&
+      !G.mem?.s16CensusName),
     text: () => pick([
       `On official forms you are a category. The category is accurate and also reductive — it covers you and does not cover you simultaneously. The bureaucracy does not have a field for the particular quality of what you are. It has the nearest available box, which you check.`,
       `Your name on official documents is a decision someone made about how to fit your name into a system designed for different names. The spelling, the truncation, the removal of the accent — these are small violences that the form was not designed to register as violations. They are not. They are just the form.`,
@@ -174,20 +161,7 @@ export const EVENTS_SONDER_16 = [
 
   // ── THE DOOR ──────────────────────────────────────────────────────────────────
 
-  {
-    id: 's16_the_door',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 30 && !G.mem?.s16TheDoor,
-    text: () => pick([
-      `There is a door you have opened and closed more times than you can count — the front door of a place you lived for years, the office door, the door of a house that was someone else's but felt like yours. You know the specific weight of it, the sound it makes, whether it swings or sticks. When the place is gone, you will be surprised by how much you miss the door.`,
-      `The door of the place where you grew up has a specific sound. You could identify it in the dark. The sound is the sound of returning — not the place itself but the specific announcement of return. You have been hearing that sound your whole life and it will not survive the house.`,
-    ]),
-    choices: null,
-    effect: (p) => { p.setMem('s16TheDoor', true) },
-  },
-
-  // ── RECEIPTS AND PAPER ────────────────────────────────────────────────────────
+// ── RECEIPTS AND PAPER ────────────────────────────────────────────────────────
 
   {
     id: 's16_receipts',
@@ -208,7 +182,7 @@ export const EVENTS_SONDER_16 = [
     id: 's16_clocks',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 38 && !G.mem?.s16Clocks,
+    when: (G) => hasPhone(G) && (G.age >= 38 && !G.mem?.s16Clocks),
     text: () => pick([
       `At some point you started knowing what time it is without checking. Not exactly — within fifteen minutes, which is close enough for most purposes. The body has a clock. You did not install it. It simply arrived, or revealed itself, at an age when you started to notice the passage of time as something you were inside of rather than watching.`,
       `You check the time less than you used to and know it more. The phone that once answered this question constantly has become less necessary. You are not sure when this happened. The clock in your body is quieter and more accurate than the clock you used to consult.`,
@@ -238,7 +212,7 @@ export const EVENTS_SONDER_16 = [
     id: 's16_numbers_you_know',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => G.age >= 22 && !G.mem?.s16NumbersYouKnow,
+    when: (G) => hasHealthcare(G) && (G.age >= 22 && !G.mem?.s16NumbersYouKnow),
     text: () => pick([
       `You still know telephone numbers that no longer connect to anyone — a home number from childhood, a number from a relationship that ended, a number you dialed so many times the muscle memory is in your fingers before the mind has decided. These numbers will die with you. You are the last place they live.`,
       `Your own phone number is the number you know least well. You have to look it up. But the number of the first apartment, the number of the doctor you saw as a child, the number of a person you have not spoken to in fifteen years — these you have.`,
@@ -253,7 +227,7 @@ export const EVENTS_SONDER_16 = [
     id: 's16_light_of_a_place',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 35 && !G.mem?.s16LightOfPlace,
+    when: (G) => G.season === 'winter' && (G.age >= 35 && !G.mem?.s16LightOfPlace),
     text: () => pick([
       `Every place has a specific quality of light. Not the weather — the light. The specific angle at which the sun comes into a room at a certain hour in a certain season. You have been in enough rooms to know this is not universal: the light here is different from the light somewhere else, and both are different from the light of where you were as a child.`,
       `The light of a particular afternoon from a particular time in your life returns without warning — attached to nothing, a quality of illumination that your body recognizes from years ago. Autumn light, or winter morning light, or the specific yellow of a certain kind of lamp in a room that no longer exists. The light is the most persistent part of what a place was.`,
@@ -264,20 +238,7 @@ export const EVENTS_SONDER_16 = [
 
   // ── PHOTOGRAPHS AGAIN ─────────────────────────────────────────────────────────
 
-  {
-    id: 's16_photograph_of_yourself',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 42 && !G.mem?.s16PhotographOfSelf,
-    text: () => pick([
-      `You look at a photograph of yourself from fifteen years ago and you see someone who thought they were older than they were. The face is young — undeniably young — and the person in it did not know that. You cannot convey this to them. The knowledge comes only from the other side of the years.`,
-      `A photograph from a decade you remember as difficult. The face in it does not look difficult. It looks like someone getting through a day. You had thought you looked worse at the time. The external record says something different from the internal one, and you do not know which one to trust.`,
-    ]),
-    choices: null,
-    effect: (p) => { p.r += 2; p.setMem('s16PhotographOfSelf', true) },
-  },
-
-  // ── THE COMMUTE AGAIN (DIFFERENT REGISTER) ────────────────────────────────────
+// ── THE COMMUTE AGAIN (DIFFERENT REGISTER) ────────────────────────────────────
 
   {
     id: 's16_journey_repeated',

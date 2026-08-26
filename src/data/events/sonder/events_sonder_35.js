@@ -5,24 +5,13 @@
 // the friend who became someone else, the smell of old paper,
 // the thing that fixes itself overnight.
 
+import { hasBooks, hasBus, hasCafe, hasRadio } from './_sonderGuards.js'
+
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
 export const EVENTS_SONDER_35 = [
 
-  {
-    id: 'sonder35_waiting_room_body',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => !G.mem?.s35WaitingRoom,
-    text: () => pick([
-      'The waiting room: the specific quality of sitting in a plastic chair in a place that processes people. The numbering system. The fluorescent light. The other people doing what you are doing — the looking at your phone, the looking at the wall, the looking at nothing in particular. Waiting is its own skill and you have gotten better at it.',
-      'You have spent hours of your life in waiting rooms. The hours are not lost, exactly — things were thought in them that would not have been thought elsewhere. The waiting room is the place where your mind goes to whatever it has been not addressing.',
-    ]),
-    choices: null,
-    effect: (p) => { p.setMem('s35WaitingRoom', true) },
-  },
-
-  {
+{
     id: 'sonder35_small_cruelty',
     phase: 'young_adult',
     weight: 2,
@@ -39,7 +28,7 @@ export const EVENTS_SONDER_35 = [
     id: 'sonder35_book_unfinished',
     phase: 'midlife',
     weight: 2,
-    when: (G) => !G.mem?.s35BookUnfinished,
+    when: (G) => hasBooks(G) && (!G.mem?.s35BookUnfinished),
     text: () => pick([
       'A book you started and put down and intend to finish. The book has been in this state for longer than it would take to finish it. You know roughly where you stopped. The book sits in the exact position where you left it, accumulating the specific meaning of unfinished things.',
       'There is a book on your shelf that has a bookmark in it at the page where you stopped years ago. You have moved the book through several homes. The bookmark has not moved. You will finish the book. The finishing is not urgent. The intention is.',
@@ -117,7 +106,7 @@ export const EVENTS_SONDER_35 = [
     id: 'sonder35_the_bus_passenger',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => !G.mem?.s35BusPassenger,
+    when: (G) => hasBus(G) && (!G.mem?.s35BusPassenger),
     text: () => pick([
       'The person across from you on the bus: asleep, or looking out the window at whatever the window offered. A face you will not see again, in transit, between its own two points. The face had a specific expression — not a performed expression, but a transit expression, the face a face makes when it thinks it is unobserved.',
       'On the bus or train or tram: the other passengers each going between their two points, each with the complete interior life that the word "passenger" does not contain. You are also a passenger, also containing it. The containment is universal and invisible.',
@@ -139,20 +128,7 @@ export const EVENTS_SONDER_35 = [
     effect: (p) => { p.e += 1; p.setMem('s35PhraseYouUse', true) },
   },
 
-  {
-    id: 'sonder35_the_neighbour_you_know',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => !G.mem?.s35NeighbourKnow,
-    text: () => pick([
-      'A neighbour you have known for years but do not know well. The relationship has a precise calibration: the greeting, the brief exchange about specific visible things, the wave. Neither of you has moved further in or further out. The calibration works and you have both maintained it without discussion.',
-      'The neighbour: you know their schedule by their car or their light or the sound of their door. You know roughly what kind of person they are from the interaction of proximity over years. You have never been in their home. They have never been in yours. This is a relationship with its own integrity.',
-    ]),
-    choices: null,
-    effect: (p) => { p.setMem('s35NeighbourKnow', true) },
-  },
-
-  {
+{
     id: 'sonder35_what_you_were_sure_of',
     phase: 'midlife',
     weight: 2,
@@ -182,7 +158,7 @@ export const EVENTS_SONDER_35 = [
     id: 'sonder35_the_object_at_the_table',
     phase: 'childhood',
     weight: 2,
-    when: (G) => !G.mem?.s35ObjectAtTable,
+    when: (G) => hasRadio(G) && (!G.mem?.s35ObjectAtTable),
     text: () => pick([
       'At the table where you grew up: a specific object that was always there. A salt shaker, a fruit bowl, a radio, a cloth that was replaced by the same cloth. The object was not remarkable. It was there every morning. Its presence was the texture of ordinary life and you noticed it only when it was gone.',
       'The house you grew up in had objects that were permanent — always in the same place, always the same function, always the same relationship to the people around the table. You did not register them as specific until they were not there anymore, and then the absence was its own kind of presence.',
@@ -256,24 +232,11 @@ export const EVENTS_SONDER_35 = [
     effect: (p) => { p.m += 2; p.setMem('s35RainAtNight', true) },
   },
 
-  {
-    id: 'sonder35_the_letter_received',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => !G.mem?.s35LetterReceived,
-    text: () => pick([
-      'A letter you received that was important: not email, but a letter, handwritten or typed, in an envelope, with a stamp. The handwriting told you something about the state the person was in when they wrote it. The envelope is still somewhere. The letter changed something or confirmed something or arrived at exactly the right moment.',
-      'The letter in the mail: the weight of paper folded, the handwriting of someone you know, the specific texture of a communication that required a decision to send — stamps, envelope, the walk to the post box. The decision is inside the letter in a way that email does not have.',
-    ]),
-    choices: null,
-    effect: (p) => { p.r += 3; p.setMem('s35LetterReceived', true) },
-  },
-
-  {
+{
     id: 'sonder35_the_heat_in_summer',
     phase: 'childhood',
     weight: 2,
-    when: (G) => !G.mem?.s35HeatInSummer,
+    when: (G) => G.season === 'summer' && (!G.mem?.s35HeatInSummer),
     text: () => pick([
       'The summer heat of your childhood: the specific temperature of the place you grew up, the specific smell the heat released from the streets and the walls and the vegetation, the way the afternoon stopped. The heat of other places is hot but it is not this heat. The heat of your childhood is the reference point.',
       'The long afternoons of summer when everything slowed: the shade that moved across the yard and you moved with it, the sound the insects made, the specific quality of the light at four o\'clock that was different from the light at noon. The heat had a texture and you lived in the texture.',
@@ -347,24 +310,11 @@ export const EVENTS_SONDER_35 = [
     effect: (p) => { p.karma += 2; p.r += 2; p.setMem('s35ApologyMade', true) },
   },
 
-  {
-    id: 'sonder35_the_body_at_rest',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => G.age >= 50 && !G.mem?.s35BodyAtRest,
-    text: () => pick([
-      'The body at rest: not asleep, just still — sitting or lying in a place where nothing is required from it. The body\'s default state is rarely available. When it arrives, it has a quality of surprise, as if the body is not sure it is allowed this. The allowing is its own small pleasure.',
-      'The specific quality of a body that has been working and is now not working — the stillness after effort, the settling of everything that was active. The stillness is not absence. It is the body having a moment that is entirely its own.',
-    ]),
-    choices: null,
-    effect: (p) => { p.m += 3; p.h += 1; p.setMem('s35BodyAtRest', true) },
-  },
-
-  {
+{
     id: 'sonder35_the_corner_table',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => !G.mem?.s35CornerTable,
+    when: (G) => hasCafe(G) && (!G.mem?.s35CornerTable),
     text: () => pick([
       'The corner table in the cafe or restaurant — the one with the wall on two sides, the view of the room, the relative quiet. You have learned to ask for it when it is available. The preference is not snobbery. It is about where the attention goes when you are in a room: the wall holds you in and the view of the room gives you something to look at without being looked at.',
       'There is a configuration of furniture in a public space that you prefer: the specific geometry of the seated position relative to the door, the window, the rest of the room. You have this preference without having formally decided it. It arrived gradually from accumulated experience of what worked.',

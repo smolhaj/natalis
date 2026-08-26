@@ -1,12 +1,14 @@
 // events_sonder_51.js — contemplative layer, weight 2, all mem-gated
 
+import { hasHealthcare, hasPhotographs, hasRunningWater, isUrban, worksInOffice } from './_sonderGuards.js'
+
 export const EVENTS_SONDER_51 = [
 
   {
     id: 'sonder_51_a',
     phase: 'late_life',
     weight: 2,
-    when: (G) => !G.mem?.s51a,
+    when: (G) => hasPhotographs(G) && (!G.mem?.s51a),
     text: 'The photograph that was always on the wall is gone. You do not remember who took it down or when. The wall has a slightly different colour in that rectangle. You notice this on a random Tuesday and stand in front of it for a moment. The photograph is not lost — it is somewhere in a box. The wall has the record of how long it was there.',
     choices: null,
     effect: (p) => { p.r += 2; p.setMem('s51a', true) },
@@ -62,17 +64,7 @@ export const EVENTS_SONDER_51 = [
     effect: (p) => { p.setMem('s51f', true) },
   },
 
-  {
-    id: 'sonder_51_g',
-    phase: 'adolescence',
-    weight: 2,
-    when: (G) => !G.mem?.s51g,
-    text: 'The song that was everywhere for three months when you were sixteen. You have not thought about it in years. It comes on in a shop somewhere and before you can account for it you are sixteen again in the specific way that music retrieves time — not the full memory but the texture of that period, the air of it, the particular emotional weather.',
-    choices: null,
-    effect: (p) => { p.r += 3; p.setMem('s51g', true) },
-  },
-
-  {
+{
     id: 'sonder_51_h',
     phase: 'young_adult',
     weight: 2,
@@ -82,37 +74,7 @@ export const EVENTS_SONDER_51 = [
     effect: (p) => { p.setMem('s51h', true) },
   },
 
-  {
-    id: 'sonder_51_i',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => !G.mem?.s51i,
-    text: 'The conversation with your child that goes differently than you expected — they have an opinion you did not know they had, a knowledge you did not know they had acquired. You update your model of who they are. The updating is constant. The surprise of it never entirely goes away.',
-    choices: null,
-    effect: (p) => { p.m += 3; p.setMem('s51i', true) },
-  },
-
-  {
-    id: 'sonder_51_j',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => !G.mem?.s51j,
-    text: 'The question you should have asked your parents when they were alive and did not ask. Not a factual question — something about what they understood, what they thought, what they wanted. The answer is unavailable now. The question has become a permanent open file.',
-    choices: null,
-    effect: (p) => { p.r += 5; p.m -= 2; p.setMem('s51j', true) },
-  },
-
-  {
-    id: 'sonder_51_k',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => !G.mem?.s51k,
-    text: 'You see your own handwriting and for a moment it looks like someone else\'s handwriting. The visual doubling: familiar and strange simultaneously. The script that your hand makes automatically that can also be looked at from outside the automaticity. You are looking at a record of what your hand does when you are not watching it.',
-    choices: null,
-    effect: (p) => { p.setMem('s51k', true) },
-  },
-
-  {
+{
     id: 'sonder_51_l',
     phase: 'young_adult',
     weight: 2,
@@ -126,7 +88,7 @@ export const EVENTS_SONDER_51 = [
     id: 'sonder_51_m',
     phase: 'late_life',
     weight: 2,
-    when: (G) => !G.mem?.s51m,
+    when: (G) => hasHealthcare(G) && (!G.mem?.s51m),
     text: 'The diagnosis that explains things. Not a good diagnosis, but an explanatory one — the reason for the thing that has been happening, named and categorized and given a treatment pathway. The naming is something. Before the name it was only the fact. The name does not change the fact but it changes your relationship to the fact.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s51m', true) },
@@ -156,7 +118,7 @@ export const EVENTS_SONDER_51 = [
     id: 'sonder_51_p',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => !G.mem?.s51p,
+    when: (G) => isUrban(G) && (!G.mem?.s51p),
     text: 'The city in rain at night: the reflections on the wet pavement, the particular way the lights scatter, the reduced population on the street that makes it feel like a different city from the daytime city. You have come to prefer cities in rain at night for reasons you cannot fully articulate. Something about the way the rain makes the surfaces luminous and the streets less occupied.',
     choices: null,
     effect: (p) => { p.setMem('s51p', true) },
@@ -166,7 +128,7 @@ export const EVENTS_SONDER_51 = [
     id: 'sonder_51_q',
     phase: 'midlife',
     weight: 2,
-    when: (G) => !G.mem?.s51q,
+    when: (G) => worksInOffice(G) && (!G.mem?.s51q),
     text: 'The colleague who retires and is never mentioned again. They were a presence in the office for fifteen years. Their retirement party was attended. Their leaving created a small reorganization. Six months later their name comes up and people have to think for a moment before they remember. You note this. You note that you will also eventually be the person people have to think for a moment about.',
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('s51q', true) },
@@ -176,7 +138,7 @@ export const EVENTS_SONDER_51 = [
     id: 'sonder_51_r',
     phase: 'late_life',
     weight: 2,
-    when: (G) => !G.mem?.s51r,
+    when: (G) => hasRunningWater(G) && (!G.mem?.s51r),
     text: 'The specific pleasure of being in a place you know so well that you navigate it without sight — the stairs in the dark, the path to the bathroom at 3am, the kitchen in the early morning before the light is on. The body has mapped this space. The map is accurate. The navigation happens before the awareness of navigating.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s51r', true) },
@@ -222,17 +184,7 @@ export const EVENTS_SONDER_51 = [
     effect: (p) => { p.r += 3; p.setMem('s51v', true) },
   },
 
-  {
-    id: 'sonder_51_w',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => !G.mem?.s51w,
-    text: 'The meeting cancelled at the last minute that you were not looking forward to. The surprise of relief: the afternoon suddenly free, the obligation dissolved, the work you were not doing now available to be done in a space with no one in it. You spend the afternoon doing exactly what you would have done had the meeting not been scheduled.',
-    choices: null,
-    effect: (p) => { p.m += 3; p.setMem('s51w', true) },
-  },
-
-  {
+{
     id: 'sonder_51_x',
     phase: 'adolescence',
     weight: 2,
@@ -252,17 +204,7 @@ export const EVENTS_SONDER_51 = [
     effect: (p) => { p.r += 3; p.setMem('s51y', true) },
   },
 
-  {
-    id: 'sonder_51_z',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => !G.mem?.s51z,
-    text: 'The voice on the phone that you would recognize anywhere. Not because you hear it often — because you heard it at the right age and it fixed. Certain voices from childhood or early life are permanent fixtures of the internal auditory landscape. The voice on the phone: you know who it is before they say.',
-    choices: null,
-    effect: (p) => { p.m += 3; p.setMem('s51z', true) },
-  },
-
-  {
+{
     id: 'sonder_51_aa',
     phase: 'young_adult',
     weight: 2,

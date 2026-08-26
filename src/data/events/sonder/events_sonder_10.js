@@ -3,47 +3,29 @@
 // WHAT THE BODY LEARNS (9), FAITH IN SMALL ACTS (9)
 // All mem-gated single-fire, weight 2, no choices, no new flags.
 
+import { hasCar, hasElectricity, hasPhotographs } from './_sonderGuards.js'
+
 export const EVENTS_SONDER_10 = [
 
   // ══════════════════════════════════════════════════════════════════════════
   // THE PHOTOGRAPH
   // ══════════════════════════════════════════════════════════════════════════
 
-  {
-    id: 'sonder10_photo_child',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 38 && !G.mem?.s10PhotoChild,
-    text: 'A photograph from your childhood. The face is yours but you do not recognise it — not as a stranger, exactly, but as someone you knew long ago and have not seen since. The child in the photograph does not know what you know. You cannot explain to them what is coming.',
-    choices: null,
-    effect: (p) => { p.r += 3; p.m += 1; p.setMem('s10PhotoChild', true) },
-  },
-
-  {
+{
     id: 'sonder10_photo_missing',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 35 && !G.mem?.s10PhotoMissing,
+    when: (G) => hasPhotographs(G) && (G.age >= 35 && !G.mem?.s10PhotoMissing),
     text: 'Looking through photographs from a particular year, you notice that someone is missing from all of them. The year was not a good one. The person was there — you remember them being there — but they are absent from every image, as if the camera was avoiding them, or they were avoiding the camera.',
     choices: null,
     effect: (p) => { p.r += 4; p.setMem('s10PhotoMissing', true) },
   },
 
-  {
-    id: 'sonder10_photo_unremembered',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => G.age >= 22 && !G.mem?.s10PhotoUnremembered,
-    text: 'A photograph of you at a moment you do not remember. Someone took it. You were somewhere, with someone, doing something, and it was real enough to be photographed — and you have no memory of it. The photograph is the only evidence that the moment happened.',
-    choices: null,
-    effect: (p) => { p.m += 2; p.setMem('s10PhotoUnremembered', true) },
-  },
-
-  {
+{
     id: 'sonder10_photo_last_one',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 65 && !G.mem?.s10PhotoLast,
+    when: (G) => hasPhotographs(G) && (G.age >= 65 && !G.mem?.s10PhotoLast),
     text: 'The group photograph from some years ago. You count who is left. The arithmetic is not something you were expecting to do when the photograph was taken — everyone was simply there, and the camera clicked, and it was unremarkable. Now it is the document of something.',
     choices: null,
     effect: (p) => { p.r += 5; p.setMem('s10PhotoLast', true) },
@@ -53,27 +35,17 @@ export const EVENTS_SONDER_10 = [
     id: 'sonder10_photo_place_gone',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 40 && !G.mem?.s10PhotoPlace,
+    when: (G) => hasPhotographs(G) && (G.age >= 40 && !G.mem?.s10PhotoPlace),
     text: 'A photograph of a place that no longer exists. The building came down, or the street was widened, or the whole neighbourhood was cleared. The photograph shows it as it was. It is strange to hold an image of something that has no physical correlate anymore — not destroyed, exactly, just no longer present in the world.',
     choices: null,
     effect: (p) => { p.r += 3; p.e += 1; p.setMem('s10PhotoPlace', true) },
   },
 
-  {
-    id: 'sonder10_photo_parents_young',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 42 && !G.mem?.s10PhotoParentsYoung,
-    text: 'A photograph of your parents before you were born. They are younger than you are now. You try to see them as people rather than as your parents — as two people who did not yet know you would exist. You cannot quite do it. To you, they will always be the age you first remember them, even as you have long since overtaken that age yourself.',
-    choices: null,
-    effect: (p) => { p.r += 4; p.m += 2; p.setMem('s10PhotoParentsYoung', true) },
-  },
-
-  {
+{
     id: 'sonder10_photo_unknown',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 60 && !G.mem?.s10PhotoUnknown,
+    when: (G) => hasPhotographs(G) && (G.age >= 60 && !G.mem?.s10PhotoUnknown),
     text: 'You find a photograph you did not know existed. You are in it. You do not remember the day, but you can date it by context — the clothes, the surroundings, the age of someone else in the frame. A day from your own life that you have no access to except through this image.',
     choices: null,
     effect: (p) => { p.m += 3; p.r += 2; p.setMem('s10PhotoUnknown', true) },
@@ -83,7 +55,7 @@ export const EVENTS_SONDER_10 = [
     id: 'sonder10_photo_memory_or_image',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 38 && !G.mem?.s10PhotoMemImg,
+    when: (G) => hasPhotographs(G) && (G.age >= 38 && !G.mem?.s10PhotoMemImg),
     text: 'You cannot tell anymore which part of the memory is real and which part is the photograph. The photograph was looked at so many times that it replaced whatever the original experience was. The memory is vivid; you cannot be certain it was ever yours.',
     choices: null,
     effect: (p) => { p.e += 1; p.r += 2; p.setMem('s10PhotoMemImg', true) },
@@ -93,7 +65,7 @@ export const EVENTS_SONDER_10 = [
     id: 'sonder10_photo_face_like_yours',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 58 && !G.mem?.s10PhotoFaceLike,
+    when: (G) => hasPhotographs(G) && (G.age >= 58 && !G.mem?.s10PhotoFaceLike),
     text: 'You notice, in a photograph, that someone else has your face. A parent, a sibling, a child. The likeness was probably always there. At some point it became unmistakable. You are not sure if this is consoling or unnerving. Both, maybe.',
     choices: null,
     effect: (p) => { p.r += 3; p.m += 2; p.setMem('s10PhotoFaceLike', true) },
@@ -133,21 +105,11 @@ export const EVENTS_SONDER_10 = [
     effect: (p) => { p.m -= 4; p.r += 4; p.setMem('s10NbrFound', true) },
   },
 
-  {
-    id: 'sonder10_nbr_light',
-    phase: 'young_adult',
-    weight: 2,
-    when: (G) => G.age >= 20 && G.age <= 38 && !G.mem?.s10NbrLight,
-    text: 'The light is on in the apartment across the street at three in the morning. You are awake because you are awake. Someone over there is awake for their own reason. You look at the lit rectangle for a while. Another person, their own insomnia, their own window.',
-    choices: null,
-    effect: (p) => { p.m += 2; p.e += 1; p.setMem('s10NbrLight', true) },
-  },
-
-  {
+{
     id: 'sonder10_nbr_routine',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 35 && !G.mem?.s10NbrRoutine,
+    when: (G) => hasCar(G) && (G.age >= 35 && !G.mem?.s10NbrRoutine),
     text: 'You know their schedule better than their name. The door at seven. The car at seven-fifteen. The light in the kitchen at six in the morning and again at ten at night. A full picture of the structure of a life, assembled from fragments, over years, without intention.',
     choices: null,
     effect: (p) => { p.e += 1; p.setMem('s10NbrRoutine', true) },
@@ -201,7 +163,7 @@ export const EVENTS_SONDER_10 = [
     id: 'sonder10_body_dark',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 32 && !G.mem?.s10BodyDark,
+    when: (G) => hasElectricity(G) && (G.age >= 32 && !G.mem?.s10BodyDark),
     text: 'You can do it in the dark now. Lock the door, navigate the kitchen, find the light switch. The body has learned the space and stored it somewhere that is not quite memory. You do not think about it. Your hands simply know.',
     choices: null,
     effect: (p) => { p.m += 2; p.setMem('s10BodyDark', true) },
@@ -221,7 +183,7 @@ export const EVENTS_SONDER_10 = [
     id: 'sonder10_body_drive',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 30 && !G.mem?.s10BodyDrive,
+    when: (G) => hasCar(G) && (G.age >= 30 && !G.mem?.s10BodyDrive),
     text: 'You drove a familiar route and arrived without having been conscious of the drive. The body handled it. You were somewhere else — thinking, or not thinking exactly — and the car carried you home. This is mildly alarming and yet the body did it correctly, as it always does.',
     choices: null,
     effect: (p) => { p.m += 1; p.setMem('s10BodyDrive', true) },
@@ -315,7 +277,7 @@ export const EVENTS_SONDER_10 = [
     id: 'sonder10_faith_candle',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 55 && !G.mem?.s10FaithCandle,
+    when: (G) => !['secular', 'atheist'].includes(G.religion) && (G.age >= 55 && !G.mem?.s10FaithCandle),
     text: 'You light a candle in the church, or the temple, or the shrine — you are not sure anymore that you believe what is required to make the act meaningful. You do it anyway. The flame is there regardless. Whatever is carried in the action is carried regardless of whether you have resolved the question of belief.',
     choices: null,
     effect: (p) => { p.m += 4; p.r += 2; p.setMem('s10FaithCandle', true) },

@@ -229,7 +229,11 @@ describe('persona coverage', () => {
       // age was 8 and no life passed 33.
       const survivors = ages.filter(a => a >= 5).sort((a, b) => a - b)
       expect(survivors.length, 'lives surviving childhood').toBeGreaterThan(lives * 0.4)
-      expect(survivors[survivors.length >> 1], 'median age of childhood survivors').toBeGreaterThan(40)
+      // Same floor and same reasoning as the balance test above: measured at
+      // n=120, the harshest cohort's survivor median is 53-55 with a p25 of ~26,
+      // so a 20-life sample median needs headroom. The original defect — median
+      // death age 8, nothing past 33 — fails this by a wide margin.
+      expect(survivors[survivors.length >> 1], 'median age of childhood survivors').toBeGreaterThan(32)
       expect(Math.max(...ages), 'oldest life in the cohort').toBeGreaterThan(64)
     }, 300000)
   }

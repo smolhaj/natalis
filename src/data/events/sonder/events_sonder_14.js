@@ -7,6 +7,8 @@
 //
 // All weight 2, mem-gated, no choices, minimal stat effects.
 
+import { hasElectricity, hasPhone, hasPhotographs, isLiterate } from './_sonderGuards.js'
+
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
 export const EVENTS_SONDER_14 = [
@@ -23,17 +25,7 @@ export const EVENTS_SONDER_14 = [
     effect: (p) => { p.setMem('s14BodyAtDesk', true) },
   },
 
-  {
-    id: 's14_the_commute_year',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 30 && !G.mem?.s14CommuteYear,
-    text: `Something happens this year and the commute is the frame around it. The commute is the same both ways: the same platform, the same sequence of stations, the same walk to the office that takes nine minutes when unhurried and six when not. The event that happened is over. The commute continues with the same nine-minute walk, the same platform. You will remember the event. You will not remember the nine minutes. Both the commute and the event are what a year is made of.`,
-    choices: null,
-    effect: (p) => { p.setMem('s14CommuteYear', true) },
-  },
-
-  {
+{
     id: 's14_hands_learning',
     phase: 'young_adult',
     weight: 2,
@@ -59,7 +51,7 @@ export const EVENTS_SONDER_14 = [
     id: 's14_object_outlives',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 60 && !G.mem?.s14ObjectOutlives,
+    when: (G) => hasElectricity(G) && (G.age >= 60 && !G.mem?.s14ObjectOutlives),
     text: `There are objects in the house that are older than the house. The table was your grandmother's. The lamp was bought in another city in a year when you were someone slightly different from who you are now and it has survived two moves. Objects accumulate a history that is not their history — they absorb the rooms they've been in, the hands that have moved them, the specific light conditions of the apartments where they have been present. The table does not remember being your grandmother's. It was simply always there.`,
     choices: null,
     effect: (p) => { p.setMem('s14ObjectOutlives', true) },
@@ -79,7 +71,7 @@ export const EVENTS_SONDER_14 = [
     id: 's14_the_photograph_in_a_drawer',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 40 && !G.mem?.s14PhotoInDrawer,
+    when: (G) => hasPhotographs(G) && (G.age >= 40 && !G.mem?.s14PhotoInDrawer),
     text: `There is a photograph that is not on display. It is in a drawer or at the bottom of a box. The reason it is not on display is not something you have articulated to anyone — it is simply that it has always been in the drawer. The photograph shows people who were real and specific and who are now older or dead or in another country or estranged, and looking at it requires calibrating between what they were at the time of the photograph and what they became afterward. The drawer is the right place for it.`,
     choices: null,
     effect: (p) => { p.setMem('s14PhotoInDrawer', true) },
@@ -129,17 +121,7 @@ export const EVENTS_SONDER_14 = [
 
   // ── THE TEXTURE OF WAITING ───────────────────────────────────────────────────
 
-  {
-    id: 's14_the_waiting_room',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 35 && !G.mem?.s14WaitingRoom,
-    text: `The waiting room has magazines from a specific month in a previous year. The people in it are each waiting for their own specific reason, which is not displayed. You wait alongside them with your own reason. The room is designed for the suspension of time — its magazines are always from a previous month, its chairs arranged for adjacency without encounter, its function the management of the interval between the decision to come and the event you came for. You will not remember the waiting room. You will remember what came after it.`,
-    choices: null,
-    effect: (p) => { p.setMem('s14WaitingRoom', true) },
-  },
-
-  {
+{
     id: 's14_the_queue',
     phase: 'young_adult',
     weight: 2,
@@ -171,17 +153,7 @@ export const EVENTS_SONDER_14 = [
     effect: (p) => { p.setMem('s14UpdateCall', true) },
   },
 
-  {
-    id: 's14_the_letter_kept',
-    phase: 'late_life',
-    weight: 2,
-    when: (G) => G.age >= 55 && !G.mem?.s14LetterKept,
-    text: `There is a letter you have kept since the year it was sent. It was sent by someone who is older or dead or changed beyond the person who wrote it. The letter contains sentences that were true at the time of writing and may or may not still be true. You do not read it often. You know where it is. Keeping it is not the same as returning to it. Keeping it is a decision made once and renewed each time you could have decided to discard it and didn't.`,
-    choices: null,
-    effect: (p) => { p.setMem('s14LetterKept', true) },
-  },
-
-  {
+{
     id: 's14_news_from_far',
     phase: 'young_adult',
     weight: 2,
@@ -213,17 +185,7 @@ export const EVENTS_SONDER_14 = [
     effect: (p) => { p.setMem('s14MirrorYoung', true) },
   },
 
-  {
-    id: 's14_mirror_parent',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 42 && G.age <= 55 && !G.mem?.s14MirrorParent,
-    text: `The face in the mirror at this age shows something that the face at twenty didn't — something that is recognisably the face of your parent at a particular age. The features were always yours. The arrangement of them has arrived at a resemblance that was not visible before. This is a specific kind of information. You receive it and proceed.`,
-    choices: null,
-    effect: (p) => { p.setMem('s14MirrorParent', true) },
-  },
-
-  {
+{
     id: 's14_no_longer_looking',
     phase: 'late_life',
     weight: 2,
@@ -235,17 +197,7 @@ export const EVENTS_SONDER_14 = [
 
   // ── ROOMS ───────────────────────────────────────────────────────────────────
 
-  {
-    id: 's14_the_kitchen_night',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 35 && !G.mem?.s14KitchenNight,
-    text: `The kitchen at night when the house is otherwise quiet has a different quality from the kitchen during the day. The same objects. The same light when the light is on. But the quiet outside it gives the kitchen a focus it doesn't have when there are other things happening. Standing in the kitchen at 11pm getting a glass of water is a different experience from standing in the kitchen at 7am making coffee. Both are the kitchen. The night kitchen is somehow more kitchen.`,
-    choices: null,
-    effect: (p) => { p.setMem('s14KitchenNight', true) },
-  },
-
-  {
+{
     id: 's14_the_empty_room',
     phase: 'late_life',
     weight: 2,
@@ -267,17 +219,7 @@ export const EVENTS_SONDER_14 = [
 
   // ── WHAT SURVIVES ──────────────────────────────────────────────────────────
 
-  {
-    id: 's14_the_song_from_before',
-    phase: 'midlife',
-    weight: 2,
-    when: (G) => G.age >= 40 && !G.mem?.s14SongBefore,
-    text: `A song from a particular year arrives unexpectedly. The song is not from a good year or a bad year specifically — it is from a year that had texture you have not thought about in a long time. The song carries the texture back exactly. Not approximated. The specific quality of that year in your body, the person you were in it, the things you were worried about which you can no longer access directly but which the song accesses without effort. The song ends. The year goes back where it was.`,
-    choices: null,
-    effect: (p) => { p.m += 3; p.setMem('s14SongBefore', true) },
-  },
-
-  {
+{
     id: 's14_the_phrase_inherited',
     phase: 'midlife',
     weight: 2,
@@ -291,7 +233,7 @@ export const EVENTS_SONDER_14 = [
     id: 's14_the_handwriting',
     phase: 'late_life',
     weight: 2,
-    when: (G) => G.age >= 58 && Object.values(G.parents ?? {}).some(p => !p.alive) && !G.mem?.s14Handwriting,
+    when: (G) => isLiterate(G) && (G.age >= 58 && Object.values(G.parents ?? {}).some(p => !p.alive) && !G.mem?.s14Handwriting),
     text: `There is a piece of paper somewhere — a card, a note, a list — in handwriting that is your parent's. You still recognise it immediately. Handwriting is one of the ways people persist after they are gone: a specific physical gesture, trained and habitual, expressing them in the moment of making the letter. The note itself may be trivial — a shopping list, a birthday card message. The handwriting is not trivial. It is them specifically, making a mark.`,
     choices: null,
     effect: (p) => { p.m += 4; p.setMem('s14Handwriting', true) },
@@ -323,7 +265,7 @@ export const EVENTS_SONDER_14 = [
     id: 's14_stranger_on_train',
     phase: 'midlife',
     weight: 2,
-    when: (G) => G.age >= 35 && !G.mem?.s14StrangerTrain,
+    when: (G) => hasPhone(G) && (G.age >= 35 && !G.mem?.s14StrangerTrain),
     text: `The woman across from you on the train today. She is doing something ordinary — reading, looking at her phone, looking at nothing in particular — and you observe, without meaning to, that she is at a specific moment in her life. You do not know what the moment is. But you can read the particular quality of attention she is giving to the nothing she is looking at — slightly inward, slightly away — and infer that something has recently happened, or is about to happen, or is being processed. You arrive at your stop and she continues.`,
     choices: null,
     effect: (p) => { p.setMem('s14StrangerTrain', true) },

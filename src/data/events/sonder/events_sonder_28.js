@@ -106,21 +106,7 @@ export const EVENTS_SONDER_28 = [
     effect: (p) => { p.setMem('sdr28HeatInTheBody', true) },
   },
 
-  {
-    id: 'sdr28_the_photograph_looked_at',
-    phase: null,
-    weight: 2,
-    when: (G) => G.age >= 35 && !G.mem?.sdr28PhotographLookedAt,
-    text: () => pick([
-      'You found a photograph of yourself from years ago and you looked at it for a while. You cannot quite locate yourself in the face. Not because you look so different, though you do. More because you do not know what that person was thinking, what they were worried about, what they thought would happen next.',
-      'There is a photograph that was not staged — someone caught you doing something ordinary. You are not looking at the camera. You do not know you are about to be a photograph yet. You look like that is just your life, going on.',
-      'The photographs from before you had a camera in your pocket every day are different. They had to be chosen. Someone decided: this moment is worth the cost of the film, the processing. What was selected says something. What was not selected you can no longer see.',
-    ]),
-    choices: null,
-    effect: (p) => { p.setMem('sdr28PhotographLookedAt', true) },
-  },
-
-  {
+{
     id: 'sdr28_market_day',
     phase: null,
     weight: 2,
