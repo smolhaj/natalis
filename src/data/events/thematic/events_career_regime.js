@@ -123,9 +123,10 @@ export const CAREER_REGIME_EVENTS = [
   },
   {
     id: 'creg_doctor_outbreak',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
-    when: (G) => G.career?.field === 'healthcare' && ['subsaharan', 'conflict_zone', 'developing_unstable'].includes(G.character.country.archetype) && G.age >= 24,
+    when: (G) =>
+      G.age <= 49 && G.career?.field === 'healthcare' && ['subsaharan', 'conflict_zone', 'developing_unstable'].includes(G.character.country.archetype) && G.age >= 24,
     text: 'The first case comes in on a Tuesday. By Friday there are eleven. The supplies that are supposed to exist for this — the PPE, the isolation protocol, the hotline to the ministry — are partial, delayed, or theoretical. You suit up in what you have.',
     choices: [
       { text: 'Work through it. This is what you trained for.', tag: null, outcome: 'You work for three weeks without a day off. Two colleagues fall ill. You do not.', effect: (p) => { p.h -= 10; p.m -= 8; p.karma += 12; p.addFlag('outbreak_survivor'); p.addFlag('healthcare_scarcity') } },
@@ -206,9 +207,10 @@ export const CAREER_REGIME_EVENTS = [
   },
   {
     id: 'creg_teacher_hungry_student',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
-    when: (G) => G.career?.field === 'education' && ['subsaharan', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype) && G.age >= 24,
+    when: (G) =>
+      G.age <= 49 && G.career?.field === 'education' && ['subsaharan', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype) && G.age >= 24,
     text: 'You can tell. After a while you learn to tell. A girl in the third row has not eaten since yesterday. She is attentive in the particular way of someone working very hard to concentrate through something. You teach the lesson. At the end you find a reason to keep her after class.',
     choices: [
       { text: 'Give her food from your own bag without making it a thing', tag: null, outcome: 'She takes it without comment. She comes back tomorrow.', effect: (p) => { p.m += 5; p.karma += 10; p.addFlag('fed_a_student') } },
@@ -287,9 +289,10 @@ export const CAREER_REGIME_EVENTS = [
   },
   {
     id: 'creg_police_untrusted_community',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
-    when: (G) => G.career?.field === 'law_enforcement' && G.age >= 24,
+    when: (G) =>
+      G.age <= 49 && G.career?.field === 'law_enforcement' && G.age >= 24,
     text: 'You are assigned to a neighborhood where people watch you from doorways and do not call the police when things happen. You understand why. You have read the history of what happened here before you arrived. You are wearing the same uniform.',
     choices: [
       { text: 'Try to build something different. It is slow work.', tag: null, outcome: 'An old woman eventually speaks to you without crossing the street first. It takes two years.', effect: (p) => { p.m += 5; p.karma += 8; p.s += 4; p.addFlag('rebuilt_community_trust') } },

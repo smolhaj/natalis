@@ -33,7 +33,7 @@ export const EVENTS_SONDER_9 = [
 
   {
     id: 'sonder9_child_memory_game',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 20 && G.age <= 35 && !G.mem?.s9ChildGame,
     text: 'You cannot fully remember the rules of the game you played every day for years as a child. The memory of playing it is vivid. The specific mechanics — the counting, the boundaries, the points — have disappeared entirely. The body remembers having done it; the mind has let the specifics go.',
@@ -127,7 +127,7 @@ export const EVENTS_SONDER_9 = [
 
 {
     id: 'sonder9_lang_name',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 8 && G.age <= 18 && !G.mem?.s9LangName,
     text: 'Your name sounds different in different people\'s mouths. Your family says it one way. Teachers say it another. The version from your own family is the one you know is you. The other versions are approximations you have learned to answer to.',
@@ -157,7 +157,7 @@ export const EVENTS_SONDER_9 = [
 
   {
     id: 'sonder9_lang_reading',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) => place.hasBooks(G) && (G.age >= 9 && G.age <= 16 && !G.mem?.s9LangReading),
     text: 'You learned to read and then it was transparent — you stopped seeing the letters and saw the meaning instead. You cannot fully remember the transition. At some point the individual marks on the page became words and then the words became invisible and only what they pointed to remained. Learning to read is one of the few things you cannot fully remember having done.',
@@ -167,7 +167,7 @@ export const EVENTS_SONDER_9 = [
 
   {
     id: 'sonder9_lang_formal',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => place.isLiterate(G) && (G.age >= 20 && G.age <= 35 && !G.mem?.s9LangFormal),
     text: 'You have a formal version of how you speak that you deploy for specific situations — official documents, doctors, people with authority. The formal version is recognisably you and also not entirely you. You switch into it without deciding to. The switch is one of the small performances of being a person in a society.',
@@ -191,7 +191,7 @@ export const EVENTS_SONDER_9 = [
 
   {
     id: 'sonder9_money_first_earned',
-    phase: 'adolescence',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 14 && G.age <= 22 && !G.mem?.s9MoneyFirstEarned,
     text: 'The first money you earned yourself was different from money given to you. The weight of it — what it cost in time and effort and humility to produce — was information about the relationship between work and value that no description had conveyed. You spent it on something you no longer remember and the fact of having earned it is what stayed.',
@@ -201,7 +201,7 @@ export const EVENTS_SONDER_9 = [
 
   {
     id: 'sonder9_money_want',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 8 && G.age <= 16 && !G.mem?.s9MoneyWant,
     text: 'There was something you wanted very badly and could not have because of money. The wanting had a texture — you can still produce it if you try. The object itself has long since ceased to matter. The shape of the wanting stayed.',
@@ -221,7 +221,7 @@ export const EVENTS_SONDER_9 = [
 
   {
     id: 'sonder9_money_windfall',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 22 && G.age <= 40 && !G.mem?.s9MoneyWindfall,
     text: 'Unexpected money arrived once. Not a large amount — something modest. You spent it on something you did not need. The lightness of spending money that was not budgeted for, that arrived without effort, was a different feeling from the money you worked for. You have thought about this difference.',
@@ -231,7 +231,7 @@ export const EVENTS_SONDER_9 = [
 
   {
     id: 'sonder9_money_gift',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 8 && G.age <= 18 && !G.mem?.s9MoneyGift,
     text: 'Someone gave you money once — not your parents, but an aunt or an elder or a neighbour — and you did not know what to do with the social weight of it. The money was a small amount and also a relationship, an expectation, something about what you were supposed to become. You spent it on something and hoped that was the right response.',
@@ -251,7 +251,7 @@ export const EVENTS_SONDER_9 = [
 
   {
     id: 'sonder9_money_debt',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 20 && G.age <= 45 && !G.mem?.s9MoneyDebt,
     text: 'Debt is a different kind of weight from other weights. The feeling of owing money — the way it changes the texture of ordinary days, the amount of cognitive space it occupies — is information about the relationship between freedom and financial obligation that is only available from the inside.',
@@ -315,7 +315,7 @@ export const EVENTS_SONDER_9 = [
 
   {
     id: 'sonder9_friend_crisis',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 22 && G.age <= 40 && !G.mem?.s9FriendCrisis,
     text: 'A friendship was tested by something — a conflict, a crisis, a difference of opinion that turned out to matter more than expected. What followed was either a friendship that came out the other side deeper, or a friendship that ended in a way that still leaves a residue. You know which.',

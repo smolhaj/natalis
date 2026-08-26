@@ -26,7 +26,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_funeral_street',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 20 && G.age <= 35 && !G.mem?.sonderFuneralStreet,
     text: 'A funeral procession moves through the street ahead of you — slow, the family walking together, a coffin in a vehicle you have to wait for. You do not know whose funeral this is. You do not know anything about the person inside the vehicle except that they existed and now do not. You think about this for the rest of the afternoon.',
@@ -35,7 +35,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_bus_photograph',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     isGlimpse: true,
     when: (G) => G.age >= 22 && G.age <= 40 && G.currentYear >= 1950 && !G.mem?.sonderBusPhoto,
@@ -54,7 +54,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_old_man_corner',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     isGlimpse: true,
     when: (G) => G.age >= 35 && G.age <= 56 && !G.mem?.sonderOldManCorner,
@@ -64,7 +64,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_children_below',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => place.isUrban(G) && (G.age >= 32 && G.age <= 55 && !G.mem?.sonderChildrenBelow),
     text: 'Children are playing in the street below, or in the courtyard, or on the patch of ground outside. You can hear them from where you are. The game they are playing makes sense only to them. They are entirely inside it. Something about the sound of it, heard from above, from the middle of an adult day, is both ordinary and not ordinary at all.',
@@ -73,7 +73,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_market_hands',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     isGlimpse: true,
     when: (G) => G.age >= 18 && G.age <= 45 && !G.mem?.sonderMarketHands,
@@ -83,7 +83,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_train_station',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 34 && G.currentYear >= 1940 && !G.mem?.sonderTrainStation,
     text: 'In the station, everyone is going somewhere and has reasons for it. The man with the too-heavy bag has reasons. The woman in the yellow coat has reasons. The child running ahead of the parent has only speed as a reason, which is also a kind of reason. You find your platform. Everyone else finds theirs. The station empties in all directions at once.',
@@ -101,7 +101,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_wall_argument',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     isGlimpse: true,
     when: (G) => G.age >= 22 && G.age <= 52 && G.currentYear >= 1920 && !G.mem?.sonderWallArgument,
@@ -123,7 +123,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_commute_owned',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 24 && G.age <= 45 && G.career && G.currentYear >= 1950 && !G.mem?.mundaneCommuteOwned,
     text: 'The commute is the only part of the day that belongs entirely to you. No one can reach you for these exact minutes — or you can choose not to be reached. You have started to use this time in a way. What you do with it says something about what you actually want, as opposed to what you think you want.',
@@ -132,7 +132,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_grocery_routine',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 55 && G.currentYear >= 1960 && !G.mem?.mundaneGroceryRoutine,
     text: 'You know which aisle has what. You know which product is never in stock on a Monday. You know the checkout queue to avoid. This knowledge, accumulated without effort over years of the same loop, is the kind of intelligence that goes unacknowledged. The weekly shop takes twenty minutes less than it used to. You have absorbed the shop.',
@@ -141,7 +141,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_sunday_nothing',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 28 && G.age <= 55 && !G.mem?.mundaneSundayNothing,
     text: 'A day with nothing required. You feel the shape of the nothing and it is unusual — not comfortable at first, then more comfortable. By afternoon you have found the thing you actually wanted to do with a free day, not the thing you had told yourself you would do if you had time. The two are different. The distance between them is information.',
@@ -150,7 +150,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_cooking_alone',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 20 && G.age <= 38 && !G.partner && !G.mem?.mundaneCookingAlone,
     text: 'You cook a meal for yourself, for no particular occasion. The choosing of it, the preparation, the time it takes — none of this is remarkable, but there is a quality of attention in it that a day spent being moved from thing to thing does not have. You eat it. It is good enough. The kitchen is quiet after.',
@@ -159,7 +159,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_task_unwitnessed',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 32 && G.age <= 58 && !G.mem?.mundaneTaskUnwitnessed,
     text: 'You spend part of the day doing something no one else will ever know you did. The repair. The filing. The reply that needed to go out. When it is done there is no record of its undone state, which means no one can see that it is now done. You notice this. You do it anyway.',
@@ -168,7 +168,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_waiting_room',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     isGlimpse: true,
     when: (G) => G.age >= 20 && G.age <= 65 && G.currentYear >= 1940 && !G.mem?.mundaneWaitingRoom,
@@ -178,7 +178,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_rain_inside',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 22 && G.age <= 65 && !G.mem?.mundaneRainInside,
     text: 'A day when the rain makes the decision for you. You stay inside. You do not have to account for the decision because the weather has made it. There is a particular freedom in having the choice removed. By afternoon you are still inside and the rain is still there, and this is, in its way, a complete day.',
@@ -187,7 +187,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_end_of_ordinary_day',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 35 && G.age <= 58 && !G.mem?.mundaneEndOfDay,
     text: 'The day was neither good nor bad. Nothing of significance happened and nothing was asked of you beyond the ordinary, and you provided it. By evening it has passed in a way that feels like most things passing. You eat something. You sit for a while. The day goes where days go.',
@@ -196,7 +196,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_birthday_unremarkable',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 38 && G.age <= 58 && !G.mem?.mundaneBirthdayUnremarkable,
     text: 'Your birthday arrives on a Tuesday and it is a Tuesday. The number has changed — you are one year older — but the day is a day. Some people send messages. You receive them. There is a meal you choose for the occasion, nothing elaborate. The next day is a Wednesday. This is, in fact, what growing older mostly is.',
@@ -209,7 +209,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_hospital_corridor',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => place.hasHealthcare(G) && (G.age >= 28 && G.age <= 58 && !G.mem?.sonderHospitalCorridor),
     text: 'In the corridor of the hospital you are not a patient in, a family is gathered around something you cannot see — their arrangement tells you everything. They do not notice you. You pass them the way people pass through other people\'s worst days, which is: without touching them.',
@@ -218,7 +218,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_platform_farewell',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 35 && G.currentYear >= 1940 && !G.mem?.sonderPlatformFarewell,
     text: 'At the station, two people are saying goodbye. The train is already at the platform. One of them is holding the other\'s face with both hands. You do not watch. You have seen it. You carry your bag to the other end of the platform and think about something else.',
@@ -227,7 +227,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_night_worker',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 20 && G.age <= 40 && !G.mem?.sonderNightWorker,
     text: 'You see them when you are returning from something late — the cleaner, the night security, the baker loading a van before four in the morning. The city runs on two shifts and you exist in the one that does not notice the other.',
@@ -236,7 +236,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_couple_not_speaking',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     isGlimpse: true,
     when: (G) => place.hasCafe(G) && (G.age >= 30 && G.age <= 55 && !G.mem?.sonderCoupleNotSpeaking),
@@ -246,7 +246,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_letter_drop',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     isGlimpse: true,
     when: (G) => G.age >= 20 && G.age <= 45 && G.currentYear >= 1920 && G.currentYear <= 1990 && !G.mem?.sonderLetterDrop,
@@ -266,7 +266,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_midnight_light',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 22 && G.age <= 45 && !G.mem?.sonderMidnightLight,
     text: 'After midnight, one window in the building across the street is still lit. Someone is awake in there for reasons you will never know — working, grieving, nursing an infant, unable to sleep, finishing something, starting something, or simply still awake. The light goes out while you are watching it.',
@@ -275,7 +275,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_stranger_laugh',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     isGlimpse: true,
     when: (G) => G.age >= 18 && G.age <= 40 && !G.mem?.sonderStrangerLaugh,
@@ -285,7 +285,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_queue_grief',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 60 && !G.mem?.sonderQueueGrief,
     text: 'The man in the queue ahead of you buys the same things every week — you know this because you are in this queue every week — except that this week there is one of everything where there used to be two. You do not know if someone has moved out or died or simply stopped wanting the thing. You do not ask.',
@@ -294,7 +294,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_park_reader',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     isGlimpse: true,
     when: (G) => G.age >= 28 && G.age <= 60 && !G.mem?.sonderParkReader,
@@ -304,7 +304,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_taxi_driver',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 20 && G.age <= 45 && G.currentYear >= 1950 && !G.mem?.sonderTaxiDriver,
     text: 'The taxi driver, or the tuk-tuk driver, or whoever carries you through this city, is explaining something about the city\'s history that you would not have found in any guide. He does not know you will think about this for weeks. He is just filling the silence with something true.',
@@ -313,7 +313,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_old_woman_market',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     isGlimpse: true,
     when: (G) => G.age >= 30 && G.age <= 58 && !G.mem?.sonderOldWomanMarket,
@@ -341,7 +341,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_child_homework',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     isGlimpse: true,
     when: (G) => place.wentToSchool(G) && (G.age >= 32 && G.age <= 55 && !G.mem?.sonderChildHomework),
@@ -351,7 +351,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_two_old_women',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 35 && G.age <= 60 && !G.mem?.sonderTwoOldWomen,
     text: 'Two old women talking in the street, standing close, both talking at once, both listening. They have the ease of people who have been talking for sixty years and have found a way to do it simultaneously. The conversation is about everything and you pass through it and come out the other side.',
@@ -360,7 +360,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_man_singing',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     isGlimpse: true,
     when: (G) => G.age >= 18 && G.age <= 38 && !G.mem?.sonderManSinging,
@@ -370,7 +370,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_late_office_window',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 22 && G.age <= 42 && G.currentYear >= 1950 && !G.mem?.sonderLateOfficeWindow,
     text: 'At eight in the evening, one office in the office building across the way is still lit. A figure at a desk, visible in silhouette. You are leaving. They are still there. You do not know if they are getting ahead or being left behind. Both can look the same from outside.',
@@ -379,7 +379,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_prayer_beads',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     isGlimpse: true,
     when: (G) => place.hasBus(G) && (G.age >= 28 && G.age <= 60 && !G.mem?.sonderPrayerBeads),
@@ -389,7 +389,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_night_library',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 35 && G.currentYear >= 1950 && !G.mem?.sonderNightLibrary,
     text: 'The library at the end of the night, when most people have left. One or two others remain — at separate tables, in separate silences. You do not know what they are working on. They do not know what you are working on. The shared silence is its own form of companionship.',
@@ -401,7 +401,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_keys_table',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 20 && G.age <= 38 && !G.mem?.mundaneKeysTable,
     text: 'The keys go on the table by the door. This has become automatic. You did not decide that the table by the door would be where the keys go. It assembled itself over weeks of arriving home and putting the keys somewhere. Now the keys go on the table by the door.',
@@ -410,7 +410,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_phrase_started_using',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 32 && G.age <= 55 && !G.mem?.mundanePhraseStartedUsing,
     text: 'You have started using a phrase you did not use before. You do not know exactly when you started. It sounds, to you, like something a person slightly older would say. You are slightly older.',
@@ -419,7 +419,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_specific_chair',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 60 && !G.mem?.mundaneSpecificChair,
     text: 'There is a chair in your home that is yours — not by declaration but by accumulated precedent. No one sits in it when you are in the room. You sit in it. This is the invisible hierarchy of domestic space.',
@@ -428,7 +428,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_shortcut_learned',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => place.isUrban(G) && (G.age >= 18 && G.age <= 35 && !G.mem?.mundaneShortcutLearned),
     text: 'You found the shortcut this year. Not the obvious one — the other one, through the alley or across the courtyard or along the wall. The knowledge of it is a small local ownership.',
@@ -437,7 +437,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_thing_on_shelf',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 65 && !G.mem?.mundaneThingOnShelf,
     text: 'There is an object that has been on the same shelf for fifteen years. You stopped noticing it around year three. This year you noticed it again — by accident, in a particular light. It is still there. It has outlasted the reason you kept it.',
@@ -455,7 +455,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_night_kitchen',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 38 && !G.mem?.mundaneNightKitchen,
     text: 'You are in the kitchen at an hour you are not usually in the kitchen. The house is quiet. You eat something over the sink. There is a specific freedom in this that has no name.',
@@ -464,7 +464,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_same_song_again',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 35 && !G.mem?.mundaneSameSongAgain,
     text: 'You have listened to the same song too many times to count this year. The number does not seem possible given how often you wanted it again. The song has gone into the layer of things you will associate with this period for the rest of your life.',
@@ -482,7 +482,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_good_pen',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 28 && G.age <= 55 && G.currentYear >= 1920 && !G.mem?.mundaneGoodPen,
     text: 'There is a pen that writes the way a pen should write. You are careful about where it is. When someone borrows it, you notice. The preference for a specific pen is one of the small dignities of a working life.',
@@ -500,7 +500,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_neighbour_nod',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 28 && G.age <= 60 && !G.mem?.mundaneNeighbourNod,
     text: 'There is a neighbour you have never spoken to beyond the nod of recognition. You have nodded at each other for years. The relationship is complete without words. If they moved, you would notice the absence.',
@@ -518,7 +518,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_work_acquaintance_left',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => place.worksInOffice(G) && (G.age >= 28 && G.age <= 55 && G.career && !G.mem?.mundaneWorkAcquaintanceLeft),
     text: 'Someone at work left — not a close colleague, but someone whose daily presence had become background. The desk is now occupied by someone else who will also eventually become background. You think about this for the length of a lunch.',
@@ -536,7 +536,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_train_missed',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 38 && G.currentYear >= 1950 && !G.mem?.mundaneTrainMissed,
     text: 'You missed the train by thirty seconds. You watched it leave. The next one is in an hour. You find a place to sit and think about what you would have done with that hour had it been given to you. You do the thing you thought of.',
@@ -554,7 +554,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_friday_feeling',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => place.hasWeekend(G) && (G.age >= 18 && G.age <= 40 && G.career && !G.mem?.mundaneFridayFeeling),
     text: 'The quality of the Friday afternoon: the week finished, the weekend still ahead, the two days still unstructured and therefore still perfect. This has happened every week for years. The feeling has not diminished.',
@@ -563,7 +563,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_dream_recalled',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 28 && G.age <= 58 && !G.mem?.mundaneDreamRecalled,
     text: 'You remembered a dream into the afternoon, which is unusual. Most dreams leave by nine. This one stayed. You are not sure what it means and are not inclined to interpret it formally, but it occupied a specific corner of the day.',
@@ -572,7 +572,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_book_two_years',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 60 && !G.mem?.mundaneBookTwoYears,
     text: 'There is a book on your bedside table or your shelf that you have been about to read for two years. You are not sure why you haven\'t. The presence of the unread book is a small persistent fact of the life of this decade.',
@@ -601,7 +601,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_television_first_year',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 6 && G.age <= 16 && G.currentYear >= 1950 && G.currentYear <= 1975 && !G.mem?.mundaneTelevisionFirstYear,
     text: 'The television arrived this year or last year. The living room has rearranged itself around the fact of it. The evenings are different now. Not better, not worse — different in a way that is already becoming normal.',
@@ -619,7 +619,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_mobile_phone_first',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 16 && G.age <= 35 && G.currentYear >= 1993 && G.currentYear <= 2005 && !G.mem?.mundaneMobilePhoneFirst,
     text: 'The mobile phone arrived in your pocket this year or last year. The change it made was not dramatic on any given day. Cumulatively it changed everything about being reachable, and therefore everything about the texture of the day.',
@@ -646,7 +646,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_funeral_suit',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 35 && G.age <= 60 && !G.mem?.mundaneFuneralSuit,
     text: 'You have worn the same dark suit or the same dark dress to funerals for fifteen years. It is the correct garment. You do not own a better one and do not need to.',
@@ -655,7 +655,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_night_three_am',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 60 && !G.mem?.mundaneNightThreeAm,
     text: 'You woke at three in the morning with a thought that did not warrant waking at three in the morning. The thought knows no proportionality. You lay with it for an hour. It dissolved into sleep before it resolved.',
@@ -693,7 +693,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_nurse_handover',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => place.hasHealthcare(G) && (G.career?.field === 'healthcare' && G.age >= 22 && G.age <= 45 && !G.mem?.mundaneNurseHandover),
     text: 'The handover at the shift change: the quick run through each patient, the tone of voice that conveys more than the words, the colleague who takes over and whom you trust with what you are leaving. You go home. The ward continues.',
@@ -722,7 +722,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_woman_name_changed',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.character?.gender === 'female' && G.partner && G.age >= 20 && G.age <= 35 && !G.mem?.mundaneWomanNameChanged,
     text: 'Your name has changed, or there was the question of whether your name would change, or you are still being introduced by a name that no longer exactly belongs to the identity it belonged to. The administration of this takes longer than expected.',
@@ -731,7 +731,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_man_asking_directions',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.character?.gender === 'male' && G.age >= 18 && G.age <= 45 && !G.mem?.mundaneManAskingDirections,
     text: 'You needed to ask directions. The asking of directions requires a specific recalibration for someone who does not usually ask for directions. You asked. You were given accurate information. You got there.',
@@ -740,7 +740,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_pregnancy_invisible',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.character?.gender === 'female' && G.age >= 22 && G.age <= 42 && !G.mem?.mundanePregnancyInvisible,
     text: 'The early weeks of a pregnancy — or the months of trying, or the months of not trying — when the body is engaged in something enormous and no one can see it. The ordinary continues around something that is not ordinary.',
@@ -760,7 +760,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_church_christmas',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) => !['secular', 'atheist'].includes(G.religion) && (G.character?.religion?.startsWith('christian') && G.age >= 6 && G.age <= 16 && !G.mem?.mundaneChurchChristmas),
     text: 'Christmas at the church is different from Christmas at home — the candles, the hymns that only come once a year, the congregation somehow larger and also more itself. You know this service by heart now. The knowing is part of what it is.',
@@ -769,16 +769,17 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_high_holidays',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
-    when: (G) => G.character?.religion === 'jewish' && G.age >= 25 && !G.mem?.mundaneHighHolidays,
+    when: (G) =>
+      G.age <= 49 && G.character?.religion === 'jewish' && G.age >= 25 && !G.mem?.mundaneHighHolidays,
     text: 'The High Holidays again. The year is counted, accounted for, and opened. The same prayers as last year and the year before. The same people — fewer, now, than in the years before — in the same seats.',
     effect: (p) => { p.m += 1; p.r += 1; p.setMem('mundaneHighHolidays', true); },
   },
 
   {
     id: 'mundane_diwali_lights',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) => G.character?.religion === 'hindu' && G.age >= 5 && G.age <= 16 && !G.mem?.mundaneDiwaliLights,
     text: 'Diwali: the diyas lit, the sweets distributed, the sky punctuated with firecrackers. The preparations took days. The evening takes hours. By midnight the street is quiet again and the lamps are burning down.',
@@ -807,7 +808,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_school_corridor_smell',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 7 && G.age <= 16 && !G.mem?.mundaneSchoolCorridorSmell,
     text: 'School has a smell that is the same regardless of which school and which country — a compound of cleaning fluid and paper and children and the particular neutrality of institutional space. You will smell it decades later and be briefly elsewhere.',
@@ -816,7 +817,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'mundane_teacher_whose_name',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 8 && G.age <= 16 && !G.mem?.mundaneTeacherWhoseName,
     text: 'One teacher whose name you will still know at eighty. Not because they were the favourite — although perhaps they were — but because something in the way they spoke to you was the first time you understood that an adult could take you seriously.',
@@ -893,7 +894,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_danfo_bus',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     isGlimpse: true,
     when: (G) => G.currentCountry?.name === 'Nigeria' && G.age >= 18 && G.age <= 42 && !G.mem?.sonderDanfoBus,
@@ -903,7 +904,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_chai_stall',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => ['India', 'Pakistan', 'Bangladesh'].includes(G.currentCountry) && G.age >= 18 && G.age <= 45 && !G.mem?.sonderChaiStall,
     text: 'The chai wallah at the corner is pouring four glasses simultaneously while chatting to a fifth person and collecting coin from a sixth. The motion belongs to someone who has done this ten thousand times. He does not appear to be managing it. He appears to be doing something else while it happens.',
@@ -912,7 +913,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_night_market_table',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => ['Thailand', 'Vietnam', 'Malaysia', 'Cambodia', 'Laos', 'Myanmar', 'Taiwan', 'South Korea', 'China'].includes(G.currentCountry) && G.age >= 25 && G.age <= 58 && !G.mem?.sonderNightMarketTable,
     text: 'At the night market, a family occupies a corner table — grandmother, parents, two children, a teenager with a phone. They are entirely ordinary and entirely specific. The grandmother peels a shrimp without looking at it. The father glances at the street and comes back.',
@@ -921,7 +922,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_coffee_house_game',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => ['Egypt', 'Algeria', 'Tunisia', 'Morocco', 'Jordan', 'Lebanon', 'Syria', 'Turkey'].includes(G.currentCountry) && G.age >= 25 && G.age <= 62 && !G.mem?.sonderCoffeeHouseGame,
     text: 'In the coffee house, two men have played backgammon for an hour without speaking. The pieces move. The silence between moves belongs to people who have played together so long they no longer need to narrate the game to each other.',
@@ -930,7 +931,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_apartment_block_cleaner',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     isGlimpse: true,
     when: (G) => place.isUrban(G) && (G.character?.country?.archetype === 'post_soviet' && G.age >= 25 && G.age <= 62 && !G.mem?.sonderApartmentCleaner),
@@ -940,7 +941,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_east_africa_rain',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => ['Kenya', 'Uganda', 'Tanzania', 'Rwanda', 'Zambia', 'Zimbabwe', 'Ethiopia'].includes(G.currentCountry) && G.age >= 18 && G.age <= 40 && !G.mem?.sonderEastAfricaRain,
     text: 'Through the matatu window, a woman walks fast in the rain holding a flat bag over her head. She is not running. She has calculated how wet she will get and has accepted it. You pass her. She disappears into the back window.',
@@ -949,7 +950,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_friday_prayer_courtyard',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => place.isUrban(G) && (G.character?.religion?.startsWith('muslim') && G.age >= 28 && G.age <= 65 && !G.mem?.sonderFridayPrayerCourtyard),
     text: 'After Friday prayer, men talk in the courtyard in groups sorted by age and neighbourhood and how long they have known each other — an arrangement no one decided. An old man stands at the edge alone, watching. He is not excluded. He is the one who sees.',
@@ -958,7 +959,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_latin_evening_window',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => ['Mexico', 'Colombia', 'Brazil', 'Argentina', 'Chile', 'Peru', 'Venezuela', 'Ecuador', 'Bolivia', 'Uruguay', 'Paraguay', 'Guatemala', 'El Salvador', 'Honduras', 'Nicaragua', 'Costa Rica'].includes(G.currentCountry) && G.age >= 28 && G.age <= 55 && !G.mem?.sonderLatinEveningWindow,
     text: 'Through an open window on the evening walk, you hear oil in a pan, a radio, a woman responding to something on the screen. The whole of an ordinary evening is in those sounds. You are on the pavement, on your way somewhere, and then you are past it.',
@@ -967,7 +968,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_checkpoint_young_soldier',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => ['conflict_zone', 'developing_unstable'].includes(G.character?.country?.archetype) && G.age >= 18 && G.age <= 42 && !G.mem?.sonderCheckpointYoungSoldier,
     text: 'The soldier at the checkpoint is twenty, possibly twenty-one. He checks your document and returns it without looking at your face. He is doing this the way you do your own work — a task repeated many times a day until it becomes motion without intention. You walk through. He returns to waiting.',
@@ -976,7 +977,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_market_head_balance',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     isGlimpse: true,
     when: (G) => ['subsaharan', 'developing_urban'].includes(G.character?.country?.archetype) && G.age >= 28 && G.age <= 55 && !G.mem?.sonderMarketHeadBalance,
@@ -1758,7 +1759,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_mother_public_invisible',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.character?.gender === 'female' && G.children?.length > 0 && G.age >= 28 && G.age <= 40 && !G.mem?.sonderMotherPublicInvisible,
     text: 'Pushing a pram through the street, you become a new category of person. Cars stop for you differently. Other people with prams nod. Men you know from before walk past without seeing you, or see you as something new rather than as who you were. You are still both.',
@@ -1955,7 +1956,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_new_parents_pavement',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     isGlimpse: true,
     when: (G) => place.hasHealthcare(G) && (G.age >= 24 && G.age <= 38 && !G.mem?.sonderNewParentsPavement),
@@ -2012,7 +2013,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_cancer_patient_sun',
-    phase: 'late_life',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 45 && !G.mem?.sonderCancerPatientSun,
     text: 'A person in a park turning their face to the sun with their eyes closed — the particular quality of someone for whom this is not routine pleasure but something else, something they are paying attention to in a way that suggests the sun cannot be taken for granted right now. You don\'t know their situation. Their face tells you something.',
@@ -2501,7 +2502,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_cambodia_survivor_ordinary',
-    phase: 'late_life',
+    phase: null,
     weight: 2,
     isGlimpse: true,
     when: (G) => G.character?.country?.name === 'Cambodia' && G.currentYear >= 1990 && G.age >= 45 && !G.mem?.sonderCambodiaSurvivorOrdinary,
@@ -2562,7 +2563,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_night_shift_worker_morning',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 40 && !G.mem?.sonderNightShiftWorkerMorning,
     text: 'The people coming off the night shift at the hour when you are beginning. You pass each other at the shift change hour, going in opposite directions. They are wearing the end of the night. You have not thought about what the night cost them because you have been asleep for it.',
@@ -2662,7 +2663,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_chinese_new_year_train_home',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.character?.country?.name === 'China' && G.age >= 20 && G.age <= 40 && G.currentYear >= 1985 && !G.mem?.sonderChineseNewYearTrainHome,
     text: 'The Spring Festival train: four hundred million people moving at the same time in the same direction, toward their parents\' homes. You are one of them. The migration is the largest annual human movement on earth and it happens inside the ordinary feeling of going home for the new year, which is just a feeling a person has about a train.',
@@ -2689,7 +2690,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_protest_march_faces',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 35 && G.currentYear >= 1960 && !G.mem?.sonderProtestMarchFaces,
     text: 'The faces in a march. Not the march as a political event but the march as a collection of individual reasons: the woman who came because her sister couldn\'t, the man who almost didn\'t come and came anyway, the teenager for whom this is the first time. All of them walking in the same direction for reasons that are each of them different from each other.',
@@ -2734,7 +2735,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_city_at_four_am',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.ruralUrban === 'urban' && G.age >= 20 && G.age <= 35 && !G.mem?.sonderCityAtFourAm,
     text: 'The city at four in the morning: the people who are awake at four are a subset of the city with its own internal logic. The delivery drivers, the nurses finishing, the insomniacs, the ones who stayed too late at someone else\'s home. You are briefly among them. Four in the morning makes everyone look like they know something the daytime doesn\'t.',
@@ -2743,7 +2744,7 @@ export const SONDER_EVENTS = [
 
   {
     id: 'sonder_soldier_homecoming_stranger',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     isGlimpse: true,
     when: (G) => G.age >= 22 && G.age <= 35 && G.currentYear >= 1945 && !G.mem?.sonderSoldierHomecomingStranger,

@@ -46,7 +46,7 @@ export const EVENTS_SONDER_56 = [
 
   {
     id: 'sonder_56_e',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 40 && G.age <= 55 && !G.mem?.s56e,
     text: 'You finish something you started — a book, a project, a year of not doing the thing — and feel, for a moment, very little. The feeling arrives later, smaller than you expected, and lasts longer.',
@@ -127,7 +127,7 @@ export const EVENTS_SONDER_56 = [
 
 {
     id: 'sonder_56_o',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 26 && G.age <= 35 && !G.mem?.s56o,
     text: 'The opinion you held at twenty-two which you now find embarrassing without quite being able to remember why you held it. The memory of having held it is clear. The reasoning that produced it is gone.',

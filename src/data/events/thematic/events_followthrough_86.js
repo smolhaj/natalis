@@ -85,9 +85,10 @@ export const FOLLOWTHROUGH_86_EVENTS = [
 
   {
     id: 'ft86_bathhouse_aids_years',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('can_bathhouse_raids_generation') &&
       G.currentYear >= 1984 && G.currentYear <= 1996 &&
       G.age >= 25 &&

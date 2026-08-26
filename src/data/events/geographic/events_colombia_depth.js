@@ -321,7 +321,7 @@ export const COLOMBIA_DEPTH_EVENTS = [
 
   {
     id: 'col_dep_falsos_echo',
-    phase: 'late_life',
+    phase: null,
     weight: 2,
     when: (G) =>
       IS_COLOMBIA(G) &&

@@ -25,9 +25,10 @@ export const FOLLOWTHROUGH_72_EVENTS = [
 
   {
     id: 'ft72_tha_1976_aftermath',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('tha_1973_generation') &&
       G.currentYear >= 1977 &&
       G.age >= 25 &&

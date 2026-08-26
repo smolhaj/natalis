@@ -30,7 +30,7 @@ export const EVENTS_SONDER_7 = [
 
   {
     id: 'sonder7_food_eating_alone',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.age >= 18 && G.age <= 35 &&
@@ -55,7 +55,7 @@ export const EVENTS_SONDER_7 = [
 
   {
     id: 'sonder7_food_cooking_for_many',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.age >= 35 && G.age <= 55 &&
@@ -80,7 +80,7 @@ export const EVENTS_SONDER_7 = [
 
   {
     id: 'sonder7_food_smell_of_home',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => place.hasCafe(G) && (G.age >= 22 && G.age <= 40 &&
       !G.mem?.s7FoodSmellHome),
@@ -133,7 +133,7 @@ export const EVENTS_SONDER_7 = [
 
   {
     id: 'sonder7_ritual_wedding_guest',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => !['secular', 'atheist'].includes(G.religion) && (G.age >= 22 && G.age <= 35 &&
       !G.mem?.s7RitualWedding),
@@ -156,7 +156,7 @@ export const EVENTS_SONDER_7 = [
 
   {
     id: 'sonder7_ritual_birthday_alone',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.age >= 40 && G.age <= 60 &&
@@ -182,7 +182,7 @@ export const EVENTS_SONDER_7 = [
 
   {
     id: 'sonder7_ritual_new_year',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.age >= 35 && G.age <= 55 &&
@@ -252,7 +252,7 @@ export const EVENTS_SONDER_7 = [
 
   {
     id: 'sonder7_street_corner',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.age >= 18 && G.age <= 35 &&
@@ -302,9 +302,10 @@ export const EVENTS_SONDER_7 = [
 
 {
     id: 'sonder7_street_power_out',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
-    when: (G) => place.hasRadio(G) && (['developing_urban', 'developing_unstable', 'subsaharan', 'conflict_zone', 'post_soviet'].includes(G.archetype) &&
+    when: (G) =>
+      G.age <= 49 && place.hasRadio(G) && (['developing_urban', 'developing_unstable', 'subsaharan', 'conflict_zone', 'post_soviet'].includes(G.archetype) &&
       G.age >= 25 &&
       !G.mem?.s7StreetPowerOut),
     text: 'The power goes out and the street rearranges itself. People come outside who were not outside. Candles appear in windows. The street is quieter and also more present to itself — the sounds that the electricity masked come back: insects, wind, distant conversation, a radio running on batteries. You have lived through enough power cuts that you know what to do and what to do without. The cut is an inconvenience. It is also, briefly, a different kind of evening.',
@@ -314,7 +315,7 @@ export const EVENTS_SONDER_7 = [
 
   {
     id: 'sonder7_street_bus_stop',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.ruralUrban === 'urban' &&
@@ -346,7 +347,7 @@ export const EVENTS_SONDER_7 = [
 
   {
     id: 'sonder7_sound_earworm',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.age >= 18 && G.age <= 35 &&
@@ -358,7 +359,7 @@ export const EVENTS_SONDER_7 = [
 
   {
     id: 'sonder7_sound_neighbours_music',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     isGlimpse: true,
     when: (G) =>
@@ -434,7 +435,7 @@ export const EVENTS_SONDER_7 = [
 
   {
     id: 'sonder7_sound_instrument_not_played',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.age >= 35 && G.age <= 55 &&

@@ -81,9 +81,10 @@ export const SINGAPORE_DEPTH_EVENTS = [
 
   {
     id: 'sg_dep_malay_muslim_sg_identity',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.character.country?.name === 'Singapore' &&
       G.ethnicity === 'malay_singaporean' &&
       G.currentYear >= 1970 &&

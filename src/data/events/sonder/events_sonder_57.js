@@ -46,7 +46,7 @@ export const EVENTS_SONDER_57 = [
 
   {
     id: 'sonder_57_e',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 42 && G.age <= 55 && !G.mem?.s57e,
     text: 'You have reached the age where you know what you are good at and what you are not, and the second list has stopped being an embarrassment. You can name both lists without much feeling attached to either. This is either wisdom or resignation. You have decided it does not matter which.',
@@ -126,7 +126,7 @@ export const EVENTS_SONDER_57 = [
 
   {
     id: 'sonder_57_n',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 46 && G.age <= 58 && !G.mem?.s57n,
     text: 'You hear your voice on a recording and do not recognise it for a second. The voice that you think of as your voice is not the voice that leaves your body and arrives in the ears of other people. This gap has been there your whole life. You are only sometimes aware of it.',
@@ -136,7 +136,7 @@ export const EVENTS_SONDER_57 = [
 
   {
     id: 'sonder_57_o',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 26 && G.age <= 35 && !G.mem?.s57o,
     text: 'You taught yourself something in your twenties — from a book, from someone at work, from watching and trying repeatedly — is now the thing people ask you about. The teaching yourself was invisible. The being asked is the visible version of the same investment.',

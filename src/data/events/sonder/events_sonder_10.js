@@ -118,7 +118,7 @@ export const EVENTS_SONDER_10 = [
 
   {
     id: 'sonder10_nbr_left_behind',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 20 && G.age <= 35 && !G.mem?.s10NbrLeftBehind,
     text: 'Moving into this place, you found things from the person before: a single shoe, a postcard from somewhere, marks on a wall that tracked a child\'s height over several years. The child is gone. The marks remain. A life was here.',
@@ -242,7 +242,7 @@ export const EVENTS_SONDER_10 = [
 
   {
     id: 'sonder10_body_read',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 22 && G.age <= 35 && !G.mem?.s10BodyRead,
     text: 'You read faster now than you used to, and you skip things without noticing you\'ve skipped them. The eye has learned to identify what matters. What you gain in speed, you may lose in something else — the unhurried sentences, the words read twice because they were exactly right. You are not sure what you\'ve traded.',

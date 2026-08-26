@@ -196,9 +196,10 @@ const BANGLADESH_EVENTS = [
 
   {
     id: 'bng_dhaka_city',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.character.country.name === 'Bangladesh' &&
       G.ruralUrban === 'urban' &&
       G.currentYear >= 2000 &&

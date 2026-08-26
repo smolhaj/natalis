@@ -146,9 +146,10 @@ export const PHILIPPINES_DEPTH_EVENTS = [
 
   {
     id: 'ph_dep_bangsamoro_2019',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       isMindanao(G) &&
       G.flags.has('ph_dep_moro_identity') &&
       G.currentYear >= 2019 &&

@@ -83,9 +83,10 @@ export const IVORY_COAST_DEPTH_EVENTS = [
 
   {
     id: 'ci_dep_ouattara_era',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       IS_IVORIAN(G) &&
       G.currentYear >= 2012 &&
       G.age >= 25 &&

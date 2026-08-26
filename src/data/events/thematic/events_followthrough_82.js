@@ -25,9 +25,10 @@ export const FOLLOWTHROUGH_82_EVENTS = [
 
   {
     id: 'ft82_rojo_transition',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('spain_rojo_family') &&
       G.flags.has('transicion_generation') &&
       G.currentYear >= 1977 && G.currentYear <= 1985 &&
@@ -46,9 +47,10 @@ export const FOLLOWTHROUGH_82_EVENTS = [
 
   {
     id: 'ft82_anti_franco_1977',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('spain_anti_franco_cell') &&
       G.currentYear >= 1977 && G.currentYear <= 1982 &&
       G.age >= 25 &&
@@ -122,9 +124,10 @@ export const FOLLOWTHROUGH_82_EVENTS = [
 
   {
     id: 'ft82_carrero_transition',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('spain_carrero_blanco_lived') &&
       G.currentYear >= 1975 && G.currentYear <= 1980 &&
       G.age >= 25 &&
@@ -162,9 +165,10 @@ export const FOLLOWTHROUGH_82_EVENTS = [
 
   {
     id: 'ft82_peligrosidad_transition',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('spain_ley_peligrosidad_survived') &&
       G.currentYear >= 1979 && G.currentYear <= 1985 &&
       G.age >= 25 &&
@@ -181,7 +185,7 @@ export const FOLLOWTHROUGH_82_EVENTS = [
 
   {
     id: 'ft82_peligrosidad_2005',
-    phase: 'late_life',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('spain_ley_peligrosidad_survived') &&

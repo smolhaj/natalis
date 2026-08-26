@@ -256,7 +256,7 @@ export const EVENTS_SONDER_24 = [
 
   {
     id: 'sdr24_morning_after',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 20 && G.age <= 40 && !G.mem?.sdr24MorningAfter,
     text: () => pick([

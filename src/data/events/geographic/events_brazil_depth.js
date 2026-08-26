@@ -208,9 +208,10 @@ export const BRAZIL_DEPTH_EVENTS = [
 
   {
     id: 'bra_dep_soy',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.character.country.name === 'Brazil' &&
       G.currentYear >= 1990 &&
       G.age >= 20 &&

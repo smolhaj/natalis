@@ -192,7 +192,7 @@ export const CHILD_DEATH_ARC_EVENTS = [
 
   {
     id: 'child_death_try_again',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.includes('lost_child') &&

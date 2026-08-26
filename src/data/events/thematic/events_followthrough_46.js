@@ -92,7 +92,7 @@ export const FOLLOWTHROUGH_46_EVENTS = [
 
   {
     id: 'ft46_bay_of_pigs_late',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('bay_of_pigs_generation') &&

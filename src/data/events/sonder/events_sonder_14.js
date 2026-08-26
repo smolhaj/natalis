@@ -27,7 +27,7 @@ export const EVENTS_SONDER_14 = [
 
 {
     id: 's14_hands_learning',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 20 && G.age <= 35 && !G.mem?.s14HandsLearning,
     text: `The hands develop their own knowledge independently of what the mind is tracking. You can do the thing with your hands while thinking about something else entirely. The first year this was not possible. At some point between then and now it became possible. You did not register the transition — it happened below attention, at the level where the hands were practicing while you were elsewhere.`,
@@ -37,7 +37,7 @@ export const EVENTS_SONDER_14 = [
 
   {
     id: 's14_lunch_years',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 35 && G.age <= 55 && !G.mem?.s14LunchYears,
     text: `There is a lunch place that has been the lunch place for years. You order the same thing, or a rotation of the same things, and they know your order or they don't and the lunch is the same quality it has always been. The conversation at lunch with whoever you eat lunch with is a parallel life to the one happening in the rest of the day — it has its own continuity, its own inside references, its own small arguments that are resumed the following week. The lunch is not a break. It is one of the ways the year holds together.`,
@@ -101,7 +101,7 @@ export const EVENTS_SONDER_14 = [
 
   {
     id: 's14_calculating',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 20 && G.age <= 35 && !G.mem?.s14Calculating,
     text: `The mental arithmetic of the week: what is in the account, what is owed, what can be deferred, what cannot. This runs continuously and mostly below full consciousness — a background calculation that surfaces when a purchase is considered, when a statement arrives, when the end of the month approaches from the middle of the month. The arithmetic is different at different ages. This is the age where it is most continuous.`,
@@ -286,7 +286,7 @@ export const EVENTS_SONDER_14 = [
 
   {
     id: 's14_the_birthday_this_year',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 40 && G.age <= 60 && !G.mem?.s14BirthdayYear,
     text: `The birthday this year has a quality that other birthdays haven't had. Not because the number is round — though the number is close to round — but because this particular year has included things that have made the age feel different from the previous age. You are still the same person. Something has shifted in the aggregation of things the year contained. The birthday is the marker. The shift had been happening for months before it.`,

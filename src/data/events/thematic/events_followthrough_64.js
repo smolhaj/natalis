@@ -108,9 +108,10 @@ export const FOLLOWTHROUGH_64_EVENTS = [
 
   {
     id: 'ft64_ondoy_midlife',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('ph_dep_ondoy_survivor') &&
       G.age >= 25 &&
       G.currentYear >= 2010 &&

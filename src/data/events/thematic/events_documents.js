@@ -6,9 +6,10 @@ export const DOCUMENT_EVENTS = [
 
   {
     id: 'doc_rwandan_id_1994',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
-    when: (G) => G.character.country?.name === 'Rwanda' && G.currentYear >= 1994 && G.currentYear <= 1994 && G.age >= 15 && !G.mem.docRwanda,
+    when: (G) =>
+      G.age <= 49 && G.character.country?.name === 'Rwanda' && G.currentYear >= 1994 && G.currentYear <= 1994 && G.age >= 15 && !G.mem.docRwanda,
     text: 'You have been to this checkpoint before. The militiaman asks for your identity card. The identity card was Belgian — the Belgians invented the ethnic column in 1933, before that Hutu and Tutsi were occupational categories you moved between, and the Belgians made it permanent and laminated. The card says what it says. The militiaman looks at it.',
     choices: [
       {

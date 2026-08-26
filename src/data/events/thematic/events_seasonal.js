@@ -149,9 +149,10 @@ export const SEASONAL_EVENTS = [
 
   {
     id: 'sea_aussie_summer_fire',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.season === 'summer' &&
       G.character.country?.name === 'Australia' &&
       G.currentYear >= 2000 &&

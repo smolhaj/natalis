@@ -178,7 +178,7 @@ export const DIVORCE_EVENTS = [
 
   {
     id: 'div_dating_again',
-    phase: 'young_adult',
+    phase: null,
     weight: 7,
     when: (G) =>
       hasDivorced(G) &&

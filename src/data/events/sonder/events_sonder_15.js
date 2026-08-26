@@ -14,7 +14,7 @@ export const EVENTS_SONDER_15 = [
 
   {
     id: 'son15_counting_money',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 20 && G.age <= 35 && !G.mem?.son15CountingMoney,
     text: () => pick([
@@ -28,7 +28,7 @@ export const EVENTS_SONDER_15 = [
 
   {
     id: 'son15_the_exact_amount',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 35 && G.age <= 55 && !G.mem?.son15ExactAmount,
     text: () => pick([
@@ -44,7 +44,7 @@ export const EVENTS_SONDER_15 = [
 
   {
     id: 'son15_tuesday',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 55 && !G.mem?.son15Tuesday,
     text: () => pick([
@@ -58,7 +58,7 @@ export const EVENTS_SONDER_15 = [
 
   {
     id: 'son15_the_commute_years',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => place.worksInOffice(G) && (G.age >= 35 && G.age <= 55 && G.career && !G.mem?.son15CommuteYears),
     text: () => pick([
@@ -74,7 +74,7 @@ export const EVENTS_SONDER_15 = [
 
   {
     id: 'son15_the_queue',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => place.isLiterate(G) && (G.age >= 18 && G.age <= 35 && !G.mem?.son15Queue),
     text: () => pick([
@@ -88,7 +88,7 @@ export const EVENTS_SONDER_15 = [
 
   {
     id: 'son15_the_stamp',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => place.isLiterate(G) && (G.age >= 20 && G.age <= 40 && !G.mem?.son15Stamp),
     text: () => pick([
@@ -104,7 +104,7 @@ export const EVENTS_SONDER_15 = [
 
   {
     id: 'son15_hands',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 38 && G.age <= 58 && !G.mem?.son15Hands,
     text: () => pick([
@@ -134,7 +134,7 @@ export const EVENTS_SONDER_15 = [
 
   {
     id: 'son15_before_the_door',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 20 && G.age <= 40 && !G.mem?.son15BeforeDoor,
     text: () => pick([
@@ -148,7 +148,7 @@ export const EVENTS_SONDER_15 = [
 
   {
     id: 'son15_the_sentence',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 35 && G.age <= 55 && !G.mem?.son15Sentence,
     text: () => pick([
@@ -164,7 +164,7 @@ export const EVENTS_SONDER_15 = [
 
   {
     id: 'son15_the_debt',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 22 && G.age <= 40 && !G.mem?.son15Debt,
     text: () => pick([
@@ -178,7 +178,7 @@ export const EVENTS_SONDER_15 = [
 
   {
     id: 'son15_what_was_given',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 35 && G.age <= 55 && !G.mem?.son15WhatGiven,
     text: () => pick([
@@ -224,7 +224,7 @@ export const EVENTS_SONDER_15 = [
 
   {
     id: 'son15_body_knowledge',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 32 && G.age <= 55 && !G.mem?.son15BodyKnowledge,
     text: () => pick([
@@ -238,7 +238,7 @@ export const EVENTS_SONDER_15 = [
 
   {
     id: 'son15_the_tiredness',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 38 && G.age <= 58 && !G.mem?.son15Tiredness,
     text: () => pick([
@@ -298,7 +298,7 @@ export const EVENTS_SONDER_15 = [
 
   {
     id: 'son15_the_accent',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.flags.has('emigrated') && G.age >= 22 && G.age <= 45 && !G.mem?.son15Accent,
     text: () => pick([
@@ -358,7 +358,7 @@ export const EVENTS_SONDER_15 = [
 
   {
     id: 'son15_the_other_life',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 35 && G.age <= 58 && !G.mem?.son15OtherLife,
     text: () => pick([
@@ -388,7 +388,7 @@ export const EVENTS_SONDER_15 = [
 
   {
     id: 'son15_the_small_repair',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 32 && G.age <= 58 && !G.mem?.son15SmallRepair,
     text: () => pick([

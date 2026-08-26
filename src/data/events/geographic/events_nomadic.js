@@ -171,9 +171,10 @@ export const NOMADIC_EVENTS = [
 
   {
     id: 'nom_mongol_ulaanbaatar',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.character.country.name === 'Mongolia' &&
       G.flags.includes('mongolian_herder') &&
       G.flags.includes('rural_to_urban') &&

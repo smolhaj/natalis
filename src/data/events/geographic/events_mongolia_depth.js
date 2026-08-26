@@ -105,9 +105,10 @@ export const MONGOLIA_DEPTH_EVENTS = [
 
   {
     id: 'mn_dep_oyu_tolgoi',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
+      G.age <= 49 &&
       IS_MONGOLIA(G) &&
       G.currentYear >= 2009 &&
       G.age >= 25 &&
@@ -131,9 +132,10 @@ export const MONGOLIA_DEPTH_EVENTS = [
 
   {
     id: 'mn_dep_inner_mongolia_connection',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       IS_MONGOLIA(G) &&
       G.age >= 25 &&
       !G.mem?.mnInnerMongolia,

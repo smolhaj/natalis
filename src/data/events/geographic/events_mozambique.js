@@ -94,9 +94,10 @@ export const MOZAMBIQUE_EVENTS = [
 
   {
     id: 'moz_gas_cabo_delgado',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.character.country.name === 'Mozambique' &&
       G.currentYear >= 2010 &&
       G.age >= 25 &&

@@ -154,9 +154,10 @@ export const ECUADOR_EVENTS = [
 
   {
     id: 'ecu_gang_crisis_2024',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
+      G.age <= 49 &&
       IS_ECUADORIAN(G) &&
       G.currentYear >= 2023 &&
       G.age >= 25 &&

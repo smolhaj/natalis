@@ -69,7 +69,7 @@ export const EVENTS_SONDER_17 = [
 
   {
     id: 's17_public_library',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) => place.hasFormalJob(G) && (G.age >= 8 && G.age <= 18 &&
       G.character.country?.archetype !== 'conflict_zone' &&
@@ -118,7 +118,7 @@ export const EVENTS_SONDER_17 = [
 
   {
     id: 's17_the_bus',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => place.hasBus(G) && (G.age >= 18 && G.age <= 40 && !G.mem?.s17TheBus),
     text: () => pick([
@@ -230,7 +230,7 @@ export const EVENTS_SONDER_17 = [
 
   {
     id: 's17_commute_partner',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => place.worksInOffice(G) && (G.age >= 30 && G.age <= 55 && !G.mem?.s17CommutePartner),
     text: () => pick([

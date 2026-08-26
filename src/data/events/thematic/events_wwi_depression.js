@@ -114,9 +114,10 @@ const FLU_1918_EVENTS = [
 
   {
     id: 'flu_1918_household',
-    phase: 'young_adult',
+    phase: null,
     weight: 7,
     when: (G) =>
+      G.age <= 29 &&
       G.currentYear === 1918 &&
       G.age >= 10 &&
       !G.mem?.flu1918Fired,

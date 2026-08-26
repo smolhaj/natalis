@@ -21,7 +21,7 @@ export const FOLLOWTHROUGH_89_EVENTS = [
 
   {
     id: 'ft89_lithium_nationalization_echo',
-    phase: 'late_life',
+    phase: null,
     weight: 2,
     when: (G) =>
       IS_BOL(G) &&
@@ -36,9 +36,10 @@ export const FOLLOWTHROUGH_89_EVENTS = [
 
   {
     id: 'ft89_tipnis_road_outcome',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
+      G.age <= 49 &&
       IS_BOL(G) &&
       G.flags.has('bol_tipnis_generation') &&
       G.currentYear >= 2013 &&

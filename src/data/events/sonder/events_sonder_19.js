@@ -23,7 +23,7 @@ export const EVENTS_SONDER_19 = [
 
   {
     id: 's19_overheard_argument',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => place.hasCafe(G) && (G.age >= 18 && G.age <= 60 && !G.mem?.s19OverheardArgument),
     text: () => pick([
@@ -38,7 +38,7 @@ export const EVENTS_SONDER_19 = [
 
   {
     id: 's19_handshake',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 65 && !G.mem?.s19Handshake,
     text: () => pick([
@@ -53,7 +53,7 @@ export const EVENTS_SONDER_19 = [
 
   {
     id: 's19_passing_through',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => place.hasFlown(G) && (G.age >= 18 && G.age <= 55 && !G.mem?.s19PassingThrough),
     text: () => pick([
@@ -68,7 +68,7 @@ export const EVENTS_SONDER_19 = [
 
   {
     id: 's19_garden',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.season === 'autumn' && (G.age >= 35 && G.age <= 70 && !G.mem?.s19Garden),
     text: () => pick([
@@ -83,7 +83,7 @@ export const EVENTS_SONDER_19 = [
 
   {
     id: 's19_small_expertise',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 65 && !G.mem?.s19SmallExpertise,
     text: () => pick([
@@ -177,7 +177,7 @@ export const EVENTS_SONDER_19 = [
 
   {
     id: 's19_walk_after',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 25 && G.age <= 70 && !G.mem?.s19WalkAfter,
     text: () => pick([
@@ -225,7 +225,7 @@ export const EVENTS_SONDER_19 = [
 
   {
     id: 's19_others_house_smell',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 7 && G.age <= 20 && !G.mem?.s19OthersHouseSmell,
     text: () => pick([
@@ -255,7 +255,7 @@ export const EVENTS_SONDER_19 = [
 
   {
     id: 's19_unnamed_neighbour',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.ruralUrban === 'urban' &&
@@ -273,7 +273,7 @@ export const EVENTS_SONDER_19 = [
 
   {
     id: 's19_library_feeling',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) => place.hasBooks(G) && (G.age >= 8 && G.age <= 22 && !G.mem?.s19LibraryFeeling),
     text: () => pick([
@@ -288,9 +288,10 @@ export const EVENTS_SONDER_19 = [
 
   {
     id: 's19_animal_in_house',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
+      G.age <= 49 &&
       (G.pets?.length > 0) &&
       G.age >= 25 &&
       !G.mem?.s19AnimalHouse,
@@ -308,7 +309,7 @@ export const EVENTS_SONDER_19 = [
 
   {
     id: 's19_sunday_morning',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => place.hasWeekend(G) && (G.age >= 28 && G.age <= 60 && !G.mem?.s19SundayMorning),
     text: () => pick([
@@ -356,7 +357,7 @@ export const EVENTS_SONDER_19 = [
 
   {
     id: 's19_deep_expertise_pleasure',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.career?.level >= 2 &&
@@ -376,7 +377,7 @@ export const EVENTS_SONDER_19 = [
 
   {
     id: 's19_unplaced_face',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 28 && G.age <= 65 && !G.mem?.s19UnplacedFace,
     text: () => pick([
@@ -409,7 +410,7 @@ export const EVENTS_SONDER_19 = [
 
   {
     id: 's19_boredom_produces',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) => place.hasInternet(G) && (G.age >= 8 && G.age <= 16 && !G.mem?.s19BoredomProduces),
     text: () => pick([
@@ -441,7 +442,7 @@ export const EVENTS_SONDER_19 = [
 
   {
     id: 's19_walk_home_changed',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.ruralUrban === 'urban' &&

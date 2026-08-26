@@ -6,7 +6,7 @@ export const EVENTS_SONDER_59 = [
 
   {
     id: 'sonder_59_a',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 38 && G.age <= 54 && !G.mem?.s59a,
     text: 'Two versions of the conversation — the one inside your head and the one that happened: you have both versions. The internal one is fully articulate, makes all the right points, finds exactly the phrase. The actual one was fine. It covered what needed to be covered. The internal version lives in you like a better speech that no one needed to hear except you.',
@@ -46,7 +46,7 @@ export const EVENTS_SONDER_59 = [
 
   {
     id: 'sonder_59_e',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 40 && G.age <= 55 && !G.mem?.s59e,
     text: 'You joined, and then you left: not dramatically, not with a letter of resignation, but by the slow process of attending less and caring less and eventually stopping. The people still inside it are doing the same things they were doing when you were there. You check in occasionally. The check-in confirms that you were right to leave and also that you are somewhat diminished by having left.',
@@ -96,7 +96,7 @@ export const EVENTS_SONDER_59 = [
 
   {
     id: 'sonder_59_j',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => place.worksInOffice(G) && (G.age >= 42 && G.age <= 58 && !G.mem?.s59j),
     text: 'You chaired it once and did not want to chair it again; someone else always chairs it, and for them it is apparently not what it was for you. You wonder sometimes what it would be like to be the person who does not mind chairing the meeting. You cannot access that interiority. They chair the meeting every time. They seem fine.',
@@ -156,7 +156,7 @@ export const EVENTS_SONDER_59 = [
 
   {
     id: 'sonder_59_p',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 44 && G.age <= 58 && !G.mem?.s59p,
     text: 'One project got good reviews and one did not: you cannot always trace the difference back to quality. Sometimes the timing was wrong, or the audience was wrong, or the thing you made was right but not for that year. You have stopped expecting the correspondence to be clean. The making and the reception are in different time zones and they do not always meet.',
@@ -227,7 +227,7 @@ export const EVENTS_SONDER_59 = [
 
   {
     id: 'sonder_59_y',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 38 && G.age <= 54 && !G.mem?.s59y,
     text: 'You keep a list: not physically, not always, but the running total of what you owe and what is owed to you — the favours, the slight slights, the generous acts by people you have not been able to repay. The list is not a grievance. It is an accounting. You do not intend to square every entry. You intend to stay aware of what the account looks like.',
@@ -247,7 +247,7 @@ export const EVENTS_SONDER_59 = [
 
   {
     id: 'sonder_59_aa',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 42 && G.age <= 56 && !G.mem?.s59aa,
     text: 'At a party, in the kitchen: the room people drift to when they want to have a real conversation. The living room is for the performance of the party; the kitchen is where the party becomes the thing the party was for. You have had the best conversations of your life in kitchens at parties while people moved around you looking for wine.',

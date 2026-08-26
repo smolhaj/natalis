@@ -9,7 +9,7 @@ export const FOLLOWTHROUGH_44_EVENTS = [
 
   {
     id: 'ft44_genocide_witness_late',
-    phase: 'late_life',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.has('genocide_witness') &&
@@ -25,7 +25,7 @@ export const FOLLOWTHROUGH_44_EVENTS = [
 
   {
     id: 'ft44_tutsi_hidden_late',
-    phase: 'late_life',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.has('tutsi_hidden') &&
@@ -137,7 +137,7 @@ export const FOLLOWTHROUGH_44_EVENTS = [
 
   {
     id: 'ft44_chechen_civilian_late',
-    phase: 'late_life',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.has('chechen_civilian') &&

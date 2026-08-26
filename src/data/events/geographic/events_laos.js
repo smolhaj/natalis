@@ -90,9 +90,10 @@ const LAOS_EVENTS = [
 
   {
     id: 'laos_china_investment',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
+      G.age <= 49 &&
       G.character.country.name === 'Laos' &&
       G.currentYear >= 2015 &&
       G.age >= 25 &&
@@ -110,9 +111,10 @@ const LAOS_EVENTS = [
 
   {
     id: 'laos_mekong_dams',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.character.country.name === 'Laos' &&
       G.currentYear >= 2019 &&
       G.age >= 25 &&

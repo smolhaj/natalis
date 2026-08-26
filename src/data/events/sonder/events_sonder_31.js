@@ -21,7 +21,7 @@ export const EVENTS_SONDER_31 = [
 
   {
     id: 'sonder_31_b',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 22 && G.age <= 35 && !G.mem?.s31b,
     text: () => pick([
@@ -125,7 +125,7 @@ export const EVENTS_SONDER_31 = [
 
   {
     id: 'sonder_31_j',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => place.worksInOffice(G) && (G.age >= 40 && G.age <= 55 && !G.mem?.s31j),
     text: () => pick([
@@ -138,7 +138,7 @@ export const EVENTS_SONDER_31 = [
 
   {
     id: 'sonder_31_k',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => place.hasPhotographs(G) && (G.age >= 24 && G.age <= 38 && !G.mem?.s31k),
     text: () => pick([
@@ -151,7 +151,7 @@ export const EVENTS_SONDER_31 = [
 
 {
     id: 'sonder_31_m',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 42 && G.age <= 58 && !G.mem?.s31m,
     text: () => pick([
@@ -177,7 +177,7 @@ export const EVENTS_SONDER_31 = [
 
   {
     id: 'sonder_31_o',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 26 && G.age <= 40 && !G.mem?.s31o,
     text: () => pick([
@@ -203,7 +203,7 @@ export const EVENTS_SONDER_31 = [
 
   {
     id: 'sonder_31_q',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 44 && G.age <= 56 && !G.mem?.s31q,
     text: () => pick([
@@ -229,7 +229,7 @@ export const EVENTS_SONDER_31 = [
 
   {
     id: 'sonder_31_s',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => place.hasBus(G) && (G.age >= 28 && G.age <= 42 && !G.mem?.s31s),
     text: () => pick([
@@ -255,7 +255,7 @@ export const EVENTS_SONDER_31 = [
 
   {
     id: 'sonder_31_u',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 45 && G.age <= 60 && !G.mem?.s31u,
     text: () => pick([
@@ -346,7 +346,7 @@ export const EVENTS_SONDER_31 = [
 
   {
     id: 'sonder_31_ab',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 48 && G.age <= 60 && !G.mem?.s31ab,
     text: () => pick([

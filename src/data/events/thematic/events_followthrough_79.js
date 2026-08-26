@@ -43,9 +43,10 @@ export const FOLLOWTHROUGH_79_EVENTS = [
 
   {
     id: 'ft79_timisoara_revolution_start',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('rom_timisoara_generation') &&
       G.currentYear >= 1995 &&
       G.age >= 25 &&
@@ -119,9 +120,10 @@ export const FOLLOWTHROUGH_79_EVENTS = [
 
   {
     id: 'ft79_mineriad_pattern',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('rom_mineriad_generation') &&
       G.currentYear >= 1995 &&
       G.age >= 25 &&

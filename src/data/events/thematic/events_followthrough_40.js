@@ -73,7 +73,7 @@ export const FOLLOWTHROUGH_40_EVENTS = [
 
   {
     id: 'ft40_emigrant_68_late',
-    phase: 'late_life',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.has('cze_emigrant_1968') &&
@@ -105,7 +105,7 @@ export const FOLLOWTHROUGH_40_EVENTS = [
 
   {
     id: 'ft40_velvet_divorce_late',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('cze_velvet_divorce_generation') &&

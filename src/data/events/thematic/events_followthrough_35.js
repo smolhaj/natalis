@@ -73,7 +73,7 @@ export const FOLLOWTHROUGH_35_EVENTS = [
 
   {
     id: 'ft35_estado_late',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('slv_estado_excepcion_generation') &&

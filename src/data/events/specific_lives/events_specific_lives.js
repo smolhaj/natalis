@@ -2291,7 +2291,7 @@ export const SPECIFIC_LIFE_EVENTS = [
 
   {
     id: 'sl_stasi_file_opened',
-    phase: 'late_life',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Germany' &&

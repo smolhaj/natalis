@@ -91,9 +91,10 @@ export const YEMEN_EVENTS = [
 
   {
     id: 'yem_humanitarian_collapse',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
+      G.age <= 49 &&
       G.character.country.name === 'Yemen' &&
       G.currentYear >= 2016 &&
       G.age >= 16 &&

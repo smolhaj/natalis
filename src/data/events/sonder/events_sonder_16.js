@@ -19,7 +19,7 @@ export const EVENTS_SONDER_16 = [
 
   {
     id: 's16_phone_call_ending',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => place.hasPhone(G) && (G.age >= 18 && G.age <= 40 && !G.mem?.s16PhoneCallEnding),
     text: () => pick([
@@ -33,7 +33,7 @@ export const EVENTS_SONDER_16 = [
 
   {
     id: 's16_long_distance_call',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 45 && G.currentYear <= 2000 && !G.mem?.s16LongDistanceCall,
     text: () => pick([
@@ -114,7 +114,7 @@ export const EVENTS_SONDER_16 = [
 
   {
     id: 's16_census_name',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => place.isLiterate(G) && (G.age >= 18 && G.age <= 40 &&
       !G.mem?.s16CensusName),
@@ -288,7 +288,7 @@ export const EVENTS_SONDER_16 = [
 
   {
     id: 's16_emigrant_call_home',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('emigrated') &&

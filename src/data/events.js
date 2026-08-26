@@ -2894,7 +2894,7 @@ const BASE_EVENTS = [
   },
   {
     id: 'parent_death_adult',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) => G.age >= 22 && G.age <= 35 && !G.flags.includes('orphan') && !G.mem.parentDied && Math.random() < 0.07,
     text: 'You get the call. Your parent is gone. You knew it would happen someday. It still feels like the floor has dropped away.',
@@ -3187,9 +3187,10 @@ const BASE_EVENTS = [
   },
   {
     id: 'mid_9_11_aftermath',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
-    when: (G) => G.currentYear >= 2001 && G.currentYear <= 2004 && G.age >= 25 && ['wealthy_west'].includes(G.character.country.archetype),
+    when: (G) =>
+      G.age <= 49 && G.currentYear >= 2001 && G.currentYear <= 2004 && G.age >= 25 && ['wealthy_west'].includes(G.character.country.archetype),
     text: 'Everything at airports is different now. Security theater becomes a permanent feature of travel. The country you live in is afraid, and that fear has decided things.',
     choices: null,
     effect: (p) => { p.m -= 5 },
@@ -3851,7 +3852,7 @@ const BASE_EVENTS = [
 
   {
     id: 'ya_miscarriage',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.partner && G.age >= 22 && G.age <= 38 && G.children.length === 0 && !G.mem.miscarriageEvent,
     text: (G) => {
@@ -3880,7 +3881,7 @@ const BASE_EVENTS = [
 
   {
     id: 'ya_postpartum_depression',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => G.children.length > 0 && !G.mem.postpartumEvent && G.age <= 35 && G.children.some(c => c.ageAtBirth >= G.age - 2),
     text: (G) => {
@@ -5690,9 +5691,10 @@ const BASE_EVENTS = [
   },
   {
     id: 'flood_damage',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
-    when: (G) => G.assets?.properties?.length > 0 && !G.mem.flood_damage && G.age >= 22,
+    when: (G) =>
+      G.age <= 49 && G.assets?.properties?.length > 0 && !G.mem.flood_damage && G.age >= 22,
     text: (G) => {
       if (['developing_unstable', 'subsaharan', 'conflict_zone'].includes(G.character.country.archetype))
         return 'The monsoon season has been brutal this year. Water has entered the ground floor of your property. The damage is extensive and insurance is a distant concept here.'
@@ -5792,9 +5794,10 @@ const BASE_EVENTS = [
   },
   {
     id: 'industry_layoffs',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
-    when: (G) => G.career !== null && !G.mem.industry_layoffs && G.currentYear >= 1980 && G.age >= 25,
+    when: (G) =>
+      G.age <= 49 && G.career !== null && !G.mem.industry_layoffs && G.currentYear >= 1980 && G.age >= 25,
     text: (G) => {
       if (G.character.country.archetype === 'wealthy_west' && G.currentYear >= 2008 && G.currentYear <= 2012)
         return 'The financial crisis has reached your industry. Whole departments are being eliminated. The redundancy notices are going out in batches and your name is on the next one.'
@@ -5847,7 +5850,7 @@ const BASE_EVENTS = [
   },
   {
     id: 'summer_job',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) => G.education?.enrolled !== null && G.age >= 16 && G.age <= 25 && !G.mem.summer_job,
     text: 'The summer break stretches ahead. A friend mentions there are positions at a local business — not glamorous, but the pay is real and the experience would look good on paper.',
@@ -5900,9 +5903,10 @@ const BASE_EVENTS = [
 
   {
     id: 'pet_illness',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
-    when: (G) => G.pets && G.pets.length > 0 && G.age >= 10,
+    when: (G) =>
+      G.age <= 29 && G.pets && G.pets.length > 0 && G.age >= 10,
     text: (G) => {
       if (G.character.country.archetype === 'conflict_zone')
         return 'Your pet is sick — lethargic, refusing food. In a place like this, finding a vet means scrounging for supplies and favours. The cost is not just money.'
@@ -5933,9 +5937,10 @@ const BASE_EVENTS = [
 
   {
     id: 'pet_runs_away',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
-    when: (G) => G.pets && G.pets.length > 0 && G.age >= 10 && !G.flags.includes('pet_lost'),
+    when: (G) =>
+      G.age <= 29 && G.pets && G.pets.length > 0 && G.age >= 10 && !G.flags.includes('pet_lost'),
     text: (G) => {
       if (G.character.country.archetype === 'conflict_zone')
         return 'In the chaos of another difficult week, the gate is left unlatched. Your pet is gone. In a neighbourhood like this, the odds of finding them are not good.'
@@ -5970,9 +5975,10 @@ const BASE_EVENTS = [
 
   {
     id: 'pet_death',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
-    when: (G) => G.pets && G.pets.length > 0 && G.age >= 18,
+    when: (G) =>
+      G.age <= 49 && G.pets && G.pets.length > 0 && G.age >= 18,
     text: (G) => {
       if (G.character.country.archetype === 'wealthy_west' || G.character.country.archetype === 'wealthy_east')
         return 'The vet said it would be a matter of weeks. They were right. Your pet — companion, routine, small daily anchor — dies at home, quietly, on their favourite blanket.'
@@ -6001,9 +6007,10 @@ const BASE_EVENTS = [
 
   {
     id: 'pet_learns_trick',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
-    when: (G) => G.pets && G.pets.length > 0 && G.age >= 8,
+    when: (G) =>
+      G.age <= 29 && G.pets && G.pets.length > 0 && G.age >= 8,
     text: (G) => {
       if (['wealthy_west', 'wealthy_east'].includes(G.character.country.archetype))
         return 'After weeks of patient repetition — treats, hand signals, the same word until it lost meaning — your pet finally gets it. The trick clicks. They look at you with what you are almost certain is pride.'
@@ -6060,9 +6067,10 @@ const BASE_EVENTS = [
 
   {
     id: 'affair_opportunity',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
-    when: (G) => G.partner !== null && G.partner.married && G.age >= 25 && !G.flags.includes('having_affair'),
+    when: (G) =>
+      G.age <= 49 && G.partner !== null && G.partner.married && G.age >= 25 && !G.flags.includes('having_affair'),
     text: (G) => {
       if (G.character.country.archetype === 'wealthy_gulf')
         return 'A colleague — charming, careful, aware of the stakes — makes their interest clear. In this society, what you are contemplating carries consequences that extend far beyond the two of you.'
@@ -6153,9 +6161,10 @@ const BASE_EVENTS = [
 
   {
     id: 'relationship_troubles',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
-    when: (G) => G.partner !== null && G.age >= 20 && !G.mem.relationshipTroubles,
+    when: (G) =>
+      G.age <= 49 && G.partner !== null && G.age >= 20 && !G.mem.relationshipTroubles,
     text: (G) => {
       if (G.character.country.archetype === 'wealthy_gulf')
         return 'The strain between you and your spouse has become harder to ignore. In a culture where appearances matter, what happens inside the home stays inside — but something needs to change.'
@@ -6193,7 +6202,7 @@ const BASE_EVENTS = [
 
   {
     id: 'partner_wants_children',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) => G.partner !== null && G.age >= 22 && G.age <= 40 && G.children.length === 0 && !G.mem.discussed_kids,
     text: (G) => {
@@ -6484,7 +6493,7 @@ const BASE_EVENTS = [
 
   {
     id: 'ps_brain_drain_peer',
-    phase: 'adolescence',
+    phase: null,
     weight: 4,
     when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 16 && G.age <= 22 && G.currentYear >= 1995 && !G.mem.ps_brain_drain,
     text: 'Your smartest friend has a visa. Germany. Canada. America. They have been preparing for two years without telling most people. At the farewell party there are jokes and then not jokes. You wonder if you are the one making the wrong choice.',
@@ -6567,7 +6576,7 @@ const BASE_EVENTS = [
 
   {
     id: 'ps_factory_collapse',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 18 && G.age <= 35 && G.currentYear >= 1991 && G.currentYear <= 2010 && !G.mem.ps_factory && !G.career,
     text: 'The factory your father worked at for thirty years is being stripped. The machines are sold for scrap. The workers — most over fifty — have nowhere to go. Your city\'s economy was built around this building. It is being peeled away brick by brick.',
@@ -6592,7 +6601,7 @@ const BASE_EVENTS = [
 
   {
     id: 'ps_drinking_culture',
-    phase: 'young_adult',
+    phase: null,
     weight: 5,
     when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 18 && G.age <= 35 && !G.mem.ps_drinking,
     text: 'At every celebration — wedding, promotion, wake, Tuesday — the vodka comes out. You don\'t drink at the first toast, you lose face. You don\'t drink at the third, something is wrong with you. The bottle is both hospitality and test.',
@@ -6624,7 +6633,7 @@ const BASE_EVENTS = [
 
   {
     id: 'ps_protest_moment',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     isKey: true,
     when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 18 && G.age <= 40 && G.currentYear >= 2000 && !G.mem.ps_protest,
@@ -6804,7 +6813,7 @@ const BASE_EVENTS = [
 
   {
     id: 'ps_late_emigration_choice',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) => G.character.country.archetype === 'post_soviet' && G.age >= 40 && G.age <= 65 && G.currentYear >= 2010 && !G.mem.ps_late_emigration && G.children.length > 0,
     text: 'Your children are talking about leaving. They have skills. They have options. The question they do not ask directly is whether you are coming with them. The other question is whether leaving means abandoning everything you stayed for.',
@@ -6863,7 +6872,7 @@ const BASE_EVENTS = [
 
   {
     id: 'ru_chechnya_war',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Russia' &&
@@ -6893,9 +6902,10 @@ const BASE_EVENTS = [
 
   {
     id: 'ru_ukraine_invasion_2022',
-    phase: 'midlife',
+    phase: null,
     weight: 5,
     when: (G) =>
+      G.age <= 49 &&
       G.character.country.name === 'Russia' &&
       G.currentYear >= 2022 && G.currentYear <= 2025 &&
       G.age >= 16 &&
@@ -6926,7 +6936,7 @@ const BASE_EVENTS = [
 
   {
     id: 'ru_mobilization_2022',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.character.country.name === 'Russia' &&
@@ -6973,7 +6983,7 @@ const BASE_EVENTS = [
   },
   {
     id: 'ss_hiv_family',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     isKey: true,
     when: (G) => G.character.country.archetype === 'subsaharan' && G.currentYear >= 1990 && G.currentYear <= 2015 && G.age >= 8 && G.age <= 25 && !G.mem.ss_hiv,
@@ -6999,7 +7009,7 @@ const BASE_EVENTS = [
   },
   {
     id: 'ss_water_collection',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     when: (G) => G.character.country.archetype === 'subsaharan' && G.age >= 7 && G.age <= 16 && !G.mem.ss_water,
     text: 'Before school — before anything — there is the water. The borehole is forty minutes away on foot. The jerrycan holds twenty litres. It weighs twenty kilograms full. Your arms have grown strong in ways your classmates\' haven\'t. Some mornings there is a queue.',
@@ -7024,7 +7034,7 @@ const BASE_EVENTS = [
   },
   {
     id: 'ss_school_fees_crisis',
-    phase: 'childhood',
+    phase: null,
     weight: 3,
     isKey: true,
     when: (G) => G.character.country.archetype === 'subsaharan' && G.age >= 10 && G.age <= 18 && !G.mem.ss_fees && G.money < 500,
@@ -7184,7 +7194,7 @@ const BASE_EVENTS = [
   },
   {
     id: 'cz_school_bombing',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     isKey: true,
     when: (G) => G.character.country.archetype === 'conflict_zone' && G.age >= 6 && G.age <= 18 && !G.mem.cz_school_attack,
@@ -7220,7 +7230,7 @@ const BASE_EVENTS = [
   },
   {
     id: 'cz_family_separation',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     isKey: true,
     when: (G) => G.character.country.archetype === 'conflict_zone' && G.age >= 5 && G.age <= 20 && !G.mem.cz_separation && G.parents,
@@ -7274,7 +7284,7 @@ const BASE_EVENTS = [
   },
   {
     id: 'gender_safety_walk',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     when: (G) => G.character.gender === 'female' && ['subsaharan', 'developing_urban', 'developing_unstable', 'conflict_zone'].includes(G.character.country.archetype) && G.age >= 13 && G.age <= 30 && !G.mem.gender_safety,
     text: 'Walking home. The calculations you run every time: which street, which time, how to dress, who to walk with. It is not paranoia — it is the accumulated knowledge of what happens when these calculations go wrong. Your mother taught you, her mother taught her. You know which shortcuts to avoid.',
@@ -7299,7 +7309,7 @@ const BASE_EVENTS = [
   },
   {
     id: 'gender_early_marriage_pressure',
-    phase: 'adolescence',
+    phase: null,
     weight: 3,
     isKey: true,
     when: (G) => G.character.gender === 'female' && ['subsaharan', 'developing_unstable', 'wealthy_gulf', 'conflict_zone'].includes(G.character.country.archetype) && G.age >= 16 && G.age <= 22 && !G.mem.marriage_pressure && !G.partner,
@@ -7332,7 +7342,7 @@ const BASE_EVENTS = [
   },
   {
     id: 'ss_remittance_dependency',
-    phase: 'adolescence',
+    phase: null,
     weight: 2,
     when: (G) => G.character.country.archetype === 'subsaharan' && G.age >= 14 && G.age <= 30 && !G.mem.ss_remittance,
     text: 'The money arrives from abroad — from London, from Doha, from Minneapolis — in irregular pulses. An uncle who emigrated ten years ago sends what he can. When it arrives, school fees are paid, the roof gets fixed. When it doesn\'t, everyone goes quiet. The family\'s survival runs on this wire.',
@@ -7416,7 +7426,7 @@ const BASE_EVENTS = [
 
   {
     id: 'du_urban_violence',
-    phase: 'childhood',
+    phase: null,
     weight: 4,
     when: (G) => G.character.country.archetype === 'developing_urban' && G.age >= 10 && G.age <= 20 && !G.mem.du_violence && ['Brazil', 'Colombia', 'South Africa', 'Mexico'].includes(G.character.country.name),
     isKey: true,
@@ -7475,7 +7485,7 @@ const BASE_EVENTS = [
 
   {
     id: 'du_remittance_sender',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) => G.character.country.archetype === 'developing_urban' && G.age >= 20 && G.age <= 40 && G.career && !G.mem.du_remittance && G.money > 200,
     text: 'The first paycheque is split before it arrives. A portion goes home to the village by bus or transfer. Your parents helped pay your school fees. Your younger siblings need uniforms. The expectation is not a burden, exactly — it is the structure of things. But it does affect the apartment you can afford.',
@@ -7500,7 +7510,7 @@ const BASE_EVENTS = [
 
   {
     id: 'du_megacity_commute',
-    phase: 'young_adult',
+    phase: null,
     weight: 4,
     when: (G) => G.character.country.archetype === 'developing_urban' && G.career && G.age >= 22 && G.age <= 55 && !G.mem.du_commute,
     text: (G) => {
@@ -8521,7 +8531,7 @@ const BASE_EVENTS = [
 
   {
     id: 'rel_children_disagreement_partner',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) => G.partner !== null && G.age >= 26 && G.age <= 38 && !G.mem.children_disagreement,
     text: 'One of you wants children. The other is not sure, or is sure in a different direction. This has come up before and been deferred. It is no longer deferrable. The conversation that happens is the longest and most honest one you have had in years. It does not resolve cleanly.',
@@ -8916,7 +8926,7 @@ const BASE_EVENTS = [
 
   {
     id: 'civic_election_night',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     cooldown: 8,
     when: (G) =>

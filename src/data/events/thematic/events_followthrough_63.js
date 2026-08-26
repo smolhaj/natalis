@@ -41,9 +41,10 @@ export const FOLLOWTHROUGH_63_EVENTS = [
 
   {
     id: 'ft63_pass_abolition',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('sa_pass_humiliation') &&
       G.currentYear >= 1986 && G.currentYear <= 1990 &&
       G.age >= 25 &&
@@ -57,7 +58,7 @@ export const FOLLOWTHROUGH_63_EVENTS = [
 
   {
     id: 'ft63_biko_late',
-    phase: 'late_life',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('sa_biko_generation') &&
@@ -149,7 +150,7 @@ export const FOLLOWTHROUGH_63_EVENTS = [
 
   {
     id: 'ft63_afg_96_late',
-    phase: 'late_life',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('afg_taliban_96_generation') &&
@@ -208,9 +209,10 @@ export const FOLLOWTHROUGH_63_EVENTS = [
 
   {
     id: 'ft63_afg_hope_2010',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('afg_2001_liberation_hope') &&
       G.currentYear >= 2008 && G.currentYear <= 2016 &&
       G.age >= 25 &&
@@ -240,9 +242,10 @@ export const FOLLOWTHROUGH_63_EVENTS = [
 
   {
     id: 'ft63_afg_stayed_2023',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('afg_2021_stayed') &&
       G.currentYear >= 2022 &&
       G.age >= 18 &&
@@ -272,9 +275,10 @@ export const FOLLOWTHROUGH_63_EVENTS = [
 
   {
     id: 'ft63_interp_evacuated_resettled',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('afg_interpreter_evacuated') &&
       G.currentYear >= 2022 &&
       G.age >= 25 &&
@@ -288,7 +292,7 @@ export const FOLLOWTHROUGH_63_EVENTS = [
 
   {
     id: 'ft63_aid_worker_reckoning',
-    phase: 'late_life',
+    phase: null,
     weight: 2,
     when: (G) =>
       G.flags.has('afg_aid_economy_worker') &&
@@ -303,9 +307,10 @@ export const FOLLOWTHROUGH_63_EVENTS = [
 
   {
     id: 'ft63_diaspora_phones_2022',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('afg_diaspora_watches') &&
       G.currentYear >= 2022 &&
       G.age >= 25 &&
@@ -319,9 +324,10 @@ export const FOLLOWTHROUGH_63_EVENTS = [
 
   {
     id: 'ft63_post_2021_years',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('afg_post_2021_life') &&
       G.currentYear >= 2024 &&
       G.age >= 20 &&

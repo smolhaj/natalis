@@ -87,7 +87,7 @@ export const FOLLOWTHROUGH_39_EVENTS = [
 
   {
     id: 'ft39_apartheid_privileged_late',
-    phase: 'late_life',
+    phase: null,
     weight: 4,
     when: (G) =>
       G.flags.has('apartheid_privileged') &&

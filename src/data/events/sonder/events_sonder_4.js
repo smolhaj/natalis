@@ -68,9 +68,10 @@ export const EVENTS_SONDER_4 = [
 
   {
     id: 'sonder4_smartphone_arrives',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) =>
+      G.age <= 49 &&
       !G.mem?.s4_smartphone &&
       G.currentYear >= 2008 && G.currentYear <= 2013 &&
       G.age >= 25,
@@ -108,7 +109,7 @@ export const EVENTS_SONDER_4 = [
 
   {
     id: 'sonder4_cassette_tape_car',
-    phase: 'childhood',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.s4_carTape &&
@@ -211,7 +212,7 @@ export const EVENTS_SONDER_4 = [
 
   {
     id: 'sonder4_factory_floor_sound',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) =>
       !G.mem?.s4_factorySound &&

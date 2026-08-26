@@ -10,7 +10,7 @@ export const EVENTS_SONDER_22 = [
 
   {
     id: 'sdr22_the_long_meeting',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => place.worksInOffice(G) && (G.age >= 22 && G.age <= 40 && !G.mem?.sdr22LongMeeting),
     text: () => pick([
@@ -24,7 +24,7 @@ export const EVENTS_SONDER_22 = [
 
   {
     id: 'sdr22_the_commute_body',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 20 && G.age <= 45 && !G.mem?.sdr22CommuteBody,
     text: () => pick([
@@ -38,7 +38,7 @@ export const EVENTS_SONDER_22 = [
 
   {
     id: 'sdr22_the_sick_day',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 50 && !G.mem?.sdr22SickDay,
     text: () => pick([
@@ -66,7 +66,7 @@ export const EVENTS_SONDER_22 = [
 
   {
     id: 'sdr22_the_new_colleague',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => place.worksInOffice(G) && (G.age >= 30 && G.age <= 55 && !G.mem?.sdr22NewColleague),
     text: () => pick([
@@ -80,7 +80,7 @@ export const EVENTS_SONDER_22 = [
 
   {
     id: 'sdr22_the_phone_call',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => place.hasPhone(G) && (G.age >= 18 && G.age <= 40 && !G.mem?.sdr22PhoneCall),
     text: () => pick([
@@ -94,7 +94,7 @@ export const EVENTS_SONDER_22 = [
 
   {
     id: 'sdr22_the_waiting_room_2',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => place.hasHealthcare(G) && (G.age >= 35 && G.age <= 65 && !G.mem?.sdr22WaitingRoom2),
     text: () => pick([
@@ -108,7 +108,7 @@ export const EVENTS_SONDER_22 = [
 
   {
     id: 'sdr22_the_childhood_smell',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 60 && !G.mem?.sdr22ChildhoodSmell,
     text: () => pick([
@@ -122,7 +122,7 @@ export const EVENTS_SONDER_22 = [
 
   {
     id: 'sdr22_the_argument_replayed',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 45 && !G.mem?.sdr22ArgumentReplayed,
     text: () => pick([
@@ -136,7 +136,7 @@ export const EVENTS_SONDER_22 = [
 
   {
     id: 'sdr22_the_wedding_stranger',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 22 && G.age <= 45 && !G.mem?.sdr22WeddingStranger,
     text: () => pick([
@@ -150,7 +150,7 @@ export const EVENTS_SONDER_22 = [
 
   {
     id: 'sdr22_the_old_city',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 35 && G.age <= 65 && !G.mem?.sdr22OldCity,
     text: () => pick([
@@ -178,7 +178,7 @@ export const EVENTS_SONDER_22 = [
 
   {
     id: 'sdr22_the_recipe',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 65 && !G.mem?.sdr22Recipe,
     text: () => pick([
@@ -192,7 +192,7 @@ export const EVENTS_SONDER_22 = [
 
   {
     id: 'sdr22_the_neighbour_again',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 28 && G.age <= 65 && !G.mem?.sdr22NeighbourAgain,
     text: () => pick([
@@ -206,7 +206,7 @@ export const EVENTS_SONDER_22 = [
 
   {
     id: 'sdr22_the_language_limit',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 45 && !G.mem?.sdr22LanguageLimit,
     text: () => pick([
@@ -220,7 +220,7 @@ export const EVENTS_SONDER_22 = [
 
   {
     id: 'sdr22_the_cost_of_things',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 60 && !G.mem?.sdr22CostOfThings,
     text: () => pick([
@@ -234,7 +234,7 @@ export const EVENTS_SONDER_22 = [
 
   {
     id: 'sdr22_the_last_time',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 35 && G.age <= 65 && !G.mem?.sdr22LastTime,
     text: () => pick([
@@ -248,7 +248,7 @@ export const EVENTS_SONDER_22 = [
 
   {
     id: 'sdr22_the_child_asks',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 28 && G.age <= 55 && !G.mem?.sdr22ChildAsks,
     text: () => pick([
@@ -262,7 +262,7 @@ export const EVENTS_SONDER_22 = [
 
   {
     id: 'sdr22_the_hospital_corridor',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => place.hasHealthcare(G) && (G.age >= 35 && G.age <= 70 && !G.mem?.sdr22HospitalCorridor),
     text: () => pick([
@@ -276,7 +276,7 @@ export const EVENTS_SONDER_22 = [
 
   {
     id: 'sdr22_the_ritual',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 20 && G.age <= 50 && !G.mem?.sdr22Ritual,
     text: () => pick([
@@ -290,7 +290,7 @@ export const EVENTS_SONDER_22 = [
 
   {
     id: 'sdr22_the_inherited_phrase',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 30 && G.age <= 60 && !G.mem?.sdr22InheritedPhrase,
     text: () => pick([
@@ -332,7 +332,7 @@ export const EVENTS_SONDER_22 = [
 
   {
     id: 'sdr22_the_good_year',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 35 && G.age <= 65 && !G.mem?.sdr22GoodYear,
     text: () => pick([
@@ -388,7 +388,7 @@ export const EVENTS_SONDER_22 = [
 
   {
     id: 'sdr22_the_stranger_in_pain',
-    phase: 'young_adult',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 18 && G.age <= 50 && !G.mem?.sdr22StrangerInPain,
     text: () => pick([
@@ -402,7 +402,7 @@ export const EVENTS_SONDER_22 = [
 
   {
     id: 'sdr22_the_thing_you_made',
-    phase: 'midlife',
+    phase: null,
     weight: 2,
     when: (G) => G.age >= 35 && G.age <= 65 && !G.mem?.sdr22ThingYouMade,
     text: () => pick([

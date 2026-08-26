@@ -86,9 +86,10 @@ export const LAOS_DEPTH_EVENTS = [
 
   {
     id: 'laos_dep_sombath',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       IS_LAOTIAN(G) &&
       G.currentYear >= 2013 &&
       G.age >= 25 &&
@@ -114,9 +115,10 @@ export const LAOS_DEPTH_EVENTS = [
 
   {
     id: 'laos_dep_hmong_return',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
+      G.age <= 49 &&
       IS_LAOTIAN(G) &&
       G.ethnicity === 'hmong' &&
       G.currentYear >= 2009 &&

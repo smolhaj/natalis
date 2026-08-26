@@ -127,9 +127,10 @@ export const FOLLOWTHROUGH_77_EVENTS = [
 
   {
     id: 'ft77_mahsa_aftermath',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('zan_zendegi_azadi') &&
       G.currentYear >= 2023 &&
       G.age >= 16 &&
@@ -146,7 +147,7 @@ export const FOLLOWTHROUGH_77_EVENTS = [
 
   {
     id: 'ft77_mahsa_diaspora_distance',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('zan_zendegi_azadi') &&
@@ -168,7 +169,7 @@ export const FOLLOWTHROUGH_77_EVENTS = [
 
   {
     id: 'ft77_1988_silence',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('irn_1988_loss') &&
@@ -189,7 +190,7 @@ export const FOLLOWTHROUGH_77_EVENTS = [
 
   {
     id: 'ft77_revolution_childhood_late',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('irn_revolution_childhood') &&

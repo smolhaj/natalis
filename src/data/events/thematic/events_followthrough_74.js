@@ -94,7 +94,7 @@ export const FOLLOWTHROUGH_74_EVENTS = [
 
   {
     id: 'ft65_food_scarcity_late',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('ven_food_scarcity_era') &&

@@ -6,7 +6,7 @@ export const FOLLOWTHROUGH_84_EVENTS = [
 
   {
     id: 'ft84_pide_files_open',
-    phase: 'late_life',
+    phase: null,
     weight: 3,
     when: (G) =>
       G.flags.has('pt_pide_generation') &&

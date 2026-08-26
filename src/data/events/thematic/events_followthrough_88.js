@@ -26,9 +26,10 @@ export const FOLLOWTHROUGH_88_EVENTS = [
 
   {
     id: 'ft88_spectrum_released',
-    phase: 'midlife',
+    phase: null,
     weight: 3,
     when: (G) =>
+      G.age <= 49 &&
       G.flags.has('sg_spectrum_generation') &&
       G.currentYear >= 1989 && G.currentYear <= 1996 &&
       G.age >= 25 &&

@@ -154,9 +154,10 @@ export const IRELAND_DEPTH_EVENTS = [
 
   {
     id: 'ire_marriage_equality',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
+      G.age <= 49 &&
       IS_IRISH(G) &&
       G.currentYear >= 2015 &&
       G.age >= 25 &&
@@ -188,7 +189,7 @@ export const IRELAND_DEPTH_EVENTS = [
 
   {
     id: 'ire_ryan_report',
-    phase: 'late_life',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_IRISH(G) &&
