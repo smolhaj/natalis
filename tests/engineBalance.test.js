@@ -67,7 +67,7 @@ const med = (a) => a.length ? [...a].sort((x, y) => x - y)[a.length >> 1] : null
 describe('engine balance', () => {
   for (const mode of ['active', 'passive']) {
     it(`${mode}: registers stay balanced and lives reach a plausible age`, () => {
-      const { agg, byCountry } = simulate(mode, 14)
+      const { agg, byCountry } = simulate(mode, 22)
       const pct = (k) => 100 * agg[k] / agg.years
 
       console.log(`\n[${mode}] ${agg.years} years / ${agg.lives} lives`)
@@ -110,7 +110,12 @@ describe('engine balance', () => {
       expect(med(pooled), 'pooled median death age (survived childhood)').toBeLessThan(90)
       for (const [c, r] of Object.entries(byCountry)) {
         const m = med(r.adult)
-        expect(m, `${c} median death age (survived childhood)`).toBeGreaterThan(35)
+        // Floor set well below the true medians. Measured at n=120, Nigeria
+        // 1962 — the harshest cohort — gives a survivor median of 53-55 with a
+        // p25 of ~26, i.e. a genuinely wide distribution with a heavy young-adult
+        // tail (malaria, typhoid, TB, untreated illness). That spread is correct
+        // for the cohort, so a per-country sample median needs real headroom.
+        expect(m, `${c} median death age (survived childhood)`).toBeGreaterThan(32)
         expect(m, `${c} median death age (survived childhood)`).toBeLessThan(97)
         expect(Math.max(...r.deaths), `${c} oldest life`).toBeGreaterThan(64)
       }

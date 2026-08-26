@@ -1660,7 +1660,7 @@ export const SONDER_EVENTS = [
     id: 'sonder_ofw_victoria_park_sunday',
     phase: 'young_adult',
     weight: 2,
-    when: (G) => (G.currentCountry?.name === 'Hong Kong' || (G.character?.country?.name === 'Philippines' && G.flags?.has?.('ofw_worker'))) && !G.mem?.sonderOfwVictoriaPark,
+    when: (G) => (G.flags.has('ofw_hongkong') || (G.character?.country?.name === 'Philippines' && G.flags.has('ofw_worker'))) && !G.mem?.sonderOfwVictoriaPark,
     text: 'In the park on Sunday — the one day in the week that is theirs — Filipino domestic workers eat food from home, do each other\'s hair, show photographs of children they have not seen in two years. The park fills with a version of the Philippines that exists only on Sundays in this city, built from what was brought and what is missed.',
     effect: (p) => { p.e += 2; p.r += 1; p.setMem('sonderOfwVictoriaPark', true); },
   },

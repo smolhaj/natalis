@@ -94,7 +94,7 @@ export const EVENTS_SONDER_2 = [
     weight: 2,
     when: (G) =>
       !G.mem?.s2_adhan &&
-      (G.religion === 'muslim' ||
+      (G.religion?.startsWith('muslim') ||
        ['Nigeria', 'Senegal', 'Mali', 'Morocco', 'Algeria', 'Tunisia', 'Egypt', 'Jordan', 'Lebanon', 'Iran', 'Pakistan', 'Bangladesh', 'Indonesia', 'Turkey', 'Saudi Arabia', 'UAE', 'Yemen', 'Sudan', 'Libya'].includes(G.character.country.name)),
     text: 'The evening call to prayer is the signal that changes what the day is. Before it: one kind of time. After it: another. You never decided to feel this. It arrived with the air of the particular city and settled into the body.',
     choices: null,

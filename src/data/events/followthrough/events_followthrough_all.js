@@ -2902,9 +2902,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('kurd_citizenship_restored') &&
       G.age >= 50 &&
       !G.mem?.ft11KurdCitizenshipLate,
-    text: 'They gave you a citizenship in April 2011. Forty-nine years after they had taken it, the decree restored it — you understood the political calculation, that the uprising had just started and the concession was part of the management. You took the document anyway. Three months later the war began. The citizenship was real and it was insufficient and you have been holding both of those things since, because both are true.',
+    text: 'The card came in April, in a queue at a government office in Hasakah, forty-nine years after they took your father\'s name off the register. You held it and it weighed nothing. Three months later the road out of the town was closed and the card was of no use to anybody at the crossing. You still have it, in the same plastic sleeve as the photographs, and you would not throw it away.',
+    context: 'A 1962 census in Hasakah stripped around 120,000 Syrian Kurds of citizenship, leaving them and their descendants stateless. Decree 49 of April 2011 restored nationality to the ajanib category weeks into the uprising; the maktumin, the unregistered, were left out.',
     choices: null,
-    effect: (p) => { p.m += 3; p.e += 4; p.setMem('ft11KurdCitizenshipLate', true) },
+    effect: (p) => { p.r += 4; p.m -= 2; p.e += 2; p.setMem('ft11KurdCitizenLate', true) },
   },
 
   // ── KURD_RETURNED_HOME [moderate/migration] ───────────────────────────────────
@@ -2962,9 +2963,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('hai_transition_generation') &&
       G.age >= 48 &&
       !G.mem?.ft11HaitiTransition,
-    text: 'Baby Doc left on February 7, 1986. You were in the city — the specific noise of relief that fills a place when a long thing ends. You believed, in that morning, that the ending was also a beginning. You have revised this belief several times since, in both directions, without arriving at a final position. What you know now is that the morning was real. What it was the morning of is a more complicated question.',
+    text: 'February the seventh, and the radio plays the same songs it plays every February the seventh. You were on the Champ de Mars that morning in 1986 and you remember the noise a city makes when a long thing ends, which is not cheering exactly. You have believed several different things since about what that morning was the beginning of. The boy selling water at the junction was not born for another twenty years and knows the date because it is a holiday.',
+    context: 'Jean-Claude Duvalier fled Haiti on 7 February 1986, ending twenty-nine years of family rule. The date became a national holiday. He returned to Haiti in 2011 and died in 2014 without being tried.',
     choices: null,
-    effect: (p) => { p.m -= 3; p.e += 4; p.setMem('ft11HaitiTransition', true) },
+    effect: (p) => { p.m -= 3; p.e += 4; p.r += 2; p.setMem('ft11HaitiTransition', true) },
   },
 
   // ── COLONIAL_SUBJECT [moderate/political] ─────────────────────────────────────
@@ -3609,7 +3611,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     id: 'mouride_diaspora_dahira',
     phase: 'midlife',
     weight: 4,
-    when: (G) => G.flags.includes('mouride_member') && G.currentCountry !== G.character?.country?.name && G.age >= 28 && !G.flags.includes('mouride_diaspora_dahira'),
+    when: (G) => G.flags.includes('mouride_member') && G.currentCountry?.name !== G.character?.country?.name && G.age >= 28 && !G.flags.includes('mouride_diaspora_dahira'),
     text: 'The dahira meets in someone\'s apartment. Eight people. A recording of the khassaïds from the phone. The smell of rice and fish from the kitchen. You are in a country that does not know what you are doing here on a Saturday evening. You know. The eight people know. The brotherhood crossed the ocean with you.',
     choices: null,
     effect: (p) => {
@@ -3706,14 +3708,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('jim_crow_childhood') &&
       G.age >= 60 &&
       !G.mem?.ft14JimCrowLate,
-    text: 'Sixty years since the water fountain. The signs are gone. What remains is harder to photograph: the reflex of the second calculation, the scan of a room, the reading of who else is there. The civil rights laws passed. The enforcement of the laws was the next struggle. The struggle after that was the enforcement of the enforcement. You have been alive for several rounds of it. The country progresses and regresses and progresses again and the speed of the progression is always slower than the urgency requires.',
+    text: 'Sixty years, and the signs are gone. What is left does not photograph: the half-second scan of a room when you come into it, which your body does before you have decided anything. Your grandson drives a car you would not have driven at his age through a county you would not have stopped in. You gave him the talk anyway, the same one, with the hands on the wheel and the yes sir. He listened, which he did not have to.',
+    context: 'The Civil Rights Act passed in 1964 and the Voting Rights Act in 1965. Shelby County v. Holder struck down the preclearance formula in 2013. What Black families call the talk - instructions for surviving a traffic stop - has been passed down continuously across all of it.',
     choices: null,
-    effect: (p) => {
-      p.r += 4
-      p.e += 3
-      p.karma += 4
-      p.setMem('ft14JimCrowLate', true)
-    },
+    effect: (p) => { p.r += 5; p.e += 3; p.m -= 3; p.karma += 2; p.setMem('ft14JimCrowLate', true) },
   },
 
   {
@@ -3797,13 +3795,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('rustbelt_generation') &&
       G.age >= 60 &&
       !G.mem?.ft14RustbeltLate,
-    text: 'They are talking about the Rust Belt again. Every four years, the candidates come to the towns where the plant closed and say they understand. Some of them grew up in towns like this. Some of them have not. What they say is similar regardless. You know what the town looked like in 1972 and you know what it looks like now and the distance between those two pictures is the political fact that is being discussed, though not always by someone who has stood in the distance.',
+    text: 'The bus with the campaign wrap parks in the lot where the plant gate used to be, because it is the only lot big enough. You go, because everybody goes. The man says he understands and he says the name of the town correctly, which the last one did not. Afterwards you walk back past the union hall, which is a vape shop, and the diner, which is still the diner, and you have coffee there because it is a Tuesday.',
+    context: 'US manufacturing employment peaked at 19.5 million in 1979 and fell below 12 million by 2010. In towns where a single plant closed, population loss of 30-50 percent over two decades was common.',
     choices: null,
-    effect: (p) => {
-      p.r += 4
-      p.e += 3
-      p.setMem('ft14RustbeltLate', true)
-    },
+    effect: (p) => { p.r += 4; p.m -= 3; p.e += 2; p.setMem('ft14RustbeltLate', true) },
   },
 
   // ── AUSTRALIA FOLLOW-THROUGHS ───────────────────────────────────────────────
@@ -3860,14 +3855,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.currentYear >= 2000 &&
       G.age >= 50 &&
       !G.mem?.ft14SolidarityAfter,
-    text: 'Solidarity became a party. The party split and split again. Wałęsa ran for president, won, and later received very low poll numbers. The trade union is still a trade union, smaller than it was. What you participated in — the meeting in the church, the shipyard gates, the extraordinary air of August 1980 — is now history. The history is accurate and is also the skeleton of the experience. The flesh of it: the feeling of the meeting, what was said, the specific faces, the exact quality of the hope. That is not in the history books and it is yours.',
+    text: 'The shipyard gate is a monument now, with a plaque and a place to stand for photographs. Your grandson asked to see it, so you take him. He reads the plaque, which gives the dates and the twenty-one demands, and then wants to know where the shop was that sold the good bread. You cannot remember. What comes instead, standing there, is the exact cold of the railing under your hands in August, which was not cold at all.',
+    context: 'The August 1980 strike at the Lenin Shipyard in Gdańsk produced the twenty-one demands and the Gdańsk Agreement, legalising Solidarity. The union splintered after 1989; Lech Wałęsa served one presidential term and left office with single-digit approval.',
     choices: null,
-    effect: (p) => {
-      p.r += 5
-      p.e += 3
-      p.karma += 3
-      p.setMem('ft14SolidarityAfter', true)
-    },
+    effect: (p) => { p.m += 3; p.r += 3; p.karma += 2; p.setMem('ft14SolidarityAfter', true) },
   },
 
   {
@@ -3898,13 +3889,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('anni_di_piombo_generation') &&
       G.age >= 60 &&
       !G.mem?.ft14AnniDiPiomboLate,
-    text: 'The files are still classified. The trials reached verdicts that were appealed and overturned and revised. The people responsible died in prison or were released early or were never definitively identified or are still alive in ordinary apartments. Italy does not have a Day of Memory for the Years of Lead the way Germany has for the war. The dead are in the record. The record is in archives that require specific authorization to read. You were there. You do not need authorization.',
+    text: 'The bar on the corner has the photograph of the bank in Piazza Fontana behind the till, curling at the edge, and nobody remembers who put it there. Your knee still tells you when it is going to rain, which is from the Saturday in 1977 and not from age. The trials went up and came back down and went up again for forty years and you stopped following the appeals somewhere in the nineties. When the students come around with a recorder for a project you tell them the times and the streets and not the rest.',
+    context: 'Italy\'s anni di piombo ran from the 1969 Piazza Fontana bombing to the mid-1980s, with over 400 killed. Many prosecutions - Piazza Fontana among them - ended without a final conviction after decades of appeals, and state intelligence files remain partly classified.',
     choices: null,
-    effect: (p) => {
-      p.r += 6
-      p.e += 3
-      p.setMem('ft14AnniDiPiomboLate', true)
-    },
+    effect: (p) => { p.r += 5; p.h -= 2; p.e += 2; p.setMem('ft14AnniPiomboLate', true) },
   },
 
   {
@@ -4021,13 +4009,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('lost_decade_generation') &&
       G.age >= 60 &&
       !G.mem?.ft15LostDecadeLate,
-    text: 'The Nikkei closed above 40,000 this year for the first time since 1989. The financial newspapers are using the word "recovery." You watched the index fall from 38,915 in December 1989 to 8,000 in 2003. You watched the real estate that was valued at four times the entire United States in 1989 become something else. The word "recovery" is accurate for the index. The decade in which you were supposed to be building something — career, savings, security — that decade did not recover. The index is not you.',
+    text: 'The index closed above forty thousand this week and the man on the morning programme says recovery four times. You were twenty-eight in 1989 and the plan was the company, the loan, the flat in Setagaya by forty. You have the company. Your junior from that year took the early retirement package in 1998 and sells insurance now, and at the reunion he is the one who makes the joke about it first.',
+    context: 'The Nikkei peaked at 38,915 in December 1989 and did not close above that level again until February 2024. At the peak, Japanese land was valued at roughly four times all land in the United States. The cohort that graduated into the 1990s is known as the employment ice age generation.',
     choices: null,
-    effect: (p) => {
-      p.r += 5
-      p.e += 3
-      p.setMem('ft15LostDecadeLate', true)
-    },
+    effect: (p) => { p.r += 4; p.w -= 2; p.e += 2; p.setMem('ft15LostDecadeLate', true) },
   },
 
   {
@@ -4094,14 +4079,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('hibakusha_stigma_lived') &&
       G.age >= 60 &&
       !G.mem?.ft15HibakushaLate,
-    text: 'Sunao Tsuboi, who was one of the last known hibakusha, died in 2021. He was ninety-six. He had been giving testimony since 1945 and had not stopped. What he was giving testimony to: the fireball, the temperature, the distance from the hypocenter, the color of the smoke, the specific quality of the silence that followed. The Nihon Hidankyo — the hibakusha organization — was awarded the Nobel Peace Prize in 2024. The award recognises that the testimony existed and was given and is now in the historical record. The generation that experienced the thing is almost entirely gone. What remains is the testimony.',
+    text: 'The school in the next ward asks for someone to come and speak, and the man who used to do it died in the spring, so they ask you. You have not said any of it aloud since 1961, when it was said about you rather than by you, across a table, by a family declining a marriage. You start with the colour of the morning and the sound the window frames made, and find the order of it still intact after sixty years, which you had not expected. Afterwards a girl of eleven asks whether you were frightened, and you tell her that at first you were not, because you did not know yet what it was.',
+    context: 'Sunao Tsuboi, among the last hibakusha to give public testimony, died in 2021 aged ninety-six. Nihon Hidankyo, the survivors\' organisation, received the Nobel Peace Prize in 2024. Discrimination against hibakusha in marriage and employment was widespread into the 1970s, driven by fears about heredity.',
     choices: null,
-    effect: (p) => {
-      p.m += 5
-      p.karma += 5
-      p.r += 4
-      p.setMem('ft15HibakushaLate', true)
-    },
+    effect: (p) => { p.m += 4; p.karma += 6; p.e += 2; p.r -= 3; p.setMem('ft15HibakushaLate', true) },
   },
 
   {
@@ -4130,14 +4111,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('anpo_generation') &&
       G.age >= 60 &&
       !G.mem?.ft15AnpoLate,
-    text: 'Kishi Nobusuke resigned after the Security Treaty was ratified in 1960. You were in the crowds outside the Diet building the night it passed. The protest had not stopped the ratification. Kishi resigned anyway — the scale of opposition made his position untenable even after he won. The Security Treaty has been renewed automatically every year since. It is now so ordinary that students who were not born yet do not know there was a protest. The protest is in the history books. What the protest felt like — the specific noise of that night, the sense that something was being decided that you had a right to contest — is not in the history books. It is in you, and you are sixty.',
+    text: 'Your granddaughter has a worksheet about the treaty and asks what the Diet building looked like that night. You tell her about the linked arms and the particular noise a hundred thousand people make chanting in time, which is not the noise of a stadium. She writes down the date. There is no line on the worksheet for the noise, so it does not go anywhere. The treaty renewed itself again this year, the way it has every year since, without anyone having to sign anything.',
+    context: 'The 1960 Anpo protests against the revised US-Japan Security Treaty were the largest in modern Japanese history. Kishi Nobusuke resigned after ratification. A student, Michiko Kanba, was killed in the crush at the Diet gates on 15 June 1960. The treaty has renewed automatically since 1970.',
     choices: null,
-    effect: (p) => {
-      p.r += 5
-      p.e += 3
-      p.karma += 3
-      p.setMem('ft15AnpoLate', true)
-    },
+    effect: (p) => { p.r += 3; p.e += 2; p.m -= 2; p.setMem('ft15AnpoLate', true) },
   },
 
   // ── LATIN AMERICA FOLLOW-THROUGHS ───────────────────────────────────────────
@@ -4150,13 +4127,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('corralito_survivor') &&
       G.age >= 55 &&
       !G.mem?.ft15CorralitoLate,
-    text: 'You learned something in December 2001 about where not to keep money. The lesson was expensive. The banks froze in December and by January the peso had been devalued to a third of its dollar value and the dollar deposits had been converted to pesos at the old rate and then revalued at the new rate. You understood, at the end of that arithmetic, that the savings you had built over a decade were worth a third of what they had been on December 1. You have kept money differently since then. The people who were too young to have savings in 2001 do not keep money the same way you do. This is not irrational on either side. The experience was the teacher.',
+    text: 'The money is behind the wardrobe in an envelope, in dollars, and you count it twice a year. Your daughter keeps hers in an app and finds the envelope funny. You have tried to explain that December and it comes out as a story about queues and a spoon on a saucepan, which is not the part that matters. The part that matters is the morning at the kitchen table when you did the arithmetic and found that ten years had come to a third of itself. You have not opened a savings account since.',
+    context: 'The corralito of December 2001 capped bank withdrawals at 250 pesos a week. In January 2002 the peso was devalued and dollar deposits were forcibly converted at 1.4 pesos while the market rate ran past 3, wiping out most of the real value of savings.',
     choices: null,
-    effect: (p) => {
-      p.r += 4
-      p.e += 4
-      p.setMem('ft15CorralitoLate', true)
-    },
+    effect: (p) => { p.e += 4; p.w -= 1; p.m -= 2; p.r += 2; p.setMem('ft15CorralitoLate', true) },
   },
 
   {
@@ -4167,14 +4141,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('arg_cacerolazos_generation') &&
       G.age >= 55 &&
       !G.mem?.ft15CacerolazoLate,
-    text: 'December 19-20, 2001. The helicopters over the Casa Rosada. De la Rúa leaving by helicopter while the square below was still full. Five presidents in twelve days. What came after was Kirchner and the recovery and the argument about what the recovery cost and whether the method was sustainable. The cacerolazos were not the end of the crisis — they were the moment the crisis became visible in a form the television could show. The crisis had been building for years. You were in the square. You were not the cause of the crisis and you were not the solution. You were the square.',
+    text: 'The pot is still in the kitchen. There is a dent in the base from the twentieth of December and you have never replaced it, though it wobbles on the burner and you have to hold the handle to keep it flat. Your son asks why you do not throw it out and you say something about it still being a good pot. Five presidents in twelve days, helicopters over the roof of the Casa Rosada, and what you kept from it is a saucepan you cannot cook rice in properly.',
+    context: 'On 19-20 December 2001 mass cacerolazos - protests made by banging pots - filled the Plaza de Mayo. President De la Rúa left the Casa Rosada by helicopter. Argentina had five presidents in twelve days.',
     choices: null,
-    effect: (p) => {
-      p.r += 4
-      p.e += 3
-      p.karma += 3
-      p.setMem('ft15CacerolazoLate', true)
-    },
+    effect: (p) => { p.m += 2; p.e += 2; p.karma += 2; p.r += 2; p.setMem('ft15CacerolazoLate', true) },
   },
 
   {
@@ -4203,14 +4173,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('arg_savings_destroyed') &&
       G.age >= 55 &&
       !G.mem?.ft15ArgSavingsLate,
-    text: 'You rebuilt. Not to the same amount, not in the same way. The dollar account was a lesson that became a different lesson when the lesson cost everything you had. The generation that grew up after 2001 was told not to save in pesos. You were told the same thing by the generation that lived through the 1989 hyperinflation. Each generation in Argentina learns this from the previous generation\'s loss. The learning transfers. The loss also transfers — to the question of what to build, what to trust, what baseline of institutional reliability is reasonable to expect. The answer your generation arrived at is low.',
+    text: 'You rebuilt, in a smaller shape, in a currency that is not this one. Your mother did the same after 1989 and you remember thinking she was superstitious about banks. At the Sunday lunch your nephew explains a stablecoin to you and you listen the whole way through and say that it sounds sensible. Then you go home and check the envelope, which is where it was.',
+    context: 'Argentine hyperinflation peaked at over 3,000 percent in 1989. The 2002 pesification destroyed dollar savings a second time within one working lifetime. Household dollar hoarding outside the banking system is estimated in the hundreds of billions.',
     choices: null,
-    effect: (p) => {
-      p.r += 5
-      p.e += 4
-      p.w -= 2
-      p.setMem('ft15ArgSavingsLate', true)
-    },
+    effect: (p) => { p.e += 3; p.w -= 2; p.r += 3; p.setMem('ft15ArgSavingsLate', true) },
   },
 
   {
@@ -4246,13 +4212,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.currentYear >= 2023 &&
       G.age >= 50 &&
       !G.mem?.ft15BrazilLulaLate,
-    text: 'Operation Car Wash began in 2014. The drains of corruption it opened ran through every major party and most of the major construction companies. Dilma was impeached in 2016. Lula was imprisoned in 2018 and released in 2019 on a Supreme Court ruling and then elected president again in 2022. The corruption that Lava Jato found was real. The procedural problems in the prosecution were also real. Judge Moro, who convicted Lula, became Bolsonaro\'s justice minister. This sequence of events has not resolved into a clean lesson about what Brazilian institutions are and what they can do. The lesson is that the question is still open.',
+    text: 'The taxi has the radio on and Lula is being sworn in again. The driver asks what you make of it and you say it is complicated, and he laughs, because that is what everyone says. You voted one way in 2018 and another way in 2022 and you have told your brother neither number. The overpass you pass under was built by one of the companies in the case and it is still standing and still carrying the traffic.',
+    context: 'Operation Lava Jato, begun in 2014, implicated most major parties and the largest construction firms. Dilma Rousseff was impeached in 2016; Lula was imprisoned in 2018, released in 2019, and elected again in 2022. Judge Sergio Moro, who convicted him, later served as Bolsonaro\'s justice minister.',
     choices: null,
-    effect: (p) => {
-      p.r += 4
-      p.e += 4
-      p.setMem('ft15BrazilLulaLate', true)
-    },
+    effect: (p) => { p.e += 3; p.r += 2; p.m -= 2; p.setMem('ft15BrazilLulaLate', true) },
   },
 
 // ============================================================
@@ -4299,13 +4262,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('chechnya_generation') &&
       G.age >= 55 &&
       !G.mem?.ft16ChechnyaLate,
-    text: 'Grozny has been rebuilt. The towers are glass and lit at night. Ramzan Kadyrov\'s photograph is in every shop window. Chechnya is officially pacified — it has been officially pacified since 2009. You remember the buildings in 1995: the apartment blocks shelled until they looked like the photographs from Stalingrad. The reporters who photographed them were later shot or poisoned or died of other causes. The war that was not called a war is now a stability that is not called an occupation. You understand the relationship between these two things because you were in the country for the transition between them.',
+    text: 'Your nephew sends photographs from Grozny: glass towers, a mosque lit green, a boulevard named for Akhmad Kadyrov. You look for the corner where the bakery was and cannot fix it against anything in the picture. He asks whether it has changed much. You type a reply, delete it, and send back that it looks clean.',
+    context: 'Grozny was largely destroyed in the 1994-96 and 1999-2000 wars and rebuilt under Ramzan Kadyrov, whose portrait is displayed across the republic. Anna Politkovskaya, who reported the second war, was murdered in 2006.',
     choices: null,
-    effect: (p) => {
-      p.r += 5
-      p.e += 3
-      p.setMem('ft16ChechnyaLate', true)
-    },
+    effect: (p) => { p.m -= 4; p.e += 2; p.r += 4; p.setMem('ft16ChechnyaLate', true) },
   },
 
   {
@@ -4374,15 +4334,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.currentYear >= 2024 &&
       G.age >= 40 &&
       !G.mem?.ft16BolotnaLate,
-    text: 'You were in the square in 2011 or you watched from nearby. The white ribbons. The hundred thousand people who discovered that there were a hundred thousand people like them in the same city. The Bolotnaya prisoners were tried and served their sentences. The foreign agent law passed and the anti-extremism laws expanded and the space for what could be said publicly narrowed through the 2010s until what remained was a specific kind of silence that resembles the silence before. In February 2024, Alexei Navalny died in IK-6 Polar Wolf. He was forty-seven. The calculation he made in 2021 — to return, knowing the cost — was a political act, which is different from a practical one.',
+    text: 'The white ribbon is in the drawer with the foreign coins and a watch that stopped. In February the news comes out of the Yamalo-Nenets district and you read it standing up in the kitchen and then you sit down. You do not post anything. In the evening your wife asks whether you are going to the embankment where people have been leaving flowers, and you say you will decide in the morning, and in the morning you go, and you do not stay long.',
+    context: 'The 2011-12 Bolotnaya Square protests over election fraud drew the largest crowds in post-Soviet Russia; the white ribbon was their emblem. Alexei Navalny died in penal colony IK-3 in the Yamalo-Nenets district in February 2024, aged forty-seven, having returned to Russia in 2021 knowing he would be arrested.',
     choices: null,
-    effect: (p) => {
-      p.r += 5
-      p.m -= 4
-      p.karma += 5
-      p.e += 3
-      p.setMem('ft16BolotnaLate', true)
-    },
+    effect: (p) => { p.m -= 6; p.karma += 4; p.r += 3; p.setMem('ft16BolotnaLate', true) },
   },
 
 // ============================================================
@@ -4527,13 +4482,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('romania_1989_generation') &&
       G.age >= 50 &&
       !G.mem?.ft18Rev1989Late,
-    text: 'Thirty years later, the question of who the "terrorists" were in December 1989 has not been definitively answered. The court cases are ongoing and have been ongoing for three decades. Iliescu was charged with crimes against humanity in 2015. The trial is still open. The revolution that felt complete on Christmas Day 1989 — when the body was shown on television and the thing that defined your entire life ended in ninety minutes — was followed by a transition that raised the question of how complete the revolution actually was. You were in it. You have been watching the accounting ever since.',
+    text: 'Every December the television runs the same footage and every December you watch it with the sound down. Your daughter was born after, and asks once who was shooting on the twenty-second. You tell her the truth, which is that you were there and you do not know. The trial has been open longer than she has been alive, and the man on the fourth floor who was Securitate still puts his bins out on Tuesdays, same as everyone.',
+    context: 'Over a thousand people died in December 1989, most after Ceaușescu had fled, shot by unidentified gunmen the state called terrorists. Ion Iliescu was charged with crimes against humanity in 2015; proceedings continue.',
     choices: null,
-    effect: (p) => {
-      p.r += 5
-      p.e += 3
-      p.setMem('ft18Rev1989Late', true)
-    },
+    effect: (p) => { p.r += 4; p.e += 3; p.m -= 3; p.setMem('ft18Rev1989Late', true) },
   },
 
   {
@@ -4586,14 +4538,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('viet_kieu_investor') &&
       G.age >= 50 &&
       !G.mem?.ft18VietKieuLate,
-    text: 'Việt Kiều — overseas Vietnamese. You came back to invest, or to visit, or to figure out what coming back meant. The country you came back to has a market economy and a party that does not permit political opposition and a class of young people who were born after the war and have no memory of the south. You are from the south. The café on the corner used to be something else. The people who remember what it was are old. You are becoming one of the people who remember.',
+    text: 'The café on the corner is a phone shop now, and the woman behind the counter was born the year you left. You order the coffee the old way, with the filter, and she has to check whether they still do it. At the family table your cousin\'s children speak a Vietnamese with no southern vowels in it and correct yours, gently, twice. You pay for lunch in dong and overtip, which everybody notices and nobody mentions.',
+    context: 'Việt Kiều, overseas Vietnamese, number roughly 5 million. Remittances exceed 15 billion dollars a year. Property purchase and residency rules were progressively eased from 2015, but political activity remains closed.',
     choices: null,
-    effect: (p) => {
-      p.r += 5
-      p.m += 3
-      p.e += 2
-      p.setMem('ft18VietKieuLate', true)
-    },
+    effect: (p) => { p.r += 4; p.m += 3; p.e += 2; p.setMem('ft18VietKieuLate', true) },
   },
 
   // ── KOREA FOLLOW-THROUGHS ─────────────────────────────────────────────────────
@@ -4629,14 +4577,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('chaebol_worker') &&
       G.age >= 55 &&
       !G.mem?.ft18ChaeholLate,
-    text: 'The chaebol company. Samsung, Hyundai, LG, Lotte. You gave it decades. The performance review, the evening dinners that were not optional, the specific culture of a large Korean corporation where the hierarchy is visible in every room. In exchange: the salary, the healthcare, the pension, the prestige of the employer on your resume. Park Geun-hye was impeached in 2017 and the Samsung heir went to prison for bribing her administration. The corruption that ran the miracle is not separate from the miracle. You built something inside that structure. The structure and what you built inside it are both real.',
+    text: 'The retirement gift is a watch with the company mark on the face, and you wear it, because it is a good watch. Thirty-one years of hoesik and the seating order at every one of them, which you could still draw from memory. Your son works at a startup and asks how you stood it, and you find yourself defending the place you spent your life complaining about. The pension arrives on the twenty-fifth.',
+    context: 'South Korea\'s chaebol conglomerates drove the post-war industrial expansion. Park Geun-hye was impeached in 2017 over payments from Samsung; Lee Jae-yong was convicted of bribery in the same case. Hoesik, the compulsory after-hours company dinner, remains standard practice.',
     choices: null,
-    effect: (p) => {
-      p.r += 4
-      p.e += 3
-      p.m += 2
-      p.setMem('ft18ChaeholLate', true)
-    },
+    effect: (p) => { p.m += 3; p.e += 2; p.w += 2; p.r += 2; p.setMem('ft18ChaeholLate', true) },
   },
 
 // ============================================================
@@ -4722,9 +4666,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('normalization_generation') &&
       G.age >= 55 &&
       !G.mem?.ft19NormLate,
-    text: 'After 1989, the question of who did what during normalization took years to settle and never settled completely. The lustration process named names. Some people disputed what was said about them. Some disputes were well-founded. The specific texture of normalization was that coercion existed on a spectrum, and the documents do not always show the spectrum. What you know about what you did — or what people you knew did — lives in a different register than what the files contain.',
+    text: 'The file came back thinner than you expected, and the informer code name in it is one you can put a face to within about four seconds. He is still alive. You see him at the shop by the tram stop and he nods and you nod, which is what you have both done for thirty years. Your son says you should say something and you say that the file does not show what the man was threatened with, which is true, and is also not the reason.',
+    context: 'Czechoslovak normalisation after 1968 required hundreds of thousands of loyalty declarations. The 1991 lustration law barred former StB collaborators from office; the registers were published in 2003 and did not record what coercion had been applied.',
     choices: null,
-    effect: (p) => { p.r += 6; p.e += 3; p.m -= 3; p.setMem('ft19NormLate', true); },
+    effect: (p) => { p.r += 5; p.e += 3; p.m -= 2; p.setMem('ft19NormalizationLate', true) },
   },
 
   {
@@ -4922,9 +4867,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     phase: 'midlife',
     weight: 3,
     when: (G) => G.flags.has('arm_karabakh_veteran_1') && G.flags.has('arm_war_2020_loss') && G.age >= 45 && !G.mem.ft22_vet_late_done,
-    text: 'You fought in those mountains in 1991. You know the road to Shushi. You know the village names. In November 2020 you watch the map on a phone screen and see them all go back, one name at a time, until the ceasefire map looks like 1988 again. A veteran from your unit calls and says nothing for a long time. Then: did we do it wrong, or did it not matter what we did. You do not answer because you do not know.',
+    text: 'You know the road to Shushi in the dark and you know which village comes after which. In November you watch a map on a phone screen and the names go back one at a time until it looks like the map from before you were a soldier. A man from your unit calls and neither of you says anything for a long time. Then he asks whether you did it wrong or whether it did not matter what you did, and you say you will call him tomorrow.',
+    context: 'The 2020 Nagorno-Karabakh war lasted forty-four days and ended with Azerbaijan recovering most of the territory taken by Armenian forces in the 1991-94 war, including Shushi. Roughly 4,000 Armenian soldiers were killed, many of them conscripts.',
     choices: null,
-    effect: (p) => { p.m -= 10; p.r += 8; p.setMem('ft22_vet_late_done', true); },
+    effect: (p) => { p.m -= 10; p.r += 8; p.h -= 2; p.setMem('ft22_vet_late_done', true) },
   },
 
   {
@@ -4987,9 +4933,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     phase: 'late_life',
     weight: 2,
     when: (G) => G.flags.has('arm_genocide_memory_bearer') && G.age >= 60 && !G.mem.ft22_genocide_late_done,
-    text: 'Your grandmother is gone. Your mother is gone. The family chain by which you knew what happened in 1915 has broken at you. You are now the one who remembers it from the one who survived it. April 24 comes every year. You go to the memorial. The young people there have never met anyone who was alive in 1915. Neither have you, but you met someone who did. You try to explain the difference. You are not sure they can feel it yet.',
+    text: 'Your grandmother told it in the kitchen, always in Western Armenian, always the same nine or ten sentences and never any more than that. She is gone, and your mother is gone, and the chain stops at you. On April the twenty-fourth you go to the memorial and stand at the eternal flame and the young people around you are holding phones up. Afterwards a girl asks you what your grandmother said, and you give her the nine sentences, in the order they were given to you.',
+    context: 'Between 1915 and 1923 roughly 1.5 million Armenians were killed. Survivors typically told the account in fixed, compressed form. The Tsitsernakaberd memorial in Yerevan opened in 1967; 24 April is the commemoration day.',
     choices: null,
-    effect: (p) => { p.m -= 4; p.r += 5; p.e += 2; p.setMem('ft22_genocide_late_done', true); },
+    effect: (p) => { p.m -= 3; p.karma += 5; p.e += 2; p.r += 3; p.setMem('ft22GenocideBearerLate', true) },
   },
 
 // ============================================================
@@ -5274,7 +5221,7 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('party_member') &&
       G.age >= 55 &&
       !G.mem?.ft24PartyReckoning,
-    text: 'You joined for practical reasons. That is the honest account. The ideology was a performance you delivered well enough to be unremarkable. The advancement was real. What you performed to get it, you tell yourself, was not the same as what you believed — but the distinction requires more maintenance than it used to.',
+    text: 'You joined for practical reasons, which is the honest account. The ideology was a performance you delivered well enough to be unremarkable, and the advancement was real. Thirty years on, the flat is still the flat the membership got you. Your daughter asks what you actually believed and you give her the practical account, and she takes it well, which is somehow worse.',
     choices: [
       {
         text: 'Pragmatism was the right call — you used the system rather than being used by it',
@@ -5405,9 +5352,9 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     when: (G) =>
       G.flags.has('experienced_displacement') &&
       !G.mem?.ft25DispMid,
-    text: 'You have been a person who was made to leave. Not emigration — that word does not fit. Removal. The country or city that was yours ceased to be yours by someone\'s decision. You carry the inventory of that: the weight of objects packed under pressure, the things you could not take, the texture of the last morning before you left. People who have never been removed from a place understand home as a given. You know it as something that was given and then taken, which means you understand something about belonging that they do not.',
+    text: 'You keep the documents in a plastic wallet in the same drawer in every house you have lived in since. You know the weight of what a person can carry, in kilograms, because you weighed it once. When people at work talk about moving house they use the word stressful and you agree with them and mean something else. Your child asks what the town was like and you find you describe the shops.',
     choices: null,
-    effect: (p) => { p.r += 6; p.e += 4; p.setMem('ft25DispMid', true) },
+    effect: (p) => { p.r += 6; p.e += 4; p.m -= 2; p.setMem('ft25DispMid', true) },
   },
 
   {
@@ -5461,9 +5408,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('sdn_khartoum_war_generation') &&
       G.age >= 50 &&
       !G.mem?.ft25KhartoumEcho,
-    text: 'Khartoum is a different city now. The fighting lasted longer than anyone expected and did not end cleanly — it shifted, paused, resumed elsewhere in the country. The neighbourhood you lived in has been rebuilt, or abandoned, or is still carrying the damage in its walls and streets. You read the new skyline differently from the people who were not there. You know which routes were safe in which months, which buildings were occupied. That specific knowledge fades but does not disappear. It becomes part of how you navigate a city even years after it has changed.',
+    text: 'You still take the long way round at the Kober bridge, though there is nothing at the Kober bridge any more. Someone new to the city asks why and you say the traffic, and they accept it, because it is also true. You know which months which streets were passable and you know the sound the small arms made from four blocks away versus two. Your body turns the corner before you decide to.',
+    context: 'Fighting between the Sudanese Armed Forces and the Rapid Support Forces broke out in Khartoum in April 2023. Over 8 million people were displaced within a year, and much of the capital\'s central districts, markets and hospitals were destroyed or occupied.',
     choices: null,
-    effect: (p) => { p.r += 6; p.e += 3; p.setMem('ft25KhartoumEcho', true) },
+    effect: (p) => { p.r += 5; p.e += 3; p.h -= 2; p.setMem('ft25KhartoumEcho', true) },
   },
 
   {
@@ -5610,13 +5558,13 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     phase: 'midlife',
     weight: 3,
     when: (G) => G.flags.has('arranged_marriage') && G.partner && G.age >= 35 && !G.mem?.ftw26ArrangedMidlife,
-    text: 'You did not choose this person the way you would have chosen from a field of options. The families chose. You agreed — or you were in no position to disagree, which is a different thing. And then time passed. The person who was a stranger at the beginning is now the person whose breathing you know, whose habits you have memorized without trying. The question of whether this is love is almost beside the point now.',
+    text: 'You were introduced in your aunt\'s front room with four other people present and a plate of biscuits nobody touched. Twenty years on, you know the exact sound she makes clearing her throat before she disagrees with you, and you start conceding before she has said anything. Your daughter says she wants to find her own person and you say that is good, and mean it. In the car you both listen to the radio without either of you choosing the station.',
     choices: [
       {
         text: 'It became something you would call love.',
         tag: 'Grown into it',
         outcome: 'Not the love of a film. A different kind: chosen by repetition, confirmed by years.',
-        effect: (p) => { p.m += 7; p.addFlag('arranged_marriage_settled'); p.setMem('ftw26ArrangedMidlife', true); },
+        effect: (p) => { p.m += 5; p.e += 2; p.setMem('ftw26ArrangedMid', true) },
       },
       {
         text: 'It became a life, which is not the same thing.',
@@ -5680,8 +5628,9 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
     phase: 'late_life',
     weight: 3,
     when: (G) => G.flags.has('nkrumah_era') && G.currentYear >= 1990 && !G.mem?.ftw26NkrumahLate,
-    text: 'You were there when it felt possible. Kwame Nkrumah believed that Africa could take its place — not the Africa of the maps drawn in Europe, but the real thing. The coup came in 1966, while he was on a plane to Hanoi. You learned, over the years after, what happens to the countries that produce men like that: they get the coup, and then the structural adjustment, and then the brain drain, and then the elections that are real but bounded. Ghana has been relatively fine. The project was larger than Ghana.',
-    effect: (p) => { p.r += 4; p.e += 2; p.setMem('ftw26NkrumahLate', true); },
+    text: 'The independence photograph is still on the wall at your sister\'s, the one with the crowd at the polo ground and everybody in white. You were nineteen and you believed the whole thing. Your grandson works for a mining company registered in Toronto and sends money home in cedis that are worth less each time. When he asks what Nkrumah was actually like, you find you describe the crowd rather than the man.',
+    context: 'Ghana became independent on 6 March 1957, the first sub-Saharan colony to do so. Kwame Nkrumah was deposed by military coup in February 1966 while flying to Hanoi. Structural adjustment followed in the 1980s.',
+    effect: (p) => { p.r += 4; p.m += 2; p.e += 2; p.setMem('ftw26NkrumahLate', true) },
   },
 
 // ============================================================
@@ -5700,9 +5649,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('white_zimbabwean_exile') &&
       G.age >= 35 && G.age <= 60 &&
       !G.mem?.ft27ZimExileSettle,
-    text: 'You are settled now — South Africa, or Australia, or the United Kingdom, depending on where the passport or the connection took you. The farm is other people\'s now. The seizure was legal under the law that was passed to make it legal. You know what the farm smelled like in the rains. You know the names of the workers who stayed and what happened to them is something you try not to think about on the same day you think about the farm. The country is there. You are here. There is a distance between those two facts that is not only geographical.',
+    text: 'The braai in Perth or Guildford, and someone has brought boerewors from the shop that imports it, and by nine the conversation is the farms again. You do not join in this time. Emmanuel, who ran the pump house for eighteen years, sent a message in March and you have not answered it, and the number is still in your phone. Someone puts on a song from before and the whole table sings the Shona chorus without knowing what any of it means.',
+    context: 'Zimbabwe\'s fast-track land reform from 2000 transferred roughly 4,000 white-owned commercial farms. An estimated 200,000 farm workers, most of them Black Zimbabweans, lost both employment and on-farm housing and were largely excluded from resettlement schemes.',
     choices: null,
-    effect: (p) => { p.r += 6; p.e += 3; p.m -= 3; p.setMem('ft27ZimExileSettle', true) },
+    effect: (p) => { p.r += 5; p.m -= 4; p.e += 1; p.setMem('ft27ZimExileSettle', true) },
   },
 
   {
@@ -5713,9 +5663,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('white_zimbabwean_exile') &&
       G.age >= 60 &&
       !G.mem?.ft27ZimExileLate,
-    text: 'There are years when you do not think about Zimbabwe for weeks at a time. Then there are the rains here, which are not the same as the rains there, and the smell of a certain red earth in a garden centre, and the whole thing is present again. You left because there was no other option. You have built a life. Both are true. The living-with is not resolution — it is a particular kind of continuous management that after forty years you have become expert at without ever becoming easy with.',
+    text: 'There are weeks when Zimbabwe does not come up at all. Then it rains the wrong way, or you pass an open bag of red potting compost in a garden centre and stop walking. Your wife knows what the stopping is and does not say anything. You buy the compost, which you do not need, and put it in the boot.',
+    context: 'Roughly a third of Zimbabwe\'s white population of 1980 had left by 1990, and the fast-track land reform from 2000 accelerated the departure. Most settled in South Africa, the United Kingdom, Australia and New Zealand.',
     choices: null,
-    effect: (p) => { p.r += 5; p.e += 4; p.m += 2; p.setMem('ft27ZimExileLate', true) },
+    effect: (p) => { p.r += 4; p.m += 2; p.e += 2; p.setMem('ft27ZimExileLate', true) },
   },
 
   // ── WHITE ZIMBABWEAN: STAYED ──────────────────────────────────────────────────
@@ -5760,9 +5711,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.has('freedom_day_witness') &&
       G.age >= 60 &&
       !G.mem?.ft27FreedomDayLate,
-    text: 'You were there. You remember the queue, or the radio in the kitchen, or the streets that night. The country has done things since then that were not in the story you told yourself about what 1994 meant. Some of them were predictable and you did not predict them, or predicted them and hoped you were wrong. You are still here. The being-still-here is not a conclusion — it is a continuing position that you revise every few years as the evidence changes.',
+    text: 'You still have the ink photograph, the thumb held up, the queue behind you going round the corner of the school. Your daughter, who was born in 1996, cannot get a job and has begun saying things about that year that you do not recognise. You do not argue with her, because the load-shedding schedule is on the fridge and it is her generator money that pays for the diesel. On the twenty-seventh you go and vote anyway, first thing, before the queue.',
+    context: 'South Africa\'s first universal election was held on 27 April 1994. Youth unemployment now exceeds 45 percent, and scheduled load-shedding has been in force since 2007. The generation born after 1994 is known as the born-frees.',
     choices: null,
-    effect: (p) => { p.r += 6; p.e += 4; p.m += 3; p.setMem('ft27FreedomDayLate', true) },
+    effect: (p) => { p.m -= 2; p.r += 4; p.e += 3; p.karma += 2; p.setMem('ft27FreedomDayLate', true) },
   },
 
   // ── DOWRY PAID: THE ONGOING WEIGHT ───────────────────────────────────────────
@@ -5861,13 +5813,13 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       !G.flags.has('sold_gold_emergency') &&
       G.age >= 30 && G.age <= 60 &&
       !G.mem?.ft27GoldCrisis,
-    text: 'The gold your grandmother left — bangles, or a chain, or a set of earrings that were hers from her wedding — has been in a box since the inheritance. You know what it is worth: you have checked, once or twice, when things were tight. You know the jeweller on the corner who buys gold by weight. The gold represents everything she accumulated and wanted you to have. The question of when a crisis is serious enough to be the crisis the gold is for is a question you revisit when the money gets difficult.',
+    text: 'The bangles are in the tin at the back of the wardrobe, under the folded sari that still smells faintly of the trunk it came in. You have taken them out twice: once when the hospital wanted a deposit, once in a month you do not talk about. Both times you put them back and found the money elsewhere. The jeweller at the corner weighs gold on a scale you can see from the street, and you have never once walked in.',
     choices: [
       {
         text: 'Sell some of it. The crisis is the crisis the gold is for.',
         tag: 'sell',
         outcome: 'The jeweller pays fairly, which is to say below market but above desperation. The box is lighter. The crisis resolves.',
-        effect: (p) => { p.mo += 800; p.m -= 6; p.r += 4; p.addFlag('sold_gold_emergency'); p.setMem('ft27GoldCrisis', true) },
+        effect: (p) => { p.e += 3; p.m += 2; p.r += 2; p.setMem('ft27GoldCrisis', true) },
       },
       {
         text: 'Not yet. This is not yet that crisis.',
@@ -6030,13 +5982,14 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('ci_election_crisis_witness') &&
       G.currentYear >= 2019 &&
       !G.mem?.ciGbagboAcquitted,
-    text: 'January 15, 2019. The International Criminal Court acquits Laurent Gbagbo. The charges — crimes against humanity for the 3,000 people killed in 2010 and 2011 — are dismissed for insufficient evidence. He walks out of the courtroom in The Hague a free man. In 2021 he returns to Abidjan in a Boeing chartered by the Ivorian government, to crowds. Alassane Ouattara — the man whose election result Gbagbo refused to accept — has been president for ten years by then. The crisis that cost 3,000 lives has produced an ICC acquittal and two presidents who have met and shaken hands. You do not quite know what to do with this.',
+    text: 'The television in the maquis is showing the plane land at Félix-Houphouët-Boigny and the crowd along the fence at the perimeter. The man next to you, who lost a brother in Abobo in 2011, watches the whole thing and orders another Flag. Nobody at the table says anything about it. On the way home the boy at the roundabout is selling flags for both parties from the same bundle.',
+    context: 'The ICC acquitted Laurent Gbagbo of crimes against humanity in January 2019 for insufficient evidence. He returned to Abidjan in 2021 aboard a government-chartered aircraft. Around 3,000 people died in the 2010-11 post-election crisis.',
     choices: [
       {
         text: 'The acquittal is what it is. The ICC\'s standard of proof is what it is.',
         tag: 'Legal',
         outcome: 'The court required a standard of evidence it couldn\'t meet. The 3,000 deaths are not in question. What can be proven in The Hague and what happened in Abidjan are different sets.',
-        effect: (p) => { p.r += 5; p.e += 2; p.addFlag('ci_gbagbo_reckoning'); p.setMem('ciGbagboAcquitted', true); },
+        effect: (p) => { p.m -= 4; p.e += 3; p.r += 3; p.setMem('ciGbagboAcquittal', true) },
       },
       {
         text: 'Something did not work here. The accounting is incomplete.',
@@ -6057,9 +6010,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('ci_long_witness') &&
       G.currentYear >= 2015 &&
       !G.mem?.ciSecondMiracle,
-    text: 'The economy has grown at 7 or 8 percent per year since 2012. People are calling it the Ivorian Miracle again. Cocoa production at record levels. The Plateau building again. The new bridge across the lagoon. This is the second time in your life you have heard the country described with these words. Between the first time and the second time: the ivoirité politics, the first civil war, two coups, the election crisis, 3,000 deaths, the ICC, the acquittal, and the handshake. The phrase has survived all of it. You have too.',
+    text: 'The new bridge across the lagoon opens and the radio uses the word miracle, which is the second time in your life you have heard it used about this country. You drove the old road before either war. Your daughter, who was eleven in 2011 and does not talk about it, says the traffic will be better now. She is right about the traffic.',
+    context: 'Côte d\'Ivoire\'s post-independence boom was called the Ivorian Miracle. After the ivoirité politics of the 1990s, two civil wars and the 2010-11 election crisis that killed around 3,000 people, growth returned at 7-8 percent a year from 2012.',
     choices: null,
-    effect: (p) => { p.r += 5; p.e += 4; p.m += 3; p.addFlag('ci_full_arc_witness'); p.setMem('ciSecondMiracle', true); },
+    effect: (p) => { p.e += 4; p.m += 3; p.r += 3; p.addFlag('ci_full_arc_witness'); p.setMem('ciSecondMiracle', true) },
   },
 
   // ── IVORIAN MIRACLE GENERATION: LATE RECKONING ───────────────────────────────
@@ -6073,9 +6027,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       !G.flags.includes('ci_long_witness') &&
       G.currentYear >= 2010 &&
       !G.mem?.ciMiracleLate,
-    text: 'You grew up in the years when Ivory Coast was called the Ivorian Miracle. You are old enough now to see what the miracle required and what it left out. The cocoa economy that produced 7 percent growth for fifteen years required four million migrants who had fewer rights than you did. The stability that made investors comfortable was one man\'s stability — thirty-three years, one photograph in every classroom. The miracle was real. The things it was built on were also real. They were not in the same sentence.',
+    text: 'The photograph of Houphouët-Boigny that hung in your classroom hung in every classroom, and you could draw the frame. Your father\'s cocoa was cut by men from Burkina who slept in the drying shed and were paid at the end of the season, and you knew two of their names. Your daughter is writing something about the period for a course and asks whether it was a good time. You say that it was, and then spend the rest of the afternoon adding to the answer in your head.',
+    context: 'Côte d\'Ivoire\'s cocoa boom drew roughly four million migrant workers, mainly from Burkina Faso and Mali, who held fewer legal rights than citizens. Félix Houphouët-Boigny ruled from 1960 until his death in 1993.',
     choices: null,
-    effect: (p) => { p.r += 6; p.e += 3; p.addFlag('ci_miracle_reckoned'); p.setMem('ciMiracleLate', true); },
+    effect: (p) => { p.e += 4; p.r += 3; p.m -= 1; p.setMem('ciMiracleReckoning', true) },
   },
 
   // ── COCOA FARMER LATE ARC ────────────────────────────────────────────────────
@@ -6120,9 +6075,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       G.flags.includes('tuareg_settled') &&
       G.currentYear >= 2010 &&
       !G.mem?.tuaregSettledLate,
-    text: 'You settled in the city. You became urban, credentialled, documented. The seasonal routes your grandparents knew — north for dry season, south for rains — are routes you know as geography but not as movement. The 2012 uprising in the north, the MNLA declaring Azawad, the subsequent collapse: you watched it from Bamako or Gao or Kidal. The city was safer and more distant and you were part of neither the nomadic life that the rebellion claimed to defend nor the state that tried to suppress it. You held a position between two things that were at war with each other.',
+    text: 'You go north for a funeral and the road is a road now, tarred as far as the checkpoint. Your cousin\'s sons keep two hundred goats and a solar panel and a phone that works in three places along the wadi. They ask what the city is like and you describe your office. Nobody asks whether you would come back, which is its own kind of answer, and you sleep badly outside because you have forgotten how much noise the animals make.',
+    context: 'The 2012 MNLA uprising declared the independent state of Azawad in northern Mali before being displaced by jihadist groups. Successive droughts from 1973 pushed much of the Tuareg population into settled towns and cities.',
     choices: null,
-    effect: (p) => { p.r += 6; p.e += 2; p.addFlag('tuareg_settled_reckoned'); p.setMem('tuaregSettledLate', true); },
+    effect: (p) => { p.r += 5; p.m -= 2; p.e += 2; p.addFlag('tuareg_settled_reckoned'); p.setMem('tuaregSettledLate', true) },
   },
 
 
@@ -6150,9 +6106,10 @@ export const FOLLOWTHROUGH_ALL_EVENTS = [
       !G.flags.includes('anglophone_crisis_inside') &&
       G.currentYear >= 2022 &&
       !G.mem?.cmrCrisisEcho,
-    text: 'You watched the Anglophone crisis from the Francophone south. From Yaoundé or Douala or Bafoussam the northwest and southwest were a separate country, almost — accessible by road but operating by different rules. You heard the reports: villages burned, children kept out of school, the internet shut down, humanitarian organisations blocked. You continued. The specific moral position of continuing while something like this happens in the same country is not a position that gets named in the news or discussed in the government briefings. You named it yourself, in private, a few times.',
+    text: 'The bus from Douala turns back at Muyuka twice that year and the second time you do not rebook. Your colleague from Bamenda stops coming to the office and then stops answering, and the desk stays as he left it for four months before someone else takes it. At lunch people talk about it in the conditional, as though it were happening in another country. You have never once raised it in a meeting.',
+    context: 'Cameroon\'s Anglophone crisis began with lawyers\' and teachers\' strikes in late 2016 and became an armed conflict. Over 700,000 people have been displaced and schools in the North-West and South-West regions closed for years. Internet in the two regions was cut for 93 days in 2017.',
     choices: null,
-    effect: (p) => { p.r += 6; p.e += 2; p.addFlag('cmr_crisis_witness_reckoned'); p.setMem('cmrCrisisEcho', true); },
+    effect: (p) => { p.r += 6; p.karma -= 2; p.e += 2; p.addFlag('cmr_crisis_witness_reckoned'); p.setMem('cmrCrisisEcho', true) },
   },
 
   {

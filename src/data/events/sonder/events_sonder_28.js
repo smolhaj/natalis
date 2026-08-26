@@ -2,6 +2,8 @@
 // Contemplative layer: the things you did not plan, repetition and time,
 // the quality of attention, small recognitions, thresholds, end-of-day light.
 
+import { isColdCountry } from './_sonderGuards.js'
+
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
 export const EVENTS_SONDER_28 = [
@@ -10,7 +12,7 @@ export const EVENTS_SONDER_28 = [
     id: 'sdr28_unplanned_route',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr28UnplannedRoute,
+    when: (G) => G.age >= 14 && !G.mem?.sdr28UnplannedRoute,
     text: () => pick([
       'You take a different street home and there is nothing remarkable about it — a shop you have not seen before, a tree in a gap between buildings. You do not know why you went that way. Sometimes you do not go the usual way and that is the whole of it.',
       'You meant to go straight home and then you did not. You stopped somewhere else first, something small — bread, a newspaper, nothing that needed to happen today. The extra twenty minutes dissolved into the evening without a trace.',
@@ -24,7 +26,7 @@ export const EVENTS_SONDER_28 = [
     id: 'sdr28_someone_laughing',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr28SomeoneLaughing,
+    when: (G) => G.age >= 12 && !G.mem?.sdr28SomeoneLaughing,
     text: () => pick([
       'From the next room, or through a wall, someone is laughing — genuinely, the kind that catches and keeps going. You do not know what they are laughing at. The sound is its own thing, separate from its cause, the pure fact of it arriving through whatever separates you from them.',
       'In the street, two people you do not know are laughing about something. You pass them. Their laughter is still going when you have gone far enough that you cannot hear it anymore. Somewhere behind you it is still happening.',
@@ -38,7 +40,7 @@ export const EVENTS_SONDER_28 = [
     id: 'sdr28_the_last_one',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr28TheLastOne,
+    when: (G) => G.age >= 20 && !G.mem?.sdr28TheLastOne,
     text: () => pick([
       'The last of something you have had for a long time. The last of the coffee in the tin, the last of the soap, the last page of the notebook. There is a small pause before you replace it, or before you buy more. You notice it, briefly, then do not.',
       'At some point you ate the last one — the last of whatever they were — and that was the last time you ever ate one. You did not know it then. The last time of anything tends not to announce itself.',
@@ -52,7 +54,7 @@ export const EVENTS_SONDER_28 = [
     id: 'sdr28_clock_watching',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr28ClockWatching,
+    when: (G) => G.age >= 16 && !G.mem?.sdr28ClockWatching,
     text: () => pick([
       'You look at the time and it is later than you expected. Not much later — an hour, maybe. But you had thought you had more of it than you do. The evening has been doing something while you were not paying attention.',
       'There is a kind of time that only exists in waiting rooms. It moves differently there — thicker, more visible, each minute aware of itself. You sit in it. At some point it ends.',
@@ -66,7 +68,7 @@ export const EVENTS_SONDER_28 = [
     id: 'sdr28_the_chair',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr28TheChair,
+    when: (G) => G.age >= 18 && !G.mem?.sdr28TheChair,
     text: () => pick([
       'There is one chair in this place that you always sit in. You do not remember choosing it. You sit in it and it is your chair and that is all that needs to be said about it.',
       'The chair you grew up with — someone sat in it before you, someone sat in it after. It probably still exists somewhere. Chairs outlast the households they were part of.',
@@ -80,7 +82,7 @@ export const EVENTS_SONDER_28 = [
     id: 'sdr28_saying_goodbye',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr28SayingGoodbye,
+    when: (G) => G.age >= 16 && !G.mem?.sdr28SayingGoodbye,
     text: () => pick([
       'The goodbye at the door that runs longer than it should — a few more sentences, a question, another thing remembered. You are both already going and yet not quite gone. This is its own kind of attachment: the reluctance to finish.',
       'There is a particular goodbye that you think about sometimes. Not a big goodbye — just a normal one, at the end of a normal day. You did not know at the time that it was the last one.',
@@ -94,7 +96,7 @@ export const EVENTS_SONDER_28 = [
     id: 'sdr28_heat_in_the_body',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr28HeatInTheBody,
+    when: (G) => G.age >= 20 && !G.mem?.sdr28HeatInTheBody,
     text: () => pick([
       'The specific heat of summer at its peak — not just temperature but weight, the air not moving, the city holding on to everything it has collected since morning. You know this heat. It is the same heat it always is.',
       'There is a cold that gets into the joints and does not leave until spring. You have known this cold for years now. It arrives, settles in, waits. You have learned what helps and what does not.',
@@ -122,7 +124,7 @@ export const EVENTS_SONDER_28 = [
     id: 'sdr28_market_day',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr28MarketDay,
+    when: (G) => G.age >= 16 && !G.mem?.sdr28MarketDay,
     text: () => pick([
       'The market on a certain morning of the week. The same stalls roughly in the same places. The particular smell of it — vegetables, something fried, the morning damp still in the canvas. You have been here enough times that you know which way to go without thinking about it.',
       'The man selling things from a cart: the same place every day, or every week. You have bought from him enough times that there is something between you, not friendship, but recognition. He knows what you usually take.',
@@ -136,7 +138,7 @@ export const EVENTS_SONDER_28 = [
     id: 'sdr28_the_name',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr28TheName,
+    when: (G) => G.age >= 12 && !G.mem?.sdr28TheName,
     text: () => pick([
       'Someone pronounces your name and gets it slightly wrong. You do not correct them. You have not always corrected people. At some point you decided whether this was worth the effort and you have been consistent since then.',
       'You hear your name said in a crowd — not directed at you, just someone else with the same name, or someone calling out for someone else. You turn before you can stop yourself. The body responds before the mind has checked.',
@@ -150,7 +152,7 @@ export const EVENTS_SONDER_28 = [
     id: 'sdr28_cooking_alone',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr28CookingAlone,
+    when: (G) => G.age >= 18 && !G.mem?.sdr28CookingAlone,
     text: () => pick([
       'You are cooking alone and you are not in a hurry. The sound of it — the oil, the water coming to a boil, the knife on the board. There is nothing else happening. This is enough of something.',
       'The dish you make when you are the only one eating it. Exactly what you want, nothing compromised, nothing explained. There is a small private pleasure in this that you would not mention to anyone.',
@@ -164,7 +166,7 @@ export const EVENTS_SONDER_28 = [
     id: 'sdr28_dust_in_light',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr28DustInLight,
+    when: (G) => G.age >= 14 && !G.mem?.sdr28DustInLight,
     text: () => pick([
       'A shaft of light through the curtains and the dust moving in it. You have seen this your whole life and it still catches your attention for a moment before you remember what you were doing.',
       'The light in the late afternoon when it comes sideways through a window and catches everything — the edge of a table, a glass of water, the dust — and makes it all briefly worth looking at.',
@@ -192,7 +194,7 @@ export const EVENTS_SONDER_28 = [
     id: 'sdr28_the_plant',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr28ThePlant,
+    when: (G) => G.age >= 20 && !G.mem?.sdr28ThePlant,
     text: () => pick([
       'The plant on the windowsill has been there long enough that you no longer see it unless you are watering it. Then you see it: it is still alive, it has grown, something has happened while you were not paying attention.',
       'You have killed more plants than you have kept. The ones that lived did so despite you, largely. They asked for less than you had to give.',
@@ -206,7 +208,7 @@ export const EVENTS_SONDER_28 = [
     id: 'sdr28_the_crowd',
     phase: null,
     weight: 2,
-    when: (G) => G.ruralUrban === 'urban' && !G.mem?.sdr28TheCrowd,
+    when: (G) => G.age >= 14 && G.ruralUrban === 'urban' && !G.mem?.sdr28TheCrowd,
     text: () => pick([
       'Moving through a crowd without touching anyone — the small negotiations of space, the adjustments, the bodies aware of each other. You get through it. On the other side: open air, your own pace again.',
       'You are in a crowd and for a moment you see yourself from above — one person among all these people, all moving with somewhere to be, all inside their own complete version of the day. The view disappears. You keep walking.',
@@ -220,7 +222,7 @@ export const EVENTS_SONDER_28 = [
     id: 'sdr28_the_smell_of_rain',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr28SmellOfRain,
+    when: (G) => G.age >= 8 && !G.mem?.sdr28SmellOfRain,
     text: () => pick([
       'The smell before rain — petrichor, though you may not know that word. The air changes. Something in you recognises it before you consciously register what is coming.',
       'It started raining while you were inside and by the time you noticed the street was already wet. There is always a version of this where you just missed being caught in it.',
@@ -262,7 +264,7 @@ export const EVENTS_SONDER_28 = [
     id: 'sdr28_the_habit',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr28TheHabit,
+    when: (G) => G.age >= 18 && !G.mem?.sdr28TheHabit,
     text: () => pick([
       'You have done this at this time on this day for so long that if you did not do it you would notice the gap it left. Not because the thing is important but because the gap would be. Habit is its own kind of structure.',
       'You no longer remember starting this. You just do it. It is part of the scaffold of the day, one of the things that holds the shape of a day together. You do not think about it. You just do it and the day holds.',
@@ -276,7 +278,7 @@ export const EVENTS_SONDER_28 = [
     id: 'sdr28_someone_alone',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr28SomeoneAlone,
+    when: (G) => G.age >= 14 && !G.mem?.sdr28SomeoneAlone,
     text: () => pick([
       'A person eating alone in a restaurant: reading, or not reading, just sitting with their food. You glance at them and then away. They are in their life. You are in yours. The restaurant contains both without difficulty.',
       'Someone on a bench in the park, not doing anything — not on a phone, not reading. Just sitting. There is something in it that you cannot quite name: either they have more peace than you or they are waiting for something or they are just resting. You do not know. You keep walking.',
@@ -318,7 +320,7 @@ export const EVENTS_SONDER_28 = [
     id: 'sdr28_the_task_done',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr28TheTaskDone,
+    when: (G) => G.age >= 20 && !G.mem?.sdr28TheTaskDone,
     text: () => pick([
       'You finished something that had been waiting. Not a large thing — a form, a repair, a call you had been putting off. It took fifteen minutes. The weight of having it undone was much larger than the thing itself.',
       'The list in your head that you maintain without writing it down. Some things have been on it for years. They move to the top sometimes and back down. Occasionally something comes off for good.',
@@ -346,7 +348,7 @@ export const EVENTS_SONDER_28 = [
     id: 'sdr28_late_at_night',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr28LateAtNight,
+    when: (G) => G.age >= 14 && !G.mem?.sdr28LateAtNight,
     text: () => pick([
       'The house at 2am or 3am — the particular quality of it. Every sound has a different scale at that hour. The refrigerator, a branch against a window, someone outside at a distance. You are the only one awake. This is a different version of the same place.',
       'You woke up in the middle of the night and could not go back to sleep for a while. You lay there. The dark was its own thing — not frightening, not peaceful, just the dark doing its usual work. Eventually sleep came back.',
@@ -360,7 +362,7 @@ export const EVENTS_SONDER_28 = [
     id: 'sdr28_something_heard',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr28SomethingHeard,
+    when: (G) => G.age >= 14 && !G.mem?.sdr28SomethingHeard,
     text: () => pick([
       'You overheard something that was not meant for you. A fragment — half a sentence, a name, a number. You do not know the context. The fragment stays with you anyway, incomplete, irreducible.',
       'The person on the phone in a public place, conducting their life at full volume. You try not to listen. You listen anyway. You will carry some version of their conversation for the rest of the day without knowing anything about them.',
@@ -374,7 +376,7 @@ export const EVENTS_SONDER_28 = [
     id: 'sdr28_winter_morning',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr28WinterMorning,
+    when: (G) => G.age >= 12 && isColdCountry(G) && !G.mem?.sdr28WinterMorning,
     text: () => pick([
       'A winter morning when the light comes late and thin. Getting up before the light makes the day feel front-heavy — all effort at the start, the light arriving as a kind of confirmation after the fact.',
       'The cold in the room before the heat comes on. You know this cold. Every winter it is the same negotiation with yourself about getting out of the blankets. You always do. The moment of it never gets easier.',
@@ -388,7 +390,7 @@ export const EVENTS_SONDER_28 = [
     id: 'sdr28_the_stranger_on_the_road',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr28StrangerOnRoad,
+    when: (G) => G.age >= 12 && !G.mem?.sdr28StrangerOnRoad,
     text: `You pass someone on the road — coming the other way, or going the same direction faster, or slower. For a second you are in each other's awareness: another person, real, complete, carrying whatever they are carrying. Then you are past each other. There is nothing more to it and there does not need to be.`,
     choices: null,
     effect: (p) => { p.setMem('sdr28StrangerOnRoad', true) },

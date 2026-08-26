@@ -3,6 +3,8 @@
 // without the mind, the person you used to be, gratitude without occasion,
 // the unasked question, things that still exist.
 
+import { hasCar, hasElectricity, isUrban } from './_sonderGuards.js'
+
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
 export const EVENTS_SONDER_29 = [
@@ -11,7 +13,7 @@ export const EVENTS_SONDER_29 = [
     id: 'sdr29_small_knowledge',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr29SmallKnowledge,
+    when: (G) => G.age >= 16 && !G.mem?.sdr29SmallKnowledge,
     text: () => pick([
       'You know things about this place that are not in any document: where the drain backs up in heavy rain, which neighbour leaves the light on all night, the hour when the street is briefly, completely quiet. This knowledge accumulated without effort. You did not decide to learn it.',
       'The shortcut that you discovered on a day when you were running late. You have used it hundreds of times since. You have never told anyone about it. It is one of the small private geographies you carry.',
@@ -25,7 +27,7 @@ export const EVENTS_SONDER_29 = [
     id: 'sdr29_body_without_mind',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr29BodyWithoutMind,
+    when: (G) => G.age >= 14 && !G.mem?.sdr29BodyWithoutMind,
     text: () => pick([
       'You were thinking about something else entirely and your hands did the task without you. Set the table, folded the cloth, locked the door. You came back to yourself and the thing was done.',
       'The route you have walked so many times that your feet know the turns before you consciously direct them. You arrive somewhere and only then notice you have arrived. The walk happened below the level of attention.',
@@ -109,7 +111,7 @@ export const EVENTS_SONDER_29 = [
     id: 'sdr29_the_word',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr29TheWord,
+    when: (G) => G.age >= 16 && !G.mem?.sdr29TheWord,
     text: () => pick([
       'There is a word you use that you got from a specific person. You can still hear it in their voice when you say it, or sometimes when you hear it. The word carries the person inside it. You have passed it on without knowing it.',
       'A word from your childhood that you stopped using at some point — you don\'t know exactly when — and only notice now because you heard someone else use it. It felt old in their mouth. You remember it feeling ordinary in yours.',
@@ -123,7 +125,7 @@ export const EVENTS_SONDER_29 = [
     id: 'sdr29_the_door',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr29TheDoor,
+    when: (G) => G.age >= 14 && !G.mem?.sdr29TheDoor,
     text: () => pick([
       'The door you have opened thousands of times. You do not think about opening it. You open it and you are through. When you think about this specific door — where you have been going through it, what has happened on the other side over the years — there is something in it worth a moment.',
       'There is a door somewhere that you will never open again. You may have already been through it for the last time without knowing. Most doors are like this eventually.',
@@ -137,7 +139,7 @@ export const EVENTS_SONDER_29 = [
     id: 'sdr29_stranger_window',
     phase: null,
     weight: 2,
-    when: (G) => G.ruralUrban === 'urban' && !G.mem?.sdr29StrangerWindow,
+    when: (G) => G.age >= 14 && isUrban(G) && hasElectricity(G) && G.ruralUrban === 'urban' && !G.mem?.sdr29StrangerWindow,
     text: `A light is on in the apartment across the way. Not unusual — it is evening, people are at home. But someone is moving inside: a shape, a silhouette, a person doing whatever they do in the evenings. They do not know you are watching. You are not watching, exactly. Your eyes went there and the life inside briefly registered. They are in their version of this hour. You are in yours. The window contains both.`,
     choices: null,
     effect: (p) => { p.setMem('sdr29StrangerWindow', true) },
@@ -147,7 +149,7 @@ export const EVENTS_SONDER_29 = [
     id: 'sdr29_the_smell_remembered',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr29SmellRemembered,
+    when: (G) => G.age >= 20 && !G.mem?.sdr29SmellRemembered,
     text: () => pick([
       'A smell that is not common anywhere you go now: something from your grandmother\'s house, or the school corridor, or the place where you worked the first time. The smell arrives in an unexpected context and takes you back with a speed that thought cannot match.',
       'There is a smell that means a specific thing to you and means nothing in particular to most people. Not good or bad — just encoded. It carries the first time you smelled it somewhere inside it, and everything that was happening at the time.',
@@ -175,7 +177,7 @@ export const EVENTS_SONDER_29 = [
     id: 'sdr29_the_ordinary_meal',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr29OrdinaryMeal,
+    when: (G) => G.age >= 16 && !G.mem?.sdr29OrdinaryMeal,
     text: () => pick([
       'You eat the same thing on certain days, not because you planned to but because it settled into the rotation without being formally decided. On those days you eat it and it is the thing you eat on those days. This is its own small comfort.',
       'A meal you did not choose carefully, eaten standing or in a hurry, that was unexpectedly good. Not because the food was special. Something about the hour, the light, the fact of being hungry and then not hungry. It is still there in memory when most careful meals are not.',
@@ -189,7 +191,7 @@ export const EVENTS_SONDER_29 = [
     id: 'sdr29_sleeping_elsewhere',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr29SleepingElsewhere,
+    when: (G) => G.age >= 18 && !G.mem?.sdr29SleepingElsewhere,
     text: () => pick([
       'You slept in a place that was not your own bed and the strangeness of it kept you partially awake. Not uncomfortable — just different. The ceiling, the sounds, the weight of the air. In the morning you knew where you were before you fully woke. The body oriented itself.',
       'A night in a different city: the quality of the dark there, the sound of traffic at 3am that is not your traffic. You were briefly someone living there, inside their ordinary night, before you got on the train back.',
@@ -231,7 +233,7 @@ export const EVENTS_SONDER_29 = [
     id: 'sdr29_the_hour_alone',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr29HourAlone,
+    when: (G) => G.age >= 20 && !G.mem?.sdr29HourAlone,
     text: () => pick([
       'An hour you had not planned on — a cancellation, an early finish, something that did not take as long as expected. You sat with the unexpected hour. You did not know what to do with it first, then you did, then it was over.',
       'The apartment or the house to yourself: the particular quality of the quiet when it is not your usual quiet but quiet from the absence of someone who is usually there. Different from loneliness. More like a different key.',
@@ -245,7 +247,7 @@ export const EVENTS_SONDER_29 = [
     id: 'sdr29_the_repair',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr29TheRepair,
+    when: (G) => G.age >= 20 && !G.mem?.sdr29TheRepair,
     text: () => pick([
       'Something was broken and now it is fixed. Not dramatically broken — just not working, a thing you worked around for longer than you should have. Now it works. The not-working was what you noticed. The working is what you stop noticing.',
       'You repaired something yourself when you could have paid someone else to do it. Or you paid someone else to do it when you could have done it yourself. Either way: the thing works now. That was the point.',
@@ -259,7 +261,7 @@ export const EVENTS_SONDER_29 = [
     id: 'sdr29_watching_someone_sleep',
     phase: null,
     weight: 2,
-    when: (G) => (G.partner || (G.children && G.children.length > 0)) && !G.mem?.sdr29WatchSleep,
+    when: (G) => G.age >= 20 && (G.partner || (G.children && G.children.length > 0)) && !G.mem?.sdr29WatchSleep,
     text: () => pick([
       'You woke up before them and watched them sleep for a moment. The face in sleep is unguarded in a way the waking face is not. You know this face. Something in watching it was tender and uncomplicated in a way that the day would not be.',
       'The child asleep: the total surrender of it, the specific weight of a sleeping child if you have to move them. The sleep of children is an argument for something, though you are not sure what.',
@@ -287,7 +289,7 @@ export const EVENTS_SONDER_29 = [
     id: 'sdr29_the_night_drive',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr29NightDrive,
+    when: (G) => G.age >= 18 && hasCar(G) && !G.mem?.sdr29NightDrive,
     text: () => pick([
       'Driving or riding at night when the roads are different — emptier, the lights making everything specific. The city at 2am is not the city at noon. Both are real. The night version is the one people see less and remember longer.',
       'A long journey in the dark: the window, the reflections, the other passengers asleep. Outside: towns you pass through without stopping, lights that mean other lives going about their business at this hour.',
@@ -301,7 +303,7 @@ export const EVENTS_SONDER_29 = [
     id: 'sdr29_the_music',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr29TheMusic,
+    when: (G) => G.age >= 16 && !G.mem?.sdr29TheMusic,
     text: () => pick([
       'A song you have not heard in years and then you hear it. The specific feeling of a song from a particular time arriving in a different time. Not just memory — something more physical. The body has been carrying it.',
       'You found yourself singing something without knowing where it came from. The song surfaced from somewhere below the level of intention. You knew all the words. You had not thought about the song in years.',
@@ -315,7 +317,7 @@ export const EVENTS_SONDER_29 = [
     id: 'sdr29_the_sky',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr29TheSky,
+    when: (G) => G.age >= 10 && !G.mem?.sdr29TheSky,
     text: () => pick([
       'You looked up today. Not because anything required it — just looked up and the sky was there, doing whatever it does at this hour. You have not looked up as often as you planned to. Most of the sky happens without you looking.',
       'Stars: only visible outside the city, or only visible in the city when the power goes out, or visible always but you forget they are there. When you do see them — all of them, properly — something recalibrates.',
@@ -343,7 +345,7 @@ export const EVENTS_SONDER_29 = [
     id: 'sdr29_the_queue',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr29TheQueue,
+    when: (G) => G.age >= 16 && !G.mem?.sdr29TheQueue,
     text: () => pick([
       'You stood in a queue today and the queue moved slowly. You did not mind as much as you thought you would. You observed the other people. You had a thought that was not about the queue. The queue ended.',
       'A queue for something minor: a counter, a gate, a till. The person behind you too close. The person ahead taking longer than necessary. The transaction completed. You leave before you have fully processed that you are through.',
@@ -357,7 +359,7 @@ export const EVENTS_SONDER_29 = [
     id: 'sdr29_light_in_evening',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr29LightEvening,
+    when: (G) => G.age >= 14 && !G.mem?.sdr29LightEvening,
     text: () => pick([
       'The specific light at the end of the day when the sun is almost but not fully gone — everything gold, then orange, then the colour of shadow. It takes fifteen minutes. You were there for some of it.',
       'The evening light through a particular window at a particular time of year. You look forward to it without meaning to. It comes around and you notice it came. It will come again.',
@@ -371,7 +373,7 @@ export const EVENTS_SONDER_29 = [
     id: 'sdr29_the_brief_conversation',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr29BriefConversation,
+    when: (G) => G.age >= 16 && !G.mem?.sdr29BriefConversation,
     text: () => pick([
       'Someone said something to you in passing — at the counter, in the corridor, while waiting for something. You have thought about it a few times since. They do not know they said it. You do not know their name. The thing they said was not large. It was specific.',
       'A conversation that was supposed to be quick and lasted an hour. You did not plan for an hour. Neither did they. Both of you walked away later having said something that needed to be said, which neither of you knew before you started.',
@@ -385,7 +387,7 @@ export const EVENTS_SONDER_29 = [
     id: 'sdr29_arrival',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr29Arrival,
+    when: (G) => G.age >= 18 && !G.mem?.sdr29Arrival,
     text: () => pick([
       'You arrived somewhere and for a moment the arriving was its own thing — before you were inside it, before you were doing what you came to do. The threshold moment: here and not yet there.',
       'Coming home after a time away: the specific smell of home, which you only notice when you have been away long enough to lose it. The reassembly of the familiar. The first night back in your own bed.',

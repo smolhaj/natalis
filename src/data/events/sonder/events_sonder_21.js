@@ -97,7 +97,7 @@ export const EVENTS_SONDER_21 = [
     phase: 'midlife',
     weight: 2,
     when: (G) =>
-      (G.flags.has('father_died') || G.flags.has('mother_died') || G.parents?.father?.alive === false || G.parents?.mother?.alive === false) &&
+      (G.flags.has('lost_parent_father') || G.flags.has('lost_parent_mother') || G.parents?.father?.alive === false || G.parents?.mother?.alive === false) &&
       !G.mem?.s21HouseDuringIllness,
     text: () => pick([
       'The house during a parent\'s illness had a specific quality. The sound of the television in the sick room. The particular efficiency of the household reorganized around the care. The way everyone lowered their voices in certain rooms without deciding to.',
@@ -131,7 +131,7 @@ export const EVENTS_SONDER_21 = [
     phase: 'midlife',
     weight: 2,
     when: (G) =>
-      (G.flags.has('father_died') || G.flags.has('mother_died')) &&
+      (G.flags.has('lost_parent_father') || G.flags.has('lost_parent_mother')) &&
       !G.mem?.s21InheritanceObject,
     text: 'There is something from the estate that is yours now. Not valuable in money. The thing you asked for, or the thing that no one else asked for, or the thing that was just there when everything was being sorted and you put it in a box and carried it home. It is in your house now and it is the most direct material line between you and them.',
     choices: null,

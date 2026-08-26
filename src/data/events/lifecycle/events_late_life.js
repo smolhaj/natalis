@@ -318,7 +318,7 @@ export const LATE_LIFE_EVENTS = [
     when: (G) =>
       G.flags.includes('grandchild_born') &&
       !G.mem.grandchildFarAway &&
-      (G.flags.includes('emigrated') || G.flags.includes('child_abroad') || G.currentCountry !== G.character.country?.name),
+      (G.flags.includes('emigrated') || G.flags.includes('child_abroad') || G.currentCountry?.name !== G.character.country?.name),
     text: 'The video calls are every Sunday, or they are supposed to be. The child grows on a screen. You see photographs. You receive voice messages. You send back voice messages with the careful diction of someone who is not sure the technology is working. The birthdays are the worst — the gap between knowing the date and being able to do nothing with your hands.',
     choices: null,
     effect: (p) => { p.m -= 10; p.r += 8; p.setMem('grandchildFarAway', true) },

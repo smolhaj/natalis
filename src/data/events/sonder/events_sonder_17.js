@@ -213,7 +213,7 @@ export const EVENTS_SONDER_17 = [
     weight: 2,
     when: (G) =>
       G.age >= 40 &&
-      (G.flags.has('mother_died') || G.flags.has('father_died') || G.flags.has('became_grandparent')) &&
+      (G.flags.has('lost_parent_mother') || G.flags.has('lost_parent_father') || G.flags.has('became_grandparent')) &&
       !G.mem?.s17ObjectsOldPeople,
     text: () => pick([
       `Going through the objects of someone very old is a specific experience. The objects outlasted the person who chose them and in some cases outlasted the world those objects came from. A kitchen tool for a food that nobody makes anymore. A remedy in a container whose brand no longer exists. A garment whose style ended forty years before the person did. The objects are a cross-section of a life's encounter with time.`,
@@ -419,7 +419,7 @@ export const EVENTS_SONDER_17 = [
     weight: 2,
     when: (G) =>
       G.age >= 55 &&
-      (G.flags.has('mother_died') || G.flags.has('father_died') || G.flags.has('friend_died') || G.flags.has('partner_died')) &&
+      (G.flags.has('lost_parent_mother') || G.flags.has('lost_parent_father') || G.flags.has('friend_died') || G.flags.has('partner_died')) &&
       !G.mem?.s17GriefTexture,
     text: () => pick([
       `Grief is not the thing you expected it to be. Not the waves, necessarily, or the stages — those are true and also incomplete. What grief is, in practice, is the specific noticing: the moment you go to tell them something and remember, the habit of reaching for them and finding air, the way the world they knew is still visible but they are not in it to see it. Grief is mostly the specifics.`,

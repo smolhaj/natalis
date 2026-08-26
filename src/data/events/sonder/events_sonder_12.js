@@ -30,7 +30,7 @@ export const EVENTS_SONDER_12 = [
     phase: 'young_adult',
     weight: 2,
     when: (G) =>
-      G.religion === 'muslim' &&
+      G.religion?.startsWith('muslim') &&
       G.flags.has('emigrant') &&
       G.age >= 20 &&
       !G.mem?.s12SoundAdhanGone,

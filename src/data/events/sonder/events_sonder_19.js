@@ -175,7 +175,7 @@ export const EVENTS_SONDER_19 = [
     weight: 2,
     when: (G) =>
       G.age >= 50 &&
-      (G.flags.has('father_died') || G.flags.has('mother_died') || G.flags.has('lost_partner') || G.flags.has('friend_died')) &&
+      (G.flags.has('lost_parent_father') || G.flags.has('lost_parent_mother') || G.flags.has('lost_partner') || G.flags.has('friend_died')) &&
       !G.mem?.s19VoiceGone,
     text: () => pick([
       `There is a specific voice you can no longer hear. You know what it sounded like. You know the particular cadence, the specific laugh, the way the voice went when it was unsure or when it was certain or when it was telling a story it had told before. The voice existed in recordings, occasionally — a voicemail you kept longer than was practical, a video someone made at a celebration. The recording is not the voice. The recording is a record of the voice. The voice is what you carry in memory, and memory is what it always is: real and unreliable and the only version you have.`,
@@ -470,7 +470,7 @@ export const EVENTS_SONDER_19 = [
     weight: 2,
     when: (G) =>
       G.age >= 35 &&
-      (G.flags.has('cancer_survivor') || G.flags.has('father_died') || G.flags.has('mother_died') || G.flags.has('lost_partner')) &&
+      (G.flags.has('cancer_survivor') || G.flags.has('lost_parent_father') || G.flags.has('lost_parent_mother') || G.flags.has('lost_partner')) &&
       !G.mem?.s19HospitalWardNight,
     text: () => pick([
       `The hospital ward at night is a different place from the ward during visiting hours. The corridors dim to a different level. The sounds change: the machinery that was background becomes audible, the specific sounds of a place that is not sleeping but is doing its work at a reduced pace. The night staff move in a different register. You have been in a hospital ward at night — as a patient or as a visitor sitting through it — and the quality of the hours between two and five in the morning in a medical ward is a specific knowledge that doesn't translate to any other context.`,

@@ -2,6 +2,8 @@
 // Contemplative layer: the return of a season, the thing you carry without knowing,
 // the face before mirrors, the argument that ended, small acts witnessed.
 
+import { hasElectricity, isColdCountry } from './_sonderGuards.js'
+
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
 export const EVENTS_SONDER_30 = [
@@ -10,7 +12,7 @@ export const EVENTS_SONDER_30 = [
     id: 'sdr30_season_returns',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr30SeasonReturns,
+    when: (G) => G.age >= 12 && !G.mem?.sdr30SeasonReturns,
     text: () => pick([
       'The season came back. Whatever this season brings — the heat, the cold, the rain at a particular angle — it arrived again and you recognized it immediately. The body recognized it before the mind did. You have had this season before.',
       'The smell of this particular month: the particular combination of damp and warmth or cold and smoke or whatever this month smells like in this place. You know it before you know what you are smelling. It has always smelled like this.',
@@ -52,7 +54,7 @@ export const EVENTS_SONDER_30 = [
     id: 'sdr30_small_act_witnessed',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr30SmallActWitnessed,
+    when: (G) => G.age >= 12 && !G.mem?.sdr30SmallActWitnessed,
     text: () => pick([
       'Someone stopped to help a stranger with something minor — directions, a dropped bag, a door held open at the right moment. The whole transaction took thirty seconds and neither person will think about it again. You saw it. You are the only record.',
       'A child helped an older person. You were watching without meaning to. The help was natural, unannounced. The older person received it without ceremony. Both went on. The moment existed and then it was over and you saw it.',
@@ -94,7 +96,7 @@ export const EVENTS_SONDER_30 = [
     id: 'sdr30_the_window_in_winter',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr30WindowWinter,
+    when: (G) => G.age >= 10 && isColdCountry(G) && !G.mem?.sdr30WindowWinter,
     text: () => pick([
       'Rain on the window while you are inside and warm. The specific pleasure of being on the right side of it — not because being outside in rain is bad, but because being inside when there is rain outside is its own thing, a shelter that announces itself.',
       'The condensation on the window in the cold. You traced something in it when you were a child. You do not remember what. The practice of tracing something in window condensation is older than you and will outlast you.',
@@ -122,7 +124,7 @@ export const EVENTS_SONDER_30 = [
     id: 'sdr30_the_crowd_dispersing',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr30CrowdDisperses,
+    when: (G) => G.age >= 14 && !G.mem?.sdr30CrowdDisperses,
     text: () => pick([
       'Something was over and the people who had gathered for it were leaving in all directions — out of the stadium, out of the ceremony, out of the hall. One moment: a concentrated thing. The next: dispersal, each person returning to their separate life. The gathering existed and then it did not.',
       'The street emptied out faster than you expected. One minute there were people and then — for some reason, weather or the end of something, an hour changing — they were not. The empty street after people is different from the empty street before people.',
@@ -150,7 +152,7 @@ export const EVENTS_SONDER_30 = [
     id: 'sdr30_the_gesture',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr30TheGesture,
+    when: (G) => G.age >= 14 && !G.mem?.sdr30TheGesture,
     text: () => pick([
       'Someone touched your arm briefly in passing — reassurance, connection, nothing requiring a response. The touch lasted half a second. The half-second was enough. The body registers these things without the mind having to interpret them.',
       'A gesture someone makes when they are talking: the particular way they use their hands to mean something, the shape a hand makes when they are looking for a word. You have watched this for so long you would know it anywhere.',
@@ -164,7 +166,7 @@ export const EVENTS_SONDER_30 = [
     id: 'sdr30_the_light_at_home',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr30LightAtHome,
+    when: (G) => G.age >= 18 && hasElectricity(G) && !G.mem?.sdr30LightAtHome,
     text: () => pick([
       'The particular light of this house at this time of day — afternoon in winter, morning in summer, whatever combination this is. You know this light. It is specific to this house at this hour. Elsewhere it is different. Here it is this.',
       'When you come home and the light is already on inside, which means someone is in there. Or no light is on, and the house is waiting. The light in the window is information before it is anything else.',
@@ -192,7 +194,7 @@ export const EVENTS_SONDER_30 = [
     id: 'sdr30_the_animal',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr30TheAnimal,
+    when: (G) => G.age >= 8 && !G.mem?.sdr30TheAnimal,
     text: () => pick([
       'A bird on a wire, or a dog sleeping in the shade, or a cat on a wall. The animal existed completely in its own life for the seconds you watched it. It did not know it was being watched. It did not need to know.',
       'An animal crossed your path today. Not dramatically — just passing through. The animal had somewhere to be, or was resting, or was doing whatever this animal does at this hour. Your lives briefly intersected.',
@@ -276,7 +278,7 @@ export const EVENTS_SONDER_30 = [
     id: 'sdr30_the_morning_after',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr30MorningAfter,
+    when: (G) => G.age >= 20 && !G.mem?.sdr30MorningAfter,
     text: () => pick([
       'The morning after something significant — a celebration, a funeral, a long conversation, a decision. The morning arrives regardless. The same requirements as any other morning. The significance of the day before is still in the air but the morning proceeds at its own pace.',
       'After a long evening: the quiet of the morning, the specific quality of tired that is also rest. The night before is receding. The day ahead has not yet started. A brief interval between the two.',
@@ -290,7 +292,7 @@ export const EVENTS_SONDER_30 = [
     id: 'sdr30_the_body_in_effort',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr30BodyEffort,
+    when: (G) => G.age >= 16 && !G.mem?.sdr30BodyEffort,
     text: () => pick([
       'Physical effort: the specific quality of the body when it is doing something that requires all of it. Not pain. Not ease. The complete engagement of the body in a task. Whatever the task is — it takes all of you and for the time it takes all of you there is nothing else.',
       'The tiredness after work that uses the body: different from the tiredness of sitting still all day. The body that has been used is tired in a way that wants rest in a specific way. You have learned the difference between kinds of tired.',
@@ -318,7 +320,7 @@ export const EVENTS_SONDER_30 = [
     id: 'sdr30_the_late_sun',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr30LateSun,
+    when: (G) => G.age >= 12 && !G.mem?.sdr30LateSun,
     text: () => pick([
       'The sun in the late afternoon in summer: the shadows getting long, the light getting low and warm, the specific quality of this hour that people have always known and always named. The late-afternoon light is the same everywhere and specific to each place.',
       'A long summer evening when the light simply will not go. The sky has been doing something beautiful for an hour and it is still doing it. You noticed. You will not necessarily remember having noticed. The sky continues.',
@@ -332,7 +334,7 @@ export const EVENTS_SONDER_30 = [
     id: 'sdr30_the_silence_between',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr30SilenceBetween,
+    when: (G) => G.age >= 20 && !G.mem?.sdr30SilenceBetween,
     text: () => pick([
       'A silence with someone that was not awkward — two people who have known each other long enough that silence is another kind of communication. You were both in the silence and both comfortable in it and then one of you said something and the silence ended.',
       'The pause in a conversation that was the conversation\'s deepest moment: where neither person was saying anything and both knew it. What was not said was the point.',
@@ -360,7 +362,7 @@ export const EVENTS_SONDER_30 = [
     id: 'sdr30_the_word_almost_used',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr30WordAlmostUsed,
+    when: (G) => G.age >= 16 && !G.mem?.sdr30WordAlmostUsed,
     text: () => pick([
       'You almost said it and then did not. The sentence went a different direction. The word that was coming was not wrong, just more than the moment required. You chose the smaller word instead. The larger one went back.',
       'A word you thought of and could not quite produce — the word that meant exactly the right thing, just out of reach. You got near it, described around it, moved on. The word exists. It will come when you are not looking for it.',
@@ -374,7 +376,7 @@ export const EVENTS_SONDER_30 = [
     id: 'sdr30_something_worked',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr30SomethingWorked,
+    when: (G) => G.age >= 18 && !G.mem?.sdr30SomethingWorked,
     text: () => pick([
       'Something went right today — not dramatically, just correctly. The thing worked the way it was supposed to. No intervention required. You noticed this briefly and then proceeded. The working of things is the default that everything else departs from.',
       'You tried something and it worked on the first attempt. This does not always happen. When it does, it is worth a moment of acknowledgement, which you gave it: a moment, then on to the next thing.',
@@ -388,7 +390,7 @@ export const EVENTS_SONDER_30 = [
     id: 'sdr30_being_introduced',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr30BeingIntroduced,
+    when: (G) => G.age >= 16 && !G.mem?.sdr30BeingIntroduced,
     text: () => pick([
       'Someone introduced you to someone else: "This is—" and then the version of you that exists in their description. The description is accurate and is not quite you. The gap between what someone says about you and what you are is the space your full self lives in.',
       'You introduced someone. The words you chose to describe them told you something about what you think is most important about them, which is different from what they think is most important about themselves.',
@@ -416,7 +418,7 @@ export const EVENTS_SONDER_30 = [
     id: 'sdr30_the_tree_in_wind',
     phase: null,
     weight: 2,
-    when: (G) => !G.mem?.sdr30TreeInWind,
+    when: (G) => G.age >= 8 && !G.mem?.sdr30TreeInWind,
     text: `A tree moving in wind: the specific motion of branches and leaves when the wind is doing something, which is different from the tree when nothing is moving. You watched it for a moment. There was nothing else to it. The tree was doing what trees do in wind. You noticed.`,
     choices: null,
     effect: (p) => { p.setMem('sdr30TreeInWind', true) },

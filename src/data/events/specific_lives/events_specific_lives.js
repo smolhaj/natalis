@@ -633,7 +633,7 @@ export const SPECIFIC_LIFE_EVENTS = [
     weight: 3,
     when: (G) =>
       G.character.country.archetype === 'post_soviet' &&
-      G.religion === 'orthodox_christian' &&
+      G.religion === 'christian_orthodox' &&
       G.currentYear >= 1945 && G.currentYear <= 1990 &&
       G.age >= 6 && G.age <= 16 &&
       !G.mem?.sl_orth_xmas,
@@ -4031,7 +4031,7 @@ export const SPECIFIC_LIFE_EVENTS = [
     weight: 2,
     when: (G) =>
       G.character.country.name === 'Zimbabwe' &&
-      G.ethnicity === 'white' &&
+      G.ethnicity === 'white_zimbabwe' &&
       G.currentYear >= 2000 && G.currentYear <= 2008 &&
       G.age >= 35 && G.age <= 65 &&
       !G.mem?.sl_zim_farm_seiz,

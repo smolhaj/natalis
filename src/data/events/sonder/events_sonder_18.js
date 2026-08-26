@@ -23,7 +23,7 @@ export const EVENTS_SONDER_18 = [
     weight: 2,
     when: (G) =>
       G.age >= 65 &&
-      (G.flags.has('father_died') || G.flags.has('mother_died')) &&
+      (G.flags.has('lost_parent_father') || G.flags.has('lost_parent_mother')) &&
       !G.mem?.s18LastToRemember,
     text: () => pick([
       `There are things you are the last person alive to remember. Not important things — not events that will appear in a history — but specific things: the way your father held a cup, the particular phrase your mother used when she was frightened, the exact sound the door made in the house you grew up in before the renovation. When you die, those things are gone. Not forgotten — *gone*, which is different. Forgotten implies someone could remember if they tried. These things will have no one left to try.`,
@@ -41,7 +41,7 @@ export const EVENTS_SONDER_18 = [
     weight: 2,
     when: (G) =>
       G.age >= 38 &&
-      G.flags.has('mother_died') &&
+      G.flags.has('lost_parent_mother') &&
       !G.mem?.s18MothersHands,
     text: () => pick([
       `You remember the specific way your mother's hands looked doing a particular thing — kneading dough, folding cloth, counting change in the palm before dropping it into a purse. You did not know at the time that you were memorising this. You know it now because the memory is precise in a way that has nothing to do with intention: the knuckles, the specific stain on one finger, the motion. The hands are gone and the memory of the hands is exact.`,
@@ -246,7 +246,7 @@ export const EVENTS_SONDER_18 = [
     weight: 2,
     when: (G) =>
       G.age >= 32 &&
-      (G.flags.has('father_died') || G.flags.has('mother_died') || G.flags.has('lost_partner') || G.flags.has('friend_died')) &&
+      (G.flags.has('lost_parent_father') || G.flags.has('lost_parent_mother') || G.flags.has('lost_partner') || G.flags.has('friend_died')) &&
       !G.mem?.s18HospitalStreet,
     text: () => pick([
       `The street outside the hospital is ordinary in a way that seems wrong. Cars. A café. People going past who are not coming from or going to the thing you are coming from. The street is doing what streets always do and you are unable to participate in the ordinariness of it. This is a form of grief that has no name: the specific protest at the fact that the world continues at its ordinary speed while something has ended or is ending inside the building you just left.`,
@@ -279,12 +279,7 @@ export const EVENTS_SONDER_18 = [
     weight: 2,
     when: (G) =>
       !G.flags.has('emigrated') &&
-      (G.character.country?.archetype === 'single_party_communist' ||
-       G.character.country?.archetype === 'military_dictatorship' ||
-       G.character.country?.archetype === 'single_party_authoritarian' ||
-       G.regime === 'military_dictatorship' ||
-       G.regime === 'single_party_communist' ||
-       G.regime === 'single_party_authoritarian') &&
+      ['military_dictatorship', 'single_party_communist', 'single_party_authoritarian', 'theocracy', 'absolute_monarchy'].includes(G.regime) &&
       G.age >= 22 && G.age <= 45 &&
       !G.mem?.s18CannotLeave,
     text: () => pick([
@@ -422,7 +417,7 @@ export const EVENTS_SONDER_18 = [
     phase: 'midlife',
     weight: 2,
     when: (G) =>
-      (G.flags.has('father_died') || G.flags.has('mother_died')) &&
+      (G.flags.has('lost_parent_father') || G.flags.has('lost_parent_mother')) &&
       G.age >= 40 &&
       !G.mem?.s18PhraseOfDead,
     text: () => pick([
@@ -475,7 +470,7 @@ export const EVENTS_SONDER_18 = [
     weight: 2,
     when: (G) =>
       G.age >= 55 &&
-      (G.flags.has('father_died') || G.flags.has('mother_died')) &&
+      (G.flags.has('lost_parent_father') || G.flags.has('lost_parent_mother')) &&
       !G.mem?.s18QuestionNotAsked,
     text: () => pick([
       `There is a question you should have asked while there was still someone to ask. You know what the question is. You know who would have answered it, and approximately what the answer would have begun with, and why you didn't ask it — not enough time, not the right moment, the assumption that there would be more time, the difficulty of a question that required a particular kind of honesty from both parties. The answer does not exist now. The question remains. It is the type of loss that does not grow smaller with time, only more precisely shaped.`,
