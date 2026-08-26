@@ -212,7 +212,8 @@ export const SUDAN_DEPTH_EVENTS = [
       IS_SUDAN(G) &&
       G.age >= 18 && G.age <= 50 &&
       !G.mem?.sdnTeaLadies,
-    text: `The sittaat al-shay — the tea ladies — are on every street corner in Khartoum. A charcoal burner, a kettle, a low plastic table, a handful of glasses. They pour attaya — strong tea with mint, with milk, in a specific rhythm that is also a kind of ceremony. The tea ladies are almost always women. They are in the informal economy, unlicensed, paying informal taxes to the police in small daily payments. During the 2019 revolution, they became something else: they ran the sit-in. They cooked for the hundreds of thousands camping outside the military headquarters. They used their earnings and their networks to supply the protest. When the RSF moved on the camp on June 3, some of them died at their stations. The tea is not separate from the politics.`,
+    text: 'On the corner there is a charcoal burner, a kettle, a low plastic table and eight glasses, and the woman who owns them pays the policeman a small amount every morning so that she can keep them there. She pours the attaya from a height, which is not for show, it is how it cools. In the spring the corner moves to the sit-in outside the army headquarters and she cooks for the people sleeping there out of her own takings. On the third of June the Rapid Support Forces come into the camp and she does not leave her burner.',
+    context: 'Khartoum\'s sittaat al-shay, unlicensed women tea sellers, are a fixture of the city\'s informal economy and pay daily informal levies to police. During the 2019 revolution they supplied and fed the sit-in outside the army general command. Security forces cleared the camp on 3 June 2019, killing more than a hundred people; several tea sellers were among the dead.',
     choices: null,
     effect: (p) => {
       p.m += 4

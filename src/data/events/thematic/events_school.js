@@ -139,7 +139,7 @@ export const SCHOOL_EVENTS = [
       G.flags.includes('scholarship_student') &&
       G.age >= 13 && G.age <= 17 &&
       !G.mem?.schScholarshipLunch,
-    text: 'The uniform fits differently on you than it does on the others — you cannot say how exactly, but you know it. The lunch table is the most legible version of the gap: what they carry in their bags, the names of the places they visited during the school break, the specific vocabulary of people who have never had to think about money. You are here on merit. You are also, clearly, from somewhere else.',
+    text: 'The uniform fits differently on you than it does on the others — you cannot say how exactly, but you know it. The lunch table is the most legible version of the gap: what they carry in their bags, the names of the places they visited during the school break, the vocabulary of people who have never had to think about money. You are here on merit. You are also, clearly, from somewhere else.',
     choices: null,
     effect: (p) => {
       p.m -= 4
@@ -158,7 +158,7 @@ export const SCHOOL_EVENTS = [
       G.flags.includes('scholarship_student') &&
       G.age >= 20 && G.age <= 30 &&
       !G.mem?.schScholarshipPayoff,
-    text: 'The doors that opened were real. The network, the credential, the specific quality of opportunity — you would not have reached most of it from the school you were zoned for. You are aware of the contingency: one exam, one letter, one family that let you go. You carry this differently than the people beside you who assumed these doors would open.',
+    text: 'The doors that opened were real. The network, the credential, the quality of opportunity — you would not have reached most of it from the school you were zoned for. You are aware of the contingency: one exam, one letter, one family that let you go. You carry this differently than the people beside you who assumed these doors would open.',
     choices: null,
     effect: (p) => {
       p.e += 3
@@ -247,7 +247,7 @@ export const SCHOOL_EVENTS = [
     text: (G) => {
       const arch = G.character.country.archetype
       if (arch === 'wealthy_east') {
-        return `The exam that determines your university placement, your career, and by extension the shape of your life is in three days. Everything before this was preparation. The hall holds four hundred students and the silence in it is a specific kind of pressure.`
+        return `The exam that determines your university placement, your career, and by extension the shape of your life is in three days. Everything before this was preparation. The hall holds four hundred students and the silence in it is a kind of pressure.`
       }
       if (arch === 'post_soviet') {
         return `The national exam determines everything: which institute, which profession, which city. People have bribed for places. Your family could not. You sit down with what you know.`

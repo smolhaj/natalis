@@ -195,7 +195,8 @@ export const RUSSIA_DEPTH_EVENTS = [
       G.currentYear >= 1994 && G.currentYear <= 1997 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.ruDepChechnya,
-    text: `The contract: you sign because the contract money is real money in 1994, which is not true of most salaries. Or you are conscripted and you do not sign anything. Grozny in December 1994: a city of 400,000 people, urban combat, the Maykop Brigade — a mechanised unit from a different era sent into an environment that requires a different era's training. The official Russian military casualties are published months later than they happen. The mothers in black at Pushkin Square, carrying photographs — the Soldiers' Mothers Committee. They negotiate body releases directly when the army does not. You go, or you know someone who goes. Grozny falls in 1995. Fighting continues. The Khasavyurt accord of 1996 is signed. The war has not ended so much as suspended.`,
+    text: 'You sign because the contract money is real, which in 1994 is not something anybody can say about a salary. Grozny in December is a city of four hundred thousand people and you go into it in an armoured column built for a different kind of war. The numbers come out months after the men do. At Pushkin Square the mothers stand with photographs and negotiate for the bodies themselves, because the army will not.',
+    context: 'Russian forces entered Grozny on 31 December 1994 and the Maykop Brigade was destroyed in the first days of street fighting. Official casualty figures were released long after the events and were widely disputed. The Union of Soldiers\' Mothers Committees negotiated body recoveries and prisoner exchanges directly with Chechen commanders. Grozny fell in 1995 and the Khasavyurt accord suspended the war in 1996.',
     choices: null,
     effect: (p) => {
       p.m -= 8

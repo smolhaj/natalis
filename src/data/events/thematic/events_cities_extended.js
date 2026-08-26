@@ -268,7 +268,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.currentYear === 1982 &&
       !G.mem?.malvinasMoment,
     text: () =>
-      `April 1982. The Junta invades the Malvinas — the Falklands — and Buenos Aires erupts in support. The Plaza de Mayo fills with thousands chanting the slogan of the war. The same generals who have been disappearing people for six years are now national heroes for a week. Then the British arrive and the Argentinian conscripts — working-class boys in summer uniforms in an Antarctic winter — begin losing. By June it is over. The defeat ends the dictatorship. The specific feeling is: relief and shame at the same time, inseparable.`,
+      `April 1982. The Junta invades the Malvinas — the Falklands — and Buenos Aires erupts in support. The Plaza de Mayo fills with thousands chanting the slogan of the war. The same generals who have been disappearing people for six years are now national heroes for a week. Then the British arrive and the Argentinian conscripts — working-class boys in summer uniforms in an Antarctic winter — begin losing. By June it is over. The defeat ends the dictatorship. The feeling is: relief and shame at the same time, inseparable.`,
     choices: null,
     effect: (p) => { p.m -= 4; p.e += 3; p.setMem('malvinasMoment', true) },
   },
@@ -383,7 +383,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.flags.has('survived_khmer_rouge') &&
       !G.mem?.ppReturn,
     text: () =>
-      `The Vietnamese army entered in January 1979 and it ended. You make your way back to Phnom Penh — walking, or riding something, or paying someone to carry you. The city is empty in the specific way of a place that has been forcibly emptied. The house you lived in has different people in it now, or nobody. You do not ask who they are. You find a space and you begin again, which is what the survivors of Year Zero spend the next decade doing.`,
+      `The Vietnamese army entered in January 1979 and it ended. You make your way back to Phnom Penh — walking, or riding something, or paying someone to carry you. The city is empty in the way of a place that has been forcibly emptied. The house you lived in has different people in it now, or nobody. You do not ask who they are. You find a space and you begin again, which is what the survivors of Year Zero spend the next decade doing.`,
     choices: null,
     effect: (p) => { p.m += 4; p.h += 3; p.setMem('ppReturn', true) },
   },
@@ -462,7 +462,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.currentYear >= 1997 && G.currentYear <= 2005 &&
       !G.mem?.khatamiBrief,
     text: () =>
-      `Khatami wins the presidency and something opens — briefly. The newspapers multiply. The cafes allow some of what was not allowed. University students are talking in ways that were not possible in 1990. You notice it the way you notice a room when someone opens a window. Then, gradually, the window closes again — the Guardian Council blocks reformist candidates, the judiciary prosecutes journalists. The opening was real. The closing is also real. This is the specific shape of the hope available in Tehran.`,
+      `Khatami wins the presidency and something opens — briefly. The newspapers multiply. The cafes allow some of what was not allowed. University students are talking in ways that were not possible in 1990. You notice it the way you notice a room when someone opens a window. Then, gradually, the window closes again — the Guardian Council blocks reformist candidates, the judiciary prosecutes journalists. The opening was real. The closing is also real. This is the shape of the hope available in Tehran.`,
     choices: null,
     effect: (p) => { p.m += 4; p.e += 3; p.setMem('khatamiBrief', true) },
   },
@@ -511,7 +511,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.currentYear >= 1991 && G.currentYear <= 2000 &&
       !G.mem?.tokyoBubbleBurst,
     text: () =>
-      `The real estate bubble has burst. Your company's stock has lost sixty percent of its value since 1989. Several colleagues have taken early retirement packages that are not really packages. The salary is unchanged but the bonus is zero and the bonus was the difference. The lost decade is a phrase people are starting to use. There is a specific quality to prosperity that reveals itself only when it stops — the specific texture of a room that has changed temperature.`,
+      `The real estate bubble has burst. Your company's stock has lost sixty percent of its value since 1989. Several colleagues have taken early retirement packages that are not really packages. The salary is unchanged but the bonus is zero and the bonus was the difference. The lost decade is a phrase people are starting to use. There is a quality to prosperity that reveals itself only when it stops — the texture of a room that has changed temperature.`,
     choices: null,
     effect: (p) => { p.m -= 5; p.wipeMoney(0.25); p.setMem('tokyoBubbleBurst', true) },
   },
@@ -577,7 +577,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.currentYear >= 1963 && G.currentYear <= 1968 &&
       !G.mem?.nairobiIndependence,
     text: () =>
-      `December 12, 1963. Kenya is independent. Jomo Kenyatta speaks at Uhuru Park and the crowd is enormous. Harambee — pulling together — is the word of the moment. The British depart from government offices and Kenyans sit in the chairs. You are in the city for the first time or you are a child of the city or you are a civil servant who was waiting for this moment. Something genuinely new is beginning. The specific quality of that beginning has not yet been tested by what comes after it.`,
+      `December 12, 1963. Kenya is independent. Jomo Kenyatta speaks at Uhuru Park and the crowd is enormous. Harambee — pulling together — is the word of the moment. The British depart from government offices and Kenyans sit in the chairs. You are in the city for the first time or you are a child of the city or you are a civil servant who was waiting for this moment. Something genuinely new is beginning. The quality of that beginning has not yet been tested by what comes after it.`,
     choices: null,
     effect: (p) => { p.m += 8; p.addFlag('nairobi_independence_generation'); p.setMem('nairobiIndependence', true) },
   },
@@ -687,7 +687,7 @@ export const CITIES_EXTENDED_EVENTS = [
       !G.mem?.rioEventMoment,
     text: (G) =>
       G.currentYear === 2014
-        ? `The World Cup. Half of Rio has been evicted and their homes demolished for the infrastructure. The Maracanã is full. The team collapses 7–1 against Germany in Belo Horizonte and the country goes quiet in a specific way — not silence but the specific tone of a collective humiliation. Football is not just football here. Everyone knew this already. The score makes it undeniable.`
+        ? `The World Cup. Half of Rio has been evicted and their homes demolished for the infrastructure. The Maracanã is full. The team collapses 7–1 against Germany in Belo Horizonte and the country goes quiet in a way — not silence but the specific tone of a collective humiliation. Football is not just football here. Everyone knew this already. The score makes it undeniable.`
         : `The Olympics. Three hundred thousand people were displaced for the infrastructure over the last six years. The venues are ready. The Copacabana beach venue is beautiful. In the cidade maravilhosa the gap between what was advertised and what was built is, as always, the story.`,
     choices: null,
     effect: (p) => { p.m -= 3; p.e += 2; p.setMem('rioEventMoment', true) },
@@ -803,7 +803,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.ethnicity === 'black_south_african' &&
       !G.mem?.jhbPassLaws,
     text: () =>
-      `The dompas — the reference book — must be on your person at all times in Johannesburg. It specifies where you are permitted to be, when, and why. To be in the city without the right endorsements is a criminal offense. The police check at the bus stop, at the train station, at the corner near your employer's building. The specific rhythm of Johannesburg is, in part, the rhythm of people calculating whether their papers are in order.`,
+      `The dompas — the reference book — must be on your person at all times in Johannesburg. It specifies where you are permitted to be, when, and why. To be in the city without the right endorsements is a criminal offense. The police check at the bus stop, at the train station, at the corner near your employer's building. The rhythm of Johannesburg is, in part, the rhythm of people calculating whether their papers are in order.`,
     choices: null,
     effect: (p) => { p.m -= 6; p.addFlag('apartheid_pass_book'); p.setMem('jhbPassLaws', true) },
   },
@@ -866,7 +866,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.currentYear >= 1995 && G.currentYear <= 2007 &&
       !G.mem?.dublinCelticTiger,
     text: () =>
-      `Dublin 1999. The country that exported its children for two hundred years cannot build houses fast enough for the people coming in. Polish electricians are in the pubs. The Liffey is lined with cranes. Property prices double in four years. Your cousin who emigrated in 1989 has come back. You have a mortgage on a house that your parents could not have bought. The speed of it is disorienting in the specific way that becoming rich quickly is always disorienting — you do not quite believe it.`,
+      `Dublin 1999. The country that exported its children for two hundred years cannot build houses fast enough for the people coming in. Polish electricians are in the pubs. The Liffey is lined with cranes. Property prices double in four years. Your cousin who emigrated in 1989 has come back. You have a mortgage on a house that your parents could not have bought. The speed of it is disorienting in the way that becoming rich quickly is always disorienting — you do not quite believe it.`,
     choices: null,
     effect: (p) => { p.m += 6; p.mo += 4000; p.setMem('dublinCelticTiger', true) },
   },
@@ -965,7 +965,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.currentYear >= 1980 && G.currentYear <= 1990 &&
       !G.mem?.harareIndependence,
     text: () =>
-      `Zimbabwe, 1980. The country that was Rhodesia is now Zimbabwe and Harare, which was Salisbury, is genuinely different in the specific way that a capital city changes when its government changes. There are Black Zimbabweans in positions that were not available to them last year. The schools are expanding; the literacy rate is rising; the health system is being built. Robert Mugabe gives a conciliation speech that Bob Marley performs at the independence concert. Something that feels like possibility is present and has not yet been tested.`,
+      `Zimbabwe, 1980. The country that was Rhodesia is now Zimbabwe and Harare, which was Salisbury, is genuinely different in the way that a capital city changes when its government changes. There are Black Zimbabweans in positions that were not available to them last year. The schools are expanding; the literacy rate is rising; the health system is being built. Robert Mugabe gives a conciliation speech that Bob Marley performs at the independence concert. Something that feels like possibility is present and has not yet been tested.`,
     choices: null,
     effect: (p) => { p.m += 7; p.addFlag('zimbabwe_independence_generation'); p.setMem('harareIndependence', true) },
   },
@@ -1212,7 +1212,7 @@ export const CITIES_EXTENDED_EVENTS = [
       G.flags.has('ghana_independence_generation') &&
       !G.mem?.accraPostCoup,
     text: () =>
-      `Nkrumah was deposed while traveling in February 1966. The military announced it on the radio. The Convention People's Party offices were vandalized. The man who said "Ghana, your beloved country, is free forever" is in Guinea, where Sékou Touré gave him asylum and a title. The specific experience of having believed in a project and watching it end — not fail but be removed — is a feeling that reshapes what you believe is possible from politics. You are adjusting.`,
+      `Nkrumah was deposed while traveling in February 1966. The military announced it on the radio. The Convention People's Party offices were vandalized. The man who said "Ghana, your beloved country, is free forever" is in Guinea, where Sékou Touré gave him asylum and a title. The experience of having believed in a project and watching it end — not fail but be removed — is a feeling that reshapes what you believe is possible from politics. You are adjusting.`,
     choices: null,
     effect: (p) => { p.m -= 6; p.r += 4; p.setMem('accraPostCoup', true) },
   },
@@ -1244,7 +1244,7 @@ export const CITIES_EXTENDED_EVENTS = [
     cooldown: 9,
     when: (G) => G.place?.id === 'tr_istanbul',
     text: () =>
-      `The Bosphorus at dusk from the Galata Bridge. The tankers going north to the Black Sea pass the ferries going east to the Asian shore pass the fishing boats going nowhere in particular. The specific geography of Istanbul — a city on two continents, a strait that is also a city street — produces a specific kind of person who has made a habit of standing on the bridge and looking both ways at once.`,
+      `The Bosphorus at dusk from the Galata Bridge. The tankers going north to the Black Sea pass the ferries going east to the Asian shore pass the fishing boats going nowhere in particular. The specific geography of Istanbul — a city on two continents, a strait that is also a city street — produces a kind of person who has made a habit of standing on the bridge and looking both ways at once.`,
     choices: null,
     effect: (p) => { p.m += 4; },
   },

@@ -182,7 +182,8 @@ export const EGYPT_DEPTH_EVENTS = [
       G.currentYear === 2016 &&
       G.age >= 20 &&
       !G.mem?.egyPound,
-    text: `November 3, 2016. The Central Bank of Egypt floats the pound. It was trading at 8.8 to the dollar. The next morning it opens at 13. By the end of the month it is 19. The IMF loan, which requires the float, is $12 billion over three years. Fuel subsidies are reduced. Electricity prices increase in stages. The logic of the reform is that the parallel market was already pricing the pound at the new rate; now the official rate has caught up with reality. The experience of the reform is: everything that you buy that has any imported component is suddenly 60% more expensive. The government says this is temporary. You calculate what 60% means in your household.`,
+    text: 'On the third of November the pound is eight and a half to the dollar and by the end of the month it is nineteen. The cooking oil goes first, then your mother\'s tablets, then the school shoes. The man at the kiosk has stopped writing prices on the boxes and tells you the number when you ask for it. You do the arithmetic on the back of a receipt at the kitchen table and then you do it again, because the first answer looked wrong.',
+    context: 'The Central Bank of Egypt floated the pound on 3 November 2016 as a condition of a $12 billion IMF programme; it fell from 8.8 to about 19 to the dollar within a month. Fuel subsidies were cut and electricity tariffs raised in stages. Anything with an imported component rose roughly 60 percent.',
     choices: null,
     effect: (p) => {
       p.m -= 10

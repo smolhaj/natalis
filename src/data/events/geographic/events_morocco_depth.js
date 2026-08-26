@@ -24,7 +24,8 @@ export const MOROCCO_DEPTH_EVENTS = [
       G.currentYear >= 1971 && G.currentYear <= 1974 &&
       G.age >= 16 &&
       !G.mem?.morSkhiratCoup,
-    text: `July 10, 1971. The army invites itself to the king's birthday party at the Skhirat palace. Military cadets from Ahermoumou — 1,400 of them — arrive with weapons. They shoot the guests. 100 people are killed, another 200 wounded, among them diplomats and ministers and members of the Moroccan elite invited to celebrate Hassan II's forty-second birthday. The king survives by hiding in a bathroom. A year later, in August 1972, two F-5 jets attack his plane over the Strait. He survives again, speaking into the plane's radio as if he were the pilot, telling the attackers the king is dead. The message your country received from these years: the king cannot be killed. The message you received as someone who was alive during them: the king is surrounded by people willing to try.`,
+    text: 'They come to the palace at Skhirat in the middle of the birthday party, fourteen hundred cadets with rifles, and they shoot the guests on the lawn. A hundred people die, among them ministers and ambassadors and the sort of men your father names when he wants to explain how the country works. The king is found alive in a bathroom. The following August two jets attack his aircraft over the Strait and he takes the radio himself and tells the pilots that the king is already dead, and they believe him.',
+    context: 'On 10 July 1971 cadets from the Ahermoumou military academy attacked Hassan II\'s forty-second birthday reception at the Skhirat palace, killing about 100 guests and wounding 200. A second attempt followed in August 1972, when F-5 jets fired on the king\'s Boeing over the Strait of Gibraltar. Both failed, and the purges that followed opened the Years of Lead.',
     choices: null,
     effect: (p) => {
       p.e += 2
@@ -211,13 +212,14 @@ export const MOROCCO_DEPTH_EVENTS = [
 
   {
     id: 'mor_four_registers',
-    phase: 'young_adult',
+    phase: null,
     weight: 3,
     when: (G) =>
       IS_MOROCCO(G) &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.morFourRegisters,
-    text: `Your country runs on four languages and you have all four. At home: Darija, the Moroccan Arabic that is not what they teach in the Gulf and that Gulf Arabs sometimes pretend they cannot understand. At the mosque and in official ceremony: Fus-ha, Modern Standard Arabic, which nobody speaks as a mother tongue but which everyone who passed through school can use. At the office and in the courts and in the hospitals: French, still, fifty years after independence, still the language of the professional class. And in the mountains and the medinas: Tamazight in its variants — Tachelhit, Tarifit, Tamazight of the Middle Atlas — which the state has only recently admitted is a language at all. To get the job, you need French. To get the respect, you need Fus-ha. To get home, you need Darija. To get your grandmother, you need the language the state spent sixty years pretending wasn't there.`,
+    text: 'At home it is Darija and your grandmother will not accept anything else. At the counter in the ministry the clerk waits until you switch to French and then he becomes helpful. In the mosque it is Fus-ha, which is nobody\'s mother\'s language. You watch yourself change register four times before lunch, and you notice which one makes people sit up, and it is not the one your grandmother taught you.',
+    context: 'Morocco runs on four registers: Darija at home, Modern Standard Arabic in religion and official ceremony, French in the professions, courts and higher education, and Tamazight in its Tachelhit, Tarifit and Middle Atlas variants. Roughly a third of Moroccans are Amazigh. Tamazight was suppressed for decades and became an official language of the state only under the 2011 constitution.',
     choices: null,
     effect: (p) => {
       p.e += 3

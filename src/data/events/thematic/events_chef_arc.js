@@ -20,7 +20,7 @@ export const CHEF_ARC_EVENTS = [
     when: (G) =>
       isChef(G) &&
       !G.mem?.chefMaterialFired,
-    text: `You learn the material the way it takes years to learn: not recipes — anyone can follow recipes — but what the material actually is. The way an onion behaves as it softens, the temperature difference between a sear and a char, the specific moment when the acid changes everything it touches. This knowledge is sensory and accumulated and cannot be fast-tracked. The training produces technique; the kitchen produces understanding. They are not the same thing.`,
+    text: `You learn the material the way it takes years to learn: not recipes — anyone can follow recipes — but what the material actually is. The way an onion behaves as it softens, the temperature difference between a sear and a char, the moment when the acid changes everything it touches. This knowledge is sensory and accumulated and cannot be fast-tracked. The training produces technique; the kitchen produces understanding. They are not the same thing.`,
     choices: null,
     effect: (p) => {
       p.m += 8

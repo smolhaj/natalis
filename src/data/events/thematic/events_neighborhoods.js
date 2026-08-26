@@ -244,7 +244,7 @@ export const NEIGHBORHOOD_EVENTS = [
     weight: 2,
     cooldown: 5,
     when: (G) => G.neighborhoodTier === 'working_class' && G.age >= 8 && G.age <= 14,
-    text: 'The block is loud in a specific way: the football on concrete, the argument three floors up, the motorbike that won\'t start, the music from the bar that opens at noon. Your parents worked hard for this flat and it is better than what came before it. The noise is a fact, not a complaint.',
+    text: 'The block is loud in a way: the football on concrete, the argument three floors up, the motorbike that won\'t start, the music from the bar that opens at noon. Your parents worked hard for this flat and it is better than what came before it. The noise is a fact, not a complaint.',
     choices: null,
     effect: (p) => { p.m -= 2; p.e += 2 },
   },

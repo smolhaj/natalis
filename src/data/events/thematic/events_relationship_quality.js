@@ -110,7 +110,7 @@ export const RELATIONSHIP_QUALITY_EVENTS = [
       {
         text: `Agree.`,
         tag: 'couples_therapy',
-        outcome: `The first session is uncomfortable in the specific way that useful things often are.`,
+        outcome: `The first session is uncomfortable in the way that useful things often are.`,
         effect: (p) => { p.m -= 3; p.updatePartnerRel(15) },
       },
       {

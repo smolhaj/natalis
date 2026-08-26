@@ -52,7 +52,7 @@ export const FOLLOWTHROUGH_84_EVENTS = [
       G.currentYear >= 1974 && G.currentYear <= 1985 &&
       G.age >= 30 &&
       !G.mem?.ft84EmigrantReturn,
-    text: 'April 25 changes the arithmetic. You no longer have to be illegal to return. The factory in Renault is still paying. The apartment in Champigny is familiar in a way the Trás-os-Montes village has stopped being. The return is possible. Whether the return is desired is a different question. You have been away for twelve years. The village has changed. You have changed more. The emigrant who returns is not the same as the emigrant who left, which is the specific arithmetic of leaving.',
+    text: 'April 25 changes the arithmetic. You no longer have to be illegal to return. The factory in Renault is still paying. The apartment in Champigny is familiar in a way the Trás-os-Montes village has stopped being. The return is possible. Whether the return is desired is a different question. You have been away for twelve years. The village has changed. You have changed more. The emigrant who returns is not the same as the emigrant who left, which is the arithmetic of leaving.',
     choices: [
       {
         text: 'You return — Portugal after April 25 is something new',

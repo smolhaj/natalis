@@ -104,7 +104,7 @@ export const FOLLOWTHROUGH_74_EVENTS = [
       if (G.character.country.name === 'Venezuela') {
         return 'The food situation has changed. Not resolved — the structural problem is not resolved — but the informal dollarization has produced a market that is expensive and fully stocked, at least in the stores that price in USD, which you can get to if you have dollars, which you may or may not have depending on the arithmetic of this month. The queue is gone. The bachaquero is gone. What replaced them is more efficient and more nakedly sorted by who has what.'
       }
-      return 'From wherever you are now, the food queue years are a period with a texture you don\'t find in accounts that aren\'t from inside it: the specific weight of the number, the conversation with the woman who had a number from two days ago, the cornmeal you got and the rice you didn\'t. You carry this as knowledge that is available and also expensive to access.'
+      return 'From wherever you are now, the food queue years are a period with a texture you don\'t find in accounts that aren\'t from inside it: the weight of the number, the conversation with the woman who had a number from two days ago, the cornmeal you got and the rice you didn\'t. You carry this as knowledge that is available and also expensive to access.'
     },
     choices: null,
     effect: (p) => {

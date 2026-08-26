@@ -229,7 +229,7 @@ const DEAF_ARC_EVENTS = [
       G.flags.has('born_deaf') &&
       !G.flags.has('deaf_family') &&
       !G.mem?.disDeafCommFired,
-    text: 'The school for the Deaf, or the club, or the online community for BSL/ASL speakers — whatever the route, you find the others. The specific feeling of being in a room where the primary language is yours — where you do not need to ask anyone to face you when they speak, where the communication is complete rather than approximate — is not something you had a word for before you experienced it. You have a word for it now: home.',
+    text: 'The school for the Deaf, or the club, or the online community for BSL/ASL speakers — whatever the route, you find the others. The feeling of being in a room where the primary language is yours — where you do not need to ask anyone to face you when they speak, where the communication is complete rather than approximate — is not something you had a word for before you experienced it. You have a word for it now: home.',
     choices: null,
     effect: (p) => { p.m += 12; p.s += 5; p.addFlag('deaf_community_found'); p.setMem('disDeafCommFired', true) },
   },

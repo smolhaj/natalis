@@ -14,7 +14,7 @@ export const FOLLOWTHROUGH_69_EVENTS = [
       G.currentYear >= 2000 &&
       G.age >= 30 &&
       !G.mem?.ft69EkusheyIntl,
-    text: 'UNESCO declared February 21 as International Mother Language Day in 1999. The day that was only Bangladesh\'s grief — the students shot at Dhaka University in 1952 for the right to speak their own language — is now a global observance. You learn this and you feel something complicated: the loss is universal now, which is a form of recognition, and the recognition makes the specific grief simultaneously larger and smaller.',
+    text: 'UNESCO declared February 21 as International Mother Language Day in 1999. The day that was only Bangladesh\'s grief — the students shot at Dhaka University in 1952 for the right to speak their own language — is now a global observance. You learn this and you feel something complicated: the loss is universal now, which is a form of recognition, and the recognition makes the grief simultaneously larger and smaller.',
     choices: null,
     effect: (p) => {
       p.m += 3

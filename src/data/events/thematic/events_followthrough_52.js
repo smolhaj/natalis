@@ -163,7 +163,7 @@ export const FOLLOWTHROUGH_52_EVENTS = [
       G.flags.has('aids_generation') &&
       G.age >= 45 &&
       !G.mem?.ft52AidsLate,
-    text: `The people you knew in the worst years who are not here now. The number is not a figure you calculate — it is a list, a set of faces, a specific quality of absence at particular kinds of gatherings where the people who would have been there are not there. The AIDS epidemic killed people your age in quantities that altered the demographic shape of a generation. You are one of the ones who came through it. That fact sits alongside grief and gratitude in a proportion that doesn't resolve.`,
+    text: `The people you knew in the worst years who are not here now. The number is not a figure you calculate — it is a list, a set of faces, a quality of absence at particular kinds of gatherings where the people who would have been there are not there. The AIDS epidemic killed people your age in quantities that altered the demographic shape of a generation. You are one of the ones who came through it. That fact sits alongside grief and gratitude in a proportion that doesn't resolve.`,
     choices: [
       {
         text: 'You have done something with the fact of surviving — advocacy, care, naming the names.',
@@ -274,7 +274,7 @@ export const FOLLOWTHROUGH_52_EVENTS = [
       G.currentYear >= 2010 &&
       G.age >= 65 &&
       !G.mem?.ft52ColdWarLate,
-    text: `The world the Cold War organized — the two blocs, the nuclear standoff, the specific quality of living inside the possibility of total annihilation — has been replaced by something else. The replacement is not clearly better. You are old enough to have lived in both structures. The young people around you know the Cold War as history. You know it as the texture of several decades. The two knowledges are not the same knowledge.`,
+    text: `The world the Cold War organized — the two blocs, the nuclear standoff, the quality of living inside the possibility of total annihilation — has been replaced by something else. The replacement is not clearly better. You are old enough to have lived in both structures. The young people around you know the Cold War as history. You know it as the texture of several decades. The two knowledges are not the same knowledge.`,
     choices: null,
     effect: (p) => {
       p.r += 4
@@ -294,7 +294,7 @@ export const FOLLOWTHROUGH_52_EVENTS = [
       G.flags.has('resettlement_established') &&
       G.age >= 38 &&
       !G.mem?.ft52RefugeeEstablished,
-    text: `You have been established here for long enough that the word refugee is historical rather than current. The legal status may have changed. The children may not know the word. You work and pay rent and have opinions about local politics and in many rooms you are simply a person who lives here. The flight is not a secret but it is also not the first thing said. The specific quality of having built a life on top of that departure is something that lives in the building more than in the story of what came before.`,
+    text: `You have been established here for long enough that the word refugee is historical rather than current. The legal status may have changed. The children may not know the word. You work and pay rent and have opinions about local politics and in many rooms you are simply a person who lives here. The flight is not a secret but it is also not the first thing said. The quality of having built a life on top of that departure is something that lives in the building more than in the story of what came before.`,
     choices: [
       {
         text: 'The building is the better story. You live in it.',

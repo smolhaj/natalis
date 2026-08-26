@@ -1,5 +1,5 @@
 // events_business.js
-// Business arc events: growth, failure, pivotal decisions, and the specific texture
+// Business arc events: growth, failure, pivotal decisions, and the texture
 // of running something you built yourself. Gate on state.business existing.
 
 export const BUSINESS_EVENTS = [
@@ -129,7 +129,7 @@ export const BUSINESS_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => G.flags.has('entrepreneur') && G.age >= 24 && (G.money ?? 0) < 5000 && !G.mem.bizCashflow,
-    text: 'The invoices are real but unpaid. The expenses are real and immediate. The gap between them is thirty days, which is also the gap between surviving and not. You have sat in this specific chair, in this specific feeling, before. You know more now but not enough to make it less uncomfortable.',
+    text: 'The invoices are real but unpaid. The expenses are real and immediate. The gap between them is thirty days, which is also the gap between surviving and not. You have sat in this specific chair, in this feeling, before. You know more now but not enough to make it less uncomfortable.',
     choices: [
       {
         text: 'Take a short-term business loan — bridge the gap',

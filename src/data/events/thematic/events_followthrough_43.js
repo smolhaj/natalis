@@ -15,7 +15,7 @@ export const FOLLOWTHROUGH_43_EVENTS = [
       G.currentYear >= 1955 &&
       G.age >= 55 &&
       !G.mem?.ft43OccupationLate,
-    text: 'The trials ended in the late 1940s and the country tried to move on. The collaborators who were convicted and served their sentences went back to their towns and villages and in many cases lived and died there without further official consequence. The social consequence was different and longer — decades of lowered status, of being the family that had, of children of collaborators carrying what their parents had done. The resistance fighters were honoured. The ordinary people who had endured without distinguishing themselves either way — the majority — had the specific experience of a generation that was present for something important and is not in the official narrative.',
+    text: 'The trials ended in the late 1940s and the country tried to move on. The collaborators who were convicted and served their sentences went back to their towns and villages and in many cases lived and died there without further official consequence. The social consequence was different and longer — decades of lowered status, of being the family that had, of children of collaborators carrying what their parents had done. The resistance fighters were honoured. The ordinary people who had endured without distinguishing themselves either way — the majority — had the experience of a generation that was present for something important and is not in the official narrative.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 3; p.m -= 3; p.setMem('ft43OccupationLate', true) },
   },

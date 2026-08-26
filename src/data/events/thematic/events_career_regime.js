@@ -143,7 +143,7 @@ export const CAREER_REGIME_EVENTS = [
     when: (G) => G.career?.field === 'military' && G.age >= 18 && G.age <= 28 && (
       G.currentYear >= 2001 || ['conflict_zone', 'developing_unstable', 'subsaharan'].includes(G.character.country.archetype)
     ),
-    text: 'The orders arrive on a Thursday. You are shipping out in three weeks. The name of the place is one you have heard on the news in a way that has a specific quality — the way names of places acquire weight. You call your family. You do not say the things you mean to say.',
+    text: 'The orders arrive on a Thursday. You are shipping out in three weeks. The name of the place is one you have heard on the news in a way that has a quality — the way names of places acquire weight. You call your family. You do not say the things you mean to say.',
     choices: [
       { text: 'Go without complaint. It\'s what you signed up for.', tag: null, outcome: 'You pack your kit on a Sunday night and do not look at the room when you leave.', effect: (p) => { p.m -= 8; p.addFlag('deployment_orders'); p.addFlag('military_service') } },
       { text: 'Request a transfer or delay through official channels', tag: null, outcome: 'The request is denied. You go anyway. The attempt is on your record.', effect: (p) => { p.m -= 10; p.r += 5; p.addFlag('deployment_orders'); p.addFlag('military_service') } },
@@ -197,7 +197,7 @@ export const CAREER_REGIME_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => G.career?.field === 'education' && (G.regime === 'single_party_communist' || G.regime === 'military_dictatorship') && G.age >= 22,
-    text: 'The curriculum says certain things about history. You know some of them are wrong — not approximately wrong, but designed to be wrong. A student asks a question that shows she is starting to reason for herself. You give the approved answer. You go home and sit with the specific feeling this produces.',
+    text: 'The curriculum says certain things about history. You know some of them are wrong — not approximately wrong, but designed to be wrong. A student asks a question that shows she is starting to reason for herself. You give the approved answer. You go home and sit with the feeling this produces.',
     choices: [
       { text: 'Teach the official curriculum. Your job, your family.', tag: null, outcome: 'You teach what you are told. The best students learn to read your silences.', effect: (p) => { p.m -= 12; p.r += 10; p.addFlag('taught_false_curriculum'); p.addFlag('double_consciousness') } },
       { text: 'Find small ways to show students how to think for themselves', tag: null, outcome: 'You assign questions without answers. You teach method instead of conclusion. It is slow and deniable. It is something.', effect: (p) => { p.m -= 6; p.e += 5; p.addFlag('quiet_resistance'); p.addFlag('independent_thinker') } },

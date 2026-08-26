@@ -384,7 +384,7 @@ export const ROMANCE_ARC_EVENTS = [
       G.age >= 40 && G.age <= 58 &&
       !G.mem?.romancePartnerIllnessEarly,
     text: (G) =>
-      `${G.partner?.name ?? 'Your partner'} receives a diagnosis that is not immediately terminal but is not minor. The next several months involve appointments and waiting rooms and the specific competence that crisis requires. The marriage becomes a different kind of partnership — practical, close, more honest than it has been in a while.`,
+      `${G.partner?.name ?? 'Your partner'} receives a diagnosis that is not immediately terminal but is not minor. The next several months involve appointments and waiting rooms and the competence that crisis requires. The marriage becomes a different kind of partnership — practical, close, more honest than it has been in a while.`,
     choices: [
       {
         text: 'Step fully into the caretaking role',
@@ -457,7 +457,7 @@ export const ROMANCE_ARC_EVENTS = [
       {
         text: 'Agree on a rhythm and hold to it.',
         tag: null,
-        outcome: 'Sunday nights become a fixed thing. The distance turns out to be survivable in the specific way that scheduled things are survivable.',
+        outcome: 'Sunday nights become a fixed thing. The distance turns out to be survivable in the way that scheduled things are survivable.',
         effect: (p) => { p.m -= 3; p.e += 3; p.updatePartnerRel(3); p.addFlag('long_distance_relationship'); p.setMem('romanceLongDistance', true) },
       },
       {

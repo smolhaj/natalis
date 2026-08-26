@@ -66,7 +66,8 @@ export const ROMANIA_DEPTH_EVENTS = [
       G.currentYear >= 1989 && G.currentYear <= 1990 &&
       G.age >= 16 &&
       !G.mem?.romDepTimisoara,
-    text: 'December 16, 1989. The Securitate comes to arrest László Tőkés, a Hungarian Reformed pastor in Timișoara who has been speaking against the regime. His congregation forms a human chain around the parsonage. The chain grows. By nightfall there are thousands in the street. The Securitate opens fire. On December 17, 60 people are dead in Timișoara. Ceaușescu is in Iran on a state visit. He returns, calls a mass rally in Bucharest on December 21 to demonstrate support. The crowd, assembled by the party, begins to boo him mid-speech. Live on state television, Ceaușescu freezes. The image goes around the country. The freeze is the end of the regime.',
+    text: 'The congregation stands around the parsonage in Timisoara so that the Securitate cannot get the pastor out, and by dark there are thousands in the street who have never met the man. On the seventeenth they fire into the crowd. Four days later the party assembles a rally in Bucharest and the crowd begins to boo, live, and the old man on the balcony stops speaking and does not know what to do with his hands. Everyone in the country sees the face he makes.',
+    context: 'Securitate officers moved to remove Laszlo Tokes, a Hungarian Reformed pastor, from his Timisoara parsonage on 16 December 1989. His congregation formed a human chain, the protest spread, and security forces opened fire, killing about sixty people on 17 December. Ceausescu returned from a state visit to Iran and called a rally in Bucharest on 21 December that turned against him on live television. He and Elena Ceausescu were executed on 25 December.',
     choices: [
       {
         text: 'You are in Timișoara',

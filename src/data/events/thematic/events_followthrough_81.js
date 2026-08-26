@@ -31,7 +31,7 @@ export const FOLLOWTHROUGH_81_EVENTS = [
       G.currentYear >= 1990 &&
       G.age >= 65 &&
       !G.mem?.ft81PartisanLate,
-    text: 'A politician invokes the Resistance at a rally. The politician was born in 1975. You listen to the invocation with a specific quality of attention. The Resistance is now a rhetorical resource available to parties across the spectrum, each claiming its inheritance. You were in the mountains. What that was, and what is being claimed now, are in some relation to each other that you have stopped trying to articulate to people who were not there.',
+    text: 'A politician invokes the Resistance at a rally. The politician was born in 1975. You listen to the invocation with a quality of attention. The Resistance is now a rhetorical resource available to parties across the spectrum, each claiming its inheritance. You were in the mountains. What that was, and what is being claimed now, are in some relation to each other that you have stopped trying to articulate to people who were not there.',
     choices: null,
     effect: (p) => {
       p.r += 6

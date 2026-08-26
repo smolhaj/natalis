@@ -33,7 +33,7 @@ export const FOLLOWTHROUGH_39_EVENTS = [
       G.flags.has('lived_through_occupation') &&
       G.age >= 50 &&
       !G.mem?.ft39OccupationLate,
-    text: 'You know what occupation looks like from the inside — the checkpoint that is not your checkpoint, the soldier who does not speak your language giving instructions in a language you are required to understand. The word sovereignty has a specific weight for you. When politicians use it in speeches you hear something different from what they intend. You hear the specific absence of it — what it meant to live in a place that your country\'s government did not control. The people who have not experienced this use the word differently, lighter, as if it were just a fact about maps rather than a fact about where you can go and at what hour.',
+    text: 'You know what occupation looks like from the inside — the checkpoint that is not your checkpoint, the soldier who does not speak your language giving instructions in a language you are required to understand. The word sovereignty has a weight for you. When politicians use it in speeches you hear something different from what they intend. You hear the specific absence of it — what it meant to live in a place that your country\'s government did not control. The people who have not experienced this use the word differently, lighter, as if it were just a fact about maps rather than a fact about where you can go and at what hour.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 3; p.m -= 3; p.setMem('ft39OccupationLate', true) },
   },

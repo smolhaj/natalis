@@ -15,7 +15,7 @@ const FEMALE = (G) => G.character.gender === 'female'
 export const WATER_INFRA_EVENTS = [
 
   // ── THE DRY SEASON ────────────────────────────────────────────────────────────
-  // Annual, brutal, and entirely predictable. The specific knowledge of thirst.
+  // Annual, brutal, and entirely predictable. The knowledge of thirst.
 
   {
     id: 'wi_dry_season',

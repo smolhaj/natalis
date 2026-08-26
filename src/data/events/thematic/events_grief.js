@@ -247,7 +247,7 @@ export const GRIEF_EVENTS = [
       !G.partner &&
       !G.mem.griefPartnerDating &&
       G.age >= 50,
-    text: 'Someone suggests — gently, carefully — that you might consider meeting people. They are not wrong that you are lonely. The question you cannot resolve is whether going on a date is a betrayal, and the answer you arrive at eventually is: they would not have wanted this for you, this specific kind of alone. You make the profile. You feel guilty. You go on the date.',
+    text: 'Someone suggests — gently, carefully — that you might consider meeting people. They are not wrong that you are lonely. The question you cannot resolve is whether going on a date is a betrayal, and the answer you arrive at eventually is: they would not have wanted this for you, this kind of alone. You make the profile. You feel guilty. You go on the date.',
     choices: [
       {
         text: 'Give it a real chance',
@@ -352,7 +352,7 @@ export const GRIEF_EVENTS = [
       Math.random() < 0.04,
     text: (G) => {
       const sib = G.siblings[0]
-      return `${sib?.name ?? 'Your sibling'} dies suddenly. An accident, or a diagnosis that moved faster than expected. They are the same age as you — or younger — and that is the specific thing you cannot stop returning to.`
+      return `${sib?.name ?? 'Your sibling'} dies suddenly. An accident, or a diagnosis that moved faster than expected. They are the same age as you — or younger — and that is the thing you cannot stop returning to.`
     },
     choices: null,
     effect: (p) => { p.m -= 22; p.r += 12; p.addFlag('lost_sibling'); p.setMem('griefSiblingCall', true) },
@@ -427,7 +427,7 @@ export const GRIEF_EVENTS = [
       Math.random() < 0.03,
     text: (G) => {
       const friend = G.friends[0]
-      return `${friend?.name ?? 'Your friend'} dies by suicide. The grief has a specific texture — the looking back, the reconstructing, the question of what you missed and whether it was missable. People say you could not have known. You spend years understanding what that means and does not mean.`
+      return `${friend?.name ?? 'Your friend'} dies by suicide. The grief has a texture — the looking back, the reconstructing, the question of what you missed and whether it was missable. People say you could not have known. You spend years understanding what that means and does not mean.`
     },
     choices: [
       {

@@ -65,7 +65,7 @@ export const FOLLOWTHROUGH_48_EVENTS = [
     text: (G) => {
       const hasChildren = G.children && G.children.length > 0
       if (hasChildren) {
-        return 'Your children grew up somewhere between languages. Their Greek is accented — the accent of someone who learned it in the house, from you, rather than in the street and at school. Their German is perfect, which is to say it is not marked the way yours is. You are proud of this and it is also a small loss that cannot be named without sounding ungrateful. The loss is the loss of the specific texture of Greek when it is the only language.'
+        return 'Your children grew up somewhere between languages. Their Greek is accented — the accent of someone who learned it in the house, from you, rather than in the street and at school. Their German is perfect, which is to say it is not marked the way yours is. You are proud of this and it is also a small loss that cannot be named without sounding ungrateful. The loss is the loss of the texture of Greek when it is the only language.'
       }
       return 'The Greek community in the German city has been here long enough to have grandchildren. There are children who speak Greek with an accent and German without one. The kafeneion on the corner has been open for forty years. It serves the old men of your generation and a few younger ones and almost no one else. The community that assembled itself here assembled itself as a temporary arrangement and stayed.'
     },
@@ -141,7 +141,7 @@ export const FOLLOWTHROUGH_48_EVENTS = [
       G.flags.has('thai_ordained') &&
       G.partner &&
       !G.mem?.thaOrdinatedMarriage,
-    text: 'The months in the robe are in the past now, the rains retreat ended, the disrobing ceremony complete. You are back in ordinary clothes and the marriage is arranged. The ordination is understood to be the preparation — the merit made, the spiritual maturity demonstrated. Your mother considers you now ready in the way that the tradition means. What you carry from the months is more difficult to account for: the specific silence of the early morning alms round, the way the day was structured by practice rather than by want. You do not know yet whether you will carry it as texture or as a reference point or as nothing.',
+    text: 'The months in the robe are in the past now, the rains retreat ended, the disrobing ceremony complete. You are back in ordinary clothes and the marriage is arranged. The ordination is understood to be the preparation — the merit made, the spiritual maturity demonstrated. Your mother considers you now ready in the way that the tradition means. What you carry from the months is more difficult to account for: the silence of the early morning alms round, the way the day was structured by practice rather than by want. You do not know yet whether you will carry it as texture or as a reference point or as nothing.',
     choices: null,
     effect: (p) => { p.m += 4; p.e += 2; p.setMem('thaOrdinatedMarriage', true) },
   },

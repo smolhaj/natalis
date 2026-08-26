@@ -53,7 +53,7 @@ export const DOCTOR_ARC_EVENTS = [
       isDoctor(G) &&
       G.flags.has('doc_first_death') &&
       !G.mem?.docTheQuestionFired,
-    text: `The patient asks you directly: am I going to die from this? You know the answer. You have known it for three weeks. The question is whether to tell them the whole answer or a version of it that serves a different purpose — hope, time, the family's ability to prepare, the patient's ability to prepare. You tell them as much of the truth as you can find words for, which is not the same as all of it but is more than you gave the last person who asked. You are learning the specific vocabulary required for this. There is no course.`,
+    text: `The patient asks you directly: am I going to die from this? You know the answer. You have known it for three weeks. The question is whether to tell them the whole answer or a version of it that serves a different purpose — hope, time, the family's ability to prepare, the patient's ability to prepare. You tell them as much of the truth as you can find words for, which is not the same as all of it but is more than you gave the last person who asked. You are learning the vocabulary required for this. There is no course.`,
     choices: [
       {
         text: 'Tell them the truth as fully as you can',
@@ -106,7 +106,7 @@ export const DOCTOR_ARC_EVENTS = [
       isDoctor(G) &&
       G.age >= 35 &&
       !G.mem?.docColleagueFired,
-    text: `A colleague — someone you trained with, someone who understood what the work was without explanation — dies. The manner of it is not surprising to anyone who works in medicine, which is its own kind of information. At the funeral, a specific kind of silence: the people who knew exactly what the years cost and cannot say it in this room. You drive home after and sit in the car for a while before going inside.`,
+    text: `A colleague — someone you trained with, someone who understood what the work was without explanation — dies. The manner of it is not surprising to anyone who works in medicine, which is its own kind of information. At the funeral, a kind of silence: the people who knew exactly what the years cost and cannot say it in this room. You drive home after and sit in the car for a while before going inside.`,
     choices: null,
     effect: (p) => {
       p.m -= 14
@@ -198,7 +198,7 @@ export const DOCTOR_ARC_EVENTS = [
       G.flags.has('doc_colleague_lost') &&
       G.age >= 55 &&
       !G.mem?.docColleagueEchoFired,
-    text: `You think about them sometimes. Not in a sustained way — the grief was processed, or was processed enough to continue — but in specific moments that the profession shares: a particular kind of silence after a difficult case, the end of a long shift, the conference dinner where people who have known each other for thirty years sit down and do not say the specific things they know about the work. They would have been here. You know what they would have said. Some years their absence is louder than others.`,
+    text: `You think about them sometimes. Not in a sustained way — the grief was processed, or was processed enough to continue — but in specific moments that the profession shares: a particular kind of silence after a difficult case, the end of a long shift, the conference dinner where people who have known each other for thirty years sit down and do not say the things they know about the work. They would have been here. You know what they would have said. Some years their absence is louder than others.`,
     choices: null,
     effect: (p) => {
       p.m -= 5

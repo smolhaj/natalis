@@ -1145,7 +1145,7 @@ export const POVERTY_EVENTS = [
       {
         text: 'Keep going — the financial stability is worth it',
         tag: 'keeps',
-        outcome: 'You maintain it for longer than your body expected. You are tired in a specific way that sleep does not entirely resolve.',
+        outcome: 'You maintain it for longer than your body expected. You are tired in a way that sleep does not entirely resolve.',
         effect: (p) => {
           p.setMem('povSecondJob', true)
           p.addFlag('works_two_jobs')
@@ -1178,7 +1178,7 @@ export const POVERTY_EVENTS = [
       !G.mem?.povWorkingPoorReckoning &&
       G.flags.has('working_poor') &&
       G.age >= 34 && G.age <= 50,
-    text: 'You have been doing this for over a decade. Working, not getting ahead. Covering costs, not building anything. The middle class is visible from here — a specific distance, a specific quality of furniture, a specific relationship with uncertainty. You know exactly where you are. The question is whether this is a stage or a condition.',
+    text: 'You have been doing this for over a decade. Working, not getting ahead. Covering costs, not building anything. The middle class is visible from here — a specific distance, a quality of furniture, a specific relationship with uncertainty. You know exactly where you are. The question is whether this is a stage or a condition.',
     choices: [
       {
         text: 'Retrain or reskill — change the income ceiling',
@@ -1231,7 +1231,7 @@ export const POVERTY_EVENTS = [
       G.flags.has('poverty_childhood') &&
       G.children?.length > 0 &&
       G.age >= 30 && G.age <= 50,
-    text: 'Your child comes home with a form about the school trip. The cost is not large. It is large enough. You recognise the calculation your parent ran when you were this age, running it now for your own child — whether to say it cannot be done and explain, or to find the money and not explain. You had promised yourself this specific moment would not arrive.',
+    text: 'Your child comes home with a form about the school trip. The cost is not large. It is large enough. You recognise the calculation your parent ran when you were this age, running it now for your own child — whether to say it cannot be done and explain, or to find the money and not explain. You had promised yourself this moment would not arrive.',
     choices: [
       {
         text: 'Find the money somehow — your child goes on the trip',
@@ -1274,7 +1274,7 @@ export const POVERTY_EVENTS = [
       G.money > 1000 &&
       !G.mem?.isHomeless &&
       G.age >= 22 && G.age <= 60,
-    text: 'Two years in this flat, or close to it. You have a chair that belongs to you and a kitchen that operates on your schedule. You have people who ring the bell and expect to be let in. The address on your bank statement is a place you recognise. You notice this with the specific attention of someone who has not always had it.',
+    text: 'Two years in this flat, or close to it. You have a chair that belongs to you and a kitchen that operates on your schedule. You have people who ring the bell and expect to be let in. The address on your bank statement is a place you recognise. You notice this with the attention of someone who has not always had it.',
     choices: null,
     effect: (p) => {
       p.setMem('povFirstStableAddress', true)

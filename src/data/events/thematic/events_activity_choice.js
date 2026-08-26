@@ -222,7 +222,7 @@ export const ACTIVITY_CHOICE_EVENTS = [
       {
         text: 'Show it — even to one person',
         tag: 'art_shown_to_someone',
-        outcome: 'The specific experience of someone looking at your work while you watch them. It does not get easier but it does get more yours.',
+        outcome: 'The experience of someone looking at your work while you watch them. It does not get easier but it does get more yours.',
         effect: (p) => { p.m += 6; p.r += 2; p.s += 3; p.addFlag('art_shown_to_someone'); p.setMem('acArtAccum', true) },
       },
       {

@@ -23,7 +23,8 @@ export const CUBA_DEPTH_EVENTS = [
       G.currentYear === 1962 &&
       G.age >= 12 &&
       !G.mem?.cubDepMissile,
-    text: 'October 1962. The crisis you hear about on the radio is described as a confrontation between Kennedy and Khrushchev. The crisis you are living is different in texture. The anti-aircraft batteries have been positioned on the outskirts of Havana. The militia units are on alert. Castro speaks for hours. The Soviet technicians are working at the installations in the countryside and you understand now what those installations are. The 13 days pass with a specific fear that is not entirely fear: there is also the revolutionary pride, the sense of being at the centre of history, the knowledge that Cuba has forced the two superpowers to negotiate over your island. When it is over and the missiles leave and the US promises not to invade, the specific emotional residue is complex: you were used as a pawn and you were also the reason it mattered.',
+    text: 'The anti-aircraft batteries go up on the edge of Havana in a week and the militia are sleeping in the school. On the radio it is Kennedy and Khrushchev; on your street it is your neighbour with a rifle he was issued on Tuesday. Fidel talks for four hours and everybody stays to the end. When it is over and the ships turn and the missiles go back, you are relieved, and you are also aware that nobody asked the island what it wanted.',
+    context: 'The Soviet Union began installing medium-range nuclear missiles in Cuba in 1962. The confrontation ran for thirteen days in October and ended when Khrushchev agreed to withdraw them in exchange for a US pledge not to invade Cuba and the later removal of American missiles from Turkey. Castro was not consulted about the settlement.',
     choices: null,
     effect: (p) => {
       p.r += 6
@@ -112,7 +113,8 @@ export const CUBA_DEPTH_EVENTS = [
       G.currentYear >= 1999 && G.currentYear <= 2001 &&
       G.age >= 18 &&
       !G.mem?.cubDepElian,
-    text: 'November 1999. A five-year-old boy, Elián González, is found floating on an inner tube in the Florida Strait. His mother drowned. His Miami relatives claim custody. His father, still in Cuba, wants him back. The US courts eventually order his return and the armed INS raid on the Miami house produces the photograph — the agent, the closet, the terrified child, the gun — that will circulate for decades. In Cuba, the case is understood as a referendum on the Revolution: the Empire tried to steal a Cuban child and the Revolution brought him home. You attend the rallies. Or you don\'t attend but you watch the coverage. The specific lesson the case teaches about the relationship between Cuba and the Cuban diaspora will stay with you for the next twenty years.',
+    text: 'The boy is five and they find him on an inner tube in the Straits, and his mother is not found. For seven months his face is on the front of Granma and on a placard in the plaza, and there is a rally in your town on a Thursday afternoon that you are not required to attend and attend. Then the photograph from Miami: the agent in the doorway, the closet, the rifle, the child. Somebody in your building says quietly that a boy has been used by everybody who touched him, and nobody argues.',
+    context: 'Elian Gonzalez was rescued off Florida in November 1999 after his mother drowned attempting the crossing. His Miami relatives contested his father\'s claim for eight months. US federal agents removed him from the house in an armed dawn raid in April 2000, producing one of the decade\'s most reproduced news photographs, and he was returned to Cuba in June.',
     choices: null,
     effect: (p) => {
       p.r += 4

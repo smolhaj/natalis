@@ -1,7 +1,7 @@
 // BUILD 17 — The religious institution from inside
 // The priest in rural Ireland. The Buddhist monk in Cambodia before and after the Khmer Rouge.
 // The imam under Suharto. The yeshiva student in Jerusalem.
-// Not faith as crisis — the specific experience of holding an institution,
+// Not faith as crisis — the experience of holding an institution,
 // exercising power, knowing what the institution has done.
 
 const IS_CLERGY = (G) => G.career?.id === 'clergy'
@@ -128,7 +128,7 @@ export const CLERGY_EVENTS = [
     phase: 'midlife',
     weight: 3,
     when: (G) => IS_BUDDHIST_CAMBODIA(G) && G.flags.has('khmer_rouge_survivor') && G.currentYear >= 1979 && G.currentYear <= 1995 && !G.mem.cleRebuild,
-    text: 'After 1979 the monasteries begin to reopen. There are almost no senior monks — most were killed. You are among the few who survived who can re-ordain others. Young men come to you who have grown up with no religious institution at all, in a country that tried to make religion impossible. You teach what you know. There is a specific solemnity to rebuilding from almost nothing.',
+    text: 'After 1979 the monasteries begin to reopen. There are almost no senior monks — most were killed. You are among the few who survived who can re-ordain others. Young men come to you who have grown up with no religious institution at all, in a country that tried to make religion impossible. You teach what you know. There is a solemnity to rebuilding from almost nothing.',
     effect: (p) => { p.m += 15; p.karma += 15; p.addFlag('rebuilt_institution'); p.setMem('cleRebuild', true) },
   },
 

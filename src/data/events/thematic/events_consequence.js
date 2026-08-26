@@ -89,7 +89,7 @@ export const CONSEQUENCE_EVENTS = [
     when: (G) => G.flags.includes('experienced_islamophobia') &&
       ['muslim_sunni', 'muslim_shia', 'muslim_sufi'].includes(G.religion) &&
       G.age >= 18 && !G.mem?.post_911_mosque,
-    text: 'The mosque is fuller than it has ever been. Not because faith increased — because people need to be somewhere they are not suspects. You sit in the back. The imam speaks about patience and dignity. Someone three rows ahead of you is quietly crying. You recognise the specific grief of belonging to something that is being blamed for something it did not do.',
+    text: 'The mosque is fuller than it has ever been. Not because faith increased — because people need to be somewhere they are not suspects. You sit in the back. The imam speaks about patience and dignity. Someone three rows ahead of you is quietly crying. You recognise the grief of belonging to something that is being blamed for something it did not do.',
     choices: null,
     effect: (p) => { p.m += 8; p.s += 5; p.addFlag('community_through_adversity'); p.setMem('post_911_mosque', true) },
   },
@@ -154,7 +154,7 @@ export const CONSEQUENCE_EVENTS = [
     phase: null,
     weight: 5,
     when: (G) => G.flags.includes('lived_through_pandemic') && G.currentYear >= 2020 && G.currentYear <= 2023 && G.age >= 18 && !G.mem?.pandemic_isolation,
-    text: 'The weeks of staying inside accumulate into something that stops feeling temporary. The apartment is the same size it always was. The silence has a texture. You speak to people through screens and feel the specific inadequacy of that. There is no event and no endpoint. There is only today, which looks like yesterday.',
+    text: 'The weeks of staying inside accumulate into something that stops feeling temporary. The apartment is the same size it always was. The silence has a texture. You speak to people through screens and feel the inadequacy of that. There is no event and no endpoint. There is only today, which looks like yesterday.',
     choices: [
       { text: 'Build a routine and hold to it rigidly', tag: null, outcome: 'The structure keeps you functional. It does not keep you well.', effect: (p) => { p.m -= 8; p.h -= 3; p.e += 3; p.addFlag('pandemic_coped'); p.setMem('pandemic_isolation', true) } },
       { text: 'Let the days blur — survival is enough right now', tag: null, outcome: 'You stop knowing what day it is. You sleep at wrong hours. The blurring takes months to reverse.', effect: (p) => { p.m -= 18; p.h -= 6; p.setMem('pandemic_isolation', true) } },
@@ -355,7 +355,7 @@ export const CONSEQUENCE_EVENTS = [
     phase: 'midlife',
     weight: 2,
     when: (G) => G.flags.includes('rehab_graduate') && G.age >= 35 && !G.mem?.recoveryGraduatePayoff,
-    text: 'You are asked to speak to a group of people at the beginning of a program. You stand in a room that looks exactly like the room where you started. You say true things in the specific way that only someone who has been through it can. Three people cry. You can see on one face the exact thing you felt the first time you heard someone say what you are now saying.',
+    text: 'You are asked to speak to a group of people at the beginning of a program. You stand in a room that looks exactly like the room where you started. You say true things in the way that only someone who has been through it can. Three people cry. You can see on one face the exact thing you felt the first time you heard someone say what you are now saying.',
     choices: null,
     effect: (p) => { p.m += 14; p.s += 5; p.karma += 10; p.addFlag('helped_others_recover'); p.setMem('recoveryGraduatePayoff', true) },
   },

@@ -46,7 +46,7 @@ export const FOLLOWTHROUGH_50_EVENTS = [
       G.currentYear - G.mem.emigratedYear <= 12 &&
       !G.mem?.ft50Emigrated10yr,
     text: () => pick([
-      `Ten years. You have lived here for ten years, which is longer than you lived in several of the places you lived before leaving. The country you came from is now a country you visit. The country you live in is not quite the country you belong to — the passport says one thing, the accent or the name or the face says something the passport doesn't cover. Ten years produces a specific kind of person: the person who carries two complete sets of reference, and who can never fully assume the other person's experience because they know both sets too well.`,
+      `Ten years. You have lived here for ten years, which is longer than you lived in several of the places you lived before leaving. The country you came from is now a country you visit. The country you live in is not quite the country you belong to — the passport says one thing, the accent or the name or the face says something the passport doesn't cover. Ten years produces a kind of person: the person who carries two complete sets of reference, and who can never fully assume the other person's experience because they know both sets too well.`,
       `A decade. When you left, you were one age and one set of circumstances. You are now a different age and different circumstances, and the decade happened here rather than there. The specific question — what would have been different if you had stayed — has fewer variables now, because you have seen what the place you came from has become in the decade you were absent. The comparison is not simple in either direction.`,
     ]),
     choices: null,
@@ -86,7 +86,7 @@ export const FOLLOWTHROUGH_50_EVENTS = [
       G.currentYear - G.mem.divorcedYear <= 7 &&
       !G.mem?.ft50Divorce5yr,
     text: () => pick([
-      `Five years since the divorce. The specific texture of it — the particular arguments, the specific silences, the way certain ordinary moments felt in the last year of it — has faded into a general shape: a period when things were wrong in a specific way, followed by the period of adjustment, followed by now. The person you were married to occupies less of your daily thought than they did at two years. The question of whether the marriage was a failure or a completed thing depends on the day.`,
+      `Five years since the divorce. The texture of it — the particular arguments, the specific silences, the way certain ordinary moments felt in the last year of it — has faded into a general shape: a period when things were wrong in a way, followed by the period of adjustment, followed by now. The person you were married to occupies less of your daily thought than they did at two years. The question of whether the marriage was a failure or a completed thing depends on the day.`,
       `Five years. The marriage is far enough back that the children, if there are children, have adjusted to whatever arrangement came out of it. The life that emerged from the ending is the life you have now, with its own texture — different from the life inside the marriage and from the life you had before it. The comparison is not always useful but it arrives anyway.`,
     ]),
     choices: null,
@@ -126,7 +126,7 @@ export const FOLLOWTHROUGH_50_EVENTS = [
       G.currentYear - G.mem.widowedYear <= 5 &&
       !G.mem?.ft50Widowed3yr,
     text: () => pick([
-      `Three years. The grief counsellors say the first year, then the second, and then — they don't quite say what happens after that. What happens is: the grief does not end but it changes character. It becomes less the constant presence and more the thing that arrives in specific moments with specific triggers. A smell. A piece of music. The specific way the light falls at a certain hour that used to be shared. Three years produces a life that includes the absence as a permanent feature rather than a recent wound.`,
+      `Three years. The grief counsellors say the first year, then the second, and then — they don't quite say what happens after that. What happens is: the grief does not end but it changes character. It becomes less the constant presence and more the thing that arrives in specific moments with specific triggers. A smell. A piece of music. The way the light falls at a certain hour that used to be shared. Three years produces a life that includes the absence as a permanent feature rather than a recent wound.`,
       `Three years since the death. The house or the flat has adjusted to being a single person's house — the routines are yours only, the preferences uncompromised, the space arranged for one without being arranged for one. The adjustment is complete in practical terms. In other terms, less so. The practical adjustment and the other adjustment are not on the same timetable.`,
     ]),
     choices: null,
@@ -146,7 +146,7 @@ export const FOLLOWTHROUGH_50_EVENTS = [
       G.currentYear - G.mem.widowedYear <= 13 &&
       !G.mem?.ft50Widowed10yr,
     text: () => pick([
-      `Ten years. The person has been gone longer than some friendships last. The specific things you remember — the exact voice, the particular laugh, the way they slept — are still available, but you notice they require more effort to access than they did at two years. Memory is not an archive. It is a living thing that decays selectively, keeping the texture of a person while losing the precision. You have ten years of memories of the absence alongside the memories of the presence.`,
+      `Ten years. The person has been gone longer than some friendships last. The things you remember — the exact voice, the particular laugh, the way they slept — are still available, but you notice they require more effort to access than they did at two years. Memory is not an archive. It is a living thing that decays selectively, keeping the texture of a person while losing the precision. You have ten years of memories of the absence alongside the memories of the presence.`,
       `A decade. You have organized a life around the absence, which is different from a life organized around a presence. The life works. It has its own shape and its own pleasures and its own obligations. You are not defined by the loss, which is not the same as not having been shaped by it. The shaping happened. The life that came out of it is the life you have.`,
     ]),
     choices: null,
@@ -186,7 +186,7 @@ export const FOLLOWTHROUGH_50_EVENTS = [
       G.currentYear - G.mem.cancer_survivorYear <= 7 &&
       !G.mem?.ft50Cancer5yr,
     text: () => pick([
-      `Five years. In oncology five years is the threshold — the point at which the recurrence risk drops enough that "survivor" is the correct term rather than "in remission." The threshold is statistical, which means it is true for a population and uncertain for a person. Five years is a specific relief and also a specific new relationship with uncertainty: the surveillance that was every three months becomes every year, and the every-year appointment is not nothing.`,
+      `Five years. In oncology five years is the threshold — the point at which the recurrence risk drops enough that "survivor" is the correct term rather than "in remission." The threshold is statistical, which means it is true for a population and uncertain for a person. Five years is a relief and also a specific new relationship with uncertainty: the surveillance that was every three months becomes every year, and the every-year appointment is not nothing.`,
       `Five-year clear. The body that went through treatment is the body you still have, which was changed by the treatment in ways that didn't fully reverse. The hair came back. The energy mostly came back. The specific relationship with your body — the knowledge of what it is capable of producing without permission — is a permanent addition to the knowledge you have. You cannot unknow what you know about it. Some days this is useful. Some days it isn't.`,
     ]),
     choices: null,
@@ -206,7 +206,7 @@ export const FOLLOWTHROUGH_50_EVENTS = [
       G.currentYear - G.mem.cancer_survivorYear <= 13 &&
       !G.mem?.ft50Cancer10yr,
     text: () => pick([
-      `Ten years. A decade since the treatment ended. The appointments are annual now and each one passes and you leave and then a day later you stop carrying the specific weight of waiting for results. The cancer is in the history now, not the present. It is still in the history. The decade that followed it was lived in the knowledge of what the decade before it contained. That knowledge did not prevent the living. It changed the register of the living.`,
+      `Ten years. A decade since the treatment ended. The appointments are annual now and each one passes and you leave and then a day later you stop carrying the weight of waiting for results. The cancer is in the history now, not the present. It is still in the history. The decade that followed it was lived in the knowledge of what the decade before it contained. That knowledge did not prevent the living. It changed the register of the living.`,
       `Ten years out. The people who were in treatment at the same time — the ones from the waiting room, the ones in the support group — some of them are here and some of them are not, and the particular arithmetic of that is not something you can stop noticing, even though you know the arithmetic is not about you. Ten years is the full distance of one completed chapter. You are in another chapter now. It does not start clean.`,
     ]),
     choices: null,
@@ -265,7 +265,7 @@ export const FOLLOWTHROUGH_50_EVENTS = [
       G.age >= 38 && G.age <= 50 &&
       !G.mem?.ft50BoardingReckoning,
     text: () => pick([
-      `The boarding school years: you are old enough now to see what they did and didn't do. The independence they produced, which is real. The specific way they taught you to manage without the people who were supposed to manage it, which is both real and not entirely healthy in ways you are still locating. The friends made in the specific intimacy of that institution, who know a version of you that the people in your adult life have not seen. The gap between the version and the current one is the gap of three decades.`,
+      `The boarding school years: you are old enough now to see what they did and didn't do. The independence they produced, which is real. The way they taught you to manage without the people who were supposed to manage it, which is both real and not entirely healthy in ways you are still locating. The friends made in the intimacy of that institution, who know a version of you that the people in your adult life have not seen. The gap between the version and the current one is the gap of three decades.`,
       `You were sent away at an age when you were not old enough to choose it. The sending had reasons: educational, financial, practical. You have sorted through the reasons for years. What you have reached is not resolution but a specific account: this is what the years away did, this is what it cost, this is what it gave, and the two lists don't cancel each other out.`,
     ]),
     choices: null,
@@ -286,7 +286,7 @@ export const FOLLOWTHROUGH_50_EVENTS = [
       G.age >= 35 &&
       !G.mem?.ft50FirstLoveTwenty,
     text: () => pick([
-      `Twenty years since the first love ended. The person exists somewhere — you know this without knowing where — and is living a life you cannot imagine with any specificity because the twenty years you don't share have made them someone you never knew. The version you knew was complete at the time. It is also not who they are now. You know this and it doesn't help with the specific quality of the memory, which is complete and young and not updated.`,
+      `Twenty years since the first love ended. The person exists somewhere — you know this without knowing where — and is living a life you cannot imagine with any specificity because the twenty years you don't share have made them someone you never knew. The version you knew was complete at the time. It is also not who they are now. You know this and it doesn't help with the quality of the memory, which is complete and young and not updated.`,
       `Twenty years. The first love is in the category of things that were once very large and are now very specific: a precise set of memories from a precise window of time, without the updating that ordinary relationships receive. You carry a version of that person that is twenty years old, which means the person you carry is no longer the person who exists. You are the only person who still carries this version. They have moved on from it in the obvious sense, which is that they lived past it.`,
     ]),
     choices: null,

@@ -248,7 +248,7 @@ export const SOCIAL_MEDIA_EVENTS = [
       const yr = G.currentYear ?? 2019
       const platform = getPlatform(G) ?? 'the platform'
       if (yr >= 2020) {
-        return `The pandemic-era usage made something visible that was previously deniable: the relationship with ${platform} is not neutral. The hours, the way political content now seems designed to produce a specific kind of agitation, the specific effect on your mood at the end of a session. You are deciding whether to keep paying this price.`
+        return `The pandemic-era usage made something visible that was previously deniable: the relationship with ${platform} is not neutral. The hours, the way political content now seems designed to produce a kind of agitation, the specific effect on your mood at the end of a session. You are deciding whether to keep paying this price.`
       }
       return `After years on ${platform}, the costs are clearer than they were at the start: the attention captured, the comparison that is structurally engineered, the version of the world the feed is optimised to show you. You are aware of what it is now. The awareness creates a decision.`
     },

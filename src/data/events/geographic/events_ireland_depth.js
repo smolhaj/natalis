@@ -168,7 +168,7 @@ export const IRELAND_DEPTH_EVENTS = [
 
   {
     id: 'ire_repeal_eighth',
-    phase: 'midlife',
+    phase: null,
     weight: 4,
     when: (G) =>
       IS_IRISH(G) &&
@@ -176,7 +176,8 @@ export const IRELAND_DEPTH_EVENTS = [
       G.currentYear >= 2018 &&
       G.age >= 22 &&
       !G.mem?.ireRepealEighth,
-    text: 'May 25, 2018. The Eighth Amendment — which gave equal right to life to the unborn and the pregnant woman, and which meant abortion was illegal in virtually all circumstances — is repealed by referendum. 66.4 percent in favour. The campaign was four years of photographs and testimonies: the women who went to England (twelve a day, every day, for thirty-five years), the women who ordered pills online, the women who died of conditions that could not be medically managed because of the legal risk to the clinical team. Savita Halappanavar\'s photograph above the polling stations. The words *her body her choice* on the jumpers of the canvassers in the rain. The count. The percentage. The minister for health crying at the microphone. The enormous ordinariness of being, finally, in a country that trusts women with their own bodies.',
+    text: 'The count comes in on the Saturday and it is two to one, and it is two to one in nearly every constituency, including the ones nobody had counted on. Somebody has taped a photograph of a young woman above the door of the polling station and people touch it on the way in. Your mother, who has never once discussed any of this, says a single sentence in the kitchen about a girl she knew at school in 1979. Then she fills the kettle and says nothing else.',
+    context: 'The Eighth Amendment, adopted in 1983, gave the unborn an equal right to life with the pregnant woman and made abortion illegal in almost all circumstances. It was repealed by referendum on 25 May 2018 with 66.4 percent in favour. Roughly nine women a day travelled from Ireland to Britain for terminations across the intervening thirty-five years. Savita Halappanavar died of sepsis in Galway in 2012 after being refused a termination, and her photograph became the campaign\'s central image.',
     choices: null,
     effect: (p) => { p.m += 9; p.karma += 6; p.r += 3; p.addFlag('ire_repeal_generation'); p.setMem('ireRepealEighth', true) },
   },

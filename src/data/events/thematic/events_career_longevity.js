@@ -3,7 +3,7 @@
 // What it feels like after 15–25 years in a field. Not the early arc
 // (events_career_arcs.js) or specific professions (doctor_arc, etc.) but the
 // universal texture of sustained expertise: the change in register, the cost of
-// mastery, the moment the field changes around you, the specific grief of
+// mastery, the moment the field changes around you, the grief of
 // a skill made obsolete. For anyone who has been doing the same thing
 // for long enough to have an opinion about how it has changed.
 
@@ -138,7 +138,7 @@ export const CAREER_LONGEVITY_EVENTS = [
       G.career &&
       G.age >= 42 && G.age <= 55 &&
       !G.mem?.clStayingQuestion,
-    text: `The question comes around every few years and this time it is more serious than the others: do you stay in this field. Not because you are doing badly — you are doing well. Not because another field has called — nothing specific has. But the body of work you have produced is large enough to see, and what you see is a specific thing you have been building, and you are not sure the thing you have been building is the thing you wanted to build. The question is structural. The answer will have consequences.`,
+    text: `The question comes around every few years and this time it is more serious than the others: do you stay in this field. Not because you are doing badly — you are doing well. Not because another field has called — nothing specific has. But the body of work you have produced is large enough to see, and what you see is a thing you have been building, and you are not sure the thing you have been building is the thing you wanted to build. The question is structural. The answer will have consequences.`,
     choices: [
       {
         text: 'You stay. The work is yours. The years in it are not transferable.',

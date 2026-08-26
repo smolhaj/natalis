@@ -110,7 +110,8 @@ export const UZBEKISTAN_EVENTS = [
       G.currentYear >= 2005 && G.currentYear <= 2007 &&
       G.age >= 18 &&
       !G.mem?.uzbAndijan,
-    text: 'On May 13, 2005, in Andijan: soldiers open fire on protesters in the square. The government says Islamic terrorists stormed an armory; witnesses describe a crowd of traders, families, people who had come out to see what was happening. The official death toll is 187. Uzbek human rights organisations count between 500 and 750. The city is sealed. Journalists are expelled. The European Union issues a statement. Karimov expels the US military from Karshi-Khanabad. Russia and China support the government\'s account. Within weeks, the story is off the front pages elsewhere. Inside Uzbekistan, the story was never on the front pages. You know what you know from sources you do not name.',
+    text: 'On the thirteenth of May the square in Andijan is full of traders and families who came out to see what the noise was, and then the soldiers fire into it. The government counts a hundred and eighty-seven and says they were terrorists. The road in is closed for a week and the journalists are put on planes. Nobody at your workplace mentions the name of the city. What you know, you know from a man who was there, and you do not say his name either.',
+    context: 'Uzbek troops opened fire on a crowd in Andijan on 13 May 2005 after an armed group stormed a prison. The official death toll was 187; Uzbek human rights organisations counted between 500 and 750. The city was sealed and foreign journalists expelled. President Karimov evicted the United States from the Karshi-Khanabad airbase after Western criticism; Russia and China endorsed the government\'s account.',
     choices: null,
     effect: (p) => { p.r += 9; p.m -= 6; p.e += 3; p.addFlag('uzb_andijan_witness'); p.setMem('uzbAndijan', true) },
   },

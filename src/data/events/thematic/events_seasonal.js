@@ -174,7 +174,7 @@ export const SEASONAL_EVENTS = [
       ['developing_urban', 'developing_unstable', 'subsaharan', 'wealthy_gulf'].includes(G.character.country?.archetype) &&
       G.age >= 18 && G.age <= 40 &&
       !G.mem?.seaRamadan,
-    text: 'Ramadan. The days are long this year — the heat has arrived early. By afternoon the city has a particular quiet. Iftar: the moment when the fast breaks, the specific relief of it, the dates and water first. The meals are bigger than usual and eaten with people. The month has a texture that the rest of the year doesn\'t have.',
+    text: 'Ramadan. The days are long this year — the heat has arrived early. By afternoon the city has a particular quiet. Iftar: the moment when the fast breaks, the relief of it, the dates and water first. The meals are bigger than usual and eaten with people. The month has a texture that the rest of the year doesn\'t have.',
     choices: null,
     effect: (p) => { p.m += 6; p.karma += 5; p.setMem('seaRamadan', true) },
   },

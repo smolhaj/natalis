@@ -48,7 +48,7 @@ export const FOLLOWTHROUGH_40_EVENTS = [
       G.currentYear >= 1990 &&
       G.age >= 50 &&
       !G.mem?.ft40SpringLate,
-    text: 'The people who were young in 1968 carry a specific kind of wound: they know what it felt like to have hope at that scale, that texture, that temperature — and then to watch it end in one night. The Velvet Revolution of 1989 was also extraordinary, but it was a different kind of extraordinary. The Spring was something the country generated from inside itself, against all probability. The twenty-one days of November 1989 were extraordinary partly because of what had been taught by August 1968 — the knowledge that this time the Soviet troops did not come, could not come, and so what the crowd had was its own weight, which was enough. You have thought about the relationship between these two Novembers and one August for most of your adult life.',
+    text: 'The people who were young in 1968 carry a kind of wound: they know what it felt like to have hope at that scale, that texture, that temperature — and then to watch it end in one night. The Velvet Revolution of 1989 was also extraordinary, but it was a different kind of extraordinary. The Spring was something the country generated from inside itself, against all probability. The twenty-one days of November 1989 were extraordinary partly because of what had been taught by August 1968 — the knowledge that this time the Soviet troops did not come, could not come, and so what the crowd had was its own weight, which was enough. You have thought about the relationship between these two Novembers and one August for most of your adult life.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 3; p.m += 4; p.setMem('ft40SpringLate', true) },
   },

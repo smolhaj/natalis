@@ -55,7 +55,7 @@ export const MULTILINGUAL_EVENTS = [
     phase: null,
     weight: 3,
     when: (G) => G.flags.has('emigrated') && G.stats.smarts >= 55 && G.age >= 22 && G.age <= 35 && !G.mem.mulLinguaFranca,
-    text: 'A conference. A colleague from Nigeria — better educated, more experienced, three published papers to your one — struggles in the Q&A. His English is strong but not native-speaker strong, and the questioner is moving fast. Your English is native. You answer for him without thinking, which he doesn\'t want, and then watch him navigate the room for the next three hours with the specific competence of someone doing twice the work to get half the credit. You had not noticed, before today, what you had been given for free.',
+    text: 'A conference. A colleague from Nigeria — better educated, more experienced, three published papers to your one — struggles in the Q&A. His English is strong but not native-speaker strong, and the questioner is moving fast. Your English is native. You answer for him without thinking, which he doesn\'t want, and then watch him navigate the room for the next three hours with the competence of someone doing twice the work to get half the credit. You had not noticed, before today, what you had been given for free.',
     effect: (p) => { p.e += 3; p.karma += 5; p.addFlag('privilege_visible'); p.setMem('mulLinguaFranca', true) },
   },
 
@@ -66,7 +66,7 @@ export const MULTILINGUAL_EVENTS = [
     phase: 'young_adult',
     weight: 3,
     when: (G) => (G.flags.has('kurd_identity_suppressed') || G.flags.has('amazigh_identity') || G.flags.has('suppressed_language')) && G.age >= 18 && G.age <= 32 && !G.mem.mulMotherTonguePol,
-    text: 'You publish something in the language. Not secretly — publicly. It is the first time you have seen something in the language in print that was not a government-approved folklore booklet or a foreign linguist\'s field notes. It has the specific weight of something ordinary that is not ordinary: a sentence in your grandmother\'s language, treated as if it belongs in the world.',
+    text: 'You publish something in the language. Not secretly — publicly. It is the first time you have seen something in the language in print that was not a government-approved folklore booklet or a foreign linguist\'s field notes. It has the weight of something ordinary that is not ordinary: a sentence in your grandmother\'s language, treated as if it belongs in the world.',
     choices: [
       {
         text: 'Keep writing. The act is the point.',

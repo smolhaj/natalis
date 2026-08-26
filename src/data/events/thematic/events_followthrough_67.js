@@ -104,7 +104,7 @@ export const FOLLOWTHROUGH_67_EVENTS = [
       G.ruralUrban === 'urban' &&
       G.age >= 22 &&
       !G.mem?.ft67HaciendaCity,
-    text: 'In the city you are nobody\'s sacada. This is what you came for. The landlord relationship — the specific texture of being known as someone who works someone else\'s land — does not follow you to Manila or Cebu. What follows you is the work ethic the cane taught, and the specific anger of someone who learned young what inequality looks like when it has a face and a surname and a family that has been there since the Spanish period.',
+    text: 'In the city you are nobody\'s sacada. This is what you came for. The landlord relationship — the texture of being known as someone who works someone else\'s land — does not follow you to Manila or Cebu. What follows you is the work ethic the cane taught, and the specific anger of someone who learned young what inequality looks like when it has a face and a surname and a family that has been there since the Spanish period.',
     choices: null,
     effect: (p) => {
       p.r += 3
@@ -123,7 +123,7 @@ export const FOLLOWTHROUGH_67_EVENTS = [
       G.flags.has('ph_ofw_departed') &&
       G.age >= 35 &&
       !G.mem?.ft67OFWReturn,
-    text: 'The contract ended, or another contract began, or you finally came home. The house that the remittances built is a specific thing: the tiled floor, the television, the repaired roof. Your mother points at things you paid for without announcing that you paid for them. The things are the announcement. You look at the house and calculate: the two years of Gulf or Hong Kong salary, the exact exchange rate, the kilo of rice it bought per month. The house does not look like that calculation. It looks like a house. This is what it was supposed to look like.',
+    text: 'The contract ended, or another contract began, or you finally came home. The house that the remittances built is a thing: the tiled floor, the television, the repaired roof. Your mother points at things you paid for without announcing that you paid for them. The things are the announcement. You look at the house and calculate: the two years of Gulf or Hong Kong salary, the exact exchange rate, the kilo of rice it bought per month. The house does not look like that calculation. It looks like a house. This is what it was supposed to look like.',
     choices: null,
     effect: (p) => {
       p.r += 4

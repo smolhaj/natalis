@@ -29,7 +29,7 @@ export const ADOPTEE_EVENTS = [
       {
         text: 'Repeat the city.',
         tag: 'repeated',
-        outcome: '"No, I mean originally." You hold eye contact and say nothing else. They move on. You note the specific exhaustion of this particular exchange.',
+        outcome: '"No, I mean originally." You hold eye contact and say nothing else. They move on. You note the exhaustion of this particular exchange.',
         effect: (p) => { p.m -= 3; p.karma += 3; p.setMem('adpTransracial', true) },
       },
     ],
@@ -62,7 +62,7 @@ export const ADOPTEE_EVENTS = [
     phase: null,
     weight: 2,
     when: (G) => G.flags.has('adopted') && G.age >= 30 && G.age <= 55 && !G.mem.adpOriginTrip,
-    text: 'You are in the country you were born in. You have been here three days. The landscape matches something you could not have remembered because you left before you could remember. Your adoptive parents are at home, which is where you are from. The people here share your face. You are a tourist in the place that is supposed to be an origin. The specific feeling has no single word in either language.',
+    text: 'You are in the country you were born in. You have been here three days. The landscape matches something you could not have remembered because you left before you could remember. Your adoptive parents are at home, which is where you are from. The people here share your face. You are a tourist in the place that is supposed to be an origin. The feeling has no single word in either language.',
     effect: (p) => { p.m -= 3; p.e += 3; p.addFlag('origin_country_visited'); p.setMem('adpOriginTrip', true) },
   },
 

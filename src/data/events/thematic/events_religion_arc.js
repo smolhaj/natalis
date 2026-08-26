@@ -137,7 +137,7 @@ export const RELIGION_ARC_EVENTS = [
     phase: null,
     weight: 4,
     when: (G) => G.age >= 14 && G.age <= 22 && !G.flags.includes('left_religion') && !G.flags.includes('lost_faith') && !G.mem?.first_doubt,
-    text: 'The question arrives and it is not rhetorical. If God exists and is good, then why did this particular thing happen — the specific thing, the one that happened last month, that everyone who knows you knows about. The answer your faith gives you does not fit. You sit with the gap.',
+    text: 'The question arrives and it is not rhetorical. If God exists and is good, then why did this particular thing happen — the thing, the one that happened last month, that everyone who knows you knows about. The answer your faith gives you does not fit. You sit with the gap.',
     choices: [
       { text: 'Stay in the question — doubt is part of it', tag: null, outcome: 'You do not find an answer. You find that living with the question is different from having an answer and not necessarily worse.', effect: (p) => { p.e += 6; p.r += 5; p.addFlag('faith_crisis'); p.setMem('first_doubt', true) } },
       { text: 'Resolve it back toward faith — lean harder into belief', tag: 'devout', outcome: 'You decide the gap is not a disproof. Certainty is not the thing. You stay.', effect: (p) => { p.m += 3; p.addFlag('devout'); p.setMem('first_doubt', true) } },

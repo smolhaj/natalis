@@ -462,7 +462,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('nga_june12_generation') &&
       G.age >= 50 &&
       !G.mem?.ft30NgaJune12,
-    text: 'June 12, 1993. MKO Abiola won. The military annulled it. You remember the specific feeling of that — not just disappointment but the confirmation of something about the relationship between the ballot and the men with guns. Abiola died in detention in 1998. Buhari declared June 12 Democracy Day in 2018 and named Abiola a posthumous hero. The declaration was both correct and twenty-five years late. You have been measuring by that distance for a long time.',
+    text: 'June 12, 1993. MKO Abiola won. The military annulled it. You remember the feeling of that — not just disappointment but the confirmation of something about the relationship between the ballot and the men with guns. Abiola died in detention in 1998. Buhari declared June 12 Democracy Day in 2018 and named Abiola a posthumous hero. The declaration was both correct and twenty-five years late. You have been measuring by that distance for a long time.',
     choices: null,
     effect: (p) => { p.r += 8; p.e += 4; p.m -= 3; p.setMem('ft30NgaJune12', true) },
   },
@@ -702,7 +702,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('head_tax_generation') &&
       G.age >= 50 &&
       !G.mem?.ft30HeadTax,
-    text: 'The head tax was $500 — a year\'s salary for a labourer in 1903. Your family paid it or knew people who paid it or carried the knowledge of it as a specific weight in the history of belonging here. Stephen Harper\'s apology came in 2006. The surviving head tax payers received $20,000 each; there were about two dozen left. The apology was the right thing to do. The calculation of what was paid and what was returned is a different kind of arithmetic.',
+    text: 'The head tax was $500 — a year\'s salary for a labourer in 1903. Your family paid it or knew people who paid it or carried the knowledge of it as a weight in the history of belonging here. Stephen Harper\'s apology came in 2006. The surviving head tax payers received $20,000 each; there were about two dozen left. The apology was the right thing to do. The calculation of what was paid and what was returned is a different kind of arithmetic.',
     choices: null,
     effect: (p) => { p.r += 7; p.e += 4; p.setMem('ft30HeadTax', true) },
   },
@@ -717,7 +717,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('white_australia_generation') &&
       G.age >= 55 &&
       !G.mem?.ft30WhiteAus,
-    text: 'The White Australia Policy operated from 1901 until Gough Whitlam formally abolished the last of its instruments in 1973. You lived inside the country that had it or at its edges. The dictation test: you could be failed in any language the officer chose. The preference for northern European immigrants. The specific vocabulary of belonging that the policy created. Australia is a different country now — more Asian, more diverse, more itself. What it was during the policy is still in the architecture if you know how to read it.',
+    text: 'The White Australia Policy operated from 1901 until Gough Whitlam formally abolished the last of its instruments in 1973. You lived inside the country that had it or at its edges. The dictation test: you could be failed in any language the officer chose. The preference for northern European immigrants. The vocabulary of belonging that the policy created. Australia is a different country now — more Asian, more diverse, more itself. What it was during the policy is still in the architecture if you know how to read it.',
     choices: null,
     effect: (p) => { p.r += 7; p.e += 4; p.setMem('ft30WhiteAus', true) },
   },
@@ -822,7 +822,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('nga_sharia_transition') &&
       G.age >= 45 &&
       !G.mem?.ft30NgaSharia,
-    text: 'Twelve northern states adopted sharia criminal law between 1999 and 2000. Zamfara was first. The adoption happened in the specific context of civilian rule returning — sharia was both genuinely demanded and politically performed. The years since have produced the specific texture of living in a society where the law is one thing and the practice is another, where the moral economy of the community and the formal legal code coexist in ways that are sometimes harmonious and sometimes not. You know what the coexistence looks like from the inside.',
+    text: 'Twelve northern states adopted sharia criminal law between 1999 and 2000. Zamfara was first. The adoption happened in the specific context of civilian rule returning — sharia was both genuinely demanded and politically performed. The years since have produced the texture of living in a society where the law is one thing and the practice is another, where the moral economy of the community and the formal legal code coexist in ways that are sometimes harmonious and sometimes not. You know what the coexistence looks like from the inside.',
     choices: null,
     effect: (p) => { p.r += 7; p.e += 4; p.setMem('ft30NgaSharia', true) },
   },
@@ -963,7 +963,7 @@ export const FOLLOWTHROUGH_30_EVENTS = [
       G.flags.has('tur_refugee_host_generation') &&
       G.age >= 32 &&
       !G.mem?.ft30SyrianNeighbour,
-    text: 'Three million, then four million. The specific texture of it: the Syrian family in the apartment below, the children who spoke a rapid Arabic that you couldn\'t follow, the restaurants that appeared in the neighbourhood with menus in both scripts. The economy of the hosting — the cheap labour, the landlords who preferred Syrian tenants because they were more desperate, the Turkish workers who could not compete with wages that desperation sets. And the political texture: the ruling party that had let them in, the opposition party that said send them back, the polls that showed most Turks wanted them gone.',
+    text: 'Three million, then four million. The texture of it: the Syrian family in the apartment below, the children who spoke a rapid Arabic that you couldn\'t follow, the restaurants that appeared in the neighbourhood with menus in both scripts. The economy of the hosting — the cheap labour, the landlords who preferred Syrian tenants because they were more desperate, the Turkish workers who could not compete with wages that desperation sets. And the political texture: the ruling party that had let them in, the opposition party that said send them back, the polls that showed most Turks wanted them gone.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 4; p.m -= 3; p.setMem('ft30SyrianNeighbour', true) },
   },

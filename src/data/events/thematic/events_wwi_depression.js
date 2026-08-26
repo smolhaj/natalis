@@ -99,7 +99,7 @@ const WWI_EVENTS = [
       G.flags.has('ww1_survived') &&
       G.currentYear >= 1918 && G.currentYear <= 1921 &&
       !G.mem?.ww1ReturnFired,
-    text: 'Home is the word you have been using for four years to describe the place you are going back to. The place is the same place. You are different. The family treats you carefully, which is a form of love and also a form of distance — they do not know what you saw and you are not able to make them understand and you are also not sure you want to. The village has lost fourteen men. You are one of the ones who came back. The ones who came back carry a specific weight that the ones who didn\'t come back do not.',
+    text: 'Home is the word you have been using for four years to describe the place you are going back to. The place is the same place. You are different. The family treats you carefully, which is a form of love and also a form of distance — they do not know what you saw and you are not able to make them understand and you are also not sure you want to. The village has lost fourteen men. You are one of the ones who came back. The ones who came back carry a weight that the ones who didn\'t come back do not.',
     choices: null,
     effect: (p) => { p.m += 3; p.r += 6; p.addFlag('ww1_veteran'); p.setMem('ww1ReturnFired', true) },
   },
@@ -194,7 +194,7 @@ const DEPRESSION_EVENTS = [
       G.flags.has('depression_era') &&
       G.currentYear >= 1935 && G.currentYear <= 1942 &&
       !G.mem?.depRecovFired,
-    text: 'Work comes back. Slowly, and then more quickly after 1939 when the factories are running again for different reasons. The decade has produced a specific way of being in the world — saving everything, distrusting security, keeping a kitchen garden long after the garden is no longer necessary, never quite believing that the good period will last. You carry this for the rest of your life. Your children will find it puzzling and then understand it when they are older.',
+    text: 'Work comes back. Slowly, and then more quickly after 1939 when the factories are running again for different reasons. The decade has produced a way of being in the world — saving everything, distrusting security, keeping a kitchen garden long after the garden is no longer necessary, never quite believing that the good period will last. You carry this for the rest of your life. Your children will find it puzzling and then understand it when they are older.',
     choices: null,
     effect: (p) => { p.mo += 500; p.m += 5; p.addFlag('depression_survivor'); p.setMem('depRecovFired', true) },
   },

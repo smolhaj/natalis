@@ -567,7 +567,7 @@ export const INDIGENOUS_EVENTS = [
         return 'The language came back, partially. Enough to speak to your grandchildren in — a sentence here, the names of things, the specific word for the weather that Northern Sami has and Norwegian does not. It did not come back the way it was. It came back the way things come back: changed by the years it was gone, arriving as a living thing that has been through something rather than the preserved thing you thought you were recovering.'
       }
       if (G.flags.has('sami_boarding_survivor')) {
-        return 'What the boarding school took from you can be calculated and the calculation is not short. The language is the most visible item on the list — the direct line to the grandmother, the naming systems for animals and weather and terrain that have no equivalent. But there are things on the list that are harder to name: the specific way of knowing a landscape that requires the right words, and the relationship to time that the Sami calendar encodes. You carry what you retained. You know what you did not retain.'
+        return 'What the boarding school took from you can be calculated and the calculation is not short. The language is the most visible item on the list — the direct line to the grandmother, the naming systems for animals and weather and terrain that have no equivalent. But there are things on the list that are harder to name: the way of knowing a landscape that requires the right words, and the relationship to time that the Sami calendar encodes. You carry what you retained. You know what you did not retain.'
       }
       return 'You are what you are, in the way the twentieth century made it possible and impossible to be. The Parliament exists now. The language has legal status. Your grandchildren are learning it in school, imperfectly but in school. What the century did cannot be undone by these things. What the century did also did not end here — it ended differently than it began.'
     },
@@ -639,7 +639,7 @@ export const INDIGENOUS_EVENTS = [
       G.age >= 16 && G.age <= 40 &&
       G.currentYear >= 1975 &&
       !G.mem?.amazonSmoke,
-    text: 'The smoke has been on the horizon every dry season for years now, but this year it is different — closer, and accompanied by the specific sound of chainsaw machinery that carries further than you expected. The farmers and cattle ranchers move in after the loggers clear. The forest that has been there since before your grandmother\'s grandmother becomes pasture in one dry season. The word for what is happening — desmatamento, deforestación, deforestation — is a word from outside the forest, which already tells you something.',
+    text: 'The smoke has been on the horizon every dry season for years now, but this year it is different — closer, and accompanied by the sound of chainsaw machinery that carries further than you expected. The farmers and cattle ranchers move in after the loggers clear. The forest that has been there since before your grandmother\'s grandmother becomes pasture in one dry season. The word for what is happening — desmatamento, deforestación, deforestation — is a word from outside the forest, which already tells you something.',
     choices: null,
     effect: (p) => { p.m -= 10; p.h -= 4; p.addFlag('amazon_deforestation_witness'); p.setMem('amazonSmoke', true); },
   },

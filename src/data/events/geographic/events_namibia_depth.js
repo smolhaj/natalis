@@ -75,7 +75,8 @@ export const NAMIBIA_DEPTH_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 1989 &&
       G.age >= 18 && G.age <= 25 &&
       !G.flags.has('nam_border_war_generation'),
-    text: 'The SADF conscripts you at eighteen. The Border War: Operation Savannah, Operation Protea, the counterinsurgency operations in the Caprivi and north of the Cutline. The enemy in the bush is SWAPO, which is also an abbreviation for the people who live in this country alongside you and went north rather than wait. The military says what you are doing. The military does not say what the people you are fighting are doing and why. You are nineteen. The bush at night. The specific discomfort of a position you were put in before you were old enough to have an opinion about it. Some of the men you serve with understand what they are defending. Some have not been asked to think about it. You are among both types, in foxholes in the dark.',
+    text: 'They call you up at eighteen and you are north of the Cutline before the year turns. The bush at night has a sound you learn to sort into three kinds: wind, animal, man. The briefing says SWAPO and does not mention that SWAPO is also the surname of a boy who worked on your father\'s farm and went north instead of waiting. Some of the men in the trench have thought about this and some have been careful not to. You are nineteen and you are both.',
+    context: 'South Africa administered South West Africa and conscripted its white male residents into the SADF. The Border War (1966-1989) was fought against SWAPO\'s People\'s Liberation Army of Namibia across the north of the territory and into southern Angola, including Operation Savannah in 1975 and Operation Protea in 1981. Namibia became independent in 1990 with SWAPO as its governing party.',
     choices: null,
     effect: (p) => { p.m -= 7; p.r += 6; p.e += 2; p.addFlag('nam_border_war_generation') },
   },

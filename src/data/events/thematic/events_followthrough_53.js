@@ -146,7 +146,7 @@ export const FOLLOWTHROUGH_53_EVENTS = [
       G.desire === 'connection' &&
       G.age >= 62 &&
       !G.mem?.ft53ConnectionLate,
-    text: `You have always needed to be close to people — not just near them, but actually in contact, actually landing, the specific experience of being with someone where the barrier is down. The life has offered this sometimes and withheld it other times and the periods of withholding were the difficult ones. At this age you are clear about what the connection requires: attention, and willingness, and time. The time is shorter than it was. The attention is more deliberate. The connections you have are chosen.`,
+    text: `You have always needed to be close to people — not just near them, but actually in contact, actually landing, the experience of being with someone where the barrier is down. The life has offered this sometimes and withheld it other times and the periods of withholding were the difficult ones. At this age you are clear about what the connection requires: attention, and willingness, and time. The time is shorter than it was. The attention is more deliberate. The connections you have are chosen.`,
     choices: [
       {
         text: 'The connections you have are the ones that mattered enough to maintain. They are yours.',

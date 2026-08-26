@@ -96,7 +96,7 @@ export const FOLLOWTHROUGH_38_EVENTS = [
       G.currentYear >= 2022 &&
       G.age >= 45 &&
       !G.mem?.ft38ExileLate,
-    text: 'You are in Costa Rica or Miami or Madrid or some city that is not Managua, and Nicaragua has cancelled your citizenship and taken your property and you have been legally made a person without a country. There are communities of you now — the Nicaragüenses sin patria, the Nicaraguans without a fatherland. You gather with people who left in April 2018 and people who left when the writers\' groups were shut down and people who left in 2021 when the candidates were jailed. The thing you share is not ideology but the specific experience of a country turning away from you while you were watching. The question you do not answer out loud, but that lives in every gathering, is whether you will ever go back.',
+    text: 'You are in Costa Rica or Miami or Madrid or some city that is not Managua, and Nicaragua has cancelled your citizenship and taken your property and you have been legally made a person without a country. There are communities of you now — the Nicaragüenses sin patria, the Nicaraguans without a fatherland. You gather with people who left in April 2018 and people who left when the writers\' groups were shut down and people who left in 2021 when the candidates were jailed. The thing you share is not ideology but the experience of a country turning away from you while you were watching. The question you do not answer out loud, but that lives in every gathering, is whether you will ever go back.',
     choices: null,
     effect: (p) => { p.r += 9; p.m -= 5; p.karma += 4; p.setMem('ft38ExileLate', true) },
   },

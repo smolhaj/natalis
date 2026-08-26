@@ -79,7 +79,7 @@ export const FOLLOWTHROUGH_58_EVENTS = [
       G.currentYear >= 2014 && G.currentYear <= 2020 &&
       G.age >= 22 &&
       !G.mem?.ft58GeziAftermath,
-    text: `The park was saved for a while and then the redevelopment plans came back in a different form. The Taksim pedestrianisation removed the square's openness. The leaders of the various Gezi groups faced long trials — the Gezi trial ran for years. Osman Kavala, a civil society figure who was not a protest leader, was imprisoned and his case ran to the European Court of Human Rights and back. The coalition from the summer of 2013 — the one you thought might be something — turned out not to be something in the electoral sense. This is not a surprise exactly. It is still a specific kind of disappointment.`,
+    text: `The park was saved for a while and then the redevelopment plans came back in a different form. The Taksim pedestrianisation removed the square's openness. The leaders of the various Gezi groups faced long trials — the Gezi trial ran for years. Osman Kavala, a civil society figure who was not a protest leader, was imprisoned and his case ran to the European Court of Human Rights and back. The coalition from the summer of 2013 — the one you thought might be something — turned out not to be something in the electoral sense. This is not a surprise exactly. It is still a kind of disappointment.`,
     choices: null,
     effect: (p) => { p.m -= 6; p.r += 5; p.setMem('ft58GeziAftermath', true) },
   },
@@ -92,7 +92,7 @@ export const FOLLOWTHROUGH_58_EVENTS = [
       G.flags.has('trk_dep_gezi_generation') &&
       G.age >= 50 &&
       !G.mem?.ft58GeziLate,
-    text: `Looking back at the summer of 2013 from the distance of decades: what was real and what was not. What was real was the square, the people in it, the three weeks, the specific texture of that moment. What turned out not to be real was the idea that the moment would translate into something durable. You have kept the memory of the moment separately from what it failed to become. The moment itself was not nothing.`,
+    text: `Looking back at the summer of 2013 from the distance of decades: what was real and what was not. What was real was the square, the people in it, the three weeks, the texture of that moment. What turned out not to be real was the idea that the moment would translate into something durable. You have kept the memory of the moment separately from what it failed to become. The moment itself was not nothing.`,
     choices: null,
     effect: (p) => { p.r += 3; p.m += 3; p.setMem('ft58GeziLate', true) },
   },

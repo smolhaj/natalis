@@ -155,3 +155,59 @@ describe('historical demography', () => {
     expect(Object.keys(counts).length).toBeGreaterThan(120)
   }, 60000)
 })
+
+describe('persona coverage', () => {
+  // The vision sentence in CLAUDE.md: a player born in 1962 in Nigeria should
+  // come away understanding what that life was actually like. Before the
+  // register system, geographic events fired ~7 times per HUNDRED lives, and a
+  // US character born in 2005 could reach exactly one US-specific event in an
+  // entire life. This asserts that a life receives its own history.
+  const PERSONAS = [
+    ['Nigeria', 1962, 'female'],
+    ['South Korea', 1988, 'female'],
+    ['India', 1975, 'male'],
+    ['United States', 2005, 'female'],
+    ['Russia', 1950, 'male'],
+    ['Ireland', 1940, 'male'],
+  ]
+
+  for (const [country, birthYear, gender] of PERSONAS) {
+    it(`${country} ${birthYear} receives its own history`, () => {
+      const anchoredIds = new Set()
+      const ages = []
+      let anchored = 0, world = 0, lives = 0, reachedLateLife = 0
+      for (let i = 0; i < 16; i++) {
+        // A persona that cannot be created at all is a failure: Ireland 1940 was
+        // impossible before, because the country's birth floor started at 1950.
+        useGameStore.getState().startCuratedGame({ country, birthYear, gender })
+        let s = { ...useGameStore.getState(), mode: 'passive' }
+        lives++
+        const start = s.log.length
+        for (let y = 0; y < 105 && !s.dead; y++) {
+          s = tick(s)
+          const ev = s.pendingEvent
+          if (ev) {
+            if (ev.register === 'anchored') { anchored++; anchoredIds.add(ev.id) }
+            s = ev.isAutomatic ? resolveAutoEvent(s) : resolveChoice(s, 0)
+          }
+        }
+        world += s.log.slice(start).filter(l => l.isWorld).length
+        ages.push(s.age)
+        if (s.age >= 50) reachedLateLife++
+      }
+      console.log(`  ${country} ${birthYear}: anchored/life ${(anchored / lives).toFixed(1)}, world/life ${(world / lives).toFixed(1)}, distinct ${anchoredIds.size}, reached 50+ ${reachedLateLife}/${lives}, oldest ${Math.max(...ages)}`)
+      expect(anchored / lives, 'place/era-anchored events per life').toBeGreaterThan(3)
+      expect(world / lives, 'world events per life').toBeGreaterThan(3)
+      expect(anchoredIds.size, 'distinct anchored events across the cohort').toBeGreaterThan(15)
+      // A meaningful share of lives must reach late life, or the 1,370 late-life
+      // events and the second half of the educational arc are unreachable. The
+      // bound is deliberately loose: high-mortality cohorts SHOULD lose many
+      // lives young (Nigeria 1962 had ~30% under-5 mortality in reality, and
+      // Soviet male life expectancy was genuinely poor), so this is a guard
+      // against the original failure — where a 1962 Nigerian life had a median
+      // death age of 8 and no survivor past 33 — not a demand for longevity.
+      expect(reachedLateLife / lives, 'share reaching age 50').toBeGreaterThan(0.25)
+      expect(Math.max(...ages), 'oldest life in the cohort').toBeGreaterThan(64)
+    }, 300000)
+  }
+})

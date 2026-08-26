@@ -30,7 +30,7 @@ export const CHILDREN_ABROAD_EVENTS = [
     text: (G) => {
       const cn = G.character.country.name
       if (['Philippines', 'Indonesia', 'Sri Lanka', 'Bangladesh'].includes(cn)) {
-        return 'Your mother leaves for the Gulf on a Tuesday. The agency took her passport the week before for processing. You watched her pack from the doorway. When she is gone the house arranges itself around her absence — the specific way a family reorganises around a missing person while insisting, always, that she will be back.'
+        return 'Your mother leaves for the Gulf on a Tuesday. The agency took her passport the week before for processing. You watched her pack from the doorway. When she is gone the house arranges itself around her absence — the way a family reorganises around a missing person while insisting, always, that she will be back.'
       }
       if (['Mexico', 'Guatemala', 'Honduras', 'El Salvador'].includes(cn)) {
         return 'Your father crosses the border at a place you are not supposed to know. The money starts arriving two months later, in amounts that change what is possible here. The house becomes quieter in the way that things become quiet when something has been removed from them.'
@@ -145,7 +145,7 @@ export const CHILDREN_ABROAD_EVENTS = [
       G.flags.includes('parent_works_abroad') &&
       G.age >= 20 && G.age <= 32 &&
       !G.mem?.caCostAccounting,
-    text: 'The house was built. The school fees were paid. You got further than the alternative would have allowed — this is the accounting you were given, and it is accurate as far as it goes. You also know the specific weight of a phone call timed in minutes, the package with clothes in the wrong sizes, the hug at arrivals from a person you had to relearn. You do not have a verdict. You have both columns.',
+    text: 'The house was built. The school fees were paid. You got further than the alternative would have allowed — this is the accounting you were given, and it is accurate as far as it goes. You also know the weight of a phone call timed in minutes, the package with clothes in the wrong sizes, the hug at arrivals from a person you had to relearn. You do not have a verdict. You have both columns.',
     choices: null,
     effect: (p) => {
       p.m += 3

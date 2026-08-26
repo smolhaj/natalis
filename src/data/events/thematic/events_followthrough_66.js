@@ -15,7 +15,7 @@ export const FOLLOWTHROUGH_66_EVENTS = [
       G.flags.has('vzla_dep_maduro_generation') &&
       G.age >= 30 && G.age <= 55 &&
       !G.mem?.ft66MaduroMidlife,
-    text: `You have spent years inside the crisis — not as an event but as the medium of daily life. The daily life inside it required a specific knowledge: which queues had stock, which supermarkets had dollars, which streets were navigable at which hours, which colectivo had which arrangement with which barrio. The knowledge is granular and is in your body as much as your mind. You know what the inside of the crisis felt like from inside it, which is not the same as what it looked like from the news reports that were made about it for people who were not inside it.`,
+    text: `You have spent years inside the crisis — not as an event but as the medium of daily life. The daily life inside it required a knowledge: which queues had stock, which supermarkets had dollars, which streets were navigable at which hours, which colectivo had which arrangement with which barrio. The knowledge is granular and is in your body as much as your mind. You know what the inside of the crisis felt like from inside it, which is not the same as what it looked like from the news reports that were made about it for people who were not inside it.`,
     choices: null,
     effect: (p) => { p.r += 6; p.e += 3; p.setMem('ft66MaduroMidlife', true) },
   },
@@ -28,7 +28,7 @@ export const FOLLOWTHROUGH_66_EVENTS = [
       G.flags.has('vzla_dep_maduro_generation') &&
       G.age >= 55 &&
       !G.mem?.ft66MaduroLate,
-    text: `The crisis is still the crisis or the crisis has begun to change or something else has happened that requires a new name. From inside Venezuela the accounting runs through personal mathematics — the price of things, the power availability, the presence or absence of particular neighbours who were there last year and are not this year. The seven million who left left a country with more space in it than before. The space has a specific texture. You know the texture because you are in it.`,
+    text: `The crisis is still the crisis or the crisis has begun to change or something else has happened that requires a new name. From inside Venezuela the accounting runs through personal mathematics — the price of things, the power availability, the presence or absence of particular neighbours who were there last year and are not this year. The seven million who left left a country with more space in it than before. The space has a texture. You know the texture because you are in it.`,
     choices: null,
     effect: (p) => { p.r += 7; p.setMem('ft66MaduroLate', true) },
   },

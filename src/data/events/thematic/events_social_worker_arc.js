@@ -53,7 +53,7 @@ export const SOCIAL_WORKER_ARC_EVENTS = [
       isSW(G) &&
       G.age >= 30 &&
       !G.mem?.swSystemFired,
-    text: `You have been flagging this case for three months. The system processes flags in a specific way, which is the way that does not always result in action in the time that action is needed. The outcome is an outcome that was not inevitable — you can see the shape of how it might have been avoided, and the shape includes a moment several weeks ago where a different decision would have changed the subsequent ones. You file the report. The report is thorough. Someone will read it and it will inform the next set of guidelines that will be circulated to the next set of workers who will flag the next set of cases that the system will process in the specific way that the system processes them.`,
+    text: `You have been flagging this case for three months. The system processes flags in a way, which is the way that does not always result in action in the time that action is needed. The outcome is an outcome that was not inevitable — you can see the shape of how it might have been avoided, and the shape includes a moment several weeks ago where a different decision would have changed the subsequent ones. You file the report. The report is thorough. Someone will read it and it will inform the next set of guidelines that will be circulated to the next set of workers who will flag the next set of cases that the system will process in the way that the system processes them.`,
     choices: null,
     effect: (p) => {
       p.m -= 15
@@ -71,7 +71,7 @@ export const SOCIAL_WORKER_ARC_EVENTS = [
       isSW(G) &&
       G.age >= 34 &&
       !G.mem?.swTraumaFired,
-    text: `The work involves sustained proximity to other people's worst experiences. You carry what you hear — not in the clinical sense of PTSD, or not only in that sense, but in the sense that the experiences are now in you in a way that does not switch off at the end of the working day. You have been trained for this. The training gives you frameworks. The frameworks are genuinely useful and also do not fully cover the specific thing that happens when you have been with the same family for eight months and the thing you knew might happen happens.`,
+    text: `The work involves sustained proximity to other people's worst experiences. You carry what you hear — not in the clinical sense of PTSD, or not only in that sense, but in the sense that the experiences are now in you in a way that does not switch off at the end of the working day. You have been trained for this. The training gives you frameworks. The frameworks are genuinely useful and also do not fully cover the thing that happens when you have been with the same family for eight months and the thing you knew might happen happens.`,
     choices: [
       {
         text: 'Seek formal supervision and peer support',
@@ -87,7 +87,7 @@ export const SOCIAL_WORKER_ARC_EVENTS = [
       {
         text: 'Keep going — you are the professional, your job is to manage this',
         tag: null,
-        outcome: `You keep going. The carrying continues. Some of it compresses into a specific kind of tiredness that is not physical tiredness.`,
+        outcome: `You keep going. The carrying continues. Some of it compresses into a kind of tiredness that is not physical tiredness.`,
         effect: (p) => {
           p.m -= 12
           p.h -= 4
@@ -125,7 +125,7 @@ export const SOCIAL_WORKER_ARC_EVENTS = [
       G.flags.has('sw_colleague_left') &&
       G.age >= 55 &&
       !G.mem?.swColleagueEchoFired,
-    text: `You still think about the colleague who left. Not constantly — the work leaves you with less time for idle thought than other occupations — but in the specific moment when a case is hard and you know exactly how they would have approached it and what they would have said in the briefing afterwards. You stayed. They left. Both choices were the same choice about the same job made in the same impossible arithmetic, and they resolved differently. Neither resolution was wrong.`,
+    text: `You still think about the colleague who left. Not constantly — the work leaves you with less time for idle thought than other occupations — but in the moment when a case is hard and you know exactly how they would have approached it and what they would have said in the briefing afterwards. You stayed. They left. Both choices were the same choice about the same job made in the same impossible arithmetic, and they resolved differently. Neither resolution was wrong.`,
     choices: null,
     effect: (p) => {
       p.m -= 4
@@ -143,7 +143,7 @@ export const SOCIAL_WORKER_ARC_EVENTS = [
       G.flags.has('sw_secondary_trauma') &&
       G.age >= 55 &&
       !G.mem?.swTraumaEchoFired,
-    text: `The specific kind of tiredness has become structural. You have learned to identify when it is affecting your professional judgement and to compensate for it, which is itself a kind of expertise. You have learned when to take leave and what the difference is between the tiredness that leave addresses and the tiredness that is permanent. Both kinds are real. You are not the person who entered this field, in ways that are partly the specific damage of secondary trauma and partly just the accumulation of being the person this work produced. Both of those things are also real.`,
+    text: `The kind of tiredness has become structural. You have learned to identify when it is affecting your professional judgement and to compensate for it, which is itself a kind of expertise. You have learned when to take leave and what the difference is between the tiredness that leave addresses and the tiredness that is permanent. Both kinds are real. You are not the person who entered this field, in ways that are partly the specific damage of secondary trauma and partly just the accumulation of being the person this work produced. Both of those things are also real.`,
     choices: null,
     effect: (p) => {
       p.m -= 6

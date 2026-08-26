@@ -90,7 +90,7 @@ export const PANDEMIC_EVENTS = [
       ['developing_urban', 'developing_unstable', 'subsaharan'].includes(G.archetype) &&
       (G.workStatus === 'informal' || G.flags.has('informal_economy') || G.flags.has('informal_worker') || !G.career) &&
       !G.mem?.panInformal,
-    text: 'The government announces a lockdown. For you, lockdown means: no work. No work means: no food by Thursday. The announcement does not mention this specific arithmetic. Elsewhere, people are staying home on salaries. Your income is today\'s movement from one place to another, and today there is no movement.',
+    text: 'The government announces a lockdown. For you, lockdown means: no work. No work means: no food by Thursday. The announcement does not mention this arithmetic. Elsewhere, people are staying home on salaries. Your income is today\'s movement from one place to another, and today there is no movement.',
     choices: [
       {
         text: 'You find a way to keep working — the risk of the virus is less than the risk of not eating',
@@ -130,7 +130,7 @@ export const PANDEMIC_EVENTS = [
       ['developing_urban', 'developing_unstable', 'subsaharan'].includes(G.archetype) &&
       (G.workStatus === 'informal' || G.flags.has('informal_economy') || G.flags.has('informal_worker') || !G.career) &&
       !G.mem?.panInformal,
-    text: 'The government announces a lockdown. For you, lockdown means: no work. No work means: no food by Thursday. The announcement does not mention this specific arithmetic. Elsewhere, people are staying home on salaries. Your income is today\'s movement from one place to another, and today there is no movement.',
+    text: 'The government announces a lockdown. For you, lockdown means: no work. No work means: no food by Thursday. The announcement does not mention this arithmetic. Elsewhere, people are staying home on salaries. Your income is today\'s movement from one place to another, and today there is no movement.',
     choices: [
       {
         text: 'You find a way to keep working — the risk of the virus is less than the risk of not eating',
@@ -226,7 +226,7 @@ export const PANDEMIC_EVENTS = [
       G.currentYear <= 2021 &&
       Object.values(G.parents ?? {}).some((par) => par?.alive !== false) &&
       !G.mem?.panDeath,
-    text: 'The call comes on a Tuesday. Your father, or your mother, is in the hospital. The rules say: no visitors. The specific rule is the specific shape of the loss. You have not been in the room. You will not be in the room. Someone holds a phone at the end and the last thing they hear is your voice from a device, which is not the same as being there, which you know, and which you will carry for a long time.',
+    text: 'The call comes on a Tuesday. Your father, or your mother, is in the hospital. The rules say: no visitors. The specific rule is the shape of the loss. You have not been in the room. You will not be in the room. Someone holds a phone at the end and the last thing they hear is your voice from a device, which is not the same as being there, which you know, and which you will carry for a long time.',
     choices: [
       {
         text: 'You speak to them on the phone every day until the end',
@@ -266,7 +266,7 @@ export const PANDEMIC_EVENTS = [
       G.currentYear <= 2021 &&
       Object.values(G.parents ?? {}).some((par) => par?.alive !== false) &&
       !G.mem?.panDeath,
-    text: 'The call comes on a Tuesday. Your father, or your mother, is in the hospital. The rules say: no visitors. The specific rule is the specific shape of the loss. You have not been in the room. You will not be in the room. Someone holds a phone at the end and the last thing they hear is your voice from a device, which is not the same as being there, which you know, and which you will carry for a long time.',
+    text: 'The call comes on a Tuesday. Your father, or your mother, is in the hospital. The rules say: no visitors. The specific rule is the shape of the loss. You have not been in the room. You will not be in the room. Someone holds a phone at the end and the last thing they hear is your voice from a device, which is not the same as being there, which you know, and which you will carry for a long time.',
     choices: [
       {
         text: 'You speak to them on the phone every day until the end',
@@ -505,7 +505,7 @@ export const PANDEMIC_EVENTS = [
       {
         text: 'You volunteer where you can — deliveries, calls to the elderly',
         tag: 'volunteer',
-        outcome: 'You feel useful in the specific way that helping makes you feel useful.',
+        outcome: 'You feel useful in the way that helping makes you feel useful.',
         effect: (p) => {
           p.karma += 8;
           p.m += 4;
@@ -544,7 +544,7 @@ export const PANDEMIC_EVENTS = [
       {
         text: 'You volunteer where you can — deliveries, calls to the elderly',
         tag: 'volunteer',
-        outcome: 'You feel useful in the specific way that helping makes you feel useful.',
+        outcome: 'You feel useful in the way that helping makes you feel useful.',
         effect: (p) => {
           p.karma += 8;
           p.m += 4;

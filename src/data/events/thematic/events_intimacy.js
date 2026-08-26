@@ -189,7 +189,7 @@ export const INTIMACY_EVENTS = [
         !G.mem?.intCultureUnnamed
       )
     },
-    text: 'In the language you grew up with, the vocabulary for this is not exactly absent — but it is not for speaking aloud. What happens between people is private in a specific way: not like a secret, but like weather. Everyone knows it is there. No one describes it directly. You have lived your whole life in this silence and it does not feel like deprivation. It is simply how the thing is held.',
+    text: 'In the language you grew up with, the vocabulary for this is not exactly absent — but it is not for speaking aloud. What happens between people is private in a way: not like a secret, but like weather. Everyone knows it is there. No one describes it directly. You have lived your whole life in this silence and it does not feel like deprivation. It is simply how the thing is held.',
     choices: null,
     effect: (p) => {
       p.setMem('intCultureUnnamed', true)

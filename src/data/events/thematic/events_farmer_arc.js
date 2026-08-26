@@ -2,7 +2,7 @@
 //
 // The farmer exists in careers.js with one event (drought).
 // These events add what that can't: the seasons as a second body,
-// the specific arithmetic of smallholder farming, the land as
+// the arithmetic of smallholder farming, the land as
 // something held and lost, the way the work passes or doesn't
 // pass to the next generation.
 //
@@ -181,7 +181,7 @@ export const FARMER_ARC_EVENTS = [
       isFarmer(G) &&
       G.age >= 48 &&
       !G.mem?.farmBodyFired,
-    text: `The body knows what farming costs. Not in a single event but in accumulation: the back, specifically, which has bent over a specific thing in a specific way for thirty years and which now carries a commentary on those thirty years that it does not stop offering. The knees. The hands in cold weather. You have been aware of the cost as it accrued and have paid it, because the work required paying it and because you are a person who pays what the work requires. The cost now presents itself differently, as something that was deferred and is now due.`,
+    text: `The body knows what farming costs. Not in a single event but in accumulation: the back, specifically, which has bent over a thing in a way for thirty years and which now carries a commentary on those thirty years that it does not stop offering. The knees. The hands in cold weather. You have been aware of the cost as it accrued and have paid it, because the work required paying it and because you are a person who pays what the work requires. The cost now presents itself differently, as something that was deferred and is now due.`,
     choices: null,
     effect: (p) => {
       p.h -= 8
@@ -217,7 +217,7 @@ export const FARMER_ARC_EVENTS = [
       isFarmer(G) &&
       G.age >= 62 &&
       !G.mem?.farmLateFired,
-    text: `You have farmed most of your life. The accounting of a farming life does not fit into the categories that other accountings use: not salary, not career, not achievement in the sense those words mean in other contexts. It is done in seasons. In the years when the rains came right and the years when they didn't. In the land that is still there, or in the specific grief of land that is no longer there. In the people who farmed beside you, who are gone in different ways. In the children who stayed and the ones who left. You stand at the edge of the field — your field, your father's field, the field that will go to your son or daughter or to someone else — and the accounting takes the form of this: the field exists. The field has fed people. These are not small things.`,
+    text: `You have farmed most of your life and it does not add up in salary or in title. It adds up in seasons: the years the rains came right, the years they didn't, the people who worked the next row and are gone. You stand at the edge of the field your father stood at the edge of. The field is still here and it has fed people. That is the whole accounting and it is not small.`,
     choices: null,
     effect: (p) => {
       p.m += 10

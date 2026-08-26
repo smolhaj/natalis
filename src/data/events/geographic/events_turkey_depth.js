@@ -133,7 +133,8 @@ export const TURKEY_DEPTH_EVENTS = [
       G.currentYear === 2016 &&
       G.age >= 14 &&
       !G.mem?.trk2016Coup,
-    text: `The night of July 15, 2016. Fighter jets over Ankara. Tanks on the Bosphorus Bridge. The parliament building is bombed. At 11:30pm Erdoğan appears on CNN Türk via FaceTime — FaceTime, from his phone — and calls on citizens to go to the squares, to the airports, to the streets. The mosques broadcast the ezan — the call to prayer — at midnight, in the middle of the night, not for prayer but to call people out. By 3am the coup is failing. The soldiers on the bridge are surrendering. What comes after is the purge: 150,000 detained or dismissed, the state of emergency. The night has been documented, argued over, contested. You were in Turkey when it happened and you know what it felt like in real time.`,
+    text: 'There are jets low over the city at an hour when there are no jets. Just before midnight the president is on a journalist\'s telephone held up to a studio camera, telling everyone to go out into the streets. Then the mosques give the ezan at midnight, all of them at once, and it is not for prayer. Your neighbour goes down to the avenue in his slippers. By three in the morning it is over, and by the following week the dismissals have begun.',
+    context: 'On the night of 15 July 2016 a faction of the Turkish armed forces attempted a coup: jets bombed the parliament in Ankara and tanks closed the Bosphorus bridge. President Erdogan appeared via FaceTime on CNN Turk and called people into the streets, and mosques broadcast the ezan through the night. About 250 people died. Roughly 150,000 public employees were dismissed or detained under the two-year state of emergency that followed.',
     choices: null,
     effect: (p) => {
       p.m -= 10

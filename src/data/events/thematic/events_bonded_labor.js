@@ -57,7 +57,7 @@ export const BONDED_LABOR_EVENTS = [
   },
 
   // ── THE BRICK KILN ───────────────────────────────────────────────────────────
-  // The specific texture of bonded kiln work: the heat, the quota, the arithmetic
+  // The texture of bonded kiln work: the heat, the quota, the arithmetic
   // that never resolves in your favour.
 
   {
@@ -168,7 +168,8 @@ export const BONDED_LABOR_EVENTS = [
       G.flags.has('bonded_release_process') &&
       G.age >= 25 && G.age <= 55 &&
       !G.mem?.blLiberation,
-    text: 'The district magistrate has issued a certificate of release. It is a piece of paper with a government seal that says the debt — the amount, the interest, the compounded interest on the interest — is cancelled and cannot be collected. The owner\'s documents claiming you owe this money are void. You are also no longer employed at the kiln, and you no longer have housing on the kiln premises, and the owner is also the person the village buys rice from. The government\'s rehabilitation scheme provides a lump sum — fourteen thousand rupees, or a similar amount — for resettlement. You have the paper. You have the money. You are standing at the edge of the owner\'s land, which is also the edge of the village, looking at what is on the other side.',
+    text: 'The district magistrate has issued a certificate of release. It is one page with a government seal, and it says the debt and the interest on the interest cannot be collected from you. It also means you no longer work at the kiln and no longer live on the kiln premises, and the owner is still the man the village buys its rice from. You have the paper and you have the resettlement money folded inside it. You are standing at the edge of his land, which is also the edge of the village, looking at the other side.',
+    context: 'India\'s Bonded Labour System (Abolition) Act came into force in 1976. Release certificates were issued by district magistrates, with a rehabilitation grant — around fourteen thousand rupees by the 2000s — that in practice often arrived late or not at all.',
     choices: [
       {
         text: 'You leave. Take the money and go somewhere the owner does not have reach.',
@@ -221,7 +222,7 @@ export const BONDED_LABOR_EVENTS = [
   },
 
   // ── THE GREAT MIGRATION PULL ──────────────────────────────────────────────────
-  // The decision to leave for the North. The specific arithmetic of the train ticket.
+  // The decision to leave for the North. The arithmetic of the train ticket.
 
   {
     id: 'bl_sharecrop_north',

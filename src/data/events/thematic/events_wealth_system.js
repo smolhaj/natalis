@@ -352,7 +352,7 @@ export const WEALTH_SYSTEM_EVENTS = [
       {
         text: 'Find a workaround — informal arrangement with a trusted woman',
         tag: null,
-        outcome: 'You manage. Informally, quietly, with the specific knowledge that this can be revoked.',
+        outcome: 'You manage. Informally, quietly, with the knowledge that this can be revoked.',
         effect: (p) => { p.m -= 3; p.e += 2; p.setMem('genderFinanceRestricted', true); p.addFlag('gender_financial_constraint') },
       },
     ],

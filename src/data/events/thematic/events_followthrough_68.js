@@ -13,7 +13,7 @@ export const FOLLOWTHROUGH_68_EVENTS = [
       G.flags.has('pak_cricket_generation') &&
       G.age >= 35 &&
       !G.mem?.ft68CricketMidlife,
-    text: 'Pakistan cricket is a specific kind of drama. The team loses matches it should win and wins matches it should lose and the explanation is always that Pakistan cricket is unpredictable, which is not an explanation, it is a description. You have followed this team for thirty years. You have stopped expecting anything. You still watch. The watching is not rational. You do it anyway.',
+    text: 'Pakistan cricket is a kind of drama. The team loses matches it should win and wins matches it should lose and the explanation is always that Pakistan cricket is unpredictable, which is not an explanation, it is a description. You have followed this team for thirty years. You have stopped expecting anything. You still watch. The watching is not rational. You do it anyway.',
     choices: null,
     effect: (p) => {
       p.m += 3

@@ -27,7 +27,7 @@ export const ERA_GAP_EVENTS = [
       G.currentYear >= 1943 && G.currentYear <= 1945 &&
       G.age >= 18 && G.age <= 35 &&
       !G.mem?.bengalFamineAdult,
-    text: `They are walking from the villages into the city. Hundreds of them, then thousands. Too thin in a specific way — the arms, the legs — and the children quietest of all. The government requisitioned the rice for the war effort: denied it first, then requisitioned it. The word for what is happening is one the newspapers are not allowed to print. You can see it.`,
+    text: `They are walking from the villages into the city. Hundreds of them, then thousands. Too thin in a way — the arms, the legs — and the children quietest of all. The government requisitioned the rice for the war effort: denied it first, then requisitioned it. The word for what is happening is one the newspapers are not allowed to print. You can see it.`,
     choices: [
       {
         text: 'Give what you can — rice, money, anything.',

@@ -531,7 +531,7 @@ export const FAME_KARMA_EVENTS = [
       G.age >= 60 &&
       !G.mem.hobbyLateDiscovery &&
       Object.values(G.hobbies ?? {}).every(h => (h?.level ?? 0) <= 1),
-    text: 'You try something you have never tried: a ceramics class, or chess, or growing things from seed. You are bad at it in the specific way of someone who has not been bad at something new in decades. Your hands do not know what they are doing yet. This turns out to be exactly what you needed.',
+    text: 'You try something you have never tried: a ceramics class, or chess, or growing things from seed. You are bad at it in the way of someone who has not been bad at something new in decades. Your hands do not know what they are doing yet. This turns out to be exactly what you needed.',
     choices: null,
     effect: (p) => { p.m += 14; p.h += 3; p.e += 5; p.addFlag('late_hobby'); p.setMem('hobbyLateDiscovery', true) },
   },

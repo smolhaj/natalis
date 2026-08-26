@@ -155,7 +155,7 @@ export const FOLLOWTHROUGH_63_EVENTS = [
       G.flags.has('afg_taliban_96_generation') &&
       G.age >= 45 &&
       !G.mem?.ft63Afg96Late,
-    text: `The Taliban era of 1996–2001 lasted five years. By the time you are old enough to think about it historically, you understand that five years is both a short time and the time in which a generation of girls had no formal education, in which all public music stopped, in which the Bamiyan Buddhas were destroyed, in which people lived with the specific quality of fear that comes from a regime that is both local and certain of its righteousness. The twenty years after (2001–2021) were an interval. When the Taliban returned in 2021 you watched people outside Afghanistan say they were surprised.`,
+    text: `The Taliban era of 1996–2001 lasted five years. By the time you are old enough to think about it historically, you understand that five years is both a short time and the time in which a generation of girls had no formal education, in which all public music stopped, in which the Bamiyan Buddhas were destroyed, in which people lived with the quality of fear that comes from a regime that is both local and certain of its righteousness. The twenty years after (2001–2021) were an interval. When the Taliban returned in 2021 you watched people outside Afghanistan say they were surprised.`,
     choices: null,
     effect: (p) => { p.r += 6; p.e += 3; p.setMem('ft63Afg96Late', true) },
   },
@@ -199,7 +199,7 @@ export const FOLLOWTHROUGH_63_EVENTS = [
       G.flags.has('afg_secret_schooling') &&
       G.age >= 30 &&
       !G.mem?.ft63SecretSchoolLate,
-    text: `Afsana died or moved or stopped teaching. You remember the texture of those lessons: the way you read faster than normal because time was shorter than normal, the weight of the book that was also the weight of being caught with it, the specific quality of the silence when there was a sound outside. You finished secondary school after 2001 or you didn't quite, but you had years that wouldn't have existed without that back room. You don't know if Afsana is still alive. You think about this more than you think people would expect.`,
+    text: `Afsana died or moved or stopped teaching. You remember the texture of those lessons: the way you read faster than normal because time was shorter than normal, the weight of the book that was also the weight of being caught with it, the quality of the silence when there was a sound outside. You finished secondary school after 2001 or you didn't quite, but you had years that wouldn't have existed without that back room. You don't know if Afsana is still alive. You think about this more than you think people would expect.`,
     choices: null,
     effect: (p) => { p.m += 3; p.r += 6; p.karma += 5; p.setMem('ft63SecretSchoolLate', true) },
   },
@@ -310,7 +310,7 @@ export const FOLLOWTHROUGH_63_EVENTS = [
       G.currentYear >= 2022 &&
       G.age >= 25 &&
       !G.mem?.ft63DiasporaPhones,
-    text: `The phone calls. Your sister or your mother or your cousin in Kabul, calling on WhatsApp when the connection holds. The conversation is careful — careful in a specific way, the careful of people who know phones are not private in certain countries, who have learned to speak around things. You ask how things are. They say it's fine or it's difficult or the prices have gone up. The specifics of difficulty accumulate over months of calls: the daughter not in school, the husband who lost his job at the ministry, the brother who cannot leave. You send money through hawala when the banking system is inaccessible. The money arrives. What the money cannot do is also clear.`,
+    text: `The phone calls. Your sister or your mother or your cousin in Kabul, calling on WhatsApp when the connection holds. The conversation is careful — careful in a way, the careful of people who know phones are not private in certain countries, who have learned to speak around things. You ask how things are. They say it's fine or it's difficult or the prices have gone up. The specifics of difficulty accumulate over months of calls: the daughter not in school, the husband who lost his job at the ministry, the brother who cannot leave. You send money through hawala when the banking system is inaccessible. The money arrives. What the money cannot do is also clear.`,
     choices: null,
     effect: (p) => { p.m -= 8; p.r += 5; p.setMem('ft63DiasporaPhones', true) },
   },

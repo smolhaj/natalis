@@ -262,7 +262,7 @@ export const MENTOR_EVENTS = [
       !G.mem?.menDeepens,
     text: (G) => {
       const name = G.mem?.firstTeacherName ?? 'a teacher whose name you still remember'
-      return `You are explaining something to a younger colleague and you hear, in your own phrasing, the phrasing of ${name}. The specific patience in how you set up the premise. You became that without noticing. It is a strange way to keep someone alive.`
+      return `You are explaining something to a younger colleague and you hear, in your own phrasing, the phrasing of ${name}. The patience in how you set up the premise. You became that without noticing. It is a strange way to keep someone alive.`
     },
     choices: null,
     effect: (p) => { p.setMem('menAdolEcho', true); p.m += 6; p.r += 3 },

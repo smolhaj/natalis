@@ -194,7 +194,7 @@ export const DYING_CITY_EVENTS = [
       !G.mem?.postsovietBrainDrainSeen,
     text: (G) => {
       const city = G.place?.name ?? 'the city'
-      return `At the train station on a Friday evening, you count four families you recognize. The Petrovs with the two boys, Sergei from the institute, Natasha who taught mathematics at School Number Four. They are going to Moscow, or Kyiv, or Berlin, or anywhere that is not here. The platform has a specific feeling — too many suitcases, children who are not old enough to know what leaving means yet. The train fills. The platform empties. The platform is always emptying now.`
+      return `At the train station on a Friday evening, you count four families you recognize. The Petrovs with the two boys, Sergei from the institute, Natasha who taught mathematics at School Number Four. They are going to Moscow, or Kyiv, or Berlin, or anywhere that is not here. The platform has a feeling — too many suitcases, children who are not old enough to know what leaving means yet. The train fills. The platform empties. The platform is always emptying now.`
     },
     choices: null,
     effect: (p) => { p.m -= 5; p.setMem('postsovietBrainDrainSeen', true) },

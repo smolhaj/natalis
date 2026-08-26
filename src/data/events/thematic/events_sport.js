@@ -69,7 +69,7 @@ export const SPORT_EVENTS = [
       if (['South Africa', 'Zimbabwe', 'Kenya'].includes(cn)) {
         return 'The game was a white sport for most of its history here — the club memberships, the provincial colours, the national team. It has opened. The history of its closure is still recent enough to be present in the room when you play. You play it anyway. What you make of it is your own.'
       }
-      return 'Cricket is summer. The whites, the crease, the specific sound of a well-timed drive. Some children love it immediately; others find it the longest afternoon of the week. You have already decided which you are.'
+      return 'Cricket is summer. The whites, the crease, the sound of a well-timed drive. Some children love it immediately; others find it the longest afternoon of the week. You have already decided which you are.'
     },
     choices: null,
     effect: (p) => {
@@ -194,7 +194,7 @@ export const SPORT_EVENTS = [
     text: (G) => {
       const cn = G.character.country.name
       if (SOUTH_ASIAN_CRICKET.includes(cn)) {
-        return 'The British brought cricket to the subcontinent as a game the colonisers played and the colonised were permitted to learn. The game took root and the colonisers left and the game stayed. Now India wins the World Cup and England comes here to play and loses. There is a specific satisfaction in this that does not require elaboration. The game was supposed to teach you something about yourself. It taught you something about them instead.'
+        return 'The British brought cricket to the subcontinent as a game the colonisers played and the colonised were permitted to learn. The game took root and the colonisers left and the game stayed. Now India wins the World Cup and England comes here to play and loses. There is a satisfaction in this that does not require elaboration. The game was supposed to teach you something about yourself. It taught you something about them instead.'
       }
       return 'Cricket here was a white sport for most of its history. The club memberships, the provincial colours, the national team. The sport has opened; the history of its closure is still close enough to be present. You play it anyway. What you make of it is your own.'
     },
@@ -330,7 +330,7 @@ export const SPORT_EVENTS = [
     text: (G) => {
       const cn = G.character.country.name
       if (SOUTH_ASIAN_CRICKET.includes(cn)) {
-        return 'From here the arc is long enough to see whole: the game came with the British, was learned under the British, was used to demonstrate things to the British, and now is played in front of billions while England qualifies for the knockout stages and goes home early. The specific pleasure of this has not diminished over decades. You do not have to explain it to anyone who grew up here.'
+        return 'From here the arc is long enough to see whole: the game came with the British, was learned under the British, was used to demonstrate things to the British, and now is played in front of billions while England qualifies for the knockout stages and goes home early. The pleasure of this has not diminished over decades. You do not have to explain it to anyone who grew up here.'
       }
       return 'You have watched the game change from what it was when you first played it. Who controls the money, who is on the posters, whose country wins the tournaments. The game that was supposed to belong to certain people no longer belongs to them in the same way. You notice this without quite knowing what to do with the noticing.'
     },

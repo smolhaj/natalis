@@ -215,7 +215,7 @@ export const COHERENCE_EVENTS = [
     effect: null,
   },
 
-  // ── FRIEND GROUP SCATTERED → the specific grief of 35 ───────────────────
+  // ── FRIEND GROUP SCATTERED → the grief of 35 ───────────────────
   {
     id: 'coh_friend_scatter_echo',
     phase: 'midlife',

@@ -107,7 +107,8 @@ export const ERITREA_EVENTS = [
       G.currentYear >= 2001 && G.currentYear <= 2005 &&
       G.age >= 25 &&
       !G.mem?.eriG15,
-    text: 'September 2001. Eighteen senior PFDJ officials — the G-15 — publish an open letter calling for elections and a constitutional government. Eleven are arrested and held without trial. Seven fled the country in time. The independent newspapers that published the letter are shut overnight. The journalists who wrote for them are arrested. No charges are filed because charges would require a court. There is no court. Within a week, Eritrea has no independent press and no internal political opposition. The constitution ratified in 1997 has never been implemented. You read about this in a government paper that does not explain what happened to the arrested ministers — it describes them as traitors. You know three of the journalists personally.',
+    text: 'The paper you buy on the corner is not there in the morning and it is not there the morning after. Three of the men who wrote for it are people you have eaten with. The government paper prints the word traitors and prints no charges, because a charge would require a court. By the end of the month you have stopped asking anyone where they have gone, and so has everyone else.',
+    context: 'In September 2001 eleven of the fifteen senior PFDJ officials who had signed an open letter calling for elections were arrested and held without charge or trial; most have never been seen since. Eritrea\'s independent newspapers were closed in the same week and their journalists detained. The constitution ratified in 1997 has never been implemented and no national election has been held.',
     choices: null,
     effect: (p) => {
       p.m -= 14; p.e += 5; p.karma -= 5;

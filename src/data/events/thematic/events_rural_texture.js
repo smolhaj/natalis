@@ -475,6 +475,7 @@ export const RURAL_TEXTURE_EVENTS = [
     when: (G) =>
       G.place?.type === 'rural' &&
       G.currentCountry?.name === 'United States' &&
+      ['christian_protestant', 'christian_catholic', 'christian_evangelical', 'christian_other'].includes(G.religion) &&
       G.currentYear >= 1950 && G.currentYear <= 2000,
     text: () =>
       `Sunday is the church, which is also the social infrastructure. The service runs an hour; the coffee hour runs longer. Everyone knows when the Hendersons' barn burned and when the Miller boy came back from Vietnam and when the school budget is going to be cut. The pastor is the third-most-important person in town after the doctor and the principal, and the church is where decisions are made that technically happen somewhere else. You know this without being able to say it.`,

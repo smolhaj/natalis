@@ -1,6 +1,6 @@
 // events_local.js — Local significance arc (BUILD 30)
 //
-// Small renown: the specific texture of being someone who matters
+// Small renown: the texture of being someone who matters
 // within a radius of five kilometres, not nationally.
 // Fires for any archetype; gated on karma, career-field, and emerging community trust.
 // Distinct from the fame system — local_hero accumulates through acts of presence,

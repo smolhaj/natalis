@@ -103,7 +103,7 @@ export const FRIEND_EVENTS = [
       {
         text: 'Be fully present — this is what friendship is for',
         tag: null,
-        outcome: 'You are available through months of it. The friendship deepens in the specific way crisis allows.',
+        outcome: 'You are available through months of it. The friendship deepens in the way crisis allows.',
         effect: (p) => { p.m += 5; p.karma += 5; p.updateFriendRel(0, 15); p.setMem('friendDivorce', true) },
       },
       {

@@ -181,7 +181,7 @@ export const FOLLOWTHROUGH_54_EVENTS = [
       {
         text: 'There are moments when you wish you had weighed in. You didn\'t. That is the honest record.',
         tag: null,
-        outcome: 'The honest record is the honest record. Regret about non-action is a specific kind of regret — harder to locate than regret about action, but real.',
+        outcome: 'The honest record is the honest record. Regret about non-action is a kind of regret — harder to locate than regret about action, but real.',
         effect: (p) => {
           p.r += 5
           p.m += 1

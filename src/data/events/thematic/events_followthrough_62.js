@@ -43,7 +43,7 @@ export const FOLLOWTHROUGH_62_EVENTS = [
       G.currentYear >= 2014 && G.currentYear <= 2020 &&
       G.age >= 18 &&
       !G.mem?.ft62WestgateAfter,
-    text: `After Westgate the security architecture of Nairobi changed. The bollards outside malls. The bag search at every entrance — a frisking that became normal in the specific way that things become normal: through repetition until the noticing stops. The Garissa University attack in April 2015 killed 148 students. The attacks continued in different forms and in different places. The question that kept recurring was not whether to go out but what level of vigilance was the appropriate one to carry into ordinary life. You reached an equilibrium. Everyone did. The equilibrium was not the same as the feeling of safety.`,
+    text: `After Westgate the security architecture of Nairobi changed. The bollards outside malls. The bag search at every entrance — a frisking that became normal in the way that things become normal: through repetition until the noticing stops. The Garissa University attack in April 2015 killed 148 students. The attacks continued in different forms and in different places. The question that kept recurring was not whether to go out but what level of vigilance was the appropriate one to carry into ordinary life. You reached an equilibrium. Everyone did. The equilibrium was not the same as the feeling of safety.`,
     choices: null,
     effect: (p) => { p.m -= 5; p.r += 5; p.setMem('ft62WestgateAfter', true) },
   },

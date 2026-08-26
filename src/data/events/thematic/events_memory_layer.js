@@ -17,7 +17,7 @@ export const MEMORY_LAYER_EVENTS = [
       G.currentYear - (G.mem?.lost_parent_fatherYear ?? 0) >= 8,
     text: (G) => {
       const yearsAgo = G.currentYear - (G.mem?.lost_parent_fatherYear ?? G.currentYear - 12)
-      return `You are doing something ordinary — opening a jar, folding a newspaper — and you notice your own hands. Your father had hands like these. You had not thought about that in years and then it comes back fully, the specific shape of them, the way he held things. He has been dead for ${yearsAgo} years. The memory arrives without warning and without sadness exactly, or not only sadness — something more compound than that.`
+      return `You are doing something ordinary — opening a jar, folding a newspaper — and you notice your own hands. Your father had hands like these. You had not thought about that in years and then it comes back fully, the shape of them, the way he held things. He has been dead for ${yearsAgo} years. The memory arrives without warning and without sadness exactly, or not only sadness — something more compound than that.`
     },
     choices: null,
     effect: (p) => { p.r += 3; p.setMem('memLayerFatherHands', true) },
@@ -68,7 +68,7 @@ export const MEMORY_LAYER_EVENTS = [
       G.flags.has('famine_memory') &&
       G.age >= 55 &&
       !G.mem?.memLayerFamineSpecific,
-    text: 'A dish you make now — one you make without thinking — you trace it back. The substitutions. The thing you ate because that was what there was. The specific texture of necessity. The dish is not the same dish anymore but the path from there to here is continuous and you know it.',
+    text: 'A dish you make now — one you make without thinking — you trace it back. The substitutions. The thing you ate because that was what there was. The texture of necessity. The dish is not the same dish anymore but the path from there to here is continuous and you know it.',
     choices: null,
     effect: (p) => { p.r += 5; p.setMem('memLayerFamineSpecific', true) },
   },

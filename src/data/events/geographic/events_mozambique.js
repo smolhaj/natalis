@@ -85,7 +85,8 @@ export const MOZAMBIQUE_EVENTS = [
       G.currentYear === 2000 &&
       G.age >= 16 &&
       !G.mem.mozFloods,
-    text: 'February 2000. Cyclone Eline makes landfall. Then the rain doesn\'t stop. The Limpopo, the Save, the Zambezi overflow. Eight hundred people die. Half a million are displaced. Entire towns are underwater for weeks. A woman named Sophia Pedro gives birth to a daughter in a tree above the floodwaters — a helicopter rescue crew helps. The baby is named Rosita. The international cameras are there for that story. They are less there for the three months of recovery. The floods are not the worst thing that has happened in Mozambique. They arrive in a country that has not finished rebuilding from the last worst thing.',
+    text: 'The cyclone comes in February and then the rain does not stop and the Limpopo comes up over the road and keeps coming. For three weeks the town is a set of rooftops. On the television a woman gives birth in a tree and a helicopter takes her down, and the cameras are there for that and gone before the water is. Your family sleeps on the floor of the school with everyone else\'s family until April.',
+    context: 'Cyclone Eline made landfall in February 2000 and weeks of rain pushed the Limpopo, Save and Zambezi over their banks. About 800 people died and half a million were displaced. Sophia Pedro, winched from a tree by a South African air force crew after giving birth above the floodwater, named her daughter Rosita; the footage was broadcast worldwide.',
     choices: null,
     effect: (p) => { p.m -= 10; p.h -= 2; p.r += 7; p.addFlag('mozambican_floods_generation'); p.setMem('mozFloods', true) },
   },

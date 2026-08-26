@@ -241,7 +241,7 @@ export const TEXTURE_EVENTS = [
       G.age >= 18 && G.age <= 35 &&
       !G.flags.includes('seasonal_migrant') &&
       !G.flags.includes('left_for_city'),
-    text: 'During the dry season, when the field requires less, you go to the city for work. Construction, unloading at the market, whatever is available. You sleep in a room with seven other men from villages like yours. You send money home every two weeks. In three months you return. You do this for several years running. The city becomes familiar in the specific way of a place you know without belonging to.',
+    text: 'During the dry season, when the field requires less, you go to the city for work. Construction, unloading at the market, whatever is available. You sleep in a room with seven other men from villages like yours. You send money home every two weeks. In three months you return. You do this for several years running. The city becomes familiar in the way of a place you know without belonging to.',
     choices: null,
     effect: (p) => { p.mo += 200; p.s += 3; p.m -= 3; p.addFlag('seasonal_migrant') },
   },
@@ -787,7 +787,7 @@ export const TEXTURE_EVENTS = [
       G.career &&
       G.age >= 55 && G.age <= 72 &&
       !G.flags.includes('career_last_day_done'),
-    text: 'You clear the desk. At the back of the bottom drawer there is a pen you have been looking for since the previous decade and a photograph from a work event whose occasion you no longer remember. Colleagues stop by during the day and say things that are warm and partly true. There is a cake. Someone makes a speech. You drive home at the usual time and the house is the same house and you sit in it for a while in the specific silence of an afternoon that used to belong to somewhere else.',
+    text: 'You clear the desk. At the back of the bottom drawer there is a pen you have been looking for since the previous decade and a photograph from a work event whose occasion you no longer remember. Colleagues stop by during the day and say things that are warm and partly true. There is a cake. Someone makes a speech. You drive home at the usual time and the house is the same house and you sit in it for a while in the silence of an afternoon that used to belong to somewhere else.',
     choices: null,
     effect: (p) => { p.m += 8; p.r += 10; p.addFlag('career_last_day_done') },
   },
@@ -827,7 +827,7 @@ export const TEXTURE_EVENTS = [
       G.age >= 50 && G.age <= 65 &&
       G.stats.smarts >= 55 &&
       !G.flags.includes('career_legacy_done'),
-    text: 'You are leading a project that you understand will outlast you at the organization — a system, a program, a building, a body of work that will carry forward after you are gone. There is a specific pleasure in this that is different from ordinary ambition. You are building for people who are not yet in the room. You find you care more about this than you expected, and less about the credit.',
+    text: 'You are leading a project that you understand will outlast you at the organization — a system, a program, a building, a body of work that will carry forward after you are gone. There is a pleasure in this that is different from ordinary ambition. You are building for people who are not yet in the room. You find you care more about this than you expected, and less about the credit.',
     choices: null,
     effect: (p) => { p.m += 12; p.e += 5; p.karma += 5; p.addFlag('built_legacy'); p.addFlag('career_legacy_done') },
   },

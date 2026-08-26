@@ -17,7 +17,8 @@ export const IVORY_COAST_DEPTH_EVENTS = [
       G.currentYear >= 1970 && G.currentYear <= 2005 &&
       G.age >= 8 && G.age <= 14 &&
       !G.flags.has('ci_cocoa_child_labor'),
-    text: 'The school year ends in June and in July the fields need clearing. Your father does not phrase it as a choice. The machete is heavier than you expected. The pods hang at a height that requires you to stretch. You work beside the adults — some of them boys from Burkina Faso who crossed the border to work, who have no families within two hundred kilometers, who sleep in the farm shed. They are children and they are also workers. You are also a child and also a worker. The distinction between what you are supposed to be at your age and what you are in July does not get discussed. The distinction exists. You feel it in the difference between July and September, when the school uniform comes back out.',
+    text: 'School ends in June and in July the fields need clearing, and your father does not phrase it as a question. The machete is heavier than it looks and the pods hang at a height that makes you stretch for every one. Two of the boys working the row beside you came down from Burkina and sleep in the shed and have no family within two hundred kilometres. In September the uniform comes back out of the cupboard and you notice the difference in your own hands.',
+    context: 'Cote d\'Ivoire produces roughly forty percent of the world\'s cocoa. An estimated 800,000 children work on Ivorian cocoa farms, most of them on family holdings during school holidays; a smaller number are trafficked or migrate unaccompanied from Burkina Faso and Mali. The industry\'s 2001 Harkin-Engel Protocol set a deadline to end the worst forms of child labour that has been repeatedly extended.',
     choices: null,
     effect: (p) => { p.m -= 6; p.h -= 3; p.e += 2; p.addFlag('ci_cocoa_child_labor') },
   },

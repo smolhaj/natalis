@@ -155,7 +155,8 @@ export const IRAN_DEPTH_EVENTS = [
       G.currentYear >= 1988 && G.currentYear <= 1992 &&
       G.age >= 18 &&
       !G.mem?.irnDep1988,
-    text: 'In the summer of 1988, following a secret fatwa from Khomeini, political prisoners across Iran are executed. The number is disputed — estimates range from 3,000 to 5,000. They are members of Mojahedin-e Khalq and leftist groups who refused to recant their beliefs. The executions happen without trial, without family notification. Families who come to visit are told their relative has been transferred. When the executions are finished, the families receive a bag of belongings. Some receive a location — a mass grave outside the city. This is not public knowledge in Iran. The families who know, know. The families who know do not speak of it publicly. You know because someone you know is in the bag of belongings.',
+    text: 'The visits stop in July and the answer at the gate is that he has been transferred. In the autumn they give your aunt a bag: a shirt, a watch, a pair of glasses, and a slip of paper with the name of a place outside the city where the ground has been recently turned. Nobody is told a number and nobody is told a charge. Your aunt keeps the watch in the drawer with the documents and does not wear it and does not speak about any of it outside the house.',
+    context: 'Following a secret order from Khomeini in the summer of 1988, political prisoners across Iran — chiefly members of the Mojahedin-e Khalq and leftist organisations — were executed after brief interrogations by panels later known as death commissions. Estimates run from 3,000 to 5,000 dead. Families were not notified, bodies were buried in unmarked plots such as Khavaran, and public discussion of the killings remains prohibited.',
     choices: null,
     effect: (p) => {
       p.m -= 14

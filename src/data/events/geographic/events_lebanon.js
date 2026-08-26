@@ -192,7 +192,8 @@ export const LEBANON_EVENTS = [
       G.flags.includes('emigrated') &&
       G.currentYear >= 2020 && G.currentYear <= 2022 &&
       !G.mem?.lbnExplosionPhone,
-    text: 'The video arrives on your phone at 6:08 PM. Your cousin sent it without a message. You watch it once: the flash at the port, the silence of the two seconds before the shockwave, then every window in the frame going inward at once. You watch it again. You call your mother. The call does not connect. You call your sister. The call does not connect. You call your aunt and she picks up on the fourth ring, crying but not hurt, and you say things in Arabic that you have not said in years and hold the phone against your face for a long time after she hangs up. The city you left is still there. The city you left is not there.',
+    text: 'The video arrives at eight minutes past six with no message attached. The flash at the port, then two seconds of nothing, then every window in the frame going inward at once. Your mother does not pick up. Your sister does not pick up. Your aunt answers on the fourth ring, crying and not hurt, and you say things to her in Arabic that you have not said in years and keep the phone against your face long after she has hung up.',
+    context: 'On 4 August 2020, 2,750 tonnes of ammonium nitrate stored at the port of Beirut detonated, killing at least 218 people, injuring 7,000, and leaving 300,000 without habitable housing. The blast was felt in Cyprus. No senior official has been convicted; the domestic investigation has been repeatedly suspended by legal challenges from the officials it named.',
     choices: null,
     effect: (p) => {
       p.m -= 20

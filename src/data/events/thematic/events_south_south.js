@@ -256,7 +256,7 @@ export const SOUTH_SOUTH_EVENTS = [
       G.flags.has('gulag_survivor') &&
       G.age >= 60 &&
       !G.mem?.ssGulagLate,
-    text: `It is not talked about. The specific silence around it is itself information — its shape, its weight, what it replaces in conversation. Your children know something happened; they don't know what. The not-knowing protects them in ways that no longer apply, and continues anyway from habit. You have chosen the silence too. You chose it for them and now cannot remember when you chose it for yourself.`,
+    text: `It is not talked about. The silence around it is itself information — its shape, its weight, what it replaces in conversation. Your children know something happened; they don't know what. The not-knowing protects them in ways that no longer apply, and continues anyway from habit. You have chosen the silence too. You chose it for them and now cannot remember when you chose it for yourself.`,
     choices: null,
     effect: (p) => {
       p.r += 6;

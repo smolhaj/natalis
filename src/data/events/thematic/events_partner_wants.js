@@ -145,7 +145,7 @@ export const PARTNER_WANTS_EVENTS = [
       {
         text: 'Yes.',
         tag: 'couples_therapy',
-        outcome: 'The first session is uncomfortable in the specific way that useful things often are.',
+        outcome: 'The first session is uncomfortable in the way that useful things often are.',
         effect: (p) => { p.m -= 3; p.updatePartnerRel(15); p.setMem('coupleTherapyOffered', true) },
       },
       {
@@ -200,7 +200,7 @@ export const PARTNER_WANTS_EVENTS = [
       return pick([
         `${pn} says something small — a joke that lands, a comment so specific to your private world that you both laugh. This is the relationship at its best.`,
         `${pn} tells you, in a way they don't usually, that they are glad it was you. The sentence is simple. It does not require a response. You give one anyway.`,
-        `A quiet evening. ${pn} across the room doing something ordinary. You watch them without them knowing. The specific pleasure of being with someone you chose.`,
+        `A quiet evening. ${pn} across the room doing something ordinary. You watch them without them knowing. The pleasure of being with someone you chose.`,
       ])
     },
     choices: null,

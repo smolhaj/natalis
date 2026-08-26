@@ -47,7 +47,7 @@ export const LGBTQ_EVENTS = [
     weight: 3,
     when: (G) => G.flags.includes('lgbtq_identity') && G.age >= 14 && G.age <= 22 && !G.mem?.lgbtq_not_alone,
     text: (G) => {
-      if (G.currentYear >= 1995) return 'You find a forum. The usernames are anonymous and the grammar is bad and some of the posts are written in languages you do not speak. But the experience — the specific experience — is written there in every language, and it is yours. You read until 2 AM.'
+      if (G.currentYear >= 1995) return 'You find a forum. The usernames are anonymous and the grammar is bad and some of the posts are written in languages you do not speak. But the experience — the experience — is written there in every language, and it is yours. You read until 2 AM.'
       if (G.currentYear >= 1970) return 'There is a book in the library. It is shelved in an unmarked section. The author writes about a life that sounds like yours. You do not borrow it — you memorize the parts that matter and leave it on the shelf.'
       return 'A neighbor — an older woman who lives alone and is spoken about in a certain way — looks at you once over the fence as you sit on the back steps. She says nothing. She does not have to.'
     },
@@ -153,7 +153,7 @@ export const LGBTQ_EVENTS = [
     phase: 'young_adult',
     weight: 4,
     when: (G) => G.flags.includes('lgbtq_identity') && !G.lgbtqCriminalized && G.age >= 17 && G.age <= 26 && !G.mem?.lgbtq_first_rel,
-    text: 'The first person. You are clumsy in ways you would not be if you had been practicing at this your whole adolescence, the way other people were. Everything is new — how to stand, how to be looked at, how to be held by someone who knows what you are. The specific relief of this is not small.',
+    text: 'The first person. You are clumsy in ways you would not be if you had been practicing at this your whole adolescence, the way other people were. Everything is new — how to stand, how to be looked at, how to be held by someone who knows what you are. The relief of this is not small.',
     choices: null,
     effect: (p) => { p.m += 18; p.s += 5; p.addFlag('lgbtq_had_relationship'); p.setMem('lgbtq_first_rel', true) },
   },
@@ -232,7 +232,7 @@ export const LGBTQ_EVENTS = [
     phase: 'midlife',
     weight: 3,
     when: (G) => G.flags.includes('lgbtq_identity') && !G.lgbtqCriminalized && G.age >= 30 && !G.mem?.lgbtq_political,
-    text: 'You have watched rights appear and be taken back. A marriage that was legal is no longer recognized in three states. A protection that existed for a decade is removed. The political dimension of your life is not something you chose. It arrived with the part of you that you did not choose either. You vote every election with a specific kind of attentiveness.',
+    text: 'You have watched rights appear and be taken back. A marriage that was legal is no longer recognized in three states. A protection that existed for a decade is removed. The political dimension of your life is not something you chose. It arrived with the part of you that you did not choose either. You vote every election with a kind of attentiveness.',
     choices: null,
     effect: (p) => { p.m -= 6; p.e += 5; p.addFlag('politically_engaged'); p.setMem('lgbtq_political', true) },
   },
@@ -385,7 +385,7 @@ export const LGBTQ_EVENTS = [
     text: 'It comes from both directions. From one: you are experimenting, you will choose eventually. From the other: you are really straight, just performing. You are in a relationship with someone and a third person tells you that your sexuality has been resolved now — that you have landed on a side. You have not landed. You are the same person you were before the relationship. You explain this. It does not take.',
     choices: [
       { text: 'Correct them directly — your identity is not conditional on your partner', tag: null, outcome: 'The conversation goes nowhere satisfying. But you have said the thing, which has its own value. You stop apologising for the complexity.', effect: (p) => { p.m -= 3; p.e += 5; p.addFlag('bisexual_advocate'); p.setMem('bisexual_erasure', true) } },
-      { text: 'Let it go — this argument costs more than it is worth', tag: null, outcome: 'You smile. You change the subject. You go home and feel the specific exhaustion of invisibility from people who were supposed to understand.', effect: (p) => { p.m -= 10; p.r += 7; p.setMem('bisexual_erasure', true) } },
+      { text: 'Let it go — this argument costs more than it is worth', tag: null, outcome: 'You smile. You change the subject. You go home and feel the exhaustion of invisibility from people who were supposed to understand.', effect: (p) => { p.m -= 10; p.r += 7; p.setMem('bisexual_erasure', true) } },
     ],
     effect: null,
   },

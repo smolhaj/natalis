@@ -18,7 +18,7 @@ export const JOURNALIST_ARC_EVENTS = [
     when: (G) =>
       isJournalist(G) &&
       !G.mem?.journFirstStoryFired,
-    text: `You have filed perhaps thirty stories. You know this because you keep a list, initially for professional reasons and then out of a habit you do not examine. Most of them were competent — the event, the attribution, the word count — and none of them has mattered in the specific way you understood journalism to matter when you decided to do it. Then one of them does. You file it and wait, as you always wait, and this time the response is different — the kind of specific response, from the specific kind of person, that tells you the information reached where it needed to reach. This is what it is supposed to feel like.`,
+    text: `You have filed perhaps thirty stories. You know this because you keep a list, initially for professional reasons and then out of a habit you do not examine. Most of them were competent — the event, the attribution, the word count — and none of them has mattered in the way you understood journalism to matter when you decided to do it. Then one of them does. You file it and wait, as you always wait, and this time the response is different — the kind of specific response, from the kind of person, that tells you the information reached where it needed to reach. This is what it is supposed to feel like.`,
     choices: null,
     effect: (p) => {
       p.m += 10
@@ -36,7 +36,7 @@ export const JOURNALIST_ARC_EVENTS = [
       isJournalist(G) &&
       G.flags.has('journalist_first_story') &&
       !G.mem?.journSourceFired,
-    text: `Someone gave you information. They gave it in confidence, which is a specific kind of trust — the trust that the person receiving information will protect the person who provided it even when protecting them is costly. A third party now knows the source's identity, or suspects it, and has come to you to confirm or deny. The source is at risk if you confirm. The story may not survive if you deny. You make the choice that you will make every subsequent time this happens, because once you make it the first time the position is set.`,
+    text: `Someone gave you information. They gave it in confidence, which is a kind of trust — the trust that the person receiving information will protect the person who provided it even when protecting them is costly. A third party now knows the source's identity, or suspects it, and has come to you to confirm or deny. The source is at risk if you confirm. The story may not survive if you deny. You make the choice that you will make every subsequent time this happens, because once you make it the first time the position is set.`,
     choices: [
       {
         text: 'Protect the source. Say nothing.',

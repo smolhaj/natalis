@@ -3,7 +3,7 @@
 // The nurse exists in careers.js with two events (patient death, pandemic shift).
 // These events add the texture those can't: being the person in the room
 // when the doctor isn't, learning clinical distance and knowing when you
-// learned it, the family at the bedside, the specific weight of accumulated
+// learned it, the family at the bedside, the weight of accumulated
 // years of loss.
 
 const isNurse = (G) => G.career?.id === 'nurse' || G.flags.has('nurse_career')
@@ -107,7 +107,7 @@ export const NURSE_ARC_EVENTS = [
       isNurse(G) &&
       G.age >= 35 &&
       !G.mem?.nurRecogFired,
-    text: `A family writes. Or comes in. Or tracks you down through the administrative routes and leaves a message with the ward. They have found you specifically — your name, the shift, the date — to say what it meant. Not the treatment. Not the outcome, which was what it was. They mean the specific thing you did in the room at the specific hour, which you may or may not clearly remember. You write back. You say what there is to say. The correspondence is brief. It sits with you for a long time.`,
+    text: `A family writes. Or comes in. Or tracks you down through the administrative routes and leaves a message with the ward. They have found you specifically — your name, the shift, the date — to say what it meant. Not the treatment. Not the outcome, which was what it was. They mean the thing you did in the room at the specific hour, which you may or may not clearly remember. You write back. You say what there is to say. The correspondence is brief. It sits with you for a long time.`,
     choices: null,
     effect: (p) => {
       p.m += 14
@@ -125,7 +125,7 @@ export const NURSE_ARC_EVENTS = [
       G.flags.has('nurse_accumulated_grief') &&
       G.age >= 55 &&
       !G.mem?.nurGriefLateFired,
-    text: `Someone asks you, at an event, how you managed it — all those years of loss. They are not in healthcare. They mean the question generously. You give the standard answer, which is true: the clinical distance, the professional tools, the colleagues who understood without needing to be told. What you do not say is that the distance was built at a cost, and the cost is present in a specific kind of tiredness that has nothing to do with physical tiredness, and that some of the faces you thought you had filed are still accessible without effort, and that you stopped being surprised by this some years ago. You say: you find a way. They nod. This is also true.`,
+    text: `Someone asks you, at an event, how you managed it — all those years of loss. They are not in healthcare. They mean the question generously. You give the standard answer, which is true: the clinical distance, the professional tools, the colleagues who understood without needing to be told. What you do not say is that the distance was built at a cost, and the cost is present in a kind of tiredness that has nothing to do with physical tiredness, and that some of the faces you thought you had filed are still accessible without effort, and that you stopped being surprised by this some years ago. You say: you find a way. They nod. This is also true.`,
     choices: null,
     effect: (p) => {
       p.m -= 4

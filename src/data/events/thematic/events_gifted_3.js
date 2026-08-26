@@ -120,7 +120,7 @@ export const GIFTED_3_EVENTS = [
     text: (G) => {
       if (G.flags.has('born_gifted_athletic')) return 'The boys\' track programme has better equipment, more coaching hours, and a budget that is a different order of magnitude. You are faster than the boys who receive the coaching you don\'t receive. The logic of the gap is structural and clear and no one in a position to change it is changing it. You train with what you have. What you have is worse and still producing results that attract attention.'
       if (G.currentYear < 1980) return 'The university admissions office returns the application. The programme does not accept women. This is not personal — it is policy. The policy is not questioned by the institution because the institution wrote the policy. You are the wrong gender for the path that would suit the gift. The gift does not adjust. The path does not open.'
-      return 'The word they use is \'impressive, for a girl\' or \'remarkable given the circumstances\' or some other formulation that places your achievement inside a smaller category than the category it belongs in. The achievement is not inside the smaller category. The sentence that describes it is. You learn to hear the sentence and discard the framing while keeping the genuine part of the recognition, which requires a specific kind of patience.'
+      return 'The word they use is \'impressive, for a girl\' or \'remarkable given the circumstances\' or some other formulation that places your achievement inside a smaller category than the category it belongs in. The achievement is not inside the smaller category. The sentence that describes it is. You learn to hear the sentence and discard the framing while keeping the genuine part of the recognition, which requires a kind of patience.'
     },
     choices: [
       {
@@ -209,7 +209,7 @@ export const GIFTED_3_EVENTS = [
       G.fame >= 60 &&
       !G.mem?.giftPrizeFired,
     text: (G) => {
-      if (G.flags.has('born_gifted_athletic')) return 'The gold medal, the world title, the record — the specific thing that the career was pointed at. The moment of it is shorter than you expected. The feeling is real and then it is the fact. The fact is permanent. What comes after the fact is a different and interesting question.'
+      if (G.flags.has('born_gifted_athletic')) return 'The gold medal, the world title, the record — the thing that the career was pointed at. The moment of it is shorter than you expected. The feeling is real and then it is the fact. The fact is permanent. What comes after the fact is a different and interesting question.'
       if (G.flags.has('born_gifted_musical')) return 'The prize is announced. Your name in the announcement. You have heard your name in a lot of contexts and this is a new context for it. The weight of what the prize represents — the accumulated judgement of the field — lands in a way that takes some time to settle into. The work is the same work it was yesterday. The frame around it has shifted.'
       return 'The phone call comes from a number you don\'t recognise early in the morning. You almost don\'t answer. The voice explains what it is calling to say. There is a pause after the explanation that you don\'t know how to fill. The work that led here was done without knowing it would lead here, and the best work usually is.'
     },

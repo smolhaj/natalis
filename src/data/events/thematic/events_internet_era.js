@@ -43,7 +43,7 @@ export const INTERNET_ERA_EVENTS = [
       G.age >= 13 && G.age <= 22 &&
       G.character.country.name === 'South Korea' &&
       !G.mem?.pcbangFirst,
-    text: 'The PC방 is open until four in the morning. The broadband is faster than anything you have encountered. You pay by the hour and lose track of hours. Starcraft is not a game here — it is infrastructure. The players around you are serious in the specific way that Seoul is serious about things it decides matter. The professional leagues are on television. You are aware this is something new in the world, though no one has named it yet.',
+    text: 'The PC방 is open until four in the morning. The broadband is faster than anything you have encountered. You pay by the hour and lose track of hours. Starcraft is not a game here — it is infrastructure. The players around you are serious in the way that Seoul is serious about things it decides matter. The professional leagues are on television. You are aware this is something new in the world, though no one has named it yet.',
     choices: [
       {
         text: 'Practise seriously — there are tournaments',
@@ -80,7 +80,7 @@ export const INTERNET_ERA_EVENTS = [
       {
         text: 'Use it for connection — diaspora family, international friends',
         tag: null,
-        outcome: 'The cousin in London is suddenly not so far. The specific loneliness of a family scattered by emigration shrinks slightly.',
+        outcome: 'The cousin in London is suddenly not so far. The loneliness of a family scattered by emigration shrinks slightly.',
         effect: (p) => { p.s += 4; p.m += 4; p.addFlag('early_internet_generation'); p.setMem('cyberFirst', true); },
       },
     ],
@@ -123,7 +123,7 @@ export const INTERNET_ERA_EVENTS = [
       G.age >= 13 && G.age <= 22 &&
       G.character.country.name === 'Brazil' &&
       !G.mem?.lanFirst,
-    text: 'The *lan house* on the corner charges R$1.50 an hour. The machines are slow but present. Orkut — not Facebook, not yet — is how you exist socially online. Brazil has more Orkut users than the country that built it. There is something in this that your generation will spend years trying to explain to people who arrived later: the specific texture of a social network that was yours, before the world\'s version arrived and replaced it.',
+    text: 'The *lan house* on the corner charges R$1.50 an hour. The machines are slow but present. Orkut — not Facebook, not yet — is how you exist socially online. Brazil has more Orkut users than the country that built it. There is something in this that your generation will spend years trying to explain to people who arrived later: the texture of a social network that was yours, before the world\'s version arrived and replaced it.',
     choices: null,
     effect: (p) => { p.s += 4; p.m += 3; p.addFlag('early_internet_generation'); p.addFlag('orkut_generation'); p.setMem('lanFirst', true); },
   },

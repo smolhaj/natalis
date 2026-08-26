@@ -1,7 +1,7 @@
 // events_accountant_arc.js — Deep accountant career arc
 //
 // The accountant is the person who knows where the money is. This gives
-// a specific kind of access and a specific kind of moral exposure.
+// a kind of access and a kind of moral exposure.
 // The arc tracks what it means to spend a career in the knowledge of
 // numbers: the intimacy with financial truth, the fraud that is
 // eventually discovered, the client who wants help with a different
@@ -19,7 +19,7 @@ export const ACCOUNTANT_ARC_EVENTS = [
     when: (G) =>
       isAccountant(G) &&
       !G.mem?.accNumbersFired,
-    text: `You know where the money is. This is a specific kind of knowledge — not the money itself, but its structure: where it comes from, where it goes, what the gap between those two movements means about the health of an enterprise. Most people who work in a company do not know this. You know it about every company you work for or audit. This gives you a view of the world that is very accurate and not always comfortable to have.`,
+    text: `You know where the money is. This is a kind of knowledge — not the money itself, but its structure: where it comes from, where it goes, what the gap between those two movements means about the health of an enterprise. Most people who work in a company do not know this. You know it about every company you work for or audit. This gives you a view of the world that is very accurate and not always comfortable to have.`,
     choices: null,
     effect: (p) => {
       p.m += 6

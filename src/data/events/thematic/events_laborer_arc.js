@@ -17,7 +17,7 @@ export const LABORER_ARC_EVENTS = [
     when: (G) =>
       isLaborer(G) &&
       !G.mem?.labBodyYoungFired,
-    text: `You know what your body can do. This is a specific knowledge — not abstract, not self-improvement, but the practical inventory of what you can lift, carry, sustain, recover from. The worksite has a hierarchy based on this inventory, and you are high enough in it that the foreman gives you the jobs that require the good version. You are the good version. This is the version you will be for approximately the next fifteen years, though you do not know this yet.`,
+    text: `You know what your body can do. This is a knowledge — not abstract, not self-improvement, but the practical inventory of what you can lift, carry, sustain, recover from. The worksite has a hierarchy based on this inventory, and you are high enough in it that the foreman gives you the jobs that require the good version. You are the good version. This is the version you will be for approximately the next fifteen years, though you do not know this yet.`,
     choices: null,
     effect: (p) => {
       p.m += 8
@@ -71,7 +71,7 @@ export const LABORER_ARC_EVENTS = [
       isLaborer(G) &&
       G.age >= 32 &&
       !G.mem?.labInjuryFired,
-    text: `The back. It was building toward this — you recognised the specific quality of the warning it had been giving for three months — and then the thing it was warning about happened. The diagnosis is a herniated disc, which is the mechanical description of a thing you already understood intuitively as: the back has limits and you have found one of them. The question now is what comes next.`,
+    text: `The back. It was building toward this — you recognised the quality of the warning it had been giving for three months — and then the thing it was warning about happened. The diagnosis is a herniated disc, which is the mechanical description of a thing you already understood intuitively as: the back has limits and you have found one of them. The question now is what comes next.`,
     choices: [
       {
         text: 'Rest properly and see a physiotherapist — the back is the career',
@@ -163,7 +163,7 @@ export const LABORER_ARC_EVENTS = [
       isLaborer(G) &&
       G.age >= 60 &&
       !G.mem?.labLateFired,
-    text: `The work was the body and the body is the record. The record includes the good years — the years when the inventory of what you could do was at its full list — and the years when the list was being shortened by what had accumulated. There is no pension that matches what the body paid over forty years of seasons. There is the knowledge of the work: the specific competence of the person who can look at a site and know what it needs, who can read the weather and know what that means for the day's plan. You have that. Some days it is enough. The other days you do not spend counting what you are owed, because that arithmetic runs forever.`,
+    text: `The work was the body and the body is the record. The record includes the good years — the years when the inventory of what you could do was at its full list — and the years when the list was being shortened by what had accumulated. There is no pension that matches what the body paid over forty years of seasons. There is the knowledge of the work: the competence of the person who can look at a site and know what it needs, who can read the weather and know what that means for the day's plan. You have that. Some days it is enough. The other days you do not spend counting what you are owed, because that arithmetic runs forever.`,
     choices: null,
     effect: (p) => {
       p.m += 8

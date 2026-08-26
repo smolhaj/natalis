@@ -1,7 +1,7 @@
 // events_celebrity.js — Celebrity / fame spiral arc
 //
 // For characters who reach significant fame. Not the generic fame_karma events,
-// but the specific texture of public life: the parasocial relationship, the
+// but the texture of public life: the parasocial relationship, the
 // media apparatus, the loss of private self, the spiral, and what comes after.
 //
 // Gates on fame stat thresholds and existing fame-producing flags.
@@ -30,7 +30,7 @@ export const CELEBRITY_EVENTS = [
       !G.mem?.celParasocialFired,
     text: (G) => {
       const yr = G.currentYear ?? 2010
-      if (yr >= 2010) return 'The messages arrive in volume. People you have never met describe, in very specific terms, the effect you have had on their lives. The effect is real — you did the thing, they experienced the thing. But the relationship they describe is not one you are in. They know the public self. What they feel for the public self is genuine. You are grateful and also — there is no other word for it — lonely in a specific way that the messages make more acute.'
+      if (yr >= 2010) return 'The messages arrive in volume. People you have never met describe, in very specific terms, the effect you have had on their lives. The effect is real — you did the thing, they experienced the thing. But the relationship they describe is not one you are in. They know the public self. What they feel for the public self is genuine. You are grateful and also — there is no other word for it — lonely in a way that the messages make more acute.'
       return 'The fan letters come in bags. Some are moving, some are unnerving, and all of them are addressed to a person who is a partial version of who you are. The post office has been notified. You do not read all of them. The ones you do read stay with you.'
     },
     choices: null,
@@ -46,7 +46,7 @@ export const CELEBRITY_EVENTS = [
       !G.mem?.celMediaFired,
     text: (G) => {
       const yr = G.currentYear ?? 2005
-      if (yr >= 2005) return 'The article appears. The framing is not malicious — just wrong in the specific way that public narratives about people are wrong: confident about the interior of a life from the exterior of it. The comment section beneath it contains opinions about your character, your decisions, and the life you lead, held by people who do not know you. You close the tab. You open it again. You close it again. You learn not to read the comment section and then read it anyway.'
+      if (yr >= 2005) return 'The article appears. The framing is not malicious — just wrong in the way that public narratives about people are wrong: confident about the interior of a life from the exterior of it. The comment section beneath it contains opinions about your character, your decisions, and the life you lead, held by people who do not know you. You close the tab. You open it again. You close it again. You learn not to read the comment section and then read it anyway.'
       return 'The profile runs in the magazine. The journalist was in your life for three days. The version of those three days that appears in print is accurate in detail and wrong in feeling — the arrangement of true things into a shape that serves the story rather than the life.'
     },
     choices: [

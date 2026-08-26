@@ -18,7 +18,7 @@ export const FOLLOWTHROUGH_47_EVENTS = [
       G.age >= 55 &&
       G.currentYear >= 1940 &&
       !G.mem?.ft47FluPandemic,
-    text: 'The 1918 illness is not much talked about in the years that follow. The war overshadows it, and then the Depression overshadows the war\'s shadow, and then another war. The fifty million dead — or a hundred million, the estimates vary — entered the historical record quietly, as background. You know what it felt like from inside a city where a third of the people were sick at once: the specific silence in the streets, the mass graves moved through without ceremony, the healthy people who died and the sick people who did not. The calculus of it never made sense then and it does not make more sense in retrospect.',
+    text: 'The 1918 illness is not much talked about in the years that follow. The war overshadows it, and then the Depression overshadows the war\'s shadow, and then another war. The fifty million dead — or a hundred million, the estimates vary — entered the historical record quietly, as background. You know what it felt like from inside a city where a third of the people were sick at once: the silence in the streets, the mass graves moved through without ceremony, the healthy people who died and the sick people who did not. The calculus of it never made sense then and it does not make more sense in retrospect.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 3; p.m -= 2; p.setMem('ft47FluPandemic', true) },
   },
@@ -35,7 +35,7 @@ export const FOLLOWTHROUGH_47_EVENTS = [
       G.currentYear >= 1940 &&
       G.character.country?.name === 'United States' &&
       !G.mem?.ft47TriangleFire,
-    text: 'One hundred and forty-six names in the newspapers. Then the labour laws changed and the union membership grew and the owners were acquitted and went back to running factories. The Triangle Shirtwaist fire is in the history books now as the founding event of the American labour movement. What the history books do not fully capture is the specific weight of knowing that the stairwell doors were locked because the owners were afraid workers might steal scraps of fabric, and that this was common practice, and that this required a building full of dead women to become impermissible.',
+    text: 'One hundred and forty-six names in the newspapers. Then the labour laws changed and the union membership grew and the owners were acquitted and went back to running factories. The Triangle Shirtwaist fire is in the history books now as the founding event of the American labour movement. What the history books do not fully capture is the weight of knowing that the stairwell doors were locked because the owners were afraid workers might steal scraps of fabric, and that this was common practice, and that this required a building full of dead women to become impermissible.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 3; p.m -= 2; p.setMem('ft47TriangleFire', true) },
   },
@@ -147,7 +147,7 @@ export const FOLLOWTHROUGH_47_EVENTS = [
       G.age >= 55 &&
       G.currentYear >= 2030 &&
       !G.mem?.ft47ClimateGen,
-    text: 'The Paris Agreement was adopted in 2015 and the NDCs were filed and the pledges were made and the warming trajectory, had all of it been implemented, would have been approximately 2.5 to 3 degrees. Not all of it was implemented. You are old enough to remember the signing ceremony and the specific feeling in the room — a version of hope, shaped like an agreement, which is not the same thing as hope — and to measure the distance between that ceremony and what the thermometers have been showing since.',
+    text: 'The Paris Agreement was adopted in 2015 and the NDCs were filed and the pledges were made and the warming trajectory, had all of it been implemented, would have been approximately 2.5 to 3 degrees. Not all of it was implemented. You are old enough to remember the signing ceremony and the feeling in the room — a version of hope, shaped like an agreement, which is not the same thing as hope — and to measure the distance between that ceremony and what the thermometers have been showing since.',
     choices: null,
     effect: (p) => { p.r += 6; p.e += 3; p.m -= 4; p.setMem('ft47ClimateGen', true) },
   },
@@ -285,7 +285,7 @@ export const FOLLOWTHROUGH_47_EVENTS = [
       G.age >= 30 &&
       G.currentYear >= 2025 &&
       !G.mem?.ft47TajikGbao,
-    text: 'The crackdown on Gorno-Badakhshan in May 2022 — armoured vehicles through mountain roads, the internet cut, the exact death toll disputed and undocumented — received almost no international coverage. The Pamiris who live there, mostly Ismaili Muslim and linguistically distinct from the Tajik majority, have lived in tension with Dushanbe since the civil war. The specific quality of the government\'s response to the protests — the internet blackout, the documented torture of detainees, the refusal to enumerate the dead — is the response of a government that understood it would face no consequences. It was correct.',
+    text: 'The crackdown on Gorno-Badakhshan in May 2022 — armoured vehicles through mountain roads, the internet cut, the exact death toll disputed and undocumented — received almost no international coverage. The Pamiris who live there, mostly Ismaili Muslim and linguistically distinct from the Tajik majority, have lived in tension with Dushanbe since the civil war. The quality of the government\'s response to the protests — the internet blackout, the documented torture of detainees, the refusal to enumerate the dead — is the response of a government that understood it would face no consequences. It was correct.',
     choices: null,
     effect: (p) => { p.r += 5; p.e += 3; p.m -= 3; p.setMem('ft47TajikGbao', true) },
   },

@@ -18,7 +18,7 @@ export const EMIGRANT_INTEGRATION_EVENTS = [
     text: (G) => {
       const newCountry = G.currentCountry?.name ?? 'here'
       const oldCountry = G.character.country.name
-      return `Your first significant holiday season here. In ${oldCountry}, this time of year had a specific weight — the food, the rhythm, who gathered where. None of that maps onto ${newCountry}. The holiday happens around you and correctly belongs to someone else. You call home. The connection is good. The distance is not reducible by a good connection.`
+      return `Your first significant holiday season here. In ${oldCountry}, this time of year had a weight — the food, the rhythm, who gathered where. None of that maps onto ${newCountry}. The holiday happens around you and correctly belongs to someone else. You call home. The connection is good. The distance is not reducible by a good connection.`
     },
     choices: null,
     effect: (p) => {
@@ -119,7 +119,7 @@ export const EMIGRANT_INTEGRATION_EVENTS = [
       !G.mem?.emigOldCountryVisit,
     text: (G) => {
       const oldCountry = G.character.country.name
-      return `You visit ${oldCountry} again. People you knew are older in the specific way that only makes sense when you haven't watched it happen gradually. The place has changed and also has not changed, both of which you expected. What you didn't expect: you move through it like a tourist with inside knowledge, which is a different thing from belonging. On the flight back, you think the word "back" and notice you mean it.`
+      return `You visit ${oldCountry} again. People you knew are older in the way that only makes sense when you haven't watched it happen gradually. The place has changed and also has not changed, both of which you expected. What you didn't expect: you move through it like a tourist with inside knowledge, which is a different thing from belonging. On the flight back, you think the word "back" and notice you mean it.`
     },
     choices: null,
     effect: (p) => {
